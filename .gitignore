@@ -1,0 +1,4 @@
+.pioenvs
+*.asc
+*.bin
+*.blif

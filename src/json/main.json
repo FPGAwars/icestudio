@@ -1,0 +1,19 @@
+{
+    "name": "main",
+    "input": ["A", "B"],
+    "output": ["C"],
+    "wires": ["aux"],
+    "modules": [
+        {
+            "name": "andc",
+            "input": ["A", "B"],
+            "output": ["aux"]
+        },
+        {
+            "name": "notc",
+            "input": ["aux"],
+            "output": ["C"]
+        }
+    ],
+    "inline": ""
+}
