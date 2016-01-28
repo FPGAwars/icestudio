@@ -21,7 +21,7 @@ def generate_head(json_module):
     _input = json_module['input']
     _output = json_module['output']
 
-    code = 'module ' + _name
+    code = '\nmodule ' + _name
     code += '('
     if _input:
         code += 'input ' + ', '.join(_input)
@@ -54,27 +54,32 @@ def generate_module(json_module):
     return code
 
 
-def generate_netlist(json_netlist, json_modules):
+def generate_netlist(json_netlist):
     """
     # JSON
     {
-        "name": "notc",
-        "input": ["a"],
-        "output": ["b"],
-        "inline": "assign b = ! a;"
-    }
-    {
         "name": "main",
-        "input": ["A"],
-        "output": ["B"],
-        "wires": ["aux"],
+        "input": {
+            "A": 99
+        },
+        "output": {
+            "B": 98
+        },
+        "wires": [
+            "aux"
+        ],
         "modules": [
             {
                 "name": "notc",
-                "input": ["A"],
-                "output": ["B"]
+                "input": {
+                    "a": "A"
+                },
+                "output": {
+                    "b": "B"
+                }
             }
-        ]
+        ],
+        "inline": ""
     }
 
     # Verilog
@@ -98,20 +103,44 @@ def generate_netlist(json_netlist, json_modules):
     if _modules:
         for index, module in enumerate(_modules):
             name = module['name']
-            module_def = find_module(name, json_modules)
             code += name + ' ' + name + str(index) + ' (\n'
             input_list = []
             output_list = []
-            for i, _input in enumerate(module_def['input']):
-                input_list += ['    .' + _input + '(' + module['input'][i] + ')']
-            for i, _output in enumerate(module_def['output']):
-                output_list += ['    .' + _output + '(' + module['output'][i] + ')']
+            for _input in module['input']:
+                input_list += ['    .' + _input + '(' + module['input'][_input] + ')']
+            for _output in module['output']:
+                output_list += ['    .' + _output + '(' + module['output'][_output] + ')']
             code += ',\n'.join(input_list + output_list) + '\n'
             code += ');\n'
     # Inline
     if _inline:
         code += _inline + '\n'
     code += 'endmodule\n'
+    return code
+
+
+def generate_pcf(json_netlist):
+    """
+    # JSON
+    {
+        "name": "main",
+        "input": {
+            "A": 99
+        },
+        "output": {
+            "B": 98
+        },
+    }
+
+    # PCF
+    set_io A 99
+    set_io B 98
+    """
+    code = ''
+    for key, value in json_netlist['input'].iteritems():
+        code += 'set_io ' + key + ' ' + str(value) + '\n'
+    for key, value in json_netlist['output'].iteritems():
+        code += 'set_io ' + key + ' ' + str(value) + '\n'
     return code
 
 
@@ -145,15 +174,20 @@ def load_verilog_modules(json_modules):
     return code
 
 
-def load_verilog_netlist(json_netlist, json_modules):
+def load_verilog_netlist(json_netlist):
     code = ''
-    code += generate_netlist(json_netlist, json_modules)
+    code += generate_netlist(json_netlist)
+    return code
+
+
+def load_pcf(json_netlist):
+    code = ''
+    code += generate_pcf(json_netlist)
     return code
 
 
 def main():
     filename = 'main'
-    code = '// Generated verilog code\n'
 
     with open('src/json/' + filename + '.json') as data_json:
 
@@ -161,13 +195,23 @@ def main():
         json_netlist = json.load(data_json)
         json_modules = get_json_modules(json_netlist)
 
-        # Generate Verilog
-        code += load_verilog_modules(json_modules)
-        code += load_verilog_netlist(json_netlist, json_modules)
-
         with open('src/' + filename + '.v', 'w') as data_verilog:
 
+            # Generate Verilog
+            code = '// Generated verilog\n'
+            code += load_verilog_modules(json_modules)
+            code += load_verilog_netlist(json_netlist)
+
             # Write Verilog
+            data_verilog.write(code)
+            data_verilog.close()
+
+        with open('src/' + filename + '.pcf', 'w') as data_verilog:
+
+            # Generate PCF
+            code = load_pcf(json_netlist)
+
+            # Write PCF
             data_verilog.write(code)
             data_verilog.close()
 
