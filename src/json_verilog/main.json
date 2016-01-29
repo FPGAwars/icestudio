@@ -12,7 +12,8 @@
     ],
     "modules": [
         {
-            "name": "and",
+            "name": "and0",
+            "type": "and",
             "input": {
                 "in0": "in0",
                 "in1": "in1"
@@ -22,12 +23,13 @@
             }
         },
         {
-            "name": "not",
+            "name": "not0",
+            "type": "not",
             "input": {
                 "in0": "w0"
             },
             "output": {
-                "in1": "out0"
+                "out0": "out0"
             }
         }
     ],
