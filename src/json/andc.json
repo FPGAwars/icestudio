@@ -1,6 +1,0 @@
-{
-    "name": "andc",
-    "input": ["a", "b"],
-    "output": ["c"],
-    "inline": "assign c = a & b;"
-}

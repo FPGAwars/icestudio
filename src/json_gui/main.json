@@ -1,33 +1,33 @@
 {
     "name": "main",
     "input": {
-        "A": 99,
-        "B": 98
+        "in0": 99,
+        "in1": 98
     },
     "output": {
-        "C": 97
+        "out0": 97
     },
     "wires": [
-        "aux"
+        "w0"
     ],
     "modules": [
         {
-            "name": "andc",
+            "name": "and",
             "input": {
-                "a": "A",
-                "b": "B"
+                "in0": "in0",
+                "in1": "in1"
             },
             "output": {
-                "c": "aux"
+                "out0": "w0"
             }
         },
         {
-            "name": "notc",
+            "name": "not",
             "input": {
-                "a": "aux"
+                "in0": "w0"
             },
             "output": {
-                "b": "C"
+                "in1": "out0"
             }
         }
     ],

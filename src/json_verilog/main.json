@@ -1,0 +1,35 @@
+{
+    "name": "main",
+    "input": {
+        "in0": 99,
+        "in1": 98
+    },
+    "output": {
+        "out0": 97
+    },
+    "wires": [
+        "w0"
+    ],
+    "modules": [
+        {
+            "name": "and",
+            "input": {
+                "in0": "in0",
+                "in1": "in1"
+            },
+            "output": {
+                "out0": "w0"
+            }
+        },
+        {
+            "name": "not",
+            "input": {
+                "in0": "w0"
+            },
+            "output": {
+                "in1": "out0"
+            }
+        }
+    ],
+    "inline": ""
+}

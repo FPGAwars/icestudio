@@ -1,0 +1,50 @@
+{
+    "nodes": [
+        {
+            "name": "in0",
+            "type": "input",
+            "value": 99,
+            "pos": [0, 0]
+        },
+        {
+            "key": "in1",
+            "type": "input",
+            "value": 98,
+            "pos": [0, 10]
+        },
+        {
+            "key": "out0",
+            "type": "output",
+            "value": 97,
+            "pos": [15, 5]
+        },
+        {
+            "key": "and0",
+            "type": "and",
+            "pos": [5, 5]
+        },
+        {
+            "key": "not0",
+            "type": "not",
+            "pos": [10, 5]
+        }
+    ],
+    "links": [
+        {
+            "from": "in0.out0",
+            "to": "and0.in0"
+        },
+        {
+            "from": "in1.out0",
+            "to": "and0.in1"
+        },
+        {
+            "from": "and0.out0",
+            "to": "not0.in0"
+        },
+        {
+            "from": "not0.out0",
+            "to": "out0.in0"
+        }
+    ]
+}

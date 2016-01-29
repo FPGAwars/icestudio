@@ -1,22 +1,22 @@
 // Generated verilog
 
-module andc(input a, b, output c);
-assign c = a & b;
+module andc(input in0, in1, output out0);
+assign out0 = in0 & in1;
 endmodule
 
-module notc(input a, output b);
-assign b = ! a;
+module notc(input in0, output out0);
+assign out0 = ! in0;
 endmodule
 
-module main(input A, B, output C);
-wire aux;
-andc andc0 (
-    .a(A),
-    .b(B),
-    .c(aux)
+module main(input in0, in1, output out0);
+wire w0;
+and and0 (
+    .in0(0),
+    .in1(0),
+    .out0(w0)
 );
-notc notc1 (
-    .a(aux),
-    .b(C)
+not not1 (
+    .in0(w0),
+    .in1(out0)
 );
 endmodule

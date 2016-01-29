@@ -1,6 +1,0 @@
-{
-    "name": "notc",
-    "input": ["a"],
-    "output": ["b"],
-    "inline": "assign b = ! a;"
-}

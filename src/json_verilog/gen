@@ -162,7 +162,7 @@ def get_json_modules(data):
     modules = []
     ms = find_modules(data)
     for m in ms:
-        with open('src/json/' + m + '.json') as data_json:
+        with open(m + '.json') as data_json:
             modules += [json.load(data_json)]
             data_json.close()
     return modules
@@ -190,13 +190,13 @@ def load_pcf(json_netlist):
 def main():
     filename = 'main'
 
-    with open('src/json/' + filename + '.json') as data_json:
+    with open(filename + '.json') as data_json:
 
         # Read JSON
         json_netlist = json.load(data_json)
         json_modules = get_json_modules(json_netlist)
 
-        with open('src/' + filename + '.v', 'w') as data_verilog:
+        with open('../' + filename + '.v', 'w') as data_verilog:
 
             # Generate Verilog
             code = '// Generated verilog\n'
@@ -207,7 +207,7 @@ def main():
             data_verilog.write(code)
             data_verilog.close()
 
-        with open('src/' + filename + '.pcf', 'w') as data_verilog:
+        with open('../' + filename + '.pcf', 'w') as data_verilog:
 
             # Generate PCF
             code = load_pcf(json_netlist)

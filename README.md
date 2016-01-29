@@ -20,5 +20,18 @@ TODO
 ### JSON to Verilog
 
 ```bash
+cd src/json_verilog
 ./gen
+```
+
+### Build
+
+```bash
+platformio run
+```
+
+### Upload
+
+```bash
+platformio run --target upload
 ```
