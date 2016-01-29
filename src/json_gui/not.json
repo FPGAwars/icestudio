@@ -1,5 +1,0 @@
-{
-    "input": ["in0"],
-    "output": ["out0"],
-    "inline": "assign out0 = ! in0;"
-}

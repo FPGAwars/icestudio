@@ -1,11 +1,11 @@
 {
     "name": "main",
-    "input": {
-        "in0": 99,
-        "in1": 98
-    },
-    "output": {
-        "out0": 97
+    "input": 2,
+    "output": 1,
+    "pcf": {
+        "i0": 99,
+        "i1": 98,
+        "o0": 97
     },
     "wires": [
         "w0"
@@ -15,21 +15,21 @@
             "name": "and0",
             "type": "and",
             "input": {
-                "in0": "in0",
-                "in1": "in1"
+                "i0": "i0",
+                "i1": "i1"
             },
             "output": {
-                "out0": "w0"
+                "o0": "w0"
             }
         },
         {
             "name": "not0",
             "type": "not",
             "input": {
-                "in0": "w0"
+                "i0": "w0"
             },
             "output": {
-                "out0": "out0"
+                "o0": "o0"
             }
         }
     ],

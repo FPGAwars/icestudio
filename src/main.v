@@ -1,22 +1,22 @@
 // Generated verilog
 
-module andx(input in0, in1, output out0);
-assign out0 = in0 & in1;
+module andx(input i0, i1, output o0);
+assign o = i0 & i1;
 endmodule
 
-module notx(input in0, output out0);
-assign out0 = ! in0;
+module notx(input i0, output o0);
+assign o0 = ! i0;
 endmodule
 
-module main(input in0, in1, output out0);
+module main(input i0, i1, output o0);
 wire w0;
 andx and0 (
-    .in0(in0),
-    .in1(in1),
-    .out0(w0)
+    .i1(i1),
+    .i0(i0),
+    .o0(w0)
 );
 notx not0 (
-    .in0(w0),
-    .out0(out0)
+    .i0(w0),
+    .o0(o0)
 );
 endmodule

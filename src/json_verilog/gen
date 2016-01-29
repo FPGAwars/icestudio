@@ -10,12 +10,12 @@ def generate_head(name, json_module):
     """
     # JSON + name
     {
-        "input": ["a"],
-        "output": ["b"]
+        "input": 1,
+        "output": 1,
     }
 
     # Verilog
-    module name(input a, output b);
+    module name(input i0, output i1);
     """
     _input = json_module['input']
     _output = json_module['output']
@@ -23,18 +23,24 @@ def generate_head(name, json_module):
     code = '\nmodule ' + name
     code += '('
     if _input:
-        code += 'input ' + ', '.join(_input)
+        ilist = []
+        for i in xrange(_input):
+            ilist += ['i' + str(i)]
+        code += 'input ' + ', '.join(ilist)
         if _output:
             code += ', '
     if _output:
-        code += 'output ' + ', '.join(_output)
+        olist = []
+        for o in xrange(_output):
+            olist += ['o' + str(o)]
+        code += 'output ' + ', '.join(olist)
     code += ');'
     return code
 
 
 def generate_module(name, json_module):
     """
-    # JSON + name
+    # JSON + name: not
     {
         "input": ["a"],
         "output": ["b"],
@@ -42,7 +48,7 @@ def generate_module(name, json_module):
     }
 
     # Verilog
-    module name(input a, output b);
+    module notx(input a, output b);
     assign b = ! a;
     endmodule
     """
@@ -57,24 +63,24 @@ def generate_netlist(json_netlist):
     # JSON
     {
         "name": "main",
-        "input": {
-            "A": 99
-        },
-        "output": {
-            "B": 98
+        "input": 1,
+        "output": 1,
+        "pcf": {
+            "i0": 99,
+            "o0": 98
         },
         "wires": [
-            "aux"
+            "w0"
         ],
         "modules": [
             {
-                "name": "N",
+                "name": "not0",
                 "type": "not",
                 "input": {
-                    "a": "A"
+                    "i0": "i0"
                 },
                 "output": {
-                    "b": "B"
+                    "o0": "o0"
                 }
             }
         ],
@@ -82,11 +88,11 @@ def generate_netlist(json_netlist):
     }
 
     # Verilog
-    module main(input A, output B);
-    wire aux;
-    not N (
-        .a(A),
-        .b(B)
+    module main(input i0, output i0);
+    wire w0;
+    notx not0 (
+        .i0(i0),
+        .b(o0)
     );
     endmodule
     """
@@ -122,22 +128,21 @@ def generate_pcf(json_netlist):
     # JSON
     {
         "name": "main",
-        "input": {
-            "A": 99
+        "input": 1,
+        "output": 1,
+        "pcf": {
+            "i0": 99,
+            "o0": 98
         },
-        "output": {
-            "B": 98
-        },
+        ...
     }
 
     # PCF
-    set_io A 99
-    set_io B 98
+    set_io i0 99
+    set_io o0 98
     """
     code = ''
-    for key, value in json_netlist['input'].iteritems():
-        code += 'set_io ' + key + ' ' + str(value) + '\n'
-    for key, value in json_netlist['output'].iteritems():
+    for key, value in json_netlist['pcf'].iteritems():
         code += 'set_io ' + key + ' ' + str(value) + '\n'
     return code
 

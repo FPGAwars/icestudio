@@ -1,5 +1,5 @@
 {
-    "input": ["in0", "in1"],
-    "output": ["out0"],
-    "inline": "assign out0 = in0 & in1;"
+    "input": 2,
+    "output": 1,
+    "inline": "assign o = i0 & i1;"
 }
