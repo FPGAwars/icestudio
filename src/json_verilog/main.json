@@ -7,30 +7,19 @@
         "i1": 98,
         "o0": 97
     },
-    "wires": [
-        "w0"
-    ],
+    "wires": 1,
     "modules": [
         {
             "name": "and0",
             "type": "and",
-            "input": {
-                "i0": "i0",
-                "i1": "i1"
-            },
-            "output": {
-                "o0": "w0"
-            }
+            "input": ["i0", "i1"],
+            "output": ["w0"]
         },
         {
             "name": "not0",
             "type": "not",
-            "input": {
-                "i0": "w0"
-            },
-            "output": {
-                "o0": "o0"
-            }
+            "input": ["w0"],
+            "output": ["o0"]
         }
     ],
     "inline": ""

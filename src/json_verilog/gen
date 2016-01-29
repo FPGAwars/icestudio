@@ -69,9 +69,7 @@ def generate_netlist(json_netlist):
             "i0": 99,
             "o0": 98
         },
-        "wires": [
-            "w0"
-        ],
+        "wires": 1,
         "modules": [
             {
                 "name": "not0",
@@ -102,18 +100,18 @@ def generate_netlist(json_netlist):
     code = generate_head(json_netlist['name'], json_netlist) + '\n'
     # Wires
     if _wires:
-        for wire in _wires:
-            code += 'wire ' + wire + ';\n'
+        for wire in xrange(_wires):
+            code += 'wire w' + str(wire) + ';\n'
     # Modules
     if _modules:
         for module in _modules:
             code += module['type'] + 'x ' + module['name'] + ' (\n'
             input_list = []
             output_list = []
-            for _input in module['input']:
-                input_list += ['    .' + _input + '(' + module['input'][_input] + ')']
-            for _output in module['output']:
-                output_list += ['    .' + _output + '(' + module['output'][_output] + ')']
+            for index, value in enumerate(module['input']):
+                input_list += ['    .i' + str(index) + '(' + value + ')']
+            for index, value in enumerate(module['output']):
+                output_list += ['    .o' + str(index) + '(' + value + ')']
             code += ',\n'.join(input_list + output_list) + '\n'
             code += ');\n'
     # Inline

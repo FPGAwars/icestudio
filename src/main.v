@@ -11,8 +11,8 @@ endmodule
 module main(input i0, i1, output o0);
 wire w0;
 andx and0 (
-    .i1(i1),
     .i0(i0),
+    .i1(i1),
     .o0(w0)
 );
 notx not0 (
