@@ -3,20 +3,23 @@
     "input": 2,
     "output": 1,
     "wire": 1,
-    "modules": [
-        {
-            "name": "and0",
+    "modules": {
+        "and0": {
             "type": "and",
-            "input": ["i0", "i1"],
-            "output": ["w0"]
+            "params": {
+                "i0": "i0",
+                "i1": "i1",
+                "o0": "w0"
+            }
         },
-        {
-            "name": "not0",
+        "not0": {
             "type": "not",
-            "input": ["w0"],
-            "output": ["o0"]
+            "params": {
+                "i0": "w0",
+                "o0": "o0"
+            }
         }
-    ],
+    },
     "inline": "",
     "pcf": {
         "i0": 99,

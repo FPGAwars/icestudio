@@ -90,7 +90,7 @@ def generate_netlist(json_netlist):
     wire w0;
     notx not0 (
         .i0(i0),
-        .b(o0)
+        .o0(o0)
     );
     endmodule
     """
@@ -105,14 +105,14 @@ def generate_netlist(json_netlist):
     # Modules
     if _modules:
         for module in _modules:
-            code += module['type'] + 'x ' + module['name'] + ' (\n'
-            input_list = []
-            output_list = []
-            for index, value in enumerate(module['input']):
-                input_list += ['    .i' + str(index) + '(' + value + ')']
-            for index, value in enumerate(module['output']):
-                output_list += ['    .o' + str(index) + '(' + value + ')']
-            code += ',\n'.join(input_list + output_list) + '\n'
+            m = _modules[module]
+            _name = module
+            _type = m['type']
+            code += _type + 'x ' + _name + ' (\n'
+            param_list = []
+            for key, value in m['params'].iteritems():
+                param_list += ['    .' + key + '(' + value + ')']
+            code += ',\n'.join(param_list) + '\n'
             code += ');\n'
     # Inline
     if _inline:
@@ -156,7 +156,7 @@ def get_json_module(_type, json_netlist):
 def load_verilog_modules(json_netlist):
     code = ''
     for module in json_netlist['modules']:
-        _type = module['type']
+        _type = json_netlist['modules'][module]['type']
         json_module = get_json_module(_type, json_netlist)
         code += generate_module(_type, json_module)
     return code
