@@ -2,12 +2,7 @@
     "name": "main",
     "input": 2,
     "output": 1,
-    "pcf": {
-        "i0": 99,
-        "i1": 98,
-        "o0": 97
-    },
-    "wires": 1,
+    "wire": 1,
     "modules": [
         {
             "name": "and0",
@@ -22,5 +17,10 @@
             "output": ["o0"]
         }
     ],
-    "inline": ""
+    "inline": "",
+    "pcf": {
+        "i0": 99,
+        "i1": 98,
+        "o0": 97
+    }
 }

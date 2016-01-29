@@ -1,7 +1,7 @@
 // Generated verilog
 
 module andx(input i0, i1, output o0);
-assign o = i0 & i1;
+assign o0 = i0 & i1;
 endmodule
 
 module notx(input i0, output o0);

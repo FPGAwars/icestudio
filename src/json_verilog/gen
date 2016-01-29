@@ -94,13 +94,13 @@ def generate_netlist(json_netlist):
     );
     endmodule
     """
-    _wires = json_netlist['wires']
+    _wire = json_netlist['wire']
     _modules = json_netlist['modules']
     _inline = json_netlist['inline']
     code = generate_head(json_netlist['name'], json_netlist) + '\n'
     # Wires
-    if _wires:
-        for wire in xrange(_wires):
+    if _wire:
+        for wire in xrange(_wire):
             code += 'wire w' + str(wire) + ';\n'
     # Modules
     if _modules:
