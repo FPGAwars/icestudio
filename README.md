@@ -20,8 +20,9 @@ TODO
 ### JSON to Verilog
 
 ```bash
-cd src/json_verilog
-./gen
+python build.py (1,2,...)
+
+Ex: python build.py 1
 ```
 
 ### Build

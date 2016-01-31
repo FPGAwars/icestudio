@@ -7,35 +7,35 @@
             "pos": [0, 0]
         },
         {
-            "key": "i1",
+            "name": "i1",
             "type": "input",
             "value": 98,
             "pos": [0, 10]
         },
         {
-            "key": "o0",
+            "name": "o0",
             "type": "output",
             "value": 97,
             "pos": [15, 5]
         },
         {
-            "key": "and0",
+            "name": "and0",
             "type": "and",
             "pos": [5, 5]
         },
         {
-            "key": "not0",
+            "name": "not0",
             "type": "not",
             "pos": [10, 5]
         }
     ],
     "links": [
         {
-            "from": "i0.o0",
+            "from": "i0",
             "to": "and0.i0"
         },
         {
-            "from": "i1.o0",
+            "from": "i1",
             "to": "and0.i1"
         },
         {
@@ -44,7 +44,7 @@
         },
         {
             "from": "not0.o0",
-            "to": "o0.i0"
+            "to": "o0"
         }
     ]
 }

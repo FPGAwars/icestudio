@@ -1,5 +1,0 @@
-{
-    "input": 2,
-    "output": 1,
-    "inline": "assign o0 = i0 & i1;"
-}
