@@ -1,92 +1,73 @@
 {
-    "nodes": [
+  "nodes": [
+    {
+      "name": "",
+      "type": "input",
+      "value": "99",
+      "id": 10,
+      "x": 129,
+      "y": 132,
+      "width": 60,
+      "outputConnectors": [
         {
-            "name": "",
-            "id": 0,
-            "x": 490,
-            "y": 142,
-            "inputConnectors": [
-                {
-                    "name": "97"
-                }
-            ],
-            "width": 60
-        },
-        {
-            "name": "",
-            "id": 1,
-            "x": 82,
-            "y": 199,
-            "outputConnectors": [
-                {
-                    "name": "98"
-                }
-            ],
-            "width": 60
-        },
-        {
-            "name": "",
-            "id": 2,
-            "x": 87,
-            "y": 67,
-            "width": 60,
-            "outputConnectors": [
-                {
-                    "name": "99"
-                }
-            ]
-        },
-        {
-            "name": "AND",
-            "id": 3,
-            "x": 269,
-            "y": 117,
-            "inputConnectors": [
-                {
-                    "name": ""
-                },
-                {
-                    "name": ""
-                }
-            ],
-            "outputConnectors": [
-                {
-                    "name": ""
-                }
-            ],
-            "width": 100
+          "name": "99"
         }
-    ],
-    "connections": [
+      ]
+    },
+    {
+      "name": "",
+      "type": "output",
+      "value": "97",
+      "id": 11,
+      "x": 409,
+      "y": 131,
+      "width": 60,
+      "inputConnectors": [
         {
-            "source": {
-                "nodeID": 2,
-                "connectorIndex": 0
-            },
-            "dest": {
-                "nodeID": 3,
-                "connectorIndex": 0
-            }
-        },
-        {
-            "source": {
-                "nodeID": 1,
-                "connectorIndex": 0
-            },
-            "dest": {
-                "nodeID": 3,
-                "connectorIndex": 1
-            }
-        },
-        {
-            "source": {
-                "nodeID": 3,
-                "connectorIndex": 0
-            },
-            "dest": {
-                "nodeID": 0,
-                "connectorIndex": 0
-            }
+          "name": "97"
         }
-    ]
+      ]
+    },
+    {
+      "name": "NOT",
+      "type": "not",
+      "id": 12,
+      "x": 250,
+      "y": 132,
+      "width": 100,
+      "inline": "assign o0 = ! i0;",
+      "inputConnectors": [
+        {
+          "name": ""
+        }
+      ],
+      "outputConnectors": [
+        {
+          "name": ""
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "nodeID": 10,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 12,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 12,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 11,
+        "connectorIndex": 0
+      }
+    }
+  ]
 }

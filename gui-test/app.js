@@ -149,6 +149,8 @@ angular.module('app', ['flowChart', ])
 		//
 		var newInputNodeDataModel = {
 			name: "",
+			type: "input",
+			value: pinValue,
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
@@ -178,6 +180,8 @@ angular.module('app', ['flowChart', ])
 		//
 		var newOutputNodeDataModel = {
 			name: "",
+			type: "output",
+			value: pinValue,
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
@@ -202,6 +206,7 @@ angular.module('app', ['flowChart', ])
 		//
 		var newNotGateNodeDataModel = {
 			name: "NOT",
+			type: "not",
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
@@ -232,6 +237,7 @@ angular.module('app', ['flowChart', ])
 		//
 		var newAndGateNodeDataModel = {
 			name: "AND",
+			type: "and",
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
@@ -265,6 +271,7 @@ angular.module('app', ['flowChart', ])
 		//
 		var newOrGateNodeDataModel = {
 			name: "OR",
+			type: "or",
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
