@@ -9,12 +9,6 @@ angular.module('app', ['flowChart', ])
 //
 .factory('prompt', function () {
 
-	/* Uncomment the following to test that the prompt service is working as expected.
-	return function () {
-		return "Test!";
-	}
-	*/
-
 	// Return the browsers prompt function.
 	return prompt;
 })
@@ -23,6 +17,10 @@ angular.module('app', ['flowChart', ])
 // Application controller.
 //
 .controller('AppCtrl', ['$scope', '$http', 'prompt', function AppCtrl ($scope, $http, prompt) {
+
+	var fs = require('fs');
+
+	console.log(fs);
 
 	//
 	// Code for the delete key.
@@ -387,9 +385,5 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel.deleteSelected();
 	};
 
-	//
-	// Create the view-model for the chart and attach to the scope.
-	//
-	//$scope.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
 }])
 ;

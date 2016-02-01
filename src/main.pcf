@@ -1,0 +1,3 @@
+set_io i0 99
+set_io i1 98
+set_io o0 97

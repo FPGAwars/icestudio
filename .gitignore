@@ -1,6 +1,4 @@
 .pioenvs
-*.v
-*.pcf
 *.asc
 *.bin
 *.blif

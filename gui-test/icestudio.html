@@ -9,9 +9,8 @@
 		ng-keydown="keyDown($event)"
 		ng-keyup="keyUp($event)"
 		>
-
 		<div style="width: 100%; overflow: hidden;">
-		    <div style="width: 600px; float: left;">
+		    <!--<div style="width: 600px; float: left;">
 				<textarea
 					style="width: 100%; height: 100%;"
 					chart-json-edit
@@ -19,7 +18,8 @@
 					>
 				</textarea>
 			</div>
-		    <div style="margin-left: 600px;">
+		    <div style="margin-left: 600px;">-->
+			<div class="panel">
 				<button
 					ng-click="saveToPc()"
 					ng-disabled=false
@@ -73,7 +73,7 @@
 				<!--
 				This custom element defines the flowchart.
 				-->
-			    <flow-chart
+			    <flow-chart class="flow"
 		    		style="margin: 5px; width: 100%; height: 93%;"
 			      	chart="chartViewModel"
 			      	>
