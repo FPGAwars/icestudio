@@ -53,6 +53,13 @@ angular.module('app', ['flowChart', ])
 
 	$scope.load = function (filepath) {
 		var data = JSON.parse(fs.readFileSync(filepath));
+		var max = nextNodeID;
+		for (var i = 0; i < data.nodes.length; i++) {
+			if (data.nodes[i].id > max) {
+				max = data.nodes[i].id;
+			}
+		}
+		nextNodeID = max + 1;
 		$scope.filepath = filepath;
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
@@ -74,7 +81,7 @@ angular.module('app', ['flowChart', ])
 			const result = child_process.spawnSync('platformio', ['run']);
 			if (result.stdout.length !== 0) {
 				if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-					alert('Build: success');
+					//alert('Build: success');
 				}
 				else {
 					alert('Build: fail');
@@ -98,7 +105,7 @@ angular.module('app', ['flowChart', ])
 		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
 		if (result.stdout.length !== 0) {
 			if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-				alert('Run: success');
+				//alert('Run: success');
 			}
 			else {
 				alert('Run: fail');

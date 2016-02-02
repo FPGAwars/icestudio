@@ -1,3 +1,2 @@
-set_io i0 99
-set_io i1 98
-set_io o0 97
+set_io input10 99
+set_io output11 97
