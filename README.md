@@ -3,6 +3,8 @@
 [![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
+![][icestudio]
+
 Experimental graphic editor for open FPGAs.
 
     GUI -> JSON -> Verilog, PCF
@@ -38,3 +40,5 @@ nw gui
 ### Credits
 
 * Using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
+
+[icestudio]: doc/icestudio.gif
