@@ -1,14 +1,14 @@
 {
   "name": "Icestudio",
-  "description": "Experimental graphic editor for FPGAs",
+  "description": "Experimental graphic editor for open FPGAs",
   "keywords": [
     "FPGA", "open", "hardware"
   ],  "version": "0.0.1",
   "license" : "GPLv2",
   "main": "icestudio.html",
   "window": {
-    "toolbar": false,
-    "width": 800,
+    "toolbar": true,
+    "width": 850,
     "height": 600,
     "resizable": true
   },

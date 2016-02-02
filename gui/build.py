@@ -176,18 +176,13 @@ def main():
         filename = sys.argv[1]
         ofilename = 'main'
 
-    # Load JSON modules
-    with open('src/examples/types.json') as data:
-        types = json.load(data)
-        data.close()
-
-    # Load JSON netlist
-    with open('src/examples/' + filename + '.json') as data:
+    # Load JSON graph
+    with open(filename) as data:
         graph = json.load(data)
         data.close()
 
     # Write Verilog file
-    with open('src/' + ofilename + '.v', 'w') as data:
+    with open('../src/' + ofilename + '.v', 'w') as data:
         # Generate Verilog
         code = '// Generated verilog\n'
         code += load_verilog_types(types)
@@ -197,7 +192,7 @@ def main():
         data.close()
 
     # Write PCF file
-    with open('src/' + ofilename + '.pcf', 'w') as data:
+    with open('../src/' + ofilename + '.pcf', 'w') as data:
         # Generate PCF
         code = load_pcf(graph['nodes'])
         # Write PCF

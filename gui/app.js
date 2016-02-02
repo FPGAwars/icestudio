@@ -16,11 +16,10 @@ angular.module('app', ['flowChart', ])
 //
 // Application controller.
 //
-.controller('AppCtrl', ['$scope', '$http', 'prompt', function AppCtrl ($scope, $http, prompt) {
+.controller('AppCtrl', ['$scope', 'prompt', function AppCtrl ($scope, prompt) {
 
 	var fs = require('fs');
-
-	console.log(fs);
+	var child_process = require('child_process');
 
 	//
 	// Code for the delete key.
@@ -52,40 +51,66 @@ angular.module('app', ['flowChart', ])
 	//
 	var nextNodeID = 10;
 
-	$scope.saveToPc = function () {
-
-		var data = $scope.chartDataModel
-		var filename = 'data.json'
-
-		if (!data) {
-			console.error('No data');
-			return;
-		}
-
-		if (typeof data === 'object') {
-			data = JSON.stringify(data, undefined, 2);
-		}
-
-		var blob = new Blob([data], {type: 'text/json'}),
-		e = document.createEvent('MouseEvents'),
-		a = document.createElement('a');
-
-		a.download = filename;
-		a.href = window.URL.createObjectURL(blob);
-		a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-		e.initMouseEvent('click', true, false, window,
-			0, 0, 0, 0, 0, false, false, false, false, 0, null);
-		a.dispatchEvent(e);
+	$scope.load = function (filepath) {
+		var data = JSON.parse(fs.readFileSync(filepath));
+		$scope.filepath = filepath;
+		$scope.chartDataModel = data;
+		$scope.chartViewModel = new flowchart.ChartViewModel(data);
 	};
 
-	//
-	// Setup the data-model for the chart.
-	//
-	$http.get('data.json').success (function(data) {
+	$scope.save = function (filepath) {
+		fs.writeFile(filepath, JSON.stringify($scope.chartDataModel),  function(err) {
+			if (err) {
+				return console.error(err);
+			}
+		});
+	};
 
-		$scope.chartDataModel = data
-		$scope.chartViewModel = new flowchart.ChartViewModel(data);
-	});
+	$scope.build = function () {
+		const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
+		if (pyresult.stdout.length !== 0) {
+			console.log(pyresult.stdout.toString());
+			process.chdir('..');
+			const result = child_process.spawnSync('platformio', ['run']);
+			if (result.stdout.length !== 0) {
+				if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
+					alert('Build: success');
+				}
+				else {
+					alert('Build: fail');
+				}
+				console.log(result.stdout.toString());
+			}
+			else {
+				alert('Compiler: fail');
+				console.log(result.stderr.toString());
+			}
+			process.chdir('gui');
+		}
+		else {
+			alert('Python fail');
+			console.log(pyresult.stderr.toString());
+		}
+	};
+
+	$scope.run = function () {
+		process.chdir('..');
+		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
+		if (result.stdout.length !== 0) {
+			if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
+				alert('Run: success');
+			}
+			else {
+				alert('Run: fail');
+			}
+			console.log(result.stdout.toString());
+		}
+		else {
+			alert('Run: fail');
+			console.log(result.stderr.toString());
+		}
+		process.chdir('gui');
+	};
 
 	//
 	// Event handler for key-down on the flowchart.
@@ -291,90 +316,6 @@ angular.module('app', ['flowChart', ])
 		};
 
 		$scope.chartViewModel.addNode(newOrGateNodeDataModel);
-	};
-
-	//
-	// Add a new node to the chart.
-	//
-	$scope.addNewNode = function () {
-
-		//var mydata = JSON.parse(data);
-		//alert(mydata);
-
-		var nodeName = prompt("Enter a node name:", "New node");
-		if (!nodeName) {
-			return;
-		}
-
-		//
-		// Template for a new node.
-		//
-		var newNodeDataModel = {
-			name: nodeName,
-			id: nextNodeID++,
-			x: 0,
-			y: 0,
-			inputConnectors: [
-				{
-					name: "X"
-				},
-				{
-					name: "Y"
-				},
-				{
-					name: "Z"
-				}
-			],
-			outputConnectors: [
-				{
-					name: "1"
-				},
-				{
-					name: "2"
-				},
-				{
-					name: "3"
-				}
-			],
-		};
-
-		$scope.chartViewModel.addNode(newNodeDataModel);
-	};
-
-	//
-	// Add an input connector to selected nodes.
-	//
-	$scope.addNewInputConnector = function () {
-		var connectorName = prompt("Enter a connector name:", "New connector");
-		if (!connectorName) {
-			return;
-		}
-
-		var selectedNodes = $scope.chartViewModel.getSelectedNodes();
-		for (var i = 0; i < selectedNodes.length; ++i) {
-			var node = selectedNodes[i];
-			node.addInputConnector({
-				name: connectorName,
-			});
-		}
-	};
-
-	//
-	// Add an output connector to selected nodes.
-	//
-	$scope.addNewOutputConnector = function () {
-		var connectorName = prompt("Enter a connector name:", "New connector");
-		if (!connectorName) {
-			return;
-		}
-
-		var selectedNodes = $scope.chartViewModel.getSelectedNodes();
-		for (var i = 0; i < selectedNodes.length; ++i) {
-			var node = selectedNodes[i];
-			node.addOutputConnector({
-				name: connectorName,
-			});
-		}
 	};
 
 	//

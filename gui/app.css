@@ -7,12 +7,14 @@ Generic reset.
 	margin: 0;
 }
 
-.test {
-	border: 5px red solid;
-	padding: 10;
-	margin: 10;
+button {
+	margin: 5;
+	padding: 5;
 	font-family: "Times New Roman";
-	font-style: italic;
+}
+
+.main {
+	font-style: bold;
 }
 
 /*
