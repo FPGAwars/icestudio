@@ -222,7 +222,7 @@ angular.module('app', ['flowChart', ])
 	//
 	$scope.addNewInputNode = function () {
 
-		var pinValue = prompt("Enter the input pin:", "99");
+		var pinValue = prompt("Enter the input pin:", "44");
 		if (!pinValue) {
 			return;
 		}
@@ -249,7 +249,7 @@ angular.module('app', ['flowChart', ])
 	//
 	$scope.addNewOutputNode = function () {
 
-		var pinValue = prompt("Enter the output pin:", "97");
+		var pinValue = prompt("Enter the output pin:", "95");
 		if (!pinValue) {
 			return;
 		}
@@ -287,7 +287,7 @@ angular.module('app', ['flowChart', ])
 			y: 0,
 			width: 100,
 			inline: "assign o0 = ! i0;",
-			inputConnectors: [ { name: "" }, { name: "" } ],
+			inputConnectors: [ { name: "" } ],
 			outputConnectors: [ { name: "" } ],
 		};
 
