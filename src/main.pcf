@@ -1,2 +1,5 @@
-set_io input10 99
-set_io output11 97
+set_io output25 99
+set_io output29 97
+set_io output30 98
+set_io output31 96
+set_io output37 95

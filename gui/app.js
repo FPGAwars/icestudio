@@ -165,6 +165,45 @@ angular.module('app', ['flowChart', ])
 	};
 
 	//
+	// Add a new driver node to the chart.
+	//
+	$scope.addNewDriverNode = function (value) {
+		return {
+			name: "",
+			type: "driver"+ value.toString(),
+			value: value,
+			inline: "assign o0 = 1'b" + value.toString() + ";",
+			id: nextNodeID++,
+			x: 0,
+			y: 0,
+			width: 50,
+			outputConnectors: [
+				{
+					name: "\"" + value.toString() + "\""
+				}
+			],
+		};
+	}
+
+	$scope.addNewDriver0Node = function () {
+
+		//
+		// Template for a new input node.
+		//
+		var newDriver0NodeDataModel = $scope.addNewDriverNode(0);
+		$scope.chartViewModel.addNode(newDriver0NodeDataModel);
+	};
+
+	$scope.addNewDriver1Node = function () {
+
+		//
+		// Template for a new input node.
+		//
+		var newDriver1NodeDataModel = $scope.addNewDriverNode(1);
+		$scope.chartViewModel.addNode(newDriver1NodeDataModel);
+	};
+
+	//
 	// Add a new input node to the chart.
 	//
 	$scope.addNewInputNode = function () {
