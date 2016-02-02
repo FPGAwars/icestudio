@@ -5,6 +5,7 @@ Generic reset.
 * {
 	padding: 0;
 	margin: 0;
+	transition: all 0.2s ease;
 }
 
 button {
@@ -23,12 +24,12 @@ Styles for nodes and connectors.
 
 .node-rect {
 	stroke: black;
-	stroke-width: 2;
+	stroke-width: 1;
 }
 
 .mouseover-node-rect {
 	stroke: black;
-	stroke-width: 4;
+	stroke-width: 2;
 }
 
 .selected-node-rect {
@@ -39,13 +40,13 @@ Styles for nodes and connectors.
 .connector-circle {
     fill: white;
     stroke: black;
-    stroke-width: 2;
+    stroke-width: 1;
 }
 
 .mouseover-connector-circle {
     fill: white;
     stroke: black;
-    stroke-width: 3;
+    stroke-width: 2;
 }
 
 /*
@@ -57,13 +58,13 @@ Style for connections.
 
 .connection-line {
 	stroke: gray;
-	stroke-width: 4;
+	stroke-width: 3;
 	fill: transparent;
 }
 
 .mouseover-connection-line {
 	stroke: gray;
-	stroke-width: 6;
+	stroke-width: 4;
 	fill: transparent;
 }
 
@@ -127,7 +128,7 @@ Drag selection rectangle.
 */
 
 .drag-selection-rect {
-	stroke: blue;
+	stroke: gray;
 	stroke-width: 2;
 	fill: transparent;
 }

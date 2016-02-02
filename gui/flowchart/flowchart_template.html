@@ -1,27 +1,27 @@
-<svg 
+<svg
   class="draggable-container"
   xmlns="http://www.w3.org/2000/svg"
   ng-mousedown="mouseDown($event)"
-  ng-mousemove="mouseMove($event)"  
+  ng-mousemove="mouseMove($event)"
   >
   <defs>
-    <linearGradient 
-      spreadMethod="pad" 
-      y2="0" 
-      x2="0" 
-      y1="1" 
-      x1="0" 
+    <linearGradient
+      spreadMethod="pad"
+      y2="0"
+      x2="0"
+      y1="1"
+      x1="0"
       id="nodeBackgroundGradient"
       >
-      <stop 
-        offset="0" 
-        stop-opacity="0.99609" 
-        stop-color="#56aaff"
+      <stop
+        offset="0"
+        stop-opacity="0.99609"
+        stop-color="#96C5EE"
         />
-        <stop 
-        offset="0.63934" 
-        stop-opacity="0.99219" 
-        stop-color="#d0d0e5"
+        <stop
+        offset="0.63934"
+        stop-opacity="0.99219"
+        stop-color="#CCE2F6"
         />
     </linearGradient>
   </defs>
@@ -30,14 +30,14 @@
     ng-mousedown="nodeMouseDown($event, node)"
     ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
     >
-    <rect 
+    <rect
       ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
-      ry="10" 
-      rx="10" 
-      x="0" 
-      y="0" 
-      ng-attr-width="{{node.width()}}" 
-      ng-attr-height="{{node.height()}}" 
+      ry="10"
+      rx="10"
+      x="0"
+      y="0"
+      ng-attr-width="{{node.width()}}"
+      ng-attr-height="{{node.height()}}"
       fill="url(#nodeBackgroundGradient)"
       >
 
@@ -65,10 +65,10 @@
         >
         {{connector.name()}}
       </text>
-      
-      <circle       
+
+      <circle
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}" 
+        ng-attr-r="{{connectorSize}}"
         ng-attr-cx="{{connector.x()}}"
         ng-attr-cy="{{connector.y()}}"
         />
@@ -88,9 +88,9 @@
         {{connector.name()}}
       </text>
 
-      <circle             
+      <circle
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}" 
+        ng-attr-r="{{connectorSize}}"
         ng-attr-cx="{{connector.x()}}"
         ng-attr-cy="{{connector.y()}}"
         />
@@ -122,17 +122,17 @@
 
         <circle
             ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5" 
-            ng-attr-cx="{{connection.sourceCoordX()}}" 
-            ng-attr-cy="{{connection.sourceCoordY()}}" 
+            r="5"
+            ng-attr-cx="{{connection.sourceCoordX()}}"
+            ng-attr-cy="{{connection.sourceCoordY()}}"
             >
         </circle>
 
         <circle
             ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5" 
-            ng-attr-cx="{{connection.destCoordX()}}" 
-            ng-attr-cy="{{connection.destCoordY()}}" 
+            r="5"
+            ng-attr-cx="{{connection.destCoordX()}}"
+            ng-attr-cy="{{connection.destCoordY()}}"
             >
         </circle>
     </g>
@@ -152,17 +152,17 @@
 
     <circle
         class="dragging-connection dragging-connection-endpoint"
-        r="4" 
-        ng-attr-cx="{{dragPoint1.x}}" 
-        ng-attr-cy="{{dragPoint1.y}}" 
+        r="4"
+        ng-attr-cx="{{dragPoint1.x}}"
+        ng-attr-cy="{{dragPoint1.y}}"
         >
     </circle>
 
     <circle
         class="dragging-connection dragging-connection-endpoint"
-        r="4" 
-        ng-attr-cx="{{dragPoint2.x}}" 
-        ng-attr-cy="{{dragPoint2.y}}" 
+        r="4"
+        ng-attr-cx="{{dragPoint2.x}}"
+        ng-attr-cy="{{dragPoint2.y}}"
         >
     </circle>
   </g>
@@ -176,5 +176,5 @@
       ng-attr-height="{{dragSelectionRect.height}}"
     >
   </rect>
-  
+
 </svg>

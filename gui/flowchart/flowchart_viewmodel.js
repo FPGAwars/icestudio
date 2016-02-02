@@ -17,12 +17,12 @@ var flowchart = {
 	//
 	// Amount of space reserved for displaying the node's name.
 	//
-	flowchart.nodeNameHeight = 40;
+	flowchart.nodeNameHeight = 20;
 
 	//
 	// Height of a connector in a node.
 	//
-	flowchart.connectorHeight = 35;
+	flowchart.connectorHeight = 25;
 
 	//
 	// Compute the Y coordinate of a connector, given its index.
@@ -516,16 +516,17 @@ var flowchart = {
 				}
 			}
 
-			var addConnection = true;
+			var addConnector = true;
 
 			for (var i = 0; i < connectionsViewModel.length; i++) {
-				if (connectionsViewModel[i].data.dest.nodeID == endNode.data.id) {
-					addConnection = false;
+				if (connectionsViewModel[i].data.dest.nodeID == endNode.data.id &&
+				    connectionsViewModel[i].data.dest.connectorIndex == endConnectorIndex) {
+					addConnector = false;
 					break;
 				}
 			}
 
-			if (addConnection) {
+			if (addConnector) {
 				if (startConnectorType == endConnectorType) {
 					throw new Error("Failed to create connection. Only output to input connections are allowed.")
 				}
