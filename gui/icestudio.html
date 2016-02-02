@@ -10,7 +10,7 @@
 		ng-keyup="keyUp($event)"
 		>
 		<div style="width: 100%; overflow: hidden;">
-			<!--<div style="width: 300px; float: left;">
+			<div style="width: 300px; float: left;">
  				<textarea
 					style="width: 100%; height: 100%;"
 					chart-json-edit
@@ -18,22 +18,22 @@
 					>
 				</textarea>
 			</div>
-		    <div class="panel" style="margin-left: 300px;">-->
-			<div class="panel">
+		    <div class="panel" style="margin-left: 300px;">
+			<!--<div class="panel">-->
 				<button class="main"
-    				ng-click="load('../examples/default.ice')"
-    				title="Load default.ice"
+    				ng-click="reset()"
+    				title="Load reset.ice"
     				>
     				Reset
 				</button>
 				<button class="main"
-    				ng-click="load('../examples/example.ice')"
+    				ng-click="load()"
     				title="Load example.ice"
     				>
     				Load
 				</button>
 				<button class="main"
-    				ng-click="save('../examples/example.ice')"
+    				ng-click="save()"
     				title="Save example.ice"
     				>
     				Save

@@ -4,34 +4,24 @@ module driver1x(output o0);
 assign o0 = 1'b1;
 endmodule
 
-module driver0x(output o0);
-assign o0 = 1'b0;
+module andx(input i0, i1, output o0);
+assign o0 = i0 & i1;
 endmodule
 
-module main(output output25, output29, output30, output31, output37);
+module main(output output23);
 wire w0;
 wire w1;
 wire w2;
-wire w3;
-wire w4;
-assign w0 = output31;
-assign w1 = output25;
-assign w2 = output30;
-assign w3 = output29;
-assign w4 = output37;
-driver1x driver123 (
+assign output23 = w2;
+driver1x driver119 (
     .o0(w0)
 );
-driver1x driver139 (
+driver1x driver120 (
     .o0(w1)
 );
-driver1x driver140 (
+andx and24 (
+    .i0(w0),
+    .i1(w1),
     .o0(w2)
-);
-driver1x driver141 (
-    .o0(w3)
-);
-driver0x driver043 (
-    .o0(w4)
 );
 endmodule

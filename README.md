@@ -7,8 +7,11 @@ Experimental graphic editor for open FPGAs.
 ### Install dependencies
 
 Install [platformio](https://atom.io/).
+
 Install icestick in platformio: [wiki](https://github.com/bqlabs/Platformio-FPGA/wiki/Platformio-FPGA-wiki-home).
+
 Install icestorm toolchain in platformio with this [script](https://github.com/bqlabs/Platformio-FPGA/blob/master/build-toolchain.sh).
+
 Install nodejs y nwjs
 ```bash
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -

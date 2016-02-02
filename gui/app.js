@@ -51,8 +51,19 @@ angular.module('app', ['flowChart', ])
 	//
 	var nextNodeID = 10;
 
-	$scope.load = function (filepath) {
-		var data = JSON.parse(fs.readFileSync(filepath));
+	$scope.filepath = '../examples/example.ice'
+
+	$scope.reset = function () {
+		nextNodeID = 10;
+		data = { nodes: [], connections: [] }
+		$scope.chartDataModel = data;
+		$scope.chartViewModel = new flowchart.ChartViewModel(data);
+	}
+
+	$scope.reset()
+
+	$scope.load = function () {
+		var data = JSON.parse(fs.readFileSync($scope.filepath));
 		var max = nextNodeID;
 		for (var i = 0; i < data.nodes.length; i++) {
 			if (data.nodes[i].id > max) {
@@ -60,44 +71,47 @@ angular.module('app', ['flowChart', ])
 			}
 		}
 		nextNodeID = max + 1;
-		$scope.filepath = filepath;
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
 	};
 
-	$scope.save = function (filepath) {
-		fs.writeFile(filepath, JSON.stringify($scope.chartDataModel),  function(err) {
-			if (err) {
+	$scope.save = function () {
+		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel),  function(err) {
+			if (!err) {
 				return console.error(err);
 			}
 		});
 	};
 
 	$scope.build = function () {
-		const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
-		if (pyresult.stdout.length !== 0) {
-			console.log(pyresult.stdout.toString());
-			process.chdir('..');
-			const result = child_process.spawnSync('platformio', ['run']);
-			if (result.stdout.length !== 0) {
-				if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-					//alert('Build: success');
+		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel),  function(err) {
+			if (!err) {
+				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
+				if (pyresult.stdout.length !== 0) {
+					console.log(pyresult.stdout.toString());
+					process.chdir('..');
+					const result = child_process.spawnSync('platformio', ['run']);
+					if (result.stdout.length !== 0) {
+						if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
+							//alert('Build: success');
+						}
+						else {
+							alert('Build: fail');
+						}
+						console.log(result.stdout.toString());
+					}
+					else {
+						alert('Compiler: fail');
+						console.log(result.stderr.toString());
+					}
+					process.chdir('gui');
 				}
 				else {
-					alert('Build: fail');
+					alert('Python fail');
+					console.log(pyresult.stderr.toString());
 				}
-				console.log(result.stdout.toString());
 			}
-			else {
-				alert('Compiler: fail');
-				console.log(result.stderr.toString());
-			}
-			process.chdir('gui');
-		}
-		else {
-			alert('Python fail');
-			console.log(pyresult.stderr.toString());
-		}
+		});
 	};
 
 	$scope.run = function () {
@@ -224,11 +238,7 @@ angular.module('app', ['flowChart', ])
 			x: 0,
 			y: 0,
 			width: 60,
-			outputConnectors: [
-				{
-					name: pinValue
-				}
-			],
+			outputConnectors: [ { name: pinValue } ],
 		};
 
 		$scope.chartViewModel.addNode(newInputNodeDataModel);
@@ -255,11 +265,7 @@ angular.module('app', ['flowChart', ])
 			x: 0,
 			y: 0,
 			width: 60,
-			inputConnectors: [
-				{
-					name: pinValue
-				}
-			],
+			inputConnectors: [ { name: pinValue } ],
 		};
 
 		$scope.chartViewModel.addNode(newOutputNodeDataModel);
@@ -281,16 +287,8 @@ angular.module('app', ['flowChart', ])
 			y: 0,
 			width: 100,
 			inline: "assign o0 = ! i0;",
-			inputConnectors: [
-				{
-					name: ""
-				}
-			],
-			outputConnectors: [
-				{
-					name: ""
-				}
-			],
+			inputConnectors: [ { name: "" }, { name: "" } ],
+			outputConnectors: [ { name: "" } ],
 		};
 
 		$scope.chartViewModel.addNode(newNotGateNodeDataModel);
@@ -312,19 +310,8 @@ angular.module('app', ['flowChart', ])
 			y: 0,
 			width: 100,
 			inline: "assign o0 = i0 & i1;",
-			inputConnectors: [
-				{
-					name: ""
-				},
-				{
-					name: ""
-				}
-			],
-			outputConnectors: [
-				{
-					name: ""
-				}
-			],
+			inputConnectors: [ { name: "" }, { name: "" } ],
+			outputConnectors: [ { name: "" } ],
 		};
 
 		$scope.chartViewModel.addNode(newAndGateNodeDataModel);
@@ -346,22 +333,34 @@ angular.module('app', ['flowChart', ])
 			y: 0,
 			width: 100,
 			inline: "assign o0 = i0 | i1;",
-			inputConnectors: [
-				{
-					name: ""
-				},
-				{
-					name: ""
-				}
-			],
-			outputConnectors: [
-				{
-					name: ""
-				}
-			],
+			inputConnectors: [ { name: "" }, { name: "" } ],
+			outputConnectors: [ { name: "" } ],
 		};
 
 		$scope.chartViewModel.addNode(newOrGateNodeDataModel);
+	};
+
+	//
+	// Add a new xor gate node to the chart.
+	//
+	$scope.addNewXorGateNode = function () {
+
+		//
+		// Template for a new output node.
+		//
+		var newXorGateNodeDataModel = {
+			name: "XOR",
+			type: "xor",
+			id: nextNodeID++,
+			x: 0,
+			y: 0,
+			width: 100,
+			inline: "assign o0 = i0 ^ i1;",
+			inputConnectors: [ { name: "" }, { name: "" } ],
+			outputConnectors: [ { name: "" } ],
+		};
+
+		$scope.chartViewModel.addNode(newXorGateNodeDataModel);
 	};
 
 	//

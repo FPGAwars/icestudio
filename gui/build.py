@@ -118,7 +118,7 @@ def generate_verilog_main(name, nodes, connections):
     wire w0;
     wire w1;
     assign w0 = input10;
-    assign w1 = output11;
+    assign output11 = w1;
     notx not12 (
         .i0(w0),
         .o0(w1)
@@ -140,7 +140,7 @@ def generate_verilog_main(name, nodes, connections):
                 inline += 'assign w{0} = {1};\n'.format(index, i)
         for o in _output:
             if o == 'output' + str(connection['dest']['nodeID']):
-                inline += 'assign w{0} = {1};\n'.format(index, o)
+                inline += 'assign {1} = w{0};\n'.format(index, o)
     # Entities
     for node in nodes:
         if node['type'] != 'input' and node['type'] != 'output':
@@ -152,7 +152,7 @@ def generate_verilog_main(name, nodes, connections):
                     param = 'o' + str(connection['source']['connectorIndex'])
                     params += ['    .{0}(w{1})'.format(param, index)]
                 if node['id'] == connection['dest']['nodeID']:
-                    param = 'i' + str(connection['source']['connectorIndex'])
+                    param = 'i' + str(connection['dest']['connectorIndex'])
                     params += ['    .{0}(w{1})'.format(param, index)]
             inline += ',\n'.join(params) + '\n'
             inline += ');\n'

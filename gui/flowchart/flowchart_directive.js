@@ -18,7 +18,7 @@ angular.module('flowChart', ['dragging'] )
   	//
   	// Controller for the flowchart directive.
   	// Having a separate controller is better for unit testing, otherwise
-  	// it is painful to unit test a directive without instantiating the DOM 
+  	// it is painful to unit test a directive without instantiating the DOM
   	// (which is possible, just not ideal).
   	//
   	controller: 'FlowChartController',
@@ -75,7 +75,7 @@ angular.module('flowChart', ['dragging'] )
 //
 // Controller for the flowchart directive.
 // Having a separate controller is better for unit testing, otherwise
-// it is painful to unit test a directive without instantiating the DOM 
+// it is painful to unit test a directive without instantiating the DOM
 // (which is possible, just not ideal).
 //
 .controller('FlowChartController', ['$scope', 'dragging', '$element', function FlowChartController ($scope, dragging, $element) {
@@ -135,7 +135,7 @@ angular.module('flowChart', ['dragging'] )
 			return null;
 		}
 
-		// 
+		//
 		// Check if the element has the class that identifies it as a connector.
 		//
 		if (hasClassSVG(element, parentClass)) {
@@ -280,7 +280,7 @@ angular.module('flowChart', ['dragging'] )
 
 		// Figure out if the mouse is over a node.
 		var scope = controller.checkForHit(mouseOverElement, controller.nodeClass);
-		$scope.mouseOverNode = (scope && scope.node) ? scope.node : null;		
+		$scope.mouseOverNode = (scope && scope.node) ? scope.node : null;
 	};
 
 	//
@@ -301,7 +301,7 @@ angular.module('flowChart', ['dragging'] )
 				lastMouseCoords = controller.translateCoordinates(x, y, evt);
 
 				//
-				// If nothing is selected when dragging starts, 
+				// If nothing is selected when dragging starts,
 				// at least select the node we are dragging.
 				//
 				if (!node.selected()) {
@@ -309,7 +309,7 @@ angular.module('flowChart', ['dragging'] )
 					node.select();
 				}
 			},
-			
+
 			//
 			// Dragging selected nodes... update their x,y coordinates.
 			//
@@ -393,7 +393,7 @@ angular.module('flowChart', ['dragging'] )
 			//
 			dragEnded: function () {
 
-				if ($scope.mouseOverConnector && 
+				if ($scope.mouseOverConnector &&
 					$scope.mouseOverConnector !== connector) {
 
 					//
