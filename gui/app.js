@@ -16,9 +16,10 @@ angular.module('app', ['flowChart', ])
 //
 // Application controller.
 //
-.controller('AppCtrl', ['$scope', 'prompt', function AppCtrl ($scope, prompt) {
+.controller('AppCtrl', ['$scope', '$document', 'prompt', function AppCtrl ($scope, $document, prompt) {
 
 	var fs = require('fs');
+	//var notie = require('notie');
 	var child_process = require('child_process');
 
 	//
@@ -93,21 +94,21 @@ angular.module('app', ['flowChart', ])
 					const result = child_process.spawnSync('platformio', ['run']);
 					if (result.stdout.length !== 0) {
 						if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-							//alert('Build: success');
+							notie.alert(1, 'Build success!', 1.0);
 						}
 						else {
-							alert('Build: fail');
+							notie.alert(3, 'Build fail', 1.0);
 						}
 						console.log(result.stdout.toString());
 					}
 					else {
-						alert('Compiler: fail');
+						notie.alert(3, 'Compiler fail', 1.0);
 						console.log(result.stderr.toString());
 					}
 					process.chdir('gui');
 				}
 				else {
-					alert('Python fail');
+					notie.alert(3, 'Compiler fail', 1.0);
 					console.log(pyresult.stderr.toString());
 				}
 			}
@@ -119,15 +120,15 @@ angular.module('app', ['flowChart', ])
 		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
 		if (result.stdout.length !== 0) {
 			if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-				//alert('Run: success');
+				notie.alert(1, 'Run success!', 1.0);
 			}
 			else {
-				alert('Run: fail');
+				notie.alert(3, 'Run fail', 1.0);
 			}
 			console.log(result.stdout.toString());
 		}
 		else {
-			alert('Run: fail');
+			notie.alert(3, 'Run fail', 1.0);
 			console.log(result.stderr.toString());
 		}
 		process.chdir('gui');

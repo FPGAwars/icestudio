@@ -11,7 +11,16 @@ Generic reset.
 button {
 	margin: 5;
 	padding: 5;
+	font-size: 15;
 	font-family: "Times New Roman";
+}
+
+.warning {
+	margin: 5;
+	padding: 5;
+	font-style: bold;
+	font-family: "Times New Roman";
+	background-color: #FFF380;
 }
 
 .main {
@@ -57,13 +66,13 @@ Style for connections.
 }
 
 .connection-line {
-	stroke: gray;
+	stroke: #A0A0A0;
 	stroke-width: 3;
 	fill: transparent;
 }
 
 .mouseover-connection-line {
-	stroke: gray;
+	stroke: #A0A0A0;
 	stroke-width: 4;
 	fill: transparent;
 }
@@ -75,7 +84,7 @@ Style for connections.
 }
 
 .connection-endpoint {
-	fill: gray;
+	fill: #A0A0A0;
 }
 
 .selected-connection-endpoint {
@@ -83,7 +92,7 @@ Style for connections.
 }
 
 .mouseover-connection-endpoint {
-	fill: gray;
+	fill: #A0A0A0;
 }
 
 .connection-name{
@@ -95,7 +104,7 @@ Style for connections.
 }
 
 .mouseover-connection-name{
-	fill: gray;
+	fill: #A0A0A0;
 }
 /*
 Style for the connection being dragged out.
@@ -106,13 +115,13 @@ Style for the connection being dragged out.
 }
 
 .dragging-connection-line {
-	stroke: gray;
+	stroke: #A0A0A0;
 	stroke-width: 3;
 	fill: transparent;
 }
 
 .dragging-connection-endpoint {
-	fill: gray;
+	fill: #A0A0A0;
 }
 
 /*
@@ -128,7 +137,7 @@ Drag selection rectangle.
 */
 
 .drag-selection-rect {
-	stroke: gray;
+	stroke: #A0A0A0;
 	stroke-width: 2;
 	fill: transparent;
 }
