@@ -6,7 +6,10 @@ Experimental graphic editor for open FPGAs.
 
 ### Install dependencies
 
-Install [platformio](https://atom.io/).
+Install [platformio](platformio.org)
+```bash
+pip install platformio
+```
 
 Install icestick in platformio: [wiki](https://github.com/bqlabs/Platformio-FPGA/wiki/Platformio-FPGA-wiki-home).
 

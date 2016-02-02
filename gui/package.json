@@ -7,8 +7,8 @@
   "license" : "GPLv2",
   "main": "icestudio.html",
   "window": {
-    "toolbar": true,
-    "width": 850,
+    "toolbar": false,
+    "width": 890,
     "height": 600,
     "resizable": true
   },

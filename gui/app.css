@@ -12,14 +12,16 @@ button {
 	margin: 5;
 	padding: 5;
 	font-size: 15;
-	font-family: "Times New Roman";
+	font-style: bold;
+	font-family: "inherit";
 }
 
 .warning {
 	margin: 5;
 	padding: 5;
+	font-size: 15;
 	font-style: bold;
-	font-family: "Times New Roman";
+	font-family: "inherit";
 	background-color: #FFF380;
 }
 

@@ -133,7 +133,7 @@ def generate_verilog_main(name, nodes, connections):
     if wires > 0:
         for wire in xrange(wires):
             inline += 'wire w{0};\n'.format(wire)
-    # Assign
+    # Assign i/o
     for index, connection in enumerate(connections):
         for i in _input:
             if i == 'input' + str(connection['source']['nodeID']):
@@ -141,7 +141,14 @@ def generate_verilog_main(name, nodes, connections):
         for o in _output:
             if o == 'output' + str(connection['dest']['nodeID']):
                 inline += 'assign {1} = w{0};\n'.format(index, o)
-    # Entities
+    # Assign wires (TODO: optimize)
+    num = len(connections)
+    for i in xrange(num):
+        for j in xrange(num):
+            if i < j:
+                if connections[i]['source']['nodeID'] == connections[j]['source']['nodeID']:
+                    inline += 'assign w{0} = w{1};\n'.format(i, j)
+    # Entities (TODO: optimize)
     for node in nodes:
         if node['type'] != 'input' and node['type'] != 'output':
             inline += node['type'] + 'x '
