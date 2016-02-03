@@ -5,18 +5,9 @@
 angular.module('app', ['flowChart', ])
 
 //
-// Simple service to create a prompt.
-//
-.factory('prompt', function () {
-
-	// Return the browsers prompt function.
-	return prompt;
-})
-
-//
 // Application controller.
 //
-.controller('AppCtrl', ['$scope', '$document', 'prompt', function AppCtrl ($scope, $document, prompt) {
+.controller('AppCtrl', ['$scope', '$document', function AppCtrl ($scope, $document) {
 
 	var fs = require('fs');
 	//var notie = require('notie');
@@ -53,6 +44,15 @@ angular.module('app', ['flowChart', ])
 	var nextNodeID = 10;
 
 	$scope.filepath = '../examples/example.ice'
+
+	$scope.prompt = function() {
+		var ret;
+
+
+		alert("ueue");
+
+		return ret;
+	}
 
 	$scope.reset = function () {
 		nextNodeID = 10;
@@ -94,7 +94,8 @@ angular.module('app', ['flowChart', ])
 					const result = child_process.spawnSync('platformio', ['run']);
 					if (result.stdout.length !== 0) {
 						if (result.stdout.toString().indexOf('SUCCESS') !=-1) {
-							notie.alert(1, 'Build success!', 1.0);
+							//notie.alert(1, 'Build success!', 1.0);
+							{};
 						}
 						else {
 							notie.alert(3, 'Build fail', 1.0);
@@ -120,7 +121,8 @@ angular.module('app', ['flowChart', ])
 		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
 		if (result.stdout.length !== 0) {
 			if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-				notie.alert(1, 'Run success!', 1.0);
+				//notie.alert(1, 'Run success!', 1.0);
+				{};
 			}
 			else {
 				notie.alert(3, 'Run fail', 1.0);
@@ -223,26 +225,38 @@ angular.module('app', ['flowChart', ])
 	//
 	$scope.addNewInputNode = function () {
 
-		var pinValue = prompt("Enter the input pin:", "44");
-		if (!pinValue) {
-			return;
-		}
-
-		//
-		// Template for a new input node.
-		//
-		var newInputNodeDataModel = {
-			name: "",
+		swal({
+			title: "FPGA pin",
+			text: "Enter the input pin:",
 			type: "input",
-			value: pinValue,
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 60,
-			outputConnectors: [ { name: pinValue } ],
-		};
+			showCancelButton: true,
+			closeOnConfirm: true,
+			animation: "none",
+			inputPlaceholder: "44"
+		},
+		function(pinValue) {
+			if (pinValue === false) return false;
 
-		$scope.chartViewModel.addNode(newInputNodeDataModel);
+			if (pinValue === "") {
+				return false
+			}
+
+			//
+			// Template for a new input node.
+			//
+			var newInputNodeDataModel = {
+				name: "",
+				type: "input",
+				value: pinValue,
+				id: nextNodeID++,
+				x: 50,
+				y: 100,
+				width: 60,
+				outputConnectors: [ { name: pinValue } ],
+			};
+
+			$scope.chartViewModel.addNode(newInputNodeDataModel);
+		});
 	};
 
 	//
@@ -250,26 +264,38 @@ angular.module('app', ['flowChart', ])
 	//
 	$scope.addNewOutputNode = function () {
 
-		var pinValue = prompt("Enter the output pin:", "95");
-		if (!pinValue) {
-			return;
-		}
+		swal({
+			title: "FPGA pin",
+			text: "Enter the output pin:",
+			type: "input",
+			showCancelButton: true,
+			closeOnConfirm: true,
+			animation: "none",
+			inputPlaceholder: "95"
+		},
+		function(pinValue) {
+			if (pinValue === false) return false;
 
-		//
-		// Template for a new output node.
-		//
-		var newOutputNodeDataModel = {
-			name: "",
-			type: "output",
-			value: pinValue,
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 60,
-			inputConnectors: [ { name: pinValue } ],
-		};
+			if (pinValue === "") {
+				return false
+			}
 
-		$scope.chartViewModel.addNode(newOutputNodeDataModel);
+			//
+			// Template for a new output node.
+			//
+			var newOutputNodeDataModel = {
+				name: "",
+				type: "output",
+				value: pinValue,
+				id: nextNodeID++,
+				x: 50,
+				y: 100,
+				width: 60,
+				inputConnectors: [ { name: pinValue } ],
+			};
+
+			$scope.chartViewModel.addNode(newOutputNodeDataModel);
+		});
 	};
 
 	//

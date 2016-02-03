@@ -16,12 +16,12 @@
       <stop
         offset="0"
         stop-opacity="0.99609"
-        stop-color="#C3D7DF"
+        stop-color="#C0DFEB"
         />
         <stop
         offset="0.63934"
         stop-opacity="0.99219"
-        stop-color="#F5F5F5"
+        stop-color="#CEE4ED"
         />
     </linearGradient>
   </defs>
@@ -36,6 +36,7 @@
       rx="10"
       x="0"
       y="0"
+      cursor="pointer"
       ng-attr-width="{{node.width()}}"
       ng-attr-height="{{node.height()}}"
       fill="url(#nodeBackgroundGradient)"
@@ -46,6 +47,7 @@
     <text
       ng-attr-x="{{node.width()/2}}"
       y="25"
+      cursor="pointer"
       text-anchor="middle"
       alignment-baseline="middle"
       >
@@ -60,6 +62,7 @@
       <text
         ng-attr-x="{{connector.x() + 20}}"
         ng-attr-y="{{connector.y()}}"
+        cursor="pointer"
         text-anchor="left"
         alignment-baseline="middle"
         >
@@ -82,6 +85,7 @@
       <text
         ng-attr-x="{{connector.x() - 20}}"
         ng-attr-y="{{connector.y()}}"
+        cursor="pointer"
         text-anchor="end"
         alignment-baseline="middle"
         >
@@ -116,6 +120,7 @@
             ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
         ng-attr-x="{{connection.middleX()}}"
         ng-attr-y="{{connection.middleY()}}"
+        cursor="pointer"
         text-anchor="middle"
         alignment-baseline="middle"
         >{{connection.name()}}</text>

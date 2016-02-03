@@ -5,7 +5,8 @@ Generic reset.
 * {
 	padding: 0;
 	margin: 0;
-	transition: all 0.2s ease;
+	transition: all 0.1s ease;
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .warning {
@@ -51,7 +52,7 @@ Styles for nodes and connectors.
 .mouseover-connector-circle {
     fill: white;
     stroke: #67727A;
-    stroke-width: 3;
+    stroke-width: 4;
 }
 
 /*

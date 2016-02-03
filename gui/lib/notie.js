@@ -29,7 +29,7 @@ var notie = function(){
     // notie.alert colors
     var alert_color_success_background = '#57BF57';
     var alert_color_warning_background = '#E3B771';
-    var alert_color_error_background = '#E1715B';
+    var alert_color_error_background = '#D75C37';
     var alert_color_info_background = '#4D82D6';
     var alert_color_text = '#FFF';
 
