@@ -1,16 +1,13 @@
 // Generated verilog
 
-module driver0x(output o0);
-assign o0 = 1'b0;
+module driver1x(output o0);
+assign o0 = 1'b1;
 endmodule
 
-module main(output output12, output13);
+module main(output output11);
 wire w0;
-wire w1;
-assign output12 = w0;
-assign output13 = w1;
-assign w0 = w1;
-driver0x driver011 (
+assign output11 = w0;
+driver1x driver110 (
     .o0(w0)
 );
 endmodule

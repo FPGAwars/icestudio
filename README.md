@@ -3,7 +3,7 @@
 [![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
-![][icestudio]
+![][icestudio-demo]
 
 Experimental graphic editor for open FPGAs.
 
@@ -41,4 +41,11 @@ nw gui
 
 * Using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 
-[icestudio]: doc/icestudio.gif
+# License
+
+![][bq-logo-cc-sa]
+
+Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
+
+[icestudio-demo]: doc/images/icestudio.gif
+[bq-logo-cc-sa]: doc/images/bq-logo-cc-sa-small-150px.png.gif

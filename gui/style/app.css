@@ -29,6 +29,12 @@ button {
 	font-style: bold;
 }
 
+.overlay {
+   position: absolute;
+   bottom: 0;
+   right: 20;
+}
+
 /*
 Styles for nodes and connectors.
 */

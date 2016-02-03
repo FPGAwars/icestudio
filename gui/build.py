@@ -1,10 +1,14 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # JSON to verilog compiler
 #
 # GPLv2
 
 import sys
 import json
+
+__author__ = 'Jesús Arroyo Torrens <jesus.arroyo@bq.com>'
+__license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.html'
 
 
 class Module:
