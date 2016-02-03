@@ -1,18 +1,26 @@
+* {
+	padding: 0;
+	margin: 0;
+	transition: all 0.2s ease;
+}
+
 .control {
     top: 0;
     left: 0;
+    margin: 8px;
 	position: absolute;
 }
 
 .blocks {
     top: 0;
     right: 0;
+    margin: 8px;
 	position: absolute;
 }
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: #35404F;
+    background-color: #6991AC;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -31,8 +39,9 @@
 .dropdown-content {
     display: none;
     position: absolute;
+    top: 55px;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 100px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -55,5 +64,6 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
-    background-color: #4AAAA5;
+    /*background-color: #3B5998;*/
+    transform: translate(0px, 5px);
 }

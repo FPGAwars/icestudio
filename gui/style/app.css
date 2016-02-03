@@ -12,8 +12,6 @@ Generic reset.
 	margin: 5;
 	padding: 5;
 	font-size: 15;
-	font-style: bold;
-	font-family: "inherit";
 	bottom: 0;
 	position: absolute;
 	background-color: #FFF380;
@@ -30,30 +28,30 @@ Styles for nodes and connectors.
 */
 
 .node-rect {
-	stroke: black;
+	stroke: #67727A;
 	stroke-width: 1;
 }
 
 .mouseover-node-rect {
-	stroke: black;
+	stroke: #67727A;
 	stroke-width: 2;
 }
 
 .selected-node-rect {
-	stroke: red;
+	stroke: #D75C37;
 	stroke-width: 3;
 }
 
 .connector-circle {
     fill: white;
-    stroke: black;
+    stroke: #67727A;
     stroke-width: 1;
 }
 
 .mouseover-connector-circle {
     fill: white;
-    stroke: black;
-    stroke-width: 2;
+    stroke: #67727A;
+    stroke-width: 3;
 }
 
 /*
@@ -64,45 +62,45 @@ Style for connections.
 }
 
 .connection-line {
-	stroke: #A0A0A0;
+	stroke: #C3D7DF;
 	stroke-width: 3;
 	fill: transparent;
 }
 
 .mouseover-connection-line {
-	stroke: #A0A0A0;
+	stroke: #C3D7DF;
 	stroke-width: 4;
 	fill: transparent;
 }
 
 .selected-connection-line {
-	stroke: red;
+	stroke: #D75C37;
 	stroke-width: 4;
 	fill: transparent;
 }
 
 .connection-endpoint {
-	fill: #A0A0A0;
+	fill: #C3D7DF;
 }
 
 .selected-connection-endpoint {
-	fill: red;
+	fill: #D75C37;
 }
 
 .mouseover-connection-endpoint {
-	fill: #A0A0A0;
+	fill: #C3D7DF;
 }
 
 .connection-name{
-	fill: black;
+	fill: #67727A;
 }
 
 .selected-connection-name{
-	fill: red;
+	fill: #D75C37;
 }
 
 .mouseover-connection-name{
-	fill: #A0A0A0;
+	fill: #C3D7DF;
 }
 /*
 Style for the connection being dragged out.
@@ -113,13 +111,13 @@ Style for the connection being dragged out.
 }
 
 .dragging-connection-line {
-	stroke: #A0A0A0;
+	stroke: #C3D7DF;
 	stroke-width: 3;
 	fill: transparent;
 }
 
 .dragging-connection-endpoint {
-	fill: #A0A0A0;
+	fill: #C3D7DF;
 }
 
 /*
@@ -135,7 +133,7 @@ Drag selection rectangle.
 */
 
 .drag-selection-rect {
-	stroke: #A0A0A0;
+	stroke: #C3D7DF;
 	stroke-width: 2;
 	fill: transparent;
 }
