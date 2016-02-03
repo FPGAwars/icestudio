@@ -22,7 +22,7 @@ var flowchart = {
 	//
 	// Height of a connector in a node.
 	//
-	flowchart.connectorHeight = 25;
+	flowchart.connectorHeight = 20;
 
 	//
 	// Compute the Y coordinate of a connector, given its index.

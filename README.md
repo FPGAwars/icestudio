@@ -48,4 +48,4 @@ nw gui
 Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
 
 [icestudio-demo]: doc/images/icestudio.gif
-[bq-logo-cc-sa]: doc/images/bq-logo-cc-sa-small-150px.png.gif
+[bq-logo-cc-sa]: doc/images/bq-logo-cc-sa-small-150px.png

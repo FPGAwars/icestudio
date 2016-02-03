@@ -34,7 +34,7 @@
 						>Build</button>
 					</div>
 					<div class="dropdown">
-						<button class="dropbtn" ng-click="run()" title="Upload bitstream to FPGA"
+						<button class="dropbtn" ng-click="upload()" title="Upload bitstream to FPGA"
 						>Upload</button>
 					</div>
 				</div>
@@ -65,6 +65,7 @@
 					<div class="dropdown">
 						<button class="dropbtn">More</button>
 						<div id="menuFile" class="dropdown-content">
+							<div class="item" ng-click="addNewDivNode()" title="">Div</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -103,6 +104,8 @@
 
 		<!-- App code. -->
 		<script src="js/app.js" type="text/javascript"></script>
+		<script src="js/blocks/bit.js" type="text/javascript"></script>
+
 
 		<!-- BQ logo. -->
 		<div class="overlay">

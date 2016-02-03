@@ -7,7 +7,7 @@ angular.module('app', ['flowChart', ])
 //
 // Application controller.
 //
-.controller('AppCtrl', ['$scope', '$document', function AppCtrl ($scope, $document) {
+.controller('AppCtrl', ['$scope', '$document', 'BitService', function AppCtrl ($scope, $document, BitService) {
 
 	var fs = require('fs');
 	//var notie = require('notie');
@@ -102,7 +102,7 @@ angular.module('app', ['flowChart', ])
 		});
 	};
 
-	$scope.run = function () {
+	$scope.upload = function () {
 		process.chdir('..');
 		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
 		if (result.stdout.length !== 0) {
@@ -111,12 +111,12 @@ angular.module('app', ['flowChart', ])
 				{};
 			}
 			else {
-				notie.alert(3, 'Run fail', 1.0);
+				notie.alert(3, 'Upload fail', 1.0);
 			}
 			console.log(result.stdout.toString());
 		}
 		else {
-			notie.alert(3, 'Run fail', 1.0);
+			notie.alert(3, 'Upload fail', 1.0);
 			console.log(result.stderr.toString());
 		}
 		process.chdir('gui');
@@ -161,6 +161,10 @@ angular.module('app', ['flowChart', ])
 	};
 
 	//
+	// TODO: move all blocks
+	//
+
+	//
 	// Add a new driver node to the chart.
 	//
 	$scope.addNewDriverNode = function (value) {
@@ -182,12 +186,12 @@ angular.module('app', ['flowChart', ])
 	}
 
 	$scope.addNewDriver0Node = function () {
-		var newDriver0NodeDataModel = $scope.addNewDriverNode(0);
+		var newDriver0NodeDataModel = BitService.addNewDriverNode(0, nextNodeID++);
 		$scope.chartViewModel.addNode(newDriver0NodeDataModel);
 	};
 
 	$scope.addNewDriver1Node = function () {
-		var newDriver1NodeDataModel = $scope.addNewDriverNode(1);
+		var newDriver1NodeDataModel = BitService.addNewDriverNode(1, nextNodeID++);
 		$scope.chartViewModel.addNode(newDriver1NodeDataModel);
 	};
 
@@ -263,6 +267,44 @@ angular.module('app', ['flowChart', ])
 				y: 100,
 				width: 60,
 				inputConnectors: [ { name: pinValue } ],
+			};
+
+			$scope.chartViewModel.addNode(newOutputNodeDataModel);
+		});
+	};
+
+	//
+	// Add a new div node to the chart.
+	//
+	$scope.addNewDivNode = function () {
+
+		swal({
+			title: "Divider",
+			text: "Enter the number of divisions",
+			type: "input",
+			showCancelButton: true,
+			closeOnConfirm: true,
+			animation: "none",
+			inputPlaceholder: "22"
+		},
+		function(divNumber) {
+			if (divNumber === false) return false;
+
+			if (divNumber === "") {
+				return false
+			}
+
+			var newOutputNodeDataModel = {
+				name: "DIV",
+				type: "div" + divNumber.toString(),
+				value: divNumber,
+				id: nextNodeID++,
+				x: 50,
+				y: 100,
+				width: 150,
+				inline: "localparam N = " + divNumber.toString() + ";\nreg [N-1:0] c = 0;\nalways @(posedge i0)\nif (c == M - 1)\nc <= 0;\nelse \nc <= c + 1;\nassign o0 = c[N-1];",
+				inputConnectors: [ { name: "clk" } ],
+				outputConnectors: [ { name: divNumber.toString() } ]
 			};
 
 			$scope.chartViewModel.addNode(newOutputNodeDataModel);
@@ -369,5 +411,4 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel.deleteSelected();
 	};
 
-}])
-;
+}]);
