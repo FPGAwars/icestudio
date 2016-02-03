@@ -47,6 +47,7 @@
     display: block;
     cursor: pointer;
 	color: #6991AC;
+    font-weight: bold;
 }
 
 /* Change color of dropdown links on hover */

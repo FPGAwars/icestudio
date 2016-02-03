@@ -52,7 +52,7 @@ Styles for nodes and connectors.
 .mouseover-connector-circle {
     fill: white;
     stroke: #67727A;
-    stroke-width: 4;
+    stroke-width: 3;
 }
 
 /*

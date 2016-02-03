@@ -54,10 +54,9 @@
       {{node.name()}}
     </text>
 
+
     <g
       ng-repeat="connector in node.inputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
-      class="connector input-connector"
       >
       <text
         ng-attr-x="{{connector.x() + 20}}"
@@ -68,7 +67,13 @@
         >
         {{connector.name()}}
       </text>
+    </g>
 
+    <g
+      ng-repeat="connector in node.inputConnectors"
+      ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
+      class="connector input-connector"
+      >
       <circle
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
         ng-attr-r="{{connectorSize}}"
@@ -79,8 +84,6 @@
 
     <g
       ng-repeat="connector in node.outputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
-      class="connector output-connector"
       >
       <text
         ng-attr-x="{{connector.x() - 20}}"
@@ -91,7 +94,13 @@
         >
         {{connector.name()}}
       </text>
+    </g>
 
+    <g
+      ng-repeat="connector in node.outputConnectors"
+      ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
+      class="connector output-connector"
+      >
       <circle
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
         ng-attr-r="{{connectorSize}}"
@@ -127,7 +136,7 @@
 
         <circle
             ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5"
+            r="3"
             ng-attr-cx="{{connection.sourceCoordX()}}"
             ng-attr-cy="{{connection.sourceCoordY()}}"
             >
@@ -135,7 +144,7 @@
 
         <circle
             ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5"
+            r="3"
             ng-attr-cx="{{connection.destCoordX()}}"
             ng-attr-cy="{{connection.destCoordY()}}"
             >

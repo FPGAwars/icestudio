@@ -29,11 +29,6 @@ angular.module('app', ['flowChart', ])
 	var ctrlDown = false;
 
 	//
-	// Code for A key.
-	//
-	var aKeyCode = 65;
-
-	//
 	// Code for esc key.
 	//
 	var escKeyCode = 27;
@@ -44,15 +39,6 @@ angular.module('app', ['flowChart', ])
 	var nextNodeID = 10;
 
 	$scope.filepath = '../examples/example.ice'
-
-	$scope.prompt = function() {
-		var ret;
-
-
-		alert("ueue");
-
-		return ret;
-	}
 
 	$scope.reset = function () {
 		nextNodeID = 10;
@@ -161,13 +147,6 @@ angular.module('app', ['flowChart', ])
 			$scope.chartViewModel.deleteSelected();
 		}
 
-		if (evt.keyCode == aKeyCode && ctrlDown) {
-			//
-			// Ctrl + A
-			//
-			$scope.chartViewModel.selectAll();
-		}
-
 		if (evt.keyCode == escKeyCode) {
 			// Escape.
 			$scope.chartViewModel.deselectAll();
@@ -193,7 +172,7 @@ angular.module('app', ['flowChart', ])
 			id: nextNodeID++,
 			x: 50,
 			y: 100,
-			width: 50,
+			width: 55,
 			outputConnectors: [
 				{
 					name: "\"" + value.toString() + "\""
@@ -203,19 +182,11 @@ angular.module('app', ['flowChart', ])
 	}
 
 	$scope.addNewDriver0Node = function () {
-
-		//
-		// Template for a new input node.
-		//
 		var newDriver0NodeDataModel = $scope.addNewDriverNode(0);
 		$scope.chartViewModel.addNode(newDriver0NodeDataModel);
 	};
 
 	$scope.addNewDriver1Node = function () {
-
-		//
-		// Template for a new input node.
-		//
 		var newDriver1NodeDataModel = $scope.addNewDriverNode(1);
 		$scope.chartViewModel.addNode(newDriver1NodeDataModel);
 	};
