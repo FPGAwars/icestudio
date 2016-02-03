@@ -294,6 +294,9 @@ angular.module('app', ['flowChart', ])
 				return false
 			}
 
+			var N = divNumber;
+			var M = Math.pow(2, divNumber);
+
 			var newOutputNodeDataModel = {
 				name: "DIV",
 				type: "div" + divNumber.toString(),
@@ -302,7 +305,7 @@ angular.module('app', ['flowChart', ])
 				x: 50,
 				y: 100,
 				width: 150,
-				inline: "localparam N = " + divNumber.toString() + ";\nreg [N-1:0] c = 0;\nalways @(posedge i0)\nif (c == M - 1)\nc <= 0;\nelse \nc <= c + 1;\nassign o0 = c[N-1];",
+				inline: "wire w0;\nlocalparam N=" + N.toString() + ";\nlocalparam M=" + M.toString() + ";\nreg [N-1:0] c=0;\nalways @(posedge i0)\nif (M == 0)\nc <= 0;\nelse if (c == M-1)\nc <= 0;\nelse\nc <= c+1;\nassign w0 = (c == 0) ? 1 : 0;\nalways @(posedge i0)\nif (N == 0)\no0 <= 0;\nelse if (w0 == 1)\no0 <= ~o0;",
 				inputConnectors: [ { name: "clk" } ],
 				outputConnectors: [ { name: divNumber.toString() } ]
 			};
