@@ -153,14 +153,19 @@ def generate_verilog_main(name, nodes, connections):
         if node['type'] != 'input' and node['type'] != 'output':
             inline += node['type'] + 'x '
             inline += node['type'] + str(node['id']) + ' (\n'
+            io = []
             params = []
             for index, connection in enumerate(connections):
                 if node['id'] == connection['source']['nodeID']:
                     param = 'o' + str(connection['source']['connectorIndex'])
-                    params += ['    .{0}(w{1})'.format(param, index)]
+                    if param not in io:
+                        io += [param]
+                        params += ['    .{0}(w{1})'.format(param, index)]
                 if node['id'] == connection['dest']['nodeID']:
                     param = 'i' + str(connection['dest']['connectorIndex'])
-                    params += ['    .{0}(w{1})'.format(param, index)]
+                    if param not in io:
+                        io += [param]
+                        params += ['    .{0}(w{1})'.format(param, index)]
             inline += ',\n'.join(params) + '\n'
             inline += ');\n'
 
