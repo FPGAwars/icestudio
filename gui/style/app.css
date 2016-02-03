@@ -8,25 +8,15 @@ Generic reset.
 	transition: all 0.2s ease;
 }
 
-button {
-	margin: 5;
-	padding: 5;
-	font-size: 15;
-	font-style: bold;
-	font-family: "inherit";
-}
-
 .warning {
 	margin: 5;
 	padding: 5;
 	font-size: 15;
 	font-style: bold;
 	font-family: "inherit";
+	bottom: 0;
+	position: absolute;
 	background-color: #FFF380;
-}
-
-.main {
-	font-style: bold;
 }
 
 .overlay {

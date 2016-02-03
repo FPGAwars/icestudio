@@ -93,7 +93,7 @@ angular.module('app', ['flowChart', ])
 					process.chdir('..');
 					const result = child_process.spawnSync('platformio', ['run']);
 					if (result.stdout.length !== 0) {
-						if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
+						if (result.stdout.toString().indexOf('SUCCESS') !=-1) {
 							notie.alert(1, 'Build success!', 1.0);
 						}
 						else {

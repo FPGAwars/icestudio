@@ -10,9 +10,6 @@
 		ng-keyup="keyUp($event)"
 		>
 		<div style="width: 100%; overflow: hidden;">
-			<div class="warning" >
-				Warning: experimental code. Use with caution!
-			</div>
 			<!--<div style="width: 300px; float: left;">
  				<textarea
 					style="width: 100%; height: 100%;"
@@ -22,118 +19,65 @@
 				</textarea>
 			</div>
 		    <div class="panel" style="margin-left: 300px;">-->
-			<!--<div class="menu">
-				<div>
+			<div class="menu">
+				<div class="control">
 					<div class="dropdown">
-						<button class="dropbtn">Dropdown</button>
-						<div class="dropdown-content">
-							<a href="#">Link 1</a>
-							<a href="#">Link 2</a>
-							<a href="#">Link 3</a>
+						<button class="dropbtn">File</button>
+						<div id="menuFile" class="dropdown-content">
+							<div class="item" ng-click="load()" title="Load example.ice">Load</div>
+							<div class="item" ng-click="save()" title="Save example.ice">Save</div>
+							<div class="item" ng-click="reset()" title="Load reset.ice">Reset</div>
 						</div>
 					</div>
+					<div class="dropdown">
+						<button class="dropbtn" ng-click="build()" title="Build project into bitstream"
+						>Build</button>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn" ng-click="run()" title="Upload bitstream to FPGA"
+						>Upload</button>
+					</div>
 				</div>
-			</div>-->
-			<div class="panel">
-				<button class="main"
-    				ng-click="reset()"
-    				title="Load reset.ice"
-    				>
-    				Reset
-				</button>
-				<button class="main"
-    				ng-click="load()"
-    				title="Load example.ice"
-    				>
-    				Load
-				</button>
-				<button class="main"
-    				ng-click="save()"
-    				title="Save example.ice"
-    				>
-    				Save
-				</button>
-				<button class="main"
-    				ng-click="build()"
-    				title="Build project to bitstream"
-    				>
-    				Build
-				</button>
-				<button class="main"
-    				ng-click="run()"
-    				title="Upload bitstream to FPGA"
-    				>
-    				Run
-				</button>
-				<button
-    				ng-click="addNewDriver0Node()"
-					ng-disabled=false
-    				title="Add a new driver 0 node"
-    				>
-    				+0
-				</button>
-				<button
-					ng-click="addNewDriver1Node()"
-					ng-disabled=false
-					title="Add a new driver 1 node"
-					>
-					+1
-				</button>
-    			<button
-    				ng-click="addNewInputNode()"
-					ng-disabled=false
-    				title="Add a new input node"
-    				>
-    				+Input
-				</button>
-				<button
-    				ng-click="addNewOutputNode()"
-					ng-disabled=false
-    				title="Add a new output node"
-    				>
-    				+Output
-				</button>
-				<button
-    				ng-click="addNewNotGateNode()"
-					ng-disabled=false
-    				title="Add a new NOT gate node"
-    				>
-    				+Not
-				</button>
-				<button
-    				ng-click="addNewAndGateNode()"
-					ng-disabled=false
-    				title="Add a new AND gate node"
-    				>
-					+And
-				</button>
-				<button
-					ng-click="addNewOrGateNode()"
-					ng-disabled=false
-					title="Add a new OR gate node"
-					>
-					+Or
-				</button>
-				<button
-					ng-click="addNewXorGateNode()"
-					ng-disabled=false
-					title="Add a new XOR gate node"
-					>
-					+Xor
-				</button>
-    			<button
-    				ng-click="deleteSelected()"
-    				ng-disabled="chartViewModel.getSelectedNodes().length == 0 && chartViewModel.getSelectedConnections().length == 0"
-    				title="Delete selected nodes and connections"
-    				>
-    				Delete Selected
-				</button>
-
+				<div class="blocks">
+					<div class="dropdown">
+						<button class="dropbtn">Bit</button>
+						<div id="menuFile" class="dropdown-content">
+							<div class="item" ng-click="addNewDriver0Node()" title="">0</div>
+							<div class="item" ng-click="addNewDriver1Node()" title="">1</div>
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn">I/O</button>
+						<div id="menuFile" class="dropdown-content">
+							<div class="item" ng-click="addNewInputNode()" title="">Input</div>
+							<div class="item" ng-click="addNewOutputNode()" title="">Output</div>
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn">Logic gates</button>
+						<div id="menuFile" class="dropdown-content">
+							<div class="item" ng-click="addNewNotGateNode()" title="">Not</div>
+							<div class="item" ng-click="addNewAndGateNode()" title="">And</div>
+							<div class="item" ng-click="addNewOrGateNode()" title="">Or</div>
+							<div class="item" ng-click="addNewXorGateNode()" title="">Xor</div>
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn">More</button>
+						<div id="menuFile" class="dropdown-content">
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn" ng-click="deleteSelected()" title=""
+						>Delete selected</button>
+					</div>
+				</div>
+			</div>
 				<!--
 				This custom element defines the flowchart.
 				-->
 			    <flow-chart class="flow"
-		    		style="color: white; margin: 0px; width: 100%; height: 85%;"
+		    		style="color: white; margin: 0px; width: 100%; height: 95%;"
 			      	chart="chartViewModel"
 			      	>
 			    </flow-chart>
@@ -141,6 +85,7 @@
 		</div>
 
 		<link rel="stylesheet" type="text/css" href="style/app.css">
+		<link rel="stylesheet" type="text/css" href="style/menu.css">
 
 		<!-- Library code. -->
 		<script src="lib/jquery-2.0.2.js" type="text/javascript"></script>
@@ -157,9 +102,13 @@
 		<!-- App code. -->
 		<script src="js/app.js" type="text/javascript"></script>
 
-		<!-- Add BQ logo. -->
+		<!-- BQ logo. -->
 		<div class="overlay">
 			<img src="../doc/images/bq-logo.png">
+		</div>
+
+		<div class="warning" >
+			Warning: experimental code. Use with caution!
 		</div>
 	</body>
 </html>
