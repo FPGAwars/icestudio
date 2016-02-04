@@ -7,35 +7,31 @@ angular.module('app', ['flowChart', ])
 //
 // Application controller.
 //
-.controller('AppCtrl', ['$scope', '$document', 'BitService', function AppCtrl ($scope, $document, BitService) {
+.controller('AppCtrl', ['$scope',
+						'$document',
+						'BitService',
+						'IOService',
+						'LGService',
+						'MoreService',
+						function AppCtrl ($scope,
+										  $document,
+										  BitService,
+									  	  IOService,
+									      LGService,
+									      MoreService) {
 
 	var fs = require('fs');
-	//var notie = require('notie');
 	var child_process = require('child_process');
 
-	//
 	// Code for the delete key.
-	//
 	var deleteKeyCode = 46;
-
-	//
 	// Code for control key.
-	//
 	var ctrlKeyCode = 17;
-
-	//
 	// Set to true when the ctrl key is down.
-	//
 	var ctrlDown = false;
-
-	//
 	// Code for esc key.
-	//
 	var escKeyCode = 27;
-
-	//
 	// Selects the next node id.
-	//
 	var nextNodeID = 10;
 
 	$scope.filepath = '../examples/example.ice'
@@ -122,9 +118,7 @@ angular.module('app', ['flowChart', ])
 		process.chdir('gui');
 	};
 
-	//
 	// Event handler for key-down on the flowchart.
-	//
 	$scope.keyDown = function (evt) {
 
 		if (evt.keyCode === ctrlKeyCode) {
@@ -135,15 +129,11 @@ angular.module('app', ['flowChart', ])
 		}
 	};
 
-	//
 	// Event handler for key-up on the flowchart.
-	//
 	$scope.keyUp = function (evt) {
 
 		if (evt.keyCode === deleteKeyCode) {
-			//
 			// Delete key.
-			//
 			$scope.chartViewModel.deleteSelected();
 		}
 
@@ -154,7 +144,6 @@ angular.module('app', ['flowChart', ])
 
 		if (evt.keyCode === ctrlKeyCode) {
 			ctrlDown = false;
-
 			evt.stopPropagation();
 			evt.preventDefault();
 		}
@@ -165,252 +154,68 @@ angular.module('app', ['flowChart', ])
 	//
 
 	//
-	// Add a new driver node to the chart.
+	// Bit
 	//
-	$scope.addNewDriverNode = function (value) {
-		return {
-			name: "",
-			type: "driver"+ value.toString(),
-			value: value,
-			inline: "assign o0 = 1'b" + value.toString() + ";",
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 55,
-			outputConnectors: [
-				{
-					name: "\"" + value.toString() + "\""
-				}
-			],
-		};
-	}
-
 	$scope.addNewDriver0Node = function () {
-		var newDriver0NodeDataModel = BitService.addNewDriverNode(0, nextNodeID++);
-		$scope.chartViewModel.addNode(newDriver0NodeDataModel);
+		BitService.addNewDriverNode(0, nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
 	};
-
 	$scope.addNewDriver1Node = function () {
-		var newDriver1NodeDataModel = BitService.addNewDriverNode(1, nextNodeID++);
-		$scope.chartViewModel.addNode(newDriver1NodeDataModel);
+		BitService.addNewDriverNode(1, nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
 	};
 
 	//
-	// Add a new input node to the chart.
+	// IO
 	//
 	$scope.addNewInputNode = function () {
-
-		swal({
-			title: "FPGA pin",
-			text: "Enter the input pin:",
-			type: "input",
-			showCancelButton: true,
-			closeOnConfirm: true,
-			animation: "none",
-			inputPlaceholder: "44"
-		},
-		function(pinValue) {
-			if (pinValue === false) return false;
-
-			if (pinValue === "") {
-				return false
-			}
-
-			//
-			// Template for a new input node.
-			//
-			var newInputNodeDataModel = {
-				name: "",
-				type: "input",
-				value: pinValue,
-				id: nextNodeID++,
-				x: 50,
-				y: 100,
-				width: 60,
-				outputConnectors: [ { name: pinValue } ],
-			};
-
-			$scope.chartViewModel.addNode(newInputNodeDataModel);
+		IOService.addNewInputNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
 		});
 	};
-
-	//
-	// Add a new output node to the chart.
-	//
 	$scope.addNewOutputNode = function () {
-
-		swal({
-			title: "FPGA pin",
-			text: "Enter the output pin:",
-			type: "input",
-			showCancelButton: true,
-			closeOnConfirm: true,
-			animation: "none",
-			inputPlaceholder: "95"
-		},
-		function(pinValue) {
-			if (pinValue === false) return false;
-
-			if (pinValue === "") {
-				return false
-			}
-
-			//
-			// Template for a new output node.
-			//
-			var newOutputNodeDataModel = {
-				name: "",
-				type: "output",
-				value: pinValue,
-				id: nextNodeID++,
-				x: 50,
-				y: 100,
-				width: 60,
-				inputConnectors: [ { name: pinValue } ],
-			};
-
-			$scope.chartViewModel.addNode(newOutputNodeDataModel);
+		IOService.addNewOutputNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
 		});
 	};
 
 	//
-	// Add a new div node to the chart.
+	// Logic gates
+	//
+	$scope.addNewNotNode = function () {
+		LGService.addNewNotNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewAndNode = function () {
+		LGService.addNewAndNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewOrNode = function () {
+		LGService.addNewOrNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewXorNode = function () {
+		LGService.addNewXorNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+
+	//
+	// More
 	//
 	$scope.addNewDivNode = function () {
-
-		swal({
-			title: "Divider",
-			text: "Enter the number of divisions",
-			type: "input",
-			showCancelButton: true,
-			closeOnConfirm: true,
-			animation: "none",
-			inputPlaceholder: "22"
-		},
-		function(divNumber) {
-			if (divNumber === false) return false;
-
-			if (divNumber === "") {
-				return false
-			}
-
-			var N = divNumber;
-			var M = Math.pow(2, divNumber);
-
-			var newOutputNodeDataModel = {
-				name: "DIV",
-				type: "div" + divNumber.toString(),
-				value: divNumber,
-				id: nextNodeID++,
-				x: 50,
-				y: 100,
-				width: 150,
-				inline: "wire w0;\nlocalparam N=" + N.toString() + ";\nlocalparam M=" + M.toString() + ";\nreg [N-1:0] c=0;\nalways @(posedge i0)\nif (M == 0)\nc <= 0;\nelse if (c == M-1)\nc <= 0;\nelse\nc <= c+1;\nassign w0 = (c == 0) ? 1 : 0;\nalways @(posedge i0)\nif (N == 0)\no0 <= 0;\nelse if (w0 == 1)\no0 <= ~o0;",
-				inputConnectors: [ { name: "clk" } ],
-				outputConnectors: [ { name: divNumber.toString() } ]
-			};
-
-			$scope.chartViewModel.addNode(newOutputNodeDataModel);
+		MoreService.addNewDivNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
 		});
 	};
 
-	//
-	// Add a new not gate node to the chart.
-	//
-	$scope.addNewNotGateNode = function () {
-
-		//
-		// Template for a new output node.
-		//
-		var newNotGateNodeDataModel = {
-			name: "NOT",
-			type: "not",
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 100,
-			inline: "assign o0 = ! i0;",
-			inputConnectors: [ { name: "" } ],
-			outputConnectors: [ { name: "" } ],
-		};
-
-		$scope.chartViewModel.addNode(newNotGateNodeDataModel);
-	};
-
-	//
-	// Add a new not gate node to the chart.
-	//
-	$scope.addNewAndGateNode = function () {
-
-		//
-		// Template for a new output node.
-		//
-		var newAndGateNodeDataModel = {
-			name: "AND",
-			type: "and",
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 100,
-			inline: "assign o0 = i0 & i1;",
-			inputConnectors: [ { name: "" }, { name: "" } ],
-			outputConnectors: [ { name: "" } ],
-		};
-
-		$scope.chartViewModel.addNode(newAndGateNodeDataModel);
-	};
-
-	//
-	// Add a new not gate node to the chart.
-	//
-	$scope.addNewOrGateNode = function () {
-
-		//
-		// Template for a new output node.
-		//
-		var newOrGateNodeDataModel = {
-			name: "OR",
-			type: "or",
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 100,
-			inline: "assign o0 = i0 | i1;",
-			inputConnectors: [ { name: "" }, { name: "" } ],
-			outputConnectors: [ { name: "" } ],
-		};
-
-		$scope.chartViewModel.addNode(newOrGateNodeDataModel);
-	};
-
-	//
-	// Add a new xor gate node to the chart.
-	//
-	$scope.addNewXorGateNode = function () {
-
-		//
-		// Template for a new output node.
-		//
-		var newXorGateNodeDataModel = {
-			name: "XOR",
-			type: "xor",
-			id: nextNodeID++,
-			x: 50,
-			y: 100,
-			width: 100,
-			inline: "assign o0 = i0 ^ i1;",
-			inputConnectors: [ { name: "" }, { name: "" } ],
-			outputConnectors: [ { name: "" } ],
-		};
-
-		$scope.chartViewModel.addNode(newXorGateNodeDataModel);
-	};
-
-	//
 	// Delete selected nodes and connections.
-	//
 	$scope.deleteSelected = function () {
-
 		$scope.chartViewModel.deleteSelected();
 	};
 

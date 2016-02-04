@@ -52,10 +52,10 @@ var flowchart = {
 		this._y = y;
 
 		//
-		// The name of the connector.
+		// The label of the connector.
 		//
-		this.name = function () {
-			return this.data.name;
+		this.label = function () {
+			return this.data.label;
 		}
 
 		//
@@ -115,10 +115,10 @@ var flowchart = {
 		this._selected = false;
 
 		//
-		// Name of the node.
+		// Label of the node.
 		//
-		this.name = function () {
-			return this.data.name || "";
+		this.label = function () {
+			return this.data.label || "";
 		};
 
 		//
@@ -244,8 +244,8 @@ var flowchart = {
 		// Set to true when the connection is selected.
 		this._selected = false;
 
-		this.name = function() {
-			return this.data.name || "";
+		this.label = function() {
+			return this.data.label || "";
 		}
 
 		this.sourceCoordX = function () {

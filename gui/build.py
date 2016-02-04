@@ -33,29 +33,18 @@ class Module:
         return code
 
 
-def _get_list(id, num):
-    _list = []
-    for i in xrange(num):
-        _list += [id + str(i)]
-    return _list
-
-
 def generate_verilog_modules(nodes):
     """
     JSON
     {
-        "name": "NOT",
-        "type": "not",
-        "id": 12,
-        "inline": "assign o0 = ! i0;",
-        "inputConnectors": [ { "name": "" } ],
-        "outputConnectors": [ { "name": "" } ]
+        "type": "driver",
+        "vcode": "...",
+        "id": 11,
+        ...
     }
 
     Verilog
-    module notx(input i0, output o0);
-    assign o0 = ! i0;
-    endmodule
+    vcode value
     """
     code = ''
     types = {}
@@ -68,20 +57,7 @@ def generate_verilog_modules(nodes):
     # Generate modules
     for node in nodes:
         if node['id'] in types:
-            name = node['type'] + 'x'
-            _input = 0
-            _output = 0
-            inline = ''
-            if 'inputConnectors' in node:
-                _input = len(node['inputConnectors'])
-            if 'outputConnectors' in node:
-                _output = len(node['outputConnectors'])
-            if 'inline' in node:
-                inline = node['inline'] + '\n'
-            code += str(Module(name,
-                               _get_list('i', _input),
-                               _get_list('o', _output),
-                               inline))
+            code += '\n' + node['vcode']
     return code
 
 
@@ -89,43 +65,37 @@ def generate_verilog_main(name, nodes, connections):
     """
     JSON + name: main
     {
-      "nodes": [
-        {
-          "type": "input", "value": "99", "id": 10,
-          "outputConnectors": [ { "name": "99" } ]
-        },
-        {
-          "type": "output", "value": "97", "id": 11,
-          "inputConnectors": [ { "name": "97" } ]
-        },
-        {
-          "type": "not", "id": 12,
-          "inline": "assign o0 = ! i0;",
-          "inputConnectors": [ { "name": "" } ],
-          "outputConnectors": [ { "name": "" } ]
-        }
-      ],
-      "connections": [
-        {
-          "source": { "nodeID": 10, "connectorIndex": 0 },
-          "dest": { "nodeID": 12, "connectorIndex": 0 }
-        },
-        {
-          "source": { "nodeID": 12, "connectorIndex": 0 },
-          "dest": { "nodeID": 11, "connectorIndex": 0 }
-        }
-      ]
+        "nodes": [
+            {
+                "type": "driver",
+                "params": [ { "name": "B", "value": "1'b1"} ],
+                "id": 10,
+                "outputConnectors": [ { "name": "o" } ]
+            },
+            {
+                "type": "output",
+                "params": [ "97" ],
+                "id": 11,
+                "inputConnectors": [ { "label": "97" } ]
+            }
+        ],
+        "connections": [
+            {
+                "source": { "nodeID": 10, "connectorIndex": 0 },
+                "dest": { "nodeID": 11, "connectorIndex": 0 }
+            }
+        ]
     }
 
     Verilog
-    module main(input input10, output output11);
+    module main(output output11);
     wire w0;
-    wire w1;
-    assign w0 = input10;
-    assign output11 = w1;
-    notx not12 (
-        .i0(w0),
-        .o0(w1)
+    assign output11 = w0;
+    driver #(
+      .B(1'b1)
+     )
+     driver10 (
+      .o(w0)
     );
     endmodule
     """
@@ -155,22 +125,32 @@ def generate_verilog_main(name, nodes, connections):
     # Entities (TODO: optimize)
     for node in nodes:
         if node['type'] != 'input' and node['type'] != 'output':
-            inline += node['type'] + 'x '
-            inline += node['type'] + str(node['id']) + ' (\n'
-            io = []
+            inline += node['type']
+            # Parameters
             params = []
+            if node['params']:
+                for param in node['params']:
+                    params += ['  .{0}({1})'.format(param['name'], param['value'])]
+                inline += ' #(\n'
+                inline += ',\n'.join(params) + '\n'
+                inline += ' )\n'
+            # Name
+            inline += ' ' + node['type'] + str(node['id']) + ' (\n'
+            # I/O
+            ios = []
+            ioh = []
             for index, connection in enumerate(connections):
                 if node['id'] == connection['source']['nodeID']:
-                    param = 'o' + str(connection['source']['connectorIndex'])
-                    if param not in io:
-                        io += [param]
-                        params += ['    .{0}(w{1})'.format(param, index)]
+                    io = node['outputConnectors'][connection['source']['connectorIndex']]['name']
+                    if io not in ioh:
+                        ioh += [io]
+                        ios += ['  .{0}(w{1})'.format(io, index)]
                 if node['id'] == connection['dest']['nodeID']:
-                    param = 'i' + str(connection['dest']['connectorIndex'])
-                    if param not in io:
-                        io += [param]
-                        params += ['    .{0}(w{1})'.format(param, index)]
-            inline += ',\n'.join(params) + '\n'
+                    io = node['inputConnectors'][connection['dest']['connectorIndex']]['name']
+                    if io not in ioh:
+                        ioh += [io]
+                        ios += ['  .{0}(w{1})'.format(io, index)]
+            inline += ',\n'.join(ios) + '\n'
             inline += ');\n'
 
     module = Module(name, _input, _output, inline)
@@ -189,20 +169,20 @@ def load_pcf(nodes):
     """
     # JSON
     {
-      "type": "input", "value": "99", "id": 10
+      "type": "input", "params": [ "44" ], "id": 15
     },
     {
-      "type": "output", "value": "97", "id": 11
-    },
+      "type": "output", "params": [ "95" ], "id": 16
+    }
 
     # PCF
-    set_io input10 99
-    set_io output11 97
+    set_io input15 44
+    set_io output16 95
     """
     code = ''
     for n in nodes:
         if n['type'] == 'input' or n['type'] == 'output':
-            code += 'set_io {0}{1} {2}\n'.format(n['type'], n['id'], n['value'])
+            code += 'set_io {0}{1} {2}\n'.format(n['type'], n['id'], n['params'][0])
     return code
 
 

@@ -52,7 +52,7 @@
       font-weight="bold"
       alignment-baseline="middle"
       >
-      {{node.name()}}
+      {{node.label()}}
     </text>
 
 
@@ -66,7 +66,7 @@
         text-anchor="left"
         alignment-baseline="middle"
         >
-        {{connector.name()}}
+        {{connector.label()}}
       </text>
     </g>
 
@@ -93,7 +93,7 @@
         text-anchor="end"
         alignment-baseline="middle"
         >
-        {{connector.name()}}
+        {{connector.label()}}
       </text>
     </g>
 
@@ -133,7 +133,7 @@
         cursor="pointer"
         text-anchor="middle"
         alignment-baseline="middle"
-        >{{connection.name()}}</text>
+        >{{connection.label()}}</text>
 
         <circle
             ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"

@@ -1,7 +1,4 @@
 .pioenvs
-*.v
-*.pcf
-*.ice
 *.out
 *.asc
 *.bin
