@@ -120,7 +120,11 @@ def generate_verilog_main(name, nodes, connections):
     for i in xrange(num):
         for j in xrange(num):
             if i < j:
-                if connections[i]['source']['nodeID'] == connections[j]['source']['nodeID']:
+                ni = connections[i]['source']['nodeID']
+                nj = connections[j]['source']['nodeID']
+                ci = connections[i]['source']['connectorIndex']
+                cj = connections[j]['source']['connectorIndex']
+                if ni == nj and ci == cj:
                     inline += 'assign w{0} = w{1};\n'.format(i, j)
     # Entities (TODO: optimize)
     for node in nodes:

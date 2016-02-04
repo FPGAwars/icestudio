@@ -1,13 +1,13 @@
 
 angular.module('app')
 
-.service('LGService', function LGService () {
+.service('LogicService', function LogicService () {
 
     var fs = require('fs');
-    var notv = fs.readFileSync('js/blocks/logicgates/not.v').toString();
-    var andv = fs.readFileSync('js/blocks/logicgates/and.v').toString();
-    var orv = fs.readFileSync('js/blocks/logicgates/or.v').toString();
-    var xorv = fs.readFileSync('js/blocks/logicgates/xor.v').toString();
+    var notv = fs.readFileSync('js/blocks/logic/not.v').toString();
+    var andv = fs.readFileSync('js/blocks/logic/and.v').toString();
+    var orv = fs.readFileSync('js/blocks/logic/or.v').toString();
+    var xorv = fs.readFileSync('js/blocks/logic/xor.v').toString();
 
     var exports = {};
 

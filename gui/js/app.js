@@ -11,14 +11,14 @@ angular.module('app', ['flowChart', ])
 						'$document',
 						'BitService',
 						'IOService',
-						'LGService',
-						'MoreService',
+						'LogicService',
+						'CombService',
 						function AppCtrl ($scope,
 										  $document,
 										  BitService,
 									  	  IOService,
-									      LGService,
-									      MoreService) {
+									      LogicService,
+									      CombService) {
 
 	var fs = require('fs');
 	var child_process = require('child_process');
@@ -185,31 +185,50 @@ angular.module('app', ['flowChart', ])
 	// Logic gates
 	//
 	$scope.addNewNotNode = function () {
-		LGService.addNewNotNode(nextNodeID++, function (node) {
+		LogicService.addNewNotNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
 	$scope.addNewAndNode = function () {
-		LGService.addNewAndNode(nextNodeID++, function (node) {
+		LogicService.addNewAndNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
 	$scope.addNewOrNode = function () {
-		LGService.addNewOrNode(nextNodeID++, function (node) {
+		LogicService.addNewOrNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
 	$scope.addNewXorNode = function () {
-		LGService.addNewXorNode(nextNodeID++, function (node) {
+		LogicService.addNewXorNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
 
 	//
-	// More
+	// Comb
 	//
+	$scope.addNewMuxNode = function () {
+		CombService.addNewMuxNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewDecNode = function () {
+		CombService.addNewDecNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
 	$scope.addNewDivNode = function () {
-		MoreService.addNewDivNode(nextNodeID++, function (node) {
+		CombService.addNewDivNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+
+	//
+	// Sec
+	//
+	$scope.addNewFlipflopNode = function () {
+		SecService.addNewFlipflopNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
