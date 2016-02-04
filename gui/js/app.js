@@ -13,12 +13,14 @@ angular.module('app', ['flowChart', ])
 						'IOService',
 						'LogicService',
 						'CombService',
+						'SecService',
 						function AppCtrl ($scope,
 										  $document,
 										  BitService,
 									  	  IOService,
 									      LogicService,
-									      CombService) {
+									      CombService,
+									      SecService) {
 
 	var fs = require('fs');
 	var child_process = require('child_process');

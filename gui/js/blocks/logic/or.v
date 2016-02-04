@@ -1,3 +1,3 @@
-module andx (input a, b, output o);
+module orx (input a, b, output o);
 assign o = a | b;
 endmodule
