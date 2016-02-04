@@ -73,28 +73,23 @@ angular.module('app', ['flowChart', ])
 			if (!err) {
 				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
 				if (pyresult.stdout.length !== 0) {
-					console.log(pyresult.stdout.toString());
 					process.chdir('..');
 					const result = child_process.spawnSync('platformio', ['run']);
 					if (result.stdout.length !== 0) {
-						if (result.stdout.toString().indexOf('SUCCESS') !=-1) {
-							//notie.alert(1, 'Build success!', 1.0);
-							{};
+						if (result.stdout.toString().indexOf('SUCCESS') != -1) {
+							alertify.success("Build success");
 						}
 						else {
-							notie.alert(3, 'Build fail', 1.0);
+							alertify.error("Build fail");
 						}
-						console.log(result.stdout.toString());
 					}
 					else {
-						notie.alert(3, 'Compiler fail', 1.0);
-						console.log(result.stderr.toString());
+						alertify.error("Compiler fail");
 					}
 					process.chdir('gui');
 				}
 				else {
-					notie.alert(3, 'Compiler fail', 1.0);
-					console.log(pyresult.stderr.toString());
+					alertify.error("Compiler fail");
 				}
 			}
 		});
@@ -104,18 +99,15 @@ angular.module('app', ['flowChart', ])
 		process.chdir('..');
 		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
 		if (result.stdout.length !== 0) {
-			if (result.stdout.toString().indexOf("SUCCESS") !=-1) {
-				//notie.alert(1, 'Run success!', 1.0);
-				{};
+			if (result.stdout.toString().indexOf("SUCCESS") != -1) {
+				alertify.success("Upload success");
 			}
 			else {
-				notie.alert(3, 'Upload fail', 1.0);
+				alertify.error("Upload fail");
 			}
-			console.log(result.stdout.toString());
 		}
 		else {
-			notie.alert(3, 'Upload fail', 1.0);
-			console.log(result.stderr.toString());
+			alertify.error("Upload fail");
 		}
 		process.chdir('gui');
 	};
