@@ -307,6 +307,10 @@ angular.module('flowChart', ['dragging'] )
 				if (!node.selected()) {
 					chart.deselectAll();
 					node.select();
+                    if (node.data.vcode) {
+                        var editor = ace.edit('editor');
+            			editor.setValue(node.data.vcode, -1);
+                    }
 				}
 			},
 

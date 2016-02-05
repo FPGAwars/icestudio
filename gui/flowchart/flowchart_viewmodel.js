@@ -165,6 +165,8 @@ var flowchart = {
 		//
 		this.deselect = function () {
 			this._selected = false;
+			var editor = ace.edit('editor');
+			editor.setValue('', -1);
 		};
 
 		//
@@ -583,10 +585,17 @@ var flowchart = {
 		//
 		this.selectAll = function () {
 
+			var editor = ace.edit('editor');
 			var nodes = this.nodes;
 			for (var i = 0; i < nodes.length; ++i) {
 				var node = nodes[i];
 				node.select();
+				if (node.data.vcode) {
+					value = editor.getValue();
+					if (value !== '') value += '\n';
+					value += node.data.vcode;
+					editor.setValue(value, -1);
+				}
 			}
 
 			var connections = this.connections;
@@ -639,6 +648,10 @@ var flowchart = {
 			else {
 				this.deselectAll();
 				node.select();
+				if (node.data.vcode) {
+					var editor = ace.edit('editor');
+					editor.setValue(node.data.vcode, -1);
+				}
 			}
 
 			// Move node to the end of the list so it is rendered after all the other.
@@ -736,6 +749,9 @@ var flowchart = {
 
 			this.deselectAll();
 
+			var editor = ace.edit('editor');
+			editor.setValue('', -1);
+
 			for (var i = 0; i < this.nodes.length; ++i) {
 				var node = this.nodes[i];
 				if (node.x() >= selectionRect.x &&
@@ -745,6 +761,12 @@ var flowchart = {
 				{
 					// Select nodes that are within the selection rect.
 					node.select();
+					if (node.data.vcode) {
+						value = editor.getValue();
+						if (value !== '') value += '\n';
+						value += node.data.vcode;
+						editor.setValue(value, -1);
+					}
 				}
 			}
 

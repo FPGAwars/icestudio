@@ -36,14 +36,16 @@ angular.module('app', ['flowChart', ])
 	// Selects the next node id.
 	var nextNodeID = 10;
 
-	$scope.filepath = '../examples/example.ice'
+	$scope.showEditor = false;
+
+	$scope.filepath = '../examples/example.json'
 
 	$scope.reset = function () {
 		nextNodeID = 10;
 		data = { nodes: [], connections: [] }
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
-	}
+	};
 
 	$scope.reset()
 
@@ -61,7 +63,7 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.save = function () {
-		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel),  function(err) {
+		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
 				return console.error(err);
 			}
@@ -69,7 +71,7 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.build = function () {
-		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel),  function(err) {
+		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
 				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
 				if (pyresult.stdout.length !== 0) {
@@ -232,4 +234,19 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel.deleteSelected();
 	};
 
+	// Show/Hide verilog editor
+	$scope.toggleEditor = function () {
+		document.getElementById('editor').style.opacity = '1.0';
+		$scope.showEditor = !$scope.showEditor;
+		if ($scope.showEditor) {
+			document.getElementById('BQLogo').style.opacity = '0.0';
+			document.getElementById('warning').style.opacity = '0.0';
+			document.getElementById('editor').style.height = '280px';
+		}
+		else {
+			document.getElementById('editor').style.height = '0px';
+			document.getElementById('BQLogo').style.opacity = '1.0';
+			document.getElementById('warning').style.opacity = '1.0';
+		}
+	};
 }]);

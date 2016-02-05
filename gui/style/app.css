@@ -9,6 +9,17 @@ Generic reset.
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+#editor {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: auto;
+	height: 280px;
+	opacity: 0.0;
+	position: absolute;
+	float: bottom;
+}
+
 .warning {
 	margin: 5;
 	padding: 5;
