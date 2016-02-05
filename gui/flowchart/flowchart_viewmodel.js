@@ -689,6 +689,9 @@ var flowchart = {
 
 			var deletedNodeIds = [];
 
+			var editor = ace.edit('editor');
+			editor.setValue('', -1);
+
 			//
 			// Sort nodes into:
 			//		nodes to keep and

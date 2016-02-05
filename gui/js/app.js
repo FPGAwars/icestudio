@@ -228,6 +228,11 @@ angular.module('app', ['flowChart', ])
 			$scope.chartViewModel.addNode(node);
 		});
 	};
+	$scope.addNewCounterNode = function () {
+		SecService.addNewCounterNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
 
 	// Delete selected nodes and connections.
 	$scope.deleteSelected = function () {
@@ -237,6 +242,7 @@ angular.module('app', ['flowChart', ])
 	// Show/Hide verilog editor
 	$scope.toggleEditor = function () {
 		document.getElementById('editor').style.opacity = '1.0';
+		document.getElementById('editor').style.visibility = 'visible';
 		$scope.showEditor = !$scope.showEditor;
 		if ($scope.showEditor) {
 			document.getElementById('BQLogo').style.opacity = '0.0';

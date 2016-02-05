@@ -73,6 +73,7 @@
 						<button class="dropbtn">Sec</button>
 						<div class="dropdown-content">
 							<div class="item" ng-click="addNewFlipflopNode()" title="">Flip-flop</div>
+							<div class="item" ng-click="addNewCounterNode()" title="">Counter</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -85,13 +86,13 @@
 					</div>
 				</div>
 			</div>
-			    <flow-chart id="flowchart" class="flow"
-		    		style="color: white; margin: 0px; width: 100%; height: 95%;"
-			      	chart="chartViewModel"
-			      	>
-			    </flow-chart>
-				<div id="editor"></div>
-		   </div>
+		    <flow-chart class="flow"
+	    		style="color: white; margin: 0px; width: 100%; height: 95%;"
+		      	chart="chartViewModel"
+		      	>
+		    </flow-chart>
+			<div id="editor" ></div>
+	   </div>
 
 		<!-- BQ logo. -->
 		<div id="BQLogo" class="overlay">
