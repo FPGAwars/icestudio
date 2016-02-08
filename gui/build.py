@@ -52,6 +52,8 @@ def generate_verilog_modules(nodes):
     for node in nodes:
         if node['type'] != 'input' and \
            node['type'] != 'output' and \
+           node['type'] != 'linput' and \
+           node['type'] != 'loutput' and \
            node['type'] not in types.values():
             types[node['id']] = node['type']
     # Generate modules
@@ -126,9 +128,19 @@ def generate_verilog_main(name, nodes, connections):
                 cj = connections[j]['source']['connectorIndex']
                 if ni == nj and ci == cj:
                     inline += 'assign w{0} = w{1};\n'.format(i, j)
-    # Entities (TODO: optimize)
+    # Assign labels and Entities (TODO: optimize)
     for node in nodes:
-        if node['type'] != 'input' and node['type'] != 'output':
+        if node['type'] == 'linput':
+            num = len(connections)
+            for i in xrange(num):
+                if node['id'] == connections[i]['source']['nodeID']:
+                    inline += 'assign w{0} = {1};\n'.format(i, node['outputConnectors'][0]['value'])
+        elif node['type'] == 'loutput':
+            num = len(connections)
+            for i in xrange(num):
+                if node['id'] == connections[i]['dest']['nodeID']:
+                    inline += 'assign {0} = w{1};\n'.format(node['inputConnectors'][0]['value'], i)
+        elif node['type'] != 'input' and node['type'] != 'output':
             inline += node['type']
             # Parameters
             params = []

@@ -14,13 +14,15 @@ angular.module('app', ['flowChart', ])
 						'LogicService',
 						'CombService',
 						'SecService',
+						'LabelService',
 						function AppCtrl ($scope,
 										  $document,
 										  BitService,
 									  	  IOService,
 									      LogicService,
 									      CombService,
-									      SecService) {
+									      SecService,
+									      LabelService) {
 
 	var fs = require('fs');
 	var child_process = require('child_process');
@@ -230,6 +232,20 @@ angular.module('app', ['flowChart', ])
 	};
 	$scope.addNewCounterNode = function () {
 		SecService.addNewCounterNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+
+	//
+	// Label
+	//
+	$scope.addNewLabelInputNode = function () {
+		LabelService.addNewLabelInputNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewLabelOutputNode = function () {
+		LabelService.addNewLabelOutputNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};

@@ -77,6 +77,13 @@
 						</div>
 					</div>
 					<div class="dropdown">
+						<button class="dropbtn">Label</button>
+						<div class="dropdown-content">
+							<div class="item" ng-click="addNewLabelInputNode()" title="">Input</div>
+							<div class="item" ng-click="addNewLabelOutputNode()" title="">Output</div>
+						</div>
+					</div>
+					<div class="dropdown">
 						<button class="dropbtn" ng-click="deleteSelected()" title=""
 						>Delete selected</button>
 					</div>
@@ -131,6 +138,7 @@
 		<script src="js/blocks/logic/logic.js" type="text/javascript"></script>
 		<script src="js/blocks/comb/comb.js" type="text/javascript"></script>
 		<script src="js/blocks/sec/sec.js" type="text/javascript"></script>
+		<script src="js/blocks/label/label.js" type="text/javascript"></script>
 
 		<!-- Editor -->
 		<script>
