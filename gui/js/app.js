@@ -235,6 +235,11 @@ angular.module('app', ['flowChart', ])
 			$scope.chartViewModel.addNode(node);
 		});
 	};
+	$scope.addNewNotesNode = function () {
+		SecService.addNewNotesNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
 
 	//
 	// Label

@@ -7,6 +7,7 @@ angular.module('app')
     var divv = fs.readFileSync('js/blocks/sec/div.v').toString();
     var flipflopv = fs.readFileSync('js/blocks/sec/flipflop.v').toString();
     var counterv = fs.readFileSync('js/blocks/sec/counter.v').toString();
+    var notesv = fs.readFileSync('js/blocks/sec/notes.v').toString();
 
     var exports = {};
 
@@ -49,6 +50,28 @@ angular.module('app')
 		});
 	};
 
+    exports.addNewCounterNode = function (nodeID, callback) {
+        var block = {
+            label: "CNT",
+            type: "counter",
+            params: [],
+            vcode: counterv,
+            id: nodeID,
+            x: 50, y: 100,
+            width: 150,
+            inputConnectors: [
+                { name: "clk", label: "clk" }
+            ],
+            outputConnectors: [
+                { name: "c0", label: "c0" },
+                { name: "c1", label: "c1" },
+                { name: "c2", label: "c2" },
+                { name: "c3", label: "c3" }
+            ]
+        };
+        callback(block);
+    };
+
     exports.addNewFlipflopNode = function (nodeID, callback) {
         var block = {
             label: "FF",
@@ -71,12 +94,12 @@ angular.module('app')
         callback(block);
     };
 
-    exports.addNewCounterNode = function (nodeID, callback) {
+    exports.addNewNotesNode = function (nodeID, callback) {
         var block = {
-            label: "CNT",
-            type: "counter",
+            label: "Notes",
+            type: "romnotes",
             params: [],
-            vcode: counterv,
+            vcode: notesv,
             id: nodeID,
             x: 50, y: 100,
             width: 150,
@@ -84,10 +107,7 @@ angular.module('app')
                 { name: "clk", label: "clk" }
             ],
             outputConnectors: [
-                { name: "c0", label: "c0" },
-                { name: "c1", label: "c1" },
-                { name: "c2", label: "c2" },
-                { name: "c3", label: "c3" }
+                { name: "ch_out", label: "o" }
             ]
         };
         callback(block);

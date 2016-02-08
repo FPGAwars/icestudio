@@ -59,7 +59,7 @@ def generate_verilog_modules(nodes):
     # Generate modules
     for node in nodes:
         if node['id'] in types:
-            code += '\n' + node['vcode']
+            code += '\n' + node['vcode'].encode('utf-8')
     return code
 
 
