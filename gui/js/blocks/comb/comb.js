@@ -6,7 +6,6 @@ angular.module('app')
     var fs = require('fs');
     var muxv = fs.readFileSync('js/blocks/comb/mux.v').toString();
     var decv = fs.readFileSync('js/blocks/comb/dec.v').toString();
-    var divv = fs.readFileSync('js/blocks/comb/div.v').toString();
 
     var exports = {};
 
@@ -50,45 +49,6 @@ angular.module('app')
         };
         callback(block);
     };
-
-    exports.addNewDivNode = function (nodeID, callback) {
-		swal({
-            title: "Divider",
-			text: "Enter the number of divisions",
-			type: "input",
-			showCancelButton: true,
-			closeOnConfirm: true,
-			animation: "none",
-			inputPlaceholder: "22"
-		},
-		function(value) {
-			if ((value === false) || (value === "")) {
-                return false;
-            }
-            var N = value;
-			var M = Math.pow(2, value);
-
-			var block = {
-				label: "DIV (" + value.toString() + ")",
-				type: "div",
-                params: [
-                    { name: "N", value: N },
-                    { name: "M", value: M }
-                ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 170,
-				vcode: divv,
-				inputConnectors: [
-                    { name: "clk", label: "clk" }
-                ],
-				outputConnectors: [
-                    { name: "o", label: "out" }
-                ]
-			};
-            callback(block);
-		});
-	};
 
     return exports;
 });

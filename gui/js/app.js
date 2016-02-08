@@ -216,22 +216,22 @@ angular.module('app', ['flowChart', ])
 			$scope.chartViewModel.addNode(node);
 		});
 	};
-	$scope.addNewDivNode = function () {
-		CombService.addNewDivNode(nextNodeID++, function (node) {
-			$scope.chartViewModel.addNode(node);
-		});
-	};
 
 	//
 	// Sec
 	//
-	$scope.addNewFlipflopNode = function () {
-		SecService.addNewFlipflopNode(nextNodeID++, function (node) {
+	$scope.addNewDivNode = function () {
+		SecService.addNewDivNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
 	$scope.addNewCounterNode = function () {
 		SecService.addNewCounterNode(nextNodeID++, function (node) {
+			$scope.chartViewModel.addNode(node);
+		});
+	};
+	$scope.addNewFlipflopNode = function () {
+		SecService.addNewFlipflopNode(nextNodeID++, function (node) {
 			$scope.chartViewModel.addNode(node);
 		});
 	};
