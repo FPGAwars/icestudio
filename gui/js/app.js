@@ -78,16 +78,17 @@ angular.module('app', ['flowChart', ])
 				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
 				if (pyresult.stdout.length !== 0) {
 					process.chdir('..');
-					const result = child_process.spawnSync('platformio', ['run']);
+					const result = child_process.spawnSync('apio', ['build']);
 					if (result.stdout.length !== 0) {
-						if (result.stdout.toString().indexOf('SUCCESS') != -1) {
-							alertify.success("Build success");
+						if (result.stdout.toString().indexOf('error') != -1) {
+							alertify.error("Build fail");
 						}
 						else {
-							alertify.error("Build fail");
+							alertify.success("Build success");
 						}
 					}
 					else {
+
 						alertify.error("Compiler fail");
 					}
 					process.chdir('gui');
@@ -101,13 +102,13 @@ angular.module('app', ['flowChart', ])
 
 	$scope.upload = function () {
 		process.chdir('..');
-		const result = child_process.spawnSync('platformio', ['run', '--target', 'upload']);
+		const result = child_process.spawnSync('apio', ['upload']);
 		if (result.stdout.length !== 0) {
-			if (result.stdout.toString().indexOf("SUCCESS") != -1) {
-				alertify.success("Upload success");
+			if (result.stdout.toString().indexOf("error") != -1) {
+				alertify.error("Upload fail");
 			}
 			else {
-				alertify.error("Upload fail");
+				alertify.success("Upload success");
 			}
 		}
 		else {

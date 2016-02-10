@@ -11,14 +11,11 @@ Experimental graphic editor for open FPGAs.
 
 ### Install dependencies
 
-Install [platformio](platformio.org)
+Install apio: scons + icestorm
 ```bash
-pip install platformio
+pip install apio
+apio install
 ```
-
-Install icestick in platformio: [wiki](https://github.com/bqlabs/Platformio-FPGA/wiki/Platformio-FPGA-wiki-home).
-
-Install icestorm toolchain in platformio with this [script](https://github.com/bqlabs/Platformio-FPGA/blob/master/build-toolchain.sh).
 
 Install nodejs and nwjs
 ```bash
