@@ -1,4 +1,6 @@
 .pioenvs
+.sconsign.dblite
+file
 *.out
 *.asc
 *.bin
