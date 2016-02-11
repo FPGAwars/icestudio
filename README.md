@@ -11,9 +11,14 @@ Experimental graphic editor for open FPGAs.
 
 ### Install dependencies
 
-Install apio: scons + icestorm
+Install libftdi
 ```bash
-pip install apio
+sudo apt-get install libftdi1
+```
+
+Install [apio](https://github.com/bqlabs/apio)
+```bash
+sudo pip install apio
 apio install
 ```
 
@@ -22,6 +27,13 @@ Install nodejs and nwjs
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g nw
+```
+
+### Download
+
+```bash
+git clone https://github.com/Jesus89/icestudio.git
+cd icestudio
 ```
 
 ### Execute
