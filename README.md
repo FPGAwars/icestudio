@@ -42,6 +42,11 @@ cd icestudio
 nw gui
 ```
 
+[![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")
+
+[![Icestudio: modules code and labels](http://img.youtube.com/vi/lCm5WAkVGIE/0.jpg)](http://www.youtube.com/watch?v=lCm5WAkVGIE "Icestudio: modules code and labels")
+
+
 ### Authors
 
 * Jesús Arroyo
