@@ -73,6 +73,7 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.build = function () {
+		$scope.chartViewModel.deselectAll();
 		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
 				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
@@ -101,6 +102,7 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.upload = function () {
+		$scope.chartViewModel.deselectAll();
 		process.chdir('..');
 		const result = child_process.spawnSync('apio', ['upload']);
 		if (result.stdout.length !== 0) {

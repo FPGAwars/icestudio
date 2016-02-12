@@ -1,13 +1,9 @@
-from os.path import join, expanduser
-from SCons.Script import (Builder, DefaultEnvironment, Default)
+import os
+from SCons.Script import (Builder, Environment, Default)
 
 TARGET = "src/main"
 VER = "src/main.v"
 PCF = "src/main.pcf"
-
-env = DefaultEnvironment()
-bin_dir = join(expanduser("~"), '.platformio', 'packages', 'toolchain-icestorm', 'bin')
-env.PrependENVPath('PATH', bin_dir)
 
 # -- Builder 1 (.v --> .blif)
 synth = Builder(action='yosys -p \"synth_ice40 -blif {}.blif\" \
@@ -26,7 +22,8 @@ bitstream = Builder(action='icepack $SOURCE $TARGET',
                     suffix='.bin',
                     src_suffix='.asc')
 
-env.Append(BUILDERS={'Synth': synth, 'PnR': pnr, 'Bin': bitstream})
+env = Environment(BUILDERS={'Synth': synth, 'PnR': pnr, 'Bin': bitstream},
+                  ENV=os.environ)
 
 blif = env.Synth(TARGET, [VER])
 asc = env.PnR(TARGET, [blif, PCF])
