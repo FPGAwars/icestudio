@@ -3,7 +3,7 @@
 [![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
-Experimental graphic editor for open FPGAs.
+Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick board](http://www.pighixxx.com/test/portfolio-items/icestick/). Built on top of [icestorm project](http://www.clifford.at/icestorm/).
 
     GUI -> JSON -> Verilog, PCF
 
@@ -22,10 +22,14 @@ sudo pip install apio
 apio install
 ```
 
-Install nodejs and nwjs
+Install nodejs
 ```bash
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
+```
+
+Install nwjs
+```bash
 sudo npm install -g nw
 ```
 

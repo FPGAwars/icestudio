@@ -3,7 +3,7 @@
   "description": "Experimental graphic editor for open FPGAs",
   "keywords": [
     "FPGA", "open", "hardware"
-  ],  "version": "0.1-alpha1",
+  ],  "version": "0.1-alpha2",
   "license" : "GPLv2",
   "main": "icestudio.html",
   "window": {
