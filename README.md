@@ -3,11 +3,11 @@
 [![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
-![][icestudio-demo]
-
 Experimental graphic editor for open FPGAs.
 
     GUI -> JSON -> Verilog, PCF
+
+![][icestudio-demo]
 
 ### Install dependencies
 
@@ -61,5 +61,5 @@ nw gui
 
 Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
 
-[icestudio-demo]: doc/images/icestudio.gif
+[icestudio-demo]: doc/images/icestudio-demo.gif
 [bq-logo-cc-sa]: doc/images/bq-logo-cc-sa-small-150px.png
