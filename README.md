@@ -18,7 +18,10 @@ sudo apt-get install libftdi1
 
 Install [apio](https://github.com/bqlabs/apio)
 ```bash
-sudo pip install apio
+pip install apio
+```
+
+```bash
 apio install
 ```
 
