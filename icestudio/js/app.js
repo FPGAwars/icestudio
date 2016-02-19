@@ -74,20 +74,24 @@ angular.module('app', ['flowChart', ])
 
 	$scope.build = function () {
 		$scope.chartViewModel.deselectAll();
-		process.chdir('..');
-		const result = child_process.spawnSync('apio', ['build']);
-		if (result.stdout.length !== 0) {
-			if (result.stdout.toString().indexOf('error') != -1) {
-				alertify.error("Build fail 1");
+		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
+			if (!err) {
+				process.chdir('..');
+				const result = child_process.spawnSync('apio', ['build']);
+				if (result.stdout.length !== 0) {
+					if (result.stdout.toString().indexOf('error') != -1) {
+						alertify.error("Build fail 1");
+					}
+					else {
+						alertify.success("Build success");
+					}
+				}
+				else {
+					alertify.error("Build fail 2");
+				}
+				process.chdir('icestudio');
 			}
-			else {
-				alertify.success("Build success");
-			}
-		}
-		else {
-			alertify.error("Build fail 2");
-		}
-		process.chdir('icestudio');
+		});
 	};
 
 	$scope.upload = function () {
