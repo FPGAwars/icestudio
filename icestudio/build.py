@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # JSON to verilog compiler
-#
+# February 2016
 # GPLv2
 
 import sys
 import json
+
+from os.path import abspath, dirname, basename, splitext, join
 
 __author__ = 'Jesús Arroyo Torrens <jesus.arroyo@bq.com>'
 __license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.html'
@@ -204,10 +206,13 @@ def load_pcf(nodes):
 
 def main():
     if len(sys.argv) != 2:
-        print('Error: example number required')
+        print('Error: json filename is required')
         return
     else:
         filename = sys.argv[1]
+
+    path = abspath(dirname(filename))
+    name = splitext(basename(filename))[0]
 
     # Load JSON graph
     with open(filename) as data:
@@ -217,7 +222,7 @@ def main():
         data.close()
 
     # Write Verilog file
-    with open('../src/main.v', 'w') as data:
+    with open(join(path, name + '.v'), 'w') as data:
         # Generate Verilog
         code = '// Generated verilog\n'
         code += generate_verilog_modules(nodes)
@@ -227,14 +232,14 @@ def main():
         data.close()
 
     # Write PCF file
-    with open('../src/main.pcf', 'w') as data:
+    with open(join(path, name + '.pcf'), 'w') as data:
         # Generate PCF
         code = load_pcf(graph['nodes'])
         # Write PCF
         data.write(code)
         data.close()
 
-    print("OK")
+    print("\nGenerated {0}.v and {0}.pcf [SUCCESS]\n".format(name))
 
 if __name__ == '__main__':
     main()

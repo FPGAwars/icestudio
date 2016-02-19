@@ -46,7 +46,7 @@ cd icestudio
 ### Execute
 
 ```bash
-nw gui
+nw icestudio
 ```
 
 [![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")

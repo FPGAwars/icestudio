@@ -1,0 +1,53 @@
+{
+  "nodes": [
+    {
+      "label": "",
+      "type": "driver",
+      "params": [
+        {
+          "name": "B",
+          "value": "1'b1"
+        }
+      ],
+      "vcode": "module driver #(parameter B = 1'b0)(output o);\nassign o = B;\nendmodule\n",
+      "id": 10,
+      "x": 141,
+      "y": 202,
+      "width": 55,
+      "outputConnectors": [
+        {
+          "name": "o",
+          "label": "\"1\""
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "95"
+      ],
+      "id": 11,
+      "x": 292,
+      "y": 199,
+      "width": 60,
+      "inputConnectors": [
+        {
+          "label": "95"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "nodeID": 10,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 11,
+        "connectorIndex": 0
+      }
+    }
+  ]
+}

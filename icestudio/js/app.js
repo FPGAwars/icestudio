@@ -40,7 +40,7 @@ angular.module('app', ['flowChart', ])
 
 	$scope.showEditor = false;
 
-	$scope.filepath = '../examples/example.json'
+	$scope.filepath = 'gen/main.json'
 
 	$scope.reset = function () {
 		nextNodeID = 10;
@@ -74,31 +74,20 @@ angular.module('app', ['flowChart', ])
 
 	$scope.build = function () {
 		$scope.chartViewModel.deselectAll();
-		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
-			if (!err) {
-				const pyresult = child_process.spawnSync('./build.py', [$scope.filepath]);
-				if (pyresult.stdout.length !== 0) {
-					process.chdir('..');
-					const result = child_process.spawnSync('apio', ['build']);
-					if (result.stdout.length !== 0) {
-						if (result.stdout.toString().indexOf('error') != -1) {
-							alertify.error("Build fail");
-						}
-						else {
-							alertify.success("Build success");
-						}
-					}
-					else {
-
-						alertify.error("Compiler fail");
-					}
-					process.chdir('gui');
-				}
-				else {
-					alertify.error("Compiler fail");
-				}
+		process.chdir('..');
+		const result = child_process.spawnSync('apio', ['build']);
+		if (result.stdout.length !== 0) {
+			if (result.stdout.toString().indexOf('error') != -1) {
+				alertify.error("Build fail 1");
 			}
-		});
+			else {
+				alertify.success("Build success");
+			}
+		}
+		else {
+			alertify.error("Build fail 2");
+		}
+		process.chdir('icestudio');
 	};
 
 	$scope.upload = function () {
@@ -107,16 +96,16 @@ angular.module('app', ['flowChart', ])
 		const result = child_process.spawnSync('apio', ['upload']);
 		if (result.stdout.length !== 0) {
 			if (result.stdout.toString().indexOf("error") != -1) {
-				alertify.error("Upload fail");
+				alertify.error("Upload fail 1");
 			}
 			else {
 				alertify.success("Upload success");
 			}
 		}
 		else {
-			alertify.error("Upload fail");
+			alertify.error("Upload fail 2");
 		}
-		process.chdir('gui');
+		process.chdir('icestudio');
 	};
 
 	// Event handler for key-down on the flowchart.
