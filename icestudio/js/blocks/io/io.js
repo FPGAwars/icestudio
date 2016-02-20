@@ -13,24 +13,28 @@ angular.module('app')
 			showCancelButton: true,
 			closeOnConfirm: true,
 			animation: "none",
-			inputPlaceholder: "44"
+			inputPlaceholder: "21 44"
 		},
 		function(value) {
 			if ((value === false) || (value === "")) {
                 return false;
             }
-			var block = {
-				label: "",
-				type: "input",
-				params: [ value ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 60,
-				outputConnectors: [ {
-                    label: value
-                }]
-			};
-            callback(block);
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                var block = {
+                    label: "",
+                    type: "input",
+                    params: [ item ],
+                    id: nodeID,
+                    x: 50, y: 100 + i * 60,
+                    width: 40 + item.length * 8,
+                    outputConnectors: [ {
+                        label: item
+                    }]
+                };
+                callback(block);
+            };
 		});
 	};
 
@@ -42,24 +46,28 @@ angular.module('app')
 			showCancelButton: true,
 			closeOnConfirm: true,
 			animation: "none",
-			inputPlaceholder: "95"
+			inputPlaceholder: "95 96 97"
 		},
 		function(value) {
 			if ((value === false) || (value === "")) {
                 return false;
             }
-			var block = {
-				label: "",
-				type: "output",
-				params: [ value ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 60,
-				inputConnectors: [ {
-                    label: value
-                }]
-			};
-            callback(block);
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+    			var block = {
+    				label: "",
+    				type: "output",
+    				params: [ item ],
+    				id: nodeID,
+    				x: 50, y: 100 + i * 60,
+    				width: 40 + item.length * 8,
+    				inputConnectors: [ {
+                        label: item
+                    }]
+    			};
+                callback(block);
+            };
 		});
 	};
 

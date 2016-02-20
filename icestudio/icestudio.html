@@ -23,9 +23,21 @@
 					<div class="dropdown">
 						<button class="dropbtn">File</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="load()" title="Load example.ice">Load</div>
-							<div class="item" ng-click="save()" title="Save example.ice">Save</div>
-							<div class="item" ng-click="reset()" title="Load reset.ice">Reset</div>
+							<div class="item" ng-click="load()" title="Load main.json">Load</div>
+							<div class="item" ng-click="save()" title="Save main.json">Save</div>
+							<div class="item" ng-click="reset()" title="Reset main.json">Reset</div>
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn">Edit</button>
+						<div class="dropdown-content">
+							<div class="item" ng-click="deleteSelected()" title="Delete selected">Delete selected</div>
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="dropbtn">View</button>
+						<div class="dropdown-content">
+							<div class="item" ng-click="toggleEditor()" title="View block code">Code</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -73,7 +85,7 @@
 						<div class="dropdown-content">
 							<div class="item" ng-click="addNewDivNode()" title="">Div</div>
 							<div class="item" ng-click="addNewCounterNode()" title="">Counter</div>
-							<div class="item" ng-click="addNewFlipflopNode()" title="">Flip-flop</div>
+							<div class="item" ng-click="addNewFlipflopNode()" title="">Flipflop</div>
 							<div class="item" ng-click="addNewNotesNode()" title="">Notes</div>
 						</div>
 					</div>
@@ -84,18 +96,10 @@
 							<div class="item" ng-click="addNewLabelOutputNode()" title="">Output</div>
 						</div>
 					</div>
-					<div class="dropdown">
-						<button class="dropbtn" ng-click="deleteSelected()" title=""
-						>Delete selected</button>
-					</div>
-					<div class="dropdown">
-						<button class="dropbtn" ng-click="toggleEditor()" title=""
-						>Code</button>
-					</div>
 				</div>
 			</div>
 		    <flow-chart class="flow"
-	    		style="color: white; margin: 0px; width: 100%; height: 95%;"
+	    		style="color: white; margin: 0px; width: 105%; height: 95%;"
 		      	chart="chartViewModel"
 		      	>
 		    </flow-chart>

@@ -19,34 +19,38 @@ angular.module('app')
 			showCancelButton: true,
 			closeOnConfirm: true,
 			animation: "none",
-			inputPlaceholder: "22"
+			inputPlaceholder: "22 23"
 		},
 		function(value) {
 			if ((value === false) || (value === "")) {
                 return false;
             }
-            var N = value;
-			var M = Math.pow(2, value);
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                var N = item;
+    			var M = Math.pow(2, item);
 
-			var block = {
-				label: "DIV (" + value.toString() + ")",
-				type: "div",
-                params: [
-                    { name: "N", value: N },
-                    { name: "M", value: M }
-                ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 170,
-				vcode: divv,
-				inputConnectors: [
-                    { name: "clk", label: "clk" }
-                ],
-				outputConnectors: [
-                    { name: "o", label: "out" }
-                ]
-			};
-            callback(block);
+    			var block = {
+    				label: "DIV (" + item.toString() + ")",
+    				type: "div",
+                    params: [
+                        { name: "N", value: N },
+                        { name: "M", value: M }
+                    ],
+    				id: nodeID,
+    				x: 50, y: 100 + i * 60,
+    				width: 150 + item.length * 8,
+    				vcode: divv,
+    				inputConnectors: [
+                        { name: "clk", label: "clk" }
+                    ],
+    				outputConnectors: [
+                        { name: "o", label: "out" }
+                    ]
+    			};
+                callback(block);
+            };
 		});
 	};
 
