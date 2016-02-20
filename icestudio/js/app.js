@@ -143,13 +143,15 @@ angular.module('app', ['flowChart', ])
 	// Bit
 	//
 	$scope.addNewDriver0Node = function () {
-		BitService.addNewDriverNode(0, nextNodeID++, function (node) {
+		BitService.addNewDriverNode(0, nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewDriver1Node = function () {
-		BitService.addNewDriverNode(1, nextNodeID++, function (node) {
+		BitService.addNewDriverNode(1, nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 
@@ -157,13 +159,15 @@ angular.module('app', ['flowChart', ])
 	// IO
 	//
 	$scope.addNewInputNode = function () {
-		IOService.addNewInputNode(nextNodeID++, function (node) {
+		IOService.addNewInputNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewOutputNode = function () {
-		IOService.addNewOutputNode(nextNodeID++, function (node) {
+		IOService.addNewOutputNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 
@@ -171,23 +175,27 @@ angular.module('app', ['flowChart', ])
 	// Logic gates
 	//
 	$scope.addNewNotNode = function () {
-		LogicService.addNewNotNode(nextNodeID++, function (node) {
+		LogicService.addNewNotNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewAndNode = function () {
-		LogicService.addNewAndNode(nextNodeID++, function (node) {
+		LogicService.addNewAndNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewOrNode = function () {
-		LogicService.addNewOrNode(nextNodeID++, function (node) {
+		LogicService.addNewOrNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewXorNode = function () {
-		LogicService.addNewXorNode(nextNodeID++, function (node) {
+		LogicService.addNewXorNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 
@@ -195,13 +203,15 @@ angular.module('app', ['flowChart', ])
 	// Comb
 	//
 	$scope.addNewMuxNode = function () {
-		CombService.addNewMuxNode(nextNodeID++, function (node) {
+		CombService.addNewMuxNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewDecNode = function () {
-		CombService.addNewDecNode(nextNodeID++, function (node) {
+		CombService.addNewDecNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 
@@ -209,23 +219,27 @@ angular.module('app', ['flowChart', ])
 	// Sec
 	//
 	$scope.addNewDivNode = function () {
-		SecService.addNewDivNode(nextNodeID++, function (node) {
+		SecService.addNewDivNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewCounterNode = function () {
-		SecService.addNewCounterNode(nextNodeID++, function (node) {
+		SecService.addNewCounterNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewFlipflopNode = function () {
-		SecService.addNewFlipflopNode(nextNodeID++, function (node) {
+		SecService.addNewFlipflopNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewNotesNode = function () {
-		SecService.addNewNotesNode(nextNodeID++, function (node) {
+		SecService.addNewNotesNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 
@@ -233,13 +247,15 @@ angular.module('app', ['flowChart', ])
 	// Label
 	//
 	$scope.addNewLabelInputNode = function () {
-		LabelService.addNewLabelInputNode(nextNodeID++, function (node) {
+		LabelService.addNewLabelInputNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 	$scope.addNewLabelOutputNode = function () {
-		LabelService.addNewLabelOutputNode(nextNodeID++, function (node) {
+		LabelService.addNewLabelOutputNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
 		});
 	};
 

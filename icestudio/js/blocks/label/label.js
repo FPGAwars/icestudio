@@ -26,7 +26,7 @@ angular.module('app')
     				label: "",
     				type: "linput",
     				params: [ item ],
-    				id: nodeID,
+    				id: nodeID++,
     				x: 50, y: 100 + i * 60,
     				width: 40 + item.length * 8,
     				outputConnectors: [ {
@@ -34,7 +34,7 @@ angular.module('app')
                         label: item
                     }]
     			};
-                callback(block);
+                callback(block, nodeID);
             };
 		});
 	};
@@ -60,7 +60,7 @@ angular.module('app')
     				label: "",
     				type: "loutput",
     				params: [ item ],
-    				id: nodeID,
+    				id: nodeID++,
     				x: 50, y: 100 + i * 60,
     				width: 40 + item.length * 8,
     				inputConnectors: [ {
@@ -68,7 +68,7 @@ angular.module('app')
                         label: item
                     }]
     			};
-                callback(block);
+                callback(block, nodeID);
             };
 		});
 	};

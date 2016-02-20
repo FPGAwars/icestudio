@@ -17,7 +17,7 @@ angular.module('app')
                 { name: "B", value: "1'b" + value }
             ],
             vcode: bitv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 55,
             outputConnectors: [ {
@@ -25,7 +25,7 @@ angular.module('app')
                 label: "\"" + value + "\""
             }]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     return exports;

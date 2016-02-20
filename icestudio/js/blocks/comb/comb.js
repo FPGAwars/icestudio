@@ -15,7 +15,7 @@ angular.module('app')
             type: "mux",
             params: [],
             vcode: muxv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
@@ -27,7 +27,7 @@ angular.module('app')
                 { name: "o", label: "out" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewDecNode = function (nodeID, callback) {
@@ -36,7 +36,7 @@ angular.module('app')
             type: "dec",
             params: [],
             vcode: decv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
@@ -47,7 +47,7 @@ angular.module('app')
                 { name: "o1", label: "o1" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     return exports;

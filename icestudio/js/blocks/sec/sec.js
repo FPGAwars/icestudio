@@ -38,7 +38,7 @@ angular.module('app')
                         { name: "N", value: N },
                         { name: "M", value: M }
                     ],
-    				id: nodeID,
+    				id: nodeID++,
     				x: 50, y: 100 + i * 60,
     				width: 150 + item.length * 8,
     				vcode: divv,
@@ -49,7 +49,7 @@ angular.module('app')
                         { name: "o", label: "out" }
                     ]
     			};
-                callback(block);
+                callback(block, nodeID);
             };
 		});
 	};
@@ -60,7 +60,7 @@ angular.module('app')
             type: "counter",
             params: [],
             vcode: counterv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
@@ -73,7 +73,7 @@ angular.module('app')
                 { name: "c3", label: "c3" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewFlipflopNode = function (nodeID, callback) {
@@ -82,7 +82,7 @@ angular.module('app')
             type: "flipflop",
             params: [],
             vcode: flipflopv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
@@ -95,7 +95,7 @@ angular.module('app')
                 { name: "q", label: "Q" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewNotesNode = function (nodeID, callback) {
@@ -104,7 +104,7 @@ angular.module('app')
             type: "romnotes",
             params: [],
             vcode: notesv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
@@ -114,7 +114,7 @@ angular.module('app')
                 { name: "ch_out", label: "o" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     return exports;
