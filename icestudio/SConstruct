@@ -1,12 +1,12 @@
 import os
 from SCons.Script import (Builder, Environment, Default)
 
-TARGET = "icestudio/gen/main"
+TARGET = "gen/main"
 JSON = TARGET + ".json"
 PCF = TARGET + ".pcf"
 
 # -- Builder 0 (.json --> .v)
-graph = Builder(action='icestudio/build.py $SOURCE',
+graph = Builder(action='./build.py $SOURCE',
                 suffix='.v',
                 src_suffix='.json')
 

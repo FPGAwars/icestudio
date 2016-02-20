@@ -76,40 +76,36 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel.deselectAll();
 		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
-				process.chdir('..');
 				const result = child_process.spawnSync('apio', ['build']);
 				if (result.stdout.length !== 0) {
 					if (result.stdout.toString().indexOf('error') != -1) {
-						alertify.error("Build fail 1");
+						alertify.error("Build fail");
 					}
 					else {
 						alertify.success("Build success");
 					}
 				}
 				else {
-					alertify.error("Build fail 2");
+					alertify.error("Build fail");
 				}
-				process.chdir('icestudio');
 			}
 		});
 	};
 
 	$scope.upload = function () {
 		$scope.chartViewModel.deselectAll();
-		process.chdir('..');
 		const result = child_process.spawnSync('apio', ['upload']);
 		if (result.stdout.length !== 0) {
 			if (result.stdout.toString().indexOf("error") != -1) {
-				alertify.error("Upload fail 1");
+				alertify.error("Upload fail");
 			}
 			else {
 				alertify.success("Upload success");
 			}
 		}
 		else {
-			alertify.error("Upload fail 2");
+			alertify.error("Upload fail");
 		}
-		process.chdir('icestudio');
 	};
 
 	// Event handler for key-down on the flowchart.
@@ -142,10 +138,6 @@ angular.module('app', ['flowChart', ])
 			evt.preventDefault();
 		}
 	};
-
-	//
-	// TODO: move all blocks
-	//
 
 	//
 	// Bit
