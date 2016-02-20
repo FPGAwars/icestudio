@@ -9,6 +9,8 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ![][icestudio-demo]
 
+## Development
+
 ### Install dependencies
 
 Install libftdi
@@ -21,6 +23,7 @@ Install [apio](https://github.com/bqlabs/apio)
 pip install apio
 ```
 
+Install backend
 ```bash
 apio install
 ```
@@ -36,6 +39,11 @@ Install nwjs
 sudo npm install -g nw
 ```
 
+Install nw-builder
+```bash
+sudo npm install -g nw-builder
+```
+
 ### Download
 
 ```bash
@@ -47,6 +55,12 @@ cd icestudio
 
 ```bash
 nw icestudio
+```
+
+### Package
+
+```bash
+nwbuild -p linux64 icestudio -v v0.12.3
 ```
 
 [![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")

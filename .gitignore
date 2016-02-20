@@ -1,7 +1,7 @@
-.pioenvs
-.sconsign.dblite
+*.sconsign.dblite
 file
 *.out
 *.asc
 *.bin
 *.blif
+build
