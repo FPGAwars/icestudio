@@ -28,7 +28,7 @@ angular.module('app')
     				params: [ item ],
     				id: nodeID,
     				x: 50, y: 100 + i * 60,
-    				width: 37 + item.length * 7,
+    				width: 40 + item.length * 8,
     				outputConnectors: [ {
                         value: item,
                         label: item
@@ -62,7 +62,7 @@ angular.module('app')
     				params: [ item ],
     				id: nodeID,
     				x: 50, y: 100 + i * 60,
-    				width: 38 + item.length * 7,
+    				width: 40 + item.length * 8,
     				inputConnectors: [ {
                         value: item,
                         label: item

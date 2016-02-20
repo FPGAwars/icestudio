@@ -40,7 +40,7 @@ angular.module('app')
                     ],
     				id: nodeID,
     				x: 50, y: 100 + i * 60,
-    				width: 150 + item.length * 7,
+    				width: 150 + item.length * 8,
     				vcode: divv,
     				inputConnectors: [
                         { name: "clk", label: "clk" }
