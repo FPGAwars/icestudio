@@ -19,19 +19,23 @@ angular.module('app')
 			if ((value === false) || (value === "")) {
                 return false;
             }
-			var block = {
-				label: "",
-				type: "linput",
-				params: [ value ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 80,
-				outputConnectors: [ {
-                    value: value,
-                    label: value
-                }]
-			};
-            callback(block);
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+    			var block = {
+    				label: "",
+    				type: "linput",
+    				params: [ item ],
+    				id: nodeID,
+    				x: 50, y: 100 + i * 60,
+    				width: 37 + item.length * 7,
+    				outputConnectors: [ {
+                        value: item,
+                        label: item
+                    }]
+    			};
+                callback(block);
+            };
 		});
 	};
 
@@ -49,19 +53,23 @@ angular.module('app')
 			if ((value === false) || (value === "")) {
                 return false;
             }
-			var block = {
-				label: "",
-				type: "loutput",
-				params: [ value ],
-				id: nodeID,
-				x: 50, y: 100,
-				width: 80,
-				inputConnectors: [ {
-                    value: value,
-                    label: value
-                }]
-			};
-            callback(block);
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+    			var block = {
+    				label: "",
+    				type: "loutput",
+    				params: [ item ],
+    				id: nodeID,
+    				x: 50, y: 100 + i * 60,
+    				width: 38 + item.length * 7,
+    				inputConnectors: [ {
+                        value: item,
+                        label: item
+                    }]
+    			};
+                callback(block);
+            };
 		});
 	};
 
