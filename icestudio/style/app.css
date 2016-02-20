@@ -7,6 +7,12 @@ Generic reset.
 	padding: 0;
 	transition: all 0.1s ease;
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #editor {
