@@ -1,4 +1,4 @@
-.sconsign.dblite
+*.sconsign.dblite
 file
 *.out
 *.asc
