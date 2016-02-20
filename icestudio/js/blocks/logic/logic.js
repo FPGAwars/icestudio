@@ -17,7 +17,7 @@ angular.module('app')
             type: "notx",
             params: [],
             vcode: notv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 80,
             inputConnectors: [
@@ -27,7 +27,7 @@ angular.module('app')
                 { name: "o", label: "" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewAndNode = function (nodeID, callback) {
@@ -36,7 +36,7 @@ angular.module('app')
             type: "andx",
             params: [],
             vcode: andv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 80,
             inputConnectors: [
@@ -47,7 +47,7 @@ angular.module('app')
                 { name: "o", label: "" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewOrNode = function (nodeID, callback) {
@@ -56,7 +56,7 @@ angular.module('app')
             type: "orx",
             params: [],
             vcode: orv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 80,
             inputConnectors: [
@@ -67,7 +67,7 @@ angular.module('app')
                 { name: "o", label: "" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     exports.addNewXorNode = function (nodeID, callback) {
@@ -76,7 +76,7 @@ angular.module('app')
             type: "xorx",
             params: [],
             vcode: xorv,
-            id: nodeID,
+            id: nodeID++,
             x: 50, y: 100,
             width: 80,
             inputConnectors: [
@@ -87,7 +87,7 @@ angular.module('app')
                 { name: "o", label: "" }
             ]
         };
-        callback(block);
+        callback(block, nodeID);
     };
 
     return exports;
