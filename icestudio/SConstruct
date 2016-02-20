@@ -6,7 +6,7 @@ JSON = TARGET + ".json"
 PCF = TARGET + ".pcf"
 
 # -- Builder 0 (.json --> .v)
-graph = Builder(action='./build.py $SOURCE',
+graph = Builder(action='python build.py $SOURCE',
                 suffix='.v',
                 src_suffix='.json')
 
