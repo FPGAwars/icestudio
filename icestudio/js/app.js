@@ -5,6 +5,30 @@
 angular.module('app', ['flowChart', ])
 
 //
+// Application 'action' directive.
+//
+.directive('action', function () {
+    return {
+        link: function (scope, elem, attr) {
+			if (attr['action'] === 'load') {
+				elem.bind('change', function (event) {
+	                var file = event.target.files[0];
+                    event.target.files.clear();
+                    if (file) scope.load(file.path);
+	            })
+			}
+			else if (attr['action'] === 'save') {
+				elem.bind('change', function (event) {
+	                var file = event.target.files[0];
+                    event.target.files.clear();
+                    if (file) scope.save(file.path);
+	            })
+			}
+		}
+	}
+})
+
+//
 // Application controller.
 //
 .controller('AppCtrl', ['$scope',
@@ -42,17 +66,17 @@ angular.module('app', ['flowChart', ])
 
 	$scope.filepath = 'gen/main.json'
 
-	$scope.reset = function () {
+	$scope.new = function () {
 		nextNodeID = 10;
 		data = { nodes: [], connections: [] }
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
 	};
 
-	$scope.reset()
+	$scope.new()
 
-	$scope.load = function () {
-		var data = JSON.parse(fs.readFileSync($scope.filepath));
+	$scope.load = function (filename) {
+		var data = JSON.parse(fs.readFileSync(filename));
 		var max = nextNodeID;
 		for (var i = 0; i < data.nodes.length; i++) {
 			if (data.nodes[i].id > max) {
@@ -62,10 +86,11 @@ angular.module('app', ['flowChart', ])
 		nextNodeID = max + 1;
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
+        $scope.$digest();
 	};
 
-	$scope.save = function () {
-		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
+	$scope.save = function (filename) {
+		fs.writeFile(filename, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
 				return console.error(err);
 			}

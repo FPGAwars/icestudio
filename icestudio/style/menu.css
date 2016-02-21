@@ -36,6 +36,7 @@
     top: 55px;
     background-color: #FCFCFC;
     min-width: 80px;
+    max-width: 100px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -48,6 +49,10 @@
     cursor: pointer;
 	color: #6991AC;
     font-weight: bold;
+}
+
+.dropdown-content input {
+
 }
 
 /* Change color of dropdown links on hover */

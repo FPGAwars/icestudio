@@ -23,9 +23,13 @@
 					<div class="dropdown">
 						<button class="dropbtn">File</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="load()" title="Load main.json">Load</div>
-							<div class="item" ng-click="save()" title="Save main.json">Save</div>
-							<div class="item" ng-click="reset()" title="Reset main.json">Reset</div>
+							<div class="item" ng-click="new()" title="New json">New</div>
+							<div class="item" title="Load json">
+								Load<input type="file" action="load"/>
+							</div>
+							<div class="item" title="Save json">
+								Save<input type="file" nwsaveas action="save"/>
+							</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -100,10 +104,9 @@
 			</div>
 		    <flow-chart class="flow"
 	    		style="color: white; margin: 0px; width: 105%; height: 95%;"
-		      	chart="chartViewModel"
-		      	>
+		      	chart="chartViewModel">
 		    </flow-chart>
-			<div id="editor" ></div>
+			<div id="editor"></div>
 	   </div>
 
 		<!-- BQ logo. -->
