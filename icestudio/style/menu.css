@@ -7,7 +7,7 @@
 
 .blocks {
     top: 0;
-    right: 5px;
+    right: 13px;
     margin: 8px;
 	position: absolute;
 }
@@ -35,12 +35,12 @@
     position: absolute;
     top: 55px;
     background-color: #FCFCFC;
-    min-width: 80px;
+    min-width: 92px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 /* Links inside the dropdown */
-.dropdown-content div {
+.dropdown-content div, label {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -50,8 +50,12 @@
     font-weight: bold;
 }
 
+.dropdown-content input {
+    display:none;
+}
+
 /* Change color of dropdown links on hover */
-.dropdown-content div:hover {background-color: #F5F5F5}
+.dropdown-content div:hover, label:hover {background-color: #F5F5F5}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
