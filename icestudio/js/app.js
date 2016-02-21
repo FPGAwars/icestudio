@@ -21,10 +21,16 @@ angular.module('app', ['flowChart', ])
 				elem.bind('change', function (event) {
 	                var file = event.target.files[0];
                     event.target.files.clear();
-                    if (file) scope.save(file.path);
-	            })
-			}
-		}
+                    if (file) {
+                        var filepath = file.path;
+                        if (! filepath.endsWith('.json')) {
+                            filepath += '.json';
+                        }
+                        scope.save(filepath);
+                    }
+                })
+            }
+        }
 	}
 })
 
