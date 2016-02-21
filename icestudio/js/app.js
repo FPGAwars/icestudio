@@ -17,7 +17,7 @@ angular.module('app', ['flowChart', ])
                     if (file) scope.load(file.path);
 	            })
 			}
-			else if (attr['action'] === 'save') {
+			else if (attr['action'] === 'saveas') {
 				elem.bind('change', function (event) {
 	                var file = event.target.files[0];
                     event.target.files.clear();
@@ -26,7 +26,7 @@ angular.module('app', ['flowChart', ])
                         if (! filepath.endsWith('.json')) {
                             filepath += '.json';
                         }
-                        scope.save(filepath);
+                        scope.saveas(filepath);
                     }
                 })
             }
@@ -57,6 +57,10 @@ angular.module('app', ['flowChart', ])
 	var fs = require('fs');
 	var child_process = require('child_process');
 
+    // Load native UI library
+    var gui = require('nw.gui');
+    var win = gui.Window.get();
+
 	// Code for the delete key.
 	var deleteKeyCode = 46;
 	// Code for control key.
@@ -68,20 +72,24 @@ angular.module('app', ['flowChart', ])
 	// Selects the next node id.
 	var nextNodeID = 10;
 
-	$scope.showEditor = false;
-
-	$scope.filepath = 'gen/main.json'
+    $scope.filepath = '';
+    $scope.showEditor = false;
 
 	$scope.new = function () {
 		nextNodeID = 10;
 		data = { nodes: [], connections: [] }
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
+        win.title = 'Icestudio';
+        $scope.filepath = '';
 	};
 
 	$scope.new();
 
 	$scope.load = function (filename) {
+        $scope.filepath = filename;
+        var name = filename.replace(/^.*[\\\/]/, '').split('.')[0];
+        win.title = 'Icestudio - ' + name;
 		var data = JSON.parse(fs.readFileSync(filename));
 		var max = nextNodeID;
 		for (var i = 0; i < data.nodes.length; i++) {
@@ -95,17 +103,27 @@ angular.module('app', ['flowChart', ])
         $scope.$digest();
 	};
 
-	$scope.save = function (filename) {
+	$scope.save = function () {
+        if ($scope.filepath === '') {
+            document.getElementById('saveas').click();
+        }
+        else {
+            $scope.saveas($scope.filepath);
+        }
+	};
+
+    $scope.saveas = function (filename) {
+        var name = filename.replace(/^.*[\\\/]/, '').split('.')[0];
+        win.title = 'Icestudio - ' + name;
 		fs.writeFile(filename, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
-				return console.error(err);
 			}
 		});
 	};
 
 	$scope.build = function () {
 		$scope.chartViewModel.deselectAll();
-		fs.writeFile($scope.filepath, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
+		fs.writeFile('gen/main.json', JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
 				const result = child_process.spawnSync('apio', ['build']);
 				if (result.stdout.length !== 0) {

@@ -23,83 +23,84 @@
 					<div class="dropdown">
 						<button class="dropbtn">File</button>
 						<div class="dropdown-content">
-							<div ng-click="new()" title="New json">
+							<div ng-click="new()">
 								New
 							</div>
-							<label title="Load json">
+							<label>
 								Load<input type="file" action="load" accept=".json"/>
 							</label>
-							<label title="Save json">
-								Save<input type="file" nwsaveas action="save" accept=".json"/>
+							<div ng-click="save()">
+								Save
+							</div>
+							<label>
+								Save as<input id="saveas" type="file" nwsaveas action="saveas" accept=".json"/>
 							</label>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Edit</button>
 						<div class="dropdown-content">
-							<div ng-click="deleteSelected()" title="Delete selected">Delete selected</div>
+							<div ng-click="deleteSelected()">Delete selected</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">View</button>
 						<div class="dropdown-content">
-							<div ng-click="toggleEditor()" title="View block code">Code</div>
+							<div ng-click="toggleEditor()">Code</div>
 						</div>
 					</div>
 					<div class="dropdown">
-						<button class="dropbtn" ng-click="build()" title="Build project into bitstream"
-						>Build</button>
+						<button class="dropbtn" ng-click="build()">Build</button>
 					</div>
 					<div class="dropdown">
-						<button class="dropbtn" ng-click="upload()" title="Upload bitstream to FPGA"
-						>Upload</button>
+						<button class="dropbtn" ng-click="upload()">Upload</button>
 					</div>
 				</div>
 				<div class="blocks">
 					<div class="dropdown">
 						<button class="dropbtn">Bit</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewDriver0Node()" title="">0</div>
-							<div ng-click="addNewDriver1Node()" title="">1</div>
+							<div ng-click="addNewDriver0Node()">0</div>
+							<div ng-click="addNewDriver1Node()">1</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">I/O</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewInputNode()" title="">Input</div>
-							<div ng-click="addNewOutputNode()" title="">Output</div>
+							<div ng-click="addNewInputNode()">Input</div>
+							<div ng-click="addNewOutputNode()">Output</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Logic</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewNotNode()" title="">Not</div>
-							<div ng-click="addNewAndNode()" title="">And</div>
-							<div ng-click="addNewOrNode()" title="">Or</div>
-							<div ng-click="addNewXorNode()" title="">Xor</div>
+							<div ng-click="addNewNotNode()">Not</div>
+							<div ng-click="addNewAndNode()">And</div>
+							<div ng-click="addNewOrNode()">Or</div>
+							<div ng-click="addNewXorNode()">Xor</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Comb</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewMuxNode()" title="">Mux</div>
-							<div ng-click="addNewDecNode()" title="">Dec</div>
+							<div ng-click="addNewMuxNode()">Mux</div>
+							<div ng-click="addNewDecNode()">Dec</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Sec</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewDivNode()" title="">Div</div>
-							<div ng-click="addNewCounterNode()" title="">Counter</div>
-							<div ng-click="addNewFlipflopNode()" title="">Flipflop</div>
-							<div ng-click="addNewNotesNode()" title="">Notes</div>
+							<div ng-click="addNewDivNode()">Div</div>
+							<div ng-click="addNewCounterNode()">Counter</div>
+							<div ng-click="addNewFlipflopNode()">Flipflop</div>
+							<div ng-click="addNewNotesNode()">Notes</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Label</button>
 						<div class="dropdown-content">
-							<div ng-click="addNewLabelInputNode()" title="">Input</div>
-							<div ng-click="addNewLabelOutputNode()" title="">Output</div>
+							<div ng-click="addNewLabelInputNode()">Input</div>
+							<div ng-click="addNewLabelOutputNode()">Output</div>
 						</div>
 					</div>
 				</div>
