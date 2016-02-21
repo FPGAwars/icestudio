@@ -79,7 +79,7 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
 	};
 
-	$scope.new()
+	$scope.new();
 
 	$scope.load = function (filename) {
 		var data = JSON.parse(fs.readFileSync(filename));

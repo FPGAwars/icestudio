@@ -23,25 +23,27 @@
 					<div class="dropdown">
 						<button class="dropbtn">File</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="new()" title="New json">New</div>
-							<div class="item" title="Load json">
+							<div ng-click="new()" title="New json">
+								New
+							</div>
+							<label title="Load json">
 								Load<input type="file" action="load" accept=".json"/>
-							</div>
-							<div class="item" title="Save json">
+							</label>
+							<label title="Save json">
 								Save<input type="file" nwsaveas action="save" accept=".json"/>
-							</div>
+							</label>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Edit</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="deleteSelected()" title="Delete selected">Delete selected</div>
+							<div ng-click="deleteSelected()" title="Delete selected">Delete selected</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">View</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="toggleEditor()" title="View block code">Code</div>
+							<div ng-click="toggleEditor()" title="View block code">Code</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -57,47 +59,47 @@
 					<div class="dropdown">
 						<button class="dropbtn">Bit</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewDriver0Node()" title="">0</div>
-							<div class="item" ng-click="addNewDriver1Node()" title="">1</div>
+							<div ng-click="addNewDriver0Node()" title="">0</div>
+							<div ng-click="addNewDriver1Node()" title="">1</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">I/O</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewInputNode()" title="">Input</div>
-							<div class="item" ng-click="addNewOutputNode()" title="">Output</div>
+							<div ng-click="addNewInputNode()" title="">Input</div>
+							<div ng-click="addNewOutputNode()" title="">Output</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Logic</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewNotNode()" title="">Not</div>
-							<div class="item" ng-click="addNewAndNode()" title="">And</div>
-							<div class="item" ng-click="addNewOrNode()" title="">Or</div>
-							<div class="item" ng-click="addNewXorNode()" title="">Xor</div>
+							<div ng-click="addNewNotNode()" title="">Not</div>
+							<div ng-click="addNewAndNode()" title="">And</div>
+							<div ng-click="addNewOrNode()" title="">Or</div>
+							<div ng-click="addNewXorNode()" title="">Xor</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Comb</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewMuxNode()" title="">Mux</div>
-							<div class="item" ng-click="addNewDecNode()" title="">Dec</div>
+							<div ng-click="addNewMuxNode()" title="">Mux</div>
+							<div ng-click="addNewDecNode()" title="">Dec</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Sec</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewDivNode()" title="">Div</div>
-							<div class="item" ng-click="addNewCounterNode()" title="">Counter</div>
-							<div class="item" ng-click="addNewFlipflopNode()" title="">Flipflop</div>
-							<div class="item" ng-click="addNewNotesNode()" title="">Notes</div>
+							<div ng-click="addNewDivNode()" title="">Div</div>
+							<div ng-click="addNewCounterNode()" title="">Counter</div>
+							<div ng-click="addNewFlipflopNode()" title="">Flipflop</div>
+							<div ng-click="addNewNotesNode()" title="">Notes</div>
 						</div>
 					</div>
 					<div class="dropdown">
 						<button class="dropbtn">Label</button>
 						<div class="dropdown-content">
-							<div class="item" ng-click="addNewLabelInputNode()" title="">Input</div>
-							<div class="item" ng-click="addNewLabelOutputNode()" title="">Output</div>
+							<div ng-click="addNewLabelInputNode()" title="">Input</div>
+							<div ng-click="addNewLabelOutputNode()" title="">Output</div>
 						</div>
 					</div>
 				</div>
