@@ -21,7 +21,7 @@ angular.module('app')
             }
             array = value.split(' ');
             for (var i = 0; i < array.length; i++) {
-                var item = array[i];
+                var item = '_' + array[i];
     			var block = {
     				label: "",
     				type: "linput",
@@ -55,7 +55,7 @@ angular.module('app')
             }
             array = value.split(' ');
             for (var i = 0; i < array.length; i++) {
-                var item = array[i];
+                var item = '_' + array[i];
     			var block = {
     				label: "",
     				type: "loutput",
