@@ -72,19 +72,39 @@ angular.module('app', ['flowChart', ])
 	// Selects the next node id.
 	var nextNodeID = 10;
 
-    $scope.filepath = '';
     $scope.showEditor = false;
 
-	$scope.new = function () {
-		nextNodeID = 10;
-		data = { nodes: [], connections: [] }
-		$scope.chartDataModel = data;
-		$scope.chartViewModel = new flowchart.ChartViewModel(data);
+    $scope.initialize = function () {
+        nextNodeID = 10;
         win.title = 'Icestudio';
         $scope.filepath = '';
-	};
+		$scope.chartDataModel = { nodes: [], connections: [] };
+		$scope.chartViewModel = new flowchart.ChartViewModel($scope.chartDataModel);
+    }
 
-	$scope.new();
+    $scope.initialize();
+
+	$scope.new = function () {
+        if ($scope.filepath !== '') {
+            $scope.initialize();
+            alertify.success("New file created");
+            /*swal({
+              title: "Open file",
+              text: "There is an open file. Do you want to save it?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes",
+              cancelButtonText: "No",
+              closeOnConfirm: true,
+              closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $scope.saveas($scope.filepath);
+                }
+            });*/
+        }
+	};
 
 	$scope.load = function (filename) {
         $scope.filepath = filename;
@@ -101,6 +121,7 @@ angular.module('app', ['flowChart', ])
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
         $scope.$digest();
+        alertify.success("File " + name + " loaded");
 	};
 
 	$scope.save = function () {
@@ -113,10 +134,12 @@ angular.module('app', ['flowChart', ])
 	};
 
     $scope.saveas = function (filename) {
+        $scope.filepath = filename;
         var name = filename.replace(/^.*[\\\/]/, '').split('.')[0];
         win.title = 'Icestudio - ' + name;
 		fs.writeFile(filename, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
+                alertify.success("File " + name + " saved");
 			}
 		});
 	};
