@@ -56,11 +56,15 @@ nw icestudio
 ### Package
 
 ```bash
-export dist=linux64
+nwbuild -p linux64 icestudio -v v0.12.3
+nwbuild -p osx64 icestudio -v v0.12.3
+nwbuild -p win64 icestudio -v v0.12.3
 
-nwbuild -p $dist icestudio -v v0.12.3
-cd build/Icestudio/$dist
-tar -zcvf icestudio-$dist.tar.gz *
+cd build/Icestudio
+
+zip -r icestudio-linux64 linux64
+zip -r icestudio-win64 win64
+zip -r icestudio-osx64 osx64
 ```
 
 ## Videos
