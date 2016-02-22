@@ -76,6 +76,14 @@ angular.module('app', ['flowChart', ])
 
     alertify.set({ delay: 2000 });
 
+    // Check apio backend
+    const result = child_process.spawnSync('apio', []);
+    if (result.error) {
+        alertify.error("Apio not installed");
+        document.getElementById('build').className += ' disabled';
+        document.getElementById('upload').className += ' disabled';
+    }
+
     $scope.initialize = function () {
         nextNodeID = 10;
         win.title = 'Icestudio';
