@@ -14,7 +14,10 @@ angular.module('app', ['flowChart', ])
 				elem.bind('change', function (event) {
 	                var file = event.target.files[0];
                     event.target.files.clear();
-                    if (file) scope.load(file.path);
+                    if (file) {
+                        scope.filepath = filename;
+                        scope.load(file.path);
+                    }
 	            })
 			}
 			else if (attr['action'] === 'saveas') {
@@ -79,9 +82,35 @@ angular.module('app', ['flowChart', ])
     // Check apio backend
     const result = child_process.spawnSync('apio', []);
     if (result.error) {
-        alertify.error("Apio not installed");
+        alertify.error('Apio not installed');
         document.getElementById('build').className += ' disabled';
         document.getElementById('upload').className += ' disabled';
+    }
+
+    // Build Examples dropdown
+    const examples = child_process.spawnSync('ls', ['examples']);
+    var examplesArray = examples.stdout.toString().split('.json\n');
+
+    $scope.examples = function () {
+        swal({
+          title: 'Examples',
+          text: examplesArray.join('\n'),
+          type: 'input',
+          showCancelButton: true,
+          closeOnConfirm: true,
+          animation: 'none',
+          inputPlaceholder: 'blink'
+        },
+        function (example) {
+            if ((!example) ||
+                (example === '') ||
+                (examplesArray.indexOf(example)) === -1)
+            {
+                alertify.error('Example ' + example + ' does not exist');
+                return false;
+            }
+            $scope.load('examples/' + example + '.json');
+        });
     }
 
     $scope.initialize = function () {
@@ -97,27 +126,11 @@ angular.module('app', ['flowChart', ])
 	$scope.new = function () {
         if ($scope.filepath !== '') {
             $scope.initialize();
-            alertify.success("New file created");
-            /*swal({
-              title: "Open file",
-              text: "There is an open file. Do you want to save it?",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Yes",
-              cancelButtonText: "No",
-              closeOnConfirm: true,
-              closeOnCancel: true
-            },
-            function(isConfirm){
-                if (isConfirm) {
-                    $scope.saveas($scope.filepath);
-                }
-            });*/
+            alertify.success('New file created');
         }
 	};
 
 	$scope.load = function (filename) {
-        $scope.filepath = filename;
         var name = filename.replace(/^.*[\\\/]/, '').split('.')[0];
         win.title = 'Icestudio - ' + name;
 		var data = JSON.parse(fs.readFileSync(filename));
@@ -131,7 +144,7 @@ angular.module('app', ['flowChart', ])
 		$scope.chartDataModel = data;
 		$scope.chartViewModel = new flowchart.ChartViewModel(data);
         $scope.$digest();
-        alertify.success("File " + name + " loaded");
+        alertify.success('File ' + name + ' loaded');
 	};
 
 	$scope.save = function () {
@@ -149,7 +162,7 @@ angular.module('app', ['flowChart', ])
         win.title = 'Icestudio - ' + name;
 		fs.writeFile(filename, JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
-                alertify.success("File " + name + " saved");
+                alertify.success('File ' + name + ' saved');
 			}
 		});
 	};
@@ -161,14 +174,14 @@ angular.module('app', ['flowChart', ])
 				const result = child_process.spawnSync('apio', ['build']);
 				if (result.stdout.length !== 0) {
 					if (result.stdout.toString().indexOf('error') != -1) {
-						alertify.error("Build fail");
+						alertify.error('Build fail');
 					}
 					else {
-						alertify.success("Build success");
+						alertify.success('Build success');
 					}
 				}
 				else {
-					alertify.error("Build fail");
+					alertify.error('Build fail');
 				}
 			}
 		});
@@ -178,15 +191,15 @@ angular.module('app', ['flowChart', ])
 		$scope.chartViewModel.deselectAll();
 		const result = child_process.spawnSync('apio', ['upload']);
 		if (result.stdout.length !== 0) {
-			if (result.stdout.toString().indexOf("error") != -1) {
-				alertify.error("Upload fail");
+			if (result.stdout.toString().indexOf('error') != -1) {
+				alertify.error('Upload fail');
 			}
 			else {
-				alertify.success("Upload success");
+				alertify.success('Upload success');
 			}
 		}
 		else {
-			alertify.error("Upload fail");
+			alertify.error('Upload fail');
 		}
 	};
 
