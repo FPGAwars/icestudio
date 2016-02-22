@@ -20,7 +20,7 @@ apio install
 
 ## User
 
-Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio.
+Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio. Also, you can test these [examples](https://github.com/bqlabs/icestudio/tree/develop/examples).
 
 ## Development
 
@@ -56,7 +56,11 @@ nw icestudio
 ### Package
 
 ```bash
-nwbuild -p linux64 icestudio -v v0.12.3
+export dist=linux64
+
+nwbuild -p $dist icestudio -v v0.12.3
+cd build/Icestudio/$dist
+tar -zcvf icestudio-$dist.tar.gz *
 ```
 
 ## Videos
