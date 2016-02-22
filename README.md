@@ -9,24 +9,20 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ![][icestudio-demo]
 
-## Development
-
 ### Install dependencies
 
-Install libftdi
+Install libftdi and [apio](https://github.com/bqlabs/apio)
 ```bash
 sudo apt-get install libftdi1
-```
-
-Install [apio](https://github.com/bqlabs/apio)
-```bash
 pip install apio
-```
-
-Install backend
-```bash
 apio install
 ```
+
+## User
+
+Download [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio.
+
+## Development
 
 Install nodejs
 ```bash
@@ -47,7 +43,7 @@ sudo npm install -g nw-builder
 ### Download
 
 ```bash
-git clone https://github.com/Jesus89/icestudio.git
+git clone https://github.com/bqlabs/icestudio.git
 cd icestudio
 ```
 
@@ -63,20 +59,22 @@ nw icestudio
 nwbuild -p linux64 icestudio -v v0.12.3
 ```
 
+## Videos
+
 [![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")
 
 [![Icestudio: modules code and labels](http://img.youtube.com/vi/lCm5WAkVGIE/0.jpg)](http://www.youtube.com/watch?v=lCm5WAkVGIE "Icestudio: modules code and labels")
 
 
-### Authors
+## Authors
 
 * Jesús Arroyo
 
-### Credits
+## Credits
 
 * Using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 
-# License
+## License
 
 ![][bq-logo-cc-sa]
 
