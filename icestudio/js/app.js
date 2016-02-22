@@ -298,6 +298,12 @@ angular.module('app', ['flowChart', ])
 			nextNodeID = id;
 		});
 	};
+    $scope.addNewTimerNode = function () {
+		SecService.addNewTimerNode(nextNodeID, function (node, id) {
+			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
+		});
+	};
 	$scope.addNewCounterNode = function () {
 		SecService.addNewCounterNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);

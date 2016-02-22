@@ -5,8 +5,9 @@ angular.module('app')
 
     var fs = require('fs');
     var divv = fs.readFileSync('js/blocks/sec/div.v').toString();
-    var flipflopv = fs.readFileSync('js/blocks/sec/flipflop.v').toString();
+    var timerv = fs.readFileSync('js/blocks/sec/timer.v').toString();
     var counterv = fs.readFileSync('js/blocks/sec/counter.v').toString();
+    var flipflopv = fs.readFileSync('js/blocks/sec/flipflop.v').toString();
     var notesv = fs.readFileSync('js/blocks/sec/notes.v').toString();
 
     var exports = {};
@@ -46,7 +47,50 @@ angular.module('app')
                         { name: "clk", label: "clk" }
                     ],
     				outputConnectors: [
-                        { name: "o", label: "out" }
+                        { name: "out", label: "out" }
+                    ]
+    			};
+                callback(block, nodeID);
+            };
+		});
+	};
+
+    exports.addNewTimerNode = function (nodeID, callback) {
+		swal({
+            title: "Timer",
+			text: "Enter the number of divisions",
+			type: "input",
+			showCancelButton: true,
+			closeOnConfirm: true,
+			animation: "none",
+			inputPlaceholder: "22 23"
+		},
+		function(value) {
+			if ((value === false) || (value === "")) {
+                return false;
+            }
+            array = value.split(' ');
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                var N = item;
+    			var M = Math.pow(2, item);
+
+    			var block = {
+    				label: "TIM (" + item.toString() + ")",
+    				type: "timer",
+                    params: [
+                        { name: "N", value: N },
+                        { name: "M", value: M }
+                    ],
+    				id: nodeID++,
+    				x: 50, y: 100 + i * 60,
+    				width: 150 + item.length * 8,
+    				vcode: timerv,
+    				inputConnectors: [
+                        { name: "clk", label: "clk" }
+                    ],
+    				outputConnectors: [
+                        { name: "out", label: "out" }
                     ]
     			};
                 callback(block, nodeID);
