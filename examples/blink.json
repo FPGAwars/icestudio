@@ -1,0 +1,177 @@
+{
+  "nodes": [
+    {
+      "label": "",
+      "type": "input",
+      "params": [
+        "21"
+      ],
+      "id": 22,
+      "x": 108,
+      "y": 199,
+      "width": 56,
+      "outputConnectors": [
+        {
+          "label": "21"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "loutput",
+      "params": [
+        "_clk"
+      ],
+      "id": 23,
+      "x": 192,
+      "y": 199,
+      "width": 72,
+      "inputConnectors": [
+        {
+          "value": "_clk",
+          "label": "_clk"
+        }
+      ]
+    },
+    {
+      "label": "DIV (22)",
+      "type": "div",
+      "params": [
+        {
+          "name": "N",
+          "value": "22"
+        },
+        {
+          "name": "M",
+          "value": 4194304
+        }
+      ],
+      "id": 25,
+      "x": 492,
+      "y": 250,
+      "width": 166,
+      "vcode": "module div #(parameter N=22, M=4194304)(input clk, output reg o);\n wire clk_temp;\n reg [N - 1:0] c = 0;\n always @(posedge clk)\n  if (M == 0)\n   c <= 0;\n  else if (c == M - 1)\n   c <= 0;\n  else\n   c <= c + 1;\n assign clk_temp = (c == 0) ? 1 : 0;\n always @(posedge clk)\n  if (N == 0)\n   o <= 0;\n  else if (clk_temp == 1)\n   o <= ~o;\nendmodule\n",
+      "inputConnectors": [
+        {
+          "name": "clk",
+          "label": "clk"
+        }
+      ],
+      "outputConnectors": [
+        {
+          "name": "o",
+          "label": "out"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "95"
+      ],
+      "id": 26,
+      "x": 206,
+      "y": 280,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "95"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "linput",
+      "params": [
+        "_led"
+      ],
+      "id": 27,
+      "x": 105,
+      "y": 279,
+      "width": 72,
+      "outputConnectors": [
+        {
+          "value": "_led",
+          "label": "_led"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "linput",
+      "params": [
+        "_clk"
+      ],
+      "id": 28,
+      "x": 386,
+      "y": 249,
+      "width": 72,
+      "outputConnectors": [
+        {
+          "value": "_clk",
+          "label": "_clk"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "loutput",
+      "params": [
+        "_led"
+      ],
+      "id": 29,
+      "x": 690,
+      "y": 251,
+      "width": 72,
+      "inputConnectors": [
+        {
+          "value": "_led",
+          "label": "_led"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "nodeID": 22,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 23,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 27,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 26,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 28,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 25,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 25,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 29,
+        "connectorIndex": 0
+      }
+    }
+  ]
+}
