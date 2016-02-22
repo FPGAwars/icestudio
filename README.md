@@ -18,9 +18,9 @@ pip install apio
 apio install
 ```
 
-## User
+## Usage
 
-Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio. Also, you can test these [examples](https://github.com/bqlabs/icestudio/tree/develop/examples).
+Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
 
 ## Development
 
