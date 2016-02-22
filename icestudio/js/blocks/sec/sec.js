@@ -64,7 +64,8 @@ angular.module('app')
             x: 50, y: 100,
             width: 150,
             inputConnectors: [
-                { name: "clk", label: "clk" }
+                { name: "clk", label: "clk" },
+                { name: "ena", label: "ena" }
             ],
             outputConnectors: [
                 { name: "c0", label: "c0" },

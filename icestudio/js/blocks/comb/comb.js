@@ -38,7 +38,7 @@ angular.module('app')
             vcode: decv,
             id: nodeID++,
             x: 50, y: 100,
-            width: 150,
+            width: 140,
             inputConnectors: [
                 { name: "c", label: "c" }
             ],

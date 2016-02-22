@@ -74,6 +74,8 @@ angular.module('app', ['flowChart', ])
 
     $scope.showEditor = false;
 
+    alertify.set({ delay: 2000 });
+
     $scope.initialize = function () {
         nextNodeID = 10;
         win.title = 'Icestudio';

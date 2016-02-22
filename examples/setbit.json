@@ -1,0 +1,178 @@
+{
+  "nodes": [
+    {
+      "label": "",
+      "type": "driver",
+      "params": [
+        {
+          "name": "B",
+          "value": "1'b1"
+        }
+      ],
+      "vcode": "module driver #(parameter B = 1'b0)(output o);\nassign o = B;\nendmodule\n",
+      "id": 10,
+      "x": 165,
+      "y": 206,
+      "width": 55,
+      "outputConnectors": [
+        {
+          "name": "o",
+          "label": "\"1\""
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "95"
+      ],
+      "id": 11,
+      "x": 342,
+      "y": 149,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "95"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "96"
+      ],
+      "id": 12,
+      "x": 342,
+      "y": 209,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "96"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "97"
+      ],
+      "id": 13,
+      "x": 342,
+      "y": 269,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "97"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "98"
+      ],
+      "id": 14,
+      "x": 342,
+      "y": 329,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "98"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "99"
+      ],
+      "id": 15,
+      "x": 342,
+      "y": 389,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "99"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "driver",
+      "params": [
+        {
+          "name": "B",
+          "value": "1'b0"
+        }
+      ],
+      "vcode": "module driver #(parameter B = 1'b0)(output o);\nassign o = B;\nendmodule\n",
+      "id": 16,
+      "x": 167,
+      "y": 357,
+      "width": 55,
+      "outputConnectors": [
+        {
+          "name": "o",
+          "label": "\"0\""
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "nodeID": 10,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 11,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 10,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 12,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 10,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 13,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 16,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 14,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 16,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 15,
+        "connectorIndex": 0
+      }
+    }
+  ]
+}

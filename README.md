@@ -20,7 +20,7 @@ apio install
 
 ## User
 
-Download [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio.
+Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the tarball and execute Icestudio.
 
 ## Development
 
