@@ -1,0 +1,247 @@
+{
+  "nodes": [
+    {
+      "label": "",
+      "type": "loutput",
+      "params": [
+        "_clk"
+      ],
+      "id": 29,
+      "x": 141,
+      "y": 128,
+      "width": 72,
+      "inputConnectors": [
+        {
+          "value": "_clk",
+          "label": "_clk"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "linput",
+      "params": [
+        "_clk"
+      ],
+      "id": 31,
+      "x": 97,
+      "y": 242,
+      "width": 72,
+      "outputConnectors": [
+        {
+          "value": "_clk",
+          "label": "_clk"
+        }
+      ]
+    },
+    {
+      "label": "DEC",
+      "type": "dec",
+      "params": [],
+      "vcode": "module dec (input c, output reg o0, o1);\n always @(*)\n  begin\n   o0 = (c == 0) ? 1 : 0;\n   o1 = (c == 1) ? 1 : 0;\n  end\nendmodule\n",
+      "id": 36,
+      "x": 420,
+      "y": 242,
+      "width": 140,
+      "inputConnectors": [
+        {
+          "name": "c",
+          "label": "c"
+        }
+      ],
+      "outputConnectors": [
+        {
+          "name": "o0",
+          "label": "o0"
+        },
+        {
+          "name": "o1",
+          "label": "o1"
+        }
+      ]
+    },
+    {
+      "label": "DIV (22)",
+      "type": "div",
+      "params": [
+        {
+          "name": "N",
+          "value": "22"
+        },
+        {
+          "name": "M",
+          "value": 4194304
+        }
+      ],
+      "id": 37,
+      "x": 212,
+      "y": 242,
+      "width": 166,
+      "vcode": "module div #(parameter N=22, M=4194304)(input clk, output reg out);\n wire clk_temp;\n reg [N - 1:0] c = 0;\n always @(posedge clk)\n  if (M == 0)\n   c <= 0;\n  else if (c == M - 1)\n   c <= 0;\n  else\n   c <= c + 1;\n assign clk_temp = (c == 0) ? 1 : 0;\n always @(posedge clk)\n  if (N == 0)\n   out <= 0;\n  else if (clk_temp == 1)\n   out <= ~out;\nendmodule\n",
+      "inputConnectors": [
+        {
+          "name": "clk",
+          "label": "clk"
+        }
+      ],
+      "outputConnectors": [
+        {
+          "name": "out",
+          "label": "out"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "96"
+      ],
+      "id": 38,
+      "x": 646,
+      "y": 168,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "96"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "97"
+      ],
+      "id": 39,
+      "x": 646,
+      "y": 228,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "97"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "98"
+      ],
+      "id": 40,
+      "x": 646,
+      "y": 288,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "98"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "output",
+      "params": [
+        "99"
+      ],
+      "id": 41,
+      "x": 646,
+      "y": 348,
+      "width": 56,
+      "inputConnectors": [
+        {
+          "label": "99"
+        }
+      ]
+    },
+    {
+      "label": "",
+      "type": "input",
+      "params": [
+        "21"
+      ],
+      "id": 16,
+      "x": 49,
+      "y": 127,
+      "width": 56,
+      "outputConnectors": [
+        {
+          "label": "21"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "nodeID": 16,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 29,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 31,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 37,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 36,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 38,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 36,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 39,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 36,
+        "connectorIndex": 1
+      },
+      "dest": {
+        "nodeID": 40,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 36,
+        "connectorIndex": 1
+      },
+      "dest": {
+        "nodeID": 41,
+        "connectorIndex": 0
+      }
+    },
+    {
+      "source": {
+        "nodeID": 37,
+        "connectorIndex": 0
+      },
+      "dest": {
+        "nodeID": 36,
+        "connectorIndex": 0
+      }
+    }
+  ]
+}
