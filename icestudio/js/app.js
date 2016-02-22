@@ -74,6 +74,8 @@ angular.module('app', ['flowChart', ])
 
     $scope.showEditor = false;
 
+    alertify.set({ delay: 2000 });
+
     $scope.initialize = function () {
         nextNodeID = 10;
         win.title = 'Icestudio';
@@ -292,6 +294,12 @@ angular.module('app', ['flowChart', ])
 	//
 	$scope.addNewDivNode = function () {
 		SecService.addNewDivNode(nextNodeID, function (node, id) {
+			$scope.chartViewModel.addNode(node);
+			nextNodeID = id;
+		});
+	};
+    $scope.addNewTimerNode = function () {
+		SecService.addNewTimerNode(nextNodeID, function (node, id) {
 			$scope.chartViewModel.addNode(node);
 			nextNodeID = id;
 		});
