@@ -15,7 +15,6 @@ angular.module('app', ['flowChart', ])
 	                var file = event.target.files[0];
                     event.target.files.clear();
                     if (file) {
-                        scope.filepath = filename;
                         scope.load(file.path);
                     }
 	            })
@@ -82,7 +81,8 @@ angular.module('app', ['flowChart', ])
     // Check apio backend
     const result = child_process.spawnSync('apio', []);
     if (result.error) {
-        alertify.error('Apio not installed');
+        alertify.error('Apio is not installed');
+
         document.getElementById('build').className += ' disabled';
         document.getElementById('upload').className += ' disabled';
     }
@@ -94,7 +94,7 @@ angular.module('app', ['flowChart', ])
     $scope.examples = function () {
         swal({
           title: 'Examples',
-          text: examplesArray.join('\n'),
+          text: examplesArray.join(', '),
           type: 'input',
           showCancelButton: true,
           closeOnConfirm: true,
@@ -102,12 +102,11 @@ angular.module('app', ['flowChart', ])
           inputPlaceholder: 'blink'
         },
         function (example) {
-            if ((!example) ||
-                (example === '') ||
-                (examplesArray.indexOf(example)) === -1)
-            {
+            if ((!example) || (example === '')) {
+              if (examplesArray.indexOf(example) === -1) {
                 alertify.error('Example ' + example + ' does not exist');
-                return false;
+              }
+              return false;
             }
             $scope.load('examples/' + example + '.json');
         });
@@ -131,6 +130,7 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.load = function (filename) {
+        $scope.filepath = filename;
         var name = filename.replace(/^.*[\\\/]/, '').split('.')[0];
         win.title = 'Icestudio - ' + name;
 		var data = JSON.parse(fs.readFileSync(filename));
