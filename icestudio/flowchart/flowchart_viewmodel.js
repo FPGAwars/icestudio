@@ -518,47 +518,44 @@ var flowchart = {
 				}
 			}
 
-			var addConnector = true;
-
 			for (var i = 0; i < connectionsViewModel.length; i++) {
-				if (connectionsViewModel[i].data.dest.nodeID == endNode.data.id &&
-				    connectionsViewModel[i].data.dest.connectorIndex == endConnectorIndex) {
-					addConnector = false;
-					break;
+				if ((connectionsViewModel[i].data.dest.nodeID == endNode.data.id &&
+				    connectionsViewModel[i].data.dest.connectorIndex == endConnectorIndex) ||
+					(connectionsViewModel[i].data.dest.nodeID == startNode.data.id &&
+				    connectionsViewModel[i].data.dest.connectorIndex == startConnectorIndex)) {
+					throw new Error("Multiple input wires not allowed.")
 				}
 			}
 
-			if (addConnector) {
-				if (startConnectorType == endConnectorType) {
-					throw new Error("Failed to create connection. Only output to input connections are allowed.")
-				}
-
-				if (startNode == endNode) {
-					throw new Error("Failed to create connection. Cannot link a node with itself.")
-				}
-
-				var startNode = {
-					nodeID: startNode.data.id,
-					connectorIndex: startConnectorIndex,
-				}
-
-				var endNode = {
-					nodeID: endNode.data.id,
-					connectorIndex: endConnectorIndex,
-				}
-
-				var connectionDataModel = {
-					source: startConnectorType == 'output' ? startNode : endNode,
-					dest: startConnectorType == 'output' ? endNode : startNode,
-				};
-				connectionsDataModel.push(connectionDataModel);
-
-				var outputConnector = startConnectorType == 'output' ? startConnector : endConnector;
-				var inputConnector = startConnectorType == 'output' ? endConnector : startConnector;
-
-				var connectionViewModel = new flowchart.ConnectionViewModel(connectionDataModel, outputConnector, inputConnector);
-				connectionsViewModel.push(connectionViewModel);
+			if (startConnectorType == endConnectorType) {
+				throw new Error("Failed to create connection. Only output to input connections are allowed.")
 			}
+
+			if (startNode == endNode) {
+				throw new Error("Failed to create connection. Cannot link a node with itself.")
+			}
+
+			var startNode = {
+				nodeID: startNode.data.id,
+				connectorIndex: startConnectorIndex,
+			}
+
+			var endNode = {
+				nodeID: endNode.data.id,
+				connectorIndex: endConnectorIndex,
+			}
+
+			var connectionDataModel = {
+				source: startConnectorType == 'output' ? startNode : endNode,
+				dest: startConnectorType == 'output' ? endNode : startNode,
+			};
+			connectionsDataModel.push(connectionDataModel);
+
+			var outputConnector = startConnectorType == 'output' ? startConnector : endConnector;
+			var inputConnector = startConnectorType == 'output' ? endConnector : startConnector;
+
+			var connectionViewModel = new flowchart.ConnectionViewModel(connectionDataModel, outputConnector, inputConnector);
+			connectionsViewModel.push(connectionViewModel);
 		};
 
 		//
