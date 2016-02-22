@@ -23,18 +23,15 @@
 					<div class="dropdown">
 						<button class="dropbtn">File</button>
 						<div class="dropdown-content">
-							<div ng-click="new()">
-								New
-							</div>
+							<div ng-click="new()">New</div>
 							<label>
 								Load<input type="file" action="load" accept=".json"/>
 							</label>
-							<div ng-click="save()">
-								Save
-							</div>
+							<div ng-click="save()">Save</div>
 							<label>
 								Save as<input id="saveas" type="file" nwsaveas action="saveas" accept=".json"/>
 							</label>
+							<div ng-click="examples()">Examples</div>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -49,10 +46,10 @@
 							<div ng-click="toggleEditor()">Code</div>
 						</div>
 					</div>
-					<div class="dropdown">
+					<div class="dropdown" id="build">
 						<button class="dropbtn" ng-click="build()">Build</button>
 					</div>
-					<div class="dropdown">
+					<div class="dropdown" id="upload">
 						<button class="dropbtn" ng-click="upload()">Upload</button>
 					</div>
 				</div>

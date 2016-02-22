@@ -29,6 +29,11 @@
     display: inline-block;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
