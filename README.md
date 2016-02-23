@@ -75,10 +75,9 @@ zip -r icestudio-osx64 osx64
 
 ## Videos
 
+[![Icestudio: GUI for open FPGAs](http://img.youtube.com/vi/Okl4Rr_i6Qk/0.jpg)](http://www.youtube.com/watch?v=Okl4Rr_i6Qk "Icestudio: GUI for open FPGAs")
+
 [![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")
-
-[![Icestudio: modules code and labels](http://img.youtube.com/vi/lCm5WAkVGIE/0.jpg)](http://www.youtube.com/watch?v=lCm5WAkVGIE "Icestudio: modules code and labels")
-
 
 ## Authors
 
