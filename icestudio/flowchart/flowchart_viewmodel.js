@@ -519,10 +519,12 @@ var flowchart = {
 			}
 
 			for (var i = 0; i < connectionsViewModel.length; i++) {
-				if ((connectionsViewModel[i].data.dest.nodeID == endNode.data.id &&
-				    connectionsViewModel[i].data.dest.connectorIndex == endConnectorIndex) ||
-					(connectionsViewModel[i].data.dest.nodeID == startNode.data.id &&
-				    connectionsViewModel[i].data.dest.connectorIndex == startConnectorIndex)) {
+				if ((endConnectorType == 'input' &&
+					 connectionsViewModel[i].data.dest.nodeID == endNode.data.id &&
+				     connectionsViewModel[i].data.dest.connectorIndex == endConnectorIndex) ||
+					(startConnectorType == 'input' &&
+	 				 connectionsViewModel[i].data.dest.nodeID == startNode.data.id &&
+	 			     connectionsViewModel[i].data.dest.connectorIndex == startConnectorIndex)) {
 					throw new Error("Multiple input wires not allowed.")
 				}
 			}
