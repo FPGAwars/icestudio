@@ -15,12 +15,18 @@ Install libftdi and [apio](https://github.com/bqlabs/apio)
 ```bash
 sudo apt-get install libftdi1
 pip install apio
+```
+
+Install tools: scons, icestorm, icestick rules.
+```bash
 apio install
 ```
 
 ## Usage
 
 Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
+
+NOTE: this is an **early experimental version**. Although frontend Icestudio works multiplatform, Apio backend is only available for Linux x86. We are working on having the backend also for win, osx and arm architectures.
 
 ## Development
 
