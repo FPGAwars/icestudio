@@ -90,8 +90,15 @@ angular.module('app', ['flowChart', ])
     });
 
     // Build Examples dropdown
-    const examples = child_process.spawnSync('ls', ['examples']);
-    var examplesArray = examples.stdout.toString().split('.json\n');
+    var examplesArray = [];
+    child_process.exec('ls examples', function(error, stdout, stderr) {
+        if (!error) {
+            examplesArray = stdout.toString().split('.json\n');
+        }
+        else {
+          examplesArray = ['blink', 'blinkdec', 'counter', 'flipflopt', 'setbit'];
+        }
+    });
 
     $scope.examples = function () {
         swal({
@@ -104,10 +111,11 @@ angular.module('app', ['flowChart', ])
           inputPlaceholder: 'blink'
         },
         function (example) {
-            if ((!example) || (example === '')) {
-              if (examplesArray.indexOf(example) === -1) {
-                alertify.error('Example ' + example + ' does not exist');
-              }
+            if (!example) {
+              return false;
+            }
+            if ((example === "") || (examplesArray.indexOf(example) === -1)) {
+              alertify.error('Example ' + example + ' does not exist');
               return false;
             }
             $scope.load('examples/' + example + '.json');
