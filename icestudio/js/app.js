@@ -78,14 +78,16 @@ angular.module('app', ['flowChart', ])
 
     alertify.set({ delay: 2000 });
 
-    // Check apio backend
-    const result = child_process.spawnSync('apio', []);
-    if (result.error) {
-        alertify.error('Apio is not installed');
+    var apio = 'export PATH=$HOME/.local/bin:$PATH; apio ';
 
-        document.getElementById('build').className += ' disabled';
-        document.getElementById('upload').className += ' disabled';
-    }
+    // Check apio backend
+    child_process.exec(apio, function(error, stdout, stderr) {
+        if (error) {
+            alertify.error('Apio is not installed');
+            document.getElementById('build').className += ' disabled';
+            document.getElementById('upload').className += ' disabled';
+        }
+    });
 
     // Build Examples dropdown
     const examples = child_process.spawnSync('ls', ['examples']);
@@ -168,39 +170,47 @@ angular.module('app', ['flowChart', ])
 	};
 
 	$scope.build = function () {
+        alertify.log('Building...');
 		$scope.chartViewModel.deselectAll();
+        document.getElementById('build').className += ' disabled';
 		fs.writeFile('gen/main.json', JSON.stringify($scope.chartDataModel, null, 2),  function(err) {
 			if (!err) {
-				const result = child_process.spawnSync('apio', ['build']);
-				if (result.stdout.length !== 0) {
-					if (result.stdout.toString().indexOf('error') != -1) {
-						alertify.error('Build fail');
-					}
-					else {
-						alertify.success('Build success');
-					}
-				}
-				else {
-					alertify.error('Build fail');
-				}
+                child_process.exec(apio + 'build', function(error, stdout, stderr) {
+                    if (error) {
+                        alertify.error('Build fail');
+                    }
+                    else if (stdout) {
+                        if (stdout.toString().indexOf('error') != -1) {
+                            alertify.error('Build fail');
+                        }
+                        else {
+                            alertify.success('Build success');
+                        }
+                    }
+                    document.getElementById('build').className = 'dropdown';
+                });
 			}
 		});
 	};
 
 	$scope.upload = function () {
+        alertify.log('Uploading...');
 		$scope.chartViewModel.deselectAll();
-		const result = child_process.spawnSync('apio', ['upload']);
-		if (result.stdout.length !== 0) {
-			if (result.stdout.toString().indexOf('error') != -1) {
-				alertify.error('Upload fail');
-			}
-			else {
-				alertify.success('Upload success');
-			}
-		}
-		else {
-			alertify.error('Upload fail');
-		}
+        document.getElementById('upload').className += ' disabled';
+        child_process.exec(apio + 'upload', function(error, stdout, stderr) {
+            if (error) {
+                alertify.error('Upload fail');
+            }
+            else if (stdout) {
+                if (stdout.toString().indexOf('error') != -1) {
+                    alertify.error('Upload fail');
+                }
+                else {
+                    alertify.success('Upload success');
+                }
+            }
+            document.getElementById('upload').className = 'dropdown';
+        });
 	};
 
 	// Event handler for key-down on the flowchart.
