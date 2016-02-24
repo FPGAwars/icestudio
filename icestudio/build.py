@@ -6,6 +6,7 @@
 
 import sys
 import json
+import codecs
 
 from os.path import abspath, dirname, basename, splitext, join
 
@@ -61,7 +62,7 @@ def generate_verilog_modules(nodes):
     # Generate modules
     for node in nodes:
         if node['id'] in types:
-            code += '\n' + node['vcode'].encode('utf-8')
+            code += '\n' + node['vcode']
     return code
 
 
@@ -109,7 +110,7 @@ def generate_verilog_main(name, nodes, connections):
     # Wires
     wires = len(connections)
     if wires > 0:
-        for wire in xrange(wires):
+        for wire in range(wires):
             inline += 'wire w{0};\n'.format(wire)
     # Assign i/o
     for index, connection in enumerate(connections):
@@ -121,8 +122,8 @@ def generate_verilog_main(name, nodes, connections):
                 inline += 'assign {1} = w{0};\n'.format(index, o)
     # Assign wires (TODO: optimize)
     num = len(connections)
-    for i in xrange(num):
-        for j in xrange(num):
+    for i in range(num):
+        for j in range(num):
             if i < j:
                 ni = connections[i]['source']['nodeID']
                 nj = connections[j]['source']['nodeID']
@@ -134,12 +135,12 @@ def generate_verilog_main(name, nodes, connections):
     for node in nodes:
         if node['type'] == 'linput':
             num = len(connections)
-            for i in xrange(num):
+            for i in range(num):
                 if node['id'] == connections[i]['source']['nodeID']:
                     inline += 'assign w{0} = {1};\n'.format(i, node['outputConnectors'][0]['value'])
         elif node['type'] == 'loutput':
             num = len(connections)
-            for i in xrange(num):
+            for i in range(num):
                 if node['id'] == connections[i]['dest']['nodeID']:
                     inline += 'assign {0} = w{1};\n'.format(node['inputConnectors'][0]['value'], i)
         elif node['type'] != 'input' and node['type'] != 'output':
@@ -222,7 +223,7 @@ def main():
         data.close()
 
     # Write Verilog file
-    with open(join(path, name + '.v'), 'w') as data:
+    with codecs.open(join(path, name + '.v'), 'w', 'utf-8') as data:
         # Generate Verilog
         code = '// Generated verilog\n'
         code += generate_verilog_modules(nodes)
