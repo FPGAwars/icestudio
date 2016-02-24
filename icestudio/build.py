@@ -6,6 +6,7 @@
 
 import sys
 import json
+import codecs
 
 from os.path import abspath, dirname, basename, splitext, join
 
@@ -222,7 +223,7 @@ def main():
         data.close()
 
     # Write Verilog file
-    with open(join(path, name + '.v'), 'w') as data:
+    with codecs.open(join(path, name + '.v'), 'w', 'utf-8') as data:
         # Generate Verilog
         code = '// Generated verilog\n'
         code += generate_verilog_modules(nodes)
