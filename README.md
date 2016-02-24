@@ -83,6 +83,10 @@ zip -r icestudio-osx64 osx64
 
 * Jesús Arroyo
 
+## Contributors
+
+* Miguel Sánchez de León Peque
+
 ## Credits
 
 * Using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)

@@ -11,7 +11,7 @@ module genrom #(             //-- Parametros
          output reg [DW-1: 0] data);  //-- Dato de salida
 
 //-- Parametro: Nombre del fichero con el contenido de la ROM
-parameter ROMFILE = "gui/js/blocks/sec/imperial.list";
+parameter ROMFILE = "js/blocks/sec/imperial.list";
 
 //-- Calcular el numero de posiciones totales de memoria
 localparam NPOS = 2 ** AW;
@@ -119,7 +119,7 @@ module romnotes(input wire clk,
 parameter DUR = `T_200ms;
 
 //-- Fichero con las notas para cargar en la rom
-parameter ROMFILE = "gui/js/blocks/sec/imperial.list";
+parameter ROMFILE = "js/blocks/sec/imperial.list";
 
 //-- Tamaño del bus de direcciones de la rom
 parameter AW = 6;
