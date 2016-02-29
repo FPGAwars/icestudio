@@ -408,7 +408,36 @@ angular.module('app', ['flowChart', ])
       parity: 'none',
       stopBits: 1
     };
-    var port = new SerialPort('/dev/ttyUSB1', openOptions);
+
+    var port = new SerialPort('/dev/ttyUSB1', openOptions, false);
+    var div_terminal = document.getElementById('terminal');
+
+    // Show/Hide terminal
+	$scope.toggleTerminal = function () {
+		document.getElementById('terminal').style.opacity = '1.0';
+		document.getElementById('terminal').style.visibility = 'visible';
+		$scope.showEditor = !$scope.showEditor;
+		if ($scope.showEditor) {
+            port.open();
+			document.getElementById('BQLogo').style.opacity = '0.0';
+			document.getElementById('warning').style.opacity = '0.0';
+			document.getElementById('terminal').style.height = '280px';
+		}
+		else {
+            port.close();
+            // div_terminal.innerHTML = '';
+			document.getElementById('terminal').style.height = '0px';
+			document.getElementById('BQLogo').style.opacity = '1.0';
+			document.getElementById('warning').style.opacity = '1.0';
+		}
+	};
+
+    win.on('close', function() {
+        if (port.isOpen()) {
+            port.close();
+        }
+        this.close(true);
+    });
 
     port.on('open', function () {
       setTimeout(asserting, 0);
@@ -423,7 +452,9 @@ angular.module('app', ['flowChart', ])
     }
 
     port.on('data', function (data) {
-      process.stdout.write(data.toString());
+      // process.stdout.write(data.toString());
+      div_terminal.innerHTML += data.toString();
+      div_terminal.innerHTML = div_terminal.innerHTML.substring(0, 5000);
     });
 
     port.on('error', function (err) {
