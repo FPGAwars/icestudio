@@ -11,9 +11,8 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ### Install dependencies
 
-Install libftdi and [apio](https://github.com/bqlabs/apio)
+Install [apio](https://github.com/bqlabs/apio)
 ```bash
-sudo apt-get install libftdi1
 pip install apio
 ```
 
@@ -69,8 +68,8 @@ nwbuild -p win64 icestudio -v v0.12.3
 cd build/Icestudio
 
 zip -r icestudio-linux64 linux64
-zip -r icestudio-win64 win64
 zip -r icestudio-osx64 osx64
+zip -r icestudio-win64 win64
 ```
 
 ## Videos
