@@ -37,7 +37,7 @@ sudo apt-get install -y nodejs
 
 Install nwjs
 ```bash
-sudo npm install -g nw
+sudo npm install -g nw@0.12.3
 ```
 
 Install nw-builder
@@ -45,11 +45,26 @@ Install nw-builder
 sudo npm install -g nw-builder
 ```
 
+Install node-pre-gyp
+```bash
+sudo npm install -g node-pre-gyp
+```
+
 ### Download
 
 ```bash
 git clone https://github.com/bqlabs/icestudio.git
 cd icestudio
+```
+
+## Setup
+
+```bash
+npm install
+
+cd node_module/serialport
+
+node-pre-gyp rebuild --runtime=node-webkit --target=0.12.3
 ```
 
 ### Execute

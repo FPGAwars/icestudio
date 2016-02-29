@@ -399,4 +399,35 @@ angular.module('app', ['flowChart', ])
 			document.getElementById('warning').style.opacity = '1.0';
 		}
 	};
+
+    var SerialPort = require('serialport').SerialPort;
+
+    var openOptions = {
+      baudRate: 115200,
+      dataBits: 8,
+      parity: 'none',
+      stopBits: 1
+    };
+    var port = new SerialPort('/dev/ttyUSB1', openOptions);
+
+    port.on('open', function () {
+      setTimeout(asserting, 0);
+    });
+
+    function asserting() {
+      console.log('asserting');
+        //NOTE: you actually de-assert rts and dtr to toggle!
+        port.set({rts:false, dtr:false}, function(err, something) {
+          console.log('asserted');
+        });
+    }
+
+    port.on('data', function (data) {
+      process.stdout.write(data.toString());
+    });
+
+    port.on('error', function (err) {
+      console.log(err);
+    });
+
 }]);

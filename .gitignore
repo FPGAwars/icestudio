@@ -5,3 +5,4 @@ file
 *.bin
 *.blif
 build
+icestudio/node_modules
