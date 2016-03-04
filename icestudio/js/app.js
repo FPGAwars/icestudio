@@ -78,7 +78,17 @@ angular.module('app', ['flowChart', ])
 
     alertify.set({ delay: 2000 });
 
-    var apio = 'export PATH=$HOME/.local/bin:$PATH; apio ';
+    var apio = 'apio ';
+    var platform = window.navigator.platform;
+
+    if (platform.indexOf('Linux') !== -1) {
+        var path = '$HOME/.local/bin';
+        apio = 'export PATH=' + path + ':$PATH; ' + apio;
+    }
+    else if (platform.indexOf('Mac') !== -1) {
+        var path = '/Library/Frameworks/Python.framework/Versions/2.7/bin/';
+        apio = 'export PATH=' + path + ':$PATH; ' + apio;
+    }
 
     // Check apio backend
     child_process.exec(apio, function(error, stdout, stderr) {
@@ -188,7 +198,7 @@ angular.module('app', ['flowChart', ])
                         alertify.error('Build fail');
                     }
                     else if (stdout) {
-                        if (stdout.toString().indexOf('Error') != -1) {
+                        if (stdout.toString().indexOf('Error 1') != -1) {
                             alertify.error('Build fail');
                         }
                         else {
@@ -210,7 +220,7 @@ angular.module('app', ['flowChart', ])
                 alertify.error('Upload fail');
             }
             else if (stdout) {
-                if (stdout.toString().indexOf('Error') != -1) {
+                if (stdout.toString().indexOf('Error 1') != -1) {
                     alertify.error('Upload fail');
                 }
                 else {
