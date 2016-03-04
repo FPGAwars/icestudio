@@ -9,7 +9,7 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ![][icestudio-demo]
 
-## Usage
+## Installation
 
 1. Install the toolchain with [apio](https://github.com/bqlabs/apio#install)
 
