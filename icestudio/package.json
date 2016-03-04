@@ -4,7 +4,7 @@
   "keywords": [
     "FPGA", "open", "hardware"
   ],
-  "version": "0.1-beta1",
+  "version": "0.1-beta2",
   "license" : "GPLv2",
   "main": "icestudio.html",
   "window": {

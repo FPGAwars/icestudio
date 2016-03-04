@@ -188,7 +188,7 @@ angular.module('app', ['flowChart', ])
                         alertify.error('Build fail');
                     }
                     else if (stdout) {
-                        if (stdout.toString().indexOf('error') != -1) {
+                        if (stdout.toString().indexOf('Error') != -1) {
                             alertify.error('Build fail');
                         }
                         else {
@@ -210,7 +210,7 @@ angular.module('app', ['flowChart', ])
                 alertify.error('Upload fail');
             }
             else if (stdout) {
-                if (stdout.toString().indexOf('error') != -1) {
+                if (stdout.toString().indexOf('Error') != -1) {
                     alertify.error('Upload fail');
                 }
                 else {

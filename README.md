@@ -9,23 +9,13 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ![][icestudio-demo]
 
-### Install dependencies
-
-Install [apio](https://github.com/bqlabs/apio)
-```bash
-pip install apio
-```
-
-Install tools: scons, icestorm, icestick rules.
-```bash
-apio install
-```
-
 ## Usage
 
-Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
+1. Install the toolchain with [apio](https://github.com/bqlabs/apio#install)
 
-NOTE: this is an **early experimental version**. Although frontend Icestudio works multiplatform, Apio backend is only available for Linux x86. We are working on having the backend also for win, osx and arm architectures.
+2. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
+
+NOTE: this is an **early experimental version**. Initially supported on Linux (32, 64), Windows and Mac.
 
 ## Development
 
@@ -44,6 +34,8 @@ Install nw-builder
 ```bash
 sudo npm install -g nw-builder
 ```
+
+Install the toolchain with [apio](https://github.com/bqlabs/apio#install)
 
 ### Download
 
