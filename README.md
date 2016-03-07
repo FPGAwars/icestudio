@@ -11,9 +11,9 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ## Installation
 
-1. Install the toolchain with [apio](https://github.com/bqlabs/apio#install)
+1. Install and configure the [drivers](https://github.com/bqlabs/icestudio/wiki/Installing-the-drivers)
 
-2. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
+2. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio
 
 NOTE: this is an **early experimental version**. Initially supported on Linux (32, 64), Windows and Mac.
 
@@ -27,7 +27,7 @@ sudo apt-get install -y nodejs
 
 Install nwjs
 ```bash
-sudo npm install -g nw
+sudo npm install -g nw@0.12.3
 ```
 
 Install nw-builder

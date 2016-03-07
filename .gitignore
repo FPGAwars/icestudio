@@ -4,4 +4,5 @@ file
 *.asc
 *.bin
 *.blif
+*.pyc
 build
