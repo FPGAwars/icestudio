@@ -56,12 +56,17 @@ angular.module('app', ['flowChart', ])
 									      SecService,
 									      LabelService) {
 
+    var os = require('os');
 	var fs = require('fs');
+    var path = require('path');
 	var child_process = require('child_process');
 
     // Load native UI library
     var gui = require('nw.gui');
     var win = gui.Window.get();
+
+    const WIN32 = Boolean(os.platform().indexOf('win32') > -1);
+    const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
 
 	// Code for the delete key.
 	var deleteKeyCode = 46;
@@ -78,26 +83,83 @@ angular.module('app', ['flowChart', ])
 
     alertify.set({ delay: 2000 });
 
-    var apio = 'apio ';
-    var platform = window.navigator.platform;
+    var home = process.env.HOME || process.env.USERPROFILE;
+    var apio = path.join(home, '.icestudio', 'bin', 'apio ');
+    var apioProfile = path.join(home, '.apio', 'profile.json');
 
-    if (platform.indexOf('Linux') !== -1) {
-        var path = '$HOME/.local/bin';
-        apio = 'export PATH=' + path + ':$PATH; ' + apio;
-    }
-    else if (platform.indexOf('Mac') !== -1) {
-        var path = '/Library/Frameworks/Python.framework/Versions/2.7/bin/';
-        apio = 'export PATH=' + path + ':$PATH; ' + apio;
-    }
+    var _pythonExecutableCached = null;
+    // Get the system executable
+    function getPythonExecutable() {
+        if (!_pythonExecutableCached) {
+            var executables;
+            if (WIN32) {
+                executables = ['python.exe', 'C:\\Python27\\python.exe'];
+            } else {
+                executables = ['python2.7', 'python'];
+            }
 
-    // Check apio backend
-    child_process.exec(apio, function(error, stdout, stderr) {
-        if (error) {
-            alertify.error('Apio is not installed');
-            document.getElementById('build').className += ' disabled';
-            document.getElementById('upload').className += ' disabled';
+            const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+            for (var i = 0; i < executables.length; i++) {
+                const result = child_process.spawnSync(executables[i], args);
+                if (0 === result.status && ('' + result.output).indexOf('2.7') > -1) {
+                    _pythonExecutableCached = executables[i];
+                }
+            }
+
+            if (!_pythonExecutableCached) {
+                var html = '<p>Download and install <a href="https://www.python.org/downloads/">Python 2.7</a></p>';
+                swal({
+                  title: 'Python 2.7 is not installed',
+                  text: html,
+                  html: true,
+                  type: 'error',
+                });
+                return null;
+            }
         }
-    });
+      return _pythonExecutableCached;
+    }
+
+    function checkApioExecutable() {
+        child_process.exec(apio, function(error, stdout, stderr) {
+            if (error) {
+                disableToolchainButtons();
+            }
+        });
+    }
+
+    function checkToolchainInstalled() {
+        fs.exists(apioProfile, function(exists) {
+            var result = false;
+            if (exists) {
+                var data = JSON.parse(fs.readFileSync(apioProfile));
+                result = 'tool-scons' in data && 'toolchain-icestorm' in data;
+            }
+
+            if (result) {
+                document.getElementById('install-toolchain').innerHTML = 'Upgrade toolchain';
+            }
+            else {
+                disableToolchainButtons();
+            }
+        });
+    }
+
+    function disableToolchainButtons() {
+        swal({
+          title: 'Toolchain is not installed',
+          text: 'Please go to Edit > Install toolchain',
+          type: 'error'
+        });
+        document.getElementById('build').className += ' disabled';
+        document.getElementById('upload').className += ' disabled';
+    }
+
+    // Check backend
+    if (getPythonExecutable()) {
+        checkApioExecutable();
+        checkToolchainInstalled();
+    }
 
     // Build Examples dropdown
     var examplesArray = [];
@@ -109,6 +171,49 @@ angular.module('app', ['flowChart', ])
           examplesArray = ['blink', 'blinkdec', 'counter', 'flipflopt', 'setbit'];
         }
     });
+
+    $scope.installToolchain = function () {
+        if (getPythonExecutable()) {
+            var html = '<p>Please, wait until installation has finished</p>\
+                        </br><p>It should take less than a minute</p>\
+                        </br><p>This process requires internet connection</p>\
+                        </br></br><div><img src="img/spinner.gif"></div></br>';
+            swal({
+              title: 'Installing toolchain',
+              text: html,
+              html: true,
+              showCancelButton: false,
+              showConfirmButton: false,
+              animation: 'none',
+            });
+
+            child_process.exec(getPythonExecutable() + ' install/install.py', function(error, stdout, stderr) {
+                if (stderr) {
+                    swal({
+                      title: 'Error',
+                      text: stderr,
+                      type: 'error'
+                    });
+                }
+                else {
+                    swal({
+                      title: 'Success',
+                      type: 'success'
+                    });
+                    document.getElementById('build').className = 'dropdown';
+                    document.getElementById('upload').className = 'dropdown';
+                    document.getElementById('install-toolchain').innerHTML = 'Upgrade toolchain';
+                }
+            });
+        }
+
+        win.on('close', function() {
+            // TODO: process kill
+            this.close(true);
+        });
+    }
+
+
 
     $scope.examples = function () {
         swal({

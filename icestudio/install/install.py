@@ -5,17 +5,17 @@
 # GPLv2
 
 import sys
+import shutil
 import subprocess
 
 from platform import system
-from datetime import datetime
-from os.path import join, expanduser, normpath
+from os.path import isdir, join, expanduser, normpath, dirname, abspath
 
 __author__ = 'Jesús Arroyo Torrens <jesus.arroyo@bq.com>'
 __license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.html'
 
 
-VIRTUALENV = 'virtualenv-14.0.1'
+VIRTUALENV = join(dirname(abspath(__file__)), 'virtualenv-14.0.1')
 ICESTUDIO_PATH = join(expanduser('~'), '.icestudio')
 ICESTUDIO_BIN = join(ICESTUDIO_PATH, 'bin')
 ICESTUDIO_PIP = join(ICESTUDIO_BIN, 'pip')
@@ -25,9 +25,9 @@ PYTHON_EXE = normpath(sys.executable)
 
 def run(commands):
     result = {
-        "out": None,
-        "err": None,
-        "returncode": None}
+        'out': None,
+        'err': None,
+        'returncode': None}
 
     p = subprocess.Popen(
         commands,
@@ -39,24 +39,27 @@ def run(commands):
         result['out'], result['err'] = p.communicate()
         result['returncode'] = p.returncode
     except KeyboardInterrupt:
-        print("Aborted by user")
-        exit(1)
+        print('Aborted by user')
+        sys.exit(1)
+
+    if result['returncode'] != 0:
+        print >> sys.stderr, ' '.join(commands)
+        sys.exit(1)
 
     return result
 
-begin = datetime.now()
-
-print(run([PYTHON_EXE, '--version'])['err'])
+run([PYTHON_EXE, '--version'])
 
 # $ curl -O https://pypi.python.org/packages/source/v/virtualenv/virtualenv-X.X.tar.gz
 # $ tar xvfz virtualenv-X.X.tar.gz
 
-print(run([PYTHON_EXE, join(VIRTUALENV, 'virtualenv.py'), ICESTUDIO_PATH])['out'])
+if isdir(ICESTUDIO_PATH):
+    shutil.rmtree(ICESTUDIO_PATH)
 
-print(run([ICESTUDIO_PIP, 'install', '-U', 'apio'])['out'])
+run([PYTHON_EXE, join(VIRTUALENV, 'virtualenv.py'), ICESTUDIO_PATH])
 
-print(run([ICESTUDIO_APIO, '--version'])['out'])
+run([ICESTUDIO_PIP, 'install', '-U', 'apio'])
 
-print(run([ICESTUDIO_APIO, 'install'])['out'])
+run([ICESTUDIO_APIO, '--version'])
 
-print(datetime.now() - begin)
+run([ICESTUDIO_APIO, 'install'])
