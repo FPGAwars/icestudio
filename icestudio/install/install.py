@@ -17,7 +17,10 @@ __license__ = 'GNU General Public License v2 http://www.gnu.org/licenses/gpl2.ht
 
 VIRTUALENV = join(dirname(abspath(__file__)), 'virtualenv-14.0.1')
 ICESTUDIO_PATH = join(expanduser('~'), '.icestudio')
-ICESTUDIO_BIN = join(ICESTUDIO_PATH, 'bin')
+if system() == 'Windows':
+    ICESTUDIO_BIN = join(ICESTUDIO_PATH, 'Scripts')
+else:
+    ICESTUDIO_BIN = join(ICESTUDIO_PATH, 'bin')
 ICESTUDIO_PIP = join(ICESTUDIO_BIN, 'pip')
 ICESTUDIO_APIO = join(ICESTUDIO_BIN, 'apio')
 PYTHON_EXE = normpath(sys.executable)
@@ -33,7 +36,7 @@ def run(commands):
         commands,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        shell=system() == "Windows")
+        shell=system() == 'Windows')
 
     try:
         result['out'], result['err'] = p.communicate()

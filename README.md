@@ -11,11 +11,9 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ## Installation
 
-1. Install [Python 2.7](https://www.python.org/downloads/)
+1. Install and configure the [drivers](https://github.com/bqlabs/icestudio/wiki/Installing-the-drivers)
 
-2. Install the drivers [TODO]
-
-3. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio.
+2. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio
 
 NOTE: this is an **early experimental version**. Initially supported on Linux (32, 64), Windows and Mac.
 

@@ -84,7 +84,12 @@ angular.module('app', ['flowChart', ])
     alertify.set({ delay: 2000 });
 
     var home = process.env.HOME || process.env.USERPROFILE;
-    var apio = path.join(home, '.icestudio', 'bin', 'apio ');
+    if (WIN32) {
+        var apio = path.join(home, '.icestudio', 'Scripts', 'apio ');
+    }
+    else {
+        var apio = path.join(home, '.icestudio', 'bin', 'apio ');
+    }
     var apioProfile = path.join(home, '.apio', 'profile.json');
 
     var _pythonExecutableCached = null;
@@ -108,6 +113,11 @@ angular.module('app', ['flowChart', ])
 
             if (!_pythonExecutableCached) {
                 var html = '<p>Download and install <a href="https://www.python.org/downloads/">Python 2.7</a></p>';
+                if (WIN32) {
+                    html += '</br><p>DON’T FORGET to select Add python.exe to Path \
+                             feature on the “Customize” stage, otherwise Python Package \
+                             Manager pip command will not be available.</p>';
+                }
                 swal({
                   title: 'Python 2.7 is not installed',
                   text: html,
@@ -174,9 +184,9 @@ angular.module('app', ['flowChart', ])
 
     $scope.installToolchain = function () {
         if (getPythonExecutable()) {
-            var html = '<p>Please, wait until installation has finished</p>\
-                        </br><p>It should take less than a minute</p>\
-                        </br><p>This process requires internet connection</p>\
+            var html = '<p>Please, wait until the installation is complete. \
+                        It should take less than a minute. \
+                        This process requires internet connection</p>\
                         </br></br><div><img src="img/spinner.gif"></div></br>';
             swal({
               title: 'Installing toolchain',
