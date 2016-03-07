@@ -114,8 +114,8 @@ angular.module('app', ['flowChart', ])
             if (!_pythonExecutableCached) {
                 var html = '<p>Download and install <a href="https://www.python.org/downloads/">Python 2.7</a></p>';
                 if (WIN32) {
-                    html += '</br><p>DON’T FORGET to select Add python.exe to Path \
-                             feature on the “Customize” stage, otherwise Python Package \
+                    html += '</br><p>DON\'T FORGET to select Add python.exe to Path \
+                             feature on the \"Customize\" stage, otherwise Python Package \
                              Manager pip command will not be available.</p>';
                 }
                 swal({
@@ -124,6 +124,8 @@ angular.module('app', ['flowChart', ])
                   html: true,
                   type: 'error',
                 });
+                document.getElementById('build').className += ' disabled';
+                document.getElementById('upload').className += ' disabled';
                 return null;
             }
         }
