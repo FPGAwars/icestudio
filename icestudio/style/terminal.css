@@ -52,3 +52,42 @@
 	word-wrap: break-word;
 	text-overflow: ellipsis;
 }
+
+#terminal-input {
+    padding: 5px;
+	top: 233px;
+	width: 100%;
+	position: absolute;
+    background-color: #222222;
+}
+
+#terminal-input input {
+	background-color: #DDDDDD;
+	padding: 9px;
+    font-size: 15px;
+    border: none;
+	width: 92%;
+    border-radius: 5px;
+}
+
+#terminal-input button {
+    color: white;
+    background-color: #777777;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#terminal-input button:active {
+    transform:scale(.95);
+}
+
+#terminal-input button:hover {
+	background-color: #888888;
+}
+
+#terminal-input button:focus, input:focus {
+    outline: 0;
+}
