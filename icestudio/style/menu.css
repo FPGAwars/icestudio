@@ -1,3 +1,4 @@
+
 .control {
     top: 0;
     left: 0;
@@ -21,6 +22,10 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.dropbtn:focus {
+    outline: 0;
 }
 
 /* The container <div> - needed to position the dropdown content */

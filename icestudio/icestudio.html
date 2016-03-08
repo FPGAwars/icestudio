@@ -109,7 +109,19 @@
 		      	chart="chartViewModel">
 		    </flow-chart>
 			<div id="editor"></div>
-			<div id="terminal"></div>
+			<div id="terminal">
+				<div id="terminal-header">
+					<button ng-click="serialOpen()">Open</button>
+					<button ng-click="serialClose()">Close</button>
+					<select ng-model="serialdata.selectedPort" ng-options="port for port in serialdata.ports"></select>
+					<select ng-model="serialdata.selectedBaudRate" ng-options="baudrate.toString() for baudrate in serialdata.baudRates"></select>
+					<button ng-click="serialClear()">Clear</button>
+					<svg height="40" width="40">
+						<circle id="serial-status" cx="20" cy="20" r="7" fill="#D75C37" />
+					</svg>
+				</div>
+				<div id="terminal-content"></div>
+			</div>
 	   </div>
 
 		<!-- BQ logo. -->
@@ -124,6 +136,7 @@
 
 		<link rel="stylesheet" type="text/css" href="style/app.css">
 		<link rel="stylesheet" type="text/css" href="style/menu.css">
+		<link rel="stylesheet" type="text/css" href="style/terminal.css">
 		<link rel="stylesheet" type="text/css" href="style/sweetalert.css">
 		<link rel="stylesheet" type="text/css" href="style/alertify.core.css">
 		<link rel="stylesheet" type="text/css" href="style/alertify.bootstrap.css">

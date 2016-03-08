@@ -75,6 +75,7 @@ angular.module('app', ['flowChart', ])
 	var nextNodeID = 10;
 
     $scope.showEditor = false;
+    $scope.showTerminal = false;
 
     alertify.set({ delay: 2000 });
 
@@ -389,6 +390,8 @@ angular.module('app', ['flowChart', ])
 		document.getElementById('editor').style.visibility = 'visible';
 		$scope.showEditor = !$scope.showEditor;
 		if ($scope.showEditor) {
+            $scope.showTerminal = false;
+            document.getElementById('terminal').style.height = '0px';
 			document.getElementById('BQLogo').style.opacity = '0.0';
 			document.getElementById('warning').style.opacity = '0.0';
 			document.getElementById('editor').style.height = '280px';
@@ -400,32 +403,91 @@ angular.module('app', ['flowChart', ])
 		}
 	};
 
-    var SerialPort = require('serialport').SerialPort;
+    var SerialPort = require('serialport');
 
-    var openOptions = {
-      baudRate: 115200,
-      dataBits: 8,
-      parity: 'none',
-      stopBits: 1
+    // Add serial ports list
+    $scope.serialdata = {
+        ports: [],
+        baudRates: [9600, 19200, 38400, 57600, 115200],
+        selectedPort: null,
+        selectedBaudRate: 115200
     };
 
-    var port = new SerialPort('/dev/ttyUSB1', openOptions, false);
-    var div_terminal = document.getElementById('terminal');
+    function onTerminalShow() {
+        SerialPort.list(function (err, ports) {
+            ports.forEach(function(port) {
+                if (port.pnpId == 'usb-Lattice_Lattice_FTUSB_Interface_Cable-if01-port0') {
+                    $scope.serialdata.ports.push(port.comName);
+                    $scope.serialdata.selectedPort = port.comName;
+                }
+            });
+        });
+    }
+
+    var div_terminal = document.getElementById('terminal-content');
+
+    $scope.port = null;
+
+    $scope.serialOpen = function () {
+        if (!$scope.port) {
+            var openOptions = {
+              baudRate: $scope.serialdata.selectedBaudRate,
+              dataBits: 8,
+              parity: 'none',
+              stopBits: 1
+            };
+
+            $scope.port = new SerialPort.SerialPort($scope.serialdata.selectedPort, openOptions, false);
+
+            $scope.port.on('open', function (error) {
+                if (!error) {
+                    $scope.port.on('data', function (data) {
+                        div_terminal.innerHTML += data.toString();
+                    });
+
+                    $scope.port.on('error', function (err) {
+                        console.log(err);
+                    });
+
+                    $scope.serialClear();
+                    $scope.port.set({rts:false, dtr:false}, function(err, something) { });
+                    $scope.port.flush();
+
+                    document.getElementById('serial-status').style.fill = '#3DD738';
+                }
+            });
+
+            $scope.port.open();
+        }
+    }
+
+    $scope.serialClose = function () {
+        if ($scope.port) {
+            $scope.port.close(function (err) {
+                $scope.port = null;
+                document.getElementById('serial-status').style.fill = '#D75C37';
+            });
+        }
+    }
+
+    $scope.serialClear = function () {
+        div_terminal.innerHTML = '';
+    }
 
     // Show/Hide terminal
 	$scope.toggleTerminal = function () {
 		document.getElementById('terminal').style.opacity = '1.0';
 		document.getElementById('terminal').style.visibility = 'visible';
-		$scope.showEditor = !$scope.showEditor;
-		if ($scope.showEditor) {
-            port.open();
+		$scope.showTerminal = !$scope.showTerminal;
+		if ($scope.showTerminal) {
+            onTerminalShow();
+            $scope.showEditor = false;
+            document.getElementById('editor').style.height = '0px';
+            document.getElementById('terminal').style.height = '280px';
 			document.getElementById('BQLogo').style.opacity = '0.0';
 			document.getElementById('warning').style.opacity = '0.0';
-			document.getElementById('terminal').style.height = '280px';
 		}
 		else {
-            port.close();
-            // div_terminal.innerHTML = '';
 			document.getElementById('terminal').style.height = '0px';
 			document.getElementById('BQLogo').style.opacity = '1.0';
 			document.getElementById('warning').style.opacity = '1.0';
@@ -433,32 +495,9 @@ angular.module('app', ['flowChart', ])
 	};
 
     win.on('close', function() {
-        if (port.isOpen()) {
-            port.close();
+        if ($scope.port && $scope.port.isOpen()) {
+            $scope.port.close();
         }
         this.close(true);
     });
-
-    port.on('open', function () {
-      setTimeout(asserting, 0);
-    });
-
-    function asserting() {
-      console.log('asserting');
-        //NOTE: you actually de-assert rts and dtr to toggle!
-        port.set({rts:false, dtr:false}, function(err, something) {
-          console.log('asserted');
-        });
-    }
-
-    port.on('data', function (data) {
-      // process.stdout.write(data.toString());
-      div_terminal.innerHTML += data.toString();
-      div_terminal.innerHTML = div_terminal.innerHTML.substring(0, 5000);
-    });
-
-    port.on('error', function (err) {
-      console.log(err);
-    });
-
 }]);

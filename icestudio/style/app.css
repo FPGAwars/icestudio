@@ -1,6 +1,3 @@
-/*
-Generic reset.
-*/
 
 * {
 	margin: 0;
@@ -24,24 +21,6 @@ Generic reset.
 	position: absolute;
 	float: bottom;
 	visibility: hidden;
-}
-
-#terminal {
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	height: 280px;
-	opacity: 0.0;
-	position: absolute;
-	float: bottom;
-	visibility: hidden;
-	color: #DDDDDD;
-	background-color: #333333;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	text-overflow: ellipsis;
 }
 
 .warning {

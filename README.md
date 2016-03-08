@@ -62,7 +62,7 @@ cd icestudio
 ```bash
 npm install
 
-cd node_module/serialport
+cd node_modules/serialport
 
 node-pre-gyp rebuild --runtime=node-webkit --target=0.12.3
 ```
