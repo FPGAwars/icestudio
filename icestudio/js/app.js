@@ -417,7 +417,9 @@ angular.module('app', ['flowChart', ])
         SerialPort.list(function (err, ports) {
             $scope.serialdata.ports = [];
             ports.forEach(function(port) {
-                if (port.pnpId == 'usb-Lattice_Lattice_FTUSB_Interface_Cable-if01-port0') {
+                if ((port.productId == '0x6010') &&
+                    (port.vendorId == '0x0403') &&
+                    (port.pnpId.indexOf('if01') != -1)) {
                     $scope.serialdata.ports.push(port.comName);
                     $scope.serialdata.selectedPort = port.comName;
                 }
@@ -452,8 +454,8 @@ angular.module('app', ['flowChart', ])
                     });
 
                     $scope.serialClear();
-                    // $scope.port.set({rts:false, dtr:false}, function(err, results) { });
-                    // $scope.port.flush();
+                    $scope.port.set({rts:false, dtr:false}, function(err, results) { });
+                    $scope.port.flush();
 
                     document.getElementById('serial-status').style.fill = '#3DD738';
                 }
@@ -474,11 +476,12 @@ angular.module('app', ['flowChart', ])
 
     $scope.serialClear = function () {
         div_terminal.innerHTML = '';
+        $scope.serialInput = '';
     }
 
     $scope.serialSend = function () {
         if ($scope.port) {
-            $scope.port.write($scope.serialInput, function(err, results) {
+            $scope.port.write($scope.serialInput.toString(), function(err, results) {
                 // console.log('err ' + err);
                 // console.log('results ' + results);
             });
@@ -487,19 +490,17 @@ angular.module('app', ['flowChart', ])
 
     // Show/Hide terminal
 	$scope.toggleTerminal = function () {
-		document.getElementById('terminal').style.opacity = '1.0';
-		document.getElementById('terminal').style.visibility = 'visible';
 		$scope.showTerminal = !$scope.showTerminal;
 		if ($scope.showTerminal) {
             onTerminalShow();
             $scope.showEditor = false;
             document.getElementById('editor').style.height = '0px';
-            document.getElementById('terminal').style.height = '280px';
+            document.getElementById('terminal').style.display = 'block';
 			document.getElementById('BQLogo').style.display = 'none';
 			document.getElementById('warning').style.display = 'none';
 		}
 		else {
-			document.getElementById('terminal').style.height = '0px';
+			document.getElementById('terminal').style.display = 'none';
 			document.getElementById('BQLogo').style.display = 'block';
 			document.getElementById('warning').style.display = 'block';
 		}
