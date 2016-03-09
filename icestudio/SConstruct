@@ -1,0 +1,45 @@
+import os
+import platform
+from SCons.Script import (Builder, Environment, Default)
+
+EXT = ''
+if 'Windows' == platform.system():
+    EXT = '.exe'
+
+TARGET = "gen/main"
+
+JSON = TARGET + ".json"
+PCF = TARGET + ".pcf"
+
+# -- Builder 0 (.json --> .v)
+graph = Builder(action='python build.py $SOURCE',
+                suffix='.v',
+                src_suffix='.json')
+
+# -- Builder 1 (.v --> .blif)
+synth = Builder(action='yosys{0} -p \"synth_ice40 -blif $TARGET\" $SOURCE'.format(EXT),
+                suffix='.blif',
+                src_suffix='.v')
+
+# -- Builder 2 (.blif --> .asc)
+pnr = Builder(action='arachne-pnr{0} -d 1k -o $TARGET -p {1} $SOURCE'.format(EXT, PCF),
+              suffix='.asc',
+              src_suffix='.blif')
+
+# -- Builder 3 (.asc --> .bin)
+bitstream = Builder(action='icepack{0} $SOURCE $TARGET'.format(EXT),
+                    suffix='.bin',
+                    src_suffix='.asc')
+
+env = Environment(BUILDERS={'Graph': graph, 'Synth': synth, 'PnR': pnr, 'Bin': bitstream},
+                  ENV=os.environ)
+
+ver = env.Graph(TARGET, [JSON])
+blif = env.Synth(TARGET, [ver])
+asc = env.PnR(TARGET, [blif, PCF])
+binf = env.Bin(TARGET, asc)
+
+upload = env.Alias('upload', binf, 'iceprog{0} $SOURCE'.format(EXT))
+AlwaysBuild(upload)
+
+Default([binf])
