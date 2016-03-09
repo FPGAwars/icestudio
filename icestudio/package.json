@@ -1,16 +1,26 @@
 {
   "name": "Icestudio",
   "description": "Experimental graphic editor for open FPGAs",
-  "keywords": [
-    "FPGA", "open", "hardware"
-  ],
-  "version": "0.1-beta3",
-  "license" : "GPLv2",
+  "license": "GPL-2.0",
+  "version": "0.1.1-alpha1",
+  "repository": "https://github.com/bqlabs/icestudio",
   "main": "icestudio.html",
   "window": {
-    "toolbar": false,
     "width": 900,
     "height": 600,
+    "toolbar": false,
     "resizable": true
-  }
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "serialport": "^2.0.5"
+  },
+  "devDependencies": {
+  },
+  "readme": "../README.md",
+  "keywords": [
+    "FPGA", "open", "hardware"
+  ]
 }

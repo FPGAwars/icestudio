@@ -80,6 +80,7 @@ angular.module('app', ['flowChart', ])
 	var nextNodeID = 10;
 
     $scope.showEditor = false;
+    $scope.showTerminal = false;
 
     alertify.set({ delay: 2000 });
 
@@ -516,14 +517,126 @@ angular.module('app', ['flowChart', ])
 		document.getElementById('editor').style.visibility = 'visible';
 		$scope.showEditor = !$scope.showEditor;
 		if ($scope.showEditor) {
-			document.getElementById('BQLogo').style.opacity = '0.0';
-			document.getElementById('warning').style.opacity = '0.0';
+            $scope.showTerminal = false;
+            document.getElementById('terminal').style.height = '0px';
+			document.getElementById('BQLogo').style.display = 'none';
+			document.getElementById('warning').style.display = 'none';
 			document.getElementById('editor').style.height = '280px';
 		}
 		else {
 			document.getElementById('editor').style.height = '0px';
-			document.getElementById('BQLogo').style.opacity = '1.0';
-			document.getElementById('warning').style.opacity = '1.0';
+			document.getElementById('BQLogo').style.display = 'block';
+			document.getElementById('warning').style.display = 'block';
 		}
 	};
+
+    var SerialPort = require('serialport');
+
+    // Add serial ports list
+    $scope.serialdata = {
+        ports: [],
+        baudRates: [9600, 19200, 38400, 57600, 115200],
+        selectedPort: null,
+        selectedBaudRate: 115200
+    };
+
+    function onTerminalShow() {
+        SerialPort.list(function (err, ports) {
+            $scope.serialdata.ports = [];
+            ports.forEach(function(port) {
+                if ((port.productId == '0x6010') &&
+                    (port.vendorId == '0x0403') &&
+                    (port.pnpId.indexOf('if01') != -1)) {
+                    $scope.serialdata.ports.push(port.comName);
+                    $scope.serialdata.selectedPort = port.comName;
+                }
+            });
+        });
+    }
+
+    var div_terminal = document.getElementById('terminal-content');
+
+    $scope.port = null;
+    $scope.serialInput = null;
+
+    $scope.serialOpen = function () {
+        if (!$scope.port) {
+            var openOptions = {
+              baudRate: $scope.serialdata.selectedBaudRate,
+              dataBits: 8,
+              parity: 'none',
+              stopBits: 1
+            };
+
+            $scope.port = new SerialPort.SerialPort($scope.serialdata.selectedPort, openOptions, false);
+
+            $scope.port.on('open', function (error) {
+                if (!error) {
+                    $scope.port.on('data', function (data) {
+                        div_terminal.innerHTML += data.toString();
+                    });
+
+                    $scope.port.on('error', function (err) {
+                        console.log(err);
+                    });
+
+                    $scope.serialClear();
+                    $scope.port.set({rts:false, dtr:false}, function(err, results) { });
+                    $scope.port.flush();
+
+                    document.getElementById('serial-status').style.fill = '#3DD738';
+                }
+            });
+
+            $scope.port.open();
+        }
+    }
+
+    $scope.serialClose = function () {
+        if ($scope.port) {
+            $scope.port.close(function (err) {
+                $scope.port = null;
+                document.getElementById('serial-status').style.fill = '#D75C37';
+            });
+        }
+    }
+
+    $scope.serialClear = function () {
+        div_terminal.innerHTML = '';
+        $scope.serialInput = '';
+    }
+
+    $scope.serialSend = function () {
+        if ($scope.port) {
+            $scope.port.write($scope.serialInput.toString(), function(err, results) {
+                // console.log('err ' + err);
+                // console.log('results ' + results);
+            });
+        }
+    }
+
+    // Show/Hide terminal
+	$scope.toggleTerminal = function () {
+		$scope.showTerminal = !$scope.showTerminal;
+		if ($scope.showTerminal) {
+            onTerminalShow();
+            $scope.showEditor = false;
+            document.getElementById('editor').style.height = '0px';
+            document.getElementById('terminal').style.display = 'block';
+			document.getElementById('BQLogo').style.display = 'none';
+			document.getElementById('warning').style.display = 'none';
+		}
+		else {
+			document.getElementById('terminal').style.display = 'none';
+			document.getElementById('BQLogo').style.display = 'block';
+			document.getElementById('warning').style.display = 'block';
+		}
+	};
+
+    win.on('close', function() {
+        if ($scope.port && $scope.port.isOpen()) {
+            $scope.port.close();
+        }
+        this.close(true);
+    });
 }]);

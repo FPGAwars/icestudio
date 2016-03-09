@@ -6,3 +6,4 @@ file
 *.blif
 *.pyc
 build
+icestudio/node_modules
