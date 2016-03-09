@@ -1,0 +1,105 @@
+
+#terminal {
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 280px;
+	position: absolute;
+	float: bottom;
+	display: none;
+	color: #DDDDDD;
+    background-color: #333333;
+	overflow-x: hidden;
+}
+
+
+#terminal-header {
+    padding: 5px;
+    background-color: #222222;
+}
+
+#terminal-header button {
+    color: white;
+    background-color: #777777;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#terminal-header select {
+    color: white;
+    background-color: #777777;
+    padding: 9px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#terminal-header button:active, select:active {
+    transform:scale(.95);
+}
+
+#terminal-header button:hover, select:hover {
+	background-color: #888888;
+}
+
+#terminal-header button:focus, select:focus {
+    outline: 0;
+}
+
+#terminal-header svg {
+    float: right;
+}
+
+#terminal-content {
+    margin: 10px;
+	overflow-y: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	text-overflow: ellipsis;
+}
+
+#terminal-input {
+    padding: 5px;
+	bottom: 0;
+	width: 100%;
+	position: absolute;
+    background-color: #222222;
+}
+
+#terminal-input input {
+	background-color: #DDDDDD;
+	padding: 7px;
+    font-size: 15px;
+    border: none;
+	width: 90%;
+    border-radius: 5px;
+}
+
+#terminal-input button {
+    color: white;
+    background-color: #777777;
+    padding: 8px;
+	right: 15px;
+	bottom: 5px;
+	position: absolute;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#terminal-input button:active {
+    transform:scale(.95);
+}
+
+#terminal-input button:hover {
+	background-color: #888888;
+}
+
+#terminal-input button:focus, input:focus {
+    outline: 0;
+}
