@@ -37,6 +37,7 @@ sudo npm install -g nw-builder
 
 Install [node-pre-gyp](https://github.com/mapbox/node-pre-gyp)
 ```bash
+sudo npm install -g nw-gyp
 sudo npm install -g node-pre-gyp
 ```
 
