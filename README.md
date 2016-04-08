@@ -11,9 +11,9 @@ Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick boar
 
 ## Installation
 
-1. Install and configure the [drivers](https://github.com/bqlabs/icestudio/wiki/Installing-the-drivers)
+1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
 
-2. Download the [latest release](https://github.com/bqlabs/icestudio/releases), unpack the zip and execute Icestudio
+2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
 
 NOTE: this is an **early experimental version**. Initially supported on Linux (32, 64), Windows and Mac.
 
@@ -44,7 +44,7 @@ sudo npm install -g node-pre-gyp
 ### Download
 
 ```bash
-git clone https://github.com/bqlabs/icestudio.git
+git clone https://github.com/FPGAwars/icestudio.git
 cd icestudio
 ```
 
