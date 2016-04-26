@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             }
         },
         exec: {
-            nw: 'nw .',
+            nw: 'node_modules/nw/bin/nw .',
             stop_NW: 'killall nw || killall nwjs || true'
         },
         watch: {

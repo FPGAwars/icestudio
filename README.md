@@ -25,22 +25,6 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-Install [nwjs](https://github.com/nwjs/nw.js)
-```bash
-sudo npm install -g nw@0.12.3
-```
-
-Install [nw-builder](https://github.com/nwjs/nw-builder)
-```bash
-sudo npm install -g nw-builder
-```
-
-Install [node-pre-gyp](https://github.com/mapbox/node-pre-gyp)
-```bash
-sudo npm install -g nw-gyp
-sudo npm install -g node-pre-gyp
-```
-
 ### Download
 
 ```bash
@@ -48,32 +32,22 @@ git clone https://github.com/FPGAwars/icestudio.git
 cd icestudio
 ```
 
-## Setup
-
 ```bash
-npm install --prefix=icestudio
-
-node-pre-gyp rebuild --directory=icestudio/node_modules/serialport --runtime=node-webkit --target=0.12.3
+npm install
+bower install
 ```
 
 ### Execute
 
+NOTE: add your node_modules/grunt-cli/bin/grunt path to PATH
+
 ```bash
-nw icestudio
+grunt serve
 ```
 
 ### Package
 
 ```bash
-nwbuild -p linux64 icestudio -v v0.12.3
-nwbuild -p osx64 icestudio -v v0.12.3
-nwbuild -p win64 icestudio -v v0.12.3
-
-cd build/Icestudio
-
-zip -r icestudio-linux64 linux64
-zip -r icestudio-osx64 osx64
-zip -r icestudio-win64 win64
 ```
 
 ## Videos
@@ -89,6 +63,7 @@ zip -r icestudio-win64 win64
 ## Contributors
 
 * Miguel Sánchez de León Peque
+* Tomás Calvo
 
 ## Credits
 
