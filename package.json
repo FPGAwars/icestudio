@@ -19,13 +19,12 @@
     "serialport": "^2.0.5"
   },
   "devDependencies": {
+    "nw": "^0.12.3",
     "grunt": "^0.4.5",
-    "grunt-cli": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-exec": "^0.4.6",
     "grunt-wiredep": "^3.0.1",
-    "load-grunt-tasks": "^3.5.0",
-    "nw": "^0.12.3"
+    "load-grunt-tasks": "^3.5.0"
   },
   "readme": "../README.md",
   "keywords": [
