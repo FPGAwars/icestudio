@@ -1,0 +1,28 @@
+{
+    "name": "Icestudio",
+    "description": "Experimental graphic editor for open FPGAs",
+    "main": "app/index.html",
+    "authors": [
+        "Tom Calvo <calvo.tom@gmail.com>"
+    ],
+    "license": "GPL-2.0",
+    "keywords": [
+        "FPGA",
+        "open",
+        "hardware"
+    ],
+    "homepage": "https://github.com/FPGAwars/icestudio",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "^1.5.5",
+        "angular-translate": "^2.11.0",
+        "angular-translate-loader-static-files": "^2.11.0",
+        "angular-route": "^1.5.5"
+    }
+}
