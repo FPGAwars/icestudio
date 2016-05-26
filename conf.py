@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'icestudio'
+project = u'Icestudio'
 copyright = u'2016, Jesús Arroyo Torrens'
 author = u'Jesús Arroyo Torrens'
 
