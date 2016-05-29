@@ -10,6 +10,8 @@ Definitions
 
 Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
 
+.. image:: ../resources/block-definition.png
+
 .. code-block:: json
 
    {
@@ -72,6 +74,8 @@ Input
 
 This special block is used to define input nodes in a block.
 
+.. image:: ../resources/input.png
+
 .. code-block:: json
 
    {
@@ -89,6 +93,8 @@ Output
 
 This special block is used to define input nodes in a block.
 
+.. image:: ../resources/output.png
+
 .. code-block:: json
 
    {
@@ -104,6 +110,8 @@ Driver low
 ``````````
 
 Set the wire to 0.
+
+.. image:: ../resources/driver0.png
 
 .. code-block:: json
 
@@ -125,6 +133,8 @@ Driver high
 
 Set the wire to 1.
 
+.. image:: ../resources/driver1.png
+
 .. code-block:: json
 
    {
@@ -140,8 +150,12 @@ Set the wire to 1.
       }
    }
 
-Logic gate: not
-```````````````
+Not
+````
+
+Inverter logic gate.
+
+.. image:: ../resources/not.png
 
 .. code-block:: json
 
