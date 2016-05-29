@@ -212,6 +212,3 @@ This block can be used in other graphs, by selecting the type "high".
 Also, it can be synthesized in a FPGA,  setting the *o1* value to a FPGA pin.
 
 .. image:: ../resources/high-in-fpga.png
-
-Implementation
---------------
