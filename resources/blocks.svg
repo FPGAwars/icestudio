@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="395.11355"
-     inkscape:cy="818.54821"
+     inkscape:zoom="1"
+     inkscape:cx="234.68993"
+     inkscape:cy="412.48509"
      inkscape:document-units="px"
-     inkscape:current-layer="g5007"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -123,7 +123,7 @@
            height="73.741135"
            x="16.414978"
            y="87.413986" /></flowRegion><flowPara
-         id="flowPara4288"></flowPara></flowRoot>    <g
+         id="flowPara4288" /></flowRoot>    <g
        id="g4355"
        transform="matrix(1.3990887,0,0,1.3990887,118.01905,-104.45501)"
        inkscape:export-xdpi="90"
@@ -454,6 +454,271 @@
              y="160.88214"
              id="tspan4896-5"
              style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:lato;-inkscape-font-specification:'lato Italic';text-align:center;text-anchor:middle">block label</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4602">
+      <g
+         id="g4487">
+        <g
+           id="g4401">
+          <rect
+             y="456.89148"
+             x="69.74057"
+             height="59.888382"
+             width="111.37162"
+             id="rect4392-6"
+             style="fill:none;stroke:#000000;stroke-width:1.70000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path4203-6-7-16-3"
+             d="m 181.9467,486.83567 34.72738,0"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.39908874px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+          <text
+             sodipodi:linespacing="125%"
+             id="text4504-1-4-8"
+             y="491.90735"
+             x="104.39033"
+             style="font-style:normal;font-weight:normal;font-size:55.96354675px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             xml:space="preserve"><tspan
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.48860931px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold'"
+               y="491.90735"
+               x="104.39033"
+               id="tspan4506-9-4-6"
+               sodipodi:role="line">HIGH</tspan></text>
+        </g>
+        <g
+           id="g4388"
+           transform="translate(-32,0)">
+          <g
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             transform="matrix(1.3990887,0,0,1.3990887,318.43218,403.16149)"
+             id="g4226-2">
+            <g
+               id="g4165-4">
+              <path
+                 sodipodi:nodetypes="cccc"
+                 inkscape:connector-curvature="0"
+                 id="path3336-3"
+                 d="m 30.330038,35.327471 0,48.957458 48.95745,-24.471095 z"
+                 style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.04261279;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+              <text
+                 sodipodi:linespacing="125%"
+                 id="text4161-2"
+                 y="64.130577"
+                 x="36.398495"
+                 style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                 xml:space="preserve"><tspan
+                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.75px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch'"
+                   y="64.130577"
+                   x="36.398495"
+                   id="tspan4163-9"
+                   sodipodi:role="line">&quot;1&quot;</tspan></text>
+            </g>
+            <path
+               style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+               d="m 78.821429,59.8062 24.821431,0"
+               id="path4203-5"
+               inkscape:connector-curvature="0" />
+          </g>
+          <g
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             transform="matrix(1.3990887,0,0,1.3990887,417.04444,159.25062)"
+             id="g4627-0">
+            <g
+               id="g4622-8">
+              <g
+                 transform="translate(3.9285714,10.357143)"
+                 id="g4574-8">
+                <rect
+                   style="fill:none;stroke:#000000;stroke-width:0.91799998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                   id="rect4326-0-0"
+                   width="29.081623"
+                   height="29.081621"
+                   x="-82.95887"
+                   y="209.24377"
+                   transform="scale(-1,1)" />
+                <path
+                   style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+                   d="m 53.532524,223.78458 -24.821433,0"
+                   id="path4203-6-7-7-3"
+                   inkscape:connector-curvature="0" />
+              </g>
+            </g>
+          </g>
+        </g>
+        <g
+           id="g4383"
+           transform="translate(-3.942627,0)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path4203-6-7-16-3-8"
+             d="m 277.27545,480.93363 14.16499,0"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.89354682px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path4203-6-7-16-3-8-3"
+             d="m 277.27545,486.67678 14.16499,0"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.89354682px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path4203-6-7-16-3-8-5"
+             d="m 277.27545,492.7377 14.16499,0"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.89354682px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g4731"
+       transform="translate(-16.301296,-22.885437)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g4401-5"
+         transform="translate(16.301296,151.40554)">
+        <rect
+           style="fill:none;stroke:#000000;stroke-width:1.70000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect4392-6-2"
+           width="111.37162"
+           height="59.888382"
+           x="69.74057"
+           y="456.89148" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.39908874px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 181.9467,486.83567 34.72738,0"
+           id="path4203-6-7-16-3-2"
+           inkscape:connector-curvature="0" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:55.96354675px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="104.39033"
+           y="491.90735"
+           id="text4504-1-4-8-3"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4506-9-4-6-3"
+             x="104.39033"
+             y="491.90735"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.48860931px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold'">HIGH</tspan></text>
+      </g>
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         transform="matrix(1.3990887,0,0,1.3990887,337.41022,310.65617)"
+         id="g4627-2">
+        <g
+           id="g4622-9">
+          <g
+             transform="translate(3.9285714,10.357143)"
+             id="g4574-2">
+            <rect
+               style="fill:none;stroke:#000000;stroke-width:0.91799998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="rect4326-0-2"
+               width="29.081623"
+               height="29.081621"
+               x="-82.95887"
+               y="209.24377"
+               transform="scale(-1,1)" />
+            <path
+               style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+               d="m 53.532524,223.78458 -24.821433,0"
+               id="path4203-6-7-7-8"
+               inkscape:connector-curvature="0" />
+          </g>
+        </g>
+      </g>
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         transform="matrix(1.3990887,0,0,1.3990887,-76.085758,556.6123)"
+         id="g4320-5">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.04261279;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 245.96327,33.865617 0,48.957457 48.95745,-24.471095 z"
+           id="path3336-7-7"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccc" />
+        <circle
+           style="fill:none;stroke:#000000;stroke-width:0.93433672;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path4159-9"
+           cx="299.57462"
+           cy="58.344345"
+           r="4.5328317" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 220.54937,58.344346 24.82143,0"
+           id="path4203-1-6"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 304.35238,58.344346 24.82143,0"
+           id="path4203-14-5"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       id="g4719"
+       transform="translate(-18.897544,0)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g4401-5-9"
+         transform="translate(18.897544,257.04022)">
+        <rect
+           style="fill:none;stroke:#000000;stroke-width:1.70000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect4392-6-2-5"
+           width="111.37162"
+           height="59.888382"
+           x="69.74057"
+           y="456.89148" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.39908874px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 181.9467,486.83567 34.72738,0"
+           id="path4203-6-7-16-3-2-9"
+           inkscape:connector-curvature="0" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:55.96354675px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="104.39033"
+           y="491.90735"
+           id="text4504-1-4-8-3-4"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4506-9-4-6-3-9"
+             x="104.39033"
+             y="491.90735"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.48860931px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch Bold'">HIGH</tspan></text>
+      </g>
+      <g
+         transform="translate(-150,0.01772473)"
+         id="g4713">
+        <rect
+           style="fill:#ffff00;stroke:#000000;stroke-width:1.28436339;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect4326-0-2-2"
+           width="40.687771"
+           height="40.687767"
+           x="-461.5697"
+           y="723.51428"
+           transform="scale(-1,1)" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.39908874px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 420.39963,743.85819 -34.72739,0"
+           id="path4203-6-7-7-8-2"
+           inkscape:connector-curvature="0" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="426.19379"
+           y="751.55817"
+           id="text4700"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4702"
+             x="426.19379"
+             y="751.55817"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch'">95</tspan></text>
       </g>
     </g>
   </g>
