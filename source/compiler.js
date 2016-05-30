@@ -20,6 +20,8 @@ function moduleGenerator (b) {
 
   if (moduleCheck(b)) {
 
+    // Header
+
     code += 'module ';
     code += b.name;
     code += 'x (';
@@ -37,14 +39,68 @@ function moduleGenerator (b) {
 
     code += ');\n';
 
+    // Content
+
     if (b.code.type == 'verilog') {
       code += ' ' + b.code.data + '\n';
     }
     else if (b.code.type == 'graph') {
-      code += '\n';
+      var graph = b.code.data;
+
+      // Wires
+      for (var c in graph.connections) {
+        code += ' wire w' + c + ';\n'
+      }
+
+      // Nodes
+      for (var n in graph.nodes) {
+        var node = graph.nodes[n];
+        if (node.type != 'input' && node.type != 'output') {
+          code += ' ' + node.type + ' #(\n';
+          code += '  )\n';
+          code += '  ' + node.id + ' (\n';
+
+          // I/O
+          for (var c in graph.connections) {
+            var connection = graph.connections[c];
+            if (node.id == connection.source.nodeId) {
+              code += '   .' + connection.source.connectorId;
+            }
+            if (node.id == connection.target.nodeId) {
+              code += '  .' + connection.target.connectorId;
+            }
+            code += '(w' + c + ')\n';
+          }
+
+          code += '  );\n';
+        }
+      }
+
+      // Connections
+      for (var c in graph.connections) {
+        var input = b.connectors.input;
+        var output = b.connectors.output;
+        var connection = graph.connections[c];
+        // Input connectors
+        for (var i in input) {
+          var id = input[i].id;
+          if (connection.source.nodeId == id) {
+            code += ' assign w' + c + ' = ' + id + ';\n'
+          }
+        }
+        // Output connectors
+        for (var o in output) {
+          var id = output[o].id;
+          if (connection.target.nodeId == id) {
+            code += ' assign ' + id + ' = w' + c + ';\n'
+          }
+        }
+      }
     }
 
-    code += 'endmodule';
+    // Footer
+
+    code += 'endmodule\n';
   }
 
   return code;
@@ -56,6 +112,7 @@ function compiler (data) {
   // Dependencies
   for (var index in data.deps) {
     code += moduleGenerator(data.deps[index]);
+    code += '\n';
   }
 
   // Project
@@ -104,6 +161,9 @@ function test_example (name) {
   });
 }
 
-// Example 1
+// Test examples
 test_example('example1');
 test_example('example2');
+test_example('example3');
+
+//console.log(compiler(require('../examples/example3.json')));
