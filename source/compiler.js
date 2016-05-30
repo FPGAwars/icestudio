@@ -15,7 +15,7 @@ function moduleParams (type, c) {
   return code;
 }
 
-function moduleGen (b) {
+function moduleGenerator (b) {
   var code = '';
 
   if (moduleCheck(b)) {
@@ -40,9 +40,26 @@ function moduleGen (b) {
     if (b.code.type == 'verilog') {
       code += ' ' + b.code.data + '\n';
     }
+    else if (b.code.type == 'graph') {
+      code += '\n';
+    }
 
     code += 'endmodule';
   }
+
+  return code;
+}
+
+function compiler (data) {
+  var code = '';
+
+  // Dependencies
+  for (var index in data.deps) {
+    code += moduleGenerator(data.deps[index]);
+  }
+
+  // Project
+  code += moduleGenerator(data.project);
 
   return code;
 }
@@ -73,7 +90,7 @@ function test_example (name) {
     if (err) throw err;
 
     var example = require(filename + '.json');
-    var s1 = moduleGen(example).replace(/[\r\n]/g, "");
+    var s1 = compiler(example).replace(/[\r\n]/g, "");
     var s2 = data.replace(/[\r\n]/g, "");
 
     process.stdout.write('Testing ' + name + ' ...');

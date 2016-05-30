@@ -3,14 +3,23 @@
 Compiler
 ========
 
+JSON structure:
+
+.. code-block:: json
+
+   {
+     "deps": [],
+     "project": []
+   }
+
 Output verilog structure:
 
 1. Modules
 2. Main module
 
    a. Wires
-   b. Connections
-   c. Nodes
+   b. Nodes
+   c. Connections
 
 Implementation
 --------------
@@ -25,7 +34,6 @@ Implementation
 
     .. literalinclude:: compiler.js
        :language: javascript
-       :emphasize-lines: 17
        :linenos:
 
 |
