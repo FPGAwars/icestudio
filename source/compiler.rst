@@ -30,6 +30,10 @@ Implementation
 
 |
 
+.. code-block:: bash
+
+   node compiler.js
+
 Examples
 --------
 
