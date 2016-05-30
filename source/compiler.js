@@ -52,30 +52,6 @@ function moduleGenerator (b) {
         code += ' wire w' + c + ';\n'
       }
 
-      // Nodes
-      for (var n in graph.nodes) {
-        var node = graph.nodes[n];
-        if (node.type != 'input' && node.type != 'output') {
-          code += ' ' + node.type + ' #(\n';
-          code += '  )\n';
-          code += '  ' + node.id + ' (\n';
-
-          // I/O
-          for (var c in graph.connections) {
-            var connection = graph.connections[c];
-            if (node.id == connection.source.nodeId) {
-              code += '   .' + connection.source.connectorId;
-            }
-            if (node.id == connection.target.nodeId) {
-              code += '  .' + connection.target.connectorId;
-            }
-            code += '(w' + c + ')\n';
-          }
-
-          code += '  );\n';
-        }
-      }
-
       // Connections
       for (var c in graph.connections) {
         var input = b.connectors.input;
@@ -94,6 +70,34 @@ function moduleGenerator (b) {
           if (connection.target.nodeId == id) {
             code += ' assign ' + id + ' = w' + c + ';\n'
           }
+        }
+      }
+
+      // Nodes
+      for (var n in graph.nodes) {
+        var node = graph.nodes[n];
+        if (node.type != 'input' && node.type != 'output') {
+          code += ' ' + node.type + 'x ' + node.id + ' (\n';
+
+          // I/O
+          var params = [];
+          for (var c in graph.connections) {
+            var param = '';
+            var connection = graph.connections[c];
+            if (node.id == connection.source.nodeId) {
+              param += '   .' + connection.source.connectorId;
+            }
+            if (node.id == connection.target.nodeId) {
+              param += '   .' + connection.target.connectorId;
+            }
+            param += '(w' + c + ')';
+            params.push(param);
+          }
+
+          code += params.join(',\n');
+          code += '\n';
+
+          code += ' );\n';
         }
       }
     }
@@ -165,5 +169,6 @@ function test_example (name) {
 test_example('example1');
 test_example('example2');
 test_example('example3');
+test_example('example4');
 
-//console.log(compiler(require('../examples/example3.json')));
+//console.log(compiler(require('../examples/example4.json')));

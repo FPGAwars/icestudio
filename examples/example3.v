@@ -4,10 +4,8 @@ endmodule
 
 module highx (output o);
  wire w0;
- driver1 #(
-  )
-  d1 (
-   .out(w0)
-  );
  assign o = w0;
+ driver1x d1 (
+   .out(w0)
+ );
 endmodule

@@ -245,7 +245,7 @@ This block is a wraper of the block *and*.
 .. code-block:: json
 
    {
-      "name": "and-wraper",
+      "name": "and_wraper",
       "label": "AND",
       "connectors": {
          "input": [ { "id": "x", "label": "" },
