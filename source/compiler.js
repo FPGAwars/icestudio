@@ -173,5 +173,6 @@ test_example('example2');
 test_example('example3');
 test_example('example4');
 test_example('example5');
+test_example('example6');
 
-//console.log(compiler(require('../examples/example5.json')));
+//console.log(compiler(require('../examples/example6.json')));
