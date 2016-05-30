@@ -1,0 +1,63 @@
+{
+  "deps": [
+    {
+       "name": "driver0",
+       "label": "\"0\"",
+       "connectors": {
+          "input": null,
+          "output": [ { "id": "out", "label": "" } ]
+       },
+       "code": {
+          "type": "verilog",
+          "data" : "assign out = 1'b0;"
+       }
+    },
+    {
+       "name": "and",
+       "label": "",
+       "connectors": {
+          "input": [ { "id": "a", "label": "" },
+                     { "id": "b", "label": "" } ],
+          "output": [ { "id": "out", "label": "" } ]
+       },
+       "code": {
+          "type": "verilog",
+          "data" : "assign out = a & b;"
+       }
+    }
+  ],
+  "project":
+  {
+     "name": "zero",
+     "label": "ZERO",
+     "connectors": {
+        "input": [ { "id": "i", "label": "" } ],
+        "output": [ { "id": "o", "label": "" } ]
+     },
+     "code": {
+        "type": "graph",
+        "data" : {
+          "nodes": [
+             { "id": "d0", "type": "driver0", "x": 0, "y": 5 },
+             { "id": "i", "type": "input", "x": 0, "y": 25 },
+             { "id": "a", "type": "and", "x": 10, "y": 10 },
+             { "id": "o", "type": "output", "x": 30, "y": 20 }
+          ],
+          "connections": [
+            {
+              "source": { "nodeId": "d0", "connectorId": "out" },
+              "target": { "nodeId": "a", "connectorId": "a" }
+            },
+            {
+              "source": { "nodeId": "i", "connectorId": "out" },
+              "target": { "nodeId": "a", "connectorId": "b" }
+            },
+            {
+              "source": { "nodeId": "a", "connectorId": "out" },
+              "target": { "nodeId": "o", "connectorId": "in" }
+            }
+          ]
+        }
+     }
+  }
+}

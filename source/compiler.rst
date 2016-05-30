@@ -136,3 +136,26 @@ Example 4
        :language: verilog
 
 |
+
+Example 5
+`````````
+
+.. image:: ../resources/zero.svg
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../examples/example5.json
+       :language: json
+
+    Generates
+
+    .. literalinclude:: ../examples/example5.v
+       :language: verilog
+
+|

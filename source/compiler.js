@@ -86,12 +86,14 @@ function moduleGenerator (b) {
             var connection = graph.connections[c];
             if (node.id == connection.source.nodeId) {
               param += '   .' + connection.source.connectorId;
+              param += '(w' + c + ')';
+              params.push(param);
             }
             if (node.id == connection.target.nodeId) {
               param += '   .' + connection.target.connectorId;
+              param += '(w' + c + ')';
+              params.push(param);
             }
-            param += '(w' + c + ')';
-            params.push(param);
           }
 
           code += params.join(',\n');
@@ -170,5 +172,6 @@ test_example('example1');
 test_example('example2');
 test_example('example3');
 test_example('example4');
+test_example('example5');
 
-//console.log(compiler(require('../examples/example4.json')));
+//console.log(compiler(require('../examples/example5.json')));
