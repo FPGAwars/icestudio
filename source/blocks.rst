@@ -169,6 +169,28 @@ Inverter logic gate.
      }
   }
 
+And
+````
+And logic gate.
+
+.. image:: ../resources/and.png
+
+.. code-block:: json
+
+  {
+     "name": "and",
+     "label": "",
+     "connectors": {
+        "input": [ { "id": "a", "label": "" },
+                   { "id": "b", "label": "" } ],
+        "output": [ { "id": "out", "label": "" } ]
+     },
+     "code": {
+        "type": "verilog",
+        "data" : "assign out = a & b;"
+     }
+  }
+
 Examples
 --------
 
@@ -186,19 +208,19 @@ This is the simplest block defined by a graph. It contains only one block with o
       "label": "HIGH",
       "connectors": {
          "input": null,
-         "output": [ { "id": "o1", "label": "" } ]
+         "output": [ { "id": "o", "label": "" } ]
       },
       "code": {
          "type": "graph",
          "data" : {
            "nodes": [
               { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
-              { "id": "o1", "type": "output", "x": 30, "y": 20 }
+              { "id": "o", "type": "output", "x": 30, "y": 20 }
            ],
            "connections": [
              {
                "source": { "nodeId": "d1", "connectorId": "out" },
-               "target": { "nodeId": "o1", "connectorId": "in" }
+               "target": { "nodeId": "o", "connectorId": "in" }
              }
            ]
          }
@@ -212,3 +234,51 @@ This block can be used in other graphs, by selecting the type "high".
 Also, it can be synthesized in a FPGA,  setting the *o1* value to a FPGA pin.
 
 .. image:: ../resources/high-in-fpga.png
+
+Wrapping blocks
+```````````````
+
+This block is a wraper of the block *and*.
+
+.. image:: ../resources/and-wraper.png
+
+.. code-block:: json
+
+   {
+      "name": "and-wraper",
+      "label": "AND",
+      "connectors": {
+         "input": [ { "id": "x", "label": "" },
+                    { "id": "y", "label": "" } ],
+         "output": [ { "id": "o", "label": "" } ]
+      },
+      "code": {
+         "type": "graph",
+         "data" : {
+           "nodes": [
+              { "id": "x", "type": "input", "x": 0, "y": 5 },
+              { "id": "y", "type": "input", "x": 0, "y": 25 },
+              { "id": "a", "type": "and", "x": 10, "y": 10 },
+              { "id": "o", "type": "output", "x": 30, "y": 20 }
+           ],
+           "connections": [
+             {
+               "source": { "nodeId": "x", "connectorId": "out" },
+               "target": { "nodeId": "a", "connectorId": "a" }
+             },
+             {
+               "source": { "nodeId": "y", "connectorId": "out" },
+               "target": { "nodeId": "a", "connectorId": "b" }
+             },
+             {
+               "source": { "nodeId": "a", "connectorId": "out" },
+               "target": { "nodeId": "o", "connectorId": "in" }
+             }
+           ]
+         }
+      }
+   }
+
+.. note::
+
+   The main connectors identifiers **x**, **y** and **o** are used in the input/output nodes.
