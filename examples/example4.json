@@ -21,7 +21,7 @@
      "connectors": {
         "input": [ { "id": "x", "label": "" },
                    { "id": "y", "label": "" } ],
-        "output": [ { "id": "o", "label": "" } ]
+        "output": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
@@ -30,7 +30,7 @@
              { "id": "x", "type": "input", "x": 0, "y": 5 },
              { "id": "y", "type": "input", "x": 0, "y": 25 },
              { "id": "a", "type": "and", "x": 10, "y": 10 },
-             { "id": "o", "type": "output", "x": 30, "y": 20 }
+             { "id": "out", "type": "output", "x": 30, "y": 20 }
           ],
           "connections": [
             {
@@ -43,7 +43,7 @@
             },
             {
               "source": { "nodeId": "a", "connectorId": "out" },
-              "target": { "nodeId": "o", "connectorId": "in" }
+              "target": { "nodeId": "out", "connectorId": "in" }
             }
           ]
         }

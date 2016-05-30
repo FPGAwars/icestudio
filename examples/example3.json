@@ -19,19 +19,19 @@
      "label": "HIGH",
      "connectors": {
         "input": null,
-        "output": [ { "id": "o", "label": "" } ]
+        "output": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
         "data" : {
           "nodes": [
              { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
-             { "id": "o", "type": "output", "x": 30, "y": 20 }
+             { "id": "out", "type": "output", "x": 30, "y": 20 }
           ],
           "connections": [
             {
               "source": { "nodeId": "d1", "connectorId": "out" },
-              "target": { "nodeId": "o", "connectorId": "in" }
+              "target": { "nodeId": "out", "connectorId": "in" }
             }
           ]
         }

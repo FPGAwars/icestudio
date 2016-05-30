@@ -208,19 +208,19 @@ This is the simplest block defined by a graph. It contains only one block with o
       "label": "HIGH",
       "connectors": {
          "input": null,
-         "output": [ { "id": "o", "label": "" } ]
+         "output": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "graph",
          "data" : {
            "nodes": [
               { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
-              { "id": "o", "type": "output", "x": 30, "y": 20 }
+              { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
            "connections": [
              {
                "source": { "nodeId": "d1", "connectorId": "out" },
-               "target": { "nodeId": "o", "connectorId": "in" }
+               "target": { "nodeId": "out", "connectorId": "in" }
              }
            ]
          }
@@ -250,7 +250,7 @@ This block is a wraper of the block *and*.
       "connectors": {
          "input": [ { "id": "x", "label": "" },
                     { "id": "y", "label": "" } ],
-         "output": [ { "id": "o", "label": "" } ]
+         "output": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "graph",
@@ -259,7 +259,7 @@ This block is a wraper of the block *and*.
               { "id": "x", "type": "input", "x": 0, "y": 5 },
               { "id": "y", "type": "input", "x": 0, "y": 25 },
               { "id": "a", "type": "and", "x": 10, "y": 10 },
-              { "id": "o", "type": "output", "x": 30, "y": 20 }
+              { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
            "connections": [
              {
@@ -272,7 +272,7 @@ This block is a wraper of the block *and*.
              },
              {
                "source": { "nodeId": "a", "connectorId": "out" },
-               "target": { "nodeId": "o", "connectorId": "in" }
+               "target": { "nodeId": "out", "connectorId": "in" }
              }
            ]
          }

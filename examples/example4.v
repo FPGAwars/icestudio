@@ -2,13 +2,13 @@ module andx (input a, b, output out);
  assign out = a & b;
 endmodule
 
-module and_wraperx (input x, y, output o);
+module and_wraperx (input x, y, output out);
  wire w0;
  wire w1;
  wire w2;
  assign w0 = x;
  assign w1 = y;
- assign o = w2;
+ assign out = w2;
  andx a (
    .a(w0),
    .b(w1),

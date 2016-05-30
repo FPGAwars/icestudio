@@ -31,17 +31,17 @@
      "name": "zero",
      "label": "ZERO",
      "connectors": {
-        "input": [ { "id": "i", "label": "" } ],
-        "output": [ { "id": "o", "label": "" } ]
+        "input": [ { "id": "in", "label": "" } ],
+        "output": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
         "data" : {
           "nodes": [
              { "id": "d0", "type": "driver0", "x": 0, "y": 5 },
-             { "id": "i", "type": "input", "x": 0, "y": 25 },
+             { "id": "in", "type": "input", "x": 0, "y": 25 },
              { "id": "a", "type": "and", "x": 10, "y": 10 },
-             { "id": "o", "type": "output", "x": 30, "y": 20 }
+             { "id": "out", "type": "output", "x": 30, "y": 20 }
           ],
           "connections": [
             {
@@ -49,12 +49,12 @@
               "target": { "nodeId": "a", "connectorId": "a" }
             },
             {
-              "source": { "nodeId": "i", "connectorId": "out" },
+              "source": { "nodeId": "in", "connectorId": "out" },
               "target": { "nodeId": "a", "connectorId": "b" }
             },
             {
               "source": { "nodeId": "a", "connectorId": "out" },
-              "target": { "nodeId": "o", "connectorId": "in" }
+              "target": { "nodeId": "out", "connectorId": "in" }
             }
           ]
         }

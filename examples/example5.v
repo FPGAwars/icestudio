@@ -6,12 +6,12 @@ module andx (input a, b, output out);
  assign out = a & b;
 endmodule
 
-module zerox (input i, output o);
+module zerox (input in, output out);
  wire w0;
  wire w1;
  wire w2;
- assign w1 = i;
- assign o = w2;
+ assign w1 = in;
+ assign out = w2;
  driver0x d0 (
    .out(w0)
  );
