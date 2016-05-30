@@ -22,7 +22,7 @@ function moduleGen (b) {
 
     code += 'module ';
     code += b.name;
-    code += ' (';
+    code += 'x (';
 
     var params = [];
     var input = moduleParams('input', b.connectors);

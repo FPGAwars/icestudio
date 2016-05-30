@@ -27,6 +27,7 @@ Implementation
        :language: javascript
        :emphasize-lines: 17
        :linenos:
+
 |
 
 Examples
@@ -45,34 +46,18 @@ Example 1
 
     |
 
-    .. code-block:: json
-
-       {
-          "name": "driver0",
-          "label": "\"0\"",
-          "connectors": {
-             "input": null,
-             "output": [ { "id": "out", "label": "" } ]
-          },
-          "code": {
-             "type": "verilog",
-             "data" : "assign out = 1'b0;"
-          }
-       }
+    .. literalinclude:: ../examples/example1.json
+       :language: json
 
     Generates
 
-    .. code-block:: verilog
+    .. literalinclude:: ../examples/example1.v
+       :language: verilog
 
-       module driver0 (output out);
-        assign out = 1'b0;
-       endmodule
 |
 
 Example 2
 `````````
-
-This block:
 
 .. image:: ../resources/and.svg
 
@@ -84,27 +69,12 @@ This block:
 
     |
 
-    .. code-block:: json
-
-      {
-         "name": "and",
-         "label": "",
-         "connectors": {
-            "input": [ { "id": "a", "label": "" },
-                       { "id": "b", "label": "" } ],
-            "output": [ { "id": "out", "label": "" } ]
-         },
-         "code": {
-            "type": "verilog",
-            "data" : "assign out = a & b;"
-         }
-      }
+    .. literalinclude:: ../examples/example2.json
+       :language: json
 
     Generates
 
-    .. code-block:: verilog
+    .. literalinclude:: ../examples/example2.v
+       :language: verilog
 
-       module and (input a, b, output out);
-        assign out = a & b;
-       endmodule
 |
