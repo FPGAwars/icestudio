@@ -12,38 +12,62 @@ Output verilog structure:
    b. Connections
    c. Nodes
 
+Implementation
+--------------
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: compiler.js
+       :language: javascript
+       :emphasize-lines: 17
+       :linenos:
+|
+
 Examples
 --------
 
-Example1
+Example 1
 `````````
-
-This block:
 
 .. image:: ../resources/driver0.svg
 
-.. code-block:: json
+.. container:: toggle
 
-   {
-      "name": "driver0",
-      "label": "\"0\"",
-      "connectors": {
-         "input": null,
-         "output": [ { "id": "out", "label": "" } ]
-      },
-      "code": {
-         "type": "verilog",
-         "data" : "assign out = 1'b0;"
-      }
-   }
+    .. container:: header
 
-Will generate this module:
+        **Show/Hide code**
 
-.. code-block:: verilog
+    |
 
-   module driver0 (output out);
-    assign out = 1'b0;
-   endmodule
+    .. code-block:: json
+
+       {
+          "name": "driver0",
+          "label": "\"0\"",
+          "connectors": {
+             "input": null,
+             "output": [ { "id": "out", "label": "" } ]
+          },
+          "code": {
+             "type": "verilog",
+             "data" : "assign out = 1'b0;"
+          }
+       }
+
+    Generates
+
+    .. code-block:: verilog
+
+       module driver0 (output out);
+        assign out = 1'b0;
+       endmodule
+|
 
 Example 2
 `````````
@@ -52,26 +76,35 @@ This block:
 
 .. image:: ../resources/and.svg
 
-.. code-block:: json
+.. container:: toggle
 
-  {
-     "name": "and",
-     "label": "",
-     "connectors": {
-        "input": [ { "id": "a", "label": "" },
-                   { "id": "b", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
-     },
-     "code": {
-        "type": "verilog",
-        "data" : "assign out = a & b;"
-     }
-  }
+    .. container:: header
 
-Will generate this module:
+        **Show/Hide code**
 
-.. code-block:: verilog
+    |
 
-   module and (input a, b, output out);
-    assign out = a & b;
-   endmodule
+    .. code-block:: json
+
+      {
+         "name": "and",
+         "label": "",
+         "connectors": {
+            "input": [ { "id": "a", "label": "" },
+                       { "id": "b", "label": "" } ],
+            "output": [ { "id": "out", "label": "" } ]
+         },
+         "code": {
+            "type": "verilog",
+            "data" : "assign out = a & b;"
+         }
+      }
+
+    Generates
+
+    .. code-block:: verilog
+
+       module and (input a, b, output out);
+        assign out = a & b;
+       endmodule
+|
