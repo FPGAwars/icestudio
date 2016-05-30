@@ -5,11 +5,13 @@ Compiler
 
 Output verilog structure:
 
-* Modules
-* Main module
- * Wires
- * Connections
- * Nodes
+1. Modules
+2. Main module
+
+   a. Wires
+   b. Connections
+   c. Nodes
+
 
 Examples
 --------
@@ -19,7 +21,7 @@ Driver low
 
 This block:
 
-.. image:: ../resources/driver0.png
+.. image:: ../resources/driver0.svg
 
 .. code-block:: json
 

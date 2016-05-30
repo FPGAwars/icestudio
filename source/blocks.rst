@@ -10,7 +10,7 @@ Definitions
 
 Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
 
-.. image:: ../resources/block-definition.png
+.. image:: ../resources/block-definition.svg
 
 .. code-block:: json
 
@@ -71,7 +71,7 @@ Input
 
 This special block is used to define input nodes in a block.
 
-.. image:: ../resources/input.png
+.. image:: ../resources/input.svg
 
 .. code-block:: json
 
@@ -90,7 +90,7 @@ Output
 
 This special block is used to define input nodes in a block.
 
-.. image:: ../resources/output.png
+.. image:: ../resources/output.svg
 
 .. code-block:: json
 
@@ -108,7 +108,7 @@ Driver low
 
 Set the wire to 0.
 
-.. image:: ../resources/driver0.png
+.. image:: ../resources/driver0.svg
 
 .. code-block:: json
 
@@ -130,7 +130,7 @@ Driver high
 
 Set the wire to 1.
 
-.. image:: ../resources/driver1.png
+.. image:: ../resources/driver1.svg
 
 .. code-block:: json
 
@@ -152,7 +152,7 @@ Not
 
 Inverter logic gate.
 
-.. image:: ../resources/not.png
+.. image:: ../resources/not.svg
 
 .. code-block:: json
 
@@ -173,7 +173,7 @@ And
 ````
 And logic gate.
 
-.. image:: ../resources/and.png
+.. image:: ../resources/and.svg
 
 .. code-block:: json
 
@@ -199,7 +199,7 @@ Hello, block!
 
 This is the simplest block defined by a graph. It contains only one block with one connector. The behavior is the same as the block *Driver high*.
 
-.. image:: ../resources/high.png
+.. image:: ../resources/high.svg
 
 .. code-block:: json
 
@@ -229,18 +229,18 @@ This is the simplest block defined by a graph. It contains only one block with o
 
 This block can be used in other graphs, by selecting the type "high".
 
-.. image:: ../resources/high-in-graph.png
+.. image:: ../resources/high-in-graph.svg
 
 Also, it can be synthesized in a FPGA,  setting the *o1* value to a FPGA pin.
 
-.. image:: ../resources/high-in-fpga.png
+.. image:: ../resources/high-in-fpga.svg
 
 Wrapping blocks
 ```````````````
 
 This block is a wraper of the block *and*.
 
-.. image:: ../resources/and-wraper.png
+.. image:: ../resources/and-wraper.svg
 
 .. code-block:: json
 
