@@ -1,0 +1,12 @@
+{
+   "name": "driver0",
+   "label": "\"0\"",
+   "connectors": {
+      "input": null,
+      "output": [ { "id": "out", "label": "" } ]
+   },
+   "code": {
+      "type": "verilog",
+      "data" : "assign out = 1'b0;"
+   }
+}

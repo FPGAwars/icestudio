@@ -1,0 +1,13 @@
+{
+   "name": "and",
+   "label": "",
+   "connectors": {
+      "input": [ { "id": "a", "label": "" },
+                 { "id": "b", "label": "" } ],
+      "output": [ { "id": "out", "label": "" } ]
+   },
+   "code": {
+      "type": "verilog",
+      "data" : "assign out = a & b;"
+   }
+}

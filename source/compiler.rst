@@ -12,12 +12,11 @@ Output verilog structure:
    b. Connections
    c. Nodes
 
-
 Examples
 --------
 
-Driver low
-``````````
+Example1
+`````````
 
 This block:
 
@@ -43,5 +42,36 @@ Will generate this module:
 .. code-block:: verilog
 
    module driver0 (output out);
-   assign out = 1'b0;
+    assign out = 1'b0;
+   endmodule
+
+Example 2
+`````````
+
+This block:
+
+.. image:: ../resources/and.svg
+
+.. code-block:: json
+
+  {
+     "name": "and",
+     "label": "",
+     "connectors": {
+        "input": [ { "id": "a", "label": "" },
+                   { "id": "b", "label": "" } ],
+        "output": [ { "id": "out", "label": "" } ]
+     },
+     "code": {
+        "type": "verilog",
+        "data" : "assign out = a & b;"
+     }
+  }
+
+Will generate this module:
+
+.. code-block:: verilog
+
+   module and (input a, b, output out);
+    assign out = a & b;
    endmodule

@@ -10,7 +10,7 @@ Definitions
 
 Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
 
-.. image:: ../resources/block-definition.svg
+  .. image:: ../resources/block-definition.svg
 
 .. code-block:: json
 
