@@ -18,8 +18,8 @@ Output verilog structure:
 2. Main module
 
    a. Wires
-   b. Nodes
-   c. Connections
+   b. Connections
+   c. Nodes
 
 Implementation
 --------------
@@ -32,7 +32,7 @@ Implementation
 
     |
 
-    .. literalinclude:: compiler.js
+    .. literalinclude:: ../code/compiler.js
        :language: javascript
        :linenos:
 
