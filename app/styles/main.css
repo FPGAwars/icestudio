@@ -1,0 +1,21 @@
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+#diagramContainer {
+     padding: 20px;
+     width:80%; height: 200px;
+     border: 1px solid gray;
+ }
+
+ .item {
+     height:80px; width: 80px;
+     border: 1px solid blue;
+     float: left;
+ }
