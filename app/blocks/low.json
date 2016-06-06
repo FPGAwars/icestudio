@@ -1,0 +1,96 @@
+{
+  "deps": [
+    {
+      "name": "input",
+      "label": "",
+      "connectors": {
+        "input": [],
+        "output": [ { "id": "out", "label": "" } ]
+      }
+    },
+    {
+      "name": "output",
+      "label": "",
+      "connectors": {
+        "input": [ { "id": "in", "label": "" } ],
+        "output": []
+      }
+    },
+    {
+       "name": "driver1",
+       "label": "\"1\"",
+       "connectors": {
+          "input": [],
+          "output": [ { "id": "out", "label": "" } ]
+       },
+       "code": {
+          "type": "verilog",
+          "data" : "assign out = 1'b1;"
+       }
+    },
+    {
+       "name": "high",
+       "label": "HIGH",
+       "connectors": {
+          "input": [],
+          "output": [ { "id": "out", "label": "" } ]
+       },
+       "code": {
+          "type": "graph",
+          "data" : {
+            "nodes": [
+               { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
+               { "id": "out", "type": "output", "x": 30, "y": 20 }
+            ],
+            "connections": [
+              {
+                "source": { "nodeId": "d1", "connectorId": "out" },
+                "target": { "nodeId": "out", "connectorId": "in" }
+              }
+            ]
+          }
+        }
+     },
+     {
+        "name": "not",
+        "label": "",
+        "connectors": {
+           "input": [ { "id": "in", "label": "" } ],
+           "output": [ { "id": "out", "label": "" } ]
+        },
+        "code": {
+           "type": "verilog",
+           "data" : "assign out = ! in;"
+        }
+     }
+  ],
+  "project":
+  {
+     "name": "low",
+     "label": "LOW",
+     "connectors": {
+        "input": [],
+        "output": [ { "id": "out", "label": "" } ]
+     },
+     "code": {
+        "type": "graph",
+        "data" : {
+          "nodes": [
+             { "id": "h", "type": "high", "x": 50, "y": 10 },
+             { "id": "n", "type": "not", "x": 200, "y": 10 },
+             { "id": "out", "type": "output", "x": 350, "y": 10 }
+          ],
+          "connections": [
+            {
+              "source": { "nodeId": "h", "connectorId": "out" },
+              "target": { "nodeId": "n", "connectorId": "in" }
+            },
+            {
+              "source": { "nodeId": "n", "connectorId": "out" },
+              "target": { "nodeId": "out", "connectorId": "in" }
+            }
+          ]
+        }
+     }
+  }
+}

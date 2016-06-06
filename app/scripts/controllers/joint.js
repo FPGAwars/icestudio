@@ -170,4 +170,6 @@ angular.module('icestudio')
     // initialize signal and keep its value
     var current = initializeSignal();
 
+    console.log(graph.toJSON());
+
   });
