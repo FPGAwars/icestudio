@@ -1,6 +1,22 @@
 {
   "deps": [
     {
+      "name": "input",
+      "label": "",
+      "connectors": {
+        "input": [],
+        "output": [ { "id": "out", "label": "" } ]
+      }
+    },
+    {
+      "name": "output",
+      "label": "",
+      "connectors": {
+        "input": [ { "id": "in", "label": "" } ],
+        "output": []
+      }
+    },
+    {
        "name": "and",
        "label": "",
        "connectors": {

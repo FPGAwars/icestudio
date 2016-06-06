@@ -1,6 +1,14 @@
 {
   "deps": [
     {
+      "name": "output",
+      "label": "",
+      "connectors": {
+        "input": [ { "id": "in", "label": "" } ],
+        "output": []
+      }
+    },
+    {
        "name": "driver1",
        "label": "\"1\"",
        "connectors": {

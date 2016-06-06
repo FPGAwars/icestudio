@@ -41,6 +41,8 @@ function moduleGenerator (b) {
     code += ');\n';
 
     // Content
+    if (!b.code)
+      return '';
 
     if (b.code.type == 'verilog') {
       code += ' ' + b.code.data + '\n';
