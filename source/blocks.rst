@@ -17,9 +17,9 @@ Generic project definition. This entity can be synthesized in a FPGA, defining i
    {
       "name": "",
       "label": "",
-      "connectors": {
-         "input": [ { "id": "", "label": "" } ],
-         "output": [ { "id": "", "label": "" } ]
+      "ports": {
+         "in": [ { "id": "", "label": "" } ],
+         "out": [ { "id": "", "label": "" } ]
       },
       "code": { }
    }
@@ -41,7 +41,7 @@ Graph: nodes and connections.
 
    {
       "type": "graph",
-      "data" : { "nodes": [], "connections": [] }
+      "data" : { "nodes": [], "links": [] }
    }
 
 **Node**
@@ -56,11 +56,13 @@ Block instance.
 
 **Connection**
 
+Node and port are the id keys of the element.
+
 .. code-block:: json
 
    {
-      "source": { "nodeId": "", "connectorId": "" },
-      "target": { "nodeId": "", "connectorId": "" }
+      "source": { "node": "", "port": "" },
+      "target": { "node": "", "port": "" }
    }
 
 Basic blocks
@@ -78,9 +80,9 @@ This special block is used to define input nodes in a block.
    {
       "name": "input",
       "label": "",
-      "connectors": {
-         "input": [],
-         "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+         "in": [],
+         "out": [ { "id": "out", "label": "" } ]
       }
    }
 
@@ -97,9 +99,9 @@ This special block is used to define input nodes in a block.
    {
       "name": "output",
       "label": "",
-      "connectors": {
-         "input": [ { "id": "in", "label": "" } ],
-         "output": []
+      "ports": {
+         "in": [ { "id": "in", "label": "" } ],
+         "out": []
       }
    }
 
@@ -115,9 +117,9 @@ Set the wire to 0.
    {
       "name": "driver0",
       "label": "\"0\"",
-      "connectors": {
-         "input": [],
-         "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+         "in": [],
+         "out": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "verilog",
@@ -137,9 +139,9 @@ Set the wire to 1.
    {
       "name": "driver1",
       "label": "\"1\"",
-      "connectors": {
-         "input": [],
-         "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+         "in": [],
+         "out": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "verilog",
@@ -159,9 +161,9 @@ Inverter logic gate.
   {
      "name": "not",
      "label": "",
-     "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [ { "id": "in", "label": "" } ],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "verilog",
@@ -180,10 +182,10 @@ And logic gate.
   {
      "name": "and",
      "label": "",
-     "connectors": {
-        "input": [ { "id": "a", "label": "" },
-                   { "id": "b", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [ { "id": "a", "label": "" },
+                { "id": "b", "label": "" } ],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "verilog",
@@ -197,7 +199,7 @@ Examples
 Hello, block!
 `````````````
 
-This is the simplest block defined by a graph. It contains only one block with one connector. The behavior is the same as the block *Driver high*.
+This is the simplest block defined by a graph. It contains only one block with one port. The behavior is the same as the block *Driver high*.
 
 .. image:: ../resources/high.svg
 
@@ -206,9 +208,9 @@ This is the simplest block defined by a graph. It contains only one block with o
    {
       "name": "high",
       "label": "HIGH",
-      "connectors": {
-         "input": [],
-         "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+         "in": [],
+         "out": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "graph",
@@ -217,10 +219,10 @@ This is the simplest block defined by a graph. It contains only one block with o
               { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
               { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
-           "connections": [
+           "links": [
              {
-               "source": { "nodeId": "d1", "connectorId": "out" },
-               "target": { "nodeId": "out", "connectorId": "in" }
+               "source": { "node": "d1", "port": "out" },
+               "target": { "node": "out", "port": "in" }
              }
            ]
          }
@@ -247,10 +249,10 @@ This block is a wraper of the block *and*.
    {
       "name": "and_wraper",
       "label": "AND",
-      "connectors": {
-         "input": [ { "id": "x", "label": "" },
-                    { "id": "y", "label": "" } ],
-         "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+         "in": [ { "id": "x", "label": "" },
+                 { "id": "y", "label": "" } ],
+         "out": [ { "id": "out", "label": "" } ]
       },
       "code": {
          "type": "graph",
@@ -261,18 +263,18 @@ This block is a wraper of the block *and*.
               { "id": "a", "type": "and", "x": 10, "y": 10 },
               { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
-           "connections": [
+           "links": [
              {
-               "source": { "nodeId": "x", "connectorId": "out" },
-               "target": { "nodeId": "a", "connectorId": "a" }
+               "source": { "node": "x", "port": "out" },
+               "target": { "node": "a", "port": "a" }
              },
              {
-               "source": { "nodeId": "y", "connectorId": "out" },
-               "target": { "nodeId": "a", "connectorId": "b" }
+               "source": { "node": "y", "port": "out" },
+               "target": { "node": "a", "port": "b" }
              },
              {
-               "source": { "nodeId": "a", "connectorId": "out" },
-               "target": { "nodeId": "out", "connectorId": "in" }
+               "source": { "node": "a", "port": "out" },
+               "target": { "node": "out", "port": "in" }
              }
            ]
          }
@@ -281,4 +283,4 @@ This block is a wraper of the block *and*.
 
 .. note::
 
-   The main connectors identifiers **x**, **y** and **o** are used in the input/output nodes.
+   The main ports identifiers **x**, **y** and **out** are used in the input/output node ids.

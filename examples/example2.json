@@ -4,10 +4,10 @@
   {
      "name": "and",
      "label": "",
-     "connectors": {
-        "input": [ { "id": "a", "label": "" },
-                   { "id": "b", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [ { "id": "a", "label": "" },
+                { "id": "b", "label": "" } ],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "verilog",

@@ -18,7 +18,7 @@ Output verilog structure:
 2. Main module
 
    a. Wires
-   b. Connections
+   b. Links
    c. Nodes
 
 Implementation

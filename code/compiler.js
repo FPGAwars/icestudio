@@ -10,7 +10,8 @@ function moduleParams (type, c) {
     for (var p in c[type]) {
       params.push(c[type][p].id);
     }
-    code = type + ' ' + params.join(', ');
+    code = ((type == 'in') ? 'input ' : (type == 'out') ? 'output ' : ' ')
+    code += params.join(', ');
   }
   return code;
 }
@@ -27,12 +28,12 @@ function moduleGenerator (b) {
     code += 'x (';
 
     var params = [];
-    var input = moduleParams('input', b.connectors);
+    var input = moduleParams('in', b.ports);
 
     if (input) {
       params.push(input);
     }
-    var output = moduleParams('output', b.connectors);
+    var output = moduleParams('out', b.ports);
     if (output) {
       params.push(output);
     }
@@ -51,26 +52,26 @@ function moduleGenerator (b) {
       var graph = b.code.data;
 
       // Wires
-      for (var c in graph.connections) {
+      for (var c in graph.links) {
         code += ' wire w' + c + ';\n'
       }
 
       // Connections
-      for (var c in graph.connections) {
-        var input = b.connectors.input;
-        var output = b.connectors.output;
-        var connection = graph.connections[c];
+      for (var c in graph.links) {
+        var input = b.ports.in;
+        var output = b.ports.out;
+        var connection = graph.links[c];
         // Input connectors
         for (var i in input) {
           var id = input[i].id;
-          if (connection.source.nodeId == id) {
+          if (connection.source.node == id) {
             code += ' assign w' + c + ' = ' + id + ';\n'
           }
         }
         // Output connectors
         for (var o in output) {
           var id = output[o].id;
-          if (connection.target.nodeId == id) {
+          if (connection.target.node == id) {
             code += ' assign ' + id + ' = w' + c + ';\n'
           }
         }
@@ -84,16 +85,16 @@ function moduleGenerator (b) {
 
           // I/O
           var params = [];
-          for (var c in graph.connections) {
+          for (var c in graph.links) {
             var param = '';
-            var connection = graph.connections[c];
-            if (node.id == connection.source.nodeId) {
-              param += '   .' + connection.source.connectorId;
+            var link = graph.links[c];
+            if (node.id == link.source.node) {
+              param += '   .' + link.source.port;
               param += '(w' + c + ')';
               params.push(param);
             }
-            if (node.id == connection.target.nodeId) {
-              param += '   .' + connection.target.connectorId;
+            if (node.id == link.target.node) {
+              param += '   .' + link.target.port;
               param += '(w' + c + ')';
               params.push(param);
             }
@@ -178,4 +179,4 @@ test_example('example4');
 test_example('example5');
 test_example('example6');
 
-//console.log(compiler(require('../examples/example6.json')));
+//console.log(compiler(require('../examples/example1.json')));

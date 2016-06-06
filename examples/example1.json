@@ -4,9 +4,9 @@
   {
      "name": "driver0",
      "label": "\"0\"",
-     "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "verilog",

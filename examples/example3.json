@@ -3,17 +3,17 @@
     {
       "name": "output",
       "label": "",
-      "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": []
+      "ports": {
+        "in": [ { "id": "in", "label": "" } ],
+        "out": []
       }
     },
     {
        "name": "driver1",
        "label": "\"1\"",
-       "connectors": {
-          "input": [],
-          "output": [ { "id": "out", "label": "" } ]
+       "ports": {
+          "in": [],
+          "out": [ { "id": "out", "label": "" } ]
        },
        "code": {
           "type": "verilog",
@@ -25,9 +25,9 @@
   {
      "name": "high",
      "label": "HIGH",
-     "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
@@ -36,10 +36,10 @@
              { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
              { "id": "out", "type": "output", "x": 30, "y": 20 }
           ],
-          "connections": [
+          "links": [
             {
-              "source": { "nodeId": "d1", "connectorId": "out" },
-              "target": { "nodeId": "out", "connectorId": "in" }
+              "source": { "node": "d1", "port": "out" },
+              "target": { "node": "out", "port": "in" }
             }
           ]
         }

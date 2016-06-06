@@ -3,26 +3,26 @@
     {
       "name": "input",
       "label": "",
-      "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
+      "ports": {
+        "in": [],
+        "out": [ { "id": "out", "label": "" } ]
       }
     },
     {
       "name": "output",
       "label": "",
-      "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": []
+      "ports": {
+        "in": [ { "id": "in", "label": "" } ],
+        "out": []
       }
     },
     {
        "name": "and",
        "label": "",
-       "connectors": {
-          "input": [ { "id": "a", "label": "" },
-                     { "id": "b", "label": "" } ],
-          "output": [ { "id": "out", "label": "" } ]
+       "ports": {
+          "in": [ { "id": "a", "label": "" },
+                  { "id": "b", "label": "" } ],
+          "out": [ { "id": "out", "label": "" } ]
        },
        "code": {
           "type": "verilog",
@@ -34,10 +34,10 @@
   {
      "name": "and_wraper",
      "label": "AND",
-     "connectors": {
-        "input": [ { "id": "x", "label": "" },
-                   { "id": "y", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [ { "id": "x", "label": "" },
+                { "id": "y", "label": "" } ],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
@@ -48,18 +48,18 @@
              { "id": "a", "type": "and", "x": 10, "y": 10 },
              { "id": "out", "type": "output", "x": 30, "y": 20 }
           ],
-          "connections": [
+          "links": [
             {
-              "source": { "nodeId": "x", "connectorId": "out" },
-              "target": { "nodeId": "a", "connectorId": "a" }
+              "source": { "node": "x", "port": "out" },
+              "target": { "node": "a", "port": "a" }
             },
             {
-              "source": { "nodeId": "y", "connectorId": "out" },
-              "target": { "nodeId": "a", "connectorId": "b" }
+              "source": { "node": "y", "port": "out" },
+              "target": { "node": "a", "port": "b" }
             },
             {
-              "source": { "nodeId": "a", "connectorId": "out" },
-              "target": { "nodeId": "out", "connectorId": "in" }
+              "source": { "node": "a", "port": "out" },
+              "target": { "node": "out", "port": "in" }
             }
           ]
         }
