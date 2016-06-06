@@ -5,7 +5,7 @@ function moduleCheck (b) {
 
 function moduleParams (type, c) {
   var code;
-  if (c[type]) {
+  if (c[type].length !== 0) {
     var params = [];
     for (var p in c[type]) {
       params.push(c[type][p].id);
@@ -28,6 +28,7 @@ function moduleGenerator (b) {
 
     var params = [];
     var input = moduleParams('input', b.connectors);
+
     if (input) {
       params.push(input);
     }

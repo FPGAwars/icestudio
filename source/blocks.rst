@@ -79,7 +79,7 @@ This special block is used to define input nodes in a block.
       "name": "input",
       "label": "",
       "connectors": {
-         "input": null,
+         "input": [],
          "output": [ { "id": "out", "label": "" } ]
       }
    }
@@ -99,7 +99,7 @@ This special block is used to define input nodes in a block.
       "label": "",
       "connectors": {
          "input": [ { "id": "in", "label": "" } ],
-         "output": null
+         "output": []
       }
    }
 
@@ -116,7 +116,7 @@ Set the wire to 0.
       "name": "driver0",
       "label": "\"0\"",
       "connectors": {
-         "input": null,
+         "input": [],
          "output": [ { "id": "out", "label": "" } ]
       },
       "code": {
@@ -138,7 +138,7 @@ Set the wire to 1.
       "name": "driver1",
       "label": "\"1\"",
       "connectors": {
-         "input": null,
+         "input": [],
          "output": [ { "id": "out", "label": "" } ]
       },
       "code": {
@@ -207,7 +207,7 @@ This is the simplest block defined by a graph. It contains only one block with o
       "name": "high",
       "label": "HIGH",
       "connectors": {
-         "input": null,
+         "input": [],
          "output": [ { "id": "out", "label": "" } ]
       },
       "code": {

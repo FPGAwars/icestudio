@@ -4,7 +4,7 @@
        "name": "driver1",
        "label": "\"1\"",
        "connectors": {
-          "input": null,
+          "input": [],
           "output": [ { "id": "out", "label": "" } ]
        },
        "code": {
@@ -18,7 +18,7 @@
      "name": "high",
      "label": "HIGH",
      "connectors": {
-        "input": null,
+        "input": [],
         "output": [ { "id": "out", "label": "" } ]
      },
      "code": {
