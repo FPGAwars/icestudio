@@ -2,26 +2,26 @@
   "deps": [
     {
       "name": "input",
-      "label": "",
-      "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
+      "label": "IN",
+      "ports": {
+        "in": [],
+        "out": [ { "id": "out", "label": "" } ]
       }
     },
     {
       "name": "output",
-      "label": "",
-      "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": []
+      "label": "OUT",
+      "ports": {
+        "in": [ { "id": "in", "label": "" } ],
+        "out": []
       }
     },
     {
        "name": "driver0",
        "label": "\"0\"",
-       "connectors": {
-          "input": [],
-          "output": [ { "id": "out", "label": "" } ]
+       "ports": {
+          "in": [],
+          "out": [ { "id": "out", "label": "" } ]
        },
        "code": {
           "type": "verilog",
@@ -30,15 +30,16 @@
     },
     {
        "name": "and",
-       "label": "",
-       "connectors": {
-          "input": [ { "id": "a", "label": "" },
-                     { "id": "b", "label": "" } ],
-          "output": [ { "id": "out", "label": "" } ]
+       "label": "AND",
+       "ports": {
+          "in": [ { "id": "a", "label": "" },
+                  { "id": "b", "label": "" },
+                  { "id": "c", "label": "" } ],
+          "out": [ { "id": "out", "label": "" } ]
        },
        "code": {
           "type": "verilog",
-          "data" : "assign out = a & b;"
+          "data" : "assign out = a & b & c;"
        }
     }
   ],
@@ -46,31 +47,37 @@
   {
      "name": "zero",
      "label": "ZERO",
-     "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [ { "id": "in0", "label": "" },
+                { "id": "in1", "label": "" } ],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
         "data" : {
           "nodes": [
-             { "id": "d0", "type": "driver0", "x": 50, "y": 10 },
-             { "id": "in", "type": "input", "x": 50, "y": 200 },
-             { "id": "a", "type": "and", "x": 200, "y": 100 },
-             { "id": "out", "type": "output", "x": 400, "y": 100 }
+             { "id": "d0", "type": "driver0", "x": 50, "y": 50 },
+             { "id": "in0", "type": "input", "x": 50, "y": 150 },
+             { "id": "in1", "type": "input", "x": 50, "y": 250 },
+             { "id": "a", "type": "and", "x": 200, "y": 130 },
+             { "id": "out", "type": "output", "x": 350, "y": 150 }
           ],
-          "connections": [
+          "links": [
             {
-              "source": { "nodeId": "d0", "connectorId": "out" },
-              "target": { "nodeId": "a", "connectorId": "a" }
+              "source": { "node": "d0", "port": "out" },
+              "target": { "node": "a", "port": "a" }
             },
             {
-              "source": { "nodeId": "in", "connectorId": "out" },
-              "target": { "nodeId": "a", "connectorId": "b" }
+              "source": { "node": "in0", "port": "out" },
+              "target": { "node": "a", "port": "b" }
             },
             {
-              "source": { "nodeId": "a", "connectorId": "out" },
-              "target": { "nodeId": "out", "connectorId": "in" }
+              "source": { "node": "in1", "port": "out" },
+              "target": { "node": "a", "port": "c" }
+            },
+            {
+              "source": { "node": "a", "port": "out" },
+              "target": { "node": "out", "port": "in" }
             }
           ]
         }

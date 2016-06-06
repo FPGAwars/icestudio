@@ -13,7 +13,7 @@ angular.module('icestudio')
       var project = data.project;
 
       var nodes = project.code.data.nodes;
-      var connections = project.code.data.connections;
+      var links = project.code.data.links;
 
       // Graph
       var graph = new joint.dia.Graph();
@@ -21,21 +21,22 @@ angular.module('icestudio')
       // Paper
       var paper = new joint.dia.Paper({
           el: $('#paper'),
-          width: 1000,
-          height: 1000,
+          width: 800,
+          height: 500,
           model: graph,
           gridSize: 1,
           defaultLink: new joint.shapes.devs.Link({
             router: { name: 'manhattan' },
             connector: { name: 'rounded' }
           }),
-          validateConnection: function(cellViewS, magnetS, cellViewT,
-                                       magnetT, end, linkView) {
+          validateConnection: function(cellViewS, magnetS,
+                                       cellViewT, magnetT,
+                                       end, linkView) {
               // Prevent loop linking
               return (magnetS !== magnetT);
           },
           // Enable link snapping within 75px lookup radius
-          snapLinks: { radius: 75 }
+          snapLinks: { radius: 30 }
       });
 
       // Nodes
@@ -46,56 +47,59 @@ angular.module('icestudio')
         var inPorts = [];
         var outPorts = [];
 
-        for (var _in = 0; _in < dep.connectors.input.length; _in++) {
-          inPorts.push(dep.connectors.input[_in].id);
+        for (var _in = 0; _in < dep.ports.in.length; _in++) {
+          inPorts.push(dep.ports.in[_in].id);
         }
 
-        for (var _out = 0; _out < dep.connectors.output.length; _out++) {
-          outPorts.push(dep.connectors.output[_out].id);
+        for (var _out = 0; _out < dep.ports.out.length; _out++) {
+          outPorts.push(dep.ports.out[_out].id);
         }
+
+        var numPorts = Math.max(inPorts.length, outPorts.length);
 
         var block = new joint.shapes.devs.Model({
             id: nodes[i].id,
             position: { x: nodes[i].x, y: nodes[i].y },
             inPorts: inPorts,
             outPorts: outPorts,
-            size: { width: 80, height: 50 },
+            size: { width: 80, height: 30 + 20 * numPorts },
             attrs: {
-                rect: { fill: '#2ECC71' },
-                '.label': { text: nodes[i].type, 'ref-x': .4, 'ref-y': .2 },
-                '.inPorts circle': { fill: '#16A085', magnet: 'passive', type: 'input' },
-                '.outPorts circle': { fill: '#E74C3C', type: 'output' }
+                rect: { fill: '#C0DFEB' },
+                '.label': { text: dep.label + '\n' + nodes[i].id },
+                '.inPorts circle': { magnet: 'passive', type: 'input' },
+                '.outPorts circle': { type: 'output' }
             }
         });
         graph.addCell(block);
       }
 
-      // Connections
-      for (var i = 0; i < connections.length; i++) {
-        var source = graph.getCell(connections[i].source.nodeId);
-        var target = graph.getCell(connections[i].target.nodeId);
-        var sourcePort = connections[i].source.connectorId;
-        var targetPort = connections[i].target.connectorId;
+      // Links
+      for (var i = 0; i < links.length; i++) {
+        var source = graph.getCell(links[i].source.node);
+        var target = graph.getCell(links[i].target.node);
+        var sourcePort = source.getPortSelector(links[i].source.port);
+        var targetPort = target.getPortSelector(links[i].target.port);
+
         var link = new joint.shapes.devs.Link({
             router: { name: 'manhattan' },
             connector: { name: 'rounded' },
-            source: { id: source.id, selector: source.getPortSelector(sourcePort) },
-            target: { id: target.id, selector: target.getPortSelector(targetPort) },
+            source: { id: source.id, selector: sourcePort },
+            target: { id: target.id, selector: targetPort },
         });
         graph.addCell(link);
       }
 
+      graph.addCell(new joint.shapes.logic.And({ position: { x: 300, y: 50 }}));
+
       paper.scale(1.5, 1.5);
 
-      console.log(JSON.stringify(graph.toJSON()));
+      function findDep(deps, name) {
+        for (var i = 0; i < deps.length; i++) {
+          if (deps[i].name == name)
+            return deps[i]
+        }
+      }
 
     });
-
-    function findDep(deps, name) {
-      for (var i = 0; i < deps.length; i++) {
-        if (deps[i].name == name)
-          return deps[i]
-      }
-    }
 
   });
