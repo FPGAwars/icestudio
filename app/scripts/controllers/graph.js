@@ -1,9 +1,6 @@
 'use strict';
 
 angular.module('icestudio')
-  .factory('joint', function($window) {
-    return $window.joint;
-  })
   .controller('GraphCtrl', function($scope, joint) {
     console.log('echo graph');
 
@@ -25,10 +22,7 @@ angular.module('icestudio')
           height: 500,
           model: graph,
           gridSize: 1,
-          defaultLink: new joint.shapes.devs.Link({
-            router: { name: 'manhattan' },
-            connector: { name: 'rounded' }
-          }),
+          defaultLink: new joint.shapes.ice.Wire(),
           validateConnection: function(cellViewS, magnetS,
                                        cellViewT, magnetT,
                                        end, linkView) {
@@ -56,18 +50,18 @@ angular.module('icestudio')
         }
 
         var numPorts = Math.max(inPorts.length, outPorts.length);
+        var width = 50;
+        if (inPorts.length) width += 40;
+        if (outPorts.length) width += 40;
 
-        var block = new joint.shapes.devs.Model({
+        var block = new joint.shapes.ice.Block({
             id: nodes[i].id,
-            position: { x: nodes[i].x, y: nodes[i].y },
             inPorts: inPorts,
             outPorts: outPorts,
-            size: { width: 80, height: 30 + 20 * numPorts },
+            position: { x: nodes[i].x, y: nodes[i].y },
+            size: { width: width, height: 30 + 20 * numPorts },
             attrs: {
-                rect: { fill: '#C0DFEB' },
-                '.label': { text: dep.label + '\n' + nodes[i].id },
-                '.inPorts circle': { magnet: 'passive', type: 'input' },
-                '.outPorts circle': { type: 'output' }
+                '.label': { text: dep.label + '\n' + nodes[i].id }
             }
         });
         graph.addCell(block);
@@ -80,18 +74,16 @@ angular.module('icestudio')
         var sourcePort = source.getPortSelector(links[i].source.port);
         var targetPort = target.getPortSelector(links[i].target.port);
 
-        var link = new joint.shapes.devs.Link({
-            router: { name: 'manhattan' },
-            connector: { name: 'rounded' },
+        var link = new joint.shapes.ice.Wire({
             source: { id: source.id, selector: sourcePort },
             target: { id: target.id, selector: targetPort },
         });
         graph.addCell(link);
       }
 
-      graph.addCell(new joint.shapes.logic.And({ position: { x: 300, y: 50 }}));
+      graph.addCell(new joint.shapes.logic.And({ position: { x: 500, y: 50 }}));
 
-      paper.scale(1.5, 1.5);
+      //paper.scale(1.5, 1.5);
 
       function findDep(deps, name) {
         for (var i = 0; i < deps.length; i++) {
