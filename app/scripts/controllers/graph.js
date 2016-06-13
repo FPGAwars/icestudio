@@ -17,20 +17,19 @@ angular.module('icestudio')
 
       // Paper
       var paper = new joint.dia.Paper({
-          el: $('#paper'),
-          width: 800,
-          height: 500,
-          model: graph,
-          gridSize: 1,
-          defaultLink: new joint.shapes.ice.Wire(),
-          validateConnection: function(cellViewS, magnetS,
-                                       cellViewT, magnetT,
-                                       end, linkView) {
-              // Prevent loop linking
-              return (magnetS !== magnetT);
-          },
-          // Enable link snapping within 75px lookup radius
-          snapLinks: { radius: 30 }
+        el: $('#paper'),
+        width: 850,
+        height: 510,
+        model: graph,
+        gridSize: 1,
+        snapLinks: { radius: 30 },
+        defaultLink: new joint.shapes.ice.Wire(),
+        validateConnection: function(cellViewS, magnetS,
+                                     cellViewT, magnetT,
+                                     end, linkView) {
+          // Prevent loop linking
+          return (magnetS !== magnetT);
+        }
       });
 
       // Nodes
@@ -55,14 +54,12 @@ angular.module('icestudio')
         if (outPorts.length) width += 40;
 
         var block = new joint.shapes.ice.Block({
-            id: nodes[i].id,
-            inPorts: inPorts,
-            outPorts: outPorts,
-            position: { x: nodes[i].x, y: nodes[i].y },
-            size: { width: width, height: 30 + 20 * numPorts },
-            attrs: {
-                '.label': { text: dep.label + '\n' + nodes[i].id }
-            }
+          id: nodes[i].id,
+          inPorts: inPorts,
+          outPorts: outPorts,
+          position: { x: nodes[i].x, y: nodes[i].y },
+          size: { width: width, height: 30 + 20 * numPorts },
+          attrs: { '.label': { text: dep.label + '\n' + nodes[i].id } }
         });
         graph.addCell(block);
       }
@@ -75,13 +72,11 @@ angular.module('icestudio')
         var targetPort = target.getPortSelector(links[i].target.port);
 
         var link = new joint.shapes.ice.Wire({
-            source: { id: source.id, selector: sourcePort },
-            target: { id: target.id, selector: targetPort },
+          source: { id: source.id, selector: sourcePort },
+          target: { id: target.id, selector: targetPort },
         });
         graph.addCell(link);
       }
-
-      graph.addCell(new joint.shapes.logic.And({ position: { x: 500, y: 50 }}));
 
       //paper.scale(1.5, 1.5);
 
@@ -93,5 +88,4 @@ angular.module('icestudio')
       }
 
     });
-
   });

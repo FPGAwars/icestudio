@@ -8,14 +8,8 @@
                                   not supported by any browser */
 }
 
-#diagramContainer {
-     padding: 20px;
-     width:80%; height: 200px;
-     border: 1px solid gray;
- }
-
- .item {
-     height:80px; width: 80px;
-     border: 1px solid blue;
-     float: left;
- }
+#paper {
+  border-radius: 5px;
+  border: 2px solid #AAA;
+  padding: 10px;
+}

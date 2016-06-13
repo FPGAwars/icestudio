@@ -10,7 +10,7 @@
     "width": 900,
     "height": 600,
     "toolbar": true,
-    "resizable": true
+    "resizable": false
   },
   "engines": {
     "node": ">= 0.10.0"
