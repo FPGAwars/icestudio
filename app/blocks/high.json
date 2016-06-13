@@ -1,27 +1,19 @@
 {
   "deps": [
     {
-      "name": "input",
-      "label": "",
-      "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
-      }
-    },
-    {
       "name": "output",
-      "label": "",
-      "connectors": {
-        "input": [ { "id": "in", "label": "" } ],
-        "output": []
+      "label": "O",
+      "ports": {
+        "in": [ { "id": "in", "label": "" } ],
+        "out": []
       }
     },
     {
        "name": "driver1",
        "label": "\"1\"",
-       "connectors": {
-          "input": [],
-          "output": [ { "id": "out", "label": "" } ]
+       "ports": {
+          "in": [],
+          "out": [ { "id": "out", "label": "" } ]
        },
        "code": {
           "type": "verilog",
@@ -33,21 +25,21 @@
   {
      "name": "high",
      "label": "HIGH",
-     "connectors": {
-        "input": [],
-        "output": [ { "id": "out", "label": "" } ]
+     "ports": {
+        "in": [],
+        "out": [ { "id": "out", "label": "" } ]
      },
      "code": {
         "type": "graph",
         "data" : {
           "nodes": [
-             { "id": "d1", "type": "driver1", "x": 50, "y": 20 },
-             { "id": "out", "type": "output", "x": 200, "y": 20 }
+             { "id": "d1", "type": "driver1", "x": 50, "y": 50 },
+             { "id": "out", "type": "output", "x": 300, "y": 50 }
           ],
-          "connections": [
+          "links": [
             {
-              "source": { "nodeId": "d1", "connectorId": "out" },
-              "target": { "nodeId": "out", "connectorId": "in" }
+              "source": { "node": "d1", "port": "out" },
+              "target": { "node": "out", "port": "in" }
             }
           ]
         }

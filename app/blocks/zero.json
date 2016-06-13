@@ -59,8 +59,8 @@
              { "id": "d0", "type": "driver0", "x": 50, "y": 50 },
              { "id": "in0", "type": "input", "x": 50, "y": 150 },
              { "id": "in1", "type": "input", "x": 50, "y": 250 },
-             { "id": "a", "type": "and", "x": 200, "y": 130 },
-             { "id": "out", "type": "output", "x": 350, "y": 150 }
+             { "id": "a", "type": "and", "x": 250, "y": 130 },
+             { "id": "out", "type": "output", "x": 500, "y": 150 }
           ],
           "links": [
             {
