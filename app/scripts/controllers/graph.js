@@ -19,7 +19,7 @@ angular.module('icestudio')
       var paper = new joint.dia.Paper({
         el: $('#paper'),
         width: 850,
-        height: 510,
+        height: 480,
         model: graph,
         gridSize: 1,
         snapLinks: { radius: 30 },

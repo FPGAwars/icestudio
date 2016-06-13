@@ -7,9 +7,3 @@
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
-
-#paper {
-  border-radius: 5px;
-  border: 2px solid #AAA;
-  padding: 10px;
-}
