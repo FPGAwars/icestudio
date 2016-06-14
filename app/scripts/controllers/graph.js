@@ -33,16 +33,19 @@ angular.module('icestudio')
         var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
         window.title = 'Icestudio - ' + name;
         loadProject(data);
+        alertify.success('File ' + name + ' loaded');
       });
     });
 
     $rootScope.$on('save', function(event, filepath) {
       saveProject(filepath);
+      alertify.success('File ' + name + ' saved');
     });
 
     $rootScope.$on('new', function(event) {
       window.title = 'Icestudio';
       graph.clear();
+      alertify.success('New project created');
     });
 
     // Functions
