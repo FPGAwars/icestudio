@@ -1,13 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('GraphCtrl', function($scope, $rootScope, joint) {
-
-    $rootScope.$on('load', function(event, filepath) {
-      $.getJSON(filepath, function(data) {
-        loadProject(data);
-      });
-    });
+  .controller('GraphCtrl', function($scope, $rootScope, joint, nodeFs) {
 
     // Graph
     var graph = new joint.dia.Graph();
@@ -28,6 +22,21 @@ angular.module('icestudio')
         return (magnetS !== magnetT);
       }
     });
+
+
+    // Events
+
+    $rootScope.$on('load', function(event, filepath) {
+      $.getJSON(filepath, function(data) {
+        loadProject(data);
+      });
+    });
+
+    $rootScope.$on('save', function(event, filepath) {
+      saveProject(filepath)
+    });
+
+    // Functions
 
     function loadProject(data) {
 
@@ -93,6 +102,18 @@ angular.module('icestudio')
             return deps[i]
         }
       }
+    }
+
+    function saveProject(filepath) {
+      var data = graph.toJSON();
+
+      nodeFs.writeFile(filepath, JSON.stringify(data, null, 2),
+        function(err) {
+          if (!err) {
+            var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+            console.log('File ' + name + ' saved');
+          }
+      });
     }
 
   });

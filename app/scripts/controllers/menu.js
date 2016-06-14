@@ -24,7 +24,11 @@ angular.module('icestudio')
           var file = event.target.files[0];
           event.target.files.clear();
           if (file) {
-            save(file.path);
+            var filepath = file.path;
+            if (! filepath.endsWith('.json')) {
+                filepath += '.json';
+            }
+            save(filepath);
           }
         });
         ctrl.click();
@@ -36,7 +40,7 @@ angular.module('icestudio')
     }
 
     function save(filepath) {
-      alert("Save " + filepath);
+      $rootScope.$emit('save', filepath);
     }
 
     $scope.build = function() {
