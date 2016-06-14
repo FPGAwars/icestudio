@@ -1,5 +1,8 @@
 <div ng-controller="MenuCtrl">
 
+    <input id="input-load" type="file" accept=".json" style="display:none"/>
+    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas/>
+
     <nav class="navbar navbar-default" role="navigation">
 
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
@@ -35,9 +38,6 @@
                 </li>
 
             </ul>
-
         </div>
-
     </nav>
-
 </div>
