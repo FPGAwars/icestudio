@@ -16,6 +16,7 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "directory-tree": "^1.0.0",
     "jquery": "^2.2.3",
     "serialport": "^2.0.5"
   },
