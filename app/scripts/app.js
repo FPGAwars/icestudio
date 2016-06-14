@@ -3,7 +3,8 @@
 angular
     .module('icestudio', [
         'ngRoute',
-        'pascalprecht.translate'
+        'pascalprecht.translate',
+        'ui.bootstrap'
     ]).config(['$routeProvider', '$translateProvider',
         function($routeProvider, $translateProvider) {
 

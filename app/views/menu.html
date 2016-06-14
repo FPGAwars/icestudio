@@ -1,0 +1,46 @@
+<div ng-controller="MenuCtrl">
+
+    <input id="input-load" type="file" accept=".json" style="display:none"/>
+    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas/>
+
+    <nav class="navbar navbar-default" role="navigation">
+
+        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+
+            <ul class="nav navbar-nav"> <!-- navbar-right -->
+
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      File <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                      <li>
+                        <a href ng-click="new()">{{ 'New project' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="load()">{{ 'Load project' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="save()">{{ 'Save project' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      Edit  <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                      <li>
+                        <a href ng-click="build()">{{ 'Build' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
