@@ -138,3 +138,4 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
 joint.shapes.ice.ModelView = joint.dia.ElementView.extend(joint.shapes.basic.PortsViewInterface);
 joint.shapes.ice.BlockView = joint.shapes.ice.ModelView;
+joint.shapes.ice.IOView = joint.shapes.ice.ModelView;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('GraphCtrl', function($scope, $rootScope, joint, nodeFs) {
+  .controller('GraphCtrl', function($scope, $rootScope, joint, nodeFs, window) {
 
     // Variables
 
@@ -30,6 +30,8 @@ angular.module('icestudio')
 
     $rootScope.$on('load', function(event, filepath) {
       $.getJSON(filepath, function(data) {
+        var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+        window.title = 'Icestudio - ' + name;
         loadProject(data);
       });
     });
@@ -39,6 +41,7 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('new', function(event) {
+      window.title = 'Icestudio';
       graph.clear();
     });
 
@@ -80,7 +83,7 @@ angular.module('icestudio')
         var shape = joint.shapes.ice.Block;
 
         if (nodes[i].type === 'input' || nodes[i].type == 'output') {
-          shape = joint.shapes.ice.IO
+          shape = joint.shapes.ice.IO;
         }
 
         var block = new shape({
