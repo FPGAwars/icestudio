@@ -29,6 +29,7 @@ angular.module('icestudio')
     $rootScope.$on('load', function(event, filepath) {
       $.getJSON(filepath, function(data) {
         loadProject(data);
+        console.log(graph.toJSON());
       });
     });
 
@@ -71,11 +72,13 @@ angular.module('icestudio')
 
         var block = new joint.shapes.ice.Block({
           id: nodes[i].id,
+          blockType: nodes[i].type,
+          blockLabel: '',
           inPorts: inPorts,
           outPorts: outPorts,
           position: { x: nodes[i].x, y: nodes[i].y },
           size: { width: width, height: 30 + 20 * numPorts },
-          attrs: { '.label': { text: dep.label + '\n' + nodes[i].id } }
+          attrs: { '.label': { text: dep.label + '\n' + nodes[i].id.toString() } }
         });
         graph.addCell(block);
       }
@@ -88,8 +91,8 @@ angular.module('icestudio')
         var targetPort = target.getPortSelector(links[i].target.port);
 
         var link = new joint.shapes.ice.Wire({
-          source: { id: source.id, selector: sourcePort },
-          target: { id: target.id, selector: targetPort },
+          source: { id: source.id, selector: sourcePort, port: links[i].source.port },
+          target: { id: target.id, selector: targetPort, port: links[i].target.port },
         });
         graph.addCell(link);
       }
@@ -105,12 +108,68 @@ angular.module('icestudio')
     }
 
     function saveProject(filepath) {
-      var data = graph.toJSON();
+
+      var graphData = graph.toJSON();
+      var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+
+      var p = {};
+
+      // Header
+
+      p.name = name;
+      p.label = name.toUpperCase();
+
+      // Ports
+
+      var inPorts = [];
+      var outPorts = [];
+
+      for (var c = 0; c < graphData.cells.length; c++) {
+        var cell = graphData.cells[c];
+        if (cell.blockType) {
+          if (cell.blockType == 'input') {
+            inPorts.push({id: cell.id, label: cell.blockLabel });
+          }
+          else if (cell.blockType == 'output') {
+            outPorts.push({id: cell.id, label: cell.blockLabel });
+          }
+        }
+      }
+
+      p.ports = { in: inPorts, out: outPorts };
+
+      // Code
+
+      var nodes = [];
+      var links = [];
+
+      for (var c = 0; c < graphData.cells.length; c++) {
+        var cell = graphData.cells[c];
+        if (cell.type == 'ice.Block') {
+          var node = {};
+          node.id = cell.id;
+          node.type = cell.blockType;
+          node.x = cell.position.x;
+          node.y = cell.position.y;
+          nodes.push(node);
+        }
+        else if (cell.type == 'ice.Wire') {
+          var link = {};
+          link.source = { node: cell.source.id, port: cell.source.port };
+          link.target = { node: cell.target.id, port: cell.target.port };
+          links.push(link);
+        }
+      }
+
+      p.code = { type: "graph", data: { nodes: nodes, links: links } };
+
+      // Data
+
+      var data = { deps: [], project: p };
 
       nodeFs.writeFile(filepath, JSON.stringify(data, null, 2),
         function(err) {
           if (!err) {
-            var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
             console.log('File ' + name + ' saved');
           }
       });
