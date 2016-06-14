@@ -1,0 +1,173 @@
+{
+  "deps": [
+    {
+      "name": "input",
+      "label": "I",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "name": "output",
+      "label": "O",
+      "ports": {
+        "in": [
+          {
+            "id": "in",
+            "label": ""
+          }
+        ],
+        "out": []
+      }
+    },
+    {
+      "name": "driver1",
+      "label": "\"1\"",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = 1'b1;"
+      }
+    },
+    {
+      "name": "high",
+      "label": "HIGH",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "graph",
+        "data": {
+          "nodes": [
+            {
+              "id": "d1",
+              "type": "driver1",
+              "x": 10,
+              "y": 10
+            },
+            {
+              "id": "out",
+              "type": "output",
+              "x": 30,
+              "y": 20
+            }
+          ],
+          "links": [
+            {
+              "source": {
+                "node": "d1",
+                "port": "out"
+              },
+              "target": {
+                "node": "out",
+                "port": "in"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "not",
+      "label": "NOT",
+      "ports": {
+        "in": [
+          {
+            "id": "in",
+            "label": ""
+          }
+        ],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = ! in;"
+      }
+    }
+  ],
+  "project": {
+    "name": "low",
+    "label": "LOW",
+    "ports": {
+      "in": [],
+      "out": [
+        {
+          "id": "out",
+          "label": ""
+        }
+      ]
+    },
+    "code": {
+      "type": "graph",
+      "data": {
+        "nodes": [
+          {
+            "id": "h",
+            "type": "high",
+            "x": 50,
+            "y": 100
+          },
+          {
+            "id": "n",
+            "type": "not",
+            "x": 261,
+            "y": 102
+          },
+          {
+            "id": "out",
+            "type": "output",
+            "x": 491,
+            "y": 103
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "node": "h",
+              "port": "out"
+            },
+            "target": {
+              "node": "n",
+              "port": "in"
+            }
+          },
+          {
+            "source": {
+              "node": "n",
+              "port": "out"
+            },
+            "target": {
+              "node": "out",
+              "port": "in"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -3,6 +3,10 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope, $rootScope) {
 
+    $scope.new = function() {
+      $rootScope.$emit('new');
+    }
+
     $scope.load = function() {
       setTimeout(function() {
         var ctrl = angular.element('#input-load');
@@ -10,7 +14,7 @@ angular.module('icestudio')
           var file = event.target.files[0];
           event.target.files.clear();
           if (file) {
-            load(file.path);
+            $rootScope.$emit('load', file.path);
           }
         });
         ctrl.click();
@@ -28,19 +32,11 @@ angular.module('icestudio')
             if (! filepath.endsWith('.json')) {
                 filepath += '.json';
             }
-            save(filepath);
+            $rootScope.$emit('save', filepath);
           }
         });
         ctrl.click();
       }, 0);
-    }
-
-    function load(filepath) {
-      $rootScope.$emit('load', filepath);
-    }
-
-    function save(filepath) {
-      $rootScope.$emit('save', filepath);
     }
 
     $scope.build = function() {

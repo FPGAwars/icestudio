@@ -3,6 +3,8 @@
 angular.module('icestudio')
   .controller('GraphCtrl', function($scope, $rootScope, joint, nodeFs) {
 
+    // Variables
+
     // Graph
     var graph = new joint.dia.Graph();
 
@@ -29,12 +31,15 @@ angular.module('icestudio')
     $rootScope.$on('load', function(event, filepath) {
       $.getJSON(filepath, function(data) {
         loadProject(data);
-        console.log(graph.toJSON());
       });
     });
 
     $rootScope.$on('save', function(event, filepath) {
-      saveProject(filepath)
+      saveProject(filepath);
+    });
+
+    $rootScope.$on('new', function(event) {
+      graph.clear();
     });
 
     // Functions
@@ -48,6 +53,8 @@ angular.module('icestudio')
       var links = project.code.data.links;
 
       graph.clear();
+
+      graph.deps = deps;
 
       // Nodes
       for (var i = 0; i < nodes.length; i++) {
@@ -70,7 +77,13 @@ angular.module('icestudio')
         if (inPorts.length) width += 40;
         if (outPorts.length) width += 40;
 
-        var block = new joint.shapes.ice.Block({
+        var shape = joint.shapes.ice.Block;
+
+        if (nodes[i].type === 'input' || nodes[i].type == 'output') {
+          shape = joint.shapes.ice.IO
+        }
+
+        var block = new shape({
           id: nodes[i].id,
           blockType: nodes[i].type,
           blockLabel: '',
@@ -145,7 +158,7 @@ angular.module('icestudio')
 
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
-        if (cell.type == 'ice.Block') {
+        if (cell.type == 'ice.Block' || cell.type == 'ice.IO') {
           var node = {};
           node.id = cell.id;
           node.type = cell.blockType;
@@ -165,7 +178,7 @@ angular.module('icestudio')
 
       // Data
 
-      var data = { deps: [], project: p };
+      var data = { deps: graph.deps, project: p };
 
       nodeFs.writeFile(filepath, JSON.stringify(data, null, 2),
         function(err) {

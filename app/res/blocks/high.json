@@ -1,0 +1,78 @@
+{
+  "deps": [
+    {
+      "name": "output",
+      "label": "O",
+      "ports": {
+        "in": [
+          {
+            "id": "in",
+            "label": ""
+          }
+        ],
+        "out": []
+      }
+    },
+    {
+      "name": "driver1",
+      "label": "\"1\"",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = 1'b1;"
+      }
+    }
+  ],
+  "project": {
+    "name": "high",
+    "label": "HIGH",
+    "ports": {
+      "in": [],
+      "out": [
+        {
+          "id": "out",
+          "label": ""
+        }
+      ]
+    },
+    "code": {
+      "type": "graph",
+      "data": {
+        "nodes": [
+          {
+            "id": "d1",
+            "type": "driver1",
+            "x": 50,
+            "y": 50
+          },
+          {
+            "id": "out",
+            "type": "output",
+            "x": 300,
+            "y": 50
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "node": "d1",
+              "port": "out"
+            },
+            "target": {
+              "node": "out",
+              "port": "in"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

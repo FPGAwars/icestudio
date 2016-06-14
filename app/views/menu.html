@@ -15,10 +15,13 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
                       <li>
-                        <a href ng-click="load()">Load project</a>
+                        <a href ng-click="new()">{{ 'New project' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="save()">Save project</a>
+                        <a href ng-click="load()">{{ 'Load project' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="save()">{{ 'Save project' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -29,10 +32,10 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
                       <li>
-                        <a href ng-click="build()">Build</a>
+                        <a href ng-click="build()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="upload()">Upload</a>
+                        <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
                       </li>
                     </ul>
                 </li>

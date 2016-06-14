@@ -110,6 +110,18 @@ joint.shapes.ice.Block = joint.shapes.ice.Model.extend({
   }, joint.shapes.ice.Model.prototype.defaults)
 });
 
+joint.shapes.ice.IO = joint.shapes.ice.Model.extend({
+
+  defaults: joint.util.deepSupplement({
+    type: 'ice.IO',
+    attrs: {
+      '.body': {
+        fill: '#FAFAD2'
+      }
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   defaults: {
