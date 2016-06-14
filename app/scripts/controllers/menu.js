@@ -3,6 +3,10 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope, $rootScope) {
 
+    $scope.categories = $rootScope.blocks;
+
+    console.log($scope.categories);
+
     $scope.new = function() {
       $rootScope.$emit('new');
     }

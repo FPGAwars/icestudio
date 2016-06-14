@@ -7,15 +7,40 @@ angular.module('icestudio')
     alertify.delay(2000);
     alertify.logPosition('bottom right');
 
-    $rootScope.blocks = [];
+    $rootScope.blocks = {};
 
     // Load blocks
-    nodeGlob('app/res/blocks/*/*/*.json', null, function (er, files) {
-      for (var i = 0; i < files.length; i++) {
-        $.getJSON(files[i].substring(4), function(data) {
-          $rootScope.blocks.push(data);
-        });
-      }
-    })
 
+    nodeGlob('app/res/blocks/*', null, function (er, categories) {
+      for (var i = 0; i < categories.length; i++) {
+
+        var category = categories[i].split('/')[3];
+
+        $rootScope.blocks[category] = {};
+
+        nodeGlob(categories[i] + '/*/*.json', null, (function(c) {
+            return function(er, blocks) {
+                storeBlocks(er, blocks, c);
+            };
+        })(category));
+
+        function storeBlocks(er, blocks, category) {
+
+          for (var j = 0; j < blocks.length; j++) {
+
+            var name = blocks[j].split('/')[4];
+
+            $.getJSON(blocks[j].substring(4), (function(c, n) {
+                return function(data) {
+                    storeData(data, c, n);
+                };
+            })(category, name));
+
+            function storeData(data, category, name) {
+              $rootScope.blocks[category][name] = data;
+            }
+          }
+        };
+      }
+    });
   });
