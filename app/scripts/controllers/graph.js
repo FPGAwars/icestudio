@@ -1,10 +1,35 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('GraphCtrl', function($scope, joint) {
-    console.log('echo graph');
+  .controller('GraphCtrl', function($scope, $rootScope, joint) {
 
-    $.getJSON('blocks/zero.json', function(data) {
+    $rootScope.$on('load', function(event, filepath) {
+      $.getJSON(filepath, function(data) {
+        loadProject(data);
+      });
+    });
+
+    // Graph
+    var graph = new joint.dia.Graph();
+
+    // Paper
+    var paper = new joint.dia.Paper({
+      el: $('#paper'),
+      width: 850,
+      height: 480,
+      model: graph,
+      gridSize: 1,
+      snapLinks: { radius: 30 },
+      defaultLink: new joint.shapes.ice.Wire(),
+      validateConnection: function(cellViewS, magnetS,
+                                   cellViewT, magnetT,
+                                   end, linkView) {
+        // Prevent loop linking
+        return (magnetS !== magnetT);
+      }
+    });
+
+    function loadProject(data) {
 
       var deps = data.deps;
       var project = data.project;
@@ -12,25 +37,7 @@ angular.module('icestudio')
       var nodes = project.code.data.nodes;
       var links = project.code.data.links;
 
-      // Graph
-      var graph = new joint.dia.Graph();
-
-      // Paper
-      var paper = new joint.dia.Paper({
-        el: $('#paper'),
-        width: 850,
-        height: 480,
-        model: graph,
-        gridSize: 1,
-        snapLinks: { radius: 30 },
-        defaultLink: new joint.shapes.ice.Wire(),
-        validateConnection: function(cellViewS, magnetS,
-                                     cellViewT, magnetT,
-                                     end, linkView) {
-          // Prevent loop linking
-          return (magnetS !== magnetT);
-        }
-      });
+      graph.clear();
 
       // Nodes
       for (var i = 0; i < nodes.length; i++) {
@@ -86,6 +93,6 @@ angular.module('icestudio')
             return deps[i]
         }
       }
+    }
 
-    });
   });

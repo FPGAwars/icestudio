@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope) {
+  .controller('MenuCtrl', function ($scope, $rootScope) {
 
     $scope.load = function() {
       setTimeout(function() {
@@ -32,7 +32,7 @@ angular.module('icestudio')
     }
 
     function load(filepath) {
-      alert("Load " + filepath);
+      $rootScope.$emit('load', filepath);
     }
 
     function save(filepath) {
