@@ -1,0 +1,17 @@
+{
+  "name": "driver1",
+  "label": "\"1\"",
+  "ports": {
+    "in": [],
+    "out": [
+      {
+        "id": "out",
+        "label": ""
+      }
+    ]
+  },
+  "code": {
+    "type": "verilog",
+    "data": "assign out = 1'b1;"
+  }
+}

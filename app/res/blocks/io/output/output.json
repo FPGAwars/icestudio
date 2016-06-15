@@ -1,0 +1,13 @@
+{
+  "name": "output",
+  "label": "",
+  "ports": {
+    "in": [
+      {
+        "id": "in",
+        "label": ""
+      }
+    ],
+    "out": []
+  }
+}

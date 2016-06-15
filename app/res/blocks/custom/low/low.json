@@ -1,0 +1,60 @@
+{
+  "name": "low",
+  "label": "LOW",
+  "ports": {
+    "in": [],
+    "out": [
+      {
+        "id": "f225dcb2-3195-45bc-941f-cf4f05d984dc",
+        "label": "o"
+      }
+    ]
+  },
+  "code": {
+    "type": "graph",
+    "data": {
+      "blocks": [
+        {
+          "id": "574ef694-a4dd-4493-b035-6bb2b16a47db",
+          "type": "custom.high",
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "49b0ce5c-8f46-4add-bd3c-76631be92df3",
+          "type": "logic.not",
+          "x": 308,
+          "y": 100
+        },
+        {
+          "id": "f225dcb2-3195-45bc-941f-cf4f05d984dc",
+          "type": "io.output",
+          "x": 565,
+          "y": 101
+        }
+      ],
+      "wires": [
+        {
+          "source": {
+            "block": "574ef694-a4dd-4493-b035-6bb2b16a47db",
+            "port": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762"
+          },
+          "target": {
+            "block": "49b0ce5c-8f46-4add-bd3c-76631be92df3",
+            "port": "in"
+          }
+        },
+        {
+          "source": {
+            "block": "49b0ce5c-8f46-4add-bd3c-76631be92df3",
+            "port": "out"
+          },
+          "target": {
+            "block": "f225dcb2-3195-45bc-941f-cf4f05d984dc",
+            "port": "in"
+          }
+        }
+      ]
+    }
+  }
+}
