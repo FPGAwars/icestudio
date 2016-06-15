@@ -44,13 +44,13 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li uib-dropdown ng-repeat="(key, category) in categories">
+                <li uib-dropdown ng-repeat="(category, blocks) in categories">
                     <a href uib-dropdown-toggle>
-                      {{ key }} <span class="caret"></span>
+                      {{ category }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-                      <li ng-repeat="(name, data) in category">
-                        <a href ng-click="">{{ name }}</a>
+                      <li ng-repeat="(name, block) in blocks">
+                        <a href ng-click="addBlock(category, name, block)">{{ name }}</a>
                       </li>
                     </ul>
                 </li>

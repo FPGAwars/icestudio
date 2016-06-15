@@ -28,6 +28,12 @@ angular.module('icestudio')
 
     // Events
 
+    $rootScope.$on('new', function(event) {
+      window.title = 'Icestudio';
+      graph.clear();
+      alertify.success('New project created');
+    });
+
     $rootScope.$on('load', function(event, filepath) {
       $.getJSON(filepath, function(data) {
         var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
@@ -42,64 +48,37 @@ angular.module('icestudio')
       alertify.success('File ' + name + ' saved');
     });
 
-    $rootScope.$on('new', function(event) {
-      window.title = 'Icestudio';
-      graph.clear();
-      alertify.success('New project created');
+    $rootScope.$on('addBlock', function(event, data) {
+      data.id = null;
+      data.x = 100;
+      data.y = 100;
+      addBlock(data);
+      alertify.success('Block ' + data.name + ' added');
     });
+
 
     // Functions
 
     function loadProject(data) {
 
-      var deps = data.deps;
-      var project = data.project;
+      var nodes = data.code.data.nodes;
+      var links = data.code.data.links;
 
-      var nodes = project.code.data.nodes;
-      var links = project.code.data.links;
+      if (data.code.type !== 'graph')
+        return 0;
 
       graph.clear();
 
-      graph.deps = deps;
-
       // Nodes
       for (var i = 0; i < nodes.length; i++) {
-
-        var dep = findDep(deps, nodes[i].type);
-
-        var inPorts = [];
-        var outPorts = [];
-
-        for (var _in = 0; _in < dep.ports.in.length; _in++) {
-          inPorts.push(dep.ports.in[_in].id);
-        }
-
-        for (var _out = 0; _out < dep.ports.out.length; _out++) {
-          outPorts.push(dep.ports.out[_out].id);
-        }
-
-        var numPorts = Math.max(inPorts.length, outPorts.length);
-        var width = 50;
-        if (inPorts.length) width += 40;
-        if (outPorts.length) width += 40;
-
-        var shape = joint.shapes.ice.Block;
-
-        if (nodes[i].type === 'input' || nodes[i].type == 'output') {
-          shape = joint.shapes.ice.IO;
-        }
-
-        var block = new shape({
-          id: nodes[i].id,
-          blockType: nodes[i].type,
-          blockLabel: '',
-          inPorts: inPorts,
-          outPorts: outPorts,
-          position: { x: nodes[i].x, y: nodes[i].y },
-          size: { width: width, height: 30 + 20 * numPorts },
-          attrs: { '.label': { text: dep.label + '\n' + nodes[i].id.toString() } }
-        });
-        graph.addCell(block);
+        var data = {};
+        data.type = nodes[i].type;
+        var type = nodes[i].type.split('.')
+        data.block = $rootScope.blocks[type[0]][type[1]];
+        data.id = nodes[i].id;
+        data.x = nodes[i].x;
+        data.y = nodes[i].y;
+        addBlock(data);
       }
 
       // Links
@@ -116,14 +95,52 @@ angular.module('icestudio')
         graph.addCell(link);
       }
 
-      //paper.scale(1.5, 1.5);
-
       function findDep(deps, name) {
         for (var i = 0; i < deps.length; i++) {
           if (deps[i].name == name)
             return deps[i]
         }
       }
+
+      //paper.scale(1.5, 1.5);
+    }
+
+    function addBlock(data) {
+
+      var inPorts = [];
+      var outPorts = [];
+
+      for (var _in = 0; _in < data.block.ports.in.length; _in++) {
+        inPorts.push(data.block.ports.in[_in].id);
+      }
+
+      for (var _out = 0; _out < data.block.ports.out.length; _out++) {
+        outPorts.push(data.block.ports.out[_out].id);
+      }
+
+      var numPorts = Math.max(inPorts.length, outPorts.length);
+      var width = 50;
+
+      if (inPorts.length) width += 40;
+      if (outPorts.length) width += 40;
+
+      var shape = joint.shapes.ice.Block;
+
+      if (data.type === 'io.input' || data.type == 'io.output') {
+        shape = joint.shapes.ice.IO;
+      }
+
+      var block = new shape({
+        id: data.id,
+        blockType: data.type,
+        blockLabel: data.block.label,
+        inPorts: inPorts,
+        outPorts: outPorts,
+        position: { x: data.x, y: data.y },
+        size: { width: width, height: 30 + 20 * numPorts },
+        attrs: { '.label': { text: data.block.label } }
+      });
+      graph.addCell(block);
     }
 
     function saveProject(filepath) {
@@ -131,12 +148,12 @@ angular.module('icestudio')
       var graphData = graph.toJSON();
       var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
 
-      var p = {};
+      var project = {};
 
       // Header
 
-      p.name = name;
-      p.label = name.toUpperCase();
+      project.name = name;
+      project.label = name.toUpperCase();
 
       // Ports
 
@@ -146,16 +163,16 @@ angular.module('icestudio')
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
         if (cell.blockType) {
-          if (cell.blockType == 'input') {
+          if (cell.blockType == 'io.input') {
             inPorts.push({id: cell.id, label: cell.blockLabel });
           }
-          else if (cell.blockType == 'output') {
+          else if (cell.blockType == 'io.output') {
             outPorts.push({id: cell.id, label: cell.blockLabel });
           }
         }
       }
 
-      p.ports = { in: inPorts, out: outPorts };
+      project.ports = { in: inPorts, out: outPorts };
 
       // Code
 
@@ -180,13 +197,11 @@ angular.module('icestudio')
         }
       }
 
-      p.code = { type: "graph", data: { nodes: nodes, links: links } };
+      project.code = { type: "graph", data: { nodes: nodes, links: links } };
 
       // Data
 
-      var data = { deps: graph.deps, project: p };
-
-      nodeFs.writeFile(filepath, JSON.stringify(data, null, 2),
+      nodeFs.writeFile(filepath, JSON.stringify(project, null, 2),
         function(err) {
           if (!err) {
             console.log('File ' + name + ' saved');

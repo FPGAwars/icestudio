@@ -5,8 +5,6 @@ angular.module('icestudio')
 
     $scope.categories = $rootScope.blocks;
 
-    console.log($scope.categories);
-
     $scope.new = function() {
       $rootScope.$emit('new');
     }
@@ -49,6 +47,10 @@ angular.module('icestudio')
 
     $scope.upload = function() {
       console.log('upload');
+    }
+
+    $scope.addBlock = function(category, name, block) {
+      $rootScope.$emit('addBlock', { type: category + '.' + name, block: block });
     }
 
   });

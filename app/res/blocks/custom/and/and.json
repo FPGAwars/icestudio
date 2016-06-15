@@ -1,141 +1,85 @@
 {
-  "deps": [
-    {
-      "name": "input",
-      "label": "I",
-      "ports": {
-        "in": [],
-        "out": [
-          {
-            "id": "out",
-            "label": ""
-          }
-        ]
-      }
-    },
-    {
-      "name": "output",
-      "label": "O",
-      "ports": {
-        "in": [
-          {
-            "id": "in",
-            "label": ""
-          }
-        ],
-        "out": []
-      }
-    },
-    {
-      "name": "and",
-      "label": "AND",
-      "ports": {
-        "in": [
-          {
-            "id": "a",
-            "label": ""
-          },
-          {
-            "id": "b",
-            "label": ""
-          }
-        ],
-        "out": [
-          {
-            "id": "out",
-            "label": ""
-          }
-        ]
+  "name": "and",
+  "label": "AND",
+  "ports": {
+    "in": [
+      {
+        "id": "x",
+        "label": "I"
       },
-      "code": {
-        "type": "verilog",
-        "data": "assign out = a & b;"
+      {
+        "id": "y",
+        "label": "I"
       }
-    }
-  ],
-  "project": {
-    "name": "and",
-    "label": "AND",
-    "ports": {
-      "in": [
+    ],
+    "out": [
+      {
+        "id": "out",
+        "label": "O"
+      }
+    ]
+  },
+  "code": {
+    "type": "graph",
+    "data": {
+      "nodes": [
         {
           "id": "x",
-          "label": ""
+          "type": "io.input",
+          "x": 50,
+          "y": 50
         },
         {
           "id": "y",
-          "label": ""
-        }
-      ],
-      "out": [
+          "type": "io.input",
+          "x": 50,
+          "y": 200
+        },
+        {
+          "id": "a",
+          "type": "logic.and",
+          "x": 225,
+          "y": 116
+        },
         {
           "id": "out",
-          "label": ""
+          "type": "io.output",
+          "x": 476,
+          "y": 125
+        }
+      ],
+      "links": [
+        {
+          "source": {
+            "node": "x",
+            "port": "out"
+          },
+          "target": {
+            "node": "a",
+            "port": "a"
+          }
+        },
+        {
+          "source": {
+            "node": "y",
+            "port": "out"
+          },
+          "target": {
+            "node": "a",
+            "port": "b"
+          }
+        },
+        {
+          "source": {
+            "node": "a",
+            "port": "out"
+          },
+          "target": {
+            "node": "out",
+            "port": "in"
+          }
         }
       ]
-    },
-    "code": {
-      "type": "graph",
-      "data": {
-        "nodes": [
-          {
-            "id": "x",
-            "type": "input",
-            "x": 50,
-            "y": 50
-          },
-          {
-            "id": "y",
-            "type": "input",
-            "x": 50,
-            "y": 200
-          },
-          {
-            "id": "a",
-            "type": "and",
-            "x": 225,
-            "y": 116
-          },
-          {
-            "id": "out",
-            "type": "output",
-            "x": 476,
-            "y": 125
-          }
-        ],
-        "links": [
-          {
-            "source": {
-              "node": "x",
-              "port": "out"
-            },
-            "target": {
-              "node": "a",
-              "port": "a"
-            }
-          },
-          {
-            "source": {
-              "node": "y",
-              "port": "out"
-            },
-            "target": {
-              "node": "a",
-              "port": "b"
-            }
-          },
-          {
-            "source": {
-              "node": "a",
-              "port": "out"
-            },
-            "target": {
-              "node": "out",
-              "port": "in"
-            }
-          }
-        ]
-      }
     }
   }
 }

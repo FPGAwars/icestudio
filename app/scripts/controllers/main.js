@@ -7,9 +7,9 @@ angular.module('icestudio')
     alertify.delay(2000);
     alertify.logPosition('bottom right');
 
-    $rootScope.blocks = {};
-
     // Load blocks
+
+    $rootScope.blocks = {};
 
     nodeGlob('app/res/blocks/*', null, function (er, categories) {
       for (var i = 0; i < categories.length; i++) {
