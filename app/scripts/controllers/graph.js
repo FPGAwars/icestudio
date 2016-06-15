@@ -110,23 +110,23 @@ angular.module('icestudio')
     function loadProject(data) {
 
       var ports = data.ports;
-      var nodes = data.code.data.nodes;
-      var links = data.code.data.links;
+      var blocks = data.code.data.blocks;
+      var wires = data.code.data.wires;
 
       if (data.code.type !== 'graph')
         return 0;
 
       graph.clear();
 
-      // Nodes
-      for (var i = 0; i < nodes.length; i++) {
+      // Blocks
+      for (var i = 0; i < blocks.length; i++) {
         var data = {};
-        data.type = nodes[i].type;
-        var type = nodes[i].type.split('.')
+        data.type = blocks[i].type;
+        var type = blocks[i].type.split('.')
         data.block = $rootScope.blocks[type[0]][type[1]];
-        data.id = nodes[i].id;
-        data.x = nodes[i].x;
-        data.y = nodes[i].y;
+        data.id = blocks[i].id;
+        data.x = blocks[i].x;
+        data.y = blocks[i].y;
 
         // Set custom labels
         if (data.type === 'io.input') {
@@ -147,33 +147,33 @@ angular.module('icestudio')
         addBlock(data);
       }
 
-      // Links
-      for (var i = 0; i < links.length; i++) {
-        var source = graph.getCell(links[i].source.node);
-        var target = graph.getCell(links[i].target.node);
+      // Wires
+      for (var i = 0; i < wires.length; i++) {
+        var source = graph.getCell(wires[i].source.block);
+        var target = graph.getCell(wires[i].target.block);
 
         // Find selectors
         var sourceSelector, targetSelector;
 
         for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
-          if (source.attributes.outPorts[_out] == links[i].source.port) {
+          if (source.attributes.outPorts[_out] == wires[i].source.port) {
             sourcePort = _out;
             break;
           }
         }
 
         for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
-          if (target.attributes.inPorts[_in] == links[i].target.port) {
+          if (target.attributes.inPorts[_in] == wires[i].target.port) {
             targetPort = _in;
             break;
           }
         }
 
-        var link = new joint.shapes.ice.Wire({
-          source: { id: source.id, selector: sourceSelector, port: links[i].source.port },
-          target: { id: target.id, selector: targetSelector, port: links[i].target.port },
+        var wire = new joint.shapes.ice.Wire({
+          source: { id: source.id, selector: sourceSelector, port: wires[i].source.port },
+          target: { id: target.id, selector: targetSelector, port: wires[i].target.port },
         });
-        graph.addCell(link);
+        graph.addCell(wire);
       }
 
       //paper.scale(1.5, 1.5);
@@ -238,28 +238,28 @@ angular.module('icestudio')
 
       // Code
 
-      var nodes = [];
-      var links = [];
+      var blocks = [];
+      var wires = [];
 
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
         if (cell.type == 'ice.Block' || cell.type == 'ice.IO') {
-          var node = {};
-          node.id = cell.id;
-          node.type = cell.blockType;
-          node.x = cell.position.x;
-          node.y = cell.position.y;
-          nodes.push(node);
+          var block = {};
+          block.id = cell.id;
+          block.type = cell.blockType;
+          block.x = cell.position.x;
+          block.y = cell.position.y;
+          blocks.push(block);
         }
         else if (cell.type == 'ice.Wire') {
-          var link = {};
-          link.source = { node: cell.source.id, port: cell.source.port };
-          link.target = { node: cell.target.id, port: cell.target.port };
-          links.push(link);
+          var wire = {};
+          wire.source = { block: cell.source.id, port: cell.source.port };
+          wire.target = { block: cell.target.id, port: cell.target.port };
+          wires.push(wire);
         }
       }
 
-      project.code = { type: 'graph', data: { nodes: nodes, links: links } };
+      project.code = { type: 'graph', data: { blocks: blocks, wires: wires } };
 
       // Data
 

@@ -22,7 +22,7 @@
   "code": {
     "type": "graph",
     "data": {
-      "nodes": [
+      "blocks": [
         {
           "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
           "type": "io.input",
@@ -48,34 +48,34 @@
           "y": 139
         }
       ],
-      "links": [
+      "wires": [
         {
           "source": {
-            "node": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+            "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
             "port": "out"
           },
           "target": {
-            "node": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+            "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
             "port": "a"
           }
         },
         {
           "source": {
-            "node": "438779b9-2e6a-41b4-8972-4085ce871f14",
+            "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
             "port": "out"
           },
           "target": {
-            "node": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+            "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
             "port": "b"
           }
         },
         {
           "source": {
-            "node": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+            "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
             "port": "out"
           },
           "target": {
-            "node": "b5384d08-d4f4-466e-9042-449a6acc5edc",
+            "block": "b5384d08-d4f4-466e-9042-449a6acc5edc",
             "port": "in"
           }
         }
