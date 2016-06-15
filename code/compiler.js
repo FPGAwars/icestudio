@@ -52,49 +52,49 @@ function moduleGenerator (b) {
       var graph = b.code.data;
 
       // Wires
-      for (var c in graph.links) {
+      for (var c in graph.wires) {
         code += ' wire w' + c + ';\n'
       }
 
       // Connections
-      for (var c in graph.links) {
+      for (var c in graph.wires) {
         var input = b.ports.in;
         var output = b.ports.out;
-        var connection = graph.links[c];
+        var connection = graph.wires[c];
         // Input connectors
         for (var i in input) {
           var id = input[i].id;
-          if (connection.source.node == id) {
+          if (connection.source.block == id) {
             code += ' assign w' + c + ' = ' + id + ';\n'
           }
         }
         // Output connectors
         for (var o in output) {
           var id = output[o].id;
-          if (connection.target.node == id) {
+          if (connection.target.block == id) {
             code += ' assign ' + id + ' = w' + c + ';\n'
           }
         }
       }
 
-      // Nodes
-      for (var n in graph.nodes) {
-        var node = graph.nodes[n];
-        if (node.type != 'input' && node.type != 'output') {
-          code += ' ' + node.type + 'x ' + node.id + ' (\n';
+      // Blocks
+      for (var n in graph.blocks) {
+        var block = graph.blocks[n];
+        if (block.type != 'input' && block.type != 'output') {
+          code += ' ' + block.type + 'x ' + block.id + ' (\n';
 
           // I/O
           var params = [];
-          for (var c in graph.links) {
+          for (var c in graph.wires) {
             var param = '';
-            var link = graph.links[c];
-            if (node.id == link.source.node) {
-              param += '   .' + link.source.port;
+            var wire = graph.wires[c];
+            if (block.id == wire.source.block) {
+              param += '   .' + wire.source.port;
               param += '(w' + c + ')';
               params.push(param);
             }
-            if (node.id == link.target.node) {
-              param += '   .' + link.target.port;
+            if (block.id == wire.target.block) {
+              param += '   .' + wire.target.port;
               param += '(w' + c + ')';
               params.push(param);
             }

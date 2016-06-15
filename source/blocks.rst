@@ -6,64 +6,64 @@ Blocks
 Definitions
 -----------
 
-**Block**
+Block
+``````
 
 Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
 
   .. image:: ../resources/block-definition.svg
 
-.. code-block:: json
+  |
 
-   {
-      "name": "",
-      "label": "",
-      "ports": {
-         "in": [ { "id": "", "label": "" } ],
-         "out": [ { "id": "", "label": "" } ]
-      },
-      "code": { }
-   }
+  .. code-block:: json
 
-**Block code**
+     {
+        "name": "",
+        "label": "",
+        "ports": {
+           "in": [ { "id": "", "label": "" } ],
+           "out": [ { "id": "", "label": "" } ]
+        },
+        "code": { }
+     }
 
-Verilog: pure verilog code.
+Block code
+''''''''''
 
-.. code-block:: json
+**Verilog**
 
-   {
-      "type": "verilog",
-      "data" : "..."
-   }
+  .. code-block:: json
 
-Graph: nodes and connections.
+     {
+        "type": "verilog",
+        "data" : "..."
+     }
 
-.. code-block:: json
+**Graph**
 
-   {
-      "type": "graph",
-      "data" : { "nodes": [], "links": [] }
-   }
+  .. code-block:: json
 
-**Node**
+     {
+        "type": "graph",
+        "data" : { "blocks": [], "wires": [] }
+     }
 
-Block instance.
+  Blocks: block instance.
 
-.. code-block:: json
+    .. code-block:: json
 
-   {
-     "id": "", "type": "", "x": 0, "y": 0
-   }
+       {
+         "id": "", "type": "", "x": 0, "y": 0
+       }
 
-**Connection**
+  Wires: connections. Block and port are the id keys of the element.
 
-Node and port are the id keys of the element.
+    .. code-block:: json
 
-.. code-block:: json
-
-   {
-      "source": { "node": "", "port": "" },
-      "target": { "node": "", "port": "" }
-   }
+       {
+          "source": { "block": "", "port": "" },
+          "target": { "block": "", "port": "" }
+       }
 
 Basic blocks
 ------------
@@ -71,7 +71,7 @@ Basic blocks
 Input
 `````
 
-This special block is used to define input nodes in a block.
+This special block is used to define input blocks in a block.
 
 .. image:: ../resources/input.svg
 
@@ -90,7 +90,7 @@ This special block is used to define input nodes in a block.
 Output
 ``````
 
-This special block is used to define input nodes in a block.
+This special block is used to define input blocks in a block.
 
 .. image:: ../resources/output.svg
 
@@ -215,14 +215,14 @@ This is the simplest block defined by a graph. It contains only one block with o
       "code": {
          "type": "graph",
          "data" : {
-           "nodes": [
+           "blocks": [
               { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
               { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
-           "links": [
+           "wires": [
              {
-               "source": { "node": "d1", "port": "out" },
-               "target": { "node": "out", "port": "in" }
+               "source": { "block": "d1", "port": "out" },
+               "target": { "block": "out", "port": "in" }
              }
            ]
          }
@@ -233,7 +233,7 @@ This block can be used in other graphs, by selecting the type "high".
 
 .. image:: ../resources/high-in-graph.svg
 
-Also, it can be synthesized in a FPGA,  setting the *o1* value to a FPGA pin.
+Also, it can be synthesized in a FPGA, setting the *o1* value to a FPGA pin.
 
 .. image:: ../resources/high-in-fpga.svg
 
@@ -257,24 +257,24 @@ This block is a wraper of the block *and*.
       "code": {
          "type": "graph",
          "data" : {
-           "nodes": [
+           "blocks": [
               { "id": "x", "type": "input", "x": 0, "y": 5 },
               { "id": "y", "type": "input", "x": 0, "y": 25 },
               { "id": "a", "type": "and", "x": 10, "y": 10 },
               { "id": "out", "type": "output", "x": 30, "y": 20 }
            ],
-           "links": [
+           "wires": [
              {
-               "source": { "node": "x", "port": "out" },
-               "target": { "node": "a", "port": "a" }
+               "source": { "block": "x", "port": "out" },
+               "target": { "block": "a", "port": "a" }
              },
              {
-               "source": { "node": "y", "port": "out" },
-               "target": { "node": "a", "port": "b" }
+               "source": { "block": "y", "port": "out" },
+               "target": { "block": "a", "port": "b" }
              },
              {
-               "source": { "node": "a", "port": "out" },
-               "target": { "node": "out", "port": "in" }
+               "source": { "block": "a", "port": "out" },
+               "target": { "block": "out", "port": "in" }
              }
            ]
          }
@@ -283,4 +283,4 @@ This block is a wraper of the block *and*.
 
 .. note::
 
-   The main ports identifiers **x**, **y** and **out** are used in the input/output node ids.
+   The main ports identifiers **x**, **y** and **out** are used in the input/output block ids.

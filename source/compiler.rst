@@ -3,23 +3,16 @@
 Compiler
 ========
 
-JSON structure:
-
-.. code-block:: json
-
-   {
-     "deps": [],
-     "project": []
-   }
+The JSON structure of a project is a block definition.
 
 Output verilog structure:
 
 1. Modules
 2. Main module
 
-   a. Wires
-   b. Links
-   c. Nodes
+   a. Wires definition
+   b. Wires connection
+   c. Blocks instances
 
 Implementation
 --------------
