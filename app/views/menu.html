@@ -42,6 +42,21 @@
                       <li>
                         <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
                       </li>
+                      <div class="divider"></div>
+                      <li>
+                        <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      View  <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                      <li>
+                        <a href ng-click="reloadBlocks()">{{ 'Reload blocks' | translate }}</a>
+                      </li>
                     </ul>
                 </li>
 

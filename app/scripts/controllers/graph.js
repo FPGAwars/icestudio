@@ -40,7 +40,6 @@ angular.module('icestudio')
             }
           }
       }, 'untitled');
-
     });
 
     $rootScope.$on('load', function(event, filepath) {
@@ -62,8 +61,23 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('exportCustomBlock', function(event) {
-      exportCustomBlock();
-      alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+      alertify.confirm('Do you want to export your custom block?',
+      function(){
+        exportCustomBlock();
+        alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+      },
+      function(){
+      });
+    });
+
+    $rootScope.$on('clear', function(event) {
+      alertify.confirm('Do you want to clear the graph?',
+      function(){
+        graph.clear();
+        alertify.success('Graph cleared');
+      },
+      function(){
+      });
     });
 
     $rootScope.$on('addBlock', function(event, data) {

@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "label": "TEST",
+  "ports": {
+    "in": [],
+    "out": []
+  },
+  "code": {
+    "type": "graph",
+    "data": {
+      "nodes": [],
+      "links": []
+    }
+  }
+}
