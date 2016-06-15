@@ -1,6 +1,6 @@
 {
   "name": "output",
-  "label": "O",
+  "label": "",
   "ports": {
     "in": [
       {

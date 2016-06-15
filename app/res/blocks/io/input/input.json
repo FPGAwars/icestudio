@@ -1,6 +1,6 @@
 {
   "name": "input",
-  "label": "I",
+  "label": "",
   "ports": {
     "in": [],
     "out": [

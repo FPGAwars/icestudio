@@ -31,7 +31,7 @@ angular.module('icestudio')
 
     $rootScope.$on('new', function(event) {
       alertify.prompt('Enter the project\'s title', 'untitled',
-        function(evt, value) {
+        function(evt, name) {
           if (name) {
             $rootScope.projectName = name;
             window.title = 'Icestudio - ' + name;
@@ -85,8 +85,23 @@ angular.module('icestudio')
       data.id = null;
       data.x = 100;
       data.y = 100;
-      addBlock(data);
-      alertify.success('Block ' + data.type + ' added');
+      if (data.type === 'io.input' || data.type == 'io.output') {
+        alertify.prompt('Insert the block label', '',
+          function(evt, label) {
+            if (label) {
+              data.block.label = label;
+              addBlock(data);
+              alertify.success('Block ' + data.type + ' added');
+            }
+          },
+          function(){
+          });
+      }
+      else {
+        addBlock(data);
+        alertify.success('Block ' + data.type + ' added');
+      }
+
     });
 
 
@@ -94,6 +109,7 @@ angular.module('icestudio')
 
     function loadProject(data) {
 
+      var ports = data.ports;
       var nodes = data.code.data.nodes;
       var links = data.code.data.links;
 
@@ -111,6 +127,23 @@ angular.module('icestudio')
         data.id = nodes[i].id;
         data.x = nodes[i].x;
         data.y = nodes[i].y;
+
+        // Set custom labels
+        if (data.type === 'io.input') {
+          for (var _in = 0; _in < ports.in.length; _in++) {
+            if (ports.in[_in].id == data.id) {
+              data.block.label = ports.in[_in].label;
+            }
+          }
+        }
+        if (data.type === 'io.output') {
+          for (var _out = 0; _out < ports.out.length; _out++) {
+            if (ports.out[_out].id == data.id) {
+              data.block.label = ports.out[_out].label;
+            }
+          }
+        }
+
         addBlock(data);
       }
 
@@ -162,6 +195,7 @@ angular.module('icestudio')
       var block = new shape({
         id: data.id,
         blockType: data.type,
+        blockLabel: data.block.label,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
@@ -192,10 +226,10 @@ angular.module('icestudio')
         var cell = graphData.cells[c];
         if (cell.blockType) {
           if (cell.blockType == 'io.input') {
-            inPorts.push({id: cell.id, label: '' });
+            inPorts.push({id: cell.id, label: cell.blockLabel });
           }
           else if (cell.blockType == 'io.output') {
-            outPorts.push({id: cell.id, label: '' });
+            outPorts.push({id: cell.id, label: cell.blockLabel });
           }
         }
       }
