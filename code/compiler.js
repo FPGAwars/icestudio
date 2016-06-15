@@ -98,12 +98,12 @@ function moduleGenerator (b) {
             var param = '';
             var wire = graph.wires[c];
             if (block.id == wire.source.block) {
-              param += '   .' + wire.source.port;
+              param += '   .' + digestId(wire.source.port);
               param += '(w' + c + ')';
               params.push(param);
             }
             if (block.id == wire.target.block) {
-              param += '   .' + wire.target.port;
+              param += '   .' + digestId(wire.target.port);
               param += '(w' + c + ')';
               params.push(param);
             }
@@ -119,20 +119,29 @@ function moduleGenerator (b) {
 
     // Footer
 
-    code += 'endmodule\n';
+    code += 'endmodule\n\n';
   }
 
   return code;
 }
 
-function findDependencies (data) {
+function findDependencies (data, blocks) {
   var deps = [];
-  if (data.code.type == 'graph') {
+
+  if (data.code && data.code.type == 'graph') {
     var graph = data.code.data;
     for (var n in graph.blocks) {
       var type = graph.blocks[n].type;
       if (deps.indexOf(type) == -1) {
-        deps.push(graph.blocks[n].type);
+        deps.push(type);
+      }
+      var category = type.split('.')[0];
+      var key = type.split('.')[1];
+      var retdeps = findDependencies(blocks[category][key], blocks);
+      for (var i in retdeps) {
+        if (deps.indexOf(retdeps[i]) == -1) {
+          deps.push(retdeps[i]);
+        }
       }
     }
   }
@@ -144,7 +153,7 @@ function compiler (data) {
   var blocks = require('./blocks.json');
 
   // Find dependencies
-  var deps = findDependencies(data);
+  var deps = findDependencies(data, blocks);
 
   // Dependencies modules
   for (var category in blocks) {
@@ -155,8 +164,6 @@ function compiler (data) {
       }
     }
   }
-
-  code += '\n';
 
   // Main module
   code += moduleGenerator(data);
@@ -208,8 +215,8 @@ function test_example (name) {
 test_example('example1');
 test_example('example2');
 test_example('example3');
-/*test_example('example4');
+test_example('example4');
 test_example('example5');
-test_example('example6');*/
+test_example('example6');
 
-//console.log(compiler(require('../examples/example1.json')));
+//console.log(compiler(require('../examples/example6.json')));

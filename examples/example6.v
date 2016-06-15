@@ -1,27 +1,27 @@
-module driver1x (output out);
+module custom_highx (output vce929a);
+ wire w0;
+ assign vce929a = w0;
+ driver_driver1x vdfd4f7 (
+   .out(w0)
+ );
+endmodule
+
+module driver_driver1x (output out);
  assign out = 1'b1;
 endmodule
 
-module highx (output out);
- wire w0;
- assign out = w0;
- driver1x d1 (
-   .out(w0)
- );
-endmodule
-
-module notx (input in, output out);
+module logic_notx (input in, output out);
  assign out = ! in;
 endmodule
 
-module lowx (output out);
+module lowx (output v6479a6);
  wire w0;
  wire w1;
- assign out = w1;
- highx h (
-   .out(w0)
+ assign v6479a6 = w1;
+ custom_highx v6eb3c6 (
+   .vce929a(w0)
  );
- notx n (
+ logic_notx vb9be04 (
    .in(w0),
    .out(w1)
  );
