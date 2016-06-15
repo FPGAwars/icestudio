@@ -4,18 +4,18 @@
   "ports": {
     "in": [
       {
-        "id": "x",
-        "label": "I"
+        "id": "dca98915-78b9-4432-9a7c-6bbd1fc38e54",
+        "label": "x"
       },
       {
-        "id": "y",
-        "label": "I"
+        "id": "ba132371-8749-446f-8bb6-09a28a9d492e",
+        "label": "y"
       }
     ],
     "out": [
       {
-        "id": "out",
-        "label": "O"
+        "id": "97cfa381-4386-4fe5-a015-73f7ff158dda",
+        "label": "o"
       }
     ]
   },
@@ -24,58 +24,58 @@
     "data": {
       "nodes": [
         {
-          "id": "x",
+          "id": "dca98915-78b9-4432-9a7c-6bbd1fc38e54",
           "type": "io.input",
-          "x": 50,
-          "y": 50
+          "x": 100,
+          "y": 100
         },
         {
-          "id": "y",
+          "id": "ba132371-8749-446f-8bb6-09a28a9d492e",
           "type": "io.input",
-          "x": 50,
-          "y": 200
+          "x": 97,
+          "y": 194
         },
         {
-          "id": "a",
+          "id": "06607f4e-dbb6-4bff-8351-3384f15e3ee3",
           "type": "logic.and",
-          "x": 225,
-          "y": 116
+          "x": 311,
+          "y": 139
         },
         {
-          "id": "out",
+          "id": "97cfa381-4386-4fe5-a015-73f7ff158dda",
           "type": "io.output",
-          "x": 476,
-          "y": 125
+          "x": 575,
+          "y": 148
         }
       ],
       "links": [
         {
           "source": {
-            "node": "x",
+            "node": "dca98915-78b9-4432-9a7c-6bbd1fc38e54",
             "port": "out"
           },
           "target": {
-            "node": "a",
+            "node": "06607f4e-dbb6-4bff-8351-3384f15e3ee3",
             "port": "a"
           }
         },
         {
           "source": {
-            "node": "y",
+            "node": "ba132371-8749-446f-8bb6-09a28a9d492e",
             "port": "out"
           },
           "target": {
-            "node": "a",
+            "node": "06607f4e-dbb6-4bff-8351-3384f15e3ee3",
             "port": "b"
           }
         },
         {
           "source": {
-            "node": "a",
+            "node": "06607f4e-dbb6-4bff-8351-3384f15e3ee3",
             "port": "out"
           },
           "target": {
-            "node": "out",
+            "node": "97cfa381-4386-4fe5-a015-73f7ff158dda",
             "port": "in"
           }
         }

@@ -1,7 +1,7 @@
 <div ng-controller="MenuCtrl">
 
     <input id="input-load" type="file" accept=".json" style="display:none"/>
-    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas/>
+    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas="{{ $root.projectName }}"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -17,11 +17,16 @@
                       <li>
                         <a href ng-click="new()">{{ 'New project' | translate }}</a>
                       </li>
+                      <div class="divider"></div>
                       <li>
                         <a href ng-click="load()">{{ 'Load project' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="save()">{{ 'Save project' | translate }}</a>
+                      </li>
+                      <div class="divider"></div>
+                      <li>
+                        <a href ng-click="exportCustomBlock()">{{ 'Export custom block' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -44,7 +49,7 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li uib-dropdown ng-repeat="(category, blocks) in categories">
+                <li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
                     <a href uib-dropdown-toggle>
                       {{ category }} <span class="caret"></span>
                     </a>

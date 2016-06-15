@@ -5,8 +5,7 @@ angular.module('icestudio')
 
     // Variables
 
-    $scope.projectName = 'Untitled';
-    window.title = 'Icestudio - ' + $scope.projectName;
+    window.title = 'Icestudio - ' + $rootScope.projectName;
 
     // Graph
     var graph = new joint.dia.Graph();
@@ -28,35 +27,43 @@ angular.module('icestudio')
       }
     });
 
-
     // Events
 
     $rootScope.$on('new', function(event) {
       alertify.prompt("Enter the project's title", function (name, e) {
           if (e) {
             if (name) {
-              $scope.projectName = name;
+              $rootScope.projectName = name;
               window.title = 'Icestudio - ' + name;
               graph.clear();
               alertify.success('New project created');
             }
           }
-      }, "Untitled");
+      }, 'untitled');
 
     });
 
     $rootScope.$on('load', function(event, filepath) {
       $.getJSON(filepath, function(data) {
         var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+        $rootScope.projectName = name;
         window.title = 'Icestudio - ' + name;
         loadProject(data);
-        alertify.success('File ' + name + ' loaded');
+        alertify.success('Project ' + name + ' loaded');
       });
     });
 
     $rootScope.$on('save', function(event, filepath) {
+      var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+      $rootScope.projectName = name;
+      window.title = 'Icestudio - ' + name;
       saveProject(filepath);
-      alertify.success('File ' + name + ' saved');
+      alertify.success('Project ' + name + ' saved');
+    });
+
+    $rootScope.$on('exportCustomBlock', function(event) {
+      exportCustomBlock();
+      alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
     });
 
     $rootScope.$on('addBlock', function(event, data) {
@@ -68,7 +75,7 @@ angular.module('icestudio')
     });
 
 
-    // Functions
+    // Functions TODO: create a service
 
     function loadProject(data) {
 
@@ -96,21 +103,29 @@ angular.module('icestudio')
       for (var i = 0; i < links.length; i++) {
         var source = graph.getCell(links[i].source.node);
         var target = graph.getCell(links[i].target.node);
-        var sourcePort = source.getPortSelector(links[i].source.port);
-        var targetPort = target.getPortSelector(links[i].target.port);
+
+        // Find selectors
+        var sourceSelector, targetSelector;
+
+        for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
+          if (source.attributes.outPorts[_out] == links[i].source.port) {
+            sourcePort = _out;
+            break;
+          }
+        }
+
+        for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
+          if (target.attributes.inPorts[_in] == links[i].target.port) {
+            targetPort = _in;
+            break;
+          }
+        }
 
         var link = new joint.shapes.ice.Wire({
-          source: { id: source.id, selector: sourcePort, port: links[i].source.port },
-          target: { id: target.id, selector: targetPort, port: links[i].target.port },
+          source: { id: source.id, selector: sourceSelector, port: links[i].source.port },
+          target: { id: target.id, selector: targetSelector, port: links[i].target.port },
         });
         graph.addCell(link);
-      }
-
-      function findDep(deps, name) {
-        for (var i = 0; i < deps.length; i++) {
-          if (deps[i].name == name)
-            return deps[i]
-        }
       }
 
       //paper.scale(1.5, 1.5);
@@ -118,25 +133,13 @@ angular.module('icestudio')
 
     function addBlock(data) {
 
-      var inPorts = [];
-      var outPorts = [];
-
-      for (var _in = 0; _in < data.block.ports.in.length; _in++) {
-        inPorts.push(data.block.ports.in[_in].id);
-      }
-
-      for (var _out = 0; _out < data.block.ports.out.length; _out++) {
-        outPorts.push(data.block.ports.out[_out].id);
-      }
-
-      var numPorts = Math.max(inPorts.length, outPorts.length);
       var width = 50;
+      var numPorts = Math.max(data.block.ports.in.length, data.block.ports.out.length);
 
-      if (inPorts.length) width += 40;
-      if (outPorts.length) width += 40;
+      if (data.block.ports.in.length) width += 40;
+      if (data.block.ports.out.length) width += 40;
 
       var shape = joint.shapes.ice.Block;
-
       if (data.type === 'io.input' || data.type == 'io.output') {
         shape = joint.shapes.ice.IO;
       }
@@ -144,9 +147,8 @@ angular.module('icestudio')
       var block = new shape({
         id: data.id,
         blockType: data.type,
-        blockLabel: data.block.label,
-        inPorts: inPorts,
-        outPorts: outPorts,
+        inPorts: data.block.ports.in,
+        outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
         size: { width: width, height: 30 + 20 * numPorts },
         attrs: { '.label': { text: data.block.label } }
@@ -175,10 +177,10 @@ angular.module('icestudio')
         var cell = graphData.cells[c];
         if (cell.blockType) {
           if (cell.blockType == 'io.input') {
-            inPorts.push({id: cell.id, label: cell.blockLabel });
+            inPorts.push({id: cell.id, label: '' });
           }
           else if (cell.blockType == 'io.output') {
-            outPorts.push({id: cell.id, label: cell.blockLabel });
+            outPorts.push({id: cell.id, label: '' });
           }
         }
       }
@@ -208,7 +210,7 @@ angular.module('icestudio')
         }
       }
 
-      project.code = { type: "graph", data: { nodes: nodes, links: links } };
+      project.code = { type: 'graph', data: { nodes: nodes, links: links } };
 
       // Data
 
@@ -218,6 +220,16 @@ angular.module('icestudio')
             console.log('File ' + name + ' saved');
           }
       });
+    }
+
+    function exportCustomBlock() {
+      var filepath = 'app/res/blocks/custom/' + $rootScope.projectName;
+      try {
+        nodeFs.mkdirSync(filepath);
+      } catch(e) {
+        if ( e.code != 'EEXIST' ) throw e;
+      }
+      saveProject(filepath + '/' + $rootScope.projectName + '.json');
     }
 
   });

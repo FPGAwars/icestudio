@@ -7,6 +7,8 @@ angular.module('icestudio')
     alertify.delay(2000);
     alertify.logPosition('bottom right');
 
+    $rootScope.projectName = 'untitled';
+
     // Load blocks
 
     $rootScope.blocks = {};

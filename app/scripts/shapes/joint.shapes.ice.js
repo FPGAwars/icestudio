@@ -55,7 +55,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     }
   }, joint.shapes.basic.Generic.prototype.defaults),
 
-  getPortAttrs: function(portName, index, total, selector, type) {
+  getPortAttrs: function(port, index, total, selector, type) {
 
     var attrs = {};
 
@@ -66,12 +66,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portBodySelector = portSelector + '>.port-body';
 
     attrs[portLabelSelector] = {
-      text: portName
+      text: port.label
     };
 
     attrs[portBodySelector] = {
       port: {
-        id: portName || _.uniqueId(type),
+        id: port.id || _.uniqueId(type),
         type: type
       }
     };
@@ -85,7 +85,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       y: (index + 0.5) * (1 / total)
     };
 
-    if (selector === '.inPorts') {
+    if (type === 'in') {
       attrs[portSelector]['ref-x'] = -30;
       attrs[portWireSelector]['d'] = 'M 0 0 L 30 0';
     }

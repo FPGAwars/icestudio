@@ -3,8 +3,6 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope, $rootScope) {
 
-    $scope.categories = $rootScope.blocks;
-
     $scope.new = function() {
       $rootScope.$emit('new');
     }
@@ -28,8 +26,8 @@ angular.module('icestudio')
         var ctrl = angular.element('#input-save');
         ctrl.on('change', function(event) {
           var file = event.target.files[0];
-          event.target.files.clear();
           if (file) {
+            event.target.files.clear();
             var filepath = file.path;
             if (! filepath.endsWith('.json')) {
                 filepath += '.json';
@@ -39,6 +37,10 @@ angular.module('icestudio')
         });
         ctrl.click();
       }, 0);
+    }
+
+    $scope.exportCustomBlock = function() {
+      $rootScope.$emit('exportCustomBlock');
     }
 
     $scope.build = function() {
