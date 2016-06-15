@@ -30,16 +30,17 @@ angular.module('icestudio')
     // Events
 
     $rootScope.$on('new', function(event) {
-      alertify.prompt("Enter the project's title", function (name, e) {
-          if (e) {
-            if (name) {
-              $rootScope.projectName = name;
-              window.title = 'Icestudio - ' + name;
-              graph.clear();
-              alertify.success('New project created');
-            }
+      alertify.prompt('Enter the project\'s title', 'untitled',
+        function(evt, value) {
+          if (name) {
+            $rootScope.projectName = name;
+            window.title = 'Icestudio - ' + name;
+            graph.clear();
+            alertify.success('New project created');
           }
-      }, 'untitled');
+        },
+        function(){
+        });
     });
 
     $rootScope.$on('load', function(event, filepath) {
