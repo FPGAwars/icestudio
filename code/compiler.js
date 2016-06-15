@@ -1,4 +1,13 @@
 
+var sha1 = require('sha1');
+
+function digestId(id) {
+  if (id.indexOf('-') != -1) {
+    return 'v' + sha1(id).toString().substring(0, 6);
+  }
+  return id;
+}
+
 function moduleCheck (b) {
   return true;
 }
@@ -8,7 +17,7 @@ function moduleParams (type, c) {
   if (c[type].length !== 0) {
     var params = [];
     for (var p in c[type]) {
-      params.push(c[type][p].id);
+      params.push(digestId(c[type][p].id));
     }
     code = ((type == 'in') ? 'input ' : (type == 'out') ? 'output ' : ' ')
     code += params.join(', ');
@@ -24,7 +33,7 @@ function moduleGenerator (b) {
     // Header
 
     code += 'module ';
-    code += b.name;
+    code += b.name.replace('.', '_');
     code += 'x (';
 
     var params = [];
@@ -65,14 +74,14 @@ function moduleGenerator (b) {
         for (var i in input) {
           var id = input[i].id;
           if (connection.source.block == id) {
-            code += ' assign w' + c + ' = ' + id + ';\n'
+            code += ' assign w' + c + ' = ' + digestId(id) + ';\n'
           }
         }
         // Output connectors
         for (var o in output) {
           var id = output[o].id;
           if (connection.target.block == id) {
-            code += ' assign ' + id + ' = w' + c + ';\n'
+            code += ' assign ' + digestId(id) + ' = w' + c + ';\n'
           }
         }
       }
@@ -80,8 +89,8 @@ function moduleGenerator (b) {
       // Blocks
       for (var n in graph.blocks) {
         var block = graph.blocks[n];
-        if (block.type != 'input' && block.type != 'output') {
-          code += ' ' + block.type + 'x ' + block.id + ' (\n';
+        if (block.type != 'io.input' && block.type != 'io.output') {
+          code += ' ' + block.type.replace('.', '_') + 'x ' + digestId(block.id) + ' (\n';
 
           // I/O
           var params = [];
@@ -116,17 +125,41 @@ function moduleGenerator (b) {
   return code;
 }
 
+function findDependencies (data) {
+  var deps = [];
+  if (data.code.type == 'graph') {
+    var graph = data.code.data;
+    for (var n in graph.blocks) {
+      var type = graph.blocks[n].type;
+      if (deps.indexOf(type) == -1) {
+        deps.push(graph.blocks[n].type);
+      }
+    }
+  }
+  return deps;
+}
+
 function compiler (data) {
   var code = '';
+  var blocks = require('./blocks.json');
 
-  // Dependencies
-  for (var index in data.deps) {
-    code += moduleGenerator(data.deps[index]);
-    code += '\n';
+  // Find dependencies
+  var deps = findDependencies(data);
+
+  // Dependencies modules
+  for (var category in blocks) {
+    for (var key in blocks[category]) {
+      if (deps.indexOf(category + '.' + key) != -1) {
+        blocks[category][key].name = category + '.' + key;
+        code += moduleGenerator(blocks[category][key]);
+      }
+    }
   }
 
-  // Project
-  code += moduleGenerator(data.project);
+  code += '\n';
+
+  // Main module
+  code += moduleGenerator(data);
 
   return code;
 }
@@ -175,8 +208,8 @@ function test_example (name) {
 test_example('example1');
 test_example('example2');
 test_example('example3');
-test_example('example4');
+/*test_example('example4');
 test_example('example5');
-test_example('example6');
+test_example('example6');*/
 
 //console.log(compiler(require('../examples/example1.json')));

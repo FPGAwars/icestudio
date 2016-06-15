@@ -1,0 +1,354 @@
+{
+  "custom": {
+    "and": {
+      "name": "and",
+      "label": "AND",
+      "ports": {
+        "in": [
+          {
+            "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+            "label": "x"
+          },
+          {
+            "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
+            "label": "y"
+          }
+        ],
+        "out": [
+          {
+            "id": "b5384d08-d4f4-466e-9042-449a6acc5edc",
+            "label": "o"
+          }
+        ]
+      },
+      "code": {
+        "type": "graph",
+        "data": {
+          "blocks": [
+            {
+              "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+              "type": "io.input",
+              "x": 100,
+              "y": 100
+            },
+            {
+              "id": "b5384d08-d4f4-466e-9042-449a6acc5edc",
+              "type": "io.output",
+              "x": 535,
+              "y": 149
+            },
+            {
+              "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
+              "type": "io.input",
+              "x": 100,
+              "y": 197
+            },
+            {
+              "id": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+              "type": "logic.and",
+              "x": 288,
+              "y": 139
+            }
+          ],
+          "wires": [
+            {
+              "source": {
+                "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+                "port": "out"
+              },
+              "target": {
+                "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+                "port": "a"
+              }
+            },
+            {
+              "source": {
+                "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
+                "port": "out"
+              },
+              "target": {
+                "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+                "port": "b"
+              }
+            },
+            {
+              "source": {
+                "block": "8a9f024d-c201-43bb-8ff4-2371bed5cb95",
+                "port": "out"
+              },
+              "target": {
+                "block": "b5384d08-d4f4-466e-9042-449a6acc5edc",
+                "port": "in"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "high": {
+      "name": "high",
+      "label": "HIGH",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+            "label": "o"
+          }
+        ]
+      },
+      "code": {
+        "type": "graph",
+        "data": {
+          "blocks": [
+            {
+              "id": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+              "type": "io.output",
+              "x": 418,
+              "y": 99
+            },
+            {
+              "id": "2578d60a-d3de-4567-932c-3d32cb0449cb",
+              "type": "driver.driver1",
+              "x": 208,
+              "y": 99
+            }
+          ],
+          "wires": [
+            {
+              "source": {
+                "block": "2578d60a-d3de-4567-932c-3d32cb0449cb",
+                "port": "out"
+              },
+              "target": {
+                "block": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+                "port": "in"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "myblock": {
+      "name": "myblock",
+      "label": "MYBLOCK",
+      "ports": {
+        "in": [
+          {
+            "id": "1cc04ac3-b7af-4702-975e-5c10f4325b4e",
+            "label": "a"
+          }
+        ],
+        "out": [
+          {
+            "id": "6d048d3c-2b3b-4312-b104-138252a0e735",
+            "label": "b"
+          }
+        ]
+      },
+      "code": {
+        "type": "graph",
+        "data": {
+          "blocks": [
+            {
+              "id": "1cc04ac3-b7af-4702-975e-5c10f4325b4e",
+              "type": "io.input",
+              "x": 100,
+              "y": 130
+            },
+            {
+              "id": "6d048d3c-2b3b-4312-b104-138252a0e735",
+              "type": "io.output",
+              "x": 526,
+              "y": 83
+            },
+            {
+              "id": "b8ecb839-4dad-4098-9cf4-e46dd72c21a9",
+              "type": "driver.driver1",
+              "x": 101,
+              "y": 32
+            },
+            {
+              "id": "8a5adc7c-7eb2-4a18-aaa6-ebc660aed51d",
+              "type": "logic.and",
+              "x": 282,
+              "y": 73
+            }
+          ],
+          "wires": [
+            {
+              "source": {
+                "block": "8a5adc7c-7eb2-4a18-aaa6-ebc660aed51d",
+                "port": "out"
+              },
+              "target": {
+                "block": "6d048d3c-2b3b-4312-b104-138252a0e735",
+                "port": "in"
+              }
+            },
+            {
+              "source": {
+                "block": "b8ecb839-4dad-4098-9cf4-e46dd72c21a9",
+                "port": "out"
+              },
+              "target": {
+                "block": "8a5adc7c-7eb2-4a18-aaa6-ebc660aed51d",
+                "port": "a"
+              }
+            },
+            {
+              "source": {
+                "block": "1cc04ac3-b7af-4702-975e-5c10f4325b4e",
+                "port": "out"
+              },
+              "target": {
+                "block": "8a5adc7c-7eb2-4a18-aaa6-ebc660aed51d",
+                "port": "b"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "driver": {
+    "driver0": {
+      "name": "driver0",
+      "label": "\"0\"",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = 1'b0;"
+      }
+    },
+    "driver1": {
+      "name": "driver1",
+      "label": "\"1\"",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = 1'b1;"
+      }
+    }
+  },
+  "io": {
+    "input": {
+      "name": "input",
+      "label": "",
+      "ports": {
+        "in": [],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      }
+    },
+    "output": {
+      "name": "output",
+      "label": "",
+      "ports": {
+        "in": [
+          {
+            "id": "in",
+            "label": ""
+          }
+        ],
+        "out": []
+      }
+    }
+  },
+  "logic": {
+    "and": {
+      "name": "and",
+      "label": "AND",
+      "ports": {
+        "in": [
+          {
+            "id": "a",
+            "label": ""
+          },
+          {
+            "id": "b",
+            "label": ""
+          }
+        ],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = a & b;"
+      }
+    },
+    "not": {
+      "name": "not",
+      "label": "NOT",
+      "ports": {
+        "in": [
+          {
+            "id": "in",
+            "label": ""
+          }
+        ],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = ! in;"
+      }
+    },
+    "or": {
+      "name": "or",
+      "label": "OR",
+      "ports": {
+        "in": [
+          {
+            "id": "a",
+            "label": ""
+          },
+          {
+            "id": "b",
+            "label": ""
+          }
+        ],
+        "out": [
+          {
+            "id": "out",
+            "label": ""
+          }
+        ]
+      },
+      "code": {
+        "type": "verilog",
+        "data": "assign out = a | b;"
+      }
+    }
+  }
+}

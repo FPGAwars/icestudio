@@ -1,17 +1,26 @@
 {
-  "deps": [],
-  "project":
-  {
-     "name": "and",
-     "label": "",
-     "ports": {
-        "in": [ { "id": "a", "label": "" },
-                { "id": "b", "label": "" } ],
-        "out": [ { "id": "out", "label": "" } ]
-     },
-     "code": {
-        "type": "verilog",
-        "data" : "assign out = a & b;"
-     }
-   }
+  "name": "and",
+  "label": "AND",
+  "ports": {
+    "in": [
+      {
+        "id": "a",
+        "label": ""
+      },
+      {
+        "id": "b",
+        "label": ""
+      }
+    ],
+    "out": [
+      {
+        "id": "out",
+        "label": ""
+      }
+    ]
+  },
+  "code": {
+    "type": "verilog",
+    "data": "assign out = a & b;"
+  }
 }
