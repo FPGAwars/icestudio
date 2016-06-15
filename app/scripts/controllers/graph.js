@@ -5,6 +5,9 @@ angular.module('icestudio')
 
     // Variables
 
+    $scope.projectName = 'Untitled';
+    window.title = 'Icestudio - ' + $scope.projectName;
+
     // Graph
     var graph = new joint.dia.Graph();
 
@@ -29,9 +32,17 @@ angular.module('icestudio')
     // Events
 
     $rootScope.$on('new', function(event) {
-      window.title = 'Icestudio';
-      graph.clear();
-      alertify.success('New project created');
+      alertify.prompt("Enter the project's title", function (name, e) {
+          if (e) {
+            if (name) {
+              $scope.projectName = name;
+              window.title = 'Icestudio - ' + name;
+              graph.clear();
+              alertify.success('New project created');
+            }
+          }
+      }, "Untitled");
+
     });
 
     $rootScope.$on('load', function(event, filepath) {
@@ -53,7 +64,7 @@ angular.module('icestudio')
       data.x = 100;
       data.y = 100;
       addBlock(data);
-      alertify.success('Block ' + data.name + ' added');
+      alertify.success('Block ' + data.type + ' added');
     });
 
 
