@@ -3,7 +3,7 @@
   "description": "Experimental graphic editor for open FPGAs",
   "license": "GPL-2.0",
   "version": "0.1.1-alpha1",
-  "repository": "https://github.com/bqlabs/icestudio",
+  "repository": "https://github.com/FPGAwars/icestudio",
   "main": "icestudio.html",
   "window": {
     "width": 900,

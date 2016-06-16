@@ -1,0 +1,50 @@
+<!doctype html>
+<html data-ng-app="icestudio">
+
+<head>
+    <title>Icestudio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/joint/dist/joint.css" />
+    <!-- endbower -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <!-- node:css -->
+    <link rel="stylesheet" href="../node_modules/alertifyjs/build/css/alertify.min.css"></script>
+    <link rel="stylesheet" href="../node_modules/alertifyjs/build/css/themes/default.min.css"></script>
+    <!-- endnode -->
+</head>
+
+<body>
+    <div data-ng-view></div>
+    <script>
+    window.$ = window.JQuery = window.jQuery = require('jquery');
+    </script>
+    <!-- bower:js -->
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-translate/angular-translate.js"></script>
+    <script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/underscore/underscore.js"></script>
+    <script src="../bower_components/backbone/backbone.js"></script>
+    <script src="../bower_components/lodash/lodash.js"></script>
+    <script src="../bower_components/joint/dist/joint.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/graph.js"></script>
+    <script src="scripts/controllers/menu.js"></script>
+    <script src="scripts/factories/node.factory.js"></script>
+    <script src="scripts/factories/joint.factory.js"></script>
+    <script src="scripts/factories/window.factory.js"></script>
+    <script src="scripts/factories/glob.factory.js"></script>
+    <script src="scripts/shapes/joint.shapes.ice.js"></script>
+    <!-- node:js -->
+    <script src="../node_modules/alertifyjs/build/alertify.min.js"></script>
+    <!-- endnode -->
+</body>
+
+</html>

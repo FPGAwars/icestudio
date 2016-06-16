@@ -1,0 +1,26 @@
+{
+  "name": "or",
+  "label": "OR",
+  "ports": {
+    "in": [
+      {
+        "id": "a",
+        "label": ""
+      },
+      {
+        "id": "b",
+        "label": ""
+      }
+    ],
+    "out": [
+      {
+        "id": "out",
+        "label": ""
+      }
+    ]
+  },
+  "code": {
+    "type": "verilog",
+    "data": "assign out = a | b;"
+  }
+}

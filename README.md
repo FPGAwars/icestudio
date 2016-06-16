@@ -3,21 +3,29 @@
 [![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
-Experimental graphic editor for open FPGAs. Tested with Linux and [iCEstick board](http://www.pighixxx.com/test/portfolio-items/icestick/). Built on top of [icestorm project](http://www.clifford.at/icestorm/).
+Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/) and [Icezum Alhambra](https://github.com/FPGAwars/icezum). Built on top of [icestorm project](http://www.clifford.at/icestorm/).
 
     GUI -> JSON -> Verilog, PCF
 
+## Version 0.1
+
 ![][icestudio-demo]
 
-## Installation
+### Installation
 
 1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
 
 2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
 
-NOTE: this is an **early experimental version**. Initially supported on Linux (32, 64), Windows and Mac.
+NOTE: initially supported on Linux (32, 64), Windows and Mac.
 
-## Development
+## Version 0.2
+
+* Documentation: http://icestudio.readthedocs.io
+
+NOTE: this is an **early experimental version** and it is under development.
+
+### Development
 
 Install [nodejs](https://github.com/nodejs/node)
 ```bash
@@ -25,20 +33,14 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-Install [nwjs](https://github.com/nwjs/nw.js)
+Install [bower](http://bower.io/)
 ```bash
-sudo npm install -g nw@0.12.3
+sudo npm install -g bower
 ```
 
-Install [nw-builder](https://github.com/nwjs/nw-builder)
+Install [grunt](http://gruntjs.com/)
 ```bash
-sudo npm install -g nw-builder
-```
-
-Install [node-pre-gyp](https://github.com/mapbox/node-pre-gyp)
-```bash
-sudo npm install -g nw-gyp
-sudo npm install -g node-pre-gyp
+sudo npm install -g grunt-cli
 ```
 
 ### Download
@@ -48,35 +50,25 @@ git clone https://github.com/FPGAwars/icestudio.git
 cd icestudio
 ```
 
-## Setup
-
 ```bash
-npm install --prefix=icestudio
-
-node-pre-gyp rebuild --directory=icestudio/node_modules/serialport --runtime=node-webkit --target=0.12.3
+npm install
+bower install
 ```
 
 ### Execute
 
 ```bash
-nw icestudio
+grunt serve
 ```
 
 ### Package
 
 ```bash
-nwbuild -p linux64 icestudio -v v0.12.3
-nwbuild -p osx64 icestudio -v v0.12.3
-nwbuild -p win64 icestudio -v v0.12.3
-
-cd build/Icestudio
-
-zip -r icestudio-linux64 linux64
-zip -r icestudio-osx64 osx64
-zip -r icestudio-win64 win64
 ```
 
 ## Videos
+
+### Version 0.1
 
 [![Icestudio: GUI for open FPGAs](http://img.youtube.com/vi/Okl4Rr_i6Qk/0.jpg)](http://www.youtube.com/watch?v=Okl4Rr_i6Qk "Icestudio: GUI for open FPGAs")
 
@@ -89,16 +81,16 @@ zip -r icestudio-win64 win64
 ## Contributors
 
 * Miguel Sánchez de León Peque
+* Tomás Calvo
 
 ## Credits
 
-* Using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
+* v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
+* v0.2: using [JointJS](https://github.com/clientIO/joint)
+* Sponsored by BQ.
 
 ## License
-
-![][bq-logo-cc-sa]
 
 Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
 
 [icestudio-demo]: doc/images/icestudio-demo.gif
-[bq-logo-cc-sa]: doc/images/bq-logo-cc-sa-small-150px.png

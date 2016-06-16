@@ -1,0 +1,38 @@
+{
+  "name": "Icestudio",
+  "version": "0.1.1-alpha1",
+  "description": "Experimental graphic editor for open FPGAs",
+  "license": "GPL-2.0",
+  "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
+  "repository": "https://github.com/FPGAwars/icestudio",
+  "main": "app/index.html",
+  "window": {
+    "width": 900,
+    "height": 600,
+    "toolbar": true,
+    "resizable": false
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "alertifyjs": "^1.7.1",
+    "directory-tree": "^1.0.0",
+    "jquery": "^2.2.3",
+    "serialport": "^2.0.5"
+  },
+  "devDependencies": {
+    "nw": "^0.12.3",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^0.4.6",
+    "grunt-wiredep": "^3.0.1",
+    "load-grunt-tasks": "^3.5.0"
+  },
+  "readme": "../README.md",
+  "keywords": [
+    "FPGA",
+    "open",
+    "hardware"
+  ]
+}
