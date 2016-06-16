@@ -10,7 +10,7 @@
             <ul class="nav navbar-nav"> <!-- navbar-right -->
 
                 <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
+                    <a href uib-dropdown-toggle style="color:#000;">
                       File <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
@@ -32,7 +32,7 @@
                 </li>
 
                 <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
+                    <a href uib-dropdown-toggle style="color:#000;">
                       Edit  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
@@ -44,18 +44,21 @@
                       </li>
                       <div class="divider"></div>
                       <li>
+                        <a href ng-click="removeBlock()">{{ 'Remove block' | translate }}</a>
+                      </li>
+                      <li>
                         <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
                       </li>
                     </ul>
                 </li>
 
                 <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
+                    <a href uib-dropdown-toggle style="color:#000;">
                       View  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
                       <li>
-                        <a href ng-click="reloadBlocks()">{{ 'Reload blocks' | translate }}</a>
+                        <a href ng-click="reloadBlocks()">{{ 'Reload blocks menu' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -65,7 +68,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
-                    <a href uib-dropdown-toggle>
+                    <a href uib-dropdown-toggle style="color:#000;">
                       {{ category }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">

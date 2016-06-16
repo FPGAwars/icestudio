@@ -7,6 +7,8 @@ angular.module('icestudio')
 
     window.title = 'Icestudio - ' + $rootScope.projectName;
 
+    $scope.selectedCell = null;
+
     // Graph
     var graph = new joint.dia.Graph();
 
@@ -26,6 +28,24 @@ angular.module('icestudio')
         return (magnetS !== magnetT);
       }
     });
+
+    paper.on('cell:pointerclick',
+        function(cellView, evt, x, y) {
+            if ($scope.selectedCell) {
+              $scope.selectedCell.removeClass('highlighted');
+            }
+            $scope.selectedCell = V(paper.findViewByModel(cellView.model).el);
+            $scope.selectedCell.addClass('highlighted');
+        }
+    );
+
+    paper.on('blank:pointerclick',
+      function() {
+        if ($scope.selectedCell) {
+          $scope.selectedCell.removeClass('highlighted');
+        }
+      }
+    );
 
     // Events
 
@@ -69,6 +89,18 @@ angular.module('icestudio')
       },
       function(){
       });
+    });
+
+    $rootScope.$on('remove', function(event) {
+      if ($scope.selectedCell) {
+        alertify.confirm('Do you want to remove the selected block?',
+        function(){
+          $scope.selectedCell.remove();
+          alertify.success('Block removed');
+        },
+        function(){
+        });
+      }
     });
 
     $rootScope.$on('clear', function(event) {
@@ -202,6 +234,7 @@ angular.module('icestudio')
         size: { width: width, height: 30 + 20 * numPorts },
         attrs: { '.label': { text: data.block.label } }
       });
+
       graph.addCell(block);
     }
 

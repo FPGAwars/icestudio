@@ -62,6 +62,10 @@ angular.module('icestudio')
       loadBlocks();
     }
 
+    $scope.removeBlock = function() {
+      $rootScope.$emit('remove');
+    }
+
     $scope.clearGraph = function() {
       $rootScope.$emit('clear');
     }

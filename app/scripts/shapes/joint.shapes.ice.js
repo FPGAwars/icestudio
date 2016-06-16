@@ -21,7 +21,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       '.body': {
         width: 80,
         height: 80,
-        stroke: '#000'
+        stroke: '#000',
+        rx: 5,
+        ry: 10,
+        'stroke-width': 2
       },
       '.port-body': {
         r: 10,

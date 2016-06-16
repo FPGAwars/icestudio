@@ -1,0 +1,9 @@
+
+.element:hover .body {
+  stroke: #AAAAAA;
+}
+
+.element.ice.highlighted .body {
+  stroke: #FF0000;
+  stroke-width: 3
+}
