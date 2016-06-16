@@ -112,17 +112,15 @@ angular.module('icestudio')
       });
     });
 
-    $rootScope.$on('remove', function(event) {
-      if ($scope.selectedCell) {
-        alertify.confirm('Do you want to remove the selected block?',
-        function(){
-          $scope.selectedCell.remove();
-          delete $scope.selectedCell;
-          alertify.success('Block removed');
-        },
-        function(){
-        });
+    $(document).on('keydown', function(event) {
+      if (event.keyCode == 46) {
+        // Supr
+        removeBlock();
       }
+    });
+
+    $rootScope.$on('remove', function(event) {
+      removeBlock()
     });
 
     $rootScope.$on('clear', function(event) {
@@ -323,6 +321,19 @@ angular.module('icestudio')
             console.log('File ' + name + ' saved');
           }
       });
+    }
+
+    function removeBlock() {
+      if ($scope.selectedCell) {
+        alertify.confirm('Do you want to remove the selected block?',
+        function(){
+          $scope.selectedCell.remove();
+          delete $scope.selectedCell;
+          alertify.success('Block removed');
+        },
+        function(){
+        });
+      }
     }
 
     function exportCustomBlock() {
