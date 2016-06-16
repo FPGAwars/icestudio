@@ -44,7 +44,7 @@ angular.module('icestudio')
     paper.on('cell:pointerdblclick',
       function(cellView, evt, x, y) {
         var data = cellView.model.attributes;
-        if (data.blockType === 'io.input' || data.blockType == 'io.output') {
+        if (data.blockType == 'io.input' || data.blockType == 'io.output') {
           alertify.prompt('Insert the block label', '',
             function(evt, label) {
               if (label) {
@@ -52,10 +52,17 @@ angular.module('icestudio')
                 cellView.update();
                 alertify.success('Label updated');
               }
-            },
-            function(){
             }
           );
+        }
+        else {
+          if (data.block.code.type == 'graph') {
+            loadProject(data.block);
+          }
+          else if (data.block.code.type == 'verilog') {
+            var code = hljs.highlightAuto(data.block.code.data).value;
+            alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
+          }
         }
       }
     );
@@ -76,7 +83,7 @@ angular.module('icestudio')
           if (name) {
             $rootScope.projectName = name;
             window.title = 'Icestudio - ' + name;
-            graph.clear();
+            clearGraph();
             alertify.success('New project created');
           }
         },
@@ -131,7 +138,7 @@ angular.module('icestudio')
     $rootScope.$on('clear', function(event) {
       alertify.confirm('Do you want to clear the graph?',
       function(){
-        graph.clear();
+        clearGraph();
         alertify.success('Graph cleared');
       },
       function(){
@@ -173,7 +180,7 @@ angular.module('icestudio')
       if (data.code.type !== 'graph')
         return 0;
 
-      graph.clear();
+      clearGraph();
 
       // Blocks
       for (var i = 0; i < blocks.length; i++) {
@@ -251,6 +258,7 @@ angular.module('icestudio')
 
       var block = new shape({
         id: data.id,
+        block: data.block,
         blockType: data.type,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
@@ -339,6 +347,11 @@ angular.module('icestudio')
         function(){
         });
       }
+    }
+
+    function clearGraph() {
+      graph.clear();
+      delete $scope.selectedCell;
     }
 
     function exportCustomBlock() {
