@@ -34,17 +34,16 @@ angular.module('icestudio')
     paper.on('cell:pointerclick',
       function(cellView, evt, x, y) {
         if ($scope.selectedCell) {
-          $scope.selectedCell.removeClass('highlighted');
+          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
         }
-        $scope.selectedCell = V(paper.findViewByModel(cellView.model).el);
-        $scope.selectedCell.addClass('highlighted');
+        $scope.selectedCell = cellView.model;
+        V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
       }
     );
 
     paper.on('cell:pointerdblclick',
       function(cellView, evt, x, y) {
         var data = cellView.model.attributes;
-        console.log(data);
         if (data.blockType === 'io.input' || data.blockType == 'io.output') {
           alertify.prompt('Insert the block label', '',
             function(evt, label) {
@@ -64,7 +63,7 @@ angular.module('icestudio')
     paper.on('blank:pointerclick',
       function() {
         if ($scope.selectedCell) {
-          $scope.selectedCell.removeClass('highlighted');
+          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
         }
       }
     );
@@ -118,6 +117,7 @@ angular.module('icestudio')
         alertify.confirm('Do you want to remove the selected block?',
         function(){
           $scope.selectedCell.remove();
+          delete $scope.selectedCell;
           alertify.success('Block removed');
         },
         function(){
