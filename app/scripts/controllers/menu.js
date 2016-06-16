@@ -4,7 +4,7 @@ angular.module('icestudio')
   .controller('MenuCtrl', function ($scope, $rootScope, nodeGlob, nodeFs) {
 
     // Initialize blocks menu
-    loadBlocks()
+    loadBlocks();
 
     $scope.new = function() {
       $rootScope.$emit('new');
@@ -59,7 +59,7 @@ angular.module('icestudio')
     }
 
     $scope.reloadBlocks = function() {
-      loadBlocks();
+      $rootScope.loadBlocks();
     }
 
     $scope.removeBlock = function() {
@@ -69,6 +69,8 @@ angular.module('icestudio')
     $scope.clearGraph = function() {
       $rootScope.$emit('clear');
     }
+
+    $rootScope.loadBlocks = loadBlocks;
 
     function loadBlocks() {
       nodeGlob('app/res/blocks/*', null, function (er, categories) {

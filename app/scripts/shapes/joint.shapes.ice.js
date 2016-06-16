@@ -41,17 +41,15 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         fill: '#000'
       },
       '.inPorts .port-label': {
-        ref: '.block-label',
-        x: 50,
+        x: 40,
         y: 4,
-        'text-anchor': 'end',
+        'text-anchor': 'start',
         fill: '#000'
       },
       '.outPorts .port-label': {
-        ref: '.block-label',
-        x: -50,
+        x: -40,
         y: 4,
-        'text-anchor': 'start',
+        'text-anchor': 'end',
         fill: '#000'
       },
       '.port-wire': {

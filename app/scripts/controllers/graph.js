@@ -103,13 +103,18 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('exportCustomBlock', function(event) {
-      alertify.confirm('Do you want to export your custom block?',
-      function(){
-        exportCustomBlock();
-        alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
-      },
-      function(){
-      });
+      alertify.prompt('Do you want to export your custom block?', $rootScope.projectName,
+        function(evt, name) {
+          if (name) {
+            $rootScope.projectName = name;
+            window.title = 'Icestudio - ' + $rootScope.projectName;
+            exportCustomBlock();
+            $rootScope.loadBlocks();
+            alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+          }
+        },
+        function(){
+        });
     });
 
     $(document).on('keydown', function(event) {
@@ -236,8 +241,8 @@ angular.module('icestudio')
       var width = 50;
       var numPorts = Math.max(data.block.ports.in.length, data.block.ports.out.length);
 
-      if (data.block.ports.in.length) width += 40;
-      if (data.block.ports.out.length) width += 40;
+      if (data.block.ports.in.length) width += 50;
+      if (data.block.ports.out.length) width += 50;
 
       var shape = joint.shapes.ice.Block;
       if (data.type === 'io.input' || data.type == 'io.output') {
