@@ -29,14 +29,36 @@ angular.module('icestudio')
       }
     });
 
+    // Paper events
+
     paper.on('cell:pointerclick',
-        function(cellView, evt, x, y) {
-            if ($scope.selectedCell) {
-              $scope.selectedCell.removeClass('highlighted');
-            }
-            $scope.selectedCell = V(paper.findViewByModel(cellView.model).el);
-            $scope.selectedCell.addClass('highlighted');
+      function(cellView, evt, x, y) {
+        if ($scope.selectedCell) {
+          $scope.selectedCell.removeClass('highlighted');
         }
+        $scope.selectedCell = V(paper.findViewByModel(cellView.model).el);
+        $scope.selectedCell.addClass('highlighted');
+      }
+    );
+
+    paper.on('cell:pointerdblclick',
+      function(cellView, evt, x, y) {
+        var data = cellView.model.attributes;
+        console.log(data);
+        if (data.blockType === 'io.input' || data.blockType == 'io.output') {
+          alertify.prompt('Insert the block label', '',
+            function(evt, label) {
+              if (label) {
+                data.attrs['.block-label'].text = label;
+                cellView.update();
+                alertify.success('Label updated');
+              }
+            },
+            function(){
+            }
+          );
+        }
+      }
     );
 
     paper.on('blank:pointerclick',
@@ -227,12 +249,11 @@ angular.module('icestudio')
       var block = new shape({
         id: data.id,
         blockType: data.type,
-        blockLabel: data.block.label,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
         size: { width: width, height: 30 + 20 * numPorts },
-        attrs: { '.label': { text: data.block.label } }
+        attrs: { '.block-label': { text: data.block.label } }
       });
 
       graph.addCell(block);
@@ -259,10 +280,10 @@ angular.module('icestudio')
         var cell = graphData.cells[c];
         if (cell.blockType) {
           if (cell.blockType == 'io.input') {
-            inPorts.push({id: cell.id, label: cell.blockLabel });
+            inPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
           else if (cell.blockType == 'io.output') {
-            outPorts.push({id: cell.id, label: cell.blockLabel });
+            outPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
         }
       }
