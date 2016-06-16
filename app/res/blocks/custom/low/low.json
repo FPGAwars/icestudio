@@ -23,13 +23,13 @@
         {
           "id": "49b0ce5c-8f46-4add-bd3c-76631be92df3",
           "type": "logic.not",
-          "x": 308,
-          "y": 100
+          "x": 321,
+          "y": 102
         },
         {
           "id": "f225dcb2-3195-45bc-941f-cf4f05d984dc",
           "type": "io.output",
-          "x": 565,
+          "x": 598,
           "y": 101
         }
       ],

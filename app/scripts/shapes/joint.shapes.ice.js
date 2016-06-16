@@ -4,7 +4,7 @@ joint.shapes.ice = {};
 
 joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><text class="label"/><g class="inPorts"/><g class="outPorts"/></g>',
+  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><text class="block-label"/><g class="inPorts"/><g class="outPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
@@ -21,31 +21,35 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       '.body': {
         width: 80,
         height: 80,
-        stroke: '#000'
+        stroke: '#000',
+        rx: 5,
+        ry: 10,
+        'stroke-width': 2
       },
       '.port-body': {
         r: 10,
         magnet: true,
         stroke: '#000'
       },
-      '.label': {
-        text: 'Model',
-        'ref-x': .5,
-        'ref-y': 10,
+      '.block-label': {
         ref: '.body',
+        'ref-x': .5,
+        'ref-y': 15,
+        'font-size': 15,
         'text-anchor': 'middle',
         'font-weight': 'bold',
         fill: '#000'
       },
       '.inPorts .port-label': {
-        x: 50,
+        x: 40,
         y: 4,
-        'text-anchor': 'end',
+        'text-anchor': 'start',
         fill: '#000'
       },
       '.outPorts .port-label': {
-        x: -60,
+        x: -40,
         y: 4,
+        'text-anchor': 'end',
         fill: '#000'
       },
       '.port-wire': {

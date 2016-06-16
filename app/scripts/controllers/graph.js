@@ -7,6 +7,8 @@ angular.module('icestudio')
 
     window.title = 'Icestudio - ' + $rootScope.projectName;
 
+    $scope.selectedCell = null;
+
     // Graph
     var graph = new joint.dia.Graph();
 
@@ -27,6 +29,52 @@ angular.module('icestudio')
       }
     });
 
+    // Paper events
+
+    paper.on('cell:pointerclick',
+      function(cellView, evt, x, y) {
+        if ($scope.selectedCell) {
+          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+        }
+        $scope.selectedCell = cellView.model;
+        V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
+      }
+    );
+
+    paper.on('cell:pointerdblclick',
+      function(cellView, evt, x, y) {
+        var data = cellView.model.attributes;
+        if (data.blockType == 'io.input' || data.blockType == 'io.output') {
+          alertify.prompt('Insert the block label', '',
+            function(evt, label) {
+              if (label) {
+                data.attrs['.block-label'].text = label;
+                cellView.update();
+                alertify.success('Label updated');
+              }
+            }
+          );
+        }
+        else {
+          if (data.block.code.type == 'graph') {
+            loadProject(data.block);
+          }
+          else if (data.block.code.type == 'verilog') {
+            var code = hljs.highlightAuto(data.block.code.data).value;
+            alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
+          }
+        }
+      }
+    );
+
+    paper.on('blank:pointerclick',
+      function() {
+        if ($scope.selectedCell) {
+          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+        }
+      }
+    );
+
     // Events
 
     $rootScope.$on('new', function(event) {
@@ -35,7 +83,7 @@ angular.module('icestudio')
           if (name) {
             $rootScope.projectName = name;
             window.title = 'Icestudio - ' + name;
-            graph.clear();
+            clearGraph();
             alertify.success('New project created');
           }
         },
@@ -62,19 +110,35 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('exportCustomBlock', function(event) {
-      alertify.confirm('Do you want to export your custom block?',
-      function(){
-        exportCustomBlock();
-        alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
-      },
-      function(){
-      });
+      alertify.prompt('Do you want to export your custom block?', $rootScope.projectName,
+        function(evt, name) {
+          if (name) {
+            $rootScope.projectName = name;
+            window.title = 'Icestudio - ' + $rootScope.projectName;
+            exportCustomBlock();
+            $rootScope.loadBlocks();
+            alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+          }
+        },
+        function(){
+        });
+    });
+
+    $(document).on('keydown', function(event) {
+      if (event.keyCode == 46) {
+        // Supr
+        removeBlock();
+      }
+    });
+
+    $rootScope.$on('remove', function(event) {
+      removeBlock()
     });
 
     $rootScope.$on('clear', function(event) {
       alertify.confirm('Do you want to clear the graph?',
       function(){
-        graph.clear();
+        clearGraph();
         alertify.success('Graph cleared');
       },
       function(){
@@ -116,7 +180,7 @@ angular.module('icestudio')
       if (data.code.type !== 'graph')
         return 0;
 
-      graph.clear();
+      clearGraph();
 
       // Blocks
       for (var i = 0; i < blocks.length; i++) {
@@ -184,8 +248,8 @@ angular.module('icestudio')
       var width = 50;
       var numPorts = Math.max(data.block.ports.in.length, data.block.ports.out.length);
 
-      if (data.block.ports.in.length) width += 40;
-      if (data.block.ports.out.length) width += 40;
+      if (data.block.ports.in.length) width += 50;
+      if (data.block.ports.out.length) width += 50;
 
       var shape = joint.shapes.ice.Block;
       if (data.type === 'io.input' || data.type == 'io.output') {
@@ -194,14 +258,15 @@ angular.module('icestudio')
 
       var block = new shape({
         id: data.id,
+        block: data.block,
         blockType: data.type,
-        blockLabel: data.block.label,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
         size: { width: width, height: 30 + 20 * numPorts },
-        attrs: { '.label': { text: data.block.label } }
+        attrs: { '.block-label': { text: data.block.label } }
       });
+
       graph.addCell(block);
     }
 
@@ -226,10 +291,10 @@ angular.module('icestudio')
         var cell = graphData.cells[c];
         if (cell.blockType) {
           if (cell.blockType == 'io.input') {
-            inPorts.push({id: cell.id, label: cell.blockLabel });
+            inPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
           else if (cell.blockType == 'io.output') {
-            outPorts.push({id: cell.id, label: cell.blockLabel });
+            outPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
         }
       }
@@ -269,6 +334,24 @@ angular.module('icestudio')
             console.log('File ' + name + ' saved');
           }
       });
+    }
+
+    function removeBlock() {
+      if ($scope.selectedCell) {
+        alertify.confirm('Do you want to remove the selected block?',
+        function(){
+          $scope.selectedCell.remove();
+          delete $scope.selectedCell;
+          alertify.success('Block removed');
+        },
+        function(){
+        });
+      }
+    }
+
+    function clearGraph() {
+      graph.clear();
+      delete $scope.selectedCell;
     }
 
     function exportCustomBlock() {
