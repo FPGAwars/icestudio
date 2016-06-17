@@ -1,7 +1,14 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocksStore) {
+  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocksStore, boards) {
+
+    $scope.currentBoards = boards.getBoards();
+    $rootScope.selectedBoard = $scope.currentBoards[0];
+
+    $scope.selectBoard = function(board) {
+      $rootScope.selectedBoard = board;
+    }
 
     $scope.new = function() {
       $rootScope.$emit('new');

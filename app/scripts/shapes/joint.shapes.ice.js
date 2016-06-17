@@ -128,7 +128,7 @@ joint.shapes.ice.IO = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
-  defaults: {
+  defaults: joint.util.deepSupplement({
     type: 'ice.Wire',
     router: { name: 'manhattan' },
     connector: { name: 'rounded', args: { radius: 5 }},
@@ -137,9 +137,77 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
         'stroke-width': 2
       }
     }
-  }
+  }, joint.dia.Link.prototype.defaults)
 });
 
 joint.shapes.ice.ModelView = joint.dia.ElementView.extend(joint.shapes.basic.PortsViewInterface);
 joint.shapes.ice.BlockView = joint.shapes.ice.ModelView;
-joint.shapes.ice.IOView = joint.shapes.ice.ModelView;
+//joint.shapes.ice.IOView = joint.shapes.ice.ModelView;
+
+joint.shapes.ice.IOView = joint.dia.ElementView.extend({
+
+  template: [
+      '<div class="io-element">',
+      '<select class="io-combo"><option></option><option>LED0</option><option>LED1</option></select>',
+      '</div>'
+  ].join(''),
+
+  initialize: function() {
+      _.bindAll(this, 'updateBox');
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+      this.$box = $(_.template(this.template)());
+      // Prevent paper from handling pointerdown.
+      this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
+      // Update the box position whenever the underlying model changes.
+      this.model.on('change', this.updateBox, this);
+      // Remove the box when the model gets removed from the graph.
+      this.model.on('remove', this.removeBox, this);
+
+      this.updateBox();
+
+      this.listenTo(this.model, 'process:ports', this.update);
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  },
+
+
+   render: function() {
+      joint.dia.ElementView.prototype.render.apply(this, arguments);
+      this.paper.$el.prepend(this.$box);
+      // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
+      this.updateBox();
+      return this;
+  },
+
+  renderPorts: function () {
+      var $inPorts = this.$('.inPorts').empty();
+      var $outPorts = this.$('.outPorts').empty();
+
+      var portTemplate = _.template(this.model.portMarkup);
+
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
+
+          $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
+
+          $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+  },
+
+  update: function () {
+      // First render ports so that `attrs` can be applied to those newly created DOM elements
+      // in `ElementView.prototype.update()`.
+      this.renderPorts();
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+      // Set the position and dimension of the box so that it covers the JointJS element.
+      var bbox = this.model.getBBox();
+      this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+  },
+  removeBox: function(evt) {
+      this.$box.remove();
+  }
+});

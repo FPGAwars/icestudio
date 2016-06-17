@@ -56,13 +56,13 @@
                       Edit  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
+                      <!--<li>
                         <a href ng-click="build()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
                       </li>
-                      <li class="divider"></li>
+                      <li class="divider"></li>-->
                       <li>
                         <a href ng-click="removeBlock()">{{ 'Remove block' | translate }}</a>
                       </li>
@@ -78,7 +78,23 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="reloadBlocks()">{{ 'Reload blocks menu' | translate }}</a>
+                        <a href ng-click="reloadBlocks()">
+                          {{ 'Reload blocks menu' | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                </li>
+
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      Boards  <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li ng-repeat="board in currentBoards">
+                        <a href ng-click="selectBoard(board)">
+                          {{ board.label }}
+                          <span ng-show="$root.selectedBoard.id == board.id" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
                       </li>
                     </ul>
                 </li>
@@ -93,7 +109,9 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="(name, block) in blocks">
-                        <a href ng-click="addBlock(category, name, block)">{{ name }}</a>
+                        <a href ng-click="addBlock(category, name, block)">
+                          {{ name }}
+                        </a>
                       </li>
                     </ul>
                 </li>

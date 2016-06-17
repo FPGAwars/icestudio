@@ -9,7 +9,8 @@ angular.module('icestudio')
                                        nodeRmdir,
                                        blocksStore,
                                        putils,
-                                       utils) {
+                                       utils,
+                                       boards) {
 
     $rootScope.project = {};
     $rootScope.breadcrumb = [ { id: '' }];
@@ -93,6 +94,7 @@ angular.module('icestudio')
             function(evt, label) {
               if (label) {
                 data.block.label = label;
+                data.choices =  boards.getPinout($rootScope.selectedBoard);
                 addBlock(data);
                 alertify.success('Block ' + data.type + ' added');
               }
@@ -321,18 +323,21 @@ angular.module('icestudio')
       if (data.block.ports.out.length) width += 50;
 
       var shape = joint.shapes.ice.Block;
+      var height = 30;
       if (data.type === 'io.input' || data.type == 'io.output') {
         shape = joint.shapes.ice.IO;
+        height = 50;
       }
 
       var block = new shape({
         id: data.id,
         block: data.block,
         blockType: data.type,
+        choices: data.choices,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
-        size: { width: width, height: 30 + 20 * numPorts },
+        size: { width: width, height: height + 20 * numPorts },
         attrs: { '.block-label': { text: data.block.label } }
       });
 
