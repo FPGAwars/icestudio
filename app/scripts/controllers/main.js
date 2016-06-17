@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MainCtrl', function($scope, $rootScope) {
-    console.log('echo main');
+  .controller('MainCtrl', function($scope, blocksStore) {
 
-    $rootScope.blocks = {};
+    // Initialize blocks
+    blocksStore.loadBlocks();
 
     alertify.defaults = {
       // dialogs defaults

@@ -1,31 +1,13 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('ProjectCtrl', function ($scope, $rootScope, joint, nodeFs, window) {
+  .controller('ProjectCtrl', function ($scope, $rootScope, joint, nodeFs, window, utils, blocksStore) {
 
     $rootScope.project = {};
     $scope.breadcrumb = [ { id: '' }];
 
     // Initialize
     updateProjectName('untitled');
-
-
-    // Service utils
-
-    function updateProjectName(name) {
-      if (name) {
-        $scope.breadcrumb[0].name = name;
-        window.title = 'Icestudio - ' + name;
-        $rootScope.project.name = name;
-        if(!$scope.$$phase) {
-          $scope.$apply();
-        }
-      }
-    }
-
-    function basename(filepath) {
-      return filepath.replace(/^.*[\\\/]/, '').split('.')[0];
-    }
 
     // Events
 
@@ -41,13 +23,13 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('load', function(event, filepath) {
-      var name = basename(filepath);
+      var name = utils.basename(filepath);
       updateProjectName(name);
       loadProject(filepath);
     });
 
     $rootScope.$on('save', function(event, filepath) {
-      var name = basename(filepath);
+      var name = utils.basename(filepath);
       updateProjectName(name);
       saveProject(filepath);
     });
@@ -366,7 +348,7 @@ angular.module('icestudio')
     function saveProject(filepath) {
 
       var graphData = graph.toJSON();
-      var name = basename(filename);
+      var name = utils.basename(filename);
 
       $scope.project.name = name;
       refreshProject();
@@ -408,8 +390,19 @@ angular.module('icestudio')
       }
       saveProject(filepath + '/' + $rootScope.projectName + '.json');
       // Refresh menu blocks
-      $rootScope.loadBlocks();
+      blocksStore.loadBlocks();
       alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
     }
+
+    function updateProjectName(name) {
+      if (name) {
+        $scope.breadcrumb[0].name = name;
+        window.title = 'Icestudio - ' + name;
+        $rootScope.project.name = name;
+        if(!$scope.$$phase) {
+          $scope.$apply();
+        }
+      }
+    };
 
   });
