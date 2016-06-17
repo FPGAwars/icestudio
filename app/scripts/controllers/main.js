@@ -5,7 +5,6 @@ angular.module('icestudio')
     console.log('echo main');
 
     $rootScope.blocks = {};
-    $rootScope.projectName = 'untitled';
 
     alertify.defaults = {
       // dialogs defaults
