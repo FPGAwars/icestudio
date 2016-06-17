@@ -1,6 +1,10 @@
 
+.element .body {
+  transition: all .05s ease-in-out;
+}
 .element:hover .body {
-  stroke: #AAAAAA;
+  transform: scale(1.02);
+  transform-origin: 50% 50%;
 }
 
 .element.ice.highlighted .body {

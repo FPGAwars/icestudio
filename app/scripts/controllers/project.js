@@ -131,8 +131,8 @@ angular.module('icestudio')
     // Paper
     var paper = new joint.dia.Paper({
       el: $('#paper'),
-      width: 850,
-      height: 440,
+      width: 900,
+      height: 443,
       model: graph,
       gridSize: 1,
       snapLinks: { radius: 30 },
@@ -149,11 +149,13 @@ angular.module('icestudio')
 
     paper.on('cell:pointerclick',
       function(cellView, evt, x, y) {
-        if ($scope.selectedCell) {
-          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+        if (paper.options.interactive) {
+          if ($scope.selectedCell) {
+            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+          }
+          $scope.selectedCell = cellView.model;
+          V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
         }
-        $scope.selectedCell = cellView.model;
-        V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
       }
     );
 
@@ -195,14 +197,28 @@ angular.module('icestudio')
 
     paper.on('blank:pointerclick',
       function() {
-        if ($scope.selectedCell) {
-          V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+        if (paper.options.interactive) {
+          if ($scope.selectedCell) {
+            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+          }
         }
       }
     );
 
 
+
+
     // Functions
+
+    function paperEnable(value) {
+      paper.options.interactive = value;
+      if (value) {
+        angular.element('#paper').css('opacity', '1.0');
+      }
+      else {
+        angular.element('#paper').css('opacity', '0.5');
+      }
+    }
 
     function loadProject(filepath) {
       $.getJSON(filepath, function(project) {
@@ -227,7 +243,7 @@ angular.module('icestudio')
       var blocks = data.code.data.blocks;
       var wires = data.code.data.wires;
 
-      paper.options.interactive = interactive;
+      paperEnable(interactive);
 
       if (data.code.type !== 'graph')
         return 0;
@@ -435,6 +451,7 @@ angular.module('icestudio')
       delete $scope.selectedCell;
       $rootScope.breadcrumb = [ { id: '', name: $scope.project.name }];
       $rootScope.$apply();
+      paperEnable(true);
       refreshProject();
     }
 
