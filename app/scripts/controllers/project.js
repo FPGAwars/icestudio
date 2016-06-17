@@ -1,13 +1,20 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('ProjectCtrl', function ($scope, $rootScope, joint, nodeFs, window, utils, blocksStore) {
+  .controller('ProjectCtrl', function ($scope,
+                                       $rootScope,
+                                       joint,
+                                       nodeFs,
+                                       nodeGlob,
+                                       blocksStore,
+                                       putils,
+                                       utils) {
 
     $rootScope.project = {};
-    $scope.breadcrumb = [ { id: '' }];
+    $rootScope.breadcrumb = [ { id: '' }];
 
     // Initialize
-    updateProjectName('untitled');
+    putils.updateProjectName('untitled');
 
     // Events
 
@@ -15,7 +22,7 @@ angular.module('icestudio')
       alertify.prompt('Enter the project\'s title', 'untitled',
         function(evt, name) {
           if (name) {
-            updateProjectName(name);
+            putils.updateProjectName(name);
             clearGraph();
             alertify.success('New project created');
           }
@@ -24,13 +31,13 @@ angular.module('icestudio')
 
     $rootScope.$on('load', function(event, filepath) {
       var name = utils.basename(filepath);
-      updateProjectName(name);
+      putils.updateProjectName(name);
       loadProject(filepath);
     });
 
     $rootScope.$on('save', function(event, filepath) {
       var name = utils.basename(filepath);
-      updateProjectName(name);
+      putils.updateProjectName(name);
       saveProject(filepath);
     });
 
@@ -39,7 +46,7 @@ angular.module('icestudio')
         $rootScope.projectName,
         function(evt, name) {
           if (name) {
-            updateProjectName(name);
+            putils.updateProjectName(name);
             exportCustomBlock();
           }
       });
@@ -64,40 +71,42 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('addBlock', function(event, data) {
-      data.id = null;
-      data.x = 100;
-      data.y = 100;
-      if (data.type === 'io.input' || data.type == 'io.output') {
-        alertify.prompt('Insert the block label', '',
-          function(evt, label) {
-            if (label) {
-              data.block.label = label;
-              addBlock(data);
-              alertify.success('Block ' + data.type + ' added');
-            }
-        });
+      if (paper.options.interactive) {
+        data.id = null;
+        data.x = 100;
+        data.y = 100;
+        if (data.type === 'io.input' || data.type == 'io.output') {
+          alertify.prompt('Insert the block label', '',
+            function(evt, label) {
+              if (label) {
+                data.block.label = label;
+                addBlock(data);
+                alertify.success('Block ' + data.type + ' added');
+              }
+          });
+        }
+        else {
+          addBlock(data);
+          alertify.success('Block ' + data.type + ' added');
+        }
+        refreshProject();
       }
-      else {
-        addBlock(data);
-        alertify.success('Block ' + data.type + ' added');
-      }
-      refreshProject();
     });
 
     $scope.breadcrumbNavitate = function(selectedItem) {
       var item;
       do {
-        $scope.breadcrumb.pop();
-        item = $scope.breadcrumb.slice(-1)[0];
+        $rootScope.breadcrumb.pop();
+        item = $rootScope.breadcrumb.slice(-1)[0];
       }
       while (selectedItem.name != item.name);
 
-      if ($scope.breadcrumb.length == 1) {
-        loadGraph($scope.project);
+      if ($rootScope.breadcrumb.length == 1) {
+        loadGraph($scope.project, true);
       }
       else {
         var type = selectedItem.type.split('.')
-        loadGraph($rootScope.blocks[type[0]][type[1]]);
+        loadGraph($rootScope.blocks[type[0]][type[1]], false);
       }
     }
 
@@ -139,26 +148,28 @@ angular.module('icestudio')
       function(cellView, evt, x, y) {
         var data = cellView.model.attributes;
         if (data.blockType == 'io.input' || data.blockType == 'io.output') {
-          alertify.prompt('Insert the block label', '',
-            function(evt, label) {
-              if (label) {
-                data.attrs['.block-label'].text = label;
-                cellView.update();
-                alertify.success('Label updated');
-              }
-          });
+          if (paper.options.interactive) {
+            alertify.prompt('Insert the block label', '',
+              function(evt, label) {
+                if (label) {
+                  data.attrs['.block-label'].text = label;
+                  cellView.update();
+                  alertify.success('Label updated');
+                }
+            });
+          }
         }
         else {
           if (data.block.code.type == 'graph') {
-            $scope.breadcrumb.push({ type: data.blockType, name: data.block.name });
-            $scope.$apply();
-            if ($scope.breadcrumb.length == 2) {
+            $rootScope.breadcrumb.push({ type: data.blockType, name: data.block.name });
+            $rootScope.$apply();
+            if ($rootScope.breadcrumb.length == 2) {
               refreshProject(function() {
-                loadGraph(data.block);
+                loadGraph(data.block, false);
               });
             }
             else {
-              loadGraph(data.block);
+              loadGraph(data.block, false);
             }
           }
           else if (data.block.code.type == 'verilog') {
@@ -183,16 +194,18 @@ angular.module('icestudio')
     function loadProject(filepath) {
       $.getJSON(filepath, function(project) {
         $scope.project = project;
-        loadGraph(project);
+        loadGraph(project, true);
         alertify.success('Project ' + project.name + ' loaded');
       });
     }
 
-    function loadGraph(data) {
+    function loadGraph(data, interactive) {
 
       var ports = data.ports;
       var blocks = data.code.data.blocks;
       var wires = data.code.data.wires;
+
+      paper.options.interactive = interactive;
 
       if (data.code.type !== 'graph')
         return 0;
@@ -340,7 +353,6 @@ angular.module('icestudio')
 
       $scope.project.code = { type: 'graph', data: { blocks: blocks, wires: wires } };
 
-
       if (callback)
         callback();
     }
@@ -376,33 +388,23 @@ angular.module('icestudio')
     function clearGraph() {
       graph.clear();
       delete $scope.selectedCell;
-      $scope.breadcrumb = [ { id: '', name: $scope.project.name }];
-      $scope.$apply();
+      $rootScope.breadcrumb = [ { id: '', name: $scope.project.name }];
+      $rootScope.$apply();
       refreshProject();
     }
 
     function exportCustomBlock() {
-      var filepath = 'app/res/blocks/custom/' + $rootScope.projectName;
+      var filepath = 'app/res/blocks/custom/' + $rootScope.project.name;
       try {
         nodeFs.mkdirSync(filepath);
       } catch(e) {
         if ( e.code != 'EEXIST' ) throw e;
       }
-      saveProject(filepath + '/' + $rootScope.projectName + '.json');
+      saveProject(filepath + '/' + $rootScope.project.name + '.json');
       // Refresh menu blocks
       blocksStore.loadBlocks();
-      alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+      alertify.success('Project ' + $rootScope.project.name + ' exported to custom blocks');
     }
 
-    function updateProjectName(name) {
-      if (name) {
-        $scope.breadcrumb[0].name = name;
-        window.title = 'Icestudio - ' + name;
-        $rootScope.project.name = name;
-        if(!$scope.$$phase) {
-          $scope.$apply();
-        }
-      }
-    };
 
   });
