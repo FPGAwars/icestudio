@@ -19,6 +19,7 @@
     "alertifyjs": "^1.7.1",
     "directory-tree": "^1.0.0",
     "jquery": "^2.2.3",
+    "rmdir": "^1.2.0",
     "serialport": "^2.0.5"
   },
   "devDependencies": {
