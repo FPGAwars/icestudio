@@ -1,7 +1,128 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('GraphCtrl', function($scope, $rootScope, joint, nodeFs, window) {
+  .controller('ProjectCtrl', function ($scope, $rootScope, joint, nodeFs, window) {
+
+    window.title = 'Icestudio - ' + $rootScope.projectName;
+
+    $scope.project = { name: $rootScope.projectName, label: $rootScope.projectName.toUpperCase()};
+
+    $scope.breadcrumb = [ $rootScope.projectName ];
+
+    // Events
+
+    $rootScope.$on('new', function(event) {
+      alertify.prompt('Enter the project\'s title', 'untitled',
+        function(evt, name) {
+          if (name) {
+            $rootScope.projectName = name;
+            $scope.breadcrumb[0] = name;
+            $scope.$apply();
+            window.title = 'Icestudio - ' + name;
+            clearGraph();
+            alertify.success('New project created');
+          }
+        },
+        function(){
+        });
+    });
+
+    $rootScope.$on('load', function(event, filepath) {
+      $.getJSON(filepath, function(data) {
+        var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+        $rootScope.projectName = name;
+        $scope.breadcrumb[0] = name;
+        $scope.$apply();
+        window.title = 'Icestudio - ' + name;
+        $scope.project = data;
+        loadGraph(data);
+        alertify.success('Project ' + name + ' loaded');
+      });
+    });
+
+    $rootScope.$on('save', function(event, filepath) {
+      var name = filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+      $rootScope.projectName = name;
+      $scope.breadcrumb[0] = name;
+      $scope.$apply();
+      window.title = 'Icestudio - ' + name;
+      saveProject(filepath);
+      alertify.success('Project ' + name + ' saved');
+    });
+
+    $rootScope.$on('exportCustomBlock', function(event) {
+      alertify.prompt('Do you want to export your custom block?', $rootScope.projectName,
+        function(evt, name) {
+          if (name) {
+            $rootScope.projectName = name;
+            $scope.breadcrumb[0] = name;
+            $scope.$apply();
+            window.title = 'Icestudio - ' + $rootScope.projectName;
+            exportCustomBlock();
+            $rootScope.loadBlocks();
+            alertify.success('Project ' + $rootScope.projectName + ' exported to custom blocks');
+          }
+        },
+        function(){
+        });
+    });
+
+    $(document).on('keydown', function(event) {
+      if (event.keyCode == 46) {
+        // Supr
+        removeBlock();
+      }
+    });
+
+    $rootScope.$on('remove', function(event) {
+      removeBlock()
+    });
+
+    $rootScope.$on('clear', function(event) {
+      alertify.confirm('Do you want to clear the graph?',
+      function(){
+        clearGraph();
+        alertify.success('Graph cleared');
+      },
+      function(){
+      });
+    });
+
+    $rootScope.$on('addBlock', function(event, data) {
+      data.id = null;
+      data.x = 100;
+      data.y = 100;
+      if (data.type === 'io.input' || data.type == 'io.output') {
+        alertify.prompt('Insert the block label', '',
+          function(evt, label) {
+            if (label) {
+              data.block.label = label;
+              addBlock(data);
+              alertify.success('Block ' + data.type + ' added');
+            }
+          },
+          function(){
+          });
+      }
+      else {
+        addBlock(data);
+        alertify.success('Block ' + data.type + ' added');
+      }
+
+    });
+
+    $scope.goto = function(selectedItem) {
+      var item;
+      do {
+        $scope.breadcrumb.pop();
+        item = $scope.breadcrumb.slice(-1)[0];
+      }
+      while (selectedItem != item);
+
+      console.log($scope.project);
+
+      loadGraph($scope.project);
+    }
 
     $scope.selectedCell = null;
 
@@ -53,7 +174,9 @@ angular.module('icestudio')
         }
         else {
           if (data.block.code.type == 'graph') {
-            loadProject(data.block);
+            $scope.breadcrumb.push(data.block.name);
+            $scope.$apply();
+            loadGraph(data.block);
           }
           else if (data.block.code.type == 'verilog') {
             var code = hljs.highlightAuto(data.block.code.data).value;
@@ -72,9 +195,9 @@ angular.module('icestudio')
     );
 
 
-    // Functions TODO: create a service
+    // Functions
 
-    function loadProject(data) {
+    function loadGraph(data) {
 
       var ports = data.ports;
       var blocks = data.code.data.blocks;

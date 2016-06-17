@@ -1,0 +1,9 @@
+<div ng-controller="ProjectCtrl">
+  <div id="paper" class="paper"></div>
+  <ol class="breadcrumb" style="margin-bottom: 5px;">
+    <li ng-repeat="item in breadcrumb" ng-class="{active: $last}" ng-switch="$last">
+      <span ng-switch-when="true">{{ item }}</span>
+      <a href ng-click="goto(item)" ng-switch-default>{{ item }}</a>
+    </li>
+  </ol>
+</div>
