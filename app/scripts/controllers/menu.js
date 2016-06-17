@@ -39,8 +39,16 @@ angular.module('icestudio')
       }, 0);
     }
 
-    $scope.exportCustomBlock = function() {
-      $rootScope.$emit('exportCustomBlock');
+    $scope.loadCustom = function(name) {
+      $rootScope.$emit('loadCustom', name);
+    }
+
+    $scope.removeCustom = function(name) {
+      $rootScope.$emit('removeCustom', name);
+    }
+
+    $scope.saveCustom = function() {
+      $rootScope.$emit('saveCustom');
     }
 
     $scope.addBlock = function(category, name, block) {

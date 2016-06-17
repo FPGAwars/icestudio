@@ -6,6 +6,7 @@ angular.module('icestudio')
                                        joint,
                                        nodeFs,
                                        nodeGlob,
+                                       nodeRmdir,
                                        blocksStore,
                                        putils,
                                        utils) {
@@ -41,14 +42,26 @@ angular.module('icestudio')
       saveProject(filepath);
     });
 
-    $rootScope.$on('exportCustomBlock', function(event) {
+    $rootScope.$on('loadCustom', function(event, name) {
+      putils.updateProjectName(name);
+      loadCustom(name);
+    });
+
+    $rootScope.$on('saveCustom', function(event) {
       alertify.prompt('Do you want to export your custom block?',
-        $rootScope.projectName,
+        $rootScope.project.name,
         function(evt, name) {
           if (name) {
             putils.updateProjectName(name);
-            exportCustomBlock();
+            saveCustom(name);
           }
+      });
+    });
+
+    $rootScope.$on('removeCustom', function(event, name) {
+      alertify.confirm('Do you want to remove custom block ' + name + '?',
+        function() {
+          removeCustom(name);
       });
     });
 
@@ -196,6 +209,15 @@ angular.module('icestudio')
         $scope.project = project;
         loadGraph(project, true);
         alertify.success('Project ' + project.name + ' loaded');
+      });
+    }
+
+    function loadCustom(name) {
+      var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
+      $.getJSON(filepath, function(project) {
+        $scope.project = project;
+        loadGraph(project, true);
+        alertify.success('Custom block ' + project.name + ' loaded');
       });
     }
 
@@ -360,7 +382,7 @@ angular.module('icestudio')
     function saveProject(filepath) {
 
       var graphData = graph.toJSON();
-      var name = utils.basename(filename);
+      var name = utils.basename(filepath);
 
       $scope.project.name = name;
       refreshProject();
@@ -373,27 +395,7 @@ angular.module('icestudio')
       });
     }
 
-    function removeBlock() {
-      if ($scope.selectedCell) {
-        alertify.confirm('Do you want to remove the selected block?',
-          function() {
-            $scope.selectedCell.remove();
-            delete $scope.selectedCell;
-            refreshProject();
-            alertify.success('Block removed');
-        });
-      }
-    }
-
-    function clearGraph() {
-      graph.clear();
-      delete $scope.selectedCell;
-      $rootScope.breadcrumb = [ { id: '', name: $scope.project.name }];
-      $rootScope.$apply();
-      refreshProject();
-    }
-
-    function exportCustomBlock() {
+    function saveCustom() {
       var filepath = 'app/res/blocks/custom/' + $rootScope.project.name;
       try {
         nodeFs.mkdirSync(filepath);
@@ -406,5 +408,34 @@ angular.module('icestudio')
       alertify.success('Project ' + $rootScope.project.name + ' exported to custom blocks');
     }
 
+    function removeCustom(name) {
+      var filepath = 'app/res/blocks/custom/' + name;
+      nodeRmdir(filepath, function (err, dirs, files) {
+        blocksStore.loadBlocks();
+        alertify.success('Custom block ' + name + ' removed');
+      });
+    }
+
+    function removeBlock() {
+      if (paper.options.interactive) {
+        if ($scope.selectedCell) {
+          alertify.confirm('Do you want to remove the selected block?',
+            function() {
+              $scope.selectedCell.remove();
+              delete $scope.selectedCell;
+              refreshProject();
+              alertify.success('Block removed');
+          });
+        }
+      }
+    }
+
+    function clearGraph() {
+      graph.clear();
+      delete $scope.selectedCell;
+      $rootScope.breadcrumb = [ { id: '', name: $scope.project.name }];
+      $rootScope.$apply();
+      refreshProject();
+    }
 
   });

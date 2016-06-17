@@ -7,26 +7,46 @@
 
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
 
-            <ul class="nav navbar-nav"> <!-- navbar-right -->
+            <ul class="nav navbar-nav">
 
                 <li uib-dropdown>
                     <a href uib-dropdown-toggle>
                       File <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    <ul uib-dropdown-menu>
                       <li>
                         <a href ng-click="new()">{{ 'New project' | translate }}</a>
                       </li>
-                      <div class="divider"></div>
+                      <li class="divider"></li>
                       <li>
                         <a href ng-click="load()">{{ 'Load project' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="save()">{{ 'Save project' | translate }}</a>
                       </li>
-                      <div class="divider"></div>
+                      <li class="divider"></li>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>
+                          {{ 'Load custom block' | translate }}
+                        </a>
+                        <ul uib-dropdown-menu>
+                          <li ng-repeat="(key, data) in $root.blocks.custom">
+                            <a href ng-click="loadCustom(key)">{{ key }}</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>
+                          {{ 'Remove custom block' | translate }}
+                        </a>
+                        <ul uib-dropdown-menu>
+                          <li ng-repeat="(key, data) in $root.blocks.custom">
+                            <a href ng-click="removeCustom(key)">{{ key }}</a>
+                          </li>
+                        </ul>
+                      </li>
                       <li>
-                        <a href ng-click="exportCustomBlock()">{{ 'Export custom block' | translate }}</a>
+                        <a href ng-click="saveCustom()">{{ 'Save custom block' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -35,14 +55,14 @@
                     <a href uib-dropdown-toggle>
                       Edit  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="build()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
                       </li>
-                      <div class="divider"></div>
+                      <li class="divider"></li>
                       <li>
                         <a href ng-click="removeBlock()">{{ 'Remove block' | translate }}</a>
                       </li>
@@ -56,7 +76,7 @@
                     <a href uib-dropdown-toggle>
                       View  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="reloadBlocks()">{{ 'Reload blocks menu' | translate }}</a>
                       </li>
@@ -71,7 +91,7 @@
                     <a href uib-dropdown-toggle>
                       {{ category }} <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="(name, block) in blocks">
                         <a href ng-click="addBlock(category, name, block)">{{ name }}</a>
                       </li>
