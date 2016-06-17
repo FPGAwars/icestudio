@@ -31,9 +31,9 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('load', function(event, filepath) {
-      var name = utils.basename(filepath);
-      putils.updateProjectName(name);
-      loadProject(filepath);
+        var name = utils.basename(filepath);
+        putils.updateProjectName(name);
+        loadProject(filepath);
     });
 
     $rootScope.$on('save', function(event, filepath) {
@@ -59,7 +59,7 @@ angular.module('icestudio')
     });
 
     $rootScope.$on('removeCustom', function(event, name) {
-      alertify.confirm('Do you want to remove custom block ' + name + '?',
+      alertify.confirm('Do you want to remove the custom block <b>' + name + '</b>?',
         function() {
           removeCustom(name);
       });
@@ -115,7 +115,7 @@ angular.module('icestudio')
       while (selectedItem.name != item.name);
 
       if ($rootScope.breadcrumb.length == 1) {
-        loadGraph($scope.project, true);
+        loadGraph($rootScope.project, true);
       }
       else {
         var type = selectedItem.type.split('.')
@@ -222,7 +222,7 @@ angular.module('icestudio')
 
     function loadProject(filepath) {
       $.getJSON(filepath, function(project) {
-        $scope.project = project;
+        $rootScope.project = project;
         loadGraph(project, true);
         alertify.success('Project ' + project.name + ' loaded');
       });
@@ -231,7 +231,7 @@ angular.module('icestudio')
     function loadCustom(name) {
       var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
       $.getJSON(filepath, function(project) {
-        $scope.project = project;
+        $rootScope.project = project;
         loadGraph(project, true);
         alertify.success('Custom block ' + project.name + ' loaded');
       });
@@ -345,7 +345,7 @@ angular.module('icestudio')
 
       // Header
 
-      $scope.project.label = $scope.project.name.toUpperCase();
+      $rootScope.project.label = $rootScope.project.name.toUpperCase();
 
       // Ports
 
@@ -364,7 +364,7 @@ angular.module('icestudio')
         }
       }
 
-      $scope.project.ports = { in: inPorts, out: outPorts };
+      $rootScope.project.ports = { in: inPorts, out: outPorts };
 
       // Code
 
@@ -389,7 +389,7 @@ angular.module('icestudio')
         }
       }
 
-      $scope.project.code = { type: 'graph', data: { blocks: blocks, wires: wires } };
+      $rootScope.project.code = { type: 'graph', data: { blocks: blocks, wires: wires } };
 
       if (callback)
         callback();
@@ -400,10 +400,10 @@ angular.module('icestudio')
       var graphData = graph.toJSON();
       var name = utils.basename(filepath);
 
-      $scope.project.name = name;
+      $rootScope.project.name = name;
       refreshProject();
 
-      nodeFs.writeFile(filepath, JSON.stringify($scope.project, null, 2),
+      nodeFs.writeFile(filepath, JSON.stringify($rootScope.project, null, 2),
         function(err) {
           if (!err) {
             console.log('File ' + name + ' saved');
@@ -449,7 +449,7 @@ angular.module('icestudio')
     function clearGraph() {
       graph.clear();
       delete $scope.selectedCell;
-      $rootScope.breadcrumb = [ { id: '', name: $scope.project.name }];
+      $rootScope.breadcrumb = [ { id: '', name: $rootScope.project.name }];
       $rootScope.$apply();
       paperEnable(true);
       refreshProject();

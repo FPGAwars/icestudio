@@ -8,17 +8,21 @@ angular.module('icestudio')
     }
 
     $scope.load = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-load');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          event.target.files.clear();
-          if (file) {
-            $rootScope.$emit('load', file.path);
-          }
-        });
-        ctrl.click();
-      }, 0);
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          setTimeout(function() {
+            var ctrl = angular.element('#input-load');
+            ctrl.on('change', function(event) {
+              var file = event.target.files[0];
+              event.target.files.clear();
+              if (file) {
+                $rootScope.$emit('load', file.path);
+              }
+            });
+            ctrl.click();
+          }, 0);
+      });
     }
 
     $scope.save = function() {
@@ -40,7 +44,11 @@ angular.module('icestudio')
     }
 
     $scope.loadCustom = function(name) {
-      $rootScope.$emit('loadCustom', name);
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          $rootScope.$emit('loadCustom', name);
+      });
     }
 
     $scope.removeCustom = function(name) {
