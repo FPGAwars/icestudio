@@ -7,7 +7,15 @@ angular.module('icestudio')
     $rootScope.selectedBoard = $scope.currentBoards[0];
 
     $scope.selectBoard = function(board) {
-      $rootScope.selectedBoard = board;
+      if ($rootScope.selectedBoard != board) {
+        alertify.confirm('The current FPGA I/O configuration will be lost. ' +
+                         'Do you want to change to <b>' + board.label + '</b> board?',
+          function() {
+            $rootScope.selectedBoard = board;
+            $rootScope.$emit('boardChanged', board);
+            alertify.success('Board ' + board.label + ' selected');
+        });
+      }
     }
 
     $scope.new = function() {

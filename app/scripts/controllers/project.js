@@ -125,6 +125,14 @@ angular.module('icestudio')
       }
     }
 
+    $rootScope.$on('boardChanged', function(event, board) {
+      var cells = graph.getCells();
+      for (var c in cells) {
+        cells[c].attributes.choices = boards.getPinout(board);
+        paper.findViewByModel(cells[c].id).renderChoices();
+      }
+    });
+
     $scope.selectedCell = null;
 
     // Graph
@@ -278,6 +286,8 @@ angular.module('icestudio')
             }
           }
         }
+
+        data.choices =  boards.getPinout($rootScope.selectedBoard);
 
         addBlock(data);
       }
