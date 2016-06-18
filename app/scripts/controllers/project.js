@@ -109,6 +109,32 @@ angular.module('icestudio')
       }
     });
 
+    $rootScope.$on('addCodeBlock', function(event) {
+      if (paper.options.interactive) {
+        var data = {};
+        data.id = null;
+        data.x = 100;
+        data.y = 100;
+        data.type = 'factory.code';
+        alertify.prompt('Insert the block i/o', '2 1',
+          function(evt, io) {
+            if (io) {
+              var i = parseInt(io.split(' ')[0]);
+              var o = parseInt(io.split(' ')[1]);
+              data.block = { ports: {
+                in:  Array(i),
+                out: Array(o)
+                }
+              };
+              data.block.name = 'code';
+              data.block.label = '';
+              addBlock(data);
+              alertify.success('Block ' + data.type + ' added');
+            }
+        });
+      }
+    });
+
     $scope.breadcrumbNavitate = function(selectedItem) {
       var item;
       do {
@@ -336,10 +362,15 @@ angular.module('icestudio')
       if (data.block.ports.out.length) width += 50;
 
       var shape = joint.shapes.ice.Block;
-      var height = 30;
+      var height = 30 + 20 * numPorts;
       if (data.type === 'io.input' || data.type == 'io.output') {
         shape = joint.shapes.ice.IO;
-        height = 50;
+        height = 50 + 20 * numPorts;
+      }
+      else if (data.type === 'factory.code') {
+        shape = joint.shapes.ice.Code;
+        width = 400;
+        height = 200;
       }
 
       var block = new shape({
@@ -352,7 +383,7 @@ angular.module('icestudio')
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
         position: { x: data.x, y: data.y },
-        size: { width: width, height: height + 20 * numPorts },
+        size: { width: width, height: height },
         attrs: { '.block-label': { text: data.block.label } }
       });
 

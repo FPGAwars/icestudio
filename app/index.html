@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-ng-app="icestudio">
+<html>
 
 <head>
     <title>Icestudio</title>
@@ -18,8 +18,8 @@
     <!-- endnode -->
 </head>
 
-<body>
-    <div data-ng-view></div>
+<body ng-app="icestudio">
+    <div ng-view></div>
     <script>
     window.$ = window.JQuery = window.jQuery = require('jquery');
     </script>
@@ -37,6 +37,7 @@
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../bower_components/highlightjs/highlight.pack.js"></script>
     <!-- endbower -->
+    <script src="../bower_components/ace-builds/src-noconflict/ace.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/menu.js"></script>

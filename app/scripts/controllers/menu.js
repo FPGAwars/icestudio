@@ -78,6 +78,10 @@ angular.module('icestudio')
       $rootScope.$emit('addBlock', { type: category + '.' + name, block: block });
     }
 
+    $scope.addCodeBlock = function() {
+      $rootScope.$emit('addCodeBlock');
+    }
+
     $scope.build = function() {
       console.log('build');
     }

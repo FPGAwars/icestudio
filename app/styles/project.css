@@ -25,3 +25,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.code-element{
+  position: absolute;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+
+.code-editor {
+  pointer-events: auto;
+  position: absolute;
+  height: 180px;
+  width: 380px;
+  transform: translate(10px, 10px);
+}
