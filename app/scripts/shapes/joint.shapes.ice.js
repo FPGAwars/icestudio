@@ -161,6 +161,10 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
+    this.$box.find('select').on('change', _.bind(function(evt) {
+            this.model.set('pinName', $(evt.target).val());
+        }, this));
+
     // Update the box position whenever the underlying model changes.
     this.model.on('change', this.updateBox, this);
     // Remove the box when the model gets removed from the graph.
@@ -198,12 +202,19 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   },
 
   renderChoices: function() {
-    var choices = this.model.attributes.choices;
-    var $select = this.$box.find('.io-combo').empty();
+    if (this.model.get('fpgaio')) {
+      var choices = this.model.attributes.choices;
+      var $select = this.$box.find('.io-combo').empty();
 
-    $select.append('<option></option>');
-    for (var c in choices) {
-      $select.append('<option>' + choices[c].name + '</option>');
+      $select.append('<option></option>');
+      for (var c in choices) {
+        $select.append('<option>' + choices[c].name + '</option>');
+      }
+
+      this.$box.find('select').val(this.model.get('pinName'));
+    }
+    else {
+      this.$box.find('select').hide();
     }
   },
 

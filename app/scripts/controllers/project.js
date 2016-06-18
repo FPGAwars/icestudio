@@ -40,7 +40,7 @@ angular.module('icestudio')
     $rootScope.$on('save', function(event, filepath) {
       var name = utils.basename(filepath);
       putils.updateProjectName(name);
-      saveProject(filepath);
+      saveProject(filepath, true);
     });
 
     $rootScope.$on('loadCustom', function(event, name) {
@@ -94,6 +94,7 @@ angular.module('icestudio')
             function(evt, label) {
               if (label) {
                 data.block.label = label;
+                data.fpgaio = true;
                 data.choices =  boards.getPinout($rootScope.selectedBoard);
                 addBlock(data);
                 alertify.success('Block ' + data.type + ' added');
@@ -117,11 +118,11 @@ angular.module('icestudio')
       while (selectedItem.name != item.name);
 
       if ($rootScope.breadcrumb.length == 1) {
-        loadGraph($rootScope.project, true);
+        loadGraph($rootScope.project, true, true);
       }
       else {
         var type = selectedItem.type.split('.')
-        loadGraph($rootScope.blocks[type[0]][type[1]], false);
+        loadGraph($rootScope.blocks[type[0]][type[1]], false, false);
       }
     }
 
@@ -190,11 +191,11 @@ angular.module('icestudio')
             $rootScope.$apply();
             if ($rootScope.breadcrumb.length == 2) {
               refreshProject(function() {
-                loadGraph(data.block, false);
-              });
+                loadGraph(data.block, false, false);
+              }, true);
             }
             else {
-              loadGraph(data.block, false);
+              loadGraph(data.block, false, false);
             }
           }
           else if (data.block.code.type == 'verilog') {
@@ -233,7 +234,7 @@ angular.module('icestudio')
     function loadProject(filepath) {
       $.getJSON(filepath, function(project) {
         $rootScope.project = project;
-        loadGraph(project, true);
+        loadGraph(project, true, true);
         alertify.success('Project ' + project.name + ' loaded');
       });
     }
@@ -242,12 +243,12 @@ angular.module('icestudio')
       var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
       $.getJSON(filepath, function(project) {
         $rootScope.project = project;
-        loadGraph(project, true);
+        loadGraph(project, true, true);
         alertify.success('Custom block ' + project.name + ' loaded');
       });
     }
 
-    function loadGraph(data, interactive) {
+    function loadGraph(data, interactive, fpgaio) {
 
       var ports = data.ports;
       var blocks = data.code.data.blocks;
@@ -270,6 +271,8 @@ angular.module('icestudio')
         data.id = blocks[i].id;
         data.x = blocks[i].x;
         data.y = blocks[i].y;
+        data.pinName = (blocks[i].value) ? blocks[i].value.name : '';
+        data.fpgaio = fpgaio;
 
         // Set custom labels
         if (data.type === 'io.input') {
@@ -343,6 +346,8 @@ angular.module('icestudio')
         id: data.id,
         block: data.block,
         blockType: data.type,
+        pinName: data.pinName,
+        fpgaio: data.fpgaio,
         choices: data.choices,
         inPorts: data.block.ports.in,
         outPorts: data.block.ports.out,
@@ -354,7 +359,7 @@ angular.module('icestudio')
       graph.addCell(block);
     }
 
-    function refreshProject(callback) {
+    function refreshProject(callback, fpgaio) {
 
       var graphData = graph.toJSON();
 
@@ -392,6 +397,8 @@ angular.module('icestudio')
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
+          if (fpgaio)
+            block.value = { name: cell.pinName };
           block.x = cell.position.x;
           block.y = cell.position.y;
           blocks.push(block);
@@ -410,13 +417,13 @@ angular.module('icestudio')
         callback();
     }
 
-    function saveProject(filepath) {
+    function saveProject(filepath, fpgaio) {
 
       var graphData = graph.toJSON();
       var name = utils.basename(filepath);
 
       $rootScope.project.name = name;
-      refreshProject();
+      refreshProject(null, fpgaio);
 
       nodeFs.writeFile(filepath, JSON.stringify($rootScope.project, null, 2),
         function(err) {
@@ -433,7 +440,7 @@ angular.module('icestudio')
       } catch(e) {
         if ( e.code != 'EEXIST' ) throw e;
       }
-      saveProject(filepath + '/' + $rootScope.project.name + '.json');
+      saveProject(filepath + '/' + $rootScope.project.name + '.json', false);
       // Refresh menu blocks
       blocksStore.loadBlocks();
       alertify.success('Project ' + $rootScope.project.name + ' exported to custom blocks');
