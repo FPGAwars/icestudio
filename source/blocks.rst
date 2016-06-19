@@ -7,7 +7,7 @@ Definitions
 -----------
 
 Block
-``````
+`````
 
 Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
 
@@ -15,55 +15,39 @@ Generic project definition. This entity can be synthesized in a FPGA, defining i
 
   |
 
-  .. code-block:: json
+.. code-block:: json
 
-     {
-        "name": "",
-        "label": "",
-        "ports": {
-           "in": [ { "id": "", "label": "" } ],
-           "out": [ { "id": "", "label": "" } ]
-        },
-        "code": { }
+   {
+     "type": "",
+     "data": {
+       "blocks" : [],
+       "wires": []
      }
+   }
 
-Block code
-''''''''''
+Block instances
+'''''''''''''''
 
-**Verilog**
+.. code-block:: json
 
-  .. code-block:: json
+   {
+     "id": "",
+     "type": "",
+     "value": {},
+     "position": { "x": 0, "y": 0 }
+   }
 
-     {
-        "type": "verilog",
-        "data" : "..."
-     }
 
-**Graph**
+Wire instances
+''''''''''''''
 
-  .. code-block:: json
+.. code-block:: json
 
-     {
-        "type": "graph",
-        "data" : { "blocks": [], "wires": [] }
-     }
+   {
+     "source": { "block": "", "port": "" },
+     "target": { "block": "", "port": "" }
+   }
 
-  Blocks: block instance.
-
-    .. code-block:: json
-
-       {
-         "id": "", "type": "", "x": 0, "y": 0
-       }
-
-  Wires: connections. Block and port are the id keys of the element.
-
-    .. code-block:: json
-
-       {
-          "source": { "block": "", "port": "" },
-          "target": { "block": "", "port": "" }
-       }
 
 Basic blocks
 ------------
@@ -72,38 +56,58 @@ Input
 `````
 
 This special block is used to define input blocks in a block.
+It has one output port named 'out'.
 
-.. image:: ../resources/input.svg
+.. image:: ../resources/basic-input.svg
 
 .. code-block:: json
 
    {
-      "name": "input",
-      "label": "",
-      "ports": {
-         "in": [],
-         "out": [ { "id": "out", "label": "" } ]
-      }
+     "id": "",
+     "type": "basic.input",
+     "value": { "name": "a" },
+     "position": { "x": 0, "y": 0 }
    }
-
 
 Output
 ``````
 
 This special block is used to define input blocks in a block.
+It has one input port named 'in'.
 
-.. image:: ../resources/output.svg
+.. image:: ../resources/basic-output.svg
 
 .. code-block:: json
 
    {
-      "name": "output",
-      "label": "",
-      "ports": {
-         "in": [ { "id": "in", "label": "" } ],
-         "out": []
-      }
+     "id": "",
+     "type": "basic.output",
+     "value": { "name": "o" },
+     "position": { "x": 0, "y": 0 }
    }
+
+Code
+````
+
+This special block is used to define verilog code in a block.
+It has input and output ports defined in *value.ports* field.
+
+.. image:: ../resources/basic-code.svg
+
+.. code-block:: json
+
+   {
+     "id": "",
+     "type": "basic.code",
+     "value": {
+       "ports": { "in": ["a", "b"], "out": ["o"] },
+       "code": "// And gate\n\nassign out = a & b;\n"
+     },
+     "position": { "x": 0, "y": 0 }
+   }
+
+Simple blocks
+-------------
 
 Driver low
 ``````````
@@ -115,17 +119,52 @@ Set the wire to 0.
 .. code-block:: json
 
    {
-      "name": "driver0",
-      "label": "\"0\"",
-      "ports": {
-         "in": [],
-         "out": [ { "id": "out", "label": "" } ]
-      },
-      "code": {
-         "type": "verilog",
-         "data" : "assign out = 1'b0;"
-      }
+     "type": "driver.low",
+     "data" : {
+       "blocks": [
+          {
+            "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+            "type": "basic.code",
+            "value": {
+              "ports": {
+                "in": [],
+                "out": [ "outpin" ]
+              },
+              "code": "assign outpin = 1'b0;"
+            },
+            "position": {
+              "x": 10,
+              "y": 10
+            }
+          },
+          {
+            "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
+            "type": "basic.output",
+            "value": {
+              "name": "out"
+            },
+            "position": {
+              "x": 30,
+              "y": 10
+            }
+          }
+       ],
+       "wires": [
+         {
+           "source": {
+             "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+             "port": "outpin"
+           },
+           "target": {
+             "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
+             "port": "in"
+           }
+         }
+       ]
+     }
    }
+
+TODO:: continue update            V
 
 Driver high
 ```````````
