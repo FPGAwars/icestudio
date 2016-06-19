@@ -274,7 +274,7 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#editor').val(this.model.get('code'));
+    this.$box.find('#editor').append(this.model.attributes.data.code);
 
     // Update the box position whenever the underlying model changes.
     this.model.on('change', this.updateBox, this);

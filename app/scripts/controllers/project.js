@@ -296,85 +296,37 @@ angular.module('icestudio')
     }
 
 
-    function loadGraph(data, interactive, fpgaio) {
+    function loadGraph(block, interactive, fpgaio) {
 
-      var ports = data.ports;
-      var blocks = data.code.data.blocks;
-      var wires = data.code.data.wires;
+      var blocks = block.data.blocks;
+      var wires = block.data.wires;
 
       paperEnable(interactive);
-
-      if (data.code.type !== 'graph')
-        return 0;
 
       graph.clear();
       delete $scope.selectedCell;
 
       // Blocks
-      for (var i = 0; i < blocks.length; i++) {
-        var data = {};
-        data.type = blocks[i].type;
-        var type = blocks[i].type.split('.')
-        data.block = $rootScope.blocks[type[0]][type[1]];
-        data.id = blocks[i].id;
-        data.x = blocks[i].x;
-        data.y = blocks[i].y;
-        data.pinName = (blocks[i].value) ? blocks[i].value.name : '';
-        data.fpgaio = fpgaio;
-
-        // Set custom labels
-        if (data.type === 'basic.input') {
-          for (var _in = 0; _in < ports.in.length; _in++) {
-            if (ports.in[_in].id == data.id) {
-              data.block.label = ports.in[_in].label;
-            }
-          }
+      for (var i in blocks) {
+        var block = blocks[i];
+        if (block.type == 'basic.code') {
+          addBasicCodeBlock(block);
         }
-        if (data.type === 'basic.output') {
-          for (var _out = 0; _out < ports.out.length; _out++) {
-            if (ports.out[_out].id == data.id) {
-              data.block.label = ports.out[_out].label;
-            }
-          }
+        else if (block.type == 'basic.input' || block.type == 'basic.output') {
+          addBasicIOBlock(block);
         }
-
-        data.choices =  boards.getPinout($rootScope.selectedBoard);
-
-        addBlock(data);
+        else {
+          addBlock(block);
+        }
       }
 
       // Wires
-      for (var i = 0; i < wires.length; i++) {
-        var source = graph.getCell(wires[i].source.block);
-        var target = graph.getCell(wires[i].target.block);
-
-        // Find selectors
-        var sourceSelector, targetSelector;
-
-        for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
-          if (source.attributes.outPorts[_out] == wires[i].source.port) {
-            sourcePort = _out;
-            break;
-          }
-        }
-
-        for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
-          if (target.attributes.inPorts[_in] == wires[i].target.port) {
-            targetPort = _in;
-            break;
-          }
-        }
-
-        var wire = new joint.shapes.ice.Wire({
-          source: { id: source.id, selector: sourceSelector, port: wires[i].source.port },
-          target: { id: target.id, selector: targetSelector, port: wires[i].target.port },
-        });
-        graph.addCell(wire);
+      for (var i in wires) {
+        addWire(wires[i]);
       }
     }
 
     function addBasicIOBlock(block) {
-
       var inPorts = [];
       var outPorts = [];
 
@@ -404,11 +356,9 @@ angular.module('icestudio')
 
       graph.addCell(block);
       refreshProject();
-      alertify.success('Block ' + block.type + ' added');
     }
 
     function addBasicCodeBlock(block) {
-
       var inPorts = [];
       var outPorts = [];
 
@@ -438,7 +388,6 @@ angular.module('icestudio')
 
       graph.addCell(block);
       refreshProject();
-      alertify.success('Block ' + block.type + ' added');
     }
 
     function addBlock(data) {
@@ -482,6 +431,32 @@ angular.module('icestudio')
       alertify.success('Block ' + data.type + ' added');
     }
 
+    function addWire(wire) {
+      var source = graph.getCell(wire.source.block);
+      var target = graph.getCell(wire.target.block);
+
+      // Find selectors
+      var sourceSelector, targetSelector;
+      for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
+        if (source.attributes.outPorts[_out] == wire.source.port) {
+          sourcePort = _out;
+          break;
+        }
+      }
+      for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
+        if (target.attributes.inPorts[_in] == wire.target.port) {
+          targetPort = _in;
+          break;
+        }
+      }
+
+      var _wire = new joint.shapes.ice.Wire({
+        source: { id: source.id, selector: sourceSelector, port: wire.source.port },
+        target: { id: target.id, selector: targetSelector, port: wire.target.port },
+      });
+      graph.addCell(_wire);
+    }
+
     function refreshProject(callback, fpgaio) {
       var graphData = graph.toJSON();
 
@@ -504,7 +479,6 @@ angular.module('icestudio')
         }
         else if (cell.type == 'ice.Wire') {
           var wire = {};
-          console.log(cell.source, cell.target);
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
           wires.push(wire);
@@ -512,8 +486,6 @@ angular.module('icestudio')
       }
 
       $rootScope.project.data = { blocks: blocks, wires: wires };
-
-      console.log($rootScope.project);
 
       if (callback)
         callback();
