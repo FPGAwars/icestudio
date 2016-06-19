@@ -7,92 +7,149 @@ angular.module('icestudio')
                                        nodeFs,
                                        nodeGlob,
                                        nodeRmdir,
-                                       blocksStore,
-                                       putils,
-                                       utils,
-                                       boards) {
+                                       blocks,
+                                       project,
+                                       boards,
+                                       utils) {
 
     $rootScope.project = {};
-    $rootScope.breadcrumb = [ { id: '' }];
+    $rootScope.breadcrumb = [ { id: '', name: '' }];
 
     // Initialize
-    putils.updateProjectName('untitled');
+    project.updateName('untitled');
 
     // Events
 
-    $rootScope.$on('new', function(event) {
-      alertify.prompt('Enter the project\'s title', 'untitled',
-        function(evt, name) {
-          if (name) {
-            putils.updateProjectName(name);
-            clearGraph();
-            alertify.success('New project created');
-          }
-      });
+    $rootScope.$on('newProject', function(event, name) {
+      project.updateName(name);
+      clear();
+      alertify.success('New project ' + name + ' created');
     });
 
-    $rootScope.$on('load', function(event, filepath) {
+    $rootScope.$on('loadProject', function(event, filepath) {
+      $.getJSON(filepath, function(p) {
         var name = utils.basename(filepath);
-        putils.updateProjectName(name);
-        loadProject(filepath);
+        project.updateName(name);
+        $rootScope.project = p;
+        loadGraph(p, true, true);
+        alertify.success('Project ' + name + ' loaded');
+      });
     });
 
-    $rootScope.$on('save', function(event, filepath) {
+    $rootScope.$on('saveProject', function(event, filepath) {
       var name = utils.basename(filepath);
-      putils.updateProjectName(name);
-      saveProject(filepath, true);
+      project.updateName(name);
+      refreshProject(null, true);
+      save(filepath);
     });
 
-    $rootScope.$on('loadCustom', function(event, name) {
-      putils.updateProjectName(name);
-      loadCustom(name);
-    });
-
-    $rootScope.$on('saveCustom', function(event) {
-      alertify.prompt('Do you want to export your custom block?',
-        $rootScope.project.name,
-        function(evt, name) {
-          if (name) {
-            putils.updateProjectName(name);
-            saveCustom(name);
-          }
+    $rootScope.$on('loadCustomBlock', function(event, name) {
+      var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
+      $.getJSON(filepath, function(p) {
+        project.updateName(name);
+        $rootScope.project = p;
+        loadGraph(project, true, true);
+        alertify.success('Custom block ' + name + ' loaded');
       });
     });
 
-    $rootScope.$on('removeCustom', function(event, name) {
-      alertify.confirm('Do you want to remove the custom block <b>' + name + '</b>?',
-        function() {
-          removeCustom(name);
+    $rootScope.$on('saveCustomBlock', function(event, name) {
+      var filepath = 'app/res/blocks/custom/' + name;
+      try {
+        nodeFs.mkdirSync(filepath);
+      } catch(e) {
+        if ( e.code != 'EEXIST' ) throw e;
+      }
+      project.updateName(name);
+      save(filepath + '/' + name + '.json', false);
+      blocks.loadBlocks(); // Refresh menu blocks
+      alertify.success('Project ' + name + ' exported to custom blocks');
+    });
+
+    $rootScope.$on('removeCustomBlock', function(event, name) {
+      var filepath = 'app/res/blocks/custom/' + name;
+      nodeRmdir(filepath, function (err, dirs, files) {
+        blocks.loadBlocks();
+        alertify.success('Custom block ' + name + ' removed');
       });
     });
 
-    $rootScope.$on('remove', function(event) {
-      removeBlock();
+    $rootScope.$on('removeSelectedBlock', function(event) {
+      if (paper.options.interactive) {
+        if ($scope.selectedCell) {
+          alertify.confirm('Do you want to remove the selected block?',
+            function() {
+              $scope.selectedCell.remove();
+              delete $scope.selectedCell;
+              refreshProject();
+              alertify.success('Block removed');
+          });
+        }
+      }
     });
 
     $(document).on('keydown', function(event) {
       if (event.keyCode == 46) { // Supr
-        removeBlock();
+        $rootScope.$emit('removeSelectedBlock');
       }
     });
 
-    $rootScope.$on('clear', function(event) {
-      alertify.confirm('Do you want to clear the graph?',
-        function() {
-          clearGraph();
-          alertify.success('Graph cleared');
-      });
+    $rootScope.$on('clearGraph', function(event) {
+      clear();
+      alertify.success('Graph cleared');
     });
+
+
 
     $rootScope.$on('addBlock', function(event, data) {
       if (paper.options.interactive) {
         data.id = null;
         data.x = 100;
         data.y = 100;
-        if (data.type === 'io.input' || data.type == 'io.output') {
-          alertify.prompt('Insert the block label', '',
+        if (data.type == 'basic.code') {
+          alertify.prompt('Insert the block i/o', '2 1',
+            function(evt, io) {
+              if (io) {
+                var i = parseInt(io.split(' ')[0]);
+                var o = parseInt(io.split(' ')[1]);
+                data.block = { ports: {
+                  in:  Array(i),
+                  out: Array(o)
+                  }
+                };
+                data.block.name = 'code';
+                data.block.label = '';
+                addBlock(data);
+                alertify.success('Block ' + data.type + ' added');
+              }
+          });
+        }
+        else if (data.type == 'basic.input') {
+          alertify.prompt('Insert the input block label', '',
             function(evt, label) {
               if (label) {
+                data.block = { ports: {
+                  in:  [],
+                  out: [ { id: 'out' } ]
+                  }
+                };
+                data.block.label = label;
+                data.fpgaio = true;
+                data.choices =  boards.getPinout($rootScope.selectedBoard);
+                addBlock(data);
+                alertify.success('Block ' + data.type + ' added');
+              }
+          });
+        }
+        else if (data.type == 'basic.output') {
+          alertify.prompt('Insert the output block label', '',
+            function(evt, label) {
+              if (label) {
+                data.block = { ports: {
+                  in:  [ { id: 'in' } ],
+                  out: []
+                  }
+                };
                 data.block.label = label;
                 data.fpgaio = true;
                 data.choices =  boards.getPinout($rootScope.selectedBoard);
@@ -109,31 +166,6 @@ angular.module('icestudio')
       }
     });
 
-    $rootScope.$on('addCodeBlock', function(event) {
-      if (paper.options.interactive) {
-        var data = {};
-        data.id = null;
-        data.x = 100;
-        data.y = 100;
-        data.type = 'factory.code';
-        alertify.prompt('Insert the block i/o', '2 1',
-          function(evt, io) {
-            if (io) {
-              var i = parseInt(io.split(' ')[0]);
-              var o = parseInt(io.split(' ')[1]);
-              data.block = { ports: {
-                in:  Array(i),
-                out: Array(o)
-                }
-              };
-              data.block.name = 'code';
-              data.block.label = '';
-              addBlock(data);
-              alertify.success('Block ' + data.type + ' added');
-            }
-        });
-      }
-    });
 
     $scope.breadcrumbNavitate = function(selectedItem) {
       var item;
@@ -199,7 +231,7 @@ angular.module('icestudio')
     paper.on('cell:pointerdblclick',
       function(cellView, evt, x, y) {
         var data = cellView.model.attributes;
-        if (data.blockType == 'io.input' || data.blockType == 'io.output') {
+        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
           if (paper.options.interactive) {
             alertify.prompt('Insert the block label', '',
               function(evt, label) {
@@ -242,9 +274,6 @@ angular.module('icestudio')
       }
     );
 
-
-
-
     // Functions
 
     function paperEnable(value) {
@@ -257,22 +286,27 @@ angular.module('icestudio')
       }
     }
 
-    function loadProject(filepath) {
-      $.getJSON(filepath, function(project) {
-        $rootScope.project = project;
-        loadGraph(project, true, true);
-        alertify.success('Project ' + project.name + ' loaded');
+    function save(filepath) {
+      var graphData = graph.toJSON();
+      var name = utils.basename(filepath);
+
+      nodeFs.writeFile(filepath, JSON.stringify($rootScope.project, null, 2),
+        function(err) {
+          if (!err) {
+            console.log('File ' + name + ' saved');
+          }
       });
     }
 
-    function loadCustom(name) {
-      var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
-      $.getJSON(filepath, function(project) {
-        $rootScope.project = project;
-        loadGraph(project, true, true);
-        alertify.success('Custom block ' + project.name + ' loaded');
-      });
+    function clear() {
+      graph.clear();
+      delete $scope.selectedCell;
+      $rootScope.breadcrumb = [ { id: '', name: $rootScope.project.name }];
+      $rootScope.$apply();
+      paperEnable(true);
+      refreshProject();
     }
+
 
     function loadGraph(data, interactive, fpgaio) {
 
@@ -301,14 +335,14 @@ angular.module('icestudio')
         data.fpgaio = fpgaio;
 
         // Set custom labels
-        if (data.type === 'io.input') {
+        if (data.type === 'basic.input') {
           for (var _in = 0; _in < ports.in.length; _in++) {
             if (ports.in[_in].id == data.id) {
               data.block.label = ports.in[_in].label;
             }
           }
         }
-        if (data.type === 'io.output') {
+        if (data.type === 'basic.output') {
           for (var _out = 0; _out < ports.out.length; _out++) {
             if (ports.out[_out].id == data.id) {
               data.block.label = ports.out[_out].label;
@@ -363,11 +397,11 @@ angular.module('icestudio')
 
       var shape = joint.shapes.ice.Block;
       var height = 30 + 20 * numPorts;
-      if (data.type === 'io.input' || data.type == 'io.output') {
+      if (data.type === 'basic.input' || data.type == 'basic.output') {
         shape = joint.shapes.ice.IO;
         height = 50 + 20 * numPorts;
       }
-      else if (data.type === 'factory.code') {
+      else if (data.type === 'basic.code') {
         shape = joint.shapes.ice.Code;
         width = 400;
         height = 200;
@@ -406,10 +440,10 @@ angular.module('icestudio')
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
         if (cell.blockType) {
-          if (cell.blockType == 'io.input') {
+          if (cell.blockType == 'basic.input') {
             inPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
-          else if (cell.blockType == 'io.output') {
+          else if (cell.blockType == 'basic.output') {
             outPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
           }
         }
@@ -446,66 +480,6 @@ angular.module('icestudio')
 
       if (callback)
         callback();
-    }
-
-    function saveProject(filepath, fpgaio) {
-
-      var graphData = graph.toJSON();
-      var name = utils.basename(filepath);
-
-      $rootScope.project.name = name;
-      refreshProject(null, fpgaio);
-
-      nodeFs.writeFile(filepath, JSON.stringify($rootScope.project, null, 2),
-        function(err) {
-          if (!err) {
-            console.log('File ' + name + ' saved');
-          }
-      });
-    }
-
-    function saveCustom() {
-      var filepath = 'app/res/blocks/custom/' + $rootScope.project.name;
-      try {
-        nodeFs.mkdirSync(filepath);
-      } catch(e) {
-        if ( e.code != 'EEXIST' ) throw e;
-      }
-      saveProject(filepath + '/' + $rootScope.project.name + '.json', false);
-      // Refresh menu blocks
-      blocksStore.loadBlocks();
-      alertify.success('Project ' + $rootScope.project.name + ' exported to custom blocks');
-    }
-
-    function removeCustom(name) {
-      var filepath = 'app/res/blocks/custom/' + name;
-      nodeRmdir(filepath, function (err, dirs, files) {
-        blocksStore.loadBlocks();
-        alertify.success('Custom block ' + name + ' removed');
-      });
-    }
-
-    function removeBlock() {
-      if (paper.options.interactive) {
-        if ($scope.selectedCell) {
-          alertify.confirm('Do you want to remove the selected block?',
-            function() {
-              $scope.selectedCell.remove();
-              delete $scope.selectedCell;
-              refreshProject();
-              alertify.success('Block removed');
-          });
-        }
-      }
-    }
-
-    function clearGraph() {
-      graph.clear();
-      delete $scope.selectedCell;
-      $rootScope.breadcrumb = [ { id: '', name: $rootScope.project.name }];
-      $rootScope.$apply();
-      paperEnable(true);
-      refreshProject();
     }
 
   });

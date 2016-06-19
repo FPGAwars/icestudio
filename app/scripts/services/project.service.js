@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('putils', ['$rootScope', 'nodeFs', 'nodeGlob', 'window',
+    .service('project', ['$rootScope', 'nodeFs', 'nodeGlob', 'window',
       function($rootScope, nodeFs, nodeGlob, window) {
 
         // TODO: move project functions here
 
-        this.updateProjectName = function(name) {
+        this.updateName = function(name) {
           if (name) {
             $rootScope.breadcrumb[0].name = name;
             window.title = 'Icestudio - ' + name;

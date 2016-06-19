@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('blocksStore', ['$rootScope', 'nodeGlob',
+    .service('blocks', ['$rootScope', 'nodeGlob',
       function($rootScope, nodeGlob) {
 
         $rootScope.blocks = {};

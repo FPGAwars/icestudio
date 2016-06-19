@@ -1,7 +1,108 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocksStore, boards) {
+  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocks, boards) {
+
+    // File
+
+    $scope.newProject = function() {
+      alertify.prompt('Enter the project\'s title', 'untitled',
+        function(evt, name) {
+          if (name) {
+            $rootScope.$emit('newProject', name);
+          }
+      });
+    }
+
+    $scope.loadProject = function() {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          setTimeout(function() {
+            var ctrl = angular.element('#input-load');
+            ctrl.on('change', function(event) {
+              var file = event.target.files[0];
+              event.target.files.clear();
+              if (file) {
+                $rootScope.$emit('loadProject', file.path);
+              }
+            });
+            ctrl.click();
+          }, 0);
+      });
+    }
+
+    $scope.saveProject = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-save');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.json')) {
+                filepath += '.json';
+            }
+            $rootScope.$emit('saveProject', filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    $scope.loadCustomBlock = function(name) {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          $rootScope.$emit('loadCustomBlock', name);
+      });
+    }
+
+    $scope.removeCustomBlock = function(name) {
+      alertify.confirm('Do you want to remove the custom block <b>' + name + '</b>?',
+        function() {
+          $rootScope.$emit('removeCustomBlock', name);
+      });
+    }
+
+    $scope.saveCustomBlock = function() {
+      alertify.prompt('Do you want to export your custom block?',
+        $rootScope.project.name,
+        function(evt, name) {
+          if (name) {
+            $rootScope.$emit('saveCustomBlock', name);
+          }
+      });
+    }
+
+    // Edit
+
+    $scope.build = function() {
+      console.log('build');
+    }
+
+    $scope.upload = function() {
+      console.log('upload');
+    }
+
+    $scope.clearGraph = function() {
+      alertify.confirm('Do you want to clear the graph?',
+        function() {
+          $rootScope.$emit('clearGraph');
+      });
+    }
+
+    $scope.removeSelectedBlock = function() {
+      $rootScope.$emit('removeSelectedBlock');
+    }
+
+    // View
+
+    $scope.reloadBlocks = function() {
+      blocks.loadBlocks();
+    }
+
+    // Boards
 
     $scope.currentBoards = boards.getBoards();
     $rootScope.selectedBoard = $scope.currentBoards[0];
@@ -18,88 +119,10 @@ angular.module('icestudio')
       }
     }
 
-    $scope.new = function() {
-      $rootScope.$emit('new');
-    }
+    // Blocks menu
 
-    $scope.load = function() {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          setTimeout(function() {
-            var ctrl = angular.element('#input-load');
-            ctrl.on('change', function(event) {
-              var file = event.target.files[0];
-              event.target.files.clear();
-              if (file) {
-                $rootScope.$emit('load', file.path);
-              }
-            });
-            ctrl.click();
-          }, 0);
-      });
-    }
-
-    $scope.save = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-save');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.json')) {
-                filepath += '.json';
-            }
-            $rootScope.$emit('save', filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
-    }
-
-    $scope.loadCustom = function(name) {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          $rootScope.$emit('loadCustom', name);
-      });
-    }
-
-    $scope.removeCustom = function(name) {
-      $rootScope.$emit('removeCustom', name);
-    }
-
-    $scope.saveCustom = function() {
-      $rootScope.$emit('saveCustom');
-    }
-
-    $scope.addBlock = function(category, name, block) {
-      $rootScope.$emit('addBlock', { type: category + '.' + name, block: block });
-    }
-
-    $scope.addCodeBlock = function() {
-      $rootScope.$emit('addCodeBlock');
-    }
-
-    $scope.build = function() {
-      console.log('build');
-    }
-
-    $scope.upload = function() {
-      console.log('upload');
-    }
-
-    $scope.reloadBlocks = function() {
-      blocksStore.loadBlocks();
-    }
-
-    $scope.removeBlock = function() {
-      $rootScope.$emit('remove');
-    }
-
-    $scope.clearGraph = function() {
-      $rootScope.$emit('clear');
+    $scope.addBlock = function(type, block) {
+      $rootScope.$emit('addBlock', { type: type, block: block });
     }
 
   });
