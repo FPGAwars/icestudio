@@ -1,7 +1,7 @@
 <div ng-controller="MenuCtrl">
 
-    <input id="input-load" type="file" accept=".json" style="display:none"/>
-    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas="{{ $root.project.name }}"/>
+    <input id="input-load" type="file" accept=".json" class="hidden"/>
+    <input id="input-save" type="file" accept=".json" class="hidden" nwsaveas="{{ $root.project.name }}"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -93,9 +93,9 @@
                     <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="addBlock('basic.code')">{{ 'code' | translate }}</a>
-                        <a href ng-click="addBlock('basic.input')">{{ 'input' | translate }}</a>
-                        <a href ng-click="addBlock('basic.output')">{{ 'output' | translate }}</a>
+                        <a href ng-click="addBasicBlock('basic.code')">{{ 'code' | translate }}</a>
+                        <a href ng-click="addBasicBlock('basic.input')">{{ 'input' | translate }}</a>
+                        <a href ng-click="addBasicBlock('basic.output')">{{ 'output' | translate }}</a>
                       </li>
                     </ul>
                 </li>

@@ -121,6 +121,10 @@ angular.module('icestudio')
 
     // Blocks menu
 
+    $scope.addBasicBlock = function(type) {
+      $rootScope.$emit('addBasicBlock', { type: type });
+    }
+
     $scope.addBlock = function(type, block) {
       $rootScope.$emit('addBlock', { type: type, block: block });
     }

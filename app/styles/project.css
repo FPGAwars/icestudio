@@ -36,6 +36,7 @@
   pointer-events: auto;
   position: absolute;
   height: 180px;
-  width: 380px;
-  transform: translate(10px, 10px);
+  width: 340px;
+  transform: translate(30px, 10px);
+  border-radius: 10px;
 }

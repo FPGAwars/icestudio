@@ -15,8 +15,90 @@ angular.module('icestudio')
     $rootScope.project = {};
     $rootScope.breadcrumb = [ { id: '', name: '' }];
 
+    $scope.selectedCell = null;
+
+    // Graph
+    var graph = new joint.dia.Graph();
+
+    // Paper
+    var paper = new joint.dia.Paper({
+      el: $('#paper'),
+      width: 900,
+      height: 443,
+      model: graph,
+      gridSize: 1,
+      snapLinks: { radius: 30 },
+      defaultLink: new joint.shapes.ice.Wire(),
+      validateConnection: function(cellViewS, magnetS,
+                                   cellViewT, magnetT,
+                                   end, linkView) {
+        // Prevent loop linking
+        return (magnetS !== magnetT);
+      }
+    });
+
     // Initialize
     project.updateName('untitled');
+
+    // Paper events
+
+    paper.on('cell:pointerclick',
+      function(cellView, evt, x, y) {
+        if (paper.options.interactive) {
+          if ($scope.selectedCell) {
+            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+          }
+          $scope.selectedCell = cellView.model;
+          V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
+        }
+      }
+    );
+
+    paper.on('cell:pointerdblclick',
+      function(cellView, evt, x, y) {
+        var data = cellView.model.attributes;
+        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+          if (paper.options.interactive) {
+            alertify.prompt('Insert the block label', '',
+              function(evt, label) {
+                if (label) {
+                  data.attrs['.block-label'].text = label;
+                  cellView.update();
+                  alertify.success('Label updated');
+                }
+            });
+          }
+        }
+        else {
+          if (data.block.code.type == 'graph') {
+            $rootScope.breadcrumb.push({ type: data.blockType, name: data.block.name });
+            $rootScope.$apply();
+            if ($rootScope.breadcrumb.length == 2) {
+              refreshProject(function() {
+                loadGraph(data.block, false, false);
+              }, true);
+            }
+            else {
+              loadGraph(data.block, false, false);
+            }
+          }
+          else if (data.block.code.type == 'verilog') {
+            var code = hljs.highlightAuto(data.block.code.data).value;
+            alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
+          }
+        }
+      }
+    );
+
+    paper.on('blank:pointerclick',
+      function() {
+        if (paper.options.interactive) {
+          if ($scope.selectedCell) {
+            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
+          }
+        }
+      }
+    );
 
     // Events
 
@@ -99,73 +181,69 @@ angular.module('icestudio')
       alertify.success('Graph cleared');
     });
 
-
-
-    $rootScope.$on('addBlock', function(event, data) {
+    $rootScope.$on('addBasicBlock', function(event, block) {
       if (paper.options.interactive) {
-        data.id = null;
-        data.x = 100;
-        data.y = 100;
-        if (data.type == 'basic.code') {
-          alertify.prompt('Insert the block i/o', '2 1',
-            function(evt, io) {
-              if (io) {
-                var i = parseInt(io.split(' ')[0]);
-                var o = parseInt(io.split(' ')[1]);
-                data.block = { ports: {
-                  in:  Array(i),
-                  out: Array(o)
-                  }
+        block.id = null;
+        block.position = { x: 100, y: 100 };
+        if (block.type == 'basic.code') {
+          alertify.prompt('Insert the block i/o', 'a,b c',
+            function(evt, ports) {
+              if (ports) {
+                block.data = {
+                  code: '',
+                  ports: { in: [], out: [] }
                 };
-                data.block.name = 'code';
-                data.block.label = '';
-                addBlock(data);
-                alertify.success('Block ' + data.type + ' added');
+                // Parse ports
+                // TODO: undefined
+                var inPorts = ports.split(' ')[0].split(',');
+                var outPorts = ports.split(' ')[1].split(',');
+                for (var i in inPorts) {
+                  if (inPorts[i])
+                    block.data.ports.in.push(inPorts[i]);
+                }
+                for (var o in outPorts) {
+                  if (outPorts[o])
+                    block.data.ports.out.push(outPorts[o]);
+                }
+                addBasicCodeBlock(block);
               }
           });
         }
-        else if (data.type == 'basic.input') {
-          alertify.prompt('Insert the input block label', '',
-            function(evt, label) {
-              if (label) {
-                data.block = { ports: {
-                  in:  [],
-                  out: [ { id: 'out' } ]
-                  }
+        else if (block.type == 'basic.input' || block.type == 'basic.output') {
+          alertify.prompt('Insert the block name', '',
+            function(evt, name) {
+              if (name) {
+                block.data = {
+                  name: name,
+                  value: '',
+                  choices: boards.getPinout($rootScope.selectedBoard)
                 };
-                data.block.label = label;
-                data.fpgaio = true;
-                data.choices =  boards.getPinout($rootScope.selectedBoard);
-                addBlock(data);
-                alertify.success('Block ' + data.type + ' added');
+                addBasicIOBlock(block);
               }
           });
         }
-        else if (data.type == 'basic.output') {
-          alertify.prompt('Insert the output block label', '',
-            function(evt, label) {
-              if (label) {
-                data.block = { ports: {
-                  in:  [ { id: 'in' } ],
-                  out: []
-                  }
-                };
-                data.block.label = label;
-                data.fpgaio = true;
-                data.choices =  boards.getPinout($rootScope.selectedBoard);
-                addBlock(data);
-                alertify.success('Block ' + data.type + ' added');
-              }
-          });
-        }
-        else {
-          addBlock(data);
-          alertify.success('Block ' + data.type + ' added');
-        }
-        refreshProject();
       }
     });
 
+    $rootScope.$on('addBlock', function(event, block) {
+      if (paper.options.interactive) {
+        block.id = null;
+        block.position = { x: 100, y: 100 };
+        addBlock(block);
+      }
+    });
+
+    $rootScope.$on('boardChanged', function(event, board) {
+      var cells = graph.getCells();
+      // Reset choices in all i/o blocks
+      for (var c in cells) {
+        var type = cells[c].attributes.blockType;
+        if (type == 'basic.input' && type == 'basic.output') {
+          cells[c].attributes.choices = boards.getPinout(board);
+          paper.findViewByModel(cells[c].id).renderChoices();
+        }
+      }
+    });
 
     $scope.breadcrumbNavitate = function(selectedItem) {
       var item;
@@ -183,96 +261,6 @@ angular.module('icestudio')
         loadGraph($rootScope.blocks[type[0]][type[1]], false, false);
       }
     }
-
-    $rootScope.$on('boardChanged', function(event, board) {
-      var cells = graph.getCells();
-      for (var c in cells) {
-        cells[c].attributes.choices = boards.getPinout(board);
-        paper.findViewByModel(cells[c].id).renderChoices();
-      }
-    });
-
-    $scope.selectedCell = null;
-
-    // Graph
-    var graph = new joint.dia.Graph();
-
-    // Paper
-    var paper = new joint.dia.Paper({
-      el: $('#paper'),
-      width: 900,
-      height: 443,
-      model: graph,
-      gridSize: 1,
-      snapLinks: { radius: 30 },
-      defaultLink: new joint.shapes.ice.Wire(),
-      validateConnection: function(cellViewS, magnetS,
-                                   cellViewT, magnetT,
-                                   end, linkView) {
-        // Prevent loop linking
-        return (magnetS !== magnetT);
-      }
-    });
-
-    // Paper events
-
-    paper.on('cell:pointerclick',
-      function(cellView, evt, x, y) {
-        if (paper.options.interactive) {
-          if ($scope.selectedCell) {
-            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
-          }
-          $scope.selectedCell = cellView.model;
-          V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
-        }
-      }
-    );
-
-    paper.on('cell:pointerdblclick',
-      function(cellView, evt, x, y) {
-        var data = cellView.model.attributes;
-        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-          if (paper.options.interactive) {
-            alertify.prompt('Insert the block label', '',
-              function(evt, label) {
-                if (label) {
-                  data.attrs['.block-label'].text = label;
-                  cellView.update();
-                  alertify.success('Label updated');
-                }
-            });
-          }
-        }
-        else {
-          if (data.block.code.type == 'graph') {
-            $rootScope.breadcrumb.push({ type: data.blockType, name: data.block.name });
-            $rootScope.$apply();
-            if ($rootScope.breadcrumb.length == 2) {
-              refreshProject(function() {
-                loadGraph(data.block, false, false);
-              }, true);
-            }
-            else {
-              loadGraph(data.block, false, false);
-            }
-          }
-          else if (data.block.code.type == 'verilog') {
-            var code = hljs.highlightAuto(data.block.code.data).value;
-            alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
-          }
-        }
-      }
-    );
-
-    paper.on('blank:pointerclick',
-      function() {
-        if (paper.options.interactive) {
-          if ($scope.selectedCell) {
-            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
-          }
-        }
-      }
-    );
 
     // Functions
 
@@ -383,8 +371,74 @@ angular.module('icestudio')
         });
         graph.addCell(wire);
       }
+    }
 
-      //paper.scale(1.5, 1.5);
+    function addBasicIOBlock(block) {
+
+      var inPorts = [];
+      var outPorts = [];
+
+      if (block.type == 'basic.input') {
+        outPorts.push({
+          name: 'out',
+          label: ''
+        });
+      }
+      else if (block.type == 'basic.output') {
+        inPorts.push({
+          name: 'in',
+          label: ''
+        });
+      }
+
+      var block = new joint.shapes.ice.IO({
+        id: block.id,
+        blockType: block.type,
+        data: { name: block.data.name, value: block.data.value },
+        position: block.position,
+        inPorts: inPorts,
+        outPorts: outPorts,
+        size: { width: 70, height: 50 },
+        attrs: { '.block-label': { text: block.data.name } }
+      });
+
+      graph.addCell(block);
+      refreshProject();
+      alertify.success('Block ' + block.type + ' added');
+    }
+
+    function addBasicCodeBlock(block) {
+
+      var inPorts = [];
+      var outPorts = [];
+
+      for (var i in block.data.ports.in) {
+        inPorts.push({
+          name: block.data.ports.in[i],
+          label: block.data.ports.in[i]
+        });
+      }
+
+      for (var o in block.data.ports.out) {
+        outPorts.push({
+          name: block.data.ports.out[o],
+          label: block.data.ports.out[o]
+        });
+      }
+
+      var block = new joint.shapes.ice.Code({
+        id: block.id,
+        blockType: block.type,
+        data: block.data,
+        position: block.position,
+        inPorts: inPorts,
+        outPorts: outPorts,
+        size: { width: 400, height: 200 }
+      });
+
+      graph.addCell(block);
+      refreshProject();
+      alertify.success('Block ' + block.type + ' added');
     }
 
     function addBlock(data) {
@@ -422,61 +476,44 @@ angular.module('icestudio')
       });
 
       graph.addCell(block);
+
+      refreshProject();
+
+      alertify.success('Block ' + data.type + ' added');
     }
 
     function refreshProject(callback, fpgaio) {
-
       var graphData = graph.toJSON();
-
-      // Header
-
-      $rootScope.project.label = $rootScope.project.name.toUpperCase();
-
-      // Ports
-
-      var inPorts = [];
-      var outPorts = [];
-
-      for (var c = 0; c < graphData.cells.length; c++) {
-        var cell = graphData.cells[c];
-        if (cell.blockType) {
-          if (cell.blockType == 'basic.input') {
-            inPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
-          }
-          else if (cell.blockType == 'basic.output') {
-            outPorts.push({id: cell.id, label: cell.attrs['.block-label'].text });
-          }
-        }
-      }
-
-      $rootScope.project.ports = { in: inPorts, out: outPorts };
-
-      // Code
 
       var blocks = [];
       var wires = [];
 
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
-        if (cell.type == 'ice.Block' || cell.type == 'ice.IO') {
+
+        if (cell.type == 'ice.Block' || cell.type == 'ice.IO' || cell.type == 'ice.Code') {
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
-          if (fpgaio)
-            block.value = { name: cell.pinName };
-          block.x = cell.position.x;
-          block.y = cell.position.y;
+          block.data = cell.data;
+          block.position = cell.position;
+          if (cell.type == 'ice.Code') {
+            block.data.code = paper.findViewByModel(cell.id).$box.find('#content').val();
+          }
           blocks.push(block);
         }
         else if (cell.type == 'ice.Wire') {
           var wire = {};
+          console.log(cell.source, cell.target);
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
           wires.push(wire);
         }
       }
 
-      $rootScope.project.code = { type: 'graph', data: { blocks: blocks, wires: wires } };
+      $rootScope.project.data = { blocks: blocks, wires: wires };
+
+      console.log($rootScope.project);
 
       if (callback)
         callback();

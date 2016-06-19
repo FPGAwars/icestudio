@@ -71,12 +71,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portBodySelector = portSelector + '>.port-body';
 
     attrs[portLabelSelector] = {
-      text: (port) ? (port.label) ? (port.label)  : ''  : ''
+      text: (port) ? (port.label) ? port.label  : ''  : ''
     };
 
     attrs[portBodySelector] = {
       port: {
-        id: (port) ? (port.id) : null  || _.uniqueId(type),
+        id: (port) ? (port.name) : null  || _.uniqueId(type),
         type: type
       }
     };
@@ -187,7 +187,6 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
   },
 
-
   render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.prepend(this.$box);
@@ -214,7 +213,7 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
   renderChoices: function() {
     if (this.model.get('fpgaio')) {
-      var choices = this.model.attributes.choices;
+      var choices = this.model.get('choices');
       var $select = this.$box.find('.io-combo').empty();
 
       $select.append('<option></option>');
@@ -254,10 +253,14 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
   template: [
       '<div class="code-element">',
       '<div class="code-editor" id="editor"></div>',
+      '<textarea class="hidden" id="content"></textarea>',
       '<script>',
       'var editor = ace.edit("editor");',
       'editor.setTheme("ace/theme/chrome");',
       'editor.getSession().setMode("ace/mode/verilog");',
+      'editor.getSession().on("change", function () {',
+      '  $("#content").val(editor.getSession().getValue());',
+      '});',
       'document.getElementById("editor").style.fontSize="15px";',
       '</script>',
       '</div>'
@@ -271,6 +274,8 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
+    this.$box.find('#editor').val(this.model.get('code'));
+
     // Update the box position whenever the underlying model changes.
     this.model.on('change', this.updateBox, this);
     // Remove the box when the model gets removed from the graph.
@@ -281,7 +286,6 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
   },
-
 
   render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
