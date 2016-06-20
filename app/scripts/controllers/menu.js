@@ -137,38 +137,6 @@ angular.module('icestudio')
 
     /*
 
-    $scope.importBlock = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-import-block');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          event.target.files.clear();
-          if (file) {
-            $rootScope.$emit('importBlock', file.path);
-          }
-        });
-        ctrl.click();
-      }, 0);
-    }
-
-    $scope.exportAsBlock = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-export-block');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.iceb')) {
-                filepath += '.iceb';
-            }
-            $rootScope.$emit('exportAsBlock', filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
-    }
-
     /*$scope.loadCustomBlock = function(name) {
       alertify.confirm('The current project will be removed. ' +
                        'Do you want to continue?',

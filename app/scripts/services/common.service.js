@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
-      function(nodeFs, nodeGlob, window, graph, boards, utils) {
+    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
+      function($rootScope, nodeFs, nodeGlob, window, graph, boards, utils) {
 
         // Variables
 
@@ -132,12 +132,18 @@ angular.module('icestudio')
 
         this.clearProject = function() {
           graph.breadcrumb = [ { id: '', name: this.projectName }];
+          if(!$rootScope.$$phase) {
+            $rootScope.$apply();
+          }
         }
 
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
             graph.breadcrumb[0].name = name;
+            if(!$rootScope.$$phase) {
+              $rootScope.$apply();
+            }
             window.title = 'Icestudio - ' + name;
           }
         }

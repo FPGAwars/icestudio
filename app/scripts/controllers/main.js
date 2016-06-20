@@ -3,9 +3,6 @@
 angular.module('icestudio')
   .controller('MainCtrl', function($scope) {
 
-    // Initialize blocks
-    //blocks.loadBlocks();
-
     alertify.defaults = {
       // dialogs defaults
       modal:true,
