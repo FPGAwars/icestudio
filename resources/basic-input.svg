@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="21.801426mm"
-   height="11.845469mm"
-   viewBox="0 0 77.249147 41.972132"
+   width="21.70418mm"
+   height="11.765214mm"
+   viewBox="0 0 76.904574 41.687762"
    id="svg6465"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="-16.528224"
-     inkscape:cy="-5.8314558"
+     inkscape:zoom="1.979899"
+     inkscape:cx="-177.67678"
+     inkscape:cy="-34.227714"
      inkscape:document-units="px"
-     inkscape:current-layer="g4146"
+     inkscape:current-layer="g4162"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,35 +56,38 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-364.23257,-299.94757)">
+     transform="translate(-364.37476,-300.08975)">
     <g
        id="g4146">
       <g
          id="g4162">
-        <rect
-           style="fill:none;stroke:#000000;stroke-width:1.28436339;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="rect4326"
-           width="40.687771"
-           height="40.687767"
-           x="364.87476"
-           y="300.58975" />
-        <path
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.39908874px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-           d="m 406.04482,320.93363 34.72739,0"
-           id="path4203-6-7"
-           inkscape:connector-curvature="0" />
-        <text
-           sodipodi:linespacing="125%"
-           id="text4504-1-7-0"
-           y="324.87732"
-           x="379.67474"
-           style="font-style:normal;font-weight:normal;font-size:55.96354294px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.48860741px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch'"
-             y="324.87732"
+        <g
+           id="g4139">
+          <rect
+             y="300.58975"
+             x="364.87476"
+             height="40.687767"
+             width="40.687771"
+             id="rect4326"
+             style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path4203-6-7"
+             d="m 406.04482,320.93363 34.72739,0"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:55.96354294px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="379.67474"
-             id="tspan4506-9-8-0"
-             sodipodi:role="line">a</tspan></text>
+             y="324.87732"
+             id="text4504-1-7-0"
+             sodipodi:linespacing="125%"><tspan
+               sodipodi:role="line"
+               id="tspan4506-9-8-0"
+               x="379.67474"
+               y="324.87732"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.48860741px;font-family:'Courier 10 Pitch';-inkscape-font-specification:'Courier 10 Pitch'">a</tspan></text>
+        </g>
       </g>
     </g>
   </g>

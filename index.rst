@@ -9,4 +9,5 @@ Contents
    :maxdepth: 2
 
    source/blocks.rst
-   source/compiler.rst
+   source/project.rst
+.. source/compiler.rst

@@ -9,7 +9,11 @@ Definitions
 Block
 `````
 
-Generic project definition. This entity can be synthesized in a FPGA, defining its I/O pins, or used in a more complex project as an aggregate.
+A block is an entity with *input* and *output* ports composed by blocks.
+
+Its *input* and *output* ports are defined from its *input* and *output* block instances.
+
+Extension: **.iceblock**
 
   .. image:: ../resources/block-definition.svg
 
@@ -18,11 +22,11 @@ Generic project definition. This entity can be synthesized in a FPGA, defining i
 .. code-block:: json
 
    {
-     "type": "",
-     "data": {
+     "graph": {
        "blocks" : [],
        "wires": []
-     }
+     },
+     "deps" : [],
    }
 
 Block instances
@@ -33,7 +37,7 @@ Block instances
    {
      "id": "",
      "type": "",
-     "value": {},
+     "data": {},
      "position": { "x": 0, "y": 0 }
    }
 
@@ -52,10 +56,10 @@ Wire instances
 Basic blocks
 ------------
 
-Input
-`````
+Input instance
+``````````````
 
-This special block is used to define input blocks in a block.
+This special block is used to define input blocks in a project.
 It has one output port named 'out'.
 
 .. image:: ../resources/basic-input.svg
@@ -65,14 +69,14 @@ It has one output port named 'out'.
    {
      "id": "",
      "type": "basic.input",
-     "value": { "name": "a" },
+     "data": { "name": "a" },
      "position": { "x": 0, "y": 0 }
    }
 
-Output
-``````
+Output instance
+```````````````
 
-This special block is used to define input blocks in a block.
+This special block is used to define output blocks in a projects.
 It has one input port named 'in'.
 
 .. image:: ../resources/basic-output.svg
@@ -82,12 +86,12 @@ It has one input port named 'in'.
    {
      "id": "",
      "type": "basic.output",
-     "value": { "name": "o" },
+     "data": { "name": "o" },
      "position": { "x": 0, "y": 0 }
    }
 
-Code
-````
+Code instance
+`````````````
 
 This special block is used to define verilog code in a block.
 It has input and output ports defined in *value.ports* field.
@@ -99,9 +103,9 @@ It has input and output ports defined in *value.ports* field.
    {
      "id": "",
      "type": "basic.code",
-     "value": {
-       "ports": { "in": ["a", "b"], "out": ["o"] },
-       "code": "// And gate\n\nassign out = a & b;\n"
+     "data": {
+       "code": "// And gate\n\nassign o = a & b;\n",
+       "ports": { "in": ["a", "b"], "out": ["o"] }
      },
      "position": { "x": 0, "y": 0 }
    }
@@ -109,28 +113,31 @@ It has input and output ports defined in *value.ports* field.
 Simple blocks
 -------------
 
-Driver low
-``````````
+Simple blocks contain **only** basic blocks.
+It has no dependencies.
 
-Set the wire to 0.
+**Example: driver low**
 
-.. image:: ../resources/driver0.svg
+.. image:: ../resources/driver.low.svg
+
+File: **driver.low.iceblock**
 
 .. code-block:: json
 
    {
-     "type": "driver.low",
-     "data" : {
+     "graph" : {
        "blocks": [
           {
             "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
             "type": "basic.code",
-            "value": {
+            "data": {
+              "code": "assign v = 1'b0;",
               "ports": {
                 "in": [],
-                "out": [ "outpin" ]
-              },
-              "code": "assign outpin = 1'b0;"
+                "out": [
+                  "v"
+                ]
+              }
             },
             "position": {
               "x": 10,
@@ -140,12 +147,12 @@ Set the wire to 0.
           {
             "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
             "type": "basic.output",
-            "value": {
-              "name": "out"
+            "data": {
+              "name": "o"
             },
             "position": {
-              "x": 30,
-              "y": 10
+              "x": 50,
+              "y": 20
             }
           }
        ],
@@ -153,7 +160,7 @@ Set the wire to 0.
          {
            "source": {
              "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
-             "port": "outpin"
+             "port": "v"
            },
            "target": {
              "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
@@ -161,165 +168,109 @@ Set the wire to 0.
            }
          }
        ]
-     }
+     },
+     "deps": []
    }
 
-TODO:: continue update            V
+Complex blocks
+--------------
 
-Driver high
-```````````
+Complex blocks contain **not only** basic blocks.
 
-Set the wire to 1.
+**Example: wrapper low**
 
-.. image:: ../resources/driver1.svg
+.. image:: ../resources/wrapper.low.svg
 
-.. code-block:: json
-
-   {
-      "name": "driver1",
-      "label": "\"1\"",
-      "ports": {
-         "in": [],
-         "out": [ { "id": "out", "label": "" } ]
-      },
-      "code": {
-         "type": "verilog",
-         "data" : "assign out = 1'b1;"
-      }
-   }
-
-Not
-````
-
-Inverter logic gate.
-
-.. image:: ../resources/not.svg
+File: **wrapper.low.iceblock**
 
 .. code-block:: json
 
   {
-     "name": "not",
-     "label": "",
-     "ports": {
-        "in": [ { "id": "in", "label": "" } ],
-        "out": [ { "id": "out", "label": "" } ]
-     },
-     "code": {
-        "type": "verilog",
-        "data" : "assign out = ! in;"
-     }
-  }
-
-And
-````
-And logic gate.
-
-.. image:: ../resources/and.svg
-
-.. code-block:: json
-
-  {
-     "name": "and",
-     "label": "",
-     "ports": {
-        "in": [ { "id": "a", "label": "" },
-                { "id": "b", "label": "" } ],
-        "out": [ { "id": "out", "label": "" } ]
-     },
-     "code": {
-        "type": "verilog",
-        "data" : "assign out = a & b;"
-     }
-  }
-
-Examples
---------
-
-Hello, block!
-`````````````
-
-This is the simplest block defined by a graph. It contains only one block with one port. The behavior is the same as the block *Driver high*.
-
-.. image:: ../resources/high.svg
-
-.. code-block:: json
-
-   {
-      "name": "high",
-      "label": "HIGH",
-      "ports": {
-         "in": [],
-         "out": [ { "id": "out", "label": "" } ]
-      },
-      "code": {
-         "type": "graph",
-         "data" : {
-           "blocks": [
-              { "id": "d1", "type": "driver1", "x": 10, "y": 10 },
-              { "id": "out", "type": "output", "x": 30, "y": 20 }
-           ],
-           "wires": [
-             {
-               "source": { "block": "d1", "port": "out" },
-               "target": { "block": "out", "port": "in" }
-             }
-           ]
+    "graph" : {
+      "blocks": [
+         {
+           "id": "2578d60a-d3de-4567-932c-3d32cb0449cb",
+           "type": "driver.low",
+           "data": {},
+           "position": {
+             "x": 10,
+             "y": 10
+           }
+         },
+         {
+           "id": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+           "type": "basic.output",
+           "data": {
+             "name": "x"
+           },
+           "position": {
+             "x": 30,
+             "y": 10
+           }
          }
+      ],
+      "wires": [
+        {
+          "source": {
+            "block": "2578d60a-d3de-4567-932c-3d32cb0449cb",
+            "port": "o"
+          },
+          "target": {
+            "block": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+            "port": "in"
+          }
+        }
+      ]
+    },
+    "deps": [
+      {
+        "driver.low": {
+          "graph" : {
+            "blocks": [
+               {
+                 "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+                 "type": "basic.code",
+                 "data": {
+                   "code": "assign v = 1'b0;",
+                   "ports": {
+                     "in": [],
+                     "out": [
+                       "v"
+                     ]
+                   }
+                 },
+                 "position": {
+                   "x": 10,
+                   "y": 10
+                 }
+               },
+               {
+                 "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
+                 "type": "basic.output",
+                 "data": {
+                   "name": "o"
+                 },
+                 "position": {
+                   "x": 50,
+                   "y": 20
+                 }
+               }
+            ],
+            "wires": [
+              {
+                "source": {
+                  "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
+                  "port": "v"
+                },
+                "target": {
+                  "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
+                  "port": "in"
+                }
+              }
+            ]
+          },
+          "deps": []
+        }
       }
-   }
-
-This block can be used in other graphs, by selecting the type "high".
-
-.. image:: ../resources/high-in-graph.svg
-
-Also, it can be synthesized in a FPGA, setting the *o1* value to a FPGA pin.
-
-.. image:: ../resources/high-in-fpga.svg
-
-Wrapping blocks
-```````````````
-
-This block is a wraper of the block *and*.
-
-.. image:: ../resources/and-wraper.svg
-
-.. code-block:: json
-
-   {
-      "name": "and_wraper",
-      "label": "AND",
-      "ports": {
-         "in": [ { "id": "x", "label": "" },
-                 { "id": "y", "label": "" } ],
-         "out": [ { "id": "out", "label": "" } ]
-      },
-      "code": {
-         "type": "graph",
-         "data" : {
-           "blocks": [
-              { "id": "x", "type": "input", "x": 0, "y": 5 },
-              { "id": "y", "type": "input", "x": 0, "y": 25 },
-              { "id": "a", "type": "and", "x": 10, "y": 10 },
-              { "id": "out", "type": "output", "x": 30, "y": 20 }
-           ],
-           "wires": [
-             {
-               "source": { "block": "x", "port": "out" },
-               "target": { "block": "a", "port": "a" }
-             },
-             {
-               "source": { "block": "y", "port": "out" },
-               "target": { "block": "a", "port": "b" }
-             },
-             {
-               "source": { "block": "a", "port": "out" },
-               "target": { "block": "out", "port": "in" }
-             }
-           ]
-         }
-      }
-   }
-
-.. note::
-
-   The main ports identifiers **x**, **y** and **out** are used in the input/output block ids.
+    ]
+  }
