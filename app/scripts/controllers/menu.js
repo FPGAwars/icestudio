@@ -7,7 +7,9 @@ angular.module('icestudio')
                                     graph,
                                     boards) {
 
-    $scope.selectedBoard = boards.selectedBoard;
+    $scope.common = common;
+    $scope.boards = boards;
+    $scope.currentBoards = boards.getBoards();
 
     // File
 
@@ -16,9 +18,58 @@ angular.module('icestudio')
         function(evt, name) {
           if (name) {
             common.newProject(name);
-            graph.clearAll();
           }
       });
+    }
+
+    $scope.openProject = function() {
+    }
+
+    $scope.saveProject = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-save-project');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.ice')) {
+                filepath += '.ice';
+            }
+            common.saveProject(filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    // Edit
+
+    $scope.clearGraph = function() {
+      alertify.confirm('Do you want to clear the graph?',
+        function() {
+          graph.clearAll();
+      });
+    }
+
+    // Boards
+
+    $scope.selectBoard = function(board) {
+      if (boards.selectedBoard != board) {
+        alertify.confirm('The current FPGA I/O configuration will be lost. ' +
+                         'Do you want to change to <b>' + board.label + '</b> board?',
+          function() {
+            boards.selectedBoard = board;
+            graph.resetIOChoices();
+            alertify.success('Board ' + board.label + ' selected');
+        });
+      }
+    }
+
+    // Blocks menu
+
+    $scope.addBasicBlock = function(type) {
+      graph.addBasicBlock(type)
     }
 
     /*$scope.openProject = function() {
@@ -124,12 +175,7 @@ angular.module('icestudio')
       console.log('upload');
     }*/
 
-    /*$scope.clearGraph = function() {
-      alertify.confirm('Do you want to clear the graph?',
-        function() {
-          $rootScope.$emit('clearGraph');
-      });
-    }
+    /*
 
     $scope.removeSelectedBlock = function() {
       $rootScope.$emit('removeSelectedBlock');
@@ -139,30 +185,9 @@ angular.module('icestudio')
 
     $scope.reloadBlocks = function() {
       blocks.loadBlocks();
-    }
-
-    // Boards
-
-    $scope.currentBoards = boards.getBoards();
-    $rootScope.selectedBoard = $scope.currentBoards[0];
-
-    $scope.selectBoard = function(board) {
-      if ($rootScope.selectedBoard != board) {
-        alertify.confirm('The current FPGA I/O configuration will be lost. ' +
-                         'Do you want to change to <b>' + board.label + '</b> board?',
-          function() {
-            $rootScope.selectedBoard = board;
-            $rootScope.$emit('boardChanged', board);
-            alertify.success('Board ' + board.label + ' selected');
-        });
-      }
-    }
+    }*/
 
     // Blocks menu
-
-    $scope.addBasicBlock = function(type) {
-      $rootScope.$emit('addBasicBlock', { type: type });
-    }
 
     /*$scope.addBlock = function(type, blockdata) {
       $rootScope.$emit('addBlock', { type: type, blockdata: blockdata });

@@ -11,6 +11,8 @@ angular.module('icestudio')
         ]
       };
 
+      this.selectedBoard = this.getBoards()[0];
+
       this.pinouts = {
         icezum: [
           { name: 'LED0', value: '95' },
@@ -26,8 +28,8 @@ angular.module('icestudio')
         ]
       };
 
-      this.getPinout = function(board) {
-        return this.pinouts[board.id];
+      this.getPinout = function() {
+        return this.pinouts[this.selectedBoard.id];
       }
 
     });

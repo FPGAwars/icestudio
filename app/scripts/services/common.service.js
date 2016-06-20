@@ -1,40 +1,97 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['nodeFs', 'nodeGlob', 'window', 'utils',
-      function(nodeFs, nodeGlob, window, utils) {
+    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
+      function($rootScope, nodeFs, nodeGlob, window, graph, boards, utils) {
 
-      this.project = {};
-      this.projectName = '';
-      this.breadcrumb = [ { id: '', name: '' } ];
+        // Variables
 
-      this.newProject = function(name) {
-        this.updateProjectName(name);
-        this.clearProject();
-        
-        alertify.success('New project ' + name + ' created');
-      }
+        this.project = {};
+        this.projectName = '';
+        this.breadcrumb = [ { id: '', name: '' } ];
 
-      this.openProject = function(filepath) {
-        $.getJSON(filepath, function(project) {
+        // Functions
+
+        this.newProject = function(name) {
+          this.project = {};
+          this.updateProjectName(name);
+          graph.clearAll();
+          alertify.success('New project ' + name + ' created');
+        };
+
+        this.openProject = function(filepath) {
+          $.getJSON(filepath, function(project) {
+            var name = utils.basename(filepath);
+            this.updateProjectName(name);
+            this.project = project;
+            //loadGraph(p, true, true);
+            alertify.success('Project ' + name + ' loaded');
+          });
+        };
+
+        this.saveProject = function(filepath) {
           var name = utils.basename(filepath);
           this.updateProjectName(name);
-          this.project = project;
-          //loadGraph(p, true, true);
-          alertify.success('Project ' + name + ' loaded');
-        });
-      }
+          this.refreshProject();
+          nodeFs.writeFile(filepath, JSON.stringify(this.project, null, 2),
+            function(err) {
+              if (!err) {
+                console.log('File ' + name + ' saved');
+              }
+          });
+        };
 
-      this.clearProject = function() {
-        this.breadcrumb = [ { id: '', name: this.projectName }];
-      }
+        this.refreshProject = function() {
+          var graphData = graph.toJSON();
 
-      this.updateProjectName = function(name) {
-        if (name) {
-          this.projectName = name
-          this.breadcrumb[0].name = name;
-          window.title = 'Icestudio - ' + name;
+          var blocks = [];
+          var wires = [];
+
+          for (var c = 0; c < graphData.cells.length; c++) {
+            var cell = graphData.cells[c];
+
+            if (cell.type == 'ice.Block' || cell.type == 'ice.IO' || cell.type == 'ice.Code') {
+              var block = {};
+              block.id = cell.id;
+              block.type = cell.blockType;
+              block.data = cell.data;
+              block.position = cell.position;
+              if (cell.type == 'ice.Code') {
+                block.data.code = graph.getCode(cell.id);
+              }
+              blocks.push(block);
+            }
+            else if (cell.type == 'ice.Wire') {
+              var wire = {};
+              wire.source = { block: cell.source.id, port: cell.source.port };
+              wire.target = { block: cell.target.id, port: cell.target.port };
+              wires.push(wire);
+            }
+          }
+
+          this.project.board = boards.selectedBoard.id;
+
+          this.project.data = { blocks: blocks, wires: wires };
+
+          this.project.deps = [];
+        };
+
+        this.clearProject = function() {
+          this.breadcrumb = [ { id: '', name: this.projectName }];
         }
-      }
+
+        this.updateProjectName = function(name) {
+          if (name) {
+            this.projectName = name
+            this.breadcrumb[0].name = name;
+            window.title = 'Icestudio - ' + name;
+            if(!$rootScope.$$phase) {
+              $rootScope.$apply();
+            }
+          }
+        }
+
+        // Intialize project
+        this.updateProjectName('untitled');
 
     }]);
