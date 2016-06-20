@@ -7,7 +7,6 @@ angular.module('icestudio')
         // Variables
 
         this.project = {};
-        this.dependencies = {};
         this.projectName = '';
 
         // Functions
@@ -31,7 +30,6 @@ angular.module('icestudio')
             this.project = project;
             boards.selectBoard(project.board);
             graph.loadProject(project);
-            this.dependencies = project.deps;
             alertify.success('Project ' + name + ' loaded');
           }
           $.ajaxSetup({ async: true });
@@ -59,7 +57,7 @@ angular.module('icestudio')
             var name = utils.basename(filepath);
             graph.importBlock(name, block);
             // TODO: Check unique add
-            this.dependencies[name] = block;
+            this.project.deps[name] = block;
             alertify.success('Block ' + name + ' imported');
           }
           $.ajaxSetup({ async: true });

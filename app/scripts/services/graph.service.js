@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['joint', 'boards',
-      function(joint, boards) {
+    .service('graph', ['$rootScope', 'joint', 'boards',
+      function($rootScope, joint, boards) {
 
         // Variables
 
@@ -13,7 +13,9 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        this.breadcrumb = [ { id: '', name: '' } ];
+        var breadcrumb = [ { id: '', name: '' } ];
+
+        this.breadcrumb = breadcrumb;
 
         // Functions
 
@@ -66,16 +68,11 @@ angular.module('icestudio')
                 // TODO.
               }
               else {
-                  //this.breadcrumb.push({ type: data.blockType, name: data.block.name });
-                  loadGraph(dependencies[data.blockType]);
-                  /*if (this.breadcrumb.length == 2) {
-                    refreshProject(function() {
-                      loadGraph(data.block, false, false);
-                    }, true);
+                  breadcrumb.push({ type: data.blockType, name: data.blockType });
+                  if(!$rootScope.$$phase) {
+                    $rootScope.$apply();
                   }
-                  else {
-                    loadGraph(data.block, false, false);
-                  }*/
+                  loadGraph(dependencies[data.blockType]);
                 }
             }
           );

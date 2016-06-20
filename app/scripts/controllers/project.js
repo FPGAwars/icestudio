@@ -2,34 +2,34 @@
 
 angular.module('icestudio')
   .controller('ProjectCtrl', function ($scope,
-                                       $rootScope,
                                        common,
                                        graph) {
 
     $scope.common = common;
+    $scope.graph = graph;
 
     // Intialization
 
     graph.createPaper($('#paper'));
 
 
-    /*$scope.breadcrumbNavitate = function(selectedItem) {
+    $scope.breadcrumbNavitate = function(selectedItem) {
       var item;
       do {
-        $rootScope.breadcrumb.pop();
-        item = $rootScope.breadcrumb.slice(-1)[0];
+        graph.breadcrumb.pop();
+        item = graph.breadcrumb.slice(-1)[0];
       }
       while (selectedItem.name != item.name);
 
-      if ($rootScope.breadcrumb.length == 1) {
-        loadGraph($rootScope.project, true, true);
+      if (graph.breadcrumb.length == 1) {
+        graph.loadProject(common.project);
       }
       else {
-        var type = selectedItem.type.split('.')
-        loadGraph($rootScope.blocks[type[0]][type[1]], false, false);
+        graph.loadProject(common.project.deps[selectedItem.type]);
       }
     }
 
+    /*
 
     $rootScope.$on('loadCustomBlock', function(event, name) {
       var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
@@ -61,23 +61,4 @@ angular.module('icestudio')
         alertify.success('Custom block ' + name + ' removed');
       });
     });*/
-
-
-
-    $rootScope.$on('addBlock', function(event, blockdata) {
-      if (paper.options.interactive) {
-        var block = {};
-        block.id = null;
-        block.position = { x: 100, y: 100 };
-        addBlock(block, blockdata);
-      }
-    });
-
-
-
-
-    // Functions
-
-
-
   });
