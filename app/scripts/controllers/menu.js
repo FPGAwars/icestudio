@@ -23,21 +23,19 @@ angular.module('icestudio')
     }
 
     $scope.openProject = function() {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          setTimeout(function() {
-            var ctrl = angular.element('#input-open-project');
-            ctrl.on('change', function(event) {
-              var file = event.target.files[0];
-              event.target.files.clear();
-              if (file) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-open-project');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            event.target.files.clear();
+            if (file) {
+              if (file.path.endsWith('.ice')) {
                 common.openProject(file.path);
               }
-            });
-            ctrl.click();
-          }, 0);
-      });
+            }
+          });
+          ctrl.click();
+        }, 0);
     }
 
     $scope.saveProject = function() {
@@ -56,6 +54,22 @@ angular.module('icestudio')
         });
         ctrl.click();
       }, 0);
+    }
+
+    $scope.importBlock = function() {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-import-block');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            event.target.files.clear();
+            if (file) {
+              if (file.path.endsWith('.iceb')) {
+                common.importBlock(file.path);
+              }
+            }
+          });
+          ctrl.click();
+        }, 0);
     }
 
 

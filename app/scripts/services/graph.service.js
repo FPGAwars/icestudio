@@ -11,6 +11,10 @@ angular.module('icestudio')
 
         var graph = new joint.dia.Graph();
 
+        var dependencies = {};
+
+        this.breadcrumb = [ { id: '', name: '' } ];
+
         // Functions
 
         this.createPaper = function(element) {
@@ -59,32 +63,20 @@ angular.module('icestudio')
                 }
               }
               else if (data.blockType == 'basic.code') {
-                /*if (paper.options.interactive) {
-                  alertify.prompt('Insert the block i/o', 'a,b c',
-                    function(evt, ports) {
-                      if (ports) {
-                      }
-                  });
-                }*/
+                // TODO.
               }
-              // TODO: edit the block ports
-              /*else {
-                if (data.block.code.type == 'graph') {
-                  common.breadcrumb.push({ type: data.blockType, name: data.block.name });
-                  if (common.breadcrumb.length == 2) {
+              else {
+                  //this.breadcrumb.push({ type: data.blockType, name: data.block.name });
+                  loadGraph(dependencies[data.blockType]);
+                  /*if (this.breadcrumb.length == 2) {
                     refreshProject(function() {
                       loadGraph(data.block, false, false);
                     }, true);
                   }
                   else {
                     loadGraph(data.block, false, false);
-                  }
+                  }*/
                 }
-                else if (data.block.code.type == 'verilog') {
-                  var code = hljs.highlightAuto(data.block.code.data).value;
-                  alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
-                }
-              }*/
             }
           );
 
@@ -99,7 +91,9 @@ angular.module('icestudio')
           );
         };
 
-        this.clearAll = function() {
+        this.clearAll = clearAll;
+
+        function clearAll() {
           graph.clear();
           selectedCell = null;
           paperEnable(true);
@@ -116,7 +110,7 @@ angular.module('icestudio')
         };
 
         this.createBasicBlock = function(type) {
-          var block = {
+          var blockInstance = {
             id: null,
             type: type,
             position: { x: 100, y: 100 }
@@ -127,7 +121,7 @@ angular.module('icestudio')
               alertify.prompt('Insert the block i/o', 'a,b c',
                 function(evt, ports) {
                   if (ports) {
-                    block.data = {
+                    blockInstance.data = {
                       code: '',
                       ports: { in: [], out: [] }
                     };
@@ -137,13 +131,13 @@ angular.module('icestudio')
                     var outPorts = ports.split(' ')[1].split(',');
                     for (var i in inPorts) {
                       if (inPorts[i])
-                        block.data.ports.in.push(inPorts[i]);
+                        blockInstance.data.ports.in.push(inPorts[i]);
                     }
                     for (var o in outPorts) {
                       if (outPorts[o])
-                        block.data.ports.out.push(outPorts[o]);
+                        blockInstance.data.ports.out.push(outPorts[o]);
                     }
-                    addBasicCodeBlock(block);
+                    addBasicCodeBlock(blockInstance);
                   }
               });
             }
@@ -151,81 +145,16 @@ angular.module('icestudio')
               alertify.prompt('Insert the block name', '',
                 function(evt, name) {
                   if (name) {
-                    block.data = {
+                    blockInstance.data = {
                       name: name,
                       value: '',
                       choices: boards.getPinout()
                     };
-                    addBasicIOBlock(block);
+                    addBasicIOBlock(blockInstance);
                   }
               });
             }
           }
-        };
-
-        function addBasicIOBlock(block) {
-          var inPorts = [];
-          var outPorts = [];
-
-          if (block.type == 'basic.input') {
-            outPorts.push({
-              name: 'out',
-              label: ''
-            });
-          }
-          else if (block.type == 'basic.output') {
-            inPorts.push({
-              name: 'in',
-              label: ''
-            });
-          }
-
-          var block = new joint.shapes.ice.IO({
-            id: block.id,
-            blockType: block.type,
-            data: { name: block.data.name, value: block.data.value },
-            position: block.position,
-            choices: boards.getPinout(),
-            inPorts: inPorts,
-            outPorts: outPorts,
-            size: { width: 100, height: 70 },
-            attrs: { '.block-label': { text: block.data.name } }
-          });
-
-          graph.addCell(block);
-          //refreshProject();*/
-        };
-
-        function addBasicCodeBlock(block) {
-          var inPorts = [];
-          var outPorts = [];
-
-          for (var i in block.data.ports.in) {
-            inPorts.push({
-              name: block.data.ports.in[i],
-              label: block.data.ports.in[i]
-            });
-          }
-
-          for (var o in block.data.ports.out) {
-            outPorts.push({
-              name: block.data.ports.out[o],
-              label: block.data.ports.out[o]
-            });
-          }
-
-          var block = new joint.shapes.ice.Code({
-            id: block.id,
-            blockType: block.type,
-            data: block.data,
-            position: block.position,
-            inPorts: inPorts,
-            outPorts: outPorts,
-            size: { width: 400, height: 200 }
-          });
-
-          graph.addCell(block);
-          //refreshProject();*/
         };
 
         this.toJSON = function() {
@@ -259,22 +188,28 @@ angular.module('icestudio')
         }
 
         this.loadProject = function(project) {
-          var blocks = project.data.blocks;
-          var wires = project.data.wires;
+          dependencies = project.deps;
+          loadGraph(project);
+        }
 
-          this.clearAll();
+        function loadGraph(project) {
+          var blockInstances = project.graph.blocks;
+          var wires = project.graph.wires;
+          var deps = project.deps;
+
+          clearAll();
 
           // Blocks
-          for (var i in blocks) {
-            var block = blocks[i];
-            if (block.type == 'basic.code') {
-              addBasicCodeBlock(block);
+          for (var i in blockInstances) {
+            var blockInstance = blockInstances[i];
+            if (blockInstance.type == 'basic.code') {
+              addBasicCodeBlock(blockInstance);
             }
-            else if (block.type == 'basic.input' || block.type == 'basic.output') {
-              addBasicIOBlock(block);
+            else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
+              addBasicIOBlock(blockInstance);
             }
             else {
-              //addBlock(block);
+              addBlock(blockInstance, deps[blockInstance.type]);
             }
           }
 
@@ -282,6 +217,120 @@ angular.module('icestudio')
           for (var i in wires) {
             addWire(wires[i]);
           }
+        }
+
+        this.importBlock = function(type, block) {
+          var blockInstance = {
+            id: null,
+            type: type,
+            data: {},
+            position: { x: 100, y: 100 }
+          }
+          // TODO: unique add deps
+          dependencies[name] = block;
+          addBlock(blockInstance, block);
+        }
+
+        function addBasicIOBlock(blockInstances) {
+          var inPorts = [];
+          var outPorts = [];
+
+          if (blockInstances.type == 'basic.input') {
+            outPorts.push({
+              name: 'out',
+              label: ''
+            });
+          }
+          else if (blockInstances.type == 'basic.output') {
+            inPorts.push({
+              name: 'in',
+              label: ''
+            });
+          }
+
+          var block = new joint.shapes.ice.IO({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: { name: blockInstances.data.name, value: blockInstances.data.value },
+            position: blockInstances.position,
+            choices: boards.getPinout(),
+            inPorts: inPorts,
+            outPorts: outPorts,
+            size: { width: 100, height: 70 },
+            attrs: { '.block-label': { text: blockInstances.data.name } }
+          });
+
+          graph.addCell(block);
+          //refreshProject();*/
+        };
+
+        function addBasicCodeBlock(blockInstances) {
+          var inPorts = [];
+          var outPorts = [];
+
+          for (var i in blockInstances.data.ports.in) {
+            inPorts.push({
+              name: blockInstances.data.ports.in[i],
+              label: blockInstances.data.ports.in[i]
+            });
+          }
+
+          for (var o in blockInstances.data.ports.out) {
+            outPorts.push({
+              name: blockInstances.data.ports.out[o],
+              label: blockInstances.data.ports.out[o]
+            });
+          }
+
+          var block = new joint.shapes.ice.Code({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: blockInstances.data,
+            position: blockInstances.position,
+            inPorts: inPorts,
+            outPorts: outPorts,
+            size: { width: 400, height: 200 }
+          });
+
+          graph.addCell(block);
+          //refreshProject();*/
+        };
+
+        function addBlock(blockInstance, block) {
+          var inPorts = [];
+          var outPorts = [];
+
+          for (var i in block.graph.blocks) {
+            var item = block.graph.blocks[i];
+            if (item.type == 'basic.input') {
+              inPorts.push({
+                name: item.data.name,
+                label: item.data.name
+              });
+            }
+            else if (item.type == 'basic.output') {
+              outPorts.push({
+                name: item.data.name,
+                label: item.data.name
+              });
+            }
+          }
+
+          var numPorts = Math.max(inPorts.length, outPorts.length);
+
+          var block = new joint.shapes.ice.Block({
+            id: blockInstance.id,
+            blockType: blockInstance.type,
+            data: {},
+            position: blockInstance.position,
+            inPorts: inPorts,
+            outPorts: outPorts,
+            size: { width: 120, height: 50 + 20 * numPorts },
+            attrs: { '.block-label': { text: blockInstance.type.toUpperCase() } }
+          });
+
+          graph.addCell(block);
+          //refreshProject();*/
         }
 
         function addWire(wire) {

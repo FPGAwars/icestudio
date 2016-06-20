@@ -80,45 +80,4 @@ angular.module('icestudio')
 
 
 
-
-    function addBlock(data) {
-
-      console.log(data);
-
-      var inPorts = [];
-      var outPorts = [];
-
-      for (var i in data.blocks) {
-        var block = data.blocks[i];
-        if (block.type == 'basic.input') {
-          inPorts.push({
-            name: block.data.name,
-            label: block.data.name
-          });
-        }
-        else if (block.type == 'basic.output') {
-          outPorts.push({
-            name: block.data.name,
-            label: block.data.name
-          });
-        }
-      }
-
-      var numPorts = Math.max(inPorts.length, outPorts.length);
-
-      var block = new joint.shapes.ice.Block({
-        id: null,
-        blockType: data.type,
-        data: data.data,
-        position: block.position,
-        inPorts: inPorts,
-        outPorts: outPorts,
-        size: { width: 50, height: 50 + 20 * numPorts },
-        attrs: { '.block-label': { text: block.name } }
-      });
-
-      graph.addCell(block);
-      refreshProject();
-    }
-
   });

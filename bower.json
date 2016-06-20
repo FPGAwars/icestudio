@@ -31,7 +31,6 @@
     "joint": "^0.9.6",
     "angular-bootstrap": "^1.3.3",
     "bootstrap": "^3.3.6",
-    "highlightjs": "^9.4.0",
     "ace-builds": "^1.2.3"
   }
 }

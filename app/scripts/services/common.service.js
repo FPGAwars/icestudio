@@ -7,8 +7,8 @@ angular.module('icestudio')
         // Variables
 
         this.project = {};
+        this.dependencies = {};
         this.projectName = '';
-        this.breadcrumb = [ { id: '', name: '' } ];
 
         // Functions
 
@@ -31,6 +31,7 @@ angular.module('icestudio')
             this.project = project;
             boards.selectBoard(project.board);
             graph.loadProject(project);
+            this.dependencies = project.deps;
             alertify.success('Project ' + name + ' loaded');
           }
           $.ajaxSetup({ async: true });
@@ -43,9 +44,25 @@ angular.module('icestudio')
           nodeFs.writeFile(filepath, JSON.stringify(this.project, null, 2),
             function(err) {
               if (!err) {
-                console.log('Project ' + name + ' saved');
+                alertify.success('Project ' + name + ' saved');
               }
           });
+        };
+
+        this.importBlock = function(filepath) {
+          $.ajaxSetup({ async: false });
+          var block;
+          $.getJSON(filepath, function(data){
+            block = data;
+          });
+          if (block) {
+            var name = utils.basename(filepath);
+            graph.importBlock(name, block);
+            // TODO: Check unique add
+            this.dependencies[name] = block;
+            alertify.success('Block ' + name + ' imported');
+          }
+          $.ajaxSetup({ async: true });
         };
 
         this.exportAsBlock = function(filepath) {
@@ -54,16 +71,16 @@ angular.module('icestudio')
           // Convert project to block
           var block = angular.copy(this.project);
           delete block.board;
-          for (var i in block.data.blocks) {
-            if (block.data.blocks[i].type == 'basic.input' ||
-                block.data.blocks[i].type == 'basic.output') {
-              delete block.data.blocks[i].data.value;
+          for (var i in block.graph.blocks) {
+            if (block.graph.blocks[i].type == 'basic.input' ||
+                block.graph.blocks[i].type == 'basic.output') {
+              delete block.graph.blocks[i].data.value;
             }
           }
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
             function(err) {
               if (!err) {
-                console.log('Block ' + name + ' saved');
+                alertify.success('Block exported as ' + name);
               }
           });
         };
@@ -98,19 +115,19 @@ angular.module('icestudio')
 
           this.project.board = boards.selectedBoard.id;
 
-          this.project.data = { blocks: blocks, wires: wires };
+          this.project.graph = { blocks: blocks, wires: wires };
 
-          this.project.deps = [];
+          this.project.deps = this.dependencies;
         };
 
         this.clearProject = function() {
-          this.breadcrumb = [ { id: '', name: this.projectName }];
+          graph.breadcrumb = [ { id: '', name: this.projectName }];
         }
 
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
-            this.breadcrumb[0].name = name;
+            graph.breadcrumb[0].name = name;
             window.title = 'Icestudio - ' + name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
