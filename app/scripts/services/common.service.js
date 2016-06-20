@@ -43,7 +43,27 @@ angular.module('icestudio')
           nodeFs.writeFile(filepath, JSON.stringify(this.project, null, 2),
             function(err) {
               if (!err) {
-                console.log('File ' + name + ' saved');
+                console.log('Project ' + name + ' saved');
+              }
+          });
+        };
+
+        this.exportAsBlock = function(filepath) {
+          var name = utils.basename(filepath);
+          this.refreshProject();
+          // Convert project to block
+          var block = angular.copy(this.project);
+          delete block.board;
+          for (var i in block.data.blocks) {
+            if (block.data.blocks[i].type == 'basic.input' ||
+                block.data.blocks[i].type == 'basic.output') {
+              delete block.data.blocks[i].data.value;
+            }
+          }
+          nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
+            function(err) {
+              if (!err) {
+                console.log('Block ' + name + ' saved');
               }
           });
         };

@@ -58,6 +58,26 @@ angular.module('icestudio')
       }, 0);
     }
 
+
+    $scope.exportAsBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.iceb')) {
+                filepath += '.iceb';
+            }
+            common.exportAsBlock(filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+
     // Edit
 
     $scope.clearGraph = function() {

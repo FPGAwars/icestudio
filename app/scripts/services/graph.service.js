@@ -58,6 +58,15 @@ angular.module('icestudio')
                   });
                 }
               }
+              else if (data.blockType == 'basic.code') {
+                /*if (paper.options.interactive) {
+                  alertify.prompt('Insert the block i/o', 'a,b c',
+                    function(evt, ports) {
+                      if (ports) {
+                      }
+                  });
+                }*/
+              }
               // TODO: edit the block ports
               /*else {
                 if (data.block.code.type == 'graph') {
