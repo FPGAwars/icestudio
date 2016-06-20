@@ -72,7 +72,16 @@ angular.module('icestudio')
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
-                  loadGraph(dependencies[data.blockType]);
+                  if (breadcrumb.length == 2) {
+                    $rootScope.$broadcast('refreshProject', function() {
+                      loadGraph(dependencies[data.blockType]);
+                      paperEnable(false);
+                    });
+                  }
+                  else {
+                    loadGraph(dependencies[data.blockType]);
+                    paperEnable(false);
+                  }
                 }
             }
           );
@@ -96,8 +105,14 @@ angular.module('icestudio')
           paperEnable(true);
         };
 
+        this.paperEnable = paperEnable;
+
         function paperEnable(value) {
           paper.options.interactive = value;
+          var cells = graph.getCells();
+          for (var i in cells) {
+            paper.findViewByModel(cells[i].id).options.interactive = value;
+          }
           if (value) {
             angular.element('#paper').css('opacity', '1.0');
           }
@@ -224,7 +239,7 @@ angular.module('icestudio')
             position: { x: 100, y: 100 }
           }
           // TODO: unique add deps
-          dependencies[name] = block;
+          dependencies[type] = block;
           addBlock(blockInstance, block);
         }
 
@@ -258,7 +273,6 @@ angular.module('icestudio')
           });
 
           graph.addCell(block);
-          //refreshProject();*/
         };
 
         function addBasicCodeBlock(blockInstances) {
@@ -290,7 +304,6 @@ angular.module('icestudio')
           });
 
           graph.addCell(block);
-          //refreshProject();*/
         };
 
         function addBlock(blockInstance, block) {
@@ -327,7 +340,6 @@ angular.module('icestudio')
           });
 
           graph.addCell(block);
-          //refreshProject();*/
         }
 
         function addWire(wire) {

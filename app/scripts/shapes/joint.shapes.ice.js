@@ -173,8 +173,8 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
     this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
     this.$box.find('select').on('change', _.bind(function(evt) {
-            this.model.attributes.data.value = $(evt.target).val();
-        }, this));
+        this.model.attributes.data.value = $(evt.target).val();
+    }, this));
 
     // Update the box position whenever the underlying model changes.
     this.model.on('change', this.updateBox, this);
@@ -275,6 +275,7 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
     this.$box.find('#editor').append(this.model.attributes.data.code);
+    this.$box.find('#content').append(this.model.attributes.data.code);
 
     // Update the box position whenever the underlying model changes.
     this.model.on('change', this.updateBox, this);

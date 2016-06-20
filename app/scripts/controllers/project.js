@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('ProjectCtrl', function ($scope,
+  .controller('ProjectCtrl', function ($rootScope,
+                                       $scope,
                                        common,
                                        graph) {
 
@@ -11,6 +12,7 @@ angular.module('icestudio')
     // Intialization
 
     graph.createPaper($('#paper'));
+    common.updateProjectName('untitled');
 
 
     $scope.breadcrumbNavitate = function(selectedItem) {
@@ -23,14 +25,19 @@ angular.module('icestudio')
 
       if (graph.breadcrumb.length == 1) {
         graph.loadProject(common.project);
+        graph.paperEnable(true);
       }
       else {
         graph.loadProject(common.project.deps[selectedItem.type]);
+        graph.paperEnable(false);
       }
     }
 
-    /*
+    $rootScope.$on('refreshProject', function(event, callback) {
+      common.refreshProject(callback);
+    });
 
+    /*
     $rootScope.$on('loadCustomBlock', function(event, name) {
       var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
       $.getJSON(filepath, function(p) {

@@ -1,18 +1,28 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
-      function($rootScope, nodeFs, nodeGlob, window, graph, boards, utils) {
+    .service('common', ['nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
+      function(nodeFs, nodeGlob, window, graph, boards, utils) {
 
         // Variables
 
-        this.project = {};
+        this.project = {
+          board: '',
+          graph: {},
+          deps: {}
+        };
         this.projectName = '';
+
+        graph.project = this.project;
 
         // Functions
 
         this.newProject = function(name) {
-          this.project = {};
+          this.project = {
+            board: '',
+            graph: {},
+            deps: {}
+          };
           this.updateProjectName(name);
           graph.clearAll();
           alertify.success('New project ' + name + ' created');
@@ -75,6 +85,7 @@ angular.module('icestudio')
               delete block.graph.blocks[i].data.value;
             }
           }
+          console.log(block);
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
             function(err) {
               if (!err) {
@@ -83,7 +94,7 @@ angular.module('icestudio')
           });
         };
 
-        this.refreshProject = function() {
+        this.refreshProject = function(callback) {
           var graphData = graph.toJSON();
 
           var blocks = [];
@@ -115,7 +126,8 @@ angular.module('icestudio')
 
           this.project.graph = { blocks: blocks, wires: wires };
 
-          this.project.deps = this.dependencies;
+          if (callback)
+            callback();
         };
 
         this.clearProject = function() {
@@ -127,13 +139,7 @@ angular.module('icestudio')
             this.projectName = name
             graph.breadcrumb[0].name = name;
             window.title = 'Icestudio - ' + name;
-            if(!$rootScope.$$phase) {
-              $rootScope.$apply();
-            }
           }
         }
-
-        // Intialize project
-        this.updateProjectName('untitled');
 
     }]);
