@@ -1,7 +1,10 @@
 <div ng-controller="MenuCtrl">
 
-    <input id="input-load" type="file" accept=".json" style="display:none"/>
-    <input id="input-save" type="file" accept=".json" style="display:none" nwsaveas="{{ $root.project.name }}"/>
+    <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
+    <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ common.projectName }}"/>
+
+    <input id="input-import-block" type="file" accept=".iceb" class="hidden"/>
+    <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ common.projectName }}"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -10,75 +13,83 @@
             <ul class="nav navbar-nav">
 
                 <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
-                      File <span class="caret"></span>
-                    </a>
+                    <a href uib-dropdown-toggle>File <span class="caret"></span></a>
                     <ul uib-dropdown-menu>
                       <li>
-                        <a href ng-click="new()">{{ 'New project' | translate }}</a>
+                        <a href ng-click="newProject()">{{ 'New project' | translate }}</a>
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a href ng-click="load()">{{ 'Load project' | translate }}</a>
+                        <a href ng-click="openProject()">{{ 'Open project' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="save()">{{ 'Save project' | translate }}</a>
+                        <a href ng-click="saveProject()">{{ 'Save project' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>
-                          {{ 'Load custom block' | translate }}
-                        </a>
+                      <li>
+                        <a href ng-click="importBlock()">{{ 'Import block' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="exportAsBlock()">{{ 'Export as block' | translate }}</a>
+                      </li>
+                      <!--<li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle> {{ 'Load custom block' | translate }}</a>
                         <ul uib-dropdown-menu>
                           <li ng-repeat="(key, data) in $root.blocks.custom">
-                            <a href ng-click="loadCustom(key)">{{ key }}</a>
+                            <a href ng-click="loadCustomBlock(key)">{{ key }}</a>
                           </li>
                         </ul>
                       </li>
                       <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>
-                          {{ 'Remove custom block' | translate }}
-                        </a>
+                        <a href uib-dropdown-toggle>{{ 'Remove custom block' | translate }}</a>
                         <ul uib-dropdown-menu>
                           <li ng-repeat="(key, data) in $root.blocks.custom">
-                            <a href ng-click="removeCustom(key)">{{ key }}</a>
+                            <a href ng-click="removeCustomBlock(key)">{{ key }}</a>
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href ng-click="saveCustom()">{{ 'Save custom block' | translate }}</a>
-                      </li>
+                        <a href ng-click="saveCustomBlock()">{{ 'Save custom block' | translate }}</a>
+                      </li>-->
                     </ul>
                 </li>
 
                 <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
-                      Edit  <span class="caret"></span>
-                    </a>
+                    <a href uib-dropdown-toggle>Edit  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
+                      <!--<li>
                         <a href ng-click="build()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
                       </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="removeBlock()">{{ 'Remove block' | translate }}</a>
-                      </li>
+                      <li class="divider"></li>-->
                       <li>
                         <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="removeSelected()">{{ 'Remove selected' | translate }}</a>
                       </li>
                     </ul>
                 </li>
 
-                <li uib-dropdown>
-                    <a href uib-dropdown-toggle>
-                      View  <span class="caret"></span>
-                    </a>
+                <!--<li uib-dropdown>
+                    <a href uib-dropdown-toggle>View  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="reloadBlocks()">{{ 'Reload blocks menu' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>-->
+
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>Boards  <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li ng-repeat="board in currentBoards">
+                        <a href ng-click="selectBoard(board)">
+                          {{ board.label }}
+                          <span ng-show="boards.selectedBoard.id == board.id" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
                       </li>
                     </ul>
                 </li>
@@ -87,17 +98,27 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
-                    <a href uib-dropdown-toggle>
-                      {{ category }} <span class="caret"></span>
-                    </a>
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li ng-repeat="(name, block) in blocks">
-                        <a href ng-click="addBlock(category, name, block)">{{ name }}</a>
+                      <li>
+                        <a href ng-click="createBasicBlock('basic.code')">{{ 'code' | translate }}</a>
+                        <a href ng-click="createBasicBlock('basic.input')">{{ 'input' | translate }}</a>
+                        <a href ng-click="createBasicBlock('basic.output')">{{ 'output' | translate }}</a>
                       </li>
                     </ul>
                 </li>
 
+                <!--<li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
+                    <a href uib-dropdown-toggle>{{ category }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li ng-repeat="(name, block) in blocks">
+                        <a href ng-click="addBlock(category + '.' + name, block)">
+                          {{ name }}
+                        </a>
+                      </li>
+                    </ul>
+                </li>-->
             </ul>
 
         </div>

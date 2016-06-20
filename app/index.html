@@ -1,12 +1,11 @@
 <!doctype html>
-<html data-ng-app="icestudio">
+<html>
 
 <head>
     <title>Icestudio</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/joint/dist/joint.css" />
-    <link rel="stylesheet" href="../bower_components/highlightjs/styles/default.css" />
     <!-- endbower -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/main.css" />
@@ -18,8 +17,8 @@
     <!-- endnode -->
 </head>
 
-<body>
-    <div data-ng-view></div>
+<body ng-app="icestudio">
+    <div ng-view></div>
     <script>
     window.$ = window.JQuery = window.jQuery = require('jquery');
     </script>
@@ -35,8 +34,8 @@
     <script src="../bower_components/joint/dist/joint.js"></script>
     <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/highlightjs/highlight.pack.js"></script>
     <!-- endbower -->
+    <script src="../bower_components/ace-builds/src-noconflict/ace.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/menu.js"></script>
@@ -47,8 +46,9 @@
     <script src="scripts/factories/glob.factory.js"></script>
     <script src="scripts/factories/rmdir.factory.js"></script>
     <script src="scripts/services/utils.service.js"></script>
-    <script src="scripts/services/blocks.service.js"></script>
-    <script src="scripts/services/project.service.js"></script>
+    <script src="scripts/services/common.service.js"></script>
+    <script src="scripts/services/graph.service.js"></script>
+    <script src="scripts/services/boards.service.js"></script>
     <script src="scripts/shapes/joint.shapes.ice.js"></script>
     <!-- node:js -->
     <script src="../node_modules/alertifyjs/build/alertify.min.js"></script>

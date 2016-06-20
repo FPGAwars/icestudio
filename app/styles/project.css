@@ -11,3 +11,32 @@
   stroke: #FF0000;
   stroke-width: 3
 }
+
+.io-element{
+  position: absolute;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+
+.io-combo {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.code-element{
+  position: absolute;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+
+.code-editor {
+  pointer-events: auto;
+  position: absolute;
+  height: 180px;
+  width: 340px;
+  transform: translate(30px, 10px);
+  border-radius: 10px;
+}

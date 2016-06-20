@@ -1,86 +1,221 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocksStore) {
+  .controller('MenuCtrl', function ($scope,
+                                    nodeFs,
+                                    common,
+                                    graph,
+                                    boards) {
 
-    $scope.new = function() {
-      $rootScope.$emit('new');
-    }
+    $scope.common = common;
+    $scope.boards = boards;
+    $scope.currentBoards = boards.getBoards();
 
-    $scope.load = function() {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          setTimeout(function() {
-            var ctrl = angular.element('#input-load');
-            ctrl.on('change', function(event) {
-              var file = event.target.files[0];
-              event.target.files.clear();
-              if (file) {
-                $rootScope.$emit('load', file.path);
-              }
-            });
-            ctrl.click();
-          }, 0);
+    // File
+
+    $scope.newProject = function() {
+      alertify.prompt('Enter the project\'s title', 'untitled',
+        function(evt, name) {
+          if (name) {
+            common.newProject(name);
+          }
       });
     }
 
-    $scope.save = function() {
+    $scope.openProject = function() {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-open-project');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            event.target.files.clear();
+            if (file) {
+              if (file.path.endsWith('.ice')) {
+                common.openProject(file.path);
+              }
+            }
+          });
+          ctrl.click();
+        }, 0);
+    }
+
+    $scope.saveProject = function() {
       setTimeout(function() {
-        var ctrl = angular.element('#input-save');
+        var ctrl = angular.element('#input-save-project');
         ctrl.on('change', function(event) {
           var file = event.target.files[0];
           if (file) {
             event.target.files.clear();
             var filepath = file.path;
-            if (! filepath.endsWith('.json')) {
-                filepath += '.json';
+            if (! filepath.endsWith('.ice')) {
+                filepath += '.ice';
             }
-            $rootScope.$emit('save', filepath);
+            common.saveProject(filepath);
           }
         });
         ctrl.click();
       }, 0);
     }
 
-    $scope.loadCustom = function(name) {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
+    $scope.importBlock = function() {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-import-block');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            event.target.files.clear();
+            if (file) {
+              if (file.path.endsWith('.iceb')) {
+                common.importBlock(file.path);
+              }
+            }
+          });
+          ctrl.click();
+        }, 0);
+    }
+
+
+    $scope.exportAsBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.iceb')) {
+                filepath += '.iceb';
+            }
+            common.exportAsBlock(filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+
+    // Edit
+
+    $scope.clearGraph = function() {
+      alertify.confirm('Do you want to clear the graph?',
         function() {
-          $rootScope.$emit('loadCustom', name);
+          graph.clearAll();
       });
     }
 
-    $scope.removeCustom = function(name) {
-      $rootScope.$emit('removeCustom', name);
+    $scope.removeSelected = function() {
+      alertify.confirm('Do you want to remove the selected block?',
+        function() {
+          graph.removeSelected();
+          alertify.success('Block removed');
+      });
     }
 
-    $scope.saveCustom = function() {
-      $rootScope.$emit('saveCustom');
+    $(document).on('keydown', function(event) {
+      if (event.keyCode == 46) { // Supr
+        $scope.removeSelected();
+      }
+    });
+
+    // Boards
+
+    $scope.selectBoard = function(board) {
+      if (boards.selectedBoard != board) {
+        alertify.confirm('The current FPGA I/O configuration will be lost. ' +
+                         'Do you want to change to <b>' + board.label + '</b> board?',
+          function() {
+            boards.selectBoard(board.id);
+            graph.resetIOChoices();
+            alertify.success('Board ' + board.label + ' selected');
+        });
+      }
     }
 
-    $scope.addBlock = function(category, name, block) {
-      $rootScope.$emit('addBlock', { type: category + '.' + name, block: block });
+    // Blocks menu
+
+    $scope.createBasicBlock = function(type) {
+      graph.createBasicBlock(type)
     }
 
-    $scope.build = function() {
+    /*
+
+    $scope.importBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-import-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          event.target.files.clear();
+          if (file) {
+            $rootScope.$emit('importBlock', file.path);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    $scope.exportAsBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.iceb')) {
+                filepath += '.iceb';
+            }
+            $rootScope.$emit('exportAsBlock', filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    /*$scope.loadCustomBlock = function(name) {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          $rootScope.$emit('loadCustomBlock', name);
+      });
+    }
+
+    $scope.removeCustomBlock = function(name) {
+      alertify.confirm('Do you want to remove the custom block <b>' + name + '</b>?',
+        function() {
+          $rootScope.$emit('removeCustomBlock', name);
+      });
+    }
+
+    $scope.saveCustomBlock = function() {
+      alertify.prompt('Do you want to export your custom block?',
+        $rootScope.project.name,
+        function(evt, name) {
+          if (name) {
+            $rootScope.$emit('saveCustomBlock', name);
+          }
+      });
+    }*/
+
+    // Edit
+
+    /*$scope.build = function() {
       console.log('build');
     }
 
     $scope.upload = function() {
       console.log('upload');
-    }
+    }*/
+
+    /*
+
+    // View
 
     $scope.reloadBlocks = function() {
-      blocksStore.loadBlocks();
-    }
+      blocks.loadBlocks();
+    }*/
 
-    $scope.removeBlock = function() {
-      $rootScope.$emit('remove');
-    }
+    // Blocks menu
 
-    $scope.clearGraph = function() {
-      $rootScope.$emit('clear');
-    }
+    /*$scope.addBlock = function(type, blockdata) {
+      $rootScope.$emit('addBlock', { type: type, blockdata: blockdata });
+    }*/
 
   });

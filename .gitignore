@@ -5,6 +5,8 @@ file
 *.bin
 *.blif
 *.pyc
+*.ice
+*.iceb
 build
 icestudio/node_modules
 bower_components

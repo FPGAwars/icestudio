@@ -13,6 +13,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     size: { width: 1, height: 1 },
     inPorts: [],
     outPorts: [],
+    choices: [],
     attrs: {
       '.': { magnet: false },
       text: {
@@ -22,8 +23,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         width: 80,
         height: 80,
         stroke: '#000',
-        rx: 5,
-        ry: 10,
+        rx: 3,
+        ry: 5,
         'stroke-width': 2
       },
       '.port-body': {
@@ -70,12 +71,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portBodySelector = portSelector + '>.port-body';
 
     attrs[portLabelSelector] = {
-      text: port.label
+      text: (port) ? (port.label) ? port.label  : ''  : ''
     };
 
     attrs[portBodySelector] = {
       port: {
-        id: port.id || _.uniqueId(type),
+        id: (port) ? (port.name) : null  || _.uniqueId(type),
         type: type
       }
     };
@@ -126,9 +127,21 @@ joint.shapes.ice.IO = joint.shapes.ice.Model.extend({
   }, joint.shapes.ice.Model.prototype.defaults)
 });
 
+joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
+
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Code',
+    attrs: {
+      '.body': {
+        fill: '#C0DFEB'
+      }
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
-  defaults: {
+  defaults: joint.util.deepSupplement({
     type: 'ice.Wire',
     router: { name: 'manhattan' },
     connector: { name: 'rounded', args: { radius: 5 }},
@@ -137,9 +150,183 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
         'stroke-width': 2
       }
     }
-  }
+  }, joint.dia.Link.prototype.defaults)
 });
 
 joint.shapes.ice.ModelView = joint.dia.ElementView.extend(joint.shapes.basic.PortsViewInterface);
 joint.shapes.ice.BlockView = joint.shapes.ice.ModelView;
-joint.shapes.ice.IOView = joint.shapes.ice.ModelView;
+
+joint.shapes.ice.IOView = joint.dia.ElementView.extend({
+
+  template: [
+      '<div class="io-element">',
+      '<select class="io-combo"></select>',
+      '</div>'
+  ].join(''),
+
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    this.$box = $(_.template(this.template)());
+    // Prevent paper from handling pointerdown.
+    this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+    this.$box.find('select').on('change', _.bind(function(evt) {
+        this.model.attributes.data.value = $(evt.target).val();
+    }, this));
+
+    // Update the box position whenever the underlying model changes.
+    this.model.on('change', this.updateBox, this);
+    // Remove the box when the model gets removed from the graph.
+    this.model.on('remove', this.removeBox, this);
+
+    this.updateBox();
+
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  },
+
+  render: function() {
+    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    this.paper.$el.prepend(this.$box);
+    // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
+    this.updateBox();
+    return this;
+  },
+
+  renderPorts: function () {
+    var $inPorts = this.$('.inPorts').empty();
+    var $outPorts = this.$('.outPorts').empty();
+
+    var portTemplate = _.template(this.model.portMarkup);
+
+    _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
+
+        $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+    _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
+
+        $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+  },
+
+  renderChoices: function() {
+    if (true) {  // this.model.get('fpgaio')) {
+      var choices = this.model.get('choices');
+      var $select = this.$box.find('.io-combo').empty();
+
+      $select.append('<option></option>');
+      for (var c in choices) {
+        $select.append('<option>' + choices[c].name + '</option>');
+      }
+
+      this.$box.find('select').val(this.model.get('data').value);
+    }
+    else {
+      this.$box.find('select').hide();
+    }
+  },
+
+  update: function () {
+    // First render ports so that `attrs` can be applied to those newly created DOM elements
+    // in `ElementView.prototype.update()`.
+    this.renderPorts();
+    this.renderChoices();
+
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    // Set the position and dimension of the box so that it covers the JointJS element.
+    var bbox = this.model.getBBox()
+    this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+  },
+
+  removeBox: function(evt) {
+    this.$box.remove();
+  }
+});
+
+joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
+
+  template: [
+      '<div class="code-element">',
+      '<div class="code-editor" id="editor"></div>',
+      '<textarea class="hidden" id="content"></textarea>',
+      '<script>',
+      'var editor = ace.edit("editor");',
+      'editor.setTheme("ace/theme/chrome");',
+      'editor.getSession().setMode("ace/mode/verilog");',
+      'editor.getSession().on("change", function () {',
+      '  $("#content").val(editor.getSession().getValue());',
+      '});',
+      'document.getElementById("editor").style.fontSize="15px";',
+      '</script>',
+      '</div>'
+  ].join(''),
+
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    this.$box = $(_.template(this.template)());
+    // Prevent paper from handling pointerdown.
+    // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+    this.$box.find('#editor').append(this.model.attributes.data.code);
+    this.$box.find('#content').append(this.model.attributes.data.code);
+
+    // Update the box position whenever the underlying model changes.
+    this.model.on('change', this.updateBox, this);
+    // Remove the box when the model gets removed from the graph.
+    this.model.on('remove', this.removeBox, this);
+
+    this.updateBox();
+
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  },
+
+  render: function() {
+    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    this.paper.$el.prepend(this.$box);
+    // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
+    this.updateBox();
+    return this;
+  },
+
+  renderPorts: function () {
+    var $inPorts = this.$('.inPorts').empty();
+    var $outPorts = this.$('.outPorts').empty();
+
+    var portTemplate = _.template(this.model.portMarkup);
+
+    _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
+
+        $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+    _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
+
+        $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+  },
+
+  update: function () {
+    // First render ports so that `attrs` can be applied to those newly created DOM elements
+    // in `ElementView.prototype.update()`.
+    this.renderPorts();
+
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    // Set the position and dimension of the box so that it covers the JointJS element.
+    var bbox = this.model.getBBox()
+    this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+  },
+
+  removeBox: function(evt) {
+    this.$box.remove();
+  }
+});
