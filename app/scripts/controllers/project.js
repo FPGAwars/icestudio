@@ -3,102 +3,26 @@
 angular.module('icestudio')
   .controller('ProjectCtrl', function ($scope,
                                        $rootScope,
-                                       joint,
-                                       nodeFs,
-                                       nodeGlob,
-                                       nodeRmdir,
-                                       blocks,
-                                       project,
+                                       common,
+                                       graph,
                                        boards,
                                        utils) {
 
-    $rootScope.project = {};
-    $rootScope.breadcrumb = [ { id: '', name: '' }];
+    $scope.project = common.project;
+    $scope.breadcrumb = common.breadcrumb;
 
-    $scope.selectedCell = null;
+    // Intialization
 
-    // Graph
-    var graph = new joint.dia.Graph();
+    common.updateProjectName('untitled');
 
-    // Paper
-    var paper = new joint.dia.Paper({
-      el: $('#paper'),
-      width: 900,
-      height: 443,
-      model: graph,
-      gridSize: 1,
-      snapLinks: { radius: 30 },
-      defaultLink: new joint.shapes.ice.Wire(),
-      validateConnection: function(cellViewS, magnetS,
-                                   cellViewT, magnetT,
-                                   end, linkView) {
-        // Prevent loop linking
-        return (magnetS !== magnetT);
-      }
-    });
+    graph.createPaper($('#paper'));
 
-    // Initialize
-    project.updateName('untitled');
+
+
 
     // Paper events
 
-    paper.on('cell:pointerclick',
-      function(cellView, evt, x, y) {
-        if (paper.options.interactive) {
-          if ($scope.selectedCell) {
-            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
-          }
-          $scope.selectedCell = cellView.model;
-          V(paper.findViewByModel($scope.selectedCell).el).addClass('highlighted');
-        }
-      }
-    );
 
-    paper.on('cell:pointerdblclick',
-      function(cellView, evt, x, y) {
-        var data = cellView.model.attributes;
-        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-          if (paper.options.interactive) {
-            alertify.prompt('Insert the block label', '',
-              function(evt, label) {
-                if (label) {
-                  data.attrs['.block-label'].text = label;
-                  cellView.update();
-                  alertify.success('Label updated');
-                }
-            });
-          }
-        }
-        else {
-          if (data.block.code.type == 'graph') {
-            $rootScope.breadcrumb.push({ type: data.blockType, name: data.block.name });
-            $rootScope.$apply();
-            if ($rootScope.breadcrumb.length == 2) {
-              refreshProject(function() {
-                loadGraph(data.block, false, false);
-              }, true);
-            }
-            else {
-              loadGraph(data.block, false, false);
-            }
-          }
-          else if (data.block.code.type == 'verilog') {
-            var code = hljs.highlightAuto(data.block.code.data).value;
-            alertify.alert('<pre><code class="verilog">' + code + '</code></pre>');
-          }
-        }
-      }
-    );
-
-    paper.on('blank:pointerclick',
-      function() {
-        if (paper.options.interactive) {
-          if ($scope.selectedCell) {
-            V(paper.findViewByModel($scope.selectedCell).el).removeClass('highlighted');
-          }
-        }
-      }
-    );
 
     // Events
 
@@ -108,7 +32,7 @@ angular.module('icestudio')
       alertify.success('New project ' + name + ' created');
     });
 
-    $rootScope.$on('loadProject', function(event, filepath) {
+    $rootScope.$on('openProject', function(event, filepath) {
       $.getJSON(filepath, function(p) {
         var name = utils.basename(filepath);
         project.updateName(name);
@@ -125,7 +49,13 @@ angular.module('icestudio')
       save(filepath);
     });
 
-    $rootScope.$on('loadCustomBlock', function(event, name) {
+    // importBlock
+
+    // exportAsBlock
+
+
+
+    /*$rootScope.$on('loadCustomBlock', function(event, name) {
       var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
       $.getJSON(filepath, function(p) {
         project.updateName(name);
@@ -154,7 +84,7 @@ angular.module('icestudio')
         blocks.loadBlocks();
         alertify.success('Custom block ' + name + ' removed');
       });
-    });
+    });*/
 
     $rootScope.$on('removeSelectedBlock', function(event) {
       if (paper.options.interactive) {
@@ -225,11 +155,12 @@ angular.module('icestudio')
       }
     });
 
-    $rootScope.$on('addBlock', function(event, block) {
+    $rootScope.$on('addBlock', function(event, blockdata) {
       if (paper.options.interactive) {
+        var block = {};
         block.id = null;
         block.position = { x: 100, y: 100 };
-        addBlock(block);
+        addBlock(block, blockdata);
       }
     });
 
@@ -264,16 +195,6 @@ angular.module('icestudio')
 
     // Functions
 
-    function paperEnable(value) {
-      paper.options.interactive = value;
-      if (value) {
-        angular.element('#paper').css('opacity', '1.0');
-      }
-      else {
-        angular.element('#paper').css('opacity', '0.5');
-      }
-    }
-
     function save(filepath) {
       var graphData = graph.toJSON();
       var name = utils.basename(filepath);
@@ -284,15 +205,6 @@ angular.module('icestudio')
             console.log('File ' + name + ' saved');
           }
       });
-    }
-
-    function clear() {
-      graph.clear();
-      delete $scope.selectedCell;
-      $rootScope.breadcrumb = [ { id: '', name: $rootScope.project.name }];
-      $rootScope.$apply();
-      paperEnable(true);
-      refreshProject();
     }
 
 
@@ -392,43 +304,42 @@ angular.module('icestudio')
 
     function addBlock(data) {
 
-      var width = 50;
-      var numPorts = Math.max(data.block.ports.in.length, data.block.ports.out.length);
+      console.log(data);
 
-      if (data.block.ports.in.length) width += 50;
-      if (data.block.ports.out.length) width += 50;
+      var inPorts = [];
+      var outPorts = [];
 
-      var shape = joint.shapes.ice.Block;
-      var height = 30 + 20 * numPorts;
-      if (data.type === 'basic.input' || data.type == 'basic.output') {
-        shape = joint.shapes.ice.IO;
-        height = 50 + 20 * numPorts;
+      for (var i in data.blocks) {
+        var block = data.blocks[i];
+        if (block.type == 'basic.input') {
+          inPorts.push({
+            name: block.data.name,
+            label: block.data.name
+          });
+        }
+        else if (block.type == 'basic.output') {
+          outPorts.push({
+            name: block.data.name,
+            label: block.data.name
+          });
+        }
       }
-      else if (data.type === 'basic.code') {
-        shape = joint.shapes.ice.Code;
-        width = 400;
-        height = 200;
-      }
 
-      var block = new shape({
-        id: data.id,
-        block: data.block,
+      var numPorts = Math.max(inPorts.length, outPorts.length);
+
+      var block = new joint.shapes.ice.Block({
+        id: null,
         blockType: data.type,
-        pinName: data.pinName,
-        fpgaio: data.fpgaio,
-        choices: data.choices,
-        inPorts: data.block.ports.in,
-        outPorts: data.block.ports.out,
-        position: { x: data.x, y: data.y },
-        size: { width: width, height: height },
-        attrs: { '.block-label': { text: data.block.label } }
+        data: data.data,
+        position: block.position,
+        inPorts: inPorts,
+        outPorts: outPorts,
+        size: { width: 50, height: 50 + 20 * numPorts },
+        attrs: { '.block-label': { text: block.name } }
       });
 
       graph.addCell(block);
-
       refreshProject();
-
-      alertify.success('Block ' + data.type + ' added');
     }
 
     function addWire(wire) {

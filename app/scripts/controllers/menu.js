@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope, $rootScope, nodeFs, blocks, boards) {
+  .controller('MenuCtrl', function ($scope,
+                                    nodeFs,
+                                    common,
+                                    graph,
+                                    boards) {
+
+    $scope.selectedBoard = boards.selectedBoard;
 
     // File
 
@@ -9,22 +15,23 @@ angular.module('icestudio')
       alertify.prompt('Enter the project\'s title', 'untitled',
         function(evt, name) {
           if (name) {
-            $rootScope.$emit('newProject', name);
+            common.newProject(name);
+            graph.clearAll();
           }
       });
     }
 
-    $scope.loadProject = function() {
+    /*$scope.openProject = function() {
       alertify.confirm('The current project will be removed. ' +
                        'Do you want to continue?',
         function() {
           setTimeout(function() {
-            var ctrl = angular.element('#input-load');
+            var ctrl = angular.element('#input-open-project');
             ctrl.on('change', function(event) {
               var file = event.target.files[0];
               event.target.files.clear();
               if (file) {
-                $rootScope.$emit('loadProject', file.path);
+                $rootScope.$emit('openProject', file.path);
               }
             });
             ctrl.click();
@@ -34,14 +41,14 @@ angular.module('icestudio')
 
     $scope.saveProject = function() {
       setTimeout(function() {
-        var ctrl = angular.element('#input-save');
+        var ctrl = angular.element('#input-save-project');
         ctrl.on('change', function(event) {
           var file = event.target.files[0];
           if (file) {
             event.target.files.clear();
             var filepath = file.path;
-            if (! filepath.endsWith('.json')) {
-                filepath += '.json';
+            if (! filepath.endsWith('.ice')) {
+                filepath += '.ice';
             }
             $rootScope.$emit('saveProject', filepath);
           }
@@ -50,7 +57,39 @@ angular.module('icestudio')
       }, 0);
     }
 
-    $scope.loadCustomBlock = function(name) {
+    $scope.importBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-import-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          event.target.files.clear();
+          if (file) {
+            $rootScope.$emit('importBlock', file.path);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    $scope.exportAsBlock = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.iceb')) {
+                filepath += '.iceb';
+            }
+            $rootScope.$emit('exportAsBlock', filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    /*$scope.loadCustomBlock = function(name) {
       alertify.confirm('The current project will be removed. ' +
                        'Do you want to continue?',
         function() {
@@ -73,19 +112,19 @@ angular.module('icestudio')
             $rootScope.$emit('saveCustomBlock', name);
           }
       });
-    }
+    }*/
 
     // Edit
 
-    $scope.build = function() {
+    /*$scope.build = function() {
       console.log('build');
     }
 
     $scope.upload = function() {
       console.log('upload');
-    }
+    }*/
 
-    $scope.clearGraph = function() {
+    /*$scope.clearGraph = function() {
       alertify.confirm('Do you want to clear the graph?',
         function() {
           $rootScope.$emit('clearGraph');
@@ -125,8 +164,8 @@ angular.module('icestudio')
       $rootScope.$emit('addBasicBlock', { type: type });
     }
 
-    $scope.addBlock = function(type, block) {
-      $rootScope.$emit('addBlock', { type: type, block: block });
-    }
+    /*$scope.addBlock = function(type, blockdata) {
+      $rootScope.$emit('addBlock', { type: type, blockdata: blockdata });
+    }*/
 
   });
