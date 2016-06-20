@@ -68,7 +68,7 @@
                         <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="removeSelectedBlock()">{{ 'Remove selected block' | translate }}</a>
+                        <a href ng-click="removeSelected()">{{ 'Remove selected' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -102,9 +102,9 @@
                     <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="addBasicBlock('basic.code')">{{ 'code' | translate }}</a>
-                        <a href ng-click="addBasicBlock('basic.input')">{{ 'input' | translate }}</a>
-                        <a href ng-click="addBasicBlock('basic.output')">{{ 'output' | translate }}</a>
+                        <a href ng-click="createBasicBlock('basic.code')">{{ 'code' | translate }}</a>
+                        <a href ng-click="createBasicBlock('basic.input')">{{ 'input' | translate }}</a>
+                        <a href ng-click="createBasicBlock('basic.output')">{{ 'output' | translate }}</a>
                       </li>
                     </ul>
                 </li>

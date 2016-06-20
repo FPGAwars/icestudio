@@ -20,13 +20,20 @@ angular.module('icestudio')
         };
 
         this.openProject = function(filepath) {
-          $.getJSON(filepath, function(project) {
+          $.ajaxSetup({ async: false });
+          var project;
+          $.getJSON(filepath, function(data){
+            project = data;
+          });
+          if (project) {
             var name = utils.basename(filepath);
             this.updateProjectName(name);
             this.project = project;
-            //loadGraph(p, true, true);
+            boards.selectBoard(project.board);
+            graph.loadProject(project);
             alertify.success('Project ' + name + ' loaded');
-          });
+          }
+          $.ajaxSetup({ async: true });
         };
 
         this.saveProject = function(filepath) {

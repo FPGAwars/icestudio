@@ -13,6 +13,16 @@ angular.module('icestudio')
 
       this.selectedBoard = this.getBoards()[0];
 
+      this.selectBoard = function(id) {
+        var boards = this.getBoards();
+        for (var i in boards) {
+          if (id == boards[i].id) {
+            this.selectedBoard = boards[i];
+            break;
+          }
+        }
+      };
+
       this.pinouts = {
         icezum: [
           { name: 'LED0', value: '95' },

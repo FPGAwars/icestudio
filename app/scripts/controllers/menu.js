@@ -23,6 +23,21 @@ angular.module('icestudio')
     }
 
     $scope.openProject = function() {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          setTimeout(function() {
+            var ctrl = angular.element('#input-open-project');
+            ctrl.on('change', function(event) {
+              var file = event.target.files[0];
+              event.target.files.clear();
+              if (file) {
+                common.openProject(file.path);
+              }
+            });
+            ctrl.click();
+          }, 0);
+      });
     }
 
     $scope.saveProject = function() {
@@ -52,6 +67,20 @@ angular.module('icestudio')
       });
     }
 
+    $scope.removeSelected = function() {
+      alertify.confirm('Do you want to remove the selected block?',
+        function() {
+          graph.removeSelected();
+          alertify.success('Block removed');
+      });
+    }
+
+    $(document).on('keydown', function(event) {
+      if (event.keyCode == 46) { // Supr
+        $scope.removeSelected();
+      }
+    });
+
     // Boards
 
     $scope.selectBoard = function(board) {
@@ -59,7 +88,7 @@ angular.module('icestudio')
         alertify.confirm('The current FPGA I/O configuration will be lost. ' +
                          'Do you want to change to <b>' + board.label + '</b> board?',
           function() {
-            boards.selectedBoard = board;
+            boards.selectBoard(board.id);
             graph.resetIOChoices();
             alertify.success('Board ' + board.label + ' selected');
         });
@@ -68,45 +97,11 @@ angular.module('icestudio')
 
     // Blocks menu
 
-    $scope.addBasicBlock = function(type) {
-      graph.addBasicBlock(type)
+    $scope.createBasicBlock = function(type) {
+      graph.createBasicBlock(type)
     }
 
-    /*$scope.openProject = function() {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          setTimeout(function() {
-            var ctrl = angular.element('#input-open-project');
-            ctrl.on('change', function(event) {
-              var file = event.target.files[0];
-              event.target.files.clear();
-              if (file) {
-                $rootScope.$emit('openProject', file.path);
-              }
-            });
-            ctrl.click();
-          }, 0);
-      });
-    }
-
-    $scope.saveProject = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-save-project');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.ice')) {
-                filepath += '.ice';
-            }
-            $rootScope.$emit('saveProject', filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
-    }
+    /*
 
     $scope.importBlock = function() {
       setTimeout(function() {
@@ -176,10 +171,6 @@ angular.module('icestudio')
     }*/
 
     /*
-
-    $scope.removeSelectedBlock = function() {
-      $rootScope.$emit('removeSelectedBlock');
-    }
 
     // View
 
