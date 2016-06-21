@@ -5,10 +5,13 @@ angular.module('icestudio')
                                     nodeFs,
                                     common,
                                     graph,
-                                    boards) {
+                                    boards,
+                                    blocks) {
 
     $scope.common = common;
+    $scope.graph = graph;
     $scope.boards = boards;
+    $scope.menuBlocks = blocks.getMenuBlocks();
     $scope.currentBoards = boards.getBoards();
 
     // File
@@ -102,16 +105,12 @@ angular.module('icestudio')
     }
 
     $scope.removeSelected = function() {
-      alertify.confirm('Do you want to remove the selected block?',
-        function() {
-          graph.removeSelected();
-          alertify.success('Block removed');
-      });
+      graph.removeSelected();
     }
 
     $(document).on('keydown', function(event) {
       if (event.keyCode == 46) { // Supr
-        $scope.removeSelected();
+        graph.removeSelected();
       }
     });
 
@@ -127,12 +126,6 @@ angular.module('icestudio')
             alertify.success('Board ' + board.label + ' selected');
         });
       }
-    }
-
-    // Blocks menu
-
-    $scope.createBasicBlock = function(type) {
-      graph.createBasicBlock(type)
     }
 
     /*
@@ -178,12 +171,6 @@ angular.module('icestudio')
 
     $scope.reloadBlocks = function() {
       blocks.loadBlocks();
-    }*/
-
-    // Blocks menu
-
-    /*$scope.addBlock = function(type, blockdata) {
-      $rootScope.$emit('addBlock', { type: type, blockdata: blockdata });
     }*/
 
   });

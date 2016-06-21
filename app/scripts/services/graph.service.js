@@ -121,7 +121,7 @@ angular.module('icestudio')
           }
         };
 
-        this.createBasicBlock = function(type) {
+        this.createBlock = function(type, block) {
           var blockInstance = {
             id: null,
             type: type,
@@ -138,9 +138,15 @@ angular.module('icestudio')
                       ports: { in: [], out: [] }
                     };
                     // Parse ports
-                    // TODO: undefined
-                    var inPorts = ports.split(' ')[0].split(',');
-                    var outPorts = ports.split(' ')[1].split(',');
+                    var inPorts = [];
+                    var outPorts = [];
+                    if (ports.split(' ').length > 0) {
+                      inPorts = ports.split(' ')[0].split(',');
+                    }
+                    if (ports.split(' ').length > 1) {
+                      outPorts = ports.split(' ')[1].split(',');
+                    }
+
                     for (var i in inPorts) {
                       if (inPorts[i])
                         blockInstance.data.ports.in.push(inPorts[i]);
@@ -165,6 +171,14 @@ angular.module('icestudio')
                     addBasicIOBlock(blockInstance);
                   }
               });
+            }
+            else {
+              if (block && block.graph) {
+                addBlock(blockInstance, block);
+              }
+              else {
+                alertify.error('Wrong block format: ' + type);
+              }
             }
           }
         };
@@ -193,8 +207,12 @@ angular.module('icestudio')
         this.removeSelected = function() {
           if (paper.options.interactive) {
             if (selectedCell) {
-              selectedCell.remove();
-              selectedCell = null;
+              alertify.confirm('Do you want to remove the selected block?',
+                function() {
+                  selectedCell.remove();
+                  selectedCell = null;
+                  alertify.success('Block removed');
+              });
             }
           }
         }
@@ -328,6 +346,12 @@ angular.module('icestudio')
 
           var numPorts = Math.max(inPorts.length, outPorts.length);
 
+          var blockLabel = blockInstance.type.toUpperCase();
+
+          if (blockInstance.type.indexOf('.') != -1) {
+            blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
+          }
+
           var block = new joint.shapes.ice.Block({
             id: blockInstance.id,
             blockType: blockInstance.type,
@@ -336,7 +360,7 @@ angular.module('icestudio')
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 120, height: 50 + 20 * numPorts },
-            attrs: { '.block-label': { text: blockInstance.type.toUpperCase() } }
+            attrs: { '.block-label': { text: blockLabel } }
           });
 
           graph.addCell(block);

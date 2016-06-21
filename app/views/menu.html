@@ -102,23 +102,23 @@
                     <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="createBasicBlock('basic.code')">{{ 'code' | translate }}</a>
-                        <a href ng-click="createBasicBlock('basic.input')">{{ 'input' | translate }}</a>
-                        <a href ng-click="createBasicBlock('basic.output')">{{ 'output' | translate }}</a>
+                        <a href ng-click="graph.createBlock('basic.code')">{{ 'code' | translate }}</a>
+                        <a href ng-click="graph.createBlock('basic.input')">{{ 'input' | translate }}</a>
+                        <a href ng-click="graph.createBlock('basic.output')">{{ 'output' | translate }}</a>
                       </li>
                     </ul>
                 </li>
 
-                <!--<li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
+                <li uib-dropdown ng-repeat="(category, blocks) in menuBlocks">
                     <a href uib-dropdown-toggle>{{ category }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="(name, block) in blocks">
-                        <a href ng-click="addBlock(category + '.' + name, block)">
+                        <a href ng-click="graph.createBlock(category + '.' + name, block)">
                           {{ name }}
                         </a>
                       </li>
                     </ul>
-                </li>-->
+                </li>
             </ul>
 
         </div>

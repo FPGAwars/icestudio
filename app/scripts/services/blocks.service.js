@@ -1,44 +1,52 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('blocks', ['$rootScope', 'nodeGlob',
-      function($rootScope, nodeGlob) {
+    .service('blocks', ['nodeGlob', 'utils',
+      function(nodeGlob, utils) {
 
-        $rootScope.blocks = {};
+        this.getMenuBlocks = function() {
+          var menuBlocks = {};
 
-        this.loadBlocks = function() {
-          nodeGlob('app/res/blocks/*', null, function (er, categories) {
-            for (var i = 0; i < categories.length; i++) {
+          nodeGlob('app/res/blocks/*', null, (function() {
 
-              var category = categories[i].split('/')[3];
+            return function (er, categories) {
 
-              $rootScope.blocks[category] = {};
+              for (var i in categories) {
 
-              nodeGlob(categories[i] + '/*/*.json', null, (function(c) {
-                  return function(er, blocks) {
-                      storeBlocks(er, blocks, c);
-                  };
-              })(category));
+                var category = categories[i].split('/')[3];
+                menuBlocks[category] = {};
 
-              function storeBlocks(er, blocks, category) {
+                nodeGlob(categories[i] + '/*.iceb', null, (function(c) {
+                    return function(er, blocks) {
+                        storeBlocks(er, blocks, c);
+                    };
+                })(category));
 
-                for (var j = 0; j < blocks.length; j++) {
+                function storeBlocks(er, blocks, category) {
 
-                  var name = blocks[j].split('/')[4];
+                  for (var j in blocks) {
 
-                  $.getJSON(blocks[j].substring(4), (function(c, n) {
-                      return function(data) {
-                          storeData(data, c, n);
-                      };
-                  })(category, name));
+                    var name = utils.basename(blocks[j]);
+                    menuBlocks[category][name] = {};
 
-                  function storeData(data, category, name) {
-                    $rootScope.blocks[category][name] = data;
+                    $.getJSON(blocks[j].substring(4), (function(c, n) {
+                        return function(data) {
+                            storeData(data, c, n);
+                        };
+                    })(category, name));
+
+                    function storeData(data, category, name) {
+                      menuBlocks[category][name] = data;
+                    }
                   }
-                }
-              };
-            }
-          });
+                };
+              }
+
+            };
+
+          })());
+
+          return menuBlocks;
         };
 
     }]);
