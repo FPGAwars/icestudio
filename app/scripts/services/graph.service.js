@@ -162,7 +162,7 @@ angular.module('icestudio')
               });
             }
             else if (type == 'basic.input' || type == 'basic.output') {
-              alertify.prompt('Insert the block name', '',
+              alertify.prompt('Insert the block name', 'a',
                 function(evt, name) {
                   if (name) {
                     blockInstance.data = {

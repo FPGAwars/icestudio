@@ -35,7 +35,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       '.block-label': {
         ref: '.body',
         'ref-x': .5,
-        'ref-y': 15,
+        'ref-y': 10,
         'font-size': 15,
         'text-anchor': 'middle',
         'font-weight': 'bold',
@@ -161,6 +161,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   template: [
       '<div class="io-element">',
       '<select class="io-combo"></select>',
+      '<script>',
+      '$("select").select2({placeholder: "", allowClear: true});',
+      '</script>',
       '</div>'
   ].join(''),
 
@@ -190,7 +193,6 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.prepend(this.$box);
-    // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
     this.updateBox();
     return this;
   },
@@ -240,7 +242,7 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   updateBox: function() {
     // Set the position and dimension of the box so that it covers the JointJS element.
     var bbox = this.model.getBBox()
-    this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+    this.$box.css({ width: bbox.width, left: bbox.x + 10, top: bbox.y + 32 });
   },
 
   removeBox: function(evt) {
