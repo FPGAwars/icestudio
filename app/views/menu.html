@@ -32,38 +32,12 @@
                       <li>
                         <a href ng-click="exportAsBlock()">{{ 'Export as block' | translate }}</a>
                       </li>
-                      <!--<li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle> {{ 'Load custom block' | translate }}</a>
-                        <ul uib-dropdown-menu>
-                          <li ng-repeat="(key, data) in $root.blocks.custom">
-                            <a href ng-click="loadCustomBlock(key)">{{ key }}</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>{{ 'Remove custom block' | translate }}</a>
-                        <ul uib-dropdown-menu>
-                          <li ng-repeat="(key, data) in $root.blocks.custom">
-                            <a href ng-click="removeCustomBlock(key)">{{ key }}</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a href ng-click="saveCustomBlock()">{{ 'Save custom block' | translate }}</a>
-                      </li>-->
                     </ul>
                 </li>
 
                 <li uib-dropdown>
                     <a href uib-dropdown-toggle>Edit  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <!--<li>
-                        <a href ng-click="build()">{{ 'Build' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="upload()">{{ 'Upload' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>-->
                       <li>
                         <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
                       </li>
@@ -72,15 +46,6 @@
                       </li>
                     </ul>
                 </li>
-
-                <!--<li uib-dropdown>
-                    <a href uib-dropdown-toggle>View  <span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
-                        <a href ng-click="reloadBlocks()">{{ 'Reload blocks menu' | translate }}</a>
-                      </li>
-                    </ul>
-                </li>-->
 
                 <li uib-dropdown>
                     <a href uib-dropdown-toggle>Boards  <span class="caret"></span></a>
@@ -102,23 +67,23 @@
                     <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="createBasicBlock('basic.code')">{{ 'code' | translate }}</a>
-                        <a href ng-click="createBasicBlock('basic.input')">{{ 'input' | translate }}</a>
-                        <a href ng-click="createBasicBlock('basic.output')">{{ 'output' | translate }}</a>
+                        <a href ng-click="common.addBlock('basic.code')">{{ 'code' | translate }}</a>
+                        <a href ng-click="common.addBlock('basic.input')">{{ 'input' | translate }}</a>
+                        <a href ng-click="common.addBlock('basic.output')">{{ 'output' | translate }}</a>
                       </li>
                     </ul>
                 </li>
 
-                <!--<li uib-dropdown ng-repeat="(category, blocks) in $root.blocks">
+                <li uib-dropdown ng-repeat="(category, blocks) in menuBlocks">
                     <a href uib-dropdown-toggle>{{ category }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="(name, block) in blocks">
-                        <a href ng-click="addBlock(category + '.' + name, block)">
+                        <a href ng-click="common.addBlock(category + '.' + name, block)">
                           {{ name }}
                         </a>
                       </li>
                     </ul>
-                </li>-->
+                </li>
             </ul>
 
         </div>

@@ -28,6 +28,7 @@ angular.module('icestudio')
         graph.paperEnable(true);
       }
       else {
+        // graph.dependencies
         graph.loadProject(common.project.deps[selectedItem.type]);
         graph.paperEnable(false);
       }
@@ -37,35 +38,4 @@ angular.module('icestudio')
       common.refreshProject(callback);
     });
 
-    /*
-    $rootScope.$on('loadCustomBlock', function(event, name) {
-      var filepath = 'res/blocks/custom/' + name + '/' + name + '.json';
-      $.getJSON(filepath, function(p) {
-        project.updateName(name);
-        $rootScope.project = p;
-        loadGraph(project, true, true);
-        alertify.success('Custom block ' + name + ' loaded');
-      });
-    });
-
-    $rootScope.$on('saveCustomBlock', function(event, name) {
-      var filepath = 'app/res/blocks/custom/' + name;
-      try {
-        nodeFs.mkdirSync(filepath);
-      } catch(e) {
-        if ( e.code != 'EEXIST' ) throw e;
-      }
-      project.updateName(name);
-      save(filepath + '/' + name + '.json', false);
-      blocks.loadBlocks(); // Refresh menu blocks
-      alertify.success('Project ' + name + ' exported to custom blocks');
-    });
-
-    $rootScope.$on('removeCustomBlock', function(event, name) {
-      var filepath = 'app/res/blocks/custom/' + name;
-      nodeRmdir(filepath, function (err, dirs, files) {
-        blocks.loadBlocks();
-        alertify.success('Custom block ' + name + ' removed');
-      });
-    });*/
   });

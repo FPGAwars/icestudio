@@ -72,14 +72,15 @@ angular.module('icestudio')
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
+                  var hidecombo = true;
                   if (breadcrumb.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
-                      loadGraph(dependencies[data.blockType]);
+                      loadGraph(dependencies[data.blockType], hidecombo);
                       paperEnable(false);
                     });
                   }
                   else {
-                    loadGraph(dependencies[data.blockType]);
+                    loadGraph(dependencies[data.blockType], hidecombo);
                     paperEnable(false);
                   }
                 }
@@ -121,9 +122,10 @@ angular.module('icestudio')
           }
         };
 
-        this.createBasicBlock = function(type) {
+        this.createBlock = function(type, block) {
           var blockInstance = {
             id: null,
+            data: {},
             type: type,
             position: { x: 100, y: 100 }
           };
@@ -138,9 +140,15 @@ angular.module('icestudio')
                       ports: { in: [], out: [] }
                     };
                     // Parse ports
-                    // TODO: undefined
-                    var inPorts = ports.split(' ')[0].split(',');
-                    var outPorts = ports.split(' ')[1].split(',');
+                    var inPorts = [];
+                    var outPorts = [];
+                    if (ports.split(' ').length > 0) {
+                      inPorts = ports.split(' ')[0].split(',');
+                    }
+                    if (ports.split(' ').length > 1) {
+                      outPorts = ports.split(' ')[1].split(',');
+                    }
+
                     for (var i in inPorts) {
                       if (inPorts[i])
                         blockInstance.data.ports.in.push(inPorts[i]);
@@ -165,6 +173,16 @@ angular.module('icestudio')
                     addBasicIOBlock(blockInstance);
                   }
               });
+            }
+            else {
+              if (block && block.graph) {
+                // TODO: unique add deps
+                dependencies[type] = block;
+                addBlock(blockInstance, block);
+              }
+              else {
+                alertify.error('Wrong block format: ' + type);
+              }
             }
           }
         };
@@ -193,8 +211,12 @@ angular.module('icestudio')
         this.removeSelected = function() {
           if (paper.options.interactive) {
             if (selectedCell) {
-              selectedCell.remove();
-              selectedCell = null;
+              alertify.confirm('Do you want to remove the selected block?',
+                function() {
+                  selectedCell.remove();
+                  selectedCell = null;
+                  alertify.success('Block removed');
+              });
             }
           }
         }
@@ -204,7 +226,7 @@ angular.module('icestudio')
           loadGraph(project);
         }
 
-        function loadGraph(project) {
+        function loadGraph(project, hidecombo) {
           var blockInstances = project.graph.blocks;
           var wires = project.graph.wires;
           var deps = project.deps;
@@ -218,7 +240,7 @@ angular.module('icestudio')
               addBasicCodeBlock(blockInstance);
             }
             else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
-              addBasicIOBlock(blockInstance);
+              addBasicIOBlock(blockInstance, hidecombo);
             }
             else {
               addBlock(blockInstance, deps[blockInstance.type]);
@@ -234,8 +256,8 @@ angular.module('icestudio')
         this.importBlock = function(type, block) {
           var blockInstance = {
             id: null,
-            type: type,
             data: {},
+            type: type,
             position: { x: 100, y: 100 }
           }
           // TODO: unique add deps
@@ -243,7 +265,7 @@ angular.module('icestudio')
           addBlock(blockInstance, block);
         }
 
-        function addBasicIOBlock(blockInstances) {
+        function addBasicIOBlock(blockInstances, hidecombo) {
           var inPorts = [];
           var outPorts = [];
 
@@ -265,6 +287,7 @@ angular.module('icestudio')
             blockType: blockInstances.type,
             data: { name: blockInstances.data.name, value: blockInstances.data.value },
             position: blockInstances.position,
+            hidecombo: hidecombo,
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
@@ -328,6 +351,12 @@ angular.module('icestudio')
 
           var numPorts = Math.max(inPorts.length, outPorts.length);
 
+          var blockLabel = blockInstance.type.toUpperCase();
+
+          if (blockInstance.type.indexOf('.') != -1) {
+            blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
+          }
+
           var block = new joint.shapes.ice.Block({
             id: blockInstance.id,
             blockType: blockInstance.type,
@@ -336,7 +365,7 @@ angular.module('icestudio')
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 120, height: 50 + 20 * numPorts },
-            attrs: { '.block-label': { text: blockInstance.type.toUpperCase() } }
+            attrs: { '.block-label': { text: blockLabel } }
           });
 
           graph.addCell(block);
