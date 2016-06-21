@@ -175,7 +175,11 @@ angular.module('icestudio')
               });
             }
             else {
-              if (block && block.graph) {
+              if (block &&
+                  block.graph &&
+                  block.graph.blocks &&
+                  block.graph.wires &&
+                  block.deps) {
                 // TODO: unique add deps
                 dependencies[type] = block;
                 addBlock(blockInstance, block);
@@ -227,29 +231,41 @@ angular.module('icestudio')
         }
 
         function loadGraph(project, hidecombo) {
-          var blockInstances = project.graph.blocks;
-          var wires = project.graph.wires;
-          var deps = project.deps;
+          if (project &&
+              project.graph &&
+              project.graph.blocks &&
+              project.graph.wires &&
+              project.deps) {
 
-          clearAll();
+            var blockInstances = project.graph.blocks;
+            var wires = project.graph.wires;
+            var deps = project.deps;
 
-          // Blocks
-          for (var i in blockInstances) {
-            var blockInstance = blockInstances[i];
-            if (blockInstance.type == 'basic.code') {
-              addBasicCodeBlock(blockInstance);
+            clearAll();
+
+            // Blocks
+            for (var i in blockInstances) {
+              var blockInstance = blockInstances[i];
+              if (blockInstance.type == 'basic.code') {
+                addBasicCodeBlock(blockInstance);
+              }
+              else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
+                addBasicIOBlock(blockInstance, hidecombo);
+              }
+              else {
+                addBlock(blockInstance, deps[blockInstance.type]);
+              }
             }
-            else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
-              addBasicIOBlock(blockInstance, hidecombo);
+
+            // Wires
+            for (var i in wires) {
+              addWire(wires[i]);
             }
-            else {
-              addBlock(blockInstance, deps[blockInstance.type]);
-            }
+
+            alertify.success('Project ' + name + ' loaded');
           }
-
-          // Wires
-          for (var i in wires) {
-            addWire(wires[i]);
+          else {
+            alertify.error('Wrong project format: ' + name);
           }
         }
 

@@ -36,14 +36,17 @@ angular.module('icestudio')
           });
           if (project) {
             var name = utils.basename(filepath);
-            this.updateProjectName(name);
-            this.project = project;
-            boards.selectBoard(project.board);
-            graph.loadProject(project);
-            alertify.success('Project ' + name + ' loaded');
+            this.loadProject(name, project);
           }
           $.ajaxSetup({ async: true });
         };
+
+        this.loadProject = function(name, project) {
+          this.updateProjectName(name);
+          this.project = project;
+          boards.selectBoard(project.board);
+          graph.loadProject(project);
+        }
 
         this.saveProject = function(filepath) {
           var name = utils.basename(filepath);
@@ -85,7 +88,6 @@ angular.module('icestudio')
               delete block.graph.blocks[i].data.value;
             }
           }
-          console.log(block);
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
             function(err) {
               if (!err) {
