@@ -72,14 +72,15 @@ angular.module('icestudio')
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
+                  var hidecombo = true;
                   if (breadcrumb.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
-                      loadGraph(dependencies[data.blockType]);
+                      loadGraph(dependencies[data.blockType], hidecombo);
                       paperEnable(false);
                     });
                   }
                   else {
-                    loadGraph(dependencies[data.blockType]);
+                    loadGraph(dependencies[data.blockType], hidecombo);
                     paperEnable(false);
                   }
                 }
@@ -225,7 +226,7 @@ angular.module('icestudio')
           loadGraph(project);
         }
 
-        function loadGraph(project) {
+        function loadGraph(project, hidecombo) {
           var blockInstances = project.graph.blocks;
           var wires = project.graph.wires;
           var deps = project.deps;
@@ -239,7 +240,7 @@ angular.module('icestudio')
               addBasicCodeBlock(blockInstance);
             }
             else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
-              addBasicIOBlock(blockInstance);
+              addBasicIOBlock(blockInstance, hidecombo);
             }
             else {
               addBlock(blockInstance, deps[blockInstance.type]);
@@ -264,7 +265,7 @@ angular.module('icestudio')
           addBlock(blockInstance, block);
         }
 
-        function addBasicIOBlock(blockInstances) {
+        function addBasicIOBlock(blockInstances, hidecombo) {
           var inPorts = [];
           var outPorts = [];
 
@@ -286,6 +287,7 @@ angular.module('icestudio')
             blockType: blockInstances.type,
             data: { name: blockInstances.data.name, value: blockInstances.data.value },
             position: blockInstances.position,
+            hidecombo: hidecombo,
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,

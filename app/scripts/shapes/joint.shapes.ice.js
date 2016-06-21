@@ -212,7 +212,10 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   },
 
   renderChoices: function() {
-    if (true) {  // this.model.get('fpgaio')) {
+    if (this.model.get('hidecombo')) {
+      this.$box.find('select').hide();
+    }
+    else {
       var choices = this.model.get('choices');
       var $select = this.$box.find('.io-combo').empty();
 
@@ -222,9 +225,6 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
       }
 
       this.$box.find('select').val(this.model.get('data').value);
-    }
-    else {
-      this.$box.find('select').hide();
     }
   },
 
