@@ -9,7 +9,6 @@ angular.module('icestudio')
                                     blocks) {
 
     $scope.common = common;
-    $scope.graph = graph;
     $scope.boards = boards;
     $scope.menuBlocks = blocks.getMenuBlocks();
     $scope.currentBoards = boards.getBoards();
@@ -127,50 +126,5 @@ angular.module('icestudio')
         });
       }
     }
-
-    /*
-
-    /*$scope.loadCustomBlock = function(name) {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue?',
-        function() {
-          $rootScope.$emit('loadCustomBlock', name);
-      });
-    }
-
-    $scope.removeCustomBlock = function(name) {
-      alertify.confirm('Do you want to remove the custom block <b>' + name + '</b>?',
-        function() {
-          $rootScope.$emit('removeCustomBlock', name);
-      });
-    }
-
-    $scope.saveCustomBlock = function() {
-      alertify.prompt('Do you want to export your custom block?',
-        $rootScope.project.name,
-        function(evt, name) {
-          if (name) {
-            $rootScope.$emit('saveCustomBlock', name);
-          }
-      });
-    }*/
-
-    // Edit
-
-    /*$scope.build = function() {
-      console.log('build');
-    }
-
-    $scope.upload = function() {
-      console.log('upload');
-    }*/
-
-    /*
-
-    // View
-
-    $scope.reloadBlocks = function() {
-      blocks.loadBlocks();
-    }*/
 
   });

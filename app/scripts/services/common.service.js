@@ -148,4 +148,10 @@ angular.module('icestudio')
           }
         }
 
+        this.addBlock = function(type, block) {
+          // TODO: Check unique add
+          this.project.deps[type] = block;
+          graph.createBlock(type, block);
+        }
+
     }]);

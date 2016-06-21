@@ -6,13 +6,7 @@ file
 *.blif
 *.pyc
 *.ice
-*.iceb
 build
 icestudio/node_modules
 bower_components
 node_modules
-app/res/blocks/custom/*
-!app/res/blocks/custom/and/*
-!app/res/blocks/custom/high/*
-!app/res/blocks/custom/low/*
-!app/res/blocks/custom/zero/*

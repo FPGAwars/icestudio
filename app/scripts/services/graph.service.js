@@ -124,6 +124,7 @@ angular.module('icestudio')
         this.createBlock = function(type, block) {
           var blockInstance = {
             id: null,
+            data: {},
             type: type,
             position: { x: 100, y: 100 }
           };
@@ -174,6 +175,8 @@ angular.module('icestudio')
             }
             else {
               if (block && block.graph) {
+                // TODO: unique add deps
+                dependencies[type] = block;
                 addBlock(blockInstance, block);
               }
               else {
@@ -252,8 +255,8 @@ angular.module('icestudio')
         this.importBlock = function(type, block) {
           var blockInstance = {
             id: null,
-            type: type,
             data: {},
+            type: type,
             position: { x: 100, y: 100 }
           }
           // TODO: unique add deps

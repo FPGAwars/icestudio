@@ -1,0 +1,70 @@
+{
+  "graph": {
+    "blocks": [
+      {
+        "id": "86967587-d937-4bce-8045-d7c97fb33c54",
+        "type": "basic.code",
+        "data": {
+          "code": "// NOT logic gate\n\nassign b = !a;",
+          "ports": {
+            "in": [
+              "a"
+            ],
+            "out": [
+              "b"
+            ]
+          }
+        },
+        "position": {
+          "x": 251,
+          "y": 37
+        }
+      },
+      {
+        "id": "b0ab5d7e-554c-4faf-99f7-f5dc43fe9808",
+        "type": "basic.input",
+        "data": {
+          "name": "i"
+        },
+        "position": {
+          "x": 45,
+          "y": 158
+        }
+      },
+      {
+        "id": "2c127b80-e72d-4e81-8825-b769dbd31cef",
+        "type": "basic.output",
+        "data": {
+          "name": "o"
+        },
+        "position": {
+          "x": 752,
+          "y": 157
+        }
+      }
+    ],
+    "wires": [
+      {
+        "source": {
+          "block": "b0ab5d7e-554c-4faf-99f7-f5dc43fe9808",
+          "port": "out"
+        },
+        "target": {
+          "block": "86967587-d937-4bce-8045-d7c97fb33c54",
+          "port": "a"
+        }
+      },
+      {
+        "source": {
+          "block": "86967587-d937-4bce-8045-d7c97fb33c54",
+          "port": "b"
+        },
+        "target": {
+          "block": "2c127b80-e72d-4e81-8825-b769dbd31cef",
+          "port": "in"
+        }
+      }
+    ]
+  },
+  "deps": {}
+}
