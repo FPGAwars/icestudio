@@ -45,7 +45,12 @@ angular.module('icestudio')
           this.updateProjectName(name);
           this.project = project;
           boards.selectBoard(project.board);
-          graph.loadProject(project);
+          if (graph.loadProject(project)) {
+            alertify.success('Project ' + name + ' loaded');
+          }
+          else {
+            alertify.error('Wrong project format: ' + name);
+          }
         }
 
         this.saveProject = function(filepath) {

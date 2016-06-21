@@ -227,7 +227,7 @@ angular.module('icestudio')
 
         this.loadProject = function(project) {
           dependencies = project.deps;
-          loadGraph(project);
+          return loadGraph(project);
         }
 
         function loadGraph(project, hidecombo) {
@@ -262,10 +262,7 @@ angular.module('icestudio')
               addWire(wires[i]);
             }
 
-            alertify.success('Project ' + name + ' loaded');
-          }
-          else {
-            alertify.error('Wrong project format: ' + name);
+            return true;
           }
         }
 

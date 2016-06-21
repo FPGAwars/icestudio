@@ -160,9 +160,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
   template: [
       '<div class="io-element">',
-      '<select class="io-combo"></select>',
+      '<select class="io-combo select2"></select>',
       '<script>',
-      '$("select").select2({placeholder: "", allowClear: true});',
+      '$(".select2").select2({placeholder: "", allowClear: true});',
       '</script>',
       '</div>'
   ].join(''),
@@ -215,7 +215,8 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
   renderChoices: function() {
     if (this.model.get('hidecombo')) {
-      this.$box.find('select').hide();
+      this.$box.find('select').removeClass('select2');
+      this.$box.find('select').css({'display': 'none'});
     }
     else {
       var choices = this.model.get('choices');
