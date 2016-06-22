@@ -59,4 +59,7 @@ Example 1
     .. literalinclude:: ../examples/example1.v
        :language: verilog
 
+    .. literalinclude:: ../examples/example1.pcf
+       :language: verilog
+
 |

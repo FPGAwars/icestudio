@@ -38,7 +38,10 @@ Block instances
      "id": "",
      "type": "",
      "data": {},
-     "position": { "x": 0, "y": 0 }
+     "position": {
+       "x": 0,
+       "y": 0
+     }
    }
 
 
@@ -48,8 +51,14 @@ Wire instances
 .. code-block:: json
 
    {
-     "source": { "block": "", "port": "" },
-     "target": { "block": "", "port": "" }
+     "source": {
+       "block": "",
+       "port": ""
+     },
+     "target": {
+       "block": "",
+       "port": ""
+     }
    }
 
 
@@ -69,8 +78,17 @@ It has one output port named 'out'.
    {
      "id": "",
      "type": "basic.input",
-     "data": { "name": "a" },
-     "position": { "x": 0, "y": 0 }
+     "data": {
+       "label": "a",
+       "pin": {
+         "name": "LED0",
+         "value": 95
+       }
+     },
+     "position": {
+       "x": 0,
+       "y": 0
+     }
    }
 
 Output instance
@@ -86,8 +104,17 @@ It has one input port named 'in'.
    {
      "id": "",
      "type": "basic.output",
-     "data": { "name": "o" },
-     "position": { "x": 0, "y": 0 }
+     "data": {
+       "label": "o",
+       "pin": {
+         "name": "LED1",
+         "value": 96
+       }
+     },
+     "position": {
+       "x": 0,
+       "y": 0
+     }
    }
 
 Code instance
@@ -105,9 +132,20 @@ It has input and output ports defined in *value.ports* field.
      "type": "basic.code",
      "data": {
        "code": "// And gate\n\nassign o = a & b;\n",
-       "ports": { "in": ["a", "b"], "out": ["o"] }
+       "ports": {
+         "in": [
+           "a",
+           "b"
+          ],
+          "out": [
+            "o"
+          ]
+        }
      },
-     "position": { "x": 0, "y": 0 }
+     "position": {
+       "x": 0,
+       "y": 0
+     }
    }
 
 Simple blocks
@@ -148,7 +186,7 @@ File: **driver/low.iceb**
           "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
           "type": "basic.output",
           "data": {
-            "name": "o"
+            "label": "o"
           },
           "position": {
             "x": 627,

@@ -65,8 +65,11 @@ File: **driver/low.ice**
           "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
           "type": "basic.output",
           "data": {
-            "name": "o",
-            "value": "LED0"
+            "label": "o",
+            "pin": {
+              "name": "LED0",
+              "value": 95
+            }
           },
           "position": {
             "x": 627,
@@ -119,8 +122,11 @@ File: **wrapper/low.ice**
           "id": "eced7092-f887-4fac-9d0d-03bdbff56d3f",
           "type": "basic.output",
           "data": {
-            "name": "x",
-            "value": "D1"
+            "label": "x",
+            "pin": {
+              "name": "D1",
+              "value": 99
+            }
           },
           "position": {
             "x": 336,
@@ -166,7 +172,7 @@ File: **wrapper/low.ice**
               "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
               "type": "basic.output",
               "data": {
-                "name": "o"
+                "label": "o"
               },
               "position": {
                 "x": 627,
