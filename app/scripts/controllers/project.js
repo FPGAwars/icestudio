@@ -20,7 +20,7 @@ angular.module('icestudio')
         graph.breadcrumbs.pop();
         item = graph.breadcrumbs.slice(-1)[0];
       }
-      while (selectedItem.name != item.name);
+      while (selectedItem != item);
 
       if (graph.breadcrumbs.length == 1) {
         graph.loadProject(common.project);

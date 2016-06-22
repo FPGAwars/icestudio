@@ -26,6 +26,14 @@ angular.module('icestudio')
       });
     }
 
+    $scope.openExample = function(name, project) {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue loading the example?',
+        function() {
+          common.loadProject(name, project);
+      });
+    }
+
     $scope.openProject = function() {
         setTimeout(function() {
           var ctrl = angular.element('#input-open-project');
@@ -101,24 +109,28 @@ angular.module('icestudio')
     $scope.clearGraph = function() {
       alertify.confirm('Do you want to clear the graph?',
         function() {
-          graph.clearAll();
+          common.clearProject();
       });
     }
 
     $scope.removeSelected = function() {
-      graph.removeSelected();
+      alertify.confirm('Do you want to remove the selected block?',
+        function() {
+          common.removeSelected();
+        }
+      );
     }
 
     $(document).on('keydown', function(event) {
       if (event.keyCode == 46) { // Supr
-        graph.removeSelected();
+        $scope.removeSelected();
       }
     });
 
     // Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard != board) {
+      if (boards.selectedBoard.id != board.id) {
         alertify.confirm('The current FPGA I/O configuration will be lost. ' +
                          'Do you want to change to <b>' + board.label + '</b> board?',
           function() {

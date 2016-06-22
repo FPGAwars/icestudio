@@ -1,11 +1,12 @@
 {
+  "board": "icezum",
   "graph": {
     "blocks": [
       {
         "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
         "type": "basic.code",
         "data": {
-          "code": "// Driver low\n\nassign v = 1'b0;",
+          "code": "// Driver high\n\nassign v = 1'b1;",
           "ports": {
             "in": [],
             "out": [
@@ -22,7 +23,11 @@
         "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
         "type": "basic.output",
         "data": {
-          "label": ""
+          "label": "o",
+          "pin": {
+            "name": "LED0",
+            "value": "95"
+          }
         },
         "position": {
           "x": 633,

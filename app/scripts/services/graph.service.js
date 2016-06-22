@@ -13,7 +13,7 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        var breadcrumbs = [ { id: '', name: '' } ];
+        var breadcrumbs = [{ name: '' }];
 
         this.breadcrumbs = breadcrumbs;
 
@@ -68,7 +68,7 @@ angular.module('icestudio')
                 // TODO.
               }
               else {
-                  breadcrumbs.push({ type: data.blockType, name: data.blockType });
+                  breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
@@ -127,7 +127,7 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 100, y: 100 }
+            position: { x: 50, y: 50 }
           };
 
           if (paper.options.interactive) {
@@ -157,6 +157,7 @@ angular.module('icestudio')
                       if (outPorts[o])
                         blockInstance.data.ports.out.push(outPorts[o]);
                     }
+                    blockInstance.position.x = 250;
                     addBasicCodeBlock(blockInstance);
                   }
               });
@@ -165,12 +166,20 @@ angular.module('icestudio')
               alertify.prompt('Insert the block name', 'i',
                 function(evt, name) {
                   if (name) {
-                    blockInstance.data = {
-                      name: name,
-                      value: '',
-                      choices: boards.getPinout()
-                    };
-                    addBasicIOBlock(blockInstance);
+                    var names = name.split(' ');
+                    for (var n in names) {
+                      if (names[n]) {
+                        blockInstance.data = {
+                          label: names[n],
+                          pin: {
+                            name: '',
+                            value: 0
+                          }
+                        };
+                        addBasicIOBlock(blockInstance);
+                        blockInstance.position.y += 100;
+                      }
+                    }
                   }
               });
             }
@@ -178,12 +187,21 @@ angular.module('icestudio')
               alertify.prompt('Insert the block name', 'o',
                 function(evt, name) {
                   if (name) {
-                    blockInstance.data = {
-                      name: name,
-                      value: '',
-                      choices: boards.getPinout()
-                    };
-                    addBasicIOBlock(blockInstance);
+                    var names = name.split(' ');
+                    blockInstance.position.x = 750;
+                    for (var n in names) {
+                      if (names[n]) {
+                        blockInstance.data = {
+                          label: names[n],
+                          pin: {
+                            name: '',
+                            value: 0
+                          }
+                        };
+                        addBasicIOBlock(blockInstance);
+                        blockInstance.position.y += 100;
+                      }
+                    }
                   }
               });
             }
@@ -193,8 +211,9 @@ angular.module('icestudio')
                   block.graph.blocks &&
                   block.graph.wires &&
                   block.deps) {
-                // TODO: unique add deps
                 dependencies[type] = block;
+                blockInstance.position.x = 100;
+                blockInstance.position.y = 150;
                 addBlock(blockInstance, block);
               }
               else {
@@ -225,18 +244,32 @@ angular.module('icestudio')
           }
         }
 
+        this.getSelectedType = function() {
+          if (selectedCell) {
+            return selectedCell.attributes.blockType;
+          }
+        }
+
         this.removeSelected = function() {
           if (paper.options.interactive) {
             if (selectedCell) {
-              alertify.confirm('Do you want to remove the selected block?',
-                function() {
-                  selectedCell.remove();
-                  selectedCell = null;
-                  alertify.success('Block removed');
-              });
+              selectedCell.remove();
+              selectedCell = null;
+              alertify.success('Block removed');
             }
           }
         }
+
+        this.typeInGraph = function(type) {
+          var count = 0;
+          var cells = graph.getCells();
+          for (var i in cells) {
+            if (cells[i].attributes.blockType == type) {
+              count += 1;
+            }
+          }
+          return count;
+        };
 
         this.loadProject = function(project, disabled) {
           return loadGraph(project, disabled);
@@ -287,7 +320,6 @@ angular.module('icestudio')
             type: type,
             position: { x: 100, y: 100 }
           }
-          // TODO: unique add deps
           dependencies[type] = block;
           addBlock(blockInstance, block);
         }
@@ -298,13 +330,13 @@ angular.module('icestudio')
 
           if (blockInstances.type == 'basic.input') {
             outPorts.push({
-              name: 'out',
+              id: 'out',
               label: ''
             });
           }
           else if (blockInstances.type == 'basic.output') {
             inPorts.push({
-              name: 'in',
+              id: 'in',
               label: ''
             });
           }
@@ -312,14 +344,14 @@ angular.module('icestudio')
           var block = new joint.shapes.ice.IO({
             id: blockInstances.id,
             blockType: blockInstances.type,
-            data: { name: blockInstances.data.name, value: blockInstances.data.value },
+            data: blockInstances.data,
             position: blockInstances.position,
             disabled: disabled,
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 100, height: 70 },
-            attrs: { '.block-label': { text: blockInstances.data.name } }
+            attrs: { '.block-label': { text: blockInstances.data.label } }
           });
 
           graph.addCell(block);
@@ -331,14 +363,14 @@ angular.module('icestudio')
 
           for (var i in blockInstances.data.ports.in) {
             inPorts.push({
-              name: blockInstances.data.ports.in[i],
+              id: blockInstances.data.ports.in[i],
               label: blockInstances.data.ports.in[i]
             });
           }
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
-              name: blockInstances.data.ports.out[o],
+              id: blockInstances.data.ports.out[o],
               label: blockInstances.data.ports.out[o]
             });
           }
@@ -365,14 +397,14 @@ angular.module('icestudio')
             var item = block.graph.blocks[i];
             if (item.type == 'basic.input') {
               inPorts.push({
-                name: item.data.name,
-                label: item.data.name
+                id: item.id,
+                label: item.data.label
               });
             }
             else if (item.type == 'basic.output') {
               outPorts.push({
-                name: item.data.name,
-                label: item.data.name
+                id: item.id,
+                label: item.data.label
               });
             }
           }

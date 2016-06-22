@@ -1,4 +1,5 @@
 {
+  "board": "icezum",
   "graph": {
     "blocks": [
       {
@@ -22,7 +23,11 @@
         "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
         "type": "basic.output",
         "data": {
-          "label": ""
+          "label": "o",
+          "pin": {
+            "name": "LED0",
+            "value": "95"
+          }
         },
         "position": {
           "x": 633,

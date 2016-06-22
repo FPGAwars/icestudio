@@ -71,12 +71,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portBodySelector = portSelector + '>.port-body';
 
     attrs[portLabelSelector] = {
-      text: (port) ? (port.label) ? port.label  : ''  : ''
+      text: port.label
     };
 
     attrs[portBodySelector] = {
       port: {
-        id: (port) ? (port.name) : null  || _.uniqueId(type),
+        id: port.id,
         type: type
       }
     };
@@ -176,7 +176,8 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
     this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
     this.$box.find('.io-combo').on('change', _.bind(function(evt) {
-        this.model.attributes.data.value = $(evt.target).val();
+        this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
+        this.model.attributes.data.pin.value = $(evt.target).val();
     }, this));
 
     // Update the box position whenever the underlying model changes.
@@ -224,10 +225,10 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
       $select.append('<option></option>');
       for (var c in choices) {
-        $select.append('<option>' + choices[c].name + '</option>');
+        $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
       }
 
-      this.$box.find('.io-combo').val(this.model.get('data').value);
+      this.$box.find('.io-combo').val(this.model.get('data').pin.value);
     }
   },
 

@@ -49,7 +49,7 @@ angular.module('icestudio')
           else {
             alertify.error('Wrong project format: ' + name);
           }
-        }
+        };
 
         this.saveProject = function(filepath) {
           var name = utils.basename(filepath);
@@ -72,7 +72,6 @@ angular.module('icestudio')
           if (block) {
             var name = utils.basename(filepath);
             graph.importBlock(name, block);
-            // TODO: Check unique add
             this.project.deps[name] = block;
             alertify.success('Block ' + name + ' imported');
           }
@@ -88,7 +87,7 @@ angular.module('icestudio')
           for (var i in block.graph.blocks) {
             if (block.graph.blocks[i].type == 'basic.input' ||
                 block.graph.blocks[i].type == 'basic.output') {
-              delete block.graph.blocks[i].data.value;
+              delete block.graph.blocks[i].data.pin;
             }
           }
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
@@ -136,11 +135,28 @@ angular.module('icestudio')
         };
 
         this.clearProject = function() {
-          graph.breadcrumbs = [ { id: '', name: this.projectName }];
+          this.project = {
+            board: '',
+            graph: {},
+            deps: {}
+          };
+          graph.clearAll();
+          graph.breadcrumbs = [{ name: this.projectName }];
           if(!$rootScope.$$phase) {
             $rootScope.$apply();
           }
-        }
+        };
+
+        this.removeSelected = function() {
+          var type = graph.getSelectedType();
+          graph.removeSelected();
+          if (type) {
+            // There is no 'type' block
+            if (graph.typeInGraph(type) == 0) {
+              delete this.project.deps[type];
+            }
+          }
+        };
 
         this.updateProjectName = function(name) {
           if (name) {
@@ -154,7 +170,6 @@ angular.module('icestudio')
         }
 
         this.addBlock = function(type, block) {
-          // TODO: Check unique add
           this.project.deps[type] = block;
           graph.createBlock(type, block);
         }
