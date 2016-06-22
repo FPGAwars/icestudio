@@ -30,7 +30,7 @@ angular.module('icestudio')
         var disabled = true;
         var project = common.project;
         for (var i = 1; i < graph.breadcrumbs.length; i++) {
-          project = project.deps[graph.breadcrumbs[i]];
+          project = project.deps[graph.breadcrumbs[i].name];
         }
         graph.loadProject(project, disabled);
         graph.paperEnable(false);

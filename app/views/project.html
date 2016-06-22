@@ -2,8 +2,8 @@
   <div id="paper" class="paper"></div>
   <ol class="breadcrumb" style="margin-bottom: 5px;">
     <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
-      <span ng-switch-when="true">{{ item }}</span>
-      <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item }}</a>
+      <span ng-switch-when="true">{{ item.name }}</span>
+      <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
     </li>
   </ol>
 </div>

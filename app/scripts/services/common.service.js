@@ -49,7 +49,7 @@ angular.module('icestudio')
           else {
             alertify.error('Wrong project format: ' + name);
           }
-        }
+        };
 
         this.saveProject = function(filepath) {
           var name = utils.basename(filepath);
@@ -72,7 +72,6 @@ angular.module('icestudio')
           if (block) {
             var name = utils.basename(filepath);
             graph.importBlock(name, block);
-            // TODO: Check unique add
             this.project.deps[name] = block;
             alertify.success('Block ' + name + ' imported');
           }
@@ -136,16 +135,33 @@ angular.module('icestudio')
         };
 
         this.clearProject = function() {
-          graph.breadcrumbs = [this.projectName];
+          this.project = {
+            board: '',
+            graph: {},
+            deps: {}
+          };
+          graph.clearAll();
+          graph.breadcrumbs = [{ name: this.projectName }];
           if(!$rootScope.$$phase) {
             $rootScope.$apply();
           }
-        }
+        };
+
+        this.removeSelected = function() {
+          var type = graph.getSelectedType();
+          graph.removeSelected();
+          if (type) {
+            // There is no 'type' block
+            if (graph.typeInGraph(type) == 0) {
+              delete this.project.deps[type];
+            }
+          }
+        };
 
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
-            graph.breadcrumbs[0] = name;
+            graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }
@@ -154,7 +170,6 @@ angular.module('icestudio')
         }
 
         this.addBlock = function(type, block) {
-          // TODO: Check unique add
           this.project.deps[type] = block;
           graph.createBlock(type, block);
         }

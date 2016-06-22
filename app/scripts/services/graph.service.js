@@ -13,7 +13,7 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        var breadcrumbs = [ '' ];
+        var breadcrumbs = [{ name: '' }];
 
         this.breadcrumbs = breadcrumbs;
 
@@ -68,7 +68,7 @@ angular.module('icestudio')
                 // TODO.
               }
               else {
-                  breadcrumbs.push(data.blockType);
+                  breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
@@ -211,7 +211,6 @@ angular.module('icestudio')
                   block.graph.blocks &&
                   block.graph.wires &&
                   block.deps) {
-                // TODO: unique add deps
                 dependencies[type] = block;
                 blockInstance.position.x = 100;
                 blockInstance.position.y = 150;
@@ -245,18 +244,32 @@ angular.module('icestudio')
           }
         }
 
+        this.getSelectedType = function() {
+          if (selectedCell) {
+            return selectedCell.attributes.blockType;
+          }
+        }
+
         this.removeSelected = function() {
           if (paper.options.interactive) {
             if (selectedCell) {
-              alertify.confirm('Do you want to remove the selected block?',
-                function() {
-                  selectedCell.remove();
-                  selectedCell = null;
-                  alertify.success('Block removed');
-              });
+              selectedCell.remove();
+              selectedCell = null;
+              alertify.success('Block removed');
             }
           }
         }
+
+        this.typeInGraph = function(type) {
+          var count = 0;
+          var cells = graph.getCells();
+          for (var i in cells) {
+            if (cells[i].attributes.blockType == type) {
+              count += 1;
+            }
+          }
+          return count;
+        };
 
         this.loadProject = function(project, disabled) {
           return loadGraph(project, disabled);
@@ -307,7 +320,6 @@ angular.module('icestudio')
             type: type,
             position: { x: 100, y: 100 }
           }
-          // TODO: unique add deps
           dependencies[type] = block;
           addBlock(blockInstance, block);
         }

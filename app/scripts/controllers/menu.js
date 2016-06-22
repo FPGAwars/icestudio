@@ -109,17 +109,21 @@ angular.module('icestudio')
     $scope.clearGraph = function() {
       alertify.confirm('Do you want to clear the graph?',
         function() {
-          graph.clearAll();
+          common.clearProject();
       });
     }
 
     $scope.removeSelected = function() {
-      graph.removeSelected();
+      alertify.confirm('Do you want to remove the selected block?',
+        function() {
+          common.removeSelected();
+        }
+      );
     }
 
     $(document).on('keydown', function(event) {
       if (event.keyCode == 46) { // Supr
-        graph.removeSelected();
+        $scope.removeSelected();
       }
     });
 
