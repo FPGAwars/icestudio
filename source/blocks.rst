@@ -13,7 +13,7 @@ A block is an entity with *input* and *output* ports composed by blocks.
 
 Its *input* and *output* ports are defined from its *input* and *output* block instances.
 
-Extension: **.iceblock**
+Extension: **.iceb**
 
   .. image:: ../resources/block-definition.svg
 
@@ -26,7 +26,7 @@ Extension: **.iceblock**
        "blocks" : [],
        "wires": []
      },
-     "deps" : [],
+     "deps" : {},
    }
 
 Block instances
@@ -120,57 +120,57 @@ It has no dependencies.
 
 .. image:: ../resources/driver.low.svg
 
-File: **driver.low.iceblock**
+File: **driver/low.iceb**
 
 .. code-block:: json
 
-   {
-     "graph" : {
-       "blocks": [
-          {
-            "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
-            "type": "basic.code",
-            "data": {
-              "code": "assign v = 1'b0;",
-              "ports": {
-                "in": [],
-                "out": [
-                  "v"
-                ]
-              }
-            },
-            "position": {
-              "x": 10,
-              "y": 10
+  {
+    "graph": {
+      "blocks": [
+        {
+          "id": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+          "type": "basic.code",
+          "data": {
+            "code": "// Driver low\n\nassign v = 1'b0;",
+            "ports": {
+              "in": [],
+              "out": [
+                "v"
+              ]
             }
           },
-          {
-            "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
-            "type": "basic.output",
-            "data": {
-              "name": "o"
-            },
-            "position": {
-              "x": 50,
-              "y": 20
-            }
+          "position": {
+            "x": 100,
+            "y": 100
           }
-       ],
-       "wires": [
-         {
-           "source": {
-             "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
-             "port": "v"
-           },
-           "target": {
-             "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
-             "port": "in"
-           }
-         }
-       ]
-     },
-     "deps": []
-   }
+        },
+        {
+          "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+          "type": "basic.output",
+          "data": {
+            "name": "o"
+          },
+          "position": {
+            "x": 627,
+            "y": 165
+          }
+        }
+      ],
+      "wires": [
+        {
+          "source": {
+            "block": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+            "port": "v"
+          },
+          "target": {
+            "block": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+            "port": "in"
+          }
+        }
+      ]
+    },
+    "deps": {}
+  }
 
 Complex blocks
 --------------
@@ -181,96 +181,94 @@ Complex blocks contain **not only** basic blocks.
 
 .. image:: ../resources/wrapper.low.svg
 
-File: **wrapper.low.iceblock**
+File: **wrapper/low.iceb**
 
 .. code-block:: json
 
   {
-    "graph" : {
+    "graph": {
       "blocks": [
-         {
-           "id": "2578d60a-d3de-4567-932c-3d32cb0449cb",
-           "type": "driver.low",
-           "data": {},
-           "position": {
-             "x": 10,
-             "y": 10
-           }
-         },
-         {
-           "id": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
-           "type": "basic.output",
-           "data": {
-             "name": "x"
-           },
-           "position": {
-             "x": 30,
-             "y": 10
-           }
-         }
+        {
+          "id": "c2d74062-f2b7-4935-aebe-bcd5fb40081a",
+          "type": "driver.low",
+          "data": {},
+          "position": {
+            "x": 100,
+            "y": 100
+          }
+        },
+        {
+          "id": "eced7092-f887-4fac-9d0d-03bdbff56d3f",
+          "type": "basic.output",
+          "data": {
+            "name": "x"
+          },
+          "position": {
+            "x": 336,
+            "y": 100
+          }
+        }
       ],
       "wires": [
         {
           "source": {
-            "block": "2578d60a-d3de-4567-932c-3d32cb0449cb",
+            "block": "c2d74062-f2b7-4935-aebe-bcd5fb40081a",
             "port": "o"
           },
           "target": {
-            "block": "a8bcf1d4-2ecf-4cc9-80da-60a0c65d7762",
+            "block": "eced7092-f887-4fac-9d0d-03bdbff56d3f",
             "port": "in"
           }
         }
       ]
     },
-    "deps": [
-      {
-        "driver.low": {
-          "graph" : {
-            "blocks": [
-               {
-                 "id": "85c862ec-e84d-44ac-b0bc-e0345389298b",
-                 "type": "basic.code",
-                 "data": {
-                   "code": "assign v = 1'b0;",
-                   "ports": {
-                     "in": [],
-                     "out": [
-                       "v"
-                     ]
-                   }
-                 },
-                 "position": {
-                   "x": 10,
-                   "y": 10
-                 }
-               },
-               {
-                 "id": "438779b9-2e6a-41b4-8972-4085ce871f14",
-                 "type": "basic.output",
-                 "data": {
-                   "name": "o"
-                 },
-                 "position": {
-                   "x": 50,
-                   "y": 20
-                 }
-               }
-            ],
-            "wires": [
-              {
-                "source": {
-                  "block": "85c862ec-e84d-44ac-b0bc-e0345389298b",
-                  "port": "v"
-                },
-                "target": {
-                  "block": "438779b9-2e6a-41b4-8972-4085ce871f14",
-                  "port": "in"
+    "deps": {
+      "driver.low": {
+        "graph": {
+          "blocks": [
+            {
+              "id": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+              "type": "basic.code",
+              "data": {
+                "code": "// Driver low\n\nassign v = 1'b0;",
+                "ports": {
+                  "in": [],
+                  "out": [
+                    "v"
+                  ]
                 }
+              },
+              "position": {
+                "x": 100,
+                "y": 100
               }
-            ]
-          },
-          "deps": []
-        }
+            },
+            {
+              "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+              "type": "basic.output",
+              "data": {
+                "name": "o"
+              },
+              "position": {
+                "x": 627,
+                "y": 165
+              }
+            }
+          ],
+          "wires": [
+            {
+              "source": {
+                "block": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+                "port": "v"
+              },
+              "target": {
+                "block": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+                "port": "in"
+              }
+            }
+          ]
+        },
+        "deps": {}
       }
-    ]
+    }
   }
