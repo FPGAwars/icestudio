@@ -1,11 +1,16 @@
 {
+  "board": "icezum",
   "graph": {
     "blocks": [
       {
         "id": "cbd703ed-2a68-41dc-9dc6-31238dd1d16d",
         "type": "basic.output",
         "data": {
-          "label": "o"
+          "label": "o",
+          "pin": {
+            "name": "LED0",
+            "value": "95"
+          }
         },
         "position": {
           "x": 630,

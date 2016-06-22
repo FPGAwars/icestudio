@@ -71,12 +71,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portBodySelector = portSelector + '>.port-body';
 
     attrs[portLabelSelector] = {
-      text: (port) ? (port.label) ? port.label  : ''  : ''
+      text: port.label
     };
 
     attrs[portBodySelector] = {
       port: {
-        id: (port) ? (port.id) : null  || _.uniqueId(type),
+        id: port.id || _.uniqueId(type),
         type: type
       }
     };

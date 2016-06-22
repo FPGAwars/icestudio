@@ -88,7 +88,7 @@ angular.module('icestudio')
           for (var i in block.graph.blocks) {
             if (block.graph.blocks[i].type == 'basic.input' ||
                 block.graph.blocks[i].type == 'basic.output') {
-              delete block.graph.blocks[i].data.value;
+              delete block.graph.blocks[i].data.pin;
             }
           }
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
