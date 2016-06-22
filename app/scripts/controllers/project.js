@@ -14,22 +14,25 @@ angular.module('icestudio')
     graph.createPaper($('#paper'));
     common.updateProjectName('untitled');
 
-
-    $scope.breadcrumbNavitate = function(selectedItem) {
+    $scope.breadcrumbsNavitate = function(selectedItem) {
       var item;
       do {
-        graph.breadcrumb.pop();
-        item = graph.breadcrumb.slice(-1)[0];
+        graph.breadcrumbs.pop();
+        item = graph.breadcrumbs.slice(-1)[0];
       }
       while (selectedItem.name != item.name);
 
-      if (graph.breadcrumb.length == 1) {
+      if (graph.breadcrumbs.length == 1) {
         graph.loadProject(common.project);
         graph.paperEnable(true);
       }
       else {
-        // graph.dependencies
-        graph.loadProject(common.project.deps[selectedItem.type]);
+        var disabled = true;
+        var project = common.project;
+        for (var i = 1; i < graph.breadcrumbs.length; i++) {
+          project = project.deps[graph.breadcrumbs[i].name];
+        }
+        graph.loadProject(project, disabled);
         graph.paperEnable(false);
       }
     }

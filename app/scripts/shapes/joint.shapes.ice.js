@@ -35,7 +35,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       '.block-label': {
         ref: '.body',
         'ref-x': .5,
-        'ref-y': 15,
+        'ref-y': 10,
         'font-size': 15,
         'text-anchor': 'middle',
         'font-weight': 'bold',
@@ -160,7 +160,10 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
   template: [
       '<div class="io-element">',
-      '<select class="io-combo"></select>',
+      '<select class="io-combo select2"></select>',
+      '<script>',
+      '$(".select2").select2({placeholder: "", allowClear: true});',
+      '</script>',
       '</div>'
   ].join(''),
 
@@ -170,9 +173,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
     this.$box = $(_.template(this.template)());
     // Prevent paper from handling pointerdown.
-    this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
+    this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('select').on('change', _.bind(function(evt) {
+    this.$box.find('.io-combo').on('change', _.bind(function(evt) {
         this.model.attributes.data.value = $(evt.target).val();
     }, this));
 
@@ -190,7 +193,6 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.prepend(this.$box);
-    // this.paper.$el.mousemove(this.onMouseMove.bind(this)), this.paper.$el.mouseup(this.onMouseUp.bind(this));
     this.updateBox();
     return this;
   },
@@ -212,8 +214,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   },
 
   renderChoices: function() {
-    if (this.model.get('hidecombo')) {
-      this.$box.find('select').hide();
+    if (this.model.get('disabled')) {
+      this.$box.find('.io-combo').removeClass('select2');
+      this.$box.find('.io-combo').css({'display': 'none'});
     }
     else {
       var choices = this.model.get('choices');
@@ -224,7 +227,7 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
         $select.append('<option>' + choices[c].name + '</option>');
       }
 
-      this.$box.find('select').val(this.model.get('data').value);
+      this.$box.find('.io-combo').val(this.model.get('data').value);
     }
   },
 
@@ -240,7 +243,7 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   updateBox: function() {
     // Set the position and dimension of the box so that it covers the JointJS element.
     var bbox = this.model.getBBox()
-    this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+    this.$box.css({ width: bbox.width, left: bbox.x + 10, top: bbox.y + 32 });
   },
 
   removeBox: function(evt) {
@@ -274,7 +277,7 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#editor').append(this.model.attributes.data.code);
+    this.$box.find('.code-editor').append(this.model.attributes.data.code);
     this.$box.find('#content').append(this.model.attributes.data.code);
 
     // Update the box position whenever the underlying model changes.
@@ -316,6 +319,13 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // First render ports so that `attrs` can be applied to those newly created DOM elements
     // in `ElementView.prototype.update()`.
     this.renderPorts();
+
+    if (this.model.get('disabled')) {
+      this.$box.find('.code-editor').css({'pointer-events': 'none'});
+    }
+    else {
+      this.$box.find('.code-editor').css({'pointer-events': 'auto'});
+    }
 
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },

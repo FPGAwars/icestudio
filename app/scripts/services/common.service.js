@@ -13,8 +13,6 @@ angular.module('icestudio')
         };
         this.projectName = '';
 
-        graph.project = this.project;
-
         // Functions
 
         this.newProject = function(name) {
@@ -36,14 +34,22 @@ angular.module('icestudio')
           });
           if (project) {
             var name = utils.basename(filepath);
-            this.updateProjectName(name);
-            this.project = project;
-            boards.selectBoard(project.board);
-            graph.loadProject(project);
-            alertify.success('Project ' + name + ' loaded');
+            this.loadProject(name, project);
           }
           $.ajaxSetup({ async: true });
         };
+
+        this.loadProject = function(name, project) {
+          this.updateProjectName(name);
+          this.project = project;
+          boards.selectBoard(project.board);
+          if (graph.loadProject(project)) {
+            alertify.success('Project ' + name + ' loaded');
+          }
+          else {
+            alertify.error('Wrong project format: ' + name);
+          }
+        }
 
         this.saveProject = function(filepath) {
           var name = utils.basename(filepath);
@@ -85,7 +91,6 @@ angular.module('icestudio')
               delete block.graph.blocks[i].data.value;
             }
           }
-          console.log(block);
           nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
             function(err) {
               if (!err) {
@@ -131,7 +136,7 @@ angular.module('icestudio')
         };
 
         this.clearProject = function() {
-          graph.breadcrumb = [ { id: '', name: this.projectName }];
+          graph.breadcrumbs = [ { id: '', name: this.projectName }];
           if(!$rootScope.$$phase) {
             $rootScope.$apply();
           }
@@ -140,7 +145,7 @@ angular.module('icestudio')
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
-            graph.breadcrumb[0].name = name;
+            graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }

@@ -1,22 +1,30 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('blocks', ['nodeGlob', 'utils',
+    .service('resources', ['nodeGlob', 'utils',
       function(nodeGlob, utils) {
 
-        this.getMenuBlocks = function() {
-          var menuBlocks = {};
+        this.getExamples = function() {
+          return getResources('app/res/examples/*', '.ice');
+        }
 
-          nodeGlob('app/res/blocks/*', null, (function() {
+        this.getMenuBlocks = function() {
+          return getResources('app/res/blocks/*', '.iceb');
+        }
+
+        function getResources(path, extension) {
+          var resources = {};
+
+          nodeGlob(path, null, (function() {
 
             return function (er, categories) {
 
               for (var i in categories) {
 
                 var category = categories[i].split('/')[3];
-                menuBlocks[category] = {};
+                resources[category] = {};
 
-                nodeGlob(categories[i] + '/*.iceb', null, (function(c) {
+                nodeGlob(categories[i] + '/*' + extension, null, (function(c) {
                     return function(er, blocks) {
                         storeBlocks(er, blocks, c);
                     };
@@ -27,7 +35,7 @@ angular.module('icestudio')
                   for (var j in blocks) {
 
                     var name = utils.basename(blocks[j]);
-                    menuBlocks[category][name] = {};
+                    resources[category][name] = {};
 
                     $.getJSON(blocks[j].substring(4), (function(c, n) {
                         return function(data) {
@@ -36,7 +44,7 @@ angular.module('icestudio')
                     })(category, name));
 
                     function storeData(data, category, name) {
-                      menuBlocks[category][name] = data;
+                      resources[category][name] = data;
                     }
                   }
                 };
@@ -46,7 +54,7 @@ angular.module('icestudio')
 
           })());
 
-          return menuBlocks;
+          return resources;
         };
 
     }]);

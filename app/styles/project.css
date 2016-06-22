@@ -1,3 +1,11 @@
+#paper {
+   background: transparent;
+   overflow: hidden;
+}
+
+#paper svg {
+   background: transparent;
+}
 
 .element .body {
   transition: all .05s ease-in-out;
@@ -14,16 +22,13 @@
 
 .io-element{
   position: absolute;
-  pointer-events: none;
-  -webkit-user-select: none;
+  pointer-events: visible;
 }
 
-.io-combo {
+.io-element select {
   pointer-events: auto;
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 80px;
 }
 
 .code-element{

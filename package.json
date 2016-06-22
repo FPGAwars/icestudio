@@ -1,6 +1,6 @@
 {
   "name": "Icestudio",
-  "version": "0.1.1-alpha1",
+  "version": "0.2-alpha1",
   "description": "Experimental graphic editor for open FPGAs",
   "license": "GPL-2.0",
   "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
@@ -18,6 +18,7 @@
   "dependencies": {
     "alertifyjs": "^1.7.1",
     "directory-tree": "^1.0.0",
+    "glob": "^7.0.5",
     "jquery": "^2.2.3",
     "rmdir": "^1.2.0",
     "serialport": "^2.0.5"
