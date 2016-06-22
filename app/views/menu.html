@@ -25,7 +25,7 @@
                                <a href uib-dropdown-toggle>{{ category }}</a>
                                <ul uib-dropdown-menu>
                                  <li ng-repeat="(name, project) in projects">
-                                   <a href ng-click="common.loadProject(name, project)">
+                                   <a href ng-click="openExample(name, project)">
                                      {{ name }}
                                    </a>
                                  </li>

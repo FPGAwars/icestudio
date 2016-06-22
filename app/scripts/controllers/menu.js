@@ -26,6 +26,14 @@ angular.module('icestudio')
       });
     }
 
+    $scope.openExample = function(name, project) {
+      alertify.confirm('The current project will be removed. ' +
+                       'Do you want to continue loading the example?',
+        function() {
+          common.loadProject(name, project);
+      });
+    }
+
     $scope.openProject = function() {
         setTimeout(function() {
           var ctrl = angular.element('#input-open-project');
@@ -118,7 +126,7 @@ angular.module('icestudio')
     // Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard != board) {
+      if (boards.selectedBoard.id != board.id) {
         alertify.confirm('The current FPGA I/O configuration will be lost. ' +
                          'Do you want to change to <b>' + board.label + '</b> board?',
           function() {

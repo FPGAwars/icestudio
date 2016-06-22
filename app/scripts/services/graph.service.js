@@ -127,7 +127,7 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 100, y: 100 }
+            position: { x: 50, y: 50 }
           };
 
           if (paper.options.interactive) {
@@ -157,6 +157,7 @@ angular.module('icestudio')
                       if (outPorts[o])
                         blockInstance.data.ports.out.push(outPorts[o]);
                     }
+                    blockInstance.position.x = 250;
                     addBasicCodeBlock(blockInstance);
                   }
               });
@@ -165,14 +166,20 @@ angular.module('icestudio')
               alertify.prompt('Insert the block name', 'i',
                 function(evt, name) {
                   if (name) {
-                    blockInstance.data = {
-                      label: name,
-                      pin: {
-                        name: '',
-                        value: 0
+                    var names = name.split(' ');
+                    for (var n in names) {
+                      if (names[n]) {
+                        blockInstance.data = {
+                          label: names[n],
+                          pin: {
+                            name: '',
+                            value: 0
+                          }
+                        };
+                        addBasicIOBlock(blockInstance);
+                        blockInstance.position.y += 100;
                       }
-                    };
-                    addBasicIOBlock(blockInstance);
+                    }
                   }
               });
             }
@@ -180,14 +187,21 @@ angular.module('icestudio')
               alertify.prompt('Insert the block name', 'o',
                 function(evt, name) {
                   if (name) {
-                    blockInstance.data = {
-                      label: name,
-                      pin: {
-                        name: '',
-                        value: 0
+                    var names = name.split(' ');
+                    blockInstance.position.x = 750;
+                    for (var n in names) {
+                      if (names[n]) {
+                        blockInstance.data = {
+                          label: names[n],
+                          pin: {
+                            name: '',
+                            value: 0
+                          }
+                        };
+                        addBasicIOBlock(blockInstance);
+                        blockInstance.position.y += 100;
                       }
-                    };
-                    addBasicIOBlock(blockInstance);
+                    }
                   }
               });
             }
@@ -199,6 +213,8 @@ angular.module('icestudio')
                   block.deps) {
                 // TODO: unique add deps
                 dependencies[type] = block;
+                blockInstance.position.x = 100;
+                blockInstance.position.y = 150;
                 addBlock(blockInstance, block);
               }
               else {
@@ -342,7 +358,7 @@ angular.module('icestudio')
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
-              id: blockInstances.data.ports.out[i],
+              id: blockInstances.data.ports.out[o],
               label: blockInstances.data.ports.out[o]
             });
           }
@@ -369,11 +385,13 @@ angular.module('icestudio')
             var item = block.graph.blocks[i];
             if (item.type == 'basic.input') {
               inPorts.push({
+                id: item.id,
                 label: item.data.label
               });
             }
             else if (item.type == 'basic.output') {
               outPorts.push({
+                id: item.id,
                 label: item.data.label
               });
             }

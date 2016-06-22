@@ -76,7 +76,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
 
     attrs[portBodySelector] = {
       port: {
-        id: port.id || _.uniqueId(type),
+        id: port.id,
         type: type
       }
     };
