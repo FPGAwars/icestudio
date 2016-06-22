@@ -136,7 +136,7 @@ angular.module('icestudio')
         };
 
         this.clearProject = function() {
-          graph.breadcrumbs = [ { id: '', name: this.projectName }];
+          graph.breadcrumbs = [this.projectName];
           if(!$rootScope.$$phase) {
             $rootScope.$apply();
           }
@@ -145,7 +145,7 @@ angular.module('icestudio')
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
-            graph.breadcrumbs[0].name = name;
+            graph.breadcrumbs[0] = name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }

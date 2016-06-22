@@ -13,7 +13,7 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        var breadcrumbs = [ { id: '', name: '' } ];
+        var breadcrumbs = [ '' ];
 
         this.breadcrumbs = breadcrumbs;
 
@@ -68,7 +68,7 @@ angular.module('icestudio')
                 // TODO.
               }
               else {
-                  breadcrumbs.push({ type: data.blockType, name: data.blockType });
+                  breadcrumbs.push(data.blockType);
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
@@ -166,9 +166,11 @@ angular.module('icestudio')
                 function(evt, name) {
                   if (name) {
                     blockInstance.data = {
-                      name: name,
-                      value: '',
-                      choices: boards.getPinout()
+                      label: name,
+                      pin: {
+                        name: '',
+                        value: 0
+                      }
                     };
                     addBasicIOBlock(blockInstance);
                   }
@@ -179,9 +181,11 @@ angular.module('icestudio')
                 function(evt, name) {
                   if (name) {
                     blockInstance.data = {
-                      name: name,
-                      value: '',
-                      choices: boards.getPinout()
+                      label: name,
+                      pin: {
+                        name: '',
+                        value: 0
+                      }
                     };
                     addBasicIOBlock(blockInstance);
                   }
@@ -298,13 +302,13 @@ angular.module('icestudio')
 
           if (blockInstances.type == 'basic.input') {
             outPorts.push({
-              name: 'out',
+              id: 'out',
               label: ''
             });
           }
           else if (blockInstances.type == 'basic.output') {
             inPorts.push({
-              name: 'in',
+              id: 'in',
               label: ''
             });
           }
@@ -312,14 +316,14 @@ angular.module('icestudio')
           var block = new joint.shapes.ice.IO({
             id: blockInstances.id,
             blockType: blockInstances.type,
-            data: { name: blockInstances.data.name, value: blockInstances.data.value },
+            data: blockInstances.data,
             position: blockInstances.position,
             disabled: disabled,
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 100, height: 70 },
-            attrs: { '.block-label': { text: blockInstances.data.name } }
+            attrs: { '.block-label': { text: blockInstances.data.label } }
           });
 
           graph.addCell(block);
@@ -331,14 +335,12 @@ angular.module('icestudio')
 
           for (var i in blockInstances.data.ports.in) {
             inPorts.push({
-              name: blockInstances.data.ports.in[i],
               label: blockInstances.data.ports.in[i]
             });
           }
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
-              name: blockInstances.data.ports.out[o],
               label: blockInstances.data.ports.out[o]
             });
           }
@@ -365,14 +367,12 @@ angular.module('icestudio')
             var item = block.graph.blocks[i];
             if (item.type == 'basic.input') {
               inPorts.push({
-                name: item.data.name,
-                label: item.data.name
+                label: item.data.label
               });
             }
             else if (item.type == 'basic.output') {
               outPorts.push({
-                name: item.data.name,
-                label: item.data.name
+                label: item.data.label
               });
             }
           }

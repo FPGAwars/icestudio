@@ -20,7 +20,7 @@ angular.module('icestudio')
         graph.breadcrumbs.pop();
         item = graph.breadcrumbs.slice(-1)[0];
       }
-      while (selectedItem.name != item.name);
+      while (selectedItem != item);
 
       if (graph.breadcrumbs.length == 1) {
         graph.loadProject(common.project);
@@ -30,7 +30,7 @@ angular.module('icestudio')
         var disabled = true;
         var project = common.project;
         for (var i = 1; i < graph.breadcrumbs.length; i++) {
-          project = project.deps[graph.breadcrumbs[i].name];
+          project = project.deps[graph.breadcrumbs[i]];
         }
         graph.loadProject(project, disabled);
         graph.paperEnable(false);
