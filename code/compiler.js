@@ -175,7 +175,7 @@ function getContent(name, project) {
   return content;
 }
 
-function compiler(name, project) {
+function verilogCompiler(name, project) {
   var code = '';
 
   if (project &&
@@ -211,6 +211,22 @@ function compiler(name, project) {
   return code;
 }
 
+function pcfCompiler(name, project) {
+  var code = '';
+
+  for (var i in project.graph.blocks) {
+    var block = project.graph.blocks[i];
+    if (block.type == 'basic.output') {
+      code += 'set_io ';
+      code += name + '_' + digestId(block.id);
+      code += ' ' + block.data.pin.value;
+      code += '\n';
+    }
+  }
+
+  return code;
+}
+
 
 // Examples
 
@@ -231,16 +247,21 @@ function compare_string(s1, s2) {
   return diff.join(' ');
 }
 
-function test_example (name) {
+function test_example(name, extension) {
   var filename = '../examples/' + name;
-  fs.readFile(filename + '.v', 'utf8', function (err, data) {
+  fs.readFile(filename + '.' + extension, 'utf8', function (err, data) {
     if (err) throw err;
 
     var example = require(filename + '.json');
-    var s1 = compiler(name, example).replace(/[\r\n]/g, "");
+    if (extension == 'v') {
+      var s1 = verilogCompiler(name, example).replace(/[\r\n]/g, "");
+    }
+    else {
+      var s1 = pcfCompiler(name, example).replace(/[\r\n]/g, "");
+    }
     var s2 = data.replace(/[\r\n]/g, "");
 
-    process.stdout.write('Testing ' + name + ' ...');
+    process.stdout.write('Testing ' + name + ' ' + extension + ' ...');
     if (s1 == s2) {
       process.stdout.write(' [OK]\n');
     }
@@ -252,11 +273,13 @@ function test_example (name) {
 }
 
 // Test examples
-test_example('example1');
+test_example('example1', 'v');
+test_example('example1', 'pcf');
 /*test_example('example2');
 test_example('example3');
 test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-//console.log(compiler('example1', require('../examples/example1.json')));
+//console.log(verilogCompiler('example1', require('../examples/example1.json')));
+//console.log(pcfCompiler('example1', require('../examples/example1.json')));
