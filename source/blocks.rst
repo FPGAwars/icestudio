@@ -79,10 +79,7 @@ It has one output port named 'out'.
      "id": "",
      "type": "basic.input",
      "data": {
-       "label": "a",
-       "pin": {
-         "name": "LED0",
-         "value": 95
+       "label": "a"
        }
      },
      "position": {
@@ -105,11 +102,7 @@ It has one input port named 'in'.
      "id": "",
      "type": "basic.output",
      "data": {
-       "label": "o",
-       "pin": {
-         "name": "LED1",
-         "value": 96
-       }
+       "label": "o"
      },
      "position": {
        "x": 0,

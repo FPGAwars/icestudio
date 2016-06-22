@@ -72,7 +72,7 @@ It contains all stored blocks sorted by categories. These menu is generated when
 
 .. note::
 
-  Double click over *input* and *output* blocks allows to modify the block name. FPGA I/O ports values are set in the block combo box. These values can be set by searching, and also unset by doing click on the cross.
+  Double click over *input* and *output* blocks allows to modify the block name. Multiple blocks can be created using the `space` separator. For example: ``x y z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
 
 
 .. hint::
@@ -83,7 +83,7 @@ It contains all stored blocks sorted by categories. These menu is generated when
 Graph
 -----
 
-This is the main panel. It contains the blocks and wires.
+This is the main panel. It contains the blocks and the wires.
 
 Blocks inspection
 `````````````````
