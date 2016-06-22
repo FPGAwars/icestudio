@@ -25,7 +25,13 @@ Extension: **.ice**
    "deps" : {},
  }
 
-**Example: driver low**
+Examples
+--------
+
+Example 1
+`````````
+
+**Driver low**
 
 .. image:: ../resources/driver.low.project.svg
 
@@ -59,7 +65,7 @@ File: **driver/low.ice**
           "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
           "type": "basic.output",
           "data": {
-            "name": "v",
+            "name": "o",
             "value": "LED0"
           },
           "position": {
@@ -84,7 +90,10 @@ File: **driver/low.ice**
     "deps": {}
   }
 
-**Example: wrapper low**
+Example 2
+`````````
+
+**Wrapper low**
 
 .. image:: ../resources/wrapper.low.project.svg
 

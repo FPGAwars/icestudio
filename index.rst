@@ -11,4 +11,4 @@ Contents
    source/blocks.rst
    source/project.rst
    source/gui.rst
-.. source/compiler.rst
+   source/compiler.rst

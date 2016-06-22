@@ -11,7 +11,7 @@ Output verilog structure:
 2. Main module
 
    a. Wires definition
-   b. Wires connection
+   b. Wires connections
    c. Blocks instances
 
 Implementation
@@ -41,7 +41,7 @@ Examples
 Example 1
 `````````
 
-.. image:: ../resources/driver0.svg
+.. image:: ../resources/driver.low.project.svg
 
 .. container:: toggle
 
@@ -57,121 +57,6 @@ Example 1
     Generates
 
     .. literalinclude:: ../examples/example1.v
-       :language: verilog
-
-|
-
-Example 2
-`````````
-
-.. image:: ../resources/and.svg
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../examples/example2.json
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../examples/example2.v
-       :language: verilog
-
-|
-
-Example 3
-`````````
-
-.. image:: ../resources/high.svg
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../examples/example3.json
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../examples/example3.v
-       :language: verilog
-
-|
-
-Example 4
-`````````
-
-.. image:: ../resources/and-wraper.svg
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../examples/example4.json
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../examples/example4.v
-       :language: verilog
-
-|
-
-Example 5
-`````````
-
-.. image:: ../resources/zero.svg
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../examples/example5.json
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../examples/example5.v
-       :language: verilog
-
-|
-
-Example 6
-`````````
-
-.. image:: ../resources/low.svg
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../examples/example6.json
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../examples/example6.v
        :language: verilog
 
 |

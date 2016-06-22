@@ -1,18 +1,25 @@
+/**
+ * @author Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>
+ *
+ * June 2016
+ */
+
+ 'use strict';
 
 var sha1 = require('sha1');
 
 function digestId(id) {
   if (id.indexOf('-') != -1) {
-    return 'v' + sha1(id).toString().substring(0, 6);
+    return sha1(id).toString().substring(0, 6);
   }
   return id;
 }
 
-function moduleCheck (b) {
+function moduleCheck(b) {
   return true;
 }
 
-function moduleParams (type, c) {
+function moduleParams(type, c) {
   var code;
   if (c[type].length !== 0) {
     var params = [];
@@ -25,7 +32,7 @@ function moduleParams (type, c) {
   return code;
 }
 
-function moduleGenerator (b) {
+function moduleGenerator(b) {
   var code = '';
 
   if (moduleCheck(b)) {
@@ -125,7 +132,7 @@ function moduleGenerator (b) {
   return code;
 }
 
-function findDependencies (data, blocks) {
+function findDependencies(data, blocks) {
   var deps = [];
 
   if (data.code && data.code.type == 'graph') {
@@ -148,25 +155,107 @@ function findDependencies (data, blocks) {
   return deps;
 }
 
-function compiler (data) {
+function module(data) {
   var code = '';
-  var blocks = require('./blocks.json');
 
-  // Find dependencies
-  var deps = findDependencies(data, blocks);
+  if (data &&
+      data.name &&
+      data.ports &&
+      data.content) {
 
-  // Dependencies modules
-  for (var category in blocks) {
-    for (var key in blocks[category]) {
-      if (deps.indexOf(category + '.' + key) != -1) {
-        blocks[category][key].name = category + '.' + key;
-        code += moduleGenerator(blocks[category][key]);
-      }
+
+
+    // Header
+
+    code += 'module ';
+    code += data.name;
+    code += ' (';
+
+    data.ports.in.forEach(function (element, index, array) {
+      array[index] = 'input ' + element;
+    })
+    data.ports.out.forEach(function (element, index, array) {
+      array[index] = 'output ' + element;
+    })
+
+    var params = [];
+
+    if (data.ports.in.length > 0) {
+      params.push(data.ports.in.join(', '));
+    }
+    if (data.ports.out.length > 0) {
+      params.push(data.ports.out.join(', '));
+    }
+
+    code += params.join(', ');
+
+    code += ');\n';
+
+    // Content
+
+    code += data.content.replace('\n\n', '\n');
+
+    // Footer
+
+    code += '\nendmodule\n\n';
+  }
+
+  return code;
+}
+
+function getPorts(name, project) {
+  var ports = {
+    in: [],
+    out: []
+  };
+
+  for (var i in project.graph.blocks) {
+    var block = project.graph.blocks[i];
+    if (block.type == 'basic.input') {
+      ports.in.push(name + '_' + digestId(block.id));
+    }
+    else if (block.type == 'basic.output') {
+      ports.out.push(name + '_' + digestId(block.id));
     }
   }
 
+  return ports;
+}
+
+function getContent(name, project) {
+  return '.';
+}
+
+function compiler(name, project) {
+  var code = '';
+
+  //console.log(project);
+
+  // TODO: Attach PCF file [project.board]
+
+  // Code modules
+
+  for (var i in project.graph.blocks) {
+    var block = project.graph.blocks[i];
+    if (block.type == 'basic.code') {
+      var data = {
+        name: name + '_' + digestId(block.id),
+        ports: block.data.ports,
+        content: block.data.code
+      }
+      code += module(data);
+    }
+  }
+
+  // TODO: Dependencies modules
+
   // Main module
-  code += moduleGenerator(data);
+  var data = {
+    name: name + '_main',
+    ports: getPorts(name, project),
+    content: getContent(name, project)
+  };
+  code += module(data);
 
   return code;
 }
@@ -212,11 +301,11 @@ function test_example (name) {
 }
 
 // Test examples
-test_example('example1');
+/*test_example('example1');
 test_example('example2');
 test_example('example3');
 test_example('example4');
 test_example('example5');
-test_example('example6');
+test_example('example6');*/
 
-//console.log(compiler(require('../examples/example6.json')));
+console.log(compiler('example1', require('../examples/example1.json')));

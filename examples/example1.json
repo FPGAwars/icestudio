@@ -1,17 +1,49 @@
 {
-  "name": "driver0",
-  "label": "\"0\"",
-  "ports": {
-    "in": [],
-    "out": [
+  "board": "icezum",
+  "graph": {
+    "blocks": [
       {
-        "id": "out",
-        "label": ""
+        "id": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+        "type": "basic.code",
+        "data": {
+          "code": "// Driver low\n\nassign v = 1'b0;",
+          "ports": {
+            "in": [],
+            "out": [
+              "v"
+            ]
+          }
+        },
+        "position": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      {
+        "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+        "type": "basic.output",
+        "data": {
+          "name": "o",
+          "value": "LED0"
+        },
+        "position": {
+          "x": 627,
+          "y": 165
+        }
+      }
+    ],
+    "wires": [
+      {
+        "source": {
+          "block": "2e684aab-9f39-47a1-9af0-25969a6a908f",
+          "port": "v"
+        },
+        "target": {
+          "block": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
+          "port": "in"
+        }
       }
     ]
   },
-  "code": {
-    "type": "verilog",
-    "data": "assign out = 1'b0;"
-  }
+  "deps": {}
 }
