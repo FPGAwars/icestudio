@@ -14,122 +14,9 @@ function digestId(id) {
   }
   return id;
 }
-
-function moduleCheck(b) {
-  return true;
-}
-
-function moduleParams(type, c) {
-  var code;
-  if (c[type].length !== 0) {
-    var params = [];
-    for (var p in c[type]) {
-      params.push(digestId(c[type][p].id));
-    }
-    code = ((type == 'in') ? 'input ' : (type == 'out') ? 'output ' : ' ')
-    code += params.join(', ');
-  }
-  return code;
-}
-
-function moduleGenerator(b) {
-  var code = '';
-
-  if (moduleCheck(b)) {
-
-    // Header
-
-    code += 'module ';
-    code += b.name.replace('.', '_');
-    code += 'x (';
-
-    var params = [];
-    var input = moduleParams('in', b.ports);
-
-    if (input) {
-      params.push(input);
-    }
-    var output = moduleParams('out', b.ports);
-    if (output) {
-      params.push(output);
-    }
-    code += params.join(', ');
-
-    code += ');\n';
-
-    // Content
-    if (!b.code)
-      return '';
-
-    if (b.code.type == 'verilog') {
-      code += ' ' + b.code.data + '\n';
-    }
-    else if (b.code.type == 'graph') {
-      var graph = b.code.data;
-
-      // Wires
-      for (var c in graph.wires) {
-        code += ' wire w' + c + ';\n'
-      }
-
-      // Connections
-      for (var c in graph.wires) {
-        var input = b.ports.in;
-        var output = b.ports.out;
-        var connection = graph.wires[c];
-        // Input connectors
-        for (var i in input) {
-          var id = input[i].id;
-          if (connection.source.block == id) {
-            code += ' assign w' + c + ' = ' + digestId(id) + ';\n'
-          }
-        }
-        // Output connectors
-        for (var o in output) {
-          var id = output[o].id;
-          if (connection.target.block == id) {
-            code += ' assign ' + digestId(id) + ' = w' + c + ';\n'
-          }
-        }
-      }
-
+/*
       // Blocks
-      for (var n in graph.blocks) {
-        var block = graph.blocks[n];
-        if (block.type != 'io.input' && block.type != 'io.output') {
-          code += ' ' + block.type.replace('.', '_') + 'x ' + digestId(block.id) + ' (\n';
 
-          // I/O
-          var params = [];
-          for (var c in graph.wires) {
-            var param = '';
-            var wire = graph.wires[c];
-            if (block.id == wire.source.block) {
-              param += '   .' + digestId(wire.source.port);
-              param += '(w' + c + ')';
-              params.push(param);
-            }
-            if (block.id == wire.target.block) {
-              param += '   .' + digestId(wire.target.port);
-              param += '(w' + c + ')';
-              params.push(param);
-            }
-          }
-
-          code += params.join(',\n');
-          code += '\n';
-
-          code += ' );\n';
-        }
-      }
-    }
-
-    // Footer
-
-    code += 'endmodule\n\n';
-  }
-
-  return code;
 }
 
 function findDependencies(data, blocks) {
@@ -154,6 +41,7 @@ function findDependencies(data, blocks) {
   }
   return deps;
 }
+*/
 
 function module(data) {
   var code = '';
@@ -163,8 +51,6 @@ function module(data) {
       data.ports &&
       data.content) {
 
-
-
     // Header
 
     code += 'module ';
@@ -173,10 +59,10 @@ function module(data) {
 
     data.ports.in.forEach(function (element, index, array) {
       array[index] = 'input ' + element;
-    })
+    });
     data.ports.out.forEach(function (element, index, array) {
       array[index] = 'output ' + element;
-    })
+    });
 
     var params = [];
 
@@ -193,11 +79,17 @@ function module(data) {
 
     // Content
 
-    code += data.content.replace('\n\n', '\n');
+    var content = data.content.replace('\n\n', '\n').split('\n');
+
+    content.forEach(function (element, index, array) {
+      array[index] = ' ' + element;
+    });
+
+    code += content.join('\n');
 
     // Footer
 
-    code += '\nendmodule\n\n';
+    code += '\nendmodule\n';
   }
 
   return code;
@@ -208,9 +100,10 @@ function getPorts(name, project) {
     in: [],
     out: []
   };
+  var graph = project.graph;
 
-  for (var i in project.graph.blocks) {
-    var block = project.graph.blocks[i];
+  for (var i in graph.blocks) {
+    var block = graph.blocks[i];
     if (block.type == 'basic.input') {
       ports.in.push(name + '_' + digestId(block.id));
     }
@@ -223,39 +116,97 @@ function getPorts(name, project) {
 }
 
 function getContent(name, project) {
-  return '.';
+  var content = '';
+  var graph = project.graph;
+
+  // Wires
+
+  for (var w in graph.wires) {
+    content += 'wire w' + w + ';\n'
+  }
+
+  // Connections
+
+  for (var w in graph.wires) {
+    var wire = graph.wires[w];
+    for (var i in graph.blocks) {
+      var block = graph.blocks[i];
+      if (block.type == 'basic.input') {
+        if (wire.source.block == block.id) {
+          content += 'assign w' + w + ' = ' + name + '_' + digestId(block.id) + ';\n';
+        }
+      }
+      else if (block.type == 'basic.output') {
+        if (wire.target.block == block.id) {
+          content += 'assign ' + name + '_' + digestId(block.id) + ' = w' + w + ';\n';
+        }
+      }
+    }
+  }
+
+  // Block instances
+  for (var b in graph.blocks) {
+    var block = graph.blocks[b];
+    if (block.type != 'basic.input' && block.type != 'basic.output') {
+      content += name + '_' + digestId(block.id) + ' ' + digestId(block.id) + ' (\n';
+
+      // Parameters
+      var params = [];
+      for (var w in graph.wires) {
+        var param = '';
+        var wire = graph.wires[w];
+        if (block.id == wire.source.block) {
+          param += '  .' + digestId(wire.source.port);
+          param += '(w' + w + ')';
+          params.push(param);
+        }
+        if (block.id == wire.target.block) {
+          param += '   .' + digestId(wire.target.port);
+          param += '(w' + w + ')';
+          params.push(param);
+        }
+      }
+
+      content += params.join(',\n');
+      content += '\n);';
+    }
+  }
+
+  return content;
 }
 
 function compiler(name, project) {
   var code = '';
 
-  //console.log(project);
+  if (project &&
+      project.board &&
+      project.graph) {
 
-  // TODO: Attach PCF file [project.board]
+    // Code modules
 
-  // Code modules
-
-  for (var i in project.graph.blocks) {
-    var block = project.graph.blocks[i];
-    if (block.type == 'basic.code') {
-      var data = {
-        name: name + '_' + digestId(block.id),
-        ports: block.data.ports,
-        content: block.data.code
+    for (var i in project.graph.blocks) {
+      var block = project.graph.blocks[i];
+      if (block.type == 'basic.code') {
+        var data = {
+          name: name + '_' + digestId(block.id),
+          ports: block.data.ports,
+          content: block.data.code
+        }
+        code += module(data);
+        code += '\n';
       }
-      code += module(data);
     }
+
+    // TODO: Dependencies modules
+
+    // Main module
+    var data = {
+      name: name + '_main',
+      ports: getPorts(name, project),
+      content: getContent(name, project)
+    };
+    code += module(data);
   }
-
-  // TODO: Dependencies modules
-
-  // Main module
-  var data = {
-    name: name + '_main',
-    ports: getPorts(name, project),
-    content: getContent(name, project)
-  };
-  code += module(data);
 
   return code;
 }
@@ -271,10 +222,10 @@ function compare_string(s1, s2) {
   var string2 = s2.split(" ");
   var size = Math.max(s1.length, s2.length);
 
-  for(x = 0; x < size; x++) {
-      if(string1[x] != string2[x]) {
-          diff.push(string1[x]);
-      }
+  for(var x = 0; x < size; x++) {
+    if(string1[x] != string2[x]) {
+      diff.push(string1[x]);
+    }
   }
 
   return diff.join(' ');
@@ -286,7 +237,7 @@ function test_example (name) {
     if (err) throw err;
 
     var example = require(filename + '.json');
-    var s1 = compiler(example).replace(/[\r\n]/g, "");
+    var s1 = compiler(name, example).replace(/[\r\n]/g, "");
     var s2 = data.replace(/[\r\n]/g, "");
 
     process.stdout.write('Testing ' + name + ' ...');
@@ -301,11 +252,11 @@ function test_example (name) {
 }
 
 // Test examples
-/*test_example('example1');
-test_example('example2');
+test_example('example1');
+/*test_example('example2');
 test_example('example3');
 test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-console.log(compiler('example1', require('../examples/example1.json')));
+//console.log(compiler('example1', require('../examples/example1.json')));
