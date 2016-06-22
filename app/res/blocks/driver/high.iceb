@@ -2,21 +2,10 @@
   "graph": {
     "blocks": [
       {
-        "id": "cbd703ed-2a68-41dc-9dc6-31238dd1d16d",
-        "type": "basic.output",
-        "data": {
-          "label": "o"
-        },
-        "position": {
-          "x": 630,
-          "y": 165
-        }
-      },
-      {
-        "id": "472d74e8-d77d-4e46-bc7a-ab1c8d65a498",
+        "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
         "type": "basic.code",
         "data": {
-          "code": "// Driver high\n\nassign v = 1b'1;",
+          "code": "// Driver high\n\nassign v = 1'b1;",
           "ports": {
             "in": [],
             "out": [
@@ -28,20 +17,102 @@
           "x": 100,
           "y": 100
         }
+      },
+      {
+        "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
+        "type": "basic.output",
+        "data": {
+          "label": "o"
+        },
+        "position": {
+          "x": 633,
+          "y": 165
+        }
       }
     ],
     "wires": [
       {
         "source": {
-          "block": "472d74e8-d77d-4e46-bc7a-ab1c8d65a498",
-          "port": "out11"
+          "block": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
+          "port": "out7"
         },
         "target": {
-          "block": "cbd703ed-2a68-41dc-9dc6-31238dd1d16d",
+          "block": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
           "port": "in"
         }
       }
     ]
   },
-  "deps": {}
+  "deps": {
+    "logic.not": {
+      "graph": {
+        "blocks": [
+          {
+            "id": "6796f28b-7f70-4c8d-adc8-b7f42d18b336",
+            "type": "basic.code",
+            "data": {
+              "code": "// NOT logic gate\n\nassign c = ! a;",
+              "ports": {
+                "in": [
+                  "a"
+                ],
+                "out": [
+                  "c"
+                ]
+              }
+            },
+            "position": {
+              "x": 240,
+              "y": 80
+            }
+          },
+          {
+            "id": "ec18fe03-b702-43d3-afb2-156848805175",
+            "type": "basic.input",
+            "data": {
+              "label": "x"
+            },
+            "position": {
+              "x": 22,
+              "y": 145
+            }
+          },
+          {
+            "id": "2b6984aa-9351-4d64-b4f8-48ef983cc738",
+            "type": "basic.output",
+            "data": {
+              "label": "z"
+            },
+            "position": {
+              "x": 765,
+              "y": 145
+            }
+          }
+        ],
+        "wires": [
+          {
+            "source": {
+              "block": "ec18fe03-b702-43d3-afb2-156848805175",
+              "port": "out"
+            },
+            "target": {
+              "block": "6796f28b-7f70-4c8d-adc8-b7f42d18b336",
+              "port": "a"
+            }
+          },
+          {
+            "source": {
+              "block": "6796f28b-7f70-4c8d-adc8-b7f42d18b336",
+              "port": "c"
+            },
+            "target": {
+              "block": "2b6984aa-9351-4d64-b4f8-48ef983cc738",
+              "port": "in"
+            }
+          }
+        ]
+      },
+      "deps": {}
+    }
+  }
 }

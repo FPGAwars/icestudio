@@ -335,12 +335,14 @@ angular.module('icestudio')
 
           for (var i in blockInstances.data.ports.in) {
             inPorts.push({
+              id: blockInstances.data.ports.in[i],
               label: blockInstances.data.ports.in[i]
             });
           }
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
+              id: blockInstances.data.ports.out[i],
               label: blockInstances.data.ports.out[o]
             });
           }

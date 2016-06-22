@@ -1,4 +1,5 @@
 {
+  "board": "icezum",
   "graph": {
     "blocks": [
       {
@@ -25,7 +26,11 @@
         "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
         "type": "basic.input",
         "data": {
-          "label": "x"
+          "label": "x",
+          "pin": {
+            "name": "",
+            "value": 0
+          }
         },
         "position": {
           "x": 31,
@@ -36,7 +41,11 @@
         "id": "97b51945-d716-4b6c-9db9-970d08541249",
         "type": "basic.input",
         "data": {
-          "label": "y"
+          "label": "y",
+          "pin": {
+            "name": "",
+            "value": 0
+          }
         },
         "position": {
           "x": 36,
@@ -47,7 +56,11 @@
         "id": "664caf9e-5f40-4df4-800a-b626af702e62",
         "type": "basic.output",
         "data": {
-          "label": "o"
+          "label": "o",
+          "pin": {
+            "name": "LED0",
+            "value": "95"
+          }
         },
         "position": {
           "x": 778,
