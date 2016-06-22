@@ -13,8 +13,6 @@ angular.module('icestudio')
         };
         this.projectName = '';
 
-        graph.project = this.project;
-
         // Functions
 
         this.newProject = function(name) {
@@ -138,7 +136,7 @@ angular.module('icestudio')
         };
 
         this.clearProject = function() {
-          graph.breadcrumb = [ { id: '', name: this.projectName }];
+          graph.breadcrumbs = [ { id: '', name: this.projectName }];
           if(!$rootScope.$$phase) {
             $rootScope.$apply();
           }
@@ -147,7 +145,7 @@ angular.module('icestudio')
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
-            graph.breadcrumb[0].name = name;
+            graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }

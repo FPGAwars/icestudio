@@ -173,9 +173,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
 
     this.$box = $(_.template(this.template)());
     // Prevent paper from handling pointerdown.
-    this.$box.find('select').on('mousedown click', function(evt) { evt.stopPropagation(); });
+    this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('select').on('change', _.bind(function(evt) {
+    this.$box.find('.io-combo').on('change', _.bind(function(evt) {
         this.model.attributes.data.value = $(evt.target).val();
     }, this));
 
@@ -214,9 +214,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   },
 
   renderChoices: function() {
-    if (this.model.get('hidecombo')) {
-      this.$box.find('select').removeClass('select2');
-      this.$box.find('select').css({'display': 'none'});
+    if (this.model.get('disabled')) {
+      this.$box.find('.io-combo').removeClass('select2');
+      this.$box.find('.io-combo').css({'display': 'none'});
     }
     else {
       var choices = this.model.get('choices');
@@ -227,7 +227,7 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
         $select.append('<option>' + choices[c].name + '</option>');
       }
 
-      this.$box.find('select').val(this.model.get('data').value);
+      this.$box.find('.io-combo').val(this.model.get('data').value);
     }
   },
 
@@ -277,7 +277,7 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#editor').append(this.model.attributes.data.code);
+    this.$box.find('.code-editor').append(this.model.attributes.data.code);
     this.$box.find('#content').append(this.model.attributes.data.code);
 
     // Update the box position whenever the underlying model changes.
@@ -319,6 +319,13 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
     // First render ports so that `attrs` can be applied to those newly created DOM elements
     // in `ElementView.prototype.update()`.
     this.renderPorts();
+
+    if (this.model.get('disabled')) {
+      this.$box.find('.code-editor').css({'pointer-events': 'none'});
+    }
+    else {
+      this.$box.find('.code-editor').css({'pointer-events': 'auto'});
+    }
 
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },

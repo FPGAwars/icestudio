@@ -13,9 +13,9 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        var breadcrumb = [ { id: '', name: '' } ];
+        var breadcrumbs = [ { id: '', name: '' } ];
 
-        this.breadcrumb = breadcrumb;
+        this.breadcrumbs = breadcrumbs;
 
         // Functions
 
@@ -68,19 +68,19 @@ angular.module('icestudio')
                 // TODO.
               }
               else {
-                  breadcrumb.push({ type: data.blockType, name: data.blockType });
+                  breadcrumbs.push({ type: data.blockType, name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
                   }
-                  var hidecombo = true;
-                  if (breadcrumb.length == 2) {
+                  var disabled = true;
+                  if (breadcrumbs.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
-                      loadGraph(dependencies[data.blockType], hidecombo);
+                      loadGraph(dependencies[data.blockType], disabled);
                       paperEnable(false);
                     });
                   }
                   else {
-                    loadGraph(dependencies[data.blockType], hidecombo);
+                    loadGraph(dependencies[data.blockType], disabled);
                     paperEnable(false);
                   }
                 }
@@ -161,8 +161,21 @@ angular.module('icestudio')
                   }
               });
             }
-            else if (type == 'basic.input' || type == 'basic.output') {
-              alertify.prompt('Insert the block name', 'a',
+            else if (type == 'basic.input') {
+              alertify.prompt('Insert the block name', 'i',
+                function(evt, name) {
+                  if (name) {
+                    blockInstance.data = {
+                      name: name,
+                      value: '',
+                      choices: boards.getPinout()
+                    };
+                    addBasicIOBlock(blockInstance);
+                  }
+              });
+            }
+            else if (type == 'basic.output') {
+              alertify.prompt('Insert the block name', 'o',
                 function(evt, name) {
                   if (name) {
                     blockInstance.data = {
@@ -225,12 +238,11 @@ angular.module('icestudio')
           }
         }
 
-        this.loadProject = function(project) {
-          dependencies = project.deps;
-          return loadGraph(project);
+        this.loadProject = function(project, disabled) {
+          return loadGraph(project, disabled);
         }
 
-        function loadGraph(project, hidecombo) {
+        function loadGraph(project, disabled) {
           if (project &&
               project.graph &&
               project.graph.blocks &&
@@ -241,16 +253,18 @@ angular.module('icestudio')
             var wires = project.graph.wires;
             var deps = project.deps;
 
+            dependencies = project.deps;
+
             clearAll();
 
             // Blocks
             for (var i in blockInstances) {
               var blockInstance = blockInstances[i];
               if (blockInstance.type == 'basic.code') {
-                addBasicCodeBlock(blockInstance);
+                addBasicCodeBlock(blockInstance, disabled);
               }
               else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
-                addBasicIOBlock(blockInstance, hidecombo);
+                addBasicIOBlock(blockInstance, disabled);
               }
               else {
                 addBlock(blockInstance, deps[blockInstance.type]);
@@ -278,7 +292,7 @@ angular.module('icestudio')
           addBlock(blockInstance, block);
         }
 
-        function addBasicIOBlock(blockInstances, hidecombo) {
+        function addBasicIOBlock(blockInstances, disabled) {
           var inPorts = [];
           var outPorts = [];
 
@@ -300,7 +314,7 @@ angular.module('icestudio')
             blockType: blockInstances.type,
             data: { name: blockInstances.data.name, value: blockInstances.data.value },
             position: blockInstances.position,
-            hidecombo: hidecombo,
+            disabled: disabled,
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
@@ -311,7 +325,7 @@ angular.module('icestudio')
           graph.addCell(block);
         };
 
-        function addBasicCodeBlock(blockInstances) {
+        function addBasicCodeBlock(blockInstances, disabled) {
           var inPorts = [];
           var outPorts = [];
 
@@ -334,6 +348,7 @@ angular.module('icestudio')
             blockType: blockInstances.type,
             data: blockInstances.data,
             position: blockInstances.position,
+            disabled: disabled,
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 400, height: 200 }
