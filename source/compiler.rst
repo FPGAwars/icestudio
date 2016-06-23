@@ -33,7 +33,11 @@ Implementation
 
 .. code-block:: bash
 
-   node compiler.js
+  npm install fs sha1
+
+.. code-block:: bash
+
+  node compiler.js
 
 Examples
 --------
@@ -51,7 +55,7 @@ Example 1
 
     |
 
-    .. literalinclude:: ../examples/example1.json
+    .. literalinclude:: ../examples/example1.ice
        :language: json
 
     Generates
@@ -77,7 +81,7 @@ Example 2
 
     |
 
-    .. literalinclude:: ../examples/example2.json
+    .. literalinclude:: ../examples/example2.ice
        :language: json
 
     Generates

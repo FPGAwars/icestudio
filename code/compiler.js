@@ -6,7 +6,9 @@
 
  'use strict';
 
+var fs = require('fs');
 var sha1 = require('sha1');
+
 
 function digestId(id) {
   if (id.indexOf('-') != -1) {
@@ -253,7 +255,7 @@ function test_example(name, extension) {
   fs.readFile(filename + '.' + extension, 'utf8', function (err, data) {
     if (err) throw err;
 
-    var example = require(filename + '.json');
+    var example = JSON.parse(fs.readFileSync(filename + '.ice'));
     if (extension == 'v') {
       var s1 = verilogCompiler('main', example).replace(/[\r\n]/g, "");
     }
@@ -283,5 +285,5 @@ test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-/*console.log(verilogCompiler('main', require('../examples/example2.json')));
-console.log(pcfCompiler(require('../examples/example2.json')));*/
+/*console.log(verilogCompiler('main', require('../examples/example2.ice')));
+console.log(pcfCompiler(require('../examples/example2.ice')));*/

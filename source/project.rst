@@ -37,7 +37,7 @@ Example 1
 
 File: **driver/low.ice**
 
-.. literalinclude:: ../examples/example1.json
+.. literalinclude:: ../examples/example1.ice
    :language: json
    :emphasize-lines: 27
 
@@ -50,6 +50,6 @@ Example 2
 
 File: **wrapper/low.ice**
 
-.. literalinclude:: ../examples/example2.json
+.. literalinclude:: ../examples/example2.ice
    :language: json
    :emphasize-lines: 19
