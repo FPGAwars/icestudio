@@ -10,8 +10,8 @@ var fs = require('fs');
 var sha1 = require('sha1');
 
 
-function digestId(id) {
-  if (id.indexOf('-') != -1) {
+function digestId(id, force) {
+  if (id.indexOf('-') != -1 || force) {
     return 'v' + sha1(id).toString().substring(0, 6);
   }
   return id;
@@ -114,7 +114,7 @@ function getPorts(project) {
   return ports;
 }
 
-function getContent(project) {
+function getContent(name, project) {
   var content = '';
   var graph = project.graph;
 
@@ -144,10 +144,13 @@ function getContent(project) {
   }
 
   // Block instances
+
+  var instances = []
   for (var b in graph.blocks) {
     var block = graph.blocks[b];
     if (block.type != 'basic.input' && block.type != 'basic.output') {
-      content += digestId(block.id) + ' ' + digestId(block.id) + ' (\n';
+      var id = digestId(block.type, true);
+      instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
 
       // Parameters
       var params = [];
@@ -155,6 +158,7 @@ function getContent(project) {
         var param = '';
         var wire = graph.wires[w];
         if (block.id == wire.source.block) {
+          project.deps[block.type]
           param += '  .' + digestId(wire.source.port);
           param += '(w' + w + ')';
           params.push(param);
@@ -166,47 +170,62 @@ function getContent(project) {
         }
       }
 
-      content += params.join(',\n');
-      content += '\n);';
+      instances.push(params.join(',\n') + '\n);');
     }
   }
+  content += instances.join('\n');
 
   return content;
 }
 
-function verilogCompiler(main, project) {
+function verilogCompiler(name, project) {
   var code = '';
 
   if (project &&
       project.graph) {
 
+    // Dependencies modules
+    for (var d in project.deps) {
+      code += verilogCompiler(name + '_' + digestId(d, true), project.deps[d]);
+      code += '\n';
+    }
+
     for (var i in project.graph.blocks) {
       var block = project.graph.blocks[i];
-      if (block.type == 'basic.code') {
-        // Code modules
-        var data = {
-          name: digestId(block.id),
-          ports: block.data.ports,
-          content: block.data.code
+      if (block) {
+        if (block.type == 'basic.code') {
+          // Code modules
+          var data = {
+            name: name + '_' + digestId(block.type, true),
+            ports: block.data.ports,
+            content: block.data.code
+          }
+          code += module(data);
+          code += '\n';
         }
-        code += module(data);
-        code += '\n';
-      }
-      else if (block.type != 'basic.input' &&
-               block.type != 'basic.output') {
-        // Dependencies modules
-        code += verilogCompiler(digestId(block.id), project.deps[block.type])
-        code += '\n';
+        /*else if (block.type != 'basic.input' &&
+                 block.type != 'basic.output') {
+          // Instance modules
+          var data = {
+            name: digestId(block.id),
+            ports: getPorts(project.deps[block.type]),
+            content: getContent(project.deps[block.type])
+          };
+          code += module(data);
+          code += '\n';
+        }*/
       }
     }
 
     // Main module
-    var data = {
-      name: main,
-      ports: getPorts(project),
-      content: getContent(project)
-    };
-    code += module(data);
+    if (name){
+      var data = {
+        name: name,
+        ports: getPorts(project),
+        content: getContent(name, project)
+      };
+      code += module(data);
+    }
   }
 
   return code;
@@ -276,14 +295,14 @@ function test_example(name, extension) {
 }
 
 // Test examples
-test_example('example1', 'v');
+/*test_example('example1', 'v');
 test_example('example1', 'pcf');
 test_example('example2', 'v');
-test_example('example2', 'pcf');
+test_example('example2', 'pcf');*/
 /*test_example('example3');
 test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-/*console.log(verilogCompiler('main', require('../examples/example2.ice')));
-console.log(pcfCompiler(require('../examples/example2.ice')));*/
+console.log(verilogCompiler('main', JSON.parse(fs.readFileSync('../examples/example3.ice'))));
+console.log(pcfCompiler(JSON.parse(fs.readFileSync('../examples/example3.ice'))));

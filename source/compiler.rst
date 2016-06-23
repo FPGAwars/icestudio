@@ -93,3 +93,29 @@ Example 2
        :language: verilog
 
 |
+
+Example 3
+`````````
+
+.. image:: ../resources/dwrapper.low.project.svg
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../examples/example3.ice
+       :language: json
+
+    Generates
+
+    .. literalinclude:: ../examples/example3.v
+       :language: verilog
+
+    .. literalinclude:: ../examples/example3.pcf
+       :language: verilog
+
+|
