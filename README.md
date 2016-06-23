@@ -55,6 +55,16 @@ npm install
 bower install
 ```
 
+```bash
+sudo apt-get install iverilog
+```
+
+```bash
+pip install apio
+apio install --all
+```
+
+
 ### Execute
 
 ```bash
