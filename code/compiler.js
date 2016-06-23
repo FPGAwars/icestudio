@@ -10,14 +10,11 @@ var sha1 = require('sha1');
 
 function digestId(id) {
   if (id.indexOf('-') != -1) {
-    return sha1(id).toString().substring(0, 6);
+    return 'v' + sha1(id).toString().substring(0, 6);
   }
   return id;
 }
 /*
-      // Blocks
-
-}
 
 function findDependencies(data, blocks) {
   var deps = [];
@@ -95,7 +92,7 @@ function module(data) {
   return code;
 }
 
-function getPorts(name, project) {
+function getPorts(project) {
   var ports = {
     in: [],
     out: []
@@ -105,17 +102,17 @@ function getPorts(name, project) {
   for (var i in graph.blocks) {
     var block = graph.blocks[i];
     if (block.type == 'basic.input') {
-      ports.in.push(name + '_' + digestId(block.id));
+      ports.in.push(digestId(block.id));
     }
     else if (block.type == 'basic.output') {
-      ports.out.push(name + '_' + digestId(block.id));
+      ports.out.push(digestId(block.id));
     }
   }
 
   return ports;
 }
 
-function getContent(name, project) {
+function getContent(project) {
   var content = '';
   var graph = project.graph;
 
@@ -133,12 +130,12 @@ function getContent(name, project) {
       var block = graph.blocks[i];
       if (block.type == 'basic.input') {
         if (wire.source.block == block.id) {
-          content += 'assign w' + w + ' = ' + name + '_' + digestId(block.id) + ';\n';
+          content += 'assign w' + w + ' = ' + digestId(block.id) + ';\n';
         }
       }
       else if (block.type == 'basic.output') {
         if (wire.target.block == block.id) {
-          content += 'assign ' + name + '_' + digestId(block.id) + ' = w' + w + ';\n';
+          content += 'assign ' + digestId(block.id) + ' = w' + w + ';\n';
         }
       }
     }
@@ -148,7 +145,7 @@ function getContent(name, project) {
   for (var b in graph.blocks) {
     var block = graph.blocks[b];
     if (block.type != 'basic.input' && block.type != 'basic.output') {
-      content += name + '_' + digestId(block.id) + ' ' + digestId(block.id) + ' (\n';
+      content += digestId(block.id) + ' ' + digestId(block.id) + ' (\n';
 
       // Parameters
       var params = [];
@@ -175,35 +172,37 @@ function getContent(name, project) {
   return content;
 }
 
-function verilogCompiler(name, project) {
+function verilogCompiler(main, project) {
   var code = '';
 
   if (project &&
-      project.board &&
       project.graph) {
-
-    // Code modules
 
     for (var i in project.graph.blocks) {
       var block = project.graph.blocks[i];
       if (block.type == 'basic.code') {
+        // Code modules
         var data = {
-          name: name + '_' + digestId(block.id),
+          name: digestId(block.id),
           ports: block.data.ports,
           content: block.data.code
         }
         code += module(data);
         code += '\n';
       }
+      else if (block.type != 'basic.input' &&
+               block.type != 'basic.output') {
+        // Dependencies modules
+        code += verilogCompiler(digestId(block.id), project.deps[block.type])
+        code += '\n';
+      }
     }
-
-    // TODO: Dependencies modules
 
     // Main module
     var data = {
-      name: name + '_main',
-      ports: getPorts(name, project),
-      content: getContent(name, project)
+      name: main,
+      ports: getPorts(project),
+      content: getContent(project)
     };
     code += module(data);
   }
@@ -211,15 +210,17 @@ function verilogCompiler(name, project) {
   return code;
 }
 
-function pcfCompiler(name, project) {
+function pcfCompiler(project) {
   var code = '';
 
   for (var i in project.graph.blocks) {
     var block = project.graph.blocks[i];
-    if (block.type == 'basic.output') {
+    if (block.type == 'basic.input' ||
+        block.type == 'basic.output') {
       code += 'set_io ';
-      code += name + '_' + digestId(block.id);
-      code += ' ' + block.data.pin.value;
+      code += digestId(block.id);
+      code += ' ';
+      code += block.data.pin.value;
       code += '\n';
     }
   }
@@ -254,10 +255,10 @@ function test_example(name, extension) {
 
     var example = require(filename + '.json');
     if (extension == 'v') {
-      var s1 = verilogCompiler(name, example).replace(/[\r\n]/g, "");
+      var s1 = verilogCompiler('main', example).replace(/[\r\n]/g, "");
     }
     else {
-      var s1 = pcfCompiler(name, example).replace(/[\r\n]/g, "");
+      var s1 = pcfCompiler(example).replace(/[\r\n]/g, "");
     }
     var s2 = data.replace(/[\r\n]/g, "");
 
@@ -275,11 +276,12 @@ function test_example(name, extension) {
 // Test examples
 test_example('example1', 'v');
 test_example('example1', 'pcf');
-/*test_example('example2');
-test_example('example3');
+test_example('example2', 'v');
+test_example('example2', 'pcf');
+/*test_example('example3');
 test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-//console.log(verilogCompiler('example1', require('../examples/example1.json')));
-//console.log(pcfCompiler('example1', require('../examples/example1.json')));
+/*console.log(verilogCompiler('main', require('../examples/example2.json')));
+console.log(pcfCompiler(require('../examples/example2.json')));*/

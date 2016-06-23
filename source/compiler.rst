@@ -63,3 +63,29 @@ Example 1
        :language: verilog
 
 |
+
+Example 2
+`````````
+
+.. image:: ../resources/wrapper.low.project.svg
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../examples/example2.json
+       :language: json
+
+    Generates
+
+    .. literalinclude:: ../examples/example2.v
+       :language: verilog
+
+    .. literalinclude:: ../examples/example2.pcf
+       :language: verilog
+
+|
