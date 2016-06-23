@@ -33,20 +33,13 @@ angular.module('icestudio')
             code += data.name;
             code += ' (';
 
-            data.ports.in.forEach(function (element, index, array) {
-              array[index] = 'input ' + element;
-            });
-            data.ports.out.forEach(function (element, index, array) {
-              array[index] = 'output ' + element;
-            });
-
             var params = [];
 
-            if (data.ports.in.length > 0) {
-              params.push(data.ports.in.join(', '));
+            for (var i in data.ports.in) {
+              params.push('input ' + data.ports.in[i]);
             }
-            if (data.ports.out.length > 0) {
-              params.push(data.ports.out.join(', '));
+            for (var o in data.ports.out) {
+              params.push('output ' + data.ports.out[o]);
             }
 
             code += params.join(', ');

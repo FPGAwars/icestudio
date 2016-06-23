@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'compiler',
-      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, compiler) {
+    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler',
+      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler) {
 
         this.verifyCode = function() {
           if (generateCode()) {
@@ -23,8 +23,15 @@ angular.module('icestudio')
           if (generateCode()) {
             alertify.message(command + ' start');
             nodeProcess.chdir('_build');
-            execute('apio ' + command, command);
-            nodeProcess.chdir('..');
+            try {
+              execute('apio init --board ' + boards.selectedBoard.id);
+              execute('apio ' + command, command);
+            }
+            catch(e) {
+            }
+            finally {
+              nodeProcess.chdir('..');
+            }
           }
         }
 
@@ -42,19 +49,24 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
             if (error) {
-              alertify.error(label + ' error');
+              if (label)
+                alertify.error(label + ' error');
             }
             else if (stdout) {
               if (stdout.toString().indexOf('ERROR') != -1) {
-                alertify.error(label + 'error');
+                if (label)
+                  alertify.error(label + ' error');
               }
               else {
-                alertify.success(label + 'success');
+                if (label)
+                  alertify.success(label + ' success');
               }
             }
             else {
-              alertify.success(label + ' success');
+              if (label)
+                alertify.success(label + ' success');
             }
           });
         }
