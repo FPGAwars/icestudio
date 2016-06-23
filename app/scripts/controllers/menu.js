@@ -6,14 +6,16 @@ angular.module('icestudio')
                                     common,
                                     graph,
                                     boards,
+                                    tools,
                                     resources) {
 
     $scope.common = common;
     $scope.boards = boards;
+    $scope.tools = tools;
 
     $scope.examples = resources.getExamples();
-    $scope.menuBlocks = resources.getMenuBlocks();
     $scope.currentBoards = boards.getBoards();
+    $scope.menuBlocks = resources.getMenuBlocks();
 
     // File
 

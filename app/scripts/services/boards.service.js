@@ -26,7 +26,9 @@ angular.module('icestudio')
       this.pinouts = {
         icezum: [
           { name: 'LED0', value: '95' },
-          { name: 'LED1', value: '96' }
+          { name: 'LED1', value: '96' },
+          { name: 'SW1', value: '10' },
+          { name: 'SW2', value: '11' }
         ],
         icestick: [
           { name: 'D1', value: '99' },

@@ -27,8 +27,8 @@
         "data": {
           "label": "x",
           "pin": {
-            "name": "",
-            "value": 0
+            "name": "SW1",
+            "value": "10"
           }
         },
         "position": {

@@ -21,7 +21,8 @@
     "glob": "^7.0.5",
     "jquery": "^2.2.3",
     "rmdir": "^1.2.0",
-    "serialport": "^2.0.5"
+    "serialport": "^2.0.5",
+    "sha1": "^1.1.1"
   },
   "devDependencies": {
     "nw": "^0.12.3",
