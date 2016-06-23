@@ -3,7 +3,7 @@
 GUI
 ===
 
-.. image:: ../resources/gui.png
+.. image:: ../resources/images/gui.png
 
 Source code: https://github.com/fpgawars/icestudio
 
@@ -90,7 +90,7 @@ Blocks inspection
 
 Non-basic blocks can be readonly inspected by double click. This is a recursive action.
 
-.. image:: ../resources/gui-inspection.png
+.. image:: ../resources/images/gui-inspection.png
 
 .. note::
 

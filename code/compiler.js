@@ -164,7 +164,7 @@ function getContent(name, project) {
           params.push(param);
         }
         if (block.id == wire.target.block) {
-          param += '   .' + digestId(wire.target.port);
+          param += '  .' + digestId(wire.target.port);
           param += '(w' + w + ')';
           params.push(param);
         }
@@ -270,7 +270,7 @@ function compare_string(s1, s2) {
 }
 
 function test_example(name, extension) {
-  var filename = '../examples/' + name;
+  var filename = ['..', 'resources', 'examples', name, name].join('/');
   fs.readFile(filename + '.' + extension, 'utf8', function (err, data) {
     if (err) throw err;
 
@@ -295,16 +295,16 @@ function test_example(name, extension) {
 }
 
 // Test examples
-test_example('example1', 'v');
-test_example('example1', 'pcf');
-test_example('example2', 'v');
-test_example('example2', 'pcf');
-test_example('example3', 'v');
-test_example('example3', 'pcf');
-/*test_example('example3');
-test_example('example4');
-test_example('example5');
-test_example('example6');*/
+test_example('low', 'v');
+test_example('low', 'pcf');
+test_example('not', 'v');
+test_example('not', 'pcf');
+test_example('or', 'v');
+test_example('or', 'pcf');
+test_example('cnot', 'v');
+test_example('cnot', 'pcf');
+test_example('dnot', 'v');
+test_example('dnot', 'pcf');
 
-//console.log(verilogCompiler('main', JSON.parse(fs.readFileSync('../examples/example1.ice'))));
-//console.log(pcfCompiler(JSON.parse(fs.readFileSync('../examples/example1.ice'))));
+//console.log(verilogCompiler('main', JSON.parse(fs.readFileSync('../examples/dnot/dnot.ice'))));
+//console.log(pcfCompiler(JSON.parse(fs.readFileSync('../examples/dnot/dnot.ice'))));

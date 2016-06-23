@@ -28,28 +28,102 @@ Extension: **.ice**
 Examples
 --------
 
-Example 1
-`````````
+Low project
+```````````
 
-**Driver low**
+.. image:: ../resources/images/low-project.png
 
-.. image:: ../resources/driver.low.project.svg
+File: **low.iceb**
 
-File: **driver/low.ice**
+.. container:: toggle
 
-.. literalinclude:: ../examples/example1.ice
-   :language: json
-   :emphasize-lines: 27
+    .. container:: header
 
-Example 2
-`````````
+        **Show/Hide code**
 
-**Wrapper low**
+    |
 
-.. image:: ../resources/wrapper.low.project.svg
+    .. literalinclude:: ../resources/examples/low/low.ice
+       :language: json
 
-File: **wrapper/low.ice**
+|
 
-.. literalinclude:: ../examples/example2.ice
-   :language: json
-   :emphasize-lines: 19
+Not project
+```````````
+
+.. image:: ../resources/images/not-project.png
+
+File: **not.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/not/not.ice
+       :language: json
+
+|
+
+Or project
+``````````
+
+.. image:: ../resources/images/or-project.png
+
+File: **or.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/or/or.ice
+       :language: json
+
+|
+
+Cnot project
+````````````
+
+.. image:: ../resources/images/cnot-project.png
+
+File: **cnot.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/cnot/cnot.ice
+       :language: json
+
+|
+
+Dnot project
+````````````
+
+.. image:: ../resources/images/dnot-project.png
+
+File: **dnot.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/dnot/dnot.ice
+       :language: json
+
+|

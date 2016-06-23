@@ -15,7 +15,7 @@ Its *input* and *output* ports are defined from its *input* and *output* block i
 
 Extension: **.iceb**
 
-  .. image:: ../resources/block-definition.svg
+  .. image:: ../resources/svg/block-definition.svg
 
   |
 
@@ -71,7 +71,7 @@ Input instance
 This special block is used to define input blocks in a project.
 It has one output port named 'out'.
 
-.. image:: ../resources/basic-input.svg
+.. image:: ../resources/svg/basic-input.svg
 
 .. code-block:: json
 
@@ -94,7 +94,7 @@ Output instance
 This special block is used to define output blocks in a projects.
 It has one input port named 'in'.
 
-.. image:: ../resources/basic-output.svg
+.. image:: ../resources/svg/basic-output.svg
 
 .. code-block:: json
 
@@ -116,7 +116,7 @@ Code instance
 This special block is used to define verilog code in a block.
 It has input and output ports defined in *value.ports* field.
 
-.. image:: ../resources/basic-code.svg
+.. image:: ../resources/svg/basic-code.svg
 
 .. code-block:: json
 
@@ -147,159 +147,107 @@ Simple blocks
 Simple blocks contain **only** basic blocks.
 It has no dependencies.
 
-**Example: driver low**
+Low block
+`````````
 
-.. image:: ../resources/driver.low.svg
+.. image:: ../resources/images/low-block.png
 
-File: **driver/low.iceb**
+File: **low.iceb**
 
-.. code-block:: json
+.. container:: toggle
 
-  {
-    "graph": {
-      "blocks": [
-        {
-          "id": "2e684aab-9f39-47a1-9af0-25969a6a908f",
-          "type": "basic.code",
-          "data": {
-            "code": "// Driver low\n\nassign v = 1'b0;",
-            "ports": {
-              "in": [],
-              "out": [
-                "v"
-              ]
-            }
-          },
-          "position": {
-            "x": 100,
-            "y": 100
-          }
-        },
-        {
-          "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
-          "type": "basic.output",
-          "data": {
-            "label": "o"
-          },
-          "position": {
-            "x": 627,
-            "y": 165
-          }
-        }
-      ],
-      "wires": [
-        {
-          "source": {
-            "block": "2e684aab-9f39-47a1-9af0-25969a6a908f",
-            "port": "v"
-          },
-          "target": {
-            "block": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
-            "port": "in"
-          }
-        }
-      ]
-    },
-    "deps": {}
-  }
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/low/low.iceb
+       :language: json
+
+|
+
+Not block
+`````````
+
+.. image:: ../resources/images/not-block.png
+
+File: **not.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/not/not.iceb
+       :language: json
+
+|
+
+Or block
+````````
+
+.. image:: ../resources/images/or-block.png
+
+File: **or.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/or/or.iceb
+       :language: json
+
+|
 
 Complex blocks
 --------------
 
 Complex blocks contain **not only** basic blocks.
 
-**Example: wrapper low**
+Cnot block
+``````````
 
-.. image:: ../resources/wrapper.low.svg
+.. image:: ../resources/images/cnot-block.png
 
-File: **wrapper/low.iceb**
+File: **cnot.iceb**
 
-.. code-block:: json
+.. container:: toggle
 
-  {
-    "graph": {
-      "blocks": [
-        {
-          "id": "c2d74062-f2b7-4935-aebe-bcd5fb40081a",
-          "type": "driver.low",
-          "data": {},
-          "position": {
-            "x": 100,
-            "y": 100
-          }
-        },
-        {
-          "id": "eced7092-f887-4fac-9d0d-03bdbff56d3f",
-          "type": "basic.output",
-          "data": {
-            "name": "x"
-          },
-          "position": {
-            "x": 336,
-            "y": 100
-          }
-        }
-      ],
-      "wires": [
-        {
-          "source": {
-            "block": "c2d74062-f2b7-4935-aebe-bcd5fb40081a",
-            "port": "o"
-          },
-          "target": {
-            "block": "eced7092-f887-4fac-9d0d-03bdbff56d3f",
-            "port": "in"
-          }
-        }
-      ]
-    },
-    "deps": {
-      "driver.low": {
-        "graph": {
-          "blocks": [
-            {
-              "id": "2e684aab-9f39-47a1-9af0-25969a6a908f",
-              "type": "basic.code",
-              "data": {
-                "code": "// Driver low\n\nassign v = 1'b0;",
-                "ports": {
-                  "in": [],
-                  "out": [
-                    "v"
-                  ]
-                }
-              },
-              "position": {
-                "x": 100,
-                "y": 100
-              }
-            },
-            {
-              "id": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
-              "type": "basic.output",
-              "data": {
-                "name": "o"
-              },
-              "position": {
-                "x": 627,
-                "y": 165
-              }
-            }
-          ],
-          "wires": [
-            {
-              "source": {
-                "block": "2e684aab-9f39-47a1-9af0-25969a6a908f",
-                "port": "v"
-              },
-              "target": {
-                "block": "2d811451-4777-4f7b-9da2-67bb9bb9a71e",
-                "port": "in"
-              }
-            }
-          ]
-        },
-        "deps": {}
-      }
-    }
-  }
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/cnot/cnot.iceb
+       :language: json
+
+|
+
+Dnot block
+``````````
+
+.. image:: ../resources/images/dnot-block.png
+
+File: **dnot.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/dnot/dnot.iceb
+       :language: json
+
+|

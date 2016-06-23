@@ -42,10 +42,10 @@ Implementation
 Examples
 --------
 
-Example 1
-`````````
+Low project
+```````````
 
-.. image:: ../resources/driver.low.project.svg
+.. image:: ../resources/images/low-project.png
 
 .. container:: toggle
 
@@ -55,23 +55,25 @@ Example 1
 
     |
 
-    .. literalinclude:: ../examples/example1.ice
+    .. literalinclude:: ../resources/examples/low.ice
        :language: json
 
     Generates
 
-    .. literalinclude:: ../examples/example1.v
+    .. literalinclude:: ../resources/examples/low/low.v
        :language: verilog
 
-    .. literalinclude:: ../examples/example1.pcf
+    .. literalinclude:: ../resources/examples/low/low.pcf
        :language: verilog
 
 |
 
-Example 2
-`````````
+Not project
+```````````
 
-.. image:: ../resources/wrapper.low.project.svg
+.. image:: ../resources/images/not-project.png
+
+File: **not.iceb**
 
 .. container:: toggle
 
@@ -81,23 +83,25 @@ Example 2
 
     |
 
-    .. literalinclude:: ../examples/example2.ice
+    .. literalinclude:: ../resources/examples/not/not.ice
        :language: json
 
     Generates
 
-    .. literalinclude:: ../examples/example2.v
-       :language: verilog
+    .. literalinclude:: ../resources/examples/not/not.v
+        :language: verilog
 
-    .. literalinclude:: ../examples/example2.pcf
-       :language: verilog
+    .. literalinclude:: ../resources/examples/not/not.pcf
+        :language: verilog
 
 |
 
-Example 3
-`````````
+Or project
+``````````
 
-.. image:: ../resources/dwrapper.low.project.svg
+.. image:: ../resources/images/or-project.png
+
+File: **or.iceb**
 
 .. container:: toggle
 
@@ -107,15 +111,71 @@ Example 3
 
     |
 
-    .. literalinclude:: ../examples/example3.ice
+    .. literalinclude:: ../resources/examples/or/or.ice
        :language: json
 
     Generates
 
-    .. literalinclude:: ../examples/example3.v
-       :language: verilog
+    .. literalinclude:: ../resources/examples/or/or.v
+        :language: verilog
 
-    .. literalinclude:: ../examples/example3.pcf
-       :language: verilog
+    .. literalinclude:: ../resources/examples/or/or.pcf
+        :language: verilog
+
+|
+
+Cnot project
+````````````
+
+.. image:: ../resources/images/cnot-project.png
+
+File: **cnot.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/cnot/cnot.ice
+       :language: json
+
+    Generates
+
+    .. literalinclude:: ../resources/examples/cnot/cnot.v
+        :language: verilog
+
+    .. literalinclude:: ../resources/examples/cnot/cnot.pcf
+        :language: verilog
+
+|
+
+Dnot project
+````````````
+
+.. image:: ../resources/images/dnot-project.png
+
+File: **dnot.iceb**
+
+.. container:: toggle
+
+    .. container:: header
+
+        **Show/Hide code**
+
+    |
+
+    .. literalinclude:: ../resources/examples/dnot/dnot.ice
+       :language: json
+
+    Generates
+
+    .. literalinclude:: ../resources/examples/dnot/dnot.v
+        :language: verilog
+
+    .. literalinclude:: ../resources/examples/dnot/dnot.pcf
+        :language: verilog
 
 |
