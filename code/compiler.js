@@ -295,14 +295,16 @@ function test_example(name, extension) {
 }
 
 // Test examples
-/*test_example('example1', 'v');
+test_example('example1', 'v');
 test_example('example1', 'pcf');
 test_example('example2', 'v');
-test_example('example2', 'pcf');*/
+test_example('example2', 'pcf');
+test_example('example3', 'v');
+test_example('example3', 'pcf');
 /*test_example('example3');
 test_example('example4');
 test_example('example5');
 test_example('example6');*/
 
-console.log(verilogCompiler('main', JSON.parse(fs.readFileSync('../examples/example3.ice'))));
-console.log(pcfCompiler(JSON.parse(fs.readFileSync('../examples/example3.ice'))));
+//console.log(verilogCompiler('main', JSON.parse(fs.readFileSync('../examples/example1.ice'))));
+//console.log(pcfCompiler(JSON.parse(fs.readFileSync('../examples/example1.ice'))));

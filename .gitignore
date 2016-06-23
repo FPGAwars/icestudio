@@ -1,2 +1,3 @@
 _build/*
 code/node_modules/*
+*.out
