@@ -16,31 +16,6 @@ function digestId(id, force) {
   }
   return id;
 }
-/*
-
-function findDependencies(data, blocks) {
-  var deps = [];
-
-  if (data.code && data.code.type == 'graph') {
-    var graph = data.code.data;
-    for (var n in graph.blocks) {
-      var type = graph.blocks[n].type;
-      if (deps.indexOf(type) == -1) {
-        deps.push(type);
-      }
-      var category = type.split('.')[0];
-      var key = type.split('.')[1];
-      var retdeps = findDependencies(blocks[category][key], blocks);
-      for (var i in retdeps) {
-        if (deps.indexOf(retdeps[i]) == -1) {
-          deps.push(retdeps[i]);
-        }
-      }
-    }
-  }
-  return deps;
-}
-*/
 
 function module(data) {
   var code = '';
@@ -153,6 +128,7 @@ function getContent(name, project) {
       instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
 
       // Parameters
+
       var params = [];
       for (var w in graph.wires) {
         var param = '';
@@ -185,16 +161,18 @@ function verilogCompiler(name, project) {
       project.graph) {
 
     // Dependencies modules
+
     for (var d in project.deps) {
       code += verilogCompiler(name + '_' + digestId(d, true), project.deps[d]);
       code += '\n';
     }
 
+    // Code modules
+
     for (var i in project.graph.blocks) {
       var block = project.graph.blocks[i];
       if (block) {
         if (block.type == 'basic.code') {
-          // Code modules
           var data = {
             name: name + '_' + digestId(block.type, true),
             ports: block.data.ports,
@@ -203,21 +181,11 @@ function verilogCompiler(name, project) {
           code += module(data);
           code += '\n';
         }
-        /*else if (block.type != 'basic.input' &&
-                 block.type != 'basic.output') {
-          // Instance modules
-          var data = {
-            name: digestId(block.id),
-            ports: getPorts(project.deps[block.type]),
-            content: getContent(project.deps[block.type])
-          };
-          code += module(data);
-          code += '\n';
-        }*/
       }
     }
 
     // Main module
+
     if (name){
       var data = {
         name: name,
@@ -283,7 +251,12 @@ function test_example(name, extension) {
     }
     var s2 = data.replace(/[\r\n]/g, "");
 
-    process.stdout.write('Testing ' + name + ' ' + extension + ' ...');
+    if (extension == 'v') {
+      process.stdout.write('Testing ' + name + ' v   ...');
+    }
+    else {
+      process.stdout.write('Testing ' + name + ' pcf ...');
+    }
     if (s1 == s2) {
       process.stdout.write(' [OK]\n');
     }
@@ -295,6 +268,7 @@ function test_example(name, extension) {
 }
 
 // Test examples
+
 test_example('low', 'v');
 test_example('low', 'pcf');
 test_example('not', 'v');

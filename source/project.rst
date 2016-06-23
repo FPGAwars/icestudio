@@ -33,7 +33,7 @@ Low project
 
 .. image:: ../resources/images/low-project.png
 
-File: **low.iceb**
+File: **low.ice**
 
 .. container:: toggle
 
@@ -53,7 +53,7 @@ Not project
 
 .. image:: ../resources/images/not-project.png
 
-File: **not.iceb**
+File: **not.ice**
 
 .. container:: toggle
 
@@ -73,7 +73,7 @@ Or project
 
 .. image:: ../resources/images/or-project.png
 
-File: **or.iceb**
+File: **or.ice**
 
 .. container:: toggle
 
@@ -93,7 +93,7 @@ Cnot project
 
 .. image:: ../resources/images/cnot-project.png
 
-File: **cnot.iceb**
+File: **cnot.ice**
 
 .. container:: toggle
 
@@ -113,7 +113,7 @@ Dnot project
 
 .. image:: ../resources/images/dnot-project.png
 
-File: **dnot.iceb**
+File: **dnot.ice**
 
 .. container:: toggle
 
