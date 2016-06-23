@@ -55,7 +55,7 @@ Low project
 
     |
 
-    .. literalinclude:: ../resources/examples/low.ice
+    .. literalinclude:: ../resources/examples/low/low.ice
        :language: json
 
     Generates
