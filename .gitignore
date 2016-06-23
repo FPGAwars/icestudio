@@ -6,6 +6,7 @@ file
 *.blif
 *.pyc
 build
+_build/*
 icestudio/node_modules
 bower_components
 node_modules

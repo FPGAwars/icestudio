@@ -74,6 +74,21 @@
                     </ul>
                 </li>
 
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>Tools  <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li>
+                        <a href ng-click="tools.verifyCode()">{{ 'Verify' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="tools.buildCode()">{{ 'Build' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="tools.uploadCode()">{{ 'Upload' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

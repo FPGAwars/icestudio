@@ -28,8 +28,8 @@
         "data": {
           "label": "x",
           "pin": {
-            "name": "",
-            "value": 0
+            "name": "SW1",
+            "value": "10"
           }
         },
         "position": {
@@ -43,8 +43,8 @@
         "data": {
           "label": "y",
           "pin": {
-            "name": "",
-            "value": 0
+            "name": "SW2",
+            "value": "11"
           }
         },
         "position": {
