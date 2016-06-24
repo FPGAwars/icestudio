@@ -35,18 +35,6 @@ Install [grunt](http://gruntjs.com/)
 sudo npm install -g grunt-cli
 ```
 
-### Download
-
-```bash
-git clone https://github.com/FPGAwars/icestudio.git
-cd icestudio
-```
-
-```bash
-npm install
-bower install
-```
-
 ```bash
 sudo apt-get install iverilog
 ```
@@ -56,6 +44,19 @@ pip install apio
 apio install --all
 ```
 
+### Download
+
+```bash
+git clone https://github.com/FPGAwars/icestudio.git
+cd icestudio
+```
+
+### Install
+
+```bash
+npm install
+grunt install
+```
 
 ### Execute
 
@@ -66,6 +67,7 @@ grunt serve
 ### Package
 
 ```bash
+grunt dist
 ```
 
 ## Version 0.1
