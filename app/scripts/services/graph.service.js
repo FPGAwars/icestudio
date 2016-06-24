@@ -39,31 +39,34 @@ angular.module('icestudio')
           // Events
           paper.on('cell:pointerclick',
             function(cellView, evt, x, y) {
-              if (selectedCell) {
-                V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+              if (paper.options.interactive) {
+                if (selectedCell) {
+                  V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                }
+                selectedCell = cellView.model;
+                V(paper.findViewByModel(selectedCell).el).addClass('highlighted');
               }
-              selectedCell = cellView.model;
-              V(paper.findViewByModel(selectedCell).el).addClass('highlighted');
             }
           );
 
           paper.on('cell:pointerdblclick',
             function(cellView, evt, x, y) {
-              var data = cellView.model.attributes;
-              if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-                alertify.prompt('Insert the block label', '',
-                  function(evt, label) {
-                    if (label) {
-                      data.attrs['.block-label'].text = label;
-                      cellView.update();
-                      alertify.success('Label updated');
-                    }
-                });
-              }
-              else if (data.blockType == 'basic.code') {
-                // TODO.
-              }
-              else {
+              if (paper.options.interactive) {
+                var data = cellView.model.attributes;
+                if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+                  alertify.prompt('Insert the block label', '',
+                    function(evt, label) {
+                      if (label) {
+                        data.attrs['.block-label'].text = label;
+                        cellView.update();
+                        alertify.success('Label updated');
+                      }
+                  });
+                }
+                else if (data.blockType == 'basic.code') {
+                  // TODO.
+                }
+                else {
                   breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
@@ -80,13 +83,16 @@ angular.module('icestudio')
                     appEnable(false);
                   }
                 }
+              }
             }
           );
 
           paper.on('blank:pointerclick',
             function() {
-              if (selectedCell) {
-                V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+              if (paper.options.interactive) {
+                if (selectedCell) {
+                  V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                }
               }
             }
           );
