@@ -28,12 +28,69 @@ module.exports = function(grunt) {
     nwjs: {
       options: {
         version: '0.12.3',
-        buildDir: 'dist',
+        buildDir: 'dist/',
         //credits: 'app/Credits.html',
         //macIcns: 'icon.icns',
-        platforms: ['linux', 'osx', 'win']
+        platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx64']
       },
-      src: 'app/**/*'
+      src: ['app/**']
+    },
+    compress: {
+      linux32: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/Icestudio/linux32/',
+          src: ['**'],
+          dest: ''
+        }]
+      },
+      linux64: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-linux64.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/Icestudio/linux64/',
+          src: ['**'],
+          dest: '.'
+        }]
+      },
+      win32: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-win32.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/Icestudio/win32/',
+          src: ['**'],
+          dest: '.'
+        }]
+      },
+      win64: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-win64.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/Icestudio/win64/',
+          src: ['**'],
+          dest: '.'
+        }]
+      },
+      osx64: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-osx64.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/Icestudio/osx64/',
+          src: ['**'],
+          dest: '.'
+        }]
+      }
     },
     watch: {
       scripts: {
@@ -53,6 +110,6 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('install', ['exec:npmInstall', 'exec:bowerInstall']);
   grunt.registerTask('serve', ['watch:scripts']);
-  grunt.registerTask('dist', ['nwjs']);
+  grunt.registerTask('dist', ['nwjs', 'compress']);
 
 };
