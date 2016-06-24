@@ -92,6 +92,7 @@ module main (input v759eac, output v7a7776, output v7aa50c);
  assign w1 = v759eac;
  assign v7aa50c = w2;
  assign v7a7776 = w3;
+ assign w1 = w0;
  main_v54c3f4 v48565e (
    .v39bf7c(w1),
    .vdf78f0(w2)
