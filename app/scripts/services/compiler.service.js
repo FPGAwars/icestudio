@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('compiler', ['nodeFs', 'nodeSha1',
-      function(nodeFs, nodeSha1) {
+    .service('compiler', ['nodeSha1',
+      function(nodeSha1) {
 
         this.generateVerilog = function(project) {
           return verilogCompiler('main', project);

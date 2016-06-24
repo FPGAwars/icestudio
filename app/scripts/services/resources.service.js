@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('resources', ['nodeGlob', 'utils',
-      function(nodeGlob, utils) {
+    .service('resources', ['nodeGlob', 'nodePath', 'utils',
+      function(nodeGlob, nodePath, utils) {
 
         this.getExamples = function() {
-          return getResources('app/res/examples/*', '.ice');
+          return getResources(nodePath.join('res', 'examples', '*'), '.ice');
         }
 
         this.getMenuBlocks = function() {
-          return getResources('app/res/blocks/*', '.iceb');
+          return getResources(nodePath.join('res', 'blocks', '*'), '.iceb');
         }
 
         function getResources(path, extension) {
@@ -21,10 +21,10 @@ angular.module('icestudio')
 
               for (var i in categories) {
 
-                var category = categories[i].split('/')[3];
+                var category = categories[i].split(nodePath.sep)[2];
                 resources[category] = {};
 
-                nodeGlob(categories[i] + '/*' + extension, null, (function(c) {
+                nodeGlob(nodePath.join(categories[i], '*' + extension), null, (function(c) {
                     return function(er, blocks) {
                         storeBlocks(er, blocks, c);
                     };
@@ -37,7 +37,7 @@ angular.module('icestudio')
                     var name = utils.basename(blocks[j]);
                     resources[category][name] = {};
 
-                    $.getJSON(blocks[j].substring(4), (function(c, n) {
+                    $.getJSON(blocks[j], (function(c, n) {
                         return function(data) {
                             storeData(data, c, n);
                         };
