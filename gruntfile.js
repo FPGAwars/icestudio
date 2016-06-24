@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 
   // Default tasks.
   grunt.registerTask('default', function() {
-    console.log('echo');
+    console.log('Icestudio');
   });
   grunt.registerTask('install', ['exec:npmInstall', 'exec:bowerInstall']);
   grunt.registerTask('serve', ['watch:scripts']);

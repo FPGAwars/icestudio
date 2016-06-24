@@ -1,7 +1,7 @@
 {
   "name": "icestudio",
   "description": "Experimental graphic editor for open FPGAs",
-  "main": "app/index.html",
+  "main": "index.html",
   "authors": [
     "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
     "Tom Calvo <calvo.tom@gmail.com>"

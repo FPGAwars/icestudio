@@ -9,7 +9,7 @@
   "window": {
     "width": 900,
     "height": 600,
-    "toolbar": false,
+    "toolbar": true,
     "resizable": false,
     "position": "center"
   },
