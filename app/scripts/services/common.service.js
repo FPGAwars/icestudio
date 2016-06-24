@@ -21,8 +21,8 @@ angular.module('icestudio')
             graph: {},
             deps: {}
           };
-          this.updateProjectName(name);
           graph.clearAll();
+          this.updateProjectName(name);
           alertify.success('New project ' + name + ' created');
         };
 
@@ -161,13 +161,16 @@ angular.module('icestudio')
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
+            if (graph.breadcrumbs.length > 1) {
+              graph.breadcrumbs = [{ name: this.projectName }];
+            }
             graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }
             window.title = 'Icestudio - ' + name;
           }
-        }
+        };
 
         this.addBlock = function(type, block) {
           this.project.deps[type] = block;

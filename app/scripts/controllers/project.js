@@ -14,6 +14,8 @@ angular.module('icestudio')
     graph.createPaper($('#paper'));
     common.updateProjectName('untitled');
 
+    // Breadcrumbs
+
     $scope.breadcrumbsNavitate = function(selectedItem) {
       var item;
       do {
@@ -24,7 +26,7 @@ angular.module('icestudio')
 
       if (graph.breadcrumbs.length == 1) {
         graph.loadProject(common.project);
-        graph.paperEnable(true);
+        graph.appEnable(true);
       }
       else {
         var disabled = true;
@@ -33,7 +35,7 @@ angular.module('icestudio')
           project = project.deps[graph.breadcrumbs[i].name];
         }
         graph.loadProject(project, disabled);
-        graph.paperEnable(false);
+        graph.appEnable(false);
       }
     }
 

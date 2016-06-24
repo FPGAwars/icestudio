@@ -1,3 +1,7 @@
+.disable-menu {
+    pointer-events:none;
+}
+
 .dropdown-submenu {
     position: relative;
 }

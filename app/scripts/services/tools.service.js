@@ -21,6 +21,7 @@ angular.module('icestudio')
 
         function apio(command) {
           $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
           if (generateCode()) {
             alertify.message(command + ' start');
             nodeProcess.chdir('_build');
@@ -74,6 +75,7 @@ angular.module('icestudio')
                   alertify.success(label + ' success');
               }
               $('body').removeClass('waiting');
+              angular.element('#menu').removeClass('disable-menu');
             }
           });
         }

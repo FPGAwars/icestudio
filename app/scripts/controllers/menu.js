@@ -5,13 +5,12 @@ angular.module('icestudio')
                                     nodeFs,
                                     common,
                                     graph,
-                                    boards,
                                     tools,
+                                    boards,
                                     resources) {
 
     $scope.common = common;
     $scope.boards = boards;
-    $scope.tools = tools;
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
@@ -76,21 +75,20 @@ angular.module('icestudio')
     }
 
     $scope.importBlock = function() {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-import-block');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            event.target.files.clear();
-            if (file) {
-              if (file.path.endsWith('.iceb')) {
-                common.importBlock(file.path);
-              }
+      setTimeout(function() {
+        var ctrl = angular.element('#input-import-block');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          event.target.files.clear();
+          if (file) {
+            if (file.path.endsWith('.iceb')) {
+              common.importBlock(file.path);
             }
-          });
-          ctrl.click();
-        }, 0);
+          }
+        });
+        ctrl.click();
+      }, 0);
     }
-
 
     $scope.exportAsBlock = function() {
       setTimeout(function() {
@@ -129,7 +127,8 @@ angular.module('icestudio')
     }
 
     $(document).on('keydown', function(event) {
-      if (event.keyCode == 46) { // Supr
+      if (event.keyCode == 46 &&
+          graph.isEnabled()) { // Supr
         $scope.removeSelected();
       }
     });
@@ -146,6 +145,20 @@ angular.module('icestudio')
             alertify.success('Board ' + board.label + ' selected');
         });
       }
+    }
+
+    // Tools
+
+    $scope.verifyCode = function() {
+      tools.verifyCode();
+    };
+
+    $scope.buildCode = function() {
+      tools.buildCode();
+    };
+
+    $scope.uploadCode = function() {
+      tools.uploadCode();
     }
 
   });
