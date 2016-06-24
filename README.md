@@ -7,23 +7,15 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
     GUI -> JSON -> Verilog, PCF
 
-## Version 0.1
+## Version 0.2 alpha
 
-![][icestudio-demo]
+<img src="./doc/images/icestudio-0.2-project.png" width="600" align="center">
 
-### Installation
+<img src="./doc/images/icestudio-0.2-block-inspection.png" width="600" align="center">
 
-1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
+**Documentation: http://icestudio.readthedocs.io**
 
-2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
-
-NOTE: initially supported on Linux (32, 64), Windows and Mac.
-
-## Version 0.2
-
-* Documentation: http://icestudio.readthedocs.io
-
-NOTE: this is an **early experimental version** and it is under development.
+NOTE: this is an **early experimental version** and it is under development. Supported on Linux.
 
 ### Development
 
@@ -76,6 +68,18 @@ grunt serve
 ```bash
 ```
 
+## Version 0.1
+
+![][icestudio-0.1-demo]
+
+### Installation
+
+1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
+
+2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
+
+NOTE: initially supported on Linux (32, 64), Windows and Mac.
+
 ## Videos
 
 ### Version 0.1
@@ -103,4 +107,4 @@ grunt serve
 
 Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
 
-[icestudio-demo]: doc/images/icestudio-demo.gif
+[icestudio-0.1-demo]: doc/images/icestudio-demo.gif
