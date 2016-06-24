@@ -101,6 +101,13 @@ module.exports = function(grunt) {
           interrupt: true
         }
       }
+    },
+    clean: {
+      dist: ['dist'],
+      // node: ['node_modules'],
+      // appnode: ['app/node_modules'],
+      // appbower: ['app/bower_components'],
+      // cache: ['cache']
     }
   });
 
@@ -110,6 +117,6 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('install', ['exec:npmInstall', 'exec:bowerInstall']);
   grunt.registerTask('serve', ['watch:scripts']);
-  grunt.registerTask('dist', ['nwjs', 'compress']);
+  grunt.registerTask('dist', ['clean:dist', 'nwjs', 'compress']);
 
 };
