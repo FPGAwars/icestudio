@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'compiler',
-      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, compiler) {
+    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler',
+      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler) {
 
         this.verifyCode = function() {
           if (generateCode()) {
@@ -20,11 +20,20 @@ angular.module('icestudio')
         };
 
         function apio(command) {
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
           if (generateCode()) {
             alertify.message(command + ' start');
             nodeProcess.chdir('_build');
-            execute('apio ' + command, command);
-            nodeProcess.chdir('..');
+            try {
+              execute('apio init --board ' + boards.selectedBoard.id);
+              execute('apio ' + command, command);
+            }
+            catch(e) {
+            }
+            finally {
+              nodeProcess.chdir('..');
+            }
           }
         }
 
@@ -42,19 +51,31 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            if (error) {
-              alertify.error(label + ' error');
-            }
-            else if (stdout) {
-              if (stdout.toString().indexOf('ERROR') != -1) {
-                alertify.error(label + 'error');
+            if (label) {
+              if (error) {
+                if (stdout.indexOf('set_io: too few arguments') != -1) {
+                  alertify.notify('FPGA I/O not defined', 'error', 5);
+                }
+                else {
+                  if (stdout) {
+                    var stdoutError = stdout.split('\n').filter(isError);
+                    function isError(line) {
+                      return (line.indexOf('ERROR: ') != -1);
+                    }
+                    if (stdoutError.length > 0) {
+                      alertify.notify(stdoutError[0], 'error', 5);
+                    }
+                  }
+                  else {
+                    alertify.notify(stderr, 'error', 5);
+                  }
+                }
               }
               else {
-                alertify.success(label + 'success');
+                  alertify.success(label + ' success');
               }
-            }
-            else {
-              alertify.success(label + ' success');
+              $('body').removeClass('waiting');
+              angular.element('#menu').removeClass('disable-menu');
             }
           });
         }

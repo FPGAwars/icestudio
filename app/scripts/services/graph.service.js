@@ -23,7 +23,7 @@ angular.module('icestudio')
           paper = new joint.dia.Paper({
             el: element,
             width: 900,
-            height: 443,
+            height: 482,
             model: graph,
             gridSize: 1,
             snapLinks: { radius: 30 },
@@ -51,9 +51,9 @@ angular.module('icestudio')
 
           paper.on('cell:pointerdblclick',
             function(cellView, evt, x, y) {
-              var data = cellView.model.attributes;
-              if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-                if (paper.options.interactive) {
+              if (paper.options.interactive) {
+                var data = cellView.model.attributes;
+                if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
                   alertify.prompt('Insert the block label', '',
                     function(evt, label) {
                       if (label) {
@@ -63,11 +63,10 @@ angular.module('icestudio')
                       }
                   });
                 }
-              }
-              else if (data.blockType == 'basic.code') {
-                // TODO.
-              }
-              else {
+                else if (data.blockType == 'basic.code') {
+                  // TODO.
+                }
+                else {
                   breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
@@ -76,14 +75,15 @@ angular.module('icestudio')
                   if (breadcrumbs.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
                       loadGraph(dependencies[data.blockType], disabled);
-                      paperEnable(false);
+                      appEnable(false);
                     });
                   }
                   else {
                     loadGraph(dependencies[data.blockType], disabled);
-                    paperEnable(false);
+                    appEnable(false);
                   }
                 }
+              }
             }
           );
 
@@ -103,21 +103,23 @@ angular.module('icestudio')
         function clearAll() {
           graph.clear();
           selectedCell = null;
-          paperEnable(true);
+          appEnable(true);
         };
 
-        this.paperEnable = paperEnable;
+        this.appEnable = appEnable;
 
-        function paperEnable(value) {
+        function appEnable(value) {
           paper.options.interactive = value;
           var cells = graph.getCells();
           for (var i in cells) {
             paper.findViewByModel(cells[i].id).options.interactive = value;
           }
           if (value) {
+            angular.element('#menu').removeClass('disable-menu');
             angular.element('#paper').css('opacity', '1.0');
           }
           else {
+            angular.element('#menu').addClass('disable-menu');
             angular.element('#paper').css('opacity', '0.5');
           }
         };
@@ -130,95 +132,93 @@ angular.module('icestudio')
             position: { x: 50, y: 50 }
           };
 
-          if (paper.options.interactive) {
-            if (type == 'basic.code') {
-              alertify.prompt('Insert the block i/o', 'a,b c',
-                function(evt, ports) {
-                  if (ports) {
-                    blockInstance.data = {
-                      code: '',
-                      ports: { in: [], out: [] }
-                    };
-                    // Parse ports
-                    var inPorts = [];
-                    var outPorts = [];
-                    if (ports.split(' ').length > 0) {
-                      inPorts = ports.split(' ')[0].split(',');
-                    }
-                    if (ports.split(' ').length > 1) {
-                      outPorts = ports.split(' ')[1].split(',');
-                    }
+          if (type == 'basic.code') {
+            alertify.prompt('Insert the block i/o', 'a,b c',
+              function(evt, ports) {
+                if (ports) {
+                  blockInstance.data = {
+                    code: '',
+                    ports: { in: [], out: [] }
+                  };
+                  // Parse ports
+                  var inPorts = [];
+                  var outPorts = [];
+                  if (ports.split(' ').length > 0) {
+                    inPorts = ports.split(' ')[0].split(',');
+                  }
+                  if (ports.split(' ').length > 1) {
+                    outPorts = ports.split(' ')[1].split(',');
+                  }
 
-                    for (var i in inPorts) {
-                      if (inPorts[i])
-                        blockInstance.data.ports.in.push(inPorts[i]);
-                    }
-                    for (var o in outPorts) {
-                      if (outPorts[o])
-                        blockInstance.data.ports.out.push(outPorts[o]);
-                    }
-                    blockInstance.position.x = 250;
-                    addBasicCodeBlock(blockInstance);
+                  for (var i in inPorts) {
+                    if (inPorts[i])
+                      blockInstance.data.ports.in.push(inPorts[i]);
                   }
-              });
-            }
-            else if (type == 'basic.input') {
-              alertify.prompt('Insert the block name', 'i',
-                function(evt, name) {
-                  if (name) {
-                    var names = name.split(' ');
-                    for (var n in names) {
-                      if (names[n]) {
-                        blockInstance.data = {
-                          label: names[n],
-                          pin: {
-                            name: '',
-                            value: 0
-                          }
-                        };
-                        addBasicIOBlock(blockInstance);
-                        blockInstance.position.y += 100;
-                      }
-                    }
+                  for (var o in outPorts) {
+                    if (outPorts[o])
+                      blockInstance.data.ports.out.push(outPorts[o]);
                   }
-              });
-            }
-            else if (type == 'basic.output') {
-              alertify.prompt('Insert the block name', 'o',
-                function(evt, name) {
-                  if (name) {
-                    var names = name.split(' ');
-                    blockInstance.position.x = 750;
-                    for (var n in names) {
-                      if (names[n]) {
-                        blockInstance.data = {
-                          label: names[n],
-                          pin: {
-                            name: '',
-                            value: 0
-                          }
-                        };
-                        addBasicIOBlock(blockInstance);
-                        blockInstance.position.y += 100;
-                      }
+                  blockInstance.position.x = 250;
+                  addBasicCodeBlock(blockInstance);
+                }
+            });
+          }
+          else if (type == 'basic.input') {
+            alertify.prompt('Insert the block name', 'i',
+              function(evt, name) {
+                if (name) {
+                  var names = name.split(' ');
+                  for (var n in names) {
+                    if (names[n]) {
+                      blockInstance.data = {
+                        label: names[n],
+                        pin: {
+                          name: '',
+                          value: 0
+                        }
+                      };
+                      addBasicIOBlock(blockInstance);
+                      blockInstance.position.y += 100;
                     }
                   }
-              });
+                }
+            });
+          }
+          else if (type == 'basic.output') {
+            alertify.prompt('Insert the block name', 'o',
+              function(evt, name) {
+                if (name) {
+                  var names = name.split(' ');
+                  blockInstance.position.x = 750;
+                  for (var n in names) {
+                    if (names[n]) {
+                      blockInstance.data = {
+                        label: names[n],
+                        pin: {
+                          name: '',
+                          value: 0
+                        }
+                      };
+                      addBasicIOBlock(blockInstance);
+                      blockInstance.position.y += 100;
+                    }
+                  }
+                }
+            });
+          }
+          else {
+            if (block &&
+                block.graph &&
+                block.graph.blocks &&
+                block.graph.wires &&
+                block.deps) {
+              dependencies[type] = block;
+              blockInstance.position.x = 100;
+              blockInstance.position.y = 150;
+              addBlock(blockInstance, block);
             }
             else {
-              if (block &&
-                  block.graph &&
-                  block.graph.blocks &&
-                  block.graph.wires &&
-                  block.deps) {
-                dependencies[type] = block;
-                blockInstance.position.x = 100;
-                blockInstance.position.y = 150;
-                addBlock(blockInstance, block);
-              }
-              else {
-                alertify.error('Wrong block format: ' + type);
-              }
+              alertify.error('Wrong block format: ' + type);
             }
           }
         };
@@ -251,12 +251,10 @@ angular.module('icestudio')
         }
 
         this.removeSelected = function() {
-          if (paper.options.interactive) {
-            if (selectedCell) {
-              selectedCell.remove();
-              selectedCell = null;
-              alertify.success('Block removed');
-            }
+          if (selectedCell) {
+            selectedCell.remove();
+            selectedCell = null;
+            alertify.success('Block removed');
           }
         }
 
@@ -270,6 +268,14 @@ angular.module('icestudio')
           }
           return count;
         };
+
+        this.isEmpty = function() {
+          return (graph.getCells().length > 0);
+        }
+
+        this.isEnabled = function() {
+          return paper.options.interactive;
+        }
 
         this.loadProject = function(project, disabled) {
           return loadGraph(project, disabled);

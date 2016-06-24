@@ -33,20 +33,13 @@ angular.module('icestudio')
             code += data.name;
             code += ' (';
 
-            data.ports.in.forEach(function (element, index, array) {
-              array[index] = 'input ' + element;
-            });
-            data.ports.out.forEach(function (element, index, array) {
-              array[index] = 'output ' + element;
-            });
-
             var params = [];
 
-            if (data.ports.in.length > 0) {
-              params.push(data.ports.in.join(', '));
+            for (var i in data.ports.in) {
+              params.push('input ' + data.ports.in[i]);
             }
-            if (data.ports.out.length > 0) {
-              params.push(data.ports.out.join(', '));
+            for (var o in data.ports.out) {
+              params.push('output ' + data.ports.out[o]);
             }
 
             code += params.join(', ');
@@ -101,7 +94,7 @@ angular.module('icestudio')
             content += 'wire w' + w + ';\n'
           }
 
-          // Connections
+          // I/O connections
 
           for (var w in graph.wires) {
             var wire = graph.wires[w];
@@ -120,6 +113,20 @@ angular.module('icestudio')
             }
           }
 
+          // Wires Connections
+
+          var numWires = graph.wires.length;
+          for (var i = 1; i < numWires; i++) {
+            for (var j = 0; j < i; j++) {
+              var wi = graph.wires[i];
+              var wj = graph.wires[j];
+              if (wi.source.block == wj.source.block &&
+                  wi.source.port == wj.source.port) {
+                content += 'assign w' + i + ' = w' + j + ';\n';
+              }
+            }
+          }
+
           // Block instances
 
           var instances = []
@@ -132,17 +139,20 @@ angular.module('icestudio')
               // Parameters
 
               var params = [];
+              var paramsNames = [];
               for (var w in graph.wires) {
                 var param = '';
+                var paramName = '';
                 var wire = graph.wires[w];
                 if (block.id == wire.source.block) {
-                  project.deps[block.type]
-                  param += '  .' + digestId(wire.source.port);
-                  param += '(w' + w + ')';
-                  params.push(param);
+                  paramName = digestId(wire.source.port);
                 }
-                if (block.id == wire.target.block) {
-                  param += '  .' + digestId(wire.target.port);
+                else if (block.id == wire.target.block) {
+                  paramName = digestId(wire.target.port);
+                }
+                if (paramName && paramsNames.indexOf(paramName) == -1) {
+                  paramsNames.push(paramName);
+                  param += '  .' + paramName;
                   param += '(w' + w + ')';
                   params.push(param);
                 }

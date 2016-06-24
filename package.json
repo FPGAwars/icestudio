@@ -9,7 +9,7 @@
   "window": {
     "width": 900,
     "height": 600,
-    "toolbar": true,
+    "toolbar": false,
     "resizable": false
   },
   "engines": {

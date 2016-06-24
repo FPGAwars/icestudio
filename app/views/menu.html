@@ -1,5 +1,7 @@
 <div ng-controller="MenuCtrl">
 
+  <div id="menu">
+
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ common.projectName }}"/>
 
@@ -78,13 +80,13 @@
                     <a href uib-dropdown-toggle>Tools  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="tools.verifyCode()">{{ 'Verify' | translate }}</a>
+                        <a href ng-click="verifyCode()">{{ 'Verify' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="tools.buildCode()">{{ 'Build' | translate }}</a>
+                        <a href ng-click="buildCode()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
-                        <a href ng-click="tools.uploadCode()">{{ 'Upload' | translate }}</a>
+                        <a href ng-click="uploadCode()">{{ 'Upload' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -114,8 +116,10 @@
                       </li>
                     </ul>
                 </li>
+
             </ul>
 
         </div>
     </nav>
+  </div>
 </div>
