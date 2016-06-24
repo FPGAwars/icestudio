@@ -29,11 +29,16 @@ angular.module('icestudio')
     }
 
     $scope.openExample = function(name, project) {
-      alertify.confirm('The current project will be removed. ' +
-                       'Do you want to continue loading the example?',
-        function() {
-          common.loadProject(name, project);
-      });
+      if (graph.isEmpty()) {
+        alertify.confirm('The current project will be removed. ' +
+                         'Do you want to continue loading the example?',
+          function() {
+            common.loadProject(name, project);
+        });
+      }
+      else {
+        common.loadProject(name, project);
+      }
     }
 
     $scope.openProject = function() {

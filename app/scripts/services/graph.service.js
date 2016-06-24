@@ -271,6 +271,10 @@ angular.module('icestudio')
           return count;
         };
 
+        this.isEmpty = function() {
+          return (graph.getCells().length > 0);
+        }
+
         this.loadProject = function(project, disabled) {
           return loadGraph(project, disabled);
         }

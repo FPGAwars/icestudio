@@ -20,6 +20,7 @@ angular.module('icestudio')
         };
 
         function apio(command) {
+          $('body').addClass('waiting');
           if (generateCode()) {
             alertify.message(command + ' start');
             nodeProcess.chdir('_build');
@@ -49,24 +50,30 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            console.log(error, stdout, stderr);
-            if (error) {
-              if (label)
-                alertify.error(label + ' error');
-            }
-            else if (stdout) {
-              if (stdout.toString().indexOf('ERROR') != -1) {
-                if (label)
-                  alertify.error(label + ' error');
+            if (label) {
+              if (error) {
+                if (stdout.indexOf('set_io: too few arguments') != -1) {
+                  alertify.notify('FPGA I/O not defined', 'error', 5);
+                }
+                else {
+                  if (stdout) {
+                    var stdoutError = stdout.split('\n').filter(isError);
+                    function isError(line) {
+                      return (line.indexOf('ERROR: ') != -1);
+                    }
+                    if (stdoutError.length > 0) {
+                      alertify.notify(stdoutError[0], 'error', 5);
+                    }
+                  }
+                  else {
+                    alertify.notify(stderr, 'error', 5);
+                  }
+                }
               }
               else {
-                if (label)
                   alertify.success(label + ' success');
               }
-            }
-            else {
-              if (label)
-                alertify.success(label + ' success');
+              $('body').removeClass('waiting');
             }
           });
         }
