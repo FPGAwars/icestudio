@@ -4,7 +4,9 @@
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "scripts": {
-    "postinstall": "npm install --prefix app; node_modules/bower/bin/bower install"
+    "start": "node_modules/grunt-cli/bin/grunt serve",
+    "dist": "node_modules/grunt-cli/bin/grunt dist",
+    "postinstall": "npm install --prefix app && node_modules/bower/bin/bower install"
   },
   "devDependencies": {
     "bower": "^1.7.9",
