@@ -13,17 +13,7 @@ module.exports = function(grunt) {
     },
     exec: {
       nw: 'node_modules/nw/bin/nw app',
-      stop_NW: 'killall nw || killall nwjs || true',
-      npmInstall: {
-        command: 'npm install --prefix app',
-        stdout: true,
-        stderr: true
-      },
-      bowerInstall: {
-        command: 'bower install',
-        stdout: true,
-        stderr: true
-      },
+      stop_NW: 'killall nw || killall nwjs || true'
     },
     nwjs: {
       options: {
@@ -115,7 +105,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', function() {
     console.log('Icestudio');
   });
-  grunt.registerTask('install', ['exec:npmInstall', 'exec:bowerInstall']);
   grunt.registerTask('serve', ['watch:scripts']);
   grunt.registerTask('dist', ['clean:dist', 'nwjs', 'compress']);
 

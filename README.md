@@ -55,7 +55,6 @@ cd icestudio
 
 ```bash
 npm install
-grunt install
 ```
 
 ### Execute
