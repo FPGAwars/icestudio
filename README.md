@@ -25,11 +25,6 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-Install [bower](http://bower.io/)
-```bash
-sudo npm install -g bower
-```
-
 Install [grunt](http://gruntjs.com/)
 ```bash
 sudo npm install -g grunt-cli
