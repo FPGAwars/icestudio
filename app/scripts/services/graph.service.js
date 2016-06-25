@@ -254,7 +254,6 @@ angular.module('icestudio')
           if (selectedCell) {
             selectedCell.remove();
             selectedCell = null;
-            alertify.success('Block removed');
           }
         }
 

@@ -81,8 +81,51 @@ angular.module('icestudio')
         }
 
         this.installToolchain = function() {
+          var content = [
+            '<div>',
+            '  <p id="progress-message">Installing toolchain</p>',
+            '  </br>',
+            '  <div class="progress">',
+            '    <div id="progress-bar" class="progress-bar progress-bar-info" role="progressbar"',
+            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+            '    </div>',
+            '  </div>',
+            '</div>'].join('\n');
+          alertify.alert(content, function(){
+            alertify.message('OK');
+          });
+
+          // Install toolchain
+
+          async.series([
+            one,
+            two
+          ]);
+
+
           // pip install apio
           // apio install --all
+        }
+
+        function one(callback) {
+          updateProgress(10);
+          setTimeout( function() {
+            callback(null, 'one');
+          }, 2000);
+        }
+
+        function two(callback) {
+          updateProgress(20);
+          callback(null, 'two');
+        }
+
+        function updateProgress(value, message) {
+          angular.element('#progress-message')
+            .text(message);
+          angular.element('#progress-bar')
+            .text(value + '%')
+            .attr('aria-valuenow', value)
+            .css('width', value + '%');
         }
 
     }]);
