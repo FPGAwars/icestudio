@@ -5,10 +5,7 @@ angular.module('icestudio')
       function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler, utils) {
 
         this.verifyCode = function() {
-          if (generateCode()) {
-            execute('iverilog _build/main.v', 'Verify');
-            //apio('verify');
-          }
+          //apio('verify');
         };
 
         this.buildCode = function() {
@@ -20,21 +17,32 @@ angular.module('icestudio')
         };
 
         function apio(command) {
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
           if (generateCode()) {
-            alertify.message(command + ' start');
-            nodeProcess.chdir('_build');
-            try {
-              execute('apio init --board ' + boards.selectedBoard.id);
-              execute('apio ' + command, command);
-            }
-            catch(e) {
-            }
-            finally {
-              nodeProcess.chdir('..');
+            if (checkApio()) {
+              $('body').addClass('waiting');
+              angular.element('#menu').addClass('disable-menu');
+              alertify.message(command + ' start');
+              nodeProcess.chdir('_build');
+              try {
+                execute([utils.getApioExecutable(), 'init', '--board', boards.selectedBoard.id].join(' '));
+                execute([utils.getApioExecutable(), command].join(' '), command);
+              }
+              catch(e) {
+              }
+              finally {
+                nodeProcess.chdir('..');
+              }
             }
           }
+        }
+
+        function checkApio() {
+          var path = utils.getApioExecutable();
+          var exists = nodeFs.existsSync(path);
+          if (!exists) {
+            alertify.notify('Run `Install toolchain`', 'error', 5);
+          }
+          return exists;
         }
 
         function generateCode() {
@@ -80,7 +88,9 @@ angular.module('icestudio')
           });
         }
 
-        this.installToolchain = function() {
+        this.installToolchain = installToolchain;
+
+        function installToolchain() {
           var content = [
             '<div>',
             '  <p id="progress-message">Installing toolchain</p>',
@@ -164,10 +174,13 @@ angular.module('icestudio')
           angular.element('#progress-message')
             .text(message);
           var bar = angular.element('#progress-bar')
-          if (value > 0)
+          if (value > 0) {
             bar.removeClass('notransition');
-          else
-            bar.addClass('notransition');
+          }
+          else {
+            bar.addClass('notransition progress-bar-info progress-bar-striped active');
+            bar.removeClass('progress-bar-danger');
+          }
           if (value == 100)
             bar.removeClass('progress-bar-striped active');
           bar.text(value + '%')

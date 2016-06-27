@@ -103,8 +103,15 @@ angular.module('icestudio')
           nodeChildProcess.exec(command.join(' '),
             function (error, stdout, stderr) {
               console.log(error, stdout, stderr);
-              if (callback)
-                callback();
+              if (!error) {
+                if (callback)
+                  callback();
+              }
+              else {
+                angular.element('#progress-bar')
+                  .addClass('progress-bar-danger')
+                  .removeClass('progress-bar-info progress-bar-striped active');
+              }
             }
           );
         }
@@ -120,6 +127,10 @@ angular.module('icestudio')
 
         this.apioInstall = function(_package, callback) {
           this.executeCommand([ENV_APIO, 'install', _package], callback);
+        }
+
+        this.getApioExecutable = function() {
+          return ENV_APIO;
         }
 
         this.basename = function(filepath) {
