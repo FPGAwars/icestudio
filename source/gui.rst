@@ -47,6 +47,17 @@ It contains the supported boards: **Icezum**, **iCEstick**, **Go board**. When a
 
   This information is stored in the *app/scripts/services/boards.service.js* file. To support a new board just add its information to this file.
 
+Tools
+`````
+
+* **Build**: generate the bitstream from the graphic source.
+* **Upload**: generate and upload the bitstream to the FPGA board.
+
+* **Install toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain.
+
+.. hint::
+
+  Generated files are stored in `_build` directory.
 
 Blocks menu
 -----------
