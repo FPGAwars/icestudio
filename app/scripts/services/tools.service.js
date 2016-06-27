@@ -86,13 +86,13 @@ angular.module('icestudio')
             '  <p id="progress-message">Installing toolchain</p>',
             '  </br>',
             '  <div class="progress">',
-            '    <div id="progress-bar" class="progress-bar progress-bar-info" role="progressbar"',
+            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
             '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
             '    </div>',
             '  </div>',
             '</div>'].join('\n');
           alertify.alert(content, function(){
-            alertify.message('OK');
+            updateProgress('', 0);
           });
 
           // Install toolchain
@@ -101,11 +101,13 @@ angular.module('icestudio')
             ensurePythonIsAvailable,
             extractVirtualEnv,
             ensureEnvDirExists,
-            makeVenvDirectory
+            makeVenvDirectory,
+            installApio,
+            apioInstallSystem,
+            apioInstallScons,
+            apioInstallIcestorm,
+            installationCompleted
           ]);
-
-          // pip install apio
-          // apio install --all
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -133,6 +135,31 @@ angular.module('icestudio')
           utils.makeVenvDirectory(callback);
         }
 
+        function installApio(callback) {
+          updateProgress('pip install -U apio', 40);
+          utils.installApio(callback);
+        }
+
+        function apioInstallSystem(callback) {
+          updateProgress('apio install system', 50);
+          utils.apioInstall('system', callback);
+        }
+
+        function apioInstallScons(callback) {
+          updateProgress('apio install scons', 60);
+          utils.apioInstall('scons', callback);
+        }
+
+        function apioInstallIcestorm(callback) {
+          updateProgress('apio install icestorm', 80);
+          utils.apioInstall('icestorm', callback);
+        }
+
+        function installationCompleted(callback) {
+          updateProgress('Installation completed', 100);
+          callback();
+        }
+
         function updateProgress(message, value) {
           angular.element('#progress-message')
             .text(message);
@@ -141,6 +168,8 @@ angular.module('icestudio')
             bar.removeClass('notransition');
           else
             bar.addClass('notransition');
+          if (value == 100)
+            bar.removeClass('progress-bar-striped active');
           bar.text(value + '%')
           bar.attr('aria-valuenow', value)
           bar.css('width', value + '%');

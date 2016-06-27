@@ -8,13 +8,16 @@ angular.module('icestudio')
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
 
         const VENV = 'virtualenv-15.0.1';
-        const VENVPATH = nodePath.join('_build', VENV);
-        const VENVTARGZ = nodePath.join('res', 'virtualenv', VENV + '.tar.gz');
+        const VENV_DIR = nodePath.join('_build', VENV);
+        const VENV_TARGZ = nodePath.join('res', 'virtualenv', VENV + '.tar.gz');
 
         const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
         const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
         const ENV_DIR = _get_env_dir(nodePath.join(ICESTUDIO_DIR, 'venv'));
         const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
+
+        const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
+        const ENV_APIO = nodePath.join(ENV_BIN_DIR, 'apio');
 
         function _get_env_dir(defaultEnvDir) {
           if (WIN32) {
@@ -84,7 +87,7 @@ angular.module('icestudio')
         }
 
         this.extractVirtualEnv = function(callback) {
-          this.extractTargz(VENVTARGZ, '_build', callback);
+          this.extractTargz(VENV_TARGZ, '_build', callback);
         }
 
         this.ensureEnvDirExists = function(callback) {
@@ -96,9 +99,10 @@ angular.module('icestudio')
             callback();
         }
 
-        this.executePythonCommand = function(args, callback) {
-          nodeChildProcess.exec([this.getPythonExecutable(), args].join(' '),
+        this.executeCommand = function(command, callback) {
+          nodeChildProcess.exec(command.join(' '),
             function (error, stdout, stderr) {
+              console.log(error, stdout, stderr);
               if (callback)
                 callback();
             }
@@ -106,7 +110,16 @@ angular.module('icestudio')
         }
 
         this.makeVenvDirectory = function(callback) {
-          this.executePythonCommand([nodePath.join(VENVPATH, 'virtualenv.py'), ENV_DIR].join(' '), callback)
+          this.executeCommand(
+            [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback)
+        }
+
+        this.installApio = function(callback) {
+          this.executeCommand([ENV_PIP, 'install', '-U', 'apio'], callback);
+        }
+
+        this.apioInstall = function(_package, callback) {
+          this.executeCommand([ENV_APIO, 'install', _package], callback);
         }
 
         this.basename = function(filepath) {
