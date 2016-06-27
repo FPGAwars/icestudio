@@ -8,6 +8,14 @@
                                   not supported by any browser */
 }
 
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
 body.waiting * {
   cursor: progress;
 }

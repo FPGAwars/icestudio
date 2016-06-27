@@ -84,7 +84,11 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: ['app/**/*.*', '!app/_build/*', '!app/a.out'],
+        files: ['app/scripts/**/*.*',
+                'app/styles/**/*.*',
+                'app/views/**/*.*',
+                'app/*.*',
+                '!app/a.out'],
         tasks: ['wiredep', 'exec:stop_NW', 'exec:nw'],
         options: {
           atBegin: true,

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler',
-      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler) {
+    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler', 'utils',
+      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler, utils) {
 
         this.verifyCode = function() {
           if (generateCode()) {
@@ -98,34 +98,52 @@ angular.module('icestudio')
           // Install toolchain
 
           async.series([
-            one,
-            two
+            ensurePythonIsAvailable,
+            extractVirtualEnv,
+            ensureEnvDirExists,
+            makeVenvDirectory
           ]);
-
 
           // pip install apio
           // apio install --all
         }
 
-        function one(callback) {
-          updateProgress(10);
-          setTimeout( function() {
-            callback(null, 'one');
-          }, 2000);
+        function ensurePythonIsAvailable(callback) {
+          updateProgress('Check Python executable...', 0);
+          if (utils.getPythonExecutable()) {
+            callback();
+          }
+          else {
+            alertify.error('Install Python 2.7');
+          }
         }
 
-        function two(callback) {
-          updateProgress(20);
-          callback(null, 'two');
+        function extractVirtualEnv(callback) {
+          updateProgress('Extract virtual env files...', 10);
+          utils.extractVirtualEnv(callback);
         }
 
-        function updateProgress(value, message) {
+        function ensureEnvDirExists(callback) {
+          updateProgress('Check virtual env directory...', 20);
+          utils.ensureEnvDirExists(callback);
+        }
+
+        function makeVenvDirectory(callback) {
+          updateProgress('Make virtual env...', 30);
+          utils.makeVenvDirectory(callback);
+        }
+
+        function updateProgress(message, value) {
           angular.element('#progress-message')
             .text(message);
-          angular.element('#progress-bar')
-            .text(value + '%')
-            .attr('aria-valuenow', value)
-            .css('width', value + '%');
+          var bar = angular.element('#progress-bar')
+          if (value > 0)
+            bar.removeClass('notransition');
+          else
+            bar.addClass('notransition');
+          bar.text(value + '%')
+          bar.attr('aria-valuenow', value)
+          bar.css('width', value + '%');
         }
 
     }]);

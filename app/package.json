@@ -9,7 +9,7 @@
   "window": {
     "width": 900,
     "height": 600,
-    "toolbar": false,
+    "toolbar": true,
     "resizable": false,
     "position": "center"
   },
@@ -23,7 +23,8 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "rmdir": "^1.2.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",
   "keywords": [
