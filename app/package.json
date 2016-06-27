@@ -9,8 +9,10 @@
   "window": {
     "width": 900,
     "height": 600,
-    "toolbar": true,
-    "resizable": false,
+    "min_width": 800,
+    "min_height": 200,
+    "toolbar": false,
+    "resizable": true,
     "position": "center"
   },
   "engines": {

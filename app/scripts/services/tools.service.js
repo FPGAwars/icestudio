@@ -59,9 +59,13 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
             if (label) {
               if (error) {
-                if (stdout.indexOf('set_io: too few arguments') != -1) {
+                if (stdout.indexOf('[upload] Error') != -1) {
+                  alertify.notify('Board not detected', 'error', 5);
+                }
+                else if (stdout.indexOf('set_io: too few arguments') != -1) {
                   alertify.notify('FPGA I/O not defined', 'error', 5);
                 }
                 else {
@@ -91,6 +95,11 @@ angular.module('icestudio')
         this.installToolchain = installToolchain;
 
         function installToolchain() {
+
+          // Configure alert
+          //alertify.defaults.closable = false;
+          alertify.defaults.theme.ok = 'hidden';
+
           var content = [
             '<div>',
             '  <p id="progress-message">Installing toolchain</p>',
@@ -106,7 +115,6 @@ angular.module('icestudio')
           });
 
           // Install toolchain
-
           async.series([
             ensurePythonIsAvailable,
             extractVirtualEnv,
@@ -118,6 +126,10 @@ angular.module('icestudio')
             apioInstallIcestorm,
             installationCompleted
           ]);
+
+          // Restore alert
+          //alertify.defaults.closable = true;
+          alertify.defaults.theme.ok = 'ajs-ok';
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -131,17 +143,17 @@ angular.module('icestudio')
         }
 
         function extractVirtualEnv(callback) {
-          updateProgress('Extract virtual env files...', 10);
+          updateProgress('Extract virtual env files...', 5);
           utils.extractVirtualEnv(callback);
         }
 
         function ensureEnvDirExists(callback) {
-          updateProgress('Check virtual env directory...', 20);
+          updateProgress('Check virtual env directory...', 15);
           utils.ensureEnvDirExists(callback);
         }
 
         function makeVenvDirectory(callback) {
-          updateProgress('Make virtual env...', 30);
+          updateProgress('Make virtual env...', 20);
           utils.makeVenvDirectory(callback);
         }
 
