@@ -9,8 +9,10 @@
   "window": {
     "width": 900,
     "height": 600,
+    "min_width": 800,
+    "min_height": 200,
     "toolbar": false,
-    "resizable": false,
+    "resizable": true,
     "position": "center"
   },
   "engines": {
@@ -23,7 +25,8 @@
     "os": "^0.1.1",
     "path": "^0.12.7",
     "rmdir": "^1.2.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",
   "keywords": [

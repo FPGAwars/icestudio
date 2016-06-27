@@ -1,10 +1,18 @@
 #paper {
    background: transparent;
+   position: relative;
+   display: inline-block;
    overflow: hidden;
 }
 
 #paper svg {
    background: transparent;
+}
+
+#breadcrumbs {
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
 }
 
 .element .body {

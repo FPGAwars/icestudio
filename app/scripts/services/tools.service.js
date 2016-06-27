@@ -1,14 +1,11 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler',
-      function(nodeFs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler) {
+    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler', 'utils',
+      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler, utils) {
 
         this.verifyCode = function() {
-          if (generateCode()) {
-            execute('iverilog _build/main.v', 'Verify');
-            //apio('verify');
-          }
+          //apio('verify');
         };
 
         this.buildCode = function() {
@@ -20,21 +17,32 @@ angular.module('icestudio')
         };
 
         function apio(command) {
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
           if (generateCode()) {
-            alertify.message(command + ' start');
-            nodeProcess.chdir('_build');
-            try {
-              execute('apio init --board ' + boards.selectedBoard.id);
-              execute('apio ' + command, command);
-            }
-            catch(e) {
-            }
-            finally {
-              nodeProcess.chdir('..');
+            if (checkApio()) {
+              $('body').addClass('waiting');
+              angular.element('#menu').addClass('disable-menu');
+              alertify.message(command + ' start');
+              nodeProcess.chdir('_build');
+              try {
+                execute([utils.getApioExecutable(), 'init', '--board', boards.selectedBoard.id].join(' '));
+                execute([utils.getApioExecutable(), command].join(' '), command);
+              }
+              catch(e) {
+              }
+              finally {
+                nodeProcess.chdir('..');
+              }
             }
           }
+        }
+
+        function checkApio() {
+          var path = utils.getApioExecutable();
+          var exists = nodeFs.existsSync(path);
+          if (!exists) {
+            alertify.notify('Run `Install toolchain`', 'error', 5);
+          }
+          return exists;
         }
 
         function generateCode() {
@@ -51,9 +59,13 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
             if (label) {
               if (error) {
-                if (stdout.indexOf('set_io: too few arguments') != -1) {
+                if (stdout.indexOf('[upload] Error') != -1) {
+                  alertify.notify('Board not detected', 'error', 5);
+                }
+                else if (stdout.indexOf('set_io: too few arguments') != -1) {
                   alertify.notify('FPGA I/O not defined', 'error', 5);
                 }
                 else {
@@ -80,9 +92,112 @@ angular.module('icestudio')
           });
         }
 
-        this.installToolchain = function() {
-          // pip install apio
-          // apio install --all
+        this.installToolchain = installToolchain;
+
+        function installToolchain() {
+
+          // Configure alert
+          //alertify.defaults.closable = false;
+          alertify.defaults.theme.ok = 'hidden';
+
+          var content = [
+            '<div>',
+            '  <p id="progress-message">Installing toolchain</p>',
+            '  </br>',
+            '  <div class="progress">',
+            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
+            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+            '    </div>',
+            '  </div>',
+            '</div>'].join('\n');
+          alertify.alert(content, function(){
+            updateProgress('', 0);
+          });
+
+          // Install toolchain
+          async.series([
+            ensurePythonIsAvailable,
+            extractVirtualEnv,
+            ensureEnvDirExists,
+            makeVenvDirectory,
+            installApio,
+            apioInstallSystem,
+            apioInstallScons,
+            apioInstallIcestorm,
+            installationCompleted
+          ]);
+
+          // Restore alert
+          //alertify.defaults.closable = true;
+          alertify.defaults.theme.ok = 'ajs-ok';
+        }
+
+        function ensurePythonIsAvailable(callback) {
+          updateProgress('Check Python executable...', 0);
+          if (utils.getPythonExecutable()) {
+            callback();
+          }
+          else {
+            alertify.error('Install Python 2.7');
+          }
+        }
+
+        function extractVirtualEnv(callback) {
+          updateProgress('Extract virtual env files...', 5);
+          utils.extractVirtualEnv(callback);
+        }
+
+        function ensureEnvDirExists(callback) {
+          updateProgress('Check virtual env directory...', 15);
+          utils.ensureEnvDirExists(callback);
+        }
+
+        function makeVenvDirectory(callback) {
+          updateProgress('Make virtual env...', 20);
+          utils.makeVenvDirectory(callback);
+        }
+
+        function installApio(callback) {
+          updateProgress('pip install -U apio', 40);
+          utils.installApio(callback);
+        }
+
+        function apioInstallSystem(callback) {
+          updateProgress('apio install system', 50);
+          utils.apioInstall('system', callback);
+        }
+
+        function apioInstallScons(callback) {
+          updateProgress('apio install scons', 60);
+          utils.apioInstall('scons', callback);
+        }
+
+        function apioInstallIcestorm(callback) {
+          updateProgress('apio install icestorm', 80);
+          utils.apioInstall('icestorm', callback);
+        }
+
+        function installationCompleted(callback) {
+          updateProgress('Installation completed', 100);
+          callback();
+        }
+
+        function updateProgress(message, value) {
+          angular.element('#progress-message')
+            .text(message);
+          var bar = angular.element('#progress-bar')
+          if (value > 0) {
+            bar.removeClass('notransition');
+          }
+          else {
+            bar.addClass('notransition progress-bar-info progress-bar-striped active');
+            bar.removeClass('progress-bar-danger');
+          }
+          if (value == 100)
+            bar.removeClass('progress-bar-striped active');
+          bar.text(value + '%')
+          bar.attr('aria-valuenow', value)
+          bar.css('width', value + '%');
         }
 
     }]);

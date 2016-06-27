@@ -161,4 +161,8 @@ angular.module('icestudio')
       tools.uploadCode();
     }
 
+    $scope.installToolchain = function() {
+      tools.installToolchain();
+    }
+
   });

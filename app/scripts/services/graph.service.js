@@ -22,8 +22,8 @@ angular.module('icestudio')
         this.createPaper = function(element) {
           paper = new joint.dia.Paper({
             el: element,
-            width: 900,
-            height: 482,
+            width: 2000,
+            height: 1000,
             model: graph,
             gridSize: 1,
             snapLinks: { radius: 30 },
@@ -254,7 +254,6 @@ angular.module('icestudio')
           if (selectedCell) {
             selectedCell.remove();
             selectedCell = null;
-            alertify.success('Block removed');
           }
         }
 

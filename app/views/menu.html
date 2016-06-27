@@ -79,14 +79,18 @@
                 <li uib-dropdown>
                     <a href uib-dropdown-toggle>Tools  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
+                      <!--<li>
                         <a href ng-click="verifyCode()">{{ 'Verify' | translate }}</a>
-                      </li>
+                      </li>-->
                       <li>
                         <a href ng-click="buildCode()">{{ 'Build' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="uploadCode()">{{ 'Upload' | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href ng-click="installToolchain()">{{ 'Install toolchain' | translate }}</a>
                       </li>
                     </ul>
                 </li>
