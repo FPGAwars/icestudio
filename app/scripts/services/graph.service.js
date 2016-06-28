@@ -37,8 +37,9 @@ angular.module('icestudio')
           });
 
           // Events
-          paper.on('cell:pointerclick',
+          paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
+              cellView.model.toFront();
               if (paper.options.interactive) {
                 if (selectedCell) {
                   V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
@@ -86,11 +87,12 @@ angular.module('icestudio')
             }
           );
 
-          paper.on('blank:pointerclick',
+          paper.on('blank:pointerdown',
             function() {
               if (paper.options.interactive) {
                 if (selectedCell) {
                   V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                  selectedCell = null;
                 }
               }
             }

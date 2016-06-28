@@ -256,17 +256,17 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
 
   template: [
       '<div class="code-element">',
-      '<div class="code-editor" id="editor"></div>',
-      '<textarea class="hidden" id="content"></textarea>',
-      '<script>',
-      'var editor = ace.edit("editor");',
-      'editor.setTheme("ace/theme/chrome");',
-      'editor.getSession().setMode("ace/mode/verilog");',
-      'editor.getSession().on("change", function () {',
-      '  $("#content").val(editor.getSession().getValue());',
-      '});',
-      'document.getElementById("editor").style.fontSize="15px";',
-      '</script>',
+      ' <div class="code-editor" id="editor"></div>',
+      ' <textarea class="hidden" id="content"></textarea>',
+      ' <script>',
+      '  var editor = ace.edit("editor");',
+      '  editor.setTheme("ace/theme/chrome");',
+      '  editor.getSession().setMode("ace/mode/verilog");',
+      '  editor.getSession().on("change", function () {',
+      '   $("#content").val(editor.getSession().getValue());',
+      '  });',
+      '  document.getElementById("editor").style.fontSize="15px";',
+      ' </script>',
       '</div>'
   ].join(''),
 
