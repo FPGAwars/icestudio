@@ -246,6 +246,18 @@ angular.module('icestudio')
                     }
                   }
                 }
+                else {
+                  blockInstance.position.x = 750;
+                  blockInstance.data = {
+                    label: '',
+                    pin: {
+                      name: '',
+                      value: 0
+                    }
+                  };
+                  addBasicIOBlock(blockInstance);
+                  blockInstance.position.y += 100;
+                }
             });
           }
           else {
@@ -477,8 +489,8 @@ angular.module('icestudio')
 
           if (block.image) {
             attrs['.block-image'] = {
-              x: 60 - 24,
-              y: 25 + 10 * numPorts - 24,
+              x: 60 - 48,
+              y: 25 + 10 * numPorts - 48,
               'xlink:href': block.image
             };
           }

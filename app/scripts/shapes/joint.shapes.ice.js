@@ -34,8 +34,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         stroke: '#000'
       },
       '.block-image': {
-        width: 48,
-        height: 48
+        width: 96,
+        height: 96
       },
       '.block-label': {
         ref: '.body',
