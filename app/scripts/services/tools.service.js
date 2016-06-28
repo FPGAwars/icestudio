@@ -210,6 +210,7 @@ angular.module('icestudio')
             .attr('aria-valuenow', 0)
             .css('width', '0%')
             .removeClass('notransition');
+
         }
 
         function errorProgress(message) {

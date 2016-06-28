@@ -27,25 +27,54 @@ angular.module('icestudio')
             model: graph,
             gridSize: 1,
             snapLinks: { radius: 30 },
+            linkPinning: false,
+
             defaultLink: new joint.shapes.ice.Wire(),
-            validateConnection: function(cellViewS, magnetS,
-                                         cellViewT, magnetT,
-                                         end, linkView) {
-              // Prevent loop linking
-              return (magnetS !== magnetT);
+            validateMagnet: function(cellView, magnet) {
+              // Prevent to start second wire connection from an input port
+              var links = graph.getLinks();
+              for (var i in links) {
+                if( (cellView.model.id == links[i].get('target').id ) &&
+                    (magnet.getAttribute('port') == links[i].get('target').port) ) {
+                  return false;
+                }
+              }
+              return true;
+            },
+            validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+              console.log(magnetS);
+              // Prevent output-output links
+              if (magnetS.getAttribute('type') == 'output' && magnetT.getAttribute('type') == 'output')
+                return false;
+
+              // Prevent multiple input links
+              var links = graph.getLinks();
+              for (var i in links) {
+                if (linkView == links[i].findView(paper)) //Skip the wire the user is drawing
+                  continue;
+                if ( (( cellViewT.model.id == links[i].get('target').id ) && ( magnetT.getAttribute('port') == links[i].get('target').port)) ) {
+                  return false;
+                }
+              }
+
+              // Prevent loop links
+              return magnetS !== magnetT;
             }
           });
 
           // Events
+
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               cellView.model.toFront();
               if (paper.options.interactive) {
                 if (selectedCell) {
-                  V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                  if (paper.findViewByModel(selectedCell))
+                    V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
                 }
                 selectedCell = cellView.model;
-                V(paper.findViewByModel(selectedCell).el).addClass('highlighted');
+                if (paper.findViewByModel(selectedCell))
+                  V(paper.findViewByModel(selectedCell).el).addClass('highlighted');
               }
             }
           );
@@ -91,7 +120,8 @@ angular.module('icestudio')
             function() {
               if (paper.options.interactive) {
                 if (selectedCell) {
-                  V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                  if (paper.findViewByModel(selectedCell))
+                    V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
                   selectedCell = null;
                 }
               }
