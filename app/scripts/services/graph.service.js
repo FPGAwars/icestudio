@@ -56,11 +56,10 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
                   alertify.prompt('Insert the block label', '',
                     function(evt, label) {
-                      if (label) {
-                        data.attrs['.block-label'].text = label;
-                        cellView.update();
-                        alertify.success('Label updated');
-                      }
+                      data.data.label = label;
+                      data.attrs['.block-label'].text = label;
+                      cellView.update();
+                      alertify.success('Label updated');
                   });
                 }
                 else if (data.blockType == 'basic.code') {
@@ -181,6 +180,17 @@ angular.module('icestudio')
                       blockInstance.position.y += 100;
                     }
                   }
+                }
+                else {
+                  blockInstance.data = {
+                    label: '',
+                    pin: {
+                      name: '',
+                      value: 0
+                    }
+                  };
+                  addBasicIOBlock(blockInstance);
+                  blockInstance.position.y += 100;
                 }
             });
           }
