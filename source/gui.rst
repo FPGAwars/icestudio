@@ -14,11 +14,12 @@ File
 ````
 
 * **New project**: create a new project.
+* **Open project**: show a file dialog to open a project (.ice).
 * **Examples**: contains all stored examples. A example is loaded as a project.
 
 
-* **Open project**: show a file dialog to open a project (.ice).
-* **Save project**: show a save file dialog to save the current project (.ice).
+* **Save**: save the current project (.ice).
+* **Save as**: show a save file dialog to save the current project (.ice).
 
 
 * **Import block**: load a block file (.iceb) into the current project.
@@ -37,7 +38,8 @@ Edit
 ````
 
 * **Clear graph**: remove all blocks and wires from the graph.
-* **Remove selected**: remove the selected block. It also can be done with *Supr* key.
+* **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
+* **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
 
 Boards
 ``````
@@ -53,7 +55,7 @@ Tools
 * **Build**: generate the bitstream from the graphic source.
 * **Upload**: generate and upload the bitstream to the FPGA board.
 
-* **Install toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain.
+* **Install toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
 
 .. hint::
 
