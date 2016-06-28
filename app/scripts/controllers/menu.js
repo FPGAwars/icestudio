@@ -118,18 +118,29 @@ angular.module('icestudio')
       });
     }
 
+    $scope.cloneSelected = function() {
+      common.cloneSelected();
+    }
+
     $scope.removeSelected = function() {
-      alertify.confirm('Do you want to remove the selected block?',
-        function() {
-          common.removeSelected();
-        }
-      );
+      if (graph.getSelectedType()) {
+        alertify.confirm('Do you want to remove the selected block?',
+          function() {
+            common.removeSelected();
+        });
+      }
     }
 
     $(document).on('keydown', function(event) {
-      if (event.keyCode == 46 &&
-          graph.isEnabled()) { // Supr
-        $scope.removeSelected();
+      console.log(event);
+      if (graph.isEnabled()) {
+        if (event.keyCode == 46 || // Supr
+            (event.keyCode == 88 && event.ctrlKey)) { // Ctrl + x
+          $scope.removeSelected();
+        }
+        else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl + c
+          $scope.cloneSelected();
+        }
       }
     });
 

@@ -148,6 +148,10 @@ angular.module('icestudio')
           }
         };
 
+        this.cloneSelected = function() {
+          graph.cloneSelected();
+        };
+
         this.removeSelected = function() {
           var type = graph.getSelectedType();
           graph.removeSelected();

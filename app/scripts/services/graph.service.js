@@ -254,6 +254,15 @@ angular.module('icestudio')
           }
         }
 
+        this.cloneSelected = function() {
+          if (selectedCell) {
+            var newCell = selectedCell.clone();
+            newCell.translate(50, 50);
+            graph.addCell(newCell);
+            alertify.success('Block ' + newCell.attributes.blockType + ' cloned');
+          }
+        }
+
         this.getSelectedType = function() {
           if (selectedCell) {
             return selectedCell.attributes.blockType;
