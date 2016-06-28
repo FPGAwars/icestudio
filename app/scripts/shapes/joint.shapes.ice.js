@@ -15,7 +15,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     outPorts: [],
     choices: [],
     attrs: {
-      '.': { magnet: false },
+      '.': {
+        magnet: false
+      },
       text: {
         'pointer-events': 'none'
       },
@@ -29,7 +31,6 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       },
       '.port-body': {
         r: 10,
-        magnet: true,
         stroke: '#000'
       },
       '.block-label': {
@@ -40,6 +41,14 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         'text-anchor': 'middle',
         'font-weight': 'bold',
         fill: '#000'
+      },
+      '.inPorts .port-body': {
+        type: 'input',
+        magnet: false
+      },
+      '.outPorts .port-body': {
+        type: 'output',
+        magnet: false
       },
       '.inPorts .port-label': {
         x: 40,
@@ -256,17 +265,17 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
 
   template: [
       '<div class="code-element">',
-      '<div class="code-editor" id="editor"></div>',
-      '<textarea class="hidden" id="content"></textarea>',
-      '<script>',
-      'var editor = ace.edit("editor");',
-      'editor.setTheme("ace/theme/chrome");',
-      'editor.getSession().setMode("ace/mode/verilog");',
-      'editor.getSession().on("change", function () {',
-      '  $("#content").val(editor.getSession().getValue());',
-      '});',
-      'document.getElementById("editor").style.fontSize="15px";',
-      '</script>',
+      ' <div class="code-editor" id="editor"></div>',
+      ' <textarea class="hidden" id="content"></textarea>',
+      ' <script>',
+      '  var editor = ace.edit("editor");',
+      '  editor.setTheme("ace/theme/chrome");',
+      '  editor.getSession().setMode("ace/mode/verilog");',
+      '  editor.getSession().on("change", function () {',
+      '   $("#content").val(editor.getSession().getValue());',
+      '  });',
+      '  document.getElementById("editor").style.fontSize="15px";',
+      ' </script>',
       '</div>'
   ].join(''),
 

@@ -19,8 +19,7 @@
   transition: all .05s ease-in-out;
 }
 .element:hover .body {
-  transform: scale(1.02);
-  transform-origin: 50% 50%;
+  stroke-width: 3;
 }
 
 .element.ice.highlighted .body {

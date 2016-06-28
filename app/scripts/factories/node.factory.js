@@ -27,4 +27,8 @@ angular.module('icestudio')
   })
   .factory('nodeTarball', function() {
     return require('tarball-extract');
-  });
+  })
+  .factory('nodePing', function() {
+    return require('ping').sys;
+  })
+  ;

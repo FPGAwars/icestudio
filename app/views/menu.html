@@ -20,27 +20,30 @@
                       <li>
                         <a href ng-click="newProject()">{{ 'New project' | translate }}</a>
                       </li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                         <a href uib-dropdown-toggle> {{ 'Examples' | translate }}</a>
-                         <ul uib-dropdown-menu>
-                           <li class="dropdown-submenu" ng-repeat="(category, projects) in examples">
-                               <a href uib-dropdown-toggle>{{ category }}</a>
-                               <ul uib-dropdown-menu>
-                                 <li ng-repeat="(name, project) in projects">
-                                   <a href ng-click="openExample(name, project)">
-                                     {{ name }}
-                                   </a>
-                                 </li>
-                               </ul>
-                           </li>
-                         </ul>
-                       </li>
-                      <li class="divider"></li>
                       <li>
                         <a href ng-click="openProject()">{{ 'Open project' | translate }}</a>
                       </li>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle> {{ 'Examples' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                           <li class="dropdown-submenu" ng-repeat="(category, projects) in examples">
+                             <a href uib-dropdown-toggle>{{ category }}</a>
+                             <ul uib-dropdown-menu>
+                               <li ng-repeat="(name, project) in projects">
+                                 <a href ng-click="openExample(name, project)">
+                                 {{ name }}
+                                 </a>
+                               </li>
+                             </ul>
+                           </li>
+                         </ul>
+                      </li>
+                      <li class="divider"></li>
                       <li>
-                        <a href ng-click="saveProject()">{{ 'Save project' | translate }}</a>
+                        <a href ng-click="saveProject()">{{ 'Save' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}</a>
                       </li>
                       <li class="divider"></li>
                       <li>
@@ -57,6 +60,9 @@
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="cloneSelected()">{{ 'Clone selected' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="removeSelected()">{{ 'Remove selected' | translate }}</a>
