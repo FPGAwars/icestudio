@@ -16,6 +16,8 @@ angular.module('icestudio')
     $scope.currentBoards = boards.getBoards();
     $scope.menuBlocks = resources.getMenuBlocks();
 
+    $scope.currentProjectPath = '';
+
     // File
 
     $scope.newProject = function() {
@@ -49,6 +51,7 @@ angular.module('icestudio')
             if (file) {
               if (file.path.endsWith('.ice')) {
                 common.openProject(file.path);
+                $scope.currentProjectPath = file.path;
               }
             }
           });
@@ -57,6 +60,16 @@ angular.module('icestudio')
     }
 
     $scope.saveProject = function() {
+      var filepath = $scope.currentProjectPath;
+      if (filepath) {
+        common.saveProject(filepath);
+      }
+      else {
+        $scope.saveProjectAs();
+      }
+    }
+
+    $scope.saveProjectAs = function() {
       setTimeout(function() {
         var ctrl = angular.element('#input-save-project');
         ctrl.on('change', function(event) {
@@ -65,9 +78,10 @@ angular.module('icestudio')
             event.target.files.clear();
             var filepath = file.path;
             if (! filepath.endsWith('.ice')) {
-                filepath += '.ice';
+              filepath += '.ice';
             }
             common.saveProject(filepath);
+            $scope.currentProjectPath = filepath;
           }
         });
         ctrl.click();
