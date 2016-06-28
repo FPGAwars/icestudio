@@ -111,7 +111,9 @@ angular.module('icestudio')
             '  </div>',
             '</div>'].join('\n');
           alertify.alert(content, function() {
-            initProgress();
+            setTimeout(function() {
+              initProgress();
+            }, 200);
           });
 
           // Install toolchain

@@ -30,7 +30,7 @@ angular.module('icestudio')
     }
 
     $scope.openExample = function(name, project) {
-      if (graph.isEmpty()) {
+      if (!graph.isEmpty()) {
         alertify.confirm('The current project will be removed. ' +
                          'Do you want to continue loading the example?',
           function() {
@@ -126,10 +126,12 @@ angular.module('icestudio')
     // Edit
 
     $scope.clearGraph = function() {
-      alertify.confirm('Do you want to clear the graph?',
+      if (!graph.isEmpty()) {
+        alertify.confirm('Do you want to clear the graph?',
         function() {
           common.clearProject();
-      });
+        });
+      }
     }
 
     $scope.cloneSelected = function() {
@@ -162,13 +164,20 @@ angular.module('icestudio')
 
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.id != board.id) {
-        alertify.confirm('The current FPGA I/O configuration will be lost. ' +
-                         'Do you want to change to <b>' + board.label + '</b> board?',
-          function() {
-            boards.selectBoard(board.id);
-            graph.resetIOChoices();
-            alertify.success('Board ' + board.label + ' selected');
-        });
+        if (!graph.isEmpty()) {
+          alertify.confirm('The current FPGA I/O configuration will be lost. ' +
+                           'Do you want to change to <b>' + board.label + '</b> board?',
+            function() {
+              boards.selectBoard(board.id);
+              graph.resetIOChoices();
+              alertify.success('Board ' + board.label + ' selected');
+          });
+        }
+        else {
+          boards.selectBoard(board.id);
+          graph.resetIOChoices();
+          alertify.success('Board ' + board.label + ' selected');
+        }
       }
     }
 

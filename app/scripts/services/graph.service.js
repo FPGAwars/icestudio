@@ -320,7 +320,7 @@ angular.module('icestudio')
         };
 
         this.isEmpty = function() {
-          return (graph.getCells().length > 0);
+          return (graph.getCells().length == 0);
         }
 
         this.isEnabled = function() {
@@ -473,6 +473,21 @@ angular.module('icestudio')
             blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
           }
 
+          var attrs = {};
+
+          if (block.image) {
+            attrs['.block-image'] = {
+              x: 60 - 24,
+              y: 25 + 10 * numPorts - 24,
+              'xlink:href': block.image
+            };
+          }
+          else {
+            attrs['.block-label'] = {
+              text: blockLabel
+            };
+          }
+
           var block = new joint.shapes.ice.Block({
             id: blockInstance.id,
             blockType: blockInstance.type,
@@ -481,7 +496,7 @@ angular.module('icestudio')
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 120, height: 50 + 20 * numPorts },
-            attrs: { '.block-label': { text: blockLabel } }
+            attrs: attrs
           });
 
           graph.addCell(block);
