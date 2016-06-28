@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'common', 'boards', 'compiler', 'utils',
-      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, common, boards, compiler, utils) {
+    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
 
         this.verifyCode = function() {
           //apio('verify');
@@ -40,7 +40,7 @@ angular.module('icestudio')
           var path = utils.getApioExecutable();
           var exists = nodeFs.existsSync(path);
           if (!exists) {
-            alertify.notify('Run `Install toolchain`', 'error', 5);
+            alertify.notify('Execute `Tools > Install toolchain`', 'error', 5);
           }
           return exists;
         }
@@ -110,16 +110,16 @@ angular.module('icestudio')
             '    </div>',
             '  </div>',
             '</div>'].join('\n');
-          alertify.alert(content, function(){
-            updateProgress('', 0);
+          alertify.alert(content, function() {
+            initProgress();
           });
 
           // Install toolchain
           async.series([
             ensurePythonIsAvailable,
             extractVirtualEnv,
-            ensureEnvDirExists,
             makeVenvDirectory,
+            ensureInternetConnection,
             installApio,
             apioInstallSystem,
             apioInstallScons,
@@ -138,7 +138,8 @@ angular.module('icestudio')
             callback();
           }
           else {
-            alertify.error('Install Python 2.7');
+            errorProgress('Python 2.7 is needed');
+            callback(true);
           }
         }
 
@@ -147,18 +148,26 @@ angular.module('icestudio')
           utils.extractVirtualEnv(callback);
         }
 
-        function ensureEnvDirExists(callback) {
-          updateProgress('Check virtual env directory...', 15);
-          utils.ensureEnvDirExists(callback);
-        }
-
         function makeVenvDirectory(callback) {
-          updateProgress('Make virtual env...', 20);
+          updateProgress('Make virtual env...', 10);
           utils.makeVenvDirectory(callback);
         }
 
+        function ensureInternetConnection(callback) {
+          updateProgress('Check Internet connection...', 20);
+          nodePing.probe('google.com', function(isAlive) {
+            if (isAlive) {
+              callback();
+            }
+            else {
+              errorProgress('Internet connection is needed');
+              callback(true);
+            }
+          });
+        }
+
         function installApio(callback) {
-          updateProgress('pip install -U apio', 40);
+          updateProgress('pip install -U apio', 30);
           utils.installApio(callback);
         }
 
@@ -186,18 +195,32 @@ angular.module('icestudio')
           angular.element('#progress-message')
             .text(message);
           var bar = angular.element('#progress-bar')
-          if (value > 0) {
-            bar.removeClass('notransition');
-          }
-          else {
-            bar.addClass('notransition progress-bar-info progress-bar-striped active');
-            bar.removeClass('progress-bar-danger');
-          }
           if (value == 100)
             bar.removeClass('progress-bar-striped active');
           bar.text(value + '%')
           bar.attr('aria-valuenow', value)
           bar.css('width', value + '%');
+        }
+
+        function initProgress() {
+          angular.element('#progress-bar')
+            .addClass('notransition progress-bar-info progress-bar-striped active')
+            .removeClass('progress-bar-danger')
+            .text('0%')
+            .attr('aria-valuenow', 0)
+            .css('width', '0%')
+            .removeClass('notransition');
+        }
+
+        function errorProgress(message) {
+          angular.element('#progress-message')
+            .text(message);
+          angular.element('#progress-bar')
+            .addClass('notransition progress-bar-danger')
+            .removeClass('progress-bar-info progress-bar-striped active')
+            .text('Error')
+            .attr('aria-valuenow', 100)
+            .css('width', '100%');
         }
 
     }]);

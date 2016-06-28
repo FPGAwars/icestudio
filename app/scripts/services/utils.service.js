@@ -79,10 +79,13 @@ angular.module('icestudio')
 
         this.extractTargz = function(source, destination, callback) {
           nodeTarball.extractTarball(source, destination, function(err) {
-            if(err)
-              console.log(err)
-            if (callback)
+            if(err) {
+              console.log(err);
+              callback(true);
+            }
+            else {
               callback();
+            }
           })
         }
 
@@ -90,35 +93,31 @@ angular.module('icestudio')
           this.extractTargz(VENV_TARGZ, '_build', callback);
         }
 
-        this.ensureEnvDirExists = function(callback) {
-          if (!nodeFs.existsSync(ICESTUDIO_DIR))
-            nodeFs.mkdirSync(ICESTUDIO_DIR);
-          if (!nodeFs.existsSync(ENV_DIR))
-            nodeFs.mkdirSync(ENV_DIR);
-          if (callback)
-            callback();
-        }
-
         this.executeCommand = function(command, callback) {
           nodeChildProcess.exec(command.join(' '),
             function (error, stdout, stderr) {
-              console.log(error, stdout, stderr);
-              if (!error) {
-                if (callback)
-                  callback();
+              if (error) {
+                console.log(error, stdout, stderr);
+                callback(true);
               }
               else {
-                angular.element('#progress-bar')
-                  .addClass('progress-bar-danger')
-                  .removeClass('progress-bar-info progress-bar-striped active');
+                callback();
               }
             }
           );
         }
 
         this.makeVenvDirectory = function(callback) {
-          this.executeCommand(
-            [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback)
+          if (!nodeFs.existsSync(ICESTUDIO_DIR))
+            nodeFs.mkdirSync(ICESTUDIO_DIR);
+          if (!nodeFs.existsSync(ENV_DIR)) {
+            nodeFs.mkdirSync(ENV_DIR);
+            this.executeCommand(
+              [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback)
+          }
+          else {
+            callback();
+          }
         }
 
         this.installApio = function(callback) {

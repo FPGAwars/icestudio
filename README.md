@@ -19,6 +19,8 @@ NOTE: this is an **early experimental version** and it is under development. Sup
 
 ### Development
 
+Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
+
 Install [nodejs](https://github.com/nodejs/node)
 ```bash
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
