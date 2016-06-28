@@ -468,6 +468,7 @@ angular.module('icestudio')
           var _wire = new joint.shapes.ice.Wire({
             source: { id: source.id, selector: sourceSelector, port: wire.source.port },
             target: { id: target.id, selector: targetSelector, port: wire.target.port },
+            vertices: wire.vertices
           });
           graph.addCell(_wire);
         }

@@ -122,6 +122,7 @@ angular.module('icestudio')
               var wire = {};
               wire.source = { block: cell.source.id, port: cell.source.port };
               wire.target = { block: cell.target.id, port: cell.target.port };
+              wire.vertices = cell.vertices;
               wires.push(wire);
             }
           }
