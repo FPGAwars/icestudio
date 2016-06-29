@@ -95,7 +95,7 @@ angular.module('icestudio')
               else if (data.blockType == 'basic.code') {
                 // TODO.
               }
-              else {
+              else if (data.type != 'ice.Wire') {
                 breadcrumbs.push({ name: data.blockType });
                 if(!$rootScope.$$phase) {
                   $rootScope.$apply();
