@@ -9,15 +9,16 @@ angular.module('icestudio')
 
         const VENV = 'virtualenv-15.0.1';
         const VENV_DIR = nodePath.join('_build', VENV);
-        const VENV_TARGZ = nodePath.join('res', 'virtualenv', VENV + '.tar.gz');
+        const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
 
         const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
+        const APIO_DIR = nodePath.join(BASE_DIR, '.apio');
         const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
         const ENV_DIR = _get_env_dir(nodePath.join(ICESTUDIO_DIR, 'venv'));
         const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
 
         const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
-        const ENV_APIO = nodePath.join(ENV_BIN_DIR, 'apio');
+        const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
 
         function _get_env_dir(defaultEnvDir) {
           if (WIN32) {
@@ -59,10 +60,6 @@ angular.module('icestudio')
                 break;
               }
             }
-
-            if (!_pythonExecutableCached) {
-              throw new Error('Python 2.7 could not be found.');
-            }
           }
           return _pythonExecutableCached;
         };
@@ -99,6 +96,14 @@ angular.module('icestudio')
               if (error) {
                 console.log(error, stdout, stderr);
                 callback(true);
+                angular.element('#progress-message')
+                  .text('Remove the current toolchain');
+                angular.element('#progress-bar')
+                  .addClass('notransition progress-bar-danger')
+                  .removeClass('progress-bar-info progress-bar-striped active')
+                  .text('Error')
+                  .attr('aria-valuenow', 100)
+                  .css('width', '100%');
               }
               else {
                 callback();
@@ -130,6 +135,26 @@ angular.module('icestudio')
 
         this.getApioExecutable = function() {
           return ENV_APIO;
+        }
+
+        this.removeToolchain = function() {
+          deleteFolderRecursive(APIO_DIR);
+          deleteFolderRecursive(ICESTUDIO_DIR);
+        }
+
+        var deleteFolderRecursive = function(path) {
+          if (nodeFs.existsSync(path)) {
+            nodeFs.readdirSync(path).forEach(function(file,index){
+              var curPath = nodePath.join(path, file);
+              if (nodeFs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+              }
+              else { // delete file
+                nodeFs.unlinkSync(curPath);
+              }
+            });
+            nodeFs.rmdirSync(path);
+          }
         }
 
         this.basename = function(filepath) {

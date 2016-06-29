@@ -4,7 +4,7 @@ joint.shapes.ice = {};
 
 joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><text class="block-label"/><g class="inPorts"/><g class="outPorts"/></g>',
+  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><image class="block-image"/><text class="block-label"/><g class="inPorts"/><g class="outPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
@@ -32,6 +32,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       '.port-body': {
         r: 10,
         stroke: '#000'
+      },
+      '.block-image': {
+        width: 96,
+        height: 96
       },
       '.block-label': {
         ref: '.body',

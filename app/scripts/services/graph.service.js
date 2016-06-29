@@ -42,7 +42,6 @@ angular.module('icestudio')
               return true;
             },
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-              console.log(magnetS);
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' && magnetT.getAttribute('type') == 'output')
                 return false;
@@ -246,6 +245,18 @@ angular.module('icestudio')
                     }
                   }
                 }
+                else {
+                  blockInstance.position.x = 750;
+                  blockInstance.data = {
+                    label: '',
+                    pin: {
+                      name: '',
+                      value: 0
+                    }
+                  };
+                  addBasicIOBlock(blockInstance);
+                  blockInstance.position.y += 100;
+                }
             });
           }
           else {
@@ -320,7 +331,7 @@ angular.module('icestudio')
         };
 
         this.isEmpty = function() {
-          return (graph.getCells().length > 0);
+          return (graph.getCells().length == 0);
         }
 
         this.isEnabled = function() {
@@ -406,7 +417,7 @@ angular.module('icestudio')
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
-            size: { width: 100, height: 70 },
+            size: { width: 120, height: 70 },
             attrs: { '.block-label': { text: blockInstances.data.label } }
           });
 
@@ -473,6 +484,21 @@ angular.module('icestudio')
             blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
           }
 
+          var attrs = {};
+
+          if (block.image) {
+            attrs['.block-image'] = {
+              x: 60 - 48,
+              y: 25 + 10 * numPorts - 48,
+              'xlink:href': block.image
+            };
+          }
+          else {
+            attrs['.block-label'] = {
+              text: blockLabel
+            };
+          }
+
           var block = new joint.shapes.ice.Block({
             id: blockInstance.id,
             blockType: blockInstance.type,
@@ -481,7 +507,7 @@ angular.module('icestudio')
             inPorts: inPorts,
             outPorts: outPorts,
             size: { width: 120, height: 50 + 20 * numPorts },
-            attrs: { '.block-label': { text: blockLabel } }
+            attrs: attrs
           });
 
           graph.addCell(block);

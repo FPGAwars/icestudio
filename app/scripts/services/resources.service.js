@@ -5,11 +5,11 @@ angular.module('icestudio')
       function(nodeGlob, nodePath, utils) {
 
         this.getExamples = function() {
-          return getResources(nodePath.join('res', 'examples', '*'), '.ice');
+          return getResources(nodePath.join('resources', 'examples', '*'), '.ice');
         }
 
         this.getMenuBlocks = function() {
-          return getResources(nodePath.join('res', 'blocks', '*'), '.iceb');
+          return getResources(nodePath.join('resources', 'blocks', '*'), '.iceb');
         }
 
         function getResources(path, extension) {
@@ -17,11 +17,11 @@ angular.module('icestudio')
 
           nodeGlob(path, null, (function() {
 
-            return function (er, categories) {
+            return function(er, categories) {
 
               for (var i in categories) {
 
-                var category = categories[i].split(nodePath.sep)[2];
+                var category = categories[i].split('/')[2];
                 resources[category] = {};
 
                 nodeGlob(nodePath.join(categories[i], '*' + extension), null, (function(c) {

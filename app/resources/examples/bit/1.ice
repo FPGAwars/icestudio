@@ -6,7 +6,7 @@
         "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
         "type": "basic.code",
         "data": {
-          "code": "// Driver high\n\nassign v = 1'b1;",
+          "code": "// Bit 1\n\nassign v = 1'b1;",
           "ports": {
             "in": [],
             "out": [

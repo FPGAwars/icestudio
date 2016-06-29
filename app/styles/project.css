@@ -35,7 +35,7 @@
 .io-element select {
   pointer-events: auto;
   position: absolute;
-  width: 80px;
+  width: 100px;
 }
 
 .code-element{

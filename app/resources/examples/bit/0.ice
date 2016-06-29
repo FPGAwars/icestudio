@@ -6,7 +6,7 @@
         "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
         "type": "basic.code",
         "data": {
-          "code": "// Driver low\n\nassign v = 1'b0;",
+          "code": "// Bit 0\n\nassign v = 1'b0;",
           "ports": {
             "in": [],
             "out": [
