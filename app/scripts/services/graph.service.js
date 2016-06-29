@@ -80,9 +80,9 @@ angular.module('icestudio')
 
           paper.on('cell:pointerdblclick',
             function(cellView, evt, x, y) {
-              if (paper.options.interactive) {
-                var data = cellView.model.attributes;
-                if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+              var data = cellView.model.attributes;
+              if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+                if (paper.options.interactive) {
                   alertify.prompt('Insert the block label', '',
                     function(evt, label) {
                       data.data.label = label;
@@ -91,25 +91,25 @@ angular.module('icestudio')
                       alertify.success('Label updated');
                   });
                 }
-                else if (data.blockType == 'basic.code') {
-                  // TODO.
+              }
+              else if (data.blockType == 'basic.code') {
+                // TODO.
+              }
+              else {
+                breadcrumbs.push({ name: data.blockType });
+                if(!$rootScope.$$phase) {
+                  $rootScope.$apply();
                 }
-                else {
-                  breadcrumbs.push({ name: data.blockType });
-                  if(!$rootScope.$$phase) {
-                    $rootScope.$apply();
-                  }
-                  var disabled = true;
-                  if (breadcrumbs.length == 2) {
-                    $rootScope.$broadcast('refreshProject', function() {
-                      loadGraph(dependencies[data.blockType], disabled);
-                      appEnable(false);
-                    });
-                  }
-                  else {
+                var disabled = true;
+                if (breadcrumbs.length == 2) {
+                  $rootScope.$broadcast('refreshProject', function() {
                     loadGraph(dependencies[data.blockType], disabled);
                     appEnable(false);
-                  }
+                  });
+                }
+                else {
+                  loadGraph(dependencies[data.blockType], disabled);
+                  appEnable(false);
                 }
               }
             }

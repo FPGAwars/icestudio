@@ -173,7 +173,7 @@ angular.module('icestudio')
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }
-            window.title = 'Icestudio - ' + name;
+            window.get().title = 'Icestudio - ' + name;
           }
         };
 

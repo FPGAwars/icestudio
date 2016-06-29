@@ -7,7 +7,9 @@ angular.module('icestudio')
                                     graph,
                                     tools,
                                     boards,
-                                    resources) {
+                                    resources,
+                                    gui,
+                                    _package) {
 
     $scope.common = common;
     $scope.boards = boards;
@@ -17,6 +19,8 @@ angular.module('icestudio')
     $scope.menuBlocks = resources.getMenuBlocks();
 
     $scope.currentProjectPath = '';
+
+    $scope.version = _package.version;
 
     // File
 
@@ -178,6 +182,17 @@ angular.module('icestudio')
           alertify.success('Board ' + board.label + ' selected');
         }
       }
+    }
+
+    // Help
+
+    $scope.openUrl = function(url) {
+      /*gui.Window.open(url, {
+        nodejs: false,
+        "new-instance": false
+      });*/
+      event.preventDefault();
+      gui.Shell.openExternal(url);
     }
 
     // Tools
