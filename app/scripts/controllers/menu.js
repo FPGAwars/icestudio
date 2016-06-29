@@ -7,7 +7,9 @@ angular.module('icestudio')
                                     graph,
                                     tools,
                                     boards,
-                                    resources) {
+                                    resources,
+                                    gui,
+                                    _package) {
 
     $scope.common = common;
     $scope.boards = boards;
@@ -17,6 +19,8 @@ angular.module('icestudio')
     $scope.menuBlocks = resources.getMenuBlocks();
 
     $scope.currentProjectPath = '';
+
+    $scope.version = _package.version;
 
     // File
 
@@ -178,6 +182,35 @@ angular.module('icestudio')
           alertify.success('Board ' + board.label + ' selected');
         }
       }
+    }
+
+    // Help
+
+    $scope.openUrl = function(url) {
+      /*gui.Window.open(url, {
+        nodejs: false,
+        "new-instance": false
+      });*/
+      event.preventDefault();
+      gui.Shell.openExternal(url);
+    }
+
+    $scope.about = function() {
+      var content = [
+        '<div class="row">',
+        '  <div class="col-sm-4">',
+        '   <img src="resources/images/fpgawars-logo.png">',
+        '  </div>',
+        '  <div class="col-sm-7" style="margin-left: 20px;">',
+        '    <h4>Icestudio</h4>',
+        '    <p><i>Graphic editor for open FPGAs</i></p>',
+        '    <p>Version: ' + $scope.version + '</p>',
+        '    <p>License: GPL v2</p>',
+        '    </br>',
+        '    <p>Created by Jesús Arroyo. June 2016</p>',
+        '  </div>',
+        '</div>'].join('\n');
+      alertify.alert(content);
     }
 
     // Tools

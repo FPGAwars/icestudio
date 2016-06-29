@@ -1,6 +1,6 @@
 {
   "name": "Icestudio",
-  "version": "0.2.0-alpha1",
+  "version": "0.2.0-beta1",
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "scripts": {

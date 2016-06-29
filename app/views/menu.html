@@ -104,6 +104,33 @@
                     </ul>
                 </li>
 
+                <li uib-dropdown>
+                    <a href uib-dropdown-toggle>Help  <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li disabled>
+                        <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'View license' | translate }}</a>
+                      </li>
+                      <li class="disabled">
+                        <a href>{{ 'Version ' + version | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href ng-click="openUrl('http://icestudio.readthedocs.io/en/latest/')">{{ 'Documentation' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="openUrl('https://github.com/FPGAwars/icestudio')">{{ 'Source code' | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href ng-click="openUrl('https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre')">{{ 'Community forum' | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href ng-click="about()">{{ 'About Icestudio' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
