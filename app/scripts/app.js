@@ -17,7 +17,7 @@ angular
                     redirectTo: '/'
                 });
             $translateProvider.useStaticFilesLoader({
-                prefix: 'res/locales/',
+                prefix: 'resources/locales/',
                 suffix: '.json'
             });
 

@@ -3,6 +3,21 @@
   "graph": {
     "blocks": [
       {
+        "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
+        "type": "basic.input",
+        "data": {
+          "label": "x",
+          "pin": {
+            "name": "SW1",
+            "value": "10"
+          }
+        },
+        "position": {
+          "x": 31,
+          "y": 31
+        }
+      },
+      {
         "id": "00925b04-5004-4307-a737-fa4e97c8b6ab",
         "type": "basic.code",
         "data": {
@@ -19,22 +34,7 @@
         },
         "position": {
           "x": 243,
-          "y": 71
-        }
-      },
-      {
-        "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
-        "type": "basic.input",
-        "data": {
-          "label": "x",
-          "pin": {
-            "name": "SW1",
-            "value": "10"
-          }
-        },
-        "position": {
-          "x": 31,
-          "y": 31
+          "y": 73
         }
       },
       {
@@ -48,8 +48,8 @@
           }
         },
         "position": {
-          "x": 36,
-          "y": 243
+          "x": 34,
+          "y": 255
         }
       },
       {
@@ -63,7 +63,7 @@
           }
         },
         "position": {
-          "x": 778,
+          "x": 760,
           "y": 137
         }
       }

@@ -9,7 +9,7 @@ angular.module('icestudio')
 
         const VENV = 'virtualenv-15.0.1';
         const VENV_DIR = nodePath.join('_build', VENV);
-        const VENV_TARGZ = nodePath.join('res', 'virtualenv', VENV + '.tar.gz');
+        const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
 
         const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
         const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');

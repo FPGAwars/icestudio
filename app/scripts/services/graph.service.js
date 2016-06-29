@@ -418,7 +418,7 @@ angular.module('icestudio')
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
-            size: { width: 100, height: 70 },
+            size: { width: 120, height: 70 },
             attrs: { '.block-label': { text: blockInstances.data.label } }
           });
 

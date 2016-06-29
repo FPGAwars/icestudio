@@ -5,11 +5,11 @@ angular.module('icestudio')
       function(nodeGlob, nodePath, utils) {
 
         this.getExamples = function() {
-          return getResources(nodePath.join('res', 'examples', '*'), '.ice');
+          return getResources(nodePath.join('resources', 'examples', '*'), '.ice');
         }
 
         this.getMenuBlocks = function() {
-          return getResources(nodePath.join('res', 'blocks', '*'), '.iceb');
+          return getResources(nodePath.join('resources', 'blocks', '*'), '.iceb');
         }
 
         function getResources(path, extension) {
