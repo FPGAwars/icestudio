@@ -7,7 +7,7 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
     GUI -> JSON -> Verilog, PCF
 
-## Version 0.2 alpha
+## Version 0.2 beta
 
 <img src="./doc/images/icestudio-0.2-project.png" width="600" align="center">
 

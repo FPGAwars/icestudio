@@ -68,6 +68,9 @@ angular.module('icestudio')
                 else if (stdout.indexOf('set_io: too few arguments') != -1) {
                   alertify.notify('FPGA I/O not defined', 'error', 5);
                 }
+                else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
+                  alertify.notify('Duplicated FPGA I/O', 'error', 5);
+                }
                 else {
                   if (stdout) {
                     var stdoutError = stdout.split('\n').filter(isError);
