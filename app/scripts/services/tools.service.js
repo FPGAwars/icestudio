@@ -134,13 +134,17 @@ angular.module('icestudio')
           alertify.defaults.theme.ok = 'ajs-ok';
         }
 
+        this.removeToolchain = function() {
+          utils.removeToolchain();
+        }
+
         function ensurePythonIsAvailable(callback) {
           updateProgress('Check Python executable...', 0);
           if (utils.getPythonExecutable()) {
             callback();
           }
           else {
-            errorProgress('Python 2.7 is needed');
+            errorProgress('Python 2.7 is required');
             callback(true);
           }
         }
@@ -162,7 +166,7 @@ angular.module('icestudio')
               callback();
             }
             else {
-              errorProgress('Internet connection is needed');
+              errorProgress('Internet connection is required');
               callback(true);
             }
           });
@@ -190,6 +194,7 @@ angular.module('icestudio')
 
         function installationCompleted(callback) {
           updateProgress('Installation completed', 100);
+          alertify.success('Toolchain installed');
           callback();
         }
 

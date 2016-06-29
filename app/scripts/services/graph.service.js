@@ -42,7 +42,6 @@ angular.module('icestudio')
               return true;
             },
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-              console.log(magnetS);
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' && magnetT.getAttribute('type') == 'output')
                 return false;

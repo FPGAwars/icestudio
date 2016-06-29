@@ -148,7 +148,6 @@ angular.module('icestudio')
     }
 
     $(document).on('keydown', function(event) {
-      console.log(event);
       if (graph.isEnabled()) {
         if (event.keyCode == 46 || // Supr
             (event.keyCode == 88 && event.ctrlKey)) { // Ctrl + x
@@ -199,4 +198,12 @@ angular.module('icestudio')
       tools.installToolchain();
     }
 
+    $scope.removeToolchain = function() {
+      alertify.confirm('Icestudio and apio configuration directories will be removed. ' +
+                       'Do you want to continue?',
+        function() {
+          tools.removeToolchain();
+          alertify.success('Toolchain removed');
+      });
+    }
   });
