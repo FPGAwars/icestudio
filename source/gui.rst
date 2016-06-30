@@ -32,7 +32,7 @@ File
 
 .. hint::
 
-  Examples are stored in `app/res/examples`. To create a new examples category just create a directory there. To create a new example copy and paste a **.ice** file.
+  Examples are stored in `app/resources/examples`. To create a new examples category just create a directory there. To create a new example copy and paste a **.ice** file.
 
 Edit
 ````
@@ -56,10 +56,24 @@ Tools
 * **Upload**: generate and upload the bitstream to the FPGA board.
 
 * **Install toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
+* **Remove toolchain**: remove the directories `.icestudio` and `.apio`.
 
 .. hint::
 
   Generated files are stored in `_build` directory.
+
+Help
+````
+
+* **View license**: open the Icestudio's license in a web browser.
+* **Version**: show the current version.
+
+* **Documentation**: open the Icestudio's documentation in a web browser.
+* **Source code**: open the Icestudio's source code in a web browser.
+
+* **Community forum**: open the FPGAwars forum in a web browser.
+
+* **About Icestudio**: information about the application.
 
 Blocks menu
 -----------
@@ -90,7 +104,7 @@ It contains all stored blocks sorted by categories. These menu is generated when
 
 .. hint::
 
-  Examples are stored in `app/res/blocks`. To create a new block category just create a directory there. To create a new block copy and paste a **.iceb** file.
+  Examples are stored in `app/resources/blocks`. To create a new block category just create a directory there. To create a new block copy and paste a **.iceb** file.
 
 
 Graph

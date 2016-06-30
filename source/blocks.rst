@@ -22,6 +22,7 @@ Extension: **.iceb**
 .. code-block:: json
 
    {
+     "image": "",
      "graph": {
        "blocks" : [],
        "wires": []
@@ -58,7 +59,13 @@ Wire instances
      "target": {
        "block": "",
        "port": ""
-     }
+     },
+     "vertices": [
+        {
+          "x": 0,
+          "y": 0
+        }
+     ]
    }
 
 
@@ -80,7 +87,6 @@ It has one output port named 'out'.
      "type": "basic.input",
      "data": {
        "label": "a"
-       }
      },
      "position": {
        "x": 0,
