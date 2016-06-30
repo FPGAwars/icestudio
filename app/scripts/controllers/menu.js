@@ -29,6 +29,7 @@ angular.module('icestudio')
         function(evt, name) {
           if (name) {
             common.newProject(name);
+            $scope.currentProjectPath = '';
           }
       });
     }
@@ -39,10 +40,12 @@ angular.module('icestudio')
                          'Do you want to continue loading the example?',
           function() {
             common.loadProject(name, project);
+            $scope.currentProjectPath = '';
         });
       }
       else {
         common.loadProject(name, project);
+        $scope.currentProjectPath = '';
       }
     }
 
