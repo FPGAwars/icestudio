@@ -277,7 +277,9 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
       '  editor.getSession().setMode("ace/mode/verilog");',
       '  editor.getSession().on("change", function () {',
       '   $("#content").val(editor.getSession().getValue());',
+      '   $(document).trigger("disableSelected");',
       '  });',
+      '  editor.on("hover", function() { $(document).trigger("disableSelected"); });',
       '  document.getElementById("editor").style.fontSize="15px";',
       ' </script>',
       '</div>'

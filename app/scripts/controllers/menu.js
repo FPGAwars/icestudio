@@ -154,8 +154,21 @@ angular.module('icestudio')
       }
     }
 
+    // Key events
+
+    var promptShown = false;
+
+    alertify.prompt().set({
+      onshow: function() {
+        promptShown = true;
+      },
+      onclose: function() {
+        promptShown = false;
+      }
+    });
+
     $(document).on('keydown', function(event) {
-      if (graph.isEnabled()) {
+      if (graph.isEnabled() && !promptShown) {
         if (event.keyCode == 46 || // Supr
             (event.keyCode == 88 && event.ctrlKey)) { // Ctrl + x
           $scope.removeSelected();

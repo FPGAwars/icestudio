@@ -118,15 +118,23 @@ angular.module('icestudio')
           paper.on('blank:pointerdown',
             function() {
               if (paper.options.interactive) {
-                if (selectedCell) {
-                  if (paper.findViewByModel(selectedCell))
-                    V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
-                  selectedCell = null;
-                }
+                disableSelected();
               }
             }
           );
         };
+
+        $(document).on('disableSelected', function() {
+          disableSelected();
+        });
+
+        function disableSelected() {
+          if (selectedCell) {
+            if (paper.findViewByModel(selectedCell))
+              V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+            selectedCell = null;
+          }
+        }
 
         this.clearAll = clearAll;
 
