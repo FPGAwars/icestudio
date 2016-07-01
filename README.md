@@ -68,6 +68,11 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 ## Videos
 
+### Version 0.2
+
+[![Icestudio: block factory](http://img.youtube.com/vi/mAIKb47z2Do/0.jpg)](http://www.youtube.com/watch?v=mAIKb47z2Do "Icestudio: block factory")
+
+
 ### Version 0.1
 
 [![Icestudio: GUI for open FPGAs](http://img.youtube.com/vi/Okl4Rr_i6Qk/0.jpg)](http://www.youtube.com/watch?v=Okl4Rr_i6Qk "Icestudio: GUI for open FPGAs")
