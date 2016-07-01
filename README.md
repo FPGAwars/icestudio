@@ -9,13 +9,15 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
 ## Version 0.2 beta
 
-<img src="./doc/images/icestudio-0.2-project.png" width="600" align="center">
+<img src="./doc/images/icestudio-0.2-blink.png" width="700" align="center">
 
-<img src="./doc/images/icestudio-0.2-block-inspection.png" width="600" align="center">
+<img src="./doc/images/icestudio-0.2-mux21-inspection.png" width="700" align="center">
+
+<img src="./doc/images/icestudio-0.2-or-inspection.png" width="700" align="center">
 
 **Documentation: http://icestudio.readthedocs.io**
 
-NOTE: this is an **early experimental version** and it is under development. Supported on Linux.
+NOTE: this is an **early experimental version** and it is under development. Supported on Linux, Windows and Mac.
 
 ### Development
 
@@ -62,7 +64,7 @@ npm run dist
 
 2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
 
-NOTE: initially supported on Linux (32, 64), Windows and Mac.
+NOTE: initially supported on Linux, Windows and Mac.
 
 ## Videos
 
