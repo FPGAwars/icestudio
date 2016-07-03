@@ -31,15 +31,8 @@ angular.module('icestudio')
 
             defaultLink: new joint.shapes.ice.Wire(),
             validateMagnet: function(cellView, magnet) {
-              // Prevent to start second wire connection from an input port
-              var links = graph.getLinks();
-              for (var i in links) {
-                if( (cellView.model.id == links[i].get('target').id ) &&
-                    (magnet.getAttribute('port') == links[i].get('target').port) ) {
-                  return false;
-                }
-              }
-              return true;
+              // Prevent to start wires from an input port
+              return (magnet.getAttribute('type') == 'output');
             },
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
               // Prevent output-output links
