@@ -96,7 +96,7 @@
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a href ng-click="installToolchain()">{{ 'Install toolchain' | translate }}</a>
+                        <a href ng-click="installToolchain()">{{ toolchain.installed ? 'Upgrade toolchain' : 'Install toolchain' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="removeToolchain()">{{ 'Remove toolchain' | translate }}</a>
