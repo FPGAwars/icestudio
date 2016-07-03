@@ -4,6 +4,12 @@ angular.module('icestudio')
     .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
       function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
 
+        var toolchain = { installed: false };
+
+        this.toolchain = toolchain;
+
+        checkToolchain();
+
         this.verifyCode = function() {
           //apio('verify');
         };
@@ -18,7 +24,7 @@ angular.module('icestudio')
 
         function apio(command) {
           if (generateCode()) {
-            if (checkApio()) {
+            if (toolchain.installed) {
               $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
               alertify.message(command + ' start');
@@ -33,16 +39,22 @@ angular.module('icestudio')
                 nodeProcess.chdir('..');
               }
             }
+            else {
+              installToolchain();
+            }
           }
         }
 
-        function checkApio() {
-          var path = utils.getApioExecutable();
-          var exists = nodeFs.existsSync(path);
-          if (!exists) {
-            alertify.notify('Execute `Tools > Install toolchain`', 'error', 5);
+        function checkToolchain() {
+          var apio = utils.getApioExecutable();
+          var exists = nodeFs.existsSync(apio);
+          if (exists) {
+            nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
+              if (stdout) {
+                toolchain.installed = (stdout.indexOf('not installed') == -1);
+              }
+            });
           }
-          return exists;
         }
 
         function generateCode() {
@@ -59,7 +71,7 @@ angular.module('icestudio')
 
         function execute(command, label) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            console.log(error, stdout, stderr);
+            //console.log(error, stdout, stderr);
             if (label) {
               if (error) {
                 if (stdout.indexOf('[upload] Error') != -1) {
@@ -201,6 +213,7 @@ angular.module('icestudio')
         function installationCompleted(callback) {
           updateProgress('Installation completed', 100);
           alertify.success('Toolchain installed');
+          toolchain.installed = true;
           callback();
         }
 

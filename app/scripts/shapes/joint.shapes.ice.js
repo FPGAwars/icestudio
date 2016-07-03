@@ -52,7 +52,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       },
       '.outPorts .port-body': {
         type: 'output',
-        magnet: false
+        magnet: true
       },
       '.inPorts .port-label': {
         x: 40,

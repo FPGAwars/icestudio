@@ -22,6 +22,8 @@ angular.module('icestudio')
 
     $scope.version = _package.version;
 
+    $scope.toolchain = tools.toolchain;
+
     // File
 
     $scope.newProject = function() {
