@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'utils',
-      function($rootScope, nodeFs, nodeGlob, window, graph, boards, utils) {
+    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'compiler', 'utils',
+      function($rootScope, nodeFs, nodeGlob, window, graph, boards, compiler, utils) {
 
         // Variables
 
@@ -94,6 +94,19 @@ angular.module('icestudio')
             function(err) {
               if (!err) {
                 alertify.success('Block exported as ' + name);
+              }
+          });
+        };
+
+        this.exportToVerilog = function(filepath) {
+          var name = utils.basename(filepath);
+          this.refreshProject();
+          // Generate verilog code from project
+          var verilog = compiler.generateVerilog(this.project);
+          nodeFs.writeFile(filepath, verilog,
+            function(err) {
+              if (!err) {
+                alertify.success('Project ' + name + ' exported to verilog');
               }
           });
         };

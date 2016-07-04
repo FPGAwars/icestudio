@@ -154,6 +154,7 @@ angular.module('icestudio')
 
         this.removeToolchain = function() {
           utils.removeToolchain();
+          toolchain.installed = false;
         }
 
         function ensurePythonIsAvailable(callback) {

@@ -8,6 +8,8 @@
     <input id="input-import-block" type="file" accept=".iceb" class="hidden"/>
     <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ common.projectName }}"/>
 
+    <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ common.projectName }}"/>
+
     <nav class="navbar navbar-default" role="navigation">
 
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
@@ -51,6 +53,10 @@
                       </li>
                       <li>
                         <a href ng-click="exportAsBlock()">{{ 'Export as block' | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href ng-click="exportToVerilog()">{{ 'Export to verilog' | translate }}</a>
                       </li>
                     </ul>
                 </li>

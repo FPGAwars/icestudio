@@ -131,6 +131,24 @@ angular.module('icestudio')
       }, 0);
     }
 
+    $scope.exportToVerilog = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-verilog');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.v')) {
+                filepath += '.v';
+            }
+            common.exportToVerilog(filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
 
     // Edit
 
