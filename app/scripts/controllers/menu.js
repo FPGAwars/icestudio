@@ -131,7 +131,7 @@ angular.module('icestudio')
       }, 0);
     }
 
-    $scope.exportToVerilog = function() {
+    $scope.exportVerilog = function() {
       setTimeout(function() {
         var ctrl = angular.element('#input-export-verilog');
         ctrl.on('change', function(event) {
@@ -142,7 +142,25 @@ angular.module('icestudio')
             if (! filepath.endsWith('.v')) {
                 filepath += '.v';
             }
-            common.exportToVerilog(filepath);
+            common.exportVerilog(filepath);
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
+    $scope.exportPCF = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-export-pcf');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            event.target.files.clear();
+            var filepath = file.path;
+            if (! filepath.endsWith('.pcf')) {
+                filepath += '.pcf';
+            }
+            common.exportPCF(filepath);
           }
         });
         ctrl.click();

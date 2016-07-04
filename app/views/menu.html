@@ -9,6 +9,7 @@
     <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ common.projectName }}"/>
 
     <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ common.projectName }}"/>
+    <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ common.projectName }}"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -56,7 +57,10 @@
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a href ng-click="exportToVerilog()">{{ 'Export to verilog' | translate }}</a>
+                        <a href ng-click="exportVerilog()">{{ 'Export verilog' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="exportPCF()">{{ 'Export PCF' | translate }}</a>
                       </li>
                     </ul>
                 </li>
