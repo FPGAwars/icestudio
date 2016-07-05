@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball',
-      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball) {
+    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib',
+      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -159,6 +159,34 @@ angular.module('icestudio')
 
         this.basename = function(filepath) {
           return filepath.replace(/^.*[\\\/]/, '').split('.')[0];
-        };
+        }
+
+        this.readFile = function(filepath, callback) {
+          nodeFs.readFile(filepath,
+            function(err, data) {
+              if (!err && callback) {
+                callback(data);
+              }
+          });
+        }
+
+        this.saveFile = function(filepath, content, callback) {
+          nodeFs.writeFile(filepath, content,
+            function(err) {
+              if (!err && callback) {
+                callback();
+              }
+          });
+        }
+
+        this.compressJSON = function(json) {
+          //nodeZlib.Gzip(data)
+          return JSON.stringify(json);
+        }
+
+        this.decompressJSON = function(json) {
+          //nodeZlib.Gunzip(data)
+          return JSON.parse(json.toString());
+        }
 
     }]);

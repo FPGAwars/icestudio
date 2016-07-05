@@ -31,4 +31,6 @@ angular.module('icestudio')
   .factory('nodePing', function() {
     return require('ping').sys;
   })
-  ;
+  .factory('nodeZlib', function() {
+    return require('zlib');
+  });
