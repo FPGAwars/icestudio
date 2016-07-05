@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'nodeFs', 'nodeGlob', 'window', 'graph', 'boards', 'compiler', 'utils',
-      function($rootScope, nodeFs, nodeGlob, window, graph, boards, compiler, utils) {
+    .service('common', ['$rootScope', 'window', 'graph', 'boards', 'compiler', 'utils',
+      function($rootScope, window, graph, boards, compiler, utils) {
 
         // Variables
 
@@ -17,6 +17,7 @@ angular.module('icestudio')
 
         this.newProject = function(name) {
           this.project = {
+            image: '',
             board: '',
             graph: {},
             deps: {}
@@ -27,16 +28,15 @@ angular.module('icestudio')
         };
 
         this.openProject = function(filepath) {
-          $.ajaxSetup({ async: false });
-          var project;
-          $.getJSON(filepath, function(data){
-            project = data;
-          });
-          if (project) {
-            var name = utils.basename(filepath);
-            this.loadProject(name, project);
-          }
-          $.ajaxSetup({ async: true });
+          utils.readFile(filepath, (function(_this) {
+            return function(data) {
+              var project = data;
+              if (project) {
+                var name = utils.basename(filepath);
+                _this.loadProject(name, project);
+              }
+            };
+          })(this));
         };
 
         this.loadProject = function(name, project) {
@@ -55,27 +55,23 @@ angular.module('icestudio')
           var name = utils.basename(filepath);
           this.updateProjectName(name);
           this.refreshProject();
-          nodeFs.writeFile(filepath, JSON.stringify(this.project, null, 2),
-            function(err) {
-              if (!err) {
-                alertify.success('Project ' + name + ' saved');
-              }
-          });
+          utils.saveFile(filepath, this.project, function() {
+            alertify.success('Project ' + name + ' saved');
+          }, true);
         };
 
         this.importBlock = function(filepath) {
-          $.ajaxSetup({ async: false });
-          var block;
-          $.getJSON(filepath, function(data){
-            block = data;
-          });
-          if (block) {
-            var name = utils.basename(filepath);
-            graph.importBlock(name, block);
-            this.project.deps[name] = block;
-            alertify.success('Block ' + name + ' imported');
-          }
-          $.ajaxSetup({ async: true });
+          utils.readFile(filepath, (function(_this) {
+            return function(data) {
+              var block = data;
+              if (block) {
+                var name = utils.basename(filepath);
+                graph.importBlock(name, block);
+                _this.project.deps[name] = block;
+                alertify.success('Block ' + name + ' imported');
+              }
+            };
+          })(this));
         };
 
         this.exportAsBlock = function(filepath) {
@@ -90,12 +86,9 @@ angular.module('icestudio')
               delete block.graph.blocks[i].data.pin;
             }
           }
-          nodeFs.writeFile(filepath, JSON.stringify(block, null, 2),
-            function(err) {
-              if (!err) {
-                alertify.success('Block exported as ' + name);
-              }
-          });
+          utils.saveFile(filepath, block, function() {
+            alertify.success('Block exported as ' + name);
+          }, true);
         };
 
         this.exportVerilog = function(filepath) {
@@ -103,12 +96,9 @@ angular.module('icestudio')
           this.refreshProject();
           // Generate verilog code from project
           var verilog = compiler.generateVerilog(this.project);
-          nodeFs.writeFile(filepath, verilog,
-            function(err) {
-              if (!err) {
-                alertify.success('Exported verilog from project ' + name);
-              }
-          });
+          utils.saveFile(filepath, verilog, function() {
+            alertify.success('Exported verilog from project ' + name);
+          }, false);
         };
 
         this.exportPCF = function(filepath) {
@@ -116,12 +106,9 @@ angular.module('icestudio')
           this.refreshProject();
           // Generate pcf code from project
           var pcf = compiler.generatePCF(this.project);
-          nodeFs.writeFile(filepath, pcf,
-            function(err) {
-              if (!err) {
-                alertify.success('Exported PCF from project ' + name);
-              }
-          });
+          utils.saveFile(filepath, pcf, function() {
+            alertify.success('Exported PCF from project ' + name);
+          }, false);
         };
 
         this.refreshProject = function(callback) {
@@ -163,6 +150,7 @@ angular.module('icestudio')
 
         this.clearProject = function() {
           this.project = {
+            image: '',
             board: '',
             graph: {},
             deps: {}
@@ -189,11 +177,15 @@ angular.module('icestudio')
           }
         };
 
+        this.setImagePath = function(imagePath) {
+          this.project.image = imagePath;
+        }
+
         this.updateProjectName = function(name) {
           if (name) {
             this.projectName = name
             if (graph.breadcrumbs.length > 1) {
-              graph.breadcrumbs = [{ name: this.projectName }];
+              graph.breadcrumbs = [{ name: name }];
             }
             graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {

@@ -35,19 +35,16 @@ angular.module('icestudio')
                   for (var j in blocks) {
 
                     var name = utils.basename(blocks[j]);
-                    resources[category][name] = {};
 
-                    $.getJSON(blocks[j], (function(c, n) {
-                        return function(data) {
-                            storeData(data, c, n);
-                        };
+                    utils.readFile(blocks[j], (function(c, n) {
+                      return function(data) {
+                        resources[c][n] = data;
+                      }
                     })(category, name));
 
-                    function storeData(data, category, name) {
-                      resources[category][name] = data;
-                    }
                   }
                 };
+
               }
 
             };

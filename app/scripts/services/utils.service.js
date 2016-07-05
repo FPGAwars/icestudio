@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball',
-      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball) {
+    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib',
+      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -159,6 +159,76 @@ angular.module('icestudio')
 
         this.basename = function(filepath) {
           return filepath.replace(/^.*[\\\/]/, '').split('.')[0];
-        };
+        }
+
+        this.readFile = function(filepath, callback) {
+          nodeFs.readFile(filepath,
+            function(err, data) {
+              if (!err && callback) {
+                decompressJSON(data, callback);
+              }
+          });
+        }
+
+        var saveBin = true;
+
+        this.saveFile = function(filepath, content, callback, compress) {
+          if (compress) {
+            compressJSON(content, function(compressed) {
+              nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
+              function(err) {
+                if (!err && callback) {
+                  callback();
+                }
+              });
+            });
+          }
+          else {
+            nodeFs.writeFile(filepath, content, function(err) {
+              if (!err && callback) {
+                callback();
+              }
+            });
+          }
+        }
+
+        function compressJSON(json, callback) {
+          if (!saveBin) {
+            if (callback)
+              callback(JSON.stringify(json, null, 2));
+          }
+          else {
+            var data = JSON.stringify(json);
+            nodeZlib.gzip(data, function (_, result) {
+              if (callback)
+                callback(result);
+            });
+          }
+        }
+
+        function decompressJSON(json, callback) {
+          var data = isJSON(json);
+          if (data) {
+            if (callback)
+              callback(data);
+          }
+          else {
+            nodeZlib.gunzip(json, function(_, uncompressed) {
+              var result = JSON.parse(uncompressed);
+              if (callback)
+                callback(result);
+            });
+          }
+        }
+
+        function isJSON(str) {
+          var result = false;
+          try {
+            result = JSON.parse(str);
+          } catch (e) {
+            return false;
+          }
+          return result;
+        }
 
     }]);

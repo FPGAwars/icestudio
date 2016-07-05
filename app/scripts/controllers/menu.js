@@ -175,6 +175,16 @@ angular.module('icestudio')
 
     // Edit
 
+    $scope.setImagePath = function() {
+      var current = common.project.image;
+      alertify.prompt('Enter the project\'s image path', (current) ? current : 'resources/images/',
+        function(evt, imagePath) {
+          if (imagePath) {
+            common.setImagePath(imagePath);
+          }
+      });
+    }
+
     $scope.clearGraph = function() {
       if (!graph.isEmpty()) {
         alertify.confirm('Do you want to clear the graph?',
