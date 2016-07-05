@@ -17,6 +17,7 @@ angular.module('icestudio')
 
         this.newProject = function(name) {
           this.project = {
+            image: '',
             board: '',
             graph: {},
             deps: {}
@@ -149,6 +150,7 @@ angular.module('icestudio')
 
         this.clearProject = function() {
           this.project = {
+            image: '',
             board: '',
             graph: {},
             deps: {}
@@ -174,6 +176,10 @@ angular.module('icestudio')
             }
           }
         };
+
+        this.setImagePath = function(imagePath) {
+          this.project.image = imagePath;
+        }
 
         this.updateProjectName = function(name) {
           if (name) {
