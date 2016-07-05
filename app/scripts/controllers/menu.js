@@ -114,59 +114,64 @@ angular.module('icestudio')
     }
 
     $scope.exportAsBlock = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-export-block');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.iceb')) {
-                filepath += '.iceb';
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-block');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.iceb')) {
+                  filepath += '.iceb';
+              }
+              common.exportAsBlock(filepath);
             }
-            common.exportAsBlock(filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
+          });
+          ctrl.click();
+        }, 0);
+      }
     }
 
     $scope.exportVerilog = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-export-verilog');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.v')) {
-                filepath += '.v';
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-verilog');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.v')) {
+                  filepath += '.v';
+              }
+              common.exportVerilog(filepath);
             }
-            common.exportVerilog(filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
+          });
+          ctrl.click();
+        }, 0);
+      }
     }
 
     $scope.exportPCF = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-export-pcf');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.pcf')) {
-                filepath += '.pcf';
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-pcf');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.pcf')) {
+                  filepath += '.pcf';
+              }
+              common.exportPCF(filepath);
             }
-            common.exportPCF(filepath);
-          }
-        });
-        ctrl.click();
-      }, 0);
+          });
+          ctrl.click();
+        }, 0);
+      }
     }
-
 
     // Edit
 
