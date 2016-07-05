@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'joint', 'boards',
-      function($rootScope, joint, boards) {
+    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards',
+      function($rootScope, nodeFs, joint, boards) {
 
         // Variables
 
@@ -487,7 +487,7 @@ angular.module('icestudio')
 
           var attrs = {};
 
-          if (block.image) {
+          if (block.image && nodeFs.existsSync(block.image)) {
             attrs['.block-image'] = {
               x: 60 - 48,
               y: 25 + 10 * numPorts - 48,
