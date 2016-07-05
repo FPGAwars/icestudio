@@ -57,7 +57,7 @@ angular.module('icestudio')
           this.refreshProject();
           utils.saveFile(filepath, this.project, function() {
             alertify.success('Project ' + name + ' saved');
-          });
+          }, true);
         };
 
         this.importBlock = function(filepath) {
@@ -88,7 +88,7 @@ angular.module('icestudio')
           }
           utils.saveFile(filepath, block, function() {
             alertify.success('Block exported as ' + name);
-          });
+          }, true);
         };
 
         this.exportVerilog = function(filepath) {
@@ -98,7 +98,7 @@ angular.module('icestudio')
           var verilog = compiler.generateVerilog(this.project);
           utils.saveFile(filepath, verilog, function() {
             alertify.success('Exported verilog from project ' + name);
-          });
+          }, false);
         };
 
         this.exportPCF = function(filepath) {
@@ -108,7 +108,7 @@ angular.module('icestudio')
           var pcf = compiler.generatePCF(this.project);
           utils.saveFile(filepath, pcf, function() {
             alertify.success('Exported PCF from project ' + name);
-          });
+          }, false);
         };
 
         this.refreshProject = function(callback) {

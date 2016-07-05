@@ -172,15 +172,24 @@ angular.module('icestudio')
 
         var saveBin = true;
 
-        this.saveFile = function(filepath, content, callback) {
-          compressJSON(content, function(compressed) {
-            nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
-            function(err) {
+        this.saveFile = function(filepath, content, callback, compress) {
+          if (compress) {
+            compressJSON(content, function(compressed) {
+              nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
+              function(err) {
+                if (!err && callback) {
+                  callback();
+                }
+              });
+            });
+          }
+          else {
+            nodeFs.writeFile(filepath, content, function(err) {
               if (!err && callback) {
                 callback();
               }
             });
-          });
+          }
         }
 
         function compressJSON(json, callback) {
