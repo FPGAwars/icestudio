@@ -85,7 +85,15 @@ angular.module('icestudio')
                           }
                         }
                         else if (data.blockType == 'basic.code') {
-                          // TODO.
+                          var block = {
+                            data: {
+                              code: _this.getCode(cellView.model.id)
+                            },
+                            position: cellView.model.attributes.position
+                          };
+                          _this.createBlock('basic.code', block, function() {
+                            cellView.model.remove();
+                          });
                         }
                         else if (data.type != 'ice.Wire') {
                           _this.breadcrumbs.push({ name: data.blockType });
@@ -154,7 +162,7 @@ angular.module('icestudio')
           }
         };
 
-        this.createBlock = function(type, block) {
+        this.createBlock = function(type, block, callback) {
           var blockInstance = {
             id: null,
             data: {},
@@ -189,7 +197,15 @@ angular.module('icestudio')
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
                   blockInstance.position.x = 250;
+
+                  if (block) {
+                    blockInstance.data.code = block.data.code;
+                    blockInstance.position = block.position;
+                  }
                   addBasicCodeBlock(blockInstance);
+
+                  if (callback)
+                    callback();
                 }
             });
           }
