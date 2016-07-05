@@ -13,8 +13,11 @@ angular.module('icestudio')
         };
 
         function digestId(id, force) {
-          if (id.indexOf('-') != -1 || force) {
+          if (id.indexOf('-') != -1) {
             return 'v' + nodeSha1(id).toString().substring(0, 6);
+          }
+          else {
+            return id.replace('.', '_');
           }
           return id;
         }
