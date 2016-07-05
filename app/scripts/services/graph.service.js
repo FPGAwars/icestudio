@@ -13,9 +13,7 @@ angular.module('icestudio')
 
         var dependencies = {};
 
-        var breadcrumbs = [{ name: '' }];
-
-        this.breadcrumbs = breadcrumbs;
+        this.breadcrumbs = [{ name: '' }];
 
         // Functions
 
@@ -72,41 +70,42 @@ angular.module('icestudio')
           );
 
           paper.on('cell:pointerdblclick',
-            function(cellView, evt, x, y) {
-              var data = cellView.model.attributes;
-              if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-                if (paper.options.interactive) {
-                  alertify.prompt('Insert the block label', '',
-                    function(evt, label) {
-                      data.data.label = label;
-                      data.attrs['.block-label'].text = label;
-                      cellView.update();
-                      alertify.success('Label updated');
-                  });
-                }
-              }
-              else if (data.blockType == 'basic.code') {
-                // TODO.
-              }
-              else if (data.type != 'ice.Wire') {
-                breadcrumbs.push({ name: data.blockType });
-                if(!$rootScope.$$phase) {
-                  $rootScope.$apply();
-                }
-                var disabled = true;
-                if (breadcrumbs.length == 2) {
-                  $rootScope.$broadcast('refreshProject', function() {
-                    loadGraph(dependencies[data.blockType], disabled);
-                    appEnable(false);
-                  });
-                }
-                else {
-                  loadGraph(dependencies[data.blockType], disabled);
-                  appEnable(false);
-                }
-              }
-            }
-          );
+            (function(_this) {
+              return function(cellView, evt, x, y) {
+                        var data = cellView.model.attributes;
+                        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+                          if (paper.options.interactive) {
+                            alertify.prompt('Insert the block label', '',
+                              function(evt, label) {
+                                data.data.label = label;
+                                data.attrs['.block-label'].text = label;
+                                cellView.update();
+                                alertify.success('Label updated');
+                            });
+                          }
+                        }
+                        else if (data.blockType == 'basic.code') {
+                          // TODO.
+                        }
+                        else if (data.type != 'ice.Wire') {
+                          _this.breadcrumbs.push({ name: data.blockType });
+                          if(!$rootScope.$$phase) {
+                            $rootScope.$apply();
+                          }
+                          var disabled = true;
+                          if (_this.breadcrumbs.length == 2) {
+                            $rootScope.$broadcast('refreshProject', function() {
+                              loadGraph(dependencies[data.blockType], disabled);
+                              appEnable(false);
+                            });
+                          }
+                          else {
+                            loadGraph(dependencies[data.blockType], disabled);
+                            appEnable(false);
+                          }
+                        }
+                      }
+                    })(this));
 
           paper.on('blank:pointerdown',
             function() {

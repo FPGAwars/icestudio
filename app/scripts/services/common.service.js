@@ -185,7 +185,7 @@ angular.module('icestudio')
           if (name) {
             this.projectName = name
             if (graph.breadcrumbs.length > 1) {
-              graph.breadcrumbs = [{ name: this.projectName }];
+              graph.breadcrumbs = [{ name: name }];
             }
             graph.breadcrumbs[0].name = name;
             if(!$rootScope.$$phase) {
