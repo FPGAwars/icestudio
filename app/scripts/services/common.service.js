@@ -29,7 +29,7 @@ angular.module('icestudio')
         this.openProject = function(filepath) {
           utils.readFile(filepath, (function(_this) {
             return function(data) {
-              var project = utils.decompressJSON(data);
+              var project = data;
               if (project) {
                 var name = utils.basename(filepath);
                 _this.loadProject(name, project);
@@ -54,7 +54,7 @@ angular.module('icestudio')
           var name = utils.basename(filepath);
           this.updateProjectName(name);
           this.refreshProject();
-          utils.saveFile(filepath, utils.compressJSON(this.project), function() {
+          utils.saveFile(filepath, this.project, function() {
             alertify.success('Project ' + name + ' saved');
           });
         };
@@ -62,7 +62,7 @@ angular.module('icestudio')
         this.importBlock = function(filepath) {
           utils.readFile(filepath, (function(_this) {
             return function(data) {
-              var block = utils.decompressJSON(data);
+              var block = data;
               if (block) {
                 var name = utils.basename(filepath);
                 graph.importBlock(name, block);
@@ -85,7 +85,7 @@ angular.module('icestudio')
               delete block.graph.blocks[i].data.pin;
             }
           }
-          utils.saveFile(filepath, utils.compressJSON(block), function() {
+          utils.saveFile(filepath, block, function() {
             alertify.success('Block exported as ' + name);
           });
         };

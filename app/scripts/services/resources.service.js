@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('resources', ['nodeFs', 'nodeGlob', 'nodePath', 'utils',
-      function(nodeFs, nodeGlob, nodePath, utils) {
+    .service('resources', ['nodeGlob', 'nodePath', 'utils',
+      function(nodeGlob, nodePath, utils) {
 
         this.getExamples = function() {
           return getResources(nodePath.join('resources', 'examples', '*'), '.ice');
@@ -35,11 +35,16 @@ angular.module('icestudio')
                   for (var j in blocks) {
 
                     var name = utils.basename(blocks[j]);
-                    var data = nodeFs.readFileSync(blocks[j]);
 
-                    resources[category][name] = utils.decompressJSON(data);
+                    utils.readFile(blocks[j], (function(c, n) {
+                      return function(data) {
+                        resources[c][n] = data;
+                      }
+                    })(category, name));
+
                   }
                 };
+
               }
 
             };

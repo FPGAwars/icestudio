@@ -165,28 +165,61 @@ angular.module('icestudio')
           nodeFs.readFile(filepath,
             function(err, data) {
               if (!err && callback) {
-                callback(data);
+                decompressJSON(data, callback);
               }
           });
         }
 
+        var saveBin = true;
+
         this.saveFile = function(filepath, content, callback) {
-          nodeFs.writeFile(filepath, content,
+          compressJSON(content, function(compressed) {
+            nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
             function(err) {
               if (!err && callback) {
                 callback();
               }
+            });
           });
         }
 
-        this.compressJSON = function(json) {
-          //nodeZlib.Gzip(data)
-          return JSON.stringify(json);
+        function compressJSON(json, callback) {
+          if (!saveBin) {
+            if (callback)
+              callback(JSON.stringify(json, null, 2));
+          }
+          else {
+            var data = JSON.stringify(json);
+            nodeZlib.gzip(data, function (_, result) {
+              if (callback)
+                callback(result);
+            });
+          }
         }
 
-        this.decompressJSON = function(json) {
-          //nodeZlib.Gunzip(data)
-          return JSON.parse(json.toString());
+        function decompressJSON(json, callback) {
+          var data = isJSON(json);
+          if (data) {
+            if (callback)
+              callback(data);
+          }
+          else {
+            nodeZlib.gunzip(json, function(_, uncompressed) {
+              var result = JSON.parse(uncompressed);
+              if (callback)
+                callback(result);
+            });
+          }
+        }
+
+        function isJSON(str) {
+          var result = false;
+          try {
+            result = JSON.parse(str);
+          } catch (e) {
+            return false;
+          }
+          return result;
         }
 
     }]);
