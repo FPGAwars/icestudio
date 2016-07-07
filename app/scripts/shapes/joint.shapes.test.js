@@ -27,7 +27,8 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
                r: 15,
                stroke: '#888888',
                'stroke-width': 2,
-               'stroke-opacity': 1
+               'stroke-opacity': 0,
+               opacity: 0
             },
             '.inPorts .port-body': {
               type: 'input',
@@ -199,7 +200,7 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
     }
 });
 
-// IO block
+// I/O blocks
 
 joint.shapes.test.I = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
@@ -294,81 +295,61 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
 joint.shapes.test.IView = joint.shapes.test.IOView;
 joint.shapes.test.OView = joint.shapes.test.IOView;
 
+// Code block
 
-
-
-var html = '\
-<div class="my-html-element">\
-<label>This is HTML</label>\
-<input type="text" value="I\'m HTML input" />\
-<svg>\
- <circle cx="10" cy="10" r="5" fill="white" />\
- <text y="2em">Hello world</text>\
-</svg>\
-<select class="select"></select>\
-<script>\
-$(".select2").select2({placeholder: "", allowClear: true});\
-</script>\
-</div>\
-'
-
-// Create a custom view for that element that displays an HTML div above it.
-// -------------------------------------------------------------------------
-
-joint.shapes.test.VElementView = joint.dia.ElementView.extend({
-
-    template: '',
-
-    initialize: function() {
-        _.bindAll(this, 'updateBox');
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
-        this.$box = $(joint.util.template(this.template)());
-        /*// Prevent paper from handling pointerdown.
-        this.$box.find('input').on('mousedown', function(evt) { evt.stopPropagation(); });
-        // This is an example of reacting on the input change and storing the input data in the cell model.
-        this.$box.find('input').on('change', _.bind(function(evt) {
-            this.model.set('myinput', $(evt.target).val());
-        }, this));*/
-
-        var image = this.model.get('image');
-        var name = this.model.get('name');
-
-        if (image) {
-          this.$box.find('img').attr('src', image);
-          this.$box.find('img').removeClass('hidden');
-          this.$box.find('label').addClass('hidden');
-        }
-        else {
-          this.$box.find('label').text(name);
-          this.$box.find('img').addClass('hidden');
-          this.$box.find('label').removeClass('hidden');
-        }
-
-        // Update the box position whenever the underlying model changes.
-        this.model.on('change', this.updateBox, this);
-        // Remove the box when the model gets removed from the graph.
-        this.model.on('remove', this.removeBox, this);
+joint.shapes.test.Code = joint.shapes.test.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'test.Code',
+    size: {
+      width: 300,
+      height: 100
     },
-    render: function() {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.append(this.$box);
-        this.updateBox();
-        return this;
-    },
-    updateBox: function() {
-        // Set the position and the size of the box so that it covers the JointJS element.
-        var bbox = this.getBBox();
-        // Example of updating the HTML with a data stored in the cell model.
-        this.$box.css({ width: bbox.find('.body').width + 2, height: bbox.height + 2, left: bbox.x, top: bbox.y });
-    },
-    removeBox: function(evt) {
-        this.$box.remove();
+    attrs: {
+      '.body': {
+        width: 300,
+        height: 100
+      }
     }
-
+  }, joint.shapes.test.Model.prototype.defaults)
 });
 
+joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
 
+    template: '\
+    <div class="code-block">\
+     <div class="code-editor" id="editor"></div>\
+     <textarea class="hidden" id="content"></textarea>\
+     <script>\
+      var editor = ace.edit("editor");\
+      editor.setTheme("ace/theme/chrome");\
+      editor.getSession().setMode("ace/mode/verilog");\
+      editor.getSession().on("change", function () {\
+       $("#content").val(editor.getSession().getValue());\
+       $(document).trigger("disableSelected");\
+     });\
+      editor.on("hover", function() { $(document).trigger("disableSelected"); });\
+      document.getElementById("editor").style.fontSize="15px";\
+     </script>\
+    </div>\
+    ',
+
+    initialize: function() {
+        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+
+        //this.$box.find('.code-block').append(this.model.attributes.data.code);
+        //this.$box.find('#content').append(this.model.attributes.data.code);
+    },
+    update: function () {
+      this.renderPorts();
+      if (this.model.get('disabled')) {
+        this.$box.find('.code-block').css({'pointer-events': 'none'});
+      }
+      else {
+        this.$box.find('.code-block').css({'pointer-events': 'all'});
+      }
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    },
+});
 
 
 //////////////////////////////////////////////////
@@ -411,9 +392,16 @@ var el3 = new joint.shapes.test.O({
   position: { x: 350, y: 180 },
   label: 'mo'
 });
+var el4 = new joint.shapes.test.Code({
+  position: { x: 0, y: 0 },
+  outPorts: [{
+    id: "out",
+    label: "out"
+  }],
+});
 //var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
 
-_graph.addCells([el1, el2, el3]);
+_graph.addCells([el1, el2, el3, el4]);
 
 var lastSelectedCell = null;
 

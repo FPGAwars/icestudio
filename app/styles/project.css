@@ -89,88 +89,24 @@
   pointer-events: all;
 }
 
-
-.my-html-element {
+.code-block {
   position: absolute;
-  background: lightgray;
+  background: #C0DFEB;
+  border-radius: 10px;
+  border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
-  border-radius: 25px;
-  border: 2px solid #73AD21;
 }
-.my-html-element input {
-  pointer-events: auto;
+
+.code-block .code-editor {
   position: absolute;
-  bottom: 2px;
-  left: 0;
-  right: 0;
+  height: 80%;
+  width: 90%;
+  transform: translate(15px, 10px);
+  border-radius: 10px;
+  pointer-events: all;
 }
-
-.my-html-element select {
-    pointer-events: auto;
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    right: 0;
-}
-
 
 .available-magnet {
   fill: yellow;
-}
-
-.io-element {
-  position: absolute;
-  background: #FAFAD2;
-  pointer-events: none;
-  -webkit-user-select: none;
-  border-radius: 10px;
-  border: 2px solid #000;
-  box-sizing: border-box;
-  z-index: 3;
-}
-
-.io-element select {
-   position: fixed;
-   top: 40px;
-   left: 8px;
-   /*left: 0;
-   right: 0;*/
-   height: 40px;
-   width: 150px;
-   border: 1px solid #D0D0D0;
-   border-radius: 10px;
-   color: #333;
-   background: #FFFFFF;
-   padding: 5px;
-   margin: 5px;
-   outline:0 !important;
-   -webkit-appearance:none;
-   opacity:1;
-
-}
-
-.io-element select {
-  pointer-events: visible;
-  position: absolute;
-  top: 40px;
-  left: 10px;
-  width: 100px;
-}
-
-
-
-.code-element{
-  position: absolute;
-  pointer-events: none;
-  -webkit-user-select: none;
-}
-
-.code-editor {
-  pointer-events: auto;
-  position: absolute;
-  height: 180px;
-  width: 340px;
-  transform: translate(30px, 10px);
-  border-radius: 10px;
 }
