@@ -27,10 +27,9 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
         },
         '.port-body': {
            r: 15,
-           stroke: '#888888',
            'stroke-width': 2,
            'stroke-opacity': 0,
-           opacity: 0
+           opacity: 0,
         },
         '.inPorts .port-body': {
           type: 'input',
@@ -41,15 +40,15 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
           magnet: true
         },
         '.inPorts .port-label': {
-          x: 40,
-          y: 4,
-          'text-anchor': 'start',
+          x: 10,
+          y: -10,
+          'text-anchor': 'end',
           fill: '#000'
         },
         '.outPorts .port-label': {
-          x: -40,
-          y: 4,
-          'text-anchor': 'end',
+          x: -10,
+          y: -10,
+          'text-anchor': 'start',
           fill: '#000'
         },
         '.port-wire': {
@@ -357,8 +356,6 @@ joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices)
 
     var dimensionFix = 1e-3;
 
-    console.log(sourcePoint, targetPoint, vertices);
-
     var points = [];
 
     points.push({ x: sourcePoint.x, y: sourcePoint.y });
@@ -390,41 +387,37 @@ joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices)
 
 joint.shapes.test.Wire = joint.dia.Link.extend({
 
-    arrowheadMarkup: [
-        '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-        '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
-        '</g>'
-    ].join(''),
+  markup: [
+    '<path class="connection" stroke="black" d="M 0 0 0 0"/>',
+    '<path class="marker-source" fill="black" stroke="black" d="M 0 0 0 0"/>',
+    '<path class="marker-target" fill="black" stroke="black" d="M 0 0 0 0"/>',
+    '<g class="labels"/>',
+    '<g class="marker-vertices"/>',
+    '<g class="marker-arrowheads"/>',
+    '<g class="link-tools"/>'
+  ].join(''),
 
-    vertexMarkup: [
-        '<g class="marker-vertex-group" transform="translate(<%= x %>, <%= y %>)">',
-        '<circle class="marker-vertex" idx="<%= idx %>" r="10" />',
-        '<g class="marker-vertex-remove-group">',
-        '<path class="marker-vertex-remove-area" idx="<%= idx %>" d="M16,5.333c-7.732,0-14,4.701-14,10.5c0,1.982,0.741,3.833,2.016,5.414L2,25.667l5.613-1.441c2.339,1.317,5.237,2.107,8.387,2.107c7.732,0,14-4.701,14-10.5C30,10.034,23.732,5.333,16,5.333z" transform="translate(5, -33)"/>',
-        '<path class="marker-vertex-remove" idx="<%= idx %>" transform="scale(.8) translate(9.5, -37)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z">',
-        '<title>Remove vertex.</title>',
-        '</path>',
-        '</g>',
-        '</g>'
-    ].join(''),
+  arrowheadMarkup: [
+    '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
+    '</g>'
+  ].join(''),
 
-    defaults: joint.util.deepSupplement({
+  defaults: joint.util.deepSupplement({
 
-        type: 'test.Wire',
+    type: 'test.Wire',
 
-        attrs: {
-            '.connection': { 'stroke-width': 2, stroke: '#888888'},
-            '.marker-vertex': { r: 7 }
-        },
+    attrs: {
+      '.connection': { 'stroke-width': 2, stroke: '#888888'},
+      '.marker-vertex': { r: 7 }
+    },
 
-        router: { name: 'manhattan' },
-        connector: { name: 'lineGapConnector'}
+    router: { name: 'manhattan' },
+    connector: { name: 'lineGapConnector'}
 
-    }, joint.dia.Link.prototype.defaults)
+  }, joint.dia.Link.prototype.defaults)
 
 });
-
-console.log(joint.routers.manhattan)
 
 
 //////////////////////////////////////////////////
@@ -449,7 +442,7 @@ var _paper = new joint.dia.Paper({
 });
 
 var el1 = new joint.shapes.test.Generic({
-  position: { x: 80, y: 80 },
+  position: { x: 80, y: 140 },
   image: 'resources/images/and.svg',
   label: 'AND',
   inPorts: [{id: 1234, label:'in1'}, {id: 2345, label:'in2'}],
@@ -474,26 +467,62 @@ var el4 = new joint.shapes.test.Code({
     label: "out"
   }],
 });
-//var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
+
+var obstacles = [el1, el2, el3, el4]
+
+_graph.on('change:position', function(cell) {
+    // has an obstacle been moved? Then reroute the link.
+    if (_.contains(obstacles, cell)) {
+      var cells = _graph.getCells();
+      for (var i in cells) {
+        var cell = cells[i];
+        if (cell.isLink()) {
+          _paper.findViewByModel(cell).update();
+        }
+      }
+    }
+});
 
 _graph.addCells([el1, el2, el3, el4]);
+
+var cells = _graph.getCells();
+for (var i in cells) {
+  var cell = cells[i];
+  if (cell.isLink()) {
+    cellToFront(cellView);
+  }
+}
 
 var lastSelectedCell = null;
 
 _paper.on('cell:pointerdown',
   function(cellView, evt, x, y) {
     if (!cellView.model.isLink()) {
-      if (lastSelectedCell)
-      cellToBack(lastSelectedCell);
+      if (lastSelectedCell) {
+        cellToBack(lastSelectedCell);
+      }
       lastSelectedCell = cellView;
       cellToFront(cellView);
     }
   }
 );
 
+// TODO: z-index svg:g / div problem
+/*
+
+| svg: g, g, g: toFront, toBack
+
+| div
+| div
+| div
+
+*/
+
+var zIndex = 1;
+
 function cellToBack(cellView) {
   // For Element SVG
-  cellView.model.toBack();
+  //cellView.model.toBack();
   // For ElementView HTML
   cellView.$box.removeClass('front');
 }
@@ -502,6 +531,8 @@ function cellToFront(cellView) {
   // For Element SVG
   cellView.model.toFront();
   // For ElementView HTML
+  //cellView.$box.css('z-index', zIndex++);
+  //$('#xpaper svg').css('z-index', zIndex);
   cellView.$box.addClass('front');
 }
 

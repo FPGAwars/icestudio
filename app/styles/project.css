@@ -9,7 +9,6 @@
    background: transparent;
 }
 
-
 #xpaper {
     width: 600px;
     height: 300px;
@@ -22,7 +21,7 @@
 
 #xpaper svg {
   background: transparent;
-  position: relative;
+  position: absolute;
   z-index: 1;
 }
 
@@ -38,7 +37,7 @@
 }
 
 .port-body:hover {
-  fill: red;
+  fill: yellow;
 }
 
 .generic-block {
@@ -79,9 +78,10 @@
 
 .io-block label {
   display: block;
-  margin-top: 4px;
+  margin-top: 6px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.2em;
+  font-weight: bold
 }
 
 .io-block .select2 {
@@ -104,8 +104,8 @@
 
 .code-block .code-editor {
   position: absolute;
-  height: 80%;
   width: 90%;
+  height: 80%;
   transform: translate(15px, 10px);
   border-radius: 5px;
   pointer-events: all;
