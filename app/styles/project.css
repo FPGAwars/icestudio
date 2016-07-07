@@ -37,10 +37,14 @@
   z-index: 1;
 }
 
+.port-body:hover {
+  fill: red;
+}
+
 .generic-block {
   position: absolute;
   background: #C0DFEB;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
@@ -67,7 +71,7 @@
 .io-block {
   position: absolute;
   background: #FAFAD2;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
@@ -92,7 +96,7 @@
 .code-block {
   position: absolute;
   background: #C0DFEB;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
@@ -103,7 +107,7 @@
   height: 80%;
   width: 90%;
   transform: translate(15px, 10px);
-  border-radius: 10px;
+  border-radius: 5px;
   pointer-events: all;
 }
 

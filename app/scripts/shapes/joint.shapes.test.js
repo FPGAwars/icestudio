@@ -10,50 +10,53 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
     portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
     defaults: joint.util.deepSupplement({
-
-        type: 'test.Model',
-        size: { width: 1, height: 1 },
-        inPorts: [],
-        outPorts: [],
-        attrs: {
-            '.': {
-              magnet: false
-            },
-            '.body': {
-                stroke: 'none',
-                'fill-opacity': 0
-            },
-            '.port-body': {
-               r: 15,
-               stroke: '#888888',
-               'stroke-width': 2,
-               'stroke-opacity': 0,
-               opacity: 0
-            },
-            '.inPorts .port-body': {
-              type: 'input',
-              magnet: false
-            },
-            '.outPorts .port-body': {
-              type: 'output',
-              magnet: true
-            },
-            '.inPorts .port-label': {
-                x: -15,
-                dy: 4,
-                'text-anchor': 'end',
-                fill: '#000'
-            },
-            '.outPorts .port-label': {
-                x: 15,
-                dy: 4,
-                fill: '#000'
-            },
-            '.port-wire': {
-              stroke: '#888888',
-              'stroke-width': 2
-            }
+      type: 'test.Model',
+      size: {
+        width: 1,
+        height: 1
+      },
+      inPorts: [],
+      outPorts: [],
+      attrs: {
+        '.': {
+          magnet: false
+        },
+        '.body': {
+            stroke: 'none',
+            'fill-opacity': 0
+        },
+        '.port-body': {
+           r: 15,
+           stroke: '#888888',
+           'stroke-width': 2,
+           'stroke-opacity': 0,
+           opacity: 0
+        },
+        '.inPorts .port-body': {
+          type: 'input',
+          magnet: false
+        },
+        '.outPorts .port-body': {
+          type: 'output',
+          magnet: true
+        },
+        '.inPorts .port-label': {
+          x: 40,
+          y: 4,
+          'text-anchor': 'start',
+          fill: '#000'
+        },
+        '.outPorts .port-label': {
+          x: -40,
+          y: 4,
+          'text-anchor': 'end',
+          fill: '#000'
+        },
+        '.port-wire': {
+          stroke: '#888888',
+          'stroke-width': 2
         }
+      }
 }, joint.shapes.basic.Generic.prototype.defaults),
 
   getPortAttrs: function(port, index, total, selector, type) {
@@ -87,12 +90,12 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
     };
 
     if (type === 'in') {
-      attrs[portSelector]['ref-x'] = -30;
-      attrs[portWireSelector]['d'] = 'M 0 0 L 30 0';
+      attrs[portSelector]['ref-x'] = -20;
+      attrs[portWireSelector]['d'] = 'M 0 0 L 20 0';
     }
     else {
-      attrs[portSelector]['ref-dx'] = 30;
-      attrs[portWireSelector]['d'] = 'M 0 0 L -30 0';
+      attrs[portSelector]['ref-dx'] = 20;
+      attrs[portWireSelector]['d'] = 'M 0 0 L -20 0';
     }
 
     return attrs;
@@ -104,26 +107,24 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
     template: '',
 
     initialize: function() {
-        _.bindAll(this, 'updateBox');
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+      _.bindAll(this, 'updateBox');
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-        this.$box = $(joint.util.template(this.template)());
+      this.$box = $(joint.util.template(this.template)());
 
-        // Update the box position whenever the underlying model changes.
-        this.model.on('change', this.updateBox, this);
-        // Remove the box when the model gets removed from the graph.
-        this.model.on('remove', this.removeBox, this);
+      this.model.on('change', this.updateBox, this);
+      this.model.on('remove', this.removeBox, this);
 
-        this.updateBox();
+      this.updateBox();
 
-        this.listenTo(this.model, 'process:ports', this.update);
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+      this.listenTo(this.model, 'process:ports', this.update);
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
     },
     render: function() {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.append(this.$box);
-        this.updateBox();
-        return this;
+      joint.dia.ElementView.prototype.render.apply(this, arguments);
+      this.paper.$el.append(this.$box);
+      this.updateBox();
+      return this;
     },
     renderPorts: function () {
       var $inPorts = this.$('.inPorts').empty();
@@ -131,25 +132,22 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
       var portTemplate = _.template(this.model.portMarkup);
 
       _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
-          $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+        $inPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
       _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
-          $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+        $outPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
     },
     update: function () {
-      // First render ports so that `attrs` can be applied to those newly created DOM elements
-      // in `ElementView.prototype.update()`.
       this.renderPorts();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
     updateBox: function() {
-        // Set the position and the size of the box so that it covers the JointJS element.
-        var bbox = this.model.getBBox();
-        this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+      var bbox = this.model.getBBox();
+      this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
     },
     removeBox: function(evt) {
-        this.$box.remove();
+      this.$box.remove();
     }
 });
 
@@ -182,21 +180,21 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
     ',
 
     initialize: function() {
-        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
-        var image = this.model.get('image');
-        var name = this.model.get('label');
+      var image = this.model.get('image');
+      var name = this.model.get('label');
 
-        if (image) {
-          this.$box.find('img').attr('src', image);
-          this.$box.find('img').removeClass('hidden');
-          this.$box.find('label').addClass('hidden');
-        }
-        else {
-          this.$box.find('label').text(name);
-          this.$box.find('img').addClass('hidden');
-          this.$box.find('label').removeClass('hidden');
-        }
+      if (image) {
+        this.$box.find('img').attr('src', image);
+        this.$box.find('img').removeClass('hidden');
+        this.$box.find('label').addClass('hidden');
+      }
+      else {
+        this.$box.find('label').text(name);
+        this.$box.find('img').addClass('hidden');
+        this.$box.find('label').removeClass('hidden');
+      }
     }
 });
 
@@ -258,15 +256,15 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     ',
 
     initialize: function() {
-        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
-        this.$box.find('.select2').on('change', _.bind(function(evt) {
-            //this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
-            //this.model.attributes.data.pin.value = $(evt.target).val();
-        }, this));
+      this.$box.find('.select2').on('change', _.bind(function(evt) {
+        //this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
+        //this.model.attributes.data.pin.value = $(evt.target).val();
+      }, this));
 
-        var name = this.model.get('label');
-        this.$box.find('label').text(name);
+      var name = this.model.get('label');
+      this.$box.find('label').text(name);
     },
     renderChoices: function() {
       if (this.model.get('disabled')) {
@@ -295,6 +293,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
 joint.shapes.test.IView = joint.shapes.test.IOView;
 joint.shapes.test.OView = joint.shapes.test.IOView;
 
+
 // Code block
 
 joint.shapes.test.Code = joint.shapes.test.Model.extend({
@@ -317,27 +316,27 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
 
     template: '\
     <div class="code-block">\
-     <div class="code-editor" id="editor"></div>\
-     <textarea class="hidden" id="content"></textarea>\
-     <script>\
-      var editor = ace.edit("editor");\
-      editor.setTheme("ace/theme/chrome");\
-      editor.getSession().setMode("ace/mode/verilog");\
-      editor.getSession().on("change", function () {\
-       $("#content").val(editor.getSession().getValue());\
-       $(document).trigger("disableSelected");\
-     });\
-      editor.on("hover", function() { $(document).trigger("disableSelected"); });\
-      document.getElementById("editor").style.fontSize="15px";\
-     </script>\
+      <div class="code-editor" id="editor"></div>\
+      <textarea class="hidden" id="content"></textarea>\
+      <script>\
+        var editor = ace.edit("editor");\
+        editor.setTheme("ace/theme/chrome");\
+        editor.getSession().setMode("ace/mode/verilog");\
+        editor.getSession().on("change", function () {\
+          $("#content").val(editor.getSession().getValue());\
+          $(document).trigger("disableSelected");\
+        });\
+        editor.on("hover", function() { $(document).trigger("disableSelected"); });\
+        document.getElementById("editor").style.fontSize="15px";\
+      </script>\
     </div>\
     ',
 
     initialize: function() {
-        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
-        //this.$box.find('.code-block').append(this.model.attributes.data.code);
-        //this.$box.find('#content').append(this.model.attributes.data.code);
+      //this.$box.find('.code-block').append(this.model.attributes.data.code);
+      //this.$box.find('#content').append(this.model.attributes.data.code);
     },
     update: function () {
       this.renderPorts();
@@ -352,10 +351,86 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
 });
 
 
+// Custom wire
+
+joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices) {
+
+    var dimensionFix = 1e-3;
+
+    console.log(sourcePoint, targetPoint, vertices);
+
+    var points = [];
+
+    points.push({ x: sourcePoint.x, y: sourcePoint.y });
+    _.each(vertices, function(vertex) {
+      points.push({ x: vertex.x, y: vertex.y });
+    });
+    points.push({ x: targetPoint.x, y: targetPoint.y });
+
+    var step = 15 + 2;
+    var n = points.length;
+
+    var sq = { x: points[0].x - points[1].x, y: points[0].y - points[1].y };
+    var tq = { x: points[n-1].x - points[n-2].x, y: points[n-1].y - points[n-2].y };
+
+    var sx = Math.sign(sq.x) * step;
+    var sy = Math.sign(sq.y) * step;
+
+    var tx = (tq.y == 0) ? Math.sign(tq.x) * step : 0;
+    var ty = (tq.x == 0) ? Math.sign(tq.y) * step : 0;
+
+    var d = ['M', sourcePoint.x + sx, sourcePoint.y + sy];
+
+    _.each(vertices, function(vertex) { d.push(vertex.x, vertex.y); });
+
+    d.push(targetPoint.x + tx + dimensionFix, targetPoint.y + ty + dimensionFix);
+
+    return d.join(' ');
+};
+
+joint.shapes.test.Wire = joint.dia.Link.extend({
+
+    arrowheadMarkup: [
+        '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
+        '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
+        '</g>'
+    ].join(''),
+
+    vertexMarkup: [
+        '<g class="marker-vertex-group" transform="translate(<%= x %>, <%= y %>)">',
+        '<circle class="marker-vertex" idx="<%= idx %>" r="10" />',
+        '<g class="marker-vertex-remove-group">',
+        '<path class="marker-vertex-remove-area" idx="<%= idx %>" d="M16,5.333c-7.732,0-14,4.701-14,10.5c0,1.982,0.741,3.833,2.016,5.414L2,25.667l5.613-1.441c2.339,1.317,5.237,2.107,8.387,2.107c7.732,0,14-4.701,14-10.5C30,10.034,23.732,5.333,16,5.333z" transform="translate(5, -33)"/>',
+        '<path class="marker-vertex-remove" idx="<%= idx %>" transform="scale(.8) translate(9.5, -37)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z">',
+        '<title>Remove vertex.</title>',
+        '</path>',
+        '</g>',
+        '</g>'
+    ].join(''),
+
+    defaults: joint.util.deepSupplement({
+
+        type: 'test.Wire',
+
+        attrs: {
+            '.connection': { 'stroke-width': 2, stroke: '#888888'},
+            '.marker-vertex': { r: 7 }
+        },
+
+        router: { name: 'manhattan' },
+        connector: { name: 'lineGapConnector'}
+
+    }, joint.dia.Link.prototype.defaults)
+
+});
+
+console.log(joint.routers.manhattan)
+
+
 //////////////////////////////////////////////////
 
 //Initial Parameters
-var gridsize = 1;
+var gridsize = 10;
 var currentScale = 1;
 
 //Get the div that will hold the graph
@@ -368,9 +443,9 @@ var _paper = new joint.dia.Paper({
     height: 300,
     gridSize: gridsize,
     model: _graph,
-    snapLinks: { radius: 40 },
+    snapLinks: { radius: 15 },
     linkPinning: false,
-    defaultLink: new joint.shapes.ice.Wire()
+    defaultLink: new joint.shapes.test.Wire()
 });
 
 var el1 = new joint.shapes.test.Generic({
