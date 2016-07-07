@@ -9,6 +9,7 @@
    background: transparent;
 }
 
+
 #xpaper {
     width: 600px;
     height: 300px;
@@ -17,6 +18,12 @@
     display: inline-block;
     background: transparent;
     overflow: hidden;
+}
+
+#xpaper svg {
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 #breadcrumbs {
@@ -37,7 +44,7 @@
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .block img {

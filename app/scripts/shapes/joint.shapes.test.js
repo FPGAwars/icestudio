@@ -24,9 +24,10 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
                 'fill-opacity': 0
             },
             '.port-body': {
-                r: 10,
-                stroke: 'none',
-                'fill-opacity': 1
+               r: 15,
+               stroke: '#888888',
+               'stroke-width': 2,
+               'stroke-opacity': 1
             },
             '.inPorts .port-body': {
               type: 'input',
@@ -48,7 +49,7 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
                 fill: '#000'
             },
             '.port-wire': {
-              stroke: '#000',
+              stroke: '#888888',
               'stroke-width': 2
             }
         }
@@ -173,18 +174,16 @@ joint.shapes.test.Generic = joint.shapes.test.Model.extend({
   }, joint.shapes.test.Model.prototype.defaults)
 });
 
-var genericBlockTemplate = '\
-<div class="block">\
-  <img>\
-  <label></label>\
-  <svg>\
-  </svg>\
-</div>\
-'
-
 joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
 
-    template: genericBlockTemplate,
+    template: '\
+    <div class="block">\
+      <img>\
+      <label></label>\
+      <svg>\
+      </svg>\
+    </div>\
+    ',
 
     initialize: function() {
         joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
@@ -204,6 +203,8 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
         }
     }
 });
+
+
 
 
 
@@ -227,7 +228,7 @@ $(".select2").select2({placeholder: "", allowClear: true});\
 
 joint.shapes.test.VElementView = joint.dia.ElementView.extend({
 
-    template: genericBlockTemplate,
+    template: '',
 
     initialize: function() {
         _.bindAll(this, 'updateBox');
@@ -298,7 +299,8 @@ var _paper = new joint.dia.Paper({
     gridSize: gridsize,
     model: _graph,
     snapLinks: true,
-    linkPinning: false
+    linkPinning: false,
+    defaultLink: new joint.shapes.ice.Wire()
 });
 
 var el1 = new joint.shapes.test.Generic({
@@ -319,7 +321,6 @@ var el2 = new joint.shapes.test.Generic({
 
 _graph.addCells([el1, el2]);
 
-
 var lastSelectedCell = null;
 
 _paper.on('cell:pointerdown',
@@ -334,11 +335,13 @@ _paper.on('cell:pointerdown',
 );
 
 function cellToBack(cellView) {
-  _paper.findViewByModel(cellView.model).$box.removeClass('front');
+  cellView.model.toBack();
+  cellView.$box.removeClass('front');
 }
 
 function cellToFront(cellView) {
-  _paper.findViewByModel(cellView.model).$box.addClass('front');
+  cellView.model.toFront();
+  cellView.$box.addClass('front');
 }
 
 /*$('#highlight').on('click', function() {
