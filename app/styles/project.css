@@ -9,10 +9,6 @@
    background: transparent;
 }
 
-#paper svg .link {
-   z-index: 2;
-}
-
 #xpaper {
     width: 600px;
     height: 300px;
@@ -27,26 +23,53 @@
   position: absolute;
   bottom: -5px;
   width: 100%;
+  z-index: 2;
 }
 
 .front {
   z-index: 1;
 }
 
+.block {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 10px;
+  border: 2px solid #888888;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+
+.block img {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+}
+
+.block label {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
 .my-html-element {
-    position: absolute;
-    background: lightgray;
-    pointer-events: none;
-    -webkit-user-select: none;
-    border-radius: 25px;
-    border: 2px solid #73AD21;
+  position: absolute;
+  background: lightgray;
+  pointer-events: none;
+  -webkit-user-select: none;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
 }
 .my-html-element input {
-    pointer-events: auto;
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    right: 0;
+  pointer-events: auto;
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
 }
 
 .my-html-element select {

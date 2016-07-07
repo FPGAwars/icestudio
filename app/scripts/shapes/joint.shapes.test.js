@@ -7,6 +7,10 @@ joint.shapes.test = {};
 joint.shapes.test.Element = joint.shapes.basic.Rect.extend({
     defaults: joint.util.deepSupplement({
       type: 'test.Element',
+      size: {
+        width: 120,
+        height: 80
+      },
       attrs: {
         rect: {
           stroke: 'none',
@@ -16,37 +20,47 @@ joint.shapes.test.Element = joint.shapes.basic.Rect.extend({
     }, joint.shapes.basic.Rect.prototype.defaults)
 });
 
-// Create a custom view for that element that displays an HTML div above it.
-// -------------------------------------------------------------------------
+// Generic block
 
-joint.shapes.test.ElementView = joint.dia.ElementView.extend({
+joint.shapes.test.Generic = joint.shapes.test.Element.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'test.Generic'
+  }, joint.shapes.test.Element.prototype.defaults)
+});
 
-    template: [
-        '<div class="my-html-element">',
-        '<label>This is HTML</label>',
-        '<input type="text" value="I\'m HTML input" />',
-        '<svg>',
-        ' <circle cx="10" cy="10" r="5" fill="white" />',
-        ' <text y="2em">Hello world</text>',
-        '</svg>',
-        '<select class="select"></select>',
-        '<script>',
-        '$(".select2").select2({placeholder: "", allowClear: true});',
-        '</script>',
-        '</div>'
-    ].join(''),
+var genericBlockTemplate = '\
+<div class="block">\
+  <img>\
+  <label></label>\
+  <svg>\
+  </svg>\
+</div>\
+'
+
+joint.shapes.test.GenericView = joint.dia.ElementView.extend({
+
+    template: genericBlockTemplate,
 
     initialize: function() {
         _.bindAll(this, 'updateBox');
         joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
         this.$box = $(joint.util.template(this.template)());
-        // Prevent paper from handling pointerdown.
-        this.$box.find('input').on('mousedown', function(evt) { evt.stopPropagation(); });
-        // This is an example of reacting on the input change and storing the input data in the cell model.
-        this.$box.find('input').on('change', _.bind(function(evt) {
-            this.model.set('myinput', $(evt.target).val());
-        }, this));
+
+        var image = this.model.get('image');
+        var name = this.model.get('name');
+
+        if (image) {
+          this.$box.find('img').attr('src', image);
+          this.$box.find('img').removeClass('hidden');
+          this.$box.find('label').addClass('hidden');
+        }
+        else {
+          this.$box.find('label').text(name);
+          this.$box.find('img').addClass('hidden');
+          this.$box.find('label').removeClass('hidden');
+        }
+
         // Update the box position whenever the underlying model changes.
         this.model.on('change', this.updateBox, this);
         // Remove the box when the model gets removed from the graph.
@@ -62,8 +76,92 @@ joint.shapes.test.ElementView = joint.dia.ElementView.extend({
         // Set the position and the size of the box so that it covers the JointJS element.
         var bbox = this.getBBox();
         // Example of updating the HTML with a data stored in the cell model.
-        this.$box.find('label').text(this.model.get('mylabel'));
-        this.$box.find('input').css({ width: bbox.width });
+        this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+    },
+    removeBox: function(evt) {
+        this.$box.remove();
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var html = '\
+<div class="my-html-element">\
+<label>This is HTML</label>\
+<input type="text" value="I\'m HTML input" />\
+<svg>\
+ <circle cx="10" cy="10" r="5" fill="white" />\
+ <text y="2em">Hello world</text>\
+</svg>\
+<select class="select"></select>\
+<script>\
+$(".select2").select2({placeholder: "", allowClear: true});\
+</script>\
+</div>\
+'
+
+// Create a custom view for that element that displays an HTML div above it.
+// -------------------------------------------------------------------------
+
+joint.shapes.test.ElementView = joint.dia.ElementView.extend({
+
+    template: genericBlockTemplate,
+
+    initialize: function() {
+        _.bindAll(this, 'updateBox');
+        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+        this.$box = $(joint.util.template(this.template)());
+        /*// Prevent paper from handling pointerdown.
+        this.$box.find('input').on('mousedown', function(evt) { evt.stopPropagation(); });
+        // This is an example of reacting on the input change and storing the input data in the cell model.
+        this.$box.find('input').on('change', _.bind(function(evt) {
+            this.model.set('myinput', $(evt.target).val());
+        }, this));*/
+
+        var image = this.model.get('image');
+        var name = this.model.get('name');
+
+        if (image) {
+          this.$box.find('img').attr('src', image);
+          this.$box.find('img').removeClass('hidden');
+          this.$box.find('label').addClass('hidden');
+        }
+        else {
+          this.$box.find('label').text(name);
+          this.$box.find('img').addClass('hidden');
+          this.$box.find('label').removeClass('hidden');
+        }
+
+        // Update the box position whenever the underlying model changes.
+        this.model.on('change', this.updateBox, this);
+        // Remove the box when the model gets removed from the graph.
+        this.model.on('remove', this.removeBox, this);
+    },
+    render: function() {
+        joint.dia.ElementView.prototype.render.apply(this, arguments);
+        this.paper.$el.append(this.$box);
+        this.updateBox();
+        return this;
+    },
+    updateBox: function() {
+        // Set the position and the size of the box so that it covers the JointJS element.
+        var bbox = this.getBBox();
+        // Example of updating the HTML with a data stored in the cell model.
         this.$box.css({ width: bbox.width + 2, height: bbox.height + 2, left: bbox.x, top: bbox.y });
     },
     removeBox: function(evt) {
@@ -95,25 +193,31 @@ var _paper = new joint.dia.Paper({
     linkPinning: false
 });
 
-var el1 = new joint.shapes.test.Element({ position: { x: 80, y: 80 }, size: { width: 150, height: 80 }, mylabel: 'I am a label' });
-var el2 = new joint.shapes.test.Element({ position: { x: 350, y: 150 }, size: { width: 150, height: 80 } });
+var el1 = new joint.shapes.test.Element({
+  position: { x: 80, y: 80 },
+  image: 'resources/images/and.svg',
+  name: 'AND'
+});
+var el2 = new joint.shapes.test.Element({
+  position: { x: 350, y: 150 },
+  image: '',
+  name: 'AND'
+});
 var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
 
 _graph.addCells([el1, el2, l]);
 
-var el1View = _paper.findViewByModel(el1);
-var el2View = _paper.findViewByModel(el2);
-
-el1View.$box.addClass('z1');
 
 var lastSelectedCell = null;
 
 _paper.on('cell:pointerdown',
   function(cellView, evt, x, y) {
-    if (lastSelectedCell)
+    if (!cellView.model.isLink()) {
+      if (lastSelectedCell)
       cellToBack(lastSelectedCell);
-    lastSelectedCell = cellView;
-    cellToFront(cellView);
+      lastSelectedCell = cellView;
+      cellToFront(cellView);
+    }
   }
 );
 
