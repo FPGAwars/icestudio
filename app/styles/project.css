@@ -37,6 +37,7 @@
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
+  opacity: 0.8;
 }
 
 .block img {

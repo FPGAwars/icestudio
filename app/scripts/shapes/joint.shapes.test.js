@@ -4,28 +4,173 @@
 // ------------------------
 
 joint.shapes.test = {};
-joint.shapes.test.Element = joint.shapes.basic.Rect.extend({
+joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
+
+    markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
+    portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
+
     defaults: joint.util.deepSupplement({
-      type: 'test.Element',
-      size: {
-        width: 120,
-        height: 80
-      },
-      attrs: {
-        rect: {
-          stroke: 'none',
-          'fill-opacity': 0
+
+        type: 'test.Model',
+        size: { width: 1, height: 1 },
+        inPorts: [],
+        outPorts: [],
+        attrs: {
+            '.': {
+              magnet: false
+            },
+            '.body': {
+                stroke: 'none',
+                'fill-opacity': 0
+            },
+            '.port-body': {
+                r: 10,
+                stroke: 'none',
+                'fill-opacity': 1
+            },
+            '.inPorts .port-body': {
+              type: 'input',
+              magnet: false
+            },
+            '.outPorts .port-body': {
+              type: 'output',
+              magnet: true
+            },
+            '.inPorts .port-label': {
+                x: -15,
+                dy: 4,
+                'text-anchor': 'end',
+                fill: '#000'
+            },
+            '.outPorts .port-label': {
+                x: 15,
+                dy: 4,
+                fill: '#000'
+            },
+            '.port-wire': {
+              stroke: '#000',
+              'stroke-width': 2
+            }
         }
+}, joint.shapes.basic.Generic.prototype.defaults),
+
+  getPortAttrs: function(port, index, total, selector, type) {
+
+    var attrs = {};
+
+    var portClass = 'port' + index;
+    var portSelector = selector + '>.' + portClass;
+    var portLabelSelector = portSelector + '>.port-label';
+    var portWireSelector = portSelector + '>.port-wire';
+    var portBodySelector = portSelector + '>.port-body';
+
+    attrs[portLabelSelector] = {
+      text: port.label
+    };
+
+    attrs[portBodySelector] = {
+      port: {
+        id: port.id,
+        type: type
       }
-    }, joint.shapes.basic.Rect.prototype.defaults)
+    };
+
+    attrs[portSelector] = {
+      ref: '.body',
+      'ref-y': (index + 0.5) * (1 / total)
+    };
+
+    attrs[portWireSelector] = {
+      y: (index + 0.5) * (1 / total)
+    };
+
+    if (type === 'in') {
+      attrs[portSelector]['ref-x'] = -30;
+      attrs[portWireSelector]['d'] = 'M 0 0 L 30 0';
+    }
+    else {
+      attrs[portSelector]['ref-dx'] = 30;
+      attrs[portWireSelector]['d'] = 'M 0 0 L -30 0';
+    }
+
+    return attrs;
+  }
+}));
+
+joint.shapes.test.ModelView = joint.dia.ElementView.extend({
+
+    template: '',
+
+    initialize: function() {
+        _.bindAll(this, 'updateBox');
+        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+        this.$box = $(joint.util.template(this.template)());
+
+        // Update the box position whenever the underlying model changes.
+        this.model.on('change', this.updateBox, this);
+        // Remove the box when the model gets removed from the graph.
+        this.model.on('remove', this.removeBox, this);
+
+        this.updateBox();
+
+        this.listenTo(this.model, 'process:ports', this.update);
+        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+    },
+    render: function() {
+        joint.dia.ElementView.prototype.render.apply(this, arguments);
+        this.paper.$el.append(this.$box);
+        this.updateBox();
+        return this;
+    },
+    renderPorts: function () {
+      var $inPorts = this.$('.inPorts').empty();
+      var $outPorts = this.$('.outPorts').empty();
+      var portTemplate = _.template(this.model.portMarkup);
+
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
+          $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
+          $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+    },
+    update: function () {
+      // First render ports so that `attrs` can be applied to those newly created DOM elements
+      // in `ElementView.prototype.update()`.
+      this.renderPorts();
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    },
+    updateBox: function() {
+        // Set the position and the size of the box so that it covers the JointJS element.
+        var bbox = this.model.getBBox();
+        this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+    },
+    removeBox: function(evt) {
+        this.$box.remove();
+    }
 });
+
 
 // Generic block
 
-joint.shapes.test.Generic = joint.shapes.test.Element.extend({
+joint.shapes.test.Generic = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.Generic'
-  }, joint.shapes.test.Element.prototype.defaults)
+    type: 'test.Generic',
+    size: { width: 120, height: 80 },
+    attrs: {
+        '.body': {
+            width: 120,
+            height: 80
+        },
+        '.inPorts .port-body': {
+            fill: 'PaleGreen'
+        },
+        '.outPorts .port-body': {
+            fill: 'Tomato'
+        }
+}
+  }, joint.shapes.test.Model.prototype.defaults)
 });
 
 var genericBlockTemplate = '\
@@ -37,15 +182,12 @@ var genericBlockTemplate = '\
 </div>\
 '
 
-joint.shapes.test.GenericView = joint.dia.ElementView.extend({
+joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
 
     template: genericBlockTemplate,
 
     initialize: function() {
-        _.bindAll(this, 'updateBox');
-        joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
-        this.$box = $(joint.util.template(this.template)());
+        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
         var image = this.model.get('image');
         var name = this.model.get('name');
@@ -60,42 +202,8 @@ joint.shapes.test.GenericView = joint.dia.ElementView.extend({
           this.$box.find('img').addClass('hidden');
           this.$box.find('label').removeClass('hidden');
         }
-
-        // Update the box position whenever the underlying model changes.
-        this.model.on('change', this.updateBox, this);
-        // Remove the box when the model gets removed from the graph.
-        this.model.on('remove', this.removeBox, this);
-    },
-    render: function() {
-        joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.append(this.$box);
-        this.updateBox();
-        return this;
-    },
-    updateBox: function() {
-        // Set the position and the size of the box so that it covers the JointJS element.
-        var bbox = this.getBBox();
-        // Example of updating the HTML with a data stored in the cell model.
-        this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
-    },
-    removeBox: function(evt) {
-        this.$box.remove();
     }
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -117,7 +225,7 @@ $(".select2").select2({placeholder: "", allowClear: true});\
 // Create a custom view for that element that displays an HTML div above it.
 // -------------------------------------------------------------------------
 
-joint.shapes.test.ElementView = joint.dia.ElementView.extend({
+joint.shapes.test.VElementView = joint.dia.ElementView.extend({
 
     template: genericBlockTemplate,
 
@@ -162,7 +270,7 @@ joint.shapes.test.ElementView = joint.dia.ElementView.extend({
         // Set the position and the size of the box so that it covers the JointJS element.
         var bbox = this.getBBox();
         // Example of updating the HTML with a data stored in the cell model.
-        this.$box.css({ width: bbox.width + 2, height: bbox.height + 2, left: bbox.x, top: bbox.y });
+        this.$box.css({ width: bbox.find('.body').width + 2, height: bbox.height + 2, left: bbox.x, top: bbox.y });
     },
     removeBox: function(evt) {
         this.$box.remove();
@@ -193,19 +301,23 @@ var _paper = new joint.dia.Paper({
     linkPinning: false
 });
 
-var el1 = new joint.shapes.test.Element({
+var el1 = new joint.shapes.test.Generic({
   position: { x: 80, y: 80 },
   image: 'resources/images/and.svg',
-  name: 'AND'
+  name: 'AND',
+  inPorts: [{id: 1234, label:'in1'}, {id: 2345, label:'in2'}],
+  outPorts: [{id: 3456, label:'out1'}]
 });
-var el2 = new joint.shapes.test.Element({
+var el2 = new joint.shapes.test.Generic({
   position: { x: 350, y: 150 },
   image: '',
-  name: 'AND'
+  name: 'AND',
+  inPorts: [{id: 1234, label:''}, {id: 2345, label:''}],
+  outPorts: [{id: 3456, label:''}]
 });
-var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
+//var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
 
-_graph.addCells([el1, el2, l]);
+_graph.addCells([el1, el2]);
 
 
 var lastSelectedCell = null;
