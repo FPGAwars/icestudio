@@ -158,30 +158,25 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
 joint.shapes.test.Generic = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'test.Generic',
-    size: { width: 120, height: 80 },
+    size: {
+      width: 120,
+      height: 80
+    },
     attrs: {
-        '.body': {
-            width: 120,
-            height: 80
-        },
-        '.inPorts .port-body': {
-            fill: 'PaleGreen'
-        },
-        '.outPorts .port-body': {
-            fill: 'Tomato'
-        }
-}
+      '.body': {
+        width: 120,
+        height: 80
+      }
+    }
   }, joint.shapes.test.Model.prototype.defaults)
 });
 
 joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
 
     template: '\
-    <div class="block">\
+    <div class="generic-block">\
       <img>\
       <label></label>\
-      <svg>\
-      </svg>\
     </div>\
     ',
 
@@ -189,7 +184,7 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
         joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
         var image = this.model.get('image');
-        var name = this.model.get('name');
+        var name = this.model.get('label');
 
         if (image) {
           this.$box.find('img').attr('src', image);
@@ -204,6 +199,100 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
     }
 });
 
+// IO block
+
+joint.shapes.test.I = joint.shapes.test.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'test.I',
+    choices: [],
+    outPorts: [{
+      id: "out",
+      label: ""
+    }],
+    size: {
+      width: 120,
+      height: 80
+    },
+    attrs: {
+      '.body': {
+        width: 120,
+        height: 80
+      }
+    }
+  }, joint.shapes.test.Model.prototype.defaults)
+});
+
+joint.shapes.test.O = joint.shapes.test.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'test.O',
+    choices: [],
+    inPorts: [{
+      id: "in",
+      label: ""
+    }],
+    size: {
+      width: 120,
+      height: 80
+    },
+    attrs: {
+      '.body': {
+        width: 120,
+        height: 80
+      }
+    }
+  }, joint.shapes.test.Model.prototype.defaults)
+});
+
+
+joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
+
+    template: '\
+    <div class="io-block">\
+      <label></label>\
+      <select class="select2"></select>\
+      <script>\
+        $(".select2").select2({placeholder: "", allowClear: true});\
+      </script>\
+    </div>\
+    ',
+
+    initialize: function() {
+        joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+
+        this.$box.find('.select2').on('change', _.bind(function(evt) {
+            //this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
+            //this.model.attributes.data.pin.value = $(evt.target).val();
+        }, this));
+
+        var name = this.model.get('label');
+        this.$box.find('label').text(name);
+    },
+    renderChoices: function() {
+      if (this.model.get('disabled')) {
+        //this.$box.find('.select2').removeClass('select2');
+        this.$box.find('.select2').css({'display': 'none'});
+      }
+      else {
+        var choices = this.model.get('choices');
+        var $select = this.$box.find('.select2').empty();
+
+        $select.append('<option></option>');
+        for (var c in choices) {
+          $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
+        }
+
+        //this.$box.find('.select2').val(this.model.get('data').pin.value);
+      }
+    },
+    update: function () {
+      this.renderPorts();
+      this.renderChoices();
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    }
+});
+
+joint.shapes.test.IView = joint.shapes.test.IOView;
+joint.shapes.test.OView = joint.shapes.test.IOView;
 
 
 
@@ -298,7 +387,7 @@ var _paper = new joint.dia.Paper({
     height: 300,
     gridSize: gridsize,
     model: _graph,
-    snapLinks: true,
+    snapLinks: { radius: 40 },
     linkPinning: false,
     defaultLink: new joint.shapes.ice.Wire()
 });
@@ -306,20 +395,25 @@ var _paper = new joint.dia.Paper({
 var el1 = new joint.shapes.test.Generic({
   position: { x: 80, y: 80 },
   image: 'resources/images/and.svg',
-  name: 'AND',
+  label: 'AND',
   inPorts: [{id: 1234, label:'in1'}, {id: 2345, label:'in2'}],
   outPorts: [{id: 3456, label:'out1'}]
 });
-var el2 = new joint.shapes.test.Generic({
-  position: { x: 350, y: 150 },
-  image: '',
-  name: 'AND',
-  inPorts: [{id: 1234, label:''}, {id: 2345, label:''}],
-  outPorts: [{id: 3456, label:''}]
+var el2 = new joint.shapes.test.I({
+  position: { x: 350, y: 100 },
+  label: 'mi',
+  choices: [
+    { name: 'LED0', value: '95' },
+    { name: 'LED1', value: '96' }
+  ]
+});
+var el3 = new joint.shapes.test.O({
+  position: { x: 350, y: 180 },
+  label: 'mo'
 });
 //var l = new joint.dia.Link({ source: { id: el1.id }, target: { id: el2.id } });
 
-_graph.addCells([el1, el2]);
+_graph.addCells([el1, el2, el3]);
 
 var lastSelectedCell = null;
 
@@ -335,12 +429,16 @@ _paper.on('cell:pointerdown',
 );
 
 function cellToBack(cellView) {
+  // For Element SVG
   cellView.model.toBack();
+  // For ElementView HTML
   cellView.$box.removeClass('front');
 }
 
 function cellToFront(cellView) {
+  // For Element SVG
   cellView.model.toFront();
+  // For ElementView HTML
   cellView.$box.addClass('front');
 }
 
@@ -349,7 +447,6 @@ function cellToFront(cellView) {
     var el1View = _paper.findViewByModel(el1);
     var el2View = _paper.findViewByModel(el2);
     var lView = _paper.findViewByModel(l);
-
     el1View.$box.addClass('highlight');
     el2View.$box.addClass('highlight');
     lView.highlight();

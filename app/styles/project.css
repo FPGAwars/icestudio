@@ -37,17 +37,16 @@
   z-index: 1;
 }
 
-.block {
+.generic-block {
   position: absolute;
   background: #C0DFEB;
   border-radius: 10px;
   border: 2px solid #888888;
   pointer-events: none;
   -webkit-user-select: none;
-  opacity: 1;
 }
 
-.block img {
+.generic-block img {
   position: absolute;
   margin: auto;
   top: 0;
@@ -57,12 +56,39 @@
   width: 80%;
 }
 
-.block label {
+.generic-block label {
   display: block;
   margin-top: 10px;
   text-align: center;
   font-size: 1.5em;
 }
+
+
+.io-block {
+  position: absolute;
+  background: #FAFAD2;
+  border-radius: 10px;
+  border: 2px solid #888888;
+  pointer-events: none;
+  -webkit-user-select: none;
+}
+
+.io-block label {
+  display: block;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.io-block .select2 {
+  position: absolute;
+  margin: auto;
+  left: 12px;
+  bottom: 8px;
+  width: 80%;
+  pointer-events: all;
+}
+
 
 .my-html-element {
   position: absolute;
