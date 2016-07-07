@@ -19,6 +19,9 @@
 </head>
 
 <body ng-app="icestudio">
+    <button id="highlight">highlight</button>
+    <button id="unhighlight">unhighlight</button>
+    <div id="xpaper" class="paper"></div>
     <div ng-view></div>
     <script>
     window.$ = window.JQuery = window.jQuery = require('jquery');
@@ -39,6 +42,7 @@
     <!-- endbower -->
     <script src="bower_components/ace-builds/src-noconflict/ace.js"></script>
     <script src="bower_components/async/dist/async.min.js"></script>
+    <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/menu.js"></script>
@@ -54,6 +58,7 @@
     <script src="scripts/services/tools.service.js"></script>
     <script src="scripts/services/compiler.service.js"></script>
     <script src="scripts/shapes/joint.shapes.ice.js"></script>
+    <script src="scripts/shapes/joint.shapes.test.js"></script>
     <!-- node:js -->
     <script src="node_modules/alertifyjs/build/alertify.min.js"></script>
     <!-- endnode -->

@@ -10,7 +10,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
   defaults: joint.util.deepSupplement({
 
     type: 'ice.Model',
-    size: { width: 1, height: 1 },
+    size: { width: 200, height:200 },
     inPorts: [],
     outPorts: [],
     choices: [],
@@ -22,12 +22,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         'pointer-events': 'none'
       },
       '.body': {
-        width: 80,
-        height: 80,
-        stroke: '#000',
+        width: 300,
+        height: 210,
         rx: 3,
         ry: 5,
-        'stroke-width': 2
+        stroke: 'none',
+        'fill-opacity': 0
       },
       '.port-body': {
         r: 10,
@@ -132,10 +132,13 @@ joint.shapes.ice.IO = joint.shapes.ice.Model.extend({
 
   defaults: joint.util.deepSupplement({
     type: 'ice.IO',
+    size: { width: 120, height: 70 },
     attrs: {
       '.body': {
         fill: '#FAFAD2'
-      }
+      },
+      '.inPorts circle': { fill: 'gray' },
+      '.outPorts circle': { fill: 'gray' }
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -257,7 +260,9 @@ joint.shapes.ice.IOView = joint.dia.ElementView.extend({
   updateBox: function() {
     // Set the position and dimension of the box so that it covers the JointJS element.
     var bbox = this.model.getBBox()
-    this.$box.css({ width: bbox.width, left: bbox.x + 10, top: bbox.y + 32 });
+    //this.$box.css({ width: bbox.width, left: bbox.x + 10, top: bbox.y + 32 });
+
+    this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y, transform: 'rotate(' + (this.model.get('angle') || 0) + 'deg)' });
   },
 
   removeBox: function(evt) {
@@ -291,7 +296,7 @@ joint.shapes.ice.CodeView = joint.dia.ElementView.extend({
 
     this.$box = $(_.template(this.template)());
     // Prevent paper from handling pointerdown.
-    // this.$box.find('input').on('mousedown click', function(evt) { evt.stopPropagation(); });
+    this.$box.find('.code-editor').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
     this.$box.find('.code-editor').append(this.model.attributes.data.code);
     this.$box.find('#content').append(this.model.attributes.data.code);

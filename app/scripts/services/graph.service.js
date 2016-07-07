@@ -26,6 +26,7 @@ angular.module('icestudio')
             gridSize: 1,
             snapLinks: { radius: 30 },
             linkPinning: false,
+            markAvailable: true,
 
             defaultLink: new joint.shapes.ice.Wire(),
             validateMagnet: function(cellView, magnet) {
@@ -54,7 +55,7 @@ angular.module('icestudio')
 
           // Events
 
-          paper.on('cell:pointerdown',
+          /*paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               cellView.model.toFront();
               if (paper.options.interactive) {
@@ -121,7 +122,7 @@ angular.module('icestudio')
                 disableSelected();
               }
             }
-          );
+          );*/
         };
 
         $(document).on('disableSelected', function() {
@@ -433,7 +434,6 @@ angular.module('icestudio')
             choices: boards.getPinout(),
             inPorts: inPorts,
             outPorts: outPorts,
-            size: { width: 120, height: 70 },
             attrs: { '.block-label': { text: blockInstances.data.label } }
           });
 

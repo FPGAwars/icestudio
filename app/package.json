@@ -11,7 +11,7 @@
     "height": 600,
     "min_width": 800,
     "min_height": 200,
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "position": "center"
   },

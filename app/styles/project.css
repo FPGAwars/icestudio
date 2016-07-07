@@ -1,12 +1,26 @@
 #paper {
-   background: transparent;
    position: relative;
    display: inline-block;
+   background: transparent;
    overflow: hidden;
 }
 
 #paper svg {
    background: transparent;
+}
+
+#paper svg .link {
+   z-index: 2;
+}
+
+#xpaper {
+    width: 600px;
+    height: 300px;
+    border: 1px solid gray;
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    overflow: hidden;
 }
 
 #breadcrumbs {
@@ -15,28 +29,79 @@
   width: 100%;
 }
 
-.element .body {
-  transition: all .05s ease-in-out;
-}
-.element:hover .body {
-  stroke-width: 3;
+.front {
+  z-index: 1;
 }
 
-.element.ice.highlighted .body {
-  stroke: #FF0000;
-  stroke-width: 3
+.my-html-element {
+    position: absolute;
+    background: lightgray;
+    pointer-events: none;
+    -webkit-user-select: none;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+}
+.my-html-element input {
+    pointer-events: auto;
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
 }
 
-.io-element{
+.my-html-element select {
+    pointer-events: auto;
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+}
+
+
+.available-magnet {
+  fill: yellow;
+}
+
+.io-element {
   position: absolute;
-  pointer-events: visible;
+  background: #FAFAD2;
+  pointer-events: none;
+  -webkit-user-select: none;
+  border-radius: 10px;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  z-index: 3;
 }
 
 .io-element select {
-  pointer-events: auto;
+   position: fixed;
+   top: 40px;
+   left: 8px;
+   /*left: 0;
+   right: 0;*/
+   height: 40px;
+   width: 150px;
+   border: 1px solid #D0D0D0;
+   border-radius: 10px;
+   color: #333;
+   background: #FFFFFF;
+   padding: 5px;
+   margin: 5px;
+   outline:0 !important;
+   -webkit-appearance:none;
+   opacity:1;
+
+}
+
+.io-element select {
+  pointer-events: visible;
   position: absolute;
+  top: 40px;
+  left: 10px;
   width: 100px;
 }
+
+
 
 .code-element{
   position: absolute;
