@@ -4,6 +4,7 @@
   display: inline-block;
   background: transparent;
   overflow: hidden;
+  cursor: move;
 }
 
 #paper svg {
@@ -90,9 +91,13 @@
 
 .code-block .code-editor {
   position: absolute;
-  width: 376px;
-  height: 176px;
-  transform: translate(10px, 10px);
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  height: 90%;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: all;

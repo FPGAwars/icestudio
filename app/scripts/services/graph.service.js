@@ -53,20 +53,7 @@ angular.module('icestudio')
             }
           });
 
-          setGrid(paper, gridsize * 2, '#808080');
-
-          //Create test cell and add to graph
-          var cell = new joint.shapes.devs.Atomic({
-              position: { x: 50, y: 100 },
-              size: { width: 100, height: 100 }
-          });
-          var cell2 = new joint.shapes.test.Code({
-              position: { x: 100, y: 100 },
-              data: {
-                code: ''
-              }
-          });
-          graph.addCells([cell, cell2]);
+          setGrid(paper, gridsize * 2, '#777');
 
           var targetElement= element[0];
 
@@ -75,33 +62,37 @@ angular.module('icestudio')
             viewportSelector: targetElement.childNodes[0].childNodes[0],
             fit: false,
             center: false,
-            zoomScaleSensitivity: 0.4,
             zoomEnabled: true,
             panEnabled: false,
-
+            zoomScaleSensitivity: 0.4,
+            dblClickZoomEnabled: false,
+            minZoom: 0.5,
+            maxZoom: 2,
+            beforeZoom: function(oldzoom, newzoom) {
+            },
             onZoom: function(scale) {
               currentScale = scale;
-              setGrid(paper, gridsize*2*currentScale, '#808080');
-              console.log('zoom ', scale);
+              setGrid(paper, gridsize*2*currentScale, '#777');
+              var cells = graph.getCells();
+              _.each(cells, function(cell) {
+                cell.attributes.zoom = scale;
+                //paper.findViewByModel(cell).render();  // Already done in pan
+              });
             },
             beforePan: function(oldpan, newpan) {
-              setGrid(paper, gridsize*2*currentScale, '#808080', newpan);
+              setGrid(paper, gridsize*2*currentScale, '#777', newpan);
             },
             onPan: function(newPan) {
               var cells = graph.getCells();
               _.each(cells, function(cell) {
-                cell.attributes.pan = newPan;
-                paper.findViewByModel(cell).render();
+                if (!cell.isLink()) {
+                  var bbox = cell.getBBox();
+                  cell.attributes.pan = newPan;
+                  paper.findViewByModel(cell).render();
+                }
               });
             }
           });
-
-          var cell3 = new joint.shapes.devs.Atomic({
-              position: { x: 0, y: 100 },
-              size: { width: 100, height: 100 }
-          });
-
-          graph.addCells([cell3]);
 
           function setGrid(paper, size, color, offset) {
             // Set grid size on the JointJS paper object (joint.dia.Paper instance)
@@ -214,6 +205,7 @@ angular.module('icestudio')
         };
 
         function select(cellView) {
+          cellView.model.toFront();
           if (!cellView.model.isLink()) {
             if (selectedCellView) {
               //if (selectedCellView)
