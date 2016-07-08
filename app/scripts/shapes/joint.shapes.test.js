@@ -23,7 +23,8 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
       },
       '.body': {
           stroke: 'none',
-          'fill-opacity': 0
+          'fill-opacity': 1,
+          fill: 'black'
       },
       '.port-body': {
          r: 15,
@@ -143,7 +144,8 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
     },
     updateBox: function() {
       var bbox = this.model.getBBox();
-      this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x, top: bbox.y });
+      var pan = this.model.attributes.pan || { x: 0, y: 0 };
+      this.$box.css({ width: bbox.width, height: bbox.height, left: bbox.x + pan.x, top: bbox.y + pan.y });
     },
     removeBox: function(evt) {
       this.$box.remove();
@@ -433,25 +435,6 @@ joint.shapes.test.Wire = joint.dia.Link.extend({
 
 //////////////////////////////////////////////////
 
-//Initial Parameters
-var gridsize = 10;
-var currentScale = 1;
-
-//Get the div that will hold the graph
-var targetElement= $('#xpaper')[0];
-
-var _graph = new joint.dia.Graph;
-var _paper = new joint.dia.Paper({
-    el: $('#xpaper'),
-    width: 600,
-    height: 300,
-    gridSize: gridsize,
-    model: _graph,
-    snapLinks: { radius: 15 },
-    linkPinning: false,
-    defaultLink: new joint.shapes.test.Wire()
-});
-
 /*var obstacles = [el1, el4]
 
 _graph.on('change:position', function(cell) {
@@ -467,67 +450,6 @@ _graph.on('change:position', function(cell) {
     }
 });*/
 
-/*//Bonus function use (see below) - create dotted grid
-setGrid(_paper, gridsize*15, '#808080');
-
-el1.on('change:position', function() {
+/*el1.on('change:position', function() {
   el1View.updateBox();
-});
-
-//Setup  svgpan and zoom, with handlers that set the grid sizing on zoom and pan
-//Handlers not needed if you don't want the dotted grid
-var panAndZoom = svgPanZoom(targetElement.childNodes[0],
-{
-    viewportSelector: targetElement.childNodes[0].childNodes[0],
-    fit: false,
-    zoomScaleSensitivity: 0.4,
-    panEnabled: false,
-    onZoom: function(scale) {
-        currentScale = scale;
-        setGrid(_paper, gridsize*15*currentScale, '#808080');
-        alert('mo');
-    },
-    beforePan: function(oldpan, newpan) {
-        setGrid(_paper, gridsize*15*currentScale, '#808080', newpan);
-    },
-    onPan: function(newPan) {
-      el1View.updateBox();
-      el2View.updateBox();
-    }
-});
-
-el1View.updateBox();
-el2View.updateBox();
-
-//Enable pan when a blank area is click (held) on
-_paper.on('blank:pointerdown', function (evt, x, y) {
-  panAndZoom.enablePan();
-  //console.log(x + ' ' + y);
-});
-
-//Disable pan when the mouse button is released
-_paper.on('cell:pointerup blank:pointerup', function(cellView, event) {
-  panAndZoom.disablePan();
-});
-
-//BONUS function - will add a css background of a dotted grid that will scale reasonably
-//well with zooming and panning.
-function setGrid(paper, size, color, offset) {
-    // Set grid size on the JointJS paper object (joint.dia.Paper instance)
-    paper.options.gridsize = gridsize;
-    // Draw a grid into the HTML 5 canvas and convert it to a data URI image
-    var canvas = $('<canvas/>', { width: size, height: size });
-    canvas[0].width = size;
-    canvas[0].height = size;
-    var context = canvas[0].getContext('2d');
-    context.beginPath();
-    context.rect(1, 1, 1, 1);
-    context.fillStyle = color || '#AAAAAA';
-    context.fill();
-    // Finally, set the grid background image of the paper container element.
-    var gridBackgroundImage = canvas[0].toDataURL('image/png');
-    $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
-    if(typeof(offset) != 'undefined'){
-        $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
-    }
-}*/
+});*/

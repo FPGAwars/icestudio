@@ -1,14 +1,15 @@
 #paper {
-   position: relative;
-   display: inline-block;
-   background: transparent;
-   overflow: hidden;
+  top: -20px;
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  overflow: hidden;
 }
 
 #paper svg {
-   background: transparent;
-   position: relative;
-   z-index: 1;
+  background: transparent;
+  position: relative;
+  z-index: 0;
 }
 
 #breadcrumbs {

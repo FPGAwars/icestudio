@@ -9,9 +9,12 @@ angular.module('icestudio')
         var graph = null;
         var paper = null;
         var selectedCellView = null;
-        var dependencies = {};
 
+        var dependencies = {};
         this.breadcrumbs = [{ name: '' }];
+
+        var gridsize = 10;
+        var currentScale = 1;
 
         // Functions
 
@@ -22,9 +25,10 @@ angular.module('icestudio')
             width: 2000,
             height: 1000,
             model: graph,
-            gridSize: 10,
+            gridSize: gridsize,
             snapLinks: { radius: 15 },
             linkPinning: false,
+            embeddingMode: false,
             //markAvailable: true,
             defaultLink: new joint.shapes.test.Wire(),
             validateMagnet: function(cellView, magnet) {
@@ -48,6 +52,76 @@ angular.module('icestudio')
               return magnetS !== magnetT;
             }
           });
+
+          setGrid(paper, gridsize * 2, '#808080');
+
+          //Create test cell and add to graph
+          var cell = new joint.shapes.devs.Atomic({
+              position: { x: 50, y: 100 },
+              size: { width: 100, height: 100 }
+          });
+          var cell2 = new joint.shapes.test.Code({
+              position: { x: 100, y: 100 },
+              data: {
+                code: ''
+              }
+          });
+          graph.addCells([cell, cell2]);
+
+          var targetElement= element[0];
+
+          var panAndZoom = svgPanZoom(targetElement.childNodes[0],
+          {
+            viewportSelector: targetElement.childNodes[0].childNodes[0],
+            fit: false,
+            center: false,
+            zoomScaleSensitivity: 0.4,
+            zoomEnabled: true,
+            panEnabled: false,
+
+            onZoom: function(scale) {
+              currentScale = scale;
+              setGrid(paper, gridsize*2*currentScale, '#808080');
+              console.log('zoom ', scale);
+            },
+            beforePan: function(oldpan, newpan) {
+              setGrid(paper, gridsize*2*currentScale, '#808080', newpan);
+            },
+            onPan: function(newPan) {
+              var cells = graph.getCells();
+              _.each(cells, function(cell) {
+                cell.attributes.pan = newPan;
+                paper.findViewByModel(cell).render();
+              });
+            }
+          });
+
+          var cell3 = new joint.shapes.devs.Atomic({
+              position: { x: 0, y: 100 },
+              size: { width: 100, height: 100 }
+          });
+
+          graph.addCells([cell3]);
+
+          function setGrid(paper, size, color, offset) {
+            // Set grid size on the JointJS paper object (joint.dia.Paper instance)
+            paper.options.gridsize = gridsize;
+            // Draw a grid into the HTML 5 canvas and convert it to a data URI image
+            var canvas = $('<canvas/>', { width: size, height: size });
+            canvas[0].width = size;
+            canvas[0].height = size;
+            var context = canvas[0].getContext('2d');
+            context.beginPath();
+            context.rect(1, 1, 1, 1);
+            context.fillStyle = color || '#AAAAAA';
+            context.fill();
+            // Finally, set the grid background image of the paper container element.
+            var gridBackgroundImage = canvas[0].toDataURL('image/png');
+            $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
+            if(typeof(offset) != 'undefined'){
+              $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
+            }
+          }
 
           // Events
 
@@ -111,14 +185,21 @@ angular.module('icestudio')
             function() {
               if (paper.options.interactive) {
                 disableSelected();
+                panAndZoom.enablePan();
               }
+            }
+          );
+
+          paper.on('cell:pointerup blank:pointerup',
+            function(cellView, evt) {
+              panAndZoom.disablePan();
             }
           );
 
           paper.on('cell:mouseover',
             function(cellView, evt, x, y) {
               if (!cellView.model.isLink()) {
-                cellView.$box.addClass('highlight');
+                //cellView.$box.addClass('highlight');
               }
             }
           );
@@ -126,7 +207,7 @@ angular.module('icestudio')
           paper.on('cell:mouseout',
             function(cellView, evt, x, y) {
               if (!cellView.model.isLink()) {
-                cellView.$box.removeClass('highlight');
+                //cellView.$box.removeClass('highlight');
               }
             }
           );
@@ -135,14 +216,14 @@ angular.module('icestudio')
         function select(cellView) {
           if (!cellView.model.isLink()) {
             if (selectedCellView) {
-              if (selectedCellView)
-                selectedCellView.$box.removeClass('selected front');
+              //if (selectedCellView)
+                //selectedCellView.$box.removeClass('selected front');
             }
             selectedCellView = cellView;
             if (selectedCellView) {
               //cellView.$box.css('z-index', zIndex);
               //$('#xpaper svg').css('z-index', zIndex);
-              selectedCellView.$box.addClass('selected front');
+              //selectedCellView.$box.addClass('selected front');
               cellView.model.toFront();
             }
           }
@@ -154,7 +235,7 @@ angular.module('icestudio')
 
         function disableSelected() {
           if (selectedCellView) {
-            selectedCellView.$box.removeClass('selected');
+            //selectedCellView.$box.removeClass('selected');
             selectedCellView = null;
           }
         }
