@@ -6,57 +6,57 @@
 joint.shapes.test = {};
 joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
 
-    markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
-    portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
+  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
+  portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
-    defaults: joint.util.deepSupplement({
-      type: 'test.Model',
-      size: {
-        width: 1,
-        height: 1
+  defaults: joint.util.deepSupplement({
+    type: 'test.Model',
+    size: {
+      width: 1,
+      height: 1
+    },
+    inPorts: [],
+    outPorts: [],
+    attrs: {
+      '.': {
+        magnet: false
       },
-      inPorts: [],
-      outPorts: [],
-      attrs: {
-        '.': {
-          magnet: false
-        },
-        '.body': {
-            stroke: 'none',
-            'fill-opacity': 0
-        },
-        '.port-body': {
-           r: 15,
-           'stroke-width': 2,
-           'stroke-opacity': 0,
-           opacity: 0,
-        },
-        '.inPorts .port-body': {
-          type: 'input',
-          magnet: false
-        },
-        '.outPorts .port-body': {
-          type: 'output',
-          magnet: true
-        },
-        '.inPorts .port-label': {
-          x: 10,
-          y: -10,
-          'text-anchor': 'end',
-          fill: '#000'
-        },
-        '.outPorts .port-label': {
-          x: -10,
-          y: -10,
-          'text-anchor': 'start',
-          fill: '#000'
-        },
-        '.port-wire': {
-          stroke: '#888888',
-          'stroke-width': 2
-        }
+      '.body': {
+          stroke: 'none',
+          'fill-opacity': 0
+      },
+      '.port-body': {
+         r: 15,
+         'stroke-width': 2,
+         'stroke-opacity': 0,
+         opacity: 0,
+      },
+      '.inPorts .port-body': {
+        type: 'input',
+        magnet: false
+      },
+      '.outPorts .port-body': {
+        type: 'output',
+        magnet: true
+      },
+      '.inPorts .port-label': {
+        x: 15,
+        y: -10,
+        'text-anchor': 'end',
+        fill: '#000'
+      },
+      '.outPorts .port-label': {
+        x: -15,
+        y: -10,
+        'text-anchor': 'start',
+        fill: '#000'
+      },
+      '.port-wire': {
+        stroke: '#888888',
+        'stroke-width': 2
       }
-}, joint.shapes.basic.Generic.prototype.defaults),
+    }
+  }, joint.shapes.basic.Generic.prototype.defaults),
 
   getPortAttrs: function(port, index, total, selector, type) {
 
@@ -199,9 +199,9 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
 
 // I/O blocks
 
-joint.shapes.test.I = joint.shapes.test.Model.extend({
+joint.shapes.test.Input = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.I',
+    type: 'test.Input',
     choices: [],
     outPorts: [{
       id: "out",
@@ -220,9 +220,9 @@ joint.shapes.test.I = joint.shapes.test.Model.extend({
   }, joint.shapes.test.Model.prototype.defaults)
 });
 
-joint.shapes.test.O = joint.shapes.test.Model.extend({
+joint.shapes.test.Output = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.O',
+    type: 'test.Output',
     choices: [],
     inPorts: [{
       id: "in",
@@ -247,7 +247,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     template: '\
     <div class="io-block">\
       <label></label>\
-      <select class="select2"></select>\
+      <select class="io-combo select2"></select>\
       <script>\
         $(".select2").select2({placeholder: "", allowClear: true});\
       </script>\
@@ -257,9 +257,12 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     initialize: function() {
       joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
-      this.$box.find('.select2').on('change', _.bind(function(evt) {
-        //this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
-        //this.model.attributes.data.pin.value = $(evt.target).val();
+      // Prevent paper from handling pointerdown.
+      this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+      this.$box.find('.io-combo').on('change', _.bind(function(evt) {
+        this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
+        this.model.attributes.data.pin.value = $(evt.target).val();
       }, this));
 
       var name = this.model.get('label');
@@ -267,19 +270,20 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     },
     renderChoices: function() {
       if (this.model.get('disabled')) {
-        //this.$box.find('.select2').removeClass('select2');
-        this.$box.find('.select2').css({'display': 'none'});
+        this.$box.find('.io-combo').removeClass('select2');
+        this.$box.find('.io-combo').css({'display': 'none'});
       }
       else {
         var choices = this.model.get('choices');
-        var $select = this.$box.find('.select2').empty();
+        var $select = this.$box.find('.io-combo').empty();
 
         $select.append('<option></option>');
         for (var c in choices) {
           $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
         }
 
-        //this.$box.find('.select2').val(this.model.get('data').pin.value);
+        //this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        this.$box.find('.io-combo').val('');
       }
     },
     update: function () {
@@ -289,8 +293,8 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     }
 });
 
-joint.shapes.test.IView = joint.shapes.test.IOView;
-joint.shapes.test.OView = joint.shapes.test.IOView;
+joint.shapes.test.InputView = joint.shapes.test.IOView;
+joint.shapes.test.OutputView = joint.shapes.test.IOView;
 
 
 // Code block
@@ -299,13 +303,13 @@ joint.shapes.test.Code = joint.shapes.test.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'test.Code',
     size: {
-      width: 300,
-      height: 100
+      width: 400,
+      height: 200
     },
     attrs: {
       '.body': {
-        width: 300,
-        height: 100
+        width: 400,
+        height: 200
       }
     }
   }, joint.shapes.test.Model.prototype.defaults)
@@ -334,16 +338,19 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
     initialize: function() {
       joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
 
-      //this.$box.find('.code-block').append(this.model.attributes.data.code);
-      //this.$box.find('#content').append(this.model.attributes.data.code);
+      // Prevent paper from handling pointerdown.
+      this.$box.find('.code-editor').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+      this.$box.find('.code-editor').append(this.model.attributes.data.code);
+      this.$box.find('#content').append(this.model.attributes.data.code);
     },
     update: function () {
       this.renderPorts();
       if (this.model.get('disabled')) {
-        this.$box.find('.code-block').css({'pointer-events': 'none'});
+        this.$box.find('.code-editor').css({'pointer-events': 'none'});
       }
       else {
-        this.$box.find('.code-block').css({'pointer-events': 'all'});
+        this.$box.find('.code-editor').css({'pointer-events': 'all'});
       }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
@@ -441,34 +448,7 @@ var _paper = new joint.dia.Paper({
     defaultLink: new joint.shapes.test.Wire()
 });
 
-var el1 = new joint.shapes.test.Generic({
-  position: { x: 80, y: 140 },
-  image: 'resources/images/and.svg',
-  label: 'AND',
-  inPorts: [{id: 1234, label:'in1'}, {id: 2345, label:'in2'}],
-  outPorts: [{id: 3456, label:'out1'}]
-});
-var el2 = new joint.shapes.test.I({
-  position: { x: 350, y: 100 },
-  label: 'mi',
-  choices: [
-    { name: 'LED0', value: '95' },
-    { name: 'LED1', value: '96' }
-  ]
-});
-var el3 = new joint.shapes.test.O({
-  position: { x: 350, y: 180 },
-  label: 'mo'
-});
-var el4 = new joint.shapes.test.Code({
-  position: { x: 0, y: 0 },
-  outPorts: [{
-    id: "out",
-    label: "out"
-  }],
-});
-
-var obstacles = [el1, el2, el3, el4]
+/*var obstacles = [el1, el4]
 
 _graph.on('change:position', function(cell) {
     // has an obstacle been moved? Then reroute the link.
@@ -481,9 +461,7 @@ _graph.on('change:position', function(cell) {
         }
       }
     }
-});
-
-_graph.addCells([el1, el2, el3, el4]);
+});*/
 
 var cells = _graph.getCells();
 for (var i in cells) {
@@ -510,7 +488,7 @@ _paper.on('cell:pointerdown',
 // TODO: z-index svg:g / div problem
 /*
 
-| svg: g, g, g: toFront, toBack
+| svg: g, g, g: toFront
 
 | div
 | div
@@ -518,7 +496,7 @@ _paper.on('cell:pointerdown',
 
 */
 
-var zIndex = 1;
+//var zIndex = 1;
 
 function cellToBack(cellView) {
   // For Element SVG
@@ -535,27 +513,6 @@ function cellToFront(cellView) {
   //$('#xpaper svg').css('z-index', zIndex);
   cellView.$box.addClass('front');
 }
-
-/*$('#highlight').on('click', function() {
-
-    var el1View = _paper.findViewByModel(el1);
-    var el2View = _paper.findViewByModel(el2);
-    var lView = _paper.findViewByModel(l);
-    el1View.$box.addClass('highlight');
-    el2View.$box.addClass('highlight');
-    lView.highlight();
-});
-
-$('#unhighlight').on('click', function() {
-
-    var el1View = _paper.findViewByModel(el1);
-    var el2View = _paper.findViewByModel(el2);
-    var lView = _paper.findViewByModel(l);
-
-    el1View.$box.removeClass('highlight');
-    el2View.$box.removeClass('highlight');
-    lView.unhighlight();
-});*/
 
 /*//Bonus function use (see below) - create dotted grid
 setGrid(_paper, gridsize*15, '#808080');

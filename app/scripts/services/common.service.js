@@ -120,18 +120,21 @@ angular.module('icestudio')
           for (var c = 0; c < graphData.cells.length; c++) {
             var cell = graphData.cells[c];
 
-            if (cell.type == 'ice.Block' || cell.type == 'ice.IO' || cell.type == 'ice.Code') {
+            if (cell.type == 'test.Generic' ||
+                cell.type == 'test.Input' ||
+                cell.type == 'test.Output' ||
+                cell.type == 'test.Code') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;
               block.data = cell.data;
               block.position = cell.position;
-              if (cell.type == 'ice.Code') {
+              if (cell.type == 'test.Code') {
                 block.data.code = graph.getCode(cell.id);
               }
               blocks.push(block);
             }
-            else if (cell.type == 'ice.Wire') {
+            else if (cell.type == 'test.Wire') {
               var wire = {};
               wire.source = { block: cell.source.id, port: cell.source.port };
               wire.target = { block: cell.target.id, port: cell.target.port };

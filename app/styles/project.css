@@ -7,22 +7,7 @@
 
 #paper svg {
    background: transparent;
-}
-
-#xpaper {
-    width: 600px;
-    height: 300px;
-    border: 1px solid gray;
-    position: relative;
-    display: inline-block;
-    background: transparent;
-    overflow: hidden;
-}
-
-#xpaper svg {
-  background: transparent;
-  position: absolute;
-  z-index: 1;
+   position: relative;
 }
 
 #breadcrumbs {
@@ -44,7 +29,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888888;
+  border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
 }
@@ -63,7 +48,7 @@
   display: block;
   margin-top: 10px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 
@@ -71,25 +56,24 @@
   position: absolute;
   background: #FAFAD2;
   border-radius: 5px;
-  border: 2px solid #888888;
+  border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
 }
 
 .io-block label {
   display: block;
-  margin-top: 6px;
+  margin-top: 10px;
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold
 }
 
 .io-block .select2 {
   position: absolute;
-  margin: auto;
-  left: 12px;
-  bottom: 8px;
-  width: 80%;
+  left: 10px;
+  bottom: 10px;
+  width: 96px;
   pointer-events: all;
 }
 
@@ -97,18 +81,23 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888888;
+  border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
 }
 
 .code-block .code-editor {
   position: absolute;
-  width: 90%;
-  height: 80%;
-  transform: translate(15px, 10px);
+  width: 376px;
+  height: 176px;
+  transform: translate(10px, 10px);
   border-radius: 5px;
+  border: 1px solid #BBB;
   pointer-events: all;
+}
+
+.highlight {
+  border: 2px solid #222;
 }
 
 .available-magnet {
