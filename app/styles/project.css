@@ -8,6 +8,7 @@
 #paper svg {
    background: transparent;
    position: relative;
+   z-index: 1;
 }
 
 #breadcrumbs {
@@ -98,6 +99,10 @@
 
 .highlight {
   border: 2px solid #222;
+}
+
+.selected {
+  border: 2px solid #F22;
 }
 
 .available-magnet {

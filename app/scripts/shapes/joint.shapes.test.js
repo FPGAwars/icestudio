@@ -264,7 +264,8 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
         this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
         this.model.attributes.data.pin.value = $(evt.target).val();
       }, this));
-
+    },
+    renderLabel: function () {
       var name = this.model.get('label');
       this.$box.find('label').text(name);
     },
@@ -287,6 +288,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
       }
     },
     update: function () {
+      this.renderLabel();
       this.renderPorts();
       this.renderChoices();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
@@ -334,6 +336,8 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
       </script>\
     </div>\
     ',
+
+    // TODO: check change and hover trigger event
 
     initialize: function() {
       joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
@@ -462,57 +466,6 @@ _graph.on('change:position', function(cell) {
       }
     }
 });*/
-
-var cells = _graph.getCells();
-for (var i in cells) {
-  var cell = cells[i];
-  if (cell.isLink()) {
-    cellToFront(cellView);
-  }
-}
-
-var lastSelectedCell = null;
-
-_paper.on('cell:pointerdown',
-  function(cellView, evt, x, y) {
-    if (!cellView.model.isLink()) {
-      if (lastSelectedCell) {
-        cellToBack(lastSelectedCell);
-      }
-      lastSelectedCell = cellView;
-      cellToFront(cellView);
-    }
-  }
-);
-
-// TODO: z-index svg:g / div problem
-/*
-
-| svg: g, g, g: toFront
-
-| div
-| div
-| div
-
-*/
-
-//var zIndex = 1;
-
-function cellToBack(cellView) {
-  // For Element SVG
-  //cellView.model.toBack();
-  // For ElementView HTML
-  cellView.$box.removeClass('front');
-}
-
-function cellToFront(cellView) {
-  // For Element SVG
-  cellView.model.toFront();
-  // For ElementView HTML
-  //cellView.$box.css('z-index', zIndex++);
-  //$('#xpaper svg').css('z-index', zIndex);
-  cellView.$box.addClass('front');
-}
 
 /*//Bonus function use (see below) - create dotted grid
 setGrid(_paper, gridsize*15, '#808080');
