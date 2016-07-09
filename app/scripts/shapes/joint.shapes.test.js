@@ -23,7 +23,7 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
       },
       '.body': {
           stroke: 'none',
-          'fill-opacity': 0
+          'fill-opacity': 0,
       },
       '.port-body': {
          r: 15,
@@ -146,12 +146,11 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
     },
     updateBox: function() {
       var bbox = this.model.getBBox();
-      var pan = this.model.attributes.pan || { x: 0, y: 0 };
-      var zoom = (this.model.attributes.zoom) ? this.model.attributes.zoom : 1;
-      this.$box.css({ width: bbox.width * zoom,
-                      height: bbox.height * zoom,
-                      left: bbox.x * zoom + pan.x,
-                      top: bbox.y * zoom + pan.y });
+      var state = this.model.attributes.state;
+      this.$box.css({ width: bbox.width * state.zoom,
+                      height: bbox.height * state.zoom,
+                      left: bbox.x * state.zoom + state.pan.x,
+                      top: bbox.y * state.zoom + state.pan.y });
     },
     removeBox: function(evt) {
       this.$box.remove();

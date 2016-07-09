@@ -7,6 +7,14 @@ angular.module('icestudio')
         // Variables
 
         this.project = {
+          image: '',
+          state: {
+            pan: {
+              x: 0,
+              y: 0
+            },
+            zoom: 1
+          },
           board: '',
           graph: {},
           deps: {}
@@ -18,11 +26,19 @@ angular.module('icestudio')
         this.newProject = function(name) {
           this.project = {
             image: '',
+            state: {
+              pan: {
+                x: 0,
+                y: 0
+              },
+              zoom: 1
+            },
             board: '',
             graph: {},
             deps: {}
           };
           graph.clearAll();
+          graph.setState(this.project.state);
           this.updateProjectName(name);
           alertify.success('New project ' + name + ' created');
         };
@@ -42,6 +58,16 @@ angular.module('icestudio')
         this.loadProject = function(name, project) {
           this.updateProjectName(name);
           this.project = project;
+          if (!project.state) {
+            project.state = {
+              pan: {
+                x: 0,
+                y: 0
+              },
+              zoom: 1
+            };
+          }
+          graph.setState(project.state);
           boards.selectBoard(project.board);
           if (graph.loadProject(project)) {
             alertify.success('Project ' + name + ' loaded');
@@ -79,6 +105,7 @@ angular.module('icestudio')
           this.refreshProject();
           // Convert project to block
           var block = angular.copy(this.project);
+          delete block.image;
           delete block.board;
           for (var i in block.graph.blocks) {
             if (block.graph.blocks[i].type == 'basic.input' ||
@@ -143,6 +170,8 @@ angular.module('icestudio')
             }
           }
 
+          this.project.state = graph.getState();
+
           this.project.board = boards.selectedBoard.id;
 
           this.project.graph = { blocks: blocks, wires: wires };
@@ -154,6 +183,13 @@ angular.module('icestudio')
         this.clearProject = function() {
           this.project = {
             image: '',
+            state: {
+              pan: {
+                x: 0,
+                y: 0
+              },
+              zoom: 1
+            },
             board: '',
             graph: {},
             deps: {}

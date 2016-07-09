@@ -14,9 +14,46 @@ angular.module('icestudio')
         this.breadcrumbs = [{ name: '' }];
 
         var gridsize = 10;
-        var currentScale = 1;
+        var state = {
+          pan: {
+            x: 0,
+            y: 0
+          },
+          zoom: 1
+        };
 
         // Functions
+
+        this.getState = function() {
+          return state;
+        }
+
+        this.setState = function(_state) {
+          state = _state;
+          this.panAndZoom.zoom(state.zoom);
+          this.panAndZoom.pan(state.pan);
+          setGrid(paper, gridsize*2*state.zoom, '#777', state.pan);
+        }
+
+        function setGrid(paper, size, color, offset) {
+          // Set grid size on the JointJS paper object (joint.dia.Paper instance)
+          paper.options.gridsize = gridsize;
+          // Draw a grid into the HTML 5 canvas and convert it to a data URI image
+          var canvas = $('<canvas/>', { width: size, height: size });
+          canvas[0].width = size;
+          canvas[0].height = size;
+          var context = canvas[0].getContext('2d');
+          context.beginPath();
+          context.rect(1, 1, 1, 1);
+          context.fillStyle = color || '#AAAAAA';
+          context.fill();
+          // Finally, set the grid background image of the paper container element.
+          var gridBackgroundImage = canvas[0].toDataURL('image/png');
+          $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
+          if(typeof(offset) != 'undefined'){
+            $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
+          }
+        }
 
         this.createPaper = function(element) {
           graph = new joint.dia.Graph();
@@ -57,62 +94,38 @@ angular.module('icestudio')
 
           var targetElement= element[0];
 
-          var panAndZoom = svgPanZoom(targetElement.childNodes[0],
+          this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
           {
             viewportSelector: targetElement.childNodes[0].childNodes[0],
             fit: false,
             center: false,
             zoomEnabled: true,
             panEnabled: false,
-            zoomScaleSensitivity: 0.4,
+            zoomScaleSensitivity: 0.2,
             dblClickZoomEnabled: false,
             minZoom: 0.5,
             maxZoom: 2,
             beforeZoom: function(oldzoom, newzoom) {
             },
             onZoom: function(scale) {
-              currentScale = scale;
-              setGrid(paper, gridsize*2*currentScale, '#777');
-              var cells = graph.getCells();
-              _.each(cells, function(cell) {
-                cell.attributes.zoom = scale;
-                //paper.findViewByModel(cell).render();  // Already done in pan
-              });
+              state.zoom = scale;
+              setGrid(paper, gridsize*2*state.zoom, '#777');
+              // Already rendere in pan
             },
             beforePan: function(oldpan, newpan) {
-              setGrid(paper, gridsize*2*currentScale, '#777', newpan);
+              setGrid(paper, gridsize*2*state.zoom, '#777', newpan);
             },
             onPan: function(newPan) {
+              state.pan = newPan;
               var cells = graph.getCells();
               _.each(cells, function(cell) {
                 if (!cell.isLink()) {
-                  var bbox = cell.getBBox();
-                  cell.attributes.pan = newPan;
+                  cell.attributes.state = state;
                   paper.findViewByModel(cell).render();
                 }
               });
             }
           });
-
-          function setGrid(paper, size, color, offset) {
-            // Set grid size on the JointJS paper object (joint.dia.Paper instance)
-            paper.options.gridsize = gridsize;
-            // Draw a grid into the HTML 5 canvas and convert it to a data URI image
-            var canvas = $('<canvas/>', { width: size, height: size });
-            canvas[0].width = size;
-            canvas[0].height = size;
-            var context = canvas[0].getContext('2d');
-            context.beginPath();
-            context.rect(1, 1, 1, 1);
-            context.fillStyle = color || '#AAAAAA';
-            context.fill();
-            // Finally, set the grid background image of the paper container element.
-            var gridBackgroundImage = canvas[0].toDataURL('image/png');
-            $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
-            if(typeof(offset) != 'undefined'){
-              $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
-            }
-          }
 
           // Events
 
@@ -173,18 +186,22 @@ angular.module('icestudio')
           );
 
           paper.on('blank:pointerdown',
-            function() {
-              if (paper.options.interactive) {
-                disableSelected();
-                panAndZoom.enablePan();
+            (function(_this) {
+              return function() {
+                if (paper.options.interactive) {
+                  disableSelected();
+                  _this.panAndZoom.enablePan();
+                }
               }
-            }
+            })(this)
           );
 
           paper.on('cell:pointerup blank:pointerup',
-            function(cellView, evt) {
-              panAndZoom.disablePan();
-            }
+            (function(_this) {
+              return function(cellView, evt) {
+                _this.panAndZoom.disablePan();
+              }
+            })(this)
           );
 
           paper.on('cell:mouseover',
@@ -419,6 +436,7 @@ angular.module('icestudio')
           if (selectedCellView) {
             var newCell = selectedCellView.model.clone();
             newCell.translate(50, 50);
+            newCell.attributes.state = state;
             graph.addCell(newCell);
             select(paper.findViewByModel(newCell));
             alertify.success('Block ' + newCell.attributes.blockType + ' cloned');
@@ -525,6 +543,7 @@ angular.module('icestudio')
             choices: boards.getPinout()
           });
 
+          cell.attributes.state = state;
           graph.addCell(cell);
           return cell;
         };
@@ -540,6 +559,7 @@ angular.module('icestudio')
             choices: boards.getPinout()
           });
 
+          cell.attributes.state = state;
           graph.addCell(cell);
           return cell;
         };
@@ -572,6 +592,7 @@ angular.module('icestudio')
             outPorts: outPorts
           });
 
+          cell.attributes.state = state;
           graph.addCell(cell);
           return cell;
         };
@@ -619,6 +640,7 @@ angular.module('icestudio')
             outPorts: outPorts
           });
 
+          cell.attributes.state = state;
           graph.addCell(cell);
           return cell;
         }
@@ -648,6 +670,7 @@ angular.module('icestudio')
             vertices: wire.vertices
           });
 
+          _wire.attributes.state = state;
           graph.addCell(_wire);
         }
 
