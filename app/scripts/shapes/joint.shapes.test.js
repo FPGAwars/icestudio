@@ -23,7 +23,7 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
       },
       '.body': {
           stroke: 'none',
-          'fill-opacity': 0,
+          'fill-opacity': 0
       },
       '.port-body': {
          r: 15,
@@ -110,9 +110,6 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
       this.$box = $(joint.util.template(this.template)());
-
-      var bbox = this.model.getBBox();
-      this.offset = { x: bbox.x, y: bbox.y };
 
       this.model.on('change', this.updateBox, this);
       this.model.on('remove', this.removeBox, this);
@@ -253,7 +250,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
 
     template: '\
     <div class="io-block">\
-      <label></label>\
+      <label class="io-label"></label>\
       <select class="io-combo select2"></select>\
       <script>\
         $(".select2").select2({placeholder: "", allowClear: true});\
@@ -299,6 +296,18 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
       this.renderPorts();
       this.renderChoices();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
+    },
+    updateBox: function() {
+      var bbox = this.model.getBBox();
+      var state = this.model.attributes.state;
+
+      this.$box.css({
+        left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
+        top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
+        width: bbox.width,
+        height: bbox.height,
+        transform: 'scale(' + state.zoom + ')'
+      });
     }
 });
 

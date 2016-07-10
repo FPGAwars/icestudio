@@ -110,7 +110,7 @@ angular.module('icestudio')
             onZoom: function(scale) {
               state.zoom = scale;
               setGrid(paper, gridsize*2*state.zoom, '#777');
-              // Already rendere in pan
+              // Already rendered in pan
             },
             beforePan: function(oldpan, newpan) {
               setGrid(paper, gridsize*2*state.zoom, '#777', newpan);
@@ -121,7 +121,7 @@ angular.module('icestudio')
               _.each(cells, function(cell) {
                 if (!cell.isLink()) {
                   cell.attributes.state = state;
-                  paper.findViewByModel(cell).render();
+                  paper.findViewByModel(cell).updateBox();
                 }
               });
             }
@@ -436,8 +436,7 @@ angular.module('icestudio')
           if (selectedCellView) {
             var newCell = selectedCellView.model.clone();
             newCell.translate(50, 50);
-            newCell.attributes.state = state;
-            graph.addCell(newCell);
+            addCell(newCell);
             select(paper.findViewByModel(newCell));
             alertify.success('Block ' + newCell.attributes.blockType + ' cloned');
           }
@@ -543,8 +542,7 @@ angular.module('icestudio')
             choices: boards.getPinout()
           });
 
-          cell.attributes.state = state;
-          graph.addCell(cell);
+          addCell(cell);
           return cell;
         };
 
@@ -559,8 +557,7 @@ angular.module('icestudio')
             choices: boards.getPinout()
           });
 
-          cell.attributes.state = state;
-          graph.addCell(cell);
+          addCell(cell);
           return cell;
         };
 
@@ -592,8 +589,7 @@ angular.module('icestudio')
             outPorts: outPorts
           });
 
-          cell.attributes.state = state;
-          graph.addCell(cell);
+          addCell(cell);
           return cell;
         };
 
@@ -640,8 +636,7 @@ angular.module('icestudio')
             outPorts: outPorts
           });
 
-          cell.attributes.state = state;
-          graph.addCell(cell);
+          addCell(cell);
           return cell;
         }
 
@@ -670,8 +665,12 @@ angular.module('icestudio')
             vertices: wire.vertices
           });
 
-          _wire.attributes.state = state;
-          graph.addCell(_wire);
+          addCell(_wire);
         }
+
+      function addCell(cell) {
+        cell.attributes.state = state;
+        graph.addCell(cell);
+      }
 
     }]);
