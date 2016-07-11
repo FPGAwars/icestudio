@@ -144,10 +144,14 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
     updateBox: function() {
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
-      this.$box.css({ width: bbox.width * state.zoom,
-                      height: bbox.height * state.zoom,
-                      left: bbox.x * state.zoom + state.pan.x,
-                      top: bbox.y * state.zoom + state.pan.y });
+
+      this.$box.css({
+        left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
+        top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
+        width: bbox.width,
+        height: bbox.height,
+        transform: 'scale(' + state.zoom + ')'
+      });
     },
     removeBox: function(evt) {
       this.$box.remove();
@@ -250,7 +254,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
 
     template: '\
     <div class="io-block">\
-      <label class="io-label"></label>\
+      <label></label>\
       <select class="io-combo select2"></select>\
       <script>\
         $(".select2").select2({placeholder: "", allowClear: true});\
@@ -296,18 +300,6 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
       this.renderPorts();
       this.renderChoices();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-    updateBox: function() {
-      var bbox = this.model.getBBox();
-      var state = this.model.attributes.state;
-
-      this.$box.css({
-        left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
-        top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
-        width: bbox.width,
-        height: bbox.height,
-        transform: 'scale(' + state.zoom + ')'
-      });
     }
 });
 
@@ -374,6 +366,14 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
       }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
+    updateBox: function() {
+      var bbox = this.model.getBBox();
+      var state = this.model.attributes.state;
+      this.$box.css({ width: bbox.width * state.zoom,
+                      height: bbox.height * state.zoom,
+                      left: bbox.x * state.zoom + state.pan.x,
+                      top: bbox.y * state.zoom + state.pan.y });
+    }
 });
 
 
