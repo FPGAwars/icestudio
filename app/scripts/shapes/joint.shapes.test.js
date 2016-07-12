@@ -145,6 +145,8 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
 
+      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+
       this.$box.css({
         left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
         top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
@@ -291,9 +293,13 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
           $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
         }
 
-        //this.$box.find('.io-combo').val(this.model.get('data').pin.value);
-        this.$box.find('.io-combo').val('');
+        this.$box.find('.io-combo').val(this.model.get('data').pin.value);
       }
+    },
+    clearValue: function () {
+      this.model.attributes.data.pin.name = '';
+      this.model.attributes.data.pin.value = 0;
+      this.$box.find('.io-combo').val('');
     },
     update: function () {
       this.renderLabel();
@@ -369,6 +375,9 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
     updateBox: function() {
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
+
+      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+
       this.$box.css({ width: bbox.width * state.zoom,
                       height: bbox.height * state.zoom,
                       left: bbox.x * state.zoom + state.pan.x,

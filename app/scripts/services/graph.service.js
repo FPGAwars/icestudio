@@ -6,6 +6,8 @@ angular.module('icestudio')
 
         // Variables
 
+        var zIndex = 0;
+
         var graph = null;
         var paper = null;
         var selectedCellView = null;
@@ -207,7 +209,7 @@ angular.module('icestudio')
           paper.on('cell:mouseover',
             function(cellView, evt, x, y) {
               if (!cellView.model.isLink()) {
-                //cellView.$box.addClass('highlight');
+                cellView.$box.addClass('highlight');
               }
             }
           );
@@ -215,7 +217,7 @@ angular.module('icestudio')
           paper.on('cell:mouseout',
             function(cellView, evt, x, y) {
               if (!cellView.model.isLink()) {
-                //cellView.$box.removeClass('highlight');
+                cellView.$box.removeClass('highlight');
               }
             }
           );
@@ -225,15 +227,15 @@ angular.module('icestudio')
           cellView.model.toFront();
           if (!cellView.model.isLink()) {
             if (selectedCellView) {
-              //if (selectedCellView)
-                //selectedCellView.$box.removeClass('selected front');
+              if (selectedCellView)
+                selectedCellView.$box.removeClass('selected');
             }
             selectedCellView = cellView;
             if (selectedCellView) {
-              //cellView.$box.css('z-index', zIndex);
+              cellView.$box.css('z-index', zIndex++);
+              selectedCellView.$box.addClass('selected');
               //$('#xpaper svg').css('z-index', zIndex);
-              //selectedCellView.$box.addClass('selected front');
-              cellView.model.toFront();
+              //cellView.model.toFront();
             }
           }
         }
@@ -244,7 +246,7 @@ angular.module('icestudio')
 
         function disableSelected() {
           if (selectedCellView) {
-            //selectedCellView.$box.removeClass('selected');
+            selectedCellView.$box.removeClass('selected');
             selectedCellView = null;
           }
         }
@@ -427,7 +429,9 @@ angular.module('icestudio')
             var type = cell.attributes.blockType;
             if (type == 'basic.input' || type == 'basic.output') {
               cell.attributes.choices = boards.getPinout();
-              paper.findViewByModel(cell.id).renderChoices();
+              var view = paper.findViewByModel(cell.id);
+              view.renderChoices();
+              view.clearValue();
             }
           }
         }
