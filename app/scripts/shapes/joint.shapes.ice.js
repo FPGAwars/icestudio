@@ -1,16 +1,15 @@
 'use strict';
 
-// Create a custom element.
-// ------------------------
+// Model element
 
-joint.shapes.test = {};
-joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
+joint.shapes.ice = {};
+joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
 
   markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
-    type: 'test.Model',
+    type: 'ice.Model',
     size: {
       width: 1,
       height: 1
@@ -101,7 +100,7 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
   }
 }));
 
-joint.shapes.test.ModelView = joint.dia.ElementView.extend({
+joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
     template: '',
 
@@ -163,9 +162,9 @@ joint.shapes.test.ModelView = joint.dia.ElementView.extend({
 
 // Generic block
 
-joint.shapes.test.Generic = joint.shapes.test.Model.extend({
+joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.Generic',
+    type: 'ice.Generic',
     size: {
       width: 120,
       height: 80
@@ -176,10 +175,10 @@ joint.shapes.test.Generic = joint.shapes.test.Model.extend({
         height: 80
       }
     }
-  }, joint.shapes.test.Model.prototype.defaults)
+  }, joint.shapes.ice.Model.prototype.defaults)
 });
 
-joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
+joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     template: '\
     <div class="generic-block">\
@@ -189,7 +188,7 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
     ',
 
     initialize: function() {
-      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
       var image = this.model.get('image');
       var name = this.model.get('label');
@@ -209,9 +208,9 @@ joint.shapes.test.GenericView = joint.shapes.test.ModelView.extend({
 
 // I/O blocks
 
-joint.shapes.test.Input = joint.shapes.test.Model.extend({
+joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.Input',
+    type: 'ice.Input',
     choices: [],
     outPorts: [{
       id: "out",
@@ -227,12 +226,12 @@ joint.shapes.test.Input = joint.shapes.test.Model.extend({
         height: 80
       }
     }
-  }, joint.shapes.test.Model.prototype.defaults)
+  }, joint.shapes.ice.Model.prototype.defaults)
 });
 
-joint.shapes.test.Output = joint.shapes.test.Model.extend({
+joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.Output',
+    type: 'ice.Output',
     choices: [],
     inPorts: [{
       id: "in",
@@ -248,11 +247,11 @@ joint.shapes.test.Output = joint.shapes.test.Model.extend({
         height: 80
       }
     }
-  }, joint.shapes.test.Model.prototype.defaults)
+  }, joint.shapes.ice.Model.prototype.defaults)
 });
 
 
-joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
+joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     template: '\
     <div class="io-block">\
@@ -265,7 +264,7 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     ',
 
     initialize: function() {
-      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
       // Prevent paper from handling pointerdown.
       this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
@@ -309,15 +308,15 @@ joint.shapes.test.IOView = joint.shapes.test.ModelView.extend({
     }
 });
 
-joint.shapes.test.InputView = joint.shapes.test.IOView;
-joint.shapes.test.OutputView = joint.shapes.test.IOView;
+joint.shapes.ice.InputView = joint.shapes.ice.IOView;
+joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 
 
 // Code block
 
-joint.shapes.test.Code = joint.shapes.test.Model.extend({
+joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'test.Code',
+    type: 'ice.Code',
     size: {
       width: 400,
       height: 200
@@ -328,10 +327,10 @@ joint.shapes.test.Code = joint.shapes.test.Model.extend({
         height: 200
       }
     }
-  }, joint.shapes.test.Model.prototype.defaults)
+  }, joint.shapes.ice.Model.prototype.defaults)
 });
 
-joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
+joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     template: '\
     <div class="code-block">\
@@ -354,7 +353,7 @@ joint.shapes.test.CodeView = joint.shapes.test.ModelView.extend({
     // TODO: check change and hover trigger event
 
     initialize: function() {
-      joint.shapes.test.ModelView.prototype.initialize.apply(this, arguments);
+      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
       // Prevent paper from handling pointerdown.
       this.$box.find('.code-editor').on('mousedown click', function(evt) { evt.stopPropagation(); });
@@ -421,7 +420,7 @@ joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices)
     return d.join(' ');
 };
 
-joint.shapes.test.Wire = joint.dia.Link.extend({
+joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   markup: [
     '<path class="connection" stroke="black" d="M 0 0 0 0"/>',
@@ -441,7 +440,7 @@ joint.shapes.test.Wire = joint.dia.Link.extend({
 
   defaults: joint.util.deepSupplement({
 
-    type: 'test.Wire',
+    type: 'ice.Wire',
 
     attrs: {
       '.connection': { 'stroke-width': 2, stroke: '#777'},

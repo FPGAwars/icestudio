@@ -7,10 +7,12 @@ angular.module('icestudio')
         // Variables
 
         var zIndex = 0;
+        var ctrlPressed = false;
 
         var graph = null;
         var paper = null;
-        var selectedCellView = null;
+        var selection = null;
+        var selectionView = null;
 
         var dependencies = {};
         this.breadcrumbs = [{ name: '' }];
@@ -25,6 +27,10 @@ angular.module('icestudio')
         };
 
         // Functions
+
+        $(document).on('keydown', function(event) {
+          ctrlPressed = event.keyCode == 17;
+        });
 
         this.getState = function() {
           // Clone state
@@ -78,7 +84,7 @@ angular.module('icestudio')
             linkPinning: false,
             embeddingMode: false,
             //markAvailable: true,
-            defaultLink: new joint.shapes.test.Wire(),
+            defaultLink: new joint.shapes.ice.Wire(),
             validateMagnet: function(cellView, magnet) {
               // Prevent to start wires from an input port
               return (magnet.getAttribute('type') == 'output');
@@ -138,12 +144,34 @@ angular.module('icestudio')
             }
           });
 
-          // Events
+         selection = new Backbone.Collection;
+         selectionView = new joint.ui.SelectionView({ paper: paper, graph: graph, model: selection });
+
+         // Events
+
+         paper.on('cell:pointerup', function(cellView, evt) {
+           if ((evt.ctrlKey || evt.metaKey) && (!cellView.model.isLink())) {
+             selection.add(cellView.model);
+             selectionView.createSelectionBox(cellView);
+           }
+         });
+
+         selectionView.on('selection-box:pointerdown', function(evt) {
+             if (evt.ctrlKey || evt.metaKey) {
+                 var cell = selection.get($(evt.target).data('model'));
+                 selection.reset(selection.without(cell));
+                 selectionView.destroySelectionBox(paper.findViewByModel(cell));
+             }
+         });
 
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               if (paper.options.interactive) {
-                select(cellView);
+                if (evt.which == 3) {
+                  // Right button
+                  selection.add(cellView.model);
+                  selectionView.createSelectionBox(cellView);
+                }
               }
             }
           );
@@ -175,7 +203,7 @@ angular.module('icestudio')
                     });
                   }
                 }
-                else if (data.type != 'test.Wire') {
+                else if (data.type != 'ice.Wire') {
                   _this.breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
@@ -198,10 +226,16 @@ angular.module('icestudio')
 
           paper.on('blank:pointerdown',
             (function(_this) {
-              return function() {
+              return function(evt, x, y) {
                 if (paper.options.interactive) {
-                  disableSelected();
-                  _this.panAndZoom.enablePan();
+                  if (evt.which == 3) {
+                    // Right button
+                    selectionView.startSelecting(evt, x, y);
+                  }
+                  else if  (evt.which == 1) {
+                    // Left button
+                    _this.panAndZoom.enablePan();
+                  }
                 }
               }
             })(this)
@@ -232,37 +266,8 @@ angular.module('icestudio')
           );
         };
 
-        function select(cellView) {
-          cellView.model.toFront();
-          if (!cellView.model.isLink()) {
-            if (selectedCellView) {
-              if (selectedCellView)
-                selectedCellView.$box.removeClass('selected');
-            }
-            selectedCellView = cellView;
-            if (selectedCellView) {
-              cellView.$box.css('z-index', zIndex++);
-              selectedCellView.$box.addClass('selected');
-              //$('#xpaper svg').css('z-index', zIndex);
-              //cellView.model.toFront();
-            }
-          }
-        }
-
-        $(document).on('disableSelected', function() {
-          disableSelected();
-        });
-
-        function disableSelected() {
-          if (selectedCellView) {
-            selectedCellView.$box.removeClass('selected');
-            selectedCellView = null;
-          }
-        }
-
         this.clearAll = function() {
           graph.clear();
-          selectedCellView = null;
           this.appEnable(true);
         };
 
@@ -324,8 +329,7 @@ angular.module('icestudio')
                     blockInstance.data.code = block.data.code;
                     blockInstance.position = block.position;
                   }
-                  var cell = addBasicCodeBlock(blockInstance);
-                  select(paper.findViewByModel(cell));
+                  addBasicCodeBlock(blockInstance);
 
                   if (callback)
                     callback();
@@ -346,8 +350,7 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      var cell = addBasicInputBlock(blockInstance);
-                      select(paper.findViewByModel(cell));
+                      addBasicInputBlock(blockInstance);
                       blockInstance.position.y += 100;
                     }
                   }
@@ -360,8 +363,7 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  var cell = addBasicInputBlock(blockInstance);
-                  select(paper.findViewByModel(cell));
+                  addBasicInputBlock(blockInstance);
                   blockInstance.position.y += 100;
                 }
             });
@@ -381,8 +383,7 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      var cell = addBasicOutputBlock(blockInstance);
-                      select(paper.findViewByModel(cell));
+                      addBasicOutputBlock(blockInstance);
                       blockInstance.position.y += 100;
                     }
                   }
@@ -396,8 +397,7 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  var cell = addBasicOutputBlock(blockInstance);
-                  select(paper.findViewByModel(cell));
+                  addBasicOutputBlock(blockInstance);
                   blockInstance.position.y += 100;
                 }
             });
@@ -411,8 +411,7 @@ angular.module('icestudio')
               dependencies[type] = block;
               blockInstance.position.x = 100;
               blockInstance.position.y = 150;
-              var cell = addGenericBlock(blockInstance, block);
-              select(paper.findViewByModel(cell));
+              addGenericBlock(blockInstance, block);
             }
             else {
               alertify.error('Wrong block format: ' + type);
@@ -444,25 +443,24 @@ angular.module('icestudio')
         }
 
         this.cloneSelected = function() {
-          if (selectedCellView) {
-            var newCell = selectedCellView.model.clone();
-            newCell.translate(50, 50);
-            addCell(newCell);
-            select(paper.findViewByModel(newCell));
-            alertify.success('Block ' + newCell.attributes.blockType + ' cloned');
+          if (selection) {
+            selection.each(function(cell) {
+              var newCell = cell.clone();
+              newCell.translate(50, 50);
+              addCell(newCell);
+            });
           }
         }
 
-        this.getSelectedType = function() {
-          if (selectedCellView) {
-            return selectedCellView.model.attributes.blockType;
-          }
+        this.hasSelection = function() {
+          return selection.length > 0;
         }
 
         this.removeSelected = function() {
-          if (selectedCellView) {
-            selectedCellView.model.remove();
-            selectedCellView = null;
+          if (selection) {
+            selection.each(function(cell) {
+              cell.remove();
+            });
           }
         }
 
@@ -536,12 +534,11 @@ angular.module('icestudio')
             position: { x: 100, y: 100 }
           }
           dependencies[type] = block;
-          var cell = addGenericBlock(blockInstance, block);
-          select(paper.findViewByModel(cell));
+          addGenericBlock(blockInstance, block);
         }
 
         function addBasicInputBlock(blockInstances, disabled) {
-          var cell = new joint.shapes.test.Input({
+          var cell = new joint.shapes.ice.Input({
             id: blockInstances.id,
             blockType: blockInstances.type,
             data: blockInstances.data,
@@ -556,7 +553,7 @@ angular.module('icestudio')
         };
 
         function addBasicOutputBlock(blockInstances, disabled) {
-          var cell = new joint.shapes.test.Output({
+          var cell = new joint.shapes.ice.Output({
             id: blockInstances.id,
             blockType: blockInstances.type,
             data: blockInstances.data,
@@ -588,7 +585,7 @@ angular.module('icestudio')
             });
           }
 
-          var cell = new joint.shapes.test.Code({
+          var cell = new joint.shapes.ice.Code({
             id: blockInstances.id,
             blockType: blockInstances.type,
             data: blockInstances.data,
@@ -634,7 +631,7 @@ angular.module('icestudio')
             blockImage = block.image;
           }
 
-          var cell = new joint.shapes.test.Generic({
+          var cell = new joint.shapes.ice.Generic({
             id: blockInstance.id,
             blockType: blockInstance.type,
             data: {},
@@ -668,7 +665,7 @@ angular.module('icestudio')
             }
           }
 
-          var _wire = new joint.shapes.test.Wire({
+          var _wire = new joint.shapes.ice.Wire({
             source: { id: source.id, selector: sourceSelector, port: wire.source.port },
             target: { id: target.id, selector: targetSelector, port: wire.target.port },
             vertices: wire.vertices

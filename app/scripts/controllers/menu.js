@@ -199,7 +199,7 @@ angular.module('icestudio')
     }
 
     $scope.removeSelected = function() {
-      if (graph.getSelectedType()) {
+      if (graph.hasSelection()) {
         alertify.confirm('Do you want to remove the selected block?',
           function() {
             common.removeSelected();

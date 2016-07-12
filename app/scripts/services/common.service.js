@@ -178,13 +178,11 @@ angular.module('icestudio')
         };
 
         this.removeSelected = function() {
-          var type = graph.getSelectedType();
+          var selection = graph.hasSelection();
           graph.removeSelected();
-          if (type) {
-            // There is no 'type' block
-            if (graph.typeInGraph(type) == 0) {
-              delete this.project.deps[type];
-            }
+          if (selection) {
+            // TODO: purge dependencies
+            //delete this.project.deps[type];
           }
         };
 
