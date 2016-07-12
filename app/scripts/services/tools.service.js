@@ -4,6 +4,7 @@ angular.module('icestudio')
     .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
       function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
 
+        var currentAlert = null;
         var toolchain = { installed: false };
 
         this.toolchain = toolchain;
@@ -27,11 +28,16 @@ angular.module('icestudio')
             if (toolchain.installed) {
               $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
-              alertify.message(command + ' start');
+              currentAlert= alertify.notify(command + ' start...', 'message', 100000);
               nodeProcess.chdir('_build');
               try {
                 execute([utils.getApioExecutable(), 'init', '--board', boards.selectedBoard.id].join(' '));
-                execute([utils.getApioExecutable(), command].join(' '), command);
+                execute([utils.getApioExecutable(), command].join(' '), command, function() {
+                  if (currentAlert)
+                    setTimeout(function() {
+                      currentAlert.dismiss(true);
+                    }, 1000);
+                });
               }
               catch(e) {
               }
@@ -69,22 +75,23 @@ angular.module('icestudio')
           return verilog;
         }
 
-        function execute(command, label) {
+        function execute(command, label, callback) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            //console.log(error, stdout, stderr);
+            if (callback)
+              callback();
             if (label) {
               if (error) {
                 if (stdout.indexOf('[upload] Error') != -1) {
-                  alertify.notify('Board not detected', 'error', 5);
+                  alertify.notify('Board not detected', 'error', 3);
                 }
                 else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 5);
+                  alertify.notify('FPGA I/O not defined', 'error', 3);
                 }
                 else if (stdout.indexOf('error: unknown pin') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 5);
+                  alertify.notify('FPGA I/O not defined', 'error', 3);
                 }
                 else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                  alertify.notify('Duplicated FPGA I/O', 'error', 5);
+                  alertify.notify('Duplicated FPGA I/O', 'error', 3);
                 }
                 else {
                   if (stdout) {
