@@ -43,16 +43,16 @@ joint.shapes.test.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.s
         x: 15,
         y: -10,
         'text-anchor': 'end',
-        fill: '#000'
+        fill: '#777'
       },
       '.outPorts .port-label': {
         x: -15,
         y: -10,
         'text-anchor': 'start',
-        fill: '#000'
+        fill: '#777'
       },
       '.port-wire': {
-        stroke: '#888888',
+        stroke: '#777',
         'stroke-width': 2
       }
     }
@@ -444,7 +444,7 @@ joint.shapes.test.Wire = joint.dia.Link.extend({
     type: 'test.Wire',
 
     attrs: {
-      '.connection': { 'stroke-width': 2, stroke: '#888888'},
+      '.connection': { 'stroke-width': 2, stroke: '#777'},
       '.marker-vertex': { r: 7 }
     },
 

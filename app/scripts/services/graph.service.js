@@ -27,14 +27,23 @@ angular.module('icestudio')
         // Functions
 
         this.getState = function() {
-          return state;
+          // Clone state
+          return JSON.parse(JSON.stringify(state));
         }
 
         this.setState = function(_state) {
-          state = _state;
-          this.panAndZoom.zoom(state.zoom);
-          this.panAndZoom.pan(state.pan);
-          setGrid(paper, gridsize*2*state.zoom, '#777', state.pan);
+          if (!_state) {
+            _state = {
+              pan: {
+                x: 0,
+                y: 0
+              },
+              zoom: 1
+            };
+          }
+          this.panAndZoom.zoom(_state.zoom);
+          this.panAndZoom.pan(_state.pan);
+          setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
         }
 
         function setGrid(paper, size, color, offset) {
@@ -174,13 +183,13 @@ angular.module('icestudio')
                   var disabled = true;
                   if (_this.breadcrumbs.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
-                      loadGraph(dependencies[data.blockType], disabled);
-                      appEnable(false);
+                      _this.loadGraph(dependencies[data.blockType], disabled);
+                      _this.appEnable(false);
                     });
                   }
                   else {
-                    loadGraph(dependencies[data.blockType], disabled);
-                    appEnable(false);
+                    _this.loadGraph(dependencies[data.blockType], disabled);
+                    _this.appEnable(false);
                   }
                 }
               }
@@ -251,17 +260,13 @@ angular.module('icestudio')
           }
         }
 
-        this.clearAll = clearAll;
-
-        function clearAll() {
+        this.clearAll = function() {
           graph.clear();
           selectedCellView = null;
-          appEnable(true);
+          this.appEnable(true);
         };
 
-        this.appEnable = appEnable;
-
-        function appEnable(value) {
+        this.appEnable = function(value) {
           paper.options.interactive = value;
           var cells = graph.getCells();
           for (var i in cells) {
@@ -270,10 +275,12 @@ angular.module('icestudio')
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
             angular.element('#paper').css('opacity', '1.0');
+            this.panAndZoom.enableZoom();
           }
           else {
             angular.element('#menu').addClass('disable-menu');
             angular.element('#paper').css('opacity', '0.5');
+            this.panAndZoom.disableZoom();
           }
         };
 
@@ -478,11 +485,7 @@ angular.module('icestudio')
           return paper.options.interactive;
         }
 
-        this.loadProject = function(project, disabled) {
-          return loadGraph(project, disabled);
-        }
-
-        function loadGraph(project, disabled) {
+        this.loadGraph = function(project, disabled) {
           if (project &&
               project.graph &&
               project.graph.blocks &&
@@ -495,7 +498,9 @@ angular.module('icestudio')
 
             dependencies = project.deps;
 
-            clearAll();
+            this.clearAll();
+
+            this.setState(project.state);
 
             // Blocks
             for (var i in blockInstances) {

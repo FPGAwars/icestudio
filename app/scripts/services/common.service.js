@@ -8,13 +8,7 @@ angular.module('icestudio')
 
         this.project = {
           image: '',
-          state: {
-            pan: {
-              x: 0,
-              y: 0
-            },
-            zoom: 1
-          },
+          state: null,
           board: '',
           graph: {},
           deps: {}
@@ -26,13 +20,7 @@ angular.module('icestudio')
         this.newProject = function(name) {
           this.project = {
             image: '',
-            state: {
-              pan: {
-                x: 0,
-                y: 0
-              },
-              zoom: 1
-            },
+            state: null,
             board: '',
             graph: {},
             deps: {}
@@ -58,18 +46,8 @@ angular.module('icestudio')
         this.loadProject = function(name, project) {
           this.updateProjectName(name);
           this.project = project;
-          if (!project.state) {
-            project.state = {
-              pan: {
-                x: 0,
-                y: 0
-              },
-              zoom: 1
-            };
-          }
-          graph.setState(project.state);
           boards.selectBoard(project.board);
-          if (graph.loadProject(project)) {
+          if (graph.loadGraph(project)) {
             alertify.success('Project ' + name + ' loaded');
           }
           else {
@@ -183,13 +161,7 @@ angular.module('icestudio')
         this.clearProject = function() {
           this.project = {
             image: '',
-            state: {
-              pan: {
-                x: 0,
-                y: 0
-              },
-              zoom: 1
-            },
+            state: this.project.state,
             board: '',
             graph: {},
             deps: {}
