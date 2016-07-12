@@ -33,6 +33,7 @@
     "bootstrap": "^3.3.6",
     "ace-builds": "^1.2.3",
     "select2": "^4.0.3",
-    "async": "^1.5.2"
+    "async": "^1.5.2",
+    "svg-pan-zoom": "^3.2.9"
   }
 }

@@ -6,27 +6,84 @@ angular.module('icestudio')
 
         // Variables
 
-        var paper = null;
-        var selectedCell = null;
+        var zIndex = 0;
+        var ctrlPressed = false;
 
-        var graph = new joint.dia.Graph();
+        var graph = null;
+        var paper = null;
+        var selection = null;
+        var selectionView = null;
 
         var dependencies = {};
-
         this.breadcrumbs = [{ name: '' }];
+
+        var gridsize = 10;
+        var state = {
+          pan: {
+            x: 0,
+            y: 0
+          },
+          zoom: 1
+        };
 
         // Functions
 
+        $(document).on('keydown', function(event) {
+          ctrlPressed = event.keyCode == 17;
+        });
+
+        this.getState = function() {
+          // Clone state
+          return JSON.parse(JSON.stringify(state));
+        }
+
+        this.setState = function(_state) {
+          if (!_state) {
+            _state = {
+              pan: {
+                x: 0,
+                y: 0
+              },
+              zoom: 1
+            };
+          }
+          this.panAndZoom.zoom(_state.zoom);
+          this.panAndZoom.pan(_state.pan);
+          setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
+        }
+
+        function setGrid(paper, size, color, offset) {
+          // Set grid size on the JointJS paper object (joint.dia.Paper instance)
+          paper.options.gridsize = gridsize;
+          // Draw a grid into the HTML 5 canvas and convert it to a data URI image
+          var canvas = $('<canvas/>', { width: size, height: size });
+          canvas[0].width = size;
+          canvas[0].height = size;
+          var context = canvas[0].getContext('2d');
+          context.beginPath();
+          context.rect(1, 1, 1, 1);
+          context.fillStyle = color || '#AAAAAA';
+          context.fill();
+          // Finally, set the grid background image of the paper container element.
+          var gridBackgroundImage = canvas[0].toDataURL('image/png');
+          $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
+          if(typeof(offset) != 'undefined'){
+            $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
+          }
+        }
+
         this.createPaper = function(element) {
+          graph = new joint.dia.Graph();
           paper = new joint.dia.Paper({
             el: element,
             width: 2000,
             height: 1000,
             model: graph,
-            gridSize: 1,
-            snapLinks: { radius: 30 },
+            gridSize: gridsize,
+            snapLinks: { radius: 15 },
             linkPinning: false,
-
+            embeddingMode: false,
+            //markAvailable: true,
             defaultLink: new joint.shapes.ice.Wire(),
             validateMagnet: function(cellView, magnet) {
               // Prevent to start wires from an input port
@@ -36,7 +93,6 @@ angular.module('icestudio')
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' && magnetT.getAttribute('type') == 'output')
                 return false;
-
               // Prevent multiple input links
               var links = graph.getLinks();
               for (var i in links) {
@@ -46,25 +102,76 @@ angular.module('icestudio')
                   return false;
                 }
               }
-
               // Prevent loop links
               return magnetS !== magnetT;
             }
           });
 
-          // Events
+          setGrid(paper, gridsize * 2, '#777');
+
+          var targetElement= element[0];
+
+          this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
+          {
+            viewportSelector: targetElement.childNodes[0].childNodes[0],
+            fit: false,
+            center: false,
+            zoomEnabled: true,
+            panEnabled: false,
+            zoomScaleSensitivity: 0.2,
+            dblClickZoomEnabled: false,
+            minZoom: 0.5,
+            maxZoom: 2,
+            beforeZoom: function(oldzoom, newzoom) {
+            },
+            onZoom: function(scale) {
+              state.zoom = scale;
+              setGrid(paper, gridsize*2*state.zoom, '#777');
+              // Already rendered in pan
+            },
+            beforePan: function(oldpan, newpan) {
+              setGrid(paper, gridsize*2*state.zoom, '#777', newpan);
+            },
+            onPan: function(newPan) {
+              state.pan = newPan;
+              var cells = graph.getCells();
+              _.each(cells, function(cell) {
+                if (!cell.isLink()) {
+                  cell.attributes.state = state;
+                  paper.findViewByModel(cell).updateBox();
+                }
+              });
+            }
+          });
+
+         selection = new Backbone.Collection;
+         selectionView = new joint.ui.SelectionView({ paper: paper, graph: graph, model: selection });
+
+         // Events
+
+         paper.on('cell:pointerup', function(cellView, evt) {
+           if ((evt.ctrlKey || evt.metaKey) && (!cellView.model.isLink())) {
+             selection.add(cellView.model);
+             selectionView.createSelectionBox(cellView);
+           }
+         });
+
+         selectionView.on('selection-box:pointerdown', function(evt) {
+             if (evt.ctrlKey || evt.metaKey) {
+                 var cell = selection.get($(evt.target).data('model'));
+                 selection.reset(selection.without(cell));
+                 selectionView.destroySelectionBox(paper.findViewByModel(cell));
+             }
+         });
 
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
-              cellView.model.toFront();
               if (paper.options.interactive) {
-                if (selectedCell) {
-                  if (paper.findViewByModel(selectedCell))
-                    V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
+                if (evt.which == 3) {
+                  // Right button
+                  selection.add(cellView.model);
+                  selectionView.createSelectionBox(cellView);
                 }
-                selectedCell = cellView.model;
-                if (paper.findViewByModel(selectedCell))
-                  V(paper.findViewByModel(selectedCell).el).addClass('highlighted');
               }
             }
           );
@@ -72,73 +179,99 @@ angular.module('icestudio')
           paper.on('cell:pointerdblclick',
             (function(_this) {
               return function(cellView, evt, x, y) {
-                        var data = cellView.model.attributes;
-                        if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
-                          if (paper.options.interactive) {
-                            alertify.prompt('Insert the block label', '',
-                              function(evt, label) {
-                                data.data.label = label;
-                                data.attrs['.block-label'].text = label;
-                                cellView.update();
-                                alertify.success('Label updated');
-                            });
-                          }
-                        }
-                        else if (data.blockType == 'basic.code') {
-                          // TODO.
-                        }
-                        else if (data.type != 'ice.Wire') {
-                          _this.breadcrumbs.push({ name: data.blockType });
-                          if(!$rootScope.$$phase) {
-                            $rootScope.$apply();
-                          }
-                          var disabled = true;
-                          if (_this.breadcrumbs.length == 2) {
-                            $rootScope.$broadcast('refreshProject', function() {
-                              loadGraph(dependencies[data.blockType], disabled);
-                              appEnable(false);
-                            });
-                          }
-                          else {
-                            loadGraph(dependencies[data.blockType], disabled);
-                            appEnable(false);
-                          }
-                        }
-                      }
-                    })(this));
+                var data = cellView.model.attributes;
+                if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+                  if (paper.options.interactive) {
+                    alertify.prompt('Insert the block label', '',
+                      function(evt, label) {
+                        data.label = label;
+                        cellView.renderLabel();
+                        alertify.success('Label updated');
+                    });
+                  }
+                }
+                else if (data.blockType == 'basic.code') {
+                  if (paper.options.interactive) {
+                    var block = {
+                      data: {
+                        code: _this.getCode(cellView.model.id)
+                      },
+                      position: cellView.model.attributes.position
+                    };
+                    _this.createBlock('basic.code', block, function() {
+                      cellView.model.remove();
+                    });
+                  }
+                }
+                else if (data.type != 'ice.Wire') {
+                  _this.breadcrumbs.push({ name: data.blockType });
+                  if(!$rootScope.$$phase) {
+                    $rootScope.$apply();
+                  }
+                  var disabled = true;
+                  if (_this.breadcrumbs.length == 2) {
+                    $rootScope.$broadcast('refreshProject', function() {
+                      _this.loadGraph(dependencies[data.blockType], disabled);
+                      _this.appEnable(false);
+                    });
+                  }
+                  else {
+                    _this.loadGraph(dependencies[data.blockType], disabled);
+                    _this.appEnable(false);
+                  }
+                }
+              }
+            })(this)
+          );
 
           paper.on('blank:pointerdown',
-            function() {
-              if (paper.options.interactive) {
-                disableSelected();
+            (function(_this) {
+              return function(evt, x, y) {
+                if (paper.options.interactive) {
+                  if (evt.which == 3) {
+                    // Right button
+                    selectionView.startSelecting(evt, x, y);
+                  }
+                  else if  (evt.which == 1) {
+                    // Left button
+                    _this.panAndZoom.enablePan();
+                  }
+                }
+              }
+            })(this)
+          );
+
+          paper.on('cell:pointerup blank:pointerup',
+            (function(_this) {
+              return function(cellView, evt) {
+                _this.panAndZoom.disablePan();
+              }
+            })(this)
+          );
+
+          paper.on('cell:mouseover',
+            function(cellView, evt, x, y) {
+              if (!cellView.model.isLink()) {
+                cellView.$box.addClass('highlight');
+              }
+            }
+          );
+
+          paper.on('cell:mouseout',
+            function(cellView, evt, x, y) {
+              if (!cellView.model.isLink()) {
+                cellView.$box.removeClass('highlight');
               }
             }
           );
         };
 
-        $(document).on('disableSelected', function() {
-          disableSelected();
-        });
-
-        function disableSelected() {
-          if (selectedCell) {
-            if (paper.findViewByModel(selectedCell))
-              V(paper.findViewByModel(selectedCell).el).removeClass('highlighted');
-            selectedCell = null;
-          }
-        }
-
-        this.clearAll = clearAll;
-
-        function clearAll() {
+        this.clearAll = function() {
           graph.clear();
-          selectedCell = null;
-          appEnable(true);
+          this.appEnable(true);
         };
 
-        this.appEnable = appEnable;
-
-        function appEnable(value) {
+        this.appEnable = function(value) {
           paper.options.interactive = value;
           var cells = graph.getCells();
           for (var i in cells) {
@@ -147,14 +280,16 @@ angular.module('icestudio')
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
             angular.element('#paper').css('opacity', '1.0');
+            this.panAndZoom.enableZoom();
           }
           else {
             angular.element('#menu').addClass('disable-menu');
             angular.element('#paper').css('opacity', '0.5');
+            this.panAndZoom.disableZoom();
           }
         };
 
-        this.createBlock = function(type, block) {
+        this.createBlock = function(type, block, callback) {
           var blockInstance = {
             id: null,
             data: {},
@@ -189,7 +324,15 @@ angular.module('icestudio')
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
                   blockInstance.position.x = 250;
+
+                  if (block) {
+                    blockInstance.data.code = block.data.code;
+                    blockInstance.position = block.position;
+                  }
                   addBasicCodeBlock(blockInstance);
+
+                  if (callback)
+                    callback();
                 }
             });
           }
@@ -207,7 +350,7 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicIOBlock(blockInstance);
+                      addBasicInputBlock(blockInstance);
                       blockInstance.position.y += 100;
                     }
                   }
@@ -220,7 +363,7 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicIOBlock(blockInstance);
+                  addBasicInputBlock(blockInstance);
                   blockInstance.position.y += 100;
                 }
             });
@@ -240,7 +383,7 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicIOBlock(blockInstance);
+                      addBasicOutputBlock(blockInstance);
                       blockInstance.position.y += 100;
                     }
                   }
@@ -254,7 +397,7 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicIOBlock(blockInstance);
+                  addBasicOutputBlock(blockInstance);
                   blockInstance.position.y += 100;
                 }
             });
@@ -268,7 +411,7 @@ angular.module('icestudio')
               dependencies[type] = block;
               blockInstance.position.x = 100;
               blockInstance.position.y = 150;
-              addBlock(blockInstance, block);
+              addGenericBlock(blockInstance, block);
             }
             else {
               alertify.error('Wrong block format: ' + type);
@@ -292,30 +435,32 @@ angular.module('icestudio')
             var type = cell.attributes.blockType;
             if (type == 'basic.input' || type == 'basic.output') {
               cell.attributes.choices = boards.getPinout();
-              paper.findViewByModel(cell.id).renderChoices();
+              var view = paper.findViewByModel(cell.id);
+              view.renderChoices();
+              view.clearValue();
             }
           }
         }
 
         this.cloneSelected = function() {
-          if (selectedCell) {
-            var newCell = selectedCell.clone();
-            newCell.translate(50, 50);
-            graph.addCell(newCell);
-            alertify.success('Block ' + newCell.attributes.blockType + ' cloned');
+          if (selection) {
+            selection.each(function(cell) {
+              var newCell = cell.clone();
+              newCell.translate(50, 50);
+              addCell(newCell);
+            });
           }
         }
 
-        this.getSelectedType = function() {
-          if (selectedCell) {
-            return selectedCell.attributes.blockType;
-          }
+        this.hasSelection = function() {
+          return selection.length > 0;
         }
 
         this.removeSelected = function() {
-          if (selectedCell) {
-            selectedCell.remove();
-            selectedCell = null;
+          if (selection) {
+            selection.each(function(cell) {
+              cell.remove();
+            });
           }
         }
 
@@ -338,11 +483,7 @@ angular.module('icestudio')
           return paper.options.interactive;
         }
 
-        this.loadProject = function(project, disabled) {
-          return loadGraph(project, disabled);
-        }
-
-        function loadGraph(project, disabled) {
+        this.loadGraph = function(project, disabled) {
           if (project &&
               project.graph &&
               project.graph.blocks &&
@@ -355,7 +496,9 @@ angular.module('icestudio')
 
             dependencies = project.deps;
 
-            clearAll();
+            this.clearAll();
+
+            this.setState(project.state);
 
             // Blocks
             for (var i in blockInstances) {
@@ -363,11 +506,14 @@ angular.module('icestudio')
               if (blockInstance.type == 'basic.code') {
                 addBasicCodeBlock(blockInstance, disabled);
               }
-              else if (blockInstance.type == 'basic.input' || blockInstance.type == 'basic.output') {
-                addBasicIOBlock(blockInstance, disabled);
+              else if (blockInstance.type == 'basic.input') {
+                addBasicInputBlock(blockInstance, disabled);
+              }
+              else if (blockInstance.type == 'basic.output') {
+                addBasicOutputBlock(blockInstance, disabled);
               }
               else {
-                addBlock(blockInstance, deps[blockInstance.type]);
+                addGenericBlock(blockInstance, deps[blockInstance.type]);
               }
             }
 
@@ -388,40 +534,37 @@ angular.module('icestudio')
             position: { x: 100, y: 100 }
           }
           dependencies[type] = block;
-          addBlock(blockInstance, block);
+          addGenericBlock(blockInstance, block);
         }
 
-        function addBasicIOBlock(blockInstances, disabled) {
-          var inPorts = [];
-          var outPorts = [];
-
-          if (blockInstances.type == 'basic.input') {
-            outPorts.push({
-              id: 'out',
-              label: ''
-            });
-          }
-          else if (blockInstances.type == 'basic.output') {
-            inPorts.push({
-              id: 'in',
-              label: ''
-            });
-          }
-
-          var block = new joint.shapes.ice.IO({
+        function addBasicInputBlock(blockInstances, disabled) {
+          var cell = new joint.shapes.ice.Input({
             id: blockInstances.id,
             blockType: blockInstances.type,
             data: blockInstances.data,
+            label: blockInstances.data.label,
             position: blockInstances.position,
             disabled: disabled,
-            choices: boards.getPinout(),
-            inPorts: inPorts,
-            outPorts: outPorts,
-            size: { width: 120, height: 70 },
-            attrs: { '.block-label': { text: blockInstances.data.label } }
+            choices: boards.getPinout()
           });
 
-          graph.addCell(block);
+          addCell(cell);
+          return cell;
+        };
+
+        function addBasicOutputBlock(blockInstances, disabled) {
+          var cell = new joint.shapes.ice.Output({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: blockInstances.data,
+            label: blockInstances.data.label,
+            position: blockInstances.position,
+            disabled: disabled,
+            choices: boards.getPinout()
+          });
+
+          addCell(cell);
+          return cell;
         };
 
         function addBasicCodeBlock(blockInstances, disabled) {
@@ -442,21 +585,21 @@ angular.module('icestudio')
             });
           }
 
-          var block = new joint.shapes.ice.Code({
+          var cell = new joint.shapes.ice.Code({
             id: blockInstances.id,
             blockType: blockInstances.type,
             data: blockInstances.data,
             position: blockInstances.position,
             disabled: disabled,
             inPorts: inPorts,
-            outPorts: outPorts,
-            size: { width: 400, height: 200 }
+            outPorts: outPorts
           });
 
-          graph.addCell(block);
+          addCell(cell);
+          return cell;
         };
 
-        function addBlock(blockInstance, block) {
+        function addGenericBlock(blockInstance, block) {
           var inPorts = [];
           var outPorts = [];
 
@@ -479,38 +622,28 @@ angular.module('icestudio')
           var numPorts = Math.max(inPorts.length, outPorts.length);
 
           var blockLabel = blockInstance.type.toUpperCase();
-
           if (blockInstance.type.indexOf('.') != -1) {
             blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
           }
 
-          var attrs = {};
-
+          var blockImage = '';
           if (block.image && nodeFs.existsSync(block.image)) {
-            attrs['.block-image'] = {
-              x: 60 - 48,
-              y: 25 + 10 * numPorts - 48,
-              'xlink:href': block.image
-            };
-          }
-          else {
-            attrs['.block-label'] = {
-              text: blockLabel
-            };
+            blockImage = block.image;
           }
 
-          var block = new joint.shapes.ice.Block({
+          var cell = new joint.shapes.ice.Generic({
             id: blockInstance.id,
             blockType: blockInstance.type,
             data: {},
+            image: blockImage,
+            label: blockLabel,
             position: blockInstance.position,
             inPorts: inPorts,
-            outPorts: outPorts,
-            size: { width: 120, height: 50 + 20 * numPorts },
-            attrs: attrs
+            outPorts: outPorts
           });
 
-          graph.addCell(block);
+          addCell(cell);
+          return cell;
         }
 
         function addWire(wire) {
@@ -537,7 +670,13 @@ angular.module('icestudio')
             target: { id: target.id, selector: targetSelector, port: wire.target.port },
             vertices: wire.vertices
           });
-          graph.addCell(_wire);
+
+          addCell(_wire);
         }
+
+      function addCell(cell) {
+        cell.attributes.state = state;
+        graph.addCell(cell);
+      }
 
     }]);

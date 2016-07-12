@@ -7,6 +7,8 @@ angular.module('icestudio')
         // Variables
 
         this.project = {
+          image: '',
+          state: null,
           board: '',
           graph: {},
           deps: {}
@@ -18,11 +20,13 @@ angular.module('icestudio')
         this.newProject = function(name) {
           this.project = {
             image: '',
+            state: null,
             board: '',
             graph: {},
             deps: {}
           };
           graph.clearAll();
+          graph.setState(this.project.state);
           this.updateProjectName(name);
           alertify.success('New project ' + name + ' created');
         };
@@ -43,7 +47,7 @@ angular.module('icestudio')
           this.updateProjectName(name);
           this.project = project;
           boards.selectBoard(project.board);
-          if (graph.loadProject(project)) {
+          if (graph.loadGraph(project)) {
             alertify.success('Project ' + name + ' loaded');
           }
           else {
@@ -120,7 +124,10 @@ angular.module('icestudio')
           for (var c = 0; c < graphData.cells.length; c++) {
             var cell = graphData.cells[c];
 
-            if (cell.type == 'ice.Block' || cell.type == 'ice.IO' || cell.type == 'ice.Code') {
+            if (cell.type == 'ice.Generic' ||
+                cell.type == 'ice.Input' ||
+                cell.type == 'ice.Output' ||
+                cell.type == 'ice.Code') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;
@@ -140,6 +147,8 @@ angular.module('icestudio')
             }
           }
 
+          this.project.state = graph.getState();
+
           this.project.board = boards.selectedBoard.id;
 
           this.project.graph = { blocks: blocks, wires: wires };
@@ -151,6 +160,7 @@ angular.module('icestudio')
         this.clearProject = function() {
           this.project = {
             image: '',
+            state: this.project.state,
             board: '',
             graph: {},
             deps: {}
@@ -167,13 +177,11 @@ angular.module('icestudio')
         };
 
         this.removeSelected = function() {
-          var type = graph.getSelectedType();
+          var selection = graph.hasSelection();
           graph.removeSelected();
-          if (type) {
-            // There is no 'type' block
-            if (graph.typeInGraph(type) == 0) {
-              delete this.project.deps[type];
-            }
+          if (selection) {
+            // TODO: purge dependencies
+            //delete this.project.deps[type];
           }
         };
 
