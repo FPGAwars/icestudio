@@ -1,6 +1,8 @@
 {
   "name": "Icestudio",
-  "version": "0.2.0-beta1",
+  "version": "0.2.0-beta2-dev",
+  "description": "Experimental graphic editor for open FPGAs",
+  "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "scripts": {

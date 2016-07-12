@@ -83,7 +83,6 @@ angular.module('icestudio')
           this.refreshProject();
           // Convert project to block
           var block = angular.copy(this.project);
-          delete block.image;
           delete block.board;
           for (var i in block.graph.blocks) {
             if (block.graph.blocks[i].type == 'basic.input' ||
@@ -125,21 +124,21 @@ angular.module('icestudio')
           for (var c = 0; c < graphData.cells.length; c++) {
             var cell = graphData.cells[c];
 
-            if (cell.type == 'test.Generic' ||
-                cell.type == 'test.Input' ||
-                cell.type == 'test.Output' ||
-                cell.type == 'test.Code') {
+            if (cell.type == 'ice.Generic' ||
+                cell.type == 'ice.Input' ||
+                cell.type == 'ice.Output' ||
+                cell.type == 'ice.Code') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;
               block.data = cell.data;
               block.position = cell.position;
-              if (cell.type == 'test.Code') {
+              if (cell.type == 'ice.Code') {
                 block.data.code = graph.getCode(cell.id);
               }
               blocks.push(block);
             }
-            else if (cell.type == 'test.Wire') {
+            else if (cell.type == 'ice.Wire') {
               var wire = {};
               wire.source = { block: cell.source.id, port: cell.source.port };
               wire.target = { block: cell.target.id, port: cell.target.port };
