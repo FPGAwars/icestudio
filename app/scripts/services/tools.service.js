@@ -12,27 +12,26 @@ angular.module('icestudio')
         checkToolchain();
 
         this.verifyCode = function() {
-          //apio('verify');
+          apio(['verify']);
         };
 
         this.buildCode = function() {
-          apio('build');
+          apio(['build', '--board', boards.selectedBoard.id]);
         };
 
         this.uploadCode = function() {
-          apio('upload');
+          apio(['upload', '--board', boards.selectedBoard.id]);
         };
 
-        function apio(command) {
+        function apio(commands) {
           if (generateCode()) {
             if (toolchain.installed) {
               $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
-              currentAlert= alertify.notify(command + ' start...', 'message', 100000);
+              currentAlert= alertify.notify(commands[0] + ' start...', 'message', 100000);
               nodeProcess.chdir('_build');
               try {
-                execute([utils.getApioExecutable(), 'init', '--board', boards.selectedBoard.id].join(' '));
-                execute([utils.getApioExecutable(), command].join(' '), command, function() {
+                execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
                   if (currentAlert)
                     setTimeout(function() {
                       currentAlert.dismiss(true);
