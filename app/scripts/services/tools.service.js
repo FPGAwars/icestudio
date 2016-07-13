@@ -96,7 +96,7 @@ angular.module('icestudio')
                   if (stdout) {
                     var stdoutError = stdout.split('\n').filter(isError);
                     function isError(line) {
-                      return (line.indexOf('ERROR: ') != -1);
+                      return (line.indexOf('syntax error') != -1);
                     }
                     if (stdoutError.length > 0) {
                       alertify.notify(stdoutError[0], 'error', 5);
@@ -150,6 +150,7 @@ angular.module('icestudio')
             apioInstallSystem,
             apioInstallScons,
             apioInstallIcestorm,
+            apioInstallIverilog,
             installationCompleted
           ]);
 
@@ -215,6 +216,11 @@ angular.module('icestudio')
         function apioInstallIcestorm(callback) {
           updateProgress('apio install icestorm', 80);
           utils.apioInstall('icestorm', callback);
+        }
+
+        function apioInstallIverilog(callback) {
+          updateProgress('apio install iverilog', 90);
+          utils.apioInstall('iverilog', callback);
         }
 
         function installationCompleted(callback) {
