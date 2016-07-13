@@ -80,35 +80,35 @@ angular.module('icestudio')
               callback();
             if (label) {
               if (error) {
-                if (stdout.indexOf('[upload] Error') != -1) {
-                  alertify.notify('Board not detected', 'error', 3);
-                }
-                else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 3);
-                }
-                else if (stdout.indexOf('error: unknown pin') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 3);
-                }
-                else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                  alertify.notify('Duplicated FPGA I/O', 'error', 3);
-                }
-                else {
-                  if (stdout) {
+                if (stdout) {
+                  if (stdout.indexOf('[upload] Error') != -1) {
+                    alertify.notify('Board not detected', 'error', 3);
+                  }
+                  else if (stdout.indexOf('set_io: too few arguments') != -1) {
+                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                  }
+                  else if (stdout.indexOf('error: unknown pin') != -1) {
+                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                  }
+                  else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
+                    alertify.notify('Duplicated FPGA I/O', 'error', 3);
+                  }
+                  else {
                     var stdoutError = stdout.split('\n').filter(isError);
                     function isError(line) {
-                      return (line.indexOf('syntax error') != -1);
+                      return (line.indexOf('syntax error') != -1 || line.indexOf('not installed') != -1);
                     }
                     if (stdoutError.length > 0) {
                       alertify.notify(stdoutError[0], 'error', 5);
                     }
                   }
-                  else {
-                    alertify.notify(stderr, 'error', 5);
-                  }
+                }
+                else {
+                  alertify.notify(stderr, 'error', 5);
                 }
               }
               else {
-                  alertify.success(label + ' success');
+                alertify.success(label + ' success');
               }
               $('body').removeClass('waiting');
               angular.element('#menu').removeClass('disable-menu');
