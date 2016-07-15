@@ -76,6 +76,7 @@ angular.module('icestudio')
 
         function execute(command, label, callback) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
             if (callback)
               callback();
             if (label) {
@@ -96,7 +97,9 @@ angular.module('icestudio')
                   else {
                     var stdoutError = stdout.split('\n').filter(isError);
                     function isError(line) {
-                      return (line.indexOf('syntax error') != -1 || line.indexOf('not installed') != -1);
+                      return (line.indexOf('syntax error') != -1 ||
+                              line.indexOf('not installed') != -1 ||
+                              line.indexOf('error: ') != -1);
                     }
                     if (stdoutError.length > 0) {
                       alertify.notify(stdoutError[0], 'error', 5);
@@ -214,7 +217,7 @@ angular.module('icestudio')
         }
 
         function apioInstallIcestorm(callback) {
-          updateProgress('apio install icestorm', 80);
+          updateProgress('apio install icestorm', 70);
           utils.apioInstall('icestorm', callback);
         }
 

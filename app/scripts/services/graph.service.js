@@ -17,7 +17,7 @@ angular.module('icestudio')
         var dependencies = {};
         this.breadcrumbs = [{ name: '' }];
 
-        var gridsize = 10;
+        var gridsize = 8;
         var state = {
           pan: {
             x: 0,
@@ -294,7 +294,7 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 50, y: 50 }
+            position: { x: 4 * gridsize, y: 4 * gridsize }
           };
 
           if (type == 'basic.code') {
@@ -323,7 +323,7 @@ angular.module('icestudio')
                     if (outPorts[o])
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
-                  blockInstance.position.x = 250;
+                  blockInstance.position.x = 31 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
@@ -351,7 +351,7 @@ angular.module('icestudio')
                         }
                       };
                       addBasicInputBlock(blockInstance);
-                      blockInstance.position.y += 100;
+                      blockInstance.position.y += 10 * gridsize;
                     }
                   }
                 }
@@ -364,7 +364,7 @@ angular.module('icestudio')
                     }
                   };
                   addBasicInputBlock(blockInstance);
-                  blockInstance.position.y += 100;
+                  blockInstance.position.y += 10 * gridsize;
                 }
             });
           }
@@ -373,7 +373,7 @@ angular.module('icestudio')
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
-                  blockInstance.position.x = 750;
+                  blockInstance.position.x = 95 * gridsize;
                   for (var n in names) {
                     if (names[n]) {
                       blockInstance.data = {
@@ -384,12 +384,12 @@ angular.module('icestudio')
                         }
                       };
                       addBasicOutputBlock(blockInstance);
-                      blockInstance.position.y += 100;
+                      blockInstance.position.y += 10 * gridsize;
                     }
                   }
                 }
                 else {
-                  blockInstance.position.x = 750;
+                  blockInstance.position.x = 95 * gridsize;
                   blockInstance.data = {
                     label: '',
                     pin: {
@@ -398,7 +398,7 @@ angular.module('icestudio')
                     }
                   };
                   addBasicOutputBlock(blockInstance);
-                  blockInstance.position.y += 100;
+                  blockInstance.position.y += 10 * gridsize;
                 }
             });
           }
@@ -409,8 +409,8 @@ angular.module('icestudio')
                 block.graph.wires &&
                 block.deps) {
               dependencies[type] = block;
-              blockInstance.position.x = 100;
-              blockInstance.position.y = 150;
+              blockInstance.position.x = 6 * gridsize;
+              blockInstance.position.y = 16 * gridsize;
               addGenericBlock(blockInstance, block);
             }
             else {
@@ -531,7 +531,7 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 100, y: 100 }
+            position: { x: 6 * gridsize, y: 16 * gridsize }
           }
           dependencies[type] = block;
           addGenericBlock(blockInstance, block);
@@ -574,14 +574,16 @@ angular.module('icestudio')
           for (var i in blockInstances.data.ports.in) {
             inPorts.push({
               id: blockInstances.data.ports.in[i],
-              label: blockInstances.data.ports.in[i]
+              label: blockInstances.data.ports.in[i],
+              gridUnits: 32
             });
           }
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
               id: blockInstances.data.ports.out[o],
-              label: blockInstances.data.ports.out[o]
+              label: blockInstances.data.ports.out[o],
+              gridUnits: 32
             });
           }
 
@@ -620,6 +622,16 @@ angular.module('icestudio')
           }
 
           var numPorts = Math.max(inPorts.length, outPorts.length);
+          var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
+
+          var gridUnits = height / gridsize;
+
+          for (var i in inPorts) {
+            inPorts[i].gridUnits = gridUnits;
+          }
+          for (var o in outPorts) {
+            outPorts[o].gridUnits = gridUnits;
+          }
 
           var blockLabel = blockInstance.type.toUpperCase();
           if (blockInstance.type.indexOf('.') != -1) {
@@ -639,7 +651,11 @@ angular.module('icestudio')
             label: blockLabel,
             position: blockInstance.position,
             inPorts: inPorts,
-            outPorts: outPorts
+            outPorts: outPorts,
+            size: {
+              width: 12 * gridsize,
+              height: height
+            }
           });
 
           addCell(cell);

@@ -60,7 +60,7 @@
 
 .io-block label {
   display: block;
-  margin-top: 10px;
+  margin-top: 4px;
   text-align: center;
   font-size: 1em;
   font-weight: bold
@@ -68,9 +68,9 @@
 
 .io-block .select2 {
   position: absolute;
-  left: 10px;
-  bottom: 10px;
-  width: 96px;
+  left: 5px;
+  bottom: 5px;
+  width: 82px;
   pointer-events: auto;
 }
 
@@ -92,7 +92,7 @@
   right: 0;
   bottom: 0;
   width: 95%;
-  height: 90%;
+  height: 93%;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
@@ -103,7 +103,7 @@
 }
 
 .highlight {
-  box-shadow: 0px 0px 30px 0px rgba(220,220,220,1);
+  box-shadow: 0px 0px 30px 0px rgba(200,200,200,1);
 }
 
 .selectionzone {

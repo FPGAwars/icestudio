@@ -17,18 +17,21 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     inPorts: [],
     outPorts: [],
     attrs: {
+      gridUnits: 1,
       '.': {
         magnet: false
       },
       '.body': {
-          stroke: 'none',
-          'fill-opacity': 0
+        width: 1,
+        height: 1,
+        stroke: 'none',
+        'fill-opacity': 0
       },
       '.port-body': {
-         r: 15,
-         'stroke-width': 2,
-         'stroke-opacity': 0,
-         opacity: 0,
+        r: 15,
+        'stroke-width': 2,
+        'stroke-opacity': 0,
+        opacity: 0,
       },
       '.inPorts .port-body': {
         type: 'input',
@@ -78,13 +81,22 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     };
 
+    var portY = (index + 0.5) / total;
+
+    if (portY < 0.5) {
+      portY = Math.ceil(portY * port.gridUnits) / port.gridUnits;
+    }
+    else if (portY > 0.5) {
+      portY = Math.floor(portY * port.gridUnits) / port.gridUnits;
+    }
+
     attrs[portSelector] = {
       ref: '.body',
-      'ref-y': (index + 0.5) * (1 / total)
+      'ref-y': portY
     };
 
     attrs[portWireSelector] = {
-      y: (index + 0.5) * (1 / total)
+      y: portY
     };
 
     if (type === 'in') {
@@ -164,17 +176,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
 joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'ice.Generic',
-    size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
-    }
+    type: 'ice.Generic'
   }, joint.shapes.ice.Model.prototype.defaults)
 });
 
@@ -214,17 +216,12 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
     choices: [],
     outPorts: [{
       id: "out",
-      label: ""
+      label: "",
+      gridUnits: 8
     }],
     size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
+      width: 96,
+      height: 64
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -235,17 +232,12 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
     choices: [],
     inPorts: [{
       id: "in",
-      label: ""
+      label: "",
+      gridUnits: 8
     }],
     size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
+      width: 96,
+      height: 64
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -319,12 +311,12 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
     type: 'ice.Code',
     size: {
       width: 400,
-      height: 200
+      height: 256
     },
     attrs: {
       '.body': {
         width: 400,
-        height: 200
+        height: 256
       }
     }
   }, joint.shapes.ice.Model.prototype.defaults)
