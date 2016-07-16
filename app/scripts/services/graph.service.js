@@ -424,7 +424,7 @@ angular.module('icestudio')
         }
 
         this.getCode = function(id) {
-          return paper.findViewByModel(id).$box.find('#content').val();
+          return paper.findViewByModel(id).$box.find('#content' + id).val();
         }
 
         this.resetIOChoices = function() {

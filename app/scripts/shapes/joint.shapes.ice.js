@@ -324,42 +324,60 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
-    template: '\
-    <div class="code-block">\
-      <div class="code-editor" id="editor"></div>\
-      <textarea class="hidden" id="content"></textarea>\
-      <script>\
-        var editor = ace.edit("editor");\
-        editor.setTheme("ace/theme/chrome");\
-        editor.getSession().setMode("ace/mode/verilog");\
-        editor.getSession().on("change", function () {\
-          $("#content").val(editor.getSession().getValue());\
-          $(document).trigger("disableSelected");\
-        });\
-        editor.on("hover", function() { $(document).trigger("disableSelected"); });\
-        document.getElementById("editor").style.fontSize="15px";\
-      </script>\
-    </div>\
-    ',
-
     // TODO: check change and hover trigger event
 
     initialize: function() {
-      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+      _.bindAll(this, 'updateBox');
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+      var id = this.model.get('id');
+      var editorLabel = 'editor' + id;
+      var contentLabel = 'content' + id;
+      this.$box = $(joint.util.template(
+        '\
+        <div class="code-block">\
+          <div class="code-editor" id="' + editorLabel + '"></div>\
+          <textarea class="hidden" id="' + contentLabel + '"></textarea>\
+          <script>\
+            var editor = ace.edit("' + editorLabel + '");\
+            editor.setTheme("ace/theme/chrome");\
+            editor.getSession().setMode("ace/mode/verilog");\
+            editor.getSession().on("change", function () {\
+              $("#' + contentLabel + '").val(editor.getSession().getValue());\
+              $(document).trigger("disableSelected");\
+            });\
+            editor.on("hover", function() {\
+              $(document).trigger("disableSelected");\
+            });\
+            document.getElementById("' + editorLabel + '").style.fontSize="15px";\
+          </script>\
+        </div>\
+        '
+      )());
+
+      this.model.on('change', this.updateBox, this);
+      this.model.on('remove', this.removeBox, this);
+
+      this.updateBox();
+
+      this.listenTo(this.model, 'process:ports', this.update);
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
       // Prevent paper from handling pointerdown.
-      this.$box.find('.code-editor').on('mousedown click', function(evt) { evt.stopPropagation(); });
+      this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-      this.$box.find('.code-editor').append(this.model.attributes.data.code);
-      this.$box.find('#content').append(this.model.attributes.data.code);
+      this.$box.find('#' + editorLabel).append(this.model.attributes.data.code);
+      this.$box.find('#' + contentLabel).append(this.model.attributes.data.code);
     },
     update: function () {
       this.renderPorts();
+      var id = this.model.get('id');
+      var editorLabel = 'editor' + id;
       if (this.model.get('disabled')) {
-        this.$box.find('.code-editor').css({'pointer-events': 'none'});
+        this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
       }
       else {
-        this.$box.find('.code-editor').css({'pointer-events': 'all'});
+        this.$box.find('#' + editorLabel).css({'pointer-events': 'all'});
       }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
@@ -380,7 +398,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 // Custom wire
 
 joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices) {
-
+    var gridSize = 8;
     var dimensionFix = 1e-3;
 
     var points = [];
@@ -391,7 +409,7 @@ joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices)
     });
     points.push({ x: targetPoint.x, y: targetPoint.y });
 
-    var step = 15 + 2;
+    var step = 16;
     var n = points.length;
 
     var sq = { x: points[0].x - points[1].x, y: points[0].y - points[1].y };
@@ -403,11 +421,11 @@ joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices)
     var tx = (tq.y == 0) ? Math.sign(tq.x) * step : 0;
     var ty = (tq.x == 0) ? Math.sign(tq.y) * step : 0;
 
-    var d = ['M', sourcePoint.x + sx, sourcePoint.y + sy];
+    var d = ['M', sourcePoint.x, sourcePoint.y];
 
     _.each(vertices, function(vertex) { d.push(vertex.x, vertex.y); });
 
-    d.push(targetPoint.x + tx + dimensionFix, targetPoint.y + ty + dimensionFix);
+    d.push(targetPoint.x + dimensionFix, targetPoint.y + dimensionFix);
 
     return d.join(' ');
 };
