@@ -171,7 +171,9 @@ angular.module('icestudio')
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               if (paper.options.interactive) {
-                cellView.$box.css('z-index', zIndex++);
+                if (!cellView.model.isLink()) {
+                  cellView.$box.css('z-index', zIndex++);
+                }
                 if (evt.which == 3) {
                   // Right button
                   selection.add(cellView.model);
@@ -334,7 +336,8 @@ angular.module('icestudio')
                     blockInstance.data.code = block.data.code;
                     blockInstance.position = block.position;
                   }
-                  addBasicCodeBlock(blockInstance);
+                  var cell = addBasicCodeBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
 
                   if (callback)
                     callback();
@@ -355,7 +358,8 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicInputBlock(blockInstance);
+                      var cell = addBasicInputBlock(blockInstance);
+                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
                       blockInstance.position.y += 10 * gridsize;
                     }
                   }
@@ -368,7 +372,8 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicInputBlock(blockInstance);
+                  var cell = addBasicInputBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
                   blockInstance.position.y += 10 * gridsize;
                 }
             });
@@ -388,7 +393,8 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicOutputBlock(blockInstance);
+                      var cell = addBasicOutputBlock(blockInstance);
+                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
                       blockInstance.position.y += 10 * gridsize;
                     }
                   }
@@ -402,7 +408,8 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicOutputBlock(blockInstance);
+                  var cell = addBasicOutputBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
                   blockInstance.position.y += 10 * gridsize;
                 }
             });
@@ -416,7 +423,8 @@ angular.module('icestudio')
               dependencies[type] = block;
               blockInstance.position.x = 6 * gridsize;
               blockInstance.position.y = 16 * gridsize;
-              addGenericBlock(blockInstance, block);
+              var cell = addGenericBlock(blockInstance, block);
+              paper.findViewByModel(cell).$box.css('z-index', zIndex++);
             }
             else {
               alertify.error('Wrong block format: ' + type);
@@ -539,7 +547,8 @@ angular.module('icestudio')
             position: { x: 6 * gridsize, y: 16 * gridsize }
           }
           dependencies[type] = block;
-          addGenericBlock(blockInstance, block);
+          var cell = addGenericBlock(blockInstance, block);
+          paper.findViewByModel(cell).$box.css('z-index', zIndex++);
         }
 
         function addBasicInputBlock(blockInstances, disabled) {
@@ -698,7 +707,6 @@ angular.module('icestudio')
       function addCell(cell) {
         cell.attributes.state = state;
         graph.addCell(cell);
-        //paper.findViewByModel(cell).$box.css('z-index', zIndex++);
       }
 
     }]);

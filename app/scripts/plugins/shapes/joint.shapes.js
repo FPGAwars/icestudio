@@ -28,10 +28,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         'fill-opacity': 0
       },
       '.port-body': {
-        r: 15,
-        'stroke-width': 2,
-        'stroke-opacity': 0,
-        opacity: 0,
+        r: 16,
+        fill: 'red',
+        opacity: 0
       },
       '.inPorts .port-body': {
         type: 'input',
@@ -42,13 +41,13 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         magnet: true
       },
       '.inPorts .port-label': {
-        x: 15,
+        x: 12,
         y: -10,
         'text-anchor': 'end',
         fill: '#777'
       },
       '.outPorts .port-label': {
-        x: -15,
+        x: -12,
         y: -10,
         'text-anchor': 'start',
         fill: '#777'
@@ -95,12 +94,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     };
 
     if (type === 'in') {
-      attrs[portSelector]['ref-x'] = -20;
-      attrs[portWireSelector]['d'] = 'M 0 0 L 20 0';
+      attrs[portSelector]['ref-x'] = -16;
+      attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
     }
     else {
-      attrs[portSelector]['ref-dx'] = 20;
-      attrs[portWireSelector]['d'] = 'M 0 0 L -20 0';
+      attrs[portSelector]['ref-dx'] = 16;
+      attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
     }
 
     return attrs;
@@ -392,39 +391,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
 // Custom wire
 
-joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices) {
-    var gridSize = 8;
-    var dimensionFix = 1e-3;
-
-    var points = [];
-
-    points.push({ x: sourcePoint.x, y: sourcePoint.y });
-    _.each(vertices, function(vertex) {
-      points.push({ x: vertex.x, y: vertex.y });
-    });
-    points.push({ x: targetPoint.x, y: targetPoint.y });
-
-    var step = 16;
-    var n = points.length;
-
-    var sq = { x: points[0].x - points[1].x, y: points[0].y - points[1].y };
-    var tq = { x: points[n-1].x - points[n-2].x, y: points[n-1].y - points[n-2].y };
-
-    var sx = Math.sign(sq.x) * step;
-    var sy = Math.sign(sq.y) * step;
-
-    var tx = (tq.y == 0) ? Math.sign(tq.x) * step : 0;
-    var ty = (tq.x == 0) ? Math.sign(tq.y) * step : 0;
-
-    var d = ['M', sourcePoint.x, sourcePoint.y];
-
-    _.each(vertices, function(vertex) { d.push(vertex.x, vertex.y); });
-
-    d.push(targetPoint.x + dimensionFix, targetPoint.y + dimensionFix);
-
-    return d.join(' ');
-};
-
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   markup: [
@@ -449,11 +415,11 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     attrs: {
       '.connection': { 'stroke-width': 2, stroke: '#777'},
-      '.marker-vertex': { r: 7 }
+      '.marker-vertex': { r: 8 }
     },
 
-    router: { name: 'manhattan' },
-    connector: { name: 'lineGapConnector'}
+    router: { name: 'ice' },
+    connector: { name: 'ice'}
 
   }, joint.dia.Link.prototype.defaults)
 
