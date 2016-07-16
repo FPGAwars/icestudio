@@ -83,12 +83,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
 
     var portY = (index + 0.5) / total;
 
-    if (portY < 0.5) {
-      portY = Math.ceil(portY * port.gridUnits) / port.gridUnits;
-    }
-    else if (portY > 0.5) {
-      portY = Math.floor(portY * port.gridUnits) / port.gridUnits;
-    }
+    portY = Math.round(portY * port.gridUnits) / port.gridUnits;
 
     attrs[portSelector] = {
       ref: '.body',

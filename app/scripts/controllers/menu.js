@@ -232,6 +232,12 @@ angular.module('icestudio')
       }
     });
 
+    // View
+
+    $scope.resetState = function() {
+      graph.resetState();
+    }
+
     // Boards
 
     $scope.selectBoard = function(board) {

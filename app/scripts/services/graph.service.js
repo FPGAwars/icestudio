@@ -52,6 +52,10 @@ angular.module('icestudio')
           setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
         }
 
+        this.resetState = function() {
+          this.setState(null);
+        }
+
         function setGrid(paper, size, color, offset) {
           // Set grid size on the JointJS paper object (joint.dia.Paper instance)
           paper.options.gridsize = gridsize;
@@ -167,6 +171,7 @@ angular.module('icestudio')
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               if (paper.options.interactive) {
+                cellView.$box.css('z-index', zIndex++);
                 if (evt.which == 3) {
                   // Right button
                   selection.add(cellView.model);
@@ -693,6 +698,7 @@ angular.module('icestudio')
       function addCell(cell) {
         cell.attributes.state = state;
         graph.addCell(cell);
+        //paper.findViewByModel(cell).$box.css('z-index', zIndex++);
       }
 
     }]);
