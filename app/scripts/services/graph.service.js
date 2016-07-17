@@ -472,6 +472,8 @@ angular.module('icestudio')
         this.removeSelected = function() {
           if (selection) {
             selection.each(function(cell) {
+              selection.reset(selection.without(cell));
+              selectionView.destroySelectionBox(paper.findViewByModel(cell));
               cell.remove();
             });
           }
@@ -647,7 +649,9 @@ angular.module('icestudio')
             outPorts[o].gridUnits = gridUnits;
           }
 
+
           var blockLabel = blockInstance.type.toUpperCase();
+          var width = Math.max((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
             blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
           }
@@ -655,6 +659,7 @@ angular.module('icestudio')
           var blockImage = '';
           if (block.image && nodeFs.existsSync(block.image)) {
             blockImage = block.image;
+            width = 12 * gridsize;
           }
 
           var cell = new joint.shapes.ice.Generic({
@@ -667,7 +672,7 @@ angular.module('icestudio')
             inPorts: inPorts,
             outPorts: outPorts,
             size: {
-              width: 12 * gridsize,
+              width: width,
               height: height
             }
           });
