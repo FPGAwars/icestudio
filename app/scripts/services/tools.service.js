@@ -12,27 +12,26 @@ angular.module('icestudio')
         checkToolchain();
 
         this.verifyCode = function() {
-          //apio('verify');
+          apio(['verify']);
         };
 
         this.buildCode = function() {
-          apio('build');
+          apio(['build', '--board', boards.selectedBoard.id]);
         };
 
         this.uploadCode = function() {
-          apio('upload');
+          apio(['upload', '--board', boards.selectedBoard.id]);
         };
 
-        function apio(command) {
+        function apio(commands) {
           if (generateCode()) {
             if (toolchain.installed) {
               $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
-              currentAlert= alertify.notify(command + ' start...', 'message', 100000);
+              currentAlert= alertify.notify(commands[0] + ' start...', 'message', 100000);
               nodeProcess.chdir('_build');
               try {
-                execute([utils.getApioExecutable(), 'init', '--board', boards.selectedBoard.id].join(' '));
-                execute([utils.getApioExecutable(), command].join(' '), command, function() {
+                execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
                   if (currentAlert)
                     setTimeout(function() {
                       currentAlert.dismiss(true);
@@ -77,39 +76,42 @@ angular.module('icestudio')
 
         function execute(command, label, callback) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
             if (callback)
               callback();
             if (label) {
               if (error) {
-                if (stdout.indexOf('[upload] Error') != -1) {
-                  alertify.notify('Board not detected', 'error', 3);
-                }
-                else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 3);
-                }
-                else if (stdout.indexOf('error: unknown pin') != -1) {
-                  alertify.notify('FPGA I/O not defined', 'error', 3);
-                }
-                else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                  alertify.notify('Duplicated FPGA I/O', 'error', 3);
-                }
-                else {
-                  if (stdout) {
+                if (stdout) {
+                  if (stdout.indexOf('[upload] Error') != -1) {
+                    alertify.notify('Board not detected', 'error', 3);
+                  }
+                  else if (stdout.indexOf('set_io: too few arguments') != -1) {
+                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                  }
+                  else if (stdout.indexOf('error: unknown pin') != -1) {
+                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                  }
+                  else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
+                    alertify.notify('Duplicated FPGA I/O', 'error', 3);
+                  }
+                  else {
                     var stdoutError = stdout.split('\n').filter(isError);
                     function isError(line) {
-                      return (line.indexOf('ERROR: ') != -1);
+                      return (line.indexOf('syntax error') != -1 ||
+                              line.indexOf('not installed') != -1 ||
+                              line.indexOf('error: ') != -1);
                     }
                     if (stdoutError.length > 0) {
                       alertify.notify(stdoutError[0], 'error', 5);
                     }
                   }
-                  else {
-                    alertify.notify(stderr, 'error', 5);
-                  }
+                }
+                else {
+                  alertify.notify(stderr, 'error', 5);
                 }
               }
               else {
-                  alertify.success(label + ' success');
+                alertify.success(label + ' success');
               }
               $('body').removeClass('waiting');
               angular.element('#menu').removeClass('disable-menu');
@@ -151,6 +153,7 @@ angular.module('icestudio')
             apioInstallSystem,
             apioInstallScons,
             apioInstallIcestorm,
+            apioInstallIverilog,
             installationCompleted
           ]);
 
@@ -214,8 +217,13 @@ angular.module('icestudio')
         }
 
         function apioInstallIcestorm(callback) {
-          updateProgress('apio install icestorm', 80);
+          updateProgress('apio install icestorm', 70);
           utils.apioInstall('icestorm', callback);
+        }
+
+        function apioInstallIverilog(callback) {
+          updateProgress('apio install iverilog', 90);
+          utils.apioInstall('iverilog', callback);
         }
 
         function installationCompleted(callback) {

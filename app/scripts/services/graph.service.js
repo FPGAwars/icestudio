@@ -17,7 +17,7 @@ angular.module('icestudio')
         var dependencies = {};
         this.breadcrumbs = [{ name: '' }];
 
-        var gridsize = 10;
+        var gridsize = 8;
         var state = {
           pan: {
             x: 0,
@@ -50,6 +50,10 @@ angular.module('icestudio')
           this.panAndZoom.zoom(_state.zoom);
           this.panAndZoom.pan(_state.pan);
           setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
+        }
+
+        this.resetState = function() {
+          this.setState(null);
         }
 
         function setGrid(paper, size, color, offset) {
@@ -158,15 +162,18 @@ angular.module('icestudio')
 
          selectionView.on('selection-box:pointerdown', function(evt) {
              if (evt.ctrlKey || evt.metaKey) {
-                 var cell = selection.get($(evt.target).data('model'));
-                 selection.reset(selection.without(cell));
-                 selectionView.destroySelectionBox(paper.findViewByModel(cell));
+               var cell = selection.get($(evt.target).data('model'));
+               selection.reset(selection.without(cell));
+               selectionView.destroySelectionBox(paper.findViewByModel(cell));
              }
          });
 
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               if (paper.options.interactive) {
+                if (!cellView.model.isLink()) {
+                  cellView.$box.css('z-index', zIndex++);
+                }
                 if (evt.which == 3) {
                   // Right button
                   selection.add(cellView.model);
@@ -294,7 +301,7 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 50, y: 50 }
+            position: { x: 4 * gridsize, y: 4 * gridsize }
           };
 
           if (type == 'basic.code') {
@@ -323,13 +330,14 @@ angular.module('icestudio')
                     if (outPorts[o])
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
-                  blockInstance.position.x = 250;
+                  blockInstance.position.x = 31 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
                     blockInstance.position = block.position;
                   }
-                  addBasicCodeBlock(blockInstance);
+                  var cell = addBasicCodeBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
 
                   if (callback)
                     callback();
@@ -350,8 +358,9 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicInputBlock(blockInstance);
-                      blockInstance.position.y += 100;
+                      var cell = addBasicInputBlock(blockInstance);
+                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                      blockInstance.position.y += 10 * gridsize;
                     }
                   }
                 }
@@ -363,8 +372,9 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicInputBlock(blockInstance);
-                  blockInstance.position.y += 100;
+                  var cell = addBasicInputBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                  blockInstance.position.y += 10 * gridsize;
                 }
             });
           }
@@ -373,7 +383,7 @@ angular.module('icestudio')
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
-                  blockInstance.position.x = 750;
+                  blockInstance.position.x = 95 * gridsize;
                   for (var n in names) {
                     if (names[n]) {
                       blockInstance.data = {
@@ -383,13 +393,14 @@ angular.module('icestudio')
                           value: 0
                         }
                       };
-                      addBasicOutputBlock(blockInstance);
-                      blockInstance.position.y += 100;
+                      var cell = addBasicOutputBlock(blockInstance);
+                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                      blockInstance.position.y += 10 * gridsize;
                     }
                   }
                 }
                 else {
-                  blockInstance.position.x = 750;
+                  blockInstance.position.x = 95 * gridsize;
                   blockInstance.data = {
                     label: '',
                     pin: {
@@ -397,8 +408,9 @@ angular.module('icestudio')
                       value: 0
                     }
                   };
-                  addBasicOutputBlock(blockInstance);
-                  blockInstance.position.y += 100;
+                  var cell = addBasicOutputBlock(blockInstance);
+                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                  blockInstance.position.y += 10 * gridsize;
                 }
             });
           }
@@ -409,9 +421,10 @@ angular.module('icestudio')
                 block.graph.wires &&
                 block.deps) {
               dependencies[type] = block;
-              blockInstance.position.x = 100;
-              blockInstance.position.y = 150;
-              addGenericBlock(blockInstance, block);
+              blockInstance.position.x = 6 * gridsize;
+              blockInstance.position.y = 16 * gridsize;
+              var cell = addGenericBlock(blockInstance, block);
+              paper.findViewByModel(cell).$box.css('z-index', zIndex++);
             }
             else {
               alertify.error('Wrong block format: ' + type);
@@ -424,7 +437,7 @@ angular.module('icestudio')
         }
 
         this.getCode = function(id) {
-          return paper.findViewByModel(id).$box.find('#content').val();
+          return paper.findViewByModel(id).$box.find('#content' + id).val();
         }
 
         this.resetIOChoices = function() {
@@ -446,8 +459,11 @@ angular.module('icestudio')
           if (selection) {
             selection.each(function(cell) {
               var newCell = cell.clone();
-              newCell.translate(50, 50);
+              newCell.translate(6 * gridsize, 6 * gridsize);
               addCell(newCell);
+              paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
+              selection.reset(selection.without(cell));
+              selectionView.cancelSelection();
             });
           }
         }
@@ -459,6 +475,8 @@ angular.module('icestudio')
         this.removeSelected = function() {
           if (selection) {
             selection.each(function(cell) {
+              selection.reset(selection.without(cell));
+              selectionView.cancelSelection();
               cell.remove();
             });
           }
@@ -531,10 +549,11 @@ angular.module('icestudio')
             id: null,
             data: {},
             type: type,
-            position: { x: 100, y: 100 }
+            position: { x: 6 * gridsize, y: 16 * gridsize }
           }
           dependencies[type] = block;
-          addGenericBlock(blockInstance, block);
+          var cell = addGenericBlock(blockInstance, block);
+          paper.findViewByModel(cell).$box.css('z-index', zIndex++);
         }
 
         function addBasicInputBlock(blockInstances, disabled) {
@@ -574,14 +593,16 @@ angular.module('icestudio')
           for (var i in blockInstances.data.ports.in) {
             inPorts.push({
               id: blockInstances.data.ports.in[i],
-              label: blockInstances.data.ports.in[i]
+              label: blockInstances.data.ports.in[i],
+              gridUnits: 32
             });
           }
 
           for (var o in blockInstances.data.ports.out) {
             outPorts.push({
               id: blockInstances.data.ports.out[o],
-              label: blockInstances.data.ports.out[o]
+              label: blockInstances.data.ports.out[o],
+              gridUnits: 32
             });
           }
 
@@ -620,8 +641,20 @@ angular.module('icestudio')
           }
 
           var numPorts = Math.max(inPorts.length, outPorts.length);
+          var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
+
+          var gridUnits = height / gridsize;
+
+          for (var i in inPorts) {
+            inPorts[i].gridUnits = gridUnits;
+          }
+          for (var o in outPorts) {
+            outPorts[o].gridUnits = gridUnits;
+          }
+
 
           var blockLabel = blockInstance.type.toUpperCase();
+          var width = Math.max((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
             blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
           }
@@ -629,6 +662,7 @@ angular.module('icestudio')
           var blockImage = '';
           if (block.image && nodeFs.existsSync(block.image)) {
             blockImage = block.image;
+            width = 12 * gridsize;
           }
 
           var cell = new joint.shapes.ice.Generic({
@@ -639,7 +673,11 @@ angular.module('icestudio')
             label: blockLabel,
             position: blockInstance.position,
             inPorts: inPorts,
-            outPorts: outPorts
+            outPorts: outPorts,
+            size: {
+              width: width,
+              height: height
+            }
           });
 
           addCell(cell);

@@ -85,3 +85,7 @@
 .dropdown-submenu-right:hover > a:after {
   border-left-color: #fff;
 }
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+  color: #777;
+}

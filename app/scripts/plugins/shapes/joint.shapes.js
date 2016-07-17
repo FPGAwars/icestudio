@@ -17,18 +17,20 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     inPorts: [],
     outPorts: [],
     attrs: {
+      gridUnits: 1,
       '.': {
         magnet: false
       },
       '.body': {
-          stroke: 'none',
-          'fill-opacity': 0
+        width: 1,
+        height: 1,
+        stroke: 'none',
+        'fill-opacity': 0
       },
       '.port-body': {
-         r: 15,
-         'stroke-width': 2,
-         'stroke-opacity': 0,
-         opacity: 0,
+        r: 16,
+        fill: 'red',
+        opacity: 0
       },
       '.inPorts .port-body': {
         type: 'input',
@@ -39,13 +41,13 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         magnet: true
       },
       '.inPorts .port-label': {
-        x: 15,
+        x: 12,
         y: -10,
         'text-anchor': 'end',
         fill: '#777'
       },
       '.outPorts .port-label': {
-        x: -15,
+        x: -12,
         y: -10,
         'text-anchor': 'start',
         fill: '#777'
@@ -78,22 +80,26 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     };
 
+    var portY = (index + 0.5) / total;
+
+    portY = Math.round(portY * port.gridUnits) / port.gridUnits;
+
     attrs[portSelector] = {
       ref: '.body',
-      'ref-y': (index + 0.5) * (1 / total)
+      'ref-y': portY
     };
 
     attrs[portWireSelector] = {
-      y: (index + 0.5) * (1 / total)
+      y: portY
     };
 
     if (type === 'in') {
-      attrs[portSelector]['ref-x'] = -20;
-      attrs[portWireSelector]['d'] = 'M 0 0 L 20 0';
+      attrs[portSelector]['ref-x'] = -16;
+      attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
     }
     else {
-      attrs[portSelector]['ref-dx'] = 20;
-      attrs[portWireSelector]['d'] = 'M 0 0 L -20 0';
+      attrs[portSelector]['ref-dx'] = 16;
+      attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
     }
 
     return attrs;
@@ -164,17 +170,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
 joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
-    type: 'ice.Generic',
-    size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
-    }
+    type: 'ice.Generic'
   }, joint.shapes.ice.Model.prototype.defaults)
 });
 
@@ -214,17 +210,12 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
     choices: [],
     outPorts: [{
       id: "out",
-      label: ""
+      label: "",
+      gridUnits: 8
     }],
     size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
+      width: 96,
+      height: 64
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -235,17 +226,12 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
     choices: [],
     inPorts: [{
       id: "in",
-      label: ""
+      label: "",
+      gridUnits: 8
     }],
     size: {
-      width: 120,
-      height: 80
-    },
-    attrs: {
-      '.body': {
-        width: 120,
-        height: 80
-      }
+      width: 96,
+      height: 64
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -319,12 +305,12 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
     type: 'ice.Code',
     size: {
       width: 400,
-      height: 200
+      height: 256
     },
     attrs: {
       '.body': {
         width: 400,
-        height: 200
+        height: 256
       }
     }
   }, joint.shapes.ice.Model.prototype.defaults)
@@ -332,42 +318,60 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
-    template: '\
-    <div class="code-block">\
-      <div class="code-editor" id="editor"></div>\
-      <textarea class="hidden" id="content"></textarea>\
-      <script>\
-        var editor = ace.edit("editor");\
-        editor.setTheme("ace/theme/chrome");\
-        editor.getSession().setMode("ace/mode/verilog");\
-        editor.getSession().on("change", function () {\
-          $("#content").val(editor.getSession().getValue());\
-          $(document).trigger("disableSelected");\
-        });\
-        editor.on("hover", function() { $(document).trigger("disableSelected"); });\
-        document.getElementById("editor").style.fontSize="15px";\
-      </script>\
-    </div>\
-    ',
-
     // TODO: check change and hover trigger event
 
     initialize: function() {
-      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+      _.bindAll(this, 'updateBox');
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+      var id = this.model.get('id');
+      var editorLabel = 'editor' + id;
+      var contentLabel = 'content' + id;
+      this.$box = $(joint.util.template(
+        '\
+        <div class="code-block">\
+          <div class="code-editor" id="' + editorLabel + '"></div>\
+          <textarea class="hidden" id="' + contentLabel + '"></textarea>\
+          <script>\
+            var editor = ace.edit("' + editorLabel + '");\
+            editor.setTheme("ace/theme/chrome");\
+            editor.getSession().setMode("ace/mode/verilog");\
+            editor.getSession().on("change", function () {\
+              $("#' + contentLabel + '").val(editor.getSession().getValue());\
+              $(document).trigger("disableSelected");\
+            });\
+            editor.on("hover", function() {\
+              $(document).trigger("disableSelected");\
+            });\
+            document.getElementById("' + editorLabel + '").style.fontSize="15px";\
+          </script>\
+        </div>\
+        '
+      )());
+
+      this.model.on('change', this.updateBox, this);
+      this.model.on('remove', this.removeBox, this);
+
+      this.updateBox();
+
+      this.listenTo(this.model, 'process:ports', this.update);
+      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
       // Prevent paper from handling pointerdown.
-      this.$box.find('.code-editor').on('mousedown click', function(evt) { evt.stopPropagation(); });
+      this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-      this.$box.find('.code-editor').append(this.model.attributes.data.code);
-      this.$box.find('#content').append(this.model.attributes.data.code);
+      this.$box.find('#' + editorLabel).append(this.model.attributes.data.code);
+      this.$box.find('#' + contentLabel).append(this.model.attributes.data.code);
     },
     update: function () {
       this.renderPorts();
+      var id = this.model.get('id');
+      var editorLabel = 'editor' + id;
       if (this.model.get('disabled')) {
-        this.$box.find('.code-editor').css({'pointer-events': 'none'});
+        this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
       }
       else {
-        this.$box.find('.code-editor').css({'pointer-events': 'all'});
+        this.$box.find('#' + editorLabel).css({'pointer-events': 'all'});
       }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
@@ -386,39 +390,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
 
 // Custom wire
-
-joint.connectors.lineGapConnector = function(sourcePoint, targetPoint, vertices) {
-
-    var dimensionFix = 1e-3;
-
-    var points = [];
-
-    points.push({ x: sourcePoint.x, y: sourcePoint.y });
-    _.each(vertices, function(vertex) {
-      points.push({ x: vertex.x, y: vertex.y });
-    });
-    points.push({ x: targetPoint.x, y: targetPoint.y });
-
-    var step = 15 + 2;
-    var n = points.length;
-
-    var sq = { x: points[0].x - points[1].x, y: points[0].y - points[1].y };
-    var tq = { x: points[n-1].x - points[n-2].x, y: points[n-1].y - points[n-2].y };
-
-    var sx = Math.sign(sq.x) * step;
-    var sy = Math.sign(sq.y) * step;
-
-    var tx = (tq.y == 0) ? Math.sign(tq.x) * step : 0;
-    var ty = (tq.x == 0) ? Math.sign(tq.y) * step : 0;
-
-    var d = ['M', sourcePoint.x + sx, sourcePoint.y + sy];
-
-    _.each(vertices, function(vertex) { d.push(vertex.x, vertex.y); });
-
-    d.push(targetPoint.x + tx + dimensionFix, targetPoint.y + ty + dimensionFix);
-
-    return d.join(' ');
-};
 
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
@@ -444,11 +415,11 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     attrs: {
       '.connection': { 'stroke-width': 2, stroke: '#777'},
-      '.marker-vertex': { r: 7 }
+      '.marker-vertex': { r: 8 }
     },
 
-    router: { name: 'manhattan' },
-    connector: { name: 'lineGapConnector'}
+    router: { name: 'ice' },
+    connector: { name: 'ice'}
 
   }, joint.dia.Link.prototype.defaults)
 

@@ -255,8 +255,8 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         default:
             // Hide selection if the user clicked somehwere else in the document.
-            this.$el.hide().empty();
-            this.model.reset([]);
+            // this.$el.hide().empty();
+            // this.model.reset([]);
             break;
         }
 

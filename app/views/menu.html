@@ -84,6 +84,15 @@
                     </ul>
                 </li>
 
+                <li uib-dropdown ng-mouseover="status.view=true" ng-mouseleave="status.view=false" is-open="status.view">
+                    <a href uib-dropdown-toggle>View  <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                      <li>
+                        <a href ng-click="resetState()">{{ 'Reset view' | translate }}</a>
+                      </li>
+                    </ul>
+                </li>
+
                 <li uib-dropdown ng-mouseover="status.boards=true" ng-mouseleave="status.boards=false" is-open="status.boards">
                     <a href uib-dropdown-toggle>Boards  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
@@ -99,9 +108,9 @@
                 <li uib-dropdown ng-mouseover="status.tools=true" ng-mouseleave="status.tools=false" is-open="status.tools">
                     <a href uib-dropdown-toggle>Tools  <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <!--<li>
+                      <li>
                         <a href ng-click="verifyCode()">{{ 'Verify' | translate }}</a>
-                      </li>-->
+                      </li>
                       <li>
                         <a href ng-click="buildCode()">{{ 'Build' | translate }}</a>
                       </li>

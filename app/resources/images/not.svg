@@ -57,30 +57,34 @@
   <g
      id="g4140"
      transform="translate(-66.935167,-7.0003566)">
-    <path
-       inkscape:connector-curvature="0"
-       id="path1316"
-       d="m 70.738576,90 75.522844,0"
-       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <use
-       height="180"
-       width="500"
-       transform="matrix(0.55491218,0,0,1,263.36773,0)"
-       id="use2208"
-       xlink:href="#path1316"
-       y="0"
-       x="0" />
-    <path
-       sodipodi:nodetypes="cccc"
-       id="rect2193"
-       d="m 147.6151,26.615152 114.0505,63.384855 -114.0505,63.384843 0,-126.769698 z"
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       inkscape:connector-curvature="0" />
-    <circle
-       id="path2247"
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       cx="282.48917"
-       cy="90"
-       r="20.152544" />
+    <g
+       id="g4186"
+       transform="translate(0,5.999976)">
+      <path
+         style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 70.738576,90 75.522844,0"
+         id="path1316"
+         inkscape:connector-curvature="0" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#path1316"
+         id="use2208"
+         transform="matrix(0.55491218,0,0,1,263.36773,0)"
+         width="500"
+         height="180" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 147.6151,26.615152 114.0505,63.384855 -114.0505,63.384843 0,-126.769698 z"
+         id="rect2193"
+         sodipodi:nodetypes="cccc" />
+      <circle
+         r="20.152544"
+         cy="90"
+         cx="282.48917"
+         style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="path2247" />
+    </g>
   </g>
 </svg>
