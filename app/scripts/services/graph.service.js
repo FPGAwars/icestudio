@@ -162,9 +162,9 @@ angular.module('icestudio')
 
          selectionView.on('selection-box:pointerdown', function(evt) {
              if (evt.ctrlKey || evt.metaKey) {
-                 var cell = selection.get($(evt.target).data('model'));
-                 selection.reset(selection.without(cell));
-                 selectionView.destroySelectionBox(paper.findViewByModel(cell));
+               var cell = selection.get($(evt.target).data('model'));
+               selection.reset(selection.without(cell));
+               selectionView.destroySelectionBox(paper.findViewByModel(cell));
              }
          });
 
@@ -459,8 +459,11 @@ angular.module('icestudio')
           if (selection) {
             selection.each(function(cell) {
               var newCell = cell.clone();
-              newCell.translate(50, 50);
+              newCell.translate(6 * gridsize, 6 * gridsize);
               addCell(newCell);
+              paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
+              selection.reset(selection.without(cell));
+              selectionView.cancelSelection();
             });
           }
         }
@@ -473,7 +476,7 @@ angular.module('icestudio')
           if (selection) {
             selection.each(function(cell) {
               selection.reset(selection.without(cell));
-              selectionView.destroySelectionBox(paper.findViewByModel(cell));
+              selectionView.cancelSelection();
               cell.remove();
             });
           }
