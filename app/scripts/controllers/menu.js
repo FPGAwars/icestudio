@@ -2,13 +2,13 @@
 
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
-                                    nodeFs,
                                     common,
                                     graph,
                                     tools,
                                     boards,
                                     resources,
                                     gui,
+                                    utils,
                                     _package) {
 
     $scope.common = common;
@@ -18,11 +18,11 @@ angular.module('icestudio')
     $scope.currentBoards = boards.getBoards();
     $scope.menuBlocks = resources.getMenuBlocks();
 
-    $scope.currentProjectPath = '';
-
     $scope.version = _package.version;
-
     $scope.toolchain = tools.toolchain;
+
+    $scope.workingdir = '';
+    $scope.currentProjectPath = '';
 
     // File
 
@@ -44,6 +44,7 @@ angular.module('icestudio')
           event.target.files.clear();
           if (file) {
             if (file.path.endsWith('.ice')) {
+              $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
                 alertify.confirm('The current project will be removed. ' +
                                  'Do you want to continue loading the project?',
@@ -99,6 +100,7 @@ angular.module('icestudio')
             if (! filepath.endsWith('.ice')) {
               filepath += '.ice';
             }
+            $scope.workingdir = utils.dirname(filepath) + utils.sep;
             common.saveProject(filepath);
             $scope.currentProjectPath = filepath;
           }
@@ -111,9 +113,11 @@ angular.module('icestudio')
       setTimeout(function() {
         var ctrl = angular.element('#input-import-block');
         ctrl.on('change', function(event) {
-          var files = event.target.files;
+          var files = JSON.parse(JSON.stringify(event.target.files));
           for (var i in files) {
-            if (files[i].path.endsWith('.iceb')) {
+            if (files[i] &&
+                files[i].path &&
+                files[i].path.endsWith('.iceb')) {
               common.importBlock(files[i].path);
             }
           }
@@ -135,6 +139,7 @@ angular.module('icestudio')
               if (! filepath.endsWith('.iceb')) {
                   filepath += '.iceb';
               }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
               common.exportAsBlock(filepath);
             }
           });
@@ -155,6 +160,7 @@ angular.module('icestudio')
               if (! filepath.endsWith('.v')) {
                   filepath += '.v';
               }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
               common.exportVerilog(filepath);
             }
           });
@@ -175,6 +181,7 @@ angular.module('icestudio')
               if (! filepath.endsWith('.pcf')) {
                   filepath += '.pcf';
               }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
               common.exportPCF(filepath);
             }
           });

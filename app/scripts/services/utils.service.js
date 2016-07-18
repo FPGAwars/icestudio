@@ -157,8 +157,14 @@ angular.module('icestudio')
           }
         }
 
+        this.sep = nodePath.sep;
+
         this.basename = function(filepath) {
-          return filepath.replace(/^.*[\\\/]/, '').split('.')[0];
+          return nodePath.basename(filepath).split('.')[0];
+        }
+
+        this.dirname = function(filepath) {
+          return nodePath.dirname(filepath);
         }
 
         this.readFile = function(filepath, callback) {
