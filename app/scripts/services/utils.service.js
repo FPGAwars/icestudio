@@ -170,7 +170,7 @@ angular.module('icestudio')
           });
         }
 
-        var saveBin = true;
+        var saveBin = false;
 
         this.saveFile = function(filepath, content, callback, compress) {
           if (compress) {
