@@ -137,6 +137,9 @@ angular.module('icestudio')
             var block = graph.blocks[b];
             if (block.type != 'basic.input' && block.type != 'basic.output') {
               var id = digestId(block.type, true);
+              if (block.type == 'basic.code') {
+                id += '_' + digestId(block.id);
+              }
               instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
 
               // Parameters
@@ -189,7 +192,7 @@ angular.module('icestudio')
               if (block) {
                 if (block.type == 'basic.code') {
                   var data = {
-                    name: name + '_' + digestId(block.type, true),
+                    name: name + '_' + digestId(block.type, true) + '_' + digestId(block.id),
                     ports: block.data.ports,
                     content: block.data.code
                   }
