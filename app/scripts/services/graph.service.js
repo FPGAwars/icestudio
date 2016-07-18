@@ -191,7 +191,7 @@ angular.module('icestudio')
                   if (paper.options.interactive) {
                     alertify.prompt('Insert the block label', '',
                       function(evt, label) {
-                        data.label = label;
+                        data.data.label = label;
                         cellView.renderLabel();
                         alertify.success('Label updated');
                     });
@@ -276,6 +276,8 @@ angular.module('icestudio')
         this.clearAll = function() {
           graph.clear();
           this.appEnable(true);
+          selection.reset();
+          selectionView.cancelSelection();
         };
 
         this.appEnable = function(value) {
@@ -654,13 +656,18 @@ angular.module('icestudio')
 
 
           var blockLabel = blockInstance.type.toUpperCase();
-          var width = Math.max((blockLabel.length + 8) * gridsize, 24 * gridsize);
+          var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
-            blockLabel = blockInstance.type.split('.')[0] + '\n' +  blockInstance.type.split('.')[1].toUpperCase();
+            blockLabel = [
+              blockInstance.type.split('.')[0],
+              blockInstance.type.split('.')[1].toUpperCase()
+            ].join(' ');
           }
 
           var blockImage = '';
-          if (block.image && nodeFs.existsSync(block.image)) {
+          if (block.image &&
+              nodeFs.existsSync(block.image) &&
+              nodeFs.lstatSync(block.image).isFile()) {
             blockImage = block.image;
             width = 12 * gridsize;
           }

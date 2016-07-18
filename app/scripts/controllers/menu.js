@@ -177,11 +177,9 @@ angular.module('icestudio')
 
     $scope.setImagePath = function() {
       var current = common.project.image;
-      alertify.prompt('Enter the project\'s image path', (current) ? current : 'resources/images/',
+      alertify.prompt('Enter the project\'s image path', (current) ? current : '',
         function(evt, imagePath) {
-          if (imagePath) {
-            common.setImagePath(imagePath);
-          }
+          common.setImagePath(imagePath);
       });
     }
 

@@ -261,7 +261,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       }, this));
     },
     renderLabel: function () {
-      var name = this.model.get('label');
+      var name = this.model.attributes.data.label;
       this.$box.find('label').text(name);
     },
     renderChoices: function() {
