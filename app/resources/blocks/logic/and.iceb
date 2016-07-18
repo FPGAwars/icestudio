@@ -89,7 +89,7 @@
     ]
   },
   "deps": {},
-  "image": "resources/images/or.svg",
+  "image": "resources/images/and.svg",
   "state": {
     "pan": {
       "x": 0,
