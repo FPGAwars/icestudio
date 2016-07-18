@@ -335,6 +335,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           <script>\
             var editor = ace.edit("' + editorLabel + '");\
             editor.setTheme("ace/theme/chrome");\
+            editor.setFontSize(15);\
             editor.getSession().setMode("ace/mode/verilog");\
             editor.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(editor.getSession().getValue());\
@@ -343,7 +344,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             editor.on("hover", function() {\
               $(document).trigger("disableSelected");\
             });\
-            document.getElementById("' + editorLabel + '").style.fontSize="15px";\
           </script>\
         </div>\
         '
