@@ -32,7 +32,7 @@
         "id": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
         "type": "basic.input",
         "data": {
-          "label": "i"
+          "label": ""
         },
         "position": {
           "x": 64,
@@ -43,7 +43,7 @@
         "id": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
         "type": "basic.output",
         "data": {
-          "label": "o"
+          "label": ""
         },
         "position": {
           "x": 776,
