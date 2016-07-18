@@ -191,7 +191,7 @@ angular.module('icestudio')
                   if (paper.options.interactive) {
                     alertify.prompt('Insert the block label', '',
                       function(evt, label) {
-                        data.label = label;
+                        data.data.label = label;
                         cellView.renderLabel();
                         alertify.success('Label updated');
                     });
@@ -276,6 +276,8 @@ angular.module('icestudio')
         this.clearAll = function() {
           graph.clear();
           this.appEnable(true);
+          selection.reset();
+          selectionView.cancelSelection();
         };
 
         this.appEnable = function(value) {
