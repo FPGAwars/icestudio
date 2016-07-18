@@ -135,10 +135,10 @@ angular.module('icestudio')
               block.data = cell.data;
               block.position = cell.position;
               if (cell.type == 'ice.Code') {
-                block.data.code = graph.getCode(cell.id);
+                block.data.code = graph.getContent(cell.id);
               }
               else if (cell.type == 'ice.Info') {
-                block.data.info = graph.getInfo(cell.id);
+                block.data.info = graph.getContent(cell.id);
               }
               blocks.push(block);
             }

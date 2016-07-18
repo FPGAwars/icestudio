@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards',
-      function($rootScope, nodeFs, joint, boards) {
+    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -445,12 +445,8 @@ angular.module('icestudio')
           return graph.toJSON();
         }
 
-        this.getCode = function(id) {
-          return paper.findViewByModel(id).$box.find('#content' + id).val();
-        }
-
-        this.getInfo = function(id) {
-          return paper.findViewByModel(id).$box.find('#content' + id).val();
+        this.getContent = function(id) {
+          return paper.findViewByModel(id).$box.find('#content' + sha1(id).toString().substring(0, 6)).val();
         }
 
         this.resetIOChoices = function() {

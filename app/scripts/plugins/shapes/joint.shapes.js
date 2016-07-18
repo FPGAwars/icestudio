@@ -1,5 +1,7 @@
 'use strict';
 
+var sha1 = require('sha1');
+
 // Model element
 
 joint.shapes.ice = {};
@@ -324,7 +326,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       _.bindAll(this, 'updateBox');
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      var id = this.model.get('id');
+      var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       var contentLabel = 'content' + id;
       this.$box = $(joint.util.template(
@@ -333,15 +335,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           <div class="code-editor" id="' + editorLabel + '"></div>\
           <textarea class="hidden" id="' + contentLabel + '"></textarea>\
           <script>\
-            var editor = ace.edit("' + editorLabel + '");\
-            editor.setTheme("ace/theme/chrome");\
-            editor.setFontSize(15);\
-            editor.getSession().setMode("ace/mode/verilog");\
-            editor.getSession().on("change", function () {\
-              $("#' + contentLabel + '").val(editor.getSession().getValue());\
+            var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
+            ' + editorLabel + '.setTheme("ace/theme/chrome");\
+            ' + editorLabel + '.setFontSize(15);\
+            ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
+            ' + editorLabel + '.getSession().on("change", function () {\
+              $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
               $(document).trigger("disableSelected");\
             });\
-            editor.on("hover", function() {\
+            ' + editorLabel + '.on("hover", function() {\
               $(document).trigger("disableSelected");\
             });\
           </script>\
@@ -365,7 +367,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     },
     update: function () {
       this.renderPorts();
-      var id = this.model.get('id');
+      var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       if (this.model.get('disabled')) {
         this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
@@ -419,7 +421,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       _.bindAll(this, 'updateBox');
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      var id = this.model.get('id');
+      var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       var contentLabel = 'content' + id;
       this.$box = $(joint.util.template(
@@ -428,15 +430,15 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
           <div class="info-editor" id="' + editorLabel + '"></div>\
           <textarea class="hidden" id="' + contentLabel + '"></textarea>\
           <script>\
-            var editor = ace.edit("' + editorLabel + '");\
-            editor.setTheme("ace/theme/chrome");\
-            editor.setFontSize(15);\
-            editor.renderer.setShowGutter(false);\
-            editor.getSession().on("change", function () {\
-              $("#' + contentLabel + '").val(editor.getSession().getValue());\
+            var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
+            ' + editorLabel + '.setTheme("ace/theme/chrome");\
+            ' + editorLabel + '.setFontSize(15);\
+            ' + editorLabel + '.renderer.setShowGutter(false);\
+            ' + editorLabel + '.getSession().on("change", function () {\
+              $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
               $(document).trigger("disableSelected");\
             });\
-            editor.on("hover", function() {\
+            ' + editorLabel + '.on("hover", function() {\
               $(document).trigger("disableSelected");\
             });\
           </script>\
@@ -470,7 +472,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
                       left: bbox.x * state.zoom + state.pan.x,
                       top: bbox.y * state.zoom + state.pan.y });
 
-      var id = this.model.get('id');
+      var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       if (this.model.get('disabled')) {
         this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
