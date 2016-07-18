@@ -127,14 +127,18 @@ angular.module('icestudio')
             if (cell.type == 'ice.Generic' ||
                 cell.type == 'ice.Input' ||
                 cell.type == 'ice.Output' ||
-                cell.type == 'ice.Code') {
+                cell.type == 'ice.Code' ||
+                cell.type == 'ice.Info') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;
               block.data = cell.data;
               block.position = cell.position;
               if (cell.type == 'ice.Code') {
-                block.data.code = graph.getCode(cell.id);
+                block.data.code = graph.getContent(cell.id);
+              }
+              else if (cell.type == 'ice.Info') {
+                block.data.info = graph.getContent(cell.id);
               }
               blocks.push(block);
             }

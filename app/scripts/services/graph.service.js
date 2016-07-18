@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards',
-      function($rootScope, nodeFs, joint, boards) {
+    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -210,7 +210,7 @@ angular.module('icestudio')
                     });
                   }
                 }
-                else if (data.type != 'ice.Wire') {
+                else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
                   _this.breadcrumbs.push({ name: data.blockType });
                   if(!$rootScope.$$phase) {
                     $rootScope.$apply();
@@ -346,6 +346,13 @@ angular.module('icestudio')
                 }
             });
           }
+          else if (type == 'basic.info') {
+            blockInstance.data = {
+              info: ''
+            };
+            var cell = addBasicInfoBlock(blockInstance);
+            paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+          }
           else if (type == 'basic.input') {
             alertify.prompt('Insert the block name', 'i',
               function(evt, name) {
@@ -438,8 +445,8 @@ angular.module('icestudio')
           return graph.toJSON();
         }
 
-        this.getCode = function(id) {
-          return paper.findViewByModel(id).$box.find('#content' + id).val();
+        this.getContent = function(id) {
+          return paper.findViewByModel(id).$box.find('#content' + sha1(id).toString().substring(0, 6)).val();
         }
 
         this.resetIOChoices = function() {
@@ -525,6 +532,9 @@ angular.module('icestudio')
               var blockInstance = blockInstances[i];
               if (blockInstance.type == 'basic.code') {
                 addBasicCodeBlock(blockInstance, disabled);
+              }
+              else if (blockInstance.type == 'basic.info') {
+                addBasicInfoBlock(blockInstance, disabled);
               }
               else if (blockInstance.type == 'basic.input') {
                 addBasicInputBlock(blockInstance, disabled);
@@ -616,6 +626,19 @@ angular.module('icestudio')
             disabled: disabled,
             inPorts: inPorts,
             outPorts: outPorts
+          });
+
+          addCell(cell);
+          return cell;
+        };
+
+        function addBasicInfoBlock(blockInstances, disabled) {
+          var cell = new joint.shapes.ice.Info({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: blockInstances.data,
+            position: blockInstances.position,
+            disabled: disabled
           });
 
           addCell(cell);
