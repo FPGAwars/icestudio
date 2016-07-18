@@ -99,7 +99,9 @@ angular.module('icestudio')
                     function isError(line) {
                       return (line.indexOf('syntax error') != -1 ||
                               line.indexOf('not installed') != -1 ||
-                              line.indexOf('error: ') != -1);
+                              line.indexOf('error: ') != -1 ||
+                              line.indexOf('ERROR: ') != -1 ||
+                              line.indexOf('already declared') != -1);
                     }
                     if (stdoutError.length > 0) {
                       alertify.notify(stdoutError[0], 'error', 5);

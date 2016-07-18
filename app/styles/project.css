@@ -98,6 +98,31 @@
   pointer-events: auto;
 }
 
+.info-block {
+  position: absolute;
+  background: #DDD;
+  border-radius: 5px;
+  border: 2px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.info-block .info-editor {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  height: 93%;
+  border-radius: 5px;
+  border: 1px solid #BBB;
+  pointer-events: auto;
+}
+
+
 .port-body:hover {
   fill: yellow;
 }

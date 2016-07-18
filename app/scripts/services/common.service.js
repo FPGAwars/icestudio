@@ -127,7 +127,8 @@ angular.module('icestudio')
             if (cell.type == 'ice.Generic' ||
                 cell.type == 'ice.Input' ||
                 cell.type == 'ice.Output' ||
-                cell.type == 'ice.Code') {
+                cell.type == 'ice.Code' ||
+                cell.type == 'ice.Info') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;
@@ -135,6 +136,9 @@ angular.module('icestudio')
               block.position = cell.position;
               if (cell.type == 'ice.Code') {
                 block.data.code = graph.getCode(cell.id);
+              }
+              else if (cell.type == 'ice.Info') {
+                block.data.info = graph.getInfo(cell.id);
               }
               blocks.push(block);
             }
