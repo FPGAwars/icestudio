@@ -40,7 +40,7 @@ File
 Edit
 ````
 
-* **Image path**: set the project's relative image path. This image will be shown in the exported block.
+* **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
 
 * **Clear graph**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.

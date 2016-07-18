@@ -23,6 +23,14 @@ Extension: **.ice**
      "wires": []
    },
    "deps" : {},
+   "image": "",
+   "state": {
+     "pan": {
+       "x": 0,
+       "y": 0
+     },
+     "zoom": 1
+   }
  }
 
 Examples
