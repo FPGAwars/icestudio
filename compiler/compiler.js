@@ -11,8 +11,11 @@ var sha1 = require('sha1');
 
 
 function digestId(id, force) {
-  if (id.indexOf('-') != -1 || force) {
+  if (id.indexOf('-') != -1) {
     return 'v' + sha1(id).toString().substring(0, 6);
+  }
+  else {
+    return id.replace('.', '_');
   }
   return id;
 }

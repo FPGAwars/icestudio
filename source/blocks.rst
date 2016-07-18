@@ -22,12 +22,19 @@ Extension: **.iceb**
 .. code-block:: json
 
    {
-     "image": "",
      "graph": {
        "blocks" : [],
        "wires": []
      },
      "deps" : {},
+     "image": "",
+     "state": {
+       "pan": {
+         "x": 0,
+         "y": 0
+       },
+       "zoom": 1
+     }
    }
 
 Block instances

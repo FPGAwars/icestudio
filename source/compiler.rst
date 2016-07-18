@@ -25,7 +25,7 @@ Implementation
 
     |
 
-    .. literalinclude:: ../code/compiler.js
+    .. literalinclude:: ../compiler/compiler.js
        :language: javascript
        :linenos:
 

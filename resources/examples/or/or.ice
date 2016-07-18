@@ -3,6 +3,51 @@
   "graph": {
     "blocks": [
       {
+        "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
+        "type": "basic.input",
+        "data": {
+          "label": "x",
+          "pin": {
+            "name": "SW1",
+            "value": "10"
+          }
+        },
+        "position": {
+          "x": 64,
+          "y": 80
+        }
+      },
+      {
+        "id": "97b51945-d716-4b6c-9db9-970d08541249",
+        "type": "basic.input",
+        "data": {
+          "label": "y",
+          "pin": {
+            "name": "SW2",
+            "value": "11"
+          }
+        },
+        "position": {
+          "x": 64,
+          "y": 208
+        }
+      },
+      {
+        "id": "664caf9e-5f40-4df4-800a-b626af702e62",
+        "type": "basic.output",
+        "data": {
+          "label": "o",
+          "pin": {
+            "name": "LED0",
+            "value": "95"
+          }
+        },
+        "position": {
+          "x": 752,
+          "y": 144
+        }
+      },
+      {
         "id": "00925b04-5004-4307-a737-fa4e97c8b6ab",
         "type": "basic.code",
         "data": {
@@ -18,53 +63,8 @@
           }
         },
         "position": {
-          "x": 243,
-          "y": 71
-        }
-      },
-      {
-        "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
-        "type": "basic.input",
-        "data": {
-          "label": "x",
-          "pin": {
-            "name": "SW1",
-            "value": "10"
-          }
-        },
-        "position": {
-          "x": 31,
-          "y": 31
-        }
-      },
-      {
-        "id": "97b51945-d716-4b6c-9db9-970d08541249",
-        "type": "basic.input",
-        "data": {
-          "label": "y",
-          "pin": {
-            "name": "SW2",
-            "value": "11"
-          }
-        },
-        "position": {
-          "x": 36,
-          "y": 243
-        }
-      },
-      {
-        "id": "664caf9e-5f40-4df4-800a-b626af702e62",
-        "type": "basic.output",
-        "data": {
-          "label": "o",
-          "pin": {
-            "name": "LED0",
-            "value": "95"
-          }
-        },
-        "position": {
-          "x": 778,
-          "y": 137
+          "x": 256,
+          "y": 48
         }
       }
     ],
@@ -101,5 +101,13 @@
       }
     ]
   },
-  "deps": {}
+  "deps": {},
+  "image": "",
+  "state": {
+    "pan": {
+      "x": 0,
+      "y": 0
+    },
+    "zoom": 1
+  }
 }

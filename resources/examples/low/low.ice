@@ -6,7 +6,7 @@
         "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
         "type": "basic.code",
         "data": {
-          "code": "// Driver low\n\nassign v = 1'b0;",
+          "code": "// Bit 0\n\nassign v = 1'b0;",
           "ports": {
             "in": [],
             "out": [
@@ -15,8 +15,8 @@
           }
         },
         "position": {
-          "x": 100,
-          "y": 100
+          "x": 96,
+          "y": 96
         }
       },
       {
@@ -30,8 +30,8 @@
           }
         },
         "position": {
-          "x": 633,
-          "y": 165
+          "x": 608,
+          "y": 192
         }
       }
     ],
@@ -48,5 +48,13 @@
       }
     ]
   },
-  "deps": {}
+  "deps": {},
+  "image": "",
+  "state": {
+    "pan": {
+      "x": 0,
+      "y": 0
+    },
+    "zoom": 1
+  }
 }
