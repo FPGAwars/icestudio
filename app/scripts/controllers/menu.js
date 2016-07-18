@@ -36,6 +36,33 @@ angular.module('icestudio')
       });
     }
 
+    $scope.openProject = function() {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-open-project');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          event.target.files.clear();
+          if (file) {
+            if (file.path.endsWith('.ice')) {
+              if (!graph.isEmpty()) {
+                alertify.confirm('The current project will be removed. ' +
+                                 'Do you want to continue loading the project?',
+                  function() {
+                    common.openProject(file.path);
+                    $scope.currentProjectPath = file.path;
+                });
+              }
+              else {
+                common.openProject(file.path);
+                $scope.currentProjectPath = file.path;
+              }
+            }
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
+
     $scope.openExample = function(name, project) {
       if (!graph.isEmpty()) {
         alertify.confirm('The current project will be removed. ' +
@@ -49,23 +76,6 @@ angular.module('icestudio')
         common.loadProject(name, project);
         $scope.currentProjectPath = '';
       }
-    }
-
-    $scope.openProject = function() {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-open-project');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            event.target.files.clear();
-            if (file) {
-              if (file.path.endsWith('.ice')) {
-                common.openProject(file.path);
-                $scope.currentProjectPath = file.path;
-              }
-            }
-          });
-          ctrl.click();
-        }, 0);
     }
 
     $scope.saveProject = function() {
@@ -101,13 +111,13 @@ angular.module('icestudio')
       setTimeout(function() {
         var ctrl = angular.element('#input-import-block');
         ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          event.target.files.clear();
-          if (file) {
-            if (file.path.endsWith('.iceb')) {
-              common.importBlock(file.path);
+          var files = event.target.files;
+          for (var i in files) {
+            if (files[i].path.endsWith('.iceb')) {
+              common.importBlock(files[i].path);
             }
           }
+          event.target.files.clear();
         });
         ctrl.click();
       }, 0);
