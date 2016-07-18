@@ -46,7 +46,7 @@ function module(data) {
 
     // Content
 
-    var content = data.content.replace('\n\n', '\n').split('\n');
+    var content = data.content.split('\n');
 
     content.forEach(function (element, index, array) {
       array[index] = ' ' + element;

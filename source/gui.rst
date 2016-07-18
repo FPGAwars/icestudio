@@ -25,6 +25,9 @@ File
 * **Import block**: load a block file (.iceb) into the current project.
 * **Export as block**: show a save file dialog to export the current project as a block file (.iceb).
 
+* **Export verilog**: show a save file dialog to export the current verilog code file (.v).
+* **Export PCF**: show a save file dialog to export the current pcf file (.pcf).
+
 .. note::
 
   When a project is exported as a block, all FPGA I/O information is removed.
@@ -37,9 +40,16 @@ File
 Edit
 ````
 
+* **Image path**: set the project's relative image path. This image will be shown in the exported block.
+
 * **Clear graph**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
 * **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
+
+View
+````
+
+* **Reset view**: reset pan and zoom to its default values.
 
 Boards
 ``````
@@ -52,6 +62,7 @@ It contains the supported boards: **Icezum**, **iCEstick**, **Go board**. When a
 Tools
 `````
 
+* **Verify**: check the generated verilog source code.
 * **Build**: generate the bitstream from the graphic source.
 * **Upload**: generate and upload the bitstream to the FPGA board.
 
@@ -87,20 +98,17 @@ It contains the basic blocks:
 * **input**: input block. Block name is asked in a prompt dialog.
 * **output**: output block. Block name is asked in a prompt dialog.
 
+.. note::
+
+  Multiple **input** and **output** blocks can be created using the `space` separator. For example: ``x y z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
+  Double click over **input** and **output** blocks allows to modify the block name.
+  In **code** block ports definition, *input* and *output* ports are separated by a space. Port names are separated by ``,``. For example: ``a,b``: input a and b, ``a,b c``: input a and b, output c.
+  Double click over **code** blocks allows to modify its *input* and *output* ports.
+
 Stored blocks
 `````````````
 
 It contains all stored blocks sorted by categories. These menu is generated when the application starts.
-
-.. note::
-
-
-  In code ports definition, *input* and *output* ports are separated by a space. Port names are separated by ``,``. For example: ``a,b``: input a and b, ``a,b c``: input a and b, output c.
-
-.. note::
-
-  Double click over *input* and *output* blocks allows to modify the block name. Multiple blocks can be created using the `space` separator. For example: ``x y z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
-
 
 .. hint::
 
@@ -112,10 +120,26 @@ Graph
 
 This is the main panel. It contains the blocks and the wires.
 
+Pan & Zoom
+``````````
+
+Pan is performed using the **mouse left button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *View > Reset view*.
+
+.. image:: ../resources/images/gui-pan-zoom.png
+
+
+Select
+``````
+
+Block selection is performed using the **mouse right button**. Blocks can be selected individually using right-click. In addition, several blocks can be selected by a selection box. Selection is cancelled when the background is clicked.
+
+.. image:: ../resources/images/gui-select.png
+
+
 Blocks inspection
 `````````````````
 
-Non-basic blocks can be readonly inspected by double click. This is a recursive action.
+Non-basic blocks can be readonly inspected by **double click** with **mouse left button**. This is a recursive action.
 
 .. image:: ../resources/images/gui-inspection.png
 
