@@ -512,7 +512,10 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     type: 'ice.Wire',
 
     attrs: {
-      '.connection': { 'stroke-width': 2, stroke: '#777'},
+      '.connection': {
+        'stroke-width': 2,
+        stroke: '#777'
+      },
       '.marker-vertex': { r: 8 }
     },
 
@@ -522,25 +525,3 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
   }, joint.dia.Link.prototype.defaults)
 
 });
-
-
-//////////////////////////////////////////////////
-
-/*var obstacles = [el1, el4]
-
-_graph.on('change:position', function(cell) {
-    // has an obstacle been moved? Then reroute the link.
-    if (_.contains(obstacles, cell)) {
-      var cells = _graph.getCells();
-      for (var i in cells) {
-        var cell = cells[i];
-        if (cell.isLink()) {
-          _paper.findViewByModel(cell).update();
-        }
-      }
-    }
-});*/
-
-/*el1.on('change:position', function() {
-  el1View.updateBox();
-});*/

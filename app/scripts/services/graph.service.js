@@ -271,6 +271,17 @@ angular.module('icestudio')
               }
             }
           );
+
+          graph.on('change:position', function(cell) {
+            // Update wires on obstacles motion
+            var cells = graph.getCells();
+            for (var i in cells) {
+              var cell = cells[i];
+              if (cell.isLink()) {
+                paper.findViewByModel(cell).update();
+              }
+            }
+          });
         };
 
         this.clearAll = function() {

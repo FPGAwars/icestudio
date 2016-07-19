@@ -135,7 +135,10 @@ angular.module('icestudio')
           var instances = []
           for (var b in graph.blocks) {
             var block = graph.blocks[b];
-            if (block.type != 'basic.input' && block.type != 'basic.output') {
+            if (block.type != 'basic.input' &&
+                block.type != 'basic.output' &&
+                block.type != 'basic.info') {
+
               var id = digestId(block.type, true);
               if (block.type == 'basic.code') {
                 id += '_' + digestId(block.id);
@@ -204,7 +207,7 @@ angular.module('icestudio')
 
             // Main module
 
-            if (name){
+            if (name) {
               var data = {
                 name: name,
                 ports: getPorts(project),
