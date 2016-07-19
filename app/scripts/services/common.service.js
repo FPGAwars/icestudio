@@ -181,12 +181,11 @@ angular.module('icestudio')
         };
 
         this.removeSelected = function() {
-          var selection = graph.hasSelection();
-          graph.removeSelected();
-          if (selection) {
-            // TODO: purge dependencies
-            //delete this.project.deps[type];
-          }
+          graph.removeSelected((function(_this) {
+            return function(type) {
+              delete _this.project.deps[type];
+            }
+          })(this));
         };
 
         this.setImagePath = function(imagePath) {

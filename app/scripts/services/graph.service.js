@@ -492,25 +492,32 @@ angular.module('icestudio')
           return selection.length > 0;
         }
 
-        this.removeSelected = function() {
+        this.removeSelected = function(removeDep) {
           if (selection) {
             selection.each(function(cell) {
               selection.reset(selection.without(cell));
               selectionView.cancelSelection();
+              var type = cell.attributes.blockType;
               cell.remove();
+              if (!typeInGraph(type)) {
+                // Check if it is the last "type" block
+                if (removeDep) {
+                  // Remove "type" dependency in the project
+                  removeDep(type);
+                }
+              }
             });
           }
         }
 
-        this.typeInGraph = function(type) {
-          var count = 0;
+        function typeInGraph(type) {
           var cells = graph.getCells();
           for (var i in cells) {
             if (cells[i].attributes.blockType == type) {
-              count += 1;
+              return true;
             }
           }
-          return count;
+          return false;
         };
 
         this.isEmpty = function() {
