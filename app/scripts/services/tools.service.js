@@ -126,8 +126,10 @@ angular.module('icestudio')
         function installToolchain() {
 
           // Configure alert
-          //alertify.defaults.closable = false;
-          alertify.defaults.theme.ok = 'hidden';
+          alertify.defaults.closable = false;
+
+          // Disable click event
+          document.addEventListener('click', disableClick, true);
 
           var content = [
             '<div>',
@@ -160,8 +162,12 @@ angular.module('icestudio')
           ]);
 
           // Restore alert
-          //alertify.defaults.closable = true;
-          alertify.defaults.theme.ok = 'ajs-ok';
+          alertify.defaults.closable = true;
+        }
+
+        function disableClick(e) {
+            e.stopPropagation();
+            e.preventDefault();
         }
 
         this.removeToolchain = function() {
@@ -232,6 +238,8 @@ angular.module('icestudio')
           updateProgress('Installation completed', 100);
           alertify.success('Toolchain installed');
           toolchain.installed = true;
+          // Enable click event
+          document.removeEventListener('click', disableClick, true);
           callback();
         }
 

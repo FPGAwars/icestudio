@@ -201,7 +201,7 @@ angular.module('icestudio')
                   if (paper.options.interactive) {
                     var block = {
                       data: {
-                        code: _this.getCode(cellView.model.id)
+                        code: _this.getContent(cellView.model.id)
                       },
                       position: cellView.model.attributes.position
                     };
