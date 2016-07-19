@@ -41,7 +41,7 @@ joint.routers.ice = (function(g, _, joint) {
         // padding applied on the element bounding boxes
         paddingBox: function() {
 
-            var step = this.step;
+            var step = 1;
 
             return {
                 x: -step,
