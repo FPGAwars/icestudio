@@ -221,7 +221,13 @@ joint.ui.SelectionView = Backbone.View.extend({
             localPoint.x -= window.pageXOffset;
             localPoint.y -= window.pageYOffset;
 
-            var elementViews = this.options.paper.findViewsInArea(g.rect(localPoint.x, localPoint.y, width, height));
+            var elementViews = this.options.paper.findViewsInArea(
+                g.rect(
+                    (localPoint.x - this.options.state.pan.x) / this.options.state.zoom,
+                    (localPoint.y - this.options.state.pan.y) / this.options.state.zoom,
+                    width / this.options.state.zoom,
+                    height / this.options.state.zoom
+            ));
 
             if (elementViews.length) {
 

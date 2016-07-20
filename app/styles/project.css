@@ -10,14 +10,13 @@
 #paper svg {
   background: transparent;
   position: relative;
-  z-index: 0;
 }
 
 #breadcrumbs {
   position: absolute;
   bottom: -5px;
   width: 100%;
-  z-index: 2;
+  z-index: 1501;
 }
 
 .generic-block {
@@ -27,7 +26,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .generic-block img {
@@ -55,7 +53,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .io-block label {
@@ -81,7 +78,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .code-block .code-editor {
@@ -135,7 +131,7 @@
   border: 2px solid #EB2222;
   opacity: .7;
   overflow: visible;
-  z-index: 100000;
+  z-index: 1500;
 }
 
 .selectionarea.selected {
