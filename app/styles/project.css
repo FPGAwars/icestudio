@@ -132,24 +132,28 @@
 }
 
 .selectionzone {
-   position: absolute;
-   border: 2px solid #EB2222;
-   overflow: visible;
+  position: absolute;
+  border: 2px solid #EB2222;
+  opacity: .7;
+  overflow: visible;
+  z-index: 999;
 }
 
 .selectionzone.selected {
-   background-color: transparent;
-   border: none;
-   opacity: 1;
-   cursor: move;
-   /* Position the selection rectangle static so that the selection-boxe are contained within
-     the paper container (which is supposed to be positioned relative). The height 0 !important
-     makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
-   position: static;
-   height: 0 !important;
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+  cursor: move;
+  /* Position the selection rectangle static so that the selection-boxe are contained within
+   the paper container (which is supposed to be positioned relative). The height 0 !important
+   makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
+  position: static;
+  height: 0 !important;
 }
 
 .selection-box {
-   position: absolute;
-   border: 2px solid #EB2222;
+  position: absolute;
+  border: 2px dashed #EB2222;
+  opacity: .7;
+  border-radius: 5px;
 }

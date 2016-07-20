@@ -182,21 +182,21 @@ joint.ui.SelectionView = Backbone.View.extend({
 
             if (dx || dy) {
 
-		var paperScale = V(this.options.paper.viewport).scale();
-		dx *= paperScale.sx;
-		dy *= paperScale.sy;
+          		var paperScale = V(this.options.paper.viewport).scale();
+          		dx *= paperScale.sx;
+          		dy *= paperScale.sy;
 
-		// Translate also each of the `selection-box`.
-		this.$('.selection-box').each(function() {
+          		// Translate also each of the `selection-box`.
+          		this.$('.selection-box').each(function() {
 
-                    var left = parseFloat($(this).css('left'), 10);
-                    var top = parseFloat($(this).css('top'), 10);
-                    $(this).css({ left: left + dx, top: top + dy });
-		});
+                              var left = parseFloat($(this).css('left'), 10);
+                              var top = parseFloat($(this).css('top'), 10);
+                              $(this).css({ left: left + dx, top: top + dy });
+          		});
 
-		this._snappedClientX = snappedClientX;
-		this._snappedClientY = snappedClientY;
-	    }
+          		this._snappedClientX = snappedClientX;
+          		this._snappedClientY = snappedClientY;
+          	}
 
             break;
         }
@@ -283,8 +283,17 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         var viewBbox = elementView.getBBox();
 
+        var border = 12;
+
         var $selectionBox = $('<div/>', { 'class': 'selection-box', 'data-model': elementView.model.get('id') });
-        $selectionBox.css({ left: viewBbox.x, top: viewBbox.y, width: viewBbox.width, height: viewBbox.height });
+        $selectionBox.css({
+          left: viewBbox.x,
+          top: viewBbox.y,
+          width: viewBbox.width + border,
+          height: viewBbox.height + border,
+          'margin-top': - border / 2,
+          'margin-left': - border / 2
+        });
         this.$el.append($selectionBox);
 
         this.$el.addClass('selected').show();
