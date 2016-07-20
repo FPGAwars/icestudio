@@ -10,6 +10,7 @@
 #paper svg {
   background: transparent;
   position: relative;
+  z-index: 0;
 }
 
 #breadcrumbs {
@@ -26,6 +27,7 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
+  z-index: 0;
 }
 
 .generic-block img {
@@ -53,6 +55,7 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
+  z-index: 0;
 }
 
 .io-block label {
@@ -78,6 +81,7 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
+  z-index: 0;
 }
 
 .code-block .code-editor {
