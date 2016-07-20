@@ -181,6 +181,18 @@ angular.module('icestudio')
           if (project &&
               project.graph) {
 
+            // Main module
+
+            if (name) {
+              var data = {
+                name: name,
+                ports: getPorts(project),
+                content: getContent(name, project)
+              };
+              code += module(data);
+              code += '\n';
+            }
+
             // Dependencies modules
 
             for (var d in project.deps) {
@@ -203,17 +215,6 @@ angular.module('icestudio')
                   code += '\n';
                 }
               }
-            }
-
-            // Main module
-
-            if (name) {
-              var data = {
-                name: name,
-                ports: getPorts(project),
-                content: getContent(name, project)
-              };
-              code += module(data);
             }
           }
 

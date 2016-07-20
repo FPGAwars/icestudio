@@ -183,6 +183,8 @@ angular.module('icestudio')
           else {
             errorProgress('Python 2.7 is required');
             callback(true);
+            // Enable click event
+            document.removeEventListener('click', disableClick, true);
           }
         }
 
@@ -205,6 +207,8 @@ angular.module('icestudio')
             else {
               errorProgress('Internet connection is required');
               callback(true);
+              // Enable click event
+              document.removeEventListener('click', disableClick, true);
             }
           });
         }
