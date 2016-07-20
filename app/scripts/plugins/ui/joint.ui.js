@@ -2,6 +2,7 @@
 
 Copyright (c) 2013 client IO
 
+Adapted to Icestudio Project. 2016
 
 This Source Code Form is subject to the terms of the JointJS+ License
 , v. 1.0. If a copy of the JointJS+ License was not distributed with this
@@ -45,7 +46,7 @@ file, You can obtain one at http://jointjs.com/license/jointjs_plus_v1.txt
 
 joint.ui.SelectionView = Backbone.View.extend({
 
-    className: 'selectionzone',
+    className: 'selectionarea',
 
     events: {
 
@@ -68,7 +69,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         this._action = 'translating';
 
-	this.options.graph.trigger('batch:start');
+	      this.options.graph.trigger('batch:start');
 
         var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
         this._snappedClientX = snappedClientCoords.x;
@@ -77,6 +78,11 @@ joint.ui.SelectionView = Backbone.View.extend({
         this.trigger('selection-box:pointerdown', evt);
 
         evt.stopPropagation();
+    },
+
+    isTranslating: function() {
+
+        return this._action == 'translating';
     },
 
     startSelecting: function(evt, x, y) {
@@ -100,7 +106,6 @@ joint.ui.SelectionView = Backbone.View.extend({
         this._offsetY = evt.offsetY === undefined ? evt.clientY - paperOffset.top + window.pageYOffset + paperScrollTop : evt.offsetY;
 
         this.$el.css({
-
             width: 1,
             height: 1,
             left: this._offsetX,
@@ -121,13 +126,10 @@ joint.ui.SelectionView = Backbone.View.extend({
             dx = evt.clientX - this._clientX;
             dy = evt.clientY - this._clientY;
 
-            var width = this.$el.width();
-            var height = this.$el.height();
             var left = parseInt(this.$el.css('left'), 10);
             var top = parseInt(this.$el.css('top'), 10);
 
             this.$el.css({
-
                 left: dx < 0 ? this._offsetX + dx : left,
                 top: dy < 0 ? this._offsetY + dy : top,
                 width: Math.abs(dx),
@@ -156,6 +158,9 @@ joint.ui.SelectionView = Backbone.View.extend({
                 // Translate the element itself.
                 element.translate(dx, dy);
 
+                // Translate also the `selection-box` of the element.
+                this.updateBox(element);
+
                 // Translate link vertices as well.
                 var connectedLinks = this.options.graph.getConnectedLinks(element);
 
@@ -182,21 +187,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
             if (dx || dy) {
 
-		var paperScale = V(this.options.paper.viewport).scale();
-		dx *= paperScale.sx;
-		dy *= paperScale.sy;
-
-		// Translate also each of the `selection-box`.
-		this.$('.selection-box').each(function() {
-
-                    var left = parseFloat($(this).css('left'), 10);
-                    var top = parseFloat($(this).css('top'), 10);
-                    $(this).css({ left: left + dx, top: top + dy });
-		});
-
-		this._snappedClientX = snappedClientX;
-		this._snappedClientY = snappedClientY;
-	    }
+          		this._snappedClientX = snappedClientX;
+          		this._snappedClientY = snappedClientY;
+          	}
 
             break;
         }
@@ -219,7 +212,13 @@ joint.ui.SelectionView = Backbone.View.extend({
             localPoint.x -= window.pageXOffset;
             localPoint.y -= window.pageYOffset;
 
-            var elementViews = this.options.paper.findViewsInArea(g.rect(localPoint.x, localPoint.y, width, height));
+            var elementViews = this.options.paper.findViewsInArea(
+                g.rect(
+                    (localPoint.x - this.options.state.pan.x) / this.options.state.zoom,
+                    (localPoint.y - this.options.state.pan.y) / this.options.state.zoom,
+                    width / this.options.state.zoom,
+                    height / this.options.state.zoom
+            ));
 
             if (elementViews.length) {
 
@@ -243,7 +242,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
           case 'translating':
 
-	    this.options.graph.trigger('batch:stop');
+	          this.options.graph.trigger('batch:stop');
             // Everything else is done during the translation.
             break;
 
@@ -281,14 +280,40 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     createSelectionBox: function(elementView) {
 
-        var viewBbox = elementView.getBBox();
+        var element = elementView.model;
 
-        var $selectionBox = $('<div/>', { 'class': 'selection-box', 'data-model': elementView.model.get('id') });
-        $selectionBox.css({ left: viewBbox.x, top: viewBbox.y, width: viewBbox.width, height: viewBbox.height });
-        this.$el.append($selectionBox);
+        if (!element.isLink()) {
 
-        this.$el.addClass('selected').show();
+          var $selectionBox = $('<div/>', {
+              'class': 'selection-box',
+              'data-model': element.get('id')
+          });
+          this.$el.append($selectionBox);
 
-        this._action = 'cherry-picking';
+          this.updateBox(element);
+
+          this.$el.addClass('selected').show();
+
+          this._action = 'cherry-picking';
+        }
+    },
+
+    updateBox: function(element) {
+
+        var border = 12;
+
+        var bbox = element.getBBox();
+        var state = this.options.state;
+
+        $("div[data-model='" + element.get('id') + "']").css({
+            left: bbox.x * state.zoom + state.pan.x +
+                  bbox.width / 2.0 * (state.zoom - 1) - border / 2,
+            top: bbox.y * state.zoom + state.pan.y +
+                 bbox.height / 2.0 * (state.zoom - 1) - border / 2,
+            width: bbox.width + border,
+            height: bbox.height + border,
+            transform: 'scale(' + state.zoom + ')'
+        });
     }
+
 });

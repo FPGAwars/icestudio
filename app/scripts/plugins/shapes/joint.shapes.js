@@ -132,7 +132,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       this.updateBox();
       return this;
     },
-    renderPorts: function () {
+    renderPorts: function() {
       var $inPorts = this.$('.inPorts').empty();
       var $outPorts = this.$('.outPorts').empty();
       var portTemplate = _.template(this.model.portMarkup);
@@ -144,7 +144,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
         $outPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
     },
-    update: function () {
+    update: function() {
       this.renderPorts();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },

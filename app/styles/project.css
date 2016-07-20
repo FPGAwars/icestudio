@@ -10,14 +10,13 @@
 #paper svg {
   background: transparent;
   position: relative;
-  z-index: 0;
 }
 
 #breadcrumbs {
   position: absolute;
   bottom: -5px;
   width: 100%;
-  z-index: 2;
+  z-index: 1501;
 }
 
 .generic-block {
@@ -27,7 +26,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .generic-block img {
@@ -55,7 +53,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .io-block label {
@@ -81,7 +78,6 @@
   border: 2px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
-  z-index: 0;
 }
 
 .code-block .code-editor {
@@ -122,7 +118,6 @@
   pointer-events: auto;
 }
 
-
 .port-body:hover {
   fill: yellow;
 }
@@ -131,25 +126,29 @@
   box-shadow: 0px 0px 30px 0px rgba(200,200,200,1);
 }
 
-.selectionzone {
-   position: absolute;
-   border: 2px solid #EB2222;
-   overflow: visible;
+.selectionarea {
+  position: absolute;
+  border: 2px solid #EB2222;
+  opacity: .7;
+  overflow: visible;
+  z-index: 1500;
 }
 
-.selectionzone.selected {
-   background-color: transparent;
-   border: none;
-   opacity: 1;
-   cursor: move;
-   /* Position the selection rectangle static so that the selection-boxe are contained within
-     the paper container (which is supposed to be positioned relative). The height 0 !important
-     makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
-   position: static;
-   height: 0 !important;
+.selectionarea.selected {
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+  cursor: move;
+  /* Position the selection rectangle static so that the selection-boxe are contained within
+   the paper container (which is supposed to be positioned relative). The height 0 !important
+   makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
+  position: static;
+  height: 0 !important;
 }
 
 .selection-box {
-   position: absolute;
-   border: 2px solid #EB2222;
+  position: absolute;
+  border: 2px dashed #EB2222;
+  opacity: .7;
+  border-radius: 5px;
 }
