@@ -716,7 +716,7 @@ angular.module('icestudio')
             blockLabel = [
               blockInstance.type.split('.')[0],
               blockInstance.type.split('.')[1].toUpperCase()
-            ].join(' ');
+            ].join('\n');
           }
 
           var blockImage = '';
