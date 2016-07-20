@@ -158,6 +158,9 @@ joint.ui.SelectionView = Backbone.View.extend({
                 // Translate the element itself.
                 element.translate(dx, dy);
 
+                // Translate also the `selection-box` of the element.
+                this.updateBox(element);
+
                 // Translate link vertices as well.
                 var connectedLinks = this.options.graph.getConnectedLinks(element);
 
@@ -183,18 +186,6 @@ joint.ui.SelectionView = Backbone.View.extend({
             }, this);
 
             if (dx || dy) {
-
-          		var paperScale = V(this.options.paper.viewport).scale();
-          		dx *= paperScale.sx;
-          		dy *= paperScale.sy;
-
-          		// Translate also each of the `selection-box`.
-          		this.$('.selection-box').each(function() {
-
-                  var left = parseFloat($(this).css('left'), 10);
-                  var top = parseFloat($(this).css('top'), 10);
-                  $(this).css({ left: left + dx, top: top + dy });
-          		});
 
           		this._snappedClientX = snappedClientX;
           		this._snappedClientY = snappedClientY;
