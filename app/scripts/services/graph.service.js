@@ -138,6 +138,7 @@ angular.module('icestudio')
             },
             onPan: function(newPan) {
               state.pan = newPan;
+              // Pan blocks
               var cells = graph.getCells();
               _.each(cells, function(cell) {
                 if (!cell.isLink()) {
@@ -145,11 +146,18 @@ angular.module('icestudio')
                   paper.findViewByModel(cell).updateBox();
                 }
               });
+              // Pan selection boxes
+              selectionView.update(state);
             }
           });
 
          selection = new Backbone.Collection;
-         selectionView = new joint.ui.SelectionView({ paper: paper, graph: graph, model: selection });
+         selectionView = new joint.ui.SelectionView({
+           paper: paper,
+           graph: graph,
+           model: selection,
+           state: state
+         });
 
          // Events
 
@@ -273,12 +281,14 @@ angular.module('icestudio')
           );
 
           graph.on('change:position', function(cell) {
-            // Update wires on obstacles motion
-            var cells = graph.getCells();
-            for (var i in cells) {
-              var cell = cells[i];
-              if (cell.isLink()) {
-                paper.findViewByModel(cell).update();
+            if (!selectionView.isTranslating()) {
+              // Update wires on obstacles motion
+              var cells = graph.getCells();
+              for (var i in cells) {
+                var cell = cells[i];
+                if (cell.isLink()) {
+                  paper.findViewByModel(cell).update();
+                }
               }
             }
           });

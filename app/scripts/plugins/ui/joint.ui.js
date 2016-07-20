@@ -2,6 +2,7 @@
 
 Copyright (c) 2013 client IO
 
+Adapted to Icestudio Project. 2016
 
 This Source Code Form is subject to the terms of the JointJS+ License
 , v. 1.0. If a copy of the JointJS+ License was not distributed with this
@@ -45,7 +46,7 @@ file, You can obtain one at http://jointjs.com/license/jointjs_plus_v1.txt
 
 joint.ui.SelectionView = Backbone.View.extend({
 
-    className: 'selectionzone',
+    className: 'selectionarea',
 
     events: {
 
@@ -68,7 +69,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         this._action = 'translating';
 
-	this.options.graph.trigger('batch:start');
+	      this.options.graph.trigger('batch:start');
 
         var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
         this._snappedClientX = snappedClientCoords.x;
@@ -77,6 +78,11 @@ joint.ui.SelectionView = Backbone.View.extend({
         this.trigger('selection-box:pointerdown', evt);
 
         evt.stopPropagation();
+    },
+
+    isTranslating: function() {
+
+        return this._action == 'translating';
     },
 
     startSelecting: function(evt, x, y) {
@@ -100,13 +106,32 @@ joint.ui.SelectionView = Backbone.View.extend({
         this._offsetY = evt.offsetY === undefined ? evt.clientY - paperOffset.top + window.pageYOffset + paperScrollTop : evt.offsetY;
 
         this.$el.css({
-
             width: 1,
             height: 1,
             left: this._offsetX,
             top: this._offsetY
 
         }).show();
+    },
+
+    update: function(state) {
+
+      var dx = state.pan.x - this.options.state.pan.x;
+      var dy = state.pan.y - this.options.state.pan.y;
+
+      // Clone state
+      this.options.state =  JSON.parse(JSON.stringify(state));
+
+      this.$('.selection-box').each(function() {
+
+          var left = parseFloat($(this).css('left'));
+          var top = parseFloat($(this).css('top'));
+
+          $(this).css({
+            left: left + dx,
+            top: top + dy
+          });
+      });
     },
 
     adjustSelection: function(evt) {
@@ -121,13 +146,10 @@ joint.ui.SelectionView = Backbone.View.extend({
             dx = evt.clientX - this._clientX;
             dy = evt.clientY - this._clientY;
 
-            var width = this.$el.width();
-            var height = this.$el.height();
             var left = parseInt(this.$el.css('left'), 10);
             var top = parseInt(this.$el.css('top'), 10);
 
             this.$el.css({
-
                 left: dx < 0 ? this._offsetX + dx : left,
                 top: dy < 0 ? this._offsetY + dy : top,
                 width: Math.abs(dx),
@@ -189,9 +211,9 @@ joint.ui.SelectionView = Backbone.View.extend({
           		// Translate also each of the `selection-box`.
           		this.$('.selection-box').each(function() {
 
-                              var left = parseFloat($(this).css('left'), 10);
-                              var top = parseFloat($(this).css('top'), 10);
-                              $(this).css({ left: left + dx, top: top + dy });
+                  var left = parseFloat($(this).css('left'), 10);
+                  var top = parseFloat($(this).css('top'), 10);
+                  $(this).css({ left: left + dx, top: top + dy });
           		});
 
           		this._snappedClientX = snappedClientX;
@@ -243,7 +265,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
           case 'translating':
 
-	    this.options.graph.trigger('batch:stop');
+	          this.options.graph.trigger('batch:stop');
             // Everything else is done during the translation.
             break;
 
@@ -281,23 +303,26 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     createSelectionBox: function(elementView) {
 
-        var viewBbox = elementView.getBBox();
+        if (!elementView.model.isLink()) {
 
-        var border = 12;
+          var viewBbox = elementView.getBBox();
 
-        var $selectionBox = $('<div/>', { 'class': 'selection-box', 'data-model': elementView.model.get('id') });
-        $selectionBox.css({
-          left: viewBbox.x,
-          top: viewBbox.y,
-          width: viewBbox.width + border,
-          height: viewBbox.height + border,
-          'margin-top': - border / 2,
-          'margin-left': - border / 2
-        });
-        this.$el.append($selectionBox);
+          var border = 12;
 
-        this.$el.addClass('selected').show();
+          var $selectionBox = $('<div/>', { 'class': 'selection-box', 'data-model': elementView.model.get('id') });
+          $selectionBox.css({
+            left: viewBbox.x,
+            top: viewBbox.y,
+            width: viewBbox.width + border,
+            height: viewBbox.height + border,
+            'margin-top': - border / 2,
+            'margin-left': - border / 2
+          });
+          this.$el.append($selectionBox);
 
-        this._action = 'cherry-picking';
+          this.$el.addClass('selected').show();
+
+          this._action = 'cherry-picking';
+        }
     }
 });
