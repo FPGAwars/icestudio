@@ -114,26 +114,6 @@ joint.ui.SelectionView = Backbone.View.extend({
         }).show();
     },
 
-    update: function(state) {
-
-      var dx = state.pan.x - this.options.state.pan.x;
-      var dy = state.pan.y - this.options.state.pan.y;
-
-      // Clone state
-      this.options.state =  JSON.parse(JSON.stringify(state));
-
-      this.$('.selection-box').each(function() {
-
-          var left = parseFloat($(this).css('left'));
-          var top = parseFloat($(this).css('top'));
-
-          $(this).css({
-            left: left + dx,
-            top: top + dy
-          });
-      });
-    },
-
     adjustSelection: function(evt) {
 
         var dx;
@@ -303,26 +283,40 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     createSelectionBox: function(elementView) {
 
-        if (!elementView.model.isLink()) {
+        var element = elementView.model;
 
-          var viewBbox = elementView.getBBox();
+        if (!element.isLink()) {
 
-          var border = 12;
-
-          var $selectionBox = $('<div/>', { 'class': 'selection-box', 'data-model': elementView.model.get('id') });
-          $selectionBox.css({
-            left: viewBbox.x,
-            top: viewBbox.y,
-            width: viewBbox.width + border,
-            height: viewBbox.height + border,
-            'margin-top': - border / 2,
-            'margin-left': - border / 2
+          var $selectionBox = $('<div/>', {
+              'class': 'selection-box',
+              'data-model': element.get('id')
           });
           this.$el.append($selectionBox);
+
+          this.updateBox(element);
 
           this.$el.addClass('selected').show();
 
           this._action = 'cherry-picking';
         }
+    },
+
+    updateBox: function(element) {
+
+        var border = 12;
+
+        var bbox = element.getBBox();
+        var state = this.options.state;
+
+        $("div[data-model='" + element.get('id') + "']").css({
+            left: bbox.x * state.zoom + state.pan.x +
+                  bbox.width / 2.0 * (state.zoom - 1) - border / 2,
+            top: bbox.y * state.zoom + state.pan.y +
+                 bbox.height / 2.0 * (state.zoom - 1) - border / 2,
+            width: bbox.width + border,
+            height: bbox.height + border,
+            transform: 'scale(' + state.zoom + ')'
+        });
     }
+
 });

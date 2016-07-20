@@ -138,16 +138,20 @@ angular.module('icestudio')
             },
             onPan: function(newPan) {
               state.pan = newPan;
-              // Pan blocks
+              selectionView.options.state = state;
+
               var cells = graph.getCells();
+
               _.each(cells, function(cell) {
                 if (!cell.isLink()) {
                   cell.attributes.state = state;
-                  paper.findViewByModel(cell).updateBox();
+                  var elementView = paper.findViewByModel(cell);
+                  // Pan blocks
+                  elementView.updateBox();
+                  // Pan selection boxes
+                  selectionView.updateBox(elementView.model);
                 }
               });
-              // Pan selection boxes
-              selectionView.update(state);
             }
           });
 
