@@ -15,6 +15,7 @@ angular.module('icestudio')
     $scope.boards = boards;
 
     $scope.examples = resources.getExamples();
+    $scope.templates = resources.getTemplates();
     $scope.currentBoards = boards.getBoards();
     $scope.menuBlocks = resources.getMenuBlocks();
 
@@ -44,6 +45,7 @@ angular.module('icestudio')
           event.target.files.clear();
           if (file) {
             if (file.path.endsWith('.ice')) {
+
               $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
                 alertify.confirm('The current project will be removed. ' +
@@ -57,6 +59,7 @@ angular.module('icestudio')
                 common.openProject(file.path);
                 $scope.currentProjectPath = file.path;
               }
+
             }
           }
         });
@@ -64,10 +67,10 @@ angular.module('icestudio')
       }, 0);
     }
 
-    $scope.openExample = function(name, project) {
+    $scope.openStoredProject = function(name, project) {
       if (!graph.isEmpty()) {
         alertify.confirm('The current project will be removed. ' +
-                         'Do you want to continue loading the example?',
+                         'Do you want to continue loading the project?',
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
