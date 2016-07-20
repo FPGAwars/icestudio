@@ -299,7 +299,7 @@ angular.module('icestudio')
         '    <p><i>Graphic editor for open FPGAs</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
-        '    <p>Date: June 2016</p>',
+        '    <p>Date: June, July 2016</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
         '  </div>',
         '</div>'].join('\n');
