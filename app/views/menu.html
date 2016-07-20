@@ -33,7 +33,22 @@
                              <a href uib-dropdown-toggle>{{ category }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="(name, project) in projects">
-                                 <a href ng-click="openExample(name, project)">
+                                 <a href ng-click="openStoredProject(name, project)">
+                                 {{ name }}
+                                 </a>
+                               </li>
+                             </ul>
+                           </li>
+                         </ul>
+                      </li>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle> {{ 'Templates' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                           <li class="dropdown-submenu" ng-repeat="(category, projects) in templates">
+                             <a href uib-dropdown-toggle>{{ category }}</a>
+                             <ul uib-dropdown-menu>
+                               <li ng-repeat="(name, project) in projects">
+                                 <a href ng-click="openStoredProject(name, project)">
                                  {{ name }}
                                  </a>
                                </li>

@@ -8,6 +8,10 @@ angular.module('icestudio')
           return getResources(nodePath.join('resources', 'examples', '*'), '.ice');
         }
 
+        this.getTemplates = function() {
+          return getResources(nodePath.join('resources', 'templates', '*'), '.ice');
+        }
+
         this.getMenuBlocks = function() {
           return getResources(nodePath.join('resources', 'blocks', '*'), '.iceb');
         }
