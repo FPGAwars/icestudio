@@ -37,6 +37,7 @@ angular.module('icestudio')
             code += ' (';
 
             var params = [];
+            var paramsSpace = 10 + data.name.length;
 
             for (var i in data.ports.in) {
               params.push('input ' + data.ports.in[i]);
@@ -45,7 +46,7 @@ angular.module('icestudio')
               params.push('output ' + data.ports.out[o]);
             }
 
-            code += params.join(', ');
+            code += params.join(',\n' + new Array(paramsSpace).join(' '));
 
             code += ');\n';
 
@@ -61,7 +62,7 @@ angular.module('icestudio')
 
             // Footer
 
-            code += '\nendmodule\n';
+            code += '\nendmodule\n\n';
           }
 
           return code;
@@ -161,7 +162,7 @@ angular.module('icestudio')
                 }
                 if (paramName && paramsNames.indexOf(paramName) == -1) {
                   paramsNames.push(paramName);
-                  param += '  .' + paramName;
+                  param += ' .' + paramName;
                   param += '(w' + w + ')';
                   params.push(param);
                 }
@@ -190,14 +191,12 @@ angular.module('icestudio')
                 content: getContent(name, project)
               };
               code += module(data);
-              code += '\n';
             }
 
             // Dependencies modules
 
             for (var d in project.deps) {
               code += verilogCompiler(name + '_' + digestId(d, true), project.deps[d]);
-              code += '\n';
             }
 
             // Code modules
@@ -212,7 +211,6 @@ angular.module('icestudio')
                     content: block.data.code
                   }
                   code += module(data);
-                  code += '\n';
                 }
               }
             }

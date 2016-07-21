@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       },
       linux64: {
         options: {
-          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-linux64.zip'
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.zip'
         },
         files: [{
           expand: true,
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       win32: {
         options: {
-          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-win32.zip'
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-win32.zip'
         },
         files: [{
           expand: true,
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       },
       win64: {
         options: {
-          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-win64.zip'
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-win64.zip'
         },
         files: [{
           expand: true,
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
       },
       osx64: {
         options: {
-          archive: 'dist/<%=pkg.name%>-v<%=pkg.version%>-osx64.zip'
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx64.zip'
         },
         files: [{
           expand: true,
