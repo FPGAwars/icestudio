@@ -9,11 +9,9 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
 ## Version 0.2 beta
 
-<img src="./doc/images/icestudio-0.2-blink.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.2-crono.png" width="700" align="center">
 
-<img src="./doc/images/icestudio-0.2-mux21-inspection.png" width="700" align="center">
-
-<img src="./doc/images/icestudio-0.2-or-inspection.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.2-counter-inspection.png" width="700" align="center">
 
 **Documentation: http://icestudio.readthedocs.io**
 
@@ -70,6 +68,8 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 ### Version 0.2
 
+[![Icestudio: new gui & multiboard](http://img.youtube.com/vi/OWnVCjo7N9Y/0.jpg)](https://www.youtube.com/watch?v=OWnVCjo7N9Y "Icestudio: new gui & multiboard")
+
 [![Icestudio: block factory](http://img.youtube.com/vi/mAIKb47z2Do/0.jpg)](http://www.youtube.com/watch?v=mAIKb47z2Do "Icestudio: block factory")
 
 
@@ -92,7 +92,7 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 * v0.2: using [JointJS](https://github.com/clientIO/joint)
-* Sponsored by BQ.
+* Sponsored by [BQ](https://www.bq.com)
 
 ## License
 
