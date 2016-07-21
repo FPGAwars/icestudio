@@ -28,12 +28,13 @@ angular.module('icestudio')
             if (toolchain.installed) {
               $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
-              currentAlert= alertify.notify(commands[0] + ' start...', 'message', 100000);
+              currentAlert = alertify.notify(commands[0] + ' start...', 'message', 100000);
               nodeProcess.chdir('_build');
               try {
                 execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
                   if (currentAlert)
                     setTimeout(function() {
+                      angular.element('#menu').removeClass('disable-menu');
                       currentAlert.dismiss(true);
                     }, 1000);
                 });
@@ -116,7 +117,6 @@ angular.module('icestudio')
                 alertify.success(label + ' success');
               }
               $('body').removeClass('waiting');
-              angular.element('#menu').removeClass('disable-menu');
             }
           });
         }
@@ -128,8 +128,7 @@ angular.module('icestudio')
           // Configure alert
           alertify.defaults.closable = false;
 
-          // Disable click event
-          document.addEventListener('click', disableClick, true);
+          utils.disableClickEvent();
 
           var content = [
             '<div>',
@@ -165,11 +164,6 @@ angular.module('icestudio')
           alertify.defaults.closable = true;
         }
 
-        function disableClick(e) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-
         this.removeToolchain = function() {
           utils.removeToolchain();
           toolchain.installed = false;
@@ -182,9 +176,8 @@ angular.module('icestudio')
           }
           else {
             errorProgress('Python 2.7 is required');
+            utils.enableClickEvent();
             callback(true);
-            // Enable click event
-            document.removeEventListener('click', disableClick, true);
           }
         }
 
@@ -206,9 +199,8 @@ angular.module('icestudio')
             }
             else {
               errorProgress('Internet connection is required');
+              utils.enableClickEvent();
               callback(true);
-              // Enable click event
-              document.removeEventListener('click', disableClick, true);
             }
           });
         }
@@ -242,8 +234,7 @@ angular.module('icestudio')
           updateProgress('Installation completed', 100);
           alertify.success('Toolchain installed');
           toolchain.installed = true;
-          // Enable click event
-          document.removeEventListener('click', disableClick, true);
+          utils.enableClickEvent();
           callback();
         }
 
