@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/Icestudio/osx64/',
-          src: ['**'],
+          src: ['Icestudio.app/**'],
           dest: '.'
         }]
       }
