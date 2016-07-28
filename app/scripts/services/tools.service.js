@@ -77,13 +77,14 @@ angular.module('icestudio')
 
         function execute(command, label, callback) {
           nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            console.log(error, stdout, stderr);
+            //console.log(error, stdout, stderr);
             if (callback)
               callback();
             if (label) {
               if (error) {
                 if (stdout) {
-                  if (stdout.indexOf('[upload] Error') != -1) {
+                  if (stdout.indexOf('[upload] Error') != -1 ||
+                      stdout.indexOf('Error: board not detected') != -1) {
                     alertify.notify('Board not detected', 'error', 3);
                   }
                   else if (stdout.indexOf('set_io: too few arguments') != -1) {
