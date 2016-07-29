@@ -93,13 +93,13 @@
                           <li>
                             <a href ng-click="selectLanguage('en')">
                               {{ 'English' | translate }}
-                              <span ng-show="language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
+                              <span ng-show="profile.data.language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
                             </a>
                           </li>
                           <li>
                             <a href ng-click="selectLanguage('es-ES')">
                               {{ 'Spanish' | translate }}
-                              <span ng-show="language == 'es-ES'" class="glyphicon glyphicon-ok-circle"></span>
+                              <span ng-show="profile.data.language == 'es-ES'" class="glyphicon glyphicon-ok-circle"></span>
                             </a>
                           </li>
                         </ul>

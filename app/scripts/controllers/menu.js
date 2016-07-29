@@ -8,12 +8,28 @@ angular.module('icestudio')
                                     tools,
                                     boards,
                                     resources,
+                                    profile,
                                     gui,
                                     utils,
                                     _package) {
 
+    // Manage language
+
+    profile.load(function() {
+      $translate.use(profile.data.language);
+    });
+    var win = gui.Window.get();
+    win.on('close', function() {
+      this.hide();
+      profile.save();
+      this.close(true);
+    });
+
+    // Initialize scope
+
     $scope.common = common;
     $scope.boards = boards;
+    $scope.profile = profile;
 
     $scope.examples = resources.getExamples();
     $scope.templates = resources.getTemplates();
@@ -25,7 +41,6 @@ angular.module('icestudio')
 
     $scope.workingdir = '';
     $scope.currentProjectPath = '';
-    $scope.language = 'en';
 
     // File
 
@@ -206,8 +221,8 @@ angular.module('icestudio')
     }
 
     $scope.selectLanguage = function(language) {
-      if ($scope.language != language) {
-        $scope.language = language;
+      if (profile.data.language != language) {
+        profile.data.language = language;
         $translate.use(language);
       }
     }
