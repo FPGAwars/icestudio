@@ -16,6 +16,7 @@ File
 * **New project**: create a new project.
 * **Open project**: show a file dialog to open a project (.ice).
 * **Examples**: contains all stored examples. A example is loaded as a project.
+* **Templates**: contains all stored templates. A template is loaded as a project.
 
 
 * **Save**: save the current project (.ice).
@@ -42,7 +43,9 @@ Edit
 
 * **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
 
-* **Clear graph**: remove all blocks and wires from the graph.
+* **Language**: select the application language: English, Spanish. This selection is stored in the app profile.
+
+* **Clear all**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
 * **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
 
