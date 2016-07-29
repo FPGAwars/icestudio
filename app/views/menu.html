@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav">
 
                 <li uib-dropdown ng-mouseover="status.file=true" ng-mouseleave="status.file=false" is-open="status.file">
-                    <a href uib-dropdown-toggle>File <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
                     <ul uib-dropdown-menu>
                       <li>
                         <a href ng-click="newProject()">{{ 'New project' | translate }}</a>
@@ -81,14 +81,14 @@
                 </li>
 
                 <li uib-dropdown ng-mouseover="status.edit=true" ng-mouseleave="status.edit=false" is-open="status.edit">
-                    <a href uib-dropdown-toggle>Edit  <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="setImagePath()">{{ 'Image path' | translate }}</a>
                       </li>
                       <li class="divider"></li>
                       <li>
-                        <a href ng-click="clearGraph()">{{ 'Clear graph' | translate }}</a>
+                        <a href ng-click="clearGraph()">{{ 'Clear all' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="cloneSelected()">{{ 'Clone selected' | translate }}</a>
@@ -100,7 +100,7 @@
                 </li>
 
                 <li uib-dropdown ng-mouseover="status.view=true" ng-mouseleave="status.view=false" is-open="status.view">
-                    <a href uib-dropdown-toggle>View  <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'View' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="resetState()">{{ 'Reset view' | translate }}</a>
@@ -109,7 +109,7 @@
                 </li>
 
                 <li uib-dropdown ng-mouseover="status.boards=true" ng-mouseleave="status.boards=false" is-open="status.boards">
-                    <a href uib-dropdown-toggle>Boards  <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'Boards' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="board in currentBoards">
                         <a href ng-click="selectBoard(board)">
@@ -121,7 +121,7 @@
                 </li>
 
                 <li uib-dropdown ng-mouseover="status.tools=true" ng-mouseleave="status.tools=false" is-open="status.tools">
-                    <a href uib-dropdown-toggle>Tools  <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'Tools' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="verifyCode()">{{ 'Verify' | translate }}</a>
@@ -143,7 +143,7 @@
                 </li>
 
                 <li uib-dropdown ng-mouseover="status.help=true" ng-mouseleave="status.help=false" is-open="status.help">
-                    <a href uib-dropdown-toggle>Help  <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'Help' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li disabled>
                         <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'View license' | translate }}</a>
@@ -174,7 +174,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li uib-dropdown ng-mouseover="status.basic=true" ng-mouseleave="status.basic=false" is-open="status.basic">
-                    <a href uib-dropdown-toggle>basic <span class="caret"></span></a>
+                    <a href uib-dropdown-toggle>{{ 'basic' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
                         <a href ng-click="common.addBlock('basic.code')">{{ 'code' | translate }}</a>
