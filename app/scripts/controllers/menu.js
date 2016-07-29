@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
+                                    $translate,
                                     common,
                                     graph,
                                     tools,
@@ -24,6 +25,7 @@ angular.module('icestudio')
 
     $scope.workingdir = '';
     $scope.currentProjectPath = '';
+    $scope.language = 'en';
 
     // File
 
@@ -201,6 +203,13 @@ angular.module('icestudio')
         function(evt, imagePath) {
           common.setImagePath(imagePath);
       });
+    }
+
+    $scope.selectLanguage = function(language) {
+      if ($scope.language != language) {
+        $scope.language = language;
+        $translate.use(language);
+      }
     }
 
     $scope.clearGraph = function() {

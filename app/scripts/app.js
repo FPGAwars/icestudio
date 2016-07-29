@@ -22,7 +22,7 @@ angular
             });
 
             // Initial language
-            $translateProvider.use('');
+            $translateProvider.preferredLanguage('en');
             $translateProvider.useSanitizeValueStrategy('escape');
         }
 

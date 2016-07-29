@@ -87,6 +87,24 @@
                         <a href ng-click="setImagePath()">{{ 'Image path' | translate }}</a>
                       </li>
                       <li class="divider"></li>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li>
+                            <a href ng-click="selectLanguage('en')">
+                              {{ 'English' | translate }}
+                              <span ng-show="language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href ng-click="selectLanguage('es-ES')">
+                              {{ 'Spanish' | translate }}
+                              <span ng-show="language == 'es-ES'" class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="divider"></li>
                       <li>
                         <a href ng-click="clearGraph()">{{ 'Clear all' | translate }}</a>
                       </li>
