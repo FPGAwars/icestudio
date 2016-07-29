@@ -13,3 +13,5 @@ cache
 _build
 node_modules
 bower_components
+
+app/profile.json

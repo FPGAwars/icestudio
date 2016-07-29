@@ -21,9 +21,9 @@ angular
                 suffix: '.json'
             });
 
-            //indicamos el idioma inicial
-            $translateProvider.preferredLanguage('es-ES');
-            $translateProvider.fallbackLanguage('es-ES');
+            // Initial language
+            $translateProvider.preferredLanguage('en');
+            $translateProvider.useSanitizeValueStrategy('escape');
         }
 
     ])

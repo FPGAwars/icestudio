@@ -77,7 +77,7 @@ angular.module('icestudio')
         this.extractTargz = function(source, destination, callback) {
           nodeTarball.extractTarball(source, destination, function(err) {
             if(err) {
-              console.log(err);
+              //console.log(err);
               callback(true);
             }
             else {
@@ -90,11 +90,28 @@ angular.module('icestudio')
           this.extractTargz(VENV_TARGZ, '_build', callback);
         }
 
+        function disableClick(e) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+
+        function enableClickEvent() {
+          document.removeEventListener('click', disableClick, true);
+        }
+
+        function disableClickEvent() {
+          document.addEventListener('click', disableClick, true);
+        }
+
+        this.enableClickEvent = enableClickEvent;
+        this.disableClickEvent = disableClickEvent;
+
         this.executeCommand = function(command, callback) {
           nodeChildProcess.exec(command.join(' '),
             function (error, stdout, stderr) {
               if (error) {
-                console.log(error, stdout, stderr);
+                //console.log(error, stdout, stderr);
+                enableClickEvent();
                 callback(true);
                 angular.element('#progress-message')
                   .text('Remove the current toolchain');
