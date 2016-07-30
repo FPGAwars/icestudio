@@ -1,5 +1,16 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
+  var os = require('os');
+
+  const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
+  if (DARWIN) {
+    var platforms = ['osx64'];
+    var distParams = ['clean:dist', 'nwjs', 'compress:osx64', 'appdmg'];
+  }
+  else {
+    var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx64'];
+    var distParams = ['clean:dist', 'nwjs', 'compress'];
+  }
 
   // Project configuration.
   grunt.initConfig({
@@ -19,11 +30,27 @@ module.exports = function(grunt) {
       options: {
         version: '0.12.3',
         buildDir: 'dist/',
-        //credits: 'app/Credits.html',
-        //macIcns: 'icon.icns',
-        platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx64']
+        winIco: 'doc/images/icestudio-logo.ico',
+        macIcns: 'doc/images/icestudio-logo.icns',
+        macPlist: { 'CFBundleIconFile': 'app.icns' },
+        platforms: platforms
       },
       src: ['app/**']
+    },
+    appdmg: {
+      options: {
+        basepath: '.',
+        title: 'Icestudio Installer',
+        icon: 'doc/images/icestudio-logo.icns',
+        //background: 'doc/images/installer_background.png',
+        contents: [
+          {x: 448, y: 244, type: 'link', path: '/Applications'},
+          {x: 192, y: 244, type: 'file', path: 'dist/Icestudio/osx64/Icestudio.app'}
+        ]
+      },
+      target: {
+        dest: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg'
+      }
     },
     compress: {
       linux32: {
@@ -89,7 +116,8 @@ module.exports = function(grunt) {
                 'app/styles/**/*.*',
                 'app/views/**/*.*',
                 'app/*.*',
-                '!app/a.out'],
+                '!app/a.out',
+                '!app/_build'],
         tasks: ['wiredep', 'exec:stop_NW', 'exec:nw'],
         options: {
           atBegin: true,
@@ -111,6 +139,5 @@ module.exports = function(grunt) {
     console.log('Icestudio');
   });
   grunt.registerTask('serve', ['watch:scripts']);
-  grunt.registerTask('dist', ['clean:dist', 'nwjs', 'compress']);
-
+  grunt.registerTask('dist', distParams);
 };
