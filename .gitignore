@@ -6,6 +6,7 @@
 *.asc
 *.bin
 *.blif
+*.log
 
 etc
 dist

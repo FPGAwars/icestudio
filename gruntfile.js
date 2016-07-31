@@ -42,7 +42,7 @@ module.exports = function(grunt) {
         basepath: '.',
         title: 'Icestudio Installer',
         icon: 'doc/images/icestudio-logo.icns',
-        //background: 'doc/images/installer_background.png',
+        background: 'doc/images/installer-background.png',
         contents: [
           {x: 448, y: 244, type: 'link', path: '/Applications'},
           {x: 192, y: 244, type: 'file', path: 'dist/Icestudio/osx64/Icestudio.app'}

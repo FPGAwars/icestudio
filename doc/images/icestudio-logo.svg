@@ -9,15 +9,48 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="95.388344mm"
-   height="95.388344mm"
-   viewBox="0 0 337.99019 337.99019"
+   width="111.07935mm"
+   height="111.07935mm"
+   viewBox="0 0 393.58825 393.58825"
    id="svg8825"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="icestudio-logo.svg">
   <defs
-     id="defs8827" />
+     id="defs8827">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter4188">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood4190" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite4192" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur4194" />
+      <feOffset
+         dx="6"
+         dy="6"
+         result="offset"
+         id="feOffset4196" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite4198" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,11 +58,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="272.9097"
-     inkscape:cy="141.12483"
+     inkscape:zoom="1.4"
+     inkscape:cx="75.493896"
+     inkscape:cy="166.3438"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g8802"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -56,18 +89,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-42.433472,-309.08134)">
+     transform="translate(-14.634449,-281.28232)">
     <g
        transform="translate(162.81501,-5070.6135)"
        id="g8802">
       <circle
-         style="opacity:1;fill:#8fd9f4;fill-opacity:1;stroke:#275d75;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         style="opacity:1;fill:#8fd9f4;fill-opacity:1;stroke:#275d75;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4188)"
          id="path4317-7-3-6-8-5-5-9-1"
          r="163.9951"
          cy="5548.6899"
          cx="48.613564" />
       <g
-         transform="matrix(1.0314871,0,0,1.0314871,51.121943,-175.79824)"
+         transform="matrix(1.0004123,0,0,1.0004123,51.046375,-3.697741)"
          id="g8707">
         <path
            style="fill:#275d75;fill-opacity:1"
