@@ -15,7 +15,10 @@
    id="svg9427"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="icestudio-logo-label.svg">
+   sodipodi:docname="icestudio-logo-label.svg"
+   inkscape:export-filename="/home/jesus/code/icestudio/doc/images/icestudio-logo-label.png"
+   inkscape:export-xdpi="26"
+   inkscape:export-ydpi="26">
   <defs
      id="defs9429">
     <filter
@@ -59,8 +62,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.51871322"
-     inkscape:cx="140.71751"
-     inkscape:cy="-120.22399"
+     inkscape:cx="1133.2764"
+     inkscape:cy="-43.110089"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -81,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
