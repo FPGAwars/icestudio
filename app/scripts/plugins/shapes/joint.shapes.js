@@ -1,6 +1,16 @@
 'use strict';
 
+var os = require('os');
 var sha1 = require('sha1');
+
+const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
+
+if (DARWIN) {
+  var fontSize = '12';
+}
+else {
+  var fontSize = '15';
+}
 
 // Model element
 
@@ -337,7 +347,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           <script>\
             var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
-            ' + editorLabel + '.setFontSize(15);\
+            ' + editorLabel + '.setFontSize(' + fontSize + ');\
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
@@ -432,7 +442,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
           <script>\
             var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
-            ' + editorLabel + '.setFontSize(15);\
+            ' + editorLabel + '.setFontSize(' + fontSize + ');\
             ' + editorLabel + '.renderer.setShowGutter(false);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
