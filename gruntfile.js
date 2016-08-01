@@ -5,7 +5,7 @@ module.exports = function(grunt) {
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
     var platforms = ['osx64'];
-    var distParams = ['clean:dist', 'nwjs', 'compress:osx64', 'appdmg'];
+    var distParams = ['clean:dist', 'nwjs', 'appdmg', 'compress:osx64'];
   }
   else {
     var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx64'];
@@ -43,9 +43,25 @@ module.exports = function(grunt) {
         title: 'Icestudio Installer',
         icon: 'doc/images/icestudio-logo.icns',
         background: 'doc/images/installer-background.png',
+        window: {
+          size: {
+            width: 512,
+            height: 385,
+          }
+        },
         contents: [
-          {x: 448, y: 244, type: 'link', path: '/Applications'},
-          {x: 192, y: 244, type: 'file', path: 'dist/Icestudio/osx64/Icestudio.app'}
+          {
+            x: 345,
+            y: 250,
+            type: 'link',
+            path: '/Applications'
+          },
+          {
+            x: 170,
+            y: 250,
+            type: 'file',
+            path: 'dist/Icestudio/osx64/Icestudio.app'
+          }
         ]
       },
       target: {

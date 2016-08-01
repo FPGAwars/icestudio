@@ -53,6 +53,8 @@ npm start
 npm run dist
 ```
 
+NOTE: in Mac OSX this commmand generates also a **dmg** package.
+
 ## Version 0.1
 
 ![][icestudio-0.1-demo]
@@ -86,8 +88,8 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 ## Contributors
 
-* Miguel Sánchez de León Peque
-* Tomás Calvo
+* v0.1: Miguel Sánchez de León Peque
+* v0.2: Tomás Calvo
 
 ## Credits
 
