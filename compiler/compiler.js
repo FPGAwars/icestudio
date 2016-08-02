@@ -35,6 +35,7 @@ function module(data) {
     code += ' (';
 
     var params = [];
+    var paramsSpace = 10 + data.name.length;
 
     for (var i in data.ports.in) {
       params.push('input ' + data.ports.in[i]);
@@ -43,7 +44,7 @@ function module(data) {
       params.push('output ' + data.ports.out[o]);
     }
 
-    code += params.join(', ');
+    code += params.join(',\n' + new Array(paramsSpace).join(' '));
 
     code += ');\n';
 
@@ -59,7 +60,7 @@ function module(data) {
 
     // Footer
 
-    code += '\nendmodule\n';
+    code += '\nendmodule\n\n';
   }
 
   return code;
@@ -133,8 +134,14 @@ function getContent(name, project) {
   var instances = []
   for (var b in graph.blocks) {
     var block = graph.blocks[b];
-    if (block.type != 'basic.input' && block.type != 'basic.output') {
+    if (block.type != 'basic.input' &&
+        block.type != 'basic.output' &&
+        block.type != 'basic.info') {
+
       var id = digestId(block.type, true);
+      if (block.type == 'basic.code') {
+        id += '_' + digestId(block.id);
+      }
       instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
 
       // Parameters
@@ -153,7 +160,7 @@ function getContent(name, project) {
         }
         if (paramName && paramsNames.indexOf(paramName) == -1) {
           paramsNames.push(paramName);
-          param += '  .' + paramName;
+          param += ' .' + paramName;
           param += '(w' + w + ')';
           params.push(param);
         }
@@ -173,11 +180,21 @@ function verilogCompiler(name, project) {
   if (project &&
       project.graph) {
 
+    // Main module
+
+    if (name) {
+      var data = {
+        name: name,
+        ports: getPorts(project),
+        content: getContent(name, project)
+      };
+      code += module(data);
+    }
+
     // Dependencies modules
 
     for (var d in project.deps) {
       code += verilogCompiler(name + '_' + digestId(d, true), project.deps[d]);
-      code += '\n';
     }
 
     // Code modules
@@ -187,25 +204,13 @@ function verilogCompiler(name, project) {
       if (block) {
         if (block.type == 'basic.code') {
           var data = {
-            name: name + '_' + digestId(block.type, true),
+            name: name + '_' + digestId(block.type, true) + '_' + digestId(block.id),
             ports: block.data.ports,
             content: block.data.code
           }
           code += module(data);
-          code += '\n';
         }
       }
-    }
-
-    // Main module
-
-    if (name){
-      var data = {
-        name: name,
-        ports: getPorts(project),
-        content: getContent(name, project)
-      };
-      code += module(data);
     }
   }
 
