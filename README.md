@@ -8,6 +8,17 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
     GUI -> JSON -> Verilog, PCF
 
+## Roadmap
+
+* Version 0.3.0
+
+  * Requirements definition phase: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3:-proposed-features)
+
+
+* Version 0.2.X
+
+  * Add new blocks, examples and templates
+
 ## Version 0.2 beta
 
 <img src="./doc/images/icestudio-0.2-crono.png" width="700" align="center">
@@ -84,7 +95,7 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 ## Authors
 
-* Jesús Arroyo
+* Jesús Arroyo Torrens
 
 ## Contributors
 
