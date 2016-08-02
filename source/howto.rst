@@ -6,61 +6,109 @@ How to...
 Create a project
 ----------------
 
-1. Create a new project
+1. **Create a new project**
 
    Go to **Edit > New project**, write your project's name and press OK.
 
-2. Add your blocks
+   .. image:: ../resources/images/howto-new.png
 
- 1. Code blocks
+|
+
+2. **Add your blocks**
+
+ 1. *Code blocks*
 
     Click on **basic > code**, add the code ports. Input and output ports are separated by a space. Port names are separated by a comma. E.g.: ``a,b c``.
 
     This block contains a text editor to write your module verilog code. Module header and footer are not required.
 
- 2. Info blocks
+    .. image:: ../resources/images/howto-code.png
+
+|
+
+ 2. *Info blocks*
 
     Click on **basic > info**.
 
     This block contains a text editor to add comments about the project.
 
- 3. Input/Output blocks
+    .. image:: ../resources/images/howto-info.png
+
+|
+
+ 3. *Input/Output blocks*
 
     Click on **basic > input** or **basic > output**, write the block's name and press OK.
 
     These blocks contain a FPGA pin selector depending on the selected board.
 
- 4. Bit blocks
+    .. image:: ../resources/images/howto-io.png
+
+|
+
+ 4. *Bit blocks*
 
     Click on **bit > 0** or **bit > 1**.
 
     These blocks are low and high logic drivers.
 
- 5. Config block
+    .. image:: ../resources/images/howto-bit.png
+
+|
+
+ 5. *Config block*
 
     Click on **config > Input-config**.
 
     This block must be connected to input ports in order to configure a pull up.
 
- 6. Logic blocks
+    .. image:: ../resources/images/howto-config.png
+
+|
+
+ 6. *Logic blocks*
 
     Go to the **logic** menu and select a logic gate.
 
-3. Connect your blocks
+    .. image:: ../resources/images/howto-logic.png
 
-4. Select your board
+|
+
+3. **Connect your blocks**
+
+.. image:: ../resources/images/howto-bwire.png
+
+|
+
+.. image:: ../resources/images/howto-wire.png
+
+|
+
+4. **Select your board**
 
    Go to **Boards** menu and select **Icezum**, **iCEstick** or **Go board**.
 
-5. Set FPGA I/O pins
+   .. image:: ../resources/images/howto-board.png
+
+|
+
+5. **Set FPGA I/O pins**
 
    Select all Input/Output blocks' pins.
 
-6. Save the project
+   .. image:: ../resources/images/howto-fpgapin.png
+
+|
+
+6. **Save the project**
 
    Go to **Edit > Save**:
 
    It will be saved as **.ice** file.
+
+   .. image:: ../resources/images/howto-save.png
+
+|
 
 
 Upload a bitstream
