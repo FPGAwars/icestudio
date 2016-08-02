@@ -491,14 +491,24 @@ angular.module('icestudio')
 
         this.cloneSelected = function() {
           if (selection) {
-            selection.each(function(cell) {
-              var newCell = cell.clone();
-              newCell.translate(6 * gridsize, 6 * gridsize);
-              addCell(newCell);
-              paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
-              selection.reset(selection.without(cell));
-              selectionView.cancelSelection();
-            });
+            selection.each((function(_this) {
+              return function(cell) {
+                var newCell = cell.clone();
+                var type = cell.attributes.blockType;
+                var content = _this.getContent(cell.id);
+                if (type == 'basic.code') {
+                  newCell.attributes.data.code = content;
+                }
+                else if (type == 'basic.info') {
+                  newCell.attributes.data.info = content;
+                }
+                newCell.translate(6 * gridsize, 6 * gridsize);
+                addCell(newCell);
+                paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
+                selection.reset(selection.without(cell));
+                selectionView.cancelSelection();
+              };
+            })(this));
           }
         }
 
