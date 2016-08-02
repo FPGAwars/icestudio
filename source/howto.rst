@@ -104,7 +104,7 @@ Create a project
 
    Go to **Edit > Save**:
 
-   It will be saved as **.ice** file.
+   It will be saved as an **.ice** file.
 
    .. image:: ../resources/images/howto-save.png
 
@@ -116,7 +116,7 @@ Upload a bitstream
 
 1. **Open a project**
 
-   Go to **Edit > Open project** and select a **.ice** file.
+   Go to **Edit > Open project** and select an **.ice** file.
 
    |
 
@@ -160,18 +160,29 @@ Upload a bitstream
 Create a block
 --------------
 
-1. Open a project
+1. **Open a project**
 
    Go to **Edit > Open project** and select an **.ice** file.
 
-2. Verify the project
+|
 
-3. Export the project as block
+.. image:: ../resources/images/howto-project.png
+
+2. **Verify the project**
+
+   Go to **Tools > Verify**.
+
+|
+
+3. **Export the project as a block**
 
    Go to **Edit > Export as block**.
 
-   It will be saved as **.iceb** file.
+   It will be saved as an **.iceb** file.
 
+   .. image:: ../resources/images/howto-export.png
+
+   |
 
 .. note::
 
@@ -181,8 +192,26 @@ Create a block
 Use a custom block
 ------------------
 
-1. Open or create a new project
+1. **Open or create a new project**
 
-2. Import the custom block
+|
+
+2. **Import the custom block**
 
    Go to **Edit > Import block** and select an **.iceb** file.
+
+   .. image:: ../resources/images/howto-import.png
+
+   |
+
+   .. image:: ../resources/images/howto-customblock.png
+
+   |
+
+3. **Examine the custom block**
+
+   Complex blocks can be examined by double clicking the block.
+
+   .. image:: ../resources/images/howto-examine.png
+
+   |

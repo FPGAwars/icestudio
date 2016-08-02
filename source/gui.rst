@@ -139,13 +139,13 @@ Block selection is performed using the **mouse right button**. Blocks can be sel
 .. image:: ../resources/images/gui-select.png
 
 
-Blocks inspection
-`````````````````
+Blocks examination
+``````````````````
 
-Non-basic blocks can be readonly inspected by **double click** with **mouse left button**. This is a recursive action.
+Non-basic blocks can be readonly examined by **double clicking** the block using the **mouse left button**. This is a recursive action.
 
-.. image:: ../resources/images/gui-inspection.png
+.. image:: ../resources/images/gui-examination.png
 
 .. note::
 
-  The inspection path is stored in the **breadcrumbs**. This allows to go back to any inspected block.
+  The examination path is stored in the **breadcrumbs**. This allows you to go back to any previous block.
