@@ -114,31 +114,48 @@ Create a project
 Upload a bitstream
 ------------------
 
-1. Open a project
+1. **Open a project**
 
    Go to **Edit > Open project** and select a **.ice** file.
 
-2. Verify the project
+   |
+
+2. **Verify the project**
 
    Go to **Tools > Verify**.
 
    This option checks the generated verilog code using ``apio verify``.
 
-3. Build the project
+   .. image:: ../resources/images/howto-verify.png
+
+   |
+
+3. **Build the project**
 
    Go to **Tools > Build**.
 
    This option generates a bitstream using ``apio build``.
 
-4. Upload the project
+   .. image:: ../resources/images/howto-build.png
+
+   |
+
+4. **Upload the project**
 
    Connect your FPGA board and press **Tools > Upload**. This option uses ``apio upload``.
+
+   .. image:: ../resources/images/howto-upload.png
+
+   |
 
 
 .. note::
 
-  If the FPGA toolchain is not installed, it will be installed automatically when any tool is pressed.
+  If the FPGA toolchain is not installed, it will be installed automatically when any tool is pressed. It can also be installed or removed in the menu **Tools** section.
 
+  .. image:: ../resources/images/howto-installtoolchain.png
+
+  |
 
 Create a block
 --------------
