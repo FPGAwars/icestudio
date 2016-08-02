@@ -38,7 +38,7 @@
         "id": "00925b04-5004-4307-a737-fa4e97c8b6ab",
         "type": "basic.code",
         "data": {
-          "code": "// NOR logic gate\n\nassign c = ~a | b;",
+          "code": "// NOR logic gate\n\nassign c = ~(a | b);",
           "ports": {
             "in": [
               "a",
