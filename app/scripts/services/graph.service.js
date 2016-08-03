@@ -178,8 +178,10 @@ angular.module('icestudio')
            if (selection) {
              selection.each(function(cell) {
                var cellView = paper.findViewByModel(cell);
-               if (!cellView.model.isLink()) {
-                 cellView.$box.css('z-index', zIndex++);
+               if (cellView) {
+                 if (!cellView.model.isLink()) {
+                   cellView.$box.css('z-index', zIndex++);
+                 }
                }
              });
            }
