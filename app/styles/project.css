@@ -30,6 +30,10 @@
   z-index: 0;
 }
 
+.config-block {
+  background: #FAFAD2;
+}
+
 .generic-block img {
   position: absolute;
   margin: auto;
@@ -155,4 +159,5 @@
   border: 2px dashed #EB2222;
   opacity: .7;
   border-radius: 5px;
+  z-index: 1500;
 }

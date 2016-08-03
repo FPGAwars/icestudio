@@ -351,10 +351,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-              $(document).trigger("disableSelected");\
-            });\
-            ' + editorLabel + '.on("hover", function() {\
-              $(document).trigger("disableSelected");\
             });\
           </script>\
         </div>\
@@ -446,10 +442,6 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.renderer.setShowGutter(false);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-              $(document).trigger("disableSelected");\
-            });\
-            ' + editorLabel + '.on("hover", function() {\
-              $(document).trigger("disableSelected");\
             });\
           </script>\
         </div>\
@@ -465,7 +457,6 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
       this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
-      this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
     },
     render: function () {
       joint.dia.ElementView.prototype.render.apply(this, arguments);

@@ -13,7 +13,8 @@
     "min_height": 200,
     "toolbar": false,
     "resizable": true,
-    "position": "center"
+    "position": "center",
+    "icon": "resources/images/icestudio-logo.png"
   },
   "engines": {
     "node": ">= 0.10.0"

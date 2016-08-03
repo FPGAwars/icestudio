@@ -2,6 +2,10 @@
   pointer-events: none;
 }
 
+.navbar {
+  z-index: 1501;
+}
+
 .dropdown-submenu {
   position: relative;
 }

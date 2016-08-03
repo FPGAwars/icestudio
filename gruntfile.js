@@ -76,7 +76,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/Icestudio/linux32/',
-          src: ['**'],
+          src: ['Icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
           dest: ''
         }]
       },
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/Icestudio/linux64/',
-          src: ['**'],
+          src: ['Icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
           dest: '.'
         }]
       },
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/Icestudio/win32/',
-          src: ['**'],
+          src: ['Icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
           dest: '.'
         }]
       },
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/Icestudio/win64/',
-          src: ['**'],
+          src: ['Icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
           dest: '.'
         }]
       },

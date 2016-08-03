@@ -70,9 +70,11 @@ angular.module('icestudio')
           context.fill();
           // Finally, set the grid background image of the paper container element.
           var gridBackgroundImage = canvas[0].toDataURL('image/png');
-          $(paper.el.childNodes[0]).css('background-image', 'url("' + gridBackgroundImage + '")');
+          $(paper.el.childNodes[0]).css(
+            'background-image', 'url("' + gridBackgroundImage + '")');
           if(typeof(offset) != 'undefined'){
-            $(paper.el.childNodes[0]).css('background-position', offset.x + 'px ' + offset.y + 'px');
+            $(paper.el.childNodes[0]).css(
+              'background-position', offset.x + 'px ' + offset.y + 'px');
           }
         }
 
@@ -95,16 +97,22 @@ angular.module('icestudio')
             },
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
               // Prevent output-output links
-              if (magnetS.getAttribute('type') == 'output' && magnetT.getAttribute('type') == 'output')
+              if (magnetS.getAttribute('type') == 'output' &&
+                  magnetT.getAttribute('type') == 'output')
                 return false;
               // Prevent multiple input links
               var links = graph.getLinks();
               for (var i in links) {
                 if (linkView == links[i].findView(paper)) //Skip the wire the user is drawing
                   continue;
-                if ( (( cellViewT.model.id == links[i].get('target').id ) && ( magnetT.getAttribute('port') == links[i].get('target').port)) ) {
+                if ((cellViewT.model.id == links[i].get('target').id) &&
+                    (magnetT.getAttribute('port') == links[i].get('target').port)) {
                   return false;
                 }
+              }
+              // Ensure input -> input-config connections
+              if (cellViewT.model.attributes.blockType == 'config.Input-config') {
+                return (cellViewS.model.attributes.blockType == 'basic.input');
               }
               // Prevent loop links
               return magnetS !== magnetT;
@@ -165,19 +173,24 @@ angular.module('icestudio')
 
          // Events
 
-         paper.on('cell:pointerup', function(cellView, evt) {
-           if ((evt.ctrlKey || evt.metaKey) && (!cellView.model.isLink())) {
-             selection.add(cellView.model);
-             selectionView.createSelectionBox(cellView);
-           }
-         });
-
          selectionView.on('selection-box:pointerdown', function(evt) {
-             if (evt.ctrlKey || evt.metaKey) {
-               var cell = selection.get($(evt.target).data('model'));
-               selection.reset(selection.without(cell));
-               selectionView.destroySelectionBox(paper.findViewByModel(cell));
-             }
+           // Selection to top view
+           if (selection) {
+             selection.each(function(cell) {
+               var cellView = paper.findViewByModel(cell);
+               if (cellView) {
+                 if (!cellView.model.isLink()) {
+                   cellView.$box.css('z-index', zIndex++);
+                 }
+               }
+             });
+           }
+           // Toggle selection
+           if ((evt.which == 3) && (evt.ctrlKey || evt.metaKey)) {
+             var cell = selection.get($(evt.target).data('model'));
+             selection.reset(selection.without(cell));
+             selectionView.destroySelectionBox(paper.findViewByModel(cell));
+           }
          });
 
           paper.on('cell:pointerdown',
@@ -199,7 +212,8 @@ angular.module('icestudio')
             (function(_this) {
               return function(cellView, evt, x, y) {
                 var data = cellView.model.attributes;
-                if (data.blockType == 'basic.input' || data.blockType == 'basic.output') {
+                if (data.blockType == 'basic.input' ||
+                    data.blockType == 'basic.output') {
                   if (paper.options.interactive) {
                     alertify.prompt('Insert the block label', '',
                       function(evt, label) {
@@ -471,7 +485,8 @@ angular.module('icestudio')
         }
 
         this.getContent = function(id) {
-          return paper.findViewByModel(id).$box.find('#content' + sha1(id).toString().substring(0, 6)).val();
+          return paper.findViewByModel(id).$box.find(
+            '#content' + sha1(id).toString().substring(0, 6)).val();
         }
 
         this.resetIOChoices = function() {
@@ -491,14 +506,27 @@ angular.module('icestudio')
 
         this.cloneSelected = function() {
           if (selection) {
-            selection.each(function(cell) {
-              var newCell = cell.clone();
-              newCell.translate(6 * gridsize, 6 * gridsize);
-              addCell(newCell);
-              paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
-              selection.reset(selection.without(cell));
-              selectionView.cancelSelection();
-            });
+            selection.each((function(_this) {
+              return function(cell) {
+                var newCell = cell.clone();
+                var type = cell.attributes.blockType;
+                var content = _this.getContent(cell.id);
+                if (type == 'basic.code') {
+                  newCell.attributes.data.code = content;
+                }
+                else if (type == 'basic.info') {
+                  newCell.attributes.data.info = content;
+                }
+                newCell.translate(6 * gridsize, 6 * gridsize);
+                addCell(newCell);
+                if (type == 'config.Input-config') {
+                  paper.findViewByModel(newCell).$box.addClass('config-block');
+                }
+                paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
+                selection.reset(selection.without(cell));
+                selectionView.cancelSelection();
+              };
+            })(this));
           }
         }
 
@@ -743,6 +771,11 @@ angular.module('icestudio')
           });
 
           addCell(cell);
+
+          if (blockInstance.type == 'config.Input-config') {
+            paper.findViewByModel(cell).$box.addClass('config-block');
+          }
+
           return cell;
         }
 
@@ -766,8 +799,16 @@ angular.module('icestudio')
           }
 
           var _wire = new joint.shapes.ice.Wire({
-            source: { id: source.id, selector: sourceSelector, port: wire.source.port },
-            target: { id: target.id, selector: targetSelector, port: wire.target.port },
+            source: {
+              id: source.id,
+              selector: sourceSelector,
+              port: wire.source.port
+            },
+            target: {
+              id: target.id,
+              selector: targetSelector,
+              port: wire.target.port
+            },
             vertices: wire.vertices
           });
 
