@@ -110,6 +110,10 @@ angular.module('icestudio')
                   return false;
                 }
               }
+              // Ensure input -> input-config connections
+              if (cellViewT.model.attributes.blockType == 'config.Input-config') {
+                return (cellViewS.model.attributes.blockType == 'basic.input');
+              }
               // Prevent loop links
               return magnetS !== magnetT;
             }
