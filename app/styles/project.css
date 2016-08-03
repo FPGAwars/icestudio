@@ -159,4 +159,5 @@
   border: 2px dashed #EB2222;
   opacity: .7;
   border-radius: 5px;
+  z-index: 1500;
 }

@@ -173,19 +173,22 @@ angular.module('icestudio')
 
          // Events
 
-         paper.on('cell:pointerup', function(cellView, evt) {
-           if ((evt.ctrlKey || evt.metaKey) && (!cellView.model.isLink())) {
-             selection.add(cellView.model);
-             selectionView.createSelectionBox(cellView);
-           }
-         });
-
          selectionView.on('selection-box:pointerdown', function(evt) {
-             if (evt.ctrlKey || evt.metaKey) {
-               var cell = selection.get($(evt.target).data('model'));
-               selection.reset(selection.without(cell));
-               selectionView.destroySelectionBox(paper.findViewByModel(cell));
-             }
+           // Selection to top view
+           if (selection) {
+             selection.each(function(cell) {
+               var cellView = paper.findViewByModel(cell);
+               if (!cellView.model.isLink()) {
+                 cellView.$box.css('z-index', zIndex++);
+               }
+             });
+           }
+           // Toggle selection
+           if ((evt.which == 3) && (evt.ctrlKey || evt.metaKey)) {
+             var cell = selection.get($(evt.target).data('model'));
+             selection.reset(selection.without(cell));
+             selectionView.destroySelectionBox(paper.findViewByModel(cell));
+           }
          });
 
           paper.on('cell:pointerdown',
