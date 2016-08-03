@@ -351,10 +351,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-              $(document).trigger("disableSelected");\
+              $(document).trigger("disableFocus");\
             });\
             ' + editorLabel + '.on("hover", function() {\
-              $(document).trigger("disableSelected");\
+              $(document).trigger("disableFocus");\
             });\
           </script>\
         </div>\
@@ -446,10 +446,10 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.renderer.setShowGutter(false);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-              $(document).trigger("disableSelected");\
+              $(document).trigger("disableFocus");\
             });\
             ' + editorLabel + '.on("hover", function() {\
-              $(document).trigger("disableSelected");\
+              $(document).trigger("disableFocus");\
             });\
           </script>\
         </div>\

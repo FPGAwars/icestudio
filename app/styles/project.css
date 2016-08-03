@@ -30,6 +30,10 @@
   z-index: 0;
 }
 
+.config-block {
+  background: #FAFAD2;
+}
+
 .generic-block img {
   position: absolute;
   margin: auto;
