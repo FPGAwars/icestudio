@@ -12,12 +12,12 @@ Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/t
 
 * Version 0.3.0
 
-  * Requirements definition phase: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3:-proposed-features)
+  * Requirements definition phase: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3.0:-proposed-features)
 
 
 * Version 0.2.X
 
-  * Add new blocks, examples and templates
+  * Add new blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
 
 ## Version 0.2 beta
 

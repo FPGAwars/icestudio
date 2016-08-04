@@ -200,6 +200,8 @@ angular.module('icestudio')
                   cellView.$box.css('z-index', zIndex++);
                 }
                 if (evt.which == 3) {
+                  // Disable current focus
+                  document.activeElement.blur();
                   // Right button
                   selection.add(cellView.model);
                   selectionView.createSelectionBox(cellView);
@@ -260,6 +262,9 @@ angular.module('icestudio')
           paper.on('blank:pointerdown',
             (function(_this) {
               return function(evt, x, y) {
+                // Disable current focus
+                document.activeElement.blur();
+
                 if (paper.options.interactive) {
                   if (evt.which == 3) {
                     // Right button
@@ -283,7 +288,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseover',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.addClass('highlight');
               }
@@ -291,7 +296,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseout',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.removeClass('highlight');
               }

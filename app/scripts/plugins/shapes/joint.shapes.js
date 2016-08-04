@@ -108,6 +108,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     if (type === 'in') {
       attrs[portSelector]['ref-x'] = -16;
       attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+      attrs[portSelector]['pointer-events'] = 'none';
+      attrs[portWireSelector]['pointer-events'] = 'none';
     }
     else {
       attrs[portSelector]['ref-dx'] = 16;
