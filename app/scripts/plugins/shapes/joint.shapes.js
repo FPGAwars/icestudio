@@ -41,7 +41,6 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       },
       '.port-body': {
         r: 16,
-        fill: 'red',
         opacity: 0
       },
       '.inPorts .port-body': {
@@ -350,6 +349,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
             ' + editorLabel + '.setFontSize(' + fontSize + ');\
+            ' + editorLabel + '.renderer.setShowGutter(true);\
+            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
@@ -442,6 +443,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
             ' + editorLabel + '.setFontSize(' + fontSize + ');\
             ' + editorLabel + '.renderer.setShowGutter(false);\
+            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
             });\
