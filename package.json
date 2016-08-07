@@ -14,8 +14,10 @@
     "bower": "^1.7.9",
     "grunt": "^1.0.1",
     "grunt-appdmg": {
-      "version": "^0.4.0",
-      "os": ["darwin"]
+      "os": [
+        "darwin"
+      ],
+      "version": "^0.4.0"
     },
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",

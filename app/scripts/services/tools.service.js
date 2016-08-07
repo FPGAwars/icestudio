@@ -8,41 +8,52 @@ angular.module('icestudio')
         var toolchain = { installed: false };
 
         this.toolchain = toolchain;
+        this.buildPath = '_build';
+        this.currentProjectPath = '';
 
         checkToolchain();
 
         this.verifyCode = function() {
-          apio(['verify']);
+          this.apio(['verify']);
         };
 
         this.buildCode = function() {
-          apio(['build', '--board', boards.selectedBoard.id]);
+          this.apio(['build', '--board', boards.selectedBoard.id]);
         };
 
         this.uploadCode = function() {
-          apio(['upload', '--board', boards.selectedBoard.id]);
+          this.apio(['upload', '--board', boards.selectedBoard.id]);
         };
 
-        function apio(commands) {
-          if (generateCode()) {
+        this.apio = function(commands) {
+          var code = this.generateCode();
+          if (code) {
             if (toolchain.installed) {
-              $('body').addClass('waiting');
               angular.element('#menu').addClass('disable-menu');
               currentAlert = alertify.notify(commands[0] + ' start...', 'message', 100000);
-              nodeProcess.chdir('_build');
-              try {
-                execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
-                  if (currentAlert)
+              if (this.syncVerilogResources(code)) {
+                $('body').addClass('waiting');
+                nodeProcess.chdir('_build');
+                try {
+                  execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
+                    if (currentAlert)
                     setTimeout(function() {
                       angular.element('#menu').removeClass('disable-menu');
                       currentAlert.dismiss(true);
                     }, 1000);
-                });
+                  });
+                }
+                catch(e) {
+                }
+                finally {
+                  nodeProcess.chdir('..');
+                }
               }
-              catch(e) {
-              }
-              finally {
-                nodeProcess.chdir('..');
+              else {
+                setTimeout(function() {
+                  angular.element('#menu').removeClass('disable-menu');
+                  currentAlert.dismiss(true);
+                }, 1000);
               }
             }
             else {
@@ -63,16 +74,45 @@ angular.module('icestudio')
           }
         }
 
-        function generateCode() {
-          var path = '_build';
-          if (!nodeFs.existsSync(path))
-            nodeFs.mkdirSync(path);
+        this.generateCode = function() {
+          if (!nodeFs.existsSync(this.buildPath))
+            nodeFs.mkdirSync(this.buildPath);
           common.refreshProject();
           var verilog = compiler.generateVerilog(common.project);
           var pcf = compiler.generatePCF(common.project);
-          nodeFs.writeFileSync(nodePath.join(path, 'main.v'), verilog, 'utf8');
-          nodeFs.writeFileSync(nodePath.join(path, 'main.pcf'), pcf, 'utf8');
+          nodeFs.writeFileSync(nodePath.join(this.buildPath, 'main.v'), verilog, 'utf8');
+          nodeFs.writeFileSync(nodePath.join(this.buildPath, 'main.pcf'), pcf, 'utf8');
           return verilog;
+        }
+
+        this.syncVerilogResources = function(code) {
+          var matches = code.match(/\".*list\"/g);
+
+          for (var i in matches) {
+
+            var file = matches[i].replace(/\"/g, "");
+            var destPath = nodePath.join(this.buildPath, file);
+            var origPath = nodePath.join(this.currentProjectPath, file);
+
+            // Remove list file if exists
+            if (nodeFs.existsSync(destPath)) {
+              nodeFs.unlinkSync(destPath);
+            }
+            // Copy list file
+            if (nodeFs.existsSync(origPath)) {
+              nodeFs.linkSync(origPath, destPath);
+              return true;
+            }
+            else {
+              // Error: file does not exist
+              alertify.notify('File: ' + file + ' does not exist', 'error', 3);
+              return false;
+            }
+          }
+        }
+
+        this.setProjectPath = function(path) {
+          this.currentProjectPath = path;
         }
 
         function execute(command, label, callback) {
