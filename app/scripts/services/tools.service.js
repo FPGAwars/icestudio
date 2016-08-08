@@ -14,46 +14,52 @@ angular.module('icestudio')
         checkToolchain();
 
         this.verifyCode = function() {
-          this.apio(['verify']);
+          this.apio(['verify'], false);
         };
 
         this.buildCode = function() {
-          this.apio(['build', '--board', boards.selectedBoard.id]);
+          this.apio(['build', '--board', boards.selectedBoard.id], true);
         };
 
         this.uploadCode = function() {
-          this.apio(['upload', '--board', boards.selectedBoard.id]);
+          this.apio(['upload', '--board', boards.selectedBoard.id], true);
         };
 
-        this.apio = function(commands) {
+        this.apio = function(commands, checkFiles) {
+          var check = true;
           var code = this.generateCode();
           if (code) {
             if (toolchain.installed) {
               angular.element('#menu').addClass('disable-menu');
               currentAlert = alertify.notify(commands[0] + ' start...', 'message', 100000);
-              if (this.syncVerilogResources(code)) {
-                $('body').addClass('waiting');
-                nodeProcess.chdir('_build');
-                try {
+              $('body').addClass('waiting');
+              nodeProcess.chdir('_build');
+              if (checkFiles) {
+                check = this.syncVerilogResources(code);
+              }
+              try {
+                if (check) {
                   execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
-                    if (currentAlert)
-                    setTimeout(function() {
-                      angular.element('#menu').removeClass('disable-menu');
-                      currentAlert.dismiss(true);
-                    }, 1000);
+                    if (currentAlert) {
+                      setTimeout(function() {
+                        angular.element('#menu').removeClass('disable-menu');
+                        currentAlert.dismiss(true);
+                      }, 1000);
+                    }
                   });
                 }
-                catch(e) {
-                }
-                finally {
-                  nodeProcess.chdir('..');
+                else {
+                  setTimeout(function() {
+                    angular.element('#menu').removeClass('disable-menu');
+                    currentAlert.dismiss(true);
+                    $('body').removeClass('waiting');
+                  }, 1000);
                 }
               }
-              else {
-                setTimeout(function() {
-                  angular.element('#menu').removeClass('disable-menu');
-                  currentAlert.dismiss(true);
-                }, 1000);
+              catch(e) {
+              }
+              finally {
+                nodeProcess.chdir('..');
               }
             }
             else {
@@ -86,29 +92,45 @@ angular.module('icestudio')
         }
 
         this.syncVerilogResources = function(code) {
-          var matches = code.match(/\".*list\"/g);
+          var ret = true;
+          var files = code.match(/\".*list\"/g);
 
-          for (var i in matches) {
+          if (files && files.length > 0) {
+            // Force rebuild
+            var apio = utils.getApioExecutable();
+            nodeChildProcess.execSync([apio, 'clean'].join(' ')).toString();
+          }
 
-            var file = matches[i].replace(/\"/g, "");
-            var destPath = nodePath.join(this.buildPath, file);
+          for (var i in files) {
+
+            var file = files[i].replace(/\"/g, "");
+            var destPath = nodePath.join('.', file);
             var origPath = nodePath.join(this.currentProjectPath, file);
 
-            // Remove list file if exists
-            if (nodeFs.existsSync(destPath)) {
-              nodeFs.unlinkSync(destPath);
+            try {
+              // Remove link if exists
+              if (nodeFs.existsSync(destPath)) {
+                nodeFs.unlinkSync(destPath);
+              }
+              // Link list file
+              if (nodeFs.existsSync(origPath)) {
+                nodeFs.linkSync(origPath, destPath);
+              }
+              else {
+                // Error: file does not exist
+                alertify.notify('File: ' + file + ' does not exist', 'error', 3);
+                ret = false;
+                break;
+              }
             }
-            // Copy list file
-            if (nodeFs.existsSync(origPath)) {
-              nodeFs.linkSync(origPath, destPath);
-              return true;
-            }
-            else {
-              // Error: file does not exist
-              alertify.notify('File: ' + file + ' does not exist', 'error', 3);
-              return false;
+            catch (e) {
+              alertify.notify('Error: ' + e.toString(), 'error', 3);
+              ret = false;
+              break;
             }
           }
+
+          return ret;
         }
 
         this.setProjectPath = function(path) {
