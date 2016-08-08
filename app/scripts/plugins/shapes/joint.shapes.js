@@ -457,6 +457,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
       this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
+      this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
     },
     render: function () {
       joint.dia.ElementView.prototype.render.apply(this, arguments);
