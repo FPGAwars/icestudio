@@ -29,12 +29,12 @@
                       <li class="dropdown-submenu" uib-dropdown>
                         <a href uib-dropdown-toggle> {{ 'Examples' | translate }}</a>
                         <ul uib-dropdown-menu>
-                           <li class="dropdown-submenu" ng-repeat="(category, projects) in examples">
-                             <a href uib-dropdown-toggle>{{ category }}</a>
+                           <li class="dropdown-submenu" ng-repeat="example in examples">
+                             <a href uib-dropdown-toggle>{{ example.name }}</a>
                              <ul uib-dropdown-menu>
-                               <li ng-repeat="(name, project) in projects">
-                                 <a href ng-click="openStoredProject(name, project)">
-                                 {{ name }}
+                               <li ng-repeat="child in example.children">
+                                 <a href ng-click="openStoredProject(child.name, child.project)">
+                                 {{ child.name }}
                                  </a>
                                </li>
                              </ul>
@@ -44,12 +44,12 @@
                       <li class="dropdown-submenu" uib-dropdown>
                         <a href uib-dropdown-toggle> {{ 'Templates' | translate }}</a>
                         <ul uib-dropdown-menu>
-                           <li class="dropdown-submenu" ng-repeat="(category, projects) in templates">
-                             <a href uib-dropdown-toggle>{{ category }}</a>
+                           <li class="dropdown-submenu" ng-repeat="template in templates">
+                             <a href uib-dropdown-toggle>{{ template.name }}</a>
                              <ul uib-dropdown-menu>
-                               <li ng-repeat="(name, project) in projects">
-                                 <a href ng-click="openStoredProject(name, project)">
-                                 {{ name }}
+                               <li ng-repeat="child in template.children">
+                                 <a href ng-click="openStoredProject(child.name, child.project)">
+                                 {{ child.name }}
                                  </a>
                                </li>
                              </ul>
@@ -203,13 +203,13 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-repeat="(category, blocks) in menuBlocks"
-                    ng-mouseover="status[category]=true" ng-mouseleave="status[category]=false" is-open="status[category]">
-                    <a href uib-dropdown-toggle>{{ category }} <span class="caret"></span></a>
+                <li uib-dropdown ng-repeat="blocks in menuBlocks"
+                    ng-mouseover="status[blocks.name]=true" ng-mouseleave="status[blocks.name]=false" is-open="status[blocks.name]">
+                    <a href uib-dropdown-toggle>{{ blocks.name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li ng-repeat="(name, block) in blocks">
-                        <a href ng-click="common.addBlock(category + '.' + name, block)">
-                          {{ name }}
+                      <li ng-repeat="block in blocks.children">
+                        <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.project)">
+                          {{ block.name }}
                         </a>
                       </li>
                     </ul>

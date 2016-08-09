@@ -176,7 +176,8 @@ angular.module('icestudio')
 
         this.sep = nodePath.sep;
 
-        this.basename = function(filepath) {
+        this.basename = basename;
+        function basename(filepath) {
           return nodePath.basename(filepath).split('.')[0];
         }
 
@@ -253,5 +254,35 @@ angular.module('icestudio')
           }
           return result;
         }
+
+        this.getFilesRecursive = getFilesRecursive;
+
+        function getFilesRecursive(folder, extension) {
+          var fileContents = nodeFs.readdirSync(folder),
+              fileTree = [],
+              stats;
+
+          fileContents.forEach(function (fileName) {
+            var filePath = nodePath.join(folder, fileName);
+            stats = nodeFs.lstatSync(filePath);
+
+            if (stats.isDirectory()) {
+              fileTree.push({
+                name: fileName,
+                children: getFilesRecursive(filePath, extension)
+              });
+            } else {
+              if (fileName.endsWith(extension)) {
+                var content = JSON.parse(nodeFs.readFileSync(filePath).toString());
+                fileTree.push({
+                  name: basename(fileName),
+                  project: content
+                });
+              }
+            }
+          });
+
+          return fileTree;
+        };
 
     }]);
