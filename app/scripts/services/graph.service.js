@@ -745,7 +745,10 @@ angular.module('icestudio')
           var blockLabel = blockInstance.type.toUpperCase();
           var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
-            blockLabel = blockInstance.type.split('.').join('\n');
+            blockLabel = [
+              blockInstance.type.split('.')[0],
+              blockInstance.type.split('.')[1].toUpperCase()
+            ].join('');
           }
 
           var blockImage = '';
