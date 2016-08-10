@@ -290,7 +290,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
           $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
         }
 
-        this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        if (this.model.get('data').pin) {
+          this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        }
       }
     },
     clearValue: function () {

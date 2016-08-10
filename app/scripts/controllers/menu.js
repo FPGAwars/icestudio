@@ -92,19 +92,21 @@ angular.module('icestudio')
     }
 
     $scope.openStoredProject = function(name, project) {
-      if (!graph.isEmpty()) {
-        alertify.confirm('The current project will be removed. ' +
-                         'Do you want to continue loading the project?',
+      if (project) {
+        if (!graph.isEmpty()) {
+          alertify.confirm('The current project will be removed. ' +
+          'Do you want to continue loading the project?',
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
             pathSync();
-        });
-      }
-      else {
-        common.loadProject(name, project);
-        $scope.currentProjectPath = '';
-        pathSync();
+          });
+        }
+        else {
+          common.loadProject(name, project);
+          $scope.currentProjectPath = '';
+          pathSync();
+        }
       }
     }
 
