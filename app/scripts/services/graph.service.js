@@ -91,6 +91,10 @@ angular.module('icestudio')
             embeddingMode: false,
             //markAvailable: true,
             defaultLink: new joint.shapes.ice.Wire(),
+            guard: function(evt, view) {
+              // FALSE means the event isn't guarded.
+              return false;
+            },
             validateMagnet: function(cellView, magnet) {
               // Prevent to start wires from an input port
               return (magnet.getAttribute('type') == 'output');
@@ -283,7 +287,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseover',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.addClass('highlight');
               }
@@ -291,7 +295,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseout',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.removeClass('highlight');
               }
@@ -741,10 +745,7 @@ angular.module('icestudio')
           var blockLabel = blockInstance.type.toUpperCase();
           var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
-            blockLabel = [
-              blockInstance.type.split('.')[0],
-              blockInstance.type.split('.')[1].toUpperCase()
-            ].join('\n');
+            blockLabel = blockInstance.type.split('.').join('\n');
           }
 
           var blockImage = '';
