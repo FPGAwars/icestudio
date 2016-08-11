@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function(nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false };
@@ -110,11 +110,11 @@ angular.module('icestudio')
             try {
               // Remove link if exists
               if (nodeFs.existsSync(destPath)) {
-                nodeFs.unlinkSync(destPath);
+                nodeFse.removeSync(destPath);
               }
               // Link list file
               if (nodeFs.existsSync(origPath)) {
-                nodeFs.linkSync(origPath, destPath);
+                nodeFse.copySync(origPath, destPath);
               }
               else {
                 // Error: file does not exist

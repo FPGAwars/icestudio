@@ -4,6 +4,9 @@ angular.module('icestudio')
   .factory('nodeFs', function() {
     return require('fs');
   })
+  .factory('nodeFse', function() {
+    return require('fs-extra');
+  })
   .factory('nodeRmdir', function() {
     return require('rmdir');
   })
