@@ -91,6 +91,10 @@ angular.module('icestudio')
             embeddingMode: false,
             //markAvailable: true,
             defaultLink: new joint.shapes.ice.Wire(),
+            guard: function(evt, view) {
+              // FALSE means the event isn't guarded.
+              return false;
+            },
             validateMagnet: function(cellView, magnet) {
               // Prevent to start wires from an input port
               return (magnet.getAttribute('type') == 'output');
@@ -793,7 +797,7 @@ angular.module('icestudio')
             blockLabel = [
               blockInstance.type.split('.')[0],
               blockInstance.type.split('.')[1].toUpperCase()
-            ].join('\n');
+            ].join('');
           }
 
           var blockImage = '';

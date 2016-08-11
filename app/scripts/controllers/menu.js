@@ -42,6 +42,10 @@ angular.module('icestudio')
     $scope.workingdir = '';
     $scope.currentProjectPath = '';
 
+    function pathSync() {
+      tools.setProjectPath(utils.dirname($scope.currentProjectPath));
+    }
+
     // File
 
     $scope.newProject = function() {
@@ -50,6 +54,7 @@ angular.module('icestudio')
           if (name) {
             common.newProject(name);
             $scope.currentProjectPath = '';
+            pathSync();
           }
       });
     }
@@ -70,11 +75,13 @@ angular.module('icestudio')
                   function() {
                     common.openProject(file.path);
                     $scope.currentProjectPath = file.path;
+                    pathSync();
                 });
               }
               else {
                 common.openProject(file.path);
                 $scope.currentProjectPath = file.path;
+                pathSync();
               }
 
             }
@@ -85,17 +92,21 @@ angular.module('icestudio')
     }
 
     $scope.openStoredProject = function(name, project) {
-      if (!graph.isEmpty()) {
-        alertify.confirm('The current project will be removed. ' +
-                         'Do you want to continue loading the project?',
+      if (project) {
+        if (!graph.isEmpty()) {
+          alertify.confirm('The current project will be removed. ' +
+          'Do you want to continue loading the project?',
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
-        });
-      }
-      else {
-        common.loadProject(name, project);
-        $scope.currentProjectPath = '';
+            pathSync();
+          });
+        }
+        else {
+          common.loadProject(name, project);
+          $scope.currentProjectPath = '';
+          pathSync();
+        }
       }
     }
 
@@ -123,6 +134,7 @@ angular.module('icestudio')
             $scope.workingdir = utils.dirname(filepath) + utils.sep;
             common.saveProject(filepath);
             $scope.currentProjectPath = filepath;
+            pathSync();
           }
         });
         ctrl.click();

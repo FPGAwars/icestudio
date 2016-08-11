@@ -291,7 +291,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
           $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
         }
 
-        this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        if (this.model.get('data').pin) {
+          this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        }
       }
     },
     clearValue: function () {
@@ -461,6 +463,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
       this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
+      this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
     },
     render: function () {
       joint.dia.ElementView.prototype.render.apply(this, arguments);
