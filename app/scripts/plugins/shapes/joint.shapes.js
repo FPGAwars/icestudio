@@ -41,7 +41,6 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       },
       '.port-body': {
         r: 16,
-        fill: 'red',
         opacity: 0
       },
       '.inPorts .port-body': {
@@ -108,6 +107,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     if (type === 'in') {
       attrs[portSelector]['ref-x'] = -16;
       attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+      attrs[portSelector]['pointer-events'] = 'none';
+      attrs[portWireSelector]['pointer-events'] = 'none';
     }
     else {
       attrs[portSelector]['ref-dx'] = 16;
@@ -290,7 +291,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
           $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
         }
 
-        this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        if (this.model.get('data').pin) {
+          this.$box.find('.io-combo').val(this.model.get('data').pin.value);
+        }
       }
     },
     clearValue: function () {
@@ -348,6 +351,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
             ' + editorLabel + '.setFontSize(' + fontSize + ');\
+            ' + editorLabel + '.renderer.setShowGutter(true);\
+            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
@@ -440,6 +445,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.setTheme("ace/theme/chrome");\
             ' + editorLabel + '.setFontSize(' + fontSize + ');\
             ' + editorLabel + '.renderer.setShowGutter(false);\
+            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
             });\
@@ -457,6 +463,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
       this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
+      this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
     },
     render: function () {
       joint.dia.ElementView.prototype.render.apply(this, arguments);

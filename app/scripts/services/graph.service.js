@@ -6,7 +6,7 @@ angular.module('icestudio')
 
         // Variables
 
-        var zIndex = 0;
+        var zIndex = 100;
         var ctrlPressed = false;
 
         var graph = null;
@@ -91,6 +91,10 @@ angular.module('icestudio')
             embeddingMode: false,
             //markAvailable: true,
             defaultLink: new joint.shapes.ice.Wire(),
+            guard: function(evt, view) {
+              // FALSE means the event isn't guarded.
+              return false;
+            },
             validateMagnet: function(cellView, magnet) {
               // Prevent to start wires from an input port
               return (magnet.getAttribute('type') == 'output');
@@ -180,7 +184,9 @@ angular.module('icestudio')
                var cellView = paper.findViewByModel(cell);
                if (cellView) {
                  if (!cellView.model.isLink()) {
-                   cellView.$box.css('z-index', zIndex++);
+                   if (cellView.$box.css('z-index') < zIndex) {
+                     cellView.$box.css('z-index', ++zIndex);
+                   }
                  }
                }
              });
@@ -193,16 +199,30 @@ angular.module('icestudio')
            }
          });
 
+         paper.on('cell:pointerup',
+           function(cellView, evt, x, y) {
+             if (paper.options.interactive) {
+               if (!cellView.model.isLink()) {
+                 if (evt.which == 3) {
+                   // Disable current focus
+                   document.activeElement.blur();
+                   // Right button
+                   selection.add(cellView.model);
+                   selectionView.createSelectionBox(cellView);
+                   cellView.$box.removeClass('highlight');
+                 }
+               }
+             }
+           }
+         );
+
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
               if (paper.options.interactive) {
                 if (!cellView.model.isLink()) {
-                  cellView.$box.css('z-index', zIndex++);
-                }
-                if (evt.which == 3) {
-                  // Right button
-                  selection.add(cellView.model);
-                  selectionView.createSelectionBox(cellView);
+                  if (cellView.$box.css('z-index') < zIndex) {
+                    cellView.$box.css('z-index', ++zIndex);
+                  }
                 }
               }
             }
@@ -242,6 +262,7 @@ angular.module('icestudio')
                     $rootScope.$apply();
                   }
                   var disabled = true;
+                  zIndex = 1;
                   if (_this.breadcrumbs.length == 2) {
                     $rootScope.$broadcast('refreshProject', function() {
                       _this.loadGraph(dependencies[data.blockType], disabled);
@@ -260,6 +281,9 @@ angular.module('icestudio')
           paper.on('blank:pointerdown',
             (function(_this) {
               return function(evt, x, y) {
+                // Disable current focus
+                document.activeElement.blur();
+
                 if (paper.options.interactive) {
                   if (evt.which == 3) {
                     // Right button
@@ -283,7 +307,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseover',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.addClass('highlight');
               }
@@ -291,7 +315,7 @@ angular.module('icestudio')
           );
 
           paper.on('cell:mouseout',
-            function(cellView, evt, x, y) {
+            function(cellView, evt) {
               if (!cellView.model.isLink()) {
                 cellView.$box.removeClass('highlight');
               }
@@ -378,7 +402,10 @@ angular.module('icestudio')
                     blockInstance.position = block.position;
                   }
                   var cell = addBasicCodeBlock(blockInstance);
-                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                  var cellView = paper.findViewByModel(cell);
+                  if (cellView.$box.css('z-index') < zIndex) {
+                    cellView.$box.css('z-index', ++zIndex);
+                  }
 
                   if (callback)
                     callback();
@@ -389,8 +416,13 @@ angular.module('icestudio')
             blockInstance.data = {
               info: ''
             };
+            blockInstance.position.x = 31 * gridsize;
+            blockInstance.position.y = 26 * gridsize;
             var cell = addBasicInfoBlock(blockInstance);
-            paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+            var cellView = paper.findViewByModel(cell);
+            if (cellView.$box.css('z-index') < zIndex) {
+              cellView.$box.css('z-index', ++zIndex);
+            }
           }
           else if (type == 'basic.input') {
             alertify.prompt('Insert the block name', 'i',
@@ -407,7 +439,10 @@ angular.module('icestudio')
                         }
                       };
                       var cell = addBasicInputBlock(blockInstance);
-                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                      var cellView = paper.findViewByModel(cell);
+                      if (cellView.$box.css('z-index') < zIndex) {
+                        cellView.$box.css('z-index', ++zIndex);
+                      }
                       blockInstance.position.y += 10 * gridsize;
                     }
                   }
@@ -421,7 +456,10 @@ angular.module('icestudio')
                     }
                   };
                   var cell = addBasicInputBlock(blockInstance);
-                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                  var cellView = paper.findViewByModel(cell);
+                  if (cellView.$box.css('z-index') < zIndex) {
+                    cellView.$box.css('z-index', ++zIndex);
+                  }
                   blockInstance.position.y += 10 * gridsize;
                 }
             });
@@ -442,7 +480,10 @@ angular.module('icestudio')
                         }
                       };
                       var cell = addBasicOutputBlock(blockInstance);
-                      paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                      var cellView = paper.findViewByModel(cell);
+                      if (cellView.$box.css('z-index') < zIndex) {
+                        cellView.$box.css('z-index', ++zIndex);
+                      }
                       blockInstance.position.y += 10 * gridsize;
                     }
                   }
@@ -457,7 +498,10 @@ angular.module('icestudio')
                     }
                   };
                   var cell = addBasicOutputBlock(blockInstance);
-                  paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+                  var cellView = paper.findViewByModel(cell);
+                  if (cellView.$box.css('z-index') < zIndex) {
+                    cellView.$box.css('z-index', ++zIndex);
+                  }
                   blockInstance.position.y += 10 * gridsize;
                 }
             });
@@ -472,7 +516,10 @@ angular.module('icestudio')
               blockInstance.position.x = 6 * gridsize;
               blockInstance.position.y = 16 * gridsize;
               var cell = addGenericBlock(blockInstance, block);
-              paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+              var cellView = paper.findViewByModel(cell);
+              if (cellView.$box.css('z-index') < zIndex) {
+                cellView.$box.css('z-index', ++zIndex);
+              }
             }
             else {
               alertify.error('Wrong block format: ' + type);
@@ -522,7 +569,10 @@ angular.module('icestudio')
                 if (type == 'config.Input-config') {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
-                paper.findViewByModel(newCell).$box.css('z-index', zIndex++);
+                var cellView = paper.findViewByModel(newCell);
+                if (cellView.$box.css('z-index') < zIndex) {
+                  cellView.$box.css('z-index', ++zIndex);
+                }
                 selection.reset(selection.without(cell));
                 selectionView.cancelSelection();
               };
@@ -625,7 +675,10 @@ angular.module('icestudio')
           }
           dependencies[type] = block;
           var cell = addGenericBlock(blockInstance, block);
-          paper.findViewByModel(cell).$box.css('z-index', zIndex++);
+          var cellView = paper.findViewByModel(cell);
+          if (cellView.$box.css('z-index') < zIndex) {
+            cellView.$box.css('z-index', ++zIndex);
+          }
         }
 
         function addBasicInputBlock(blockInstances, disabled) {
@@ -744,7 +797,7 @@ angular.module('icestudio')
             blockLabel = [
               blockInstance.type.split('.')[0],
               blockInstance.type.split('.')[1].toUpperCase()
-            ].join('\n');
+            ].join('');
           }
 
           var blockImage = '';

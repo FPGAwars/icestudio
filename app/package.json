@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "alertifyjs": "^1.7.1",
-    "glob": "^7.0.5",
     "jquery": "^2.2.3",
     "os": "^0.1.1",
     "path": "^0.12.7",
