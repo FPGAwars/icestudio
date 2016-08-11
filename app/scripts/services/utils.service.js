@@ -24,9 +24,9 @@ angular.module('icestudio')
           if (WIN32) {
             // Put the env directory to the root of the current local disk when
             // default path contains non-ASCII characters. Virtualenv will fail to
-            for (const char of defaultEnvDir) {
+            for (var char in defaultEnvDir) {
               if (char.charCodeAt(0) > 127) {
-                const defaultEnvDirFormat = nodeOs.parse(defaultEnvDir);
+                var defaultEnvDirFormat = nodeOs.parse(defaultEnvDir);
                 return nodeOs.format({
                   root: defaultEnvDirFormat.root,
                   dir: defaultEnvDirFormat.root,
@@ -54,7 +54,7 @@ angular.module('icestudio')
               possibleExecutables.push('python');
             }
 
-            for (const executable of possibleExecutables) {
+            for (var executable in possibleExecutables) {
               if (isPython2(executable)) {
                 _pythonExecutableCached = executable;
                 break;

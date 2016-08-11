@@ -26,6 +26,43 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+
+    useminPrepare: {
+         html: 'app/index.html',
+         options: {
+             dest: 'dist'
+         }
+     },
+
+     copy: {
+	    dist: {
+        files: [
+          {
+            expand: true,
+            cwd: 'app',
+            dest: 'dist',
+            src: [
+              'index.html',
+              'package.json',
+              'resources/**',
+              'node_modules/**',
+              'views/{,*/}*.html'
+            ]
+          },
+          {
+            expand: true,
+            cwd: 'app/bower_components/bootstrap/fonts',
+            dest: 'dist/fonts/',
+            src: '*.*'
+          }
+        ]
+	    }
+    },
+
+    usemin:{
+	  	html:['dist/index.html']
+    },
+
     pkg: grunt.file.readJSON('package.json'),
     wiredep: {
       task: {
@@ -35,7 +72,7 @@ module.exports = function(grunt) {
       }
     },
     exec: {
-      nw: 'node_modules/nw/bin/nw app',
+      nw: 'node_modules/nw/bin/nw dist',
       stop_NW: 'killall nw || killall nwjs || true'
     },
     nwjs: {
@@ -154,7 +191,7 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      dist: ['dist'],
+      dist: ['dist', '.tmp'],
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
@@ -166,6 +203,16 @@ module.exports = function(grunt) {
   grunt.registerTask('default', function() {
     console.log('Icestudio');
   });
-  grunt.registerTask('serve', ['watch:scripts']);
-  grunt.registerTask('dist', distParams);
+  grunt.registerTask('serve', [
+    'watch:scripts'
+  ]);
+  grunt.registerTask('dist', [
+    'clean:dist',
+    'copy:dist',
+    'useminPrepare',
+    'concat',
+    'uglify',
+    'cssmin',
+    'usemin'
+  ]);
 };
