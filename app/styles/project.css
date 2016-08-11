@@ -1,0 +1,163 @@
+#paper {
+  top: -20px;
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  overflow: hidden;
+  cursor: move;
+}
+
+#paper svg {
+  background: transparent;
+  position: relative;
+  z-index: 0;
+}
+
+#breadcrumbs {
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
+  z-index: 1501;
+}
+
+.generic-block {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 2px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.config-block {
+  background: #FAFAD2;
+}
+
+.generic-block img {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+}
+
+.generic-block label {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1em;
+}
+
+
+.io-block {
+  position: absolute;
+  background: #FAFAD2;
+  border-radius: 5px;
+  border: 2px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.io-block label {
+  display: block;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold
+}
+
+.io-block .select2 {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 82px;
+  pointer-events: auto;
+}
+
+.code-block {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 2px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.code-block .code-editor {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  height: 93%;
+  border-radius: 5px;
+  border: 1px solid #BBB;
+  pointer-events: auto;
+}
+
+.info-block {
+  position: absolute;
+  background: #DDD;
+  border-radius: 5px;
+  border: 2px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.info-block .info-editor {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 95%;
+  height: 93%;
+  border-radius: 5px;
+  border: 1px solid #BBB;
+  pointer-events: auto;
+}
+
+.port-body:hover {
+  fill: yellow;
+}
+
+.highlight {
+  box-shadow: 0px 0px 30px 0px rgba(200,200,200,1);
+}
+
+.selectionarea {
+  position: absolute;
+  border: 2px solid #EB2222;
+  opacity: .7;
+  overflow: visible;
+  z-index: 1500;
+}
+
+.selectionarea.selected {
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+  cursor: move;
+  /* Position the selection rectangle static so that the selection-boxe are contained within
+   the paper container (which is supposed to be positioned relative). The height 0 !important
+   makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
+  position: static;
+  height: 0 !important;
+}
+
+.selection-box {
+  position: absolute;
+  border: 2px dashed #EB2222;
+  opacity: .7;
+  border-radius: 5px;
+  z-index: 1500;
+}

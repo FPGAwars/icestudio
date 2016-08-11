@@ -1,0 +1,34 @@
+{
+  "name": "Icestudio",
+  "version": "0.2.0",
+  "description": "Experimental graphic editor for open FPGAs",
+  "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
+  "repository": "https://github.com/FPGAwars/icestudio",
+  "license": "GPL-2.0",
+  "scripts": {
+    "start": "node_modules/grunt-cli/bin/grunt serve",
+    "dist": "node_modules/grunt-cli/bin/grunt dist",
+    "postinstall": "npm install --prefix app && node_modules/bower/bin/bower install"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compress": "^1.3.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^1.0.0",
+    "grunt-nw-builder": "^2.0.3",
+    "grunt-usemin": "^3.1.1",
+    "grunt-wiredep": "^3.0.1",
+    "load-grunt-tasks": "^3.5.0",
+    "nw": "^0.12.3"
+  },
+  "optionalDependencies": {
+    "grunt-appdmg": "^0.4.0"
+  }
+}
