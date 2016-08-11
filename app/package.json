@@ -20,7 +20,6 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "alertifyjs": "^1.7.1",
     "jquery": "^2.2.3",
     "os": "^0.1.1",
     "path": "^0.12.7",
