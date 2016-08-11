@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
     var platforms = ['osx64'];
-    var options = { scope: ['devDependencies', 'dependencies'] };
+    var options = { scope: ['devDependencies', 'optionalDependencies'] };
     var distCommands = ['nwjs', 'appdmg', 'compress:osx64'];
   }
   else {
