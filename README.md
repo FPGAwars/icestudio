@@ -61,6 +61,14 @@ cd icestudio
 
 ### Install
 
+Linux:
+
+```bash
+npm install --no-optional
+```
+
+Mac OS X:
+
 ```bash
 npm install
 ```
@@ -77,7 +85,7 @@ npm start
 npm run dist
 ```
 
-NOTE: in Mac OSX this commmand generates also a **dmg** package.
+NOTE: in Mac OS X this commmand generates also a **dmg** package.
 
 ## Version 0.1
 
