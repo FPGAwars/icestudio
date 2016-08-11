@@ -1,16 +1,28 @@
 module.exports = function(grunt) {
-  require('load-grunt-tasks')(grunt);
   var os = require('os');
 
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
+    var options = {
+      scope: [
+        'devDependencies',
+        'dependencies'
+      ]
+    };
     var platforms = ['osx64'];
     var distParams = ['clean:dist', 'nwjs', 'appdmg', 'compress:osx64'];
   }
   else {
+    var options = {
+      scope: [
+        'devDependencies'
+      ]
+    };
     var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx64'];
     var distParams = ['clean:dist', 'nwjs', 'compress'];
   }
+
+  require('load-grunt-tasks')(grunt, options);
 
   // Project configuration.
   grunt.initConfig({
