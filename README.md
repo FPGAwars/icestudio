@@ -4,32 +4,45 @@
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 
 
-Experimental graphic editor for open FPGAs: [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/) and [Icezum Alhambra](https://github.com/FPGAwars/icezum). Built on top of [icestorm project](http://www.clifford.at/icestorm/).
+**Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
 
     GUI -> JSON -> Verilog, PCF
+
+Supported boards:
+
+* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
+* [Icezum Alhambra](https://github.com/FPGAwars/icezum)
+* [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
+
 
 ## Roadmap
 
 * Version 0.3.0
 
-  * Requirements definition phase: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3.0:-proposed-features)
+  * Requirements definition: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3.0:-proposed-features)
 
 
 * Version 0.2.X
 
-  * Add new blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
+  * New blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
 
-## Version 0.2 beta
+## Version 0.2
+
+### Installation
+
+1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
+
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.2.0), unpack the zip and execute Icestudio
+
+**Documentation: http://icestudio.readthedocs.io**
+
+NOTE: supported on Linux, Windows and Mac.
 
 <img src="./doc/images/icestudio-0.2-crono.png" width="700" align="center">
 
 <img src="./doc/images/icestudio-0.2-counter-inspection.png" width="700" align="center">
 
-**Documentation: http://icestudio.readthedocs.io**
-
-NOTE: this is an **early experimental version** and it is under development. Supported on Linux, Windows and Mac.
-
-### Development
+## Development
 
 Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
 
@@ -48,6 +61,14 @@ cd icestudio
 
 ### Install
 
+Linux:
+
+```bash
+npm install --no-optional
+```
+
+Mac OS X:
+
 ```bash
 npm install
 ```
@@ -64,19 +85,19 @@ npm start
 npm run dist
 ```
 
-NOTE: in Mac OSX this commmand generates also a **dmg** package.
+NOTE: in Mac OS X this commmand generates also a **dmg** package.
 
 ## Version 0.1
-
-![][icestudio-0.1-demo]
 
 ### Installation
 
 1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
 
-2. Download the [latest release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute Icestudio
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.1.0), unpack the zip and execute Icestudio
 
-NOTE: initially supported on Linux, Windows and Mac.
+NOTE: supported on Linux, Windows and Mac.
+
+![][icestudio-0.1-demo]
 
 ## Videos
 
@@ -99,14 +120,16 @@ NOTE: initially supported on Linux, Windows and Mac.
 
 ## Contributors
 
+* v0.2: Tomás Calvo, Juan González, Carlos Díaz
 * v0.1: Miguel Sánchez de León Peque
-* v0.2: Tomás Calvo
 
 ## Credits
 
-* v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 * v0.2: using [JointJS](https://github.com/clientIO/joint)
+* v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 * Sponsored by [BQ](https://www.bq.com)
+
+![](https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png)
 
 ## License
 

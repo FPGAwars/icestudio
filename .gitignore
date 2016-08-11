@@ -9,6 +9,7 @@
 *.log
 
 etc
+.tmp
 dist
 cache
 _build
