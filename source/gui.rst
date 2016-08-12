@@ -18,10 +18,8 @@ File
 * **Examples**: contains all stored examples. A example is loaded as a project.
 * **Templates**: contains all stored templates. A template is loaded as a project.
 
-
 * **Save**: save the current project (.ice).
 * **Save as**: show a save file dialog to save the current project (.ice).
-
 
 * **Import block**: load a block file (.iceb) into the current project.
 * **Export as block**: show a save file dialog to export the current project as a block file (.iceb).
@@ -69,7 +67,7 @@ Tools
 * **Build**: generate the bitstream from the graphic source.
 * **Upload**: generate and upload the bitstream to the FPGA board.
 
-* **Install toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
+* **Install/Upgrade toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
 * **Remove toolchain**: remove the directories `.icestudio` and `.apio`.
 
 .. hint::
@@ -134,7 +132,7 @@ Pan is performed using the **mouse left button** over the background. Zoom is pe
 Select
 ``````
 
-Block selection is performed using the **mouse right button**. Blocks can be selected individually using right-click. In addition, several blocks can be selected by a selection box. Selection is cancelled when the background is clicked.
+Block selection is performed using the **mouse right button**. Blocks can be selected/unselected individually using right-click/Ctrl+right-click, respectively. In addition, several blocks can be selected by a selection box. Selection is cancelled when the background is clicked.
 
 .. image:: ../resources/images/gui-select.png
 
