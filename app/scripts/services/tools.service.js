@@ -18,7 +18,7 @@ angular.module('icestudio')
         };
 
         this.buildCode = function() {
-          this.apio(['build', '--board', boards.selectedBoard.id], true);
+          this.apio(['build'], true);
         };
 
         this.uploadCode = function() {
@@ -108,11 +108,9 @@ angular.module('icestudio')
             var origPath = nodePath.join(this.currentProjectPath, file);
 
             try {
-              // Remove link if exists
-              if (nodeFs.existsSync(destPath)) {
-                nodeFse.removeSync(destPath);
-              }
-              // Link list file
+              // Remove list files
+              nodeFse.removeSync('*.list');
+              // Copy list file
               if (nodeFs.existsSync(origPath)) {
                 nodeFse.copySync(origPath, destPath);
               }
@@ -138,7 +136,7 @@ angular.module('icestudio')
         }
 
         function execute(command, label, callback) {
-          nodeChildProcess.exec(command, function(error, stdout, stderr) {
+          nodeChildProcess.exec(command, { maxBuffer: 5000 * 1024 }, function(error, stdout, stderr) {
             //console.log(error, stdout, stderr);
             if (callback)
               callback();
