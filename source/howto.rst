@@ -215,3 +215,18 @@ Use a custom block
    .. image:: ../resources/images/howto-examine.png
 
    |
+
+Include a list file
+-------------------
+
+If your code block contains a list file(s), for example:
+
+.. code-block:: verilog
+
+  $readmemh("rom.list", rom);
+
+1. **Save the ice project**
+
+2. **Copy the list file(s) in the project directory**
+
+3. **Build and upload the project**
