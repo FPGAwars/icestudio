@@ -46,7 +46,7 @@
         "id": "75cafe5a-1968-49ed-9e05-70d1bc3fbd0f",
         "type": "basic.input",
         "data": {
-          "label": "sel0"
+          "label": "sel"
         },
         "position": {
           "x": 0,

@@ -35,7 +35,7 @@
         "id": "67ed5e09-486d-4f97-929f-aefea9c43951",
         "type": "basic.input",
         "data": {
-          "label": "sel0"
+          "label": "sel"
         },
         "position": {
           "x": 80,
