@@ -1,5 +1,5 @@
 {
-  "image": "resources/images/input-config.svg",
+  "image": "",
   "state": {
     "pan": {
       "x": -23,
@@ -13,7 +13,7 @@
         "id": "2b245a71-2d80-466b-955f-e3d61839fe25",
         "type": "basic.code",
         "data": {
-          "code": "wire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
+          "code": "// Pull up inv\n\nwire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
           "ports": {
             "in": [
               "i"
@@ -46,7 +46,7 @@
           "label": ""
         },
         "position": {
-          "x": 776,
+          "x": 760,
           "y": 200
         }
       }
