@@ -13,11 +13,22 @@
         "id": "c3f73f68-1074-4355-b69f-6a20f7bea3e7",
         "type": "basic.input",
         "data": {
-          "label": "in0"
+          "label": "i0"
         },
         "position": {
           "x": 80,
           "y": 120
+        }
+      },
+      {
+        "id": "5fb29465-2ee7-45bb-afa4-9a3de895c774",
+        "type": "basic.input",
+        "data": {
+          "label": "i1"
+        },
+        "position": {
+          "x": 80,
+          "y": 208
         }
       },
       {
@@ -29,17 +40,6 @@
         "position": {
           "x": 80,
           "y": 296
-        }
-      },
-      {
-        "id": "5fb29465-2ee7-45bb-afa4-9a3de895c774",
-        "type": "basic.input",
-        "data": {
-          "label": "in1"
-        },
-        "position": {
-          "x": 80,
-          "y": 208
         }
       },
       {

@@ -13,7 +13,7 @@
         "id": "91e2ff2d-2430-41e5-9d21-bc9ec4082aaa",
         "type": "basic.output",
         "data": {
-          "label": "out0"
+          "label": "o0"
         },
         "position": {
           "x": 720,
@@ -24,7 +24,7 @@
         "id": "c6dc7002-dfc0-45fd-88e2-b5e5a75231f2",
         "type": "basic.output",
         "data": {
-          "label": "out1"
+          "label": "o1"
         },
         "position": {
           "x": 720,
@@ -35,7 +35,7 @@
         "id": "5fc9a8e9-d463-4c1f-b6a3-185d5cabb406",
         "type": "basic.input",
         "data": {
-          "label": "in0"
+          "label": "i"
         },
         "position": {
           "x": 0,
