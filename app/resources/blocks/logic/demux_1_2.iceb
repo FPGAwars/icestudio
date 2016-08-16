@@ -1,0 +1,122 @@
+{
+  "image": "resources/images/demux.svg",
+  "state": {
+    "pan": {
+      "x": 104.8444188797269,
+      "y": 152.1580250587398
+    },
+    "zoom": 0.8586960434913635
+  },
+  "graph": {
+    "blocks": [
+      {
+        "id": "91e2ff2d-2430-41e5-9d21-bc9ec4082aaa",
+        "type": "basic.output",
+        "data": {
+          "label": "out0"
+        },
+        "position": {
+          "x": 720,
+          "y": 96
+        }
+      },
+      {
+        "id": "c6dc7002-dfc0-45fd-88e2-b5e5a75231f2",
+        "type": "basic.output",
+        "data": {
+          "label": "out1"
+        },
+        "position": {
+          "x": 720,
+          "y": 224
+        }
+      },
+      {
+        "id": "5fc9a8e9-d463-4c1f-b6a3-185d5cabb406",
+        "type": "basic.input",
+        "data": {
+          "label": "in0"
+        },
+        "position": {
+          "x": 0,
+          "y": 96
+        }
+      },
+      {
+        "id": "75cafe5a-1968-49ed-9e05-70d1bc3fbd0f",
+        "type": "basic.input",
+        "data": {
+          "label": "sel0"
+        },
+        "position": {
+          "x": 0,
+          "y": 224
+        }
+      },
+      {
+        "id": "c8fdb023-d458-4657-899c-5749a256be09",
+        "type": "basic.code",
+        "data": {
+          "code": "assign {out1,out0} = in0 << sel0;",
+          "ports": {
+            "in": [
+              "in0",
+              "sel0"
+            ],
+            "out": [
+              "out0",
+              "out1"
+            ]
+          }
+        },
+        "position": {
+          "x": 208,
+          "y": 64
+        }
+      }
+    ],
+    "wires": [
+      {
+        "source": {
+          "block": "c8fdb023-d458-4657-899c-5749a256be09",
+          "port": "out1"
+        },
+        "target": {
+          "block": "c6dc7002-dfc0-45fd-88e2-b5e5a75231f2",
+          "port": "in"
+        }
+      },
+      {
+        "source": {
+          "block": "c8fdb023-d458-4657-899c-5749a256be09",
+          "port": "out0"
+        },
+        "target": {
+          "block": "91e2ff2d-2430-41e5-9d21-bc9ec4082aaa",
+          "port": "in"
+        }
+      },
+      {
+        "source": {
+          "block": "5fc9a8e9-d463-4c1f-b6a3-185d5cabb406",
+          "port": "out"
+        },
+        "target": {
+          "block": "c8fdb023-d458-4657-899c-5749a256be09",
+          "port": "in0"
+        }
+      },
+      {
+        "source": {
+          "block": "75cafe5a-1968-49ed-9e05-70d1bc3fbd0f",
+          "port": "out"
+        },
+        "target": {
+          "block": "c8fdb023-d458-4657-899c-5749a256be09",
+          "port": "sel0"
+        }
+      }
+    ]
+  },
+  "deps": {}
+}
