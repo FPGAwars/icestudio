@@ -114,8 +114,9 @@ angular.module('icestudio')
                   return false;
                 }
               }
-              // Ensure input -> input-config connections
-              if (cellViewT.model.attributes.blockType == 'config.Input-config') {
+              // Ensure input -> pull-up connections
+              if (cellViewT.model.attributes.blockType == 'config.pull-up' ||
+                  cellViewT.model.attributes.blockType == 'config.pull-up-inv') {
                 return (cellViewS.model.attributes.blockType == 'basic.input');
               }
               // Prevent loop links
@@ -566,7 +567,8 @@ angular.module('icestudio')
                 }
                 newCell.translate(6 * gridsize, 6 * gridsize);
                 addCell(newCell);
-                if (type == 'config.Input-config') {
+                if (type == 'config.pull-up' ||
+                    type == 'config.pull-up-inv') {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
                 var cellView = paper.findViewByModel(newCell);
@@ -822,7 +824,8 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.Input-config') {
+          if (blockInstance.type == 'config.pull-up' ||
+              blockInstance.type == 'config.pull-up-inv') {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 
