@@ -115,7 +115,7 @@
       {
         "source": {
           "block": "e4eb896c-1039-4d73-aeb0-ce34b933f4c3",
-          "port": "out0"
+          "port": "o"
         },
         "target": {
           "block": "061aa997-2f30-4591-8841-fb6abf5c3b2e",
