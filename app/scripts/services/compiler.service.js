@@ -19,7 +19,6 @@ angular.module('icestudio')
           else {
             return id.replace('.', '_');
           }
-          return id;
         }
 
         function module(data) {
@@ -144,7 +143,7 @@ angular.module('icestudio')
               if (block.type == 'basic.code') {
                 id += '_' + digestId(block.id);
               }
-              instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
+              instances.push(name + '_' + digestId(id) + ' ' + digestId(block.id) + ' (');
 
               // Parameters
 
@@ -181,6 +180,10 @@ angular.module('icestudio')
 
           if (project &&
               project.graph) {
+
+            // Scape dot in name
+
+            name = digestId(name);
 
             // Main module
 
