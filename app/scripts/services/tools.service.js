@@ -18,7 +18,7 @@ angular.module('icestudio')
         };
 
         this.buildCode = function() {
-          this.apio(['build'], true);
+          this.apio(['build', '--board', boards.selectedBoard.id], true);
         };
 
         this.uploadCode = function() {
