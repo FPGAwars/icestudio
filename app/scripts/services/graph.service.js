@@ -104,13 +104,26 @@ angular.module('icestudio')
               if (magnetS.getAttribute('type') == 'output' &&
                   magnetT.getAttribute('type') == 'output')
                 return false;
-              // Prevent multiple input links
               var links = graph.getLinks();
               for (var i in links) {
-                if (linkView == links[i].findView(paper)) //Skip the wire the user is drawing
+                var linkIView = links[i].findView(paper);
+                if (linkView == linkIView) {
+                  //Skip the wire the user is drawing
                   continue;
+                }
+                // Prevent multiple input links
                 if ((cellViewT.model.id == links[i].get('target').id) &&
                     (magnetT.getAttribute('port') == links[i].get('target').port)) {
+                  return false;
+                }
+                // Prevent multiple pull-up connections
+                if (cellViewT.model.attributes.blockType == 'config.pull-up' ||
+                    cellViewT.model.attributes.blockType == 'config.pull-up-inv') {
+                  return false;
+                }
+                // Prevent to connect other blocks if a pull-up is connected
+                if (linkIView.targetView.model.attributes.blockType == 'config.pull-up' ||
+                    linkIView.targetView.model.attributes.blockType == 'config.pull-up-inv') {
                   return false;
                 }
               }

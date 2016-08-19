@@ -147,6 +147,9 @@ angular.module('icestudio')
                       stdout.indexOf('Error: board not detected') != -1) {
                     alertify.notify('Board not detected', 'error', 3);
                   }
+                  else if (stdout.indexOf('Error: unkown board') != -1) {
+                    alertify.notify('Unknown board', 'error', 3);
+                  }
                   else if (stdout.indexOf('set_io: too few arguments') != -1) {
                     alertify.notify('FPGA I/O not defined', 'error', 3);
                   }
