@@ -8,7 +8,7 @@ angular.module('icestudio')
           { id: 'icezum', label: 'Icezum' },
           { id: 'icestick', label: 'iCEstick' },
           { id: 'go-board', label: 'Go board' },
-		  { id: 'iCE40-HX8K', label: 'iCE40-HX8K' }
+          { id: 'iCE40-HX8K', label: 'iCE40-HX8K' }
         ]
       };
 
@@ -181,17 +181,9 @@ angular.module('icestudio')
       ];
 
       this.pinouts['iCE40-HX8K'] = [
-        { name: 'D9', value: 'B5' },
-        { name: 'D8', value: 'B4' },
-		{ name: 'D7', value: 'A2' },
-		{ name: 'D6', value: 'A1' },
-		{ name: 'D5', value: 'C5' },
-		{ name: 'D4', value: 'C4' },
-		{ name: 'D3', value: 'B3' },
-		{ name: 'D2', value: 'C3' },
-		{ name: 'B1', value: 'B1' },
-		{ name: 'B2', value: 'B2' },
-		{ name: 'C1', value: 'C1' },
+        { name: 'B1', value: 'B1' },
+        { name: 'B2', value: 'B2' },
+        { name: 'C1', value: 'C1' },
         { name: 'C2', value: 'C2' },
         { name: 'D1', value: 'D1' },
         { name: 'D2', value: 'D2' },
@@ -299,7 +291,7 @@ angular.module('icestudio')
         { name: 'A15', value: 'A15' },
         { name: 'B15', value: 'B15' },
         { name: 'A16', value: 'A16' }
-	   ]
+      ];
 
       this.getPinout = function() {
         return this.pinouts[this.selectedBoard.id];
