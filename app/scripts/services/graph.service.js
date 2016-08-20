@@ -122,8 +122,9 @@ angular.module('icestudio')
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
-                if (linkIView.targetView.model.attributes.blockType == 'config.pull-up' ||
-                    linkIView.targetView.model.attributes.blockType == 'config.pull-up-inv') {
+                if ((linkIView.targetView.model.attributes.blockType == 'config.pull-up' ||
+                     linkIView.targetView.model.attributes.blockType == 'config.pull-up-inv') &&
+                     (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
               }
