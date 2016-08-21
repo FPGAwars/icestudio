@@ -116,12 +116,16 @@ NOTE: supported on Linux, Windows and Mac.
 
 ## Authors
 
-* Jesús Arroyo Torrens
+* [Jesús Arroyo Torrens](https://github.com/Jesus89)
 
 ## Contributors
 
-* v0.2: Tomás Calvo, Juan González, Carlos Díaz
-* v0.1: Miguel Sánchez de León Peque
+* v0.2
+ * [Tomás Calvo](https://github.com/tocalvo)
+ * [Juan González (Obijuan)](https://github.com/Obijuan)
+ * [Carlos Díaz](https://github.com/C47D)
+* v0.1
+ * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
 ## Credits
 
