@@ -116,9 +116,10 @@ angular.module('icestudio')
                     (magnetT.getAttribute('port') == links[i].get('target').port)) {
                   return false;
                 }
-                // Prevent multiple pull-up connections
-                if (cellViewT.model.attributes.blockType == 'config.pull-up' ||
-                    cellViewT.model.attributes.blockType == 'config.pull-up-inv') {
+                // Prevent to connect a pull-up if other blocks are connected
+                if ((cellViewT.model.attributes.blockType == 'config.pull-up' ||
+                     cellViewT.model.attributes.blockType == 'config.pull-up-inv') &&
+                     (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
