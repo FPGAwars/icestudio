@@ -2,7 +2,7 @@
 
 [Icestudio](https://github.com/FPGAwars/icestudio)'s technical documentation.
 
-Work in progress...
+<img src="./doc/images/icestudio-logo-label.png" align="center">
 
 ## License
 
