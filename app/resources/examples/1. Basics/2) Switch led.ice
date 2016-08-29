@@ -5,7 +5,7 @@
       "x": 0,
       "y": 0
     },
-    "zoom": 0.9999999701854082
+    "zoom": 0.999999940395341
   },
   "board": "icezum",
   "graph": {
@@ -36,7 +36,7 @@
           }
         },
         "position": {
-          "x": 496,
+          "x": 424,
           "y": 80
         }
       },
@@ -74,7 +74,7 @@
         }
       },
       {
-        "id": "520cdb02-ffa6-4cc9-8e91-9b5a91a6133a",
+        "id": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
         "type": "config.pull-up-inv",
         "data": {},
         "position": {
@@ -90,13 +90,13 @@
           "port": "out"
         },
         "target": {
-          "block": "520cdb02-ffa6-4cc9-8e91-9b5a91a6133a",
+          "block": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
           "port": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150"
         }
       },
       {
         "source": {
-          "block": "520cdb02-ffa6-4cc9-8e91-9b5a91a6133a",
+          "block": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
           "port": "a139fa0d-9b45-4480-a251-f4a66b49aa23"
         },
         "target": {
@@ -108,7 +108,7 @@
   },
   "deps": {
     "config.pull-up-inv": {
-      "image": "",
+      "image": "resources/images/pull-up-inv.svg",
       "state": {
         "pan": {
           "x": -23,
