@@ -364,7 +364,16 @@ angular.module('icestudio')
           paper.options.enabled = value;
           var cells = graph.getCells();
           for (var i in cells) {
-            paper.findViewByModel(cells[i].id).options.interactive = value;
+            var cellView = paper.findViewByModel(cells[i].id);
+            cellView.options.interactive = value;
+            if (cells[i].attributes.type != 'ice.Generic') {
+              if (value) {
+                cellView.$el.removeClass('disable-graph');
+              }
+              else {
+                cellView.$el.addClass('disable-graph');
+              }
+            }
           }
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
