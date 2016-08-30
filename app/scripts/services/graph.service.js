@@ -362,6 +362,16 @@ angular.module('icestudio')
 
         this.appEnable = function(value) {
           paper.options.enabled = value;
+          if (value) {
+            angular.element('#menu').removeClass('disable-menu');
+            angular.element('#paper').css('opacity', '1.0');
+            angular.element('#read-only-banner').addClass('hidden');
+          }
+          else {
+            angular.element('#menu').addClass('disable-menu');
+            angular.element('#paper').css('opacity', '0.7');
+            angular.element('#read-only-banner').removeClass('hidden');
+          }
           var cells = graph.getCells();
           for (var i in cells) {
             var cellView = paper.findViewByModel(cells[i].id);
@@ -374,14 +384,6 @@ angular.module('icestudio')
                 cellView.$el.addClass('disable-graph');
               }
             }
-          }
-          if (value) {
-            angular.element('#menu').removeClass('disable-menu');
-            angular.element('#paper').css('opacity', '1.0');
-          }
-          else {
-            angular.element('#menu').addClass('disable-menu');
-            angular.element('#paper').css('opacity', '0.7');
           }
         };
 
