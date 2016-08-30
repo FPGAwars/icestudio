@@ -49,14 +49,14 @@ angular.module('icestudio')
           }
           this.panAndZoom.zoom(_state.zoom);
           this.panAndZoom.pan(_state.pan);
-          setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
+          setGrid(paper, gridsize*2*_state.zoom, _state.pan);
         }
 
         this.resetState = function() {
           this.setState(null);
         }
 
-        function setGrid(paper, size, color, offset) {
+        function setGrid(paper, size, offset) {
           // Set grid size on the JointJS paper object (joint.dia.Paper instance)
           paper.options.gridsize = gridsize;
           // Draw a grid into the HTML 5 canvas and convert it to a data URI image
@@ -66,7 +66,8 @@ angular.module('icestudio')
           var context = canvas[0].getContext('2d');
           context.beginPath();
           context.rect(1, 1, 1, 1);
-          context.fillStyle = color || '#AAAAAA';
+          context.fillStyle = '#555';
+          context.globalAlpha = size / gridsize / 2;
           context.fill();
           // Finally, set the grid background image of the paper container element.
           var gridBackgroundImage = canvas[0].toDataURL('image/png');
@@ -139,7 +140,7 @@ angular.module('icestudio')
             }
           });
 
-          setGrid(paper, gridsize * 2, '#777');
+          setGrid(paper, gridsize * 2);
 
           var targetElement= element[0];
 
@@ -152,17 +153,17 @@ angular.module('icestudio')
             panEnabled: false,
             zoomScaleSensitivity: 0.2,
             dblClickZoomEnabled: false,
-            minZoom: 0.5,
+            minZoom: 0.2,
             maxZoom: 2,
             beforeZoom: function(oldzoom, newzoom) {
             },
             onZoom: function(scale) {
               state.zoom = scale;
-              setGrid(paper, gridsize*2*state.zoom, '#777');
+              setGrid(paper, gridsize*2*state.zoom);
               // Already rendered in pan
             },
             beforePan: function(oldpan, newpan) {
-              setGrid(paper, gridsize*2*state.zoom, '#777', newpan);
+              setGrid(paper, gridsize*2*state.zoom, newpan);
             },
             onPan: function(newPan) {
               state.pan = newPan;
@@ -217,7 +218,7 @@ angular.module('icestudio')
 
          paper.on('cell:pointerup',
            function(cellView, evt, x, y) {
-             if (paper.options.interactive) {
+             if (paper.options.enabled) {
                if (!cellView.model.isLink()) {
                  if (evt.which == 3) {
                    // Disable current focus
@@ -234,7 +235,7 @@ angular.module('icestudio')
 
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
-              if (paper.options.interactive) {
+              if (paper.options.enabled) {
                 if (!cellView.model.isLink()) {
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
@@ -250,7 +251,7 @@ angular.module('icestudio')
                 var data = cellView.model.attributes;
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
-                  if (paper.options.interactive) {
+                  if (paper.options.enabled) {
                     alertify.prompt('Insert the block label', '',
                       function(evt, label) {
                         data.data.label = label;
@@ -260,7 +261,7 @@ angular.module('icestudio')
                   }
                 }
                 else if (data.blockType == 'basic.code') {
-                  if (paper.options.interactive) {
+                  if (paper.options.enabled) {
                     var block = {
                       data: {
                         code: _this.getContent(cellView.model.id)
@@ -300,15 +301,15 @@ angular.module('icestudio')
                 // Disable current focus
                 document.activeElement.blur();
 
-                if (paper.options.interactive) {
-                  if (evt.which == 3) {
-                    // Right button
+                if (evt.which == 3) {
+                  // Right button
+                  if (paper.options.enabled) {
                     selectionView.startSelecting(evt, x, y);
                   }
-                  else if  (evt.which == 1) {
-                    // Left button
-                    _this.panAndZoom.enablePan();
-                  }
+                }
+                else if (evt.which == 1) {
+                  // Left button
+                  _this.panAndZoom.enablePan();
                 }
               }
             })(this)
@@ -360,7 +361,7 @@ angular.module('icestudio')
         };
 
         this.appEnable = function(value) {
-          paper.options.interactive = value;
+          paper.options.enabled = value;
           var cells = graph.getCells();
           for (var i in cells) {
             paper.findViewByModel(cells[i].id).options.interactive = value;
@@ -368,12 +369,10 @@ angular.module('icestudio')
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
             angular.element('#paper').css('opacity', '1.0');
-            this.panAndZoom.enableZoom();
           }
           else {
             angular.element('#menu').addClass('disable-menu');
-            angular.element('#paper').css('opacity', '0.5');
-            this.panAndZoom.disableZoom();
+            angular.element('#paper').css('opacity', '0.7');
           }
         };
 
@@ -634,7 +633,7 @@ angular.module('icestudio')
         }
 
         this.isEnabled = function() {
-          return paper.options.interactive;
+          return paper.options.enabled;
         }
 
         this.loadGraph = function(project, disabled) {
