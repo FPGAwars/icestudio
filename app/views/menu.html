@@ -205,19 +205,19 @@
 
                 <li uib-dropdown ng-repeat="blocks in menuBlocks" is-open="status[blocks.name]"
                     ng-mouseover="status[blocks.name]=true" ng-mouseleave="status[blocks.name]=false">
-                  <a href uib-dropdown-toggle>{{ blocks.name }} <span class="caret"></span></a>
+                  <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
                   <ul class="dropdown-menu" uib-dropdown-menu>
                     <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
                       <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.project)" ng-if="block.project">
-                        {{ block.name }}
+                        {{ block.name | translate }}
                       </a>
                       <a href uib-dropdown-toggle ng-if="block.children">
-                        {{ block.name }}
+                        {{ block.name | translate }}
                       </a>
                       <ul uib-dropdown-menu ng-if="block.children">
                         <li ng-repeat="sblock in block.children">
                           <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.project)" ng-if="sblock.project">
-                            {{ sblock.name }}
+                            {{ sblock.name | translate }}
                           </a>
                         </li>
                       </ul>

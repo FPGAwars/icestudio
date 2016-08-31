@@ -140,6 +140,8 @@ angular.module('icestudio')
             }
           });
 
+          paper.options.enabled = true;
+
           setGrid(paper, gridsize * 2);
 
           var targetElement= element[0];
