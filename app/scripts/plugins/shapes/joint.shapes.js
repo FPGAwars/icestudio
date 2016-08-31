@@ -333,18 +333,17 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
-    // TODO: check change and hover trigger event
-
     initialize: function() {
       _.bindAll(this, 'updateBox');
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
+      var blockLabel = 'block' + id;
       var editorLabel = 'editor' + id;
       var contentLabel = 'content' + id;
       this.$box = $(joint.util.template(
         '\
-        <div class="code-block">\
+        <div class="code-block" id="' + blockLabel + '">\
           <div class="code-editor" id="' + editorLabel + '"></div>\
           <textarea class="hidden" id="' + contentLabel + '"></textarea>\
           <script>\
@@ -356,6 +355,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
+            });\
+            $("#' + blockLabel + '").resize(function () {\
+              ' + editorLabel + '.resize();\
             });\
           </script>\
         </div>\
@@ -426,18 +428,17 @@ joint.shapes.ice.Info = joint.shapes.basic.Rect.extend({
 
 joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
 
-    // TODO: check change and hover trigger event
-
     initialize: function() {
       _.bindAll(this, 'updateBox');
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
+      var blockLabel = 'block' + id;
       var editorLabel = 'editor' + id;
       var contentLabel = 'content' + id;
       this.$box = $(joint.util.template(
         '\
-        <div class="info-block">\
+        <div class="info-block" id="' + blockLabel + '">\
           <div class="info-editor" id="' + editorLabel + '"></div>\
           <textarea class="hidden" id="' + contentLabel + '"></textarea>\
           <script>\
@@ -448,6 +449,9 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
             ' + editorLabel + '.getSession().on("change", function () {\
               $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
+            });\
+            $("#' + blockLabel + '").resize(function () {\
+              ' + editorLabel + '.resize();\
             });\
           </script>\
         </div>\
@@ -471,15 +475,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
         this.updateBox();
         return this;
     },
-    updateBox: function() {
-      var bbox = this.model.getBBox();
-      var state = this.model.attributes.state;
-
-      this.$box.css({ width: bbox.width * state.zoom,
-                      height: bbox.height * state.zoom,
-                      left: bbox.x * state.zoom + state.pan.x,
-                      top: bbox.y * state.zoom + state.pan.y });
-
+    update: function () {
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       if (this.model.get('disabled')) {
@@ -488,6 +484,16 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
       else {
         this.$box.find('#' + editorLabel).css({'pointer-events': 'all'});
       }
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    },
+    updateBox: function() {
+      var bbox = this.model.getBBox();
+      var state = this.model.attributes.state;
+
+      this.$box.css({ width: bbox.width * state.zoom,
+                      height: bbox.height * state.zoom,
+                      left: bbox.x * state.zoom + state.pan.x,
+                      top: bbox.y * state.zoom + state.pan.y });
     },
     removeBox: function(evt) {
       this.$box.remove();
