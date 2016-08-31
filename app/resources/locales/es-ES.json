@@ -57,5 +57,9 @@
   "not": "Not",
   "or": "Or",
   "xnor": "Xnor",
-  "xor": "Xor"
+  "xor": "Xor",
+  "1_basics": "1. Básicos",
+  "1_1_led_on": "1. Led encendido",
+  "1_2_switch_led": "2. Interruptor led",
+  "1_3_switch_and_gate": "3. Interruptor puerta and"
 }

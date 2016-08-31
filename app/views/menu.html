@@ -30,11 +30,11 @@
                         <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
                         <ul uib-dropdown-menu>
                            <li class="dropdown-submenu" ng-repeat="example in examples" ng-if="example.children">
-                             <a href uib-dropdown-toggle>{{ example.name }}</a>
+                             <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in example.children">
                                  <a href ng-click="openStoredProject(child.name, child.project)" ng-if="child.project">
-                                 {{ child.name }}
+                                 {{ child.name | translate }}
                                  </a>
                                </li>
                              </ul>
@@ -45,11 +45,11 @@
                         <a href uib-dropdown-toggle>{{ 'Templates' | translate }}</a>
                         <ul uib-dropdown-menu>
                            <li class="dropdown-submenu" ng-repeat="template in templates" ng-if="template.children">
-                             <a href uib-dropdown-toggle>{{ template.name }}</a>
+                             <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in template.children">
                                  <a href ng-click="openStoredProject(child.name, child.project)" ng-if="child.project">
-                                 {{ child.name }}
+                                 {{ child.name | translate }}
                                  </a>
                                </li>
                              </ul>

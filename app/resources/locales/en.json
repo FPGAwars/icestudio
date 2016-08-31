@@ -22,5 +22,9 @@
   "not": "Not",
   "or": "Or",
   "xnor": "Xnor",
-  "xor": "Xor"
+  "xor": "Xor",
+  "1_basics": "1. Basic",
+  "1_1_led_on": "1. Led on",
+  "1_2_switch_led": "2. Switch led",
+  "1_3_switch_and_gate": "3. Switch and gate"
 }
