@@ -49,7 +49,7 @@ angular.module('icestudio')
     // File
 
     $scope.newProject = function() {
-      alertify.prompt('Enter the project\'s title', 'untitled',
+      alertify.prompt($translate.instant('enter_project_title'), 'untitled',
         function(evt, name) {
           if (name) {
             common.newProject(name);
