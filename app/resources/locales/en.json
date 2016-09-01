@@ -63,5 +63,13 @@
   "1_led_on": "1. Led on",
   "2_switch_led": "2. Switch led",
   "3_switch_and_gate": "3. Switch and gate",
-  "enter_project_title": "Enter the project's title"
+  "enter_project_title": "Enter the project's title",
+  "load_project_confirmation": "The current project will be removed. Do you want to continue loading the project?",
+  "enter_project_image_path": "Enter the project's image path",
+  "clear_all_confirmation": "Do you want to clear the graph?",
+  "remove_block_confirmation": "Do you want to remove the selected block?",
+  "change_board_confirmation": "The current FPGA I/O configuration will be lost. Do you want to change to @boardname board?",
+  "board_selected": "Board @boardname selected",
+  "remove_toolchain_confirmation": "Icestudio and apio configuration directories will be removed. Do you want to continue?",
+  "toolchain_removed": "Toolchain removed"
 }
