@@ -88,7 +88,7 @@
       },
       {
         "id": "54c58086-340e-49b3-a6d0-f1b091c8bf3f",
-        "type": "config.pull-up-inv",
+        "type": "config.pull_up_inv",
         "data": {},
         "position": {
           "x": 240,
@@ -97,7 +97,7 @@
       },
       {
         "id": "434fbbef-5ba3-4b59-bfee-88fc8e7be457",
-        "type": "config.pull-up-inv",
+        "type": "config.pull_up_inv",
         "data": {},
         "position": {
           "x": 240,
@@ -259,8 +259,8 @@
         "zoom": 1
       }
     },
-    "config.pull-up-inv": {
-      "image": "resources/images/pull-up-inv.svg",
+    "config.pull_up_inv": {
+      "image": "resources/images/pull_up_inv.svg",
       "state": {
         "pan": {
           "x": -23,

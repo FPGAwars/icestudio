@@ -118,21 +118,21 @@ angular.module('icestudio')
                   return false;
                 }
                 // Prevent to connect a pull-up if other blocks are connected
-                if ((cellViewT.model.attributes.blockType == 'config.pull-up' ||
-                     cellViewT.model.attributes.blockType == 'config.pull-up-inv') &&
+                if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                     cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
-                if ((linkIView.targetView.model.attributes.blockType == 'config.pull-up' ||
-                     linkIView.targetView.model.attributes.blockType == 'config.pull-up-inv') &&
+                if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
+                     linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
               }
               // Ensure input -> pull-up connections
-              if (cellViewT.model.attributes.blockType == 'config.pull-up' ||
-                  cellViewT.model.attributes.blockType == 'config.pull-up-inv') {
+              if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                  cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
                 return (cellViewS.model.attributes.blockType == 'basic.input');
               }
               // Prevent loop links
@@ -602,8 +602,8 @@ angular.module('icestudio')
                 }
                 newCell.translate(6 * gridsize, 6 * gridsize);
                 addCell(newCell);
-                if (type == 'config.pull-up' ||
-                    type == 'config.pull-up-inv') {
+                if (type == 'config.pull_up' ||
+                    type == 'config.pull_up_inv') {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
                 var cellView = paper.findViewByModel(newCell);
@@ -859,8 +859,8 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.pull-up' ||
-              blockInstance.type == 'config.pull-up-inv') {
+          if (blockInstance.type == 'config.pull_up' ||
+              blockInstance.type == 'config.pull_up_inv') {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 
