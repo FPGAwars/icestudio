@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', '$translate', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, $translate, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -254,11 +254,11 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt('Insert the block label', '',
+                    alertify.prompt($translate.instant('enter_block_label'), data.data.label,
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
-                        alertify.success('Label updated');
+                        alertify.success($translate.instant('label_updated'));
                     });
                   }
                 }
@@ -406,7 +406,7 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt('Insert the block i/o', 'a,b c',
+            alertify.prompt($translate.instant('enter_block_ports'), 'a,b c',
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -461,7 +461,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt('Insert the block name', 'i',
+            alertify.prompt($translate.instant('enter_block_label'), 'i',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -501,7 +501,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt('Insert the block name', 'o',
+            alertify.prompt($translate.instant('enter_block_label'), 'o',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -558,7 +558,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error('Wrong block format: ' + type);
+              alertify.error($translate.instant('wrong_block_format', { type: type }));
             }
           }
         };

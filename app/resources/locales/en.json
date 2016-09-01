@@ -80,5 +80,9 @@
   "block_imported": "Block {{name}} imported",
   "block_exported_as": "Block exported as {{name}}",
   "verilog_exported": "Verilog code exported",
-  "pcf_exported": "PCF file exported"
+  "pcf_exported": "PCF file exported",
+  "enter_block_label": "Enter the block label",
+  "label_updated": "Label updated",
+  "enter_block_ports": "Enter the block ports",
+  "wrong_block_format": "Wrong block format: {{type}}"
 }
