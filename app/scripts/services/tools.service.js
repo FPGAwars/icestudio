@@ -31,7 +31,7 @@ angular.module('icestudio')
           if (code) {
             if (toolchain.installed) {
               angular.element('#menu').addClass('disable-menu');
-              currentAlert = alertify.notify($translate.instant('start_command', { command: commands[0] }), 'message', 100000);
+              currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
               nodeProcess.chdir('_build');
               if (checkFiles) {
@@ -178,7 +178,7 @@ angular.module('icestudio')
                 }
               }
               else {
-                alertify.success($translate.instant('success_command', { command: label }));
+                alertify.success($translate.instant('done_' + label));
               }
               $('body').removeClass('waiting');
             }
