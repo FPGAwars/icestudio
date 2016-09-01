@@ -1,4 +1,5 @@
 <div ng-controller="ProjectCtrl">
+  <div id="read-only-banner" class="banner hidden">Read only</div>
   <div id="paper" class="paper"></div>
   <ol id="breadcrumbs" class="breadcrumb" style="margin-bottom: 5px;">
     <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
