@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', '$translate', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, $translate, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -118,21 +118,21 @@ angular.module('icestudio')
                   return false;
                 }
                 // Prevent to connect a pull-up if other blocks are connected
-                if ((cellViewT.model.attributes.blockType == 'config.pull-up' ||
-                     cellViewT.model.attributes.blockType == 'config.pull-up-inv') &&
+                if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                     cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
-                if ((linkIView.targetView.model.attributes.blockType == 'config.pull-up' ||
-                     linkIView.targetView.model.attributes.blockType == 'config.pull-up-inv') &&
+                if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
+                     linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
                   return false;
                 }
               }
               // Ensure input -> pull-up connections
-              if (cellViewT.model.attributes.blockType == 'config.pull-up' ||
-                  cellViewT.model.attributes.blockType == 'config.pull-up-inv') {
+              if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                  cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
                 return (cellViewS.model.attributes.blockType == 'basic.input');
               }
               // Prevent loop links
@@ -254,11 +254,11 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt('Insert the block label', '',
+                    alertify.prompt($translate.instant('enter_block_label'), data.data.label,
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
-                        alertify.success('Label updated');
+                        alertify.success($translate.instant('label_updated'));
                     });
                   }
                 }
@@ -406,7 +406,7 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt('Insert the block i/o', 'a,b c',
+            alertify.prompt($translate.instant('enter_block_ports'), 'a,b c',
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -461,7 +461,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt('Insert the block name', 'i',
+            alertify.prompt($translate.instant('enter_block_label'), 'i',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -501,7 +501,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt('Insert the block name', 'o',
+            alertify.prompt($translate.instant('enter_block_label'), 'o',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -558,7 +558,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error('Wrong block format: ' + type);
+              alertify.error($translate.instant('wrong_block_format', { type: type }));
             }
           }
         };
@@ -602,8 +602,8 @@ angular.module('icestudio')
                 }
                 newCell.translate(6 * gridsize, 6 * gridsize);
                 addCell(newCell);
-                if (type == 'config.pull-up' ||
-                    type == 'config.pull-up-inv') {
+                if (type == 'config.pull_up' ||
+                    type == 'config.pull_up_inv') {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
                 var cellView = paper.findViewByModel(newCell);
@@ -859,8 +859,8 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.pull-up' ||
-              blockInstance.type == 'config.pull-up-inv') {
+          if (blockInstance.type == 'config.pull_up' ||
+              blockInstance.type == 'config.pull_up_inv') {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 

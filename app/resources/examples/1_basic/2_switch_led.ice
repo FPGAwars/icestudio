@@ -75,7 +75,7 @@
       },
       {
         "id": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
-        "type": "config.pull-up-inv",
+        "type": "config.pull_up_inv",
         "data": {},
         "position": {
           "x": 224,
@@ -107,8 +107,8 @@
     ]
   },
   "deps": {
-    "config.pull-up-inv": {
-      "image": "resources/images/pull-up-inv.svg",
+    "config.pull_up_inv": {
+      "image": "resources/images/pull_up_inv.svg",
       "state": {
         "pan": {
           "x": -23,

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function(nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false };
@@ -31,7 +31,7 @@ angular.module('icestudio')
           if (code) {
             if (toolchain.installed) {
               angular.element('#menu').addClass('disable-menu');
-              currentAlert = alertify.notify(commands[0] + ' start...', 'message', 100000);
+              currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
               nodeProcess.chdir('_build');
               if (checkFiles) {
@@ -116,13 +116,13 @@ angular.module('icestudio')
               }
               else {
                 // Error: file does not exist
-                alertify.notify('File: ' + file + ' does not exist', 'error', 3);
+                alertify.notify($translate.instant('file_does_not_exist', { file: file }), 'error', 3);
                 ret = false;
                 break;
               }
             }
             catch (e) {
-              alertify.notify('Error: ' + e.toString(), 'error', 3);
+              alertify.notify($translate.instant('generic_error', { error: e.toString() }), 'error', 3);
               ret = false;
               break;
             }
@@ -145,19 +145,19 @@ angular.module('icestudio')
                 if (stdout) {
                   if (stdout.indexOf('[upload] Error') != -1 ||
                       stdout.indexOf('Error: board not detected') != -1) {
-                    alertify.notify('Board not detected', 'error', 3);
+                    alertify.notify($translate.instant('board_not_detected'), 'error', 3);
                   }
                   else if (stdout.indexOf('Error: unkown board') != -1) {
-                    alertify.notify('Unknown board', 'error', 3);
+                    alertify.notify($translate.instant('unknown_board'), 'error', 3);
                   }
                   else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                    alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
                   }
                   else if (stdout.indexOf('error: unknown pin') != -1) {
-                    alertify.notify('FPGA I/O not defined', 'error', 3);
+                    alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
                   }
                   else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                    alertify.notify('Duplicated FPGA I/O', 'error', 3);
+                    alertify.notify($translate.instant('duplicated_fpga_io'), 'error', 3);
                   }
                   else {
                     var stdoutError = stdout.split('\n').filter(isError);
@@ -178,7 +178,7 @@ angular.module('icestudio')
                 }
               }
               else {
-                alertify.success(label + ' success');
+                alertify.success($translate.instant('done_' + label));
               }
               $('body').removeClass('waiting');
             }
@@ -196,7 +196,7 @@ angular.module('icestudio')
 
           var content = [
             '<div>',
-            '  <p id="progress-message">Installing toolchain</p>',
+            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
             '  </br>',
             '  <div class="progress">',
             '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
@@ -262,7 +262,7 @@ angular.module('icestudio')
               callback();
             }
             else {
-              errorProgress('Internet connection is required');
+              errorProgress($translate.instant('internet_connection_required'));
               utils.enableClickEvent();
               callback(true);
             }
@@ -295,8 +295,8 @@ angular.module('icestudio')
         }
 
         function installationCompleted(callback) {
-          updateProgress('Installation completed', 100);
-          alertify.success('Toolchain installed');
+          updateProgress($translate.instant('installation_completed'), 100);
+          alertify.success($translate.instant('toolchain_installed'));
           toolchain.installed = true;
           utils.enableClickEvent();
           callback();
