@@ -84,5 +84,17 @@
   "enter_block_label": "Enter the block label",
   "label_updated": "Label updated",
   "enter_block_ports": "Enter the block ports",
-  "wrong_block_format": "Wrong block format: {{type}}"
+  "wrong_block_format": "Wrong block format: {{type}}",
+  "start_command": "Start {{command}} ...",
+  "generic_error": "Error: {{error}}",
+  "file_does_not_exist": "File {{file}} does not exist",
+  "board_not_detected": "Board not detected",
+  "unknown_board": "Unknown board",
+  "fpga_io_not_defined": "FPGA I/O not defined",
+  "duplicated_fpga_io": "Duplicated FPGA I/O",
+  "success_command": "Success {{command}}",
+  "installing_toolchain": "Installing toolchain",
+  "internet_connection_required": "Internet connection is required",
+  "installation_completed": "Installation completed",
+  "toolchain_installed": "Toolchain installed"
 }
