@@ -49,7 +49,8 @@ angular.module('icestudio')
     // File
 
     $scope.newProject = function() {
-      alertify.prompt($translate.instant('enter_project_title'), 'untitled',
+      alertify.prompt($translate.instant('enter_project_title'),
+                      $translate.instant('untitled'),
         function(evt, name) {
           if (name) {
             common.newProject(name);
@@ -295,20 +296,17 @@ angular.module('icestudio')
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.id != board.id) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('change_board_confirmation')
-              .replace('@boardname', '<b>' + board.label + '</b>'),
+          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.label + '</b>' }),
             function() {
               boards.selectBoard(board.id);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected')
-                .replace('@boardname', board.label));
+              alertify.success($translate.instant('board_selected', { name: board.label }));
           });
         }
         else {
           boards.selectBoard(board.id);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected')
-            .replace('@boardname', board.label));
+          alertify.success($translate.instant('board_selected',  { name: board.label }));
         }
       }
     }

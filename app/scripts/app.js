@@ -23,7 +23,7 @@ angular
 
       // Initial language
       $translateProvider.preferredLanguage('en');
-      $translateProvider.useSanitizeValueStrategy('escape');
+      //$translateProvider.useSanitizeValueStrategy('escape');
     }
 
   ])
