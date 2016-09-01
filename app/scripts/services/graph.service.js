@@ -386,6 +386,14 @@ angular.module('icestudio')
                 cellView.$el.addClass('disable-graph');
               }
             }
+            else if (cells[i].attributes.type != 'ice.Wire') {
+              if (value) {
+                cellView.$el.find('.port-body').removeClass('disable-graph');
+              }
+              else {
+                cellView.$el.find('.port-body').addClass('disable-graph');
+              }
+            }
           }
         };
 

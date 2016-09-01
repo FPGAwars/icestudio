@@ -382,12 +382,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.renderPorts();
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
-      if (this.model.get('disabled')) {
-        this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
-      }
-      else {
-        this.$box.find('#' + editorLabel).css({'pointer-events': 'all'});
-      }
+      var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
+      editor.setReadOnly(this.model.get('disabled'));
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
     updateBox: function() {
@@ -478,12 +474,8 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     update: function () {
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
-      if (this.model.get('disabled')) {
-        this.$box.find('#' + editorLabel).css({'pointer-events': 'none'});
-      }
-      else {
-        this.$box.find('#' + editorLabel).css({'pointer-events': 'all'});
-      }
+      var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
+      editor.setReadOnly(this.model.get('disabled'));
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
     updateBox: function() {
