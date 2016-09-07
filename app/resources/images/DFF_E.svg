@@ -1,68 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 85 85" style="enable-background:new 0 0 85 85;" xml:space="preserve">
-<style type="text/css">
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 85 85"
+   style="enable-background:new 0 0 85 85;"
+   xml:space="preserve"
+   inkscape:version="0.91 r"
+   sodipodi:docname="DFF_E.svg"><metadata
+     id="metadata4935"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs4933" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="744"
+     id="namedview4931"
+     showgrid="false"
+     inkscape:zoom="5.0495743"
+     inkscape:cx="36.693801"
+     inkscape:cy="38.827555"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1" /><style
+     type="text/css"
+     id="style4861">
 	.st0{font-family:'FranklinGothic-Medium';}
 	.st1{font-size:10px;}
-</style>
-<text transform="matrix(1 0 0 1 28.9852 16.5838)" class="st0 st1">DFF_E</text>
-<path d="M71.3,7.8v69.5H13.8V7.8H71.3 M73.3,5.8H11.8v73.5h61.5V5.8L73.3,5.8z"/>
-<g>
-	<g>
-		<path d="M85,26.6v1.2H73.3v-1.2H85z"/>
-	</g>
-	<g>
-		<path d="M67.8,31v1c-0.4,0-0.6,0-0.7,0c-1,0-1.5-0.4-1.5-1.3c-0.2,0-0.4,0-0.4,0c-0.9,0-1.6-0.3-2.1-1c-0.5-0.7-0.7-1.5-0.7-2.5
-			c0-1,0.2-1.8,0.7-2.5c0.5-0.7,1.2-1,2.1-1c0.7,0,1.2,0.2,1.6,0.5c0.4,0.3,0.7,0.7,0.9,1.2s0.3,1.1,0.3,1.8c0,1.4-0.5,2.5-1.4,3.1
-			c-0.1,0.1-0.2,0.2-0.2,0.3c0,0.1,0,0.2,0.1,0.3C66.7,31,66.8,31,67,31c0.1,0,0.3,0,0.5,0C67.6,31,67.7,31,67.8,31z M65.2,29.7
-			c1,0,1.6-0.8,1.6-2.5c0-0.9-0.1-1.5-0.4-1.9s-0.6-0.6-1.1-0.6c-1,0-1.5,0.8-1.5,2.5C63.7,28.9,64.2,29.7,65.2,29.7z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path d="M85,70.4v1.2H73.3v-1.2H85z"/>
-	</g>
-	<g>
-		<path d="M57.3,71l-0.6-0.4c0.2-0.5,0.4-0.9,0.7-1c0.2-0.2,0.5-0.3,0.8-0.3c0.2,0,0.6,0.1,1.1,0.3c0.4,0.2,0.7,0.3,0.9,0.3
-			c0.3,0,0.6-0.2,0.8-0.6l0.6,0.4c-0.4,0.8-0.9,1.3-1.6,1.3c-0.2,0-0.6-0.1-1.2-0.4c-0.3-0.1-0.6-0.2-0.7-0.2
-			C57.7,70.4,57.5,70.6,57.3,71z"/>
-		<path d="M67.8,73.8v1c-0.4,0-0.6,0-0.7,0c-1,0-1.5-0.4-1.5-1.3c-0.2,0-0.4,0-0.4,0c-0.9,0-1.6-0.3-2.1-1c-0.5-0.7-0.7-1.5-0.7-2.5
-			c0-1,0.2-1.8,0.7-2.5c0.5-0.7,1.2-1,2.1-1c0.7,0,1.2,0.2,1.6,0.5c0.4,0.3,0.7,0.7,0.9,1.2s0.3,1.1,0.3,1.8c0,1.4-0.5,2.5-1.4,3.1
-			c-0.2,0.1-0.2,0.2-0.2,0.3c0,0.1,0,0.2,0.1,0.3c0.1,0.1,0.2,0.1,0.4,0.1c0.1,0,0.3,0,0.5,0C67.6,73.8,67.7,73.8,67.8,73.8z
-			 M65.2,72.5c1,0,1.6-0.8,1.6-2.5c0-0.9-0.1-1.5-0.4-1.9s-0.6-0.6-1.1-0.6c-1,0-1.5,0.8-1.5,2.5C63.7,71.7,64.2,72.5,65.2,72.5z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path d="M11.8,48v1.2H0L0,48H11.8z"/>
-	</g>
-	<g>
-		<path d="M21.8,52h-4.3v-6.7h4.3v1h-3.1v1.8h2.5v1h-2.5v1.9h3.1V52z"/>
-		<path d="M27.9,52h-1.2l-2.5-4.3c0-0.1-0.1-0.2-0.2-0.3c0-0.1-0.1-0.2-0.2-0.3V52h-1v-6.7h1.3l2.3,3.9c0,0,0.2,0.3,0.4,0.7v-4.6
-			h0.9V52z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path d="M11.8,26.6v1.2H0l0-1.2H11.8z"/>
-	</g>
-	<g>
-		<path d="M19.8,30.5h-1.3v-5.6h-1.8v-1h4.8v1h-1.8V30.5z"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path d="M11.8,69.5v1.2H0l0-1.2H11.8z"/>
-	</g>
-	<g>
-		<path d="M21.2,71.1l1.1,0.1c-0.1,0.7-0.3,1.2-0.8,1.6c-0.4,0.4-1,0.6-1.8,0.6c-0.6,0-1.1-0.2-1.5-0.5c-0.4-0.3-0.7-0.7-0.9-1.2
-			c-0.2-0.5-0.3-1.1-0.3-1.7c0-1,0.2-1.8,0.7-2.5c0.5-0.6,1.1-1,2-1c0.7,0,1.2,0.2,1.7,0.6c0.4,0.4,0.7,1,0.8,1.7l-1.1,0.1
-			c-0.2-1-0.7-1.5-1.4-1.5c-0.4,0-0.8,0.2-1,0.6c-0.2,0.4-0.4,1-0.4,1.8c0,0.8,0.1,1.4,0.4,1.8c0.3,0.4,0.6,0.6,1.1,0.6
-			c0.4,0,0.7-0.1,0.9-0.4C21,71.8,21.2,71.5,21.2,71.1z"/>
-		<path d="M27.4,73.4h-4.1v-6.7h1.3v5.6h2.8V73.4z"/>
-		<path d="M33.5,73.4h-1.3L30.7,70l-1.3,1.7v1.7h-1.2v-6.7h1.2v3.5c0.2-0.2,0.3-0.4,0.3-0.5l2.2-3h1.2l-1.6,2.2L33.5,73.4z"/>
-	</g>
-	<polygon points="12.9,66.2 12.9,67.2 15.8,70.1 12.9,73 12.9,74 16.8,70.1 	"/>
-</g>
+</style><text
+     class="st0 st1"
+     id="text4863"
+     style="font-size:10px;font-family:FranklinGothic-Medium"
+     x="32.745312"
+     y="16.662701">DFF</text>
+<path
+     d="M71.3,7.8v69.5H13.8V7.8H71.3 M73.3,5.8H11.8v73.5h61.5V5.8L73.3,5.8z"
+     id="path4865" /><g
+     id="g4871"><path
+       d="M85,26.6v1.2H73.3v-1.2H85z"
+       id="path4873" /></g><g
+     id="g4967"
+     transform="translate(-29.6556,6.864909)"><g
+       id="g4887-9"
+       transform="matrix(-1,0,0,1,114.6556,8.3350906)"><path
+         id="path4889-4"
+         d="m 4.7,55.2 0,1.2 -4.7,0 0,-1.2 4.7,0 z"
+         inkscape:connector-curvature="0" /></g><path
+       id="path4927-8"
+       d="m 106.4556,61.635091 c -1.4,0 -2.5,1.1 -2.5,2.5 0,1.4 1.1,2.5 2.5,2.5 1.4,0 2.5,-1.1 2.5,-2.5 0,-1.4 -1.1,-2.5 -2.5,-2.5 m 0,-1 c 1.9,0 3.5,1.6 3.5,3.5 0,1.9 -1.6,3.5 -3.5,3.5 -1.9,0 -3.5,-1.6 -3.5,-3.5 0,-1.9 1.5,-3.5 3.5,-3.5 l 0,0 z"
+       inkscape:connector-curvature="0" /></g><g
+     id="g6432"><g
+       id="g4867"><path
+         id="path4869"
+         d="M11.8,26.6v1.2H0l0-1.2H11.8z" /></g><text
+       style="font-size:10px;font-family:FranklinGothic-Medium"
+       id="text4863-3"
+       class="st0 st1"
+       x="17.258919"
+       y="30.84502">D</text>
+</g><g
+     id="g6427"
+     transform="translate(0,7.1920662)"><g
+       id="g4883"><path
+         id="path4885"
+         d="m 11.8,40.9 0,1.2 -11.8,0 0,-1.2 11.8,0 z"
+         inkscape:connector-curvature="0" /></g><text
+       y="45.09502"
+       x="17.258919"
+       class="st0 st1"
+       id="text4989"
+       style="font-size:10px;font-family:FranklinGothic-Medium">EN</text>
+</g><g
+     id="g6437"><g
+       id="g4879"><path
+         id="path4881"
+         d="M11.8,69.5v1.2H0l0-1.2H11.8z" /></g><polygon
+       id="polygon4929"
+       points="12.9,66.2 12.9,67.2 15.8,70.1 12.9,73 12.9,74 16.8,70.1 " /><text
+       y="73.590134"
+       x="17.258919"
+       class="st0 st1"
+       id="text4993"
+       style="font-size:10px;font-family:FranklinGothic-Medium">CLK</text>
+</g><text
+     style="font-size:10px;font-family:FranklinGothic-Medium"
+     id="text4995"
+     class="st0 st1"
+     x="59.968964"
+     y="30.985054">Q</text>
+<text
+     y="73.730164"
+     x="59.968964"
+     class="st0 st1"
+     id="text4997"
+     style="font-size:10px;font-family:FranklinGothic-Medium">Q</text>
 </svg>

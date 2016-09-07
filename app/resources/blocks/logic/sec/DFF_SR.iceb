@@ -1,11 +1,11 @@
 {
-  "image": "resources/images/DFF_R.svg",
+  "image": "resources/images/DFF_SR.svg",
   "state": {
     "pan": {
-      "x": 130.00009604991658,
-      "y": 84.99996770372616
+      "x": -90.99993940146229,
+      "y": 4.999967660064385
     },
-    "zoom": 1.0000000218309708
+    "zoom": 1
   },
   "graph": {
     "blocks": [
@@ -38,8 +38,19 @@
           "label": "d"
         },
         "position": {
-          "x": 168,
-          "y": 112
+          "x": 160,
+          "y": 104
+        }
+      },
+      {
+        "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
+        "type": "basic.input",
+        "data": {
+          "label": "rst"
+        },
+        "position": {
+          "x": 160,
+          "y": 256
         }
       },
       {
@@ -49,15 +60,15 @@
           "label": "clk"
         },
         "position": {
-          "x": 168,
+          "x": 160,
           "y": 328
         }
       },
       {
-        "id": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+        "id": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
         "type": "basic.code",
         "data": {
-          "code": "reg _q = 1'b0;\n\nalways @(posedge clk or negedge rst_n)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
+          "code": "reg _q = 1'b0;\n\nalways @(posedge clk)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
           "ports": {
             "in": [
               "d",
@@ -77,30 +88,19 @@
         }
       },
       {
-        "id": "cd76c5a4-d516-463c-9d29-cfe7585c34a7",
+        "id": "8f38d25f-98e1-4708-bb93-6949b0fdc9eb",
         "type": "bit.1",
         "data": {},
         "position": {
-          "x": 168,
-          "y": 184
-        }
-      },
-      {
-        "id": "4ca492c0-1bbd-4809-a3f4-e5ad297c974c",
-        "type": "basic.input",
-        "data": {
-          "label": "rst_n"
-        },
-        "position": {
-          "x": 168,
-          "y": 256
+          "x": 160,
+          "y": 176
         }
       }
     ],
     "wires": [
       {
         "source": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q"
         },
         "target": {
@@ -110,7 +110,7 @@
       },
       {
         "source": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q_n"
         },
         "target": {
@@ -120,42 +120,42 @@
       },
       {
         "source": {
-          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
-          "port": "out"
-        },
-        "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
-          "port": "clk"
-        }
-      },
-      {
-        "source": {
           "block": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
           "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "d"
         }
       },
       {
         "source": {
-          "block": "cd76c5a4-d516-463c-9d29-cfe7585c34a7",
-          "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
+          "block": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
+          "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
-          "port": "en"
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "rst_n"
         }
       },
       {
         "source": {
-          "block": "4ca492c0-1bbd-4809-a3f4-e5ad297c974c",
+          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
           "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
-          "port": "rst_n"
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "clk"
+        }
+      },
+      {
+        "source": {
+          "block": "8f38d25f-98e1-4708-bb93-6949b0fdc9eb",
+          "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
+        },
+        "target": {
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "en"
         }
       }
     ]

@@ -1,11 +1,11 @@
 {
-  "image": "resources/images/DFF_E_R.svg",
+  "image": "resources/images/DFF_E_SR.svg",
   "state": {
     "pan": {
-      "x": 130.00009604991658,
-      "y": 84.99996770372616
+      "x": -118.99996991904041,
+      "y": -15.000032339935615
     },
-    "zoom": 1.0000000218309708
+    "zoom": 1
   },
   "graph": {
     "blocks": [
@@ -39,7 +39,7 @@
         },
         "position": {
           "x": 168,
-          "y": 112
+          "y": 104
         }
       },
       {
@@ -50,14 +50,14 @@
         },
         "position": {
           "x": 168,
-          "y": 184
+          "y": 176
         }
       },
       {
         "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
         "type": "basic.input",
         "data": {
-          "label": "rst_n"
+          "label": "rst"
         },
         "position": {
           "x": 168,
@@ -76,10 +76,10 @@
         }
       },
       {
-        "id": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+        "id": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
         "type": "basic.code",
         "data": {
-          "code": "reg _q = 1'b0;\n\nalways @(posedge clk or negedge rst_n)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
+          "code": "reg _q = 1'b0;\n\nalways @(posedge clk)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
           "ports": {
             "in": [
               "d",
@@ -102,7 +102,7 @@
     "wires": [
       {
         "source": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q"
         },
         "target": {
@@ -112,7 +112,7 @@
       },
       {
         "source": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q_n"
         },
         "target": {
@@ -122,21 +122,11 @@
       },
       {
         "source": {
-          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
-          "port": "out"
-        },
-        "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
-          "port": "clk"
-        }
-      },
-      {
-        "source": {
           "block": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
           "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "d"
         }
       },
@@ -146,7 +136,7 @@
           "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "en"
         }
       },
@@ -156,8 +146,18 @@
           "port": "out"
         },
         "target": {
-          "block": "cfacb99e-850b-4ddc-a25b-fda4c93f1c5a",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "rst_n"
+        }
+      },
+      {
+        "source": {
+          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
+          "port": "out"
+        },
+        "target": {
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "clk"
         }
       }
     ]
