@@ -1,5 +1,5 @@
 {
-  "image": "resources/images/TFF_SR.svg",
+  "image": "",
   "state": {
     "pan": {
       "x": -74.12131512662035,
@@ -46,7 +46,7 @@
         "id": "8fa94192-fba9-4c2a-be61-b8ca88389423",
         "type": "basic.input",
         "data": {
-          "label": "rst_i"
+          "label": "rst_n"
         },
         "position": {
           "x": 168,

@@ -1,5 +1,5 @@
 {
-  "image": "resources/images/DFF_SR.svg",
+  "image": "",
   "state": {
     "pan": {
       "x": -90.99993940146229,
@@ -46,7 +46,7 @@
         "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
         "type": "basic.input",
         "data": {
-          "label": "rst"
+          "label": "rst_n"
         },
         "position": {
           "x": 160,
