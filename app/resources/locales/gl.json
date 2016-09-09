@@ -70,6 +70,7 @@
   "1_led_on": "1. Acender led",
   "2_switch_led": "2. Interruptor con led",
   "3_switch_and_gate": "3. Interruptor con porta and",
+  "read_only": "Só lectura",
   "untitled": "Sen título",
   "enter_project_title": "Introduza o título do proxecto",
   "load_project_confirmation": "O proxecto actual perderase. ¿Desexa continuar abrindo o proxecto?",

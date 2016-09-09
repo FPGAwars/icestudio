@@ -79,7 +79,7 @@
         "id": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
         "type": "basic.code",
         "data": {
-          "code": "reg _q = 1'b0;\n\nalways @(posedge clk)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
+          "code": "// D flip-flop with synchronous reset\n\nreg _q = 1'b0;\n\nalways @(posedge clk)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
           "ports": {
             "in": [
               "d",
