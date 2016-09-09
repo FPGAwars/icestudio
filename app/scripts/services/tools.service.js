@@ -14,18 +14,18 @@ angular.module('icestudio')
         checkToolchain();
 
         this.verifyCode = function() {
-          this.apio(['verify'], false);
+          this.apio(['verify']);
         };
 
         this.buildCode = function() {
-          this.apio(['build', '--board', boards.selectedBoard.id], true);
+          this.apio(['build', '--board', boards.selectedBoard.id]);
         };
 
         this.uploadCode = function() {
-          this.apio(['upload', '--board', boards.selectedBoard.id], true);
+          this.apio(['upload', '--board', boards.selectedBoard.id]);
         };
 
-        this.apio = function(commands, checkFiles) {
+        this.apio = function(commands) {
           var check = true;
           var code = this.generateCode();
           if (code) {
@@ -34,9 +34,7 @@ angular.module('icestudio')
               currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
               nodeProcess.chdir('_build');
-              if (checkFiles) {
-                check = this.syncVerilogResources(code);
-              }
+              check = this.syncResources(code);
               try {
                 if (check) {
                   execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
@@ -91,25 +89,30 @@ angular.module('icestudio')
           return verilog;
         }
 
-        this.syncVerilogResources = function(code) {
+        this.syncResources = function(code) {
           var ret = true;
-          var files = code.match(/\".*list\"/g);
 
-          if (files && files.length > 0) {
-            // Force rebuild
-            var apio = utils.getApioExecutable();
-            nodeChildProcess.execSync([apio, 'clean'].join(' ')).toString();
-          }
+          // Remove resources
+          nodeFse.removeSync('!(main.*)');
 
-          for (var i in files) {
+          // Sync Verilog files
+          if (ret) ret = this.syncFiles(/@include \"(.*?)\.v\"/g, 'v', code);
 
-            var file = files[i].replace(/\"/g, "");
+          // Sync List files
+          if (ret) ret = this.syncFiles(/\"(.*?)\.list\"/g, 'list', code);
+
+          return ret;
+        }
+
+        this.syncFiles = function(pattern, ext, code) {
+          var ret = true;
+          var match;
+          while (match = pattern.exec(code)) {
+            var file = match[1] + '.' + ext;
             var destPath = nodePath.join('.', file);
             var origPath = nodePath.join(this.currentProjectPath, file);
 
             try {
-              // Remove list files
-              nodeFse.removeSync('*.list');
               // Copy list file
               if (nodeFs.existsSync(origPath)) {
                 nodeFse.copySync(origPath, destPath);
