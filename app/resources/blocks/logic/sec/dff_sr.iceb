@@ -1,11 +1,11 @@
 {
-  "image": "",
+  "image": "resources/images/dff_sr.svg",
   "state": {
     "pan": {
-      "x": 43.92210542683756,
-      "y": 8.822522121617709
+      "x": -100,
+      "y": 0
     },
-    "zoom": 1.164556886347174
+    "zoom": 1
   },
   "graph": {
     "blocks": [
@@ -13,7 +13,7 @@
         "id": "ffdd9aa2-aea3-4aa9-8431-80e799226774",
         "type": "basic.output",
         "data": {
-          "label": "q"
+          "label": "Q"
         },
         "position": {
           "x": 824,
@@ -24,7 +24,7 @@
         "id": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
         "type": "basic.output",
         "data": {
-          "label": "q_n"
+          "label": "Q*"
         },
         "position": {
           "x": 824,
@@ -35,11 +35,11 @@
         "id": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
         "type": "basic.input",
         "data": {
-          "label": "t"
+          "label": "D"
         },
         "position": {
           "x": 168,
-          "y": 112
+          "y": 104
         }
       },
       {
@@ -50,14 +50,14 @@
         },
         "position": {
           "x": 168,
-          "y": 184
+          "y": 176
         }
       },
       {
-        "id": "8fa94192-fba9-4c2a-be61-b8ca88389423",
+        "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
         "type": "basic.input",
         "data": {
-          "label": "rst_n"
+          "label": "rst*"
         },
         "position": {
           "x": 168,
@@ -76,13 +76,13 @@
         }
       },
       {
-        "id": "075956ce-9af4-49ea-9123-91786feaba4d",
+        "id": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
         "type": "basic.code",
         "data": {
-          "code": "reg _q = 1'b0;\n\nalways @(posedge clk or negedge rst_n)\nbegin\n    if(rst_n == 0)\n        _q <= 1'b0;\n    else\n        if(en & t)\n            _q = ~_q;\nend\n\nassign {q, q_n} = {_q, ~_q};",
+          "code": "reg _q = 1'b0;\n\nalways @(posedge clk)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
           "ports": {
             "in": [
-              "t",
+              "d",
               "en",
               "rst_n",
               "clk"
@@ -102,7 +102,7 @@
     "wires": [
       {
         "source": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q"
         },
         "target": {
@@ -112,7 +112,7 @@
       },
       {
         "source": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "q_n"
         },
         "target": {
@@ -122,22 +122,12 @@
       },
       {
         "source": {
-          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
-          "port": "out"
-        },
-        "target": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
-          "port": "clk"
-        }
-      },
-      {
-        "source": {
           "block": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
           "port": "out"
         },
         "target": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
-          "port": "t"
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "d"
         }
       },
       {
@@ -146,18 +136,28 @@
           "port": "out"
         },
         "target": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "en"
         }
       },
       {
         "source": {
-          "block": "8fa94192-fba9-4c2a-be61-b8ca88389423",
+          "block": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
           "port": "out"
         },
         "target": {
-          "block": "075956ce-9af4-49ea-9123-91786feaba4d",
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
           "port": "rst_n"
+        }
+      },
+      {
+        "source": {
+          "block": "6855f64f-fa1c-4371-b2e1-a98970674a96",
+          "port": "out"
+        },
+        "target": {
+          "block": "17c79db9-4b5b-4a7c-9f13-c4c9f9e5a4e5",
+          "port": "clk"
         }
       }
     ]

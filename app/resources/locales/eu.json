@@ -61,6 +61,11 @@
 "or": "Or",
 "xnor": "Xnor",
 "xor": "Xor",
+"sec": "Sec",
+"dff_ar": "Bistable D asink",
+"dff_sr": "Bistable D",
+"tff_ar": "Bistable T asink",
+"tff_sr": "Bistable T",
 "1_basic": "1. Basikoa",
 "1_led_on": "1. Led-a piztu",
 "2_switch_led": "2. Etengailua led batekin",
@@ -104,6 +109,3 @@
 "installation_completed": "Instalazioa amaitua",
 "toolchain_installed": "Toolchain instalatua"
 }
-
-
-
