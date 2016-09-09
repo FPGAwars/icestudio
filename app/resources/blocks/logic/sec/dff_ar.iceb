@@ -2,10 +2,10 @@
   "image": "",
   "state": {
     "pan": {
-      "x": 130.00009604991658,
-      "y": 84.99996770372616
+      "x": -100,
+      "y": 0
     },
-    "zoom": 1.0000000218309708
+    "zoom": 1
   },
   "graph": {
     "blocks": [
@@ -13,7 +13,7 @@
         "id": "ffdd9aa2-aea3-4aa9-8431-80e799226774",
         "type": "basic.output",
         "data": {
-          "label": "q"
+          "label": "Q"
         },
         "position": {
           "x": 824,
@@ -24,7 +24,7 @@
         "id": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
         "type": "basic.output",
         "data": {
-          "label": "q_n"
+          "label": "Q*"
         },
         "position": {
           "x": 824,
@@ -35,7 +35,7 @@
         "id": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
         "type": "basic.input",
         "data": {
-          "label": "d"
+          "label": "D"
         },
         "position": {
           "x": 168,
@@ -57,7 +57,7 @@
         "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
         "type": "basic.input",
         "data": {
-          "label": "rst_n"
+          "label": "rst*"
         },
         "position": {
           "x": 168,

@@ -2,10 +2,10 @@
   "image": "",
   "state": {
     "pan": {
-      "x": -74.12131512662035,
-      "y": -19.815387050930884
+      "x": -100,
+      "y": 0
     },
-    "zoom": 1.0000000218309708
+    "zoom": 1
   },
   "graph": {
     "blocks": [
@@ -13,7 +13,7 @@
         "id": "ffdd9aa2-aea3-4aa9-8431-80e799226774",
         "type": "basic.output",
         "data": {
-          "label": "q"
+          "label": "Q"
         },
         "position": {
           "x": 824,
@@ -24,7 +24,7 @@
         "id": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
         "type": "basic.output",
         "data": {
-          "label": "q_n"
+          "label": "Q*"
         },
         "position": {
           "x": 824,
@@ -35,7 +35,7 @@
         "id": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
         "type": "basic.input",
         "data": {
-          "label": "t"
+          "label": "T"
         },
         "position": {
           "x": 168,
@@ -43,10 +43,21 @@
         }
       },
       {
+        "id": "50d69ac2-949d-476e-a711-420ba9f510cd",
+        "type": "basic.input",
+        "data": {
+          "label": "en"
+        },
+        "position": {
+          "x": 168,
+          "y": 176
+        }
+      },
+      {
         "id": "8fa94192-fba9-4c2a-be61-b8ca88389423",
         "type": "basic.input",
         "data": {
-          "label": "rst_n"
+          "label": "rst*"
         },
         "position": {
           "x": 168,
@@ -86,15 +97,6 @@
           "x": 344,
           "y": 120
         }
-      },
-      {
-        "id": "5e615d9b-7211-4db4-8404-90ecb5945d07",
-        "type": "bit.1",
-        "data": {},
-        "position": {
-          "x": 168,
-          "y": 176
-        }
       }
     ],
     "wires": [
@@ -116,6 +118,16 @@
         "target": {
           "block": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
           "port": "in"
+        }
+      },
+      {
+        "source": {
+          "block": "50d69ac2-949d-476e-a711-420ba9f510cd",
+          "port": "out"
+        },
+        "target": {
+          "block": "163997db-34b5-4c61-a06c-5ab94207674a",
+          "port": "en"
         }
       },
       {
@@ -147,74 +159,8 @@
           "block": "163997db-34b5-4c61-a06c-5ab94207674a",
           "port": "clk"
         }
-      },
-      {
-        "source": {
-          "block": "5e615d9b-7211-4db4-8404-90ecb5945d07",
-          "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
-        },
-        "target": {
-          "block": "163997db-34b5-4c61-a06c-5ab94207674a",
-          "port": "en"
-        }
       }
     ]
   },
-  "deps": {
-    "bit.1": {
-      "graph": {
-        "blocks": [
-          {
-            "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
-            "type": "basic.code",
-            "data": {
-              "code": "// Bit 1\n\nassign v = 1'b1;",
-              "ports": {
-                "in": [],
-                "out": [
-                  "v"
-                ]
-              }
-            },
-            "position": {
-              "x": 96,
-              "y": 96
-            }
-          },
-          {
-            "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
-            "type": "basic.output",
-            "data": {
-              "label": ""
-            },
-            "position": {
-              "x": 608,
-              "y": 192
-            }
-          }
-        ],
-        "wires": [
-          {
-            "source": {
-              "block": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
-              "port": "v"
-            },
-            "target": {
-              "block": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
-              "port": "in"
-            }
-          }
-        ]
-      },
-      "deps": {},
-      "image": "resources/images/1.svg",
-      "state": {
-        "pan": {
-          "x": 0,
-          "y": 0
-        },
-        "zoom": 1
-      }
-    }
-  }
+  "deps": {}
 }
