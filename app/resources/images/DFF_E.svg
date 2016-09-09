@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 85 85"
+   style="enable-background:new 0 0 85 85;"
+   xml:space="preserve"
+   inkscape:version="0.91 r"
+   sodipodi:docname="DFF_E.svg"><metadata
+     id="metadata4935"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs4933" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="744"
+     id="namedview4931"
+     showgrid="false"
+     inkscape:zoom="5.0495743"
+     inkscape:cx="36.693801"
+     inkscape:cy="38.827555"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1" /><style
+     type="text/css"
+     id="style4861">
+	.st0{font-family:'FranklinGothic-Medium';}
+	.st1{font-size:10px;}
+</style><text
+     class="st0 st1"
+     id="text4863"
+     style="font-size:10px;font-family:FranklinGothic-Medium"
+     x="32.745312"
+     y="16.662701">DFF</text>
+<path
+     d="M71.3,7.8v69.5H13.8V7.8H71.3 M73.3,5.8H11.8v73.5h61.5V5.8L73.3,5.8z"
+     id="path4865" /><g
+     id="g4871"><path
+       d="M85,26.6v1.2H73.3v-1.2H85z"
+       id="path4873" /></g><g
+     id="g4967"
+     transform="translate(-29.6556,6.864909)"><g
+       id="g4887-9"
+       transform="matrix(-1,0,0,1,114.6556,8.3350906)"><path
+         id="path4889-4"
+         d="m 4.7,55.2 0,1.2 -4.7,0 0,-1.2 4.7,0 z"
+         inkscape:connector-curvature="0" /></g><path
+       id="path4927-8"
+       d="m 106.4556,61.635091 c -1.4,0 -2.5,1.1 -2.5,2.5 0,1.4 1.1,2.5 2.5,2.5 1.4,0 2.5,-1.1 2.5,-2.5 0,-1.4 -1.1,-2.5 -2.5,-2.5 m 0,-1 c 1.9,0 3.5,1.6 3.5,3.5 0,1.9 -1.6,3.5 -3.5,3.5 -1.9,0 -3.5,-1.6 -3.5,-3.5 0,-1.9 1.5,-3.5 3.5,-3.5 l 0,0 z"
+       inkscape:connector-curvature="0" /></g><g
+     id="g6432"><g
+       id="g4867"><path
+         id="path4869"
+         d="M11.8,26.6v1.2H0l0-1.2H11.8z" /></g><text
+       style="font-size:10px;font-family:FranklinGothic-Medium"
+       id="text4863-3"
+       class="st0 st1"
+       x="17.258919"
+       y="30.84502">D</text>
+</g><g
+     id="g6427"
+     transform="translate(0,7.1920662)"><g
+       id="g4883"><path
+         id="path4885"
+         d="m 11.8,40.9 0,1.2 -11.8,0 0,-1.2 11.8,0 z"
+         inkscape:connector-curvature="0" /></g><text
+       y="45.09502"
+       x="17.258919"
+       class="st0 st1"
+       id="text4989"
+       style="font-size:10px;font-family:FranklinGothic-Medium">EN</text>
+</g><g
+     id="g6437"><g
+       id="g4879"><path
+         id="path4881"
+         d="M11.8,69.5v1.2H0l0-1.2H11.8z" /></g><polygon
+       id="polygon4929"
+       points="12.9,66.2 12.9,67.2 15.8,70.1 12.9,73 12.9,74 16.8,70.1 " /><text
+       y="73.590134"
+       x="17.258919"
+       class="st0 st1"
+       id="text4993"
+       style="font-size:10px;font-family:FranklinGothic-Medium">CLK</text>
+</g><text
+     style="font-size:10px;font-family:FranklinGothic-Medium"
+     id="text4995"
+     class="st0 st1"
+     x="59.968964"
+     y="30.985054">Q</text>
+<text
+     y="73.730164"
+     x="59.968964"
+     class="st0 st1"
+     id="text4997"
+     style="font-size:10px;font-family:FranklinGothic-Medium">Q</text>
+</svg>
