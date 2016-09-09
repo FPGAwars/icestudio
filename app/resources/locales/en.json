@@ -70,6 +70,7 @@
   "1_led_on": "1. Led on",
   "2_switch_led": "2. Switch led",
   "3_switch_and_gate": "3. Switch and gate",
+  "read_only": "Read only",
   "untitled": "untitled",
   "enter_project_title": "Enter the project's title",
   "load_project_confirmation": "The current project will be removed. Do you want to continue loading the project?",

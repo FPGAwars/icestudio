@@ -70,6 +70,7 @@
 "1_led_on": "1. Led-a piztu",
 "2_switch_led": "2. Etengailua led batekin",
 "3_switch_and_gate": "3. Etengailua and atearekin",
+"read_only": "Irakurtzeko soilik",
 "untitled": "Izenik gabe",
 "enter_project_title": "Proiektuari izena jarri",
 "load_project_confirmation": "Proiektu hau ezabatuko da. Proiektua irekitzen jarraitu nahi duzu?",
