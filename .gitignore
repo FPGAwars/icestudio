@@ -2,7 +2,6 @@
 *.out
 *.ini
 *.v
-*.pcf
 *.asc
 *.bin
 *.blif

@@ -278,7 +278,7 @@ angular.module('icestudio')
                 var content = JSON.parse(nodeFs.readFileSync(filePath).toString());
                 fileTree.push({
                   name: basename(fileName),
-                  project: content
+                  content: content
                 });
               }
             }

@@ -153,7 +153,7 @@ angular.module('icestudio')
 
           this.project.state = graph.getState();
 
-          this.project.board = boards.selectedBoard.id;
+          this.project.board = boards.selectedBoard.name;
 
           this.project.graph = { blocks: blocks, wires: wires };
 

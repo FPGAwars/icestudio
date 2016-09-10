@@ -1,0 +1,111 @@
+# -----------------------------------------------------------------------------
+#- Icezum constraint file (.pcf)
+#- By Juan Gonzalez (Obijuan)
+#- April - 2016
+#- GPL license
+# -----------------------------------------------------------------------------
+# --  Repo: https://github.com/FPGAwars/icezum/wiki
+# --  Pinout: https://github.com/FPGAwars/icezum/blob/master/doc/pinout/icezum-pinout.pdf
+
+# ------------ User Leds ------------------------------------------------------
+set_io --warn-no-port LED0  95
+set_io --warn-no-port LED1  96
+set_io --warn-no-port LED2  97
+set_io --warn-no-port LED3  98
+set_io --warn-no-port LED4  99
+set_io --warn-no-port LED5  101
+set_io --warn-no-port LED6  102
+set_io --warn-no-port LED7  104
+
+# ------------ User push buttons ---------------------------------------------
+set_io --warn-no-port SW1  10
+set_io --warn-no-port SW2  11
+
+# ------------ 5v Digital I/O ------------------------------------------------
+
+# --- Top Female header
+#   ---------------------------------------   -------------------------------
+#  |  SCL SDA AR GND D13 D12 D11 D10 D9 D8 | | D7 D6  D5  D4  D3  D2  D1  D0 |
+#   ---------------------------------------   -------------------------------
+#
+#                     Male, 3 pin connectors
+#
+#               Gnd   *   *   *   *   *  *      *  *  *   *   *   *   *   * Gnd
+#               Vcc   *   *   *   *   *  *      *  *  *   *   *   *   *   * Vcc
+#               S     *   *   *   *   *  *      *  *  *   *   *   *   *   * S
+#
+#
+#                                                     Male, 3 pin connectors
+#                                                     *   *   *   *   *   *
+#                                                     *   *   *   *   *   *
+#                                                     *   *   *   *   *   *
+# --- Bottom female header
+#               -------------------------------     -------------------------
+#              |  x 5V  R 3v3 5vP  GND GND PWR |   | DD0 DD1 DD2 DD3 DD4 DD5 |
+#               -------------------------------     -------------------------
+
+# -- In top female header
+set_io --warn-no-port D13  144
+set_io --warn-no-port D12  143
+set_io --warn-no-port D11  142
+set_io --warn-no-port D10  141
+set_io --warn-no-port D9   139
+set_io --warn-no-port D8   138
+set_io --warn-no-port D7   112
+set_io --warn-no-port D6   113
+set_io --warn-no-port D5   114
+set_io --warn-no-port D4   115
+set_io --warn-no-port D3   116
+set_io --warn-no-port D2   117
+set_io --warn-no-port D1   118
+set_io --warn-no-port D0   119
+
+# -- In Bottom female header
+set_io --warn-no-port DD0   78
+set_io --warn-no-port DD1   79
+set_io --warn-no-port DD2   80
+set_io --warn-no-port DD3   81
+set_io --warn-no-port DD4   88
+set_io --warn-no-port DD5   87
+
+# ------------------------- FPGA Direct 3v3 GPIO ------------------------------
+#
+#        -----------------
+#       | GP1 GP3 GP5 GP7 |
+#      >| GP0 GP2 GP4 GP6 |
+#        -----------------
+#
+set_io --warn-no-port GP0  37
+set_io --warn-no-port GP1  38
+set_io --warn-no-port GP2  39
+set_io --warn-no-port GP3  41
+set_io --warn-no-port GP4  42
+set_io --warn-no-port GP5  43
+set_io --warn-no-port GP6  49
+set_io --warn-no-port GP7  50
+
+# -------------------------- I2C ADC -----------------------------------------
+set_io --warn-no-port ADC_SCL  91
+set_io --warn-no-port ADC_SDA  90
+set_io --warn-no-port ADc_INT  93
+
+# -------------------------- SYSTEM CLOCK ------------------------------------
+set_io --warn-no-port CLK 21
+
+# -------------------------- FTDI --------------------------------------------
+# --- FTDI 0:
+set_io --warn-no-port RES  66
+set_io --warn-no-port DONE 65
+set_io --warn-no-port SS   71
+set_io --warn-no-port MISO 67
+set_io --warn-no-port MOSI 68
+set_io --warn-no-port SCK  70
+#
+# --- FTDI 1: (Serial port)
+set_io --warn-no-port DCD 1
+set_io --warn-no-port DSR 2
+set_io --warn-no-port DTR 3
+set_io --warn-no-port CTS 4
+set_io --warn-no-port RTS 7
+set_io --warn-no-port TX  8
+set_io --warn-no-port RX  9

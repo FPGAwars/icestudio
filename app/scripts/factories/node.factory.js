@@ -33,4 +33,10 @@ angular.module('icestudio')
   })
   .factory('nodeZlib', function() {
     return require('zlib');
+  })
+  .factory('nodeSSHexec', function() {
+    return require('ssh-exec');
+  })
+  .factory('nodeRSync', function() {
+    return require('rsyncwrapper');
   });
