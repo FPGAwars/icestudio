@@ -17,7 +17,7 @@ name = input('Insert board name: ')  # eg. icoboard
 label = input('Insert board label: ')  # eg. icoBOARD 1.0
 
 # Regex pattern
-pattern = 'set_io\s--warn-no-port\s(?P<name>.*?)\s(?P<value>.*?)\n'
+pattern = 'set_io\s--warn-no-port\s(?P<name>.*?)\s+(?P<value>.*?)\n'
 
 # Open file
 with open(name + '.pcf') as file:
