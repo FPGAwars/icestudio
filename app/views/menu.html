@@ -97,6 +97,13 @@
                         <a href ng-click="setImagePath()">{{ 'image_path' | translate }}</a>
                       </li>
                       <li class="divider"></li>
+                      <li>
+                        <a href ng-click="setRemoteHostname()">
+                          {{ 'remote_hostname' | translate }}
+                          <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
+                      </li>
+                      <li class="divider"></li>
                       <li class="dropdown-submenu" uib-dropdown>
                         <a href uib-dropdown-toggle>{{ 'language' | translate }}</a>
                         <ul uib-dropdown-menu>

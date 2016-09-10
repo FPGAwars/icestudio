@@ -231,6 +231,14 @@ angular.module('icestudio')
       });
     }
 
+    $scope.setRemoteHostname = function() {
+      var current = profile.data.remoteHostname;
+      alertify.prompt($translate.instant('enter_remote_hostname'), (current) ? current : '',
+        function(evt, remoteHostname) {
+          profile.data.remoteHostname = remoteHostname;
+      });
+    }
+
     $scope.selectLanguage = function(language) {
       if (profile.data.language != language) {
         profile.data.language = language;

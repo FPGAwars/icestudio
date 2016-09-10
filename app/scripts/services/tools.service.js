@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false };
@@ -37,7 +37,7 @@ angular.module('icestudio')
               check = this.syncResources(code);
               try {
                 if (check) {
-                  execute(commands, commands[0], function() {
+                  execute(commands, commands[0], currentAlert, function() {
                     if (currentAlert) {
                       setTimeout(function() {
                         angular.element('#menu').removeClass('disable-menu');
@@ -138,15 +138,14 @@ angular.module('icestudio')
           this.currentProjectPath = path;
         }
 
-        function execute(commands, label, callback) {
-          var useRemote = true;
+        function execute(commands, label, currentAlert, callback) {
+          var remoteHostname = profile.data.remoteHostname;
 
-          var REMOTE_SERVER = 'pi@192.168.0.22';
-
-          if (useRemote) {
+          if (remoteHostname) {
+            currentAlert.setContent('Synchronize remote files ...');
             nodeRSync({
               src: nodeProcess.cwd() + '/',
-              dest: REMOTE_SERVER + ':_build/',
+              dest: remoteHostname + ':_build/',
               ssh: true,
               recursive: true,
               delete: true,
@@ -154,10 +153,14 @@ angular.module('icestudio')
               exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
             }, function (error, stdout, stderr, cmd) {
               if (!error) {
-                nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), REMOTE_SERVER,
+                currentAlert.setContent('Execute remote ' + label + ' ...');
+                nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
                   function (error, stdout, stderr) {
                     processExecute(label, callback, error, stdout, stderr);
                   });
+              }
+              else {
+                processExecute(label, callback, error, stdout, stderr);
               }
             });
           }
@@ -170,7 +173,6 @@ angular.module('icestudio')
         }
 
         function processExecute(label, callback, error, stdout, stderr) {
-          console.log(error, stdout, stderr);
           if (callback)
             callback();
           if (label) {
@@ -210,8 +212,14 @@ angular.module('icestudio')
                   }
                 }
               }
-              else {
-                alertify.notify(stderr, 'error', 5);
+              else if (stderr) {
+                if (stderr.indexOf('Could not resolve hostname') != -1 ||
+                    stderr.indexOf('Connection refused') != -1) {
+                  alertify.notify($translate.instant('wrong_remote_hostname', { name: profile.data.remoteHostname }), 'error', 3);
+                }
+                else {
+                  alertify.notify(stderr, 'error', 5);
+                }
               }
             }
             else {
