@@ -32,5 +32,5 @@ with open(name + '.pcf') as file:
 
     # Save json file
     with open(name + '.json', 'w') as outfile:
-        json.dump(board, outfile, sort_keys=True, indent=4)
+        json.dump(board, outfile)
         print('Done!')
