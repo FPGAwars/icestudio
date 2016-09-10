@@ -33,7 +33,7 @@
                              <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in example.children">
-                                 <a href ng-click="openStoredProject(child.name, child.project)" ng-if="child.project">
+                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.project">
                                  {{ child.name | translate }}
                                  </a>
                                </li>
@@ -48,7 +48,7 @@
                              <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in template.children">
-                                 <a href ng-click="openStoredProject(child.name, child.project)" ng-if="child.project">
+                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.project">
                                  {{ child.name | translate }}
                                  </a>
                                </li>
@@ -143,8 +143,8 @@
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="board in currentBoards">
                         <a href ng-click="selectBoard(board)">
-                          {{ board.label }}
-                          <span ng-show="boards.selectedBoard.id == board.id" class="glyphicon glyphicon-ok-circle"></span>
+                          {{ board.content.label }}
+                          <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                     </ul>
@@ -219,7 +219,7 @@
                   <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
                   <ul class="dropdown-menu" uib-dropdown-menu>
                     <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
-                      <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.project)" ng-if="block.project">
+                      <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
                         {{ block.name | translate }}
                       </a>
                       <a href uib-dropdown-toggle ng-if="block.children">
@@ -227,7 +227,7 @@
                       </a>
                       <ul uib-dropdown-menu ng-if="block.children">
                         <li ng-repeat="sblock in block.children">
-                          <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.project)" ng-if="sblock.project">
+                          <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
                             {{ sblock.name | translate }}
                           </a>
                         </li>

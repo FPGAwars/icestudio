@@ -294,19 +294,19 @@ angular.module('icestudio')
     // Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard.id != board.id) {
+      if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.label + '</b>' }),
+          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.content.label + '</b>' }),
             function() {
-              boards.selectBoard(board.id);
+              boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected', { name: board.label }));
+              alertify.success($translate.instant('board_selected', { name: board.content.label }));
           });
         }
         else {
-          boards.selectBoard(board.id);
+          boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected',  { name: board.label }));
+          alertify.success($translate.instant('board_selected',  { name: board.content.label }));
         }
       }
     }
