@@ -78,6 +78,7 @@
   "enter_project_image_path": "Enter the project's image path",
   "enter_remote_hostname": "Enter the remote hostname user@host (experimental)",
   "wrong_remote_hostname": "Wrong remote hostname {{name}}",
+  "remote_host_not_connected": "Remote host {{name}} not connected",
   "clear_all_confirmation": "Do you want to clear all?",
   "remove_block_confirmation": "Do you want to remove the selected block?",
   "change_board_confirmation": "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?",

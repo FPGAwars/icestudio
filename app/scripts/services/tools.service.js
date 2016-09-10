@@ -217,6 +217,9 @@ angular.module('icestudio')
                     stderr.indexOf('Connection refused') != -1) {
                   alertify.notify($translate.instant('wrong_remote_hostname', { name: profile.data.remoteHostname }), 'error', 3);
                 }
+                else if (stderr.indexOf('No route to host') != -1) {
+                  alertify.notify($translate.instant('remote_host_not_connected', { name: profile.data.remoteHostname }), 'error', 3);
+                }
                 else {
                   alertify.notify(stderr, 'error', 5);
                 }
