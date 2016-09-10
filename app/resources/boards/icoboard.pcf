@@ -1,0 +1,253 @@
+# -----------------------------------------------------------------------------
+#- icoBOARD constraint file (.pcf)
+#- By Jesus Arroyo Torrens
+#- September - 2016
+#- GPL license
+# -----------------------------------------------------------------------------
+# --  Pinout: http://icoboard.org/icoboard-1-0.html
+
+
+# ------------ System clock ---------------------------------------------------
+set_io --warn-no-port CLK R9
+
+
+# ------------ LEDs map -------------------------------------------------------
+#         ______     ______
+#      __|      |___|      |_______
+#     |  |______|   |______| LED3  |
+#    LED1                          |
+#     |_          ______           |
+#       |        |      |          |
+#       |        |      |          |
+#      _|        |______|          |
+#     |                            |
+#    LED2  ______     ______       |
+#     |___|      |___|      |______|
+#         |______|   |______|
+#
+# --   LED1-LED2: Green leds
+# --   LED3: Red led
+
+# ------------| Green leds |---------------------------------------------------
+set_io --warn-no-port LED1 C8
+set_io --warn-no-port LED2 F7
+
+# ------------| Red led |------------------------------------------------------
+set_io --warn-no-port LED3 K9
+
+
+# ------------ PMOD connectors ------------------------------------------------
+#         ______     ______
+#      __|  P1  |___|  P2  |_______
+#     |  |______|   |______|       |
+#     |                            |
+#     |_          ______           |
+#       |        |      |          |
+#       |        |      |          |
+#      _|        |______|          |
+#     |                            |
+#     |    ______     ______       |
+#     |___|  P3  |___|  P4  |______|
+#         |______|   |______|
+#
+
+# -------------| P1 |----------------------------------------------------------
+#
+#                   v                                      v
+#      -------------------------------        ---------------------------
+#     | 3V3 | GND | B4 | C3 | A2 | A5 |      | 3V3 | GND | 0 | 1 | 2 | 3 |
+#      -------------------------------        ---------------------------
+#     | 3V3 | GND | B5 | B3 | B6 | B7 |      | 3V3 | GND | 4 | 5 | 6 | 7 |
+#      -------------------------------        ---------------------------
+#
+
+set_io --warn-no-port P10 B4
+set_io --warn-no-port P11 C3
+set_io --warn-no-port P12 A2
+set_io --warn-no-port P13 A5
+set_io --warn-no-port P14 B5
+set_io --warn-no-port P15 B3
+set_io --warn-no-port P16 B6
+set_io --warn-no-port P17 B7
+
+# -------------| P2 |----------------------------------------------------------
+#
+#                   v                                        v
+#      ---------------------------------        ---------------------------
+#     | 3V3 | GND | B11 | B10 | B9 | D8 |      | 3V3 | GND | 0 | 1 | 2 | 3 |
+#      ---------------------------------        ---------------------------
+#     | 3V3 | GND | A11 | A10 | A9 | B8 |      | 3V3 | GND | 4 | 5 | 6 | 7 |
+#      ---------------------------------        ---------------------------
+#
+
+set_io --warn-no-port P20 B11
+set_io --warn-no-port P21 B10
+set_io --warn-no-port P22 B9
+set_io --warn-no-port P23 D8
+set_io --warn-no-port P24 A11
+set_io --warn-no-port P25 A10
+set_io --warn-no-port P26 A9
+set_io --warn-no-port P27 B8
+
+# -------------| P3 |----------------------------------------------------------
+#
+#                   v                                      v
+#      -------------------------------        ---------------------------
+#     | 3V3 | GND | N6 | L7 | G5 | L9 |      | 3V3 | GND | 0 | 1 | 2 | 3 |
+#      -------------------------------        ---------------------------
+#     | 3V3 | GND | N7 | M8 | P9 | N9 |      | 3V3 | GND | 4 | 5 | 6 | 7 |
+#      -------------------------------        ---------------------------
+#
+
+set_io --warn-no-port P30 N6
+set_io --warn-no-port P31 L7
+set_io --warn-no-port P32 G5
+set_io --warn-no-port P33 L9
+set_io --warn-no-port P34 N7
+set_io --warn-no-port P35 M8
+set_io --warn-no-port P36 P9
+set_io --warn-no-port P37 N9
+
+# -------------| P4 |----------------------------------------------------------
+#
+#                    v                                        v
+#      -----------------------------------       ---------------------------
+#     | 3V3 | GND | T11 | T14 | T15 |  T9 |     | 3V3 | GND | 0 | 1 | 2 | 3 |
+#      -----------------------------------       ---------------------------
+#     | 3V3 | GND | T10 | T13 | R14 | R10 |     | 3V3 | GND | 4 | 5 | 6 | 7 |
+#      -----------------------------------       ---------------------------
+#
+
+set_io --warn-no-port P40 T11
+set_io --warn-no-port P41 T14
+set_io --warn-no-port P42 T15
+set_io --warn-no-port P43 T9
+set_io --warn-no-port P44 T10
+set_io --warn-no-port P45 T13
+set_io --warn-no-port P46 R14
+set_io --warn-no-port P47 R10
+
+
+# ------------ 4*17 connectors ------------------------------------------------
+#         ______     ______
+#      __|      |___|      |_______
+#     |  |______|   |______|       |
+#     |                        ****|
+#     |_          ______       ****|
+#       |        |      |      ****|
+#       |        |      |      ****|
+#      _|        |______|      ****|
+#     |                        ****|
+#     |    ______     ______   ****|
+#     |___|      |___|      |______|
+#         |______|   |______|
+#
+#
+#        -----------------------           -----------------------
+#       | 3V3 | GND | 3V3 | GND |         | 3V3 | GND | 3V3 | GND |
+#        -----------------------           -----------------------
+#       | C13 | A15 | L12 | J16 |         |   0 |   1 |   2 |   3 |
+#        -----------------------           -----------------------
+#       |  E9 | C11 | P14 | J15 |         |   4 |   5 |   6 |   7 |
+#        -----------------------           -----------------------
+#       | B14 | E10 | T16 | J14 |         |   8 |   9 |  10 |  11 |
+#        -----------------------           -----------------------
+#       | A16 |  F9 | F14 | K16 |         |  12 |  13 |  14 |  15 |
+#        -----------------------           -----------------------
+#       | D15 | B16 | G13 | G14 |         |  16 |  17 |  18 |  19 |
+#        -----------------------           -----------------------
+#       | D16 | G11 | K15 | L16 |         |  20 |  21 |  22 |  23 |
+#        -----------------------           -----------------------
+#       | F16 | D10 | H14 | H13 |         |  24 |  25 |  26 |  27 |
+#        -----------------------           -----------------------
+#       | G15 | D11 | M16 | H12 |         |  28 |  29 |  30 |  31 |
+#        -----------------------           -----------------------
+#       | G10 | E11 | M15 | N16 |         |  32 |  33 |  34 |  35 |
+#        -----------------------           -----------------------
+#       | J10 | F12 | J11 | R16 |         |  36 |  37 |  38 |  39 |
+#        -----------------------           -----------------------
+#       | G16 | E14 | J13 | K12 |         |  40 |  41 |  42 |  43 |
+#        -----------------------           -----------------------
+#       | H16 | F11 | K13 | K14 |         |  44 |  45 |  46 |  47 |
+#        -----------------------           -----------------------
+#       | F15 | G12 | L11 |  M9 |         |  48 |  49 |  50 |  51 |
+#        -----------------------           -----------------------
+#       | E16 | B13 | N12 | L14 |         |  52 |  53 |  54 |  55 |
+#        -----------------------           -----------------------
+#       | D14 | C12 | M12 | M14 |         |  56 |  57 |  58 |  59 |
+#        -----------------------           -----------------------
+#       | C16 | B12 | R15 | L10 |         |  60 |  61 |  62 |  63 |
+#        -----------------------           -----------------------
+#
+#
+
+set_io --warn-no-port C00 C13
+set_io --warn-no-port C01 A15
+set_io --warn-no-port C02 L12
+set_io --warn-no-port C03 J16
+set_io --warn-no-port C04 E9
+set_io --warn-no-port C05 C11
+set_io --warn-no-port C06 P14
+set_io --warn-no-port C07 J15
+set_io --warn-no-port C08 B14
+set_io --warn-no-port C09 E10
+
+set_io --warn-no-port C10 T16
+set_io --warn-no-port C11 J14
+set_io --warn-no-port C12 A16
+set_io --warn-no-port C13 F9
+set_io --warn-no-port C14 F14
+set_io --warn-no-port C15 K16
+set_io --warn-no-port C16 D15
+set_io --warn-no-port C17 B16
+set_io --warn-no-port C18 G13
+set_io --warn-no-port C19 G14
+
+set_io --warn-no-port C20 D16
+set_io --warn-no-port C21 G11
+set_io --warn-no-port C22 K15
+set_io --warn-no-port C23 L16
+set_io --warn-no-port C24 F16
+set_io --warn-no-port C25 D10
+set_io --warn-no-port C26 H14
+set_io --warn-no-port C27 H13
+set_io --warn-no-port C28 G15
+set_io --warn-no-port C29 D11
+
+set_io --warn-no-port C30 M16
+set_io --warn-no-port C31 H12
+set_io --warn-no-port C32 G10
+set_io --warn-no-port C33 E11
+set_io --warn-no-port C34 M15
+set_io --warn-no-port C35 N16
+set_io --warn-no-port C36 J10
+set_io --warn-no-port C37 F12
+set_io --warn-no-port C38 J11
+set_io --warn-no-port C39 R16
+
+set_io --warn-no-port C40 G16
+set_io --warn-no-port C41 E14
+set_io --warn-no-port C42 J13
+set_io --warn-no-port C43 K12
+set_io --warn-no-port C44 H16
+set_io --warn-no-port C45 F11
+set_io --warn-no-port C46 K13
+set_io --warn-no-port C47 K14
+set_io --warn-no-port C48 F15
+set_io --warn-no-port C49 G12
+
+set_io --warn-no-port C50 L11
+set_io --warn-no-port C51 M9
+set_io --warn-no-port C52 E16
+set_io --warn-no-port C53 B13
+set_io --warn-no-port C54 N12
+set_io --warn-no-port C55 L14
+set_io --warn-no-port C56 D14
+set_io --warn-no-port C57 C12
+set_io --warn-no-port C58 M12
+set_io --warn-no-port C59 M14
+
+set_io --warn-no-port C60 C16
+set_io --warn-no-port C61 B12
+set_io --warn-no-port C62 R15
+set_io --warn-no-port C63 L10

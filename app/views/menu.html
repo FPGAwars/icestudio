@@ -33,7 +33,7 @@
                              <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in example.children">
-                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.project">
+                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
                                  {{ child.name | translate }}
                                  </a>
                                </li>
@@ -48,7 +48,7 @@
                              <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
                              <ul uib-dropdown-menu>
                                <li ng-repeat="child in template.children">
-                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.project">
+                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
                                  {{ child.name | translate }}
                                  </a>
                                </li>
