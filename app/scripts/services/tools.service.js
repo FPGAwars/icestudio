@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false };
@@ -18,11 +18,11 @@ angular.module('icestudio')
         };
 
         this.buildCode = function() {
-          this.apio(['build', '--board', boards.selectedBoard.id]);
+          this.apio(['build', '--board', boards.selectedBoard.name]);
         };
 
         this.uploadCode = function() {
-          this.apio(['upload', '--board', boards.selectedBoard.id]);
+          this.apio(['upload', '--board', boards.selectedBoard.name]);
         };
 
         this.apio = function(commands) {
@@ -37,7 +37,7 @@ angular.module('icestudio')
               check = this.syncResources(code);
               try {
                 if (check) {
-                  execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
+                  execute(commands, commands[0], function() {
                     if (currentAlert) {
                       setTimeout(function() {
                         angular.element('#menu').removeClass('disable-menu');
@@ -138,54 +138,87 @@ angular.module('icestudio')
           this.currentProjectPath = path;
         }
 
-        function execute(command, label, callback) {
-          nodeChildProcess.exec(command, { maxBuffer: 5000 * 1024 }, function(error, stdout, stderr) {
-            //console.log(error, stdout, stderr);
-            if (callback)
-              callback();
-            if (label) {
-              if (error) {
-                if (stdout) {
-                  if (stdout.indexOf('[upload] Error') != -1 ||
-                      stdout.indexOf('Error: board not detected') != -1) {
-                    alertify.notify($translate.instant('board_not_detected'), 'error', 3);
-                  }
-                  else if (stdout.indexOf('Error: unkown board') != -1) {
-                    alertify.notify($translate.instant('unknown_board'), 'error', 3);
-                  }
-                  else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                    alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
-                  }
-                  else if (stdout.indexOf('error: unknown pin') != -1) {
-                    alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
-                  }
-                  else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                    alertify.notify($translate.instant('duplicated_fpga_io'), 'error', 3);
-                  }
-                  else {
-                    var stdoutError = stdout.split('\n').filter(isError);
-                    function isError(line) {
-                      return (line.indexOf('syntax error') != -1 ||
-                              line.indexOf('not installed') != -1 ||
-                              line.indexOf('error: ') != -1 ||
-                              line.indexOf('ERROR: ') != -1 ||
-                              line.indexOf('already declared') != -1);
-                    }
-                    if (stdoutError.length > 0) {
-                      alertify.notify(stdoutError[0], 'error', 5);
-                    }
-                  }
+        function execute(commands, label, callback) {
+          var useRemote = true;
+
+          var REMOTE_SERVER = 'pi@192.168.0.22';
+
+          if (useRemote) {
+            nodeRSync({
+              src: nodeProcess.cwd() + '/',
+              dest: REMOTE_SERVER + ':_build/',
+              ssh: true,
+              recursive: true,
+              delete: true,
+              include: ['*.v', '*.pcf', '*.list'],
+              exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
+            }, function (error, stdout, stderr, cmd) {
+              if (!error) {
+                nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), REMOTE_SERVER,
+                  function (error, stdout, stderr) {
+                    processExecute(label, callback, error, stdout, stderr);
+                  });
+              }
+            });
+          }
+          else {
+            nodeChildProcess.exec(([utils.getApioExecutable()].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+              function(error, stdout, stderr) {
+                processExecute(label, callback, error, stdout, stderr);
+              });
+          }
+        }
+
+        function processExecute(label, callback, error, stdout, stderr) {
+          console.log(error, stdout, stderr);
+          if (callback)
+            callback();
+          if (label) {
+            if (error || stderr) {
+              if (stdout) {
+                if (stdout.indexOf('[upload] Error') != -1 ||
+                    stdout.indexOf('Error: board not detected') != -1) {
+                  alertify.notify($translate.instant('board_not_detected'), 'error', 3);
+                }
+                else if (stdout.indexOf('Error: unkown board') != -1) {
+                  alertify.notify($translate.instant('unknown_board'), 'error', 3);
+                }
+                else if (stdout.indexOf('set_io: too few arguments') != -1) {
+                  alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
+                }
+                else if (stdout.indexOf('error: unknown pin') != -1) {
+                  alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
+                }
+                else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
+                  alertify.notify($translate.instant('duplicated_fpga_io'), 'error', 3);
                 }
                 else {
-                  alertify.notify(stderr, 'error', 5);
+                  var stdoutError = stdout.split('\n').filter(isError);
+                  function isError(line) {
+                    return (line.indexOf('syntax error') != -1 ||
+                            line.indexOf('not installed') != -1 ||
+                            line.indexOf('error: ') != -1 ||
+                            line.indexOf('ERROR: ') != -1 ||
+                            line.indexOf('Error: ') != -1 ||
+                            line.indexOf('already declared') != -1);
+                  }
+                  if (stdoutError.length > 0) {
+                    alertify.notify(stdoutError[0], 'error', 5);
+                  }
+                  else {
+                    alertify.notify(stdout, 'error', 5);
+                  }
                 }
               }
               else {
-                alertify.success($translate.instant('done_' + label));
+                alertify.notify(stderr, 'error', 5);
               }
-              $('body').removeClass('waiting');
             }
-          });
+            else {
+              alertify.success($translate.instant('done_' + label));
+            }
+            $('body').removeClass('waiting');
+          }
         }
 
         this.installToolchain = installToolchain;

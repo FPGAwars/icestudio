@@ -11,7 +11,7 @@
     "height": 600,
     "min_width": 800,
     "min_height": 200,
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
@@ -26,7 +26,9 @@
     "path": "^0.12.7",
     "ping": "^0.1.10",
     "rmdir": "^1.2.0",
+    "rsyncwrapper": "^2.0.0",
     "sha1": "^1.1.1",
+    "ssh-exec": "^2.0.0",
     "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",
