@@ -10,7 +10,7 @@ Create a project
 
    Go to **Edit > New project**, write your project's name and press OK.
 
-   .. image:: ../resources/images/howto-new.png
+   .. image:: ../resources/images/howto/new.png
 
 |
 
@@ -18,77 +18,77 @@ Create a project
 
  1. *Code blocks*
 
-    Click on **basic > code**, add the code ports. Input and output ports are separated by a space. Port names are separated by a comma. E.g.: ``a,b c``.
+    Click on **Basic > Code**, add the code ports. Input and output ports are separated by a space. Port names are separated by a comma. E.g.: ``a,b c``.
 
     This block contains a text editor to write your module verilog code. Module header and footer are not required.
 
-    .. image:: ../resources/images/howto-code.png
+    .. image:: ../resources/images/howto/code.png
 
 |
 
  2. *Info blocks*
 
-    Click on **basic > info**.
+    Click on **Basic > Info**.
 
     This block contains a text editor to add comments about the project.
 
-    .. image:: ../resources/images/howto-info.png
+    .. image:: ../resources/images/howto/info.png
 
 |
 
  3. *Input/Output blocks*
 
-    Click on **basic > input** or **basic > output**, write the block's name and press OK.
+    Click on **Basic > Input** or **Basic > Output**, write the block's name and press OK.
 
     These blocks contain a FPGA pin selector depending on the selected board.
 
-    .. image:: ../resources/images/howto-io.png
+    .. image:: ../resources/images/howto/io.png
 
 |
 
  4. *Bit blocks*
 
-    Click on **bit > 0** or **bit > 1**.
+    Click on **Bit > 0** or **Bit > 1**.
 
     These blocks are low and high logic drivers.
 
-    .. image:: ../resources/images/howto-bit.png
+    .. image:: ../resources/images/howto/bit.png
 
 |
 
  5. *Config block*
 
-    Click on **config > Input-config**.
+    Click on **Config > Pull up** or **Config > Pull up inv**.
 
     This block must be connected to input ports in order to configure a pull up.
 
-    .. image:: ../resources/images/howto-config.png
+    .. image:: ../resources/images/howto/config.png
 
 |
 
  6. *Logic blocks*
 
-    Go to the **logic** menu and select a logic gate.
+    Go to the **Logic** menu and select. This menu contains **Logic Gates**, **Combinational blocks** and **Sequential flip-flops**.
 
-    .. image:: ../resources/images/howto-logic.png
+    .. image:: ../resources/images/howto/logic.png
 
 |
 
 3. **Connect your blocks**
 
-.. image:: ../resources/images/howto-bwire.png
+.. image:: ../resources/images/howto/bwire.png
 
 |
 
-.. image:: ../resources/images/howto-wire.png
+.. image:: ../resources/images/howto/wire.png
 
 |
 
 4. **Select your board**
 
-   Go to **Boards** menu and select **Icezum**, **iCEstick** or **Go board**.
+   Go to **Boards** menu and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra** or **icoBOARD 1.0**.
 
-   .. image:: ../resources/images/howto-board.png
+   .. image:: ../resources/images/howto/board.png
 
 |
 
@@ -96,7 +96,7 @@ Create a project
 
    Select all Input/Output blocks' pins.
 
-   .. image:: ../resources/images/howto-fpgapin.png
+   .. image:: ../resources/images/howto/fpgapin.png
 
 |
 
@@ -106,7 +106,7 @@ Create a project
 
    It will be saved as an **.ice** file.
 
-   .. image:: ../resources/images/howto-save.png
+   .. image:: ../resources/images/howto/save.png
 
 |
 
@@ -126,7 +126,7 @@ Upload a bitstream
 
    This option checks the generated verilog code using ``apio verify``.
 
-   .. image:: ../resources/images/howto-verify.png
+   .. image:: ../resources/images/howto/verify.png
 
    |
 
@@ -136,7 +136,7 @@ Upload a bitstream
 
    This option generates a bitstream using ``apio build``.
 
-   .. image:: ../resources/images/howto-build.png
+   .. image:: ../resources/images/howto/build.png
 
    |
 
@@ -144,7 +144,7 @@ Upload a bitstream
 
    Connect your FPGA board and press **Tools > Upload**. This option uses ``apio upload``.
 
-   .. image:: ../resources/images/howto-upload.png
+   .. image:: ../resources/images/howto/upload.png
 
    |
 
@@ -153,7 +153,7 @@ Upload a bitstream
 
   If the FPGA toolchain is not installed, it will be installed automatically when any tool is pressed. It can also be installed or removed in the menu **Tools** section.
 
-  .. image:: ../resources/images/howto-installtoolchain.png
+  .. image:: ../resources/images/howto/installtoolchain.png
 
   |
 
@@ -166,7 +166,7 @@ Create a block
 
 |
 
-.. image:: ../resources/images/howto-project.png
+.. image:: ../resources/images/howto/project.png
 
 2. **Verify the project**
 
@@ -180,7 +180,7 @@ Create a block
 
    It will be saved as an **.iceb** file.
 
-   .. image:: ../resources/images/howto-export.png
+   .. image:: ../resources/images/howto/export.png
 
    |
 
@@ -200,11 +200,11 @@ Use a custom block
 
    Go to **Edit > Import block** and select an **.iceb** file.
 
-   .. image:: ../resources/images/howto-import.png
+   .. image:: ../resources/images/howto/import.png
 
    |
 
-   .. image:: ../resources/images/howto-customblock.png
+   .. image:: ../resources/images/howto/customblock.png
 
    |
 
@@ -212,7 +212,7 @@ Use a custom block
 
    Complex blocks can be examined by double clicking the block.
 
-   .. image:: ../resources/images/howto-examine.png
+   .. image:: ../resources/images/howto/examine.png
 
    |
 
@@ -270,7 +270,7 @@ I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio 
 
 3. **Enter the host name in Icestudio, Edit > Remote hostname**
 
-   .. image:: ../resources/images/howto-remotehost.png
+   .. image:: ../resources/images/howto/remotehost.png
 
    |
 
