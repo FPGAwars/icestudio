@@ -1,6 +1,6 @@
 # Icestudio docs
 
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest/)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable/)
 
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
