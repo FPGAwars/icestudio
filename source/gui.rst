@@ -34,18 +34,20 @@ File
 
 .. hint::
 
-  Examples are stored in `app/resources/examples`. To create a new examples category just create a directory there. To create a new example copy and paste a **.ice** file.
+  Examples and templates are stored in `app/resources/examples` and `app/resources/templates` respectively. To create a new examples/templates category just create a directory there. To create a new example/template copy and paste an **.ice** file.
 
 Edit
 ````
 
-* **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
-
-* **Language**: select the application language: English, Spanish. This selection is stored in the app profile.
-
 * **Clear all**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
 * **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
+
+* **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
+
+* **Remote hostname**: set the hostame of a remote device with a FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
+
+* **Language**: select the application language: English, Spanish, Galician, Basque. This selection is stored in the app profile.
 
 View
 ````
@@ -54,11 +56,11 @@ View
 
 Boards
 ``````
-It contains the supported boards: **Icezum**, **iCEstick**, **Go board**. When a board is selected all I/O block combos are updated and its current values removed.
+It contains the supported boards: **Icezum**, **Go board**, **iCEstick**, **iCE40-HX8K**, **icoBOARD 1.0**. When a board is selected all I/O block combos are updated and its current values removed.
 
 .. hint::
 
-  This information is stored in the *app/scripts/services/boards.service.js* file. To support a new board just add its information to this file.
+  This information is stored in the `app/resources/boards` directory. To support a new board just create a new JSON file with its information. Also, a generator.py script has been created to generate the board JSON file from a PCF file.
 
 Tools
 `````
@@ -72,7 +74,7 @@ Tools
 
 .. hint::
 
-  Generated files are stored in `_build` directory.
+  Generated files are stored in the `_build` directory.
 
 Help
 ````
@@ -95,9 +97,10 @@ Basic
 
 It contains the basic blocks:
 
-* **code**: code block. Ports are asked in a prompt dialog.
-* **input**: input block. Block name is asked in a prompt dialog.
-* **output**: output block. Block name is asked in a prompt dialog.
+* **Code**: code block. Ports are asked in a prompt dialog.
+* **Info**: info block. Text box for comments and notes.
+* **Input**: input block. Block name is asked in a prompt dialog.
+* **Output**: output block. Block name is asked in a prompt dialog.
 
 .. note::
 
@@ -113,7 +116,7 @@ It contains all stored blocks sorted by categories. These menu is generated when
 
 .. hint::
 
-  Examples are stored in `app/resources/blocks`. To create a new block category just create a directory there. To create a new block copy and paste a **.iceb** file.
+  Blocks are stored in `app/resources/blocks`. To create a new block category just create a directory there. To create a new block copy and paste an **.iceb** file.
 
 
 Graph
@@ -140,7 +143,9 @@ Block selection is performed using the **mouse right button**. Blocks can be sel
 Blocks examination
 ``````````````````
 
-Non-basic blocks can be readonly examined by **double clicking** the block using the **mouse left button**. This is a recursive action.
+Non-basic blocks can be read only examined by **double clicking** the block using the **mouse left button**. This is a recursive action.
+
+During the examination, pan, zoom and code navigation are enabled.
 
 .. image:: ../resources/images/gui-examination.png
 

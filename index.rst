@@ -11,8 +11,8 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   source/gui.rst
-   source/howto.rst
-   source/blocks.rst
-   source/project.rst
-   source/compiler.rst
+   source/gui
+   source/howto
+   source/blocks
+   source/project
+   source/compiler

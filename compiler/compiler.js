@@ -17,7 +17,6 @@ function digestId(id, force) {
   else {
     return id.replace('.', '_');
   }
-  return id;
 }
 
 function module(data) {
@@ -142,7 +141,7 @@ function getContent(name, project) {
       if (block.type == 'basic.code') {
         id += '_' + digestId(block.id);
       }
-      instances.push(name + '_' + id + ' ' + digestId(block.id) + ' (');
+      instances.push(name + '_' + digestId(id) + ' ' + digestId(block.id) + ' (');
 
       // Parameters
 
@@ -179,6 +178,10 @@ function verilogCompiler(name, project) {
 
   if (project &&
       project.graph) {
+
+    // Scape dot in name
+
+    name = digestId(name);
 
     // Main module
 
