@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
+                                    $timeout,
                                     $translate,
                                     common,
                                     graph,
@@ -45,6 +46,23 @@ angular.module('icestudio')
     function pathSync() {
       tools.setProjectPath(utils.dirname($scope.currentProjectPath));
     }
+
+    // Menu
+
+    var timer;
+
+    // mouseover event
+    $scope.showMenu = function (menu) {
+      $timeout.cancel(timer);
+      $scope.status[menu] = true;
+    };
+
+    // mouseleave event
+    $scope.hideMenu = function (menu) {
+      timer = $timeout(function () {
+          $scope.status[menu] = false;
+      }, 500);
+    };
 
     // File
 

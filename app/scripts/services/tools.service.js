@@ -96,7 +96,7 @@ angular.module('icestudio')
           nodeFse.removeSync('!(main.*)');
 
           // Sync Verilog files
-          if (ret) ret = this.syncFiles(/@include \"(.*?)\.v\"/g, 'v', code);
+          if (ret) ret = this.syncFiles(/@include (.*?)\.v/g, 'v', code);
 
           // Sync List files
           if (ret) ret = this.syncFiles(/\"(.*?)\.list\"/g, 'list', code);

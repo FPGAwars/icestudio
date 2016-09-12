@@ -17,7 +17,7 @@
 
             <ul class="nav navbar-nav">
 
-                <li uib-dropdown ng-mouseover="status.file=true" is-open="status.file">
+                <li uib-dropdown ng-mouseover="showMenu('file')" ng-mouseleave="hideMenu('file')" is-open="status.file">
                     <a href uib-dropdown-toggle>{{ 'file' | translate }}<span class="caret"></span></a>
                     <ul uib-dropdown-menu>
                       <li>
@@ -80,7 +80,7 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-mouseover="status.edit=true" is-open="status.edit">
+                <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" is-open="status.edit">
                     <a href uib-dropdown-toggle>{{ 'edit' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
@@ -136,7 +136,7 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-mouseover="status.view=true" is-open="status.view">
+                <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu('view')" is-open="status.view">
                     <a href uib-dropdown-toggle>{{ 'view' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
@@ -145,7 +145,7 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-mouseover="status.boards=true" is-open="status.boards">
+                <li uib-dropdown ng-mouseover="showMenu('boards')" ng-mouseleave="hideMenu('boards')" is-open="status.boards">
                     <a href uib-dropdown-toggle>{{ 'boards' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="board in currentBoards">
@@ -157,7 +157,7 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-mouseover="status.tools=true" is-open="status.tools">
+                <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu('tools')" is-open="status.tools">
                     <a href uib-dropdown-toggle>{{ 'tools' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
@@ -179,7 +179,7 @@
                     </ul>
                 </li>
 
-                <li uib-dropdown ng-mouseover="status.help=true" is-open="status.help">
+                <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu('help')" is-open="status.help">
                     <a href uib-dropdown-toggle>{{ 'help' | translate }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                       <li disabled>
@@ -210,7 +210,7 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li uib-dropdown ng-mouseover="status.basic=true" is-open="status.basic">
+                <li uib-dropdown ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" is-open="status.basic">
                   <a href uib-dropdown-toggle>{{ 'basic' | translate }}<span class="caret"></span></a>
                   <ul class="dropdown-menu" uib-dropdown-menu>
                     <li>
@@ -222,7 +222,7 @@
                   </ul>
                 </li>
 
-                <li uib-dropdown ng-repeat="blocks in menuBlocks" ng-mouseover="status[blocks.name]=true" is-open="status[blocks.name]">
+                <li uib-dropdown ng-repeat="blocks in menuBlocks" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
                   <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
                   <ul class="dropdown-menu" uib-dropdown-menu>
                     <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
