@@ -230,3 +230,48 @@ If your code block contains a list file(s), for example:
 2. **Copy the list file(s) in the project directory**
 
 3. **Build and upload the project**
+
+Include a verilog file
+----------------------
+
+If your code block includes a verilog file(s), for example:
+
+.. code-block:: verilog
+
+  // @include lib.v
+  // @include math.v
+
+1. **Save the ice project**
+
+2. **Copy the verilog file(s) in the project's directory**
+
+3. **Build and upload the project**
+
+Configure a remote host
+------------------------
+
+I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio as a client, first configure the host:
+
+1. **Copy your SSH public key into the server**
+
+  .. code-block:: bash
+
+    $ ssh-keygen
+    $ ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.0.22
+
+2. **Install apio in the server**
+
+  .. code-block:: bash
+
+    $ ssh pi@192.168.0.22
+    $ sudo pip install -U apio
+    $ apio install --all
+    $ apio drivers --enable  # For FTDI devices
+
+3. **Enter the host name in Icestudio, Edit > Remote hostname**
+
+   .. image:: ../resources/images/howto-remotehost.png
+
+   |
+
+4. **Now, Verify, Build and Upload tools will run in the selected host**

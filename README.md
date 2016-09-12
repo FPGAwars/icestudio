@@ -1,8 +1,10 @@
 # Icestudio docs
 
-[Icestudio](https://github.com/FPGAwars/icestudio)'s technical documentation.
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest/)
 
 <img src="./doc/images/icestudio-logo-label.png" align="center">
+
+[Icestudio](https://github.com/FPGAwars/icestudio)'s technical documentation.
 
 ## License
 
