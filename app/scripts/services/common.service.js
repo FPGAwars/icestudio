@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'window', 'graph', 'boards', 'compiler', 'utils',
-      function($rootScope, window, graph, boards, compiler, utils) {
+    .service('common', ['$rootScope', '$translate', 'window', 'graph', 'boards', 'compiler', 'utils',
+      function($rootScope, $translate, window, graph, boards, compiler, utils) {
 
         // Variables
 
@@ -28,7 +28,7 @@ angular.module('icestudio')
           graph.clearAll();
           graph.setState(this.project.state);
           this.updateProjectName(name);
-          alertify.success('New project ' + name + ' created');
+          alertify.success($translate.instant('project_created', { name: name }));
         };
 
         this.openProject = function(filepath) {
@@ -48,10 +48,10 @@ angular.module('icestudio')
           this.project = project;
           boards.selectBoard(project.board);
           if (graph.loadGraph(project)) {
-            alertify.success('Project ' + name + ' loaded');
+            alertify.success($translate.instant('project_loaded', { name: name }));
           }
           else {
-            alertify.error('Wrong project format: ' + name);
+            alertify.error($translate.instant('wrong_project_format', { name: name }));
           }
         };
 
@@ -60,7 +60,7 @@ angular.module('icestudio')
           this.updateProjectName(name);
           this.refreshProject();
           utils.saveFile(filepath, this.project, function() {
-            alertify.success('Project ' + name + ' saved');
+            alertify.success($translate.instant('project_saved', { name: name }));
           }, true);
         };
 
@@ -72,7 +72,7 @@ angular.module('icestudio')
                 var name = utils.basename(filepath);
                 graph.importBlock(name, block);
                 _this.project.deps[name] = block;
-                alertify.success('Block ' + name + ' imported');
+                alertify.success($translate.instant('block_imported', { name: name }));
               }
             };
           })(this));
@@ -91,7 +91,7 @@ angular.module('icestudio')
             }
           }
           utils.saveFile(filepath, block, function() {
-            alertify.success('Block exported as ' + name);
+            alertify.success($translate.instant('block_exported_as', { name: name }));
           }, true);
         };
 
@@ -101,7 +101,7 @@ angular.module('icestudio')
           // Generate verilog code from project
           var verilog = compiler.generateVerilog(this.project);
           utils.saveFile(filepath, verilog, function() {
-            alertify.success('Exported verilog from project ' + name);
+            alertify.success($translate.instant('verilog_exported'));
           }, false);
         };
 
@@ -111,7 +111,7 @@ angular.module('icestudio')
           // Generate pcf code from project
           var pcf = compiler.generatePCF(this.project);
           utils.saveFile(filepath, pcf, function() {
-            alertify.success('Exported PCF from project ' + name);
+            alertify.success($translate.instant('pcf_exported'));
           }, false);
         };
 
@@ -153,7 +153,7 @@ angular.module('icestudio')
 
           this.project.state = graph.getState();
 
-          this.project.board = boards.selectedBoard.id;
+          this.project.board = boards.selectedBoard.name;
 
           this.project.graph = { blocks: blocks, wires: wires };
 
@@ -202,7 +202,7 @@ angular.module('icestudio')
             if(!$rootScope.$$phase) {
               $rootScope.$apply();
             }
-            window.get().title = 'Icestudio - ' + name;
+            window.get().title = name + ' - Icestudio';
           }
         };
 

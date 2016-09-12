@@ -71,7 +71,20 @@ module.exports = function(grunt) {
       }
     },
 
-    // Uglify configurationoptions:
+    // JSON minification plugin without concatination
+    'json-minify': {
+      json: {
+        files: 'dist/tmp/resources/**/*.json'
+      },
+      ice: {
+        files: 'dist/tmp/resources/**/*.ice'
+      },
+      ideb: {
+        files: 'dist/tmp/resources/**/*.iceb'
+      }
+    },
+
+    // Uglify configuration options:
     uglify: {
       options: {
         mangle: false
@@ -120,7 +133,7 @@ module.exports = function(grunt) {
             x: 170,
             y: 250,
             type: 'file',
-            path: 'dist/Icestudio/osx64/Icestudio.app'
+            path: 'dist/icestudio/osx64/icestudio.app'
           }
         ]
       },
@@ -137,8 +150,8 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'dist/Icestudio/linux32/',
-          src: ['Icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          cwd: 'dist/icestudio/linux32/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
           dest: ''
         }]
       },
@@ -148,8 +161,8 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'dist/Icestudio/linux64/',
-          src: ['Icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          cwd: 'dist/icestudio/linux64/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
           dest: '.'
         }]
       },
@@ -159,8 +172,8 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'dist/Icestudio/win32/',
-          src: ['Icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          cwd: 'dist/icestudio/win32/',
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
           dest: '.'
         }]
       },
@@ -170,8 +183,8 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'dist/Icestudio/win64/',
-          src: ['Icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          cwd: 'dist/icestudio/win64/',
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
           dest: '.'
         }]
       },
@@ -181,8 +194,8 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'dist/Icestudio/osx64/',
-          src: ['Icestudio.app/**'],
+          cwd: 'dist/icestudio/osx64/',
+          src: ['icestudio.app/**'],
           dest: '.'
         }]
       }
@@ -235,9 +248,10 @@ module.exports = function(grunt) {
     'useminPrepare',
     'concat',
     'copy:dist',
+    'json-minify',
     'uglify',
     'cssmin',
-    'usemin',
+    'usemin'
   ]
   .concat(distCommands)
   .concat([

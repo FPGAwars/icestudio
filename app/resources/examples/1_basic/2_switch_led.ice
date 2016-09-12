@@ -5,7 +5,7 @@
       "x": 0,
       "y": 0
     },
-    "zoom": 0.9999999806863423
+    "zoom": 0.999999940395341
   },
   "board": "icezum",
   "graph": {
@@ -22,7 +22,7 @@
         },
         "position": {
           "x": 48,
-          "y": 304
+          "y": 80
         }
       },
       {
@@ -36,8 +36,8 @@
           }
         },
         "position": {
-          "x": 416,
-          "y": 304
+          "x": 424,
+          "y": 80
         }
       },
       {
@@ -47,17 +47,8 @@
           "info": "Switch-led basic example\n\nA simple circuit that connects the input pin,\nwhere there is a button switch, with the\noutpun pin, where there is a led\n\nWhen the button is pressed (1), the led is\nturned on. When the button is released (0), the\nled is turned off\n\nNotice the blue box with a gear. It is a\nconfiguration block for activating the \nFPGA internal pull-up resistor in the SW1 pin"
         },
         "position": {
-          "x": 16,
-          "y": 8
-        }
-      },
-      {
-        "id": "0cccecc3-0d0c-48f5-9066-0adff1a3280e",
-        "type": "config.Input-config",
-        "data": {},
-        "position": {
-          "x": 224,
-          "y": 304
+          "x": 32,
+          "y": 224
         }
       },
       {
@@ -67,8 +58,8 @@
           "info": "Ejemplo básico switch-led\n\nSencillo circuito que conecta directamente\nun pin de entrada de la FPGA, donde hay\nun pulsador, con el pin de salida, donde está\nel led\n\nCuando se aprieta el pulsador (1), se enciende\nel led. Cuando se suelta (0) se apaga\n\nFíjate en la caja azul con el engranaje. Es un\nbloque de configuración que permite activar la\nresistencia de pull-up interna del pin de la \nFPGA"
         },
         "position": {
-          "x": 432,
-          "y": 8
+          "x": 448,
+          "y": 224
         }
       },
       {
@@ -78,8 +69,17 @@
           "info": "EXERCISE 1: Upload the circuit into your FPGA\nboard and test it!\n\nEXERCISE 2: Change the button to SW2 and test\nit again\n\n---------------------------------------------\nEjercicio 1: Carga el circuito en la FPGA y\n¡pruébalo!\n\nEJERCICIO 2: Cambia el pulsador al SW2 y\npruébalo de nuevo"
         },
         "position": {
-          "x": 16,
-          "y": 400
+          "x": 864,
+          "y": 224
+        }
+      },
+      {
+        "id": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
+        "type": "config.pull_up_inv",
+        "data": {},
+        "position": {
+          "x": 224,
+          "y": 80
         }
       }
     ],
@@ -90,13 +90,13 @@
           "port": "out"
         },
         "target": {
-          "block": "0cccecc3-0d0c-48f5-9066-0adff1a3280e",
+          "block": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
           "port": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150"
         }
       },
       {
         "source": {
-          "block": "0cccecc3-0d0c-48f5-9066-0adff1a3280e",
+          "block": "b3fa5f92-e06c-4354-9784-1f780a04fdf1",
           "port": "a139fa0d-9b45-4480-a251-f4a66b49aa23"
         },
         "target": {
@@ -107,8 +107,8 @@
     ]
   },
   "deps": {
-    "config.Input-config": {
-      "image": "resources/images/input-config.svg",
+    "config.pull_up_inv": {
+      "image": "resources/images/pull_up_inv.svg",
       "state": {
         "pan": {
           "x": -23,
@@ -122,7 +122,7 @@
             "id": "2b245a71-2d80-466b-955f-e3d61839fe25",
             "type": "basic.code",
             "data": {
-              "code": "wire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
+              "code": "// Pull up inv\n\nwire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
               "ports": {
                 "in": [
                   "i"
@@ -155,7 +155,7 @@
               "label": ""
             },
             "position": {
-              "x": 776,
+              "x": 760,
               "y": 200
             }
           }

@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
+                                    $timeout,
                                     $translate,
                                     common,
                                     graph,
@@ -46,10 +47,28 @@ angular.module('icestudio')
       tools.setProjectPath(utils.dirname($scope.currentProjectPath));
     }
 
+    // Menu
+
+    var timer;
+
+    // mouseover event
+    $scope.showMenu = function (menu) {
+      $timeout.cancel(timer);
+      $scope.status[menu] = true;
+    };
+
+    // mouseleave event
+    $scope.hideMenu = function (menu) {
+      timer = $timeout(function () {
+          $scope.status[menu] = false;
+      }, 500);
+    };
+
     // File
 
     $scope.newProject = function() {
-      alertify.prompt('Enter the project\'s title', 'untitled',
+      alertify.prompt($translate.instant('enter_project_title'),
+                      $translate.instant('untitled'),
         function(evt, name) {
           if (name) {
             common.newProject(name);
@@ -70,8 +89,7 @@ angular.module('icestudio')
 
               $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
-                alertify.confirm('The current project will be removed. ' +
-                                 'Do you want to continue loading the project?',
+                alertify.confirm($translate.instant('load_project_confirmation'),
                   function() {
                     common.openProject(file.path);
                     $scope.currentProjectPath = file.path;
@@ -94,8 +112,7 @@ angular.module('icestudio')
     $scope.openStoredProject = function(name, project) {
       if (project) {
         if (!graph.isEmpty()) {
-          alertify.confirm('The current project will be removed. ' +
-          'Do you want to continue loading the project?',
+          alertify.confirm($translate.instant('load_project_confirmation'),
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
@@ -226,9 +243,17 @@ angular.module('icestudio')
 
     $scope.setImagePath = function() {
       var current = common.project.image;
-      alertify.prompt('Enter the project\'s image path', (current) ? current : '',
+      alertify.prompt($translate.instant('enter_project_image_path'), (current) ? current : '',
         function(evt, imagePath) {
           common.setImagePath(imagePath);
+      });
+    }
+
+    $scope.setRemoteHostname = function() {
+      var current = profile.data.remoteHostname;
+      alertify.prompt($translate.instant('enter_remote_hostname'), (current) ? current : '',
+        function(evt, remoteHostname) {
+          profile.data.remoteHostname = remoteHostname;
       });
     }
 
@@ -241,7 +266,7 @@ angular.module('icestudio')
 
     $scope.clearGraph = function() {
       if (!graph.isEmpty()) {
-        alertify.confirm('Do you want to clear the graph?',
+        alertify.confirm($translate.instant('clear_all_confirmation'),
         function() {
           common.clearProject();
         });
@@ -254,7 +279,7 @@ angular.module('icestudio')
 
     $scope.removeSelected = function() {
       if (graph.hasSelection()) {
-        alertify.confirm('Do you want to remove the selected block?',
+        alertify.confirm($translate.instant('remove_block_confirmation'),
           function() {
             common.removeSelected();
         });
@@ -295,20 +320,19 @@ angular.module('icestudio')
     // Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard.id != board.id) {
+      if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm('The current FPGA I/O configuration will be lost. ' +
-                           'Do you want to change to <b>' + board.label + '</b> board?',
+          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.content.label + '</b>' }),
             function() {
-              boards.selectBoard(board.id);
+              boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success('Board ' + board.label + ' selected');
+              alertify.success($translate.instant('board_selected', { name: board.content.label }));
           });
         }
         else {
-          boards.selectBoard(board.id);
+          boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success('Board ' + board.label + ' selected');
+          alertify.success($translate.instant('board_selected',  { name: board.content.label }));
         }
       }
     }
@@ -335,8 +359,8 @@ angular.module('icestudio')
         '    <p><i>Graphic editor for open FPGAs</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
-        '    <p>Date: June, July 2016</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars June-September 2016</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
@@ -361,11 +385,10 @@ angular.module('icestudio')
     }
 
     $scope.removeToolchain = function() {
-      alertify.confirm('Icestudio and apio configuration directories will be removed. ' +
-                       'Do you want to continue?',
+      alertify.confirm($translate.instant('remove_toolchain_confirmation'),
         function() {
           tools.removeToolchain();
-          alertify.success('Toolchain removed');
+          alertify.success($translate.instant('toolchain_removed'));
       });
     }
   });

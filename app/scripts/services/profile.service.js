@@ -8,7 +8,8 @@ angular.module('icestudio')
         const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
 
         this.data = {
-          'language': 'en'
+          'language': 'en',
+          'remoterHostname': ''
         }
 
         this.load = function(callback) {

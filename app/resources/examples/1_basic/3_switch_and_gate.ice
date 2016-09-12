@@ -5,7 +5,7 @@
       "x": 0,
       "y": 0
     },
-    "zoom": 1
+    "zoom": 0.9999999403953552
   },
   "board": "icezum",
   "graph": {
@@ -21,8 +21,8 @@
           }
         },
         "position": {
-          "x": 96,
-          "y": 304
+          "x": 40,
+          "y": 32
         }
       },
       {
@@ -36,8 +36,8 @@
           }
         },
         "position": {
-          "x": 96,
-          "y": 440
+          "x": 40,
+          "y": 128
         }
       },
       {
@@ -51,8 +51,8 @@
           }
         },
         "position": {
-          "x": 712,
-          "y": 368
+          "x": 664,
+          "y": 80
         }
       },
       {
@@ -60,26 +60,8 @@
         "type": "logic.and",
         "data": {},
         "position": {
-          "x": 520,
-          "y": 368
-        }
-      },
-      {
-        "id": "4d525b5f-21b6-44f0-a349-e8f72f5c907a",
-        "type": "config.Input-config",
-        "data": {},
-        "position": {
-          "x": 288,
-          "y": 304
-        }
-      },
-      {
-        "id": "97a6dae1-7b79-4133-b952-93fdc4f59d2f",
-        "type": "config.Input-config",
-        "data": {},
-        "position": {
-          "x": 288,
-          "y": 440
+          "x": 488,
+          "y": 80
         }
       },
       {
@@ -89,8 +71,8 @@
           "info": "Basic AND gate circuit\n\nA 2-inputs AND logic gate is used to turn on\nthe LED7 only when the 2 input buttons\nare pressed\n\nThis example shows the basic behaviour of\nthe AND gate\n\nEXERCISE: Upload this circuit into the FPGA\nboard and play with it"
         },
         "position": {
-          "x": 24,
-          "y": 16
+          "x": 40,
+          "y": 232
         }
       },
       {
@@ -101,7 +83,25 @@
         },
         "position": {
           "x": 464,
-          "y": 16
+          "y": 232
+        }
+      },
+      {
+        "id": "54c58086-340e-49b3-a6d0-f1b091c8bf3f",
+        "type": "config.pull_up_inv",
+        "data": {},
+        "position": {
+          "x": 240,
+          "y": 32
+        }
+      },
+      {
+        "id": "434fbbef-5ba3-4b59-bfee-88fc8e7be457",
+        "type": "config.pull_up_inv",
+        "data": {},
+        "position": {
+          "x": 240,
+          "y": 128
         }
       }
     ],
@@ -118,27 +118,17 @@
       },
       {
         "source": {
-          "block": "5d1b4f33-ae65-4154-b4f4-ff1403437600",
-          "port": "out"
-        },
-        "target": {
-          "block": "97a6dae1-7b79-4133-b952-93fdc4f59d2f",
-          "port": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150"
-        }
-      },
-      {
-        "source": {
           "block": "aa8bab8b-61e4-4e28-b444-0e68d9484ea1",
           "port": "out"
         },
         "target": {
-          "block": "4d525b5f-21b6-44f0-a349-e8f72f5c907a",
+          "block": "54c58086-340e-49b3-a6d0-f1b091c8bf3f",
           "port": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150"
         }
       },
       {
         "source": {
-          "block": "4d525b5f-21b6-44f0-a349-e8f72f5c907a",
+          "block": "54c58086-340e-49b3-a6d0-f1b091c8bf3f",
           "port": "a139fa0d-9b45-4480-a251-f4a66b49aa23"
         },
         "target": {
@@ -148,7 +138,17 @@
       },
       {
         "source": {
-          "block": "97a6dae1-7b79-4133-b952-93fdc4f59d2f",
+          "block": "5d1b4f33-ae65-4154-b4f4-ff1403437600",
+          "port": "out"
+        },
+        "target": {
+          "block": "434fbbef-5ba3-4b59-bfee-88fc8e7be457",
+          "port": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150"
+        }
+      },
+      {
+        "source": {
+          "block": "434fbbef-5ba3-4b59-bfee-88fc8e7be457",
           "port": "a139fa0d-9b45-4480-a251-f4a66b49aa23"
         },
         "target": {
@@ -159,84 +159,6 @@
     ]
   },
   "deps": {
-    "config.Input-config": {
-      "image": "resources/images/input-config.svg",
-      "state": {
-        "pan": {
-          "x": -23,
-          "y": 8
-        },
-        "zoom": 1
-      },
-      "graph": {
-        "blocks": [
-          {
-            "id": "2b245a71-2d80-466b-955f-e3d61839fe25",
-            "type": "basic.code",
-            "data": {
-              "code": "wire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
-              "ports": {
-                "in": [
-                  "i"
-                ],
-                "out": [
-                  "o"
-                ]
-              }
-            },
-            "position": {
-              "x": 256,
-              "y": 104
-            }
-          },
-          {
-            "id": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
-            "type": "basic.input",
-            "data": {
-              "label": ""
-            },
-            "position": {
-              "x": 64,
-              "y": 200
-            }
-          },
-          {
-            "id": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
-            "type": "basic.output",
-            "data": {
-              "label": ""
-            },
-            "position": {
-              "x": 776,
-              "y": 200
-            }
-          }
-        ],
-        "wires": [
-          {
-            "source": {
-              "block": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
-              "port": "out"
-            },
-            "target": {
-              "block": "2b245a71-2d80-466b-955f-e3d61839fe25",
-              "port": "i"
-            }
-          },
-          {
-            "source": {
-              "block": "2b245a71-2d80-466b-955f-e3d61839fe25",
-              "port": "o"
-            },
-            "target": {
-              "block": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
-              "port": "in"
-            }
-          }
-        ]
-      },
-      "deps": {}
-    },
     "logic.and": {
       "graph": {
         "blocks": [
@@ -336,6 +258,84 @@
         },
         "zoom": 1
       }
+    },
+    "config.pull_up_inv": {
+      "image": "resources/images/pull_up_inv.svg",
+      "state": {
+        "pan": {
+          "x": -23,
+          "y": 8
+        },
+        "zoom": 1
+      },
+      "graph": {
+        "blocks": [
+          {
+            "id": "2b245a71-2d80-466b-955f-e3d61839fe25",
+            "type": "basic.code",
+            "data": {
+              "code": "// Pull up inv\n\nwire din, dout, outen;\n\nassign o = ~din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
+              "ports": {
+                "in": [
+                  "i"
+                ],
+                "out": [
+                  "o"
+                ]
+              }
+            },
+            "position": {
+              "x": 256,
+              "y": 104
+            }
+          },
+          {
+            "id": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
+            "type": "basic.input",
+            "data": {
+              "label": ""
+            },
+            "position": {
+              "x": 64,
+              "y": 200
+            }
+          },
+          {
+            "id": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
+            "type": "basic.output",
+            "data": {
+              "label": ""
+            },
+            "position": {
+              "x": 760,
+              "y": 200
+            }
+          }
+        ],
+        "wires": [
+          {
+            "source": {
+              "block": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
+              "port": "out"
+            },
+            "target": {
+              "block": "2b245a71-2d80-466b-955f-e3d61839fe25",
+              "port": "i"
+            }
+          },
+          {
+            "source": {
+              "block": "2b245a71-2d80-466b-955f-e3d61839fe25",
+              "port": "o"
+            },
+            "target": {
+              "block": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
+              "port": "in"
+            }
+          }
+        ]
+      },
+      "deps": {}
     }
   }
 }

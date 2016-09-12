@@ -4,6 +4,9 @@ angular.module('icestudio')
   .factory('nodeFs', function() {
     return require('fs');
   })
+  .factory('nodeFse', function() {
+    return require('fs-extra');
+  })
   .factory('nodeRmdir', function() {
     return require('rmdir');
   })
@@ -30,4 +33,10 @@ angular.module('icestudio')
   })
   .factory('nodeZlib', function() {
     return require('zlib');
+  })
+  .factory('nodeSSHexec', function() {
+    return require('ssh-exec');
+  })
+  .factory('nodeRSync', function() {
+    return require('rsyncwrapper');
   });

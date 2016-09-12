@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['nodeFs', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function(nodeFs, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
+      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false };
@@ -14,32 +14,30 @@ angular.module('icestudio')
         checkToolchain();
 
         this.verifyCode = function() {
-          this.apio(['verify'], false);
+          this.apio(['verify']);
         };
 
         this.buildCode = function() {
-          this.apio(['build', '--board', boards.selectedBoard.id], true);
+          this.apio(['build', '--board', boards.selectedBoard.name]);
         };
 
         this.uploadCode = function() {
-          this.apio(['upload', '--board', boards.selectedBoard.id], true);
+          this.apio(['upload', '--board', boards.selectedBoard.name]);
         };
 
-        this.apio = function(commands, checkFiles) {
+        this.apio = function(commands) {
           var check = true;
           var code = this.generateCode();
           if (code) {
             if (toolchain.installed) {
               angular.element('#menu').addClass('disable-menu');
-              currentAlert = alertify.notify(commands[0] + ' start...', 'message', 100000);
+              currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
               nodeProcess.chdir('_build');
-              if (checkFiles) {
-                check = this.syncVerilogResources(code);
-              }
+              check = this.syncResources(code);
               try {
                 if (check) {
-                  execute(([utils.getApioExecutable()].concat(commands)).join(' '), commands[0], function() {
+                  execute(commands, commands[0], currentAlert, function() {
                     if (currentAlert) {
                       setTimeout(function() {
                         angular.element('#menu').removeClass('disable-menu');
@@ -91,40 +89,43 @@ angular.module('icestudio')
           return verilog;
         }
 
-        this.syncVerilogResources = function(code) {
+        this.syncResources = function(code) {
           var ret = true;
-          var files = code.match(/\".*list\"/g);
 
-          if (files && files.length > 0) {
-            // Force rebuild
-            var apio = utils.getApioExecutable();
-            nodeChildProcess.execSync([apio, 'clean'].join(' ')).toString();
-          }
+          // Remove resources
+          nodeFse.removeSync('!(main.*)');
 
-          for (var i in files) {
+          // Sync Verilog files
+          if (ret) ret = this.syncFiles(/@include (.*?)\.v/g, 'v', code);
 
-            var file = files[i].replace(/\"/g, "");
+          // Sync List files
+          if (ret) ret = this.syncFiles(/\"(.*?)\.list\"/g, 'list', code);
+
+          return ret;
+        }
+
+        this.syncFiles = function(pattern, ext, code) {
+          var ret = true;
+          var match;
+          while (match = pattern.exec(code)) {
+            var file = match[1] + '.' + ext;
             var destPath = nodePath.join('.', file);
             var origPath = nodePath.join(this.currentProjectPath, file);
 
             try {
-              // Remove link if exists
-              if (nodeFs.existsSync(destPath)) {
-                nodeFs.unlinkSync(destPath);
-              }
-              // Link list file
+              // Copy list file
               if (nodeFs.existsSync(origPath)) {
-                nodeFs.linkSync(origPath, destPath);
+                nodeFse.copySync(origPath, destPath);
               }
               else {
                 // Error: file does not exist
-                alertify.notify('File: ' + file + ' does not exist', 'error', 3);
+                alertify.notify($translate.instant('file_does_not_exist', { file: file }), 'error', 3);
                 ret = false;
                 break;
               }
             }
             catch (e) {
-              alertify.notify('Error: ' + e.toString(), 'error', 3);
+              alertify.notify($translate.instant('generic_error', { error: e.toString() }), 'error', 3);
               ret = false;
               break;
             }
@@ -137,51 +138,98 @@ angular.module('icestudio')
           this.currentProjectPath = path;
         }
 
-        function execute(command, label, callback) {
-          nodeChildProcess.exec(command, function(error, stdout, stderr) {
-            //console.log(error, stdout, stderr);
-            if (callback)
-              callback();
-            if (label) {
-              if (error) {
-                if (stdout) {
-                  if (stdout.indexOf('[upload] Error') != -1 ||
-                      stdout.indexOf('Error: board not detected') != -1) {
-                    alertify.notify('Board not detected', 'error', 3);
+        function execute(commands, label, currentAlert, callback) {
+          var remoteHostname = profile.data.remoteHostname;
+
+          if (remoteHostname) {
+            currentAlert.setContent('Synchronize remote files ...');
+            nodeRSync({
+              src: nodeProcess.cwd() + '/',
+              dest: remoteHostname + ':_build/',
+              ssh: true,
+              recursive: true,
+              delete: true,
+              include: ['*.v', '*.pcf', '*.list'],
+              exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
+            }, function (error, stdout, stderr, cmd) {
+              if (!error) {
+                currentAlert.setContent('Execute remote ' + label + ' ...');
+                nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
+                  function (error, stdout, stderr) {
+                    processExecute(label, callback, error, stdout, stderr);
+                  });
+              }
+              else {
+                processExecute(label, callback, error, stdout, stderr);
+              }
+            });
+          }
+          else {
+            nodeChildProcess.exec(([utils.getApioExecutable()].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+              function(error, stdout, stderr) {
+                processExecute(label, callback, error, stdout, stderr);
+              });
+          }
+        }
+
+        function processExecute(label, callback, error, stdout, stderr) {
+          if (callback)
+            callback();
+          if (label) {
+            if (error || stderr) {
+              if (stdout) {
+                if (stdout.indexOf('[upload] Error') != -1 ||
+                    stdout.indexOf('Error: board not detected') != -1) {
+                  alertify.notify($translate.instant('board_not_detected'), 'error', 3);
+                }
+                else if (stdout.indexOf('Error: unkown board') != -1) {
+                  alertify.notify($translate.instant('unknown_board'), 'error', 3);
+                }
+                else if (stdout.indexOf('set_io: too few arguments') != -1) {
+                  alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
+                }
+                else if (stdout.indexOf('error: unknown pin') != -1) {
+                  alertify.notify($translate.instant('fpga_io_not_defined'), 'error', 3);
+                }
+                else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
+                  alertify.notify($translate.instant('duplicated_fpga_io'), 'error', 3);
+                }
+                else {
+                  var stdoutError = stdout.split('\n').filter(isError);
+                  function isError(line) {
+                    return (line.indexOf('syntax error') != -1 ||
+                            line.indexOf('not installed') != -1 ||
+                            line.indexOf('error: ') != -1 ||
+                            line.indexOf('ERROR: ') != -1 ||
+                            line.indexOf('Error: ') != -1 ||
+                            line.indexOf('already declared') != -1);
                   }
-                  else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                    alertify.notify('FPGA I/O not defined', 'error', 3);
-                  }
-                  else if (stdout.indexOf('error: unknown pin') != -1) {
-                    alertify.notify('FPGA I/O not defined', 'error', 3);
-                  }
-                  else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                    alertify.notify('Duplicated FPGA I/O', 'error', 3);
+                  if (stdoutError.length > 0) {
+                    alertify.notify(stdoutError[0], 'error', 5);
                   }
                   else {
-                    var stdoutError = stdout.split('\n').filter(isError);
-                    function isError(line) {
-                      return (line.indexOf('syntax error') != -1 ||
-                              line.indexOf('not installed') != -1 ||
-                              line.indexOf('error: ') != -1 ||
-                              line.indexOf('ERROR: ') != -1 ||
-                              line.indexOf('already declared') != -1);
-                    }
-                    if (stdoutError.length > 0) {
-                      alertify.notify(stdoutError[0], 'error', 5);
-                    }
+                    alertify.notify(stdout, 'error', 5);
                   }
+                }
+              }
+              else if (stderr) {
+                if (stderr.indexOf('Could not resolve hostname') != -1 ||
+                    stderr.indexOf('Connection refused') != -1) {
+                  alertify.notify($translate.instant('wrong_remote_hostname', { name: profile.data.remoteHostname }), 'error', 3);
+                }
+                else if (stderr.indexOf('No route to host') != -1) {
+                  alertify.notify($translate.instant('remote_host_not_connected', { name: profile.data.remoteHostname }), 'error', 3);
                 }
                 else {
                   alertify.notify(stderr, 'error', 5);
                 }
               }
-              else {
-                alertify.success(label + ' success');
-              }
-              $('body').removeClass('waiting');
             }
-          });
+            else {
+              alertify.success($translate.instant('done_' + label));
+            }
+            $('body').removeClass('waiting');
+          }
         }
 
         this.installToolchain = installToolchain;
@@ -195,7 +243,7 @@ angular.module('icestudio')
 
           var content = [
             '<div>',
-            '  <p id="progress-message">Installing toolchain</p>',
+            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
             '  </br>',
             '  <div class="progress">',
             '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
@@ -261,7 +309,7 @@ angular.module('icestudio')
               callback();
             }
             else {
-              errorProgress('Internet connection is required');
+              errorProgress($translate.instant('internet_connection_required'));
               utils.enableClickEvent();
               callback(true);
             }
@@ -294,8 +342,8 @@ angular.module('icestudio')
         }
 
         function installationCompleted(callback) {
-          updateProgress('Installation completed', 100);
-          alertify.success('Toolchain installed');
+          updateProgress($translate.instant('installation_completed'), 100);
+          alertify.success($translate.instant('toolchain_installed'));
           toolchain.installed = true;
           utils.enableClickEvent();
           callback();

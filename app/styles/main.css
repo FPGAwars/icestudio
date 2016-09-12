@@ -25,3 +25,31 @@ body {
 body.waiting * {
   cursor: progress;
 }
+
+.alertify-notifier .ajs-message.ajs-success {
+  color: #111;
+  background: #d4ffad;
+  border-color: #a9cc8a;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+  color: #111;
+  background: #ffb3b6;
+  border-color: #ff8084;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.alertify-notifier .ajs-message.ajs-warning {
+  color: #111;
+  background: #fbf7d0;
+  border-color: #f5ea8a;
+  border-radius: 5px;
+}
+
+.copyleft {
+  display:inline-block;
+  transform: rotate(180deg);
+}

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', '$translate', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, $translate, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -49,14 +49,14 @@ angular.module('icestudio')
           }
           this.panAndZoom.zoom(_state.zoom);
           this.panAndZoom.pan(_state.pan);
-          setGrid(paper, gridsize*2*_state.zoom, '#777', _state.pan);
+          setGrid(paper, gridsize*2*_state.zoom, _state.pan);
         }
 
         this.resetState = function() {
           this.setState(null);
         }
 
-        function setGrid(paper, size, color, offset) {
+        function setGrid(paper, size, offset) {
           // Set grid size on the JointJS paper object (joint.dia.Paper instance)
           paper.options.gridsize = gridsize;
           // Draw a grid into the HTML 5 canvas and convert it to a data URI image
@@ -66,7 +66,8 @@ angular.module('icestudio')
           var context = canvas[0].getContext('2d');
           context.beginPath();
           context.rect(1, 1, 1, 1);
-          context.fillStyle = color || '#AAAAAA';
+          context.fillStyle = '#555';
+          context.globalAlpha = size / gridsize / 2;
           context.fill();
           // Finally, set the grid background image of the paper container element.
           var gridBackgroundImage = canvas[0].toDataURL('image/png');
@@ -104,18 +105,34 @@ angular.module('icestudio')
               if (magnetS.getAttribute('type') == 'output' &&
                   magnetT.getAttribute('type') == 'output')
                 return false;
-              // Prevent multiple input links
               var links = graph.getLinks();
               for (var i in links) {
-                if (linkView == links[i].findView(paper)) //Skip the wire the user is drawing
+                var linkIView = links[i].findView(paper);
+                if (linkView == linkIView) {
+                  //Skip the wire the user is drawing
                   continue;
+                }
+                // Prevent multiple input links
                 if ((cellViewT.model.id == links[i].get('target').id) &&
                     (magnetT.getAttribute('port') == links[i].get('target').port)) {
                   return false;
                 }
+                // Prevent to connect a pull-up if other blocks are connected
+                if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                     cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
+                     (cellViewS.model.id == links[i].get('source').id)) {
+                  return false;
+                }
+                // Prevent to connect other blocks if a pull-up is connected
+                if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
+                     linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
+                     (cellViewS.model.id == links[i].get('source').id)) {
+                  return false;
+                }
               }
-              // Ensure input -> input-config connections
-              if (cellViewT.model.attributes.blockType == 'config.Input-config') {
+              // Ensure input -> pull-up connections
+              if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
+                  cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
                 return (cellViewS.model.attributes.blockType == 'basic.input');
               }
               // Prevent loop links
@@ -123,7 +140,9 @@ angular.module('icestudio')
             }
           });
 
-          setGrid(paper, gridsize * 2, '#777');
+          paper.options.enabled = true;
+
+          setGrid(paper, gridsize * 2);
 
           var targetElement= element[0];
 
@@ -136,17 +155,17 @@ angular.module('icestudio')
             panEnabled: false,
             zoomScaleSensitivity: 0.2,
             dblClickZoomEnabled: false,
-            minZoom: 0.5,
+            minZoom: 0.2,
             maxZoom: 2,
             beforeZoom: function(oldzoom, newzoom) {
             },
             onZoom: function(scale) {
               state.zoom = scale;
-              setGrid(paper, gridsize*2*state.zoom, '#777');
+              setGrid(paper, gridsize*2*state.zoom);
               // Already rendered in pan
             },
             beforePan: function(oldpan, newpan) {
-              setGrid(paper, gridsize*2*state.zoom, '#777', newpan);
+              setGrid(paper, gridsize*2*state.zoom, newpan);
             },
             onPan: function(newPan) {
               state.pan = newPan;
@@ -201,7 +220,7 @@ angular.module('icestudio')
 
          paper.on('cell:pointerup',
            function(cellView, evt, x, y) {
-             if (paper.options.interactive) {
+             if (paper.options.enabled) {
                if (!cellView.model.isLink()) {
                  if (evt.which == 3) {
                    // Disable current focus
@@ -218,7 +237,7 @@ angular.module('icestudio')
 
           paper.on('cell:pointerdown',
             function(cellView, evt, x, y) {
-              if (paper.options.interactive) {
+              if (paper.options.enabled) {
                 if (!cellView.model.isLink()) {
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
@@ -234,17 +253,17 @@ angular.module('icestudio')
                 var data = cellView.model.attributes;
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
-                  if (paper.options.interactive) {
-                    alertify.prompt('Insert the block label', '',
+                  if (paper.options.enabled) {
+                    alertify.prompt($translate.instant('enter_block_label'), data.data.label,
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
-                        alertify.success('Label updated');
+                        alertify.success($translate.instant('label_updated'));
                     });
                   }
                 }
                 else if (data.blockType == 'basic.code') {
-                  if (paper.options.interactive) {
+                  if (paper.options.enabled) {
                     var block = {
                       data: {
                         code: _this.getContent(cellView.model.id)
@@ -284,15 +303,15 @@ angular.module('icestudio')
                 // Disable current focus
                 document.activeElement.blur();
 
-                if (paper.options.interactive) {
-                  if (evt.which == 3) {
-                    // Right button
+                if (evt.which == 3) {
+                  // Right button
+                  if (paper.options.enabled) {
                     selectionView.startSelecting(evt, x, y);
                   }
-                  else if  (evt.which == 1) {
-                    // Left button
-                    _this.panAndZoom.enablePan();
-                  }
+                }
+                else if (evt.which == 1) {
+                  // Left button
+                  _this.panAndZoom.enablePan();
                 }
               }
             })(this)
@@ -344,20 +363,37 @@ angular.module('icestudio')
         };
 
         this.appEnable = function(value) {
-          paper.options.interactive = value;
-          var cells = graph.getCells();
-          for (var i in cells) {
-            paper.findViewByModel(cells[i].id).options.interactive = value;
-          }
+          paper.options.enabled = value;
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
             angular.element('#paper').css('opacity', '1.0');
-            this.panAndZoom.enableZoom();
+            angular.element('#read-only-banner').addClass('hidden');
           }
           else {
             angular.element('#menu').addClass('disable-menu');
-            angular.element('#paper').css('opacity', '0.5');
-            this.panAndZoom.disableZoom();
+            angular.element('#paper').css('opacity', '0.7');
+            angular.element('#read-only-banner').removeClass('hidden');
+          }
+          var cells = graph.getCells();
+          for (var i in cells) {
+            var cellView = paper.findViewByModel(cells[i].id);
+            cellView.options.interactive = value;
+            if (cells[i].attributes.type != 'ice.Generic') {
+              if (value) {
+                cellView.$el.removeClass('disable-graph');
+              }
+              else {
+                cellView.$el.addClass('disable-graph');
+              }
+            }
+            else if (cells[i].attributes.type != 'ice.Wire') {
+              if (value) {
+                cellView.$el.find('.port-body').removeClass('disable-graph');
+              }
+              else {
+                cellView.$el.find('.port-body').addClass('disable-graph');
+              }
+            }
           }
         };
 
@@ -370,7 +406,7 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt('Insert the block i/o', 'a,b c',
+            alertify.prompt($translate.instant('enter_block_ports'), 'a,b c',
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -425,7 +461,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt('Insert the block name', 'i',
+            alertify.prompt($translate.instant('enter_block_label'), 'i',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -465,7 +501,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt('Insert the block name', 'o',
+            alertify.prompt($translate.instant('enter_block_label'), 'o',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -522,7 +558,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error('Wrong block format: ' + type);
+              alertify.error($translate.instant('wrong_block_format', { type: type }));
             }
           }
         };
@@ -566,7 +602,8 @@ angular.module('icestudio')
                 }
                 newCell.translate(6 * gridsize, 6 * gridsize);
                 addCell(newCell);
-                if (type == 'config.Input-config') {
+                if (type == 'config.pull_up' ||
+                    type == 'config.pull_up_inv') {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
                 var cellView = paper.findViewByModel(newCell);
@@ -617,7 +654,7 @@ angular.module('icestudio')
         }
 
         this.isEnabled = function() {
-          return paper.options.interactive;
+          return paper.options.enabled;
         }
 
         this.loadGraph = function(project, disabled) {
@@ -794,10 +831,7 @@ angular.module('icestudio')
           var blockLabel = blockInstance.type.toUpperCase();
           var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
-            blockLabel = [
-              blockInstance.type.split('.')[0],
-              blockInstance.type.split('.')[1].toUpperCase()
-            ].join('');
+            blockLabel = blockInstance.type.split('.').join(' ');
           }
 
           var blockImage = '';
@@ -825,7 +859,8 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.Input-config') {
+          if (blockInstance.type == 'config.pull_up' ||
+              blockInstance.type == 'config.pull_up_inv') {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 
