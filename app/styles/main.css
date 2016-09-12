@@ -48,3 +48,8 @@ body.waiting * {
   border-color: #f5ea8a;
   border-radius: 5px;
 }
+
+.copyleft {
+  display:inline-block;
+  transform: rotate(180deg);
+}

@@ -359,8 +359,8 @@ angular.module('icestudio')
         '    <p><i>Graphic editor for open FPGAs</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
-        '    <p>Date: June, July 2016</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars June-September 2016</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
