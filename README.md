@@ -1,7 +1,7 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
-[![R&D](https://img.shields.io/badge/-R%26D-brightgreen.svg)](https://github.com/Jesus89/icestudio)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest/)
 
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
@@ -10,9 +10,11 @@
 
 Supported boards:
 
-* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [Icezum Alhambra](https://github.com/FPGAwars/icezum)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
+* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
+* [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [icoBOARD 1.0](http://icoboard.org/icoboard-1-0.html)
 
 
 ## Roadmap
@@ -26,21 +28,19 @@ Supported boards:
 
   * New blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
 
-## Version 0.2
+## Version 0.2.1
 
 ### Installation
 
-1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
+1. Install and configure the [drivers](http://apiodoc.readthedocs.io/en/stable/source/installation.html#install-fpga-ftdi-drivers)
 
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.2.0), unpack the zip and execute Icestudio
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute **icestudio**
 
 **Documentation: http://icestudio.readthedocs.io**
 
 NOTE: supported on Linux, Windows and Mac.
 
-<img src="./doc/images/icestudio-0.2-crono.png" width="700" align="center">
-
-<img src="./doc/images/icestudio-0.2-counter-inspection.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.2.1.png" width="700" align="center">
 
 ## Development
 
@@ -89,19 +89,13 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
 
 ## Version 0.1
 
-### Installation
-
-1. Install and configure the [drivers](https://github.com/FPGAwars/icestudio/wiki/Installing-the-drivers)
-
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.1.0), unpack the zip and execute Icestudio
-
-NOTE: supported on Linux, Windows and Mac.
-
 ![][icestudio-0.1-demo]
 
 ## Videos
 
 ### Version 0.2
+
+[![Icestudio: icoBOARD in a remote RPi2 ](http://img.youtube.com/vi/DAStv80OtXQ/0.jpg)](https://www.youtube.com/watch?v=DAStv80OtXQ "Icestudio: icoBOARD in a remote RPi2")
 
 [![Icestudio: new gui & multiboard](http://img.youtube.com/vi/OWnVCjo7N9Y/0.jpg)](https://www.youtube.com/watch?v=OWnVCjo7N9Y "Icestudio: new gui & multiboard")
 
@@ -124,6 +118,7 @@ NOTE: supported on Linux, Windows and Mac.
  * [Tomás Calvo](https://github.com/tocalvo)
  * [Juan González (Obijuan)](https://github.com/Obijuan)
  * [Carlos Díaz](https://github.com/C47D)
+ * [Xoan Sampaiño](https://github.com/xoan)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
