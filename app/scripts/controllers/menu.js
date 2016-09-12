@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
+                                    $timeout,
                                     $translate,
                                     common,
                                     graph,
@@ -45,6 +46,23 @@ angular.module('icestudio')
     function pathSync() {
       tools.setProjectPath(utils.dirname($scope.currentProjectPath));
     }
+
+    // Menu
+
+    var timer;
+
+    // mouseover event
+    $scope.showMenu = function (menu) {
+      $timeout.cancel(timer);
+      $scope.status[menu] = true;
+    };
+
+    // mouseleave event
+    $scope.hideMenu = function (menu) {
+      timer = $timeout(function () {
+          $scope.status[menu] = false;
+      }, 500);
+    };
 
     // File
 
@@ -341,8 +359,8 @@ angular.module('icestudio')
         '    <p><i>Graphic editor for open FPGAs</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
-        '    <p>Date: June, July 2016</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars June-September 2016</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
