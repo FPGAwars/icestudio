@@ -28,8 +28,8 @@ body.waiting * {
 
 .alertify-notifier .ajs-message.ajs-success {
   color: #111;
-  background: #c9f7a1;
-  border-color: #93ef43;
+  background: #d4ffad;
+  border-color: #a9cc8a;
   border-radius: 5px;
   text-shadow: none;
 }
