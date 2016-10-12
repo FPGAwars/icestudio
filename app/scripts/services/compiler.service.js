@@ -5,11 +5,16 @@ angular.module('icestudio')
       function(nodeSha1) {
 
         this.generateVerilog = function(project) {
-          return verilogCompiler('main', project);
+          var code = '';
+          code += '`default_nettype none\n\n';
+          code += verilogCompiler('main', project);
+          return code;
         };
 
         this.generatePCF = function(project) {
-          return pcfCompiler(project);
+          var code = '';
+          code += pcfCompiler(project);
+          return code;
         };
 
         function digestId(id, force) {
