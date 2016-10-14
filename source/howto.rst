@@ -231,19 +231,21 @@ If your code block contains a list file(s), for example:
 
 3. **Build and upload the project**
 
-Include a verilog file
-----------------------
+Include a verilog (header) file
+-------------------------------
 
-If your code block includes a verilog file(s), for example:
+If your code block includes a verilog (header) file(s), for example:
 
 .. code-block:: verilog
 
-  // @include lib.v
+  // @include lib.vh
   // @include math.v
+
+  `include "lib.vh"
 
 1. **Save the ice project**
 
-2. **Copy the verilog file(s) in the project's directory**
+2. **Copy the verilog (header) file(s) in the project's directory**
 
 3. **Build and upload the project**
 
