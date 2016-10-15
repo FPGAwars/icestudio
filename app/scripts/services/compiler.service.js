@@ -23,6 +23,12 @@ angular.module('icestudio')
           return code;
         };
 
+        this.generateGTKWave = function(project) {
+          var code = header('[*]');
+          //code += gtkwaveCompiler(project);
+          return code;
+        };
+
         function header(comment) {
           var header = '';
           var date = new Date();
@@ -331,7 +337,7 @@ angular.module('icestudio')
             }
           }
           if (hasClk) {
-            content += '// Clock signal\n';
+            content += '\n// Clock signal\n';
             content += 'always #0.5 input_clk = ~input_clk;\n';
           }
 
