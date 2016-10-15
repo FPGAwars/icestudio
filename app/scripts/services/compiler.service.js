@@ -25,7 +25,7 @@ angular.module('icestudio')
 
         this.generateGTKWave = function(project) {
           var code = header('[*]');
-          //code += gtkwaveCompiler(project);
+          code += gtkwaveCompiler(project);
           return code;
         };
 
@@ -281,31 +281,9 @@ angular.module('icestudio')
           content += '// Simulation time: 100ns (10 * 10ns)\n';
           content += 'parameter DURATION = 10;\n\n';
 
-          var input = [];
-          var output = [];
-          var input_unnamed = 0;
-          var output_unnamed = 0;
-          for (var i in project.graph.blocks) {
-            var block = project.graph.blocks[i];
-            if (block.type == 'basic.input') {
-              if (block.data.label) {
-                input.push({ id: digestId(block.id), label: 'input_' + block.data.label });
-              }
-              else {
-                input.push({ id: digestId(block.id), label: 'input_' + input_unnamed.toString() });
-                input_unnamed += 1;
-              }
-            }
-            else if (block.type == 'basic.output') {
-              if (block.data.label) {
-                output.push({ id: digestId(block.id), label: 'output_' + block.data.label });
-              }
-              else {
-                output.push({ id: digestId(block.id), label: 'output_' + output_unnamed.toString() });
-                output_unnamed += 1;
-              }
-            }
-          }
+          var io = mainIO(project);
+          var input = io[0];
+          var output = io[1];
 
           // Input/Output
           content += '// Input/Output\n';
@@ -364,6 +342,51 @@ angular.module('icestudio')
           code += module(data);
 
           return code;
+        }
+
+        function gtkwaveCompiler(project) {
+          var code = '';
+
+          var io = mainIO(project);
+          var input = io[0];
+          var output = io[1];
+
+          var wires = input.concat(output);
+          for (var w in wires) {
+            code += 'main_tb.' + wires[w].label + '\n';
+          }
+
+          return code;
+        }
+
+        function mainIO(project) {
+          var input = [];
+          var output = [];
+          var input_unnamed = 0;
+          var output_unnamed = 0;
+          for (var i in project.graph.blocks) {
+            var block = project.graph.blocks[i];
+            if (block.type == 'basic.input') {
+              if (block.data.label) {
+                input.push({ id: digestId(block.id), label: 'input_' + block.data.label });
+              }
+              else {
+                input.push({ id: digestId(block.id), label: 'input_' + input_unnamed.toString() });
+                input_unnamed += 1;
+              }
+            }
+            else if (block.type == 'basic.output') {
+              if (block.data.label) {
+                output.push({ id: digestId(block.id), label: 'output_' + block.data.label });
+              }
+              else {
+                output.push({ id: digestId(block.id), label: 'output_' + output_unnamed.toString() });
+                output_unnamed += 1;
+              }
+            }
+          }
+
+          return [input, output];
         }
 
     }]);
