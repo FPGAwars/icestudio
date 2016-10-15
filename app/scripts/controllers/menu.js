@@ -239,6 +239,27 @@ angular.module('icestudio')
       }
     }
 
+    $scope.exportTestbench = function() {
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-testbench');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.v')) {
+                  filepath += '.v';
+              }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
+              common.exportTestbench(filepath);
+            }
+          });
+          ctrl.click();
+        }, 0);
+      }
+    }
+
     // Edit
 
     $scope.setImagePath = function() {

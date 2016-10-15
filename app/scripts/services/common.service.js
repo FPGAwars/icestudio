@@ -115,6 +115,16 @@ angular.module('icestudio')
           }, false);
         };
 
+        this.exportTestbench = function(filepath) {
+          var name = utils.basename(filepath);
+          this.refreshProject();
+          // Generate testbench code from project
+          var testbench = compiler.generateTestbench(this.project);
+          utils.saveFile(filepath, testbench, function() {
+            alertify.success($translate.instant('testbench_exported'));
+          }, false);
+        };
+
         this.refreshProject = function(callback) {
           var graphData = graph.toJSON();
 

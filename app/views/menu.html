@@ -10,6 +10,7 @@
 
     <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.v"/>
     <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.pcf"/>
+    <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.v"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -76,6 +77,9 @@
                       </li>
                       <li>
                         <a href ng-click="exportPCF()">{{ 'export_pcf' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="exportTestbench()">{{ 'export_testbench' | translate }}</a>
                       </li>
                     </ul>
                 </li>

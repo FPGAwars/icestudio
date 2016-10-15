@@ -17,6 +17,12 @@ angular.module('icestudio')
           return code;
         };
 
+        this.generateTestbench = function(project) {
+          var code = header('#');
+          // code += testbenchCompiler(project);
+          return code;
+        };
+
         function header(comment) {
           var header = '';
           var date = new Date();
