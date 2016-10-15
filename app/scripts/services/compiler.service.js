@@ -326,8 +326,8 @@ angular.module('icestudio')
           content += ' // TODO: initialize the registers here\n';
           content += ' // e.g. input_value = 1;\n';
           content += ' // e.g. #2 input_value = 0;\n';
-          if (hasClk) {
-            content += ' input_clk = 0;\n';
+          for (var i in input) {
+            content += ' ' + input[i].label + ' = 0;\n';
           }
           content += '\n';
           content += ' #(DURATION) $display("End of simulation");\n';
@@ -368,7 +368,7 @@ angular.module('icestudio')
             var block = project.graph.blocks[i];
             if (block.type == 'basic.input') {
               if (block.data.label) {
-                input.push({ id: digestId(block.id), label: 'input_' + block.data.label });
+                input.push({ id: digestId(block.id), label: 'input_' + block.data.label.replace(' ', '_') });
               }
               else {
                 input.push({ id: digestId(block.id), label: 'input_' + input_unnamed.toString() });
@@ -377,7 +377,7 @@ angular.module('icestudio')
             }
             else if (block.type == 'basic.output') {
               if (block.data.label) {
-                output.push({ id: digestId(block.id), label: 'output_' + block.data.label });
+                output.push({ id: digestId(block.id), label: 'output_' + block.data.label.replace(' ', '_') });
               }
               else {
                 output.push({ id: digestId(block.id), label: 'output_' + output_unnamed.toString() });
