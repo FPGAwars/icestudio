@@ -34,6 +34,8 @@
   "install_toolchain": "Install toolchain",
   "upgrade_toolchain": "Upgrade toolchain",
   "remove_toolchain": "Remove toolchain",
+  "enable_drivers": "Enable drivers",
+  "disable_drivers": "Disable drivers",
   "view_license": "View license",
   "version": "Version",
   "documentation": "Documentation",

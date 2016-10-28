@@ -39,6 +39,7 @@ angular.module('icestudio')
 
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
+    $scope.drivers = { 'enabled': false };
 
     $scope.workingdir = '';
     $scope.currentProjectPath = '';

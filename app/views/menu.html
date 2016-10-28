@@ -184,6 +184,13 @@
                       <li>
                         <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
                       </li>
+                      <li class="divider"></li>
+                      <li>
+                      <li>
+                        <a href ng-click="configureDriver()">{{ drivers.enabled ? 'disable_drivers' : 'enable_drivers' | translate }}
+                        <span ng-show="drivers.enabled" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
+                      </li>
                     </ul>
                 </li>
 
