@@ -1,3 +1,4 @@
+
 'use strict';
 
 angular.module('icestudio')
@@ -292,12 +293,24 @@ angular.module('icestudio')
             'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
             'service udev restart'
           ]
-          var command = 'sh -c "' + commands.join('; ') + '"'
+          var command = 'sh -c "' + commands.join('; ') + '"';
+
+          // console.log(command);
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
 
           nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
-            console.log(error, stdout, stderr);
-            if (!error) {
-              alertify.alert('Please, <b>unplug</b> and <b>reconnect</b> your board');
+            // console.log(error, stdout, stderr);
+            $('body').removeClass('waiting');
+            angular.element('#menu').removeClass('disable-menu');
+            if (error) {
+              alertify.notify(stderr, 'error', 5);
+            }
+            else {
+              alertify.success('Drivers enabled');
+              setTimeout(function() {
+                 alertify.notify('<b>Unplug</b> and <b>reconnect</b> your board', 'message', 5);
+              }, 1000);
             }
           });
         }
@@ -307,10 +320,84 @@ angular.module('icestudio')
             'rm /etc/udev/rules.d/80-icestick.rules',
             'service udev restart'
           ]
-          var command = 'sh -c "' + commands.join('; ') + '"'
+          var command = 'sh -c "' + commands.join('; ') + '"';
+
+          // console.log(command);
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
 
           nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
-            console.log(error, stdout, stderr);
+            // console.log(error, stdout, stderr);
+            $('body').removeClass('waiting');
+            angular.element('#menu').removeClass('disable-menu');
+            if (error) {
+              alertify.notify(stderr, 'error', 5);
+            }
+            else {
+              alertify.success('Drivers disabled');
+            }
+          });
+        }
+
+        this.enableDarwinDrivers = function() {
+          var commands = [
+            'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+            'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
+          ]
+          var command = 'sh -c "' + commands.join('; ') + '"';
+
+          // console.log(command);
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
+
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+            if (error) {
+              $('body').removeClass('waiting');
+              angular.element('#menu').removeClass('disable-menu');
+            }
+            else {
+              nodeChildProcess.exec('brew install libftdi', function(error, stdout, stderr) {
+                // console.log(error, stdout, stderr);
+                $('body').removeClass('waiting');
+                angular.element('#menu').removeClass('disable-menu');
+                if (error) {
+                  if (stderr.indexOf('brew: command not found') != -1) {
+                    alertify.notify('Homebrew is required', 'error', 5);
+                  }
+                  else {
+                    alertify.notify(stderr, 'error', 5);
+                  }
+                }
+                else {
+                  alertify.success('Drivers enabled');
+                  /*setTimeout(function() {
+                     alertify.notify('<b>Unplug</b> and <b>reconnect</b> your board', 'message', 5);
+                  }, 1000);*/
+                }
+              });
+            }
+          });
+        }
+
+        this.disableDarwinDrivers = function() {
+          var commands = [
+            'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+            'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
+          ]
+          var command = 'sh -c "' + commands.join('; ') + '"'
+
+          // console.log(command);
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
+
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+            $('body').removeClass('waiting');
+            angular.element('#menu').removeClass('disable-menu');
+            if (!error) {
+              alertify.warning('Drivers disabled');
+            }
           });
         }
 
