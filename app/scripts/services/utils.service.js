@@ -158,6 +158,7 @@ angular.module('icestudio')
             process.env.ICESTUDIO_APIO : SYSTEM_APIO);
           if (exists) {
             alertify.notify('Using system wide apio', 'message', 5);
+            angular.element('#toolchainops').addClass('disable-menu');
             return SYSTEM_APIO;
           }
           return ENV_APIO;
