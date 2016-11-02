@@ -178,12 +178,14 @@
                         <a href ng-click="uploadCode()">{{ 'upload' | translate }}</a>
                       </li>
                       <li class="divider"></li>
+                      <div id="toolchainops">
                       <li>
                         <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade_toolchain' : 'install_toolchain' | translate }}</a>
                       </li>
                       <li>
                         <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
                       </li>
+                      </div>
                     </ul>
                 </li>
 

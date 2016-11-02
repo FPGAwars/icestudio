@@ -19,6 +19,7 @@ angular.module('icestudio')
 
         const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
         const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
+        const SYSTEM_APIO = '/usr/bin/apio';
 
         function _get_env_dir(defaultEnvDir) {
           if (WIN32) {
@@ -153,6 +154,12 @@ angular.module('icestudio')
         }
 
         this.getApioExecutable = function() {
+          var candidate_apio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : SYSTEM_APIO;
+          if (nodeFs.existsSync(candidate_apio)) {
+            alertify.notify('Using system wide apio', 'message', 5);
+            angular.element('#toolchainops').addClass('disable-menu');
+            return candidate_apio;
+          }
           return ENV_APIO;
         }
 
