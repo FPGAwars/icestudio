@@ -154,12 +154,11 @@ angular.module('icestudio')
         }
 
         this.getApioExecutable = function() {
-          var exists = nodeFs.existsSync(process.env.ICESTUDIO_APIO ?
-            process.env.ICESTUDIO_APIO : SYSTEM_APIO);
-          if (exists) {
+          var candidate_apio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : SYSTEM_APIO;
+          if (nodeFs.existsSync(candidate_apio)) {
             alertify.notify('Using system wide apio', 'message', 5);
             angular.element('#toolchainops').addClass('disable-menu');
-            return SYSTEM_APIO;
+            return candidate_apio;
           }
           return ENV_APIO;
         }
