@@ -283,6 +283,17 @@ angular.module('icestudio')
           toolchain.installed = false;
         }
 
+        this.enableDrivers = function() {
+          // $translate.instant('enter_block_label')
+
+          utils.enableLinuxDrivers();
+        }
+
+        this.disableDrivers = function() {
+
+          utils.disableLinuxDrivers();
+        }
+
         function ensurePythonIsAvailable(callback) {
           updateProgress('Check Python executable...', 0);
           if (utils.getPythonExecutable()) {

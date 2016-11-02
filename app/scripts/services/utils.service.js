@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib',
-      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib) {
+    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo',
+      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -286,5 +286,32 @@ angular.module('icestudio')
 
           return fileTree;
         };
+
+        this.enableLinuxDrivers = function() {
+          var commands = [
+            'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
+            'service udev restart'
+          ]
+          var command = 'sh -c "' + commands.join('; ') + '"'
+
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
+            if (!error) {
+              alertify.alert('Please, <b>unplug</b> and <b>reconnect</b> your board');
+            }
+          });
+        }
+
+        this.disableLinuxDrivers = function() {
+          var commands = [
+            'rm /etc/udev/rules.d/80-icestick.rules',
+            'service udev restart'
+          ]
+          var command = 'sh -c "' + commands.join('; ') + '"'
+
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            console.log(error, stdout, stderr);
+          });
+        }
 
     }]);

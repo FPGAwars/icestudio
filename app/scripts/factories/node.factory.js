@@ -39,4 +39,7 @@ angular.module('icestudio')
   })
   .factory('nodeRSync', function() {
     return require('rsyncwrapper');
+  })
+  .factory('nodeSudo', function() {
+    return require('sudo-prompt');
   });

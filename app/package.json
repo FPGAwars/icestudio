@@ -29,6 +29,7 @@
     "rsyncwrapper": "^2.0.0",
     "sha1": "^1.1.1",
     "ssh-exec": "^2.0.0",
+    "sudo-prompt": "^6.2.0",
     "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",
