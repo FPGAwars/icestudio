@@ -284,14 +284,11 @@ angular.module('icestudio')
         }
 
         this.enableDrivers = function() {
-          // $translate.instant('enter_block_label')
-
-          utils.enableDarwinDrivers();
+          utils.enableDrivers();
         }
 
         this.disableDrivers = function() {
-
-          utils.disableDarwinDrivers();
+          utils.disableDrivers();
         }
 
         function ensurePythonIsAvailable(callback) {

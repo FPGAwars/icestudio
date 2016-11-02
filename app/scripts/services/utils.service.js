@@ -7,6 +7,7 @@ angular.module('icestudio')
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
+        const LINUX = Boolean(nodeOs.platform().indexOf('linux') > -1);
 
         const VENV = 'virtualenv-15.0.1';
         const VENV_DIR = nodePath.join('_build', VENV);
@@ -286,28 +287,58 @@ angular.module('icestudio')
           });
 
           return fileTree;
-        };
+        }
 
-        this.enableLinuxDrivers = function() {
-          var commands = [
-            'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
-            'service udev restart'
-          ]
+        this.enableDrivers = function() {
+          if (WIN32) {
+
+          }
+          else if (DARWIN) {
+            enableDarwinDrivers();
+          }
+          else {
+            linuxDrivers(true);
+          }
+        }
+
+        this.disableDrivers = function() {
+          if (WIN32) {
+
+          }
+          else if (DARWIN) {
+            disableDarwinDrivers();
+          }
+          else {
+            linuxDrivers(false);
+          }
+        }
+
+        function linuxDrivers(enable) {
+          if (enable) {
+            var commands = [
+              'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
+              'service udev restart'
+            ];
+          }
+          else {
+            var commands = [
+              'rm /etc/udev/rules.d/80-icestick.rules',
+              'service udev restart'
+            ];
+          }
           var command = 'sh -c "' + commands.join('; ') + '"';
 
-          // console.log(command);
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
-
+          beginLazyProcess();
           nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
             // console.log(error, stdout, stderr);
-            $('body').removeClass('waiting');
-            angular.element('#menu').removeClass('disable-menu');
-            if (error) {
-              alertify.notify(stderr, 'error', 5);
-            }
-            else {
-              alertify.success('Drivers enabled');
+            endLazyProcess();
+            if (!error) {
+              if (enable) {
+                alertify.success('Drivers enabled');
+              }
+              else {
+                alertify.warning('Drivers disabled');
+              }
               setTimeout(function() {
                  alertify.notify('<b>Unplug</b> and <b>reconnect</b> your board', 'message', 5);
               }, 1000);
@@ -315,52 +346,23 @@ angular.module('icestudio')
           });
         }
 
-        this.disableLinuxDrivers = function() {
-          var commands = [
-            'rm /etc/udev/rules.d/80-icestick.rules',
-            'service udev restart'
-          ]
-          var command = 'sh -c "' + commands.join('; ') + '"';
-
-          // console.log(command);
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
-
-          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
-            $('body').removeClass('waiting');
-            angular.element('#menu').removeClass('disable-menu');
-            if (error) {
-              alertify.notify(stderr, 'error', 5);
-            }
-            else {
-              alertify.success('Drivers disabled');
-            }
-          });
-        }
-
-        this.enableDarwinDrivers = function() {
+        function enableDarwinDrivers() {
           var commands = [
             'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
             'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
-          ]
+          ];
           var command = 'sh -c "' + commands.join('; ') + '"';
 
-          // console.log(command);
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
-
+          beginLazyProcess();
           nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
             // console.log(error, stdout, stderr);
             if (error) {
-              $('body').removeClass('waiting');
-              angular.element('#menu').removeClass('disable-menu');
+              endLazyProcess();
             }
             else {
               nodeChildProcess.exec('brew install libftdi', function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
-                $('body').removeClass('waiting');
-                angular.element('#menu').removeClass('disable-menu');
+                endLazyProcess();
                 if (error) {
                   if (stderr.indexOf('brew: command not found') != -1) {
                     alertify.notify('Homebrew is required', 'error', 5);
@@ -371,34 +373,37 @@ angular.module('icestudio')
                 }
                 else {
                   alertify.success('Drivers enabled');
-                  /*setTimeout(function() {
-                     alertify.notify('<b>Unplug</b> and <b>reconnect</b> your board', 'message', 5);
-                  }, 1000);*/
                 }
               });
             }
           });
         }
 
-        this.disableDarwinDrivers = function() {
+        function disableDarwinDrivers() {
           var commands = [
             'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
             'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
-          ]
+          ];
           var command = 'sh -c "' + commands.join('; ') + '"'
 
-          // console.log(command);
-          $('body').addClass('waiting');
-          angular.element('#menu').addClass('disable-menu');
-
+          beginLazyProcess();
           nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
             // console.log(error, stdout, stderr);
-            $('body').removeClass('waiting');
-            angular.element('#menu').removeClass('disable-menu');
+            endLazyProcess();
             if (!error) {
               alertify.warning('Drivers disabled');
             }
           });
+        }
+
+        function beginLazyProcess() {
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
+        }
+
+        function endLazyProcess() {
+          $('body').removeClass('waiting');
+          angular.element('#menu').removeClass('disable-menu');
         }
 
     }]);

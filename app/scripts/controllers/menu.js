@@ -411,15 +411,21 @@ angular.module('icestudio')
     // Tools
 
     $scope.verifyCode = function() {
-      tools.verifyCode();
+      if (!graph.isEmpty()) {
+        tools.verifyCode();
+      }
     };
 
     $scope.buildCode = function() {
-      tools.buildCode();
+      if (!graph.isEmpty()) {
+        tools.buildCode();
+      }
     };
 
     $scope.uploadCode = function() {
-      tools.uploadCode();
+      if (!graph.isEmpty()) {
+        tools.uploadCode();
+      }
     }
 
     $scope.installToolchain = function() {
