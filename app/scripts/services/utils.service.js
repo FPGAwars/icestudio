@@ -153,13 +153,19 @@ angular.module('icestudio')
           this.executeCommand([ENV_APIO, 'install', _package], callback);
         }
 
+        this.toolchainDisabled = false;
+
         this.getApioExecutable = function() {
           var candidate_apio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : SYSTEM_APIO;
           if (nodeFs.existsSync(candidate_apio)) {
-            alertify.notify('Using system wide apio', 'message', 5);
-            angular.element('#toolchainops').addClass('disable-menu');
+            if (!this.toolchainDisabled) {
+              // Show message only on start
+              alertify.notify('Using system wide apio', 'message', 5);
+            }
+            this.toolchainDisabled = true;
             return candidate_apio;
           }
+          this.toolchainDisabled = false;
           return ENV_APIO;
         }
 

@@ -427,10 +427,6 @@ angular.module('icestudio')
     }
 
     $scope.removeToolchain = function() {
-      alertify.confirm($translate.instant('remove_toolchain_confirmation'),
-        function() {
-          tools.removeToolchain();
-          alertify.success($translate.instant('toolchain_removed'));
-      });
+      tools.removeToolchain();
     }
   });

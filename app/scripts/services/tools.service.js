@@ -5,7 +5,7 @@ angular.module('icestudio')
       function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
 
         var currentAlert = null;
-        var toolchain = { installed: false };
+        var toolchain = { installed: false, disabled: false };
 
         this.toolchain = toolchain;
         this.buildPath = '_build';
@@ -29,7 +29,7 @@ angular.module('icestudio')
           var check = true;
           var code = this.generateCode();
           if (code) {
-            if (toolchain.installed) {
+            if (toolchain.installed || toolchain.disabled) {
               angular.element('#menu').addClass('disable-menu');
               currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
@@ -69,9 +69,10 @@ angular.module('icestudio')
         function checkToolchain() {
           var apio = utils.getApioExecutable();
           var exists = nodeFs.existsSync(apio);
+          toolchain.disabled = utils.toolchainDisabled;
           if (exists) {
             nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
-              if (stdout) {
+              if (stdout && !toolchain.disabled) {
                 toolchain.installed = (stdout.indexOf('not installed') == -1);
               }
             });
@@ -168,7 +169,9 @@ angular.module('icestudio')
             });
           }
           else {
-            nodeChildProcess.exec(([utils.getApioExecutable()].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+            var apio = utils.getApioExecutable();
+            toolchain.disabled = utils.toolchainDisabled;
+            nodeChildProcess.exec(([apio].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
               function(error, stdout, stderr) {
                 processExecute(label, callback, error, stdout, stderr);
               });
@@ -239,48 +242,56 @@ angular.module('icestudio')
 
         function installToolchain() {
 
-          // Configure alert
-          alertify.defaults.closable = false;
+          if (!toolchain.disabled) {
+            // Configure alert
+            alertify.defaults.closable = false;
 
-          utils.disableClickEvent();
+            utils.disableClickEvent();
 
-          var content = [
-            '<div>',
-            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
-            '  </br>',
-            '  <div class="progress">',
-            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-            '    </div>',
-            '  </div>',
-            '</div>'].join('\n');
-          alertify.alert(content, function() {
-            setTimeout(function() {
-              initProgress();
-            }, 200);
-          });
+            var content = [
+              '<div>',
+              '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
+              '  </br>',
+              '  <div class="progress">',
+              '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
+              '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+              '    </div>',
+              '  </div>',
+              '</div>'].join('\n');
+              alertify.alert(content, function() {
+                setTimeout(function() {
+                  initProgress();
+                }, 200);
+              });
 
-          // Install toolchain
-          async.series([
-            ensurePythonIsAvailable,
-            extractVirtualEnv,
-            makeVenvDirectory,
-            ensureInternetConnection,
-            installApio,
-            apioInstallSystem,
-            apioInstallScons,
-            apioInstallIcestorm,
-            apioInstallIverilog,
-            installationCompleted
-          ]);
+              // Install toolchain
+              async.series([
+                ensurePythonIsAvailable,
+                extractVirtualEnv,
+                makeVenvDirectory,
+                ensureInternetConnection,
+                installApio,
+                apioInstallSystem,
+                apioInstallScons,
+                apioInstallIcestorm,
+                apioInstallIverilog,
+                installationCompleted
+              ]);
 
-          // Restore alert
-          alertify.defaults.closable = true;
+              // Restore alert
+              alertify.defaults.closable = true;
+          }
         }
 
         this.removeToolchain = function() {
-          utils.removeToolchain();
-          toolchain.installed = false;
+          if (!toolchain.disabled && toolchain.installed) {
+            alertify.confirm($translate.instant('remove_toolchain_confirmation'),
+              function() {
+                utils.removeToolchain();
+                toolchain.installed = false;
+                alertify.success($translate.instant('toolchain_removed'));
+            });
+          }
         }
 
         function ensurePythonIsAvailable(callback) {
