@@ -358,6 +358,9 @@ angular.module('icestudio')
             updateProgress('apio install drivers', 95);
             utils.apioInstall('drivers', callback);
           }
+          else {
+            callback();
+          }
         }
 
         function installationCompleted(callback) {

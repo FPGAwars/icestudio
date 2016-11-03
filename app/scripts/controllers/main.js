@@ -8,7 +8,7 @@ angular.module('icestudio')
       modal:true,
       basic:false,
       frameless:false,
-      movable:true,
+      movable:false,
       moveBounded:false,
       resizable:true,
       closable:true,

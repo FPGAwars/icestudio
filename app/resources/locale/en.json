@@ -65,6 +65,8 @@
   "demux_1_2": "Demux 1:2",
   "demux_1_4": "Demux 1:4",
   "demux_1_8": "Demux 1:8",
+  "hex_7seg_cc": "Hex 7 Segment CC",
+  "hex_7seg_ca": "Hex 7 Segment CA",
   "mux_2_1": "Mux 2:1",
   "mux_4_1": "Mux 4:1",
   "gate": "Gate",
