@@ -146,7 +146,7 @@ angular.module('icestudio')
           var remoteHostname = profile.data.remoteHostname;
 
           if (remoteHostname) {
-            currentAlert.setContent('Synchronize remote files ...');
+            currentAlert.setContent($translate.instant('sync_remote_files'));
             nodeRSync({
               src: nodeProcess.cwd() + '/',
               dest: remoteHostname + ':_build/',
@@ -157,7 +157,7 @@ angular.module('icestudio')
               exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
             }, function (error, stdout, stderr, cmd) {
               if (!error) {
-                currentAlert.setContent('Execute remote ' + label + ' ...');
+                currentAlert.setContent($translate.instant('execute_remote', { label: label }));
                 nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
                   function (error, stdout, stderr) {
                     processExecute(label, callback, error, stdout, stderr);
@@ -264,22 +264,23 @@ angular.module('icestudio')
                 }, 200);
               });
 
-              // Install toolchain
-              async.series([
-                ensurePythonIsAvailable,
-                extractVirtualEnv,
-                makeVenvDirectory,
-                ensureInternetConnection,
-                installApio,
-                apioInstallSystem,
-                apioInstallScons,
-                apioInstallIcestorm,
-                apioInstallIverilog,
-                installationCompleted
-              ]);
+            // Install toolchain
+            async.series([
+              ensurePythonIsAvailable,
+              extractVirtualEnv,
+              makeVenvDirectory,
+              ensureInternetConnection,
+              installApio,
+              apioInstallSystem,
+              apioInstallScons,
+              apioInstallIcestorm,
+              apioInstallIverilog,
+              apioInstallDrivers,
+              installationCompleted
+            ]);
 
-              // Restore alert
-              alertify.defaults.closable = true;
+            // Restore alert
+            alertify.defaults.closable = true;
           }
         }
 
@@ -292,6 +293,14 @@ angular.module('icestudio')
                 alertify.success($translate.instant('toolchain_removed'));
             });
           }
+        }
+
+        this.enableDrivers = function() {
+          utils.enableDrivers();
+        }
+
+        this.disableDrivers = function() {
+          utils.disableDrivers();
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -353,6 +362,16 @@ angular.module('icestudio')
         function apioInstallIverilog(callback) {
           updateProgress('apio install iverilog', 90);
           utils.apioInstall('iverilog', callback);
+        }
+
+        function apioInstallDrivers(callback) {
+          if (nodeOs.platform().indexOf('win32') > -1) {
+            updateProgress('apio install drivers', 95);
+            utils.apioInstall('drivers', callback);
+          }
+          else {
+            callback();
+          }
         }
 
         function installationCompleted(callback) {

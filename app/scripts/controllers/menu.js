@@ -402,7 +402,7 @@ angular.module('icestudio')
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars June-September 2016</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
@@ -411,15 +411,21 @@ angular.module('icestudio')
     // Tools
 
     $scope.verifyCode = function() {
-      tools.verifyCode();
+      if (!graph.isEmpty()) {
+        tools.verifyCode();
+      }
     };
 
     $scope.buildCode = function() {
-      tools.buildCode();
+      if (!graph.isEmpty()) {
+        tools.buildCode();
+      }
     };
 
     $scope.uploadCode = function() {
-      tools.uploadCode();
+      if (!graph.isEmpty()) {
+        tools.uploadCode();
+      }
     }
 
     $scope.installToolchain = function() {
@@ -428,5 +434,13 @@ angular.module('icestudio')
 
     $scope.removeToolchain = function() {
       tools.removeToolchain();
+    }
+
+    $scope.enableDrivers = function() {
+      tools.enableDrivers();
+    }
+
+    $scope.disableDrivers = function() {
+      tools.disableDrivers();
     }
   });

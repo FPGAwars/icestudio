@@ -184,6 +184,16 @@
                       <li ng-class="toolchain.disabled ? 'disabled' : ''">
                         <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
                       </li>
+                      <li class="divider"></li>
+                      <li>
+                        <li>
+                          <a href ng-click="enableDrivers()">{{ 'enable_drivers' | translate }}
+                          </a>
+                        </li>
+                      <li>
+                        <a href ng-click="disableDrivers()">{{ 'disable_drivers' | translate }}
+                        </a>
+                      </li>
                     </ul>
                 </li>
 
