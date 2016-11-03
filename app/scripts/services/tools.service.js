@@ -145,7 +145,7 @@ angular.module('icestudio')
           var remoteHostname = profile.data.remoteHostname;
 
           if (remoteHostname) {
-            currentAlert.setContent('Synchronize remote files ...');
+            currentAlert.setContent($translate.instant('sync_remote_files'));
             nodeRSync({
               src: nodeProcess.cwd() + '/',
               dest: remoteHostname + ':_build/',
@@ -156,7 +156,7 @@ angular.module('icestudio')
               exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
             }, function (error, stdout, stderr, cmd) {
               if (!error) {
-                currentAlert.setContent('Execute remote ' + label + ' ...');
+                currentAlert.setContent($translate.instant('execute_remote', { label: label }));
                 nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
                   function (error, stdout, stderr) {
                     processExecute(label, callback, error, stdout, stderr);

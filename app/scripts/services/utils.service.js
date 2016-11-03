@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo',
-      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo) {
+    .service('utils', ['$translate', 'nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo',
+      function($translate, nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -334,13 +334,13 @@ angular.module('icestudio')
             endLazyProcess();
             if (!error) {
               if (enable) {
-                alertify.success('Drivers enabled');
+                alertify.success($translate.instant('drivers_enabled'));
               }
               else {
-                alertify.warning('Drivers disabled');
+                alertify.warning($translate.instant('drivers_disabled'));
               }
               setTimeout(function() {
-                 alertify.notify('<b>Unplug</b> and <b>reconnect</b> the board', 'message', 5);
+                 alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
               }, 1000);
             }
           });
@@ -365,14 +365,14 @@ angular.module('icestudio')
                 endLazyProcess();
                 if (error) {
                   if (stderr.indexOf('brew: command not found') != -1) {
-                    alertify.notify('Homebrew is required', 'error', 5);
+                    alertify.notify($translate.instant('homebrew_required'), 'error', 5);
                   }
                   else {
                     alertify.notify(stderr, 'error', 5);
                   }
                 }
                 else {
-                  alertify.success('Drivers enabled');
+                  alertify.success($translate.instant('drivers_enabled'));
                 }
               });
             }
@@ -391,41 +391,35 @@ angular.module('icestudio')
             // console.log(error, stdout, stderr);
             endLazyProcess();
             if (!error) {
-              alertify.warning('Drivers disabled');
+              alertify.warning($translate.instant('drivers_disabled'));
             }
           });
         }
 
         function enableWindowsDrivers() {
-          alertify.confirm('<h4>FTDI driver installation instructions</h4><ol>' +
-                           '<li>Connect the FPGA board</li>' +
-                           '<li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li>' +
-                           '<li>Unplug and reconnect the board</li></ol><br>' +
-                           '<p><i>Note: Windows 10 + USB 3.0 combination may also require to replace the (Interface 1) driver by libusb-win32</i></p>', function() {
+          alertify.confirm($translate.instant('install_drivers_windows'), function() {
             beginLazyProcess();
             nodeChildProcess.exec([ENV_APIO, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (error) {
-                alertify.notify('Toolchain not installed. Please, install or upgrade the toolchain', 'error', 5);
+                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
               }
               else {
-                alertify.notify('<b>Unplug</b> and <b>reconnect</b> the board', 'message', 5);
+                alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
               }
             });
           });
         }
 
         function disableWindowsDrivers() {
-          alertify.confirm('<h4>FTDI driver uninstallation instructions</h4><ol>' +
-                           '<li>Find the FPGA USB Device</li>' +
-                           '<li>Select the board interface and uninstall the driver</li></ol>', function() {
+          alertify.confirm($translate.instant('uninstall_drivers_windows'), function() {
             beginLazyProcess();
             nodeChildProcess.exec([ENV_APIO, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (error) {
-                alertify.notify('Toolchain not installed. Please, install or upgrade the toolchain', 'error', 5);
+                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
               }
             });
           });
