@@ -271,6 +271,7 @@ angular.module('icestudio')
             apioInstallScons,
             apioInstallIcestorm,
             apioInstallIverilog,
+            apioInstallDrivers,
             installationCompleted
           ]);
 
@@ -350,6 +351,13 @@ angular.module('icestudio')
         function apioInstallIverilog(callback) {
           updateProgress('apio install iverilog', 90);
           utils.apioInstall('iverilog', callback);
+        }
+
+        function apioInstallDrivers(callback) {
+          if (nodeOs.platform().indexOf('win32') > -1) {
+            updateProgress('apio install drivers', 95);
+            utils.apioInstall('drivers', callback);
+          }
         }
 
         function installationCompleted(callback) {

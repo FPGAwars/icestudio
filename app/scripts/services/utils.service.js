@@ -291,7 +291,7 @@ angular.module('icestudio')
 
         this.enableDrivers = function() {
           if (WIN32) {
-
+            enableWindowsDrivers();
           }
           else if (DARWIN) {
             enableDarwinDrivers();
@@ -303,7 +303,7 @@ angular.module('icestudio')
 
         this.disableDrivers = function() {
           if (WIN32) {
-
+            disableWindowsDrivers();
           }
           else if (DARWIN) {
             disableDarwinDrivers();
@@ -340,7 +340,7 @@ angular.module('icestudio')
                 alertify.warning('Drivers disabled');
               }
               setTimeout(function() {
-                 alertify.notify('<b>Unplug</b> and <b>reconnect</b> your board', 'message', 5);
+                 alertify.notify('<b>Unplug</b> and <b>reconnect</b> the board', 'message', 5);
               }, 1000);
             }
           });
@@ -393,6 +393,41 @@ angular.module('icestudio')
             if (!error) {
               alertify.warning('Drivers disabled');
             }
+          });
+        }
+
+        function enableWindowsDrivers() {
+          alertify.confirm('<h4>FTDI driver installation instructions</h4><ol>' +
+                           '<li>Connect the FPGA board</li>' +
+                           '<li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li>' +
+                           '<li>Unplug and reconnect the board</li></ol><br>' +
+                           '<p><i>Note: Windows 10 + USB 3.0 combination may also require to replace the (Interface 1) driver by libusb-win32</i></p>', function() {
+            beginLazyProcess();
+            nodeChildProcess.exec([ENV_APIO, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
+              // console.log(error, stdout, stderr);
+              endLazyProcess();
+              if (error) {
+                alertify.notify('Toolchain not installed. Please, install or upgrade the toolchain', 'error', 5);
+              }
+              else {
+                alertify.notify('<b>Unplug</b> and <b>reconnect</b> the board', 'message', 5);
+              }
+            });
+          });
+        }
+
+        function disableWindowsDrivers() {
+          alertify.confirm('<h4>FTDI driver uninstallation instructions</h4><ol>' +
+                           '<li>Find the FPGA USB Device</li>' +
+                           '<li>Select the board interface and uninstall the driver</li></ol>', function() {
+            beginLazyProcess();
+            nodeChildProcess.exec([ENV_APIO, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+              // console.log(error, stdout, stderr);
+              endLazyProcess();
+              if (error) {
+                alertify.notify('Toolchain not installed. Please, install or upgrade the toolchain', 'error', 5);
+              }
+            });
           });
         }
 
