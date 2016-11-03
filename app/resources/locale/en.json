@@ -36,7 +36,7 @@
   "install_toolchain": "Install toolchain",
   "upgrade_toolchain": "Upgrade toolchain",
   "remove_toolchain": "Remove toolchain",
-  "toolchain_not_installed": "Toolchain not installed. Please, install or upgrade the toolchain",
+  "toolchain_not_installed": "Toolchain not updated. Please, install or upgrade the toolchain",
   "enable_drivers": "Enable drivers",
   "drivers_enabled": "Drivers enabled",
   "disable_drivers": "Disable drivers",
