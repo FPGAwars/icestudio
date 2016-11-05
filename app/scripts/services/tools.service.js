@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodeOnline', 'common', 'boards', 'compiler', 'utils',
+      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodeOnline, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false, disabled: false };
@@ -327,8 +327,8 @@ angular.module('icestudio')
 
         function ensureInternetConnection(callback) {
           updateProgress('Check Internet connection...', 20);
-          nodePing.probe('google.com', function(isAlive) {
-            if (isAlive) {
+          nodeOnline(function(err, online) {
+            if (online) {
               callback();
             }
             else {

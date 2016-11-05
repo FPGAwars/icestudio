@@ -28,9 +28,6 @@ angular.module('icestudio')
   .factory('nodeTarball', function() {
     return require('tarball-extract');
   })
-  .factory('nodePing', function() {
-    return require('ping').sys;
-  })
   .factory('nodeZlib', function() {
     return require('zlib');
   })
@@ -42,4 +39,7 @@ angular.module('icestudio')
   })
   .factory('nodeSudo', function() {
     return require('sudo-prompt');
+  })
+  .factory('nodeOnline', function() {
+    return require('is-online');
   });

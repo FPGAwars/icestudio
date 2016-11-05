@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "fs-extra": "^0.30.0",
+    "is-online": "^5.1.2",
     "jquery": "^2.2.3",
     "os": "^0.1.1",
     "path": "^0.12.7",
-    "ping": "^0.1.10",
     "rmdir": "^1.2.0",
     "rsyncwrapper": "^2.0.0",
     "sha1": "^1.1.1",
