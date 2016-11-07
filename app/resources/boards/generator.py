@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # -- This script generates a board json file from a pcf
 # -- Author Jesús Arroyo (C) 2016
@@ -12,12 +12,18 @@ import json
 print('Pinout generator')
 print('----------------')
 
+# Python 2-3 compat
+try:
+    input = raw_input
+except:
+    pass
+
 # Load parameters
 name = input('Insert board name: ')  # eg. icoboard
 label = input('Insert board label: ')  # eg. icoBOARD 1.0
 
 # Regex pattern
-pattern = 'set_io\s--warn-no-port\s(?P<name>.*?)\s+(?P<value>.*?)\n'
+pattern = 'set_io\s--warn-no-port\s(?P<name>.*?)\s+(?P<value>.*?)\s'
 
 # Open file
 with open(name + '.pcf') as file:
