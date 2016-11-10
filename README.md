@@ -14,7 +14,7 @@ Supported boards:
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
 * [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
-* [icoBOARD 1.0](http://icoboard.org/icoboard-1-0.html)
+* [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
 * [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 
@@ -120,6 +120,8 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
  * [Juan González (Obijuan)](https://github.com/Obijuan)
  * [Carlos Díaz](https://github.com/C47D)
  * [Xoan Sampaiño](https://github.com/xoan)
+ * [Salvador E. Tropea](https://github.com/set-soft)
+ * [Democrito](https://github.com/Democrito)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
