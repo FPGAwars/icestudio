@@ -29,17 +29,17 @@ Supported boards:
 
   * New blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
 
-## Version 0.2.1
+## Version 0.2.2
 
 ### Installation
 
-1. Install and configure the [drivers](http://apiodoc.readthedocs.io/en/stable/source/installation.html#install-fpga-ftdi-drivers)
+1. Install [Python 2.7](https://www.python.org)
 
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute **icestudio**
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unzip and execute **icestudio**
 
 **Documentation: http://icestudio.readthedocs.io**
 
-NOTE: supported on Linux, Windows and Mac.
+Supported on Linux, Windows and Mac OSX.
 
 <img src="./doc/images/icestudio-0.2.1.png" width="700" align="center">
 
