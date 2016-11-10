@@ -10,11 +10,12 @@
 
 Supported boards:
 
-* [Icezum Alhambra](https://github.com/FPGAwars/icezum)
+* [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
 * [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
-* [icoBOARD 1.0](http://icoboard.org/icoboard-1-0.html)
+* [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
+* [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 
 ## Roadmap
@@ -28,17 +29,17 @@ Supported boards:
 
   * New blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
 
-## Version 0.2.1
+## Version 0.2.2
 
 ### Installation
 
-1. Install and configure the [drivers](http://apiodoc.readthedocs.io/en/stable/source/installation.html#install-fpga-ftdi-drivers)
+1. Install [Python 2.7](https://www.python.org)
 
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unpack the zip and execute **icestudio**
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unzip and execute **icestudio**
 
 **Documentation: http://icestudio.readthedocs.io**
 
-NOTE: supported on Linux, Windows and Mac.
+Supported on Linux, Windows and Mac OSX.
 
 <img src="./doc/images/icestudio-0.2.1.png" width="700" align="center">
 
@@ -119,6 +120,8 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
  * [Juan González (Obijuan)](https://github.com/Obijuan)
  * [Carlos Díaz](https://github.com/C47D)
  * [Xoan Sampaiño](https://github.com/xoan)
+ * [Salvador E. Tropea](https://github.com/set-soft)
+ * [Democrito](https://github.com/Democrito)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 

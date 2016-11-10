@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodePing', 'common', 'boards', 'compiler', 'utils',
-      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodePing, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodeOnline', 'common', 'boards', 'compiler', 'utils',
+      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodeOnline, common, boards, compiler, utils) {
 
         var currentAlert = null;
-        var toolchain = { installed: false };
+        var toolchain = { installed: false, disabled: false };
 
         this.toolchain = toolchain;
         this.buildPath = '_build';
@@ -29,7 +29,7 @@ angular.module('icestudio')
           var check = true;
           var code = this.generateCode();
           if (code) {
-            if (toolchain.installed) {
+            if (toolchain.installed || toolchain.disabled) {
               angular.element('#menu').addClass('disable-menu');
               currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
@@ -61,7 +61,7 @@ angular.module('icestudio')
               }
             }
             else {
-              installToolchain();
+              alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
             }
           }
         }
@@ -69,9 +69,10 @@ angular.module('icestudio')
         function checkToolchain() {
           var apio = utils.getApioExecutable();
           var exists = nodeFs.existsSync(apio);
+          toolchain.disabled = utils.toolchainDisabled;
           if (exists) {
             nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
-              if (stdout) {
+              if (stdout && !toolchain.disabled) {
                 toolchain.installed = (stdout.indexOf('not installed') == -1);
               }
             });
@@ -96,7 +97,10 @@ angular.module('icestudio')
           nodeFse.removeSync('!(main.*)');
 
           // Sync Verilog files
-          if (ret) ret = this.syncFiles(/@include (.*?)\.v/g, 'v', code);
+          if (ret) ret = this.syncFiles(/@include (.*?)\.v\s+/g, 'v', code);
+
+          // Sync Verilog Header files
+          if (ret) ret = this.syncFiles(/@include (.*?)\.vh\s+/g, 'vh', code);
 
           // Sync List files
           if (ret) ret = this.syncFiles(/\"(.*?)\.list\"/g, 'list', code);
@@ -142,7 +146,7 @@ angular.module('icestudio')
           var remoteHostname = profile.data.remoteHostname;
 
           if (remoteHostname) {
-            currentAlert.setContent('Synchronize remote files ...');
+            currentAlert.setContent($translate.instant('sync_remote_files'));
             nodeRSync({
               src: nodeProcess.cwd() + '/',
               dest: remoteHostname + ':_build/',
@@ -153,7 +157,7 @@ angular.module('icestudio')
               exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
             }, function (error, stdout, stderr, cmd) {
               if (!error) {
-                currentAlert.setContent('Execute remote ' + label + ' ...');
+                currentAlert.setContent($translate.instant('execute_remote', { label: label }));
                 nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
                   function (error, stdout, stderr) {
                     processExecute(label, callback, error, stdout, stderr);
@@ -165,7 +169,9 @@ angular.module('icestudio')
             });
           }
           else {
-            nodeChildProcess.exec(([utils.getApioExecutable()].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+            var apio = utils.getApioExecutable();
+            toolchain.disabled = utils.toolchainDisabled;
+            nodeChildProcess.exec(([apio].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
               function(error, stdout, stderr) {
                 processExecute(label, callback, error, stdout, stderr);
               });
@@ -236,48 +242,65 @@ angular.module('icestudio')
 
         function installToolchain() {
 
-          // Configure alert
-          alertify.defaults.closable = false;
+          if (!toolchain.disabled) {
+            // Configure alert
+            alertify.defaults.closable = false;
 
-          utils.disableClickEvent();
+            utils.disableClickEvent();
 
-          var content = [
-            '<div>',
-            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
-            '  </br>',
-            '  <div class="progress">',
-            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-            '    </div>',
-            '  </div>',
-            '</div>'].join('\n');
-          alertify.alert(content, function() {
-            setTimeout(function() {
-              initProgress();
-            }, 200);
-          });
+            var content = [
+              '<div>',
+              '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
+              '  </br>',
+              '  <div class="progress">',
+              '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
+              '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+              '    </div>',
+              '  </div>',
+              '</div>'].join('\n');
+              alertify.alert(content, function() {
+                setTimeout(function() {
+                  initProgress();
+                }, 200);
+              });
 
-          // Install toolchain
-          async.series([
-            ensurePythonIsAvailable,
-            extractVirtualEnv,
-            makeVenvDirectory,
-            ensureInternetConnection,
-            installApio,
-            apioInstallSystem,
-            apioInstallScons,
-            apioInstallIcestorm,
-            apioInstallIverilog,
-            installationCompleted
-          ]);
+            // Install toolchain
+            async.series([
+              ensurePythonIsAvailable,
+              extractVirtualEnv,
+              makeVenvDirectory,
+              ensureInternetConnection,
+              installApio,
+              apioInstallSystem,
+              apioInstallScons,
+              apioInstallIcestorm,
+              apioInstallIverilog,
+              apioInstallDrivers,
+              installationCompleted
+            ]);
 
-          // Restore alert
-          alertify.defaults.closable = true;
+            // Restore alert
+            alertify.defaults.closable = true;
+          }
         }
 
         this.removeToolchain = function() {
-          utils.removeToolchain();
-          toolchain.installed = false;
+          if (!toolchain.disabled && toolchain.installed) {
+            alertify.confirm($translate.instant('remove_toolchain_confirmation'),
+              function() {
+                utils.removeToolchain();
+                toolchain.installed = false;
+                alertify.success($translate.instant('toolchain_removed'));
+            });
+          }
+        }
+
+        this.enableDrivers = function() {
+          utils.enableDrivers();
+        }
+
+        this.disableDrivers = function() {
+          utils.disableDrivers();
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -304,8 +327,8 @@ angular.module('icestudio')
 
         function ensureInternetConnection(callback) {
           updateProgress('Check Internet connection...', 20);
-          nodePing.probe('google.com', function(isAlive) {
-            if (isAlive) {
+          nodeOnline(function(err, online) {
+            if (online) {
               callback();
             }
             else {
@@ -339,6 +362,16 @@ angular.module('icestudio')
         function apioInstallIverilog(callback) {
           updateProgress('apio install iverilog', 90);
           utils.apioInstall('iverilog', callback);
+        }
+
+        function apioInstallDrivers(callback) {
+          if (nodeOs.platform().indexOf('win32') > -1) {
+            updateProgress('apio install drivers', 95);
+            utils.apioInstall('drivers', callback);
+          }
+          else {
+            callback();
+          }
         }
 
         function installationCompleted(callback) {

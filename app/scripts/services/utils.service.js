@@ -1,11 +1,13 @@
+
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib',
-      function(nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib) {
+    .service('utils', ['$translate', 'nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo',
+      function($translate, nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
+        const LINUX = Boolean(nodeOs.platform().indexOf('linux') > -1);
 
         const VENV = 'virtualenv-15.0.1';
         const VENV_DIR = nodePath.join('_build', VENV);
@@ -19,6 +21,7 @@ angular.module('icestudio')
 
         const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
         const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
+        const SYSTEM_APIO = '/usr/bin/apio';
 
         function _get_env_dir(defaultEnvDir) {
           if (WIN32) {
@@ -145,14 +148,26 @@ angular.module('icestudio')
         }
 
         this.installApio = function(callback) {
-          this.executeCommand([ENV_PIP, 'install', '-U', 'apio'], callback);
+          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=0.1.9,<0.2.0"'], callback);
         }
 
         this.apioInstall = function(_package, callback) {
           this.executeCommand([ENV_APIO, 'install', _package], callback);
         }
 
+        this.toolchainDisabled = false;
+
         this.getApioExecutable = function() {
+          var candidate_apio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : SYSTEM_APIO;
+          if (nodeFs.existsSync(candidate_apio)) {
+            if (!this.toolchainDisabled) {
+              // Show message only on start
+              alertify.notify('Using system wide apio', 'message', 5);
+            }
+            this.toolchainDisabled = true;
+            return candidate_apio;
+          }
+          this.toolchainDisabled = false;
           return ENV_APIO;
         }
 
@@ -285,6 +300,156 @@ angular.module('icestudio')
           });
 
           return fileTree;
-        };
+        }
+
+        this.enableDrivers = function() {
+          if (WIN32) {
+            enableWindowsDrivers();
+          }
+          else if (DARWIN) {
+            enableDarwinDrivers();
+          }
+          else {
+            linuxDrivers(true);
+          }
+        }
+
+        this.disableDrivers = function() {
+          if (WIN32) {
+            disableWindowsDrivers();
+          }
+          else if (DARWIN) {
+            disableDarwinDrivers();
+          }
+          else {
+            linuxDrivers(false);
+          }
+        }
+
+        function linuxDrivers(enable) {
+          if (enable) {
+            var commands = [
+              'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
+              'service udev restart'
+            ];
+          }
+          else {
+            var commands = [
+              'rm /etc/udev/rules.d/80-icestick.rules',
+              'service udev restart'
+            ];
+          }
+          var command = 'sh -c "' + commands.join('; ') + '"';
+
+          beginLazyProcess();
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+            endLazyProcess();
+            if (!error) {
+              if (enable) {
+                alertify.success($translate.instant('drivers_enabled'));
+              }
+              else {
+                alertify.warning($translate.instant('drivers_disabled'));
+              }
+              setTimeout(function() {
+                 alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
+              }, 1000);
+            }
+          });
+        }
+
+        function enableDarwinDrivers() {
+          var commands = [
+            'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+            'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
+          ];
+          var command = 'sh -c "' + commands.join('; ') + '"';
+
+          beginLazyProcess();
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+            if (error) {
+              endLazyProcess();
+            }
+            else {
+              nodeChildProcess.exec('/usr/local/bin/brew install libftdi', function(error, stdout, stderr) {
+                // console.log(error, stdout, stderr);
+                endLazyProcess();
+                if (error) {
+                  if ((stderr.indexOf('brew: command not found') != -1) ||
+                       (stderr.indexOf('brew: No such file or directory') != -1)) {
+                    alertify.notify($translate.instant('homebrew_required'), 'error', 5);
+                  }
+                  else if (stderr.indexOf('Error: Failed to download') != -1) {
+                    alertify.notify($translate.instant('internet_connection_required'), 'error', 5);
+                  }
+                  else {
+                    alertify.notify(stderr, 'error', 5);
+                  }
+                }
+                else {
+                  alertify.success($translate.instant('drivers_enabled'));
+                }
+              });
+            }
+          });
+        }
+
+        function disableDarwinDrivers() {
+          var commands = [
+            'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+            'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
+          ];
+          var command = 'sh -c "' + commands.join('; ') + '"'
+
+          beginLazyProcess();
+          nodeSudo.exec(command, {name: 'Icestudio'}, function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
+            endLazyProcess();
+            if (!error) {
+              alertify.warning($translate.instant('drivers_disabled'));
+            }
+          });
+        }
+
+        function enableWindowsDrivers() {
+          alertify.confirm($translate.instant('install_drivers_windows'), function() {
+            beginLazyProcess();
+            nodeChildProcess.exec([ENV_APIO, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
+              // console.log(error, stdout, stderr);
+              endLazyProcess();
+              if (stderr) {
+                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
+              }
+              else {
+                alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
+              }
+            });
+          });
+        }
+
+        function disableWindowsDrivers() {
+          alertify.confirm($translate.instant('uninstall_drivers_windows'), function() {
+            beginLazyProcess();
+            nodeChildProcess.exec([ENV_APIO, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+              // console.log(error, stdout, stderr);
+              endLazyProcess();
+              if (error) {
+                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
+              }
+            });
+          });
+        }
+
+        function beginLazyProcess() {
+          $('body').addClass('waiting');
+          angular.element('#menu').addClass('disable-menu');
+        }
+
+        function endLazyProcess() {
+          $('body').removeClass('waiting');
+          angular.element('#menu').removeClass('disable-menu');
+        }
 
     }]);
