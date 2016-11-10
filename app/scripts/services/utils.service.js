@@ -373,11 +373,12 @@ angular.module('icestudio')
               endLazyProcess();
             }
             else {
-              nodeChildProcess.exec('brew install libftdi', function(error, stdout, stderr) {
+              nodeChildProcess.exec('/usr/local/bin/brew install libftdi', function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
                 endLazyProcess();
                 if (error) {
-                  if (stderr.indexOf('brew: command not found') != -1) {
+                  if ((stderr.indexOf('brew: command not found') != -1) ||
+                       (stderr.indexOf('brew: No such file or directory') != -1)) {
                     alertify.notify($translate.instant('homebrew_required'), 'error', 5);
                   }
                   else {
