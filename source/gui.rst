@@ -26,6 +26,8 @@ File
 
 * **Export verilog**: show a save file dialog to export the current verilog code file (.v).
 * **Export PCF**: show a save file dialog to export the current pcf file (.pcf).
+* **Export testbench**: show a save file dialog to export a auto-generated testbench (.v).
+* **Export GTKWave**: show a save file dialog to export a GTKWave file with all signals showed (.gtkw).
 
 .. note::
 
@@ -71,6 +73,9 @@ Tools
 
 * **Install/Upgrade toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
 * **Remove toolchain**: remove the directories `.icestudio` and `.apio`.
+
+* **Enable drivers**: launch the FTDI drivers configuration. Each OS has a different process.
+* **Disable drivers**: revert the FTDI drivers configuration. Each OS has a different process.
 
 .. hint::
 
