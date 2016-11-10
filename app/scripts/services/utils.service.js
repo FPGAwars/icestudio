@@ -148,7 +148,7 @@ angular.module('icestudio')
         }
 
         this.installApio = function(callback) {
-          this.executeCommand([ENV_PIP, 'install', '-U', 'apio'], callback);
+          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=0.1.9,<0.2.0"'], callback);
         }
 
         this.apioInstall = function(_package, callback) {
