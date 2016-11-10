@@ -381,6 +381,9 @@ angular.module('icestudio')
                        (stderr.indexOf('brew: No such file or directory') != -1)) {
                     alertify.notify($translate.instant('homebrew_required'), 'error', 5);
                   }
+                  else if (stderr.indexOf('Error: Failed to download') != -1) {
+                    alertify.notify($translate.instant('internet_connection_required'), 'error', 5);
+                  }
                   else {
                     alertify.notify(stderr, 'error', 5);
                   }
@@ -416,7 +419,7 @@ angular.module('icestudio')
             nodeChildProcess.exec([ENV_APIO, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
-              if (error) {
+              if (stderr) {
                 alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
               }
               else {

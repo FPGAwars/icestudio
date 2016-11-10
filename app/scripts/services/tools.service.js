@@ -61,7 +61,7 @@ angular.module('icestudio')
               }
             }
             else {
-              installToolchain();
+              alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
             }
           }
         }

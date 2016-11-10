@@ -43,7 +43,7 @@
   "drivers_disabled": "Drivers deshabilitados",
   "homebrew_required": "Homebrew es necesario",
   "unplug_and_reconnect": "<b>Desconecta</b> y <b>conecta</b> la placa",
-  "install_drivers_windows": "<h4>Instrucciones de instalación del driver FTDI</h4><ol><li>Conecta la placa FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la placa por <b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol><br><p><i>Nota: la combinación de Windows 10 + USB 3.0 puede requerir reemplazar el driver de la (Interface 1) por libusb-win32</i></p>",
+  "install_drivers_windows": "<h4>Instrucciones de instalación del driver FTDI</h4><ol><li>Conecta la placa FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la placa por <b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol><br><p><i>Aviso: no funciona con Windows 10 + USB 3.0</i></p>",
   "uninstall_drivers_windows": "<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra el dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala el driver</li></ol>",
   "view_license": "Ver licencia",
   "version": "Versión",
