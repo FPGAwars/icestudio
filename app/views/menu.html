@@ -10,6 +10,8 @@
 
     <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.v"/>
     <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.pcf"/>
+    <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.v"/>
+    <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.gtkw"/>
 
     <nav class="navbar navbar-default" role="navigation">
 
@@ -76,6 +78,12 @@
                       </li>
                       <li>
                         <a href ng-click="exportPCF()">{{ 'export_pcf' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="exportTestbench()">{{ 'export_testbench' | translate }}</a>
+                      </li>
+                      <li>
+                        <a href ng-click="exportGTKwave()">{{ 'export_gtkwave' | translate }}</a>
                       </li>
                     </ul>
                 </li>
@@ -170,11 +178,21 @@
                         <a href ng-click="uploadCode()">{{ 'upload' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li>
+                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
                         <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade_toolchain' : 'install_toolchain' | translate }}</a>
                       </li>
-                      <li>
+                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
                         <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <li>
+                          <a href ng-click="enableDrivers()">{{ 'enable_drivers' | translate }}
+                          </a>
+                        </li>
+                      <li>
+                        <a href ng-click="disableDrivers()">{{ 'disable_drivers' | translate }}
+                        </a>
                       </li>
                     </ul>
                 </li>

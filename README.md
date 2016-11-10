@@ -10,11 +10,12 @@
 
 Supported boards:
 
-* [Icezum Alhambra](https://github.com/FPGAwars/icezum)
+* [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
 * [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
 * [icoBOARD 1.0](http://icoboard.org/icoboard-1-0.html)
+* [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 
 ## Roadmap

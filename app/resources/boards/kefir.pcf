@@ -1,0 +1,47 @@
+# -----------------------------------------------------------------------------
+#- Kefir I HX4K constraint file (.pcf)
+# -----------------------------------------------------------------------------
+
+# Capacitive-sense buttons
+set_io --warn-no-port BTN1 136
+set_io --warn-no-port BTN2 134
+set_io --warn-no-port BTN3 128
+set_io --warn-no-port BTN4 122
+
+# LED outputs
+set_io --warn-no-port LED1 137
+set_io --warn-no-port LED2 135
+set_io --warn-no-port LED3 129
+set_io --warn-no-port LED4 121
+
+# Clock input
+set_io --warn-no-port CLK 49
+
+# SPI Flash enable control
+set_io --warn-no-port SS_B 71
+
+# MCP3008 A/D
+set_io --warn-no-port AD_CS   101
+set_io --warn-no-port AD_Din  102
+set_io --warn-no-port AD_Dout 104
+set_io --warn-no-port AD_Clk  105
+
+# USB
+set_io --warn-no-port USB_Vp_o 112
+set_io --warn-no-port USB_Vm_o 113
+set_io --warn-no-port USB_Vm_i 114
+set_io --warn-no-port USB_Vp_i 115
+set_io --warn-no-port USB_nOE  116
+
+set_io --warn-no-port ARDU00 138
+set_io --warn-no-port ARDU01 141
+set_io --warn-no-port ARDU02 143
+set_io --warn-no-port ARDU03 1
+
+# Arduino Power (P2)
+# Active low RESET
+set_io --warn-no-port RESET_P2 73
+
+# Milk channel A
+set_io --warn-no-port Milk_TXD 37
+set_io --warn-no-port Milk_RXD 38

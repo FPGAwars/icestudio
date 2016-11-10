@@ -239,6 +239,48 @@ angular.module('icestudio')
       }
     }
 
+    $scope.exportTestbench = function() {
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-testbench');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.v')) {
+                  filepath += '.v';
+              }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
+              common.exportTestbench(filepath);
+            }
+          });
+          ctrl.click();
+        }, 0);
+      }
+    }
+
+    $scope.exportGTKwave = function() {
+      if (!graph.isEmpty()) {
+        setTimeout(function() {
+          var ctrl = angular.element('#input-export-gtkwave');
+          ctrl.on('change', function(event) {
+            var file = event.target.files[0];
+            if (file) {
+              event.target.files.clear();
+              var filepath = file.path;
+              if (! filepath.endsWith('.gtkw')) {
+                  filepath += '.gtkw';
+              }
+              $scope.workingdir = utils.dirname(filepath) + utils.sep;
+              common.exportGTKWave(filepath);
+            }
+          });
+          ctrl.click();
+        }, 0);
+      }
+    }
+
     // Edit
 
     $scope.setImagePath = function() {
@@ -360,7 +402,7 @@ angular.module('icestudio')
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars June-September 2016</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
@@ -369,15 +411,21 @@ angular.module('icestudio')
     // Tools
 
     $scope.verifyCode = function() {
-      tools.verifyCode();
+      if (!graph.isEmpty()) {
+        tools.verifyCode();
+      }
     };
 
     $scope.buildCode = function() {
-      tools.buildCode();
+      if (!graph.isEmpty()) {
+        tools.buildCode();
+      }
     };
 
     $scope.uploadCode = function() {
-      tools.uploadCode();
+      if (!graph.isEmpty()) {
+        tools.uploadCode();
+      }
     }
 
     $scope.installToolchain = function() {
@@ -385,10 +433,14 @@ angular.module('icestudio')
     }
 
     $scope.removeToolchain = function() {
-      alertify.confirm($translate.instant('remove_toolchain_confirmation'),
-        function() {
-          tools.removeToolchain();
-          alertify.success($translate.instant('toolchain_removed'));
-      });
+      tools.removeToolchain();
+    }
+
+    $scope.enableDrivers = function() {
+      tools.enableDrivers();
+    }
+
+    $scope.disableDrivers = function() {
+      tools.disableDrivers();
     }
   });

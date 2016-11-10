@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 35.530029 51.500018"
+   xml:space="preserve"
+   inkscape:version="0.91 r"
+   sodipodi:docname="7segmentos_CATODO.svg"
+   width="35.530029"
+   height="51.500019"><metadata
+     id="metadata4230"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs4228" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="744"
+     id="namedview4226"
+     showgrid="false"
+     inkscape:zoom="5.0495743"
+     inkscape:cx="-2.3605467"
+     inkscape:cy="34.654146"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" /><style
+     type="text/css"
+     id="style4204">
+	.st0{fill:#FF0000;}
+	.st1{font-family:'FranklinGothic-DemiCond';}
+	.st2{font-size:9.5149px;}
+</style><g
+     id="g4206"
+     transform="matrix(0.6767625,0,0,0.6767625,-11.031229,-3.5207709)"><polygon
+       class="st0"
+       points="27.7,20 27.7,20.1 53.4,20.1 53.4,20 56.4,16.8 53.9,14.4 53.9,14.4 28.2,14.4 28.2,14.5 28.2,14.4 25.1,17.7 27.7,20 "
+       id="polygon4208"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="25.1,50.4 25.1,50.5 50.8,50.5 50.8,50.4 53.8,47.2 51.2,44.9 51.2,44.8 25.5,44.8 25.5,44.9 25.5,44.8 22.5,48.1 25,50.4 "
+       id="polygon4210"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="48.9,80.8 48.9,80.9 23.2,80.9 23.2,80.8 20.2,77.6 22.7,75.3 22.7,75.2 48.4,75.2 48.4,75.3 48.4,75.3 51.5,78.5 48.9,80.9 "
+       id="polygon4212"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="19,44.6 21.3,46.9 24.4,43.7 26.4,20.9 24.1,18.6 20.8,21.7 "
+       id="polygon4214"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="52.7,43.9 55,46.3 58.1,43.1 60.1,20.3 57.8,18 54.5,21.1 "
+       id="polygon4216"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="16.3,75.2 18.5,77.6 21.7,74.4 23.7,51.6 21.4,49.3 18.1,52.4 "
+       id="polygon4218"
+       style="fill:#ff0000" /><polygon
+       class="st0"
+       points="49.9,74.6 52.2,77 55.4,73.8 57.4,51 55.1,48.7 51.7,51.8 "
+       id="polygon4220"
+       style="fill:#ff0000" /><circle
+       class="st0"
+       cx="65.099998"
+       cy="77.599998"
+       r="3.7"
+       id="circle4222"
+       style="fill:#ff0000" /></g><text
+     class="st0 st1 st2"
+     id="text4224"
+     x="2.5318303"
+     y="3.3766565"
+     style="font-size:3.64159703px;font-family:FranklinGothic-DemiCond;fill:#ff0000">CATODO COMÚN</text>
+</svg>
