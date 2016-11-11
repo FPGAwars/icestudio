@@ -8,7 +8,7 @@
   "scripts": {
     "start": "grunt serve",
     "dist": "grunt dist",
-    "postinstall": "npmpd && npm install --prefix app && bower install"
+    "postinstall": "npmpd && cd app && npm install && bower install"
   },
   "devDependencies": {
     "bower": "^1.7.9",
