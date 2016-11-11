@@ -31,8 +31,8 @@ module.exports = function(grunt) {
 
     // Executes nw application
     exec: {
-      nw: 'node_modules/nw/bin/nw app',
-      stop_NW: 'killall nw || killall nwjs || true'
+      nw: 'nw app',
+      stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -210,8 +210,9 @@ module.exports = function(grunt) {
           'app/styles/**/*.*',
           'app/views/**/*.*',
           'app/*.*',
-          '!app/a.out',
-          '!app/_build'
+          '!app/*.out',
+          '!app/_build',
+          '!app/zadig.ini'
         ],
         tasks: [
           'wiredep',

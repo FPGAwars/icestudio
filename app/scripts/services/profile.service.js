@@ -20,7 +20,7 @@ angular.module('icestudio')
               }
               if (callback)
                 callback()
-              console.log('Profile loaded');
+              // console.log('Profile loaded');
             };
           })(this));
         }

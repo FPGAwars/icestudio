@@ -6,9 +6,9 @@
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "scripts": {
-    "start": "node_modules/grunt-cli/bin/grunt serve",
-    "dist": "node_modules/grunt-cli/bin/grunt dist",
-    "postinstall": "npm install --prefix app && node_modules/bower/bin/bower install"
+    "start": "grunt serve",
+    "dist": "grunt dist",
+    "postinstall": "npmpd && npm install --prefix app && bower install"
   },
   "devDependencies": {
     "bower": "^1.7.9",
@@ -23,13 +23,14 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-exec": "^1.0.0",
     "grunt-json-minify": "^1.1.0",
-    "grunt-nw-builder": "^2.0.3",
+    "grunt-nw-builder": "^3.1.0",
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^3.0.1",
     "load-grunt-tasks": "^3.5.0",
+    "npm-platform-dependencies": "0.0.12",
     "nw": "^0.12.3"
   },
-  "optionalDependencies": {
+  "darwinDependencies": {
     "grunt-appdmg": "^0.4.0"
   }
 }

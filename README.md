@@ -62,14 +62,6 @@ cd icestudio
 
 ### Install
 
-Linux:
-
-```bash
-npm install --no-optional
-```
-
-Mac OS X:
-
 ```bash
 npm install
 ```

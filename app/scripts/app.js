@@ -28,5 +28,5 @@ angular
 
   ])
   .run(function(nodeFs) {
-    console.log('Start');
+    // console.log('Start');
   });
