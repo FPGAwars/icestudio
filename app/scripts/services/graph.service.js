@@ -602,8 +602,7 @@ angular.module('icestudio')
                 }
                 newCell.translate(6 * gridsize, 6 * gridsize);
                 addCell(newCell);
-                if (type == 'config.pull_up' ||
-                    type == 'config.pull_up_inv') {
+                if (type.indexOf('config.') != -1) {
                   paper.findViewByModel(newCell).$box.addClass('config-block');
                 }
                 var cellView = paper.findViewByModel(newCell);
@@ -859,8 +858,7 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.pull_up' ||
-              blockInstance.type == 'config.pull_up_inv') {
+          if (blockInstance.type.indexOf('config.') != -1) {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 

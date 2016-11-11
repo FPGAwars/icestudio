@@ -2,10 +2,10 @@
   "image": "resources/images/tri_state.svg",
   "state": {
     "pan": {
-      "x": 32.99997367612758,
-      "y": 228.0000044024108
+      "x": 0,
+      "y": 0
     },
-    "zoom": 2.000000106650534
+    "zoom": 1
   },
   "graph": {
     "blocks": [
