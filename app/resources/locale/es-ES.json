@@ -60,6 +60,7 @@
   "config": "Config",
   "pull_up": "Pull up",
   "pull_up_inv": "Pull up inv",
+  "tri_state": "Tri-state",
   "logic": "Lógica",
   "comb": "Comb",
   "demux_1_2": "Demux 1:2",

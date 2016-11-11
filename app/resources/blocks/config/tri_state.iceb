@@ -1,0 +1,122 @@
+{
+  "image": "resources/images/tri_state.svg",
+  "state": {
+    "pan": {
+      "x": 32.99997367612758,
+      "y": 228.0000044024108
+    },
+    "zoom": 2.000000106650534
+  },
+  "graph": {
+    "blocks": [
+      {
+        "id": "5c8e9a35-33e7-46ef-a0cc-cc27edcc99c0",
+        "type": "basic.code",
+        "data": {
+          "code": "  SB_IO #(\n      .PIN_TYPE(6'b1010_01),\n      .PULLUP(1'b0)\n  ) triState (\n      .PACKAGE_PIN(pin),\n      .OUTPUT_ENABLE(oe),\n      .D_OUT_0(din),\n      .D_IN_0(dout)\n  );",
+          "ports": {
+            "in": [
+              "pin",
+              "oe",
+              "din"
+            ],
+            "out": [
+              "dout"
+            ]
+          }
+        },
+        "position": {
+          "x": 248,
+          "y": 32
+        }
+      },
+      {
+        "id": "076fd025-aa42-4f23-ae97-b65aec2298ce",
+        "type": "basic.input",
+        "data": {
+          "label": "pin"
+        },
+        "position": {
+          "x": 32,
+          "y": 40
+        }
+      },
+      {
+        "id": "f96a1baf-fc8b-4c25-b132-12552605743f",
+        "type": "basic.input",
+        "data": {
+          "label": "oe"
+        },
+        "position": {
+          "x": 32,
+          "y": 128
+        }
+      },
+      {
+        "id": "04fdb7a7-2740-4ff1-ad26-56407ef5b958",
+        "type": "basic.input",
+        "data": {
+          "label": "din"
+        },
+        "position": {
+          "x": 32,
+          "y": 216
+        }
+      },
+      {
+        "id": "0b2a85b3-b6ac-4e8a-8b16-dd5a195fb058",
+        "type": "basic.output",
+        "data": {
+          "label": "dout"
+        },
+        "position": {
+          "x": 760,
+          "y": 128
+        }
+      }
+    ],
+    "wires": [
+      {
+        "source": {
+          "block": "076fd025-aa42-4f23-ae97-b65aec2298ce",
+          "port": "out"
+        },
+        "target": {
+          "block": "5c8e9a35-33e7-46ef-a0cc-cc27edcc99c0",
+          "port": "pin"
+        }
+      },
+      {
+        "source": {
+          "block": "f96a1baf-fc8b-4c25-b132-12552605743f",
+          "port": "out"
+        },
+        "target": {
+          "block": "5c8e9a35-33e7-46ef-a0cc-cc27edcc99c0",
+          "port": "oe"
+        }
+      },
+      {
+        "source": {
+          "block": "04fdb7a7-2740-4ff1-ad26-56407ef5b958",
+          "port": "out"
+        },
+        "target": {
+          "block": "5c8e9a35-33e7-46ef-a0cc-cc27edcc99c0",
+          "port": "din"
+        }
+      },
+      {
+        "source": {
+          "block": "5c8e9a35-33e7-46ef-a0cc-cc27edcc99c0",
+          "port": "dout"
+        },
+        "target": {
+          "block": "0b2a85b3-b6ac-4e8a-8b16-dd5a195fb058",
+          "port": "in"
+        }
+      }
+    ]
+  },
+  "deps": {}
+}
