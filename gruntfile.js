@@ -3,12 +3,12 @@ module.exports = function(grunt) {
 
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
-    var platforms = ['osx64'];
+    var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'optionalDependencies'] };
-    var distCommands = ['nwjs', 'appdmg', 'compress:osx64'];
+    var distCommands = ['nwjs', 'appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
-    var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx64'];
+    var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'];
     var options = { scope: ['devDependencies'] };
     var distCommands = ['nwjs', 'compress'];
   }
@@ -185,6 +185,17 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/win64/',
           src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          dest: '.'
+        }]
+      },
+      osx32: {
+        options: {
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx32.zip'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/icestudio/osx32/',
+          src: ['icestudio.app/**'],
           dest: '.'
         }]
       },
