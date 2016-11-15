@@ -2,8 +2,11 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['$translate', 'nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo',
-      function($translate, nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo) {
+    .service('utils', ['$translate', 'nodeFs', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline',
+      function($translate, nodeFs, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline) {
+
+        const APIO_MIN = '0.1.9';
+        const APIO_MAX = '0.2.0';
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -14,13 +17,14 @@ angular.module('icestudio')
         const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
 
         const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
-        const APIO_DIR = nodePath.join(BASE_DIR, '.apio');
         const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
+        const APIO_HOME_DIR = nodePath.join(ICESTUDIO_DIR, 'apio');
         const ENV_DIR = _get_env_dir(nodePath.join(ICESTUDIO_DIR, 'venv'));
         const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
 
         const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
         const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
+        const APIO_CMD = 'export APIO_HOME_DIR=' + APIO_HOME_DIR + '; ' + ENV_APIO;
         const SYSTEM_APIO = '/usr/bin/apio';
 
         function _get_env_dir(defaultEnvDir) {
@@ -147,12 +151,24 @@ angular.module('icestudio')
           }
         }
 
+        this.isOnline = function(callback, error) {
+          nodeOnline(function(err, online) {
+            if (online) {
+              callback();
+            }
+            else {
+              error();
+              callback(true);
+            }
+          });
+        }
+
         this.installApio = function(callback) {
-          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=0.1.9,<0.2.0"'], callback);
+          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=' + APIO_MIN + ',<' + APIO_MAX + '"'], callback);
         }
 
         this.apioInstall = function(_package, callback) {
-          this.executeCommand([ENV_APIO, 'install', _package], callback);
+          this.executeCommand([APIO_CMD, 'install', _package], callback);
         }
 
         this.toolchainDisabled = false;
@@ -168,11 +184,10 @@ angular.module('icestudio')
             return candidate_apio;
           }
           this.toolchainDisabled = false;
-          return ENV_APIO;
+          return APIO_CMD;
         }
 
         this.removeToolchain = function() {
-          deleteFolderRecursive(APIO_DIR);
           deleteFolderRecursive(ICESTUDIO_DIR);
         }
 
@@ -416,7 +431,7 @@ angular.module('icestudio')
         function enableWindowsDrivers() {
           alertify.confirm($translate.instant('install_drivers_windows'), function() {
             beginLazyProcess();
-            nodeChildProcess.exec([ENV_APIO, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
+            nodeChildProcess.exec([APIO_CMD, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (stderr) {
@@ -432,7 +447,7 @@ angular.module('icestudio')
         function disableWindowsDrivers() {
           alertify.confirm($translate.instant('uninstall_drivers_windows'), function() {
             beginLazyProcess();
-            nodeChildProcess.exec([ENV_APIO, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+            nodeChildProcess.exec([APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (error) {

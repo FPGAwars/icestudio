@@ -432,8 +432,16 @@ angular.module('icestudio')
       tools.installToolchain();
     }
 
+    $scope.updateToolchain = function() {
+      tools.updateToolchain();
+    }
+
     $scope.removeToolchain = function() {
       tools.removeToolchain();
+    }
+
+    $scope.resetToolchain = function() {
+      tools.resetToolchain();
     }
 
     $scope.enableDrivers = function() {

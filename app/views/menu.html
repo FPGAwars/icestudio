@@ -187,10 +187,13 @@
                         <a href uib-dropdown-toggle>{{ 'toolchain' | translate }}</a>
                         <ul uib-dropdown-menu>
                           <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                            <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade' : 'install' | translate }}</a>
+                            <a href ng-click="toolchain.installed ? updateToolchain() : installToolchain()">{{ toolchain.installed ? 'update' : 'install' | translate }}</a>
                           </li>
                           <li ng-class="toolchain.disabled ? 'disabled' : ''">
                             <a href ng-click="removeToolchain()">{{ 'remove' | translate }}</a>
+                          </li>
+                          <li ng-class="toolchain.disabled ? 'disabled' : ''">
+                            <a href ng-click="resetToolchain()">{{ 'reset_default' | translate }}</a>
                           </li>
                         </ul>
                       </li>

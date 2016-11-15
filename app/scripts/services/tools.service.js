@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'nodeOnline', 'common', 'boards', 'compiler', 'utils',
-      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, nodeOnline, common, boards, compiler, utils) {
+    .service('tools', ['$translate', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'common', 'boards', 'compiler', 'utils',
+      function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { installed: false, disabled: false };
@@ -68,15 +68,13 @@ angular.module('icestudio')
 
         function checkToolchain() {
           var apio = utils.getApioExecutable();
-          var exists = nodeFs.existsSync(apio);
           toolchain.disabled = utils.toolchainDisabled;
-          if (exists) {
-            nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
-              if (stdout && !toolchain.disabled) {
-                toolchain.installed = (stdout.indexOf('not installed') == -1);
-              }
-            });
-          }
+          nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
+            if (!toolchain.disabled) {
+              toolchain.installed = ((stderr.indexOf('not found') == -1) &&
+                                     (stdout.indexOf('not installed') == -1));
+            }
+          });
         }
 
         this.generateCode = function() {
@@ -238,54 +236,41 @@ angular.module('icestudio')
           }
         }
 
-        this.installToolchain = installToolchain;
-
-        function installToolchain() {
-
+        this.installToolchain = function() {
           if (!toolchain.disabled) {
-            // Configure alert
-            alertify.defaults.closable = false;
-
-            utils.disableClickEvent();
-
-            var content = [
-              '<div>',
-              '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
-              '  </br>',
-              '  <div class="progress">',
-              '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-              '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-              '    </div>',
-              '  </div>',
-              '</div>'].join('\n');
-              alertify.alert(content, function() {
-                setTimeout(function() {
-                  initProgress();
-                }, 200);
+            // Check if cache toolchain exists TODO
+            if (false) {
+              installDefaultToolchain();
+            }
+            else {
+              alertify.confirm('Cache toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?',
+                function() {
+                  installOnlineToolchain();
               });
+            }
+          }
+        }
 
-            // Install toolchain
-            async.series([
-              ensurePythonIsAvailable,
-              extractVirtualEnv,
-              makeVenvDirectory,
-              ensureInternetConnection,
-              installApio,
-              apioInstallSystem,
-              apioInstallScons,
-              apioInstallIcestorm,
-              apioInstallIverilog,
-              apioInstallDrivers,
-              installationCompleted
-            ]);
+        this.updateToolchain = function() {
+          if (!toolchain.disabled) {
+            alertify.confirm('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?',
+              function() {
+                installOnlineToolchain();
+            });
+          }
+        }
 
-            // Restore alert
-            alertify.defaults.closable = true;
+        this.resetToolchain = function() {
+          if (!toolchain.disabled) {
+            alertify.confirm('The toolchain will be restored to default. Do you want to continue?',
+              function() {
+                installDefaultToolchain();
+            });
           }
         }
 
         this.removeToolchain = function() {
-          if (!toolchain.disabled && toolchain.installed) {
+          if (!toolchain.disabled) {
             alertify.confirm($translate.instant('remove_toolchain_confirmation'),
               function() {
                 utils.removeToolchain();
@@ -301,6 +286,83 @@ angular.module('icestudio')
 
         this.disableDrivers = function() {
           utils.disableDrivers();
+        }
+
+        function installDefaultToolchain() {
+          // Configure alert
+          alertify.defaults.closable = false;
+
+          utils.disableClickEvent();
+
+          var content = [
+            '<div>',
+            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
+            '  </br>',
+            '  <div class="progress">',
+            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
+            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+            '    </div>',
+            '  </div>',
+            '</div>'].join('\n');
+            alertify.alert(content, function() {
+              setTimeout(function() {
+                initProgress();
+              }, 200);
+            });
+
+          // Reset toolchain
+          async.series([
+            ensurePythonIsAvailable,
+            extractVirtualEnv,
+            makeVenvDirectory,
+            installDefaultApio,
+            installDefaultApioHomeDir,
+            installationCompleted
+          ]);
+
+          // Restore alert
+          alertify.defaults.closable = true;
+        }
+
+        function installOnlineToolchain() {
+          // Configure alert
+          alertify.defaults.closable = false;
+
+          utils.disableClickEvent();
+
+          var content = [
+            '<div>',
+            '  <p id="progress-message">' + $translate.instant('installing_toolchain') + '</p>',
+            '  </br>',
+            '  <div class="progress">',
+            '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
+            '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
+            '    </div>',
+            '  </div>',
+            '</div>'].join('\n');
+            alertify.alert(content, function() {
+              setTimeout(function() {
+                initProgress();
+              }, 200);
+            });
+
+          // Install toolchain
+          async.series([
+            ensurePythonIsAvailable,
+            extractVirtualEnv,
+            makeVenvDirectory,
+            checkInternetConnection,
+            installApio,
+            apioInstallSystem,
+            apioInstallScons,
+            apioInstallIcestorm,
+            apioInstallIverilog,
+            apioInstallDrivers,
+            installationCompleted
+          ]);
+
+          // Restore alert
+          alertify.defaults.closable = true;
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -325,17 +387,29 @@ angular.module('icestudio')
           utils.makeVenvDirectory(callback);
         }
 
-        function ensureInternetConnection(callback) {
+        // Local installation
+
+        function installDefaultApio(callback) {
+          updateProgress('pip install -U apio', 50);
+          // utils.installApio(callback);
+          callback();
+          // TODO
+        }
+
+        function installDefaultApioHomeDir(callback) {
+          updateProgress('pip install -U apio', 90);
+          // utils.installApio(callback);
+          callback();
+          // TODO
+        }
+
+        // Remote installation
+
+        function checkInternetConnection(callback) {
           updateProgress('Check Internet connection...', 20);
-          nodeOnline(function(err, online) {
-            if (online) {
-              callback();
-            }
-            else {
-              errorProgress($translate.instant('internet_connection_required'));
-              utils.enableClickEvent();
-              callback(true);
-            }
+          utils.isOnline(callback, function() {
+            errorProgress($translate.instant('internet_connection_required'));
+            utils.enableClickEvent();
           });
         }
 
