@@ -73,17 +73,22 @@
                         <a href ng-click="exportAsBlock()">{{ 'export_as_block' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li>
-                        <a href ng-click="exportVerilog()">{{ 'export_verilog' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportPCF()">{{ 'export_pcf' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportTestbench()">{{ 'export_testbench' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportGTKwave()">{{ 'export_gtkwave' | translate }}</a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'export' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li>
+                            <a href ng-click="exportVerilog()">{{ 'verilog' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportPCF()">{{ 'pcf' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportTestbench()">{{ 'testbench' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportGTKwave()">{{ 'gtkwave' | translate }}</a>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                 </li>
