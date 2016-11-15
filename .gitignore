@@ -12,7 +12,9 @@ etc
 .tmp
 dist
 cache
+_cache
 _build
+toolchain
 node_modules
 bower_components
 

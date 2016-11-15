@@ -132,7 +132,7 @@
   "fpga_io_not_defined": "FPGA I/O ports not defined",
   "duplicated_fpga_io": "Duplicated FPGA I/O ports",
   "installing_toolchain": "Installing toolchain",
-  "internet_connection_required": "Internet connection is required",
+  "internet_connection_required": "Internet connection required",
   "installation_completed": "Installation completed",
   "toolchain_installed": "Toolchain installed"
 }

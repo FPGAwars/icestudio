@@ -66,13 +66,16 @@ angular.module('icestudio')
           }
         }
 
-        function checkToolchain() {
+        function checkToolchain(callback) {
           var apio = utils.getApioExecutable();
           toolchain.disabled = utils.toolchainDisabled;
           nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
             if (!toolchain.disabled) {
               toolchain.installed = ((stderr.indexOf('not found') == -1) &&
                                      (stdout.indexOf('not installed') == -1));
+              if (callback) {
+                callback(toolchain.installed);
+              }
             }
           });
         }
@@ -237,47 +240,44 @@ angular.module('icestudio')
         }
 
         this.installToolchain = function() {
-          if (!toolchain.disabled) {
-            // Check if cache toolchain exists TODO
-            if (false) {
-              installDefaultToolchain();
-            }
-            else {
-              alertify.confirm('Cache toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?',
-                function() {
-                  installOnlineToolchain();
-              });
-            }
+          if (utils.checkDefaultToolchain()) {
+            installDefaultToolchain();
           }
-        }
-
-        this.updateToolchain = function() {
-          if (!toolchain.disabled) {
-            alertify.confirm('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?',
+          else {
+            alertify.confirm('Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?',
               function() {
                 installOnlineToolchain();
             });
           }
         }
 
+        this.updateToolchain = function() {
+          alertify.confirm('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?',
+            function() {
+              installOnlineToolchain();
+          });
+        }
+
         this.resetToolchain = function() {
-          if (!toolchain.disabled) {
+          if (utils.checkDefaultToolchain()) {
             alertify.confirm('The toolchain will be restored to default. Do you want to continue?',
               function() {
+                utils.removeToolchain();
                 installDefaultToolchain();
             });
+          }
+          else {
+            alertify.alert('Error: default toolchain not found in \'' + utils.TOOLCHAIN_DIR + '\'');
           }
         }
 
         this.removeToolchain = function() {
-          if (!toolchain.disabled) {
-            alertify.confirm($translate.instant('remove_toolchain_confirmation'),
-              function() {
-                utils.removeToolchain();
-                toolchain.installed = false;
-                alertify.success($translate.instant('toolchain_removed'));
-            });
-          }
+          alertify.confirm($translate.instant('remove_toolchain_confirmation'),
+            function() {
+              utils.removeToolchain();
+              toolchain.installed = false;
+              alertify.success($translate.instant('toolchain_removed'));
+          });
         }
 
         this.enableDrivers = function() {
@@ -315,8 +315,9 @@ angular.module('icestudio')
             ensurePythonIsAvailable,
             extractVirtualEnv,
             makeVenvDirectory,
+            extractDefaultApio,
             installDefaultApio,
-            installDefaultApioHomeDir,
+            extractDefaultApioPackages,
             installationCompleted
           ]);
 
@@ -348,11 +349,11 @@ angular.module('icestudio')
 
           // Install toolchain
           async.series([
+            checkInternetConnection,
             ensurePythonIsAvailable,
             extractVirtualEnv,
             makeVenvDirectory,
-            checkInternetConnection,
-            installApio,
+            installOnlineApio,
             apioInstallSystem,
             apioInstallScons,
             apioInstallIcestorm,
@@ -363,6 +364,14 @@ angular.module('icestudio')
 
           // Restore alert
           alertify.defaults.closable = true;
+        }
+
+        function checkInternetConnection(callback) {
+          updateProgress('Check Internet connection...', 0);
+          utils.isOnline(callback, function() {
+            errorProgress($translate.instant('internet_connection_required'));
+            utils.enableClickEvent();
+          });
         }
 
         function ensurePythonIsAvailable(callback) {
@@ -389,33 +398,26 @@ angular.module('icestudio')
 
         // Local installation
 
-        function installDefaultApio(callback) {
-          updateProgress('pip install -U apio', 50);
-          // utils.installApio(callback);
-          callback();
-          // TODO
+        function extractDefaultApio(callback) {
+          updateProgress('Extract default apio files...', 20);
+          utils.extractDefaultApio(callback);
         }
 
-        function installDefaultApioHomeDir(callback) {
-          updateProgress('pip install -U apio', 90);
-          // utils.installApio(callback);
-          callback();
-          // TODO
+        function installDefaultApio(callback) {
+          updateProgress('Install default apio...', 40);
+          utils.installDefaultApio(callback);
+        }
+
+        function extractDefaultApioPackages(callback) {
+          updateProgress('Extract default apio packages...', 70);
+          utils.extractDefaultApioPackages(callback);
         }
 
         // Remote installation
 
-        function checkInternetConnection(callback) {
-          updateProgress('Check Internet connection...', 20);
-          utils.isOnline(callback, function() {
-            errorProgress($translate.instant('internet_connection_required'));
-            utils.enableClickEvent();
-          });
-        }
-
-        function installApio(callback) {
+        function installOnlineApio(callback) {
           updateProgress('pip install -U apio', 30);
-          utils.installApio(callback);
+          utils.installOnlineApio(callback);
         }
 
         function apioInstallSystem(callback) {
@@ -449,11 +451,18 @@ angular.module('icestudio')
         }
 
         function installationCompleted(callback) {
-          updateProgress($translate.instant('installation_completed'), 100);
-          alertify.success($translate.instant('toolchain_installed'));
-          toolchain.installed = true;
-          utils.enableClickEvent();
-          callback();
+          checkToolchain(function(installed) {
+            if (installed) {
+              updateProgress($translate.instant('installation_completed'), 100);
+              alertify.success($translate.instant('toolchain_installed'));
+            }
+            else {
+              errorProgress('Toolchain not installed');
+              alertify.error('Toolchain not installed');
+            }
+            utils.enableClickEvent();
+            callback();
+          });
         }
 
         function updateProgress(message, value) {
