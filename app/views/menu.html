@@ -183,21 +183,30 @@
                         <a href ng-click="uploadCode()">{{ 'upload' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade_toolchain' : 'install_toolchain' | translate }}</a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'toolchain' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li ng-class="toolchain.disabled ? 'disabled' : ''">
+                            <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade' : 'install' | translate }}</a>
+                          </li>
+                          <li ng-class="toolchain.disabled ? 'disabled' : ''">
+                            <a href ng-click="removeToolchain()">{{ 'remove' | translate }}</a>
+                          </li>
+                        </ul>
                       </li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <li>
-                          <a href ng-click="enableDrivers()">{{ 'enable_drivers' | translate }}
-                          </a>
-                        </li>
-                      <li>
-                        <a href ng-click="disableDrivers()">{{ 'disable_drivers' | translate }}
-                        </a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'drivers' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li>
+                            <li>
+                              <a href ng-click="enableDrivers()">{{ 'enable' | translate }}
+                              </a>
+                            </li>
+                          <li>
+                            <a href ng-click="disableDrivers()">{{ 'disable' | translate }}
+                            </a>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                 </li>
