@@ -72,6 +72,7 @@ angular.module('icestudio')
           nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
             if (!toolchain.disabled) {
               toolchain.installed = ((stderr.indexOf('not found') == -1) &&
+                                     (stderr.indexOf('No such file') == -1) &&
                                      (stdout.indexOf('not installed') == -1));
               if (callback) {
                 callback(toolchain.installed);
