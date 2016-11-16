@@ -17,7 +17,7 @@ function ToolchainBuilder(options) {
     apioMax: '0.2.0',
     buildDir: './build',
     cacheDir: './cache',
-    platforms: ['linux64'],
+    platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
   };
 
   // Assign options
@@ -148,20 +148,29 @@ ToolchainBuilder.prototype.installApio = function () {
 ToolchainBuilder.prototype.downloadApioPackages = function () {
   var self = this;
   self.emit('log', '> Download apio packages');
-  self.emit('log', '>> linux64');
   return new Promise(function(resolve, reject) {
-    var command = [
-      'export', 'APIO_HOME_DIR=' + self.options.apioPackagesDir, ';',
-      self.options.venvApio, 'install', 'system', '--platform', 'linux_x86_64' // TODO: use platforms
-    ];
-    childProcess.exec(command.join(' '),
-      function (error, stdout, stderr) {
-        if (error) { reject(error); }
-        else { resolve(); }
+    function command(dest, platform) {
+      return [ 'export', 'APIO_HOME_DIR=' + dest, ';',
+      self.options.venvApio, 'install', 'system', '--platform', platform ];
+    };
+    self.pFound = [];
+    self.options.platforms.forEach(function(platform) {
+      var p = getRealPlatform(platform);
+      if (p && self.pFound.indexOf(p) == -1) {
+        self.pFound.push(p);
+        self.emit('log', '  - ' + p);
+        var cmd = command(path.join(self.options.apioPackagesDir, p), p);
+        childProcess.execSync(cmd.join(' '),
+          function (error, stdout, stderr) {
+            if (error) { reject(error); }
+            else { resolve(); }
+          }
+        );
       }
-    );
+    });
   });
 }
+
 
 
 
@@ -199,5 +208,22 @@ function isPython2(executable) {
     return 0 === result.status && result.stdout.toString().startsWith('2.7');
   } catch(e) {
     return false;
+  }
+}
+
+function getRealPlatform(platform) {
+  switch(platform) {
+    case 'linux32':
+      return 'linux_i686';
+    case 'linux64':
+      return 'linux_x86_64';
+    case 'win32':
+    case 'win64':
+      return 'windows';
+    case 'osx32':
+    case 'osx64':
+      return 'darwin';
+    default:
+      return '';
   }
 }
