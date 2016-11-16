@@ -176,7 +176,7 @@ angular.module('icestudio')
         }
 
         this.extractDefaultApio = function(callback) {
-          this.extractTargz(DEFAULT_APIO_TARGZ, CACHE, callback);
+          this.extractTargz(DEFAULT_APIO_TARGZ, DEFAULT_APIO_DIR, callback);
         }
 
         this.installDefaultApio = function(callback) {

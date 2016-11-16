@@ -355,10 +355,10 @@ angular.module('icestudio')
             makeVenvDirectory,
             installOnlineApio,
             apioInstallSystem,
-            apioInstallScons,
             apioInstallIcestorm,
             apioInstallIverilog,
             apioInstallDrivers,
+            apioInstallScons,
             installationCompleted
           ]);
 
@@ -421,33 +421,33 @@ angular.module('icestudio')
         }
 
         function apioInstallSystem(callback) {
-          updateProgress('apio install system', 50);
+          updateProgress('apio install system', 40);
           utils.apioInstall('system', callback);
         }
 
-        function apioInstallScons(callback) {
-          updateProgress('apio install scons', 60);
-          utils.apioInstall('scons', callback);
-        }
-
         function apioInstallIcestorm(callback) {
-          updateProgress('apio install icestorm', 70);
+          updateProgress('apio install icestorm', 50);
           utils.apioInstall('icestorm', callback);
         }
 
         function apioInstallIverilog(callback) {
-          updateProgress('apio install iverilog', 90);
+          updateProgress('apio install iverilog', 70);
           utils.apioInstall('iverilog', callback);
         }
 
         function apioInstallDrivers(callback) {
           if (nodeOs.platform().indexOf('win32') > -1) {
-            updateProgress('apio install drivers', 95);
+            updateProgress('apio install drivers', 80);
             utils.apioInstall('drivers', callback);
           }
           else {
             callback();
           }
+        }
+
+        function apioInstallScons(callback) {
+          updateProgress('apio install scons', 90);
+          utils.apioInstall('scons', callback);
         }
 
         function installationCompleted(callback) {

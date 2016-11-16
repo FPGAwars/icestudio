@@ -38,7 +38,7 @@
   "install": "Instalar",
   "update": "Actualizar",
   "remove": "Eliminar",
-  "toolchain_not_installed": "La toolchain no está configurada correctamente. Por favor, instala o actualiza la toolchain",
+  "toolchain_not_installed": "La toolchain no está instalada. Por favor, instala la toolchain",
   "drivers": "Drivers",
   "enable": "Habilitar",
   "drivers_enabled": "Drivers habilitados",
