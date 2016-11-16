@@ -59,7 +59,7 @@ angular.module('icestudio')
           }
 
           return defaultEnvDir;
-        };
+        }
 
         var _pythonExecutableCached = null;
         // Get the system executable
@@ -84,7 +84,7 @@ angular.module('icestudio')
             }
           }
           return _pythonExecutableCached;
-        };
+        }
 
         function isPython2(executable) {
           const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
@@ -94,7 +94,7 @@ angular.module('icestudio')
           } catch(e) {
             return false;
           }
-        };
+        }
 
         this.extractTargz = function(source, destination, callback) {
           nodeTarball.extractTarball(source, destination, function(err) {
@@ -105,7 +105,7 @@ angular.module('icestudio')
             else {
               callback();
             }
-          })
+          });
         }
 
         this.extractVirtualEnv = function(callback) {
@@ -157,12 +157,9 @@ angular.module('icestudio')
           }
           if (!nodeFs.existsSync(ENV_DIR)) {
             nodeFs.mkdirSync(ENV_DIR);
-            this.executeCommand(
-              [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback)
           }
-          else {
-            callback();
-          }
+          this.executeCommand(
+            [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback)
         }
 
         this.checkDefaultToolchain = function() {
