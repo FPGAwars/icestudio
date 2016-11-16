@@ -5,12 +5,12 @@ module.exports = function(grunt) {
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'optionalDependencies'] };
-    var distCommands = ['nwjs', 'appdmg', 'compress:osx32', 'compress:osx64'];
+    var distCommands = ['nwjs', 'toolchain', 'appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
-    var platforms = ['linux64']; // ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64']
+    var platforms = ['linux32', 'linux64']; // ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64']
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['nwjs', 'compress:linux64'];
+    var distCommands = ['nwjs', 'toolchain', 'compress:linux32', 'compress:linux64'];
   }
 
   require('load-grunt-tasks')(grunt, options);
@@ -117,7 +117,8 @@ module.exports = function(grunt) {
       options: {
         apioMin: '0.1.9',
         apioMax: '0.2.0',
-        buildDir: 'dist/'
+        buildDir: 'dist/',
+        platforms: platforms
       }
     },
 
@@ -163,7 +164,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
           dest: ''
         }]
       },
@@ -174,7 +175,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
           dest: '.'
         }]
       },
@@ -185,7 +186,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win32/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
           dest: '.'
         }]
       },
@@ -196,7 +197,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win64/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
           dest: '.'
         }]
       },

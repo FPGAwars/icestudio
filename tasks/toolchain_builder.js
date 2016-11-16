@@ -1,6 +1,6 @@
 // Toolchain builder
 
-var fs = require('fs');
+var fse = require('fs-extra');
     path = require('path');
     childProcess = require('child_process');
     async = require('async');
@@ -31,14 +31,13 @@ function ToolchainBuilder(options) {
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
-  this.options.tmpDir = path.join(this.options.toolchainDir, 'tmp');
-  this.options.apioDir = path.join(this.options.tmpDir, 'default-apio');
-  this.options.apioPackagesDir = path.join(this.options.tmpDir, 'default-apio-packages');
+  this.options.apioDir = path.join(this.options.toolchainDir, 'default-apio');
+  this.options.apioPackagesDir = path.join(this.options.toolchainDir, 'default-apio-packages');
 
-  this.options.venvExtractDir = path.join(this.options.tmpDir, venvRelease);
+  this.options.venvExtractDir = path.join(this.options.toolchainDir, venvRelease);
   this.options.venvTarPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.tar.gz');
 
-  this.options.venvDir = path.join(this.options.tmpDir, 'venv');
+  this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, process.platform === 'win32' ? 'Scripts' : 'bin');
   this.options.venvPip = path.join(this.options.venvBinDir, 'pip');
   this.options.venvApio = path.join(this.options.venvBinDir, 'apio');
@@ -58,7 +57,7 @@ ToolchainBuilder.prototype.build = function (callback) {
       .then(this.downloadApioPackages.bind(this))
       .then(this.packageApio.bind(this))
       .then(this.packageApioPackages.bind(this))
-      //.then(this.downloadApio.bind(this))
+      .then(this.createDefaultToolchains.bind(this))
       .then(function (info) {
         var result = info || this;
 
@@ -90,10 +89,7 @@ ToolchainBuilder.prototype.extractVirtualenv = function () {
   var self = this;
   self.emit('log', '> Extract virtualenv tarball');
   return new Promise(function(resolve, reject) {
-    /*if (!fs.existsSync(self.options.tmpDir)) {
-      fs.mkdirSync(self.options.tmpDir);
-    }*/
-    targz().extract(self.options.venvTarPath, self.options.tmpDir, function (error) {
+    targz().extract(self.options.venvTarPath, self.options.toolchainDir, function (error) {
       if (error) { reject(error); }
       else { resolve(); }
     })
@@ -157,7 +153,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
       return [ 'export', 'APIO_HOME_DIR=' + dest, ';',
-      self.options.venvApio, 'install', 'system', '--platform', platform ];
+      self.options.venvApio, 'install', '--all', '--platform', platform ];
     };
     self.pFound = [];
     self.options.platforms.forEach(function(platform) {
@@ -183,7 +179,7 @@ ToolchainBuilder.prototype.packageApio = function () {
   return new Promise(function(resolve, reject) {
     targz({}, {fromBase: true}).compress(
       self.options.apioDir,
-      path.join(self.options.tmpDir, 'default-apio.tar.gz'),
+      path.join(self.options.toolchainDir, 'default-apio.tar.gz'),
       function (error) {
         if (error) { reject(error); }
         else { resolve(); }
@@ -204,7 +200,7 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
           self.emit('log', '  - ' + p);
           targz({}, {fromBase: true}).compress(
             path.join(self.options.apioPackagesDir, p),
-            path.join(self.options.tmpDir, 'default-apio-packages-' + p + '.tar.gz'),
+            path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.tar.gz'),
             function (error) {
               if (error) { reject(error) }
               callback();
@@ -221,8 +217,28 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
   });
 }
 
-
-
+ToolchainBuilder.prototype.createDefaultToolchains = function () {
+  var self = this;
+  self.emit('log', '> Create default toolchains');
+  return new Promise(function(resolve, reject) {
+    self.options.platforms.forEach(function(platform) {
+      self.emit('log', '  - ' + platform);
+      // Copy default-apio
+      var apioFilename = 'default-apio.tar.gz';
+      fse.copySync(
+        path.join(self.options.toolchainDir, apioFilename),
+        path.join(self.options.buildDir, 'icestudio', platform, 'toolchain', apioFilename)
+      );
+      // Copy default-apio-packages
+      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.tar.gz';
+      fse.copySync(
+        path.join(self.options.toolchainDir, apioPackagesFilename),
+        path.join(self.options.buildDir, 'icestudio', platform, 'toolchain', 'default-apio-packages.tar.gz')
+      );
+    });
+    resolve();
+  });
+}
 
 // Auxiliar functions
 
