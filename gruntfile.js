@@ -8,14 +8,17 @@ module.exports = function(grunt) {
     var distCommands = ['nwjs', 'appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
-    var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'];
+    var platforms = ['linux64']; // ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64']
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['nwjs', 'compress'];
+    var distCommands = ['nwjs', 'compress:linux64'];
   }
 
   require('load-grunt-tasks')(grunt, options);
 
-  // Project configuration.
+  // Load custom tasks
+  grunt.loadTasks('tasks');
+
+  // Project configuration
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -107,6 +110,15 @@ module.exports = function(grunt) {
         platforms: platforms
       },
       src: ['dist/tmp/**']
+    },
+
+    // Creates standalone toolchains for each platform
+    toolchain: {
+      options: {
+        apioMin: '0.1.9',
+        apioMax: '0.2.0',
+        buildDir: 'dist/'
+      }
     },
 
     // ONLY MAC: generates a dmg package

@@ -8,10 +8,10 @@
   "scripts": {
     "start": "grunt serve",
     "dist": "grunt dist",
-    "postinstall": "npmpd && cd app && npm install && bower install"
+    "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install"
   },
   "devDependencies": {
-    "bower": "^1.7.9",
+    "bower": "^1.8.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
