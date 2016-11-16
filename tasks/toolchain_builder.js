@@ -3,8 +3,9 @@
 var fs = require('fs');
     path = require('path');
     childProcess = require('child_process');
-    tarball = require('tarball-extract');
+    async = require('async');
     _ = require('lodash');
+    targz = require('tar.gz');
     inherits = require('inherits');
     EventEmitter = require('events').EventEmitter;
 
@@ -22,6 +23,9 @@ function ToolchainBuilder(options) {
 
   // Assign options
   this.options = _.defaults(options, defaults);
+
+  if (this.options.platforms.length == 0)
+    throw new Error('No platform to build!');
 
   var venvRelease = 'virtualenv-15.0.1';
 
@@ -52,6 +56,8 @@ ToolchainBuilder.prototype.build = function (callback) {
       .then(this.downloadApio.bind(this))
       .then(this.installApio.bind(this))
       .then(this.downloadApioPackages.bind(this))
+      .then(this.packageApio.bind(this))
+      .then(this.packageApioPackages.bind(this))
       //.then(this.downloadApio.bind(this))
       .then(function (info) {
         var result = info || this;
@@ -87,10 +93,10 @@ ToolchainBuilder.prototype.extractVirtualenv = function () {
     /*if (!fs.existsSync(self.options.tmpDir)) {
       fs.mkdirSync(self.options.tmpDir);
     }*/
-    tarball.extractTarball(self.options.venvTarPath, self.options.tmpDir, function(error) {
-      if (error) { reject(error) }
+    targz().extract(self.options.venvTarPath, self.options.tmpDir, function (error) {
+      if (error) { reject(error); }
       else { resolve(); }
-    });
+    })
   });
 }
 
@@ -163,10 +169,54 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
         childProcess.execSync(cmd.join(' '),
           function (error, stdout, stderr) {
             if (error) { reject(error); }
-            else { resolve(); }
           }
         );
       }
+    });
+    resolve();
+  });
+}
+
+ToolchainBuilder.prototype.packageApio = function () {
+  var self = this;
+  self.emit('log', '> Package apio');
+  return new Promise(function(resolve, reject) {
+    targz({}, {fromBase: true}).compress(
+      self.options.apioDir,
+      path.join(self.options.tmpDir, 'default-apio.tar.gz'),
+      function (error) {
+        if (error) { reject(error); }
+        else { resolve(); }
+      });
+  });
+}
+
+ToolchainBuilder.prototype.packageApioPackages = function () {
+  var self = this;
+  self.emit('log', '> Package apio packages');
+  return new Promise(function(resolve, reject) {
+    self.pFound = [];
+    async.eachSeries(self.options.platforms, function iteratee(platform, callback) {
+      async.setImmediate(function () {
+        var p = getRealPlatform(platform);
+        if (p && self.pFound.indexOf(p) == -1) {
+          self.pFound.push(p);
+          self.emit('log', '  - ' + p);
+          targz({}, {fromBase: true}).compress(
+            path.join(self.options.apioPackagesDir, p),
+            path.join(self.options.tmpDir, 'default-apio-packages-' + p + '.tar.gz'),
+            function (error) {
+              if (error) { reject(error) }
+              callback();
+            }
+          );
+        }
+        else {
+          callback();
+        }
+      });
+    }, function done() {
+      resolve();
     });
   });
 }
