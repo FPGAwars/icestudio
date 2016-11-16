@@ -11,7 +11,7 @@
     "height": 600,
     "min_width": 800,
     "min_height": 200,
-    "toolbar": true,
+    "toolbar": false,
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "fs-extra": "^1.0.0",
+    "glob": "^7.1.1",
     "is-online": "^5.1.2",
     "jquery": "^3.1.1",
     "os": "^0.1.1",

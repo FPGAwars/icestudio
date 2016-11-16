@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "glob": "^7.1.1",
     "inherits": "~2.0.1",
     "lodash": "~4.16.2",
     "tar.gz": "1.0.2"

@@ -69,11 +69,10 @@ angular.module('icestudio')
         function checkToolchain(callback) {
           var apio = utils.getApioExecutable();
           toolchain.disabled = utils.toolchainDisabled;
-          nodeChildProcess.exec([apio, 'clean'].join(' '), function(error, stdout, stderr) {
+          nodeChildProcess.exec(['cd', utils.SAMPLE_DIR, '&', apio, 'clean'].join(' '), function(error, stdout, stderr) {
+            // console.log(error, stdout, stderr);
             if (!toolchain.disabled) {
-              toolchain.installed = ((stderr.indexOf('not found') == -1) &&
-                                     (stderr.indexOf('No such file') == -1) &&
-                                     (stdout.indexOf('not installed') == -1));
+              toolchain.installed = !error;
               if (callback) {
                 callback(toolchain.installed);
               }

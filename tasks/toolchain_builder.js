@@ -5,6 +5,7 @@ var fse = require('fs-extra');
     childProcess = require('child_process');
     async = require('async');
     _ = require('lodash');
+    glob = require('glob');
     targz = require('tar.gz');
     inherits = require('inherits');
     EventEmitter = require('events').EventEmitter;
@@ -39,8 +40,8 @@ function ToolchainBuilder(options) {
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, process.platform === 'win32' ? 'Scripts' : 'bin');
-  this.options.venvPip = path.join(this.options.venvBinDir, 'pip');
-  this.options.venvApio = path.join(this.options.venvBinDir, 'apio');
+  this.options.venvPip = path.join(this.options.venvBinDir, 'pip')
+  this.options.venvApio = path.join(this.options.venvBinDir, 'apio')
 }
 
 
@@ -48,6 +49,7 @@ ToolchainBuilder.prototype.build = function (callback) {
   var hasCallback = (typeof callback === 'function'),
       done = Promise.defer();
 
+  this.emit('log', this.options.venvPip);
   // Let's create the standalone toolchains
   this.ensurePythonIsAvailable()
       .then(this.extractVirtualenv.bind(this))
@@ -135,15 +137,20 @@ ToolchainBuilder.prototype.installApio = function () {
   var self = this;
   self.emit('log', '> Install apio');
   return new Promise(function(resolve, reject) {
-    var command = [
-      self.options.venvPip, 'install', '--no-deps', path.join(self.options.apioDir, '*.*')
-    ];
-    childProcess.exec(command.join(' '),
-      function (error, stdout, stderr) {
-        if (error) { reject(error); }
-        else { resolve(); }
+    glob(path.join(self.options.apioDir, '*.*'), {}, function (error, files) {
+      if (error) { reject(error); }
+      else {
+        var command = [
+          self.options.venvPip, 'install', '-U', '--no-deps'
+        ].concat(files);
+        childProcess.exec(command.join(' '),
+          function (error, stdout, stderr) {
+            if (error) { reject(error); }
+            else { resolve(); }
+          }
+        );
       }
-    );
+    })
   });
 }
 
@@ -152,8 +159,9 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      return [ 'export', 'APIO_HOME_DIR=' + dest, ';',
-      self.options.venvApio, 'install', '--all', '--platform', platform ];
+      var packages = ['system', 'icestorm', 'iverilog', 'scons', process.platform === 'win32' ? 'drivers' : ''];
+      return [ process.platform === 'win32' ? 'set' : 'export', 'APIO_HOME_DIR=' + dest + '&',
+      self.options.venvApio, 'install', '--platform', platform ].concat(packages);
     };
     self.pFound = [];
     self.options.platforms.forEach(function(platform) {
