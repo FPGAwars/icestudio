@@ -139,6 +139,13 @@
                               <span ng-show="profile.data.language == 'eu'" class="glyphicon glyphicon-ok-circle"></span>
                             </a>
                           </li>
+                          <li>
+                            <a href ng-click="selectLanguage('fr-FR')">
+                              {{ 'français' | translate }}
+                              <span ng-show="profile.data.language == 'fr-FR'" class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
+                          </li>
+
                         </ul>
                       </li>
                     </ul>
