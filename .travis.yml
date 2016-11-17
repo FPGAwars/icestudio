@@ -10,7 +10,6 @@ os:
   - osx
 
 before_install:
-  - if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo dpkg --add-architecture i386; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y wine; fi
@@ -27,5 +26,6 @@ deploy:
     - dist/*.zip
     - dist/*.dmg
   file_glob: true
+  skip_cleanup: true
   on:
-    tags: true
+    all_branches: true
