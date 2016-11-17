@@ -25,6 +25,6 @@ curl -s -X POST \
   -H "Travis-API-Version: 3" \
   -H "Authorization: token $TOKEN" \
   -d "$body" \
-  https://api.travis-ci.org/repo/Jesus89%2Ficestudio/requests
+  https://api.travis-ci.org/repo/FPGAwars%2Ficestudio/requests
 
 echo "\n> Done!"
