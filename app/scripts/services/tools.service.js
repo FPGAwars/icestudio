@@ -69,8 +69,9 @@ angular.module('icestudio')
         function checkToolchain(callback) {
           var apio = utils.getApioExecutable();
           toolchain.disabled = utils.toolchainDisabled;
-          nodeChildProcess.exec(['cd', utils.SAMPLE_DIR, '&', apio, 'clean'].join(' '), function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
+          nodeChildProcess.exec([
+            'cd', utils.SAMPLE_DIR, (process.platform === 'win32' ? '&' : ';'),
+            apio, 'clean'].join(' '), function(error, stdout, stderr) {
             if (!toolchain.disabled) {
               toolchain.installed = !error;
               if (callback) {

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     var distCommands = ['nwjs', 'toolchain', 'appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
-    var platforms = ['linux64', 'linux64', 'win32', 'win64'];
+    var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
     var distCommands = ['nwjs', 'toolchain', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
   }
@@ -257,6 +257,7 @@ module.exports = function(grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
+      toolchain: ['cache/toolchain/default-apio', 'cache/toolchain/*.tar.gz'],
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
@@ -273,6 +274,7 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dist', [
     'clean:dist',
+    'clean:toolchain',
     'useminPrepare',
     'concat',
     'copy:dist',

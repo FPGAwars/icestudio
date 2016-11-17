@@ -2,13 +2,11 @@
 *.sconsign.dblite
 *.out
 *.ini
-*.v
 *.asc
 *.bin
 *.blif
 *.log
 
-etc
 .tmp
 dist
 cache

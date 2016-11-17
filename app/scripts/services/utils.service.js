@@ -5,9 +5,9 @@ angular.module('icestudio')
     .service('utils', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package',
       function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package) {
 
-        const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
-        const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
-        const LINUX = Boolean(nodeOs.platform().indexOf('linux') > -1);
+        const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
+        const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
+        const LINUX = Boolean(process.platform.indexOf('linux') > -1);
 
         const CACHE = '_cache';
 
