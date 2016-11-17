@@ -10,6 +10,10 @@
     "dist": "grunt dist",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install"
   },
+  "apio": {
+    "min": "0.1.9",
+    "max": "0.2.0"
+  },
   "devDependencies": {
     "bower": "^1.8.0",
     "grunt": "^1.0.1",

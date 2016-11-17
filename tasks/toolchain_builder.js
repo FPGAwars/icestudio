@@ -16,7 +16,7 @@ module.exports = ToolchainBuilder;
 function ToolchainBuilder(options) {
   var defaults = {
     apioMin: '0.1.9',
-    apioMax: '0.2.0',
+    apioMax: '1.0.0',
     buildDir: './build',
     cacheDir: './cache',
     platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
@@ -39,7 +39,7 @@ function ToolchainBuilder(options) {
   this.options.venvTarPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.tar.gz');
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
-  this.options.venvBinDir = path.join(this.options.venvDir, process.platform === 'win32' ? 'Scripts' : 'bin');
+  this.options.venvBinDir = path.join(this.options.venvDir, (process.platform === 'win32' ? 'Scripts' : 'bin'));
   this.options.venvPip = path.join(this.options.venvBinDir, 'pip')
   this.options.venvApio = path.join(this.options.venvBinDir, 'apio')
 }
@@ -159,8 +159,9 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', 'scons', process.platform === 'win32' ? 'drivers' : ''];
-      return [ process.platform === 'win32' ? 'set' : 'export', 'APIO_HOME_DIR=' + dest + '&',
+      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform === 'windows' ? 'drivers' : '')];
+      return [ (process.platform === 'win32' ? 'set' : 'export'),
+      'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
     };
     self.pFound = [];

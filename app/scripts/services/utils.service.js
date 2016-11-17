@@ -2,11 +2,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob',
-      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob) {
-
-        const APIO_MIN = '0.1.9';
-        const APIO_MAX = '0.2.0';
+    .service('utils', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package',
+      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package) {
 
         const WIN32 = Boolean(nodeOs.platform().indexOf('win32') > -1);
         const DARWIN = Boolean(nodeOs.platform().indexOf('darwin') > -1);
@@ -40,7 +37,7 @@ angular.module('icestudio')
         const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
         const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
         const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
-        const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + '& ' + ENV_APIO;
+        const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + (WIN32 ? '& ' : '; ') + ENV_APIO;
         const SYSTEM_APIO = '/usr/bin/apio';
 
         function _get_env_dir(defaultEnvDir) {
@@ -208,7 +205,7 @@ angular.module('icestudio')
         }
 
         this.installOnlineApio = function(callback) {
-          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=' + APIO_MIN + ',<' + APIO_MAX + '"'], callback);
+          this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
         }
 
         this.apioInstall = function(_package, callback) {
