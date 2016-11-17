@@ -73,17 +73,22 @@
                         <a href ng-click="exportAsBlock()">{{ 'export_as_block' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li>
-                        <a href ng-click="exportVerilog()">{{ 'export_verilog' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportPCF()">{{ 'export_pcf' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportTestbench()">{{ 'export_testbench' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportGTKwave()">{{ 'export_gtkwave' | translate }}</a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'export' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li>
+                            <a href ng-click="exportVerilog()">{{ 'verilog' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportPCF()">{{ 'pcf' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportTestbench()">{{ 'testbench' | translate }}</a>
+                          </li>
+                          <li>
+                            <a href ng-click="exportGTKwave()">{{ 'gtkwave' | translate }}</a>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                 </li>
@@ -185,21 +190,37 @@
                         <a href ng-click="uploadCode()">{{ 'upload' | translate }}</a>
                       </li>
                       <li class="divider"></li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade_toolchain' : 'install_toolchain' | translate }}</a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'toolchain' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li ng-class="toolchain.disabled ? 'disabled' : ''">
+                            <a href ng-click="toolchain.installed ? updateToolchain() : installToolchain()">{{ toolchain.installed ? 'update' : 'install' | translate }}</a>
+                          </li>
+                          <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
+                            <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : removeToolchain()">
+                              {{ 'remove' | translate }}
+                            </a>
+                          </li>
+                          <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
+                            <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : resetToolchain()">
+                              {{ 'reset_default' | translate }}
+                            </a>
+                          </li>
+                        </ul>
                       </li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <li>
-                          <a href ng-click="enableDrivers()">{{ 'enable_drivers' | translate }}
-                          </a>
-                        </li>
-                      <li>
-                        <a href ng-click="disableDrivers()">{{ 'disable_drivers' | translate }}
-                        </a>
+                      <li class="dropdown-submenu" uib-dropdown>
+                        <a href uib-dropdown-toggle>{{ 'drivers' | translate }}</a>
+                        <ul uib-dropdown-menu>
+                          <li>
+                            <li>
+                              <a href ng-click="enableDrivers()">{{ 'enable' | translate }}
+                              </a>
+                            </li>
+                          <li>
+                            <a href ng-click="disableDrivers()">{{ 'disable' | translate }}
+                            </a>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                 </li>

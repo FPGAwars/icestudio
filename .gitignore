@@ -2,18 +2,17 @@
 *.sconsign.dblite
 *.out
 *.ini
-*.v
 *.asc
 *.bin
 *.blif
 *.log
 
-etc
 .tmp
 dist
 cache
-_build
 node_modules
 bower_components
 
 app/profile.json
+app/_cache
+app/_build

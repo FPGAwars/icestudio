@@ -1,21 +1,26 @@
 module.exports = function(grunt) {
   var os = require('os');
+  // Load apio info
+  var _package = require('./package.json');
 
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
-    var options = { scope: ['devDependencies', 'optionalDependencies'] };
-    var distCommands = ['nwjs', 'appdmg', 'compress:osx32', 'compress:osx64'];
+    var options = { scope: ['devDependencies', 'darwinDependencies'] };
+    var distCommands = ['nwjs', 'toolchain', 'appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
-    var platforms = ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'];
+    var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['nwjs', 'compress'];
+    var distCommands = ['nwjs', 'toolchain', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
   }
 
   require('load-grunt-tasks')(grunt, options);
 
-  // Project configuration.
+  // Load custom tasks
+  grunt.loadTasks('tasks');
+
+  // Project configuration
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -109,6 +114,16 @@ module.exports = function(grunt) {
       src: ['dist/tmp/**']
     },
 
+    // Creates standalone toolchains for each platform
+    toolchain: {
+      options: {
+        apioMin: _package.apio.min,
+        apioMax: _package.apio.max,
+        buildDir: 'dist/',
+        platforms: platforms
+      }
+    },
+
     // ONLY MAC: generates a dmg package
     appdmg: {
       options: {
@@ -151,7 +166,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
           dest: ''
         }]
       },
@@ -162,7 +177,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so'],
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
           dest: '.'
         }]
       },
@@ -173,7 +188,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win32/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
           dest: '.'
         }]
       },
@@ -184,7 +199,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win64/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll'],
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
           dest: '.'
         }]
       },
@@ -223,6 +238,7 @@ module.exports = function(grunt) {
           'app/*.*',
           '!app/*.out',
           '!app/_build',
+          '!app/_cache',
           '!app/zadig.ini'
         ],
         tasks: [
@@ -241,6 +257,7 @@ module.exports = function(grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
+      toolchain: ['cache/toolchain/default-apio', 'cache/toolchain/*.tar.gz'],
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
@@ -257,6 +274,7 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dist', [
     'clean:dist',
+    'clean:toolchain',
     'useminPrepare',
     'concat',
     'copy:dist',

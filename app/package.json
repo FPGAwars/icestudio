@@ -16,11 +16,16 @@
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
   },
+  "apio": {
+    "min": "0.1.9",
+    "max": "0.2.0"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
   "dependencies": {
     "fs-extra": "^1.0.0",
+    "glob": "^7.1.1",
     "is-online": "^5.1.2",
     "jquery": "^3.1.1",
     "os": "^0.1.1",

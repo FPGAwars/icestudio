@@ -42,4 +42,7 @@ angular.module('icestudio')
   })
   .factory('nodeOnline', function() {
     return require('is-online');
+  })
+  .factory('nodeGlob', function() {
+    return require('glob');
   });
