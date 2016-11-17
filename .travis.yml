@@ -3,13 +3,14 @@ dist: trusty
 language: node_js
 
 node_js:
-  - "4"
+  - '4'
 
 os:
   - linux
   - osx
 
 before_install:
+  - if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo dpkg --add-architecture i386; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y wine; fi
@@ -18,7 +19,13 @@ install:
   - npm install
   - npm run dist
 
-addons:
-  artifacts:
-    paths:
-      - $(ls dist/*.zip | tr "\n" ":")
+deploy:
+  provider: releases
+  api_key:
+    secure: jFhV5p4eY9tpll2KmWcQPJMJYBtmjAki8Fg9yUUVdm99vUZ5pRdWS+MQfbkIeO8PtYPzh0Wqb6aC+1v46uGmWME9E5aWOkMwjUMxhR9n/rA740MpWwZ2NflTVzDO5EPWcOcPa73j4O6IzPEiwbFPfXlKDLcZRa26zEZFfHFtCXQAmLXU5Jz7L+mR8/Iwhm5PAzs+HR6+s5AWLWKhVAz21qrhIQ/mJCUqHrbHyj0o6qSvbjZ+YrhX5WtehWpJh2KZkgkRDZA91LexNw545V8zuVr/XHVIHou4sUqqwsWG7ytu286wC/IGtl/x8PYikGJurqbmVerDjbN6mZJgWf021ov0VjMBZWgAB+LZl3LipibANiHILHCTNFts0dJdaEsELRNlCC+Annuga9M6AfVwqIJcGUJE4eLR1szqe9AFX1MKuZtDwD/+mIko65UaFY+uXsaxKSkWexqA5/6p/CptyyOUKgtaNy06hDWwsynLA70IDtW+zfAeJac74lLZ4MZn0gN5YJv0/5bV2pb3t1tA2oqp2wJXrCZbwU1G/BammkdjZfc0qHdP8cjRgylr0IgeoTo6R+bq9c16HYOaU74eCBFfcHUvrbBPjjMhZU48gh4lp0hSZKOAtss7xP60I7csDzcx2c8wHICdOJQs/5O/LV90M/+HrJWZfJOSc7vpqdY=
+  file:
+    - dist/*.zip
+    - dist/*.dmg
+  file_glob: true
+  on:
+    tags: true
