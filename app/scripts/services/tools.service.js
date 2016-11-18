@@ -11,7 +11,11 @@ angular.module('icestudio')
         this.buildPath = '_build';
         this.currentProjectPath = '';
 
+        // Check if the toolchain is installed
         checkToolchain();
+
+        // Remove _build directory on start
+        nodeFse.removeSync(this.buildPath);
 
         this.verifyCode = function() {
           this.apio(['verify']);
@@ -33,7 +37,7 @@ angular.module('icestudio')
               angular.element('#menu').addClass('disable-menu');
               currentAlert = alertify.notify($translate.instant('start_' + commands[0]), 'message', 100000);
               $('body').addClass('waiting');
-              nodeProcess.chdir('_build');
+              nodeProcess.chdir(this.buildPath);
               check = this.syncResources(code);
               try {
                 if (check) {
@@ -151,7 +155,7 @@ angular.module('icestudio')
             currentAlert.setContent($translate.instant('sync_remote_files'));
             nodeRSync({
               src: nodeProcess.cwd() + '/',
-              dest: remoteHostname + ':_build/',
+              dest: remoteHostname + ':' + this.buildPath + '/',
               ssh: true,
               recursive: true,
               delete: true,
@@ -160,7 +164,7 @@ angular.module('icestudio')
             }, function (error, stdout, stderr, cmd) {
               if (!error) {
                 currentAlert.setContent($translate.instant('execute_remote', { label: label }));
-                nodeSSHexec('cd _build; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
+                nodeSSHexec('cd ' + this.buildPath + '; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
                   function (error, stdout, stderr) {
                     processExecute(label, callback, error, stdout, stderr);
                   });
