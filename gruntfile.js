@@ -237,8 +237,8 @@ module.exports = function(grunt) {
           'app/views/**/*.*',
           'app/*.*',
           '!app/*.out',
-          '!app/_build',
-          '!app/_cache',
+          '!app/_build/**/*.*',
+          '!app/_cache/**/*.*',
           '!app/zadig.ini'
         ],
         tasks: [

@@ -368,13 +368,13 @@ angular.module('icestudio')
             function() {
               boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected', { name: board.content.label }));
+              alertify.success($translate.instant('board_selected', { name: '<b>' + board.content.label + '</b>' }));
           });
         }
         else {
           boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected',  { name: board.content.label }));
+          alertify.success($translate.instant('board_selected',  { name: '<b>' + board.content.label + '</b>' }));
         }
       }
     }

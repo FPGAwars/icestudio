@@ -207,7 +207,7 @@ angular.module('icestudio')
               if (stdout) {
                 if (stdout.indexOf('[upload] Error') != -1 ||
                     stdout.indexOf('Error: board not detected') != -1) {
-                  alertify.notify($translate.instant('board_not_detected'), 'error', 3);
+                  alertify.notify($translate.instant('board_not_detected', { name: '<b>' + boards.selectedBoard.content.label + '</b>' }), 'error', 3);
                 }
                 else if (stdout.indexOf('Error: unkown board') != -1) {
                   alertify.notify($translate.instant('unknown_board'), 'error', 3);
