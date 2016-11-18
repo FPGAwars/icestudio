@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="lib/svg-pan-zoom.js"></script>
+    <style type="text/css">
+      body { overflow:hidden; }
+    </style>
+  </head>
+  <body>
+    <object id="pinout" type="image/svg+xml" data="pinout.svg" style="width: 100%; height: 100%;">
+      Your browser does not support SVG
+    </object>
+    <script>
+      window.onload = function() {
+        var panZoomTiger = svgPanZoom('#pinout', {
+          controlIconsEnabled: true
+        });
+        panZoomTiger.pan({x: 0, y: 10})
+      };
+    </script>
+  </body>
+</html>

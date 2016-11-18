@@ -359,6 +359,18 @@ angular.module('icestudio')
       graph.resetState();
     }
 
+    $scope.showPinout = function() {
+      gui.Window.open('resources/boards/viewer/pinout.html', {
+        title: boards.selectedBoard.content.label + ' - Pinout',
+        focus: true,
+        toolbar: false,
+        resizable: true,
+        width: 500,
+        height: 700,
+        icon: 'resources/images/icestudio-logo.png'
+      });
+    }
+
     // Boards
 
     $scope.selectBoard = function(board) {
@@ -377,35 +389,6 @@ angular.module('icestudio')
           alertify.success($translate.instant('board_selected',  { name: '<b>' + board.content.label + '</b>' }));
         }
       }
-    }
-
-    // Help
-
-    $scope.openUrl = function(url) {
-      /*gui.Window.open(url, {
-        nodejs: false,
-        "new-instance": false
-      });*/
-      event.preventDefault();
-      gui.Shell.openExternal(url);
-    }
-
-    $scope.about = function() {
-      var content = [
-        '<div class="row">',
-        '  <div class="col-sm-4">',
-        '   <img src="resources/images/fpgawars-logo.png">',
-        '  </div>',
-        '  <div class="col-sm-7" style="margin-left: 20px;">',
-        '    <h4>Icestudio</h4>',
-        '    <p><i>Graphic editor for open FPGAs</i></p>',
-        '    <p>Version: ' + $scope.version + '</p>',
-        '    <p>License: GPL v2</p>',
-        '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016</p>',
-        '  </div>',
-        '</div>'].join('\n');
-      alertify.alert(content);
     }
 
     // Tools
@@ -450,5 +433,34 @@ angular.module('icestudio')
 
     $scope.disableDrivers = function() {
       tools.disableDrivers();
+    }
+
+    // Help
+
+    $scope.openUrl = function(url) {
+      /*gui.Window.open(url, {
+        nodejs: false,
+        "new-instance": false
+      });*/
+      event.preventDefault();
+      gui.Shell.openExternal(url);
+    }
+
+    $scope.about = function() {
+      var content = [
+        '<div class="row">',
+        '  <div class="col-sm-4">',
+        '   <img src="resources/images/fpgawars-logo.png">',
+        '  </div>',
+        '  <div class="col-sm-7" style="margin-left: 20px;">',
+        '    <h4>Icestudio</h4>',
+        '    <p><i>Graphic editor for open FPGAs</i></p>',
+        '    <p>Version: ' + $scope.version + '</p>',
+        '    <p>License: GPL v2</p>',
+        '    <p>Created by Jesús Arroyo Torrens</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016</p>',
+        '  </div>',
+        '</div>'].join('\n');
+      alertify.alert(content);
     }
   });
