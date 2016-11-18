@@ -148,7 +148,7 @@
                   </li>
                   <li>
                     <a href ng-click="selectLanguage('fr-FR')">
-                      {{ 'français' | translate }}
+                      {{ 'french' | translate }}
                       <span ng-show="profile.data.language == 'fr-FR'" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
@@ -195,7 +195,9 @@
                 <a href uib-dropdown-toggle>{{ 'toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                    <a href ng-click="toolchain.installed ? updateToolchain() : installToolchain()">{{ toolchain.installed ? 'update' : 'install' | translate }}</a>
+                    <a href ng-click="toolchain.installed ? updateToolchain() : installToolchain()">
+                      {{ toolchain.installed ? 'update' : 'install' | translate }}
+                    </a>
                   </li>
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
                     <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : removeToolchain()">
@@ -206,6 +208,10 @@
                     <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : resetToolchain()">
                       {{ 'reset_default' | translate }}
                     </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="disabled" ng-show="toolchain.installed">
+                    <a href>{{ 'Apio ' + toolchain.apio }}</a>
                   </li>
                 </ul>
               </li>

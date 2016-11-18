@@ -5,7 +5,7 @@ angular.module('icestudio')
       function($translate, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, common, boards, compiler, utils) {
 
         var currentAlert = null;
-        var toolchain = { installed: false, disabled: false };
+        var toolchain = { apio: '-', installed: false, disabled: false };
 
         this.toolchain = toolchain;
         this.buildPath = '_build';
@@ -13,6 +13,9 @@ angular.module('icestudio')
 
         // Check if the toolchain is installed
         checkToolchain();
+
+        // Update toolchain information
+        updateToolchainInfo();
 
         // Remove _build directory on start
         nodeFse.removeSync(this.buildPath);
@@ -81,6 +84,18 @@ angular.module('icestudio')
               if (callback) {
                 callback(toolchain.installed);
               }
+            }
+          });
+        }
+
+        function updateToolchainInfo() {
+          var apio = utils.getApioExecutable();
+          nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout, stderr) {
+            if (error) {
+              toolchain.apio = '-';
+            }
+            else {
+              toolchain.apio = stdout.match(/apio, version (.+)/i)[1];
             }
           });
         }
@@ -460,6 +475,7 @@ angular.module('icestudio')
             if (installed) {
               updateProgress($translate.instant('installation_completed'), 100);
               alertify.success($translate.instant('toolchain_installed'));
+              updateToolchainInfo();
             }
             else {
               errorProgress('Toolchain not installed');
