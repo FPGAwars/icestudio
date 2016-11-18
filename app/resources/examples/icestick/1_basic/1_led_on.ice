@@ -5,9 +5,9 @@
       "x": 0,
       "y": 0
     },
-    "zoom": 0.9999999813303895
+    "zoom": 1
   },
-  "board": "icezum",
+  "board": "icestick",
   "graph": {
     "blocks": [
       {
@@ -47,8 +47,8 @@
         "data": {
           "label": "led",
           "pin": {
-            "name": "LED0",
-            "value": "95"
+            "name": "D1",
+            "value": "99"
           }
         },
         "position": {
