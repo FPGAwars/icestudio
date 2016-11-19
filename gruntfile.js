@@ -84,7 +84,7 @@ module.exports = function(grunt) {
       ice: {
         files: 'dist/tmp/resources/**/*.ice'
       },
-      ideb: {
+      iceb: {
         files: 'dist/tmp/resources/**/*.iceb'
       }
     },
@@ -234,12 +234,7 @@ module.exports = function(grunt) {
           'app/resources/**/*.*',
           'app/scripts/**/*.*',
           'app/styles/**/*.*',
-          'app/views/**/*.*',
-          'app/*.*',
-          '!app/*.out',
-          '!app/_build/**/*.*',
-          '!app/_cache/**/*.*',
-          '!app/zadig.ini'
+          'app/views/**/*.*'
         ],
         tasks: [
           'wiredep',
