@@ -15,6 +15,7 @@
   "export_as_block": "Export as block",
   "export": "Export",
   "verilog": "Verilog",
+  "preferences": "Preferences",
   "pcf": "PCF",
   "datasheet_not_defined": "Datasheet not defined",
   "testbench": "Testbench",
