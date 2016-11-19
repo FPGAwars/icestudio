@@ -360,7 +360,7 @@ angular.module('icestudio')
     }
 
     $scope.showPinout = function() {
-      gui.Window.open('resources/viewers/svg/pinout.html', {
+      gui.Window.open('resources/viewers/svg/pinout.html?board=' + boards.selectedBoard.name, {
         title: boards.selectedBoard.info.label + ' - Pinout',
         focus: true,
         toolbar: false,
