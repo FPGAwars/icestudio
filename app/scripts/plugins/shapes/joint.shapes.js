@@ -499,6 +499,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   markup: [
     '<path class="connection" stroke="black" d="M 0 0 0 0"/>',
+    '<path class="connection-wrap" d="M 0 0 0 0"/>',
     '<path class="marker-source" fill="black" stroke="black" d="M 0 0 0 0"/>',
     '<path class="marker-target" fill="black" stroke="black" d="M 0 0 0 0"/>',
     '<g class="labels"/>',
