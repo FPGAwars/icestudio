@@ -359,6 +359,18 @@ angular.module('icestudio')
       graph.resetState();
     }
 
+    $scope.showPCF = function() {
+      gui.Window.open('resources/viewers/plain/pcf.html?board=' + boards.selectedBoard.name, {
+        title: boards.selectedBoard.info.label + ' - PCF',
+        focus: true,
+        toolbar: false,
+        resizable: true,
+        width: 650,
+        height: 700,
+        icon: 'resources/images/icestudio-logo.png'
+      });
+    }
+
     $scope.showPinout = function() {
       gui.Window.open('resources/viewers/svg/pinout.html?board=' + boards.selectedBoard.name, {
         title: boards.selectedBoard.info.label + ' - Pinout',

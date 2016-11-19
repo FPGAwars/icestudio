@@ -8,7 +8,7 @@
   </head>
   <body>
     <object id="pinout" type="image/svg+xml" data="" style="width: 100%; height: 100%;">
-      Sorry, SVG pinout does not exists
+      <b>Sorry, SVG pinout does not exists</b>
     </object>
     <script>
       function getURLParameter(name) {
@@ -16,7 +16,7 @@
       };
       function getDataPath() {
         var board = getURLParameter('board');
-        var data = "../../../resources/boards/" + board + "/pinout.svg";
+        var data = "../../boards/" + board + "/pinout.svg";
         document.getElementById("pinout").data = data;
       };
       window.onload = function() {

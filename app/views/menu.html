@@ -165,10 +165,13 @@
             <a href uib-dropdown-toggle>{{ 'view' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
+                <a href ng-click="showPCF()">PCF</a>
+              </li>
+              <li>
                 <a href ng-click="showPinout()">Pinout</a>
               </li>
               <li>
-                <a href ng-click="">{{ 'documentation' | translate }}</a>
+                <a href ng-click="showDatasheet()">{{ 'datasheet' | translate }}</a>
               </li>
             </ul>
           </li>

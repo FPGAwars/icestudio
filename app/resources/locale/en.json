@@ -18,6 +18,7 @@
   "pcf": "PCF",
   "testbench": "Testbench",
   "gtkwave": "GTKWave",
+  "datasheet": "Datasheet",
   "clone_selected": "Clone selected",
   "remove_selected": "Remove selected",
   "clear_all": "Clear all",
