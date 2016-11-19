@@ -11,13 +11,6 @@
       Sorry, SVG pinout does not exists
     </object>
     <script>
-      window.onload = function() {
-        var panZoomTiger = svgPanZoom('#pinout', {
-          controlIconsEnabled: true,
-          minZoom: 1,
-          maxZoom: 5
-        });
-      };
       function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
       };
@@ -26,7 +19,16 @@
         var data = "../../../resources/boards/" + board + "/pinout.svg";
         document.getElementById("pinout").data = data;
       };
-      getDataPath();
+      window.onload = function() {
+        getDataPath();
+        setTimeout(function() {
+          var panZoomTiger = svgPanZoom('#pinout', {
+            controlIconsEnabled: true,
+            minZoom: 1,
+            maxZoom: 5
+          });
+        }, 100);
+      };
     </script>
   </body>
 </html>
