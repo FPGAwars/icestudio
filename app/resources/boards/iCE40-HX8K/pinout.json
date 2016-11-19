@@ -1,6 +1,4 @@
-{
-  "label": "iCE40-HX8K",
-  "pinout": [
+[
     { "name": "B1", "value": "B1" },
     { "name": "B2", "value": "B2" },
     { "name": "C1", "value": "C1" },
@@ -111,5 +109,4 @@
     { "name": "A15", "value": "A15" },
     { "name": "B15", "value": "B15" },
     { "name": "A16", "value": "A16" }
-  ]
-}
+]

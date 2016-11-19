@@ -99,6 +99,10 @@
             <a href uib-dropdown-toggle>{{ 'edit' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
+                <a href ng-click="resetState()">{{ 'reset_view' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
                 <a href ng-click="cloneSelected()">{{ 'clone_selected' | translate }}</a>
               </li>
               <li>
@@ -161,11 +165,10 @@
             <a href uib-dropdown-toggle>{{ 'view' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
-                <a href ng-click="resetState()">{{ 'reset_view' | translate }}</a>
-              </li>
-              <li class="divider"></li>
-              <li>
                 <a href ng-click="showPinout()">Pinout</a>
+              </li>
+              <li>
+                <a href ng-click="">{{ 'documentation' | translate }}</a>
               </li>
             </ul>
           </li>
@@ -175,7 +178,7 @@
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li ng-repeat="board in currentBoards">
                 <a href ng-click="selectBoard(board)">
-                  {{ board.content.label }}
+                  {{ board.info.label }}
                   <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
                 </a>
               </li>
@@ -213,7 +216,7 @@
                       {{ 'reset_default' | translate }}
                     </a>
                   </li>
-                  <li class="divider"></li>
+                  <li class="divider" ng-show="toolchain.installed"></li>
                   <li class="disabled" ng-show="toolchain.installed">
                     <a href>{{ 'Apio ' + toolchain.apio }}</a>
                   </li>

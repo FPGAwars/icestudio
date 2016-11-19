@@ -360,8 +360,8 @@ angular.module('icestudio')
     }
 
     $scope.showPinout = function() {
-      gui.Window.open('resources/boards/viewer/pinout.html', {
-        title: boards.selectedBoard.content.label + ' - Pinout',
+      gui.Window.open('resources/viewers/svg/pinout.html', {
+        title: boards.selectedBoard.info.label + ' - Pinout',
         focus: true,
         toolbar: false,
         resizable: true,
@@ -376,17 +376,17 @@ angular.module('icestudio')
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.content.label + '</b>' }),
+          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.info.label + '</b>' }),
             function() {
               boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected', { name: '<b>' + board.content.label + '</b>' }));
+              alertify.success($translate.instant('board_selected', { name: '<b>' + board.info.label + '</b>' }));
           });
         }
         else {
           boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected',  { name: '<b>' + board.content.label + '</b>' }));
+          alertify.success($translate.instant('board_selected',  { name: '<b>' + board.info.label + '</b>' }));
         }
       }
     }

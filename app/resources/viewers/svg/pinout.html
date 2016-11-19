@@ -13,9 +13,10 @@
     <script>
       window.onload = function() {
         var panZoomTiger = svgPanZoom('#pinout', {
-          controlIconsEnabled: true
+          controlIconsEnabled: true,
+          minZoom: 1,
+          maxZoom: 5
         });
-        panZoomTiger.pan({x: 0, y: 10})
       };
     </script>
   </body>

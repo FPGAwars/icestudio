@@ -1,11 +1,41 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('boards', ['nodePath', 'utils',
-      function(nodePath, utils) {
+    .service('boards', ['nodePath', 'nodeFs',
+      function(nodePath, nodeFs) {
 
-        this.currentBoards = utils.getFilesRecursive(nodePath.join('resources', 'boards'), '.json');
         this.selectedBoard = null;
+        this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
+
+        function loadBoards(path) {
+          var boards = [];
+          var contents = nodeFs.readdirSync(path);
+          contents.forEach(function (content) {
+            var contentPath = nodePath.join(path, content);
+            if (nodeFs.statSync(contentPath).isDirectory()) {
+              if (!content.startsWith('_')) {
+                var info = readJSONFile(contentPath, 'info.json');
+                var pinout = readJSONFile(contentPath, 'pinout.json');
+                boards.push({
+                  'name': content,
+                  'info': info,
+                  'pinout': pinout
+                });
+              }
+            }
+          });
+          return boards;
+        }
+
+        function readJSONFile(filepath, filename) {
+          var ret = {};
+          try {
+            var data = nodeFs.readFileSync(nodePath.join(filepath, filename));
+            ret = JSON.parse(data.toString());
+          }
+          catch (err) { }
+          return ret;
+        }
 
         this.selectBoard = function(name) {
           for (var i in this.currentBoards) {
@@ -24,7 +54,7 @@ angular.module('icestudio')
         };
 
         this.getPinout = function() {
-          return this.selectedBoard.content.pinout;
+          return this.selectedBoard.pinout;
         };
 
     }]);
