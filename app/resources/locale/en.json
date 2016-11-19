@@ -16,6 +16,7 @@
   "export": "Export",
   "verilog": "Verilog",
   "pcf": "PCF",
+  "datasheet_not_defined": "Datasheet not defined",
   "testbench": "Testbench",
   "gtkwave": "GTKWave",
   "datasheet": "Datasheet",

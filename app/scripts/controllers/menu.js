@@ -383,6 +383,15 @@ angular.module('icestudio')
       });
     }
 
+    $scope.showDatasheet = function() {
+      if (boards.selectedBoard.info.datasheet) {
+        gui.Shell.openExternal(boards.selectedBoard.info.datasheet);
+      }
+      else {
+        alertify.error($translate.instant('datasheet_not_defined'));
+      }
+    }
+
     // Boards
 
     $scope.selectBoard = function(board) {
