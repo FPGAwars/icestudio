@@ -429,7 +429,12 @@ angular.module('icestudio')
               endLazyProcess();
             }
             else {
-              nodeChildProcess.exec('/usr/local/bin/brew install libftdi', function(error, stdout, stderr) {
+              var brewCommands = [
+                '/usr/local/bin/brew update',
+                '/usr/local/bin/brew install libftdi',
+                '/usr/local/bin/brew link --overwrite libftdi'
+              ];
+              nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
                 endLazyProcess();
                 if (error) {
