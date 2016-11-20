@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['gettextCatalog', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'common', 'boards', 'compiler', 'utils',
-      function(gettextCatalog, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, common, boards, compiler, utils) {
+    .service('tools', ['gettextCatalog', 'gettext', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'common', 'boards', 'compiler', 'utils',
+      function(gettextCatalog, gettext, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, common, boards, compiler, utils) {
 
         var currentAlert = null;
         var toolchain = { apio: '-', installed: false, disabled: false };
@@ -38,7 +38,15 @@ angular.module('icestudio')
           if (code) {
             if (toolchain.installed || toolchain.disabled) {
               angular.element('#menu').addClass('disable-menu');
-              currentAlert = alertify.notify(gettextCatalog.getString('start_' + commands[0]), 'message', 100000);
+              // Annotate strings for translation
+              /// Start verification ...
+              gettext('start_verify');
+              /// Start building ...
+              gettext('start_build');
+              /// Start uploading ...
+              gettext('start_upload');
+              var message = 'start_' + commands[0];
+              currentAlert = alertify.notify(gettextCatalog.getString(message), 'message', 100000);
               $('body').addClass('waiting');
               nodeProcess.chdir(this.buildPath);
               check = this.syncResources(code);
@@ -253,7 +261,15 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.success(gettextCatalog.getString('done_' + label));
+              // Annotate strings for translation
+              /// Verification done
+              gettext('done_verify');
+              /// Build done
+              gettext('done_build');
+              /// Upload done
+              gettext('done_upload');
+              var message = 'done_' + label;
+              alertify.success(gettextCatalog.getString(message));
             }
             $('body').removeClass('waiting');
           }

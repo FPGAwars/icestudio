@@ -265,7 +265,8 @@ module.exports = function(grunt) {
         files: {
           'app/resources/locale/template.pot': [
             'app/views/*.html',
-            'app/scripts/**/*.js'
+            'app/scripts/**/*.js',
+            'app/resources/**/*.js'
           ]
         }
       },
