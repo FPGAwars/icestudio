@@ -193,7 +193,9 @@ angular.module('icestudio')
         }
 
         this.isOnline = function(callback, error) {
-          nodeOnline(function(err, online) {
+          nodeOnline({
+            timeout: 5000
+          }, function(err, online) {
             if (online) {
               callback();
             }
