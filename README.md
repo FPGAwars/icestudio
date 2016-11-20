@@ -80,6 +80,18 @@ npm run dist
 
 NOTE: in Mac OS X this commmand generates also a **dmg** package.
 
+## Languages
+
+|  Language  | Translated strings                         |
+|:----------:|:------------------------------------------:|
+| English    | ![Progress](http://progressed.io/bar/100)  |
+| Spanish    | ![Progress](http://progressed.io/bar/97)   |
+| French     | ![Progress](http://progressed.io/bar/81)   |
+| Basque     | ![Progress](http://progressed.io/bar/72)   |
+| Galician   | ![Progress](http://progressed.io/bar/69)   |
+
+**Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
+
 ## Version 0.1
 
 ![][icestudio-0.1-demo]
@@ -114,6 +126,7 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
  * [Xoan Sampaiño](https://github.com/xoan)
  * [Salvador E. Tropea](https://github.com/set-soft)
  * [Democrito](https://github.com/Democrito)
+ * [Martoni](https://github.com/Martoni)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
