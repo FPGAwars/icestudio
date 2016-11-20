@@ -19,9 +19,5 @@ angular
     }
 
   ])
-  .run(function(gettextCatalog) {
-    // Initial language
-    var lang = 'es';
-    gettextCatalog.setCurrentLanguage(lang);
-    gettextCatalog.loadRemote('resources/locale/' + lang + '/' + lang + '.json');
+  .run(function() {
   });

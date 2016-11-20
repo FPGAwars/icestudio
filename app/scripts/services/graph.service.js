@@ -254,11 +254,11 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt(gettextCatalog.getString('enter_block_label'), data.data.label,
+                    alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), data.data.label,
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
-                        alertify.success(gettextCatalog.getString('label_updated'));
+                        alertify.success(gettextCatalog.getString('Label updated'));
                     });
                   }
                 }
@@ -406,7 +406,7 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt(gettextCatalog.getString('enter_block_ports'), 'a,b c',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s ports'), 'a,b c',
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -461,7 +461,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt(gettextCatalog.getString('enter_block_label'), 'i',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'i',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -501,7 +501,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt(gettextCatalog.getString('enter_block_label'), 'o',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'o',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -558,7 +558,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error(gettextCatalog.getString('wrong_block_format', { type: type }));
+              alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }));
             }
           }
         };
