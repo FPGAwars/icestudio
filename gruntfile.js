@@ -257,7 +257,39 @@ module.exports = function(grunt) {
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
       // cache: ['cache']
+    },
+
+    // Generate POT file
+    nggettext_extract: {
+      pot: {
+        files: {
+          'app/resources/locale/template.pot': [
+            'app/views/*.html',
+            'app/scripts/**/*.js'
+          ]
+        }
+      },
+    },
+
+    // Compile PO files into JSON
+    nggettext_compile: {
+      all: {
+        options: {
+          format: 'json'
+        },
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: "app/resources/locale",
+            dest: "app/resources/locale",
+            src: ["**/*.po"],
+            ext: ".json"
+          }
+        ]
+      }
     }
+
   });
 
   // Default tasks.
@@ -265,11 +297,14 @@ module.exports = function(grunt) {
     console.log('Icestudio');
   });
   grunt.registerTask('serve', [
+    'nggettext_extract',
+    'nggettext_compile',
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
     'clean:dist',
     'clean:toolchain',
+    'nggettext_compile',
     'useminPrepare',
     'concat',
     'copy:dist',

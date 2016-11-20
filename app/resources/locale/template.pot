@@ -1,0 +1,429 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: app/views/menu.html:23
+msgid "File"
+msgstr ""
+
+#: app/views/menu.html:271
+msgid "about_icestudio"
+msgstr ""
+
+#: app/views/menu.html:281
+msgid "basic"
+msgstr ""
+
+#: app/views/menu.html:152
+msgid "basque"
+msgstr ""
+
+#: app/scripts/services/common.service.js:94
+msgid "block_exported_as"
+msgstr ""
+
+#: app/scripts/services/common.service.js:75
+msgid "block_imported"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:210
+msgid "board_not_detected"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:406
+#: app/scripts/controllers/menu.js:412
+msgid "board_selected"
+msgstr ""
+
+#: app/views/menu.html:185
+msgid "boards"
+msgstr ""
+
+#: app/views/menu.html:203
+msgid "build"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:402
+msgid "change_board_confirmation"
+msgstr ""
+
+#: app/views/menu.html:112
+msgid "clear_all"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:313
+msgid "clear_all_confirmation"
+msgstr ""
+
+#: app/views/menu.html:106
+msgid "clone_selected"
+msgstr ""
+
+#: app/views/menu.html:284
+msgid "code"
+msgstr ""
+
+#: app/views/menu.html:267
+msgid "community_forum"
+msgstr ""
+
+#: app/views/menu.html:179
+msgid "datasheet"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:393
+msgid "datasheet_not_defined"
+msgstr ""
+
+#: app/views/menu.html:241
+msgid "disable"
+msgstr ""
+
+#: app/views/menu.html:260
+msgid "documentation"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:256
+msgid "done_"
+msgstr ""
+
+#: app/views/menu.html:234
+msgid "drivers"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:411
+#: app/scripts/services/utils.service.js:474
+msgid "drivers_disabled"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:408
+#: app/scripts/services/utils.service.js:455
+msgid "drivers_enabled"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:222
+msgid "duplicated_fpga_io"
+msgstr ""
+
+#: app/views/menu.html:99
+msgid "edit"
+msgstr ""
+
+#: app/views/menu.html:237
+msgid "enable"
+msgstr ""
+
+#: app/views/menu.html:134
+msgid "english"
+msgstr ""
+
+#: app/scripts/services/graph.service.js:257
+#: app/scripts/services/graph.service.js:464
+#: app/scripts/services/graph.service.js:504
+msgid "enter_block_label"
+msgstr ""
+
+#: app/scripts/services/graph.service.js:409
+msgid "enter_block_ports"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:290
+msgid "enter_project_image_path"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:72
+msgid "enter_project_title"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:298
+msgid "enter_remote_hostname"
+msgstr ""
+
+#: app/views/menu.html:32
+msgid "examples"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:181
+msgid "execute_remote"
+msgstr ""
+
+#: app/views/menu.html:79
+msgid "export"
+msgstr ""
+
+#: app/views/menu.html:75
+msgid "export_as_block"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:147
+msgid "file_does_not_exist"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:216
+#: app/scripts/services/tools.service.js:219
+msgid "fpga_io_not_defined"
+msgstr ""
+
+#: app/views/menu.html:158
+msgid "french"
+msgstr ""
+
+#: app/views/menu.html:146
+msgid "galician"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:153
+msgid "generic_error"
+msgstr ""
+
+#: app/views/menu.html:91
+msgid "gtkwave"
+msgstr ""
+
+#: app/scripts/services/common.service.js:134
+msgid "gtkwave_exported"
+msgstr ""
+
+#: app/views/menu.html:250
+msgid "help"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:445
+msgid "homebrew_required"
+msgstr ""
+
+#: app/views/menu.html:119
+msgid "image_path"
+msgstr ""
+
+#: app/views/menu.html:72
+msgid "import_block"
+msgstr ""
+
+#: app/views/menu.html:285
+msgid "info"
+msgstr ""
+
+#: app/views/menu.html:286
+msgid "input"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:480
+msgid "install_drivers_windows"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:476
+msgid "installation_completed"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:319
+#: app/scripts/services/tools.service.js:356
+msgid "installing_toolchain"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:392
+#: app/scripts/services/utils.service.js:448
+msgid "internet_connection_required"
+msgstr ""
+
+#: app/scripts/services/graph.service.js:261
+msgid "label_updated"
+msgstr ""
+
+#: app/views/menu.html:130
+msgid "language"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:117
+#: app/scripts/controllers/menu.js:94
+msgid "load_project_confirmation"
+msgstr ""
+
+#: app/views/menu.html:26
+msgid "new_project"
+msgstr ""
+
+#: app/views/menu.html:29
+msgid "open_project"
+msgstr ""
+
+#: app/views/menu.html:287
+msgid "output"
+msgstr ""
+
+#: app/views/menu.html:85
+msgid "pcf"
+msgstr ""
+
+#: app/scripts/services/common.service.js:114
+msgid "pcf_exported"
+msgstr ""
+
+#: app/views/menu.html:116
+msgid "preferences"
+msgstr ""
+
+#: app/scripts/services/common.service.js:31
+msgid "project_created"
+msgstr ""
+
+#: app/scripts/services/common.service.js:51
+msgid "project_loaded"
+msgstr ""
+
+#: app/scripts/services/common.service.js:63
+msgid "project_saved"
+msgstr ""
+
+#: app/views/project.html:2
+msgid "read_only"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:248
+msgid "remote_host_not_connected"
+msgstr ""
+
+#: app/views/menu.html:124
+msgid "remote_hostname"
+msgstr ""
+
+#: app/views/menu.html:219
+msgid "remove"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:326
+msgid "remove_block_confirmation"
+msgstr ""
+
+#: app/views/menu.html:109
+msgid "remove_selected"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:295
+msgid "remove_toolchain_confirmation"
+msgstr ""
+
+#: app/views/menu.html:224
+msgid "reset_default"
+msgstr ""
+
+#: app/views/menu.html:102
+msgid "reset_view"
+msgstr ""
+
+#: app/views/menu.html:65
+msgid "save"
+msgstr ""
+
+#: app/views/menu.html:68
+msgid "save_as"
+msgstr ""
+
+#: app/views/menu.html:263
+msgid "source_code"
+msgstr ""
+
+#: app/views/menu.html:140
+msgid "spanish"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:41
+msgid "start_"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:170
+msgid "sync_remote_files"
+msgstr ""
+
+#: app/views/menu.html:49
+msgid "templates"
+msgstr ""
+
+#: app/views/menu.html:88
+msgid "testbench"
+msgstr ""
+
+#: app/scripts/services/common.service.js:124
+msgid "testbench_exported"
+msgstr ""
+
+#: app/views/menu.html:210
+msgid "toolchain"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:477
+msgid "toolchain_installed"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:71
+#: app/scripts/services/utils.service.js:486
+#: app/scripts/services/utils.service.js:502
+msgid "toolchain_not_installed"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:299
+msgid "toolchain_removed"
+msgstr ""
+
+#: app/views/menu.html:197
+msgid "tools"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:496
+msgid "uninstall_drivers_windows"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:213
+msgid "unknown_board"
+msgstr ""
+
+#: app/scripts/services/utils.service.js:414
+#: app/scripts/services/utils.service.js:489
+msgid "unplug_and_reconnect"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:73
+msgid "untitled"
+msgstr ""
+
+#: app/views/menu.html:206
+msgid "upload"
+msgstr ""
+
+#: app/views/menu.html:200
+msgid "verify"
+msgstr ""
+
+#: app/views/menu.html:82
+msgid "verilog"
+msgstr ""
+
+#: app/scripts/services/common.service.js:104
+msgid "verilog_exported"
+msgstr ""
+
+#: app/views/menu.html:256
+msgid "version"
+msgstr ""
+
+#: app/views/menu.html:170
+msgid "view"
+msgstr ""
+
+#: app/views/menu.html:253
+msgid "view_license"
+msgstr ""
+
+#: app/scripts/services/graph.service.js:561
+msgid "wrong_block_format"
+msgstr ""
+
+#: app/scripts/services/common.service.js:54
+msgid "wrong_project_format"
+msgstr ""
+
+#: app/scripts/services/tools.service.js:245
+msgid "wrong_remote_hostname"
+msgstr ""

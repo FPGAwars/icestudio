@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['$translate', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package',
-      function($translate, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package) {
+    .service('utils', ['gettextCatalog', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package',
+      function(gettextCatalog, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package) {
 
         const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
         const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
@@ -405,13 +405,13 @@ angular.module('icestudio')
             endLazyProcess();
             if (!error) {
               if (enable) {
-                alertify.success($translate.instant('drivers_enabled'));
+                alertify.success(gettextCatalog.getString('drivers_enabled'));
               }
               else {
-                alertify.warning($translate.instant('drivers_disabled'));
+                alertify.warning(gettextCatalog.getString('drivers_disabled'));
               }
               setTimeout(function() {
-                 alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
+                 alertify.notify(gettextCatalog.getString('unplug_and_reconnect'), 'message', 5);
               }, 1000);
             }
           });
@@ -442,17 +442,17 @@ angular.module('icestudio')
                 if (error) {
                   if ((stderr.indexOf('brew: command not found') != -1) ||
                        (stderr.indexOf('brew: No such file or directory') != -1)) {
-                    alertify.notify($translate.instant('homebrew_required'), 'error', 5);
+                    alertify.notify(gettextCatalog.getString('homebrew_required'), 'error', 5);
                   }
                   else if (stderr.indexOf('Error: Failed to download') != -1) {
-                    alertify.notify($translate.instant('internet_connection_required'), 'error', 5);
+                    alertify.notify(gettextCatalog.getString('internet_connection_required'), 'error', 5);
                   }
                   else {
                     alertify.notify(stderr, 'error', 5);
                   }
                 }
                 else {
-                  alertify.success($translate.instant('drivers_enabled'));
+                  alertify.success(gettextCatalog.getString('drivers_enabled'));
                 }
               });
             }
@@ -471,35 +471,35 @@ angular.module('icestudio')
             // console.log(error, stdout, stderr);
             endLazyProcess();
             if (!error) {
-              alertify.warning($translate.instant('drivers_disabled'));
+              alertify.warning(gettextCatalog.getString('drivers_disabled'));
             }
           });
         }
 
         function enableWindowsDrivers() {
-          alertify.confirm($translate.instant('install_drivers_windows'), function() {
+          alertify.confirm(gettextCatalog.getString('install_drivers_windows'), function() {
             beginLazyProcess();
             nodeChildProcess.exec([APIO_CMD, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (stderr) {
-                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
+                alertify.notify(gettextCatalog.getString('toolchain_not_installed'), 'error', 5);
               }
               if (!error) {
-                alertify.notify($translate.instant('unplug_and_reconnect'), 'message', 5);
+                alertify.notify(gettextCatalog.getString('unplug_and_reconnect'), 'message', 5);
               }
             });
           });
         }
 
         function disableWindowsDrivers() {
-          alertify.confirm($translate.instant('uninstall_drivers_windows'), function() {
+          alertify.confirm(gettextCatalog.getString('uninstall_drivers_windows'), function() {
             beginLazyProcess();
             nodeChildProcess.exec([APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (stderr) {
-                alertify.notify($translate.instant('toolchain_not_installed'), 'error', 5);
+                alertify.notify(gettextCatalog.getString('toolchain_not_installed'), 'error', 5);
               }
             });
           });

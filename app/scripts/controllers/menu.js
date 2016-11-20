@@ -3,7 +3,7 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
                                     $timeout,
-                                    $translate,
+                                    gettextCatalog,
                                     common,
                                     graph,
                                     tools,
@@ -17,7 +17,9 @@ angular.module('icestudio')
     // Manage language
 
     profile.load(function() {
-      $translate.use(profile.data.language);
+      var lang = profile.data.language;
+      gettextCatalog.setCurrentLanguage(lang);
+      gettextCatalog.loadRemote('resources/locale/' + lang + '/' + lang + '.json');
     });
     var win = gui.Window.get();
     win.on('close', function() {
@@ -67,8 +69,8 @@ angular.module('icestudio')
     // File
 
     $scope.newProject = function() {
-      alertify.prompt($translate.instant('enter_project_title'),
-                      $translate.instant('untitled'),
+      alertify.prompt(gettextCatalog.getString('enter_project_title'),
+                      gettextCatalog.getString('untitled'),
         function(evt, name) {
           if (name) {
             common.newProject(name);
@@ -89,7 +91,7 @@ angular.module('icestudio')
 
               $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
-                alertify.confirm($translate.instant('load_project_confirmation'),
+                alertify.confirm(gettextCatalog.getString('load_project_confirmation'),
                   function() {
                     common.openProject(file.path);
                     $scope.currentProjectPath = file.path;
@@ -112,7 +114,7 @@ angular.module('icestudio')
     $scope.openStoredProject = function(name, project) {
       if (project) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('load_project_confirmation'),
+          alertify.confirm(gettextCatalog.getString('load_project_confirmation'),
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
@@ -285,7 +287,7 @@ angular.module('icestudio')
 
     $scope.setImagePath = function() {
       var current = common.project.image;
-      alertify.prompt($translate.instant('enter_project_image_path'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('enter_project_image_path'), (current) ? current : '',
         function(evt, imagePath) {
           common.setImagePath(imagePath);
       });
@@ -293,7 +295,7 @@ angular.module('icestudio')
 
     $scope.setRemoteHostname = function() {
       var current = profile.data.remoteHostname;
-      alertify.prompt($translate.instant('enter_remote_hostname'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('enter_remote_hostname'), (current) ? current : '',
         function(evt, remoteHostname) {
           profile.data.remoteHostname = remoteHostname;
       });
@@ -308,7 +310,7 @@ angular.module('icestudio')
 
     $scope.clearGraph = function() {
       if (!graph.isEmpty()) {
-        alertify.confirm($translate.instant('clear_all_confirmation'),
+        alertify.confirm(gettextCatalog.getString('clear_all_confirmation'),
         function() {
           common.clearProject();
         });
@@ -321,7 +323,7 @@ angular.module('icestudio')
 
     $scope.removeSelected = function() {
       if (graph.hasSelection()) {
-        alertify.confirm($translate.instant('remove_block_confirmation'),
+        alertify.confirm(gettextCatalog.getString('remove_block_confirmation'),
           function() {
             common.removeSelected();
         });
@@ -388,7 +390,7 @@ angular.module('icestudio')
         gui.Shell.openExternal(boards.selectedBoard.info.datasheet);
       }
       else {
-        alertify.error($translate.instant('datasheet_not_defined'));
+        alertify.error(gettextCatalog.getString('datasheet_not_defined'));
       }
     }
 
@@ -397,17 +399,17 @@ angular.module('icestudio')
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.info.label + '</b>' }),
+          alertify.confirm(gettextCatalog.getString('change_board_confirmation', { name: '<b>' + board.info.label + '</b>' }),
             function() {
               boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected', { name: '<b>' + board.info.label + '</b>' }));
+              alertify.success(gettextCatalog.getString('board_selected', { name: '<b>' + board.info.label + '</b>' }));
           });
         }
         else {
           boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected',  { name: '<b>' + board.info.label + '</b>' }));
+          alertify.success(gettextCatalog.getString('board_selected',  { name: '<b>' + board.info.label + '</b>' }));
         }
       }
     }
