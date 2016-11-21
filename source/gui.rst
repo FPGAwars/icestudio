@@ -15,19 +15,18 @@ File
 
 * **New project**: create a new project.
 * **Open project**: show a file dialog to open a project (.ice).
-* **Examples**: contains all stored examples. A example is loaded as a project.
+* **Examples**: contains all stored examples depending on the selected board. A example is loaded as a project.
 * **Templates**: contains all stored templates. A template is loaded as a project.
-
 * **Save**: save the current project (.ice).
 * **Save as**: show a save file dialog to save the current project (.ice).
-
 * **Import block**: load a block file (.iceb) into the current project.
 * **Export as block**: show a save file dialog to export the current project as a block file (.iceb).
+* **Export**: show a save file dialog to export
 
-* **Export verilog**: show a save file dialog to export the current verilog code file (.v).
-* **Export PCF**: show a save file dialog to export the current pcf file (.pcf).
-* **Export testbench**: show a save file dialog to export a auto-generated testbench (.v).
-* **Export GTKWave**: show a save file dialog to export a GTKWave file with all signals showed (.gtkw).
+  * **Verilog**: the current verilog code file (.v).
+  * **PCF**: the current pcf file (.pcf).
+  * **Testbench**: an auto-generated testbench (.v).
+  * **GTKWave**: a GTKWave file with all signals showed (.gtkw).
 
 .. note::
 
@@ -41,28 +40,30 @@ File
 Edit
 ````
 
+* **Reset view**: reset pan and zoom to its default values.
 * **Clear all**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
 * **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
+* **Preferences**:
 
-* **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
-
-* **Remote hostname**: set the hostame of a remote device with a FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
-
-* **Language**: select the application language: English, Spanish, Galician, Basque. This selection is stored in the app profile.
+  * **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
+  * **Remote hostname**: set the hostame of a remote device with a FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
+  * **Language**: select the application language: English, Spanish, Galician, Basque and French. This selection is stored in the app profile.
 
 View
 ````
 
-* **Reset view**: reset pan and zoom to its default values.
+* **PCF**: show the selected board PCF file in a new window.
+* **Pinout**: show the selected board SVG pinout in a new window.
+* **Datasheet**: open a web browser with the information of the selected board.
 
 Boards
 ``````
-It contains the supported boards: **Icezum**, **Go board**, **iCEstick**, **iCE40-HX8K**, **icoBOARD 1.0**. When a board is selected all I/O block combos are updated and its current values removed.
+It contains the supported boards: **IceZUM Alhambra**, **Go board**, **iCEstick**, **iCE40-HX8K**, **icoBOARD 1.0**, **Kéfir I**. When a board is selected all I/O block combos are updated and its current values removed.
 
 .. hint::
 
-  This information is stored in the `app/resources/boards` directory. To support a new board just create a new JSON file with its information. Also, a generator.py script has been created to generate the board JSON file from a PCF file.
+  This information is stored in the `app/resources/boards` directory. To support a new board just create a new directory with the *info.json*, *pinout.pcf* and *pinout.svg* (optional) files with its information. Also, a generator.py script has been created to generate the *pinout.json* file from the *pinout.pcf*.
 
 Tools
 `````
@@ -70,12 +71,17 @@ Tools
 * **Verify**: check the generated verilog source code.
 * **Build**: generate the bitstream from the graphic source.
 * **Upload**: generate and upload the bitstream to the FPGA board.
+* **Toolchain**:
 
-* **Install/Upgrade toolchain**: install a python virtualenv in `.icestudio/venv`, apio and icestorm toolchain. It requires Python 2.7 installed and Internet connection.
-* **Remove toolchain**: remove the directories `.icestudio` and `.apio`.
+  * **Install/Update**: install a python virtualenv in `.icestudio/venv`, apio and its packages in `.icestudio/apio`. It requires Python 2.7.
+  * **Remove**: remove the `.icestudio` directory.
+  * **Reset default**: restore the default toolchain distributed with Icestudio.
+  * **Apio version**: show the current apio version.
 
-* **Enable drivers**: launch the FTDI drivers configuration. Each OS has a different process.
-* **Disable drivers**: revert the FTDI drivers configuration. Each OS has a different process.
+* **Drivers**:
+
+  * **Enable**: launch the FTDI drivers configuration. Each OS has a different process.
+  * **Disable**: revert the FTDI drivers configuration. Each OS has a different process.
 
 .. hint::
 

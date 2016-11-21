@@ -12,15 +12,22 @@ Install the toolchain
 
     Windows users: DON’T FORGET to select Add python.exe to Path feature on the “Customize” stage.
 
-2. **Connect to the internet**
+2. **Launch the toolchain installation process**
 
-3. **Launch the toolchain installation process**
-
-  Go to **Tools > Install toolchain**. Be patient for the toolchain installation.
+  Go to **Tools > Toolchain > Install**. Be patient for the toolchain installation.
 
 .. note::
 
-  When the toolchain is installed, the menu option appears as **Tools > Upgrade toolchain**
+  When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**
+
+Update the toolchain
+---------------------
+
+1. **Connect to the Internet**
+
+2. **Launch the toolchain updating process**
+
+  Go to **Tools > Toolchain > Update**. Be patient for the toolchain update.
 
 Install the drivers
 -------------------
@@ -29,11 +36,11 @@ Install the drivers
 
 2. **Enable the FTDI drivers**
 
-  Go to **Tools > Enable drivers**. Each OS has a different process. This configuration requires administration privileges.
+  Go to **Tools > Drivers > Enable**. Each OS has a different process. This configuration requires administration privileges.
 
 .. note::
 
-  To revert the drivers configuration go to **Tools > Disable drivers**
+  To revert the drivers configuration go to **Tools > Drivers > Disable**
 
 Create a project
 ----------------
