@@ -297,8 +297,10 @@ module.exports = function(grunt) {
   grunt.registerTask('default', function() {
     console.log('Icestudio');
   });
+  grunt.registerTask('gettext', [
+    'nggettext_extract'
+  ]);
   grunt.registerTask('serve', [
-    'nggettext_extract',
     'nggettext_compile',
     'watch:scripts'
   ]);

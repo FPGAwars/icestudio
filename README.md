@@ -92,6 +92,10 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
+```bash
+npm run gettext
+```
+
 ## Version 0.1
 
 ![][icestudio-0.1-demo]
