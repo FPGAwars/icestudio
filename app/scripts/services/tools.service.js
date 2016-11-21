@@ -277,6 +277,7 @@ angular.module('icestudio')
 
         this.installToolchain = function() {
           if (utils.checkDefaultToolchain()) {
+            utils.removeToolchain();
             installDefaultToolchain();
           }
           else {
