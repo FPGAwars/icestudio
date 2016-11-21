@@ -3,7 +3,7 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
                                     $timeout,
-                                    $translate,
+                                    gettextCatalog,
                                     common,
                                     graph,
                                     tools,
@@ -17,7 +17,9 @@ angular.module('icestudio')
     // Manage language
 
     profile.load(function() {
-      $translate.use(profile.data.language);
+      var lang = profile.data.language;
+      gettextCatalog.setCurrentLanguage(lang);
+      gettextCatalog.loadRemote('resources/locale/' + lang + '/' + lang + '.json');
     });
     var win = gui.Window.get();
     win.on('close', function() {
@@ -67,8 +69,8 @@ angular.module('icestudio')
     // File
 
     $scope.newProject = function() {
-      alertify.prompt($translate.instant('enter_project_title'),
-                      $translate.instant('untitled'),
+      alertify.prompt(gettextCatalog.getString('Enter the project\'s title'),
+                      gettextCatalog.getString('untitled'),
         function(evt, name) {
           if (name) {
             common.newProject(name);
@@ -89,7 +91,7 @@ angular.module('icestudio')
 
               $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
-                alertify.confirm($translate.instant('load_project_confirmation'),
+                alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
                   function() {
                     common.openProject(file.path);
                     $scope.currentProjectPath = file.path;
@@ -112,7 +114,7 @@ angular.module('icestudio')
     $scope.openStoredProject = function(name, project) {
       if (project) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('load_project_confirmation'),
+          alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
           function() {
             common.loadProject(name, project);
             $scope.currentProjectPath = '';
@@ -285,7 +287,7 @@ angular.module('icestudio')
 
     $scope.setImagePath = function() {
       var current = common.project.image;
-      alertify.prompt($translate.instant('enter_project_image_path'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('Enter the project\'s image path'), (current) ? current : '',
         function(evt, imagePath) {
           common.setImagePath(imagePath);
       });
@@ -293,7 +295,7 @@ angular.module('icestudio')
 
     $scope.setRemoteHostname = function() {
       var current = profile.data.remoteHostname;
-      alertify.prompt($translate.instant('enter_remote_hostname'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host (experimental)'), (current) ? current : '',
         function(evt, remoteHostname) {
           profile.data.remoteHostname = remoteHostname;
       });
@@ -302,13 +304,14 @@ angular.module('icestudio')
     $scope.selectLanguage = function(language) {
       if (profile.data.language != language) {
         profile.data.language = language;
-        $translate.use(language);
+        gettextCatalog.setCurrentLanguage(language);
+        gettextCatalog.loadRemote('resources/locale/' + language + '/' + language + '.json');
       }
     }
 
     $scope.clearGraph = function() {
       if (!graph.isEmpty()) {
-        alertify.confirm($translate.instant('clear_all_confirmation'),
+        alertify.confirm(gettextCatalog.getString('Do you want to clear all?'),
         function() {
           common.clearProject();
         });
@@ -321,7 +324,7 @@ angular.module('icestudio')
 
     $scope.removeSelected = function() {
       if (graph.hasSelection()) {
-        alertify.confirm($translate.instant('remove_block_confirmation'),
+        alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
           function() {
             common.removeSelected();
         });
@@ -388,7 +391,7 @@ angular.module('icestudio')
         gui.Shell.openExternal(boards.selectedBoard.info.datasheet);
       }
       else {
-        alertify.error($translate.instant('datasheet_not_defined'));
+        alertify.error(gettextCatalog.getString('Datasheet not defined'));
       }
     }
 
@@ -397,17 +400,17 @@ angular.module('icestudio')
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm($translate.instant('change_board_confirmation', { name: '<b>' + board.info.label + '</b>' }),
+          alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: '<b>' + board.info.label + '</b>' }),
             function() {
               boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success($translate.instant('board_selected', { name: '<b>' + board.info.label + '</b>' }));
+              alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: '<b>' + board.info.label + '</b>' }));
           });
         }
         else {
           boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success($translate.instant('board_selected',  { name: '<b>' + board.info.label + '</b>' }));
+          alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: '<b>' + board.info.label + '</b>' }));
         }
       }
     }

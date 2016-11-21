@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', '$translate', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, $translate, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'nodeSha1',
+      function($rootScope, gettextCatalog, nodeFs, joint, boards, nodeSha1) {
 
         // Variables
 
@@ -254,11 +254,11 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt($translate.instant('enter_block_label'), data.data.label,
+                    alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), data.data.label,
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
-                        alertify.success($translate.instant('label_updated'));
+                        alertify.success(gettextCatalog.getString('Label updated'));
                     });
                   }
                 }
@@ -406,7 +406,7 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt($translate.instant('enter_block_ports'), 'a,b c',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s ports'), 'a,b c',
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -461,7 +461,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt($translate.instant('enter_block_label'), 'i',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'i',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -501,7 +501,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt($translate.instant('enter_block_label'), 'o',
+            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'o',
               function(evt, name) {
                 if (name) {
                   var names = name.split(' ');
@@ -558,7 +558,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error($translate.instant('wrong_block_format', { type: type }));
+              alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }));
             }
           }
         };

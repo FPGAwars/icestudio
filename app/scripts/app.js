@@ -3,10 +3,10 @@
 angular
   .module('icestudio', [
     'ngRoute',
-    'pascalprecht.translate',
-    'ui.bootstrap'
-  ]).config(['$routeProvider', '$translateProvider',
-    function($routeProvider, $translateProvider) {
+    'ui.bootstrap',
+    'gettext'
+  ]).config(['$routeProvider',
+    function($routeProvider) {
 
       $routeProvider
         .when('/', {
@@ -16,17 +16,8 @@ angular
         .otherwise({
           redirectTo: '/'
         });
-      $translateProvider.useStaticFilesLoader({
-        prefix: 'resources/locale/',
-        suffix: '.json'
-      });
-
-      // Initial language
-      $translateProvider.preferredLanguage('en');
-      //$translateProvider.useSanitizeValueStrategy('escape');
     }
 
   ])
-  .run(function(nodeFs) {
-    // console.log('Start');
+  .run(function() {
   });
