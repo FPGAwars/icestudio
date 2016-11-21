@@ -1,16 +1,36 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.8.7.1\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Team: \n"
 "Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. 1. Basic
+#: app/resources/examples/labels.js:4
+msgid "1_basic"
+msgstr "1. Basique"
+
+#. 1. Led on
+#: app/resources/examples/labels.js:6
+msgid "1_led_on"
+msgstr "1. Led on"
+
+#. 2. Switch led
+#: app/resources/examples/labels.js:8
+msgid "2_switch_led"
+msgstr "2. Switch led"
+
+#. 3. Switch and gate
+#: app/resources/examples/labels.js:10
+msgid "3_switch_and_gate"
+msgstr "3. Switch and gate"
 
 #: app/scripts/services/utils.service.js:414
 #: app/scripts/services/utils.service.js:489
@@ -56,7 +76,7 @@ msgstr "Bloc exporté comme {{name}}"
 msgid "Block {{name}} imported"
 msgstr "Bloc {{name}} importé"
 
-#: app/scripts/services/tools.service.js:210
+#: app/scripts/services/tools.service.js:218
 msgid "Board {{name}} not detected"
 msgstr "Carte {{name}}  non détectée"
 
@@ -72,11 +92,11 @@ msgstr "Cartes"
 msgid "Build"
 msgstr "Construire"
 
-#: app/scripts/services/tools.service.js:390
+#: app/scripts/services/tools.service.js:406
 msgid "Check Internet connection..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:398
+#: app/scripts/services/tools.service.js:414
 msgid "Check Python..."
 msgstr ""
 
@@ -104,7 +124,7 @@ msgstr ""
 msgid "Datasheet not defined"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:267
+#: app/scripts/services/tools.service.js:283
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -140,7 +160,7 @@ msgstr "Pilote désactivé"
 msgid "Drivers enabled"
 msgstr "Pilote activé"
 
-#: app/scripts/services/tools.service.js:222
+#: app/scripts/services/tools.service.js:230
 msgid "Duplicated FPGA I/O ports"
 msgstr "Ports d'entrée sortie FPGA dupliqué"
 
@@ -178,11 +198,11 @@ msgstr "Entrer un nom de projet"
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Entrer le hostname distant user@host (experimentale)"
 
-#: app/scripts/services/tools.service.js:290
+#: app/scripts/services/tools.service.js:306
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:153
+#: app/scripts/services/tools.service.js:161
 msgid "Error: {{error}}"
 msgstr "Erreur: {{error}}"
 
@@ -190,7 +210,7 @@ msgstr "Erreur: {{error}}"
 msgid "Examples"
 msgstr "Exemples"
 
-#: app/scripts/services/tools.service.js:181
+#: app/scripts/services/tools.service.js:189
 msgid "Execute remote {{label}} ..."
 msgstr "Executer à distance {{label}} ..."
 
@@ -202,20 +222,20 @@ msgstr "Exporter"
 msgid "Export as block"
 msgstr "Exporter un bloc"
 
-#: app/scripts/services/tools.service.js:422
+#: app/scripts/services/tools.service.js:438
 msgid "Extract default apio files..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:432
+#: app/scripts/services/tools.service.js:448
 msgid "Extract default apio packages..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:410
+#: app/scripts/services/tools.service.js:426
 msgid "Extract virtual env files..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:216
-#: app/scripts/services/tools.service.js:219
+#: app/scripts/services/tools.service.js:224
+#: app/scripts/services/tools.service.js:227
 msgid "FPGA I/O ports not defined"
 msgstr "Ports d'entrée sortie FPGA non définits"
 
@@ -223,7 +243,7 @@ msgstr "Ports d'entrée sortie FPGA non définits"
 msgid "File"
 msgstr "Fichier"
 
-#: app/scripts/services/tools.service.js:147
+#: app/scripts/services/tools.service.js:155
 msgid "File {{file}} does not exist"
 msgstr "Le fichier {{file}} n'existe pas"
 
@@ -263,20 +283,20 @@ msgstr "Info"
 msgid "Input"
 msgstr "Entrée"
 
-#: app/scripts/services/tools.service.js:427
+#: app/scripts/services/tools.service.js:443
 msgid "Install default apio..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:476
+#: app/scripts/services/tools.service.js:492
 msgid "Installation completed"
 msgstr "Installation terminée"
 
-#: app/scripts/services/tools.service.js:319
-#: app/scripts/services/tools.service.js:356
+#: app/scripts/services/tools.service.js:335
+#: app/scripts/services/tools.service.js:372
 msgid "Installing toolchain"
 msgstr "Installation de la toolchain"
 
-#: app/scripts/services/tools.service.js:392
+#: app/scripts/services/tools.service.js:408
 #: app/scripts/services/utils.service.js:448
 msgid "Internet connection required"
 msgstr "Une connexion internet est requise"
@@ -289,7 +309,7 @@ msgstr "Titre mis à jour"
 msgid "Language"
 msgstr "Langage"
 
-#: app/scripts/services/tools.service.js:415
+#: app/scripts/services/tools.service.js:431
 msgid "Make virtual env..."
 msgstr ""
 
@@ -325,7 +345,7 @@ msgstr "Projet {{name}} chargé"
 msgid "Project {{name}} saved"
 msgstr "Projet {{name}} sauvegardé"
 
-#: app/scripts/services/tools.service.js:403
+#: app/scripts/services/tools.service.js:419
 msgid "Python 2.7 is required"
 msgstr ""
 
@@ -333,7 +353,7 @@ msgstr ""
 msgid "Read only"
 msgstr "Lecture seule"
 
-#: app/scripts/services/tools.service.js:248
+#: app/scripts/services/tools.service.js:256
 msgid "Remote host {{name}} not connected"
 msgstr "Remote host {{name}} not connected"
 
@@ -373,7 +393,7 @@ msgstr "Code source"
 msgid "Spanish"
 msgstr "Espagnole"
 
-#: app/scripts/services/tools.service.js:170
+#: app/scripts/services/tools.service.js:178
 msgid "Synchronize remote files ..."
 msgstr "Synchroniser les fichiers distants ..."
 
@@ -403,17 +423,17 @@ msgid ""
 "project?"
 msgstr "Le projet actuel sera supprimé. Continuer de charger le projet?"
 
-#: app/scripts/services/tools.service.js:295
+#: app/scripts/services/tools.service.js:311
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 "Les répertoires de configuration d'Icestudio et apio vont être supprimés. "
 "Voulez-vous continuer?"
 
-#: app/scripts/services/tools.service.js:283
+#: app/scripts/services/tools.service.js:299
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:275
+#: app/scripts/services/tools.service.js:291
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -423,21 +443,21 @@ msgstr ""
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.service.js:477
+#: app/scripts/services/tools.service.js:493
 msgid "Toolchain installed"
 msgstr "La toolchain est installée"
 
-#: app/scripts/services/tools.service.js:481
+#: app/scripts/services/tools.service.js:497
 msgid "Toolchain not installed"
 msgstr "La toolchain n'est pas à jour"
 
-#: app/scripts/services/tools.service.js:71
+#: app/scripts/services/tools.service.js:79
 #: app/scripts/services/utils.service.js:486
 #: app/scripts/services/utils.service.js:502
 msgid "Toolchain not installed. Please, install the toolchain"
 msgstr "La toolchain n'est pas à jour. Installer, ou mettre à jour svp"
 
-#: app/scripts/services/tools.service.js:299
+#: app/scripts/services/tools.service.js:315
 msgid "Toolchain removed"
 msgstr "Toolchain supprimée"
 
@@ -445,7 +465,7 @@ msgstr "Toolchain supprimée"
 msgid "Tools"
 msgstr "Outils"
 
-#: app/scripts/services/tools.service.js:213
+#: app/scripts/services/tools.service.js:221
 msgid "Unknown board"
 msgstr "Carte inconnue"
 
@@ -481,18 +501,175 @@ msgstr "Mauvais format de bloc: {{type}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Mauvais format de projet: {{name}}"
 
-#: app/scripts/services/tools.service.js:245
+#: app/scripts/services/tools.service.js:253
 msgid "Wrong remote hostname {{name}}"
 msgstr "Mauvais hostname distant {{name}}"
 
-#: app/scripts/services/tools.service.js:256
-msgid "done_"
-msgstr ""
+#. And
+#: app/resources/blocks/labels.js:34
+msgid "and"
+msgstr "Et"
 
-#: app/scripts/services/tools.service.js:41
-msgid "start_"
-msgstr ""
+#. Bit
+#: app/resources/blocks/labels.js:4
+msgid "bit"
+msgstr "Bit"
+
+#. Comb
+#: app/resources/blocks/labels.js:16
+msgid "comb"
+msgstr "Combinatoire"
+
+#. Config
+#: app/resources/blocks/labels.js:6
+msgid "config"
+msgstr "Configuration"
+
+#. Demux 1:2
+#: app/resources/blocks/labels.js:18
+msgid "demux_1_2"
+msgstr "Démultiplexeur 1:2"
+
+#. Demux 1:4
+#: app/resources/blocks/labels.js:20
+msgid "demux_1_4"
+msgstr "Démultiplexeur 1:4"
+
+#. Demux 1:8
+#: app/resources/blocks/labels.js:22
+msgid "demux_1_8"
+msgstr "Démultiplexeur 1:8"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:50
+msgid "dff_ar"
+msgstr "D flip-flop async"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:52
+msgid "dff_sr"
+msgstr "D flip-flop"
+
+#. Build done
+#: app/scripts/services/tools.service.js:268
+msgid "done_build"
+msgstr "Construction terminée"
+
+#. Upload done
+#: app/scripts/services/tools.service.js:270
+msgid "done_upload"
+msgstr "Téléchargement terminé"
+
+#. Verification done
+#: app/scripts/services/tools.service.js:266
+msgid "done_verify"
+msgstr "Vérification faite"
+
+#. Gate
+#: app/resources/blocks/labels.js:32
+msgid "gate"
+msgstr "Porte"
+
+#. Hex 7 Segment CA
+#: app/resources/blocks/labels.js:26
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment CA"
+
+#. Hex 7 Segment CC
+#: app/resources/blocks/labels.js:24
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. Logic
+#: app/resources/blocks/labels.js:14
+msgid "logic"
+msgstr "Logique"
+
+#. Mux 2:1
+#: app/resources/blocks/labels.js:28
+msgid "mux_2_1"
+msgstr "Multiplexeur 2:1"
+
+#. Mux 4:1
+#: app/resources/blocks/labels.js:30
+msgid "mux_4_1"
+msgstr "Multiplexeur 4:1"
+
+#. Nand
+#: app/resources/blocks/labels.js:36
+msgid "nand"
+msgstr "Non Et"
+
+#. Nor
+#: app/resources/blocks/labels.js:38
+msgid "nor"
+msgstr "Non Ou"
+
+#. Not
+#: app/resources/blocks/labels.js:40
+msgid "not"
+msgstr "Non"
+
+#. Or
+#: app/resources/blocks/labels.js:42
+msgid "or"
+msgstr "Ou"
+
+#. Pull up
+#: app/resources/blocks/labels.js:8
+msgid "pull_up"
+msgstr "Pull up"
+
+#. Pull up inv
+#: app/resources/blocks/labels.js:10
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. Sec
+#: app/resources/blocks/labels.js:48
+msgid "sec"
+msgstr "Séquentiel"
+
+#. Start building ...
+#: app/scripts/services/tools.service.js:45
+msgid "start_build"
+msgstr "Début de la construction ..."
+
+#. Start uploading ...
+#: app/scripts/services/tools.service.js:47
+msgid "start_upload"
+msgstr "Début du téléchargement ..."
+
+#. Start verification ...
+#: app/scripts/services/tools.service.js:43
+msgid "start_verify"
+msgstr "Début de la verification ..."
+
+#. T flip-flop async
+#: app/resources/blocks/labels.js:54
+msgid "tff_ar"
+msgstr "T flip-flop async"
+
+#. T flip-flop
+#: app/resources/blocks/labels.js:56
+msgid "tff_sr"
+msgstr "T flip-flop"
+
+#. Tri-state
+#: app/resources/blocks/labels.js:12
+msgid "tri_state"
+msgstr "Tri-state"
 
 #: app/scripts/controllers/menu.js:73
 msgid "untitled"
 msgstr "sans titre"
+
+#. Xnor
+#: app/resources/blocks/labels.js:44
+msgid "xnor"
+msgstr "Xnor"
+
+#. Xor
+#: app/resources/blocks/labels.js:46
+msgid "xor"
+msgstr "Xor"

@@ -1,16 +1,36 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.8.7.1\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
 "Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. 1. Basic
+#: app/resources/examples/labels.js:4
+msgid "1_basic"
+msgstr "1. Básico"
+
+#. 1. Led on
+#: app/resources/examples/labels.js:6
+msgid "1_led_on"
+msgstr "1. Encender led"
+
+#. 2. Switch led
+#: app/resources/examples/labels.js:8
+msgid "2_switch_led"
+msgstr "2. Interruptor con led"
+
+#. 3. Switch and gate
+#: app/resources/examples/labels.js:10
+msgid "3_switch_and_gate"
+msgstr "3. Interruptor con puerta and"
 
 #: app/scripts/services/utils.service.js:414
 #: app/scripts/services/utils.service.js:489
@@ -32,9 +52,9 @@ msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
-"<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra "
-"el dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y "
-"desinstala el driver</li></ol>"
+"<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra el "
+"dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala "
+"el driver</li></ol>"
 
 #: app/views/menu.html:271
 msgid "About Icestudio"
@@ -56,11 +76,11 @@ msgstr "Bloque exportado como {{name}}"
 msgid "Block {{name}} imported"
 msgstr "Bloque {{name}} importado"
 
-#: app/scripts/services/tools.service.js:210
+#: app/scripts/services/tools.service.js:218
 msgid "Board {{name}} not detected"
 msgstr "Placa {{name}} no detectada"
 
-#: app/scripts/controllers/menu.js:406 app/scripts/controllers/menu.js:412
+#: app/scripts/controllers/menu.js:407 app/scripts/controllers/menu.js:413
 msgid "Board {{name}} selected"
 msgstr "Placa {{name}} seleccionada"
 
@@ -72,11 +92,11 @@ msgstr "Placas"
 msgid "Build"
 msgstr "Sintetizar"
 
-#: app/scripts/services/tools.service.js:390
+#: app/scripts/services/tools.service.js:406
 msgid "Check Internet connection..."
 msgstr "Comprobando conexión a Internet..."
 
-#: app/scripts/services/tools.service.js:398
+#: app/scripts/services/tools.service.js:414
 msgid "Check Python..."
 msgstr "Comprobando Python..."
 
@@ -100,11 +120,11 @@ msgstr "Foro de la comunidad"
 msgid "Datasheet"
 msgstr "Datasheet"
 
-#: app/scripts/controllers/menu.js:393
+#: app/scripts/controllers/menu.js:394
 msgid "Datasheet not defined"
 msgstr "Datasheet no definido"
 
-#: app/scripts/services/tools.service.js:267
+#: app/scripts/services/tools.service.js:283
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -116,11 +136,11 @@ msgstr ""
 msgid "Disable"
 msgstr "Deshabilitar"
 
-#: app/scripts/controllers/menu.js:313
+#: app/scripts/controllers/menu.js:314
 msgid "Do you want to clear all?"
 msgstr "¿Deseas borrar todo?"
 
-#: app/scripts/controllers/menu.js:326
+#: app/scripts/controllers/menu.js:327
 msgid "Do you want to remove the selected block?"
 msgstr "¿Deseas eliminar el bloque seleccionado?"
 
@@ -142,7 +162,7 @@ msgstr "Drivers deshabilitados"
 msgid "Drivers enabled"
 msgstr "Drivers habilitados"
 
-#: app/scripts/services/tools.service.js:222
+#: app/scripts/services/tools.service.js:230
 msgid "Duplicated FPGA I/O ports"
 msgstr "Puertos E/S de la FPGA duplicados"
 
@@ -180,11 +200,11 @@ msgstr "Introduce el título del proyecto"
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Introduce el nombre del host remoto usuario@host (experimental)"
 
-#: app/scripts/services/tools.service.js:290
+#: app/scripts/services/tools.service.js:306
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Error: toolchain por defecto no encontrada en '{{dir}}'"
 
-#: app/scripts/services/tools.service.js:153
+#: app/scripts/services/tools.service.js:161
 msgid "Error: {{error}}"
 msgstr "Error: {{error}}"
 
@@ -192,7 +212,7 @@ msgstr "Error: {{error}}"
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: app/scripts/services/tools.service.js:181
+#: app/scripts/services/tools.service.js:189
 msgid "Execute remote {{label}} ..."
 msgstr "Ejecutar {{label}} remoto ..."
 
@@ -204,20 +224,20 @@ msgstr "Exportar"
 msgid "Export as block"
 msgstr "Exportar como bloque"
 
-#: app/scripts/services/tools.service.js:422
+#: app/scripts/services/tools.service.js:438
 msgid "Extract default apio files..."
 msgstr "Extraer ficheros de apio..."
 
-#: app/scripts/services/tools.service.js:432
+#: app/scripts/services/tools.service.js:448
 msgid "Extract default apio packages..."
 msgstr "Extraer paquetes de apio..."
 
-#: app/scripts/services/tools.service.js:410
+#: app/scripts/services/tools.service.js:426
 msgid "Extract virtual env files..."
 msgstr "Extraer ficheros del virtual env"
 
-#: app/scripts/services/tools.service.js:216
-#: app/scripts/services/tools.service.js:219
+#: app/scripts/services/tools.service.js:224
+#: app/scripts/services/tools.service.js:227
 msgid "FPGA I/O ports not defined"
 msgstr "Puertos E/S de la FPGA no definidos"
 
@@ -225,7 +245,7 @@ msgstr "Puertos E/S de la FPGA no definidos"
 msgid "File"
 msgstr "Archivo"
 
-#: app/scripts/services/tools.service.js:147
+#: app/scripts/services/tools.service.js:155
 msgid "File {{file}} does not exist"
 msgstr "El fichero {{file}} no existe"
 
@@ -265,20 +285,20 @@ msgstr "Info"
 msgid "Input"
 msgstr "Entrada"
 
-#: app/scripts/services/tools.service.js:427
+#: app/scripts/services/tools.service.js:443
 msgid "Install default apio..."
 msgstr "Instalar apio..."
 
-#: app/scripts/services/tools.service.js:476
+#: app/scripts/services/tools.service.js:492
 msgid "Installation completed"
 msgstr "Instalación completada"
 
-#: app/scripts/services/tools.service.js:319
-#: app/scripts/services/tools.service.js:356
+#: app/scripts/services/tools.service.js:335
+#: app/scripts/services/tools.service.js:372
 msgid "Installing toolchain"
 msgstr "Instalando la toolchain"
 
-#: app/scripts/services/tools.service.js:392
+#: app/scripts/services/tools.service.js:408
 #: app/scripts/services/utils.service.js:448
 msgid "Internet connection required"
 msgstr "Se requiere conexión a Internet"
@@ -291,7 +311,7 @@ msgstr "Etiqueta actualizada"
 msgid "Language"
 msgstr "Idioma"
 
-#: app/scripts/services/tools.service.js:415
+#: app/scripts/services/tools.service.js:431
 msgid "Make virtual env..."
 msgstr "Crear virtual env..."
 
@@ -327,7 +347,7 @@ msgstr "Proyecto {{name}} cargado"
 msgid "Project {{name}} saved"
 msgstr "Proyecto {{name}} guardado"
 
-#: app/scripts/services/tools.service.js:403
+#: app/scripts/services/tools.service.js:419
 msgid "Python 2.7 is required"
 msgstr "Se requiere Python 2.7"
 
@@ -335,7 +355,7 @@ msgstr "Se requiere Python 2.7"
 msgid "Read only"
 msgstr "Solo lectura"
 
-#: app/scripts/services/tools.service.js:248
+#: app/scripts/services/tools.service.js:256
 msgid "Remote host {{name}} not connected"
 msgstr "Host remoto {{name}} no conectado"
 
@@ -353,7 +373,7 @@ msgstr "Eliminar seleccionado"
 
 #: app/views/menu.html:224
 msgid "Reset default"
-msgstr ""
+msgstr "Reset default"
 
 #: app/views/menu.html:102
 msgid "Reset view"
@@ -375,7 +395,7 @@ msgstr "Código fuente"
 msgid "Spanish"
 msgstr "Español"
 
-#: app/scripts/services/tools.service.js:170
+#: app/scripts/services/tools.service.js:178
 msgid "Synchronize remote files ..."
 msgstr "Sincronizando ficheros remotos ..."
 
@@ -391,7 +411,7 @@ msgstr "Testbench"
 msgid "Testbench exported"
 msgstr "Testbench exportado"
 
-#: app/scripts/controllers/menu.js:402
+#: app/scripts/controllers/menu.js:403
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -403,19 +423,18 @@ msgstr ""
 msgid ""
 "The current project will be removed. Do you want to continue loading the "
 "project?"
-msgstr ""
-"El actual projecto se borrará. ¿Deseas continuar abriendo el proyecto?"
+msgstr "El actual projecto se borrará. ¿Deseas continuar abriendo el proyecto?"
 
-#: app/scripts/services/tools.service.js:295
+#: app/scripts/services/tools.service.js:311
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "La toolchain será eliminada. ¿Deseas continuar?"
 
-#: app/scripts/services/tools.service.js:283
+#: app/scripts/services/tools.service.js:299
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 "La toolchain será restaurada a los valores por defecto: ¿Deseas continuar?"
 
-#: app/scripts/services/tools.service.js:275
+#: app/scripts/services/tools.service.js:291
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -427,21 +446,21 @@ msgstr ""
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.service.js:477
+#: app/scripts/services/tools.service.js:493
 msgid "Toolchain installed"
 msgstr "Toolchain instalada"
 
-#: app/scripts/services/tools.service.js:481
+#: app/scripts/services/tools.service.js:497
 msgid "Toolchain not installed"
 msgstr "La toolchain no está instalada"
 
-#: app/scripts/services/tools.service.js:71
+#: app/scripts/services/tools.service.js:79
 #: app/scripts/services/utils.service.js:486
 #: app/scripts/services/utils.service.js:502
 msgid "Toolchain not installed. Please, install the toolchain"
 msgstr "La toolchain no está instalada. Por favor, instala la toolchain"
 
-#: app/scripts/services/tools.service.js:299
+#: app/scripts/services/tools.service.js:315
 msgid "Toolchain removed"
 msgstr "Toolchain eliminada"
 
@@ -449,7 +468,7 @@ msgstr "Toolchain eliminada"
 msgid "Tools"
 msgstr "Herramientas"
 
-#: app/scripts/services/tools.service.js:213
+#: app/scripts/services/tools.service.js:221
 msgid "Unknown board"
 msgstr "Placa desconocida"
 
@@ -485,18 +504,175 @@ msgstr "Formato de bloque incorrecto: {{type}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Formato de proyecto incorrecto: {{name}}"
 
-#: app/scripts/services/tools.service.js:245
+#: app/scripts/services/tools.service.js:253
 msgid "Wrong remote hostname {{name}}"
 msgstr "Nombre del host remoto incorrecto {{name}}"
 
-#: app/scripts/services/tools.service.js:256
-msgid "done_"
-msgstr ""
+#. And
+#: app/resources/blocks/labels.js:34
+msgid "and"
+msgstr "And"
 
-#: app/scripts/services/tools.service.js:41
-msgid "start_"
-msgstr ""
+#. Bit
+#: app/resources/blocks/labels.js:4
+msgid "bit"
+msgstr "Bit"
+
+#. Comb
+#: app/resources/blocks/labels.js:16
+msgid "comb"
+msgstr "Comb"
+
+#. Config
+#: app/resources/blocks/labels.js:6
+msgid "config"
+msgstr "Config"
+
+#. Demux 1:2
+#: app/resources/blocks/labels.js:18
+msgid "demux_1_2"
+msgstr "Demux 1:2"
+
+#. Demux 1:4
+#: app/resources/blocks/labels.js:20
+msgid "demux_1_4"
+msgstr "Demux 1:4"
+
+#. Demux 1:8
+#: app/resources/blocks/labels.js:22
+msgid "demux_1_8"
+msgstr "Demux 1:8"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:50
+msgid "dff_ar"
+msgstr "Biestable D asinc"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:52
+msgid "dff_sr"
+msgstr "Biestable D"
+
+#. Build done
+#: app/scripts/services/tools.service.js:268
+msgid "done_build"
+msgstr "Sintetizado realizado"
+
+#. Upload done
+#: app/scripts/services/tools.service.js:270
+msgid "done_upload"
+msgstr "Carga realizada"
+
+#. Verification done
+#: app/scripts/services/tools.service.js:266
+msgid "done_verify"
+msgstr "Verificación realizada"
+
+#. Gate
+#: app/resources/blocks/labels.js:32
+msgid "gate"
+msgstr "Puerta"
+
+#. Hex 7 Segment CA
+#: app/resources/blocks/labels.js:26
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment AC"
+
+#. Hex 7 Segment CC
+#: app/resources/blocks/labels.js:24
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. Logic
+#: app/resources/blocks/labels.js:14
+msgid "logic"
+msgstr "Lógica"
+
+#. Mux 2:1
+#: app/resources/blocks/labels.js:28
+msgid "mux_2_1"
+msgstr "Mux 2:1"
+
+#. Mux 4:1
+#: app/resources/blocks/labels.js:30
+msgid "mux_4_1"
+msgstr "Mux 4:1"
+
+#. Nand
+#: app/resources/blocks/labels.js:36
+msgid "nand"
+msgstr "Nand"
+
+#. Nor
+#: app/resources/blocks/labels.js:38
+msgid "nor"
+msgstr "Nor"
+
+#. Not
+#: app/resources/blocks/labels.js:40
+msgid "not"
+msgstr "Not"
+
+#. Or
+#: app/resources/blocks/labels.js:42
+msgid "or"
+msgstr "Or"
+
+#. Pull up
+#: app/resources/blocks/labels.js:8
+msgid "pull_up"
+msgstr "Pull up"
+
+#. Pull up inv
+#: app/resources/blocks/labels.js:10
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. Sec
+#: app/resources/blocks/labels.js:48
+msgid "sec"
+msgstr "Sec"
+
+#. Start building ...
+#: app/scripts/services/tools.service.js:45
+msgid "start_build"
+msgstr "Comenzar sintetizado ..."
+
+#. Start uploading ...
+#: app/scripts/services/tools.service.js:47
+msgid "start_upload"
+msgstr "Comenzar carga ..."
+
+#. Start verification ...
+#: app/scripts/services/tools.service.js:43
+msgid "start_verify"
+msgstr "Comenzar verificación ..."
+
+#. T flip-flop async
+#: app/resources/blocks/labels.js:54
+msgid "tff_ar"
+msgstr "Biestable T asinc"
+
+#. T flip-flop
+#: app/resources/blocks/labels.js:56
+msgid "tff_sr"
+msgstr "Biestable T"
+
+#. Tri-state
+#: app/resources/blocks/labels.js:12
+msgid "tri_state"
+msgstr "Tri-estado"
 
 #: app/scripts/controllers/menu.js:73
 msgid "untitled"
 msgstr "Sin título"
+
+#. Xnor
+#: app/resources/blocks/labels.js:44
+msgid "xnor"
+msgstr "Xnor"
+
+#. Xor
+#: app/resources/blocks/labels.js:46
+msgid "xor"
+msgstr "Xor"

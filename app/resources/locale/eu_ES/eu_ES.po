@@ -1,16 +1,36 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.8.7.1\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
 "Language: eu_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. 1. Basic
+#: app/resources/examples/labels.js:4
+msgid "1_basic"
+msgstr "1. Basikoa"
+
+#. 1. Led on
+#: app/resources/examples/labels.js:6
+msgid "1_led_on"
+msgstr "1. Led-a piztu"
+
+#. 2. Switch led
+#: app/resources/examples/labels.js:8
+msgid "2_switch_led"
+msgstr "2. Etengailua led batekin"
+
+#. 3. Switch and gate
+#: app/resources/examples/labels.js:10
+msgid "3_switch_and_gate"
+msgstr "3. Etengailua and atearekin"
 
 #: app/scripts/services/utils.service.js:414
 #: app/scripts/services/utils.service.js:489
@@ -50,7 +70,7 @@ msgstr "Blokea {{name}} bezala esportatua"
 msgid "Block {{name}} imported"
 msgstr "{{name}} blokea importatua"
 
-#: app/scripts/services/tools.service.js:210
+#: app/scripts/services/tools.service.js:218
 msgid "Board {{name}} not detected"
 msgstr "{{name}} plaka ez da aurkitzen"
 
@@ -66,11 +86,11 @@ msgstr "Plakak"
 msgid "Build"
 msgstr "Sintetizatu"
 
-#: app/scripts/services/tools.service.js:390
+#: app/scripts/services/tools.service.js:406
 msgid "Check Internet connection..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:398
+#: app/scripts/services/tools.service.js:414
 msgid "Check Python..."
 msgstr ""
 
@@ -98,7 +118,7 @@ msgstr ""
 msgid "Datasheet not defined"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:267
+#: app/scripts/services/tools.service.js:283
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -134,7 +154,7 @@ msgstr ""
 msgid "Drivers enabled"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:222
+#: app/scripts/services/tools.service.js:230
 msgid "Duplicated FPGA I/O ports"
 msgstr "FPGAren E/S portuak bikoiztuak"
 
@@ -172,11 +192,11 @@ msgstr "Proiektuari izena jarri"
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Enter the remote hostname user@host (experimental)"
 
-#: app/scripts/services/tools.service.js:290
+#: app/scripts/services/tools.service.js:306
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:153
+#: app/scripts/services/tools.service.js:161
 msgid "Error: {{error}}"
 msgstr "Errorea: {{error}}"
 
@@ -184,7 +204,7 @@ msgstr "Errorea: {{error}}"
 msgid "Examples"
 msgstr "Adibideak"
 
-#: app/scripts/services/tools.service.js:181
+#: app/scripts/services/tools.service.js:189
 msgid "Execute remote {{label}} ..."
 msgstr "Execute remote {{label}} ..."
 
@@ -196,20 +216,20 @@ msgstr "Esportatu"
 msgid "Export as block"
 msgstr "Blokea bezala esportatu"
 
-#: app/scripts/services/tools.service.js:422
+#: app/scripts/services/tools.service.js:438
 msgid "Extract default apio files..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:432
+#: app/scripts/services/tools.service.js:448
 msgid "Extract default apio packages..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:410
+#: app/scripts/services/tools.service.js:426
 msgid "Extract virtual env files..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:216
-#: app/scripts/services/tools.service.js:219
+#: app/scripts/services/tools.service.js:224
+#: app/scripts/services/tools.service.js:227
 msgid "FPGA I/O ports not defined"
 msgstr "FPGAren E/S portuak definitu gabe"
 
@@ -217,7 +237,7 @@ msgstr "FPGAren E/S portuak definitu gabe"
 msgid "File"
 msgstr "Fitxategia"
 
-#: app/scripts/services/tools.service.js:147
+#: app/scripts/services/tools.service.js:155
 msgid "File {{file}} does not exist"
 msgstr "{{file}} fitxeroa ez da existitzen"
 
@@ -257,20 +277,20 @@ msgstr "Info"
 msgid "Input"
 msgstr "Sarrera"
 
-#: app/scripts/services/tools.service.js:427
+#: app/scripts/services/tools.service.js:443
 msgid "Install default apio..."
 msgstr ""
 
-#: app/scripts/services/tools.service.js:476
+#: app/scripts/services/tools.service.js:492
 msgid "Installation completed"
 msgstr "Instalazioa amaitua"
 
-#: app/scripts/services/tools.service.js:319
-#: app/scripts/services/tools.service.js:356
+#: app/scripts/services/tools.service.js:335
+#: app/scripts/services/tools.service.js:372
 msgid "Installing toolchain"
 msgstr "Toolchain instalatzen"
 
-#: app/scripts/services/tools.service.js:392
+#: app/scripts/services/tools.service.js:408
 #: app/scripts/services/utils.service.js:448
 msgid "Internet connection required"
 msgstr "Internet konexioa behar da"
@@ -283,7 +303,7 @@ msgstr "Etiketa freskatua"
 msgid "Language"
 msgstr "Hizkuntza"
 
-#: app/scripts/services/tools.service.js:415
+#: app/scripts/services/tools.service.js:431
 msgid "Make virtual env..."
 msgstr ""
 
@@ -319,7 +339,7 @@ msgstr "{{name}} proiektua irekita"
 msgid "Project {{name}} saved"
 msgstr "{{name}} proiektua gordeta"
 
-#: app/scripts/services/tools.service.js:403
+#: app/scripts/services/tools.service.js:419
 msgid "Python 2.7 is required"
 msgstr ""
 
@@ -327,7 +347,7 @@ msgstr ""
 msgid "Read only"
 msgstr "Irakurtzeko soilik"
 
-#: app/scripts/services/tools.service.js:248
+#: app/scripts/services/tools.service.js:256
 msgid "Remote host {{name}} not connected"
 msgstr "Remote host {{name}} not connected"
 
@@ -367,7 +387,7 @@ msgstr "Jatorrizko kodea"
 msgid "Spanish"
 msgstr "Gaztelera"
 
-#: app/scripts/services/tools.service.js:170
+#: app/scripts/services/tools.service.js:178
 msgid "Synchronize remote files ..."
 msgstr "Synchronize remote files ..."
 
@@ -396,15 +416,15 @@ msgid ""
 "project?"
 msgstr "Proiektu hau ezabatuko da. Proiektua irekitzen jarraitu nahi duzu?"
 
-#: app/scripts/services/tools.service.js:295
+#: app/scripts/services/tools.service.js:311
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:283
+#: app/scripts/services/tools.service.js:299
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:275
+#: app/scripts/services/tools.service.js:291
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -414,21 +434,21 @@ msgstr ""
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.service.js:477
+#: app/scripts/services/tools.service.js:493
 msgid "Toolchain installed"
 msgstr "Toolchain instalatua"
 
-#: app/scripts/services/tools.service.js:481
+#: app/scripts/services/tools.service.js:497
 msgid "Toolchain not installed"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:71
+#: app/scripts/services/tools.service.js:79
 #: app/scripts/services/utils.service.js:486
 #: app/scripts/services/utils.service.js:502
 msgid "Toolchain not installed. Please, install the toolchain"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:299
+#: app/scripts/services/tools.service.js:315
 msgid "Toolchain removed"
 msgstr "Toolchain ezabatuta"
 
@@ -436,7 +456,7 @@ msgstr "Toolchain ezabatuta"
 msgid "Tools"
 msgstr "Erremintak"
 
-#: app/scripts/services/tools.service.js:213
+#: app/scripts/services/tools.service.js:221
 msgid "Unknown board"
 msgstr "Plaka ezezaguna"
 
@@ -472,18 +492,175 @@ msgstr "Blokearen formatua okerra: {{type}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Proiektu formatua okerra: {{name}}"
 
-#: app/scripts/services/tools.service.js:245
+#: app/scripts/services/tools.service.js:253
 msgid "Wrong remote hostname {{name}}"
 msgstr ""
 
-#: app/scripts/services/tools.service.js:256
-msgid "done_"
-msgstr ""
+#. And
+#: app/resources/blocks/labels.js:34
+msgid "and"
+msgstr "And"
 
-#: app/scripts/services/tools.service.js:41
-msgid "start_"
-msgstr ""
+#. Bit
+#: app/resources/blocks/labels.js:4
+msgid "bit"
+msgstr "Bit"
+
+#. Comb
+#: app/resources/blocks/labels.js:16
+msgid "comb"
+msgstr "Comb"
+
+#. Config
+#: app/resources/blocks/labels.js:6
+msgid "config"
+msgstr "Config"
+
+#. Demux 1:2
+#: app/resources/blocks/labels.js:18
+msgid "demux_1_2"
+msgstr "Demux 1:2"
+
+#. Demux 1:4
+#: app/resources/blocks/labels.js:20
+msgid "demux_1_4"
+msgstr "Demux 1:4"
+
+#. Demux 1:8
+#: app/resources/blocks/labels.js:22
+msgid "demux_1_8"
+msgstr "Demux 1:8"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:50
+msgid "dff_ar"
+msgstr "Bistable D asink"
+
+#. D flip-flop async
+#: app/resources/blocks/labels.js:52
+msgid "dff_sr"
+msgstr "Bistable D"
+
+#. Build done
+#: app/scripts/services/tools.service.js:268
+msgid "done_build"
+msgstr "Sintetizatua egina"
+
+#. Upload done
+#: app/scripts/services/tools.service.js:270
+msgid "done_upload"
+msgstr "Karga egina"
+
+#. Verification done
+#: app/scripts/services/tools.service.js:266
+msgid "done_verify"
+msgstr "Egiaztapena egina"
+
+#. Gate
+#: app/resources/blocks/labels.js:32
+msgid "gate"
+msgstr "Gate"
+
+#. Hex 7 Segment CA
+#: app/resources/blocks/labels.js:26
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment CA"
+
+#. Hex 7 Segment CC
+#: app/resources/blocks/labels.js:24
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. Logic
+#: app/resources/blocks/labels.js:14
+msgid "logic"
+msgstr "Logika"
+
+#. Mux 2:1
+#: app/resources/blocks/labels.js:28
+msgid "mux_2_1"
+msgstr "Mux 2:1"
+
+#. Mux 4:1
+#: app/resources/blocks/labels.js:30
+msgid "mux_4_1"
+msgstr "Mux 4:1"
+
+#. Nand
+#: app/resources/blocks/labels.js:36
+msgid "nand"
+msgstr "Nand"
+
+#. Nor
+#: app/resources/blocks/labels.js:38
+msgid "nor"
+msgstr "Nor"
+
+#. Not
+#: app/resources/blocks/labels.js:40
+msgid "not"
+msgstr "Not"
+
+#. Or
+#: app/resources/blocks/labels.js:42
+msgid "or"
+msgstr "Or"
+
+#. Pull up
+#: app/resources/blocks/labels.js:8
+msgid "pull_up"
+msgstr "Pull up"
+
+#. Pull up inv
+#: app/resources/blocks/labels.js:10
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. Sec
+#: app/resources/blocks/labels.js:48
+msgid "sec"
+msgstr "Sec"
+
+#. Start building ...
+#: app/scripts/services/tools.service.js:45
+msgid "start_build"
+msgstr "Sintetizatua hasi ..."
+
+#. Start uploading ...
+#: app/scripts/services/tools.service.js:47
+msgid "start_upload"
+msgstr "Karga hasi ..."
+
+#. Start verification ...
+#: app/scripts/services/tools.service.js:43
+msgid "start_verify"
+msgstr "Egiaztapena hasi ..."
+
+#. T flip-flop async
+#: app/resources/blocks/labels.js:54
+msgid "tff_ar"
+msgstr "Bistable T asink"
+
+#. T flip-flop
+#: app/resources/blocks/labels.js:56
+msgid "tff_sr"
+msgstr "Bistable T"
+
+#. Tri-state
+#: app/resources/blocks/labels.js:12
+msgid "tri_state"
+msgstr "Tri-state"
 
 #: app/scripts/controllers/menu.js:73
 msgid "untitled"
 msgstr "Izenik gabe"
+
+#. Xnor
+#: app/resources/blocks/labels.js:44
+msgid "xnor"
+msgstr "Xnor"
+
+#. Xor
+#: app/resources/blocks/labels.js:46
+msgid "xor"
+msgstr "Xor"
