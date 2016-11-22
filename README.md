@@ -17,18 +17,6 @@ Supported boards:
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
 * [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
-
-## Roadmap
-
-* Version 0.3.0
-
-  * Requirements definition: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.3.0:-proposed-features)
-
-
-* Version 0.2.X
-
-  * New blocks, examples and templates: [wiki](https://github.com/FPGAwars/icestudio/wiki/Icestudio-0.2.X:-proposed-content)
-
 ## Version 0.2.2
 
 ### Installation
@@ -47,7 +35,10 @@ Supported on Linux, Windows and Mac OSX.
 
 Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
 
-Install [nodejs](https://github.com/nodejs/node)
+Install [nodejs](https://github.com/nodejs/node) 4
+
+##### Ubuntu
+
 ```bash
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
@@ -78,7 +69,7 @@ npm start
 npm run dist
 ```
 
-NOTE: in Mac OS X this commmand generates also a **dmg** package.
+NOTE: in Mac OS X this command also generates a **dmg** package.
 
 ## Languages
 
@@ -95,6 +86,13 @@ NOTE: in Mac OS X this commmand generates also a **dmg** package.
 ```bash
 npm run gettext
 ```
+
+## Roadmap
+
+There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-proposed-features) in the wiki with the features proposed by the Community. If you want to contribute with new features and ideas write in the [Google Group](https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre).
+
+ We use the GitHub issues to schedule our new features and improvements.
+
 
 ## Version 0.1
 
