@@ -8,21 +8,20 @@ angular.module('icestudio')
         const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
 
         this.data = {
-          'language': 'en',
+          'language': '',
           'remoterHostname': ''
         }
 
         this.load = function(callback) {
-          utils.readFile(PROFILE_PATH, (function(_this) {
-            return function(data) {
-              if (data) {
-                _this.data = data;
-              }
-              if (callback)
-                callback()
-              // console.log('Profile loaded');
-            };
-          })(this));
+          var self = this;
+          utils.readFile(PROFILE_PATH, function(data) {
+            if (data) {
+              self.data = data;
+            }
+            if (callback)
+              callback();
+            // console.log('Profile loaded');
+          });
         }
 
         this.save = function() {

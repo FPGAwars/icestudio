@@ -45,4 +45,7 @@ angular.module('icestudio')
   })
   .factory('nodeGlob', function() {
     return require('glob');
+  })
+  .factory('nodeLangInfo', function() {
+    return require('node-lang-info');
   });

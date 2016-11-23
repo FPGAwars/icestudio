@@ -4,7 +4,8 @@ angular.module('icestudio')
   .controller('ProjectCtrl', function ($rootScope,
                                        $scope,
                                        common,
-                                       graph) {
+                                       graph,
+                                       gettextCatalog) {
 
     $scope.common = common;
     $scope.graph = graph;
@@ -12,7 +13,9 @@ angular.module('icestudio')
     // Intialization
 
     graph.createPaper($('#paper'));
-    common.updateProjectName('untitled');
+    setTimeout(function() {
+      common.updateProjectName(gettextCatalog.getString('untitled'));
+    }, 80);
 
     // Breadcrumbs
 

@@ -17,7 +17,6 @@ angular
           redirectTo: '/'
         });
     }
-
   ])
   .run(function() {
   });

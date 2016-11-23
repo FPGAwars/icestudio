@@ -3,7 +3,7 @@
 angular.module('icestudio')
   .controller('MenuCtrl', function ($scope,
                                     $timeout,
-                                    gettextCatalog,
+                                    nodeLangInfo,
                                     common,
                                     graph,
                                     tools,
@@ -12,21 +12,8 @@ angular.module('icestudio')
                                     profile,
                                     gui,
                                     utils,
+                                    gettextCatalog,
                                     _package) {
-
-    // Manage language
-
-    profile.load(function() {
-      var lang = profile.data.language;
-      gettextCatalog.setCurrentLanguage(lang);
-      gettextCatalog.loadRemote('resources/locale/' + lang + '/' + lang + '.json');
-    });
-    var win = gui.Window.get();
-    win.on('close', function() {
-      this.hide();
-      profile.save();
-      this.close(true);
-    });
 
     // Initialize scope
 
@@ -44,6 +31,30 @@ angular.module('icestudio')
 
     $scope.workingdir = '';
     $scope.currentProjectPath = '';
+
+    // Load language
+    profile.load(function(data) {
+      var lang = profile.data.language;
+      if (lang) {
+        utils.setLocale(lang);
+      }
+      else {
+        // If lang is empty, use the system language
+        nodeLangInfo(function(err, sysLang) {
+          if (!err) {
+            profile.data.language = utils.setLocale(sysLang);
+          }
+        });
+      }
+    });
+
+    // Configure window
+    var win = gui.Window.get();
+    win.on('close', function() {
+      this.hide();
+      profile.save();
+      this.close(true);
+    });
 
     function pathSync() {
       tools.setProjectPath(utils.dirname($scope.currentProjectPath));
@@ -304,8 +315,7 @@ angular.module('icestudio')
     $scope.selectLanguage = function(language) {
       if (profile.data.language != language) {
         profile.data.language = language;
-        gettextCatalog.setCurrentLanguage(language);
-        gettextCatalog.loadRemote('resources/locale/' + language + '/' + language + '.json');
+        utils.setLocale(language);
       }
     }
 

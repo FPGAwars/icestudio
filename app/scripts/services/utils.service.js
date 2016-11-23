@@ -18,6 +18,8 @@ angular.module('icestudio')
         const SAMPLE_DIR = nodePath.join('resources', 'sample');
         this.SAMPLE_DIR = SAMPLE_DIR;
 
+        const LOCALE_DIR = nodePath.join('resources', 'locale');
+
         const APP_DIR = nodePath.dirname(process.execPath);
         const TOOLCHAIN_DIR = nodePath.join(APP_DIR, 'toolchain');
         this.TOOLCHAIN_DIR = TOOLCHAIN_DIR;
@@ -231,14 +233,15 @@ angular.module('icestudio')
         }
 
         this.removeToolchain = function() {
-          deleteFolderRecursive(ICESTUDIO_DIR);
+          deleteFolderRecursive(ENV_DIR);
+          deleteFolderRecursive(APIO_HOME_DIR);
         }
 
         var deleteFolderRecursive = function(path) {
           if (nodeFs.existsSync(path)) {
-            nodeFs.readdirSync(path).forEach(function(file,index){
+            nodeFs.readdirSync(path).forEach(function(file, index) {
               var curPath = nodePath.join(path, file);
-              if (nodeFs.lstatSync(curPath).isDirectory()) { // recurse
+              if (nodeFs.lstatSync(curPath).isDirectory()) { // recursive
                 deleteFolderRecursive(curPath);
               }
               else { // delete file
@@ -263,8 +266,12 @@ angular.module('icestudio')
         this.readFile = function(filepath, callback) {
           nodeFs.readFile(filepath,
             function(err, data) {
-              if (!err && callback) {
+              if (!err) {
                 decompressJSON(data, callback);
+              }
+              else {
+                if (callback)
+                  callback();
               }
           });
         }
@@ -513,6 +520,56 @@ angular.module('icestudio')
         function endLazyProcess() {
           $('body').removeClass('waiting');
           angular.element('#menu').removeClass('disable-menu');
+        }
+
+        this.setLocale = function(locale) {
+          // Update current locale format
+          locale = splitLocale(locale);
+          // Load supported languages
+          var supported = getSupportedLanguages();
+          // Set the best matching language
+          var bestLang = bestLocale(locale, supported);
+          gettextCatalog.setCurrentLanguage(bestLang);
+          gettextCatalog.loadRemote(nodePath.join(LOCALE_DIR, bestLang, bestLang + '.json'));
+          return bestLang;
+        }
+
+        function splitLocale(locale) {
+          var ret = {};
+          var list = locale.split('_');
+          if (list.length > 0) ret.lang = list[0];
+          if (list.length > 1) ret.country = list[1];
+          return ret;
+        }
+
+        function getSupportedLanguages() {
+          var supported = [];
+          nodeFs.readdirSync(LOCALE_DIR).forEach(function(element, index) {
+            var curPath = nodePath.join(LOCALE_DIR, element);
+            if (nodeFs.lstatSync(curPath).isDirectory()) {
+              supported.push(splitLocale(element));
+            }
+          });
+          return supported;
+        }
+
+        function bestLocale(locale, supported) {
+          var ret = 'en';
+          // 1. Try exact match
+          for (var i = 0; i < supported.length; i++) {
+            if (locale.lang === supported[i].lang &&
+                locale.country === supported[i].country) {
+              return supported[i].lang + '_' + supported[i].country;
+            }
+          }
+          // 2. Try lang match
+          for (var i = 0; i < supported.length; i++) {
+            if (locale.lang === supported[i].lang) {
+              return supported[i].lang + (supported[i].country ? '_' + supported[i].country : '');
+            }
+          }
+          // 3. Return default lang
+          return 'en';
         }
 
     }]);
