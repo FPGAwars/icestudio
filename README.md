@@ -35,12 +35,12 @@ Supported on Linux, Windows and Mac OSX.
 
 Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
 
-Install [nodejs](https://github.com/nodejs/node) 4
+Install [nodejs](https://github.com/nodejs/node)
 
 ##### Ubuntu
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
