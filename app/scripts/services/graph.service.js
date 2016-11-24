@@ -103,8 +103,13 @@ angular.module('icestudio')
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' &&
-                  magnetT.getAttribute('type') == 'output')
+                  magnetT.getAttribute('type') == 'output') {
+                if (magnetS !== magnetT){
+                  // Show warning if source and target blocks are different
+                  warning(gettextCatalog.getString('Invalid connection'));
+                }
                 return false;
+              }
               var links = graph.getLinks();
               for (var i in links) {
                 var linkIView = links[i].findView(paper);
@@ -115,25 +120,32 @@ angular.module('icestudio')
                 // Prevent multiple input links
                 if ((cellViewT.model.id == links[i].get('target').id) &&
                     (magnetT.getAttribute('port') == links[i].get('target').port)) {
+                  warning(gettextCatalog.getString('Invalid multiple input connections'));
                   return false;
                 }
                 // Prevent to connect a pull-up if other blocks are connected
                 if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
                      cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
+                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
                 if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
                      linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
+                  warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
                   return false;
                 }
               }
               // Ensure input -> pull-up connections
               if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
                   cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
-                return (cellViewS.model.attributes.blockType == 'basic.input');
+                var ret = (cellViewS.model.attributes.blockType == 'basic.input');
+                if (!ret) {
+                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
+                }
+                return ret;
               }
               // Prevent loop links
               return magnetS !== magnetT;
@@ -141,6 +153,17 @@ angular.module('icestudio')
           });
 
           paper.options.enabled = true;
+          paper.options.warningTimer = false;
+
+          function warning(message) {
+            if (!paper.options.warningTimer) {
+              paper.options.warningTimer = true;
+              alertify.notify(message, 'warning', 4);
+              setTimeout(function() {
+                paper.options.warningTimer = false;
+              }, 4000);
+            }
+          };
 
           setGrid(paper, gridsize * 2);
 
