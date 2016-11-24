@@ -555,11 +555,13 @@ angular.module('icestudio')
 
         function bestLocale(locale, supported) {
           var ret = 'en';
-          // 1. Try exact match
-          for (var i = 0; i < supported.length; i++) {
-            if (locale.lang === supported[i].lang &&
-                locale.country === supported[i].country) {
-              return supported[i].lang + '_' + supported[i].country;
+          // 1. Try complete match
+          if (locale.country) {
+            for (var i = 0; i < supported.length; i++) {
+              if (locale.lang === supported[i].lang &&
+                  locale.country === supported[i].country) {
+                return supported[i].lang + '_' + supported[i].country;
+              }
             }
           }
           // 2. Try lang match
