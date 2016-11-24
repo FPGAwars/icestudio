@@ -210,8 +210,11 @@
                 <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                    <a href ng-click="toolchain.installed ? updateToolchain() : installToolchain()">
-                      {{ toolchain.installed ? 'Update' : 'Install' | translate }}
+                    <a href ng-hide="toolchain.installed" ng-click="installToolchain()">
+                      {{ 'Install' | translate }}
+                    </a>
+                    <a href ng-show="toolchain.installed" ng-click="updateToolchain()">
+                      {{ 'Update' | translate }}
                     </a>
                   </li>
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">

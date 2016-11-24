@@ -49,6 +49,16 @@ body.waiting * {
   border-radius: 5px;
 }
 
+.alertify.ajs-in:not(.ajs-hidden) .ajs-dialog {
+  -webkit-animation-duration: 10ms;
+          animation-duration: 10ms;
+}
+
+::selection {
+  color: #fff;
+  background: #3593d2;
+}
+
 .copyleft {
   display:inline-block;
   transform: rotate(180deg);

@@ -555,11 +555,13 @@ angular.module('icestudio')
 
         function bestLocale(locale, supported) {
           var ret = 'en';
-          // 1. Try exact match
-          for (var i = 0; i < supported.length; i++) {
-            if (locale.lang === supported[i].lang &&
-                locale.country === supported[i].country) {
-              return supported[i].lang + '_' + supported[i].country;
+          // 1. Try complete match
+          if (locale.country) {
+            for (var i = 0; i < supported.length; i++) {
+              if (locale.lang === supported[i].lang &&
+                  locale.country === supported[i].country) {
+                return supported[i].lang + '_' + supported[i].country;
+              }
             }
           }
           // 2. Try lang match
@@ -570,6 +572,27 @@ angular.module('icestudio')
           }
           // 3. Return default lang
           return 'en';
+        }
+
+        this.multiprompt = function(messages, values, callback) {
+          var content = [];
+          var n = messages.length;
+          content.push('<div>');
+          for (var i in messages) {
+            if (i > 0) content.push('<br>');
+            content.push('  <p>' + messages[i] + '</p>');
+            content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
+          }
+          content.push('</div>');
+
+          alertify.confirm(content.join('\n')).set('onok', function(evt) {
+            var values = [];
+            for (var i = 0; i < n; i++) {
+              values.push($('#input' + i.toString()).val());
+            }
+            if (callback)
+              callback(evt, values);
+          });
         }
 
     }]);
