@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MainCtrl', function($scope) {
+  .controller('MainCtrl', function($scope, gettextCatalog) {
 
     alertify.defaults = {
       // dialogs defaults
@@ -36,9 +36,9 @@ angular.module('icestudio')
         // dialogs default title
         title:'Icestudio',
         // ok button text
-        ok: 'OK',
+        ok: gettextCatalog.getString('OK'),
         // cancel button text
-        cancel: 'Cancel'
+        cancel: gettextCatalog.getString('Cancel')
       },
 
       // theme settings

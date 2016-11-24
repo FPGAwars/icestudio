@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, gettextCatalog, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'utils',
+      function($rootScope, gettextCatalog, nodeFs, joint, boards, utils) {
 
         // Variables
 
@@ -406,7 +406,11 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt(gettextCatalog.getString('Enter the block\'s ports'), 'a,b c',
+            utils.multiprompt(
+              [ gettextCatalog.getString('Enter the input ports'),
+                gettextCatalog.getString('Enter the output ports') ],
+              [ 'a , b',
+                'c , d' ],
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -416,11 +420,11 @@ angular.module('icestudio')
                   // Parse ports
                   var inPorts = [];
                   var outPorts = [];
-                  if (ports.split(' ').length > 0) {
-                    inPorts = ports.split(' ')[0].split(',');
+                  if (ports.length > 0) {
+                    inPorts = ports[0].replace(' ', '').split(',');
                   }
-                  if (ports.split(' ').length > 1) {
-                    outPorts = ports.split(' ')[1].split(',');
+                  if (ports.length > 1) {
+                    outPorts = ports[1].replace(' ', '').split(',');
                   }
 
                   for (var i in inPorts) {

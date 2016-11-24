@@ -574,4 +574,26 @@ angular.module('icestudio')
           return 'en';
         }
 
+        this.multiprompt = function(messages, values, callback) {
+          var content = [];
+          var n = messages.length;
+          content.push('<div>');
+          for (var i in messages) {
+            if (i > 0) content.push('<br>');
+            content.push('  <p>' + messages[i] + '</p>');
+            content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
+          }
+          content.push('</div>');
+
+          alertify.confirm(content.join('\n')).set('onok', function(evt) {
+            var values = [];
+            for (var i = 0; i < n; i++) {
+              values.push($('#input' + i.toString()).val());
+            }
+            console.log(values);
+            if (callback)
+              callback(evt, values);
+          });
+        }
+
     }]);
