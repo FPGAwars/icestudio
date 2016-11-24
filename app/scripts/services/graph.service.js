@@ -254,7 +254,7 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), data.data.label,
+                    alertify.prompt(gettextCatalog.getString('Enter the port label'), ' ' + data.data.label + ' ',
                       function(evt, label) {
                         data.data.label = label;
                         cellView.renderLabel();
@@ -409,8 +409,8 @@ angular.module('icestudio')
             utils.multiprompt(
               [ gettextCatalog.getString('Enter the input ports'),
                 gettextCatalog.getString('Enter the output ports') ],
-              [ 'a , b',
-                'c , d' ],
+              [ ' a , b ',
+                ' c , d ' ],
               function(evt, ports) {
                 if (ports) {
                   blockInstance.data = {
@@ -421,10 +421,10 @@ angular.module('icestudio')
                   var inPorts = [];
                   var outPorts = [];
                   if (ports.length > 0) {
-                    inPorts = ports[0].replace(' ', '').split(',');
+                    inPorts = ports[0].replace(/ /g, '').split(',');
                   }
                   if (ports.length > 1) {
-                    outPorts = ports[1].replace(' ', '').split(',');
+                    outPorts = ports[1].replace(/ /g, '').split(',');
                   }
 
                   for (var i in inPorts) {
@@ -465,10 +465,10 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'i',
+            alertify.prompt(gettextCatalog.getString('Enter the port label'), ' a , b ',
               function(evt, name) {
                 if (name) {
-                  var names = name.split(' ');
+                  var names = name.replace(/ /g, '').split(',');
                   for (var n in names) {
                     if (names[n]) {
                       blockInstance.data = {
@@ -505,10 +505,10 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt(gettextCatalog.getString('Enter the block\'s label'), 'o',
+            alertify.prompt(gettextCatalog.getString('Enter the port label'), ' c , d ',
               function(evt, name) {
                 if (name) {
-                  var names = name.split(' ');
+                  var names = name.replace(/ /g, '').split(',');
                   blockInstance.position.x = 95 * gridsize;
                   for (var n in names) {
                     if (names[n]) {

@@ -590,7 +590,6 @@ angular.module('icestudio')
             for (var i = 0; i < n; i++) {
               values.push($('#input' + i.toString()).val());
             }
-            console.log(values);
             if (callback)
               callback(evt, values);
           });

@@ -54,6 +54,11 @@ body.waiting * {
           animation-duration: 10ms;
 }
 
+::selection {
+  color: #fff;
+  background: #3593d2;
+}
+
 .copyleft {
   display:inline-block;
   transform: rotate(180deg);
