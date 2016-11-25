@@ -152,7 +152,8 @@ angular.module('icestudio')
       }
     }
 
-    $scope.saveProjectAs = function() {
+    $scope.saveProjectAs = function(callback) {
+      var localCallback = callback;
       setTimeout(function() {
         var ctrl = angular.element('#input-save-project');
         ctrl.on('change', function(event) {
@@ -167,14 +168,16 @@ angular.module('icestudio')
             common.saveProject(filepath);
             $scope.currentProjectPath = filepath;
             pathSync();
+            if (localCallback)
+              localCallback();
           }
         });
         ctrl.click();
       }, 0);
     }
 
-    $rootScope.$on('saveProjectAs', function(event) {
-      $scope.saveProjectAs();
+    $rootScope.$on('saveProjectAs', function(event, callback) {
+      $scope.saveProjectAs(callback);
     })
 
     $scope.importBlock = function() {

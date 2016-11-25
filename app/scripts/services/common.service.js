@@ -89,12 +89,17 @@ angular.module('icestudio')
                   }
                 }
                 else {
-                  alertify.confirm(gettextCatalog.getString('The import operation requires a project path. Yo need to save the current project. Do you want to continue?'),
+                  alertify.confirm(gettextCatalog.getString('This import operation requires a project path. Yo need to save the current project. Do you want to continue?'),
                     function() {
-                      $rootScope.$emit('saveProjectAs');
-                      // TODO
-                      // 3
-                      // 4
+                      $rootScope.$emit('saveProjectAs', function() {
+                        setTimeout(function() {
+                          // 3. Copy the included files
+                          if (copyIncludedFiles()) {
+                            // 4. Success: import block
+                            doImportBlock();
+                          }
+                        }, 500);
+                      });
                   });
                 }
               }
@@ -126,7 +131,7 @@ angular.module('icestudio')
             function doImportBlock() {
               graph.importBlock(name, block);
               self.project.deps[name] = block;
-              alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: name }));
+              alertify.notify(gettextCatalog.getString('Block {{name}} imported', { name: name }), 'success', 3);
             }
 
           });
