@@ -219,6 +219,8 @@ angular.module('icestudio')
 
          // Events
 
+         var self = this;
+
          selectionView.on('selection-box:pointerdown', function(evt) {
            // Selection to top view
            if (selection) {
@@ -270,83 +272,71 @@ angular.module('icestudio')
             }
           );
 
-          paper.on('cell:pointerdblclick',
-            (function(_this) {
-              return function(cellView, evt, x, y) {
-                var data = cellView.model.attributes;
-                if (data.blockType == 'basic.input' ||
-                    data.blockType == 'basic.output') {
-                  if (paper.options.enabled) {
-                    alertify.prompt(gettextCatalog.getString('Update the port label'), ' ' + data.data.label + ' ',
-                      function(evt, label) {
-                        data.data.label = label; // .replace(/ /g, '')
-                        cellView.renderLabel();
-                        alertify.success(gettextCatalog.getString('Label updated'));
-                    });
-                  }
-                }
-                else if (data.blockType == 'basic.code') {
-                  if (paper.options.enabled) {
-                    var block = {
-                      data: {
-                        code: _this.getContent(cellView.model.id)
-                      },
-                      position: cellView.model.attributes.position
-                    };
-                    _this.createBlock('basic.code', block, function() {
-                      cellView.model.remove();
-                    });
-                  }
-                }
-                else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
-                  _this.breadcrumbs.push({ name: data.blockType });
-                  if(!$rootScope.$$phase) {
-                    $rootScope.$apply();
-                  }
-                  var disabled = true;
-                  zIndex = 1;
-                  if (_this.breadcrumbs.length == 2) {
-                    $rootScope.$broadcast('refreshProject', function() {
-                      _this.loadGraph(dependencies[data.blockType], disabled);
-                      _this.appEnable(false);
-                    });
-                  }
-                  else {
-                    _this.loadGraph(dependencies[data.blockType], disabled);
-                    _this.appEnable(false);
-                  }
-                }
+          paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+            var data = cellView.model.attributes;
+            if (data.blockType == 'basic.input' ||
+                data.blockType == 'basic.output') {
+              if (paper.options.enabled) {
+                alertify.prompt(gettextCatalog.getString('Update the port label'), ' ' + data.data.label + ' ',
+                  function(evt, label) {
+                    data.data.label = label; // .replace(/ /g, '')
+                    cellView.renderLabel();
+                    alertify.success(gettextCatalog.getString('Label updated'));
+                });
               }
-            })(this)
-          );
-
-          paper.on('blank:pointerdown',
-            (function(_this) {
-              return function(evt, x, y) {
-                // Disable current focus
-                document.activeElement.blur();
-
-                if (evt.which == 3) {
-                  // Right button
-                  if (paper.options.enabled) {
-                    selectionView.startSelecting(evt, x, y);
-                  }
-                }
-                else if (evt.which == 1) {
-                  // Left button
-                  _this.panAndZoom.enablePan();
-                }
+            }
+            else if (data.blockType == 'basic.code') {
+              if (paper.options.enabled) {
+                var block = {
+                  data: {
+                    code: self.getContent(cellView.model.id)
+                  },
+                  position: cellView.model.attributes.position
+                };
+                self.createBlock('basic.code', block, function() {
+                  cellView.model.remove();
+                });
               }
-            })(this)
-          );
-
-          paper.on('cell:pointerup blank:pointerup',
-            (function(_this) {
-              return function(cellView, evt) {
-                _this.panAndZoom.disablePan();
+            }
+            else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
+              self.breadcrumbs.push({ name: data.blockType });
+              if(!$rootScope.$$phase) {
+                $rootScope.$apply();
               }
-            })(this)
-          );
+              var disabled = true;
+              zIndex = 1;
+              if (self.breadcrumbs.length == 2) {
+                $rootScope.$broadcast('refreshProject', function() {
+                  self.loadGraph(dependencies[data.blockType], disabled);
+                  self.appEnable(false);
+                });
+              }
+              else {
+                self.loadGraph(dependencies[data.blockType], disabled);
+                self.appEnable(false);
+              }
+            }
+          });
+
+          paper.on('blank:pointerdown', function(evt, x, y) {
+            // Disable current focus
+            document.activeElement.blur();
+
+            if (evt.which == 3) {
+              // Right button
+              if (paper.options.enabled) {
+                selectionView.startSelecting(evt, x, y);
+              }
+            }
+            else if (evt.which == 1) {
+              // Left button
+              self.panAndZoom.enablePan();
+            }
+          });
+
+          paper.on('cell:pointerup blank:pointerup', function(cellView, evt) {
+            self.panAndZoom.disablePan();
+          });
 
           paper.on('cell:mouseover',
             function(cellView, evt) {
@@ -615,31 +605,30 @@ angular.module('icestudio')
         }
 
         this.cloneSelected = function() {
+          var self = this;
           if (selection) {
-            selection.each((function(_this) {
-              return function(cell) {
-                var newCell = cell.clone();
-                var type = cell.attributes.blockType;
-                var content = _this.getContent(cell.id);
-                if (type == 'basic.code') {
-                  newCell.attributes.data.code = content;
-                }
-                else if (type == 'basic.info') {
-                  newCell.attributes.data.info = content;
-                }
-                newCell.translate(6 * gridsize, 6 * gridsize);
-                addCell(newCell);
-                if (type.indexOf('config.') != -1) {
-                  paper.findViewByModel(newCell).$box.addClass('config-block');
-                }
-                var cellView = paper.findViewByModel(newCell);
-                if (cellView.$box.css('z-index') < zIndex) {
-                  cellView.$box.css('z-index', ++zIndex);
-                }
-                selection.reset(selection.without(cell));
-                selectionView.cancelSelection();
-              };
-            })(this));
+            selection.each(function(cell) {
+              var newCell = cell.clone();
+              var type = cell.attributes.blockType;
+              var content = self.getContent(cell.id);
+              if (type == 'basic.code') {
+                newCell.attributes.data.code = content;
+              }
+              else if (type == 'basic.info') {
+                newCell.attributes.data.info = content;
+              }
+              newCell.translate(6 * gridsize, 6 * gridsize);
+              addCell(newCell);
+              if (type.indexOf('config.') != -1) {
+                paper.findViewByModel(newCell).$box.addClass('config-block');
+              }
+              var cellView = paper.findViewByModel(newCell);
+              if (cellView.$box.css('z-index') < zIndex) {
+                cellView.$box.css('z-index', ++zIndex);
+              }
+              selection.reset(selection.without(cell));
+              selectionView.cancelSelection();
+            });
           }
         }
 
