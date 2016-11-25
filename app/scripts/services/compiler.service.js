@@ -52,8 +52,7 @@ angular.module('icestudio')
 
           if (data &&
               data.name &&
-              data.ports &&
-              data.content) {
+              data.ports) {
 
             // Header
 
@@ -77,13 +76,16 @@ angular.module('icestudio')
 
             // Content
 
-            var content = data.content.split('\n');
+            if (data.content) {
 
-            content.forEach(function (element, index, array) {
-              array[index] = ' ' + element;
-            });
+              var content = data.content.split('\n');
 
-            code += content.join('\n');
+              content.forEach(function (element, index, array) {
+                array[index] = ' ' + element;
+              });
+
+              code += content.join('\n');
+            }
 
             // Footer
 
