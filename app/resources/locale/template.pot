@@ -459,7 +459,7 @@ msgid "The toolchain will be updated. This operation requires Internet connectio
 msgstr ""
 
 #: app/scripts/services/common.service.js:94
-msgid "This import operation requires a project path. Yo need to save the current project. Do you want to continue?"
+msgid "This import operation requires a project path. You need to save the current project. Do you want to continue?"
 msgstr ""
 
 #: app/views/menu.html:210

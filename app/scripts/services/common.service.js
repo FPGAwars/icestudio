@@ -91,7 +91,7 @@ angular.module('icestudio')
                   });
                 }
                 else {
-                  alertify.confirm(gettextCatalog.getString('This import operation requires a project path. Yo need to save the current project. Do you want to continue?'),
+                  alertify.confirm(gettextCatalog.getString('This import operation requires a project path. You need to save the current project. Do you want to continue?'),
                     function() {
                       $rootScope.$emit('saveProjectAs', function() {
                         setTimeout(function() {
