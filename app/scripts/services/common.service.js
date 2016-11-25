@@ -116,31 +116,31 @@ angular.module('icestudio')
 
             function copyIncludedFiles(callback) {
               var success = true;
-              async.eachSeries(files, function(filename, cb) {
-                var origPath = nodePath.join(path, filename);
-                var destPath = nodePath.join(self.projectPath, filename);
-                if (nodeFs.existsSync(destPath)) {
-                  alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
+              async.eachSeries(files, function(filename, next) {
+                setTimeout(function() {
+                  var origPath = nodePath.join(path, filename);
+                  var destPath = nodePath.join(self.projectPath, filename);
+                  if (nodeFs.existsSync(destPath)) {
+                    alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
                     function() {
                       success &= doCopySync(origPath, destPath, filename)
                       if (!success) {
-                        alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
-                        return cb(); // break
+                        return next(); // break
                       }
-                      cb();
+                      next();
                     },
                     function() {
-                      return cb(); // break
+                      next();
                     });
-                }
-                else {
-                  success &= doCopySync(origPath, destPath, filename)
-                  if (!success) {
-                    alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
-                    return cb(); // break
                   }
-                  cb();
-                }
+                  else {
+                    success &= doCopySync(origPath, destPath, filename)
+                    if (!success) {
+                      return next(); // break
+                    }
+                    next();
+                  }
+                }, 0);
               }, function(result) {
                 return callback(success);
               });
@@ -152,7 +152,7 @@ angular.module('icestudio')
                 alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 3);
               }
               else {
-                alertify.notify(gettextCatalog.getString('Included file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
+                alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
               }
               return success;
             }
