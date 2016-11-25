@@ -362,7 +362,7 @@ msgstr "Crear virtual env..."
 
 #: app/views/menu.html:26
 msgid "New project"
-msgstr "Nuevo projecto"
+msgstr "Nuevo proyecto"
 
 #: app/scripts/services/common.service.js:36
 msgid "New project {{name}} created"

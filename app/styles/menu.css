@@ -90,6 +90,10 @@
   border-left-color: #fff;
 }
 
+.navbar-default .navbar-nav>li>a {
+  color: #555;
+}
+
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-  color: #777;
+  color: #555;
 }

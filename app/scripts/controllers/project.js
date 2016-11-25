@@ -13,9 +13,7 @@ angular.module('icestudio')
     // Intialization
 
     graph.createPaper($('#paper'));
-    setTimeout(function() {
-      common.updateProjectName(gettextCatalog.getString('untitled'));
-    }, 80);
+
 
     // Breadcrumbs
 

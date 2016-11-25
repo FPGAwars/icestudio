@@ -20,6 +20,14 @@
   z-index: 1501;
 }
 
+#breadcrumbs>li {
+  color: #333;
+}
+
+#breadcrumbs>li>a:hover {
+  text-decoration: none;
+}
+
 .disable-graph {
   pointer-events: none;
 }

@@ -277,7 +277,7 @@ angular.module('icestudio')
             if (data.blockType == 'basic.input' ||
                 data.blockType == 'basic.output') {
               if (paper.options.enabled) {
-                alertify.prompt(gettextCatalog.getString('Update the port label'), ' ' + data.data.label + ' ',
+                alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
                   function(evt, label) {
                     data.data.label = label; // .replace(/ /g, '')
                     cellView.renderLabel();
@@ -425,7 +425,7 @@ angular.module('icestudio')
               [ ' a , b ',
                 ' c , d ' ],
               function(evt, ports) {
-                if (ports) {
+                if (ports && (ports[0].length || ports[1].length)) {
                   blockInstance.data = {
                     code: '',
                     ports: { in: [], out: [] }
@@ -478,7 +478,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' a , b ',
+            alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' in ',
               function(evt, name) {
                 if (name) {
                   var names = name.replace(/ /g, '').split(',');
@@ -501,7 +501,7 @@ angular.module('icestudio')
                   }
                 }
                 else {
-                  blockInstance.data = {
+                  /*blockInstance.data = {
                     label: '',
                     pin: {
                       name: '',
@@ -513,12 +513,12 @@ angular.module('icestudio')
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
                   }
-                  blockInstance.position.y += 10 * gridsize;
+                  blockInstance.position.y += 10 * gridsize;*/
                 }
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' c , d ',
+            alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' out ',
               function(evt, name) {
                 if (name) {
                   var names = name.replace(/ /g, '').split(',');
@@ -542,7 +542,7 @@ angular.module('icestudio')
                   }
                 }
                 else {
-                  blockInstance.position.x = 95 * gridsize;
+                  /*blockInstance.position.x = 95 * gridsize;
                   blockInstance.data = {
                     label: '',
                     pin: {
@@ -555,7 +555,7 @@ angular.module('icestudio')
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
                   }
-                  blockInstance.position.y += 10 * gridsize;
+                  blockInstance.position.y += 10 * gridsize;*/
                 }
             });
           }

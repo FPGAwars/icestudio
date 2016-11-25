@@ -33,22 +33,6 @@ angular.module('icestudio')
     $scope.workingdir = '';
     $scope.currentProjectPath = '';
 
-    // Load language
-    profile.load(function(data) {
-      var lang = profile.data.language;
-      if (lang) {
-        utils.setLocale(lang);
-      }
-      else {
-        // If lang is empty, use the system language
-        nodeLangInfo(function(err, sysLang) {
-          if (!err) {
-            profile.data.language = utils.setLocale(sysLang);
-          }
-        });
-      }
-    });
-
     // Configure window
     var win = gui.Window.get();
     win.on('close', function() {
@@ -58,9 +42,11 @@ angular.module('icestudio')
     });
 
     function pathSync() {
-      var projectPath = utils.dirname($scope.currentProjectPath);
-      tools.setProjectPath(projectPath);
-      common.setProjectPath(projectPath);
+      if ($scope.currentProjectPath) {
+        var projectPath = utils.dirname($scope.currentProjectPath);
+        tools.setProjectPath(projectPath);
+        common.setProjectPath(projectPath);
+      }
     }
 
     // Menu
