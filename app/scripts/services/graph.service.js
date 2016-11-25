@@ -277,9 +277,9 @@ angular.module('icestudio')
                 if (data.blockType == 'basic.input' ||
                     data.blockType == 'basic.output') {
                   if (paper.options.enabled) {
-                    alertify.prompt(gettextCatalog.getString('Enter the port label'), ' ' + data.data.label + ' ',
+                    alertify.prompt(gettextCatalog.getString('Update the port label'), ' ' + data.data.label + ' ',
                       function(evt, label) {
-                        data.data.label = label;
+                        data.data.label = label; // .replace(/ /g, '')
                         cellView.renderLabel();
                         alertify.success(gettextCatalog.getString('Label updated'));
                     });
@@ -488,7 +488,7 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt(gettextCatalog.getString('Enter the port label'), ' a , b ',
+            alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' a , b ',
               function(evt, name) {
                 if (name) {
                   var names = name.replace(/ /g, '').split(',');
@@ -528,7 +528,7 @@ angular.module('icestudio')
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt(gettextCatalog.getString('Enter the port label'), ' c , d ',
+            alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' c , d ',
               function(evt, name) {
                 if (name) {
                   var names = name.replace(/ /g, '').split(',');
