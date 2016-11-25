@@ -109,7 +109,7 @@ set_io --warn-no-port J1L4  1   # J1.8
                                 # J1.10 (GND)
                                 # J1.12 (3V3)
 
-# -------------------------- SPI Memory ---------------------------------------------
+# -------------------------- SPI Memory ---------------------------------------
 set_io --warn-no-port SS    49  # J11.1
 set_io --warn-no-port SO    45  # J11.2
 set_io --warn-no-port SI    46  # J11.3

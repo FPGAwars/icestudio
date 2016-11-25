@@ -17,23 +17,23 @@
 # --    D5: green led
 
 
-# ------------ Red leds ------------------------------------------------------
+# ------------ Red leds -------------------------------------------------------
 set_io --warn-no-port D1 99
 set_io --warn-no-port D2 98
 set_io --warn-no-port D3 97
 set_io --warn-no-port D4 96
 
-# ------------ Green led -----------------------------------------------------
+# ------------ Green led ------------------------------------------------------
 set_io --warn-no-port D5 95
 
-# ------------ IrDA ----------------------------------------------------------
+# ------------ IrDA -----------------------------------------------------------
 set_io --warn-no-port IrDA_TX 105
 set_io --warn-no-port IrDA_RX 106
 
 #-- SD = 0, enable IrDA
 set_io --warn-no-port SD 107
 
-# ------------ PMOD connector ------------------------------------------------
+# ------------ PMOD connector -------------------------------------------------
 #
 #   Pmod standar numeration (Oriented according the icestick, with the
 #               usb connector pointing to the left and IRda to the right)
@@ -67,7 +67,7 @@ set_io --warn-no-port PMOD8 88
 set_io --warn-no-port PMOD9 90
 set_io --warn-no-port PMOD10 91
 
-# ------------------------ EXPANSION I/O ------------------------------------
+# ------------------------ EXPANSION I/O --------------------------------------
 #
 # -- Numeration
 #
@@ -120,10 +120,10 @@ set_io --warn-no-port BR8 47
 set_io --warn-no-port BR9 45
 set_io --warn-no-port BR10 44
 
-# -------------------------- SYSTEM CLOCK ------------------------------------
+# -------------------------- SYSTEM CLOCK -------------------------------------
 set_io --warn-no-port CLK 21
 
-# -------------------------- FTDI --------------------------------------------
+# -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
 set_io --warn-no-port RES  66
 set_io --warn-no-port DONE 65
