@@ -103,7 +103,7 @@ angular.module('icestudio')
               toolchain.apio = '-';
             }
             else {
-              toolchain.apio = stdout.match(/apio, version (.+)/i)[1];
+              toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
             }
           });
         }
@@ -202,6 +202,7 @@ angular.module('icestudio')
             toolchain.disabled = utils.toolchainDisabled;
             nodeChildProcess.exec(([apio].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
               function(error, stdout, stderr) {
+                // console.log(error, stdout, stderr);
                 processExecute(label, callback, error, stdout, stderr);
               });
           }
@@ -270,6 +271,29 @@ angular.module('icestudio')
               gettext('done_upload');
               var message = 'done_' + label;
               alertify.success(gettextCatalog.getString(message));
+              if (stdout) {
+                // Show used resources in the FPGA
+                /*
+                PIOs       0 / 96
+                PLBs       0 / 160
+                BRAMs      0 / 16
+                */
+                var match,
+                    fpgaResources = '',
+                    patterns = [
+                      /PIOs.+/g,
+                      /PLBs.+/g,
+                      /BRAMs.+/g
+                    ];
+
+                for (var p in patterns) {
+                  match = patterns[p].exec(stdout);
+                  fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
+                }
+                if (fpgaResources) {
+                  alertify.notify('<pre>' + fpgaResources + '</pre>', 'message', 3);
+                }
+              }
             }
             $('body').removeClass('waiting');
           }
