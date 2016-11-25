@@ -617,7 +617,7 @@ angular.module('icestudio')
           var ret = [];
           var patterns = [
             /@include\s(.*?)(\\n|\n|\s)/g,
-            /\"(.*?)\.list\"(\\n|\n|\s)/g
+            /\\"(.*\.list?)\\"/g
           ];
           for (var p in patterns) {
             var match;

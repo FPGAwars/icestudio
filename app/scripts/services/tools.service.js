@@ -125,23 +125,20 @@ angular.module('icestudio')
           // Remove resources
           nodeFse.removeSync('!(main.*)');
 
-          // Sync Verilog files
-          if (ret) ret = this.syncFiles(/@include (.*?)\.v\s+/g, 'v', code);
+          // Sync included files
+          if (ret) ret = this.syncFiles(/@include\s(.*?)(\\n|\n|\s)/g, code);
 
-          // Sync Verilog Header files
-          if (ret) ret = this.syncFiles(/@include (.*?)\.vh\s+/g, 'vh', code);
-
-          // Sync List files
-          if (ret) ret = this.syncFiles(/\"(.*?)\.list\"/g, 'list', code);
+          // Sync list files
+          if (ret) ret = this.syncFiles(/\"(.*\.list?)\"/g, code);
 
           return ret;
         }
 
-        this.syncFiles = function(pattern, ext, code) {
+        this.syncFiles = function(pattern, code) {
           var ret = true;
           var match;
           while (match = pattern.exec(code)) {
-            var file = match[1] + '.' + ext;
+            var file = match[1];
             var destPath = nodePath.join('.', file);
             var origPath = nodePath.join(this.currentProjectPath, file);
 
