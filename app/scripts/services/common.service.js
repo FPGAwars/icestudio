@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'gettextCatalog', 'window', 'graph', 'boards', 'compiler', 'utils', 'nodePath',
-      function($rootScope, gettextCatalog, window, graph, boards, compiler, utils, nodePath) {
+    .service('common', ['$rootScope', 'gettextCatalog', 'window', 'graph', 'boards', 'compiler', 'utils', 'nodePath', 'nodeFs',
+      function($rootScope, gettextCatalog, window, graph, boards, compiler, utils, nodePath, nodeFs) {
 
         // Variables
 
@@ -33,7 +33,7 @@ angular.module('icestudio')
           graph.clearAll();
           graph.setState(this.project.state);
           this.updateProjectName(name);
-          alertify.success(gettextCatalog.getString('New project {{name}} created', { name: name }));
+          alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
         };
 
         this.openProject = function(filepath) {
@@ -52,10 +52,10 @@ angular.module('icestudio')
           this.project = project;
           boards.selectBoard(project.board);
           if (graph.loadGraph(project)) {
-            alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: name }));
+            alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
           }
           else {
-            alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: name }));
+            alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }));
           }
         };
 
@@ -64,7 +64,7 @@ angular.module('icestudio')
           this.updateProjectName(name);
           this.refreshProject();
           utils.saveFile(filepath, this.project, function() {
-            alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: name }));
+            alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
           }, true);
         };
 
@@ -83,10 +83,12 @@ angular.module('icestudio')
                 // 2. Check project's directory
                 if (self.projectPath) {
                   // 3. Copy the included files
-                  if (copyIncludedFiles()) {
-                    // 4. Success: import block
-                    doImportBlock();
-                  }
+                  copyIncludedFiles(function(success) {
+                    if (success) {
+                      // 4. Success: import block
+                      doImportBlock();
+                    }
+                  });
                 }
                 else {
                   alertify.confirm(gettextCatalog.getString('This import operation requires a project path. Yo need to save the current project. Do you want to continue?'),
@@ -94,10 +96,12 @@ angular.module('icestudio')
                       $rootScope.$emit('saveProjectAs', function() {
                         setTimeout(function() {
                           // 3. Copy the included files
-                          if (copyIncludedFiles()) {
-                            // 4. Success: import block
-                            doImportBlock();
-                          }
+                          copyIncludedFiles(function(success) {
+                            if (success) {
+                              // 4. Success: import block
+                              doImportBlock();
+                            }
+                          });
                         }, 500);
                       });
                   });
@@ -110,20 +114,45 @@ angular.module('icestudio')
               }
             }
 
-            function copyIncludedFiles() {
+            function copyIncludedFiles(callback) {
               var success = true;
-              for (var i in files) {
-                var filename = files[i];
+              async.eachSeries(files, function(filename, cb) {
                 var origPath = nodePath.join(path, filename);
                 var destPath = nodePath.join(self.projectPath, filename);
-                success &= utils.copySync(origPath, destPath, filename);
-                if (success) {
-                  alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: filename }), 'message', 3);
+                if (nodeFs.existsSync(destPath)) {
+                  alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
+                    function() {
+                      success &= doCopySync(origPath, destPath, filename)
+                      if (!success) {
+                        alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
+                        return cb(); // break
+                      }
+                      cb();
+                    },
+                    function() {
+                      return cb(); // break
+                    });
                 }
                 else {
-                  alertify.notify(gettextCatalog.getString('Included file {{file}} does not exist', { file: filename }), 'error', 3);
-                  break;
+                  success &= doCopySync(origPath, destPath, filename)
+                  if (!success) {
+                    alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
+                    return cb(); // break
+                  }
+                  cb();
                 }
+              }, function(result) {
+                return callback(success);
+              });
+            }
+
+            function doCopySync(orig, dest, filename) {
+              var success = utils.copySync(orig, dest, filename);
+              if (success) {
+                alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 3);
+              }
+              else {
+                alertify.notify(gettextCatalog.getString('Included file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
               }
               return success;
             }
@@ -131,7 +160,7 @@ angular.module('icestudio')
             function doImportBlock() {
               graph.importBlock(name, block);
               self.project.deps[name] = block;
-              alertify.notify(gettextCatalog.getString('Block {{name}} imported', { name: name }), 'success', 3);
+              alertify.notify(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }), 'success', 3);
             }
 
           });
@@ -150,7 +179,7 @@ angular.module('icestudio')
             }
           }
           utils.saveFile(filepath, block, function() {
-            alertify.success(gettextCatalog.getString('Block exported as {{name}}', { name: name }));
+            alertify.success(gettextCatalog.getString('Block exported as {{name}}', { name: utils.bold(name) }));
           }, true);
         };
 

@@ -419,17 +419,17 @@ angular.module('icestudio')
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.name != board.name) {
         if (!graph.isEmpty()) {
-          alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: '<b>' + board.info.label + '</b>' }),
+          alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: utils.bold(board.info.label) }),
             function() {
               boards.selectBoard(board.name);
               graph.resetIOChoices();
-              alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: '<b>' + board.info.label + '</b>' }));
+              alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
           });
         }
         else {
           boards.selectBoard(board.name);
           graph.resetIOChoices();
-          alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: '<b>' + board.info.label + '</b>' }));
+          alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
         }
       }
     }

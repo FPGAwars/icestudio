@@ -202,7 +202,7 @@ angular.module('icestudio')
               if (stdout) {
                 if (stdout.indexOf('[upload] Error') != -1 ||
                     stdout.indexOf('Error: board not detected') != -1) {
-                  alertify.notify(gettextCatalog.getString('Board {{name}} not detected', { name: '<b>' + boards.selectedBoard.info.label + '</b>' }), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(boards.selectedBoard.info.label) }), 'error', 3);
                 }
                 else if (stdout.indexOf('Error: unkown board') != -1) {
                   alertify.notify(gettextCatalog.getString('Unknown board'), 'error', 3);

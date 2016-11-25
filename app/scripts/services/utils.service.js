@@ -631,4 +631,8 @@ angular.module('icestudio')
           return ret;
         }
 
+        this.bold = function(text) {
+          return '<b>' + text + '</b>';
+        }
+
     }]);
