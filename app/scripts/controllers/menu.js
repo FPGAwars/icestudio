@@ -428,20 +428,30 @@ angular.module('icestudio')
     // Tools
 
     $scope.verifyCode = function() {
-      if (!graph.isEmpty()) {
+      checkGraph(function() {
         tools.verifyCode();
-      }
-    };
+      });
+    }
 
     $scope.buildCode = function() {
-      if (!graph.isEmpty()) {
+      checkGraph(function() {
         tools.buildCode();
-      }
-    };
+      });
+    }
 
     $scope.uploadCode = function() {
-      if (!graph.isEmpty()) {
+      checkGraph(function() {
         tools.uploadCode();
+      });
+    }
+
+    function checkGraph(callback) {
+      if (!graph.isEmpty()) {
+        if (callback)
+          callback();
+      }
+      else {
+        alertify.warning(gettextCatalog.getString('Add a block to start'));
       }
     }
 
