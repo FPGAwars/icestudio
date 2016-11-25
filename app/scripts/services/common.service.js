@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('common', ['$rootScope', 'gettextCatalog', 'window', 'graph', 'boards', 'compiler', 'utils',
-      function($rootScope, gettextCatalog, window, graph, boards, compiler, utils) {
+    .service('common', ['$rootScope', 'gettextCatalog', 'window', 'graph', 'boards', 'compiler', 'utils', 'nodePath',
+      function($rootScope, gettextCatalog, window, graph, boards, compiler, utils, nodePath) {
 
         // Variables
 
@@ -14,8 +14,13 @@ angular.module('icestudio')
           deps: {}
         };
         this.projectName = '';
+        this.projectPath = '';
 
         // Functions
+
+        this.setProjectPath = function(path) {
+          this.projectPath = path;
+        }
 
         this.newProject = function(name) {
           this.project = {
@@ -32,15 +37,14 @@ angular.module('icestudio')
         };
 
         this.openProject = function(filepath) {
-          utils.readFile(filepath, (function(_this) {
-            return function(data) {
-              var project = data;
-              if (project) {
-                var name = utils.basename(filepath);
-                _this.loadProject(name, project);
-              }
-            };
-          })(this));
+          var self = this;
+          utils.readFile(filepath, function(data) {
+            var project = data;
+            if (project) {
+              var name = utils.basename(filepath);
+              self.loadProject(name, project);
+            }
+          });
         };
 
         this.loadProject = function(name, project) {
@@ -65,17 +69,67 @@ angular.module('icestudio')
         };
 
         this.importBlock = function(filepath) {
-          utils.readFile(filepath, (function(_this) {
-            return function(data) {
-              var block = data;
-              if (block) {
-                var name = utils.basename(filepath);
-                graph.importBlock(name, block);
-                _this.project.deps[name] = block;
-                alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: name }));
+          var self = this;
+          utils.readFile(filepath, function(data) {
+            var block = data;
+            if (block) {
+              var name = utils.basename(filepath);
+              var path = utils.dirname(filepath);
+              // 1. Parse and find included files
+              var code = JSON.stringify(block);
+              var files = utils.findIncludedFiles(code);
+              // Are there included files?
+              if (files.length > 0) {
+                // 2. Check project's directory
+                if (self.projectPath) {
+                  // 3. Copy the included files
+                  if (copyIncludedFiles()) {
+                    // 4. Success: import block
+                    doImportBlock();
+                  }
+                }
+                else {
+                  alertify.confirm(gettextCatalog.getString('The import operation requires a project path. Yo need to save the current project. Do you want to continue?'),
+                    function() {
+                      $rootScope.$emit('saveProjectAs');
+                      // TODO
+                      // 3
+                      // 4
+                  });
+                }
               }
-            };
-          })(this));
+              else {
+                // No included files to copy
+                // 4. Import block
+                doImportBlock();
+              }
+            }
+
+            function copyIncludedFiles() {
+              var success = true;
+              for (var i in files) {
+                var filename = files[i];
+                var origPath = nodePath.join(path, filename);
+                var destPath = nodePath.join(self.projectPath, filename);
+                success &= utils.copySync(origPath, destPath, filename);
+                if (success) {
+                  alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: filename }), 'message', 3);
+                }
+                else {
+                  alertify.notify(gettextCatalog.getString('Included file {{file}} does not exist', { file: filename }), 'error', 3);
+                  break;
+                }
+              }
+              return success;
+            }
+
+            function doImportBlock() {
+              graph.importBlock(name, block);
+              self.project.deps[name] = block;
+              alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: name }));
+            }
+
+          });
         };
 
         this.exportAsBlock = function(filepath) {
@@ -201,11 +255,10 @@ angular.module('icestudio')
         };
 
         this.removeSelected = function() {
-          graph.removeSelected((function(_this) {
-            return function(type) {
-              delete _this.project.deps[type];
-            }
-          })(this));
+          var self = this;
+          graph.removeSelected(function(type) {
+            delete self.project.deps[type];
+          });
         };
 
         this.setImagePath = function(imagePath) {

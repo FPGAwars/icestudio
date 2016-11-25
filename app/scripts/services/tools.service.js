@@ -145,21 +145,10 @@ angular.module('icestudio')
             var destPath = nodePath.join('.', file);
             var origPath = nodePath.join(this.currentProjectPath, file);
 
-            try {
-              // Copy list file
-              if (nodeFs.existsSync(origPath)) {
-                nodeFse.copySync(origPath, destPath);
-              }
-              else {
-                // Error: file does not exist
-                alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 'error', 3);
-                ret = false;
-                break;
-              }
-            }
-            catch (e) {
-              alertify.notify(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 'error', 3);
-              ret = false;
+            // Copy included file
+            var copySuccess = utils.copySync(origPath, destPath, file);
+            if (!copySuccess) {
+              alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: filename }), 'error', 3);
               break;
             }
           }

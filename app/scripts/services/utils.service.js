@@ -595,4 +595,40 @@ angular.module('icestudio')
           });
         }
 
+        this.copySync = function(orig, dest, filename) {
+          var ret = true;
+          try {
+            if (nodeFs.existsSync(orig)) {
+              nodeFse.copySync(orig, dest);
+            }
+            else {
+              // Error: file does not exist
+              ret = false;
+            }
+          }
+          catch (e) {
+            alertify.notify(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 'error', 3);
+            ret = false;
+          }
+          return ret;
+        }
+
+        this.findIncludedFiles = function(code) {
+          var ret = [];
+          var patterns = [
+            /@include\s(.*?)(\\n|\n|\s)/g,
+            /\"(.*?)\.list\"(\\n|\n|\s)/g
+          ];
+          for (var p in patterns) {
+            var match;
+            while (match = patterns[p].exec(code)) {
+              var file = match[1].replace(/ /g, '');
+              if (ret.indexOf(file) == -1) {
+                ret.push(file);
+              }
+            }
+          }
+          return ret;
+        }
+
     }]);

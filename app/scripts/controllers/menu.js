@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MenuCtrl', function ($scope,
+  .controller('MenuCtrl', function ($rootScope,
+                                    $scope,
                                     $timeout,
                                     nodeLangInfo,
                                     common,
@@ -57,7 +58,9 @@ angular.module('icestudio')
     });
 
     function pathSync() {
-      tools.setProjectPath(utils.dirname($scope.currentProjectPath));
+      var projectPath = utils.dirname($scope.currentProjectPath);
+      tools.setProjectPath(projectPath);
+      common.setProjectPath(projectPath);
     }
 
     // Menu
@@ -99,7 +102,6 @@ angular.module('icestudio')
           event.target.files.clear();
           if (file) {
             if (file.path.endsWith('.ice')) {
-
               $scope.workingdir = utils.dirname(file.path) + utils.sep;
               if (!graph.isEmpty()) {
                 alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
@@ -170,6 +172,10 @@ angular.module('icestudio')
         ctrl.click();
       }, 0);
     }
+
+    $rootScope.$on('saveProjectAs', function(event) {
+      $scope.saveProjectAs();
+    })
 
     $scope.importBlock = function() {
       setTimeout(function() {
