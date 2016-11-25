@@ -77,9 +77,9 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/87)   |
-| Basque     | ![Progress](http://progressed.io/bar/80)   |
-| Galician   | ![Progress](http://progressed.io/bar/78)   |
+| French     | ![Progress](http://progressed.io/bar/77)   |
+| Basque     | ![Progress](http://progressed.io/bar/71)   |
+| Galician   | ![Progress](http://progressed.io/bar/69)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
