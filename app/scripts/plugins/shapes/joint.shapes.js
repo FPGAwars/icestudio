@@ -503,20 +503,40 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     '<path class="marker-source" fill="black" stroke="black" d="M 0 0 0 0"/>',
     '<path class="marker-target" fill="black" stroke="black" d="M 0 0 0 0"/>',
     '<g class="labels"/>',
+    '<g class="marker-bifurcations"/>',
     '<g class="marker-vertices"/>',
     '<g class="marker-arrowheads"/>',
     '<g class="link-tools"/>'
   ].join(''),
 
+  bifurcationMarkup: [
+    '<g class="marker-bifurcation-group" transform="translate(<%= x %>, <%= y %>)">',
+    '<circle class="marker-bifurcation" idx="<%= idx %>" r="4" fill="#777"/>',
+    '</g>'
+  ].join(''),
+
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="6"/>',
     '</g>'
   ].join(''),
 
   defaults: joint.util.deepSupplement({
 
     type: 'ice.Wire',
+
+    /*labels: [
+      {
+        position: .5,
+        attrs: {
+          text: {
+            text: ' /8 ' || '',
+            'font-weight': 'bold',
+            'font-size': '150%'
+          }
+        }
+      }
+    ],*/
 
     attrs: {
       '.connection': {
@@ -527,8 +547,105 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     },
 
     router: { name: 'ice' },
-    connector: { name: 'ice'}
+    connector: { name: 'ice'},
 
   }, joint.dia.Link.prototype.defaults)
+
+});
+
+joint.shapes.ice.WireView = joint.dia.LinkView.extend({
+
+  render: function() {
+    joint.dia.LinkView.prototype.render.apply(this, arguments);
+    console.log('render');
+    return this;
+  },
+
+  remove: function() {
+    joint.dia.LinkView.prototype.remove.apply(this, arguments);
+    console.log('remove');
+    // here we remove the pattern from the paper SVG <defs> element
+    return this;
+  },
+
+  update: function() {
+    joint.dia.LinkView.prototype.update.apply(this, arguments);
+    console.log('update');
+    this.updateBifurcations();
+    return this;
+  },
+
+  updateBifurcations: function() {
+    var $markerBifurcations = $(this._V.markerBifurcations.node).empty();
+    var markupTemplate = joint.util.template(this.model.get('bifurcationMarkup') || this.model.bifurcationMarkup);
+
+    var bifurcations = [];
+
+    var self = this;
+    var currentWire = this.model;
+    var allWires = this.paper.model.getLinks();
+
+    console.log('Update wire: ' + this.model.attributes.id.toString());
+
+    _.each(allWires, function(wire) {
+      console.log(' - ' + wire.id);
+      if ((wire.attributes.id != currentWire.attributes.id) &&
+          (wire.attributes.source.id == currentWire.attributes.source.id) &&
+          (wire.attributes.source.port == currentWire.attributes.source.port))
+        {
+          // Wire with the same source of currentWire
+
+          var currentWireView = self;
+          var wireView = self.paper.findViewByModel(wire);
+
+          findBifurcations(wireView, currentWireView);
+          findBifurcations(currentWireView, wireView);
+        }
+    });
+
+    _.each(bifurcations, function(vertex, idx) {
+        $markerBifurcations.append(V(markupTemplate(_.extend({ idx: idx }, vertex))).node);
+    });
+
+    function findBifurcations(wireA, wireB) {
+      var V = [];
+      V.push(wireA.sourcePoint);
+      V = V.concat(wireA.route);
+      V.push(wireA.targetPoint);
+
+      var candidates = [];
+      candidates = wireB.route;
+
+      _.each(candidates, function(candidate, idx) {
+        // Eval if exists in any segment of wire V
+        for (var i = 0; i < V.length -1; i++) {
+          var segment = [V[i], V[i+1]];
+          if (evalIntersection(candidate, segment)) {
+            console.log('   > Bifurcation!', candidate);
+            bifurcations.push(candidate);
+          }
+        }
+      });
+    }
+
+    function evalIntersection(point, segment) {
+      if (segment[0].x == segment[1].x) {
+        // Vertical
+        return ((point.x == segment[0].x) &&
+                (point.y > Math.min(segment[0].y, segment[1].y)) &&
+                (point.y < Math.max(segment[0].y, segment[1].y))
+              );
+      }
+      else {
+        // Horizontal
+        return ((point.y == segment[0].y) &&
+                (point.x > Math.min(segment[0].x, segment[1].x)) &&
+                (point.x < Math.max(segment[0].x, segment[1].x))
+              );
+      }
+    }
+
+    return this;
+  }
 
 });
