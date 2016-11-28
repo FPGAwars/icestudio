@@ -365,6 +365,11 @@ angular.module('icestudio')
         else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl + c
           $scope.cloneSelected();
         }
+        if (process.platform === 'darwin') {
+          if (event.keyCode == 8) { // Back
+            $scope.removeSelected();
+          }
+        }
       }
     });
 
