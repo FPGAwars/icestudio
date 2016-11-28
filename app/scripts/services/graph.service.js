@@ -158,7 +158,7 @@ angular.module('icestudio')
           function warning(message) {
             if (!paper.options.warningTimer) {
               paper.options.warningTimer = true;
-              alertify.notify(message, 'warning', 4);
+              alertify.notify(message, 'warning', 5);
               setTimeout(function() {
                 paper.options.warningTimer = false;
               }, 4000);
@@ -575,7 +575,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }));
+              alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
             }
           }
         };

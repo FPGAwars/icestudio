@@ -396,7 +396,7 @@ angular.module('icestudio')
         gui.Shell.openExternal(boards.selectedBoard.info.datasheet);
       }
       else {
-        alertify.error(gettextCatalog.getString('Datasheet not defined'));
+        alertify.notify(gettextCatalog.getString('Datasheet not defined'), 'error', 30);
       }
     }
 
@@ -446,7 +446,7 @@ angular.module('icestudio')
           callback();
       }
       else {
-        alertify.warning(gettextCatalog.getString('Add a block to start'));
+        alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
     }
 

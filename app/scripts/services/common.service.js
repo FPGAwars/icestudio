@@ -55,7 +55,7 @@ angular.module('icestudio')
             alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
           }
           else {
-            alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }));
+            alertify.notify(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 'error', 30);
           }
         };
 
@@ -149,10 +149,10 @@ angular.module('icestudio')
             function doCopySync(orig, dest, filename) {
               var success = utils.copySync(orig, dest, filename);
               if (success) {
-                alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 3);
+                alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 5);
               }
               else {
-                alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 3);
+                alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 30);
               }
               return success;
             }
@@ -160,7 +160,7 @@ angular.module('icestudio')
             function doImportBlock() {
               graph.importBlock(name, block);
               self.project.deps[name] = block;
-              alertify.notify(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }), 'success', 3);
+              alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
             }
 
           });

@@ -26,8 +26,16 @@ body.waiting * {
   cursor: progress;
 }
 
+.alertify-notifier.ajs-right {
+  bottom: 45px;
+}
+
 .alertify-notifier.ajs-bottom {
   bottom: 45px;
+}
+
+.alertify-notifier .ajs-message {
+  cursor: pointer;
 }
 
 .alertify-notifier .ajs-message.ajs-success {
@@ -51,6 +59,7 @@ body.waiting * {
   background: #fbf7d0;
   border-color: #f5ea8a;
   border-radius: 5px;
+  text-shadow: none;
 }
 
 .alertify.ajs-in:not(.ajs-hidden) .ajs-dialog {

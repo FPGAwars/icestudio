@@ -57,7 +57,7 @@ angular.module('icestudio')
                       setTimeout(function() {
                         angular.element('#menu').removeClass('disable-menu');
                         currentAlert.dismiss(true);
-                      }, 1000);
+                      }, 2000);
                     }
                   });
                 }
@@ -66,7 +66,7 @@ angular.module('icestudio')
                     angular.element('#menu').removeClass('disable-menu');
                     currentAlert.dismiss(true);
                     $('body').removeClass('waiting');
-                  }, 1000);
+                  }, 2000);
                 }
               }
               catch(e) {
@@ -76,7 +76,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 5);
+              alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
             }
           }
         }
@@ -145,7 +145,7 @@ angular.module('icestudio')
             // Copy included file
             var copySuccess = utils.copySync(origPath, destPath, file);
             if (!copySuccess) {
-              alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: filename }), 'error', 3);
+              alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: filename }), 'error', 30);
               break;
             }
           }
@@ -202,19 +202,19 @@ angular.module('icestudio')
               if (stdout) {
                 if (stdout.indexOf('[upload] Error') != -1 ||
                     stdout.indexOf('Error: board not detected') != -1) {
-                  alertify.notify(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(boards.selectedBoard.info.label) }), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(boards.selectedBoard.info.label) }), 'error', 30);
                 }
                 else if (stdout.indexOf('Error: unkown board') != -1) {
-                  alertify.notify(gettextCatalog.getString('Unknown board'), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Unknown board'), 'error', 30);
                 }
                 else if (stdout.indexOf('set_io: too few arguments') != -1) {
-                  alertify.notify(gettextCatalog.getString('FPGA I/O ports not defined'), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('FPGA I/O ports not defined'), 'error', 30);
                 }
                 else if (stdout.indexOf('error: unknown pin') != -1) {
-                  alertify.notify(gettextCatalog.getString('FPGA I/O ports not defined'), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('FPGA I/O ports not defined'), 'error', 30);
                 }
                 else if (stdout.indexOf('error: duplicate pin constraints') != -1) {
-                  alertify.notify(gettextCatalog.getString('Duplicated FPGA I/O ports'), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Duplicated FPGA I/O ports'), 'error', 30);
                 }
                 else {
                   var stdoutError = stdout.split('\n').filter(isError);
@@ -227,23 +227,23 @@ angular.module('icestudio')
                             line.indexOf('already declared') != -1);
                   }
                   if (stdoutError.length > 0) {
-                    alertify.notify(stdoutError[0], 'error', 5);
+                    alertify.notify(stdoutError[0], 'error', 30);
                   }
                   else {
-                    alertify.notify(stdout, 'error', 5);
+                    alertify.notify(stdout, 'error', 30);
                   }
                 }
               }
               else if (stderr) {
                 if (stderr.indexOf('Could not resolve hostname') != -1 ||
                     stderr.indexOf('Connection refused') != -1) {
-                  alertify.notify(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.data.remoteHostname }), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.data.remoteHostname }), 'error', 30);
                 }
                 else if (stderr.indexOf('No route to host') != -1) {
-                  alertify.notify(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.data.remoteHostname }), 'error', 3);
+                  alertify.notify(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.data.remoteHostname }), 'error', 30);
                 }
                 else {
-                  alertify.notify(stderr, 'error', 5);
+                  alertify.notify(stderr, 'error', 30);
                 }
               }
             }
@@ -277,7 +277,7 @@ angular.module('icestudio')
                   fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
                 }
                 if (fpgaResources) {
-                  alertify.notify('<pre>' + fpgaResources + '</pre>', 'message', 4);
+                  alertify.notify('<pre>' + fpgaResources + '</pre>', 'message', 5);
                 }
               }
             }

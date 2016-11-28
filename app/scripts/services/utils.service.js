@@ -449,13 +449,13 @@ angular.module('icestudio')
                 if (error) {
                   if ((stderr.indexOf('brew: command not found') != -1) ||
                        (stderr.indexOf('brew: No such file or directory') != -1)) {
-                    alertify.notify(gettextCatalog.getString('Homebrew is required'), 'error', 5);
+                    alertify.notify(gettextCatalog.getString('Homebrew is required'), 'error', 30);
                   }
                   else if (stderr.indexOf('Error: Failed to download') != -1) {
-                    alertify.notify(gettextCatalog.getString('Internet connection required'), 'error', 5);
+                    alertify.notify(gettextCatalog.getString('Internet connection required'), 'error', 30);
                   }
                   else {
-                    alertify.notify(stderr, 'error', 5);
+                    alertify.notify(stderr, 'error', 30);
                   }
                 }
                 else {
@@ -490,7 +490,7 @@ angular.module('icestudio')
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (stderr) {
-                alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 5);
+                alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
               }
               if (!error) {
                 alertify.notify(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 'message', 5);
@@ -506,7 +506,7 @@ angular.module('icestudio')
               // console.log(error, stdout, stderr);
               endLazyProcess();
               if (stderr) {
-                alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 5);
+                alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
               }
             });
           });
@@ -607,7 +607,7 @@ angular.module('icestudio')
             }
           }
           catch (e) {
-            alertify.notify(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 'error', 3);
+            alertify.notify(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 'error', 30);
             ret = false;
           }
           return ret;

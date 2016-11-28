@@ -6,7 +6,7 @@ angular.module('icestudio')
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
     alertify.defaults.transition = 'fade';
-    alertify.defaults.notifier.delay = 2;
+    alertify.defaults.notifier.delay = 3;
     alertify.defaults.glossary.title = 'Icestudio';
 
     setTimeout(function() {
