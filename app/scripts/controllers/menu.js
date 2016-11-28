@@ -41,6 +41,13 @@ angular.module('icestudio')
       this.close(true);
     });
 
+    // Darwin fix for shortcuts
+    if (process.platform === 'darwin') {
+      var mb = new gui.Menu({type: 'menubar'});
+      mb.createMacBuiltin('Icestudio');
+      win.menu = mb;
+    }
+
     function pathSync() {
       if ($scope.currentProjectPath) {
         var projectPath = utils.dirname($scope.currentProjectPath);
