@@ -12,8 +12,8 @@ gettext('pull_up_inv')
 gettext('tri_state')
 /// Logic
 gettext('logic')
-/// Comb
-gettext('comb')
+/// Combinational
+gettext('combinational')
 /// Demux 1:2
 gettext('demux_1_2')
 /// Demux 1:4
@@ -44,8 +44,8 @@ gettext('or')
 gettext('xnor')
 /// Xor
 gettext('xor')
-/// Sec
-gettext('sec')
+/// Sequential
+gettext('sequential')
 /// D flip-flop async
 gettext('dff_ar')
 /// D flip-flop async

@@ -60,7 +60,7 @@ msgstr ""
 msgid "About Icestudio"
 msgstr "Sobre Icestudio"
 
-#: app/scripts/controllers/menu.js:463
+#: app/scripts/controllers/menu.js:449
 msgid "Add a block to start"
 msgstr "Añade un bloque para comenzar"
 
@@ -84,7 +84,7 @@ msgstr "Bloque {{name}} importado"
 msgid "Board {{name}} not detected"
 msgstr "Placa {{name}} no detectada"
 
-#: app/scripts/controllers/menu.js:426 app/scripts/controllers/menu.js:432
+#: app/scripts/controllers/menu.js:412 app/scripts/controllers/menu.js:418
 msgid "Board {{name}} selected"
 msgstr "Placa {{name}} seleccionada"
 
@@ -96,7 +96,7 @@ msgstr "Placas"
 msgid "Build"
 msgstr "Sintetizar"
 
-#: app/scripts/controllers/main.js:41
+#: app/scripts/controllers/main.js:15
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -128,7 +128,7 @@ msgstr "Foro de la comunidad"
 msgid "Datasheet"
 msgstr "Datasheet"
 
-#: app/scripts/controllers/menu.js:413
+#: app/scripts/controllers/menu.js:399
 msgid "Datasheet not defined"
 msgstr "Datasheet no definido"
 
@@ -144,11 +144,11 @@ msgstr ""
 msgid "Disable"
 msgstr "Deshabilitar"
 
-#: app/scripts/controllers/menu.js:333
+#: app/scripts/controllers/menu.js:319
 msgid "Do you want to clear all?"
 msgstr "¿Deseas borrar todo?"
 
-#: app/scripts/controllers/menu.js:346
+#: app/scripts/controllers/menu.js:332
 msgid "Do you want to remove the selected block?"
 msgstr "¿Deseas eliminar el bloque seleccionado?"
 
@@ -196,15 +196,15 @@ msgstr "Introduce los puertos de entrada"
 msgid "Enter the output ports"
 msgstr "Introduce los puertos de salida"
 
-#: app/scripts/controllers/menu.js:310
+#: app/scripts/controllers/menu.js:296
 msgid "Enter the project's image path"
 msgstr "Introduce la ruta de la imagen del proyecto"
 
-#: app/scripts/controllers/menu.js:86
+#: app/scripts/controllers/menu.js:72
 msgid "Enter the project's title"
 msgstr "Introduce el título del proyecto"
 
-#: app/scripts/controllers/menu.js:318
+#: app/scripts/controllers/menu.js:304
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Introduce el nombre del host remoto usuario@host (experimental)"
 
@@ -368,7 +368,7 @@ msgstr "Nuevo proyecto"
 msgid "New project {{name}} created"
 msgstr "Nuevo proyecto {{name}} creado"
 
-#: app/scripts/controllers/main.js:39
+#: app/scripts/controllers/main.js:14
 msgid "OK"
 msgstr "OK"
 
@@ -404,7 +404,7 @@ msgstr "Proyecto {{name}} guardado"
 msgid "Python 2.7 is required"
 msgstr "Es necesario Python 2.7"
 
-#: app/views/project.html:2
+#: app/views/project.html:3
 msgid "Read only"
 msgstr "Solo lectura"
 
@@ -464,7 +464,7 @@ msgstr "Testbench"
 msgid "Testbench exported"
 msgstr "Testbench exportado"
 
-#: app/scripts/controllers/menu.js:422
+#: app/scripts/controllers/menu.js:408
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -472,7 +472,7 @@ msgstr ""
 "La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la "
 "placa {{name}}?"
 
-#: app/scripts/controllers/menu.js:107 app/scripts/controllers/menu.js:130
+#: app/scripts/controllers/menu.js:116 app/scripts/controllers/menu.js:93
 msgid ""
 "The current project will be removed. Do you want to continue loading the "
 "project?"
@@ -582,15 +582,19 @@ msgstr "Nombre del host remoto incorrecto {{name}}"
 msgid "and"
 msgstr "And"
 
+#: app/views/project.html:4
+msgid "back"
+msgstr "volver"
+
 #. Bit
 #: app/resources/blocks/labels.js:4
 msgid "bit"
 msgstr "Bit"
 
-#. Comb
+#. Combinational
 #: app/resources/blocks/labels.js:16
-msgid "comb"
-msgstr "Comb"
+msgid "combinational"
+msgstr "Combinacional"
 
 #. Config
 #: app/resources/blocks/labels.js:6
@@ -697,10 +701,10 @@ msgstr "Pull up"
 msgid "pull_up_inv"
 msgstr "Pull up inv"
 
-#. Sec
+#. Sequential
 #: app/resources/blocks/labels.js:48
-msgid "sec"
-msgstr "Sec"
+msgid "sequential"
+msgstr "Secuencial"
 
 #. Start building ...
 #: app/scripts/services/tools.service.js:45
@@ -732,7 +736,7 @@ msgstr "Biestable T"
 msgid "tri_state"
 msgstr "Tri-estado"
 
-#: app/scripts/controllers/menu.js:87 app/scripts/controllers/project.js:17
+#: app/scripts/app.js:38 app/scripts/controllers/menu.js:73
 msgid "untitled"
 msgstr "Sin título"
 
@@ -745,6 +749,12 @@ msgstr "Xnor"
 #: app/resources/blocks/labels.js:46
 msgid "xor"
 msgstr "Xor"
+
+#~ msgid "comb"
+#~ msgstr "Comb"
+
+#~ msgid "sec"
+#~ msgstr "Sec"
 
 #~ msgid ""
 #~ "This import operation requires a project path. Yo need to save the "

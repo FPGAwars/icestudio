@@ -54,7 +54,7 @@ msgstr ""
 msgid "About Icestudio"
 msgstr "Icestudio informazioa"
 
-#: app/scripts/controllers/menu.js:463
+#: app/scripts/controllers/menu.js:449
 msgid "Add a block to start"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr "{{name}} blokea importatua"
 msgid "Board {{name}} not detected"
 msgstr "{{name}} plaka ez da aurkitzen"
 
-#: app/scripts/controllers/menu.js:426 app/scripts/controllers/menu.js:432
+#: app/scripts/controllers/menu.js:412 app/scripts/controllers/menu.js:418
 msgid "Board {{name}} selected"
 msgstr "{{name}} paka aukeratul"
 
@@ -90,7 +90,7 @@ msgstr "Plakak"
 msgid "Build"
 msgstr "Sintetizatu"
 
-#: app/scripts/controllers/main.js:41
+#: app/scripts/controllers/main.js:15
 msgid "Cancel"
 msgstr ""
 
@@ -122,7 +122,7 @@ msgstr "Komunitatearen foroa"
 msgid "Datasheet"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:413
+#: app/scripts/controllers/menu.js:399
 msgid "Datasheet not defined"
 msgstr ""
 
@@ -136,11 +136,11 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:333
+#: app/scripts/controllers/menu.js:319
 msgid "Do you want to clear all?"
 msgstr "¿Dena ezabatu nahi duzu?"
 
-#: app/scripts/controllers/menu.js:346
+#: app/scripts/controllers/menu.js:332
 msgid "Do you want to remove the selected block?"
 msgstr "¿Aukeratutako blokea ezabatu nahi duzu?"
 
@@ -188,15 +188,15 @@ msgstr ""
 msgid "Enter the output ports"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:310
+#: app/scripts/controllers/menu.js:296
 msgid "Enter the project's image path"
 msgstr "Proiektuaren irudi bidea sartu"
 
-#: app/scripts/controllers/menu.js:86
+#: app/scripts/controllers/menu.js:72
 msgid "Enter the project's title"
 msgstr "Proiektuari izena jarri"
 
-#: app/scripts/controllers/menu.js:318
+#: app/scripts/controllers/menu.js:304
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Enter the remote hostname user@host (experimental)"
 
@@ -356,7 +356,7 @@ msgstr "Proiektu berria"
 msgid "New project {{name}} created"
 msgstr "{{name}} proiektu sortuta"
 
-#: app/scripts/controllers/main.js:39
+#: app/scripts/controllers/main.js:14
 msgid "OK"
 msgstr ""
 
@@ -392,7 +392,7 @@ msgstr "{{name}} proiektua gordeta"
 msgid "Python 2.7 is required"
 msgstr ""
 
-#: app/views/project.html:2
+#: app/views/project.html:3
 msgid "Read only"
 msgstr "Irakurtzeko soilik"
 
@@ -452,14 +452,14 @@ msgstr "Testbench esportatua"
 msgid "Testbench exported"
 msgstr "Testbench esportatua"
 
-#: app/scripts/controllers/menu.js:422
+#: app/scripts/controllers/menu.js:408
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr ""
 "FPGAaren E/S configurazioa galduko da. {{name}} plaka aldatu nahi duzu?"
 
-#: app/scripts/controllers/menu.js:107 app/scripts/controllers/menu.js:130
+#: app/scripts/controllers/menu.js:116 app/scripts/controllers/menu.js:93
 msgid ""
 "The current project will be removed. Do you want to continue loading the "
 "project?"
@@ -564,15 +564,19 @@ msgstr ""
 msgid "and"
 msgstr "And"
 
+#: app/views/project.html:4
+msgid "back"
+msgstr ""
+
 #. Bit
 #: app/resources/blocks/labels.js:4
 msgid "bit"
 msgstr "Bit"
 
-#. Comb
+#. Combinational
 #: app/resources/blocks/labels.js:16
-msgid "comb"
-msgstr "Comb"
+msgid "combinational"
+msgstr ""
 
 #. Config
 #: app/resources/blocks/labels.js:6
@@ -679,10 +683,10 @@ msgstr "Pull up"
 msgid "pull_up_inv"
 msgstr "Pull up inv"
 
-#. Sec
+#. Sequential
 #: app/resources/blocks/labels.js:48
-msgid "sec"
-msgstr "Sec"
+msgid "sequential"
+msgstr ""
 
 #. Start building ...
 #: app/scripts/services/tools.service.js:45
@@ -714,7 +718,7 @@ msgstr "Bistable T"
 msgid "tri_state"
 msgstr "Tri-state"
 
-#: app/scripts/controllers/menu.js:87 app/scripts/controllers/project.js:17
+#: app/scripts/app.js:38 app/scripts/controllers/menu.js:73
 msgid "untitled"
 msgstr "Izenik gabe"
 
@@ -727,6 +731,12 @@ msgstr "Xnor"
 #: app/resources/blocks/labels.js:46
 msgid "xor"
 msgstr "Xor"
+
+#~ msgid "comb"
+#~ msgstr "Comb"
+
+#~ msgid "sec"
+#~ msgstr "Sec"
 
 #~ msgid "Enter the block's label"
 #~ msgstr "Blokearen etiketa sartu"
