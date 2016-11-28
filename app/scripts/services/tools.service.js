@@ -277,7 +277,7 @@ angular.module('icestudio')
                   fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
                 }
                 if (fpgaResources) {
-                  alertify.notify('<pre>' + fpgaResources + '</pre>', 'message', 3);
+                  alertify.notify('<pre>' + fpgaResources + '</pre>', 'message', 4);
                 }
               }
             }

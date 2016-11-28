@@ -26,6 +26,10 @@ body.waiting * {
   cursor: progress;
 }
 
+.alertify-notifier.ajs-bottom {
+  bottom: 45px;
+}
+
 .alertify-notifier .ajs-message.ajs-success {
   color: #111;
   background: #d4ffad;

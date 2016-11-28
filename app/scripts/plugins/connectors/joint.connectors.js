@@ -1,7 +1,5 @@
 
 joint.connectors.ice = function(sourcePoint, targetPoint, vertices) {
-    var dimensionFix = 1e-3;
-
     var points = [];
 
     points.push({ x: sourcePoint.x, y: sourcePoint.y });
@@ -22,11 +20,23 @@ joint.connectors.ice = function(sourcePoint, targetPoint, vertices) {
     var tx = (tq.y == 0) ? Math.sign(tq.x) * step : 0;
     var ty = (tq.x == 0) ? Math.sign(tq.y) * step : 0;
 
-    var d = ['M', sourcePoint.x + sx, sourcePoint.y + sy];
+    var full = ['M'];
+    var wrap = ['M'];
 
-    _.each(vertices, function(vertex) { d.push(vertex.x, vertex.y); });
+    var dVertices = [];
+    _.each(vertices, function(vertex) { dVertices.push(vertex.x, vertex.y); });
 
-    d.push(targetPoint.x + tx + dimensionFix, targetPoint.y + ty + dimensionFix);
+    full.push(sourcePoint.x + sx, sourcePoint.y + sy);
+    wrap.push(sourcePoint.x, sourcePoint.y);
 
-    return d.join(' ');
+    full = full.concat(dVertices);
+    wrap = wrap.concat(dVertices);
+
+    full.push(targetPoint.x + tx, targetPoint.y + ty);
+    wrap.push(targetPoint.x, targetPoint.y);
+
+    return {
+      full: full.join(' '),
+      wrap: wrap.join(' ')
+    };
 };

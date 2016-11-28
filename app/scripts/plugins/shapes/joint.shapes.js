@@ -500,8 +500,8 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
   markup: [
     '<path class="connection" stroke="black" d="M 0 0 0 0"/>',
     '<path class="connection-wrap" d="M 0 0 0 0"/>',
-    '<path class="marker-source" fill="black" stroke="black" d="M 0 0 0 0"/>',
-    '<path class="marker-target" fill="black" stroke="black" d="M 0 0 0 0"/>',
+    '<path class="marker-source" d="M 0 0 0 0"/>',
+    '<path class="marker-target" d="M 0 0 0 0"/>',
     '<g class="labels"/>',
     '<g class="marker-bifurcations"/>',
     '<g class="marker-vertices"/>',
@@ -573,6 +573,43 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     console.log('update');
     this.updateBifurcations();
     return this;
+  },
+
+  updateConnection: function(opt) {
+    opt = opt || {};
+
+    var model = this.model;
+    var route;
+
+    if (opt.translateBy && model.isRelationshipEmbeddedIn(opt.translateBy)) {
+      // The link is being translated by an ancestor that will
+      // shift source point, target point and all vertices
+      // by an equal distance.
+      var tx = opt.tx || 0;
+      var ty = opt.ty || 0;
+
+      route = this.route =  _.map(this.route, function(point) {
+        // translate point by point by delta translation
+        return g.point(point).offset(tx, ty);
+      });
+
+      // translate source and target connection and marker points.
+      this._translateConnectionPoints(tx, ty);
+
+    } else {
+      // Necessary path finding
+      route = this.route = this.findRoute(model.get('vertices') || [], opt);
+      // finds all the connection points taking new vertices into account
+      this._findConnectionPoints(route);
+    }
+
+    var pathData = this.getPathData(route);
+
+    // The markup needs to contain a `.connection`
+    this._V.connection.attr('d', pathData.full);
+    this._V.connectionWrap && this._V.connectionWrap.attr('d', pathData.wrap);
+
+    this._translateAndAutoOrientArrows(this._V.markerSource, this._V.markerTarget);
   },
 
   updateBifurcations: function() {
