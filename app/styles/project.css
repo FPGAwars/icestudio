@@ -13,11 +13,15 @@
   z-index: 0;
 }
 
-#breadcrumbs {
+#footer {
   position: absolute;
   bottom: -5px;
   width: 100%;
   z-index: 1501;
+}
+
+#breadcrumbs {
+  margin-bottom: 5px;
 }
 
 #breadcrumbs>li {
@@ -28,8 +32,10 @@
   text-decoration: none;
 }
 
-.disable-graph {
-  pointer-events: none;
+#board {
+  position: absolute;
+  bottom: 12px;
+  right: 15px;
 }
 
 #read-only {
@@ -50,6 +56,10 @@
   top: 100px;
   right: 30px;
   z-index: 1501;
+}
+
+.disable-graph {
+  pointer-events: none;
 }
 
 .generic-block {

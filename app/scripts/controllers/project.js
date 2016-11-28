@@ -4,10 +4,12 @@ angular.module('icestudio')
   .controller('ProjectCtrl', function ($rootScope,
                                        $scope,
                                        common,
+                                       boards,
                                        graph,
                                        gettextCatalog) {
 
     $scope.common = common;
+    $scope.boards = boards;
     $scope.graph = graph;
 
     // Intialization

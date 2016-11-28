@@ -4,10 +4,13 @@
     <a id="back-button" ng-click="breadcrumbsBack()">< {{ 'back' | translate }}</a>
   </div>
   <div id="paper" class="paper"></div>
-  <ol id="breadcrumbs" class="breadcrumb" style="margin-bottom: 5px;">
-    <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
-      <span ng-switch-when="true">{{ item.name }}</span>
-      <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
-    </li>
-  </ol>
+  <div id="footer">
+    <ol id="breadcrumbs" class="breadcrumb">
+      <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
+        <span ng-switch-when="true">{{ item.name }}</span>
+        <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
+      </li>
+    </ol>
+    <div id="board">{{ boards.selectedBoard.info.label }}</a>
+  </div>
 </div>
