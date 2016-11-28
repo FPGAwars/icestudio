@@ -167,7 +167,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/linux32/',
           src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
-          dest: ''
+          dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
       linux64: {
@@ -178,7 +178,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/linux64/',
           src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'],
-          dest: '.'
+          dest: '<%=pkg.name%>-<%=pkg.version%>-linux64'
         }]
       },
       win32: {
@@ -189,7 +189,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/win32/',
           src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
-          dest: '.'
+          dest: '<%=pkg.name%>-<%=pkg.version%>-win32'
         }]
       },
       win64: {
@@ -200,7 +200,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/win64/',
           src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'],
-          dest: '.'
+          dest: '<%=pkg.name%>-<%=pkg.version%>-win64'
         }]
       },
       osx32: {
@@ -211,7 +211,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/osx32/',
           src: ['icestudio.app/**'],
-          dest: '.'
+          dest: '<%=pkg.name%>-<%=pkg.version%>-osx32'
         }]
       },
       osx64: {
@@ -222,7 +222,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'dist/icestudio/osx64/',
           src: ['icestudio.app/**'],
-          dest: '.'
+          dest: '<%=pkg.name%>-<%=pkg.version%>-osx64'
         }]
       }
     },
