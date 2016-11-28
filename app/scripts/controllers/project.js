@@ -24,7 +24,15 @@ angular.module('icestudio')
         item = graph.breadcrumbs.slice(-1)[0];
       }
       while (selectedItem != item);
+      loadSelectedGraph();
+    }
 
+    $scope.breadcrumbsBack = function() {
+      graph.breadcrumbs.pop();
+      loadSelectedGraph();
+    }
+
+    function loadSelectedGraph() {
       if (graph.breadcrumbs.length == 1) {
         graph.loadGraph(common.project);
         graph.appEnable(true);

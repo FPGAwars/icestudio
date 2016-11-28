@@ -1,5 +1,8 @@
 <div ng-controller="ProjectCtrl">
-  <div id="read-only-banner" class="banner hidden">{{ 'Read only' | translate }}</div>
+  <div id="banner" class="hidden">
+    <div id="read-only">{{ 'Read only' | translate }}</div>
+    <a id="back-button" ng-click="breadcrumbsBack()">< {{ 'back' | translate }}</a>
+  </div>
   <div id="paper" class="paper"></div>
   <ol id="breadcrumbs" class="breadcrumb" style="margin-bottom: 5px;">
     <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">

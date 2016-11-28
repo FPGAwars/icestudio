@@ -32,12 +32,22 @@
   pointer-events: none;
 }
 
-.banner {
+#read-only {
   font-family: Courier New;
   font-size: 15px;
   color: #EB2222;
-  opacity: .7;
   position: absolute;
+  right: 30px;
+  z-index: 1501;
+}
+
+#back-button {
+  font-family: Courier New;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  position: absolute;
+  top: 100px;
   right: 30px;
   z-index: 1501;
 }
