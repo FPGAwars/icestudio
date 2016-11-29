@@ -15,6 +15,7 @@
 
 #footer {
   position: absolute;
+  cursor: default;
   bottom: -5px;
   width: 100%;
   z-index: 1501;
@@ -211,7 +212,7 @@
     stroke-linecap: butt;
     stroke-linejoin: round;
     opacity: 0;
-    cursor: move;
+    cursor: pointer;
 }
 .joint-link.joint-theme-default .connection-wrap:hover {
     opacity: .4;

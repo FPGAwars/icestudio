@@ -57,6 +57,10 @@ angular.module('icestudio')
         }
 
         function setGrid(paper, size, offset) {
+
+          // TODO: draw grid in a SVG because 'background' truncates the parameters
+
+          /*
           // Set grid size on the JointJS paper object (joint.dia.Paper instance)
           paper.options.gridsize = gridsize;
           // Draw a grid into the HTML 5 canvas and convert it to a data URI image
@@ -76,7 +80,7 @@ angular.module('icestudio')
           if(typeof(offset) != 'undefined'){
             $(paper.el.childNodes[0]).css(
               'background-position', offset.x + 'px ' + offset.y + 'px');
-          }
+          }*/
         }
 
         this.createPaper = function(element) {
