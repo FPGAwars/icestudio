@@ -62,7 +62,7 @@ msgstr "À propos d'Icestudio"
 
 #: app/scripts/controllers/menu.js:449
 msgid "Add a block to start"
-msgstr ""
+msgstr "Ajouter un bloc pour commencer"
 
 #: app/views/menu.html:284
 msgid "Basic"
@@ -98,15 +98,15 @@ msgstr "Construire"
 
 #: app/scripts/controllers/main.js:15
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: app/scripts/services/tools.service.js:417
 msgid "Check Internet connection..."
-msgstr ""
+msgstr "Vérifier la connexion Internet..."
 
 #: app/scripts/services/tools.service.js:425
 msgid "Check Python..."
-msgstr ""
+msgstr "Vérifier Python..."
 
 #: app/views/menu.html:112
 msgid "Clear all"
@@ -126,11 +126,11 @@ msgstr "Forum communautaire"
 
 #: app/views/menu.html:179
 msgid "Datasheet"
-msgstr ""
+msgstr "Documentation"
 
 #: app/scripts/controllers/menu.js:399
 msgid "Datasheet not defined"
-msgstr ""
+msgstr "Documentation non définie"
 
 #: app/scripts/services/tools.service.js:294
 msgid ""
@@ -140,7 +140,7 @@ msgstr ""
 
 #: app/views/menu.html:244
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
 #: app/scripts/controllers/menu.js:319
 msgid "Do you want to clear all?"
@@ -178,7 +178,7 @@ msgstr "Édition"
 
 #: app/views/menu.html:240
 msgid "Enable"
-msgstr ""
+msgstr "Activer"
 
 #: app/views/menu.html:134
 msgid "English"
@@ -187,12 +187,12 @@ msgstr "Anglais"
 #: app/scripts/services/graph.service.js:423
 #: app/scripts/services/graph.service.js:481
 msgid "Enter the input ports"
-msgstr ""
+msgstr "Entrer les ports d'entrée"
 
 #: app/scripts/services/graph.service.js:424
 #: app/scripts/services/graph.service.js:521
 msgid "Enter the output ports"
-msgstr ""
+msgstr "Entrer les ports de sortie"
 
 #: app/scripts/controllers/menu.js:296
 msgid "Enter the project's image path"
@@ -262,7 +262,7 @@ msgstr "Le fichier {{file}} n'existe pas"
 
 #: app/scripts/services/common.service.js:152
 msgid "File {{file}} imported"
-msgstr ""
+msgstr "Fichier {{file}} importé"
 
 #: app/views/menu.html:158
 msgid "French"
@@ -336,7 +336,7 @@ msgstr ""
 
 #: app/scripts/services/graph.service.js:109
 msgid "Invalid connection"
-msgstr ""
+msgstr "Connexion invalide"
 
 #: app/scripts/services/graph.service.js:123
 msgid "Invalid multiple input connections"
@@ -364,7 +364,7 @@ msgstr "Nouveau projet {{name}} créé"
 
 #: app/scripts/controllers/main.js:14
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: app/views/menu.html:29
 msgid "Open project"
@@ -384,7 +384,7 @@ msgstr "Fichier PCF exporté"
 
 #: app/views/menu.html:116
 msgid "Preferences"
-msgstr ""
+msgstr "Préférences"
 
 #: app/scripts/services/common.service.js:55
 msgid "Project {{name}} loaded"
@@ -396,7 +396,7 @@ msgstr "Projet {{name}} sauvegardé"
 
 #: app/scripts/services/tools.service.js:430
 msgid "Python 2.7 is required"
-msgstr ""
+msgstr "Python 2.7 est requis"
 
 #: app/views/project.html:3
 msgid "Read only"
