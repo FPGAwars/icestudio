@@ -11,6 +11,10 @@
   z-index: 1501;
 }
 
+.navbar-right {
+  margin-right: 0px;
+}
+
 .dropdown-submenu {
   position: relative;
 }

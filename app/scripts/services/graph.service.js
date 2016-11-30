@@ -180,7 +180,7 @@ angular.module('icestudio')
             center: false,
             zoomEnabled: true,
             panEnabled: false,
-            zoomScaleSensitivity: 0.2,
+            zoomScaleSensitivity: 0.1,
             dblClickZoomEnabled: false,
             minZoom: 0.2,
             maxZoom: 2,
@@ -259,6 +259,14 @@ angular.module('icestudio')
                    selectionView.createSelectionBox(cellView);
                    cellView.$box.removeClass('highlight');
                  }
+                 // Update wires on obstacles
+                 var cells = graph.getCells();
+                 for (var i in cells) {
+                   var cell = cells[i];
+                   if (cell.isLink()) {
+                     paper.findViewByModel(cell).update();
+                   }
+                 }
                }
              }
            }
@@ -283,9 +291,12 @@ angular.module('icestudio')
               if (paper.options.enabled) {
                 alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
                   function(evt, label) {
-                    data.data.label = label; // .replace(/ /g, '')
-                    cellView.renderLabel();
-                    alertify.success(gettextCatalog.getString('Label updated'));
+                    label = label.replace(/ /g, '');
+                    if (data.data.label != label) {
+                      data.data.label = label;
+                      cellView.renderLabel();
+                      alertify.success(gettextCatalog.getString('Label updated'));
+                    }
                 });
               }
             }
@@ -361,13 +372,13 @@ angular.module('icestudio')
           graph.on('change:position', function(cell) {
             if (!selectionView.isTranslating()) {
               // Update wires on obstacles motion
-              var cells = graph.getCells();
+              /*var cells = graph.getCells();
               for (var i in cells) {
                 var cell = cells[i];
                 if (cell.isLink()) {
                   paper.findViewByModel(cell).update();
                 }
-              }
+              }*/
             }
           });
         };

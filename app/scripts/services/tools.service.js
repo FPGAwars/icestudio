@@ -57,7 +57,7 @@ angular.module('icestudio')
                       setTimeout(function() {
                         angular.element('#menu').removeClass('disable-menu');
                         currentAlert.dismiss(true);
-                      }, 2000);
+                      }, 1000);
                     }
                   });
                 }

@@ -55,16 +55,16 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         x: 12,
         y: -10,
         'text-anchor': 'end',
-        fill: '#777'
+        fill: '#888'
       },
       '.outPorts .port-label': {
         x: -12,
         y: -10,
         'text-anchor': 'start',
-        fill: '#777'
+        fill: '#888'
       },
       '.port-wire': {
-        stroke: '#777',
+        stroke: '#888',
         'stroke-width': 2
       }
     }
@@ -503,21 +503,21 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     '<path class="marker-source" d="M 0 0 0 0"/>',
     '<path class="marker-target" d="M 0 0 0 0"/>',
     '<g class="labels"/>',
-    '<g class="marker-bifurcations"/>',
     '<g class="marker-vertices"/>',
+    '<g class="marker-bifurcations"/>',
     '<g class="marker-arrowheads"/>',
     '<g class="link-tools"/>'
   ].join(''),
 
   bifurcationMarkup: [
     '<g class="marker-bifurcation-group" transform="translate(<%= x %>, <%= y %>)">',
-    '<circle class="marker-bifurcation" idx="<%= idx %>" r="4" fill="#777"/>',
+    '<circle class="marker-bifurcation" idx="<%= idx %>" r="4" fill="#888"/>',
     '</g>'
   ].join(''),
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="6"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="8"/>',
     '</g>'
   ].join(''),
 
@@ -541,7 +541,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     attrs: {
       '.connection': {
         'stroke-width': 2,
-        stroke: '#777'
+        stroke: '#888'
       },
       '.marker-vertex': { r: 8 }
     },
@@ -558,6 +558,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   render: function() {
     joint.dia.LinkView.prototype.render.apply(this, arguments);
     console.log('render');
+    this.updateBifurcations();
     return this;
   },
 
@@ -565,6 +566,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     joint.dia.LinkView.prototype.remove.apply(this, arguments);
     console.log('remove');
     // here we remove the pattern from the paper SVG <defs> element
+    this.updateBifurcations();
     return this;
   },
 
@@ -613,22 +615,23 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   },
 
   updateBifurcations: function() {
-    var $markerBifurcations = $(this._V.markerBifurcations.node).empty();
-    var markupTemplate = joint.util.template(this.model.get('bifurcationMarkup') || this.model.bifurcationMarkup);
+    if (this._V.markerBifurcations) {
+      var $markerBifurcations = $(this._V.markerBifurcations.node).empty();
+      var markupTemplate = joint.util.template(this.model.get('bifurcationMarkup') || this.model.bifurcationMarkup);
 
-    var bifurcations = [];
+      var bifurcations = [];
 
-    var self = this;
-    var currentWire = this.model;
-    var allWires = this.paper.model.getLinks();
+      var self = this;
+      var currentWire = this.model;
+      var allWires = this.paper.model.getLinks();
 
-    console.log('Update wire: ' + this.model.attributes.id.toString());
+      console.log('Update wire: ' + this.model.attributes.id.toString());
 
-    _.each(allWires, function(wire) {
-      console.log(' - ' + wire.id);
-      if ((wire.attributes.id != currentWire.attributes.id) &&
-          (wire.attributes.source.id == currentWire.attributes.source.id) &&
-          (wire.attributes.source.port == currentWire.attributes.source.port))
+      _.each(allWires, function(wire) {
+        console.log(' - ' + wire.id);
+        if ((wire.attributes.id != currentWire.attributes.id) &&
+        (wire.attributes.source.id == currentWire.attributes.source.id) &&
+        (wire.attributes.source.port == currentWire.attributes.source.port))
         {
           // Wire with the same source of currentWire
 
@@ -638,47 +641,46 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
           findBifurcations(wireView, currentWireView);
           findBifurcations(currentWireView, wireView);
         }
-    });
-
-    _.each(bifurcations, function(vertex, idx) {
-        $markerBifurcations.append(V(markupTemplate(_.extend({ idx: idx }, vertex))).node);
-    });
-
-    function findBifurcations(wireA, wireB) {
-      var V = [];
-      V.push(wireA.sourcePoint);
-      V = V.concat(wireA.route);
-      V.push(wireA.targetPoint);
-
-      var candidates = [];
-      candidates = wireB.route;
-
-      _.each(candidates, function(candidate, idx) {
-        // Eval if exists in any segment of wire V
-        for (var i = 0; i < V.length -1; i++) {
-          var segment = [V[i], V[i+1]];
-          if (evalIntersection(candidate, segment)) {
-            console.log('   > Bifurcation!', candidate);
-            bifurcations.push(candidate);
-          }
-        }
       });
-    }
 
-    function evalIntersection(point, segment) {
-      if (segment[0].x == segment[1].x) {
-        // Vertical
-        return ((point.x == segment[0].x) &&
-                (point.y > Math.min(segment[0].y, segment[1].y)) &&
-                (point.y < Math.max(segment[0].y, segment[1].y))
-              );
+      _.each(bifurcations, function(vertex, idx) {
+        $markerBifurcations.append(V(markupTemplate(_.extend({ idx: idx }, vertex))).node);
+      });
+
+      function findBifurcations(wireA, wireB) {
+        var V = [];
+        V.push(wireA.sourcePoint);
+        V = V.concat(wireA.route);
+        V.push(wireA.targetPoint);
+
+        var candidates = [];
+        candidates = wireB.route;
+
+        _.each(candidates, function(candidate, idx) {
+          // Eval if exists in any segment of wire V
+          for (var i = 0; i < V.length -1; i++) {
+            var segment = [V[i], V[i+1]];
+            if (evalIntersection(candidate, segment)) {
+              console.log('   > Bifurcation!', candidate);
+              bifurcations.push(candidate);
+            }
+          }
+        });
       }
-      else {
-        // Horizontal
-        return ((point.y == segment[0].y) &&
-                (point.x > Math.min(segment[0].x, segment[1].x)) &&
-                (point.x < Math.max(segment[0].x, segment[1].x))
-              );
+
+      function evalIntersection(point, segment) {
+        if (segment[0].x == segment[1].x) {
+          // Vertical
+          return ((point.x == segment[0].x) &&
+            (point.y > Math.min(segment[0].y, segment[1].y)) &&
+            (point.y < Math.max(segment[0].y, segment[1].y)));
+        }
+        else {
+          // Horizontal
+          return ((point.y == segment[0].y) &&
+          (point.x > Math.min(segment[0].x, segment[1].x)) &&
+          (point.x < Math.max(segment[0].x, segment[1].x)));
+        }
       }
     }
 
