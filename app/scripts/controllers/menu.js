@@ -5,6 +5,7 @@ angular.module('icestudio')
                                     $scope,
                                     $timeout,
                                     nodeLangInfo,
+                                    nodeFs,
                                     common,
                                     graph,
                                     tools,
@@ -370,8 +371,38 @@ angular.module('icestudio')
             $scope.removeSelected();
           }
         }
+        if (event.keyCode == 80 && event.ctrlKey) { // Ctrl + p
+          // Print and save a window snapshot
+          takeSnapshot();
+        }
       }
     });
+
+    function takeSnapshot() {
+      win.capturePage(function(buffer) {
+        saveSnapshot(buffer);
+      }, { format : 'png', datatype : 'buffer'} );
+    }
+
+    function saveSnapshot(buffer) {
+      setTimeout(function() {
+        var ctrl = angular.element('#input-save-snapshot');
+        ctrl.on('change', function(event) {
+          var file = event.target.files[0];
+          if (file) {
+            var filepath = file.path;
+            if (! filepath.endsWith('.png')) {
+              filepath += '.png';
+            }
+            nodeFs.writeFile(filepath, buffer, function (err) {
+              event.target.files.clear();
+              if (err) throw err;
+            });
+          }
+        });
+        ctrl.click();
+      }, 0);
+    }
 
     // View
 
