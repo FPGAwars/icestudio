@@ -56,27 +56,27 @@ msgstr ""
 "dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala "
 "el driver</li></ol>"
 
-#: app/views/menu.html:274
+#: app/views/menu.html:275
 msgid "About Icestudio"
 msgstr "Sobre Icestudio"
 
-#: app/scripts/controllers/menu.js:449
+#: app/scripts/controllers/menu.js:421
 msgid "Add a block to start"
 msgstr "Añade un bloque para comenzar"
 
-#: app/views/menu.html:284
+#: app/views/menu.html:285
 msgid "Basic"
 msgstr "Básico"
 
-#: app/views/menu.html:152
+#: app/views/menu.html:153
 msgid "Basque"
 msgstr "Euskera"
 
-#: app/scripts/services/common.service.js:182
+#: app/scripts/services/common.service.js:183
 msgid "Block exported as {{name}}"
 msgstr "Bloque exportado como {{name}}"
 
-#: app/scripts/services/common.service.js:163
+#: app/scripts/services/common.service.js:164
 msgid "Block {{name}} imported"
 msgstr "Bloque {{name}} importado"
 
@@ -84,15 +84,15 @@ msgstr "Bloque {{name}} importado"
 msgid "Board {{name}} not detected"
 msgstr "Placa {{name}} no detectada"
 
-#: app/scripts/controllers/menu.js:412 app/scripts/controllers/menu.js:418
+#: app/scripts/controllers/menu.js:383 app/scripts/controllers/menu.js:390
 msgid "Board {{name}} selected"
 msgstr "Placa {{name}} seleccionada"
 
-#: app/views/menu.html:185
+#: app/views/menu.html:186
 msgid "Boards"
 msgstr "Placas"
 
-#: app/views/menu.html:203
+#: app/views/menu.html:204
 msgid "Build"
 msgstr "Sintetizar"
 
@@ -108,29 +108,25 @@ msgstr "Comprobando conexión a Internet..."
 msgid "Check Python..."
 msgstr "Comprobando Python..."
 
-#: app/views/menu.html:112
+#: app/views/menu.html:113
 msgid "Clear all"
 msgstr "Borrar todo"
 
-#: app/views/menu.html:106
+#: app/views/menu.html:107
 msgid "Clone selected"
 msgstr "Clonar seleccionado"
 
-#: app/views/menu.html:287
+#: app/views/menu.html:288
 msgid "Code"
 msgstr "Código"
 
-#: app/views/menu.html:270
+#: app/views/menu.html:271
 msgid "Community forum"
 msgstr "Foro de la comunidad"
 
-#: app/views/menu.html:179
+#: app/views/menu.html:180
 msgid "Datasheet"
 msgstr "Datasheet"
-
-#: app/scripts/controllers/menu.js:399
-msgid "Datasheet not defined"
-msgstr "Datasheet no definido"
 
 #: app/scripts/services/tools.service.js:294
 msgid ""
@@ -140,23 +136,23 @@ msgstr ""
 "No se encuentra la toolchain por defecto, por lo que será descargada. Esta "
 "operación requiere conexión a Internet. ¿Deseas continuar?"
 
-#: app/views/menu.html:244
+#: app/views/menu.html:245
 msgid "Disable"
 msgstr "Deshabilitar"
 
-#: app/scripts/controllers/menu.js:319
+#: app/scripts/controllers/menu.js:256
 msgid "Do you want to clear all?"
 msgstr "¿Deseas borrar todo?"
 
-#: app/scripts/controllers/menu.js:332
+#: app/scripts/controllers/menu.js:269
 msgid "Do you want to remove the selected block?"
 msgstr "¿Deseas eliminar el bloque seleccionado?"
 
-#: app/views/menu.html:263
+#: app/views/menu.html:264
 msgid "Documentation"
 msgstr "Documentación"
 
-#: app/views/menu.html:237
+#: app/views/menu.html:238
 msgid "Drivers"
 msgstr "Drivers"
 
@@ -174,37 +170,37 @@ msgstr "Drivers habilitados"
 msgid "Duplicated FPGA I/O ports"
 msgstr "Puertos E/S de la FPGA duplicados"
 
-#: app/views/menu.html:99
+#: app/views/menu.html:100
 msgid "Edit"
 msgstr "Editar"
 
-#: app/views/menu.html:240
+#: app/views/menu.html:241
 msgid "Enable"
 msgstr "Habilitar"
 
-#: app/views/menu.html:134
+#: app/views/menu.html:135
 msgid "English"
 msgstr "Inglés"
 
-#: app/scripts/services/graph.service.js:423
-#: app/scripts/services/graph.service.js:481
+#: app/scripts/services/graph.service.js:438
+#: app/scripts/services/graph.service.js:496
 msgid "Enter the input ports"
 msgstr "Introduce los puertos de entrada"
 
-#: app/scripts/services/graph.service.js:424
-#: app/scripts/services/graph.service.js:521
+#: app/scripts/services/graph.service.js:439
+#: app/scripts/services/graph.service.js:536
 msgid "Enter the output ports"
 msgstr "Introduce los puertos de salida"
 
-#: app/scripts/controllers/menu.js:296
+#: app/scripts/controllers/menu.js:233
 msgid "Enter the project's image path"
 msgstr "Introduce la ruta de la imagen del proyecto"
 
-#: app/scripts/controllers/menu.js:72
+#: app/scripts/controllers/menu.js:82
 msgid "Enter the project's title"
 msgstr "Introduce el título del proyecto"
 
-#: app/scripts/controllers/menu.js:304
+#: app/scripts/controllers/menu.js:241
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Introduce el nombre del host remoto usuario@host (experimental)"
 
@@ -216,7 +212,7 @@ msgstr "Error: toolchain por defecto no encontrada en '{{dir}}'"
 msgid "Error: {{error}}"
 msgstr "Error: {{error}}"
 
-#: app/views/menu.html:32
+#: app/views/menu.html:33
 msgid "Examples"
 msgstr "Ejemplos"
 
@@ -224,11 +220,11 @@ msgstr "Ejemplos"
 msgid "Execute remote {{label}} ..."
 msgstr "Ejecutar {{label}} remoto ..."
 
-#: app/views/menu.html:79
+#: app/views/menu.html:80
 msgid "Export"
 msgstr "Exportar"
 
-#: app/views/menu.html:75
+#: app/views/menu.html:76
 msgid "Export as block"
 msgstr "Exportar como bloque"
 
@@ -249,11 +245,11 @@ msgstr "Extraer ficheros del virtual env"
 msgid "FPGA I/O ports not defined"
 msgstr "Puertos E/S de la FPGA no definidos"
 
-#: app/views/menu.html:23
+#: app/views/menu.html:24
 msgid "File"
 msgstr "Archivo"
 
-#: app/scripts/services/common.service.js:124
+#: app/scripts/services/common.service.js:125
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -264,23 +260,23 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "El archivo {{file}} no existe"
 
-#: app/scripts/services/common.service.js:152
+#: app/scripts/services/common.service.js:153
 msgid "File {{file}} imported"
 msgstr "Archivo {{file}} importado"
 
-#: app/views/menu.html:158
+#: app/views/menu.html:159
 msgid "French"
 msgstr "Francés"
 
-#: app/scripts/services/common.service.js:222
+#: app/scripts/services/common.service.js:223
 msgid "GTKWave exported"
 msgstr "GTKWave exportado"
 
-#: app/views/menu.html:146
+#: app/views/menu.html:147
 msgid "Galician"
 msgstr "Gallego"
 
-#: app/views/menu.html:253
+#: app/views/menu.html:254
 msgid "Help"
 msgstr "Ayuda"
 
@@ -288,23 +284,27 @@ msgstr "Ayuda"
 msgid "Homebrew is required"
 msgstr "Es necesario Homebrew"
 
-#: app/views/menu.html:119
+#: app/views/menu.html:120
 msgid "Image path"
 msgstr "Ruta de la imagen"
 
-#: app/views/menu.html:72
+#: app/scripts/controllers/menu.js:322
+msgid "Image {{name}} saved"
+msgstr "Imagen {{name}} guardada"
+
+#: app/views/menu.html:73
 msgid "Import block"
 msgstr "Importar bloque"
 
-#: app/views/menu.html:288
+#: app/views/menu.html:289
 msgid "Info"
 msgstr "Info"
 
-#: app/views/menu.html:289
+#: app/views/menu.html:290
 msgid "Input"
 msgstr "Entrada"
 
-#: app/views/menu.html:214
+#: app/views/menu.html:215
 msgid "Install"
 msgstr "Instalar"
 
@@ -326,33 +326,33 @@ msgstr "Instalando la toolchain"
 msgid "Internet connection required"
 msgstr "Es necesario conexión a Internet"
 
-#: app/scripts/services/graph.service.js:130
+#: app/scripts/services/graph.service.js:134
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Conexión de <i>Pull up</i> no válida:<br>hay un bloque conectado"
 
-#: app/scripts/services/graph.service.js:146
+#: app/scripts/services/graph.service.js:150
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Conexión de <i>Pull up</i> no válida:<br>sólo se permiten bloques "
 "<i>Entrada</i>"
 
-#: app/scripts/services/graph.service.js:137
+#: app/scripts/services/graph.service.js:141
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Conexión de bloque no válida:<br>hay un <i>Pull up</i>  conectado"
 
-#: app/scripts/services/graph.service.js:109
+#: app/scripts/services/graph.service.js:113
 msgid "Invalid connection"
 msgstr "Conexión no válida"
 
-#: app/scripts/services/graph.service.js:123
+#: app/scripts/services/graph.service.js:127
 msgid "Invalid multiple input connections"
 msgstr "Conexiones de entrada múltiple no válidas"
 
-#: app/scripts/services/graph.service.js:284
+#: app/scripts/services/graph.service.js:298
 msgid "Label updated"
 msgstr "Etiqueta actualizada"
 
-#: app/views/menu.html:130
+#: app/views/menu.html:131
 msgid "Language"
 msgstr "Idioma"
 
@@ -360,7 +360,7 @@ msgstr "Idioma"
 msgid "Make virtual env..."
 msgstr "Crear virtual env..."
 
-#: app/views/menu.html:26
+#: app/views/menu.html:27
 msgid "New project"
 msgstr "Nuevo proyecto"
 
@@ -372,23 +372,23 @@ msgstr "Nuevo proyecto {{name}} creado"
 msgid "OK"
 msgstr "OK"
 
-#: app/views/menu.html:29
+#: app/views/menu.html:30
 msgid "Open project"
 msgstr "Abrir proyecto"
 
-#: app/scripts/services/common.service.js:155
+#: app/scripts/services/common.service.js:156
 msgid "Original file {{file}} does not exist"
 msgstr "El archivo original {{file}} no existe"
 
-#: app/views/menu.html:290
+#: app/views/menu.html:291
 msgid "Output"
 msgstr "Salida"
 
-#: app/scripts/services/common.service.js:202
+#: app/scripts/services/common.service.js:203
 msgid "PCF file exported"
 msgstr "Fichero PCF exportado"
 
-#: app/views/menu.html:116
+#: app/views/menu.html:117
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -396,7 +396,7 @@ msgstr "Preferencias"
 msgid "Project {{name}} loaded"
 msgstr "Proyecto {{name}} cargado"
 
-#: app/scripts/services/common.service.js:67
+#: app/scripts/services/common.service.js:68
 msgid "Project {{name}} saved"
 msgstr "Proyecto {{name}} guardado"
 
@@ -412,39 +412,39 @@ msgstr "Solo lectura"
 msgid "Remote host {{name}} not connected"
 msgstr "Host remoto {{name}} no conectado"
 
-#: app/views/menu.html:124
+#: app/views/menu.html:125
 msgid "Remote hostname"
 msgstr "Nombre del host remoto"
 
-#: app/views/menu.html:222
+#: app/views/menu.html:223
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/views/menu.html:109
+#: app/views/menu.html:110
 msgid "Remove selected"
 msgstr "Eliminar seleccionado"
 
-#: app/views/menu.html:227
+#: app/views/menu.html:228
 msgid "Reset default"
 msgstr "Reset default"
 
-#: app/views/menu.html:102
+#: app/views/menu.html:103
 msgid "Reset view"
 msgstr "Resetear vista"
 
-#: app/views/menu.html:65
+#: app/views/menu.html:66
 msgid "Save"
 msgstr "Guardar"
 
-#: app/views/menu.html:68
+#: app/views/menu.html:69
 msgid "Save as"
 msgstr "Guardar como"
 
-#: app/views/menu.html:266
+#: app/views/menu.html:267
 msgid "Source code"
 msgstr "Código fuente"
 
-#: app/views/menu.html:140
+#: app/views/menu.html:141
 msgid "Spanish"
 msgstr "Español"
 
@@ -452,19 +452,19 @@ msgstr "Español"
 msgid "Synchronize remote files ..."
 msgstr "Sincronizando ficheros remotos ..."
 
-#: app/views/menu.html:49
+#: app/views/menu.html:50
 msgid "Templates"
 msgstr "Plantillas"
 
-#: app/views/menu.html:88
+#: app/views/menu.html:89
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/scripts/services/common.service.js:212
+#: app/scripts/services/common.service.js:213
 msgid "Testbench exported"
 msgstr "Testbench exportado"
 
-#: app/scripts/controllers/menu.js:408
+#: app/scripts/controllers/menu.js:379
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -472,7 +472,7 @@ msgstr ""
 "La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la "
 "placa {{name}}?"
 
-#: app/scripts/controllers/menu.js:116 app/scripts/controllers/menu.js:93
+#: app/scripts/controllers/menu.js:103 app/scripts/controllers/menu.js:126
 msgid ""
 "The current project will be removed. Do you want to continue loading the "
 "project?"
@@ -495,7 +495,7 @@ msgstr ""
 "La toolchain será actualizada. Esta operación requiere conexión a Internet. "
 "¿Deseas continuar?"
 
-#: app/scripts/services/common.service.js:94
+#: app/scripts/services/common.service.js:95
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -503,7 +503,7 @@ msgstr ""
 "Esta operación de importación requiere una ruta del proyecto. Debes guardar "
 "el proyecto actual. ¿Deseas continuar?"
 
-#: app/views/menu.html:210
+#: app/views/menu.html:211
 msgid "Toolchain"
 msgstr "Toolchain"
 
@@ -525,7 +525,7 @@ msgstr "La toolchain no está instalada. Por favor, instala la toolchain"
 msgid "Toolchain removed"
 msgstr "Toolchain eliminada"
 
-#: app/views/menu.html:197
+#: app/views/menu.html:198
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -533,39 +533,39 @@ msgstr "Herramientas"
 msgid "Unknown board"
 msgstr "Placa desconocida"
 
-#: app/views/menu.html:217
+#: app/views/menu.html:218
 msgid "Update"
 msgstr "Actualizar"
 
-#: app/scripts/services/graph.service.js:280
+#: app/scripts/services/graph.service.js:292
 msgid "Update the port label"
 msgstr "Actualizar la etiqueta del puerto"
 
-#: app/views/menu.html:206
+#: app/views/menu.html:207
 msgid "Upload"
 msgstr "Cargar"
 
-#: app/views/menu.html:200
+#: app/views/menu.html:201
 msgid "Verify"
 msgstr "Verificar"
 
-#: app/scripts/services/common.service.js:192
+#: app/scripts/services/common.service.js:193
 msgid "Verilog code exported"
 msgstr "Código Verilog exportado"
 
-#: app/views/menu.html:259
+#: app/views/menu.html:260
 msgid "Version"
 msgstr "Versión"
 
-#: app/views/menu.html:170
+#: app/views/menu.html:171
 msgid "View"
 msgstr "Ver"
 
-#: app/views/menu.html:256
+#: app/views/menu.html:257
 msgid "View license"
 msgstr "Ver licencia"
 
-#: app/scripts/services/graph.service.js:578
+#: app/scripts/services/graph.service.js:593
 msgid "Wrong block format: {{type}}"
 msgstr "Formato de bloque incorrecto: {{type}}"
 
@@ -736,7 +736,7 @@ msgstr "Biestable T"
 msgid "tri_state"
 msgstr "Tri-estado"
 
-#: app/scripts/app.js:38 app/scripts/controllers/menu.js:73
+#: app/scripts/app.js:38 app/scripts/controllers/menu.js:83
 msgid "untitled"
 msgstr "Sin título"
 
@@ -749,6 +749,17 @@ msgstr "Xnor"
 #: app/resources/blocks/labels.js:46
 msgid "xor"
 msgstr "Xor"
+
+#: app/scripts/controllers/menu.js:370
+msgid "{{board}} datasheet not defined"
+msgstr "{{board}} datasheet no definido"
+
+#: app/scripts/controllers/menu.js:360
+msgid "{{board}} pinout not defined"
+msgstr "{{board}} pinout no definido"
+
+#~ msgid "Datasheet not defined"
+#~ msgstr "Datasheet no definido"
 
 #~ msgid "comb"
 #~ msgstr "Comb"
