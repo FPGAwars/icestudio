@@ -16,9 +16,12 @@ Install the toolchain
 
   Go to **Tools > Toolchain > Install**. Be patient for the toolchain installation.
 
+  .. image:: ../resources/images/howto/installtoolchain.png
+
+|
 .. note::
 
-  When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**
+  When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**. Also, the toolchain can be restored to default in **Tools > Toolchain > Reset default**.
 
 Update the toolchain
 ---------------------
@@ -57,9 +60,13 @@ Create a project
 
  1. *Code blocks*
 
-    Click on **Basic > Code**, add the code ports. Input and output ports are separated by a space. Port names are separated by a comma. E.g.: ``a,b c``.
+    Click on **Basic > Code**, add the code ports. Port names are separated by a comma. E.g.: ``a, b``.
 
-    This block contains a text editor to write your module verilog code. Module header and footer are not required.
+    .. image:: ../resources/images/howto/code-prompt.png
+
+    |
+
+    This block contains a text editor to write your module in verilog code. Module header and footer are not required.
 
     .. image:: ../resources/images/howto/code.png
 
@@ -97,9 +104,9 @@ Create a project
 
  5. *Config block*
 
-    Click on **Config > Pull up** or **Config > Pull up inv**.
+    Click on **Config > Pull up / Pull up inv / Tri-state**.
 
-    This block must be connected to input ports in order to configure a pull up.
+    The *Pull up* block must be connected to input ports in order to configure a pull up in the FPGA.
 
     .. image:: ../resources/images/howto/config.png
 
@@ -125,7 +132,7 @@ Create a project
 
 4. **Select your board**
 
-   Go to **Boards** menu and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra** or **icoBOARD 1.0**.
+   Go to **Boards** menu and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra**, **icoBOARD 1.0** or **Kéfir I**.
 
    .. image:: ../resources/images/howto/board.png
 
@@ -187,14 +194,6 @@ Upload a bitstream
 
    |
 
-
-.. note::
-
-  If the FPGA toolchain is not installed, it will be installed automatically when any tool is pressed. It can also be installed or removed in the menu **Tools** section.
-
-  .. image:: ../resources/images/howto/installtoolchain.png
-
-  |
 
 Create a block
 --------------
