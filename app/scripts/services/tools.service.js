@@ -257,7 +257,7 @@ angular.module('icestudio')
               gettext('done_upload');
               var message = 'done_' + label;
               alertify.success(gettextCatalog.getString(message));
-              if (stdout) {
+              if ((label == 'build') && stdout) {
                 // Show used resources in the FPGA
                 /*
                 PIOs       0 / 96
