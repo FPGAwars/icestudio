@@ -370,6 +370,7 @@ angular.module('icestudio')
               boards.selectBoard(board.name);
               graph.resetIOChoices();
               alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
+              $scope.$apply();
           });
         }
         else {
