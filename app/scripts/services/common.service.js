@@ -57,6 +57,7 @@ angular.module('icestudio')
           else {
             alertify.notify(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 'error', 30);
           }
+          $rootScope.$apply();
         };
 
         this.saveProject = function(filepath) {
