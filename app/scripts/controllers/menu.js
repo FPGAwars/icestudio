@@ -348,7 +348,7 @@ angular.module('icestudio')
         focus: true,
         toolbar: false,
         resizable: true,
-        width: 500,
+        width: 450,
         height: 700,
         icon: 'resources/images/icestudio-logo.png'
       });
