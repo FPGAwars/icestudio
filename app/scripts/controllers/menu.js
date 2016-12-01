@@ -6,6 +6,7 @@ angular.module('icestudio')
                                     $timeout,
                                     nodeLangInfo,
                                     nodeFs,
+                                    nodePath,
                                     common,
                                     graph,
                                     tools,
@@ -343,23 +344,30 @@ angular.module('icestudio')
     }
 
     $scope.showPinout = function() {
-      gui.Window.open('resources/viewers/svg/pinout.html?board=' + boards.selectedBoard.name, {
-        title: boards.selectedBoard.info.label + ' - Pinout',
-        focus: true,
-        toolbar: false,
-        resizable: true,
-        width: 450,
-        height: 700,
-        icon: 'resources/images/icestudio-logo.png'
-      });
+      var board = boards.selectedBoard;
+      if (nodeFs.existsSync(nodePath.join('resources', 'boards', board.name, 'pinout.svg'))) {
+        gui.Window.open('resources/viewers/svg/pinout.html?board=' + board.name, {
+          title: boards.selectedBoard.info.label + ' - Pinout',
+          focus: true,
+          toolbar: false,
+          resizable: true,
+          width: 500,
+          height: 700,
+          icon: 'resources/images/icestudio-logo.png'
+        });
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 'warning', 5);
+      }
     }
 
     $scope.showDatasheet = function() {
-      if (boards.selectedBoard.info.datasheet) {
-        gui.Shell.openExternal(boards.selectedBoard.info.datasheet);
+      var board = boards.selectedBoard;
+      if (board.info.datasheet) {
+        gui.Shell.openExternal(board.info.datasheet);
       }
       else {
-        alertify.notify(gettextCatalog.getString('Datasheet not defined'), 'error', 30);
+        alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
       }
     }
 
