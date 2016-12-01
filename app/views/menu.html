@@ -4,6 +4,7 @@
 
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.ice"/>
+    <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + common.projectName }}.png"/>
 
     <input id="input-import-block" type="file" accept=".iceb" class="hidden" multiple/>
     <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.iceb"/>
@@ -13,257 +14,312 @@
     <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.v"/>
     <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.gtkw"/>
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
 
-        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+      <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
 
-            <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav">
 
-                <li uib-dropdown ng-mouseover="showMenu('file')" ng-mouseleave="hideMenu('file')" is-open="status.file">
-                    <a href uib-dropdown-toggle>{{ 'file' | translate }}<span class="caret"></span></a>
+          <li uib-dropdown ng-mouseover="showMenu('file')" ng-mouseleave="hideMenu('file')" is-open="status.file">
+            <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
+            <ul uib-dropdown-menu>
+              <li>
+                <a href ng-click="newProject()">{{ 'New project' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="openProject()">{{ 'Open project' | translate }}</a>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
+                <ul uib-dropdown-menu
+                    ng-repeat="boardExamples in examples"
+                    ng-if="boardExamples.name == boards.selectedBoard.name">
+                  <li class="dropdown-submenu" ng-repeat="example in boardExamples.children">
+                    <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
+                    <ul uib-dropdown-menu>
+                      <li ng-repeat="child in example.children">
+                        <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
+                        {{ child.name | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Templates' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li class="dropdown-submenu" ng-repeat="template in templates" ng-if="template.children">
+                    <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
+                    <ul uib-dropdown-menu>
+                      <li ng-repeat="child in template.children">
+                        <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
+                          {{ child.name | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="saveProject()">{{ 'Save' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="importBlock()">{{ 'Import block' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="exportAsBlock()">{{ 'Export as block' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Export' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li>
+                    <a href ng-click="exportVerilog()">{{ 'Verilog' }}</a>
+                  </li>
+                  <li>
+                    <a href ng-click="exportPCF()">{{ 'PCF' }}</a>
+                  </li>
+                  <li>
+                    <a href ng-click="exportTestbench()">{{ 'Testbench' | translate }}</a>
+                  </li>
+                  <li>
+                    <a href ng-click="exportGTKwave()">{{ 'GTKWave' }}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" is-open="status.edit">
+            <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li>
+                <a href ng-click="resetState()">{{ 'Reset view' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="cloneSelected()">{{ 'Clone selected' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="removeSelected()">{{ 'Remove selected' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="clearGraph()">{{ 'Clear all' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Preferences' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li>
+                    <a href ng-click="setImagePath()">{{ 'Image path' | translate }}</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href ng-click="setRemoteHostname()">
+                      {{ 'Remote hostname' | translate }}
+                      <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
                     <ul uib-dropdown-menu>
                       <li>
-                        <a href ng-click="newProject()">{{ 'new_project' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="openProject()">{{ 'open_project' | translate }}</a>
-                      </li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>{{ 'examples' | translate }}</a>
-                        <ul uib-dropdown-menu>
-                           <li class="dropdown-submenu" ng-repeat="example in examples" ng-if="example.children">
-                             <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
-                             <ul uib-dropdown-menu>
-                               <li ng-repeat="child in example.children">
-                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
-                                 {{ child.name | translate }}
-                                 </a>
-                               </li>
-                             </ul>
-                           </li>
-                         </ul>
-                      </li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>{{ 'templates' | translate }}</a>
-                        <ul uib-dropdown-menu>
-                           <li class="dropdown-submenu" ng-repeat="template in templates" ng-if="template.children">
-                             <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
-                             <ul uib-dropdown-menu>
-                               <li ng-repeat="child in template.children">
-                                 <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
-                                 {{ child.name | translate }}
-                                 </a>
-                               </li>
-                             </ul>
-                           </li>
-                         </ul>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="saveProject()">{{ 'save' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="saveProjectAs()">{{ 'save_as' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="importBlock()">{{ 'import_block' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportAsBlock()">{{ 'export_as_block' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="exportVerilog()">{{ 'export_verilog' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportPCF()">{{ 'export_pcf' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportTestbench()">{{ 'export_testbench' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="exportGTKwave()">{{ 'export_gtkwave' | translate }}</a>
-                      </li>
-                    </ul>
-                </li>
-
-                <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" is-open="status.edit">
-                    <a href uib-dropdown-toggle>{{ 'edit' | translate }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
-                        <a href ng-click="cloneSelected()">{{ 'clone_selected' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="removeSelected()">{{ 'remove_selected' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="clearGraph()">{{ 'clear_all' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="setImagePath()">{{ 'image_path' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="setRemoteHostname()">
-                          {{ 'remote_hostname' | translate }}
-                          <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
+                        <a href ng-click="selectLanguage('en')">
+                          {{ 'English' | translate }}
+                          <span ng-show="profile.data.language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
-                      <li class="divider"></li>
-                      <li class="dropdown-submenu" uib-dropdown>
-                        <a href uib-dropdown-toggle>{{ 'language' | translate }}</a>
-                        <ul uib-dropdown-menu>
-                          <li>
-                            <a href ng-click="selectLanguage('en')">
-                              {{ 'english' | translate }}
-                              <span ng-show="profile.data.language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href ng-click="selectLanguage('es-ES')">
-                              {{ 'spanish' | translate }}
-                              <span ng-show="profile.data.language == 'es-ES'" class="glyphicon glyphicon-ok-circle"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href ng-click="selectLanguage('gl')">
-                              {{ 'galician' | translate }}
-                              <span ng-show="profile.data.language == 'gl'" class="glyphicon glyphicon-ok-circle"></span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href ng-click="selectLanguage('eu')">
-                              {{ 'basque' | translate }}
-                              <span ng-show="profile.data.language == 'eu'" class="glyphicon glyphicon-ok-circle"></span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                </li>
-
-                <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu('view')" is-open="status.view">
-                    <a href uib-dropdown-toggle>{{ 'view' | translate }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
                       <li>
-                        <a href ng-click="resetState()">{{ 'reset_view' | translate }}</a>
+                        <a href ng-click="selectLanguage('es_ES')">
+                          {{ 'Spanish' | translate }}
+                          <span ng-show="profile.data.language == 'es_ES'" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
                       </li>
-                    </ul>
-                </li>
-
-                <li uib-dropdown ng-mouseover="showMenu('boards')" ng-mouseleave="hideMenu('boards')" is-open="status.boards">
-                    <a href uib-dropdown-toggle>{{ 'boards' | translate }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li ng-repeat="board in currentBoards">
-                        <a href ng-click="selectBoard(board)">
-                          {{ board.content.label }}
-                          <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
+                      <li>
+                        <a href ng-click="selectLanguage('gl_ES')">
+                          {{ 'Galician' | translate }}
+                          <span ng-show="profile.data.language == 'gl_ES'" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href ng-click="selectLanguage('eu_ES')">
+                          {{ 'Basque' | translate }}
+                          <span ng-show="profile.data.language == 'eu_ES'" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href ng-click="selectLanguage('fr_FR')">
+                          {{ 'French' | translate }}
+                          <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                     </ul>
-                </li>
-
-                <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu('tools')" is-open="status.tools">
-                    <a href uib-dropdown-toggle>{{ 'tools' | translate }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li>
-                        <a href ng-click="verifyCode()">{{ 'verify' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="buildCode()">{{ 'build' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="uploadCode()">{{ 'upload' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="installToolchain()">{{ toolchain.installed ? 'upgrade_toolchain' : 'install_toolchain' | translate }}</a>
-                      </li>
-                      <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                        <a href ng-click="removeToolchain()">{{ 'remove_toolchain' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <li>
-                          <a href ng-click="enableDrivers()">{{ 'enable_drivers' | translate }}
-                          </a>
-                        </li>
-                      <li>
-                        <a href ng-click="disableDrivers()">{{ 'disable_drivers' | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                </li>
-
-                <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu('help')" is-open="status.help">
-                    <a href uib-dropdown-toggle>{{ 'help' | translate }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                      <li disabled>
-                        <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'view_license' | translate }}</a>
-                      </li>
-                      <li class="disabled">
-                        <a href>{{ 'version' | translate }} {{ version }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="openUrl('http://icestudio.readthedocs.io')">{{ 'documentation' | translate }}</a>
-                      </li>
-                      <li>
-                        <a href ng-click="openUrl('https://github.com/FPGAwars/icestudio')">{{ 'source_code' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="openUrl('https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre')">{{ 'community_forum' | translate }}</a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href ng-click="about()">{{ 'about_icestudio' | translate }}</a>
-                      </li>
-                    </ul>
-                </li>
-
+                  </li>
+                </ul>
+              </li>
             </ul>
+          </li>
 
-            <ul class="nav navbar-nav navbar-right">
-
-                <li uib-dropdown ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" is-open="status.basic">
-                  <a href uib-dropdown-toggle>{{ 'basic' | translate }}<span class="caret"></span></a>
-                  <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li>
-                      <a href ng-click="common.addBlock('basic.code')">{{ 'code' | translate }}</a>
-                      <a href ng-click="common.addBlock('basic.info')">{{ 'info' | translate }}</a>
-                      <a href ng-click="common.addBlock('basic.input')">{{ 'input' | translate }}</a>
-                      <a href ng-click="common.addBlock('basic.output')">{{ 'output' | translate }}</a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li uib-dropdown ng-repeat="blocks in menuBlocks" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
-                  <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
-                  <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
-                      <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
-                        {{ block.name | translate }}
-                      </a>
-                      <a href uib-dropdown-toggle ng-if="block.children">
-                        {{ block.name | translate }}
-                      </a>
-                      <ul uib-dropdown-menu ng-if="block.children">
-                        <li ng-repeat="sblock in block.children">
-                          <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
-                            {{ sblock.name | translate }}
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-
+          <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu('view')" is-open="status.view">
+            <a href uib-dropdown-toggle>{{ 'View' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li>
+                <a href ng-click="showPCF()">{{ 'PCF' }}</a>
+              </li>
+              <li>
+                <a href ng-click="showPinout()">{{ 'Pinout' }}</a>
+              </li>
+              <li>
+                <a href ng-click="showDatasheet()">{{ 'Datasheet' | translate }}</a>
+              </li>
             </ul>
+          </li>
 
-        </div>
+          <li uib-dropdown ng-mouseover="showMenu('boards')" ng-mouseleave="hideMenu('boards')" is-open="status.boards">
+            <a href uib-dropdown-toggle>{{ 'Boards' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li ng-repeat="board in currentBoards">
+                <a href ng-click="selectBoard(board)">
+                  {{ board.info.label }}
+                  <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu('tools')" is-open="status.tools">
+            <a href uib-dropdown-toggle>{{ 'Tools' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li>
+                <a href ng-click="verifyCode()">{{ 'Verify' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="buildCode()">{{ 'Build' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="uploadCode()">{{ 'Upload' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li ng-class="toolchain.disabled ? 'disabled' : ''">
+                    <a href ng-hide="toolchain.installed" ng-click="installToolchain()">
+                      {{ 'Install' | translate }}
+                    </a>
+                    <a href ng-show="toolchain.installed" ng-click="updateToolchain()">
+                      {{ 'Update' | translate }}
+                    </a>
+                  </li>
+                  <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
+                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : removeToolchain()">
+                      {{ 'Remove' | translate }}
+                    </a>
+                  </li>
+                  <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
+                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : resetToolchain()">
+                      {{ 'Reset default' | translate }}
+                    </a>
+                  </li>
+                  <li class="divider" ng-show="toolchain.installed"></li>
+                  <li class="disabled" ng-show="toolchain.installed">
+                    <a href>{{ 'Apio ' + toolchain.apio }}</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li>
+                    <a href ng-click="enableDrivers()">{{ 'Enable' | translate }}
+                    </a>
+                  </li>
+                  <li>
+                    <a href ng-click="disableDrivers()">{{ 'Disable' | translate }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu('help')" is-open="status.help">
+            <a href uib-dropdown-toggle>{{ 'Help' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li disabled>
+                <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'View license' | translate }}</a>
+              </li>
+              <li class="disabled">
+                <a href>{{ 'Version' | translate }} {{ version }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="openUrl('http://icestudio.readthedocs.io')">{{ 'Documentation' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="openUrl('https://github.com/FPGAwars/icestudio')">{{ 'Source code' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="openUrl('https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre')">{{ 'Community forum' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="about()">{{ 'About Icestudio' | translate }}</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+          <li uib-dropdown ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" is-open="status.basic">
+            <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li>
+                <a href ng-click="common.addBlock('basic.code')">{{ 'Code' | translate }}</a>
+                <a href ng-click="common.addBlock('basic.info')">{{ 'Info' | translate }}</a>
+                <a href ng-click="common.addBlock('basic.input')">{{ 'Input' | translate }}</a>
+                <a href ng-click="common.addBlock('basic.output')">{{ 'Output' | translate }}</a>
+              </li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-repeat="blocks in menuBlocks" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
+            <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
+                <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
+                  {{ block.name | translate }}
+                </a>
+                <a href uib-dropdown-toggle ng-if="block.children">
+                  {{ block.name | translate }}
+                </a>
+                <ul uib-dropdown-menu ng-if="block.children">
+                  <li ng-repeat="sblock in block.children">
+                    <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
+                      {{ sblock.name | translate }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+
+      </div>
+
     </nav>
+
   </div>
+
 </div>

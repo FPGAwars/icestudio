@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', '$translate', 'nodeFs', 'joint', 'boards', 'nodeSha1',
-      function($rootScope, $translate, nodeFs, joint, boards, nodeSha1) {
+    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'utils',
+      function($rootScope, gettextCatalog, nodeFs, joint, boards, utils) {
 
         // Variables
 
@@ -57,6 +57,10 @@ angular.module('icestudio')
         }
 
         function setGrid(paper, size, offset) {
+
+          // TODO: draw grid in a SVG because 'background' truncates the parameters
+
+          /*
           // Set grid size on the JointJS paper object (joint.dia.Paper instance)
           paper.options.gridsize = gridsize;
           // Draw a grid into the HTML 5 canvas and convert it to a data URI image
@@ -76,7 +80,7 @@ angular.module('icestudio')
           if(typeof(offset) != 'undefined'){
             $(paper.el.childNodes[0]).css(
               'background-position', offset.x + 'px ' + offset.y + 'px');
-          }
+          }*/
         }
 
         this.createPaper = function(element) {
@@ -103,8 +107,13 @@ angular.module('icestudio')
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' &&
-                  magnetT.getAttribute('type') == 'output')
+                  magnetT.getAttribute('type') == 'output') {
+                if (magnetS !== magnetT){
+                  // Show warning if source and target blocks are different
+                  warning(gettextCatalog.getString('Invalid connection'));
+                }
                 return false;
+              }
               var links = graph.getLinks();
               for (var i in links) {
                 var linkIView = links[i].findView(paper);
@@ -115,25 +124,32 @@ angular.module('icestudio')
                 // Prevent multiple input links
                 if ((cellViewT.model.id == links[i].get('target').id) &&
                     (magnetT.getAttribute('port') == links[i].get('target').port)) {
+                  warning(gettextCatalog.getString('Invalid multiple input connections'));
                   return false;
                 }
                 // Prevent to connect a pull-up if other blocks are connected
                 if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
                      cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
+                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
                   return false;
                 }
                 // Prevent to connect other blocks if a pull-up is connected
                 if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
                      linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
                      (cellViewS.model.id == links[i].get('source').id)) {
+                  warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
                   return false;
                 }
               }
               // Ensure input -> pull-up connections
               if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
                   cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
-                return (cellViewS.model.attributes.blockType == 'basic.input');
+                var ret = (cellViewS.model.attributes.blockType == 'basic.input');
+                if (!ret) {
+                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
+                }
+                return ret;
               }
               // Prevent loop links
               return magnetS !== magnetT;
@@ -141,6 +157,17 @@ angular.module('icestudio')
           });
 
           paper.options.enabled = true;
+          paper.options.warningTimer = false;
+
+          function warning(message) {
+            if (!paper.options.warningTimer) {
+              paper.options.warningTimer = true;
+              alertify.notify(message, 'warning', 5);
+              setTimeout(function() {
+                paper.options.warningTimer = false;
+              }, 4000);
+            }
+          };
 
           setGrid(paper, gridsize * 2);
 
@@ -153,7 +180,7 @@ angular.module('icestudio')
             center: false,
             zoomEnabled: true,
             panEnabled: false,
-            zoomScaleSensitivity: 0.2,
+            zoomScaleSensitivity: 0.1,
             dblClickZoomEnabled: false,
             minZoom: 0.2,
             maxZoom: 2,
@@ -196,6 +223,8 @@ angular.module('icestudio')
 
          // Events
 
+         var self = this;
+
          selectionView.on('selection-box:pointerdown', function(evt) {
            // Selection to top view
            if (selection) {
@@ -230,6 +259,14 @@ angular.module('icestudio')
                    selectionView.createSelectionBox(cellView);
                    cellView.$box.removeClass('highlight');
                  }
+                 // Update wires on obstacles
+                 var cells = graph.getCells();
+                 for (var i in cells) {
+                   var cell = cells[i];
+                   if (cell.isLink()) {
+                     paper.findViewByModel(cell).update();
+                   }
+                 }
                }
              }
            }
@@ -247,83 +284,74 @@ angular.module('icestudio')
             }
           );
 
-          paper.on('cell:pointerdblclick',
-            (function(_this) {
-              return function(cellView, evt, x, y) {
-                var data = cellView.model.attributes;
-                if (data.blockType == 'basic.input' ||
-                    data.blockType == 'basic.output') {
-                  if (paper.options.enabled) {
-                    alertify.prompt($translate.instant('enter_block_label'), data.data.label,
-                      function(evt, label) {
-                        data.data.label = label;
-                        cellView.renderLabel();
-                        alertify.success($translate.instant('label_updated'));
-                    });
-                  }
-                }
-                else if (data.blockType == 'basic.code') {
-                  if (paper.options.enabled) {
-                    var block = {
-                      data: {
-                        code: _this.getContent(cellView.model.id)
-                      },
-                      position: cellView.model.attributes.position
-                    };
-                    _this.createBlock('basic.code', block, function() {
-                      cellView.model.remove();
-                    });
-                  }
-                }
-                else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
-                  _this.breadcrumbs.push({ name: data.blockType });
-                  if(!$rootScope.$$phase) {
-                    $rootScope.$apply();
-                  }
-                  var disabled = true;
-                  zIndex = 1;
-                  if (_this.breadcrumbs.length == 2) {
-                    $rootScope.$broadcast('refreshProject', function() {
-                      _this.loadGraph(dependencies[data.blockType], disabled);
-                      _this.appEnable(false);
-                    });
-                  }
-                  else {
-                    _this.loadGraph(dependencies[data.blockType], disabled);
-                    _this.appEnable(false);
-                  }
-                }
+          paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+            var data = cellView.model.attributes;
+            if (data.blockType == 'basic.input' ||
+                data.blockType == 'basic.output') {
+              if (paper.options.enabled) {
+                alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
+                  function(evt, label) {
+                    label = label.replace(/ /g, '');
+                    if (data.data.label != label) {
+                      data.data.label = label;
+                      cellView.renderLabel();
+                      alertify.success(gettextCatalog.getString('Label updated'));
+                    }
+                });
               }
-            })(this)
-          );
-
-          paper.on('blank:pointerdown',
-            (function(_this) {
-              return function(evt, x, y) {
-                // Disable current focus
-                document.activeElement.blur();
-
-                if (evt.which == 3) {
-                  // Right button
-                  if (paper.options.enabled) {
-                    selectionView.startSelecting(evt, x, y);
-                  }
-                }
-                else if (evt.which == 1) {
-                  // Left button
-                  _this.panAndZoom.enablePan();
-                }
+            }
+            else if (data.blockType == 'basic.code') {
+              if (paper.options.enabled) {
+                var block = {
+                  data: {
+                    code: self.getContent(cellView.model.id)
+                  },
+                  position: cellView.model.attributes.position
+                };
+                self.createBlock('basic.code', block, function() {
+                  cellView.model.remove();
+                });
               }
-            })(this)
-          );
-
-          paper.on('cell:pointerup blank:pointerup',
-            (function(_this) {
-              return function(cellView, evt) {
-                _this.panAndZoom.disablePan();
+            }
+            else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
+              self.breadcrumbs.push({ name: data.blockType });
+              if(!$rootScope.$$phase) {
+                $rootScope.$apply();
               }
-            })(this)
-          );
+              var disabled = true;
+              zIndex = 1;
+              if (self.breadcrumbs.length == 2) {
+                $rootScope.$broadcast('refreshProject', function() {
+                  self.loadGraph(dependencies[data.blockType], disabled);
+                  self.appEnable(false);
+                });
+              }
+              else {
+                self.loadGraph(dependencies[data.blockType], disabled);
+                self.appEnable(false);
+              }
+            }
+          });
+
+          paper.on('blank:pointerdown', function(evt, x, y) {
+            // Disable current focus
+            document.activeElement.blur();
+
+            if (evt.which == 3) {
+              // Right button
+              if (paper.options.enabled) {
+                selectionView.startSelecting(evt, x, y);
+              }
+            }
+            else if (evt.which == 1) {
+              // Left button
+              self.panAndZoom.enablePan();
+            }
+          });
+
+          paper.on('cell:pointerup blank:pointerup', function(cellView, evt) {
+            self.panAndZoom.disablePan();
+          });
 
           paper.on('cell:mouseover',
             function(cellView, evt) {
@@ -344,13 +372,13 @@ angular.module('icestudio')
           graph.on('change:position', function(cell) {
             if (!selectionView.isTranslating()) {
               // Update wires on obstacles motion
-              var cells = graph.getCells();
+              /*var cells = graph.getCells();
               for (var i in cells) {
                 var cell = cells[i];
                 if (cell.isLink()) {
                   paper.findViewByModel(cell).update();
                 }
-              }
+              }*/
             }
           });
         };
@@ -366,13 +394,13 @@ angular.module('icestudio')
           paper.options.enabled = value;
           if (value) {
             angular.element('#menu').removeClass('disable-menu');
-            angular.element('#paper').css('opacity', '1.0');
-            angular.element('#read-only-banner').addClass('hidden');
+            angular.element('#paper').removeClass('disable-paper');
+            angular.element('#banner').addClass('hidden');
           }
           else {
             angular.element('#menu').addClass('disable-menu');
-            angular.element('#paper').css('opacity', '0.7');
-            angular.element('#read-only-banner').removeClass('hidden');
+            angular.element('#paper').addClass('disable-paper');
+            angular.element('#banner').removeClass('hidden');
           }
           var cells = graph.getCells();
           for (var i in cells) {
@@ -406,9 +434,13 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
-            alertify.prompt($translate.instant('enter_block_ports'), 'a,b c',
+            utils.multiprompt(
+              [ gettextCatalog.getString('Enter the input ports'),
+                gettextCatalog.getString('Enter the output ports') ],
+              [ ' a , b ',
+                ' c , d ' ],
               function(evt, ports) {
-                if (ports) {
+                if (ports && (ports[0].length || ports[1].length)) {
                   blockInstance.data = {
                     code: '',
                     ports: { in: [], out: [] }
@@ -416,11 +448,11 @@ angular.module('icestudio')
                   // Parse ports
                   var inPorts = [];
                   var outPorts = [];
-                  if (ports.split(' ').length > 0) {
-                    inPorts = ports.split(' ')[0].split(',');
+                  if (ports.length > 0) {
+                    inPorts = ports[0].replace(/ /g, '').split(',');
                   }
-                  if (ports.split(' ').length > 1) {
-                    outPorts = ports.split(' ')[1].split(',');
+                  if (ports.length > 1) {
+                    outPorts = ports[1].replace(/ /g, '').split(',');
                   }
 
                   for (var i in inPorts) {
@@ -461,10 +493,10 @@ angular.module('icestudio')
             }
           }
           else if (type == 'basic.input') {
-            alertify.prompt($translate.instant('enter_block_label'), 'i',
+            alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' in ',
               function(evt, name) {
                 if (name) {
-                  var names = name.split(' ');
+                  var names = name.replace(/ /g, '').split(',');
                   for (var n in names) {
                     if (names[n]) {
                       blockInstance.data = {
@@ -484,7 +516,7 @@ angular.module('icestudio')
                   }
                 }
                 else {
-                  blockInstance.data = {
+                  /*blockInstance.data = {
                     label: '',
                     pin: {
                       name: '',
@@ -496,15 +528,15 @@ angular.module('icestudio')
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
                   }
-                  blockInstance.position.y += 10 * gridsize;
+                  blockInstance.position.y += 10 * gridsize;*/
                 }
             });
           }
           else if (type == 'basic.output') {
-            alertify.prompt($translate.instant('enter_block_label'), 'o',
+            alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' out ',
               function(evt, name) {
                 if (name) {
-                  var names = name.split(' ');
+                  var names = name.replace(/ /g, '').split(',');
                   blockInstance.position.x = 95 * gridsize;
                   for (var n in names) {
                     if (names[n]) {
@@ -525,7 +557,7 @@ angular.module('icestudio')
                   }
                 }
                 else {
-                  blockInstance.position.x = 95 * gridsize;
+                  /*blockInstance.position.x = 95 * gridsize;
                   blockInstance.data = {
                     label: '',
                     pin: {
@@ -538,7 +570,7 @@ angular.module('icestudio')
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
                   }
-                  blockInstance.position.y += 10 * gridsize;
+                  blockInstance.position.y += 10 * gridsize;*/
                 }
             });
           }
@@ -558,7 +590,7 @@ angular.module('icestudio')
               }
             }
             else {
-              alertify.error($translate.instant('wrong_block_format', { type: type }));
+              alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
             }
           }
         };
@@ -588,32 +620,30 @@ angular.module('icestudio')
         }
 
         this.cloneSelected = function() {
+          var self = this;
           if (selection) {
-            selection.each((function(_this) {
-              return function(cell) {
-                var newCell = cell.clone();
-                var type = cell.attributes.blockType;
-                var content = _this.getContent(cell.id);
-                if (type == 'basic.code') {
-                  newCell.attributes.data.code = content;
-                }
-                else if (type == 'basic.info') {
-                  newCell.attributes.data.info = content;
-                }
-                newCell.translate(6 * gridsize, 6 * gridsize);
-                addCell(newCell);
-                if (type == 'config.pull_up' ||
-                    type == 'config.pull_up_inv') {
-                  paper.findViewByModel(newCell).$box.addClass('config-block');
-                }
-                var cellView = paper.findViewByModel(newCell);
-                if (cellView.$box.css('z-index') < zIndex) {
-                  cellView.$box.css('z-index', ++zIndex);
-                }
-                selection.reset(selection.without(cell));
-                selectionView.cancelSelection();
-              };
-            })(this));
+            selection.each(function(cell) {
+              var newCell = cell.clone();
+              var type = cell.attributes.blockType;
+              var content = self.getContent(cell.id);
+              if (type == 'basic.code') {
+                newCell.attributes.data.code = content;
+              }
+              else if (type == 'basic.info') {
+                newCell.attributes.data.info = content;
+              }
+              newCell.translate(6 * gridsize, 6 * gridsize);
+              addCell(newCell);
+              if (type.indexOf('config.') != -1) {
+                paper.findViewByModel(newCell).$box.addClass('config-block');
+              }
+              var cellView = paper.findViewByModel(newCell);
+              if (cellView.$box.css('z-index') < zIndex) {
+                cellView.$box.css('z-index', ++zIndex);
+              }
+              selection.reset(selection.without(cell));
+              selectionView.cancelSelection();
+            });
           }
         }
 
@@ -859,8 +889,7 @@ angular.module('icestudio')
 
           addCell(cell);
 
-          if (blockInstance.type == 'config.pull_up' ||
-              blockInstance.type == 'config.pull_up_inv') {
+          if (blockInstance.type.indexOf('config.') != -1) {
             paper.findViewByModel(cell).$box.addClass('config-block');
           }
 

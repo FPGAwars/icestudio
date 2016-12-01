@@ -42,4 +42,10 @@ angular.module('icestudio')
   })
   .factory('nodeOnline', function() {
     return require('is-online');
+  })
+  .factory('nodeGlob', function() {
+    return require('glob');
+  })
+  .factory('nodeLangInfo', function() {
+    return require('node-lang-info');
   });

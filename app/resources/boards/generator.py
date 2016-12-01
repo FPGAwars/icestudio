@@ -6,6 +6,7 @@
 
 # set_io --warn-no-port LED1 C8 -> { "name": "LED1", "value": "C8" },
 
+import os
 import re
 import json
 
@@ -20,13 +21,12 @@ except:
 
 # Load parameters
 name = input('Insert board name: ')  # eg. icoboard
-label = input('Insert board label: ')  # eg. icoBOARD 1.0
 
 # Regex pattern
 pattern = 'set_io\s--warn-no-port\s(?P<name>.*?)\s+(?P<value>.*?)\s'
 
 # Open file
-with open(name + '.pcf') as file:
+with open(os.path.join(name, 'pinout.pcf')) as file:
     data = file.read()
 
     # Build json
@@ -34,9 +34,8 @@ with open(name + '.pcf') as file:
     format_pinout = []
     for item in pinout:
         format_pinout += [{ 'name': item[0], 'value': item[1] }]
-    board = { 'label': label, 'pinout': format_pinout }
 
     # Save json file
-    with open(name + '.json', 'w') as outfile:
-        json.dump(board, outfile)
+    with open(os.path.join(name, 'pinout.json'), 'w') as outfile:
+        json.dump(format_pinout, outfile)
         print('Done!')

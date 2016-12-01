@@ -25,8 +25,8 @@
         "data": {
           "label": "",
           "pin": {
-            "name": "LED0",
-            "value": "95"
+            "name": "",
+            "value": ""
           }
         },
         "position": {
@@ -49,7 +49,7 @@
     ]
   },
   "deps": {},
-  "image": "resources/images/1.svg",
+  "image": "",
   "state": {
     "pan": {
       "x": 0,

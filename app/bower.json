@@ -36,6 +36,7 @@
     "async": "^1.5.2",
     "svg-pan-zoom": "^3.2.9",
     "alertify-js": "^1.8.0",
-    "jquery-resize": "*"
+    "jquery-resize": "*",
+    "angular-gettext": "^2.3.8"
   }
 }

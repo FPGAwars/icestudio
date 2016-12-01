@@ -4,15 +4,18 @@ angular.module('icestudio')
   .controller('ProjectCtrl', function ($rootScope,
                                        $scope,
                                        common,
-                                       graph) {
+                                       boards,
+                                       graph,
+                                       gettextCatalog) {
 
     $scope.common = common;
+    $scope.boards = boards;
     $scope.graph = graph;
 
     // Intialization
 
     graph.createPaper($('#paper'));
-    common.updateProjectName('untitled');
+
 
     // Breadcrumbs
 
@@ -23,7 +26,15 @@ angular.module('icestudio')
         item = graph.breadcrumbs.slice(-1)[0];
       }
       while (selectedItem != item);
+      loadSelectedGraph();
+    }
 
+    $scope.breadcrumbsBack = function() {
+      graph.breadcrumbs.pop();
+      loadSelectedGraph();
+    }
+
+    function loadSelectedGraph() {
       if (graph.breadcrumbs.length == 1) {
         graph.loadGraph(common.project);
         graph.appEnable(true);

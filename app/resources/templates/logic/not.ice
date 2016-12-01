@@ -8,8 +8,8 @@
         "data": {
           "label": "",
           "pin": {
-            "name": "SW1",
-            "value": "10"
+            "name": "",
+            "value": ""
           }
         },
         "position": {
@@ -23,8 +23,8 @@
         "data": {
           "label": "",
           "pin": {
-            "name": "LED0",
-            "value": "95"
+            "name": "",
+            "value": ""
           }
         },
         "position": {
@@ -76,7 +76,7 @@
     ]
   },
   "deps": {},
-  "image": "resources/images/not.svg",
+  "image": "",
   "state": {
     "pan": {
       "x": 0,

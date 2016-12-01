@@ -1,9 +1,18 @@
 .disable-menu {
   pointer-events: none;
+  opacity: 0.7;
+}
+
+.disable-paper {
+  opacity: 0.7;
 }
 
 .navbar {
   z-index: 1501;
+}
+
+.navbar-right {
+  margin-right: 0px;
 }
 
 .dropdown-submenu {
@@ -90,6 +99,10 @@
   border-left-color: #fff;
 }
 
+.navbar-default .navbar-nav>li>a {
+  color: #555;
+}
+
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-  color: #777;
+  color: #555;
 }

@@ -13,10 +13,57 @@
   z-index: 0;
 }
 
-#breadcrumbs {
+#footer {
   position: absolute;
+  cursor: default;
   bottom: -5px;
   width: 100%;
+  z-index: 1501;
+}
+
+#breadcrumbs {
+  margin-bottom: 5px;
+  border-radius: 0px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e7e7e7;
+}
+
+#breadcrumbs>li {
+  color: #333;
+}
+
+#breadcrumbs>li>a:hover {
+  text-decoration: none;
+}
+
+#board {
+  position: absolute;
+  bottom: 12px;
+  right: 15px;
+}
+
+#read-only {
+  font-family: Courier New;
+  font-size: 15px;
+  color: #EB2222;
+  background-color: white;
+  border-radius: 5px;
+  cursor: default;
+  position: absolute;
+  right: 30px;
+  z-index: 1501;
+}
+
+#back-button {
+  font-family: Courier New;
+  font-size: 15px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  position: absolute;
+  top: 100px;
+  right: 30px;
   z-index: 1501;
 }
 
@@ -24,21 +71,11 @@
   pointer-events: none;
 }
 
-.banner {
-  font-family: Courier New;
-  font-size: 15px;
-  color: #EB2222;
-  opacity: .7;
-  position: absolute;
-  right: 30px;
-  z-index: 1501;
-}
-
 .generic-block {
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #777;
+  border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   z-index: 0;
@@ -63,13 +100,14 @@
   margin-top: 10px;
   text-align: center;
   font-size: 1em;
+  color: #444;
 }
 
 .io-block {
   position: absolute;
   background: #FAFAD2;
   border-radius: 5px;
-  border: 2px solid #777;
+  border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   z-index: 0;
@@ -80,7 +118,7 @@
   margin-top: 4px;
   text-align: center;
   font-size: 1em;
-  font-weight: bold
+  color: #444;
 }
 
 .io-block .select2 {
@@ -95,7 +133,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #777;
+  border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   z-index: 0;
@@ -119,7 +157,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 2px solid #777;
+  border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   z-index: 0;
@@ -173,4 +211,50 @@
   opacity: .7;
   border-radius: 5px;
   z-index: 1500;
+}
+
+/* Wires makers */
+
+.joint-link.joint-theme-default .connection-wrap {
+    stroke: #000000;
+    stroke-width: 15;
+    stroke-linecap: butt;
+    stroke-linejoin: butt;
+    opacity: 0;
+    cursor: pointer;
+}
+.joint-link.joint-theme-default .connection-wrap:hover {
+    opacity: .4;
+    stroke-opacity: .4;
+}
+.joint-link.joint-theme-default .connection {
+    stroke-linejoin: butt;
+}
+.joint-link.joint-theme-default .link-tools .tool-remove circle {
+    fill: #EB2222;
+}
+.joint-link.joint-theme-default .link-tools .tool-remove path {
+    fill: #FFFFFF;
+}
+
+/* <circle> element inside .marker-vertex-group <g> element */
+.joint-link.joint-theme-default .marker-vertex {
+    fill: #64b0ce;
+}
+.joint-link.joint-theme-default .marker-vertex:hover {
+    fill: #317d9b;
+    stroke: none;
+}
+
+.joint-link.joint-theme-default .marker-arrowhead {
+    fill: #64b0ce;
+}
+.joint-link.joint-theme-default .marker-arrowhead:hover {
+    fill: #317d9b;
+    stroke: none;
+}
+
+/* <circle> element used to remove a vertex */
+.joint-link.joint-theme-default .marker-vertex-remove {
+    fill: #FFFFFF;
 }
