@@ -26,7 +26,7 @@
   "dependencies": {
     "fs-extra": "^1.0.0",
     "glob": "^7.1.1",
-    "is-online": "https://github.com/sindresorhus/is-online.git#9463e3348f0ea8ecb59d9a1c62398d2092c31e3e",
+    "is-online": "^5.2.0",
     "jquery": "^3.1.1",
     "node-lang-info": "^0.2.1",
     "os": "^0.1.1",
