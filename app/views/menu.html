@@ -4,7 +4,7 @@
 
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.ice"/>
-    <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.png"/>
+    <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + common.projectName }}.png"/>
 
     <input id="input-import-block" type="file" accept=".iceb" class="hidden" multiple/>
     <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.iceb"/>

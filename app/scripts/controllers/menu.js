@@ -32,6 +32,7 @@ angular.module('icestudio')
     $scope.toolchain = tools.toolchain;
 
     $scope.workingdir = '';
+    $scope.snapshotdir = '';
     $scope.currentProjectPath = '';
 
     // Configure window
@@ -298,10 +299,10 @@ angular.module('icestudio')
             $scope.removeSelected();
           }
         }
-        if (event.keyCode == 80 && event.ctrlKey) { // Ctrl + p
-          // Print and save a window snapshot
-          takeSnapshot();
-        }
+      }
+      if (event.keyCode == 80 && event.ctrlKey) { // Ctrl + p
+        // Print and save a window snapshot
+        takeSnapshot();
       }
     });
 
@@ -315,6 +316,8 @@ angular.module('icestudio')
     function saveSnapshot(base64Data) {
       utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
         nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+          $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
+          $scope.$apply();
           if (!err) alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
           else throw err;
         });
