@@ -17,7 +17,7 @@ Supported boards:
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
 * [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
-## Version 0.2.2
+## Version 0.2.3
 
 ### Installation
 
@@ -29,7 +29,7 @@ Supported boards:
 
 Supported on Linux, Windows and Mac OSX.
 
-<img src="./doc/images/icestudio-0.2.1.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
 
 ## Development
 
