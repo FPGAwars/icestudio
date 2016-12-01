@@ -115,10 +115,9 @@ It contains the basic blocks:
 
 .. note::
 
-  Multiple **input** and **output** blocks can be created using the `space` separator. For example: ``x y z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
-  Double click over **input** and **output** blocks allows to modify the block name.
-  In **code** block ports definition, *input* and *output* ports are separated by a space. Port names are separated by ``,``. For example: ``a,b``: input a and b, ``a,b c``: input a and b, output c.
-  Double click over **code** blocks allows to modify its *input* and *output* ports.
+  Multiple **input** and **output** blocks can be created using the `comma` separator. For example: ``x, y, z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
+  Double click over **input** and **output** blocks allows to modify the block label.
+  In **code** block ports definition,  multiple *input* and *output* ports can be created also using the `comma` separator.
 
 Stored blocks
 `````````````
@@ -154,7 +153,7 @@ Block selection is performed using the **mouse right button**. Blocks can be sel
 Blocks examination
 ``````````````````
 
-Non-basic blocks can be read only examined by **double clicking** the block using the **mouse left button**. This is a recursive action.
+Non-basic blocks can be read only examined by **double clicking** the block using the **mouse left button**. This is a recursive action. In order to go back, click on **< back** link.
 
 During the examination, pan, zoom and code navigation are enabled.
 
@@ -163,3 +162,8 @@ During the examination, pan, zoom and code navigation are enabled.
 .. note::
 
   The examination path is stored in the **breadcrumbs**. This allows you to go back to any previous block.
+
+Take snapshot
+`````````````
+
+Taking a **png** snapshot of the application is as easy as press `Ctrl+p`. A save dialog appears to set the name and the path of the captured image.
