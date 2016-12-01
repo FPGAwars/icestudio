@@ -146,28 +146,15 @@ angular.module('icestudio')
       }
     }
 
-    $scope.saveProjectAs = function(callback) {
-      var localCallback = callback;
-      setTimeout(function() {
-        var ctrl = angular.element('#input-save-project');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            event.target.files.clear();
-            var filepath = file.path;
-            if (! filepath.endsWith('.ice')) {
-              filepath += '.ice';
-            }
-            $scope.workingdir = utils.dirname(filepath) + utils.sep;
-            common.saveProject(filepath);
-            $scope.currentProjectPath = filepath;
-            pathSync();
-            if (localCallback)
-              localCallback();
-          }
-        });
-        ctrl.click();
-      }, 0);
+    $scope.saveProjectAs = function(localCallback) {
+      utils.saveDialog('#input-save-project', '.ice', function(filepath) {
+        $scope.workingdir = utils.dirname(filepath) + utils.sep;
+        common.saveProject(filepath);
+        $scope.currentProjectPath = filepath;
+        pathSync();
+        if (localCallback)
+          localCallback();
+      });
     }
 
     $rootScope.$on('saveProjectAs', function(event, callback) {
@@ -193,108 +180,48 @@ angular.module('icestudio')
     }
 
     $scope.exportAsBlock = function() {
-      if (!graph.isEmpty()) {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-export-block');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            if (file) {
-              event.target.files.clear();
-              var filepath = file.path;
-              if (! filepath.endsWith('.iceb')) {
-                  filepath += '.iceb';
-              }
-              $scope.workingdir = utils.dirname(filepath) + utils.sep;
-              common.exportAsBlock(filepath);
-            }
-          });
-          ctrl.click();
-        }, 0);
-      }
+      checkGraph(function() {
+        utils.saveDialog('#input-export-block', '.iceb', function(filepath) {
+          $scope.workingdir = utils.dirname(filepath) + utils.sep;
+          common.exportAsBlock(filepath);
+        });
+      });
     }
 
     $scope.exportVerilog = function() {
-      if (!graph.isEmpty()) {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-export-verilog');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            if (file) {
-              event.target.files.clear();
-              var filepath = file.path;
-              if (! filepath.endsWith('.v')) {
-                  filepath += '.v';
-              }
-              $scope.workingdir = utils.dirname(filepath) + utils.sep;
-              common.exportVerilog(filepath);
-            }
-          });
-          ctrl.click();
-        }, 0);
-      }
+      checkGraph(function() {
+        utils.saveDialog('#input-export-verilog', '.v', function(filepath) {
+          $scope.workingdir = utils.dirname(filepath) + utils.sep;
+          common.exportVerilog(filepath);
+        });
+      });
     }
 
     $scope.exportPCF = function() {
-      if (!graph.isEmpty()) {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-export-pcf');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            if (file) {
-              event.target.files.clear();
-              var filepath = file.path;
-              if (! filepath.endsWith('.pcf')) {
-                  filepath += '.pcf';
-              }
-              $scope.workingdir = utils.dirname(filepath) + utils.sep;
-              common.exportPCF(filepath);
-            }
-          });
-          ctrl.click();
-        }, 0);
-      }
+      checkGraph(function() {
+        utils.saveDialog('#input-export-pcf', '.pcf', function(filepath) {
+          $scope.workingdir = utils.dirname(filepath) + utils.sep;
+          common.exportPCF(filepath);
+        });
+      });
     }
 
     $scope.exportTestbench = function() {
-      if (!graph.isEmpty()) {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-export-testbench');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            if (file) {
-              event.target.files.clear();
-              var filepath = file.path;
-              if (! filepath.endsWith('.v')) {
-                  filepath += '.v';
-              }
-              $scope.workingdir = utils.dirname(filepath) + utils.sep;
-              common.exportTestbench(filepath);
-            }
-          });
-          ctrl.click();
-        }, 0);
-      }
+      checkGraph(function() {
+        utils.saveDialog('#input-export-testbench', '.v', function(filepath) {
+          $scope.workingdir = utils.dirname(filepath) + utils.sep;
+          common.exportTestbench(filepath);
+        });
+      });
     }
 
     $scope.exportGTKwave = function() {
-      if (!graph.isEmpty()) {
-        setTimeout(function() {
-          var ctrl = angular.element('#input-export-gtkwave');
-          ctrl.on('change', function(event) {
-            var file = event.target.files[0];
-            if (file) {
-              event.target.files.clear();
-              var filepath = file.path;
-              if (! filepath.endsWith('.gtkw')) {
-                  filepath += '.gtkw';
-              }
-              $scope.workingdir = utils.dirname(filepath) + utils.sep;
-              common.exportGTKWave(filepath);
-            }
-          });
-          ctrl.click();
-        }, 0);
-      }
+      checkGraph(function() {
+        utils.saveDialog('#input-export-gtkwave', '.gtkw', function(filepath) {
+          $scope.workingdir = utils.dirname(filepath) + utils.sep;
+          common.exportGTKWave(filepath);
+        });
+      });
     }
 
     // Edit
@@ -323,12 +250,12 @@ angular.module('icestudio')
     }
 
     $scope.clearGraph = function() {
-      if (!graph.isEmpty()) {
+      checkGraph(function() {
         alertify.confirm(gettextCatalog.getString('Do you want to clear all?'),
         function() {
           common.clearProject();
         });
-      }
+      });
     }
 
     $scope.cloneSelected = function() {
@@ -379,29 +306,19 @@ angular.module('icestudio')
     });
 
     function takeSnapshot() {
-      win.capturePage(function(buffer) {
-        saveSnapshot(buffer);
-      }, { format : 'png', datatype : 'buffer'} );
+      win.capturePage(function(img) {
+        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+        saveSnapshot(base64Data);
+      }, 'png');
     }
 
-    function saveSnapshot(buffer) {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-save-snapshot');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          if (file) {
-            var filepath = file.path;
-            if (! filepath.endsWith('.png')) {
-              filepath += '.png';
-            }
-            nodeFs.writeFile(filepath, buffer, function (err) {
-              event.target.files.clear();
-              if (err) throw err;
-            });
-          }
+    function saveSnapshot(base64Data) {
+      utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
+        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+          if (!err) alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
+          else throw err;
         });
-        ctrl.click();
-      }, 0);
+      });
     }
 
     // View

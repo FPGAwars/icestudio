@@ -635,4 +635,18 @@ angular.module('icestudio')
           return '<b>' + text + '</b>';
         }
 
+        this.saveDialog = function(inputID, ext, callback) {
+          var chooser = $(inputID);
+          chooser.unbind('change');
+          chooser.change(function(evt) {
+            var filepath = $(this).val();
+            if (!filepath.endsWith(ext))
+              filepath += ext;
+            if (callback)
+              callback(filepath);
+            $(this).val('');
+          });
+          chooser.trigger('click');
+        }
+
     }]);
