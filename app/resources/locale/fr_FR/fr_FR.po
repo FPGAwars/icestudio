@@ -133,6 +133,9 @@ msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
 msgstr ""
+"La toolchain par default n'a pas été trouvée. La toolchain va être "
+"téléchargée. Cette operation nécessite une connexion internet."
+"Voulez-vous continuer ?"
 
 #: app/views/menu.html:245
 msgid "Disable"
@@ -204,7 +207,7 @@ msgstr "Entrer le hostname distant user@host (experimentale)"
 
 #: app/scripts/services/tools.service.js:317
 msgid "Error: default toolchain not found in '{{dir}}'"
-msgstr ""
+msgstr "Erreur: La toolchaine par défaut n'a pas été trouvée dans '{{dir}}'"
 
 #: app/scripts/services/utils.service.js:610
 msgid "Error: {{error}}"
@@ -228,15 +231,15 @@ msgstr "Exporter un bloc"
 
 #: app/scripts/services/tools.service.js:449
 msgid "Extract default apio files..."
-msgstr ""
+msgstr "Extraction des fichiers apio par défaut..."
 
 #: app/scripts/services/tools.service.js:459
 msgid "Extract default apio packages..."
-msgstr ""
+msgstr "Extraction des packets apio par défaut"
 
 #: app/scripts/services/tools.service.js:437
 msgid "Extract virtual env files..."
-msgstr ""
+msgstr "Extraction des fichiers d'environnement virtuels"
 
 #: app/scripts/services/tools.service.js:211
 #: app/scripts/services/tools.service.js:214
@@ -251,6 +254,8 @@ msgstr "Fichier"
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
+"Le Fichier {{file}} existe déjà dans le chemin du projet. Voulez vous le"
+"remplacer ?"
 
 #: app/scripts/services/tools.service.js:148
 msgid "File {{file}} does not exist"
@@ -286,7 +291,7 @@ msgstr "Chemin image"
 
 #: app/scripts/controllers/menu.js:322
 msgid "Image {{name}} saved"
-msgstr ""
+msgstr "Image {{name}} sauvée"
 
 #: app/views/menu.html:73
 msgid "Import block"
@@ -302,11 +307,11 @@ msgstr "Entrée"
 
 #: app/views/menu.html:215
 msgid "Install"
-msgstr ""
+msgstr "Installation"
 
 #: app/scripts/services/tools.service.js:454
 msgid "Install default apio..."
-msgstr ""
+msgstr "Installer l'apio par défaut..."
 
 #: app/scripts/services/tools.service.js:503
 msgid "Installation completed"
@@ -324,15 +329,15 @@ msgstr "Une connexion internet est requise"
 
 #: app/scripts/services/graph.service.js:134
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
-msgstr ""
+msgstr "Connexion de <i>Pull up</i> invalide:<br> Le bloc est déjà connecté"
 
 #: app/scripts/services/graph.service.js:150
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
-msgstr ""
+msgstr "Connexion de <i>Pull up</i> invalide:<br> Une seule entrée autorisée"
 
 #: app/scripts/services/graph.service.js:141
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
-msgstr ""
+msgstr "Connexion de bloc invalide:<br> <i>Pull up</i> déjà connectée"
 
 #: app/scripts/services/graph.service.js:113
 msgid "Invalid connection"
@@ -340,7 +345,7 @@ msgstr "Connexion invalide"
 
 #: app/scripts/services/graph.service.js:127
 msgid "Invalid multiple input connections"
-msgstr ""
+msgstr "Connexions de multiples entrées invalides"
 
 #: app/scripts/services/graph.service.js:298
 msgid "Label updated"
@@ -352,7 +357,7 @@ msgstr "Langage"
 
 #: app/scripts/services/tools.service.js:442
 msgid "Make virtual env..."
-msgstr ""
+msgstr "Faire l'environnement virtuel..."
 
 #: app/views/menu.html:27
 msgid "New project"
@@ -372,7 +377,7 @@ msgstr "Ouvrir un projet"
 
 #: app/scripts/services/common.service.js:156
 msgid "Original file {{file}} does not exist"
-msgstr ""
+msgstr "Le fichier originel {{file}} n'éxiste pas"
 
 #: app/views/menu.html:291
 msgid "Output"
@@ -412,7 +417,7 @@ msgstr "Hostname distant"
 
 #: app/views/menu.html:223
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: app/views/menu.html:110
 msgid "Remove selected"
@@ -420,7 +425,7 @@ msgstr "Supprimer la selection"
 
 #: app/views/menu.html:228
 msgid "Reset default"
-msgstr ""
+msgstr "Réinitialiser avec les paramètres par défaut"
 
 #: app/views/menu.html:103
 msgid "Reset view"
@@ -474,13 +479,12 @@ msgstr "Le projet actuel sera supprimé. Continuer de charger le projet?"
 
 #: app/scripts/services/tools.service.js:322
 msgid "The toolchain will be removed. Do you want to continue?"
-msgstr ""
-"Les répertoires de configuration d'Icestudio et apio vont être supprimés. "
+msgstr "Les répertoires de configuration d'Icestudio et apio vont être supprimés. "
 "Voulez-vous continuer?"
 
 #: app/scripts/services/tools.service.js:310
 msgid "The toolchain will be restored to default. Do you want to continue?"
-msgstr ""
+msgstr "La toolchain va être restaurée par défaut. Voulez vous continuer ?"
 
 #: app/scripts/services/tools.service.js:302
 msgid ""
@@ -493,6 +497,8 @@ msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr ""
+"Cette opération d'import requière un chemin de projet (path). Vous devez"
+" sauvez le projet actuel. Voulez vous continuer ?"
 
 #: app/views/menu.html:211
 msgid "Toolchain"
@@ -575,7 +581,7 @@ msgstr "Et"
 
 #: app/views/project.html:4
 msgid "back"
-msgstr ""
+msgstr "retour"
 
 #. Bit
 #: app/resources/blocks/labels.js:4
