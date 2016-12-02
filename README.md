@@ -77,7 +77,7 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/84)   |
+| French     | ![Progress](http://progressed.io/bar/96)   |
 | Basque     | ![Progress](http://progressed.io/bar/69)   |
 | Galician   | ![Progress](http://progressed.io/bar/67)   |
 
