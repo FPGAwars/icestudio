@@ -313,6 +313,67 @@ joint.shapes.ice.InputView = joint.shapes.ice.IOView;
 joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 
 
+// Constant blocks
+
+joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Constant',
+    outPorts: [{
+      id: "out",
+      label: "",
+      gridUnits: 8
+    }],
+    size: {
+      width: 96,
+      height: 64
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+
+joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
+
+    template: '\
+    <div class="constant-block">\
+      <label></label>\
+      <input class="constant-input"></input>\
+    </div>\
+    ',
+
+    initialize: function() {
+      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+
+      // Prevent paper from handling pointerdown.
+      this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+      this.$box.find('.constant-input').on('change', _.bind(function(evt) {
+        this.model.attributes.data.value = $(evt.target).val();
+      }, this));
+    },
+    renderLabel: function () {
+      var name = this.model.attributes.data.label;
+      this.$box.find('label').text(name);
+    },
+    renderValue: function() {
+      if (this.model.get('disabled')) {
+        this.$box.find('.constant-input').css({'display': 'none'});
+      }
+      else {
+        this.$box.find('.constant-input').val(this.model.get('data').value);
+      }
+    },
+    clearValue: function () {
+      this.$box.find('.constant-input').val('');
+    },
+    update: function () {
+      this.renderLabel();
+      this.renderPorts();
+      this.renderValue();
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    }
+});
+
+
 // Code block
 
 joint.shapes.ice.Code = joint.shapes.ice.Model.extend({

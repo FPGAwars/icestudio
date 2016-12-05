@@ -300,6 +300,19 @@ angular.module('icestudio')
                 });
               }
             }
+            else if (data.blockType == 'basic.constant') {
+              if (paper.options.enabled) {
+                alertify.prompt(gettextCatalog.getString('Update the block label'), data.data.label ? ' ' + data.data.label + ' ' : '',
+                  function(evt, label) {
+                    label = label.replace(/ /g, '');
+                    if (data.data.label != label) {
+                      data.data.label = label;
+                      cellView.renderLabel();
+                      alertify.success(gettextCatalog.getString('Label updated'));
+                    }
+                });
+              }
+            }
             else if (data.blockType == 'basic.code') {
               if (paper.options.enabled) {
                 var block = {
@@ -464,6 +477,7 @@ angular.module('icestudio')
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
                   blockInstance.position.x = 31 * gridsize;
+                  blockInstance.position.y = 18 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
@@ -484,8 +498,7 @@ angular.module('icestudio')
             blockInstance.data = {
               info: ''
             };
-            blockInstance.position.x = 31 * gridsize;
-            blockInstance.position.y = 26 * gridsize;
+            blockInstance.position.y = 30 * gridsize;
             var cell = addBasicInfoBlock(blockInstance);
             var cellView = paper.findViewByModel(cell);
             if (cellView.$box.css('z-index') < zIndex) {
@@ -571,6 +584,31 @@ angular.module('icestudio')
                     cellView.$box.css('z-index', ++zIndex);
                   }
                   blockInstance.position.y += 10 * gridsize;*/
+                }
+            });
+          }
+          else if (type == 'basic.constant') {
+            alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), ' C ',
+              function(evt, name) {
+                if (name) {
+                  var names = name.replace(/ /g, '').split(',');
+                  blockInstance.position.x = 20 * gridsize;
+                  for (var n in names) {
+                    if (names[n]) {
+                      blockInstance.data = {
+                        label: names[n],
+                        value: ''
+                      };
+                      var cell = addBasicConstantBlock(blockInstance);
+                      var cellView = paper.findViewByModel(cell);
+                      if (cellView.$box.css('z-index') < zIndex) {
+                        cellView.$box.css('z-index', ++zIndex);
+                      }
+                      blockInstance.position.x += 15 * gridsize;
+                    }
+                  }
+                }
+                else {
                 }
             });
           }
@@ -719,6 +757,9 @@ angular.module('icestudio')
               else if (blockInstance.type == 'basic.output') {
                 addBasicOutputBlock(blockInstance, disabled);
               }
+              else if (blockInstance.type == 'basic.constant') {
+                addBasicConstantBlock(blockInstance, disabled);
+              }
               else {
                 addGenericBlock(blockInstance, deps[blockInstance.type]);
               }
@@ -772,6 +813,20 @@ angular.module('icestudio')
             position: blockInstances.position,
             disabled: disabled,
             choices: boards.getPinout()
+          });
+
+          addCell(cell);
+          return cell;
+        };
+
+        function addBasicConstantBlock(blockInstances, disabled) {
+          var cell = new joint.shapes.ice.Constant({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: blockInstances.data,
+            label: blockInstances.data.label,
+            position: blockInstances.position,
+            disabled: disabled
           });
 
           addCell(cell);
