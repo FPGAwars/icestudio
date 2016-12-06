@@ -477,7 +477,7 @@ angular.module('icestudio')
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
                   blockInstance.position.x = 31 * gridsize;
-                  blockInstance.position.y = 18 * gridsize;
+                  blockInstance.position.y = 20 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
@@ -834,11 +834,11 @@ angular.module('icestudio')
         };
 
         function addBasicCodeBlock(blockInstances, disabled) {
-          var inPorts = [];
-          var outPorts = [];
+          var leftPorts = [];
+          var rightPorts = [];
 
           for (var i in blockInstances.data.ports.in) {
-            inPorts.push({
+            leftPorts.push({
               id: blockInstances.data.ports.in[i],
               label: blockInstances.data.ports.in[i],
               gridUnits: 32
@@ -846,7 +846,7 @@ angular.module('icestudio')
           }
 
           for (var o in blockInstances.data.ports.out) {
-            outPorts.push({
+            rightPorts.push({
               id: blockInstances.data.ports.out[o],
               label: blockInstances.data.ports.out[o],
               gridUnits: 32
@@ -859,8 +859,8 @@ angular.module('icestudio')
             data: blockInstances.data,
             position: blockInstances.position,
             disabled: disabled,
-            inPorts: inPorts,
-            outPorts: outPorts
+            leftPorts: leftPorts,
+            rightPorts: rightPorts
           });
 
           addCell(cell);
@@ -881,35 +881,35 @@ angular.module('icestudio')
         };
 
         function addGenericBlock(blockInstance, block) {
-          var inPorts = [];
-          var outPorts = [];
+          var leftPorts = [];
+          var rightPorts = [];
 
           for (var i in block.graph.blocks) {
             var item = block.graph.blocks[i];
             if (item.type == 'basic.input') {
-              inPorts.push({
+              leftPorts.push({
                 id: item.id,
                 label: item.data.label
               });
             }
             else if (item.type == 'basic.output') {
-              outPorts.push({
+              rightPorts.push({
                 id: item.id,
                 label: item.data.label
               });
             }
           }
 
-          var numPorts = Math.max(inPorts.length, outPorts.length);
+          var numPorts = Math.max(leftPorts.length, rightPorts.length);
           var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
 
           var gridUnits = height / gridsize;
 
-          for (var i in inPorts) {
-            inPorts[i].gridUnits = gridUnits;
+          for (var i in leftPorts) {
+            leftPorts[i].gridUnits = gridUnits;
           }
-          for (var o in outPorts) {
-            outPorts[o].gridUnits = gridUnits;
+          for (var o in rightPorts) {
+            rightPorts[o].gridUnits = gridUnits;
           }
 
 
@@ -934,8 +934,8 @@ angular.module('icestudio')
             image: blockImage,
             label: blockLabel,
             position: blockInstance.position,
-            inPorts: inPorts,
-            outPorts: outPorts,
+            leftPorts: leftPorts,
+            rightPorts: rightPorts,
             size: {
               width: width,
               height: height
@@ -957,14 +957,14 @@ angular.module('icestudio')
 
           // Find selectors
           var sourceSelector, targetSelector;
-          for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
-            if (source.attributes.outPorts[_out] == wire.source.port) {
+          for (var _out = 0; _out < source.attributes.rightPorts.length; _out++) {
+            if (source.attributes.rightPorts[_out] == wire.source.port) {
               sourcePort = _out;
               break;
             }
           }
-          for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
-            if (target.attributes.inPorts[_in] == wire.target.port) {
+          for (var _in = 0; _in < source.attributes.leftPorts.length; _in++) {
+            if (target.attributes.leftPorts[_in] == wire.target.port) {
               targetPort = _in;
               break;
             }
