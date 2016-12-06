@@ -54,3 +54,6 @@ gettext('dff_sr')
 gettext('tff_ar')
 /// T flip-flop
 gettext('tff_sr')
+/// Debouncer
+gettext('debouncer')
+

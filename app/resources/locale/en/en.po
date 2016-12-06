@@ -598,6 +598,11 @@ msgstr "Combinational"
 msgid "config"
 msgstr "Config"
 
+#. Debouncer
+#: app/resources/blocks/labels.js:57
+msgid "debouncer"
+msgstr "Debouncer"
+
 #. Demux 1:2
 #: app/resources/blocks/labels.js:18
 msgid "demux_1_2"

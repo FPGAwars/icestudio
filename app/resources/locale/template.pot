@@ -560,6 +560,11 @@ msgstr ""
 msgid "config"
 msgstr ""
 
+#. Debouncer
+#: app/resources/blocks/labels.js:57
+msgid "debouncer"
+msgstr ""
+
 #. Demux 1:2
 #: app/resources/blocks/labels.js:18
 msgid "demux_1_2"
