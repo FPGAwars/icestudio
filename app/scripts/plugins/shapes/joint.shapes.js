@@ -389,7 +389,7 @@ joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Constant',
     bottomPorts: [{
-      id: 'out',
+      id: 'constant-out',
       label: ''
     }],
     size: {
