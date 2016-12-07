@@ -132,8 +132,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       attrs[portWireSelector]['pointer-events'] = 'none';
     }
 
-    var gridUnits = 8;
-    var pos = Math.round((index + 0.5) / total * gridUnits) / gridUnits;
+    var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
 
     switch (type) {
       case 'left':
@@ -295,7 +294,8 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
     choices: [],
     rightPorts: [{
       id: 'out',
-      label: ''
+      label: '',
+      gridUnits: 8
     }],
     size: {
       width: 96,
@@ -310,7 +310,8 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
     choices: [],
     leftPorts: [{
       id: 'in',
-      label: ''
+      label: '',
+      gridUnits: 8
     }],
     size: {
       width: 96,
@@ -390,7 +391,8 @@ joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
     type: 'ice.Constant',
     bottomPorts: [{
       id: 'constant-out',
-      label: ''
+      label: '',
+      gridUnits: 8
     }],
     size: {
       width: 96,
@@ -425,11 +427,9 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     },
     renderValue: function() {
       if (this.model.get('disabled')) {
-        this.$box.find('.constant-input').css({'display': 'none'});
+        this.$box.find('.constant-input').css({'pointer-events': 'none'});
       }
-      else {
-        this.$box.find('.constant-input').val(this.model.get('data').value);
-      }
+      this.$box.find('.constant-input').val(this.model.get('data').value);
     },
     clearValue: function () {
       this.$box.find('.constant-input').val('');

@@ -869,7 +869,7 @@ angular.module('icestudio')
             topPorts.push({
               id: blockInstances.data.params[p],
               label: blockInstances.data.params[p],
-              gridUnits: 32
+              gridUnits: 48
             });
           }
 
@@ -904,6 +904,8 @@ angular.module('icestudio')
         function addGenericBlock(blockInstance, block) {
           var leftPorts = [];
           var rightPorts = [];
+          var topPorts = [];
+          var bottomPorts = [];
 
           for (var i in block.graph.blocks) {
             var item = block.graph.blocks[i];
@@ -919,23 +921,42 @@ angular.module('icestudio')
                 label: item.data.label
               });
             }
+            else if (item.type == 'basic.constant') {
+              topPorts.push({
+                id: item.id,
+                label: item.data.label
+              });
+            }
           }
 
-          var numPorts = Math.max(leftPorts.length, rightPorts.length);
-          var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
+          var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
+          var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
 
-          var gridUnits = height / gridsize;
+          var height = 8 * gridsize;
+          height = Math.max(4 * gridsize * numPortsHeight, height);
+          var blockLabel = blockInstance.type.toUpperCase();
+          var width = 12 * gridsize;
+          if (blockLabel.length > 4) {
+            width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
+          }
+          width = Math.max(4 * gridsize * numPortsWidth, width);
+
+          var gridUnitsHeight = height / gridsize;
+          var gridUnitsWidth = width / gridsize;
 
           for (var i in leftPorts) {
-            leftPorts[i].gridUnits = gridUnits;
+            leftPorts[i].gridUnits = gridUnitsHeight;
           }
-          for (var o in rightPorts) {
-            rightPorts[o].gridUnits = gridUnits;
+          for (var i in rightPorts) {
+            rightPorts[i].gridUnits = gridUnitsHeight;
+          }
+          for (var i in topPorts) {
+            topPorts[i].gridUnits = gridUnitsWidth;
+          }
+          for (var i in bottomPorts) {
+            bottomPorts[i].gridUnits = gridUnitsWidth;
           }
 
-
-          var blockLabel = blockInstance.type.toUpperCase();
-          var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
           if (blockInstance.type.indexOf('.') != -1) {
             blockLabel = blockInstance.type.split('.').join(' ');
           }
@@ -957,6 +978,7 @@ angular.module('icestudio')
             position: blockInstance.position,
             leftPorts: leftPorts,
             rightPorts: rightPorts,
+            topPorts: topPorts,
             size: {
               width: width,
               height: height

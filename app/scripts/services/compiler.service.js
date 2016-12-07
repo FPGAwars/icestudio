@@ -105,6 +105,20 @@ angular.module('icestudio')
         return code;
       }
 
+      function getParams(project) {
+        var params = [];
+        var graph = project.graph;
+
+        for (var i in graph.blocks) {
+          var block = graph.blocks[i];
+          if (block.type == 'basic.constant') {
+            params.push(digestId(block.id));
+          }
+        }
+
+        return params;
+      }
+
       function getPorts(project) {
         var ports = {
           in: [],
@@ -285,6 +299,7 @@ angular.module('icestudio')
           if (name) {
             var data = {
               name: name,
+              params: getParams(project),
               ports: getPorts(project),
               content: getContent(name, project)
             };
