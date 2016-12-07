@@ -237,7 +237,8 @@ angular.module('icestudio')
                 cell.type == 'ice.Input' ||
                 cell.type == 'ice.Output' ||
                 cell.type == 'ice.Code' ||
-                cell.type == 'ice.Info') {
+                cell.type == 'ice.Info' ||
+                cell.type == 'ice.Constant') {
               var block = {};
               block.id = cell.id;
               block.type = cell.blockType;

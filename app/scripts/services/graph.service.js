@@ -449,23 +449,30 @@ angular.module('icestudio')
           if (type == 'basic.code') {
             utils.multiprompt(
               [ gettextCatalog.getString('Enter the input ports'),
-                gettextCatalog.getString('Enter the output ports') ],
+                gettextCatalog.getString('Enter the output ports'),
+                gettextCatalog.getString('Enter the parameters') ],
               [ ' a , b ',
-                ' c , d ' ],
+                ' c , d ',
+               '' ],
               function(evt, ports) {
                 if (ports && (ports[0].length || ports[1].length)) {
                   blockInstance.data = {
                     code: '',
+                    params: [],
                     ports: { in: [], out: [] }
                   };
                   // Parse ports
                   var inPorts = [];
                   var outPorts = [];
+                  var params = [];
                   if (ports.length > 0) {
                     inPorts = ports[0].replace(/ /g, '').split(',');
                   }
                   if (ports.length > 1) {
                     outPorts = ports[1].replace(/ /g, '').split(',');
+                  }
+                  if (ports.length > 2) {
+                    params = ports[2].replace(/ /g, '').split(',');
                   }
 
                   for (var i in inPorts) {
@@ -476,8 +483,12 @@ angular.module('icestudio')
                     if (outPorts[o])
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
+                  for (var p in params) {
+                    if (params[p])
+                      blockInstance.data.params.push(params[p]);
+                  }
                   blockInstance.position.x = 31 * gridsize;
-                  blockInstance.position.y = 20 * gridsize;
+                  blockInstance.position.y = 24 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
@@ -836,6 +847,7 @@ angular.module('icestudio')
         function addBasicCodeBlock(blockInstances, disabled) {
           var leftPorts = [];
           var rightPorts = [];
+          var topPorts = [];
 
           for (var i in blockInstances.data.ports.in) {
             leftPorts.push({
@@ -853,6 +865,14 @@ angular.module('icestudio')
             });
           }
 
+          for (var p in blockInstances.data.params) {
+            topPorts.push({
+              id: blockInstances.data.params[p],
+              label: blockInstances.data.params[p],
+              gridUnits: 32
+            });
+          }
+
           var cell = new joint.shapes.ice.Code({
             id: blockInstances.id,
             blockType: blockInstances.type,
@@ -860,7 +880,8 @@ angular.module('icestudio')
             position: blockInstances.position,
             disabled: disabled,
             leftPorts: leftPorts,
-            rightPorts: rightPorts
+            rightPorts: rightPorts,
+            topPorts: topPorts
           });
 
           addCell(cell);

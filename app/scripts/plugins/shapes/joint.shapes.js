@@ -415,7 +415,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
       // Prevent paper from handling pointerdown.
       this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-      this.$box.find('.constant-input').on('change', _.bind(function(evt) {
+      this.$box.find('.constant-input').on('input', _.bind(function(evt) {
         this.model.attributes.data.value = $(evt.target).val();
       }, this));
     },
@@ -444,17 +444,18 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
 
 // Code block
+// Size: 64 * x
 
 joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Code',
     size: {
-      width: 400,
+      width: 384,
       height: 256
     },
     attrs: {
       '.body': {
-        width: 400,
+        width: 384,
         height: 256
       }
     }
