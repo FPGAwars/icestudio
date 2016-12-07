@@ -317,7 +317,9 @@ angular.module('icestudio')
               if (paper.options.enabled) {
                 var block = {
                   data: {
-                    code: self.getContent(cellView.model.id)
+                    code: self.getContent(cellView.model.id),
+                    params: data.data.params,
+                    ports: data.data.ports
                   },
                   position: cellView.model.attributes.position
                 };
@@ -447,13 +449,21 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
+            var defaultValues = [
+              ' a , b ',
+              ' c , d ',
+              ''
+            ];
+            if (block && block.data) {
+              defaultValues[0] = ' ' +  block.data.ports.in.join(' , ') +  ' ';
+              defaultValues[1] = ' ' +  block.data.ports.out.join(' , ') +  ' ';
+              defaultValues[2] = ' ' +  block.data.params.join(' , ') +  ' ';
+            }
             utils.multiprompt(
               [ gettextCatalog.getString('Enter the input ports'),
                 gettextCatalog.getString('Enter the output ports'),
                 gettextCatalog.getString('Enter the parameters') ],
-              [ ' a , b ',
-                ' c , d ',
-               '' ],
+              defaultValues,
               function(evt, ports) {
                 if (ports && (ports[0].length || ports[1].length)) {
                   blockInstance.data = {
