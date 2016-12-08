@@ -46,18 +46,22 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         opacity: 0
       },
       '.leftPorts .port-body': {
+        pos: 'left',
         type: 'input',
         magnet: false
       },
       '.rightPorts .port-body': {
+        pos: 'right',
         type: 'output',
         magnet: true
       },
       '.topPorts .port-body': {
+        pos: 'top',
         type: 'input',
         magnet: false
       },
       '.bottomPorts .port-body': {
+        pos: 'bottom',
         type: 'output',
         magnet: true
       },

@@ -184,7 +184,7 @@ angular.module('icestudio')
             else if (block.type == 'basic.output') {
               if (wire.target.block == block.id) {
                 if (wire.source.port == 'constant-out') {
-                  connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
+                  // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
                 }
                 else {
                   connections.assign.push('assign ' + digestId(block.id) + ' = w' + w + ';');

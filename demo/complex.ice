@@ -5,7 +5,7 @@
       "x": 0,
       "y": 0
     },
-    "zoom": 0.9999999822412187
+    "zoom": 1
   },
   "board": "icezum",
   "graph": {
@@ -55,21 +55,6 @@
         },
         "position": {
           "x": 176,
-          "y": 80
-        }
-      },
-      {
-        "id": "8216800a-e417-4044-9adf-403f8568c3f5",
-        "type": "basic.output",
-        "data": {
-          "label": "b",
-          "pin": {
-            "name": "LED1",
-            "value": "96"
-          }
-        },
-        "position": {
-          "x": 600,
           "y": 80
         }
       },
@@ -200,16 +185,6 @@
             "y": 264
           }
         ]
-      },
-      {
-        "source": {
-          "block": "365fa313-f3c1-433d-9d51-97429dfaa3c8",
-          "port": "constant-out"
-        },
-        "target": {
-          "block": "8216800a-e417-4044-9adf-403f8568c3f5",
-          "port": "in"
-        }
       },
       {
         "source": {

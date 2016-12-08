@@ -108,11 +108,25 @@ angular.module('icestudio')
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' &&
                   magnetT.getAttribute('type') == 'output') {
-                if (magnetS !== magnetT){
+                if (magnetS !== magnetT) {
                   // Show warning if source and target blocks are different
                   warning(gettextCatalog.getString('Invalid connection'));
                 }
                 return false;
+              }
+              // Ensure right -> left connections
+              if (magnetS.getAttribute('pos') == 'right') {
+                if (magnetT.getAttribute('pos') != 'left') {
+                  warning(gettextCatalog.getString('Invalid connection'));
+                  return false;
+                }
+              }
+              // Ensure bottom -> top connections
+              if (magnetS.getAttribute('pos') == 'bottom') {
+                if (magnetT.getAttribute('pos') != 'top') {
+                  warning(gettextCatalog.getString('Invalid connection'));
+                  return false;
+                }
               }
               var links = graph.getLinks();
               for (var i in links) {
