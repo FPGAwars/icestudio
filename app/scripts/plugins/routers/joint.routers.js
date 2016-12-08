@@ -22,10 +22,10 @@ joint.routers.ice = (function(g, _, joint) {
         maximumLoops: 2000,
 
         // possible starting directions from an element
-        startDirections: ['right'],
+        startDirections: ['right', 'top', 'bottom'],
 
         // possible ending directions to an element
-        endDirections: ['left'],
+        endDirections: ['left', 'top', 'bottom'],
 
         // specify directions above
         directionMap: {

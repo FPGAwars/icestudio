@@ -585,13 +585,20 @@ angular.module('icestudio')
           }
           content.push('</div>');
 
-          alertify.confirm(content.join('\n')).set('onok', function(evt) {
+          alertify.confirm(content.join('\n'))
+          .set('onok', function(evt) {
             var values = [];
             for (var i = 0; i < n; i++) {
               values.push($('#input' + i.toString()).val());
             }
             if (callback)
               callback(evt, values);
+          })
+          .set('oncancel', function(evt) {
+            // Restore previous values
+            for (var i = 0; i < n; i++) {
+              $('#input' + i.toString()).val(values[i]);
+            }
           });
         }
 

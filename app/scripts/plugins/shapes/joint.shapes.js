@@ -15,9 +15,9 @@ else {
 // Model element
 
 joint.shapes.ice = {};
-joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
+joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
+  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
@@ -26,8 +26,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       width: 1,
       height: 1
     },
-    inPorts: [],
-    outPorts: [],
+    leftPorts: [],
+    rightPorts: [],
+    topPorts: [],
+    bottomPorts: [],
     attrs: {
       gridUnits: 1,
       '.': {
@@ -43,24 +45,27 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         r: 16,
         opacity: 0
       },
-      '.inPorts .port-body': {
+      '.leftPorts .port-body': {
+        pos: 'left',
         type: 'input',
         magnet: false
       },
-      '.outPorts .port-body': {
+      '.rightPorts .port-body': {
+        pos: 'right',
         type: 'output',
         magnet: true
       },
-      '.inPorts .port-label': {
-        x: 12,
-        y: -10,
-        'text-anchor': 'end',
-        fill: '#888'
+      '.topPorts .port-body': {
+        pos: 'top',
+        type: 'input',
+        magnet: false
       },
-      '.outPorts .port-label': {
-        x: -12,
-        y: -10,
-        'text-anchor': 'start',
+      '.bottomPorts .port-body': {
+        pos: 'bottom',
+        type: 'output',
+        magnet: true
+      },
+      '.port-label': {
         fill: '#888'
       },
       '.port-wire': {
@@ -69,6 +74,35 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     }
   }, joint.shapes.basic.Generic.prototype.defaults),
+
+
+  initialize: function() {
+    this.updatePortsAttrs();
+    this.on('change:leftPorts change:rightPorts change:topPorts change:bottomPorts', this.updatePortsAttrs, this);
+    this.constructor.__super__.constructor.__super__.initialize.apply(this, arguments);
+  },
+
+  updatePortsAttrs: function(eventName) {
+    if (this._portSelectors) {
+      var newAttrs = _.omit(this.get('attrs'), this._portSelectors);
+      this.set('attrs', newAttrs, { silent: true });
+    }
+    this._portSelectors = [];
+    var attrs = {};
+
+    _.each(['left', 'right', 'top', 'bottom'], function(type) {
+      var port = type + 'Ports';
+      _.each(this.get(port), function(portName, index, ports) {
+          var portAttributes = this.getPortAttrs(portName, index, ports.length, '.' + port, type);
+          this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
+          _.extend(attrs, portAttributes);
+      }, this);
+    }, this);
+
+    this.attr(attrs, { silent: true });
+    this.processPorts();
+    this.trigger('process:ports');
+  },
 
   getPortAttrs: function(port, index, total, selector, type) {
 
@@ -80,9 +114,15 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portWireSelector = portSelector + '>.port-wire';
     var portBodySelector = portSelector + '>.port-body';
 
+    attrs[portSelector] = {
+      ref: '.body'
+    };
+
     attrs[portLabelSelector] = {
       text: port.label
     };
+
+    attrs[portWireSelector] = {};
 
     attrs[portBodySelector] = {
       port: {
@@ -91,33 +131,55 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     };
 
-    var portY = (index + 0.5) / total;
-
-    portY = Math.round(portY * port.gridUnits) / port.gridUnits;
-
-    attrs[portSelector] = {
-      ref: '.body',
-      'ref-y': portY
-    };
-
-    attrs[portWireSelector] = {
-      y: portY
-    };
-
-    if (type === 'in') {
-      attrs[portSelector]['ref-x'] = -16;
-      attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+    if ((type === 'leftPorts') || (type === 'topPorts')) {
       attrs[portSelector]['pointer-events'] = 'none';
       attrs[portWireSelector]['pointer-events'] = 'none';
     }
-    else {
-      attrs[portSelector]['ref-dx'] = 16;
-      attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
+
+    var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
+
+    switch (type) {
+      case 'left':
+        attrs[portSelector]['ref-x'] = -16;
+        attrs[portSelector]['ref-y'] = pos;
+        attrs[portLabelSelector]['dx'] = 10;
+        attrs[portLabelSelector]['y'] = -10;
+        attrs[portLabelSelector]['text-anchor'] = 'end';
+        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+        break;
+      case 'right':
+        attrs[portSelector]['ref-dx'] = 16;
+        attrs[portSelector]['ref-y'] = pos;
+        attrs[portLabelSelector]['dx'] = -10;
+        attrs[portLabelSelector]['y'] = -10;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
+        break;
+      case 'top':
+        attrs[portSelector]['ref-y'] = -16;
+        attrs[portSelector]['ref-x'] = pos;
+        attrs[portLabelSelector]['dx'] = 10;
+        attrs[portLabelSelector]['dy'] = 0;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 32';
+        break;
+      case 'bottom':
+        attrs[portSelector]['ref-dy'] = 16;
+        attrs[portSelector]['ref-x'] = pos;
+        attrs[portLabelSelector]['dx'] = 10;
+        attrs[portLabelSelector]['y'] = 0;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -32';
+        break;
     }
 
     return attrs;
   }
-}));
+});
 
 joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
@@ -137,28 +199,40 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       this.listenTo(this.model, 'process:ports', this.update);
       joint.dia.ElementView.prototype.initialize.apply(this, arguments);
     },
+
     render: function() {
       joint.dia.ElementView.prototype.render.apply(this, arguments);
       this.paper.$el.append(this.$box);
       this.updateBox();
       return this;
     },
+
     renderPorts: function() {
-      var $inPorts = this.$('.inPorts').empty();
-      var $outPorts = this.$('.outPorts').empty();
+      var $leftPorts = this.$('.leftPorts').empty();
+      var $rightPorts = this.$('.rightPorts').empty();
+      var $topPorts = this.$('.topPorts').empty();
+      var $bottomPorts = this.$('.bottomPorts').empty();
       var portTemplate = _.template(this.model.portMarkup);
 
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
-        $inPorts.append(V(portTemplate({ id: index, port: port })).node);
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'left' }), function (port, index) {
+        $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
-        $outPorts.append(V(portTemplate({ id: index, port: port })).node);
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'right' }), function (port, index) {
+        $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'top' }), function (port, index) {
+        $topPorts.append(V(portTemplate({ id: index, port: port })).node);
+      });
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'bottom' }), function (port, index) {
+        $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
     },
+
     update: function() {
       this.renderPorts();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
+
     updateBox: function() {
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
@@ -173,6 +247,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
         transform: 'scale(' + state.zoom + ')'
       });
     },
+
     removeBox: function(evt) {
       this.$box.remove();
     }
@@ -221,9 +296,9 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Input',
     choices: [],
-    outPorts: [{
-      id: "out",
-      label: "",
+    rightPorts: [{
+      id: 'out',
+      label: '',
       gridUnits: 8
     }],
     size: {
@@ -237,9 +312,9 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Output',
     choices: [],
-    inPorts: [{
-      id: "in",
-      label: "",
+    leftPorts: [{
+      id: 'in',
+      label: '',
       gridUnits: 8
     }],
     size: {
@@ -313,18 +388,78 @@ joint.shapes.ice.InputView = joint.shapes.ice.IOView;
 joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 
 
+// Constant blocks
+
+joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Constant',
+    bottomPorts: [{
+      id: 'constant-out',
+      label: '',
+      gridUnits: 8
+    }],
+    size: {
+      width: 96,
+      height: 64
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+
+joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
+
+    template: '\
+    <div class="constant-block">\
+      <label></label>\
+      <input class="constant-input"></input>\
+    </div>\
+    ',
+
+    initialize: function() {
+      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+
+      // Prevent paper from handling pointerdown.
+      this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
+
+      this.$box.find('.constant-input').on('input', _.bind(function(evt) {
+        this.model.attributes.data.value = $(evt.target).val();
+      }, this));
+    },
+    renderLabel: function () {
+      var name = this.model.attributes.data.label;
+      this.$box.find('label').text(name);
+    },
+    renderValue: function() {
+      if (this.model.get('disabled')) {
+        this.$box.find('.constant-input').css({'pointer-events': 'none'});
+      }
+      this.$box.find('.constant-input').val(this.model.get('data').value);
+    },
+    clearValue: function () {
+      this.$box.find('.constant-input').val('');
+    },
+    update: function () {
+      this.renderLabel();
+      this.renderPorts();
+      this.renderValue();
+      joint.dia.ElementView.prototype.update.apply(this, arguments);
+    }
+});
+
+
 // Code block
+// Size: 64 * x
 
 joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Code',
     size: {
-      width: 400,
+      width: 384,
       height: 256
     },
     attrs: {
       '.body': {
-        width: 400,
+        width: 384,
         height: 256
       }
     }

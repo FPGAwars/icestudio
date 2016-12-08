@@ -108,11 +108,25 @@ angular.module('icestudio')
               // Prevent output-output links
               if (magnetS.getAttribute('type') == 'output' &&
                   magnetT.getAttribute('type') == 'output') {
-                if (magnetS !== magnetT){
+                if (magnetS !== magnetT) {
                   // Show warning if source and target blocks are different
                   warning(gettextCatalog.getString('Invalid connection'));
                 }
                 return false;
+              }
+              // Ensure right -> left connections
+              if (magnetS.getAttribute('pos') == 'right') {
+                if (magnetT.getAttribute('pos') != 'left') {
+                  warning(gettextCatalog.getString('Invalid connection'));
+                  return false;
+                }
+              }
+              // Ensure bottom -> top connections
+              if (magnetS.getAttribute('pos') == 'bottom') {
+                if (magnetT.getAttribute('pos') != 'top') {
+                  warning(gettextCatalog.getString('Invalid connection'));
+                  return false;
+                }
               }
               var links = graph.getLinks();
               for (var i in links) {
@@ -300,11 +314,26 @@ angular.module('icestudio')
                 });
               }
             }
+            else if (data.blockType == 'basic.constant') {
+              if (paper.options.enabled) {
+                alertify.prompt(gettextCatalog.getString('Update the block label'), data.data.label ? ' ' + data.data.label + ' ' : '',
+                  function(evt, label) {
+                    label = label.replace(/ /g, '');
+                    if (data.data.label != label) {
+                      data.data.label = label;
+                      cellView.renderLabel();
+                      alertify.success(gettextCatalog.getString('Label updated'));
+                    }
+                });
+              }
+            }
             else if (data.blockType == 'basic.code') {
               if (paper.options.enabled) {
                 var block = {
                   data: {
-                    code: self.getContent(cellView.model.id)
+                    code: self.getContent(cellView.model.id),
+                    params: data.data.params,
+                    ports: data.data.ports
                   },
                   position: cellView.model.attributes.position
                 };
@@ -434,25 +463,40 @@ angular.module('icestudio')
           };
 
           if (type == 'basic.code') {
+            var defaultValues = [
+              ' a , b ',
+              ' c , d ',
+              ''
+            ];
+            if (block && block.data) {
+              defaultValues[0] = ' ' +  block.data.ports.in.join(' , ') +  ' ';
+              defaultValues[1] = ' ' +  block.data.ports.out.join(' , ') +  ' ';
+              defaultValues[2] = ' ' +  block.data.params.join(' , ') +  ' ';
+            }
             utils.multiprompt(
               [ gettextCatalog.getString('Enter the input ports'),
-                gettextCatalog.getString('Enter the output ports') ],
-              [ ' a , b ',
-                ' c , d ' ],
+                gettextCatalog.getString('Enter the output ports'),
+                gettextCatalog.getString('Enter the parameters') ],
+              defaultValues,
               function(evt, ports) {
                 if (ports && (ports[0].length || ports[1].length)) {
                   blockInstance.data = {
                     code: '',
+                    params: [],
                     ports: { in: [], out: [] }
                   };
                   // Parse ports
                   var inPorts = [];
                   var outPorts = [];
+                  var params = [];
                   if (ports.length > 0) {
                     inPorts = ports[0].replace(/ /g, '').split(',');
                   }
                   if (ports.length > 1) {
                     outPorts = ports[1].replace(/ /g, '').split(',');
+                  }
+                  if (ports.length > 2) {
+                    params = ports[2].replace(/ /g, '').split(',');
                   }
 
                   for (var i in inPorts) {
@@ -463,7 +507,12 @@ angular.module('icestudio')
                     if (outPorts[o])
                       blockInstance.data.ports.out.push(outPorts[o]);
                   }
+                  for (var p in params) {
+                    if (params[p])
+                      blockInstance.data.params.push(params[p]);
+                  }
                   blockInstance.position.x = 31 * gridsize;
+                  blockInstance.position.y = 24 * gridsize;
 
                   if (block) {
                     blockInstance.data.code = block.data.code;
@@ -484,8 +533,7 @@ angular.module('icestudio')
             blockInstance.data = {
               info: ''
             };
-            blockInstance.position.x = 31 * gridsize;
-            blockInstance.position.y = 26 * gridsize;
+            blockInstance.position.y = 30 * gridsize;
             var cell = addBasicInfoBlock(blockInstance);
             var cellView = paper.findViewByModel(cell);
             if (cellView.$box.css('z-index') < zIndex) {
@@ -571,6 +619,31 @@ angular.module('icestudio')
                     cellView.$box.css('z-index', ++zIndex);
                   }
                   blockInstance.position.y += 10 * gridsize;*/
+                }
+            });
+          }
+          else if (type == 'basic.constant') {
+            alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), ' C ',
+              function(evt, name) {
+                if (name) {
+                  var names = name.replace(/ /g, '').split(',');
+                  blockInstance.position.x = 20 * gridsize;
+                  for (var n in names) {
+                    if (names[n]) {
+                      blockInstance.data = {
+                        label: names[n],
+                        value: ''
+                      };
+                      var cell = addBasicConstantBlock(blockInstance);
+                      var cellView = paper.findViewByModel(cell);
+                      if (cellView.$box.css('z-index') < zIndex) {
+                        cellView.$box.css('z-index', ++zIndex);
+                      }
+                      blockInstance.position.x += 15 * gridsize;
+                    }
+                  }
+                }
+                else {
                 }
             });
           }
@@ -719,6 +792,9 @@ angular.module('icestudio')
               else if (blockInstance.type == 'basic.output') {
                 addBasicOutputBlock(blockInstance, disabled);
               }
+              else if (blockInstance.type == 'basic.constant') {
+                addBasicConstantBlock(blockInstance, disabled);
+              }
               else {
                 addGenericBlock(blockInstance, deps[blockInstance.type]);
               }
@@ -778,12 +854,27 @@ angular.module('icestudio')
           return cell;
         };
 
+        function addBasicConstantBlock(blockInstances, disabled) {
+          var cell = new joint.shapes.ice.Constant({
+            id: blockInstances.id,
+            blockType: blockInstances.type,
+            data: blockInstances.data,
+            label: blockInstances.data.label,
+            position: blockInstances.position,
+            disabled: disabled
+          });
+
+          addCell(cell);
+          return cell;
+        };
+
         function addBasicCodeBlock(blockInstances, disabled) {
-          var inPorts = [];
-          var outPorts = [];
+          var leftPorts = [];
+          var rightPorts = [];
+          var topPorts = [];
 
           for (var i in blockInstances.data.ports.in) {
-            inPorts.push({
+            leftPorts.push({
               id: blockInstances.data.ports.in[i],
               label: blockInstances.data.ports.in[i],
               gridUnits: 32
@@ -791,10 +882,18 @@ angular.module('icestudio')
           }
 
           for (var o in blockInstances.data.ports.out) {
-            outPorts.push({
+            rightPorts.push({
               id: blockInstances.data.ports.out[o],
               label: blockInstances.data.ports.out[o],
               gridUnits: 32
+            });
+          }
+
+          for (var p in blockInstances.data.params) {
+            topPorts.push({
+              id: blockInstances.data.params[p],
+              label: blockInstances.data.params[p],
+              gridUnits: 48
             });
           }
 
@@ -804,8 +903,9 @@ angular.module('icestudio')
             data: blockInstances.data,
             position: blockInstances.position,
             disabled: disabled,
-            inPorts: inPorts,
-            outPorts: outPorts
+            leftPorts: leftPorts,
+            rightPorts: rightPorts,
+            topPorts: topPorts
           });
 
           addCell(cell);
@@ -826,40 +926,61 @@ angular.module('icestudio')
         };
 
         function addGenericBlock(blockInstance, block) {
-          var inPorts = [];
-          var outPorts = [];
+          var leftPorts = [];
+          var rightPorts = [];
+          var topPorts = [];
+          var bottomPorts = [];
 
           for (var i in block.graph.blocks) {
             var item = block.graph.blocks[i];
             if (item.type == 'basic.input') {
-              inPorts.push({
+              leftPorts.push({
                 id: item.id,
                 label: item.data.label
               });
             }
             else if (item.type == 'basic.output') {
-              outPorts.push({
+              rightPorts.push({
+                id: item.id,
+                label: item.data.label
+              });
+            }
+            else if (item.type == 'basic.constant') {
+              topPorts.push({
                 id: item.id,
                 label: item.data.label
               });
             }
           }
 
-          var numPorts = Math.max(inPorts.length, outPorts.length);
-          var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
+          var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
+          var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
 
-          var gridUnits = height / gridsize;
-
-          for (var i in inPorts) {
-            inPorts[i].gridUnits = gridUnits;
-          }
-          for (var o in outPorts) {
-            outPorts[o].gridUnits = gridUnits;
-          }
-
-
+          var height = 8 * gridsize;
+          height = Math.max(4 * gridsize * numPortsHeight, height);
           var blockLabel = blockInstance.type.toUpperCase();
-          var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
+          var width = 12 * gridsize;
+          if (blockLabel.length > 4) {
+            width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
+          }
+          width = Math.max(4 * gridsize * numPortsWidth, width);
+
+          var gridUnitsHeight = height / gridsize;
+          var gridUnitsWidth = width / gridsize;
+
+          for (var i in leftPorts) {
+            leftPorts[i].gridUnits = gridUnitsHeight;
+          }
+          for (var i in rightPorts) {
+            rightPorts[i].gridUnits = gridUnitsHeight;
+          }
+          for (var i in topPorts) {
+            topPorts[i].gridUnits = gridUnitsWidth;
+          }
+          for (var i in bottomPorts) {
+            bottomPorts[i].gridUnits = gridUnitsWidth;
+          }
+
           if (blockInstance.type.indexOf('.') != -1) {
             blockLabel = blockInstance.type.split('.').join(' ');
           }
@@ -879,8 +1000,9 @@ angular.module('icestudio')
             image: blockImage,
             label: blockLabel,
             position: blockInstance.position,
-            inPorts: inPorts,
-            outPorts: outPorts,
+            leftPorts: leftPorts,
+            rightPorts: rightPorts,
+            topPorts: topPorts,
             size: {
               width: width,
               height: height
@@ -902,14 +1024,14 @@ angular.module('icestudio')
 
           // Find selectors
           var sourceSelector, targetSelector;
-          for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
-            if (source.attributes.outPorts[_out] == wire.source.port) {
+          for (var _out = 0; _out < source.attributes.rightPorts.length; _out++) {
+            if (source.attributes.rightPorts[_out] == wire.source.port) {
               sourcePort = _out;
               break;
             }
           }
-          for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
-            if (target.attributes.inPorts[_in] == wire.target.port) {
+          for (var _in = 0; _in < source.attributes.leftPorts.length; _in++) {
+            if (target.attributes.leftPorts[_in] == wire.target.port) {
               targetPort = _in;
               break;
             }

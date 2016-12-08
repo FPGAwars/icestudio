@@ -82,7 +82,7 @@
 }
 
 .config-block {
-  background: #FAFAD2;
+  background: #fafacd;
 }
 
 .generic-block img {
@@ -105,7 +105,7 @@
 
 .io-block {
   position: absolute;
-  background: #FAFAD2;
+  background: #fafacd;
   border-radius: 5px;
   border: 2px solid #888;
   pointer-events: none;
@@ -123,6 +123,33 @@
 
 .io-block .select2 {
   position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 82px;
+  pointer-events: auto;
+}
+
+.constant-block {
+  position: absolute;
+  background: #faeaaf;
+  border-radius: 5px;
+  border: 2px solid #888;
+  pointer-events: none;
+  -webkit-user-select: none;
+  z-index: 0;
+}
+
+.constant-block label {
+  display: block;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 1em;
+  color: #444;
+}
+
+.constant-block input {
+  position: absolute;
+  text-align: center;
   left: 5px;
   bottom: 5px;
   width: 82px;
