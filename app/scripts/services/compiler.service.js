@@ -6,7 +6,7 @@ angular.module('icestudio')
 
       this.generateVerilog = function(project) {
         var code = header('//');
-        code += '`default_nettype none\n\n';
+        code += '`default_nettype none\n';
         code += verilogCompiler('main', project);
         return code;
       };
@@ -54,7 +54,7 @@ angular.module('icestudio')
 
           // Header
 
-          code += 'module ' + data.name;
+          code += '\nmodule ' + data.name;
 
           //-- Parameters
 
@@ -62,7 +62,7 @@ angular.module('icestudio')
           for (var p in data.params) {
             if (data.params[p] instanceof Object) {
               // Generic block
-              params.push(' parameter ' + data.params[p].name + ' = ' + data.params[p].value);
+              params.push(' parameter ' + data.params[p].name + ' = ' + (data.params[p].value ? data.params[p].value : '0'));
             }
             else {
               // Code block
@@ -107,7 +107,7 @@ angular.module('icestudio')
 
           // Footer
 
-          code += '\nendmodule\n\n';
+          code += '\nendmodule\n';
         }
 
         return code;
@@ -153,34 +153,50 @@ angular.module('icestudio')
       function getContent(name, project) {
         var content = [];
         var graph = project.graph;
-
-        // Wires
-
-        for (var w in graph.wires) {
-          if (graph.wires[w].source.port != 'constant-out') {
-            content.push('wire w' + w + ';');
-          }
-        }
-
-        // I/O connections
+        var connections = {
+          localparam: [],
+          wire: [],
+          assign: []
+        };
 
         for (var w in graph.wires) {
           var wire = graph.wires[w];
+          if (wire.source.port == 'constant-out') {
+            // Local Parameters
+            var constantBlock = findBlock(wire.source.block, graph);
+            var paramValue = digestId(constantBlock.id);
+            if (paramValue) {
+              connections.localparam.push('localparam p' + w + ' = ' + paramValue  + ';');
+            }
+          }
+          else {
+            // Wires
+            connections.wire.push('wire w' + w + ';');
+          }
+          // Assignations
           for (var i in graph.blocks) {
             var block = graph.blocks[i];
             if (block.type == 'basic.input') {
               if (wire.source.block == block.id) {
-                content.push('assign w' + w + ' = ' + digestId(block.id) + ';');
+                connections.assign.push('assign w' + w + ' = ' + digestId(block.id) + ';');
               }
             }
             else if (block.type == 'basic.output') {
               if (wire.target.block == block.id) {
-                content.push('assign ' + digestId(block.id) + ' = w' + w + ';');
+                if (wire.source.port == 'constant-out') {
+                  connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
+                }
+                else {
+                  connections.assign.push('assign ' + digestId(block.id) + ' = w' + w + ';');
+                }
               }
             }
-            // TODO: assign constant value
           }
         }
+
+        content = content.concat(connections.localparam);
+        content = content.concat(connections.wire);
+        content = content.concat(connections.assign);
 
         // Wires Connections
 
@@ -190,7 +206,8 @@ angular.module('icestudio')
             var wi = graph.wires[i];
             var wj = graph.wires[j];
             if (wi.source.block == wj.source.block &&
-                wi.source.port == wj.source.port) {
+                wi.source.port == wj.source.port &&
+                wi.source.port != 'constant-out') {
               content.push('assign w' + i + ' = w' + j + ';');
             }
           }
@@ -233,14 +250,10 @@ angular.module('icestudio')
               if ((block.id == wire.target.block) &&
                   (wire.source.port == 'constant-out')) {
                 var paramName = digestId(wire.target.port);
-                var constantBlock = findBlock(wire.source.block, graph);
-                var paramValue = digestId(constantBlock.id);
-                if (paramValue) {
-                  var param = '';
-                  param += ' .' + paramName;
-                  param += '(' + paramValue + ')';
-                  params.push(param);
-                }
+                var param = '';
+                param += ' .' + paramName;
+                param += '(p' + w + ')';
+                params.push(param);
               }
             }
 
