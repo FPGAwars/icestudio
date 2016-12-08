@@ -584,6 +584,10 @@ angular.module('icestudio')
             content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
           }
           content.push('</div>');
+          // Restore values
+          for (var i = 0; i < n; i++) {
+            $('#input' + i.toString()).val(values[i]);
+          }
 
           alertify.confirm(content.join('\n'))
           .set('onok', function(evt) {
@@ -595,10 +599,6 @@ angular.module('icestudio')
               callback(evt, values);
           })
           .set('oncancel', function(evt) {
-            // Restore previous values
-            for (var i = 0; i < n; i++) {
-              $('#input' + i.toString()).val(values[i]);
-            }
           });
         }
 

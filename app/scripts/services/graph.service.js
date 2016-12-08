@@ -518,18 +518,28 @@ angular.module('icestudio')
                   blockInstance.position.x = 31 * gridsize;
                   blockInstance.position.y = 24 * gridsize;
 
-                  if (block) {
-                    blockInstance.data.code = block.data.code;
-                    blockInstance.position = block.position;
-                  }
-                  var cell = addBasicCodeBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
+                  var allAttrs= inPorts.concat(outPorts, params);
+                  var numAttrs = allAttrs.length;
 
-                  if (callback)
-                    callback();
+                  // Check duplicated attributes
+                  if (numAttrs == $.unique(allAttrs).length) {
+                    evt.cancel = false;
+                    if (block) {
+                      blockInstance.data.code = block.data.code;
+                      blockInstance.position = block.position;
+                    }
+                    var cell = addBasicCodeBlock(blockInstance);
+                    var cellView = paper.findViewByModel(cell);
+                    if (cellView.$box.css('z-index') < zIndex) {
+                      cellView.$box.css('z-index', ++zIndex);
+                    }
+                    if (callback)
+                      callback();
+                  }
+                  else {
+                    evt.cancel = true;
+                    alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
+                  }
                 }
             });
           }
