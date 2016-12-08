@@ -58,13 +58,19 @@ angular.module('icestudio')
 
           //-- Parameters
 
-          if (data.params) {
-
-            var params = [];
-            for (var p in data.params) {
-              params.push(' parameter ' + data.params[p] + '=0');
+          var params = [];
+          for (var p in data.params) {
+            if (data.params[p] instanceof Object) {
+              // Generic block
+              params.push(' parameter ' + data.params[p].name + ' = ' + data.params[p].value);
             }
+            else {
+              // Code block
+              params.push(' parameter ' + data.params[p] + ' = 0');
+            }
+          }
 
+          if (params.length > 0) {
             code += ' #(\n';
             code += params.join(',\n');
             code += '\n)';
@@ -80,9 +86,11 @@ angular.module('icestudio')
             ports.push(' output ' + data.ports.out[o]);
           }
 
-          code += ' (\n';
-          code += ports.join(',\n');
-          code += '\n);\n';
+          if (ports.length > 0) {
+            code += ' (\n';
+            code += ports.join(',\n');
+            code += '\n);\n';
+          }
 
           // Content
 
@@ -112,7 +120,10 @@ angular.module('icestudio')
         for (var i in graph.blocks) {
           var block = graph.blocks[i];
           if (block.type == 'basic.constant') {
-            params.push(digestId(block.id));
+            params.push({
+              name: digestId(block.id),
+              value: block.data.value
+            });
           }
         }
 
@@ -146,7 +157,9 @@ angular.module('icestudio')
         // Wires
 
         for (var w in graph.wires) {
-          content.push('wire w' + w + ';');
+          if (graph.wires[w].source.port != 'constant-out') {
+            content.push('wire w' + w + ';');
+          }
         }
 
         // I/O connections
@@ -165,6 +178,7 @@ angular.module('icestudio')
                 content.push('assign ' + digestId(block.id) + ' = w' + w + ';');
               }
             }
+            // TODO: assign constant value
           }
         }
 
@@ -213,28 +227,24 @@ angular.module('icestudio')
 
             //-- Parameters
 
-            if (block.data.params) {
-
-              var params = [];
-              for (var p in block.data.params) {
-                var paramName = block.data.params[p];
-                for (var w in allWires) {
-                  var wire = allWires[w];
-                  if ((block.id == wire.target.block) &&
-                      (paramName == wire.target.port)) {
-                    var constantBlock = findBlock(wire.source.block, graph);
-                    var paramValue = constantBlock.data.value;
-                    if (paramValue) {
-                      var param = '';
-                      param += ' .' + paramName;
-                      param += '(' + paramValue + ')';
-                      params.push(param);
-                    }
-                    break;
-                  }
+            var params = [];
+            for (var w in graph.wires) {
+              var wire = graph.wires[w];
+              if ((block.id == wire.target.block) &&
+                  (wire.source.port == 'constant-out')) {
+                var paramName = digestId(wire.target.port);
+                var constantBlock = findBlock(wire.source.block, graph);
+                var paramValue = digestId(constantBlock.id);
+                if (paramValue) {
+                  var param = '';
+                  param += ' .' + paramName;
+                  param += '(' + paramValue + ')';
+                  params.push(param);
                 }
               }
+            }
 
+            if (params.length > 0) {
               instance += ' #(\n' + params.join(',\n') + '\n)';
             }
 
@@ -267,7 +277,9 @@ angular.module('icestudio')
               }
             }
 
-            instance += ' (\n' + ports.join(',\n') + '\n);';
+            if (ports.length > 0) {
+              instance += ' (\n' + ports.join(',\n') + '\n);';
+            }
           }
 
           if (instance)
