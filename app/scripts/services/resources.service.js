@@ -8,10 +8,6 @@ angular.module('icestudio')
           return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
         }
 
-        this.getTemplates = function() {
-          return utils.getFilesRecursive(nodePath.join('resources', 'templates'), '.ice');
-        }
-
         this.getMenuBlocks = function() {
           return utils.getFilesRecursive(nodePath.join('resources', 'blocks'), '.iceb');
         }

@@ -469,9 +469,13 @@ angular.module('icestudio')
               ''
             ];
             if (block && block.data) {
-              defaultValues[0] = ' ' +  block.data.ports.in.join(' , ') +  ' ';
-              defaultValues[1] = ' ' +  block.data.ports.out.join(' , ') +  ' ';
-              defaultValues[2] = ' ' +  block.data.params.join(' , ') +  ' ';
+              if (block.data.ports) {
+                defaultValues[0] = ' ' +  block.data.ports.in.join(' , ') +  ' ';
+                defaultValues[1] = ' ' +  block.data.ports.out.join(' , ') +  ' ';
+              }
+              if (block.data.params) {
+                defaultValues[2] = ' ' +  block.data.params.join(' , ') +  ' ';
+              }
             }
             utils.multiprompt(
               [ gettextCatalog.getString('Enter the input ports'),

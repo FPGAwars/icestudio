@@ -46,21 +46,6 @@
                   </li>
                 </ul>
               </li>
-              <li class="dropdown-submenu" uib-dropdown>
-                <a href uib-dropdown-toggle>{{ 'Templates' | translate }}</a>
-                <ul uib-dropdown-menu>
-                  <li class="dropdown-submenu" ng-repeat="template in templates" ng-if="template.children">
-                    <a href uib-dropdown-toggle>{{ template.name | translate }}</a>
-                    <ul uib-dropdown-menu>
-                      <li ng-repeat="child in template.children">
-                        <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
-                          {{ child.name | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
               <li class="divider"></li>
               <li>
                 <a href ng-click="saveProject()">{{ 'Save' | translate }}</a>

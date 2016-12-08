@@ -25,7 +25,6 @@ angular.module('icestudio')
     $scope.profile = profile;
 
     $scope.examples = resources.getExamples();
-    $scope.templates = resources.getTemplates();
     $scope.currentBoards = boards.getBoards();
     $scope.menuBlocks = resources.getMenuBlocks();
 
