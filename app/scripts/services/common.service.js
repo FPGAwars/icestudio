@@ -49,7 +49,7 @@ angular.module('icestudio')
 
         this.loadProject = function(name, project) {
           this.updateProjectName(name);
-          this.project = project;
+          this.project = JSON.parse(JSON.stringify(project));
           boards.selectBoard(project.board);
           if (graph.loadGraph(project)) {
             alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
