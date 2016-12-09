@@ -22,10 +22,10 @@ joint.routers.ice = (function(g, _, joint) {
         maximumLoops: 2000,
 
         // possible starting directions from an element
-        startDirections: ['right', 'top', 'bottom'],
+        startDirections: ['right', 'bottom'],
 
         // possible ending directions to an element
-        endDirections: ['left', 'top', 'bottom'],
+        endDirections: ['left', 'top'],
 
         // specify directions above
         directionMap: {
@@ -515,6 +515,14 @@ joint.routers.ice = (function(g, _, joint) {
 
     // public function
     return function(vertices, opt, linkView) {
+
+        if (linkView.sourceMagnet) {
+          opt.startDirections = [linkView.sourceMagnet.attributes.pos.value];
+        }
+
+        if (linkView.targetMagnet) {
+          opt.endDirections = [linkView.targetMagnet.attributes.pos.value];
+        }
 
         return router.call(linkView, vertices, _.extend({}, config, opt));
     };
