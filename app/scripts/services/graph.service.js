@@ -810,7 +810,9 @@ angular.module('icestudio')
                 addBasicConstantBlock(blockInstance, disabled);
               }
               else {
-                addGenericBlock(blockInstance, deps[blockInstance.type]);
+                if (deps && deps[blockInstance.type]) {
+                  addGenericBlock(blockInstance, deps[blockInstance.type]);
+                }
               }
             }
 

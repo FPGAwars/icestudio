@@ -380,7 +380,9 @@ angular.module('icestudio')
               boards.selectBoard(board.name);
               graph.resetIOChoices();
               alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
-              $rootScope.$apply();
+              if(!$rootScope.$$phase) {
+                $rootScope.$apply();
+              }
           });
         }
         else {
