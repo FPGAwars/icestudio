@@ -410,6 +410,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
     template: '\
     <div class="constant-block">\
+      <p>*</p>\
       <label></label>\
       <input class="constant-input"></input>\
     </div>\
@@ -425,6 +426,14 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
         this.model.attributes.data.value = $(evt.target).val();
       }, this));
     },
+    renderLocal: function() {
+      if (this.model.get('data').local) {
+        this.$box.find('p').removeClass('hidden');
+      }
+      else {
+        this.$box.find('p').addClass('hidden');
+      }
+    },
     renderLabel: function () {
       var name = this.model.attributes.data.label;
       this.$box.find('label').text(name);
@@ -439,6 +448,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
       this.$box.find('.constant-input').val('');
     },
     update: function () {
+      this.renderLocal();
       this.renderLabel();
       this.renderPorts();
       this.renderValue();
