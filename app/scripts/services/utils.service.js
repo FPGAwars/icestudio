@@ -441,7 +441,9 @@ angular.module('icestudio')
               var brewCommands = [
                 '/usr/local/bin/brew update',
                 '/usr/local/bin/brew install libftdi',
-                '/usr/local/bin/brew link --overwrite libftdi'
+                '/usr/local/bin/brew link --overwrite libftdi',
+                '/usr/local/bin/brew install libffi',
+                '/usr/local/bin/brew link --overwrite libffi'
               ];
               nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
