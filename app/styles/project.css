@@ -139,6 +139,14 @@
   z-index: 0;
 }
 
+.constant-block p {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  font-size: 1.5em;
+  color: #444;
+}
+
 .constant-block label {
   display: block;
   margin-top: 4px;

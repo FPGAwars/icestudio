@@ -146,6 +146,7 @@ angular.module('icestudio')
             var copySuccess = utils.copySync(origPath, destPath, file);
             if (!copySuccess) {
               alertify.notify(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 'error', 30);
+              ret = false;
               break;
             }
           }

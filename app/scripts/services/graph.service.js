@@ -305,7 +305,7 @@ angular.module('icestudio')
               if (paper.options.enabled) {
                 alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
                   function(evt, label) {
-                    label = label.replace(/ /g, '');
+                    var label = label.replace(/ /g, '');
                     if (data.data.label != label) {
                       data.data.label = label;
                       cellView.renderLabel();
@@ -316,14 +316,24 @@ angular.module('icestudio')
             }
             else if (data.blockType == 'basic.constant') {
               if (paper.options.enabled) {
-                alertify.prompt(gettextCatalog.getString('Update the block label'), data.data.label ? ' ' + data.data.label + ' ' : '',
-                  function(evt, label) {
-                    label = label.replace(/ /g, '');
+                utils.constantprompt([
+                  gettextCatalog.getString('Update the block label'),
+                  gettextCatalog.getString('Update the block status'),
+                  gettextCatalog.getString('Local parameter')
+                ], [
+                  data.data.label ? ' ' + data.data.label + ' ' : '',
+                  data.data.local ? data.data.local : false
+                ],
+                  function(evt, values) {
+                    var label = values[0].replace(/ /g, '');
                     if (data.data.label != label) {
                       data.data.label = label;
                       cellView.renderLabel();
                       alertify.success(gettextCatalog.getString('Label updated'));
                     }
+                    var local = values[1];
+                    data.data.local = local;
+                    cellView.renderLocal();
                 });
               }
             }
@@ -646,6 +656,7 @@ angular.module('icestudio')
                     if (names[n]) {
                       blockInstance.data = {
                         label: names[n],
+                        local: false,
                         value: ''
                       };
                       var cell = addBasicConstantBlock(blockInstance);
@@ -962,10 +973,12 @@ angular.module('icestudio')
               });
             }
             else if (item.type == 'basic.constant') {
-              topPorts.push({
-                id: item.id,
-                label: item.data.label
-              });
+              if (!item.data.local) {
+                topPorts.push({
+                  id: item.id,
+                  label: item.data.label
+                });
+              }
             }
           }
 

@@ -441,7 +441,9 @@ angular.module('icestudio')
               var brewCommands = [
                 '/usr/local/bin/brew update',
                 '/usr/local/bin/brew install libftdi',
-                '/usr/local/bin/brew link --overwrite libftdi'
+                '/usr/local/bin/brew link --overwrite libftdi',
+                '/usr/local/bin/brew install libffi',
+                '/usr/local/bin/brew link --overwrite libffi'
               ];
               nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
@@ -595,6 +597,34 @@ angular.module('icestudio')
             for (var i = 0; i < n; i++) {
               values.push($('#input' + i.toString()).val());
             }
+            if (callback)
+              callback(evt, values);
+          })
+          .set('oncancel', function(evt) {
+          });
+        }
+
+        this.constantprompt = function(messages, values, callback) {
+          var content = [];
+          var n = messages.length;
+          content.push('<div>');
+          content.push('  <p>' + messages[0] + '</p>');
+          content.push('  <input class="ajs-input" id="label" type="text" value="' + values[0] + '"/>');
+          content.push('  <br>');
+          content.push('  <p>' + messages[1] + '</p>');
+          content.push('  <ul>');
+          content.push('  <li><p>' + messages[2] + ' <input id="local" type="checkbox" ' + (values[1] ? 'checked' : '') + '/></p></li>');
+          content.push('  </ul>');
+          content.push('</div>');
+          // Restore values
+          $('#label').val(values[0]);
+          $('#local').prop('checked', values[1]);
+
+          alertify.confirm(content.join('\n'))
+          .set('onok', function(evt) {
+            var values = [];
+            values.push($('#label').val());
+            values.push($('#local').prop('checked'));
             if (callback)
               callback(evt, values);
           })
