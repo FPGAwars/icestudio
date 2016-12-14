@@ -440,10 +440,12 @@ angular.module('icestudio')
             else {
               var brewCommands = [
                 '/usr/local/bin/brew update',
-                '/usr/local/bin/brew install libftdi',
-                '/usr/local/bin/brew link --overwrite libftdi',
-                '/usr/local/bin/brew install libffi',
-                '/usr/local/bin/brew link --overwrite libffi'
+                '/usr/local/bin/brew install --force libftdi',
+                '/usr/local/bin/brew unlink libftdi',
+                '/usr/local/bin/brew link --force libftdi',
+                '/usr/local/bin/brew install --force libffi',
+                '/usr/local/bin/brew unlink libffi',
+                '/usr/local/bin/brew link --force libffi'
               ];
               nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
                 // console.log(error, stdout, stderr);
@@ -452,6 +454,7 @@ angular.module('icestudio')
                   if ((stderr.indexOf('brew: command not found') != -1) ||
                        (stderr.indexOf('brew: No such file or directory') != -1)) {
                     alertify.notify(gettextCatalog.getString('Homebrew is required'), 'error', 30);
+                    // TODO: open web browser with Homebrew website on click
                   }
                   else if (stderr.indexOf('Error: Failed to download') != -1) {
                     alertify.notify(gettextCatalog.getString('Internet connection required'), 'error', 30);
