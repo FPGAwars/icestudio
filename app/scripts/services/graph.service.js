@@ -56,6 +56,16 @@ angular.module('icestudio')
           this.setState(null);
         }
 
+        this.resetBreadcrumbs = function(name) {
+          if (this.breadcrumbs.length > 1) {
+            this.breadcrumbs = [{ name: name }];
+          }
+          this.breadcrumbs[0].name = name;
+          if(!$rootScope.$$phase) {
+            $rootScope.$apply();
+          }
+        }
+
         function setGrid(paper, size, offset) {
 
           // TODO: draw grid in a SVG because 'background' truncates the parameters
@@ -361,12 +371,12 @@ angular.module('icestudio')
               zIndex = 1;
               if (self.breadcrumbs.length == 2) {
                 $rootScope.$broadcast('refreshProject', function() {
-                  self.loadGraph(dependencies[data.blockType], disabled);
+                  self.loadDesign(dependencies[data.blockType], disabled);
                   self.appEnable(false);
                 });
               }
               else {
-                self.loadGraph(dependencies[data.blockType], disabled);
+                self.loadDesign(dependencies[data.blockType], disabled);
                 self.appEnable(false);
               }
             }
@@ -793,22 +803,22 @@ angular.module('icestudio')
           return paper.options.enabled;
         }
 
-        this.loadGraph = function(project, disabled) {
-          if (project &&
-              project.graph &&
-              project.graph.blocks &&
-              project.graph.wires &&
-              project.deps) {
+        this.loadDesign = function(design, disabled) {
+          if (design &&
+              design.graph &&
+              design.graph.blocks &&
+              design.graph.wires &&
+              design.deps) {
 
-            var blockInstances = project.graph.blocks;
-            var wires = project.graph.wires;
-            var deps = project.deps;
+            var blockInstances = design.graph.blocks;
+            var wires = design.graph.wires;
+            var deps = design.deps;
 
-            dependencies = project.deps;
+            dependencies = design.deps;
 
             this.clearAll();
 
-            this.setState(project.state);
+            this.setState(design.state);
 
             // Blocks
             for (var i in blockInstances) {

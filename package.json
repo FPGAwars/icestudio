@@ -30,6 +30,7 @@
     "grunt-exec": "^1.0.0",
     "grunt-json-minify": "^1.1.0",
     "grunt-nw-builder": "^2.0.3",
+    "grunt-replace": "^1.0.1",
     "grunt-usemin": "^3.1.1",
     "grunt-wiredep": "^3.0.1",
     "load-grunt-tasks": "^3.5.0",

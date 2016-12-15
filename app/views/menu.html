@@ -6,8 +6,7 @@
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.ice"/>
     <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + common.projectName }}.png"/>
 
-    <input id="input-import-block" type="file" accept=".iceb" class="hidden" multiple/>
-    <input id="input-export-block" type="file" accept=".iceb" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.iceb"/>
+    <input id="input-add-as-block" type="file" accept=".ice,.iceb" class="hidden" multiple/>
 
     <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.v"/>
     <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.pcf"/>
@@ -24,10 +23,10 @@
             <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
-                <a href ng-click="newProject()">{{ 'New project' | translate }}</a>
+                <a href ng-click="newProject()">{{ 'New' | translate }}</a>
               </li>
               <li>
-                <a href ng-click="openProject()">{{ 'Open project' | translate }}</a>
+                <a href ng-click="openProject()">{{ 'Open' | translate }}...</a>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
@@ -38,7 +37,7 @@
                     <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                     <ul uib-dropdown-menu>
                       <li ng-repeat="child in example.children">
-                        <a href ng-click="openStoredProject(child.name, child.content)" ng-if="child.content">
+                        <a href ng-click="loadProject(child.name, child.content)" ng-if="child.content">
                         {{ child.name | translate }}
                         </a>
                       </li>
@@ -51,18 +50,15 @@
                 <a href ng-click="saveProject()">{{ 'Save' | translate }}</a>
               </li>
               <li>
-                <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}</a>
+                <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}...</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="importBlock()">{{ 'Import block' | translate }}</a>
-              </li>
-              <li>
-                <a href ng-click="exportAsBlock()">{{ 'Export as block' | translate }}</a>
+                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
-                <a href uib-dropdown-toggle>{{ 'Export' | translate }}</a>
+                <a href uib-dropdown-toggle>{{ 'Export' | translate }}...</a>
                 <ul uib-dropdown-menu>
                   <li>
                     <a href ng-click="exportVerilog()">{{ 'Verilog' }}</a>
@@ -102,7 +98,7 @@
                 <a href uib-dropdown-toggle>{{ 'Preferences' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="setImagePath()">{{ 'Image path' | translate }}</a>
+                    <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
                   </li>
                   <li class="divider"></li>
                   <li>

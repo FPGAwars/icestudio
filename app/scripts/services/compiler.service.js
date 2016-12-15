@@ -4,30 +4,31 @@ angular.module('icestudio')
   .service('compiler', ['nodeSha1', '_package',
     function(nodeSha1, _package) {
 
-      this.generateVerilog = function(project) {
-        var code = header('//');
-        code += '`default_nettype none\n';
-        code += verilogCompiler('main', project);
+      this.generate = function(target, project) {
+        var code = '';
+        switch(target) {
+          case 'verilog':
+            code += header('//');
+            code += '`default_nettype none\n';
+            code += verilogCompiler('main', project);
+            break;
+          case 'pcf':
+            code += header('#');
+            code += pcfCompiler(project);
+            break;
+          case 'testbench':
+            code += header('//');
+            code += testbenchCompiler(project);
+            break;
+          case 'verilog':
+            code += header('[*]');
+            code += gtkwaveCompiler(project);
+            break;
+          default:
+            code += '';
+        }
         return code;
-      };
-
-      this.generatePCF = function(project) {
-        var code = header('#');
-        code += pcfCompiler(project);
-        return code;
-      };
-
-      this.generateTestbench = function(project) {
-        var code = header('//');
-        code += testbenchCompiler(project);
-        return code;
-      };
-
-      this.generateGTKWave = function(project) {
-        var code = header('[*]');
-        code += gtkwaveCompiler(project);
-        return code;
-      };
+      }
 
       function header(comment) {
         var header = '';

@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['gettextCatalog', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package',
-      function(gettextCatalog, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package) {
+    .service('utils', ['$rootScope', 'gettextCatalog', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package', 'window',
+      function($rootScope, gettextCatalog, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package, window) {
 
         const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
         const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
@@ -635,6 +635,40 @@ angular.module('icestudio')
           });
         }
 
+        this.projectinfoprompt = function(values, callback) {
+          var content = [];
+          var messages = [
+            gettextCatalog.getString('Name'),
+            gettextCatalog.getString('Version'),
+            gettextCatalog.getString('Description'),
+            gettextCatalog.getString('Author')
+          ]
+          var n = messages.length;
+          content.push('<div>');
+          for (var i in messages) {
+            if (i > 0) content.push('<br>');
+            content.push('  <p>' + messages[i] + '</p>');
+            content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
+          }
+          content.push('</div>');
+          // Restore values
+          for (var i = 0; i < n; i++) {
+            $('#input' + i.toString()).val(values[i]);
+          }
+
+          alertify.confirm(content.join('\n'))
+          .set('onok', function(evt) {
+            var values = [];
+            for (var i = 0; i < n; i++) {
+              values.push($('#input' + i.toString()).val());
+            }
+            if (callback)
+              callback(evt, values);
+          })
+          .set('oncancel', function(evt) {
+          });
+        }
+
         this.copySync = function(orig, dest, filename) {
           var ret = true;
           try {
@@ -675,6 +709,20 @@ angular.module('icestudio')
           return '<b>' + text + '</b>';
         }
 
+        this.openDialog = function(inputID, ext, callback) {
+          var chooser = $(inputID);
+          chooser.unbind('change');
+          chooser.change(function(evt) {
+            var filepath = $(this).val();
+            //if (filepath.endsWith(ext)) {
+              if (callback)
+                callback(filepath);
+            //}
+            $(this).val('');
+          });
+          chooser.trigger('click');
+        }
+
         this.saveDialog = function(inputID, ext, callback) {
           var chooser = $(inputID);
           chooser.unbind('change');
@@ -688,5 +736,16 @@ angular.module('icestudio')
           });
           chooser.trigger('click');
         }
+
+        this.updateWindowTitle = function(title) {
+          window.get().title = title;
+        }
+
+        this.rootScopeSafeApply = function() {
+          if(!$rootScope.$$phase) {
+            $rootScope.$apply();
+          }
+        }
+
 
     }]);

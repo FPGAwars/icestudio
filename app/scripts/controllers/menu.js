@@ -4,6 +4,7 @@ angular.module('icestudio')
   .controller('MenuCtrl', function ($rootScope,
                                     $scope,
                                     $timeout,
+                                    project,
                                     nodeLangInfo,
                                     nodeFs,
                                     nodePath,
@@ -33,7 +34,6 @@ angular.module('icestudio')
 
     $scope.workingdir = '';
     $scope.snapshotdir = '';
-    $scope.currentProjectPath = '';
 
     // Configure window
     var win = gui.Window.get();
@@ -71,129 +71,90 @@ angular.module('icestudio')
     // mouseleave event
     $scope.hideMenu = function (menu) {
       timer = $timeout(function () {
-          $scope.status[menu] = false;
+        $scope.status[menu] = false;
       }, 500);
     };
+
 
     // File
 
     $scope.newProject = function() {
-      alertify.prompt(gettextCatalog.getString('Enter the project\'s title'),
-                      gettextCatalog.getString('untitled'),
+      alertify.prompt(
+        gettextCatalog.getString('Enter the project name'),
+        gettextCatalog.getString('untitled'),
         function(evt, name) {
-          if (name) {
-            common.newProject(name);
-            $scope.currentProjectPath = '';
-            pathSync();
-          }
-      });
-    }
+          if (name)
+            project.new(name);
+        });
+    };
 
     $scope.openProject = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-open-project');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          event.target.files.clear();
-          if (file) {
-            if (file.path.endsWith('.ice')) {
-              $scope.workingdir = utils.dirname(file.path) + utils.sep;
-              if (!graph.isEmpty()) {
-                alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-                  function() {
-                    common.openProject(file.path);
-                    $scope.currentProjectPath = file.path;
-                    pathSync();
-                });
-              }
-              else {
-                common.openProject(file.path);
-                $scope.currentProjectPath = file.path;
-                pathSync();
-              }
-
-            }
-          }
+      utils.openDialog('#input-open-project', '.ice', function(filepath) {
+        updateWorkingdir(filepath);
+        checkGraph(function() {
+          alertify.confirm(
+            gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
+            function() {
+              project.open(filepath);
+            });
+        },
+        function() {
+          project.open(filepath);
         });
-        ctrl.click();
-      }, 0);
-    }
+      });
+    };
 
-    $scope.openStoredProject = function(name, project) {
-      if (project) {
-        if (!graph.isEmpty()) {
-          alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-          function() {
-            common.loadProject(name, project);
-            $scope.currentProjectPath = '';
-            pathSync();
-          });
-        }
-        else {
-          common.loadProject(name, project);
-          $scope.currentProjectPath = '';
-          pathSync();
-        }
+    $scope.loadProject = function(name, data) {
+      if (data) {
+        checkGraph(function() {
+          alertify.confirm(
+            gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
+            function() {
+              project.load(name, data);
+            });
+        },
+        function() {
+          project.load(name, data);
+        });
       }
-    }
+    };
 
     $scope.saveProject = function() {
-      var filepath = $scope.currentProjectPath;
+      var filepath = project.path;
       if (filepath) {
-        common.saveProject(filepath);
+        project.save(filepath);
       }
       else {
         $scope.saveProjectAs();
       }
-    }
+    };
 
     $scope.saveProjectAs = function(localCallback) {
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + utils.sep;
-        common.saveProject(filepath);
-        $scope.currentProjectPath = filepath;
-        pathSync();
+        updateWorkingdir(filepath);
+        project.save(filepath);
         if (localCallback)
           localCallback();
       });
-    }
+    };
 
     $rootScope.$on('saveProjectAs', function(event, callback) {
       $scope.saveProjectAs(callback);
-    })
+    });
 
-    $scope.importBlock = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-import-block');
-        ctrl.on('change', function(event) {
-          var files = JSON.parse(JSON.stringify(event.target.files));
-          for (var i in files) {
-            if (files[i] &&
-                files[i].path &&
-                files[i].path.endsWith('.iceb')) {
-              common.importBlock(files[i].path);
-            }
-          }
-          event.target.files.clear();
-        });
-        ctrl.click();
-      }, 0);
-    }
-
-    $scope.exportAsBlock = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-block', '.iceb', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportAsBlock(filepath);
+    $scope.addAsBlock = function() {
+      utils.openDialog('#input-add-as-block', '.ice', function(filepath) {
+        checkGraph(function() {
+          project.addAsBlock(filepath);
         });
       });
-    }
+    };
 
     $scope.exportVerilog = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-verilog', '.v', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportVerilog(filepath);
+          project.export('verilog', filepath, gettextCatalog.getString('Verilog code exported'));
+          updateWorkingdir(filepath);
         });
       });
     }
@@ -201,8 +162,8 @@ angular.module('icestudio')
     $scope.exportPCF = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-pcf', '.pcf', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportPCF(filepath);
+          project.export('pcf', filepath, gettextCatalog.getString('PCF file exported'));
+          updateWorkingdir(filepath);
         });
       });
     }
@@ -210,8 +171,8 @@ angular.module('icestudio')
     $scope.exportTestbench = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-testbench', '.v', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportTestbench(filepath);
+          project.export('testbench', filepath, gettextCatalog.getString('Testbench exported'));
+          updateWorkingdir(filepath);
         });
       });
     }
@@ -219,20 +180,32 @@ angular.module('icestudio')
     $scope.exportGTKwave = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-gtkwave', '.gtkw', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportGTKWave(filepath);
+          project.export('gtkwave', filepath, gettextCatalog.getString('GTKWave exported'));
+          updateWorkingdir(filepath);
         });
       });
     }
 
+    function updateWorkingdir(filepath) {
+      $scope.workingdir = utils.dirname(filepath) + utils.sep;
+    };
+
+
     // Edit
 
-    $scope.setImagePath = function() {
-      var current = common.project.image;
+    $scope.setProjectInformation = function() {
+
+      var values = [
+
+      ];
+      utils.projectinfoprompt(values, function(evt, values) {
+
+      });
+      /*var current = common.project.image;
       alertify.prompt(gettextCatalog.getString('Enter the project\'s image path'), (current) ? current : '',
         function(evt, imagePath) {
           common.setImagePath(imagePath);
-      });
+      });*/
     }
 
     $scope.setRemoteHostname = function() {
@@ -413,13 +386,16 @@ angular.module('icestudio')
       });
     }
 
-    function checkGraph(callback) {
+    function checkGraph(callback, callback2) {
       if (!graph.isEmpty()) {
         if (callback)
           callback();
       }
       else {
-        alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
+        if (callback2)
+          callback2();
+        else
+          alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
     }
 
@@ -450,10 +426,6 @@ angular.module('icestudio')
     // Help
 
     $scope.openUrl = function(url) {
-      /*gui.Window.open(url, {
-        nodejs: false,
-        "new-instance": false
-      });*/
       event.preventDefault();
       gui.Shell.openExternal(url);
     }
