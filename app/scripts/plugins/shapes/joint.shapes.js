@@ -278,7 +278,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       var name = this.model.get('label');
 
       if (image) {
-        this.$box.find('img').attr('src', image);
+        this.$box.find('img').attr('src', 'data:image/svg+xml,' + image);
         this.$box.find('img').removeClass('hidden');
         this.$box.find('label').addClass('hidden');
       }

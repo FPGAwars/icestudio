@@ -1023,11 +1023,14 @@ angular.module('icestudio')
           }
 
           var blockImage = '';
-          if (block.image &&
-              nodeFs.existsSync(block.image) &&
-              nodeFs.lstatSync(block.image).isFile()) {
-            blockImage = block.image;
+          if (block.image) {
             width = 12 * gridsize;
+            if (block.image.startsWith('%3Csvg')) {
+              blockImage = block.image;
+            }
+            else if (block.image.startsWith('<svg')) {
+              blockImage = encodeURI(block.image);
+            }
           }
 
           var cell = new joint.shapes.ice.Generic({
