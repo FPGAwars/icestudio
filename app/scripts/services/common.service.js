@@ -171,6 +171,7 @@ angular.module('icestudio')
 
         this.exportAsBlock = function(filepath) {
           var name = utils.basename(filepath);
+          this.sortGraph();
           this.refreshProject();
           // Convert project to block
           var block = angular.copy(this.project);
@@ -225,6 +226,22 @@ angular.module('icestudio')
             alertify.success(gettextCatalog.getString('GTKWave exported'));
           }, false);
         };
+
+        this.sortGraph = function() {
+          var cells = graph.getCells();
+
+          // Sort cells by x-coordinate
+          cells = _.sortBy(cells, function(cell) {
+            return cell.attributes.position.x;
+          });
+
+          // Sort cells by y-coordinate
+          cells = _.sortBy(cells, function(cell) {
+            return cell.attributes.position.y;
+          });
+
+          graph.setCells(cells);
+        }
 
         this.refreshProject = function(callback) {
           var graphData = graph.toJSON();

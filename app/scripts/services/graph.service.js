@@ -697,6 +697,14 @@ angular.module('icestudio')
           return graph.toJSON();
         }
 
+        this.getCells = function() {
+          return graph.getCells();
+        }
+
+        this.setCells = function(cells) {
+          graph.attributes.cells.models = cells;
+        }
+
         this.getContent = function(id) {
           return paper.findViewByModel(id).$box.find(
             '#content' + sha1(id).toString().substring(0, 6)).val();
