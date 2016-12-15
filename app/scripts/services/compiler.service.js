@@ -116,7 +116,7 @@ angular.module('icestudio')
 
       function getParams(project) {
         var params = [];
-        var graph = project.graph;
+        var graph = project.design.graph;
 
         for (var i in graph.blocks) {
           var block = graph.blocks[i];
@@ -136,7 +136,7 @@ angular.module('icestudio')
           in: [],
           out: []
         };
-        var graph = project.graph;
+        var graph = project.design.graph;
 
         for (var i in graph.blocks) {
           var block = graph.blocks[i];
@@ -153,7 +153,7 @@ angular.module('icestudio')
 
       function getContent(name, project) {
         var content = [];
-        var graph = project.graph;
+        var graph = project.design.graph;
         var connections = {
           localparam: [],
           wire: [],
@@ -216,7 +216,7 @@ angular.module('icestudio')
 
         // Block instances
 
-        content = content.concat(getInstances(name, project.graph));
+        content = content.concat(getInstances(name, project.design.graph));
 
         return content.join('\n');
       }
@@ -314,7 +314,11 @@ angular.module('icestudio')
         var code = '';
 
         if (project &&
-            project.graph) {
+            project.design &&
+            project.design.graph) {
+
+          var graph = project.design.graph;
+          var deps = project.design.deps;
 
           // Scape dot in name
 
@@ -334,14 +338,14 @@ angular.module('icestudio')
 
           // Dependencies modules
 
-          for (var d in project.deps) {
-            code += verilogCompiler(name + '_' + digestId(d, true), project.deps[d]);
+          for (var d in deps) {
+            code += verilogCompiler(name + '_' + digestId(d, true), deps[d]);
           }
 
           // Code modules
 
-          for (var i in project.graph.blocks) {
-            var block = project.graph.blocks[i];
+          for (var i in graph.blocks) {
+            var block = graph.blocks[i];
             if (block) {
               if (block.type == 'basic.code') {
                 var data = {
@@ -361,9 +365,10 @@ angular.module('icestudio')
 
       function pcfCompiler(project) {
         var code = '';
+        var graph = project.design.graph;
 
-        for (var i in project.graph.blocks) {
-          var block = project.graph.blocks[i];
+        for (var i in graph.blocks) {
+          var block = graph.blocks[i];
           if (block.type == 'basic.input' ||
               block.type == 'basic.output') {
             code += 'set_io ';
@@ -475,8 +480,9 @@ angular.module('icestudio')
         var output = [];
         var input_unnamed = 0;
         var output_unnamed = 0;
-        for (var i in project.graph.blocks) {
-          var block = project.graph.blocks[i];
+        var graph = project.design.graph;
+        for (var i in graph.blocks) {
+          var block = graph.blocks[i];
           if (block.type == 'basic.input') {
             if (block.data.label) {
               input.push({ id: digestId(block.id), label: 'input_' + block.data.label.replace(' ', '_') });

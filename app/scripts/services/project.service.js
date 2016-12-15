@@ -55,7 +55,7 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
-      this.project = _safeLoad(name, data);
+      this.project = _safeLoad(data);
 
       if (graph.loadDesign(this.project.design)) {
         boards.selectBoard(this.project.design.board);
@@ -67,7 +67,7 @@ angular.module('icestudio')
       }
     };
 
-    function _safeLoad(name, data) {
+    function _safeLoad(data) {
       var project = {};
       switch(data.version) {
         case '1.0':
@@ -75,8 +75,15 @@ angular.module('icestudio')
           break;
         default:
           project = _default();
-          project.design = data;
+          project.design.board = data.board;
+          project.design.graph = data.graph;
+          project.design.deps = data.deps;
+          project.design.state = data.state;
           break;
+      }
+      // Safe load all dependencies recursively
+      for (var d in project.design.deps) {
+        project.design.deps[d] = _safeLoad(project.design.deps[d]);
       }
       return project;
     };
@@ -114,10 +121,10 @@ angular.module('icestudio')
     this.addAsBlock = function(filepath) {
       var self = this;
       utils.readFile(filepath, function(data) {
-        var name = utils.basename(filepath);
-        var path = utils.dirname(filepath);
-        var block = _safeLoad(name, data);
+        var block = _safeLoad(data);
         if (block) {
+          var name = utils.basename(filepath);
+          var path = utils.dirname(filepath);
           // 1. Parse and find included files
           var code = JSON.stringify(block);
           var files = utils.findIncludedFiles(code);
@@ -210,7 +217,7 @@ angular.module('icestudio')
             }
           }
           // Add block
-          graph.importBlock(name, block.design);
+          graph.importBlock(name, block);
           self.project.design.deps[name] = block;
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
         };
@@ -280,6 +287,7 @@ angular.module('icestudio')
     };
 
     this.addBlock = function(type, block) {
+      block = _safeLoad(block);
       this.project.design.deps[type] = block;
       graph.createBlock(type, block);
     };

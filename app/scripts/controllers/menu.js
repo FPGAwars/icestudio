@@ -178,9 +178,17 @@ angular.module('icestudio')
     };
 
     $scope.quit = function() {
-      profile.save();
-      win.close(true);
+      exit();
     };
+
+    function exit() {
+      alertify.confirm(
+        gettextCatalog.getString('Do you want to exit the application?'),
+        function() {
+          profile.save();
+          win.close(true);
+        });
+    }
 
 
     //-- Edit
@@ -209,7 +217,7 @@ angular.module('icestudio')
         function() {
           project.clear();
         });
-      });
+      }, function() {});
     };
 
     $scope.setProjectInformation = function() {

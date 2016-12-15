@@ -688,11 +688,12 @@ angular.module('icestudio')
           }
           else {
             if (block &&
-                block.graph &&
-                block.graph.blocks &&
-                block.graph.wires &&
-                block.deps) {
-              dependencies[type] = block;
+                block.design &&
+                block.design.graph &&
+                block.design.graph.blocks &&
+                block.design.graph.wires &&
+                block.design.deps) {
+              dependencies[type] = block.design;
               blockInstance.position.x = 6 * gridsize;
               blockInstance.position.y = 16 * gridsize;
               var cell = addGenericBlock(blockInstance, block);
@@ -980,8 +981,8 @@ angular.module('icestudio')
           var topPorts = [];
           var bottomPorts = [];
 
-          for (var i in block.graph.blocks) {
-            var item = block.graph.blocks[i];
+          for (var i in block.design.graph.blocks) {
+            var item = block.design.graph.blocks[i];
             if (item.type == 'basic.input') {
               leftPorts.push({
                 id: item.id,
@@ -1037,13 +1038,13 @@ angular.module('icestudio')
           }
 
           var blockImage = '';
-          if (block.image) {
+          if (block.package.image) {
             width = 12 * gridsize;
-            if (block.image.startsWith('%3Csvg')) {
-              blockImage = block.image;
+            if (block.package.image.startsWith('%3Csvg')) {
+              blockImage = block.package.image;
             }
-            else if (block.image.startsWith('<svg')) {
-              blockImage = encodeURI(block.image);
+            else if (block.package.image.startsWith('<svg')) {
+              blockImage = encodeURI(block.package.image);
             }
           }
 

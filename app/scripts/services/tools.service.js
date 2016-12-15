@@ -22,7 +22,6 @@ angular.module('icestudio')
 
         this.toolchain = toolchain;
         this.buildPath = '_build';
-        this.currentProjectPath = '';
 
         // Check if the toolchain is installed
         checkToolchain();
@@ -153,7 +152,7 @@ angular.module('icestudio')
           while (match = pattern.exec(code)) {
             var file = match[1];
             var destPath = nodePath.join('.', file);
-            var origPath = nodePath.join(this.currentProjectPath, file);
+            var origPath = nodePath.join(utils.dirname(project.path), file);
 
             // Copy included file
             var copySuccess = utils.copySync(origPath, destPath, file);
@@ -165,10 +164,6 @@ angular.module('icestudio')
           }
 
           return ret;
-        }
-
-        this.setProjectPath = function(path) {
-          this.currentProjectPath = path;
         }
 
         function execute(commands, label, currentAlert, callback) {
