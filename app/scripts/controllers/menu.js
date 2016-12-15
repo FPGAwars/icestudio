@@ -177,12 +177,17 @@ angular.module('icestudio')
       $scope.workingdir = utils.dirname(filepath) + utils.sep;
     };
 
+    $scope.quit = function() {
+      profile.save();
+      win.close(true);
+    };
+
 
     //-- Edit
 
     $scope.resetView = function() {
       graph.resetState();
-    }
+    };
 
     $scope.cloneSelected = function() {
       graph.cloneSelected();
@@ -276,7 +281,7 @@ angular.module('icestudio')
         var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
         saveSnapshot(base64Data);
       }, 'png');
-    }
+    };
 
     function saveSnapshot(base64Data) {
       utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
@@ -287,7 +292,7 @@ angular.module('icestudio')
           else throw err;
         });
       });
-    }
+    };
 
 
     //-- View
@@ -302,7 +307,7 @@ angular.module('icestudio')
         height: 700,
         icon: 'resources/images/icestudio-logo.png'
       });
-    }
+    };
 
     $scope.showPinout = function() {
       var board = boards.selectedBoard;
@@ -320,7 +325,7 @@ angular.module('icestudio')
       else {
         alertify.notify(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 'warning', 5);
       }
-    }
+    };
 
     $scope.showDatasheet = function() {
       var board = boards.selectedBoard;
@@ -330,7 +335,8 @@ angular.module('icestudio')
       else {
         alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
       }
-    }
+    };
+
 
     //-- Boards
 
@@ -351,7 +357,7 @@ angular.module('icestudio')
           alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
         }
       }
-    }
+    };
 
 
     //-- Tools
@@ -360,19 +366,19 @@ angular.module('icestudio')
       checkGraph(function() {
         tools.verifyCode();
       });
-    }
+    };
 
     $scope.buildCode = function() {
       checkGraph(function() {
         tools.buildCode();
       });
-    }
+    };
 
     $scope.uploadCode = function() {
       checkGraph(function() {
         tools.uploadCode();
       });
-    }
+    };
 
     function checkGraph(callback, callback2) {
       if (!graph.isEmpty()) {
@@ -385,7 +391,7 @@ angular.module('icestudio')
         else
           alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
-    }
+    };
 
 
     //-- Help
@@ -393,7 +399,7 @@ angular.module('icestudio')
     $scope.openUrl = function(url) {
       event.preventDefault();
       gui.Shell.openExternal(url);
-    }
+    };
 
     $scope.about = function() {
       var content = [
@@ -411,5 +417,6 @@ angular.module('icestudio')
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
-    }
+    };
+
   });
