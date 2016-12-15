@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('ProjectCtrl', function ($rootScope,
-                                       $scope,
-                                       common,
-                                       boards,
-                                       graph,
-                                       gettextCatalog) {
+  .controller('DesignCtrl', function ($rootScope,
+                                      $scope,
+                                      project,
+                                      boards,
+                                      graph,
+                                      gettextCatalog) {
 
-    $scope.common = common;
     $scope.boards = boards;
     $scope.graph = graph;
 
@@ -36,22 +35,27 @@ angular.module('icestudio')
 
     function loadSelectedGraph() {
       if (graph.breadcrumbs.length == 1) {
-        graph.loadGraph(common.project);
+        graph.loadDesign(project.project.design);
         graph.appEnable(true);
       }
       else {
         var disabled = true;
-        var project = common.project;
+        var p = project.project;
         for (var i = 1; i < graph.breadcrumbs.length; i++) {
-          project = project.deps[graph.breadcrumbs[i].name];
+          if (p.design && p.design.deps) {
+            p = p.design.deps[graph.breadcrumbs[i].name];
+          }
+          else if (p.deps) {
+            p = p.deps[graph.breadcrumbs[i].name];
+          }
         }
-        graph.loadGraph(project, disabled);
+        graph.loadDesign(p.design, disabled);
         graph.appEnable(false);
       }
     }
 
     $rootScope.$on('refreshProject', function(event, callback) {
-      common.refreshProject(callback);
+      project.update(callback);
     });
 
   });

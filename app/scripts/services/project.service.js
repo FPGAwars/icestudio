@@ -4,7 +4,7 @@ angular.module('icestudio')
   .service('project', function(graph, boards, compiler, utils, gettextCatalog) {
 
     this.path = '';
-    this.project = {};
+    this.project = _default();
 
     function _default() {
       return {
@@ -25,37 +25,42 @@ angular.module('icestudio')
       }
     };
 
+    this.updateName = function(name) {
+      if (name) {
+        graph.resetBreadcrumbs(name);
+        utils.updateWindowTitle(name + ' - Icestudio');
+        this.project.package.name = name;
+      }
+    }
+
     this.new = function(name) {
       this.path = '';
       this.project = _default();
+      this.updateName(name);
 
       graph.clearAll();
-      graph.resetBreadcrumbs(name);
       graph.setState(this.project.design.state);
 
-      utils.updateWindowTitle(name + ' - Icestudio');
       alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
     };
 
     this.open = function(filepath) {
       var self = this;
+      this.path = filepath;
       utils.readFile(filepath, function(data) {
         if (data) {
           var name = utils.basename(filepath);
-          self.path = filepath;
           self.load(name, data);
         }
       });
     };
 
     this.load = function(name, data) {
-      this.name = name;
       this.project = _safeLoad(name, data);
 
       if (graph.loadDesign(this.project.design)) {
-        graph.resetBreadcrumbs(name);
         boards.selectBoard(this.project.design.board);
-        utils.rootScopeSafeApply();
+        this.updateName(name);
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
       }
       else {
@@ -65,25 +70,23 @@ angular.module('icestudio')
 
     function _safeLoad(name, data) {
       var project = {};
-      if (project.version) {
-        if (project.version == '1.0') {
-          // Version 1.0
+      switch(data.version) {
+        case '1.0':
           project = data;
-        }
-      }
-      else {
-        // Version 0.0
-        project = _default()
-        project.package.name = name;
-        project.design = data;
+          break;
+        default:
+          project = _default();
+          project.package.name = name;
+          project.design = data;
+          break;
       }
       return project;
     };
 
     this.save = function(filepath) {
       var name = utils.basename(filepath);
-      utils.updateWindowTitle(name + ' - Icestudio');
       this.path = filepath;
+      this.updateName(name);
 
       this.update();
       utils.saveFile(filepath, this.project, function() {
@@ -142,6 +145,18 @@ angular.module('icestudio')
       utils.saveFile(filepath, data, function() {
         alertify.success(message);
       }, false);
+    };
+
+    this.addBlock = function(type, block) {
+      this.project.design.deps[type] = block;
+      graph.createBlock(type, block);
+    };
+
+    this.removeSelected = function() {
+      var self = this;
+      graph.removeSelected(function(type) {
+        delete self.project.design.deps[type];
+      });
     };
 
   });

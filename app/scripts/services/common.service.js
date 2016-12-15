@@ -163,12 +163,7 @@ angular.module('icestudio')
           graph.cloneSelected();
         };
 
-        this.removeSelected = function() {
-          var self = this;
-          graph.removeSelected(function(type) {
-            delete self.project.deps[type];
-          });
-        };
+
 
         this.setImagePath = function(imagePath) {
           this.project.image = imagePath;
@@ -188,9 +183,6 @@ angular.module('icestudio')
           }
         };
 
-        this.addBlock = function(type, block) {
-          this.project.deps[type] = block;
-          graph.createBlock(type, block);
-        }
+
 
     }]);

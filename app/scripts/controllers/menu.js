@@ -24,6 +24,7 @@ angular.module('icestudio')
     $scope.common = common;
     $scope.boards = boards;
     $scope.profile = profile;
+    $scope.project = project;
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
@@ -240,7 +241,7 @@ angular.module('icestudio')
       if (graph.hasSelection()) {
         alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
           function() {
-            common.removeSelected();
+            project.removeSelected();
         });
       }
     }

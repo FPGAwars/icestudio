@@ -266,11 +266,11 @@
             <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
-                <a href ng-click="common.addBlock('basic.input')">{{ 'Input' | translate }}</a>
-                <a href ng-click="common.addBlock('basic.output')">{{ 'Output' | translate }}</a>
-                <a href ng-click="common.addBlock('basic.constant')">{{ 'Constant' | translate }}</a>
-                <a href ng-click="common.addBlock('basic.code')">{{ 'Code' | translate }}</a>
-                <a href ng-click="common.addBlock('basic.info')">{{ 'Info' | translate }}</a>
+                <a href ng-click="project.addBlock('basic.input')">{{ 'Input' | translate }}</a>
+                <a href ng-click="project.addBlock('basic.output')">{{ 'Output' | translate }}</a>
+                <a href ng-click="project.addBlock('basic.constant')">{{ 'Constant' | translate }}</a>
+                <a href ng-click="project.addBlock('basic.code')">{{ 'Code' | translate }}</a>
+                <a href ng-click="project.addBlock('basic.info')">{{ 'Info' | translate }}</a>
               </li>
             </ul>
           </li>
@@ -279,7 +279,7 @@
             <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
-                <a href ng-click="common.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
+                <a href ng-click="project.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
                   {{ block.name | translate }}
                 </a>
                 <a href uib-dropdown-toggle ng-if="block.children">
@@ -287,7 +287,7 @@
                 </a>
                 <ul uib-dropdown-menu ng-if="block.children">
                   <li ng-repeat="sblock in block.children">
-                    <a href ng-click="common.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
+                    <a href ng-click="project.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
                       {{ sblock.name | translate }}
                     </a>
                   </li>
