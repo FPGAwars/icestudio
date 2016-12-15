@@ -3,15 +3,15 @@
   <div id="menu">
 
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
-    <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.ice"/>
-    <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + common.projectName }}.png"/>
+    <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + project.name }}.ice"/>
+    <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + project.name }}.png"/>
 
     <input id="input-add-as-block" type="file" accept=".ice,.iceb" class="hidden" multiple/>
 
-    <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.v"/>
-    <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + common.projectName }}.pcf"/>
-    <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.v"/>
-    <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + common.projectName }}_tb.gtkw"/>
+    <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + project.name }}.v"/>
+    <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + project.name }}.pcf"/>
+    <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.v"/>
+    <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.gtkw"/>
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
 
@@ -45,16 +45,15 @@
                   </li>
                 </ul>
               </li>
+              <li>
+                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
+              </li>
               <li class="divider"></li>
               <li>
                 <a href ng-click="saveProject()">{{ 'Save' | translate }}</a>
               </li>
               <li>
                 <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}...</a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
@@ -81,7 +80,7 @@
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
-                <a href ng-click="resetState()">{{ 'Reset view' | translate }}</a>
+                <a href ng-click="resetView()">{{ 'Reset view' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -192,20 +191,20 @@
                 <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
-                    <a href ng-hide="toolchain.installed" ng-click="installToolchain()">
+                    <a href ng-hide="toolchain.installed" ng-click="tools.installToolchain()">
                       {{ 'Install' | translate }}
                     </a>
-                    <a href ng-show="toolchain.installed" ng-click="updateToolchain()">
+                    <a href ng-show="toolchain.installed" ng-click="tools.updateToolchain()">
                       {{ 'Update' | translate }}
                     </a>
                   </li>
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
-                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : removeToolchain()">
+                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.removeToolchain()">
                       {{ 'Remove' | translate }}
                     </a>
                   </li>
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
-                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : resetToolchain()">
+                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.resetToolchain()">
                       {{ 'Reset default' | translate }}
                     </a>
                   </li>
@@ -219,11 +218,11 @@
                 <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="enableDrivers()">{{ 'Enable' | translate }}
+                    <a href ng-click="tools.enableDrivers()">{{ 'Enable' | translate }}
                     </a>
                   </li>
                   <li>
-                    <a href ng-click="disableDrivers()">{{ 'Disable' | translate }}
+                    <a href ng-click="tools.disableDrivers()">{{ 'Disable' | translate }}
                     </a>
                   </li>
                 </ul>

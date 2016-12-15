@@ -18,7 +18,7 @@ angular
         });
     }
   ])
-  .run(function(profile, common, utils, nodeLangInfo, gettextCatalog) {
+  .run(function(profile, project, utils, gettextCatalog, nodeLangInfo) {
     // Load language
     profile.load(function(data) {
       var lang = profile.data.language;
@@ -35,6 +35,6 @@ angular
       }
     });
     setTimeout(function() {
-      common.updateProjectName(gettextCatalog.getString('untitled'));
+      project.updateName(gettextCatalog.getString('untitled'));
     }, 100);
   });

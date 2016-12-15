@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('compiler', ['nodeSha1', '_package',
-    function(nodeSha1, _package) {
+  .service('compiler', function(nodeSha1,
+                                _package) {
 
       this.generate = function(target, project) {
         var code = '';
@@ -500,4 +500,4 @@ angular.module('icestudio')
         return [input, output];
       }
 
-  }]);
+  });

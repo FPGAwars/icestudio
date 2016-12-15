@@ -4,24 +4,21 @@ angular.module('icestudio')
   .controller('MenuCtrl', function ($rootScope,
                                     $scope,
                                     $timeout,
+                                    boards,
+                                    profile,
                                     project,
-                                    nodeLangInfo,
-                                    nodeFs,
-                                    nodePath,
-                                    common,
+                                    resources,
                                     graph,
                                     tools,
-                                    boards,
-                                    resources,
-                                    profile,
                                     gui,
                                     utils,
                                     gettextCatalog,
-                                    _package) {
+                                    _package,
+                                    nodeFs,
+                                    nodePath) {
 
-    // Initialize scope
+    //-- Initialize scope
 
-    $scope.common = common;
     $scope.boards = boards;
     $scope.profile = profile;
     $scope.project = project;
@@ -51,16 +48,7 @@ angular.module('icestudio')
       win.menu = mb;
     }
 
-    function pathSync() {
-      if ($scope.currentProjectPath) {
-        var projectPath = utils.dirname($scope.currentProjectPath);
-        tools.setProjectPath(projectPath);
-        common.setProjectPath(projectPath);
-      }
-    }
-
-    // Menu
-
+    // Menu timer
     var timer;
 
     // mouseover event
@@ -77,7 +65,7 @@ angular.module('icestudio')
     };
 
 
-    // File
+    //-- File
 
     $scope.newProject = function() {
       alertify.prompt(
@@ -145,9 +133,7 @@ angular.module('icestudio')
 
     $scope.addAsBlock = function() {
       utils.openDialog('#input-add-as-block', '.ice', function(filepath) {
-        checkGraph(function() {
-          project.addAsBlock(filepath);
-        });
+        project.addAsBlock(filepath);
       });
     };
 
@@ -192,7 +178,34 @@ angular.module('icestudio')
     };
 
 
-    // Edit
+    //-- Edit
+
+    $scope.resetView = function() {
+      graph.resetState();
+    }
+
+    $scope.cloneSelected = function() {
+      graph.cloneSelected();
+    };
+
+    $scope.removeSelected = function() {
+      if (graph.hasSelection()) {
+        // TODO: don't show again checkbox
+        alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
+          function() {
+            project.removeSelected();
+        });
+      }
+    };
+
+    $scope.clearGraph = function() {
+      checkGraph(function() {
+        alertify.confirm(gettextCatalog.getString('Do you want to clear all?'),
+        function() {
+          project.clear();
+        });
+      });
+    };
 
     $scope.setProjectInformation = function() {
 
@@ -202,12 +215,12 @@ angular.module('icestudio')
       utils.projectinfoprompt(values, function(evt, values) {
 
       });
-      /*var current = common.project.image;
+      /*var current = project.image;
       alertify.prompt(gettextCatalog.getString('Enter the project\'s image path'), (current) ? current : '',
         function(evt, imagePath) {
           common.setImagePath(imagePath);
       });*/
-    }
+    };
 
     $scope.setRemoteHostname = function() {
       var current = profile.data.remoteHostname;
@@ -215,36 +228,14 @@ angular.module('icestudio')
         function(evt, remoteHostname) {
           profile.data.remoteHostname = remoteHostname;
       });
-    }
+    };
 
     $scope.selectLanguage = function(language) {
       if (profile.data.language != language) {
         profile.data.language = language;
         utils.setLocale(language);
       }
-    }
-
-    $scope.clearGraph = function() {
-      checkGraph(function() {
-        alertify.confirm(gettextCatalog.getString('Do you want to clear all?'),
-        function() {
-          common.clearProject();
-        });
-      });
-    }
-
-    $scope.cloneSelected = function() {
-      common.cloneSelected();
-    }
-
-    $scope.removeSelected = function() {
-      if (graph.hasSelection()) {
-        alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
-          function() {
-            project.removeSelected();
-        });
-      }
-    }
+    };
 
     // Key events
 
@@ -298,11 +289,8 @@ angular.module('icestudio')
       });
     }
 
-    // View
 
-    $scope.resetState = function() {
-      graph.resetState();
-    }
+    //-- View
 
     $scope.showPCF = function() {
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + boards.selectedBoard.name, {
@@ -344,7 +332,7 @@ angular.module('icestudio')
       }
     }
 
-    // Boards
+    //-- Boards
 
     $scope.selectBoard = function(board) {
       if (boards.selectedBoard.name != board.name) {
@@ -354,9 +342,7 @@ angular.module('icestudio')
               boards.selectBoard(board.name);
               graph.resetIOChoices();
               alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
-              if(!$rootScope.$$phase) {
-                $rootScope.$apply();
-              }
+              utils.rootScopeSafeApply();
           });
         }
         else {
@@ -367,7 +353,8 @@ angular.module('icestudio')
       }
     }
 
-    // Tools
+
+    //-- Tools
 
     $scope.verifyCode = function() {
       checkGraph(function() {
@@ -400,31 +387,8 @@ angular.module('icestudio')
       }
     }
 
-    $scope.installToolchain = function() {
-      tools.installToolchain();
-    }
 
-    $scope.updateToolchain = function() {
-      tools.updateToolchain();
-    }
-
-    $scope.removeToolchain = function() {
-      tools.removeToolchain();
-    }
-
-    $scope.resetToolchain = function() {
-      tools.resetToolchain();
-    }
-
-    $scope.enableDrivers = function() {
-      tools.enableDrivers();
-    }
-
-    $scope.disableDrivers = function() {
-      tools.disableDrivers();
-    }
-
-    // Help
+    //-- Help
 
     $scope.openUrl = function(url) {
       event.preventDefault();

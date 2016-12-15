@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('resources', ['nodePath', 'utils',
-      function(nodePath, utils) {
+    .service('resources', function(utils,
+                                   nodePath) {
 
         this.getExamples = function() {
           return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
@@ -12,4 +12,4 @@ angular.module('icestudio')
           return utils.getFilesRecursive(nodePath.join('resources', 'blocks'), '.iceb');
         }
 
-    }]);
+    });

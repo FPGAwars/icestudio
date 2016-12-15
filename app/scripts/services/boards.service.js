@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('boards', ['nodePath', 'nodeFs',
-      function(nodePath, nodeFs) {
+    .service('boards', function(nodeFs,
+                                nodePath) {
 
         this.selectedBoard = null;
         this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
@@ -57,4 +57,4 @@ angular.module('icestudio')
           return this.selectedBoard.pinout;
         };
 
-    }]);
+    });

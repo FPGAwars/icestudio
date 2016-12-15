@@ -2,8 +2,20 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('utils', ['$rootScope', 'gettextCatalog', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeChildProcess', 'nodeTarball', 'nodeZlib', 'nodeSudo', 'nodeOnline', 'nodeGlob', '_package', 'window',
-      function($rootScope, gettextCatalog, nodeFs, nodeFse, nodeOs, nodePath, nodeChildProcess, nodeTarball, nodeZlib, nodeSudo, nodeOnline, nodeGlob, _package, window) {
+    .service('utils', function($rootScope,
+                               gettextCatalog,
+                               _package,
+                               window,
+                               nodeFs,
+                               nodeFse,
+                               nodeOs,
+                               nodePath,
+                               nodeChildProcess,
+                               nodeTarball,
+                               nodeZlib,
+                               nodeSudo,
+                               nodeOnline,
+                               nodeGlob) {
 
         const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
         const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
@@ -747,5 +759,4 @@ angular.module('icestudio')
           }
         }
 
-
-    }]);
+    });

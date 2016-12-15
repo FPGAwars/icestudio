@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('profile', function(nodeFs, nodePath, utils) {
+    .service('profile', function(utils,
+                                 nodeFs,
+                                 nodePath) {
 
         const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
         const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');

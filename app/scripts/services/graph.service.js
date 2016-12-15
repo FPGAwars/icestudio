@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'utils',
-      function($rootScope, gettextCatalog, nodeFs, joint, boards, utils) {
+    .service('graph', function($rootScope,
+                               joint,
+                               boards,
+                               utils,
+                               gettextCatalog,
+                               nodeFs) {
 
         // Variables
 
@@ -1109,4 +1113,4 @@ angular.module('icestudio')
         graph.addCell(cell);
       }
 
-    }]);
+    });

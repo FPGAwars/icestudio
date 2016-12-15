@@ -1,8 +1,21 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('tools', ['gettextCatalog', 'gettext', 'profile', 'nodeFs', 'nodeFse', 'nodeOs', 'nodePath', 'nodeProcess', 'nodeChildProcess', 'nodeSSHexec', 'nodeRSync', 'common', 'boards', 'compiler', 'utils',
-      function(gettextCatalog, gettext, profile, nodeFs, nodeFse, nodeOs, nodePath, nodeProcess, nodeChildProcess, nodeSSHexec, nodeRSync, common, boards, compiler, utils) {
+    .service('tools', function(project,
+                               boards,
+                               compiler,
+                               profile,
+                               utils,
+                               gettextCatalog,
+                               gettext,
+                               nodeFs,
+                               nodeFse,
+                               nodeOs,
+                               nodePath,
+                               nodeProcess,
+                               nodeChildProcess,
+                               nodeSSHexec,
+                               nodeRSync) {
 
         var currentAlert = null;
         var toolchain = { apio: '-', installed: false, disabled: false };
@@ -111,9 +124,9 @@ angular.module('icestudio')
         this.generateCode = function() {
           if (!nodeFs.existsSync(this.buildPath))
             nodeFs.mkdirSync(this.buildPath);
-          common.refreshProject();
-          var verilog = compiler.generateVerilog(common.project);
-          var pcf = compiler.generatePCF(common.project);
+          project.update();
+          var verilog = compiler.generate('verilog', project.project);
+          var pcf = compiler.generate('pcf', project.project);
           nodeFs.writeFileSync(nodePath.join(this.buildPath, 'main.v'), verilog, 'utf8');
           nodeFs.writeFileSync(nodePath.join(this.buildPath, 'main.pcf'), pcf, 'utf8');
           return verilog;
@@ -546,4 +559,4 @@ angular.module('icestudio')
             .css('width', '100%');
         }
 
-    }]);
+    });

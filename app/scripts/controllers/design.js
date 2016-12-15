@@ -35,6 +35,7 @@ angular.module('icestudio')
 
     function loadSelectedGraph() {
       if (graph.breadcrumbs.length == 1) {
+        // TODO: back compat
         graph.loadDesign(project.project.design);
         graph.appEnable(true);
       }
@@ -49,7 +50,12 @@ angular.module('icestudio')
             p = p.deps[graph.breadcrumbs[i].name];
           }
         }
-        graph.loadDesign(p.design, disabled);
+        if (p.design) {
+          graph.loadDesign(p.design, disabled);
+        }
+        else if (p.deps) {
+          graph.loadDesign(p.deps, disabled);
+        }
         graph.appEnable(false);
       }
     }

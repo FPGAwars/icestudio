@@ -1,9 +1,16 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('project', function(graph, boards, compiler, utils, gettextCatalog) {
+  .service('project', function(graph,
+                               boards,
+                               compiler,
+                               utils,
+                               gettextCatalog,
+                               nodeFs,
+                               nodePath) {
 
-    this.path = '';
+    this.name = '';  // Used in File dialogs
+    this.path = '';  // Used in Save / Save as
     this.project = _default();
 
     function _default() {
@@ -24,14 +31,6 @@ angular.module('icestudio')
         }
       }
     };
-
-    this.updateName = function(name) {
-      if (name) {
-        graph.resetBreadcrumbs(name);
-        utils.updateWindowTitle(name + ' - Icestudio');
-        this.project.package.name = name;
-      }
-    }
 
     this.new = function(name) {
       this.path = '';
@@ -76,7 +75,6 @@ angular.module('icestudio')
           break;
         default:
           project = _default();
-          project.package.name = name;
           project.design = data;
           break;
       }
@@ -88,10 +86,136 @@ angular.module('icestudio')
       this.path = filepath;
       this.updateName(name);
 
+      sortGraph();
       this.update();
       utils.saveFile(filepath, this.project, function() {
         alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
       }, true);
+    };
+
+    function sortGraph() {
+      var cells = graph.getCells();
+
+      // Sort cells by x-coordinate
+      cells = _.sortBy(cells, function(cell) {
+        if (!cell.isLink())
+          return cell.attributes.position.x;
+      });
+
+      // Sort cells by y-coordinate
+      cells = _.sortBy(cells, function(cell) {
+        if (!cell.isLink())
+          return cell.attributes.position.y;
+      });
+
+      graph.setCells(cells);
+    };
+
+    this.addAsBlock = function(filepath) {
+      var self = this;
+      utils.readFile(filepath, function(data) {
+        var name = utils.basename(filepath);
+        var path = utils.dirname(filepath);
+        var block = _safeLoad(name, data);
+        if (block) {
+          // 1. Parse and find included files
+          var code = JSON.stringify(block);
+          var files = utils.findIncludedFiles(code);
+          // Are there included files?
+          if (files.length > 0) {
+            // 2. Check project's directory
+            if (self.path) {
+              // 3. Copy the included files
+              copyIncludedFiles(function(success) {
+                if (success) {
+                  // 4. Success: import block
+                  doImportBlock(name, block);
+                }
+              });
+            }
+            else {
+              alertify.confirm(gettextCatalog.getString('This import operation requires a project path. You need to save the current project. Do you want to continue?'),
+                function() {
+                  $rootScope.$emit('saveProjectAs', function() {
+                    setTimeout(function() {
+                      // 3. Copy the included files
+                      copyIncludedFiles(function(success) {
+                        if (success) {
+                          // 4. Success: import block
+                          doImportBlock(name, block);
+                        }
+                      });
+                    }, 500);
+                  });
+              });
+            }
+          }
+          else {
+            // No included files to copy
+            // 4. Import block
+            doImportBlock(name, block);
+          }
+        }
+
+        function copyIncludedFiles(callback) {
+          var success = true;
+          async.eachSeries(files, function(filename, next) {
+            setTimeout(function() {
+              var origPath = nodePath.join(path, filename);
+              var destPath = nodePath.join(self.projectPath, filename);
+              if (nodeFs.existsSync(destPath)) {
+                alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
+                function() {
+                  success &= doCopySync(origPath, destPath, filename)
+                  if (!success) {
+                    return next(); // break
+                  }
+                  next();
+                },
+                function() {
+                  next();
+                });
+              }
+              else {
+                success &= doCopySync(origPath, destPath, filename)
+                if (!success) {
+                  return next(); // break
+                }
+                next();
+              }
+            }, 0);
+          }, function(result) {
+            return callback(success);
+          });
+        };
+
+        function doCopySync(orig, dest, filename) {
+          var success = utils.copySync(orig, dest, filename);
+          if (success) {
+            alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 5);
+          }
+          else {
+            alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 30);
+          }
+          return success;
+        };
+
+        function doImportBlock(name, block) {
+          // Convert project to block
+          delete block.design.board;
+          for (var i in block.design.graph.blocks) {
+            if (block.design.graph.blocks[i].type == 'basic.input' ||
+                block.design.graph.blocks[i].type == 'basic.output') {
+              delete block.design.graph.blocks[i].data.pin;
+            }
+          }
+          // Add block
+          graph.importBlock(name, block.design);
+          self.project.design.deps[name] = block;
+          alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
+        };
+
+      });
     };
 
     this.update = function(callback) {
@@ -139,6 +263,14 @@ angular.module('icestudio')
         callback();
     };
 
+    this.updateName = function(name) {
+      if (name) {
+        this.name = name;
+        graph.resetBreadcrumbs(name);
+        utils.updateWindowTitle(name + ' - Icestudio');
+      }
+    };
+
     this.export = function(target, filepath, message) {
       this.update();
       var data = compiler.generate(target, this.project);
@@ -157,6 +289,12 @@ angular.module('icestudio')
       graph.removeSelected(function(type) {
         delete self.project.design.deps[type];
       });
+    };
+
+    this.clear = function() {
+      this.project = _default();
+      graph.clearAll();
+      graph.resetBreadcrumbs();
     };
 
   });
