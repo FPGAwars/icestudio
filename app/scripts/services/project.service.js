@@ -175,25 +175,30 @@ angular.module('icestudio')
             setTimeout(function() {
               var origPath = nodePath.join(path, filename);
               var destPath = nodePath.join(utils.dirname(self.path), filename);
-              if (nodeFs.existsSync(destPath)) {
-                alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
-                function() {
+              if (origPath !== destPath) {
+                if (nodeFs.existsSync(destPath)) {
+                  alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
+                  function() {
+                    success = success && doCopySync(origPath, destPath, filename);
+                    if (!success) {
+                      return next(); // break
+                    }
+                    next();
+                  },
+                  function() {
+                    next();
+                  });
+                }
+                else {
                   success = success && doCopySync(origPath, destPath, filename);
                   if (!success) {
                     return next(); // break
                   }
                   next();
-                },
-                function() {
-                  next();
-                });
+                }
               }
               else {
-                success = success && doCopySync(origPath, destPath, filename);
-                if (!success) {
-                  return next(); // break
-                }
-                next();
+                return next(); // break
               }
             }, 0);
           }, function(/*result*/) {

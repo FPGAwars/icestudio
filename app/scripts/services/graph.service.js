@@ -26,7 +26,7 @@ angular.module('icestudio')
         x: 0,
         y: 0
       },
-      zoom: 1
+      zoom: 1.0
     };
 
     // Functions
@@ -47,7 +47,7 @@ angular.module('icestudio')
             x: 0,
             y: 0
           },
-          zoom: 1
+          zoom: 1.0
         };
       }
       this.panAndZoom.zoom(_state.zoom);

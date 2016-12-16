@@ -15,7 +15,8 @@ angular.module('icestudio')
                              nodeZlib,
                              nodeSudo,
                              nodeOnline,
-                             nodeGlob) {
+                             nodeGlob,
+                             SVGO) {
 
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
@@ -664,7 +665,6 @@ angular.module('icestudio')
       var i;
       var content = [];
       var messages = [
-        gettextCatalog.getString('Name'),
         gettextCatalog.getString('Version'),
         gettextCatalog.getString('Description'),
         gettextCatalog.getString('Author')
@@ -678,11 +678,34 @@ angular.module('icestudio')
         content.push('  <p>' + messages[i] + '</p>');
         content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
       }
+      content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
+      content.push('  <img id="preview-svg" src="data:image/svg+xml,' + '' + '"  width="128" height="64" style="margin: 5px; border: 1px solid">');
+      content.push('  <input id="input-open-svg" type="file" accept=".svg" style="display:inline-block;">');
+      // TODO: add Save SVG
       content.push('</div>');
       // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i.toString()).val(values[i]);
       }
+
+      alertify.confirm()
+      .set('onshow', function() {
+        var chooser = $('#input-open-svg');
+        chooser.unbind('change');
+        chooser.change(function(/*evt*/) {
+          var filepath = $(this).val();
+          var svgo = new SVGO();
+          nodeFs.readFile(filepath, 'utf8', function(err, data) {
+            if (err) {
+              throw err;
+            }
+            svgo.optimize(data, function(result) {
+              var image = encodeURI(result.data);
+              $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+            });
+          });
+        });
+      });
 
       alertify.confirm(content.join('\n'))
       .set('onok', function(evt) {
@@ -693,8 +716,10 @@ angular.module('icestudio')
         if (callback) {
           callback(evt, values);
         }
+        alertify.confirm().set('onshow', function() {});
       })
       .set('oncancel', function(/*evt*/) {
+        alertify.confirm().set('onshow', function() {});
       });
     };
 

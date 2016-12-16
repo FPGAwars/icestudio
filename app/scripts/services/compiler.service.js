@@ -235,8 +235,7 @@ angular.module('icestudio')
         if (block.type !== 'basic.input' &&
             block.type !== 'basic.output' &&
             block.type !== 'basic.constant' &&
-            block.type !== 'basic.info' &&
-            graph.wires.length > 0) {
+            block.type !== 'basic.info') {
 
           // Header
 
@@ -294,9 +293,7 @@ angular.module('icestudio')
             }
           }
 
-          if (ports.length > 0) {
-            instance += ' (\n' + ports.join(',\n') + '\n);';
-          }
+          instance += ' (\n' + ports.join(',\n') + '\n);';
         }
 
         if (instance) {

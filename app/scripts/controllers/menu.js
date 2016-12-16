@@ -226,16 +226,14 @@ angular.module('icestudio')
     $scope.setProjectInformation = function() {
       var p = project.project.package;
       var values = [
-        p.name,
         p.version,
         p.description,
         p.author
       ];
       utils.projectinfoprompt(values, function(evt, values) {
-        project.project.package.name = values[0];
-        project.project.package.version = values[1];
-        project.project.package.description = values[2];
-        project.project.package.author = values[3];
+        project.project.package.version = values[0];
+        project.project.package.description = values[1];
+        project.project.package.author = values[2];
       });
     };
 
