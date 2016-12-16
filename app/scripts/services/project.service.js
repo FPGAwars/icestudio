@@ -30,8 +30,8 @@ angular.module('icestudio')
           deps: {},
           state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
         }
-      }
-    };
+      };
+    }
 
     this.new = function(name) {
       this.path = '';
@@ -89,7 +89,7 @@ angular.module('icestudio')
         project.design.deps[d] = _safeLoad(project.design.deps[d]);
       }
       return project;
-    };
+    }
 
     this.save = function(filepath) {
       var name = utils.basename(filepath);
@@ -108,18 +108,20 @@ angular.module('icestudio')
 
       // Sort cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink())
+        if (!cell.isLink()) {
           return cell.attributes.position.x;
+        }
       });
 
       // Sort cells by y-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink())
+        if (!cell.isLink()) {
           return cell.attributes.position.y;
+        }
       });
 
       graph.setCells(cells);
-    };
+    }
 
     this.addAsBlock = function(filepath) {
       var self = this;
@@ -176,7 +178,7 @@ angular.module('icestudio')
               if (nodeFs.existsSync(destPath)) {
                 alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
                 function() {
-                  success &= doCopySync(origPath, destPath, filename)
+                  success = success && doCopySync(origPath, destPath, filename);
                   if (!success) {
                     return next(); // break
                   }
@@ -187,20 +189,20 @@ angular.module('icestudio')
                 });
               }
               else {
-                success &= doCopySync(origPath, destPath, filename)
+                success = success && doCopySync(origPath, destPath, filename);
                 if (!success) {
                   return next(); // break
                 }
                 next();
               }
             }, 0);
-          }, function(result) {
+          }, function(/*result*/) {
             return callback(success);
           });
-        };
+        }
 
         function doCopySync(orig, dest, filename) {
-          var success = utils.copySync(orig, dest, filename);
+          var success = utils.copySync(orig, dest);
           if (success) {
             alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 5);
           }
@@ -208,14 +210,14 @@ angular.module('icestudio')
             alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 30);
           }
           return success;
-        };
+        }
 
         function doImportBlock(name, block) {
           // Convert project to block
           delete block.design.board;
           for (var i in block.design.graph.blocks) {
-            if (block.design.graph.blocks[i].type == 'basic.input' ||
-                block.design.graph.blocks[i].type == 'basic.output') {
+            if (block.design.graph.blocks[i].type === 'basic.input' ||
+                block.design.graph.blocks[i].type === 'basic.output') {
               delete block.design.graph.blocks[i].data.pin;
             }
           }
@@ -223,8 +225,7 @@ angular.module('icestudio')
           graph.importBlock(name, block);
           self.project.design.deps[name] = block;
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
-        };
-
+        }
       });
     };
 
@@ -237,26 +238,26 @@ angular.module('icestudio')
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
 
-        if (cell.type == 'ice.Generic' ||
-            cell.type == 'ice.Input' ||
-            cell.type == 'ice.Output' ||
-            cell.type == 'ice.Code' ||
-            cell.type == 'ice.Info' ||
-            cell.type == 'ice.Constant') {
+        if (cell.type === 'ice.Generic' ||
+            cell.type === 'ice.Input' ||
+            cell.type === 'ice.Output' ||
+            cell.type === 'ice.Code' ||
+            cell.type === 'ice.Info' ||
+            cell.type === 'ice.Constant') {
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
           block.data = cell.data;
           block.position = cell.position;
-          if (cell.type == 'ice.Code') {
+          if (cell.type === 'ice.Code') {
             block.data.code = graph.getContent(cell.id);
           }
-          else if (cell.type == 'ice.Info') {
+          else if (cell.type === 'ice.Info') {
             block.data.info = graph.getContent(cell.id);
           }
           blocks.push(block);
         }
-        else if (cell.type == 'ice.Wire') {
+        else if (cell.type === 'ice.Wire') {
           var wire = {};
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
@@ -269,8 +270,9 @@ angular.module('icestudio')
       this.project.design.board = boards.selectedBoard.name;
       this.project.design.graph = { blocks: blocks, wires: wires };
 
-      if (callback)
+      if (callback) {
         callback();
+      }
     };
 
     this.updateName = function(name) {

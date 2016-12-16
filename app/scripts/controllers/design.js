@@ -5,8 +5,7 @@ angular.module('icestudio')
                                       $scope,
                                       project,
                                       boards,
-                                      graph,
-                                      gettextCatalog) {
+                                      graph) {
 
     $scope.boards = boards;
     $scope.graph = graph;
@@ -14,7 +13,6 @@ angular.module('icestudio')
     // Intialization
 
     graph.createPaper($('#paper'));
-
 
     // Breadcrumbs
 
@@ -24,17 +22,17 @@ angular.module('icestudio')
         graph.breadcrumbs.pop();
         item = graph.breadcrumbs.slice(-1)[0];
       }
-      while (selectedItem != item);
+      while (selectedItem !== item);
       loadSelectedGraph();
-    }
+    };
 
     $scope.breadcrumbsBack = function() {
       graph.breadcrumbs.pop();
       loadSelectedGraph();
-    }
+    };
 
     function loadSelectedGraph() {
-      if (graph.breadcrumbs.length == 1) {
+      if (graph.breadcrumbs.length === 1) {
         graph.loadDesign(project.project.design, false);
       }
       else {

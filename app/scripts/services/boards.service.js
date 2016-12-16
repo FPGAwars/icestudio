@@ -1,60 +1,60 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('boards', function(nodeFs,
-                                nodePath) {
+  .service('boards', function(nodeFs,
+                              nodePath) {
 
-        this.selectedBoard = null;
-        this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
+    this.selectedBoard = null;
+    this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
 
-        function loadBoards(path) {
-          var boards = [];
-          var contents = nodeFs.readdirSync(path);
-          contents.forEach(function (content) {
-            var contentPath = nodePath.join(path, content);
-            if (nodeFs.statSync(contentPath).isDirectory()) {
-              if (!content.startsWith('_')) {
-                var info = readJSONFile(contentPath, 'info.json');
-                var pinout = readJSONFile(contentPath, 'pinout.json');
-                boards.push({
-                  'name': content,
-                  'info': info,
-                  'pinout': pinout
-                });
-              }
-            }
-          });
-          return boards;
-        }
-
-        function readJSONFile(filepath, filename) {
-          var ret = {};
-          try {
-            var data = nodeFs.readFileSync(nodePath.join(filepath, filename));
-            ret = JSON.parse(data.toString());
+    function loadBoards(path) {
+      var boards = [];
+      var contents = nodeFs.readdirSync(path);
+      contents.forEach(function (content) {
+        var contentPath = nodePath.join(path, content);
+        if (nodeFs.statSync(contentPath).isDirectory()) {
+          if (!content.startsWith('_')) {
+            var info = readJSONFile(contentPath, 'info.json');
+            var pinout = readJSONFile(contentPath, 'pinout.json');
+            boards.push({
+              'name': content,
+              'info': info,
+              'pinout': pinout
+            });
           }
-          catch (err) { }
-          return ret;
         }
+      });
+      return boards;
+    }
 
-        this.selectBoard = function(name) {
-          for (var i in this.currentBoards) {
-            if (name == this.currentBoards[i].name) {
-              this.selectedBoard = this.currentBoards[i];
-              break;
-            }
-          }
-        };
+    function readJSONFile(filepath, filename) {
+      var ret = {};
+      try {
+        var data = nodeFs.readFileSync(nodePath.join(filepath, filename));
+        ret = JSON.parse(data.toString());
+      }
+      catch (err) { }
+      return ret;
+    }
 
-        // Set default board
-        this.selectBoard('icezum');
+    this.selectBoard = function(name) {
+      for (var i in this.currentBoards) {
+        if (name === this.currentBoards[i].name) {
+          this.selectedBoard = this.currentBoards[i];
+          break;
+        }
+      }
+    };
 
-        this.getBoards = function() {
-          return this.currentBoards;
-        };
+    // Set default board
+    this.selectBoard('icezum');
 
-        this.getPinout = function() {
-          return this.selectedBoard.pinout;
-        };
+    this.getBoards = function() {
+      return this.currentBoards;
+    };
 
-    });
+    this.getPinout = function() {
+      return this.selectedBoard.pinout;
+    };
+
+  });

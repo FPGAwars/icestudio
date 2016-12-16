@@ -82,7 +82,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     this.constructor.__super__.constructor.__super__.initialize.apply(this, arguments);
   },
 
-  updatePortsAttrs: function(eventName) {
+  updatePortsAttrs: function(/*eventName*/) {
     if (this._portSelectors) {
       var newAttrs = _.omit(this.get('attrs'), this._portSelectors);
       this.set('attrs', newAttrs, { silent: true });
@@ -214,16 +214,16 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       var $bottomPorts = this.$('.bottomPorts').empty();
       var portTemplate = _.template(this.model.portMarkup);
 
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'left' }), function (port, index) {
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'left'; }), function (port, index) {
         $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'right' }), function (port, index) {
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'right'; }), function (port, index) {
         $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'top' }), function (port, index) {
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'top'; }), function (port, index) {
         $topPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'bottom' }), function (port, index) {
+      _.each(_.filter(this.model.ports, function (p) { return p.type === 'bottom'; }), function (port, index) {
         $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
       });
     },
@@ -248,7 +248,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       });
     },
 
-    removeBox: function(evt) {
+    removeBox: function(/*evt*/) {
       this.$box.remove();
     }
 });
@@ -344,7 +344,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
       this.$box.find('.io-combo').on('change', _.bind(function(evt) {
-        this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
+        this.model.attributes.data.pin.name = $(evt.target).find('option:selected').text();
         this.model.attributes.data.pin.value = $(evt.target).val();
       }, this));
     },
@@ -632,7 +632,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
                       left: bbox.x * state.zoom + state.pan.x,
                       top: bbox.y * state.zoom + state.pan.y });
     },
-    removeBox: function(evt) {
+    removeBox: function(/*evt*/) {
       this.$box.remove();
     }
 });
@@ -752,7 +752,9 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
     // The markup needs to contain a `.connection`
     this._V.connection.attr('d', pathData.full);
-    this._V.connectionWrap && this._V.connectionWrap.attr('d', pathData.wrap);
+    if(this._V.connectionWrap) {
+      this._V.connectionWrap.attr('d', pathData.wrap);
+    }
 
     this._translateAndAutoOrientArrows(this._V.markerSource, this._V.markerTarget);
   },
@@ -766,8 +768,8 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       // Find all the wires in the same port
       var portWires = [];
       _.each(allWires, function(wire) {
-        if ((wire.attributes.source.id == currentWire.attributes.source.id) &&
-            (wire.attributes.source.port == currentWire.attributes.source.port))
+        if ((wire.attributes.source.id === currentWire.attributes.source.id) &&
+            (wire.attributes.source.port === currentWire.attributes.source.port))
         {
           // Wire with the same source of currentWire
           var wireView = self.paper.findViewByModel(wire);
@@ -789,13 +791,15 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         );
         _.each(portWires, function(wireA) {
           _.each(portWires, function(wireB) {
-            if (wireA.id != wireB.id) {
+            if (wireA.id !== wireB.id) {
               // Not the same wire
               findBifurcations(wireA.view, wireB.view, wireA.markers);
             }
           });
         });
       }
+
+      /* jshint -W082 */
 
       function findBifurcations(wireA, wireB, markersA) {
         // Find the corners in A that intersects with any B segment
@@ -804,7 +808,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
         if (vA.length > 2) {
           for (var i = 1; i < vA.length - 1; i++) {
-            if ((vA[i-1].x != vA[i+1].x) && (vA[i-1].y != vA[i+1].y)) {
+            if ((vA[i-1].x !== vA[i+1].x) && (vA[i-1].y !== vA[i+1].y)) {
               // vA[i] is a corner
               for (var j = 0; j < vB.length - 1; j++) {
                 // Eval if intersects any segment of wire vB
@@ -827,20 +831,22 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       }
 
       function evalIntersection(point, segment) {
-        if (segment[0].x == segment[1].x) {
+        if (segment[0].x === segment[1].x) {
           // Vertical
-          return ((point.x == segment[0].x) &&
+          return ((point.x === segment[0].x) &&
             (point.y > Math.min(segment[0].y, segment[1].y)) &&
             (point.y < Math.max(segment[0].y, segment[1].y)));
         }
         else {
           // Horizontal
-          return ((point.y == segment[0].y) &&
+          return ((point.y === segment[0].y) &&
           (point.x > Math.min(segment[0].x, segment[1].x)) &&
           (point.x < Math.max(segment[0].x, segment[1].x)));
         }
       }
     }
+
+    /* jshint +W082 */
 
     return this;
   }

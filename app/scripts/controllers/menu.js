@@ -22,6 +22,7 @@ angular.module('icestudio')
     $scope.boards = boards;
     $scope.profile = profile;
     $scope.project = project;
+    $scope.tools = tools;
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
@@ -72,8 +73,9 @@ angular.module('icestudio')
         gettextCatalog.getString('Enter the project name'),
         gettextCatalog.getString('untitled'),
         function(evt, name) {
-          if (name)
+          if (name) {
             project.new(name);
+          }
         });
     };
 
@@ -122,8 +124,9 @@ angular.module('icestudio')
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath);
-        if (localCallback)
+        if (localCallback) {
           localCallback();
+        }
       });
     };
 
@@ -144,7 +147,7 @@ angular.module('icestudio')
           updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportPCF = function() {
       checkGraph(function() {
@@ -153,7 +156,7 @@ angular.module('icestudio')
           updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportTestbench = function() {
       checkGraph(function() {
@@ -162,7 +165,7 @@ angular.module('icestudio')
           updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportGTKwave = function() {
       checkGraph(function() {
@@ -171,11 +174,11 @@ angular.module('icestudio')
           updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     function updateWorkingdir(filepath) {
       $scope.workingdir = utils.dirname(filepath) + utils.sep;
-    };
+    }
 
     $scope.quit = function() {
       exit();
@@ -245,7 +248,7 @@ angular.module('icestudio')
     };
 
     $scope.selectLanguage = function(language) {
-      if (profile.data.language != language) {
+      if (profile.data.language !== language) {
         profile.data.language = language;
         utils.setLocale(language);
       }
@@ -266,20 +269,20 @@ angular.module('icestudio')
 
     $(document).on('keydown', function(event) {
       if (graph.isEnabled() && !promptShown) {
-        if (event.keyCode == 46 || // Supr
-            (event.keyCode == 88 && event.ctrlKey)) { // Ctrl + x
+        if (event.keyCode === 46 || // Supr
+            (event.keyCode === 88 && event.ctrlKey)) { // Ctrl + x
           $scope.removeSelected();
         }
-        else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl + c
+        else if (event.keyCode === 67 && event.ctrlKey) { // Ctrl + c
           $scope.cloneSelected();
         }
         if (process.platform === 'darwin') {
-          if (event.keyCode == 8) { // Back
+          if (event.keyCode === 8) { // Back
             $scope.removeSelected();
           }
         }
       }
-      if (event.keyCode == 80 && event.ctrlKey) { // Ctrl + p
+      if (event.keyCode === 80 && event.ctrlKey) { // Ctrl + p
         // Print and save a window snapshot
         takeSnapshot();
       }
@@ -287,21 +290,25 @@ angular.module('icestudio')
 
     function takeSnapshot() {
       win.capturePage(function(img) {
-        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
         saveSnapshot(base64Data);
       }, 'png');
-    };
+    }
 
     function saveSnapshot(base64Data) {
       utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
         nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
           $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
           $scope.$apply();
-          if (!err) alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
-          else throw err;
+          if (!err) {
+            alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
+          }
+          else {
+            throw err;
+          }
         });
       });
-    };
+    }
 
 
     //-- View
@@ -350,7 +357,7 @@ angular.module('icestudio')
     //-- Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard.name != board.name) {
+      if (boards.selectedBoard.name !== board.name) {
         if (!graph.isEmpty()) {
           alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: utils.bold(board.info.label) }),
             function() {
@@ -391,16 +398,19 @@ angular.module('icestudio')
 
     function checkGraph(callback, callback2) {
       if (!graph.isEmpty()) {
-        if (callback)
+        if (callback) {
           callback();
+        }
       }
       else {
-        if (callback2)
+        if (callback2) {
           callback2();
-        else
+        }
+        else {
           alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
+        }
       }
-    };
+    }
 
 
     //-- Help

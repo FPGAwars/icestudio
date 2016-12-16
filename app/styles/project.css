@@ -78,6 +78,7 @@
   border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
+  user-select: none;
   z-index: 0;
 }
 
@@ -110,6 +111,7 @@
   border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
+  user-select: none;
   z-index: 0;
 }
 
@@ -136,12 +138,13 @@
   border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
+  user-select: none;
   z-index: 0;
 }
 
 .constant-block p {
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 5px;
   font-size: 1.5em;
   color: #444;
@@ -171,6 +174,7 @@
   border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
+  user-select: none;
   z-index: 0;
 }
 
@@ -195,6 +199,7 @@
   border: 2px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
+  user-select: none;
   z-index: 0;
 }
 
@@ -217,7 +222,7 @@
 }
 
 .highlight {
-  box-shadow: 0px 0px 30px 0px rgba(200,200,200,1);
+  box-shadow: 0 0 30px 0 rgba(200,200,200,1);
 }
 
 .selectionarea {
