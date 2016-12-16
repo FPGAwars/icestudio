@@ -20,7 +20,7 @@ angular.module('icestudio')
             code += header('//');
             code += testbenchCompiler(project);
             break;
-          case 'verilog':
+          case 'gtkwave':
             code += header('[*]');
             code += gtkwaveCompiler(project);
             break;
@@ -90,8 +90,10 @@ angular.module('icestudio')
           if (ports.length > 0) {
             code += ' (\n';
             code += ports.join(',\n');
-            code += '\n);\n';
+            code += '\n)';
           }
+
+          code += ';\n';
 
           // Content
 
@@ -233,7 +235,8 @@ angular.module('icestudio')
           if (block.type != 'basic.input' &&
               block.type != 'basic.output' &&
               block.type != 'basic.constant' &&
-              block.type != 'basic.info') {
+              block.type != 'basic.info' &&
+              graph.wires.length > 0) {
 
             // Header
 
