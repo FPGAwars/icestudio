@@ -665,6 +665,7 @@ angular.module('icestudio')
       var i;
       var content = [];
       var messages = [
+        gettextCatalog.getString('Name'),
         gettextCatalog.getString('Version'),
         gettextCatalog.getString('Description'),
         gettextCatalog.getString('Author')
@@ -673,20 +674,23 @@ angular.module('icestudio')
       content.push('<div>');
       for (i in messages) {
         if (i > 0) {
-          content.push('<br>');
+          //content.push('<br>');
         }
         content.push('  <p>' + messages[i] + '</p>');
         content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
-      content.push('  <img id="preview-svg" src="data:image/svg+xml,' + '' + '"  width="128" height="64" style="margin: 5px; border: 1px solid">');
+      content.push('  <img id="preview-svg" src="data:image/svg+xml,' + values[4] + '"  width="128" height="64" style="margin: 5px; border: 1px solid">');
       content.push('  <input id="input-open-svg" type="file" accept=".svg" style="display:inline-block;">');
       // TODO: add Save SVG
       content.push('</div>');
-      // Restore values
+      /*// Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i.toString()).val(values[i]);
       }
+      $('#preview-svg').attr('src', 'data:image/svg+xml,' + values[4]);*/
+
+      var image = '';
 
       alertify.confirm()
       .set('onshow', function() {
@@ -700,7 +704,7 @@ angular.module('icestudio')
               throw err;
             }
             svgo.optimize(data, function(result) {
-              var image = encodeURI(result.data);
+              image = encodeURI(result.data);
               $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
             });
           });
@@ -713,6 +717,7 @@ angular.module('icestudio')
         for (var i = 0; i < n; i++) {
           values.push($('#input' + i.toString()).val());
         }
+        values.push(image);
         if (callback) {
           callback(evt, values);
         }
