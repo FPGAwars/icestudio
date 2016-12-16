@@ -61,7 +61,7 @@ angular.module('icestudio')
     $scope.hideMenu = function (menu) {
       timer = $timeout(function () {
         $scope.status[menu] = false;
-      }, 500);
+      }, 700);
     };
 
 
@@ -221,18 +221,19 @@ angular.module('icestudio')
     };
 
     $scope.setProjectInformation = function() {
-
+      var p = project.project.package;
       var values = [
-
+        p.name,
+        p.version,
+        p.description,
+        p.author
       ];
       utils.projectinfoprompt(values, function(evt, values) {
-
+        project.project.package.name = values[0];
+        project.project.package.version = values[1];
+        project.project.package.description = values[2];
+        project.project.package.author = values[3];
       });
-      /*var current = project.image;
-      alertify.prompt(gettextCatalog.getString('Enter the project\'s image path'), (current) ? current : '',
-        function(evt, imagePath) {
-          common.setImagePath(imagePath);
-      });*/
     };
 
     $scope.setRemoteHostname = function() {

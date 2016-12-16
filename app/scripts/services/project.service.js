@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('project', function(graph,
+  .service('project', function($rootScope,
+                               graph,
                                boards,
                                compiler,
                                utils,
@@ -56,11 +57,13 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       this.project = _safeLoad(data);
+      var ret = graph.loadDesign(this.project.design, false, function() {
+        alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
+      });
 
-      if (graph.loadDesign(this.project.design)) {
+      if (ret) {
         boards.selectBoard(this.project.design.board);
         this.updateName(name);
-        alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
       }
       else {
         alertify.notify(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 'error', 30);
@@ -169,7 +172,7 @@ angular.module('icestudio')
           async.eachSeries(files, function(filename, next) {
             setTimeout(function() {
               var origPath = nodePath.join(path, filename);
-              var destPath = nodePath.join(self.projectPath, filename);
+              var destPath = nodePath.join(utils.dirname(self.path), filename);
               if (nodeFs.existsSync(destPath)) {
                 alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
                 function() {
@@ -287,8 +290,10 @@ angular.module('icestudio')
     };
 
     this.addBlock = function(type, block) {
-      block = _safeLoad(block);
-      this.project.design.deps[type] = block;
+      if (block) {
+        block = _safeLoad(block);
+        this.project.design.deps[type] = block;
+      }
       graph.createBlock(type, block);
     };
 

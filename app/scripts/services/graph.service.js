@@ -371,17 +371,14 @@ angular.module('icestudio')
               if(!$rootScope.$$phase) {
                 $rootScope.$apply();
               }
-              var disabled = true;
               zIndex = 1;
               if (self.breadcrumbs.length == 2) {
-                $rootScope.$broadcast('refreshProject', function() {
-                  self.loadDesign(dependencies[data.blockType], disabled);
-                  self.appEnable(false);
+                $rootScope.$broadcast('updateProject', function() {
+                  self.loadDesign(dependencies[data.blockType].design, true);
                 });
               }
               else {
-                self.loadDesign(dependencies[data.blockType], disabled);
-                self.appEnable(false);
+                self.loadDesign(dependencies[data.blockType].design, true);
               }
             }
           });
@@ -693,7 +690,7 @@ angular.module('icestudio')
                 block.design.graph.blocks &&
                 block.design.graph.wires &&
                 block.design.deps) {
-              dependencies[type] = block.design;
+              dependencies[type] = block;
               blockInstance.position.x = 6 * gridsize;
               blockInstance.position.y = 16 * gridsize;
               var cell = addGenericBlock(blockInstance, block);
@@ -808,52 +805,65 @@ angular.module('icestudio')
           return paper.options.enabled;
         }
 
-        this.loadDesign = function(design, disabled) {
+        this.loadDesign = function(design, disabled, callback) {
           if (design &&
               design.graph &&
               design.graph.blocks &&
               design.graph.wires &&
               design.deps) {
 
+            var self = this;
             var blockInstances = design.graph.blocks;
             var wires = design.graph.wires;
             var deps = design.deps;
 
             dependencies = design.deps;
 
-            this.clearAll();
+            $('body').addClass('waiting');
 
+            this.clearAll();
             this.setState(design.state);
 
-            // Blocks
-            for (var i in blockInstances) {
-              var blockInstance = blockInstances[i];
-              if (blockInstance.type == 'basic.code') {
-                addBasicCodeBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.info') {
-                addBasicInfoBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.input') {
-                addBasicInputBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.output') {
-                addBasicOutputBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.constant') {
-                addBasicConstantBlock(blockInstance, disabled);
-              }
-              else {
-                if (deps && deps[blockInstance.type]) {
-                  addGenericBlock(blockInstance, deps[blockInstance.type]);
+            setTimeout(function() {
+
+              // Blocks
+              for (var i in blockInstances) {
+                var blockInstance = blockInstances[i];
+                if (blockInstance.type == 'basic.code') {
+                  addBasicCodeBlock(blockInstance, disabled);
+                }
+                else if (blockInstance.type == 'basic.info') {
+                  addBasicInfoBlock(blockInstance, disabled);
+                }
+                else if (blockInstance.type == 'basic.input') {
+                  addBasicInputBlock(blockInstance, disabled);
+                }
+                else if (blockInstance.type == 'basic.output') {
+                  addBasicOutputBlock(blockInstance, disabled);
+                }
+                else if (blockInstance.type == 'basic.constant') {
+                  addBasicConstantBlock(blockInstance, disabled);
+                }
+                else {
+                  if (deps && deps[blockInstance.type]) {
+                    addGenericBlock(blockInstance, deps[blockInstance.type]);
+                  }
                 }
               }
-            }
 
-            // Wires
-            for (var i in wires) {
-              addWire(wires[i]);
-            }
+              // Wires
+              for (var i in wires) {
+                addWire(wires[i]);
+              }
+
+              self.appEnable(!disabled);
+
+              $('body').removeClass('waiting');
+
+              if (callback)
+                callback();
+
+            }, 20);
 
             return true;
           }
