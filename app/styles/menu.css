@@ -12,7 +12,7 @@
 }
 
 .navbar-right {
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .dropdown-submenu {
@@ -23,7 +23,7 @@
   top: 0;
   left: 100%;
   margin-top: -6px;
-  margin-left: 0px;
+  margin-left: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;

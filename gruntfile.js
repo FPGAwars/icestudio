@@ -83,9 +83,6 @@ module.exports = function(grunt) {
       },
       ice: {
         files: 'dist/tmp/resources/**/*.ice'
-      },
-      iceb: {
-        files: 'dist/tmp/resources/**/*.iceb'
       }
     },
 
