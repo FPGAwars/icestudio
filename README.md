@@ -37,6 +37,8 @@ Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
 
 Install [nodejs](https://github.com/nodejs/node)
 
+Using [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint).
+
 ##### Ubuntu
 
 ```bash
@@ -129,12 +131,13 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
  * [Salvador E. Tropea](https://github.com/set-soft)
  * [Democrito](https://github.com/Democrito)
  * [Martoni](https://github.com/Martoni)
+ * [Pascal Cotret](https://github.com/pcotret)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
 ## Credits
 
-* v0.2: using [JointJS](https://github.com/clientIO/joint)
+* v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 * Sponsored by [BQ](https://www.bq.com)
 

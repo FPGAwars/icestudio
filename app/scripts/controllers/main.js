@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MainCtrl', function($scope, gettextCatalog) {
+  .controller('MainCtrl', function($scope,
+                                   gettextCatalog) {
 
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
