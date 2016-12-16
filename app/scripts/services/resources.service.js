@@ -9,7 +9,7 @@ angular.module('icestudio')
     };
 
     this.getMenuBlocks = function() {
-      return utils.getFilesRecursive(nodePath.join('resources', 'blocks'), '.iceb');
+      return utils.getFilesRecursive(nodePath.join('resources', 'blocks'), '.ice');
     };
 
   });

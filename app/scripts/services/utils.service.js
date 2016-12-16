@@ -684,11 +684,11 @@ angular.module('icestudio')
       content.push('  <input id="input-open-svg" type="file" accept=".svg" style="display:inline-block;">');
       // TODO: add Save SVG
       content.push('</div>');
-      /*// Restore values
+      // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i.toString()).val(values[i]);
       }
-      $('#preview-svg').attr('src', 'data:image/svg+xml,' + values[4]);*/
+      $('#preview-svg').attr('src', 'data:image/svg+xml,' + values[4]);
 
       var image = '';
 
