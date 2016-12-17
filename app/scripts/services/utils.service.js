@@ -672,6 +672,7 @@ angular.module('icestudio')
       ];
       var n = messages.length;
       var image = values[4];
+      var blankImage = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
       content.push('<div>');
       for (i in messages) {
         if (i > 0) {
@@ -684,11 +685,12 @@ angular.module('icestudio')
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
       content.push('  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">');
       content.push('  <div>');
-      content.push('    <img class="ajs-input" id="preview-svg" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" height="100" >');
+      content.push('  <img id="preview-svg" class="ajs-input" src="' + (image ? ('data:image/svg+xml,' + image) : blankImage) + '" height="68" style="pointer-events:none">');
       content.push('  </div>');
       content.push('  <div>');
       content.push('    <label for="input-open-svg" class="btn">' + gettextCatalog.getString('Open SVG') + '</label>');
-      content.push('    <label for="input-save-svg" class="btn">' + gettextCatalog.getString('Save SVG') + '</label>');
+      content.push('    <label id="save-svg" for="input-save-svg" class="btn">' + gettextCatalog.getString('Save SVG') + '</label>');
+      content.push('    <label id="reset-svg" class="btn">' + gettextCatalog.getString('Reset SVG') + '</label>');
       content.push('  </div>');
       content.push('</div>');
       // Restore values
@@ -698,9 +700,18 @@ angular.module('icestudio')
       if (image) {
         $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
       }
+      else {
+        $('#preview-svg').attr('src', blankImage);
+      }
 
       alertify.confirm()
       .set('onshow', function() {
+        registerOpen();
+        registerSave();
+        registerReset();
+      });
+
+      function registerOpen() {
         // Open SVG
         var chooserOpen = $('#input-open-svg');
         chooserOpen.unbind('change');
@@ -713,28 +724,52 @@ angular.module('icestudio')
             }
             svgo.optimize(data, function(result) {
               image = encodeURI(result.data);
+              registerSave();
               $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
-              //$('#input-save-svg').attr('nwsaveas', $('#input-open-svg').val());
             });
           });
+          $(this).val('');
         });
+      }
+
+      function registerSave() {
         // Save SVG
-        var chooserSave = $('#input-save-svg');
-        chooserSave.unbind('change');
-        chooserSave.change(function(/*evt*/) {
-          if (image) {
-            var filepath = $(this).val();
-            if (!filepath.endsWith('.svg')) {
-              filepath += '.svg';
-            }
-            nodeFs.writeFile(filepath, decodeURI(image), function(err) {
-              if (err) {
-                throw err;
+        var label = $('#save-svg');
+        if (image) {
+          label.removeClass('disabled');
+          label.attr('for', 'input-save-svg');
+          var chooserSave = $('#input-save-svg');
+          chooserSave.unbind('change');
+          chooserSave.change(function(/*evt*/) {
+            if (image) {
+              var filepath = $(this).val();
+              if (!filepath.endsWith('.svg')) {
+                filepath += '.svg';
               }
-            });
-          }
+              nodeFs.writeFile(filepath, decodeURI(image), function(err) {
+                if (err) {
+                  throw err;
+                }
+              });
+              $(this).val('');
+            }
+          });
+        }
+        else {
+          label.addClass('disabled');
+          label.attr('for', '');
+        }
+      }
+
+      function registerReset() {
+        // Reset SVG
+        var reset = $('#reset-svg');
+        reset.click(function(/*evt*/) {
+          image = '';
+          registerSave();
+          $('#preview-svg').attr('src', blankImage);
         });
-      });
+      }
 
       alertify.confirm(content.join('\n'))
       .set('onok', function(evt) {
