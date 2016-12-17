@@ -671,6 +671,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Author')
       ];
       var n = messages.length;
+      var image = values[4];
       content.push('<div>');
       for (i in messages) {
         if (i > 0) {
@@ -680,23 +681,30 @@ angular.module('icestudio')
         content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
-      content.push('  <img id="preview-svg" src="data:image/svg+xml,' + values[4] + '"  width="128" height="64" style="margin: 5px; border: 1px solid">');
-      content.push('  <input id="input-open-svg" type="file" accept=".svg" style="display:inline-block;">');
-      // TODO: add Save SVG
+      content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
+      content.push('  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">');
+      content.push('  <div>');
+      content.push('    <img class="ajs-input" id="preview-svg" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" height="100" >');
+      content.push('  </div>');
+      content.push('  <div>');
+      content.push('    <label for="input-open-svg" class="btn">' + gettextCatalog.getString('Open SVG') + '</label>');
+      content.push('    <label for="input-save-svg" class="btn">' + gettextCatalog.getString('Save SVG') + '</label>');
+      content.push('  </div>');
       content.push('</div>');
       // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i.toString()).val(values[i]);
       }
-      $('#preview-svg').attr('src', 'data:image/svg+xml,' + values[4]);
-
-      var image = '';
+      if (image) {
+        $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+      }
 
       alertify.confirm()
       .set('onshow', function() {
-        var chooser = $('#input-open-svg');
-        chooser.unbind('change');
-        chooser.change(function(/*evt*/) {
+        // Open SVG
+        var chooserOpen = $('#input-open-svg');
+        chooserOpen.unbind('change');
+        chooserOpen.change(function(/*evt*/) {
           var filepath = $(this).val();
           var svgo = new SVGO();
           nodeFs.readFile(filepath, 'utf8', function(err, data) {
@@ -706,8 +714,25 @@ angular.module('icestudio')
             svgo.optimize(data, function(result) {
               image = encodeURI(result.data);
               $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+              //$('#input-save-svg').attr('nwsaveas', $('#input-open-svg').val());
             });
           });
+        });
+        // Save SVG
+        var chooserSave = $('#input-save-svg');
+        chooserSave.unbind('change');
+        chooserSave.change(function(/*evt*/) {
+          if (image) {
+            var filepath = $(this).val();
+            if (!filepath.endsWith('.svg')) {
+              filepath += '.svg';
+            }
+            nodeFs.writeFile(filepath, decodeURI(image), function(err) {
+              if (err) {
+                throw err;
+              }
+            });
+          }
         });
       });
 
