@@ -282,10 +282,10 @@ angular.module('icestudio')
           if (paper.options.enabled) {
             utils.inputcheckboxprompt([
               gettextCatalog.getString('Update the port label'),
-              gettextCatalog.getString('Connect to an FPGA port')
+              gettextCatalog.getString('Virtual port')
             ], [
               data.data.label ? data.data.label : '',
-              data.data.connected ? data.data.connected : false
+              data.data.virtual ? data.data.virtual : false
             ],
               function(evt, values) {
                 var label = values[0].replace(/ /g, '');
@@ -293,8 +293,8 @@ angular.module('icestudio')
                   data.data.label = label;
                   alertify.success(gettextCatalog.getString('Block updated'));
                 }
-                var connected = values[1];
-                data.data.connected = connected;
+                var virtual = values[1];
+                data.data.virtual = virtual;
                 cellView.renderBlock();
             });
           }
@@ -557,7 +557,8 @@ angular.module('icestudio')
                     pin: {
                       name: '',
                       value: 0
-                    }
+                    },
+                    virtual: true
                   };
                   var cell = addBasicInputBlock(blockInstance);
                   var cellView = paper.findViewByModel(cell);
@@ -598,7 +599,8 @@ angular.module('icestudio')
                     pin: {
                       name: '',
                       value: 0
-                    }
+                    },
+                    virtual: true
                   };
                   var cell = addBasicOutputBlock(blockInstance);
                   var cellView = paper.findViewByModel(cell);
@@ -862,7 +864,7 @@ angular.module('icestudio')
         blockType: blockInstances.type,
         data: blockInstances.data,
         position: blockInstances.position,
-        disabled: disabled, // Not used
+        disabled: disabled,
         choices: boards.getPinout()
       });
 
@@ -876,7 +878,7 @@ angular.module('icestudio')
         blockType: blockInstances.type,
         data: blockInstances.data,
         position: blockInstances.position,
-        disabled: disabled, // Not used
+        disabled: disabled,
         choices: boards.getPinout()
       });
 
@@ -991,9 +993,17 @@ angular.module('icestudio')
       var height = 8 * gridsize;
       height = Math.max(4 * gridsize * numPortsHeight, height);
       var blockLabel = blockInstance.type.toUpperCase();
+      var blockLabels = blockInstance.type.split('.');
+      var maxBlockLabel = '';
       var width = 12 * gridsize;
-      if (blockLabel.length > 4) {
-        width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
+
+      for (var l in blockLabels) {
+        if (blockLabels[l].length > maxBlockLabel.length) {
+          maxBlockLabel = blockLabels[l];
+        }
+      }
+      if (maxBlockLabel.length > 4) {
+        width = Math.min((maxBlockLabel.length + 8) * gridsize, 24 * gridsize);
       }
       width = Math.max(4 * gridsize * numPortsWidth, width);
 
@@ -1013,8 +1023,8 @@ angular.module('icestudio')
         bottomPorts[i].gridUnits = gridUnitsWidth;
       }
 
-      if (blockInstance.type.indexOf('.') !== -1) {
-        blockLabel = blockInstance.type.split('.').join(' ');
+      if (blockLabels.length > 1) {
+        blockLabel = blockLabels.join('<br>').toUpperCase();
       }
 
       var blockImage = '';

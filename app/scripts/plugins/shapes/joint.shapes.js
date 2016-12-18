@@ -283,7 +283,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         this.$box.find('label').addClass('hidden');
       }
       else {
-        this.$box.find('label').text(name);
+        this.$box.find('label').html(name);
         this.$box.find('img').addClass('hidden');
         this.$box.find('label').removeClass('hidden');
       }
@@ -336,13 +336,13 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var virtualPortId = 'virtualPort' + this.id;
       var fpgaPortId = 'fpgaPort' + this.id;
       var comboId = 'combo' + this.id;
-      var connected = this.model.get('data').connected;
+      var virtual = this.model.get('data').virtual || this.model.get('disabled');
       this.$box = $(joint.util.template(
         '\
-        <div class="virtual-port' + (connected ? ' hidden' : '') + '" id="' + virtualPortId + '">\
+        <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
           <label></label>\
         </div>\
-        <div class="fpga-port' + (connected ? '' : ' hidden') + '" id="' + fpgaPortId + '">\
+        <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
           <label></label>\
           <select id="' + comboId + '" class="select2"></select>\
           <script>\
@@ -377,18 +377,19 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var virtualPortId = '#virtualPort' + this.id;
       var fpgaPortId = '#fpgaPort' + this.id;
       var name = this.model.get('data').label;
+      var virtual = this.model.get('data').virtual || this.model.get('disabled');
 
       this.$box.find('label').text(name);
 
-      if (this.model.get('data').connected) {
-        // FPGA I/O port (yellow)
-        $(virtualPortId).addClass('hidden');
-        $(fpgaPortId).removeClass('hidden');
-      }
-      else {
+      if (virtual) {
         // Virtual port (green)
         $(fpgaPortId).addClass('hidden');
         $(virtualPortId).removeClass('hidden');
+      }
+      else {
+        // FPGA I/O port (yellow)
+        $(virtualPortId).addClass('hidden');
+        $(fpgaPortId).removeClass('hidden');
       }
     },
     renderValue: function() {
@@ -408,8 +409,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     update: function () {
       this.renderPorts();
       this.renderBlock();
-      this.renderChoides();
-      this.renderValue();
+      if (!this.model.get('disabled')) {
+        this.renderChoides();
+        this.renderValue();
+      }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     }
 });

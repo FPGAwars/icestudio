@@ -224,7 +224,6 @@ angular.module('icestudio')
             if (block.design.graph.blocks[i].type === 'basic.input' ||
                 block.design.graph.blocks[i].type === 'basic.output') {
               delete block.design.graph.blocks[i].data.pin;
-              delete block.design.graph.blocks[i].data.connected;
             }
           }
           // Add block
