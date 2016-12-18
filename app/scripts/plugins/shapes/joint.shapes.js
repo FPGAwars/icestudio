@@ -327,59 +327,89 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
-    template: '\
-    <div class="io-block">\
-      <label></label>\
-      <select class="io-combo select2"></select>\
-      <script>\
-        $(".select2").select2({placeholder: "", allowClear: true});\
-      </script>\
-    </div>\
-    ',
+    id: '',
 
     initialize: function() {
       joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
-      // Prevent paper from handling pointerdown.
-      this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
+      this.id = sha1(this.model.get('id')).toString().substring(0, 6);
+      var virtualPortId = 'virtualPort' + this.id;
+      var fpgaPortId = 'fpgaPort' + this.id;
+      var comboId = 'combo' + this.id;
+      var connected = this.model.get('data').connected;
+      this.$box = $(joint.util.template(
+        '\
+        <div class="virtual-port' + (connected ? ' hidden' : '') + '" id="' + virtualPortId + '">\
+          <label></label>\
+        </div>\
+        <div class="fpga-port' + (connected ? '' : ' hidden') + '" id="' + fpgaPortId + '">\
+          <label></label>\
+          <select id="' + comboId + '" class="select2"></select>\
+          <script>\
+            $("#' + comboId + '").select2({placeholder: "", allowClear: true});\
+          </script>\
+        </div>\
+        '
+      )());
 
-      this.$box.find('.io-combo').on('change', _.bind(function(evt) {
+      this.$box.find('#' + virtualPortId);
+
+      // Prevent paper from handling pointerdown.
+      var comboSelector = this.$box.find('#' + comboId);
+      comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
+      comboSelector.on('change', _.bind(function(evt) {
         this.model.attributes.data.pin.name = $(evt.target).find('option:selected').text();
         this.model.attributes.data.pin.value = $(evt.target).val();
       }, this));
     },
-    renderLabel: function () {
-      var name = this.model.attributes.data.label;
-      this.$box.find('label').text(name);
+    renderChoides: function() {
+      var comboId = '#combo' + this.id;
+      var comboSelector = this.$box.find(comboId);
+      var choices = this.model.get('choices');
+
+      comboSelector.empty();
+      comboSelector.append('<option></option>');
+      for (var c in choices) {
+        comboSelector.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
+      }
     },
-    renderChoices: function() {
-      if (this.model.get('disabled')) {
-        this.$box.find('.io-combo').removeClass('select2');
-        this.$box.find('.io-combo').css({'display': 'none'});
+    renderBlock: function() {
+      var virtualPortId = '#virtualPort' + this.id;
+      var fpgaPortId = '#fpgaPort' + this.id;
+      var name = this.model.get('data').label;
+
+      this.$box.find('label').text(name);
+
+      if (this.model.get('data').connected) {
+        // FPGA I/O port (yellow)
+        $(virtualPortId).addClass('hidden');
+        $(fpgaPortId).removeClass('hidden');
       }
       else {
-        var choices = this.model.get('choices');
-        var $select = this.$box.find('.io-combo').empty();
+        // Virtual port (green)
+        $(fpgaPortId).addClass('hidden');
+        $(virtualPortId).removeClass('hidden');
+      }
+    },
+    renderValue: function() {
+      var comboId = '#combo' + this.id;
+      var comboSelector = this.$box.find(comboId);
 
-        $select.append('<option></option>');
-        for (var c in choices) {
-          $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
-        }
-
-        if (this.model.get('data').pin) {
-          this.$box.find('.io-combo').val(this.model.get('data').pin.value);
-        }
+      if (this.model.get('data').pin) {
+        comboSelector.val(this.model.get('data').pin.value);
       }
     },
     clearValue: function () {
+      var comboId = '#combo' + this.id;
       this.model.attributes.data.pin.name = '';
       this.model.attributes.data.pin.value = 0;
-      this.$box.find('.io-combo').val('');
+      this.$box.find(comboId).val('');
     },
     update: function () {
-      this.renderLabel();
       this.renderPorts();
-      this.renderChoices();
+      this.renderBlock();
+      this.renderChoides();
+      this.renderValue();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     }
 });

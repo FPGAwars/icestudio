@@ -633,16 +633,13 @@ angular.module('icestudio')
       });
     };
 
-    this.constantprompt = function(messages, values, callback) {
+    this.inputcheckboxprompt = function(messages, values, callback) {
       var content = [];
       content.push('<div>');
       content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input class="ajs-input" id="label" type="text" value="' + values[0] + '"/>');
+      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '"/>');
       content.push('  <br>');
-      content.push('  <p>' + messages[1] + '</p>');
-      content.push('  <ul>');
-      content.push('  <li><p>' + messages[2] + ' <input id="local" type="checkbox" ' + (values[1] ? 'checked' : '') + '/></p></li>');
-      content.push('  </ul>');
+      content.push('  <div class="checkbox"><label><input id="local" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
       content.push('</div>');
       // Restore values
       $('#label').val(values[0]);

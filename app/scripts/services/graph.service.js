@@ -280,25 +280,32 @@ angular.module('icestudio')
         if (data.blockType === 'basic.input' ||
             data.blockType === 'basic.output') {
           if (paper.options.enabled) {
-            alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
-              function(evt, label) {
-                label = label.replace(/ /g, '');
+            utils.inputcheckboxprompt([
+              gettextCatalog.getString('Update the port label'),
+              gettextCatalog.getString('Connect to an FPGA port')
+            ], [
+              data.data.label ? data.data.label : '',
+              data.data.connected ? data.data.connected : false
+            ],
+              function(evt, values) {
+                var label = values[0].replace(/ /g, '');
                 if (data.data.label !== label) {
                   data.data.label = label;
-                  cellView.renderLabel();
-                  alertify.success(gettextCatalog.getString('Label updated'));
+                  alertify.success(gettextCatalog.getString('Block updated'));
                 }
+                var connected = values[1];
+                data.data.connected = connected;
+                cellView.renderBlock();
             });
           }
         }
         else if (data.blockType === 'basic.constant') {
           if (paper.options.enabled) {
-            utils.constantprompt([
+            utils.inputcheckboxprompt([
               gettextCatalog.getString('Update the block label'),
-              gettextCatalog.getString('Update the block status'),
               gettextCatalog.getString('Local parameter')
             ], [
-              data.data.label ? ' ' + data.data.label + ' ' : '',
+              data.data.label ? data.data.label : '',
               data.data.local ? data.data.local : false
             ],
               function(evt, values) {
@@ -306,7 +313,7 @@ angular.module('icestudio')
                 if (data.data.label !== label) {
                   data.data.label = label;
                   cellView.renderLabel();
-                  alertify.success(gettextCatalog.getString('Label updated'));
+                  alertify.success(gettextCatalog.getString('Block updated'));
                 }
                 var local = values[1];
                 data.data.local = local;
@@ -444,17 +451,17 @@ angular.module('icestudio')
 
       if (type === 'basic.code') {
         var defaultValues = [
-          ' a , b ',
-          ' c , d ',
+          'a , b',
+          'c , d',
           ''
         ];
         if (block && block.data) {
           if (block.data.ports) {
-            defaultValues[0] = ' ' +  block.data.ports.in.join(' , ') +  ' ';
-            defaultValues[1] = ' ' +  block.data.ports.out.join(' , ') +  ' ';
+            defaultValues[0] = block.data.ports.in.join(' , ');
+            defaultValues[1] = block.data.ports.out.join(' , ');
           }
           if (block.data.params) {
-            defaultValues[2] = ' ' +  block.data.params.join(' , ') +  ' ';
+            defaultValues[2] = block.data.params.join(' , ');
           }
         }
         utils.multiprompt(
@@ -539,7 +546,7 @@ angular.module('icestudio')
         }
       }
       else if (type === 'basic.input') {
-        alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' in ',
+        alertify.prompt(gettextCatalog.getString('Enter the input ports'), 'in',
           function(evt, name) {
             if (name) {
               var names = name.replace(/ /g, '').split(',');
@@ -579,7 +586,7 @@ angular.module('icestudio')
         });
       }
       else if (type === 'basic.output') {
-        alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' out ',
+        alertify.prompt(gettextCatalog.getString('Enter the output ports'), 'out',
           function(evt, name) {
             if (name) {
               var names = name.replace(/ /g, '').split(',');
@@ -621,7 +628,7 @@ angular.module('icestudio')
         });
       }
       else if (type === 'basic.constant') {
-        alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), ' C ',
+        alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), 'C',
           function(evt, name) {
             if (name) {
               var names = name.replace(/ /g, '').split(',');
@@ -854,9 +861,8 @@ angular.module('icestudio')
         id: blockInstances.id,
         blockType: blockInstances.type,
         data: blockInstances.data,
-        label: blockInstances.data.label,
         position: blockInstances.position,
-        disabled: disabled,
+        disabled: disabled, // Not used
         choices: boards.getPinout()
       });
 
@@ -869,9 +875,8 @@ angular.module('icestudio')
         id: blockInstances.id,
         blockType: blockInstances.type,
         data: blockInstances.data,
-        label: blockInstances.data.label,
         position: blockInstances.position,
-        disabled: disabled,
+        disabled: disabled, // Not used
         choices: boards.getPinout()
       });
 
@@ -884,7 +889,6 @@ angular.module('icestudio')
         id: blockInstances.id,
         blockType: blockInstances.type,
         data: blockInstances.data,
-        label: blockInstances.data.label,
         position: blockInstances.position,
         disabled: disabled
       });

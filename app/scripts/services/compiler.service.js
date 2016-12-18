@@ -377,7 +377,9 @@ angular.module('icestudio')
           code += 'set_io ';
           code += digestId(block.id);
           code += ' ';
-          code += block.data.pin.value;
+          if (block.data.connected) {
+            code += block.data.pin.value;
+          }
           code += '\n';
         }
       }

@@ -104,9 +104,9 @@
   color: #444;
 }
 
-.io-block {
+.virtual-port {
   position: absolute;
-  background: #fafacd;
+  background: #E2FBC9;
   border-radius: 5px;
   border: 2px solid #888;
   pointer-events: none;
@@ -115,7 +115,26 @@
   z-index: 0;
 }
 
-.io-block label {
+.virtual-port label {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1em;
+  color: #444;
+}
+
+.fpga-port {
+  position: absolute;
+  background: #FBFBC9;
+  border-radius: 5px;
+  border: 2px solid #888;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.fpga-port label {
   display: block;
   margin-top: 4px;
   text-align: center;
@@ -123,7 +142,7 @@
   color: #444;
 }
 
-.io-block .select2 {
+.select2 {
   position: absolute;
   left: 5px;
   bottom: 5px;
@@ -133,7 +152,7 @@
 
 .constant-block {
   position: absolute;
-  background: #faeaaf;
+  background: #FBF0C9;
   border-radius: 5px;
   border: 2px solid #888;
   pointer-events: none;
