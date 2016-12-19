@@ -547,17 +547,35 @@ angular.module('icestudio')
       }
       else if (type === 'basic.input') {
         alertify.prompt(gettextCatalog.getString('Enter the input ports'), 'in',
-          function(evt, name) {
-            if (name) {
-              var names = name.replace(/ /g, '').split(',');
-              for (var n in names) {
-                if (names[n]) {
-                  blockInstance.data = {
-                    label: names[n],
-                    pin: {
+          function(evt, input) {
+            if (input) {
+              var labels = input.replace(/ /g, '').split(',');
+              for (var l in labels) {
+                var portInfo = utils.parsePortLabel(labels[l]);
+                console.log(portInfo);
+                if (portInfo) {
+                  evt.cancel = false;
+                  var pins = [];
+                  if (portInfo.range) {
+                    for (var r in portInfo.range) {
+                      pins.push({
+                        index: portInfo.range[r].toString(),
+                        name: '',
+                        value: 0
+                      });
+                    }
+                  }
+                  else {
+                    pins.push({
+                      index: '',
                       name: '',
                       value: 0
-                    },
+                    });
+                  }
+                  blockInstance.data = {
+                    label: portInfo.input,
+                    name: portInfo.name,
+                    pins: pins,
                     virtual: true
                   };
                   var cell = addBasicInputBlock(blockInstance);
@@ -566,6 +584,11 @@ angular.module('icestudio')
                     cellView.$box.css('z-index', ++zIndex);
                   }
                   blockInstance.position.y += 10 * gridsize;
+                }
+                else {
+                  evt.cancel = true;
+                  alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', {name: labels[l]}), 'warning', 3);
+                  break;
                 }
               }
             }
