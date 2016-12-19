@@ -295,7 +295,7 @@ angular.module('icestudio')
                 }
                 var virtual = values[1];
                 data.data.virtual = virtual;
-                cellView.renderBlock();
+                cellView.render();
             });
           }
         }
@@ -552,7 +552,6 @@ angular.module('icestudio')
               var labels = input.replace(/ /g, '').split(',');
               for (var l in labels) {
                 var portInfo = utils.parsePortLabel(labels[l]);
-                console.log(portInfo);
                 if (portInfo) {
                   evt.cancel = false;
                   var pins = [];
@@ -567,7 +566,7 @@ angular.module('icestudio')
                   }
                   else {
                     pins.push({
-                      index: '',
+                      index: '0',
                       name: '',
                       value: 0
                     });
@@ -724,7 +723,7 @@ angular.module('icestudio')
         var cell = cells[i];
         var type = cell.attributes.blockType;
         if (type === 'basic.input' || type === 'basic.output') {
-          cell.attributes.choices = boards.getPinout();
+          cell.attributes.choices = boards.getPinoutHTML();
           var view = paper.findViewByModel(cell.id);
           view.renderChoices();
           view.clearValue();
@@ -888,7 +887,7 @@ angular.module('icestudio')
         data: blockInstances.data,
         position: blockInstances.position,
         disabled: disabled,
-        choices: boards.getPinout()
+        choices: boards.getPinoutHTML()
       });
 
       addCell(cell);
@@ -902,7 +901,7 @@ angular.module('icestudio')
         data: blockInstances.data,
         position: blockInstances.position,
         disabled: disabled,
-        choices: boards.getPinout()
+        choices: boards.getPinoutHTML()
       });
 
       addCell(cell);

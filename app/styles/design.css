@@ -136,18 +136,30 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 4px;
+  margin-top: 3px;
+  margin-bottom: 4px;
   text-align: center;
   font-size: 1em;
   color: #444;
 }
 
-.select2 {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
+.fpga-port div p {
+  position: relative;
+  top: 0px;
+  left: -20px;
+  float: left;
+}
+
+.fpga-port div .select2 {
+  position: relative;
   width: 82px;
+  left: 5px;
+  margin-bottom: 4px;
   pointer-events: auto;
+}
+
+.bigdrop {
+  width: 96px !important;
 }
 
 .constant-block {

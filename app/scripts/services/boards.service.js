@@ -3,7 +3,7 @@
 angular.module('icestudio')
   .service('boards', function(nodeFs,
                               nodePath) {
-
+    this.pinoutHTML = '';
     this.selectedBoard = null;
     this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
 
@@ -41,6 +41,7 @@ angular.module('icestudio')
       for (var i in this.currentBoards) {
         if (name === this.currentBoards[i].name) {
           this.selectedBoard = this.currentBoards[i];
+          this.pinoutHTML = generateHTMLOptions(this.selectedBoard.pinout);
           break;
         }
       }
@@ -53,8 +54,17 @@ angular.module('icestudio')
       return this.currentBoards;
     };
 
-    this.getPinout = function() {
-      return this.selectedBoard.pinout;
+    this.getPinoutHTML = function() {
+      return this.pinoutHTML;
     };
+
+    function generateHTMLOptions(pinout) {
+      var code = '<option>';
+      for (var i in pinout) {
+        code += '<option value="' + pinout[i].value + '">' + pinout[i].name + '</option>';
+      }
+      code += '</option>';
+      return code;
+    }
 
   });

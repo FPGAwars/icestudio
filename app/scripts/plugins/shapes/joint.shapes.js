@@ -330,6 +330,7 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     id: '',
+    pins: [],
 
     initialize: function() {
       joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
@@ -339,6 +340,25 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var fpgaPortId = 'fpgaPort' + this.id;
       var comboId = 'combo' + this.id;
       var virtual = this.model.get('data').virtual || this.model.get('disabled');
+
+      var selectCode = '';
+      var selectScript = '';
+      this.pins = this.model.attributes.data.pins;
+
+      // a,b[0:1],c[0:2],d[0:3]
+
+      if (this.pins) {
+        for (var i in this.pins) {
+          //selectCode += '<p style="top:' + (30 + 38*i) + 'px">' + this.pins[i].index + '</p>';
+          selectCode +='<select id="' + comboId + this.pins[i].index + '"';
+          selectCode += 'class="select2" index="' + this.pins[i].index + '">';
+          selectCode += '</select>';
+
+          selectScript += '$("#' + comboId + this.pins[i].index + '").select2(';
+          selectScript += '{placeholder: "", allowClear: true, dropdownCssClass: "bigdrop"});';
+        }
+      }
+
       this.$box = $(joint.util.template(
         '\
         <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
@@ -346,33 +366,27 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         </div>\
         <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
           <label></label>\
-          <select id="' + comboId + '" class="select2"></select>\
-          <script>\
-            $("#' + comboId + '").select2({placeholder: "", allowClear: true});\
-          </script>\
+          <div>' + selectCode + '</div>\
+          <script>' + selectScript + '</script>\
         </div>\
         '
       )());
 
-      this.$box.find('#' + virtualPortId);
-
       // Prevent paper from handling pointerdown.
-      var comboSelector = this.$box.find('#' + comboId);
+      var comboSelector = this.$box.find('.select2');
       comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
       comboSelector.on('change', _.bind(function(evt) {
-        this.model.attributes.data.pin.name = $(evt.target).find('option:selected').text();
-        this.model.attributes.data.pin.value = $(evt.target).val();
+        var target = $(evt.target);
+        var index = target.attr('index');
+        this.model.attributes.data.pins[index].name = target.find('option:selected').text();
+        this.model.attributes.data.pins[index].value = target.val();
       }, this));
     },
     renderChoides: function() {
-      var comboId = '#combo' + this.id;
-      var comboSelector = this.$box.find(comboId);
-      var choices = this.model.get('choices');
-
-      comboSelector.empty();
-      comboSelector.append('<option></option>');
-      for (var c in choices) {
-        comboSelector.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
+      if (this.pins) {
+        for (var i in this.pins) {
+          this.$box.find('#combo' + this.id + this.pins[i].index).empty().append(this.model.get('choices'));
+        }
       }
     },
     renderBlock: function() {
@@ -387,19 +401,22 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         // Virtual port (green)
         $(fpgaPortId).addClass('hidden');
         $(virtualPortId).removeClass('hidden');
+        this.model.attributes.size.height = 64;
       }
       else {
         // FPGA I/O port (yellow)
         $(virtualPortId).addClass('hidden');
         $(fpgaPortId).removeClass('hidden');
+        if (this.pins) {
+          this.model.attributes.size.height = 32 + 32 * this.pins.length;
+        }
       }
     },
     renderValue: function() {
-      var comboId = '#combo' + this.id;
-      var comboSelector = this.$box.find(comboId);
-
-      if (this.model.get('data').pin) {
-        comboSelector.val(this.model.get('data').pin.value);
+      if (this.pins) {
+        for (var i in this.pins) {
+          this.$box.find('#combo' + this.id + this.pins[i].index).val(this.pins[i].value);
+        }
       }
     },
     clearValue: function () {
@@ -691,7 +708,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   bifurcationMarkup: [
     '<g class="marker-bifurcation-group" transform="translate(<%= x %>, <%= y %>)">',
-    '<circle class="marker-bifurcation" idx="<%= idx %>" r="4" fill="#888"/>',
+    '<circle class="marker-bifurcation" idx="<%= idx %>" r="<%= r %>" fill="#888"/>',
     '</g>'
   ].join(''),
 
@@ -741,12 +758,14 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     // console.log('render');
 
     var pins = this.sourceView.model.attributes.data.pins;
+    var wireDot = (pins && pins.length > 1) ? 8 : 4;
     var wireWidth = (pins && pins.length > 1) ? 8 : 2;
     var wireLabel = (pins && pins.length > 1) ? '' + pins.length + '' : '';
 
     // Set up the wire
     this.$('.connection').css('stroke-width', wireWidth);
     this.model.label(0, {attrs: { text: { text: wireLabel } } });
+    this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, wireDot);
 
     return this;
   },
