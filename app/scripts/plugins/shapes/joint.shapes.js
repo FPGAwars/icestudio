@@ -236,8 +236,10 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     updateBox: function() {
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
+      var pins = this.model.attributes.data.pins;
+      var wireWidth = (pins && pins.length > 1) ? 8 : 2;
 
-      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+      this.$('.port-wire').css('stroke-width', wireWidth * state.zoom);
 
       this.$box.css({
         left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
@@ -703,18 +705,19 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     type: 'ice.Wire',
 
-    /*labels: [
+    labels: [
       {
-        position: .5,
+        position: 0.5,
         attrs: {
           text: {
-            text: ' /8 ' || '',
+            text: '',
             'font-weight': 'bold',
-            'font-size': '150%'
+            'font-size': '150%',
+            'y': '12px'
           }
         }
       }
-    ],*/
+    ],
 
     attrs: {
       '.connection': {
@@ -736,6 +739,15 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   render: function() {
     joint.dia.LinkView.prototype.render.apply(this, arguments);
     // console.log('render');
+
+    var pins = this.sourceView.model.attributes.data.pins;
+    var wireWidth = (pins && pins.length > 1) ? 8 : 2;
+    var wireLabel = (pins && pins.length > 1) ? '' + pins.length + '' : '';
+
+    // Set up the wire
+    this.$('.connection').css('stroke-width', wireWidth);
+    this.model.label(0, {attrs: { text: { text: wireLabel } } });
+
     return this;
   },
 
