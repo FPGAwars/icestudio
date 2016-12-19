@@ -574,6 +574,7 @@ angular.module('icestudio')
                   blockInstance.data = {
                     label: portInfo.input,
                     name: portInfo.name,
+                    range: portInfo.rangestr ? portInfo.rangestr : '',
                     pins: pins,
                     virtual: true
                   };

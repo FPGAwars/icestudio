@@ -874,6 +874,7 @@ angular.module('icestudio')
       if (match && (match[0] === match.input)) {
         ret.input = match[0];
         ret.name = match[1];
+        ret.rangestr = match[2];
         if (match[2]) {
           if (match[3] > match[4]) {
             ret.range = _.range(match[3], parseInt(match[4])-1, -1);

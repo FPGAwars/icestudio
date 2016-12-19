@@ -80,10 +80,12 @@ angular.module('icestudio')
 
         var ports = [];
         for (var i in data.ports.in) {
-          ports.push(' input ' + data.ports.in[i]);
+          var _in = data.ports.in[i];
+          ports.push(' input ' + _in.range + (_in.range ? ' ' : '') + _in.name);
         }
         for (var o in data.ports.out) {
-          ports.push(' output ' + data.ports.out[o]);
+          var _out = data.ports.out[o];
+          ports.push(' output ' + _out.range + (_out.range ? ' ' : '') + _out.name);
         }
 
         if (ports.length > 0) {
@@ -142,10 +144,16 @@ angular.module('icestudio')
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === 'basic.input') {
-          ports.in.push(digestId(block.id));
+          ports.in.push({
+            name: digestId(block.id),
+            range: block.data.range ? block.data.range : ''
+          });
         }
         else if (block.type === 'basic.output') {
-          ports.out.push(digestId(block.id));
+          ports.out.push({
+            name: digestId(block.id),
+            range: block.data.range ? block.data.range : ''
+          });
         }
       }
 
@@ -374,13 +382,25 @@ angular.module('icestudio')
         var block = graph.blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
-          code += 'set_io ';
-          code += digestId(block.id);
-          code += ' ';
           if (!block.data.virtual) {
-            code += block.data.pin.value;
+            if (block.data.pins.length > 1) {
+              for (var p in block.data.pins) {
+                var pin = block.data.pins[p];
+                code += 'set_io ';
+                code += digestId(block.id);
+                code += '[' + pin.index + '] ';
+                code += pin.value;
+                code += '\n';
+              }
+            }
+            else {
+              code += 'set_io ';
+              code += digestId(block.id);
+              code += ' ';
+              code += block.data.pins[0].value;
+              code += '\n';
+            }
           }
-          code += '\n';
         }
       }
 
