@@ -56,6 +56,9 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
+      if (!data.version) {
+        alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 3);
+      }
       this.project = _safeLoad(data);
       var ret = graph.loadDesign(this.project.design, false, function() {
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -126,6 +129,9 @@ angular.module('icestudio')
     this.addAsBlock = function(filepath) {
       var self = this;
       utils.readFile(filepath, function(data) {
+        if (!data.version) {
+          alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 3);
+        }
         var block = _safeLoad(data);
         if (block) {
           var name = utils.basename(filepath);
