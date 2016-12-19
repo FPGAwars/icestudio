@@ -25,10 +25,16 @@
           "type": "basic.output",
           "data": {
             "label": "out",
-            "pin": {
-              "name": "LED0",
-              "value": "95"
-            }
+            "name": "out",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED0",
+                "value": "95"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 632,
@@ -40,10 +46,16 @@
           "type": "basic.input",
           "data": {
             "label": "in",
-            "pin": {
-              "name": "SW1",
-              "value": "10"
-            }
+            "name": "in",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "SW1",
+                "value": "10"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 96,
@@ -73,10 +85,16 @@
           "type": "basic.output",
           "data": {
             "label": "out",
-            "pin": {
-              "name": "LED1",
-              "value": "96"
-            }
+            "name": "out",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED1",
+                "value": "96"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 632,
@@ -174,7 +192,17 @@
                 "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
                 "type": "basic.input",
                 "data": {
-                  "label": ""
+                  "label": "",
+                  "name": "",
+                  "range": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": 0
+                    }
+                  ],
+                  "virtual": false
                 },
                 "position": {
                   "x": 64,
@@ -185,7 +213,17 @@
                 "id": "664caf9e-5f40-4df4-800a-b626af702e62",
                 "type": "basic.output",
                 "data": {
-                  "label": ""
+                  "label": "",
+                  "name": "",
+                  "range": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": 0
+                    }
+                  ],
+                  "virtual": false
                 },
                 "position": {
                   "x": 752,
@@ -232,7 +270,7 @@
         "x": 0,
         "y": 0
       },
-      "zoom": 0.9999999638409349
+      "zoom": 0.9999999403953552
     }
   }
 }

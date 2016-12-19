@@ -37,10 +37,16 @@
           "type": "basic.output",
           "data": {
             "label": "led",
-            "pin": {
-              "name": "LED0",
-              "value": "95"
-            }
+            "name": "led",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED0",
+                "value": "95"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 536,
@@ -100,7 +106,17 @@
                 "id": "94e9a915-defe-4437-8abd-d3e57dafbb45",
                 "type": "basic.output",
                 "data": {
-                  "label": "led"
+                  "label": "led",
+                  "name": "led",
+                  "range": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": 0
+                    }
+                  ],
+                  "virtual": false
                 },
                 "position": {
                   "x": 624,
@@ -167,7 +183,7 @@
         "x": -21,
         "y": 66
       },
-      "zoom": 1
+      "zoom": 0.9999999999999893
     }
   }
 }

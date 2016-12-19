@@ -48,10 +48,16 @@
           "type": "basic.output",
           "data": {
             "label": "led",
-            "pin": {
-              "name": "LED0",
-              "value": "95"
-            }
+            "name": "led",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED0",
+                "value": "95"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 624,

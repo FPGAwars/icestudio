@@ -50,10 +50,16 @@
           "type": "basic.input",
           "data": {
             "label": "clk",
-            "pin": {
-              "name": "CLK",
-              "value": "21"
-            }
+            "name": "clk",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "CLK",
+                "value": "21"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 64,
@@ -65,10 +71,16 @@
           "type": "basic.output",
           "data": {
             "label": "",
-            "pin": {
-              "name": "LED0",
-              "value": "95"
-            }
+            "name": "",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED0",
+                "value": "95"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 752,
@@ -115,7 +127,7 @@
         "x": 3,
         "y": 145
       },
-      "zoom": 0.9999999638409349
+      "zoom": 0.9999999403953552
     }
   }
 }

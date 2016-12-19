@@ -284,8 +284,8 @@ angular.module('icestudio')
               gettextCatalog.getString('Update the port label'),
               gettextCatalog.getString('Virtual port')
             ], [
-              data.data.label ? data.data.label : '',
-              data.data.virtual ? data.data.virtual : false
+              data.data.label,
+              data.data.virtual
             ],
               function(evt, values) {
                 var label = values[0].replace(/ /g, '');
@@ -305,8 +305,8 @@ angular.module('icestudio')
               gettextCatalog.getString('Update the block label'),
               gettextCatalog.getString('Local parameter')
             ], [
-              data.data.label ? data.data.label : '',
-              data.data.local ? data.data.local : false
+              data.data.label,
+              data.data.local
             ],
               function(evt, values) {
                 var label = values[0].replace(/ /g, '');

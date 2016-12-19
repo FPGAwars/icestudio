@@ -16,10 +16,16 @@
           "type": "basic.input",
           "data": {
             "label": "in",
-            "pin": {
-              "name": "SW1",
-              "value": "10"
-            }
+            "name": "in",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "SW1",
+                "value": "10"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 104,
@@ -31,10 +37,16 @@
           "type": "basic.output",
           "data": {
             "label": "out",
-            "pin": {
-              "name": "LED0",
-              "value": "95"
-            }
+            "name": "out",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "LED0",
+                "value": "95"
+              }
+            ],
+            "virtual": false
           },
           "position": {
             "x": 344,
@@ -61,7 +73,7 @@
         "x": 0,
         "y": 0
       },
-      "zoom": 0.9999999638409349
+      "zoom": 0.9999999403953552
     }
   }
 }

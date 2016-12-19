@@ -80,6 +80,22 @@ angular.module('icestudio')
           project = data;
           break;
         default:
+          var blocks = data.graph.blocks;
+          for (var b in blocks) {
+            var block = blocks[b];
+            if (block.type === 'basic.input' ||
+                block.type === 'basic.output') {
+              block.data.name = block.data.label;
+              block.data.range = '';
+              block.data.pins = [{
+                index: '0',
+                name: block.data.pin ? block.data.pin.name : '',
+                value: block.data.pin ? block.data.pin.value : 0
+              }];
+              block.data.virtual = false;
+              delete block.data.pin;
+            }
+          }
           project = _default();
           project.design.board = data.board;
           project.design.graph = data.graph;

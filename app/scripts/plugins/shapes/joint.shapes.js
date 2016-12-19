@@ -395,7 +395,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var name = this.model.get('data').label;
       var virtual = this.model.get('data').virtual || this.model.get('disabled');
 
-      this.$box.find('label').text(name);
+      this.$box.find('label').text(name ? name : ' ');
 
       if (virtual) {
         // Virtual port (green)
@@ -766,6 +766,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     this.$('.connection').css('stroke-width', wireWidth);
     this.model.label(0, {attrs: { text: { text: wireLabel } } });
     this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, wireDot);
+    this.update();
 
     return this;
   },
