@@ -158,9 +158,13 @@
   pointer-events: auto;
 }
 
+.select2-selection__rendered {
+  font-size: 13px;
+}
+
 .bigdrop {
-  width: 86px !important;
-  font-size: 12px;
+  width: 92px !important;
+  font-size: 13px;
 }
 
 .constant-block {

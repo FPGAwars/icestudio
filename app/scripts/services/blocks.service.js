@@ -537,7 +537,7 @@ angular.module('icestudio')
               if (addCellCallback) {
                 addCellCallback(loadBasic(blockInstance));
                 cellView.model.remove();
-                alertify.success(gettextCatalog.getString('Block updated: create'));
+                alertify.success(gettextCatalog.getString('Block updated'));
               }
             }
             else if (block.data.name !== portInfo.name ||
@@ -545,10 +545,9 @@ angular.module('icestudio')
               // Edit block
               block.data.label = portInfo.input;
               block.data.name = portInfo.name;
-              block.data.pins = getPins(portInfo);
               block.data.virtual = virtual;
               cellView.render();
-              alertify.success(gettextCatalog.getString('Block updated: edit'));
+              alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
           else {

@@ -182,7 +182,8 @@ angular.module('icestudio')
         }
         else {
           // Wires
-          connections.wire.push('wire w' + w + ';');
+          var range = wire.size ? '[0:' + (wire.size-1) +'] ' : ' ';
+          connections.wire.push('wire ' + range + 'w' + w + ';');
         }
         // Assignations
         for (i in graph.blocks) {

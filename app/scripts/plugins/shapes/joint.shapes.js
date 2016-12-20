@@ -342,13 +342,11 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var selectScript = '';
       this.pins = this.model.attributes.data.pins;
 
-      // a,b[0:1],c[0:2],d[0:3]
-
       if (this.pins) {
         for (var i in this.pins) {
           //selectCode += '<p style="top:' + (30 + 38*i) + 'px">' + this.pins[i].index + '</p>';
           selectCode +='<select id="' + comboId + this.pins[i].index + '"';
-          selectCode += 'class="select2" index="' + this.pins[i].index + '">';
+          selectCode += 'class="select2" i="' + i + '">';
           selectCode += '</select>';
 
           selectScript += '$("#' + comboId + this.pins[i].index + '").select2(';
@@ -374,24 +372,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
       comboSelector.on('change', _.bind(function(evt) {
         var target = $(evt.target);
-        var index = target.attr('index');
+        var i = target.attr('i');
         var name = target.find('option:selected').text();
         var value = target.val();
-        this.model.attributes.data.pins[index].name = name;
-        this.model.attributes.data.pins[index].value = value;
-        this.$box.find('.select2-selection').css('font-size', computeFontSize(name));
+        this.model.attributes.data.pins[i].name = name;
+        this.model.attributes.data.pins[i].value = value;
+        //comboSelector.find('.select2-selection').css('font-size', this.computeFontSize(name));
       }, this));
 
-      function computeFontSize(name) {
-        var n = name.length;
-        return Math.min(13, 17-n).toString() + 'px';
-      }
-    },
-    renderChoices: function() {
-      if (this.pins) {
-        for (var i in this.pins) {
-          this.$box.find('#combo' + this.id + this.pins[i].index).empty().append(this.model.get('choices'));
-        }
+      // Render data
+      if (!this.model.get('disabled')) {
+        this.renderChoices();
+        this.renderValue();
       }
     },
     renderBlock: function() {
@@ -417,10 +409,22 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         }
       }
     },
+    renderChoices: function() {
+      if (this.pins) {
+        for (var i in this.pins) {
+          this.$box.find('#combo' + this.id + this.pins[i].index).empty().append(this.model.get('choices'));
+        }
+      }
+    },
     renderValue: function() {
       if (this.pins) {
         for (var i in this.pins) {
-          this.$box.find('#combo' + this.id + this.pins[i].index).val(this.pins[i].value);
+          var index = this.pins[i].index;
+          var comboId = 'combo' + this.id + index;
+          var comboSelector = this.$box.find('#' + comboId);
+          comboSelector.val(this.pins[i].value);
+          //var fontSize = this.computeFontSize(this.pins[i].name);
+          //$('#select2-' + comboId + '-container').css('font-size', fontSize);
         }
       }
     },
@@ -428,18 +432,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       if (this.pins) {
         for (var i in this.pins) {
           this.$box.find('#combo' + this.id + this.pins[i].index).val('');
-          this.model.attributes.data.pins[i.toString()].name = '';
-          this.model.attributes.data.pins[i.toString()].value = 0;
+          this.model.attributes.data.pins[i].name = '';
+          this.model.attributes.data.pins[i].value = 0;
         }
       }
+    },
+    computeFontSize: function(name) {
+      var n = name.length;
+      return Math.min(13, 17-n).toString() + 'px';
     },
     update: function () {
       this.renderPorts();
       this.renderBlock();
-      if (!this.model.get('disabled')) {
-        this.renderChoices();
-        this.renderValue();
-      }
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     }
 });
@@ -773,6 +777,9 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     // Set up the wire
     this.$('.connection').css('stroke-width', wireWidth);
     this.model.label(0, {attrs: { text: { text: wireLabel } } });
+    if (pins && pins.length > 1) {
+      this.model.attributes.size = pins.length;
+    }
     this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, wireDot);
     this.update();
 
