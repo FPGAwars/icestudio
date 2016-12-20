@@ -279,22 +279,8 @@ angular.module('icestudio')
         if (data.blockType === 'basic.input' ||
             data.blockType === 'basic.output') {
           if (paper.options.enabled) {
-            utils.inputcheckboxprompt([
-              gettextCatalog.getString('Update the port label'),
-              gettextCatalog.getString('Virtual port')
-            ], [
-              data.data.label,
-              data.data.virtual
-            ],
-              function(evt, values) {
-                var label = values[0].replace(/ /g, '');
-                if (data.data.label !== label) {
-                  data.data.label = label;
-                  alertify.success(gettextCatalog.getString('Block updated'));
-                }
-                var virtual = values[1];
-                data.data.virtual = virtual;
-                cellView.render();
+            blocks.editBasicIO(cellView, function(cell) {
+              addCell(cell);
             });
           }
         }
