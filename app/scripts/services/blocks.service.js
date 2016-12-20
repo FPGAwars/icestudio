@@ -34,6 +34,7 @@ angular.module('icestudio')
 
 
     this.editBasicIO = editBasicIO;
+    this.editBasicConstant = editBasicConstant;
 
 
     //-- New
@@ -553,6 +554,31 @@ angular.module('icestudio')
           else {
             evt.cancel = true;
             alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: label }), 'warning', 3);
+          }
+      });
+    }
+
+    function editBasicConstant(cellView) {
+      var block = cellView.model.attributes;
+      utils.inputcheckboxprompt([
+        gettextCatalog.getString('Update the block label'),
+        gettextCatalog.getString('Local parameter')
+      ], [
+        block.data.label,
+        block.data.local
+      ],
+        function(evt, values) {
+          var label = values[0].replace(/ /g, '');
+          var local = values[1];
+          // Edit block
+          if (block.data.name !== label ||
+              block.data.local !== local) {
+            // Edit block
+            block.data.label = label;
+            block.data.local = local;
+            cellView.renderLabel();
+            cellView.renderLocal();
+            alertify.success(gettextCatalog.getString('Block updated'));
           }
       });
     }

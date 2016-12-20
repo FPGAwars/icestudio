@@ -276,6 +276,7 @@ angular.module('icestudio')
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
         var data = cellView.model.attributes;
+        // TODO: move to blocks.service edit function
         if (data.blockType === 'basic.input' ||
             data.blockType === 'basic.output') {
           if (paper.options.enabled) {
@@ -286,24 +287,7 @@ angular.module('icestudio')
         }
         else if (data.blockType === 'basic.constant') {
           if (paper.options.enabled) {
-            utils.inputcheckboxprompt([
-              gettextCatalog.getString('Update the block label'),
-              gettextCatalog.getString('Local parameter')
-            ], [
-              data.data.label,
-              data.data.local
-            ],
-              function(evt, values) {
-                var label = values[0].replace(/ /g, '');
-                if (data.data.label !== label) {
-                  data.data.label = label;
-                  cellView.renderLabel();
-                  alertify.success(gettextCatalog.getString('Block updated'));
-                }
-                var local = values[1];
-                data.data.local = local;
-                cellView.renderLocal();
-            });
+            blocks.editBasicConstant(cellView);
           }
         }
         else if (data.blockType === 'basic.code') {
