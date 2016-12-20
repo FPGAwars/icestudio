@@ -159,7 +159,8 @@
 }
 
 .bigdrop {
-  width: 96px !important;
+  width: 86px !important;
+  font-size: 12px;
 }
 
 .constant-block {

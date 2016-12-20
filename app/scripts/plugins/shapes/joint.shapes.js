@@ -329,9 +329,6 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
-    id: '',
-    pins: [],
-
     initialize: function() {
       joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
@@ -378,11 +375,19 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       comboSelector.on('change', _.bind(function(evt) {
         var target = $(evt.target);
         var index = target.attr('index');
-        this.model.attributes.data.pins[index].name = target.find('option:selected').text();
-        this.model.attributes.data.pins[index].value = target.val();
+        var name = target.find('option:selected').text();
+        var value = target.val();
+        this.model.attributes.data.pins[index].name = name;
+        this.model.attributes.data.pins[index].value = value;
+        this.$box.find('.select2-selection').css('font-size', computeFontSize(name));
       }, this));
+
+      function computeFontSize(name) {
+        var n = name.length;
+        return Math.min(13, 17-n).toString() + 'px';
+      }
     },
-    renderChoides: function() {
+    renderChoices: function() {
       if (this.pins) {
         for (var i in this.pins) {
           this.$box.find('#combo' + this.id + this.pins[i].index).empty().append(this.model.get('choices'));
@@ -420,16 +425,19 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       }
     },
     clearValue: function () {
-      var comboId = '#combo' + this.id;
-      this.model.attributes.data.pin.name = '';
-      this.model.attributes.data.pin.value = 0;
-      this.$box.find(comboId).val('');
+      if (this.pins) {
+        for (var i in this.pins) {
+          this.$box.find('#combo' + this.id + this.pins[i].index).val('');
+          this.model.attributes.data.pins[i.toString()].name = '';
+          this.model.attributes.data.pins[i.toString()].value = 0;
+        }
+      }
     },
     update: function () {
       this.renderPorts();
       this.renderBlock();
       if (!this.model.get('disabled')) {
-        this.renderChoides();
+        this.renderChoices();
         this.renderValue();
       }
       joint.dia.ElementView.prototype.update.apply(this, arguments);

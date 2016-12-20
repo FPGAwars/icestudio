@@ -59,11 +59,10 @@ angular.module('icestudio')
     };
 
     function generateHTMLOptions(pinout) {
-      var code = '<option>';
+      var code = '<option></option>';
       for (var i in pinout) {
         code += '<option value="' + pinout[i].value + '">' + pinout[i].name + '</option>';
       }
-      code += '</option>';
       return code;
     }
 

@@ -382,24 +382,23 @@ angular.module('icestudio')
         var block = graph.blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
-          if (!block.data.virtual) {
-            if (block.data.pins.length > 1) {
-              for (var p in block.data.pins) {
-                var pin = block.data.pins[p];
-                code += 'set_io ';
-                code += digestId(block.id);
-                code += '[' + pin.index + '] ';
-                code += pin.value;
-                code += '\n';
-              }
-            }
-            else {
+
+          if (block.data.pins.length > 1) {
+            for (var p in block.data.pins) {
+              var pin = block.data.pins[p];
               code += 'set_io ';
               code += digestId(block.id);
-              code += ' ';
-              code += block.data.pins[0].value;
+              code += '[' + pin.index + '] ';
+              code += block.data.virtual ? '' : pin.value;
               code += '\n';
             }
+          }
+          else {
+            code += 'set_io ';
+            code += digestId(block.id);
+            code += ' ';
+            code += block.data.virtual ? '' : block.data.pins[0].value;
+            code += '\n';
           }
         }
       }
