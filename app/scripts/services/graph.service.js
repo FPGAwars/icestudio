@@ -439,6 +439,12 @@ angular.module('icestudio')
     };
 
     this.createBlock = function(type, block, callback) {
+      var addCellCallback = function(cell) {
+        addCell(cell);
+        if (callback) {
+          callback();
+        }
+      };
       if (type.indexOf('basic.') !== -1) {
         blocks.newBasic(type, block, addCellCallback);
       }
@@ -446,13 +452,6 @@ angular.module('icestudio')
         dependencies[type] = block;
         blocks.newGeneric(type, block, addCellCallback);
       }
-
-      var addCellCallback = function(cell) {
-        addCell(cell);
-        if (callback) {
-          callback();
-        }
-      };
     };
 
     this.toJSON = function() {

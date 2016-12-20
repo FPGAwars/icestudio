@@ -57,7 +57,7 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       if (!data.version) {
-        alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 3);
+        alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
       }
       this.project = _safeLoad(data);
       var ret = graph.loadDesign(this.project.design, false, function() {
@@ -146,7 +146,7 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(filepath, function(data) {
         if (!data.version) {
-          alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 3);
+          alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
         }
         var block = _safeLoad(data);
         if (block) {
