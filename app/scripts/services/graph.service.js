@@ -98,6 +98,13 @@ angular.module('icestudio')
             }
             return false;
           }
+          // Prevent different size connections
+          var tsize = cellViewT.model.attributes.data.pins.length;
+          var lsize = linkView.model.attributes.size;
+          if (tsize !== lsize) {
+            warning(gettextCatalog.getString('Invalid connection: ' + lsize + ' → ' + tsize));
+            return false;
+          }
           // Ensure right -> left connections
           if (magnetS.getAttribute('pos') === 'right') {
             if (magnetT.getAttribute('pos') !== 'left') {

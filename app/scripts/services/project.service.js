@@ -288,7 +288,9 @@ angular.module('icestudio')
           var wire = {};
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
-          wire.size = cell.size;
+          if (cell.size > 1) {
+            wire.size = cell.size;
+          }
           wire.vertices = cell.vertices;
           wires.push(wire);
         }

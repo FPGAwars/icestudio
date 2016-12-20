@@ -776,10 +776,8 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
     // Set up the wire
     this.$('.connection').css('stroke-width', wireWidth);
+    this.model.attributes.size = pins.length;
     this.model.label(0, {attrs: { text: { text: wireLabel } } });
-    if (pins && pins.length > 1) {
-      this.model.attributes.size = pins.length;
-    }
     this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, wireDot);
     this.update();
 
