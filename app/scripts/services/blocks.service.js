@@ -7,16 +7,45 @@ angular.module('icestudio')
                               gettextCatalog) {
     var gridsize = 8;
 
-    this.new = function(type, block, addCellcallback) {
+    this.newBasic = function(type, block, addCellCallback) {
       switch(type) {
         case 'basic.input':
         case 'basic.output':
-          return newBasicIO(type, addCellcallback);
+          newBasicIO(type, addCellCallback);
+          break;
+        case 'basic.constant':
+          newBasicConstant(addCellCallback);
+          break;
+        case 'basic.code':
+          newBasicCode(block, addCellCallback); // block
+          break;
+        case 'basic.info':
+          newBasicInfo(addCellCallback);
+          break;
+        default:
+          break;
       }
     };
+    this.newGeneric = newGeneric;
 
-    this.loadBasicInput = loadBasicInput;
-    this.loadBasicOutput = loadBasicOutput;
+    this.loadBasic = function(instance, disabled) {
+      switch(instance.type) {
+        case 'basic.input':
+          return loadBasicInput(instance, disabled);
+        case 'basic.output':
+          return loadBasicOutput(instance, disabled);
+        case 'basic.constant':
+          return loadBasicConstant(instance, disabled);
+        case 'basic.code':
+          return loadBasicCode(instance, disabled);
+        case 'basic.info':
+          return loadBasicInfo(instance, disabled);
+        default:
+          break;
+      }
+    };
+    this.loadGeneric = loadGeneric;
+    this.loadWire = loadWire;
 
     function loadBasicInput(instance, disabled) {
       var cell = new joint.shapes.ice.Input({
@@ -42,7 +71,7 @@ angular.module('icestudio')
       return cell;
     }
 
-    this.basicConstant = function(instance, disabled) {
+    function loadBasicConstant(instance, disabled) {
       var cell = new joint.shapes.ice.Constant({
         id: instance.id,
         blockType: instance.type,
@@ -51,9 +80,9 @@ angular.module('icestudio')
         disabled: disabled
       });
       return cell;
-    };
+    }
 
-    this.basicCode = function(instance, disabled) {
+    function loadBasicCode(instance, disabled) {
       var leftPorts = [];
       var rightPorts = [];
       var topPorts = [];
@@ -93,9 +122,9 @@ angular.module('icestudio')
         topPorts: topPorts
       });
       return cell;
-    };
+    }
 
-    this.basicInfo = function(instance, disabled) {
+    function loadBasicInfo(instance, disabled) {
       var cell = new joint.shapes.ice.Info({
         id: instance.id,
         blockType: instance.type,
@@ -104,9 +133,9 @@ angular.module('icestudio')
         disabled: disabled
       });
       return cell;
-    };
+    }
 
-    this.generic = function(instance, block) {
+    function loadGeneric(instance, block) {
       var i;
       var leftPorts = [];
       var rightPorts = [];
@@ -205,9 +234,9 @@ angular.module('icestudio')
         }
       });
       return cell;
-    };
+    }
 
-    this.wire = function(instance, source, target) {
+    function loadWire(instance, source, target) {
 
       // Find selectors
       var sourceSelector, targetSelector;
@@ -238,7 +267,7 @@ angular.module('icestudio')
         vertices: instance.vertices
       });
       return _wire;
-    };
+    }
 
     function newBasicIO(type, addCellCallback) {
       var config = null;
@@ -278,7 +307,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', {name: labels[l]}), 'warning', 3);
+                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: labels[l] }), 'warning', 3);
                 break;
               }
             }
@@ -298,6 +327,154 @@ angular.module('icestudio')
         pins.push({ index: '0', name: '', value: 0 });
       }
       return pins;
+    }
+
+    function newBasicConstant(addCellCallback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.constant',
+        position: { x: 20 * gridsize, y: 4 * gridsize }
+      };
+      alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), 'C',
+        function(evt, name) {
+          if (name) {
+            var names = name.replace(/ /g, '').split(',');
+            for (var n in names) {
+              if (names[n]) {
+                blockInstance.data = {
+                  label: names[n],
+                  local: false,
+                  value: ''
+                };
+                if (addCellCallback) {
+                  addCellCallback(loadBasicConstant(blockInstance));
+                }
+                blockInstance.position.x += 15 * gridsize;
+              }
+            }
+          }
+      });
+    }
+
+    function newBasicCode(block, addCellCallback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.code',
+        position: { x: 4 * gridsize, y: 4 * gridsize }
+      };
+      var defaultValues = [
+        'a , b',
+        'c , d',
+        ''
+      ];
+      if (block && block.data) {
+        if (block.data.ports) {
+          defaultValues[0] = block.data.ports.in.join(' , ');
+          defaultValues[1] = block.data.ports.out.join(' , ');
+        }
+        if (block.data.params) {
+          defaultValues[2] = block.data.params.join(' , ');
+        }
+      }
+      utils.multiprompt(
+        [ gettextCatalog.getString('Enter the input ports'),
+          gettextCatalog.getString('Enter the output ports'),
+          gettextCatalog.getString('Enter the parameters') ],
+        defaultValues,
+        function(evt, ports) {
+          if (ports && (ports[0].length || ports[1].length)) {
+            blockInstance.data = {
+              code: '',
+              params: [],
+              ports: { in: [], out: [] }
+            };
+            // Parse ports
+            var inPorts = [];
+            var outPorts = [];
+            var params = [];
+            if (ports.length > 0) {
+              inPorts = ports[0].replace(/ /g, '').split(',');
+            }
+            if (ports.length > 1) {
+              outPorts = ports[1].replace(/ /g, '').split(',');
+            }
+            if (ports.length > 2) {
+              params = ports[2].replace(/ /g, '').split(',');
+            }
+
+            for (var i in inPorts) {
+              if (inPorts[i]) {
+                blockInstance.data.ports.in.push(inPorts[i]);
+              }
+            }
+            for (var o in outPorts) {
+              if (outPorts[o]) {
+                blockInstance.data.ports.out.push(outPorts[o]);
+              }
+            }
+            for (var p in params) {
+              if (params[p]) {
+                blockInstance.data.params.push(params[p]);
+              }
+            }
+            blockInstance.position.x = 31 * gridsize;
+            blockInstance.position.y = 24 * gridsize;
+
+            var allAttrs= inPorts.concat(outPorts, params);
+            var numAttrs = allAttrs.length;
+
+            // Check duplicated attributes
+            if (numAttrs === $.unique(allAttrs).length) {
+              evt.cancel = false;
+              if (block) {
+                blockInstance.data.code = block.data.code;
+                blockInstance.position = block.position;
+              }
+              if (addCellCallback) {
+                addCellCallback(loadBasicCode(blockInstance));
+              }
+            }
+            else {
+              evt.cancel = true;
+              alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
+            }
+          }
+      });
+    }
+
+    function newBasicInfo(addCellCallback) {
+      var blockInstance = {
+        id: null,
+        data: { info: '' },
+        type: 'basic.info',
+        position: { x: 4 * gridsize, y: 30 * gridsize }
+      };
+      if (addCellCallback) {
+        addCellCallback(loadBasicInfo(blockInstance));
+      }
+    }
+
+    function newGeneric(type, block, addCellCallback) {
+      var blockInstance = {
+        id: null,
+        type: type,
+        position: { x: 6 * gridsize, y: 16 * gridsize }
+      };
+      if (block &&
+          block.design &&
+          block.design.graph &&
+          block.design.graph.blocks &&
+          block.design.graph.wires &&
+          block.design.deps) {
+        if (addCellCallback) {
+          addCellCallback(loadGeneric(blockInstance, block));
+        }
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
+      }
     }
 
   });

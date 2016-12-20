@@ -249,7 +249,7 @@ angular.module('icestudio')
             }
           }
           // Add block
-          graph.importBlock(name, block);
+          graph.createBlock(name, block);
           self.project.design.deps[name] = block;
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
         }

@@ -64,9 +64,7 @@ angular.module('icestudio')
         this.breadcrumbs = [{ name: name }];
       }
       this.breadcrumbs[0].name = name;
-      if(!$rootScope.$$phase) {
-        $rootScope.$apply();
-      }
+      utils.rootScopeSafeApply();
     };
 
     this.createPaper = function(element) {
@@ -339,9 +337,7 @@ angular.module('icestudio')
         }
         else if (data.type !== 'ice.Wire' && data.type !== 'ice.Info') {
           self.breadcrumbs.push({ name: data.blockType });
-          if(!$rootScope.$$phase) {
-            $rootScope.$apply();
-          }
+          utils.rootScopeSafeApply();
           zIndex = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
@@ -443,165 +439,20 @@ angular.module('icestudio')
     };
 
     this.createBlock = function(type, block, callback) {
-      blocks.new(type, block, function(cell) {
+      if (type.indexOf('basic.') !== -1) {
+        blocks.newBasic(type, block, addCellCallback);
+      }
+      else {
+        dependencies[type] = block;
+        blocks.newGeneric(type, block, addCellCallback);
+      }
+
+      var addCellCallback = function(cell) {
         addCell(cell);
         if (callback) {
           callback();
         }
-      });
-
-      /*var blockInstance = {
-        id: null,
-        data: {},
-        type: type,
-        position: { x: 4 * gridsize, y: 4 * gridsize }
       };
-
-      if (type === 'basic.code') {
-        var defaultValues = [
-          'a , b',
-          'c , d',
-          ''
-        ];
-        if (block && block.data) {
-          if (block.data.ports) {
-            defaultValues[0] = block.data.ports.in.join(' , ');
-            defaultValues[1] = block.data.ports.out.join(' , ');
-          }
-          if (block.data.params) {
-            defaultValues[2] = block.data.params.join(' , ');
-          }
-        }
-        utils.multiprompt(
-          [ gettextCatalog.getString('Enter the input ports'),
-            gettextCatalog.getString('Enter the output ports'),
-            gettextCatalog.getString('Enter the parameters') ],
-          defaultValues,
-          function(evt, ports) {
-            if (ports && (ports[0].length || ports[1].length)) {
-              blockInstance.data = {
-                code: '',
-                params: [],
-                ports: { in: [], out: [] }
-              };
-              // Parse ports
-              var inPorts = [];
-              var outPorts = [];
-              var params = [];
-              if (ports.length > 0) {
-                inPorts = ports[0].replace(/ /g, '').split(',');
-              }
-              if (ports.length > 1) {
-                outPorts = ports[1].replace(/ /g, '').split(',');
-              }
-              if (ports.length > 2) {
-                params = ports[2].replace(/ /g, '').split(',');
-              }
-
-              for (var i in inPorts) {
-                if (inPorts[i]) {
-                  blockInstance.data.ports.in.push(inPorts[i]);
-                }
-              }
-              for (var o in outPorts) {
-                if (outPorts[o]) {
-                  blockInstance.data.ports.out.push(outPorts[o]);
-                }
-              }
-              for (var p in params) {
-                if (params[p]) {
-                  blockInstance.data.params.push(params[p]);
-                }
-              }
-              blockInstance.position.x = 31 * gridsize;
-              blockInstance.position.y = 24 * gridsize;
-
-              var allAttrs= inPorts.concat(outPorts, params);
-              var numAttrs = allAttrs.length;
-
-              // Check duplicated attributes
-              if (numAttrs === $.unique(allAttrs).length) {
-                evt.cancel = false;
-                if (block) {
-                  blockInstance.data.code = block.data.code;
-                  blockInstance.position = block.position;
-                }
-                var cell = blocks.basicCode(blockInstance);
-                addCell(cell);
-                var cellView = paper.findViewByModel(cell);
-                if (cellView.$box.css('z-index') < zIndex) {
-                  cellView.$box.css('z-index', ++zIndex);
-                }
-                if (callback) {
-                  callback();
-                }
-              }
-              else {
-                evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
-              }
-            }
-        });
-      }
-      else if (type === 'basic.info') {
-        blockInstance.data = {
-          info: ''
-        };
-        blockInstance.position.y = 30 * gridsize;
-        var cell = blocks.basicInfo(blockInstance);
-        addCell(cell);
-        var cellView = paper.findViewByModel(cell);
-        if (cellView.$box.css('z-index') < zIndex) {
-          cellView.$box.css('z-index', ++zIndex);
-        }
-      }
-      else if (type === 'basic.constant') {
-        alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), 'C',
-          function(evt, name) {
-            if (name) {
-              var names = name.replace(/ /g, '').split(',');
-              blockInstance.position.x = 20 * gridsize;
-              for (var n in names) {
-                if (names[n]) {
-                  blockInstance.data = {
-                    label: names[n],
-                    local: false,
-                    value: ''
-                  };
-                  var cell = addCell(blocks.basicConstant(blockInstance));
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                  blockInstance.position.x += 15 * gridsize;
-                }
-              }
-            }
-            else {
-            }
-        });
-      }
-      else {
-        if (block &&
-            block.design &&
-            block.design.graph &&
-            block.design.graph.blocks &&
-            block.design.graph.wires &&
-            block.design.deps) {
-          dependencies[type] = block;
-          blockInstance.position.x = 6 * gridsize;
-          blockInstance.position.y = 16 * gridsize;
-          var _cell = blocks.generic(blockInstance, block);
-          addCell(_cell);
-          var _cellView = paper.findViewByModel(_cell);
-          if (_cellView.$box.css('z-index') < zIndex) {
-            _cellView.$box.css('z-index', ++zIndex);
-          }
-        }
-        else {
-          alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
-        }
-      }*/
     };
 
     this.toJSON = function() {
@@ -627,7 +478,8 @@ angular.module('icestudio')
       for (var i in cells) {
         var cell = cells[i];
         var type = cell.attributes.blockType;
-        if (type === 'basic.input' || type === 'basic.output') {
+        if (type === 'basic.input' ||
+            type === 'basic.output') {
           cell.attributes.choices = boards.getPinoutHTML();
           var view = paper.findViewByModel(cell.id);
           view.renderChoices();
@@ -653,10 +505,6 @@ angular.module('icestudio')
           addCell(newCell);
           if (type.indexOf('config.') !== -1) {
             paper.findViewByModel(newCell).$box.addClass('config-block');
-          }
-          var cellView = paper.findViewByModel(newCell);
-          if (cellView.$box.css('z-index') < zIndex) {
-            cellView.$box.css('z-index', ++zIndex);
           }
           selection.reset(selection.without(cell));
           selectionView.cancelSelection();
@@ -730,27 +578,12 @@ angular.module('icestudio')
           // Blocks
           for (i in blockInstances) {
             var blockInstance = blockInstances[i];
-            if (blockInstance.type === 'basic.input') {
-              cell = blocks.loadBasicInput(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.output') {
-              cell = blocks.loadBasicOutput(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.code') {
-              cell = blocks.basicCode(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.info') {
-              cell = blocks.basicInfo(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.constant') {
-              cell = blocks.basicConstant(blockInstance, disabled);
+            if (blockInstance.type.indexOf('basic.') !== -1) {
+              cell = blocks.loadBasic(blockInstance, disabled);
             }
             else {
               if (deps && deps[blockInstance.type]) {
-                cell = blocks.generic(blockInstance, deps[blockInstance.type]);
-                if (blockInstance.type.indexOf('config.') !== -1) {
-                  paper.findViewByModel(cell).$box.addClass('config-block');
-                }
+                cell = blocks.loadGeneric(blockInstance, deps[blockInstance.type]);
               }
             }
             addCell(cell);
@@ -758,14 +591,13 @@ angular.module('icestudio')
 
           // Wires
           for (i in wires) {
-            cell = blocks.wire(wires[i],
-                               graph.getCell(wires[i].source.block),
-                               graph.getCell(wires[i].target.block));
+            var source = graph.getCell(wires[i].source.block);
+            var target = graph.getCell(wires[i].target.block);
+            cell = blocks.loadWire(wires[i], source, target);
             addCell(cell);
           }
 
           self.appEnable(!disabled);
-
           $('body').removeClass('waiting');
 
           if (callback) {
@@ -778,28 +610,17 @@ angular.module('icestudio')
       }
     };
 
-    this.importBlock = function(type, block) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: type,
-        position: { x: 6 * gridsize, y: 16 * gridsize }
-      };
-      dependencies[type] = block;
-      var cell = blocks.generic(blockInstance, block);
-      addCell(cell);
-      var cellView = paper.findViewByModel(cell);
-      if (cellView.$box.css('z-index') < zIndex) {
-        cellView.$box.css('z-index', ++zIndex);
-      }
-    };
-
     function addCell(cell) {
       cell.attributes.state = state;
       graph.addCell(cell);
-      var cellView = paper.findViewByModel(cell);
-      if (cellView.$box.css('z-index') < zIndex) {
-        cellView.$box.css('z-index', ++zIndex);
+      if (!cell.isLink()) {
+        var cellView = paper.findViewByModel(cell);
+        if (cellView.$box.css('z-index') < zIndex) {
+          cellView.$box.css('z-index', ++zIndex);
+        }
+        if (cell.attributes.blockType.indexOf('config.') !== -1) {
+          cellView.$box.addClass('config-block');
+        }
       }
     }
 
