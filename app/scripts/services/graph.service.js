@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('graph', function($rootScope,
                              joint,
                              boards,
+                             blocks,
                              utils,
                              gettextCatalog,
                              nodeSha1) {
@@ -442,7 +443,14 @@ angular.module('icestudio')
     };
 
     this.createBlock = function(type, block, callback) {
-      var blockInstance = {
+      blocks.new(type, block, function(cell) {
+        addCell(cell);
+        if (callback) {
+          callback();
+        }
+      });
+
+      /*var blockInstance = {
         id: null,
         data: {},
         type: type,
@@ -518,7 +526,8 @@ angular.module('icestudio')
                   blockInstance.data.code = block.data.code;
                   blockInstance.position = block.position;
                 }
-                var cell = addBasicCodeBlock(blockInstance);
+                var cell = blocks.basicCode(blockInstance);
+                addCell(cell);
                 var cellView = paper.findViewByModel(cell);
                 if (cellView.$box.css('z-index') < zIndex) {
                   cellView.$box.css('z-index', ++zIndex);
@@ -539,118 +548,12 @@ angular.module('icestudio')
           info: ''
         };
         blockInstance.position.y = 30 * gridsize;
-        var cell = addBasicInfoBlock(blockInstance);
+        var cell = blocks.basicInfo(blockInstance);
+        addCell(cell);
         var cellView = paper.findViewByModel(cell);
         if (cellView.$box.css('z-index') < zIndex) {
           cellView.$box.css('z-index', ++zIndex);
         }
-      }
-      else if (type === 'basic.input') {
-        alertify.prompt(gettextCatalog.getString('Enter the input ports'), 'in',
-          function(evt, input) {
-            if (input) {
-              var labels = input.replace(/ /g, '').split(',');
-              for (var l in labels) {
-                var portInfo = utils.parsePortLabel(labels[l]);
-                if (portInfo) {
-                  evt.cancel = false;
-                  var pins = [];
-                  if (portInfo.range) {
-                    for (var r in portInfo.range) {
-                      pins.push({
-                        index: portInfo.range[r].toString(),
-                        name: '',
-                        value: 0
-                      });
-                    }
-                  }
-                  else {
-                    pins.push({
-                      index: '0',
-                      name: '',
-                      value: 0
-                    });
-                  }
-                  blockInstance.data = {
-                    label: portInfo.input,
-                    name: portInfo.name,
-                    range: portInfo.rangestr ? portInfo.rangestr : '',
-                    pins: pins,
-                    virtual: true
-                  };
-                  var cell = addBasicInputBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                  blockInstance.position.y += 10 * gridsize;
-                }
-                else {
-                  evt.cancel = true;
-                  alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', {name: labels[l]}), 'warning', 3);
-                  break;
-                }
-              }
-            }
-            else {
-              /*blockInstance.data = {
-                label: '',
-                pin: {
-                  name: '',
-                  value: 0
-                }
-              };
-              var cell = addBasicInputBlock(blockInstance);
-              var cellView = paper.findViewByModel(cell);
-              if (cellView.$box.css('z-index') < zIndex) {
-                cellView.$box.css('z-index', ++zIndex);
-              }
-              blockInstance.position.y += 10 * gridsize;*/
-            }
-        });
-      }
-      else if (type === 'basic.output') {
-        alertify.prompt(gettextCatalog.getString('Enter the output ports'), 'out',
-          function(evt, name) {
-            if (name) {
-              var names = name.replace(/ /g, '').split(',');
-              blockInstance.position.x = 95 * gridsize;
-              for (var n in names) {
-                if (names[n]) {
-                  blockInstance.data = {
-                    label: names[n],
-                    pin: {
-                      name: '',
-                      value: 0
-                    },
-                    virtual: true
-                  };
-                  var cell = addBasicOutputBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                  blockInstance.position.y += 10 * gridsize;
-                }
-              }
-            }
-            else {
-              /*blockInstance.position.x = 95 * gridsize;
-              blockInstance.data = {
-                label: '',
-                pin: {
-                  name: '',
-                  value: 0
-                }
-              };
-              var cell = addBasicOutputBlock(blockInstance);
-              var cellView = paper.findViewByModel(cell);
-              if (cellView.$box.css('z-index') < zIndex) {
-                cellView.$box.css('z-index', ++zIndex);
-              }
-              blockInstance.position.y += 10 * gridsize;*/
-            }
-        });
       }
       else if (type === 'basic.constant') {
         alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), 'C',
@@ -665,7 +568,7 @@ angular.module('icestudio')
                     local: false,
                     value: ''
                   };
-                  var cell = addBasicConstantBlock(blockInstance);
+                  var cell = addCell(blocks.basicConstant(blockInstance));
                   var cellView = paper.findViewByModel(cell);
                   if (cellView.$box.css('z-index') < zIndex) {
                     cellView.$box.css('z-index', ++zIndex);
@@ -688,7 +591,8 @@ angular.module('icestudio')
           dependencies[type] = block;
           blockInstance.position.x = 6 * gridsize;
           blockInstance.position.y = 16 * gridsize;
-          var _cell = addGenericBlock(blockInstance, block);
+          var _cell = blocks.generic(blockInstance, block);
+          addCell(_cell);
           var _cellView = paper.findViewByModel(_cell);
           if (_cellView.$box.css('z-index') < zIndex) {
             _cellView.$box.css('z-index', ++zIndex);
@@ -697,7 +601,7 @@ angular.module('icestudio')
         else {
           alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
         }
-      }
+      }*/
     };
 
     this.toJSON = function() {
@@ -821,35 +725,43 @@ angular.module('icestudio')
         this.setState(design.state);
 
         setTimeout(function() {
+          var cell;
 
           // Blocks
           for (i in blockInstances) {
             var blockInstance = blockInstances[i];
-            if (blockInstance.type === 'basic.code') {
-              addBasicCodeBlock(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.info') {
-              addBasicInfoBlock(blockInstance, disabled);
-            }
-            else if (blockInstance.type === 'basic.input') {
-              addBasicInputBlock(blockInstance, disabled);
+            if (blockInstance.type === 'basic.input') {
+              cell = blocks.loadBasicInput(blockInstance, disabled);
             }
             else if (blockInstance.type === 'basic.output') {
-              addBasicOutputBlock(blockInstance, disabled);
+              cell = blocks.loadBasicOutput(blockInstance, disabled);
+            }
+            else if (blockInstance.type === 'basic.code') {
+              cell = blocks.basicCode(blockInstance, disabled);
+            }
+            else if (blockInstance.type === 'basic.info') {
+              cell = blocks.basicInfo(blockInstance, disabled);
             }
             else if (blockInstance.type === 'basic.constant') {
-              addBasicConstantBlock(blockInstance, disabled);
+              cell = blocks.basicConstant(blockInstance, disabled);
             }
             else {
               if (deps && deps[blockInstance.type]) {
-                addGenericBlock(blockInstance, deps[blockInstance.type]);
+                cell = blocks.generic(blockInstance, deps[blockInstance.type]);
+                if (blockInstance.type.indexOf('config.') !== -1) {
+                  paper.findViewByModel(cell).$box.addClass('config-block');
+                }
               }
             }
+            addCell(cell);
           }
 
           // Wires
           for (i in wires) {
-            addWire(wires[i]);
+            cell = blocks.wire(wires[i],
+                               graph.getCell(wires[i].source.block),
+                               graph.getCell(wires[i].target.block));
+            addCell(cell);
           }
 
           self.appEnable(!disabled);
@@ -874,257 +786,21 @@ angular.module('icestudio')
         position: { x: 6 * gridsize, y: 16 * gridsize }
       };
       dependencies[type] = block;
-      var cell = addGenericBlock(blockInstance, block);
+      var cell = blocks.generic(blockInstance, block);
+      addCell(cell);
       var cellView = paper.findViewByModel(cell);
       if (cellView.$box.css('z-index') < zIndex) {
         cellView.$box.css('z-index', ++zIndex);
       }
     };
 
-    function addBasicInputBlock(blockInstances, disabled) {
-      var cell = new joint.shapes.ice.Input({
-        id: blockInstances.id,
-        blockType: blockInstances.type,
-        data: blockInstances.data,
-        position: blockInstances.position,
-        disabled: disabled,
-        choices: boards.getPinoutHTML()
-      });
-
-      addCell(cell);
-      return cell;
-    }
-
-    function addBasicOutputBlock(blockInstances, disabled) {
-      var cell = new joint.shapes.ice.Output({
-        id: blockInstances.id,
-        blockType: blockInstances.type,
-        data: blockInstances.data,
-        position: blockInstances.position,
-        disabled: disabled,
-        choices: boards.getPinoutHTML()
-      });
-
-      addCell(cell);
-      return cell;
-    }
-
-    function addBasicConstantBlock(blockInstances, disabled) {
-      var cell = new joint.shapes.ice.Constant({
-        id: blockInstances.id,
-        blockType: blockInstances.type,
-        data: blockInstances.data,
-        position: blockInstances.position,
-        disabled: disabled
-      });
-
-      addCell(cell);
-      return cell;
-    }
-
-    function addBasicCodeBlock(blockInstances, disabled) {
-      var leftPorts = [];
-      var rightPorts = [];
-      var topPorts = [];
-
-      for (var i in blockInstances.data.ports.in) {
-        leftPorts.push({
-          id: blockInstances.data.ports.in[i],
-          label: blockInstances.data.ports.in[i],
-          gridUnits: 32
-        });
-      }
-
-      for (var o in blockInstances.data.ports.out) {
-        rightPorts.push({
-          id: blockInstances.data.ports.out[o],
-          label: blockInstances.data.ports.out[o],
-          gridUnits: 32
-        });
-      }
-
-      for (var p in blockInstances.data.params) {
-        topPorts.push({
-          id: blockInstances.data.params[p],
-          label: blockInstances.data.params[p],
-          gridUnits: 48
-        });
-      }
-
-      var cell = new joint.shapes.ice.Code({
-        id: blockInstances.id,
-        blockType: blockInstances.type,
-        data: blockInstances.data,
-        position: blockInstances.position,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        rightPorts: rightPorts,
-        topPorts: topPorts
-      });
-
-      addCell(cell);
-      return cell;
-    }
-
-    function addBasicInfoBlock(blockInstances, disabled) {
-      var cell = new joint.shapes.ice.Info({
-        id: blockInstances.id,
-        blockType: blockInstances.type,
-        data: blockInstances.data,
-        position: blockInstances.position,
-        disabled: disabled
-      });
-
-      addCell(cell);
-      return cell;
-    }
-
-    function addGenericBlock(blockInstance, block) {
-      var i;
-      var leftPorts = [];
-      var rightPorts = [];
-      var topPorts = [];
-      var bottomPorts = [];
-
-      for (i in block.design.graph.blocks) {
-        var item = block.design.graph.blocks[i];
-        if (item.type === 'basic.input') {
-          leftPorts.push({
-            id: item.id,
-            label: item.data.label
-          });
-        }
-        else if (item.type === 'basic.output') {
-          rightPorts.push({
-            id: item.id,
-            label: item.data.label
-          });
-        }
-        else if (item.type === 'basic.constant') {
-          if (!item.data.local) {
-            topPorts.push({
-              id: item.id,
-              label: item.data.label
-            });
-          }
-        }
-      }
-
-      var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
-      var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
-
-      var height = 8 * gridsize;
-      height = Math.max(4 * gridsize * numPortsHeight, height);
-      var blockLabel = blockInstance.type.toUpperCase();
-      var blockLabels = blockInstance.type.split('.');
-      var maxBlockLabel = '';
-      var width = 12 * gridsize;
-
-      for (var l in blockLabels) {
-        if (blockLabels[l].length > maxBlockLabel.length) {
-          maxBlockLabel = blockLabels[l];
-        }
-      }
-      if (maxBlockLabel.length > 4) {
-        width = Math.min((maxBlockLabel.length + 8) * gridsize, 24 * gridsize);
-      }
-      width = Math.max(4 * gridsize * numPortsWidth, width);
-
-      var gridUnitsHeight = height / gridsize;
-      var gridUnitsWidth = width / gridsize;
-
-      for (i in leftPorts) {
-        leftPorts[i].gridUnits = gridUnitsHeight;
-      }
-      for (i in rightPorts) {
-        rightPorts[i].gridUnits = gridUnitsHeight;
-      }
-      for (i in topPorts) {
-        topPorts[i].gridUnits = gridUnitsWidth;
-      }
-      for (i in bottomPorts) {
-        bottomPorts[i].gridUnits = gridUnitsWidth;
-      }
-
-      if (blockLabels.length > 1) {
-        blockLabel = blockLabels.join('<br>').toUpperCase();
-      }
-
-      var blockImage = '';
-      if (block.package.image) {
-        width = 12 * gridsize;
-        if (block.package.image.startsWith('%3Csvg')) {
-          blockImage = block.package.image;
-        }
-        else if (block.package.image.startsWith('<svg')) {
-          blockImage = encodeURI(block.package.image);
-        }
-      }
-
-      var cell = new joint.shapes.ice.Generic({
-        id: blockInstance.id,
-        blockType: blockInstance.type,
-        data: {},
-        image: blockImage,
-        label: blockLabel,
-        position: blockInstance.position,
-        leftPorts: leftPorts,
-        rightPorts: rightPorts,
-        topPorts: topPorts,
-        size: {
-          width: width,
-          height: height
-        }
-      });
-
-      addCell(cell);
-
-      if (blockInstance.type.indexOf('config.') !== -1) {
-        paper.findViewByModel(cell).$box.addClass('config-block');
-      }
-
-      return cell;
-    }
-
-    function addWire(wire) {
-      var source = graph.getCell(wire.source.block);
-      var target = graph.getCell(wire.target.block);
-
-      // Find selectors
-      var sourceSelector, targetSelector;
-      for (var _out = 0; _out < source.attributes.rightPorts.length; _out++) {
-        if (source.attributes.rightPorts[_out] === wire.source.port) {
-          sourceSelector = _out;
-          break;
-        }
-      }
-      for (var _in = 0; _in < source.attributes.leftPorts.length; _in++) {
-        if (target.attributes.leftPorts[_in] === wire.target.port) {
-          targetSelector = _in;
-          break;
-        }
-      }
-
-      var _wire = new joint.shapes.ice.Wire({
-        source: {
-          id: source.id,
-          selector: sourceSelector,
-          port: wire.source.port
-        },
-        target: {
-          id: target.id,
-          selector: targetSelector,
-          port: wire.target.port
-        },
-        vertices: wire.vertices
-      });
-
-      addCell(_wire);
-    }
-
     function addCell(cell) {
       cell.attributes.state = state;
       graph.addCell(cell);
+      var cellView = paper.findViewByModel(cell);
+      if (cellView.$box.css('z-index') < zIndex) {
+        cellView.$box.css('z-index', ++zIndex);
+      }
     }
 
   });
