@@ -54,12 +54,18 @@ angular.module('icestudio')
           type: config.type,
           position: { x: config.x * gridsize, y: 4 * gridsize }
         };
-        alertify.prompt(gettextCatalog.getString('Enter the ports'), config._default,
-        function(evt, input) {
-          if (input) {
-            var labels = input.replace(/ /g, '').split(',');
+        utils.inputcheckboxprompt([
+          gettextCatalog.getString('Enter the ports'),
+          gettextCatalog.getString('Virtual port')
+        ], [
+          config._default,
+          true
+        ],
+          function(evt, values) {
+            var labels = values[0].replace(/ /g, '').split(',');
+            var virtual = values[1];
+            // Validate values
             var portInfo, portInfos = [];
-            // Validate input
             for (var l in labels) {
               portInfo = utils.parsePortLabel(labels[l]);
               if (portInfo) {
@@ -75,20 +81,20 @@ angular.module('icestudio')
             // Create blocks
             for (var p in portInfos) {
               portInfo = portInfos[p];
+              var pins = getPins(portInfo);
               blockInstance.data = {
                 label: portInfo.input,
                 name: portInfo.name,
                 range: portInfo.rangestr ? portInfo.rangestr : '',
-                pins: getPins(portInfo),
-                virtual: true
+                pins: pins,
+                virtual: virtual
               };
               if (addCellCallback) {
                 addCellCallback(loadBasic(blockInstance));
               }
               // Next block position
-              blockInstance.position.y += 10 * gridsize;
+              blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
             }
-          }
         });
       }
     }
@@ -113,22 +119,27 @@ angular.module('icestudio')
         type: 'basic.constant',
         position: { x: 20 * gridsize, y: 4 * gridsize }
       };
-      alertify.prompt(gettextCatalog.getString('Enter the constant blocks'), 'C',
-        function(evt, name) {
-          if (name) {
-            var names = name.replace(/ /g, '').split(',');
-            for (var n in names) {
-              if (names[n]) {
-                blockInstance.data = {
-                  label: names[n],
-                  local: false,
-                  value: ''
-                };
-                if (addCellCallback) {
-                  addCellCallback(loadBasicConstant(blockInstance));
-                }
-                blockInstance.position.x += 15 * gridsize;
+      utils.inputcheckboxprompt([
+        gettextCatalog.getString('Enter the constant blocks'),
+        gettextCatalog.getString('Local parameter')
+      ], [
+        'C',
+        false
+      ],
+        function(evt, values) {
+          var labels = values[0].replace(/ /g, '').split(',');
+          var local = values[1];
+          for (var l in labels) {
+            if (labels[l]) {
+              blockInstance.data = {
+                label: labels[l],
+                local: local,
+                value: ''
+              };
+              if (addCellCallback) {
+                addCellCallback(loadBasicConstant(blockInstance));
               }
+              blockInstance.position.x += 15 * gridsize;
             }
           }
       });
@@ -511,7 +522,7 @@ angular.module('icestudio')
         function(evt, values) {
           var label = values[0].replace(/ /g, '');
           var virtual = values[1];
-          // Validate input
+          // Validate values
           var portInfo = utils.parsePortLabel(label);
           if (portInfo) {
             evt.cancel = false;

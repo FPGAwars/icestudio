@@ -26,11 +26,11 @@ body {
   cursor: progress;
 }
 
-.alertify-notifier .ajs-right {
+.alertify-notifier.ajs-right {
   bottom: 45px;
 }
 
-.alertify-notifier .ajs-bottom {
+.alertify-notifier.ajs-bottom {
   bottom: 45px;
 }
 

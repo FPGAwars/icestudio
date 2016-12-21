@@ -99,7 +99,8 @@ angular.module('icestudio')
             return false;
           }
           // Prevent different size connections
-          var tsize = cellViewT.model.attributes.data.pins.length;
+          var pins = cellViewT.model.attributes.data.pins;
+          var tsize = pins ? pins.length : 1;
           var lsize = linkView.model.attributes.size;
           if (tsize !== lsize) {
             warning(gettextCatalog.getString('Invalid connection: ' + lsize + ' → ' + tsize));

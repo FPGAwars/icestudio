@@ -869,7 +869,7 @@ angular.module('icestudio')
     this.parsePortLabel = function(data) {
       // e.g: name[x:y]
       var match, ret = {};
-      var pattern = /([A-Za-z0-9_]+)(\[([0-9]+):([0-9]+)\]){0,1}/g;
+      var pattern = /([A-Za-z0-9_]*)(\[([0-9]+):([0-9]+)\]){0,1}/g;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.input = match[0];
