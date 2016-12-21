@@ -98,15 +98,6 @@ angular.module('icestudio')
             }
             return false;
           }
-          // Prevent different size connections
-          // TODO: block port target
-          var pins = cellViewT.model.attributes.data.pins;
-          var tsize = pins ? pins.length : 1;
-          var lsize = linkView.model.attributes.size;
-          if (tsize !== lsize) {
-            warning(gettextCatalog.getString('Invalid connection: ' + lsize + ' → ' + tsize));
-            return false;
-          }
           // Ensure right -> left connections
           if (magnetS.getAttribute('pos') === 'right') {
             if (magnetT.getAttribute('pos') !== 'left') {
@@ -121,8 +112,9 @@ angular.module('icestudio')
               return false;
             }
           }
+          var i;
           var links = graph.getLinks();
-          for (var i in links) {
+          for (i in links) {
             var linkIView = links[i].findView(paper);
             if (linkView === linkIView) {
               //Skip the wire the user is drawing
@@ -157,6 +149,30 @@ angular.module('icestudio')
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
             }
             return ret;
+          }
+          // Prevent different size connections
+          var tsize;
+          var lsize = linkView.model.attributes.size;
+          var tdata = cellViewT.model.attributes.data;
+          var portName = magnetT.getAttribute('port');
+          if (tdata.pins) {
+            // I/O port block
+            tsize = tdata.pins ? tdata.pins.length : 1;
+          }
+          else {
+            // Code/Generic block
+            var port;
+            for (i in tdata.ports.in) {
+              port = tdata.ports.in[i];
+              if (portName === port.name) {
+                tsize = port.size;
+                break;
+              }
+            }
+          }
+          if (tsize !== lsize) {
+            warning(gettextCatalog.getString('Invalid connection: ' + lsize + ' → ' + tsize));
+            return false;
           }
           // Prevent loop links
           return magnetS !== magnetT;
