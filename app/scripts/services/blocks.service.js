@@ -129,18 +129,34 @@ angular.module('icestudio')
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
           var local = values[1];
+          // Validate values
+          var paramInfo, paramInfos = [];
           for (var l in labels) {
             if (labels[l]) {
-              blockInstance.data = {
-                label: labels[l],
-                local: local,
-                value: ''
-              };
-              if (addCellCallback) {
-                addCellCallback(loadBasicConstant(blockInstance));
+              paramInfo = utils.parseParamLabel(labels[l]);
+              if (paramInfo) {
+                evt.cancel = false;
+                paramInfos.push(paramInfo);
               }
-              blockInstance.position.x += 15 * gridsize;
+              else {
+                evt.cancel = true;
+                alertify.notify(gettextCatalog.getString('Wrong parameter name {{name}}', { name: labels[l] }), 'warning', 3);
+                return;
+              }
             }
+          }
+          // Create blocks
+          for (var p in paramInfos) {
+            paramInfo = paramInfos[p];
+            blockInstance.data = {
+              label: paramInfo.input,
+              local: local,
+              value: ''
+            };
+            if (addCellCallback) {
+              addCellCallback(loadBasicConstant(blockInstance));
+            }
+            blockInstance.position.x += 15 * gridsize;
           }
       });
     }
@@ -207,6 +223,21 @@ angular.module('icestudio')
               }
             }
           }
+          var p, paramInfo, paramInfos = [];
+          for (p in params) {
+            if (params[p]) {
+              paramInfo = utils.parseParamLabel(params[p]);
+              if (paramInfo) {
+                evt.cancel = false;
+                paramInfos.push(paramInfo);
+              }
+              else {
+                evt.cancel = true;
+                alertify.notify(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }), 'warning', 3);
+                return;
+              }
+            }
+          }
           // Create ports
           blockInstance.data = {
             code: '',
@@ -236,13 +267,13 @@ angular.module('icestudio')
               allNames.push(outPortInfos[o].name);
             }
           }
-          for (var p in params) {
-            if (params[p]) {
+          for (p in paramInfos) {
+            if (paramInfos[p]) {
               blockInstance.data.params.push({
-                label: params[p],
-                name: params[p]
+                label: paramInfos[p].input,
+                name: paramInfos[p].name
               });
-              allNames.push(params[p]);
+              allNames.push(paramInfos[p].name);
             }
           }
           // Check duplicated attributes

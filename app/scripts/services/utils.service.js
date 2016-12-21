@@ -869,7 +869,7 @@ angular.module('icestudio')
     this.parsePortLabel = function(data) {
       // e.g: name[x:y]
       var match, ret = {};
-      var pattern = /([A-Za-z0-9_]*)(\[([0-9]+):([0-9]+)\]){0,1}/g;
+      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*){0,1}(\[([0-9]+):([0-9]+)\]){0,1}/g;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.input = match[0];
@@ -883,6 +883,19 @@ angular.module('icestudio')
             ret.range = _.range(match[3], parseInt(match[4])+1, +1);
           }
         }
+        return ret;
+      }
+      return null;
+    };
+
+    this.parseParamLabel = function(data) {
+      // e.g: name
+      var match, ret = {};
+      var pattern = /[A-Za-z_]+[A-Za-z_0-9]*/g;
+      match = pattern.exec(data);
+      if (match && (match[0] === match.input)) {
+        ret.input = match[0];
+        ret.name = match[0];
         return ret;
       }
       return null;
