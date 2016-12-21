@@ -18,7 +18,7 @@ joint.shapes.ice = {};
 joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
   markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
-  portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
+  portMarkup: '<g class="port port<%= id %>"><path id="port-wire-<%= port.id %>" class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
     type: 'ice.Model',
@@ -587,24 +587,41 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.$box.find('#' + editorLabel).append(this.model.attributes.data.code);
       this.$box.find('#' + contentLabel).append(this.model.attributes.data.code);
     },
-    update: function () {
-      this.renderPorts();
+    renderValue: function() {
       var id = sha1(this.model.get('id')).toString().substring(0, 6);
       var editorLabel = 'editor' + id;
       var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
       editor.setReadOnly(this.model.get('disabled'));
+    },
+    update: function () {
+      this.renderPorts();
+      this.renderValue();
       joint.dia.ElementView.prototype.update.apply(this, arguments);
     },
     updateBox: function() {
+      var port, wireWidth;
       var bbox = this.model.getBBox();
       var state = this.model.attributes.state;
+      var data = this.model.attributes.data;
 
+      // Render ports width
       this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+      for (var i in data.ports.in) {
+        port = data.ports.in[i];
+        wireWidth = (port.size > 1) ? 8 : 2;
+        this.$('#port-wire-' + port.name).css('stroke-width', wireWidth * state.zoom);
+      }
+      for (var o in data.ports.out) {
+        port = data.ports.out[o];
+        wireWidth = (port.size > 1) ? 8 : 2;
+        this.$('#port-wire-' + port.name).css('stroke-width', wireWidth * state.zoom);
+      }
 
       this.$box.css({ width: bbox.width * state.zoom,
                       height: bbox.height * state.zoom,
                       left: bbox.x * state.zoom + state.pan.x,
                       top: bbox.y * state.zoom + state.pan.y });
+                      // 'border-width': 2 * state.zoom: problem int instead of float
     }
 });
 
@@ -765,22 +782,45 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
 joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
+  initialize: function() {
+    joint.dia.LinkView.prototype.initialize.apply(this, arguments);
+
+    var self = this;
+    setTimeout(function() {
+      var portName = self.model.attributes.source.port;
+      var dataSource = self.sourceView.model.attributes.data;
+
+      // Initialize wire properties
+      var size;
+      if (dataSource.pins) {
+        // I/O port block
+        size = dataSource.pins.length;
+      }
+      else {
+        // Code/Generic block
+        var port;
+        for (var o in dataSource.ports.out) {
+          port = dataSource.ports.out[o];
+          if (portName === port.name) {
+            size = port.size;
+            break;
+          }
+        }
+      }
+      if (size) {
+        self.model.attributes.size = size; // For wire size connection validation
+        self.$('.connection').css('stroke-width', (size > 1) ? 8 : 2);
+        self.model.label(0, {attrs: { text: { text: (size > 1) ? '' + size + '' : '' } } });
+        self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, (size > 1) ? 8 : 4);
+      }
+      self.update();
+
+    }, 0);
+
+  },
   render: function() {
     joint.dia.LinkView.prototype.render.apply(this, arguments);
     // console.log('render');
-
-    var pins = this.sourceView.model.attributes.data.pins;
-    var wireDot = (pins && pins.length > 1) ? 8 : 4;
-    var wireWidth = (pins && pins.length > 1) ? 8 : 2;
-    var wireLabel = (pins && pins.length > 1) ? '' + pins.length + '' : '';
-
-    // Set up the wire
-    this.$('.connection').css('stroke-width', wireWidth);
-    this.model.attributes.size = pins.length;
-    this.model.label(0, {attrs: { text: { text: wireLabel } } });
-    this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, wireDot);
-    this.update();
-
     return this;
   },
 

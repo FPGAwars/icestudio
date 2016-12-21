@@ -355,24 +355,26 @@ angular.module('icestudio')
 
       for (var i in instance.data.ports.in) {
         leftPorts.push({
-          id: instance.data.ports.in[i],
-          label: instance.data.ports.in[i],
+          id: instance.data.ports.in[i].name,
+          label: instance.data.ports.in[i].label,
+          size: instance.data.ports.in[i].size,
           gridUnits: 32
         });
       }
 
       for (var o in instance.data.ports.out) {
         rightPorts.push({
-          id: instance.data.ports.out[o],
-          label: instance.data.ports.out[o],
+          id: instance.data.ports.out[o].name,
+          label: instance.data.ports.out[o].label,
+          size: instance.data.ports.out[o].size,
           gridUnits: 32
         });
       }
 
       for (var p in instance.data.params) {
         topPorts.push({
-          id: instance.data.params[p],
-          label: instance.data.params[p],
+          id: instance.data.params[p].name,
+          label: instance.data.params[p].label,
           gridUnits: 48
         });
       }

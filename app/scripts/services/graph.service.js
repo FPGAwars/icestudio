@@ -99,6 +99,7 @@ angular.module('icestudio')
             return false;
           }
           // Prevent different size connections
+          // TODO: block port target
           var pins = cellViewT.model.attributes.data.pins;
           var tsize = pins ? pins.length : 1;
           var lsize = linkView.model.attributes.size;
