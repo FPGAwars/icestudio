@@ -796,7 +796,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         // I/O port block
         size = dataSource.pins.length;
       }
-      else {
+      else if (dataSource.ports) {
         // Code/Generic block
         var port;
         for (var o in dataSource.ports.out) {

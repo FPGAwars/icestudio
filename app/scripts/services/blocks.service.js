@@ -265,6 +265,7 @@ angular.module('icestudio')
               blockInstance.data.ports.in.push({
                 label: inPortInfos[i].input,
                 name: inPortInfos[i].name,
+                range: inPortInfos[i].rangestr,
                 size: pins.length
               });
               allNames.push(inPortInfos[i].name);
@@ -277,6 +278,7 @@ angular.module('icestudio')
               blockInstance.data.ports.out.push({
                 label: outPortInfos[o].input,
                 name: outPortInfos[o].name,
+                range: outPortInfos[o].rangestr,
                 size: pins.length
               });
               allNames.push(outPortInfos[o].name);

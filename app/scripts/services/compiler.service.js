@@ -61,12 +61,7 @@ angular.module('icestudio')
         var params = [];
         for (var p in data.params) {
           if (data.params[p] instanceof Object) {
-            // Generic block
             params.push(' parameter ' + data.params[p].name + ' = ' + (data.params[p].value ? data.params[p].value : '0'));
-          }
-          else {
-            // Code block
-            params.push(' parameter ' + data.params[p] + ' = 0');
           }
         }
 
@@ -81,11 +76,11 @@ angular.module('icestudio')
         var ports = [];
         for (var i in data.ports.in) {
           var _in = data.ports.in[i];
-          ports.push(' input ' + _in.range + (_in.range ? ' ' : '') + _in.name);
+          ports.push(' input ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
         }
         for (var o in data.ports.out) {
           var _out = data.ports.out[o];
-          ports.push(' output ' + _out.range + (_out.range ? ' ' : '') + _out.name);
+          ports.push(' output ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
         }
 
         if (ports.length > 0) {

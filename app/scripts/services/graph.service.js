@@ -170,6 +170,8 @@ angular.module('icestudio')
               }
             }
           }
+          tsize = tsize || 1;
+          lsize = lsize || 1;
           if (tsize !== lsize) {
             warning(gettextCatalog.getString('Invalid connection: ' + lsize + ' → ' + tsize));
             return false;
