@@ -12,16 +12,21 @@
     "graph": {
       "blocks": [
         {
-          "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
+          "id": "1a748af9-e00b-40ae-a3d9-030da7397247",
           "type": "basic.code",
           "data": {
             "code": "// Bit 0\n\nassign v = 1'b0;",
             "ports": {
               "in": [],
               "out": [
-                "v"
+                {
+                  "label": "v",
+                  "name": "v",
+                  "size": 1
+                }
               ]
-            }
+            },
+            "params": []
           },
           "position": {
             "x": 96,
@@ -29,10 +34,19 @@
           }
         },
         {
-          "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
+          "id": "355855e8-69a6-472a-9212-dd5c3bece567",
           "type": "basic.output",
           "data": {
-            "label": ""
+            "label": "",
+            "range": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": 0
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 608,
@@ -43,11 +57,11 @@
       "wires": [
         {
           "source": {
-            "block": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
+            "block": "1a748af9-e00b-40ae-a3d9-030da7397247",
             "port": "v"
           },
           "target": {
-            "block": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
+            "block": "355855e8-69a6-472a-9212-dd5c3bece567",
             "port": "in"
           }
         }
@@ -59,7 +73,7 @@
         "x": 0,
         "y": 0
       },
-      "zoom": 1
+      "zoom": 1.0000000353093697
     }
   }
 }

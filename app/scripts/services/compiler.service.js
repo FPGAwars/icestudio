@@ -39,13 +39,13 @@ angular.module('icestudio')
       return header;
     }
 
-    function digestId(id, force) {
-      if (id.indexOf('-') !== -1 || force) {
-        return 'v' + nodeSha1(id).toString().substring(0, 6);
-      }
-      else {
-        return id.replace('.', '_');
-      }
+    function digestId(id) {
+      if (id.indexOf('-') !== -1) {
+         return 'v' + nodeSha1(id).toString().substring(0, 6);
+       }
+       else {
+         return id.replace('.', '_');
+       }
     }
 
     function module(data) {
@@ -177,8 +177,8 @@ angular.module('icestudio')
         }
         else {
           // Wires
-          var range = wire.size ? '[0:' + (wire.size-1) +'] ' : ' ';
-          connections.wire.push('wire ' + range + 'w' + w + ';');
+          var range = wire.size ? ' [0:' + (wire.size-1) +'] ' : ' ';
+          connections.wire.push('wire' + range + 'w' + w + ';');
         }
         // Assignations
         for (i in graph.blocks) {
@@ -243,11 +243,13 @@ angular.module('icestudio')
 
           // Header
 
-          var id = digestId(block.type, true);
+          instance += name;
           if (block.type === 'basic.code') {
-            id += '_' + digestId(block.id);
+            instance += '_' + digestId(block.id);
           }
-          instance += name + '_' + digestId(id);
+          else {
+            instance += '_' + digestId(block.type);
+          }
 
           //-- Parameters
 
@@ -327,10 +329,6 @@ angular.module('icestudio')
         var graph = project.design.graph;
         var deps = project.design.deps;
 
-        // Scape dot in name
-
-        name = digestId(name);
-
         // Main module
 
         if (name) {
@@ -346,7 +344,7 @@ angular.module('icestudio')
         // Dependencies modules
 
         for (var d in deps) {
-          code += verilogCompiler(name + '_' + digestId(d, true), deps[d]);
+          code += verilogCompiler(name + '_' + digestId(d), deps[d]);
         }
 
         // Code modules
@@ -356,7 +354,7 @@ angular.module('icestudio')
           if (block) {
             if (block.type === 'basic.code') {
               data = {
-                name: name + '_' + digestId(block.type, true) + '_' + digestId(block.id),
+                name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
                 content: block.data.code

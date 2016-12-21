@@ -406,6 +406,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         $(fpgaPortId).removeClass('hidden');
         if (this.pins) {
           this.model.attributes.size.height = 32 + 32 * this.pins.length;
+          var bbox = this.model.getBBox();
+          var state = this.model.attributes.state;
+          this.$box.css({ top: bbox.y * state.zoom + state.pan.y });
         }
       }
     },
@@ -810,7 +813,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       if (size) {
         self.model.attributes.size = size; // For wire size connection validation
         self.$('.connection').css('stroke-width', (size > 1) ? 8 : 2);
-        self.model.label(0, {attrs: { text: { text: (size > 1) ? '' + size + '' : '' } } });
+        self.model.label(0, {attrs: { text: { text: (size > 1) ? '|' + size + '|' : '' } } });
         self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, (size > 1) ? 8 : 4);
       }
       self.update();
