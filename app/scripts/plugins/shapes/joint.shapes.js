@@ -289,6 +289,34 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         this.$box.find('img').addClass('hidden');
         this.$box.find('label').removeClass('hidden');
       }
+    },
+    updateBox: function() {
+      var port, wireWidth;
+      var bbox = this.model.getBBox();
+      var state = this.model.attributes.state;
+      var leftPorts = this.model.attributes.leftPorts;
+      var rightPorts = this.model.attributes.rightPorts;
+
+      // Render ports width
+      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+      for (var i in leftPorts) {
+        port = leftPorts[i];
+        wireWidth = (port.size > 1) ? 8 : 2;
+        this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+      }
+      for (var o in rightPorts) {
+        port = rightPorts[o];
+        wireWidth = (port.size > 1) ? 8 : 2;
+        this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+      }
+
+      this.$box.css({
+        left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
+        top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
+        width: bbox.width,
+        height: bbox.height,
+        transform: 'scale(' + state.zoom + ')'
+      });
     }
 });
 
@@ -406,9 +434,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         $(fpgaPortId).removeClass('hidden');
         if (this.pins) {
           this.model.attributes.size.height = 32 + 32 * this.pins.length;
-          var bbox = this.model.getBBox();
-          var state = this.model.attributes.state;
-          this.$box.css({ top: bbox.y * state.zoom + state.pan.y });
+          // TODO: move block and wire
+          //var bbox = this.model.getBBox();
+          //var state = this.model.attributes.state;
+          //this.$box.css({ top: bbox.y * state.zoom + state.pan.y });
         }
       }
     },
@@ -792,6 +821,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     setTimeout(function() {
       var portName = self.model.attributes.source.port;
       var dataSource = self.sourceView.model.attributes.data;
+      var rightPorts = self.sourceView.model.attributes.rightPorts;
 
       // Initialize wire properties
       var size;
@@ -799,12 +829,12 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         // I/O port block
         size = dataSource.pins.length;
       }
-      else if (dataSource.ports) {
+      else {
         // Code/Generic block
         var port;
-        for (var o in dataSource.ports.out) {
-          port = dataSource.ports.out[o];
-          if (portName === port.name) {
+        for (var o in rightPorts) {
+          port = rightPorts[o];
+          if (portName === port.id) {
             size = port.size;
             break;
           }

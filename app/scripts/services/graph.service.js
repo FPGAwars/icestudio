@@ -154,7 +154,8 @@ angular.module('icestudio')
           var tsize;
           var lsize = linkView.model.attributes.size;
           var tdata = cellViewT.model.attributes.data;
-          var portName = magnetT.getAttribute('port');
+          var tLeftPorts = cellViewT.model.attributes.leftPorts;
+          var portId = magnetT.getAttribute('port');
           if (tdata.pins) {
             // I/O port block
             tsize = tdata.pins ? tdata.pins.length : 1;
@@ -162,9 +163,9 @@ angular.module('icestudio')
           else {
             // Code/Generic block
             var port;
-            for (i in tdata.ports.in) {
-              port = tdata.ports.in[i];
-              if (portName === port.name) {
+            for (i in tLeftPorts) {
+              port = tLeftPorts[i];
+              if (portId === port.id) {
                 tsize = port.size;
                 break;
               }

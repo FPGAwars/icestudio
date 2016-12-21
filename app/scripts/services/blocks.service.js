@@ -466,13 +466,15 @@ angular.module('icestudio')
         if (item.type === 'basic.input') {
           leftPorts.push({
             id: item.id,
-            label: item.data.label
+            label: item.data.label,
+            size: block.design.graph.blocks[i].data.pins.length
           });
         }
         else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
-            label: item.data.label
+            label: item.data.label,
+            size: block.design.graph.blocks[i].data.pins.length
           });
         }
         else if (item.type === 'basic.constant') {
