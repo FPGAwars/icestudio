@@ -7,7 +7,7 @@ angular.module('icestudio')
                               gettextCatalog) {
     var gridsize = 8;
 
-    this.newBasic = function(type, block, addCellCallback) {
+    this.newBasic = function(type, addCellCallback) {
       switch(type) {
         case 'basic.input':
         case 'basic.output':
@@ -17,7 +17,7 @@ angular.module('icestudio')
           newBasicConstant(addCellCallback);
           break;
         case 'basic.code':
-          newBasicCode(block, addCellCallback); // block
+          newBasicCode(addCellCallback);
           break;
         case 'basic.info':
           newBasicInfo(addCellCallback);
@@ -40,33 +40,33 @@ angular.module('icestudio')
     //-- New
 
     function newBasicIO(type, addCellCallback) {
-      var config = null;
+      var config;
       if (type === 'basic.input') {
         config = { type: type, _default: 'in', x: 4 };
       }
-      else if (type === 'basic.output') {
+      else { // 'basic.output'
         config = { type: type, _default: 'out', x: 95 };
       }
-      if (config) {
-        var blockInstance = {
-          id: null,
-          data: {},
-          type: config.type,
-          position: { x: config.x * gridsize, y: 4 * gridsize }
-        };
-        utils.inputcheckboxprompt([
-          gettextCatalog.getString('Enter the ports'),
-          gettextCatalog.getString('Virtual port')
-        ], [
-          config._default,
-          true
-        ],
-          function(evt, values) {
-            var labels = values[0].replace(/ /g, '').split(',');
-            var virtual = values[1];
-            // Validate values
-            var portInfo, portInfos = [];
-            for (var l in labels) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: config.type,
+        position: { x: config.x * gridsize, y: 4 * gridsize }
+      };
+      utils.inputcheckboxprompt([
+        gettextCatalog.getString('Enter the ports'),
+        gettextCatalog.getString('Virtual port')
+      ], [
+        config._default,
+        true
+      ],
+        function(evt, values) {
+          var labels = values[0].replace(/ /g, '').split(',');
+          var virtual = values[1];
+          // Validate values
+          var portInfo, portInfos = [];
+          for (var l in labels) {
+            if (labels[l]) {
               portInfo = utils.parsePortLabel(labels[l]);
               if (portInfo) {
                 evt.cancel = false;
@@ -78,25 +78,25 @@ angular.module('icestudio')
                 return;
               }
             }
-            // Create blocks
-            for (var p in portInfos) {
-              portInfo = portInfos[p];
-              var pins = getPins(portInfo);
-              blockInstance.data = {
-                label: portInfo.input,
-                name: portInfo.name,
-                range: portInfo.rangestr ? portInfo.rangestr : '',
-                pins: pins,
-                virtual: virtual
-              };
-              if (addCellCallback) {
-                addCellCallback(loadBasic(blockInstance));
-              }
-              // Next block position
-              blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+          // Create blocks
+          for (var p in portInfos) {
+            portInfo = portInfos[p];
+            var pins = getPins(portInfo);
+            blockInstance.data = {
+              label: portInfo.input,
+              name: portInfo.name,
+              range: portInfo.rangestr ? portInfo.rangestr : '',
+              pins: pins,
+              virtual: virtual
+            };
+            if (addCellCallback) {
+              addCellCallback(loadBasic(blockInstance));
             }
-        });
-      }
+            // Next block position
+            blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+      });
     }
 
     function getPins(portInfo) {
@@ -145,19 +145,19 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicCode(block, addCellCallback) {
+    function newBasicCode(addCellCallback) {
       var blockInstance = {
         id: null,
         data: {},
         type: 'basic.code',
-        position: { x: 4 * gridsize, y: 4 * gridsize }
+        position: { x: 31 * gridsize, y: 24 * gridsize }
       };
       var defaultValues = [
         'a , b',
         'c , d',
         ''
       ];
-      if (block && block.data) {
+      /*if (block && block.data) {
         if (block.data.ports) {
           defaultValues[0] = block.data.ports.in.join(' , ');
           defaultValues[1] = block.data.ports.out.join(' , ');
@@ -165,69 +165,97 @@ angular.module('icestudio')
         if (block.data.params) {
           defaultValues[2] = block.data.params.join(' , ');
         }
-      }
+      }*/
       utils.multiprompt(
         [ gettextCatalog.getString('Enter the input ports'),
           gettextCatalog.getString('Enter the output ports'),
           gettextCatalog.getString('Enter the parameters') ],
         defaultValues,
-        function(evt, ports) {
-          if (ports && (ports[0].length || ports[1].length)) {
-            blockInstance.data = {
-              code: '',
-              params: [],
-              ports: { in: [], out: [] }
-            };
-            // Parse ports
-            var inPorts = [];
-            var outPorts = [];
-            var params = [];
-            if (ports.length > 0) {
-              inPorts = ports[0].replace(/ /g, '').split(',');
-            }
-            if (ports.length > 1) {
-              outPorts = ports[1].replace(/ /g, '').split(',');
-            }
-            if (ports.length > 2) {
-              params = ports[2].replace(/ /g, '').split(',');
-            }
-
-            for (var i in inPorts) {
-              if (inPorts[i]) {
-                blockInstance.data.ports.in.push(inPorts[i]);
+        function(evt, values) {
+          var inPorts = values[0].replace(/ /g, '').split(',');
+          var outPorts = values[1].replace(/ /g, '').split(',');
+          var params = values[2].replace(/ /g, '').split(',');
+          var allNames = [];
+          // Validate values
+          var i, inPortInfo, inPortInfos = [];
+          for (i in inPorts) {
+            if (inPorts[i]) {
+              inPortInfo = utils.parsePortLabel(inPorts[i]);
+              if (inPortInfo) {
+                evt.cancel = false;
+                inPortInfos.push(inPortInfo);
+              }
+              else {
+                evt.cancel = true;
+                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }), 'warning', 3);
+                return;
               }
             }
-            for (var o in outPorts) {
-              if (outPorts[o]) {
-                blockInstance.data.ports.out.push(outPorts[o]);
+          }
+          var o, outPortInfo, outPortInfos = [];
+          for (o in outPorts) {
+            if (outPorts[o]) {
+              outPortInfo = utils.parsePortLabel(outPorts[o]);
+              if (outPortInfo) {
+                evt.cancel = false;
+                outPortInfos.push(outPortInfo);
+              }
+              else {
+                evt.cancel = true;
+                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }), 'warning', 3);
+                return;
               }
             }
-            for (var p in params) {
-              if (params[p]) {
-                blockInstance.data.params.push(params[p]);
-              }
+          }
+          // Create ports
+          blockInstance.data = {
+            code: '',
+            params: [],
+            ports: { in: [], out: [] }
+          };
+          var pins;
+          for (i in inPortInfos) {
+            if (inPortInfos[i]) {
+              pins = getPins(inPortInfos[i]);
+              blockInstance.data.ports.in.push({
+                label: inPortInfos[i].input,
+                name: inPortInfos[i].name,
+                size: pins.length
+              });
+              allNames.push(inPortInfos[i].name);
             }
-            blockInstance.position.x = 31 * gridsize;
-            blockInstance.position.y = 24 * gridsize;
-
-            var allAttrs= inPorts.concat(outPorts, params);
-            var numAttrs = allAttrs.length;
-
-            // Check duplicated attributes
-            if (numAttrs === $.unique(allAttrs).length) {
-              evt.cancel = false;
-              if (block) {
-                blockInstance.data.code = block.data.code;
-                blockInstance.position = block.position;
-              }
-              if (addCellCallback) {
-                addCellCallback(loadBasicCode(blockInstance));
-              }
+          }
+          for (o in outPortInfos) {
+            if (outPortInfos[o]) {
+              pins = getPins(outPortInfos[o]);
+              blockInstance.data.ports.out.push({
+                label: outPortInfos[o].input,
+                name: outPortInfos[o].name,
+                size: pins.length
+              });
+              allNames.push(outPortInfos[o].name);
             }
-            else {
-              evt.cancel = true;
-              alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
+          }
+          for (var p in params) {
+            if (params[p]) {
+              blockInstance.data.params.push({
+                label: params[p],
+                name: params[p]
+              });
+              allNames.push(params[p]);
             }
+          }
+          // Check duplicated attributes
+          var numNames = allNames.length;
+          if (numNames === $.unique(allNames).length) {
+            evt.cancel = false;
+            if (addCellCallback) {
+              addCellCallback(loadBasicCode(blockInstance));
+            }
+          }
+          else {
+            evt.cancel = true;
+            alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
           }
       });
     }

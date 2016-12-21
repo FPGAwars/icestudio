@@ -424,7 +424,7 @@ angular.module('icestudio')
         }
       };
       if (type.indexOf('basic.') !== -1) {
-        blocks.newBasic(type, block, addCellCallback);
+        blocks.newBasic(type, addCellCallback);
       }
       else {
         dependencies[type] = block;
