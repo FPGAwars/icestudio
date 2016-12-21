@@ -300,47 +300,29 @@ angular.module('icestudio')
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
-        var data = cellView.model.attributes;
-        // TODO: move to blocks.service edit function
-        if (data.blockType === 'basic.input' ||
-            data.blockType === 'basic.output') {
+        var type =  cellView.model.attributes.blockType;
+        if (type.indexOf('basic.') !== -1) {
           if (paper.options.enabled) {
-            blocks.editBasicIO(cellView, function(cell) {
+            if (type === 'basic.code') {
+              var content = self.getContent(cellView.model.id);
+              cellView.model.attributes.data.code = content;
+            }
+            blocks.editBasic(type, cellView, function(cell) {
               addCell(cell);
             });
           }
         }
-        else if (data.blockType === 'basic.constant') {
-          if (paper.options.enabled) {
-            blocks.editBasicConstant(cellView);
-          }
-        }
-        else if (data.blockType === 'basic.code') {
-          if (paper.options.enabled) {
-            var block = {
-              data: {
-                code: self.getContent(cellView.model.id),
-                params: data.data.params,
-                ports: data.data.ports
-              },
-              position: cellView.model.attributes.position
-            };
-            self.createBlock('basic.code', block, function() {
-              cellView.model.remove();
-            });
-          }
-        }
-        else if (data.type !== 'ice.Wire' && data.type !== 'ice.Info') {
-          self.breadcrumbs.push({ name: data.blockType });
+        else {
+          self.breadcrumbs.push({ name: type });
           utils.rootScopeSafeApply();
           zIndex = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
-              self.loadDesign(dependencies[data.blockType].design, true);
+              self.loadDesign(dependencies[type].design, true);
             });
           }
           else {
-            self.loadDesign(dependencies[data.blockType].design, true);
+            self.loadDesign(dependencies[type].design, true);
           }
         }
       });
@@ -433,19 +415,17 @@ angular.module('icestudio')
       }
     };
 
-    this.createBlock = function(type, block, callback) {
-      var addCellCallback = function(cell) {
-        addCell(cell);
-        if (callback) {
-          callback();
-        }
-      };
+    this.createBlock = function(type, block) {
       if (type.indexOf('basic.') !== -1) {
-        blocks.newBasic(type, addCellCallback);
+        blocks.newBasic(type, function(cell) {
+          addCell(cell);
+        });
       }
       else {
         dependencies[type] = block;
-        blocks.newGeneric(type, block, addCellCallback);
+        blocks.newGeneric(type, block, function(cell) {
+          addCell(cell);
+        });
       }
     };
 

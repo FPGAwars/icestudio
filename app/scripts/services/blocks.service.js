@@ -7,7 +7,19 @@ angular.module('icestudio')
                               gettextCatalog) {
     var gridsize = 8;
 
-    this.newBasic = function(type, addCellCallback) {
+    this.newBasic = newBasic;
+    this.newGeneric = newGeneric;
+
+    this.loadBasic = loadBasic;
+    this.loadGeneric = loadGeneric;
+    this.loadWire = loadWire;
+
+    this.editBasic = editBasic;
+
+
+    //-- New
+
+    function newBasic(type, addCellCallback) {
       switch(type) {
         case 'basic.input':
         case 'basic.output':
@@ -25,19 +37,7 @@ angular.module('icestudio')
         default:
           break;
       }
-    };
-    this.newGeneric = newGeneric;
-
-    this.loadBasic = loadBasic;
-    this.loadGeneric = loadGeneric;
-    this.loadWire = loadWire;
-
-
-    this.editBasicIO = editBasicIO;
-    this.editBasicConstant = editBasicConstant;
-
-
-    //-- New
+    }
 
     function newBasicIO(type, addCellCallback) {
       var config;
@@ -161,10 +161,14 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicCode(addCellCallback) {
+    function newBasicCode(addCellCallback, block) {
       var blockInstance = {
         id: null,
-        data: {},
+        data: {
+          code: '',
+          params: [],
+          ports: { in: [], out: [] }
+        },
         type: 'basic.code',
         position: { x: 31 * gridsize, y: 24 * gridsize }
       };
@@ -173,15 +177,29 @@ angular.module('icestudio')
         'c , d',
         ''
       ];
-      /*if (block && block.data) {
+      if (block) {
+        blockInstance = block;
+        var index;
         if (block.data.ports) {
-          defaultValues[0] = block.data.ports.in.join(' , ');
-          defaultValues[1] = block.data.ports.out.join(' , ');
+          var inPorts = [];
+          for (index in block.data.ports.in) {
+            inPorts.push(block.data.ports.in[index].label);
+          }
+          defaultValues[0] = inPorts.join(' , ');
+          var outPorts = [];
+          for (index in block.data.ports.out) {
+            outPorts.push(block.data.ports.out[index].label);
+          }
+          defaultValues[1] = outPorts.join(' , ');
         }
         if (block.data.params) {
-          defaultValues[2] = block.data.params.join(' , ');
+          var params = [];
+          for (index in block.data.params) {
+            params.push(block.data.params[index].label);
+          }
+          defaultValues[2] = params.join(' , ');
         }
-      }*/
+      }
       utils.multiprompt(
         [ gettextCatalog.getString('Enter the input ports'),
           gettextCatalog.getString('Enter the output ports'),
@@ -239,12 +257,8 @@ angular.module('icestudio')
             }
           }
           // Create ports
-          blockInstance.data = {
-            code: '',
-            params: [],
-            ports: { in: [], out: [] }
-          };
           var pins;
+          blockInstance.data.ports.in = [];
           for (i in inPortInfos) {
             if (inPortInfos[i]) {
               pins = getPins(inPortInfos[i]);
@@ -256,6 +270,7 @@ angular.module('icestudio')
               allNames.push(inPortInfos[i].name);
             }
           }
+          blockInstance.data.ports.out = [];
           for (o in outPortInfos) {
             if (outPortInfos[o]) {
               pins = getPins(outPortInfos[o]);
@@ -267,6 +282,7 @@ angular.module('icestudio')
               allNames.push(outPortInfos[o].name);
             }
           }
+          blockInstance.data.params = [];
           for (p in paramInfos) {
             if (paramInfos[p]) {
               blockInstance.data.params.push({
@@ -280,6 +296,7 @@ angular.module('icestudio')
           var numNames = allNames.length;
           if (numNames === $.unique(allNames).length) {
             evt.cancel = false;
+            // Create block
             if (addCellCallback) {
               addCellCallback(loadBasicCode(blockInstance));
             }
@@ -571,6 +588,23 @@ angular.module('icestudio')
 
     //-- Edit
 
+    function editBasic(type, cellView, addCellCallback) {
+      switch(type) {
+        case 'basic.input':
+        case 'basic.output':
+          editBasicIO(cellView, addCellCallback);
+          break;
+        case 'basic.constant':
+          editBasicConstant(cellView, addCellCallback);
+          break;
+        case 'basic.code':
+          editBasicCode(cellView, addCellCallback);
+          break;
+        default:
+          break;
+      }
+    }
+
     function editBasicIO(cellView, addCellCallback) {
       var block = cellView.model.attributes;
       utils.inputcheckboxprompt([
@@ -653,6 +687,23 @@ angular.module('icestudio')
             alertify.success(gettextCatalog.getString('Block updated'));
           }
       });
+    }
+
+    function editBasicCode(cellView, addCellCallback) {
+      var block = cellView.model.attributes;
+      var blockInstance = {
+        id: null,
+        data: block.data,
+        type: 'basic.code',
+        position: block.position
+      };
+      newBasicCode(function(cell) {
+        if (addCellCallback) {
+          addCellCallback(cell);
+          cellView.model.remove();
+          alertify.success(gettextCatalog.getString('Block updated'));
+        }
+      }, blockInstance);
     }
 
   });
