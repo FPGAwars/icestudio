@@ -16,7 +16,7 @@
           "type": "basic.constant",
           "data": {
             "label": "C",
-            "local": false,
+            "local": true,
             "value": "5"
           },
           "position": {
