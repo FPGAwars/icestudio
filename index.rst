@@ -2,7 +2,7 @@
 Welcome to icestudio's documentation!
 =====================================
 
-.. image:: resources/svg/icestudio-logo-label.svg
+.. image:: resources/images/icestudio-logo-label.svg
    :width: 400 px
 
 Contents
