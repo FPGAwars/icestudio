@@ -364,36 +364,56 @@ angular.module('icestudio')
     }
 
     function loadBasicInput(instance, disabled) {
+      var rightPorts = [{
+        id: 'out',
+        label: '',
+        size: instance.data.pins.length,
+        gridUnits: 8
+      }];
       var cell = new joint.shapes.ice.Input({
         id: instance.id,
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
         disabled: disabled,
+        rightPorts: rightPorts,
         choices: boards.getPinoutHTML()
       });
       return cell;
     }
 
     function loadBasicOutput(instance, disabled) {
+      var leftPorts = [{
+        id: 'in',
+        label: '',
+        size: instance.data.pins.length,
+        gridUnits: 8
+      }];
       var cell = new joint.shapes.ice.Output({
         id: instance.id,
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
         disabled: disabled,
+        leftPorts: leftPorts,
         choices: boards.getPinoutHTML()
       });
       return cell;
     }
 
     function loadBasicConstant(instance, disabled) {
+      var bottomPorts = [{
+        id: 'constant-out',
+        label: '',
+        gridUnits: 8
+      }];
       var cell = new joint.shapes.ice.Constant({
         id: instance.id,
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
-        disabled: disabled
+        disabled: disabled,
+        bottomPorts: bottomPorts
       });
       return cell;
     }
@@ -541,7 +561,6 @@ angular.module('icestudio')
       var cell = new joint.shapes.ice.Generic({
         id: instance.id,
         blockType: instance.type,
-        data: {},
         image: blockImage,
         label: blockLabel,
         position: instance.position,

@@ -234,12 +234,24 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
   updateBox: function() {
+    var port, wireWidth;
     var bbox = this.model.getBBox();
-    var state = this.model.attributes.state;
-    var pins = this.model.attributes.data.pins;
-    var wireWidth = (pins && pins.length > 1) ? 8 : 2;
+    var state = this.model.get('state');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
 
-    this.$('.port-wire').css('stroke-width', wireWidth * state.zoom);
+    // Render ports width
+    this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+    for (var i in leftPorts) {
+      port = leftPorts[i];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+    }
+    for (var o in rightPorts) {
+      port = rightPorts[o];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+    }
 
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
@@ -289,35 +301,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.find('img').addClass('hidden');
       this.$box.find('label').removeClass('hidden');
     }
-  },
-
-  updateBox: function() {
-    var port, wireWidth;
-    var bbox = this.model.getBBox();
-    var state = this.model.attributes.state;
-    var leftPorts = this.model.attributes.leftPorts;
-    var rightPorts = this.model.attributes.rightPorts;
-
-    // Render ports width
-    this.$('.port-wire').css('stroke-width', 2 * state.zoom);
-    for (var i in leftPorts) {
-      port = leftPorts[i];
-      wireWidth = (port.size > 1) ? 8 : 2;
-      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
-    }
-    for (var o in rightPorts) {
-      port = rightPorts[o];
-      wireWidth = (port.size > 1) ? 8 : 2;
-      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
-    }
-
-    this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
-      width: bbox.width,
-      height: bbox.height,
-      transform: 'scale(' + state.zoom + ')'
-    });
   }
 });
 
@@ -326,12 +309,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Input',
-    choices: [],
-    rightPorts: [{
-      id: 'out',
-      label: '',
-      gridUnits: 8
-    }],
     size: {
       width: 96,
       height: 64
@@ -342,12 +319,6 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
 joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Output',
-    choices: [],
-    leftPorts: [{
-      id: 'in',
-      label: '',
-      gridUnits: 8
-    }],
     size: {
       width: 96,
       height: 64
@@ -369,7 +340,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     var selectCode = '';
     var selectScript = '';
-    this.pins = this.model.attributes.data.pins;
+    this.pins = this.model.get('data').pins;
 
     if (this.pins) {
       for (var i in this.pins) {
@@ -499,11 +470,6 @@ joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Constant',
-    bottomPorts: [{
-      id: 'constant-out',
-      label: '',
-      gridUnits: 8
-    }],
     size: {
       width: 96,
       height: 64
@@ -543,7 +509,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
   },
 
   renderLabel: function () {
-    var name = this.model.attributes.data.label;
+    var name = this.model.get('data').label;
     this.$box.find('label').text(name);
   },
 
@@ -631,8 +597,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#' + editorLabel).append(this.model.attributes.data.code);
-    this.$box.find('#' + contentLabel).append(this.model.attributes.data.code);
+    this.$box.find('#' + editorLabel).append(this.model.get('data').code);
+    this.$box.find('#' + contentLabel).append(this.model.get('data').code);
   },
 
   renderValue: function() {
@@ -651,20 +617,21 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   updateBox: function() {
     var port, wireWidth;
     var bbox = this.model.getBBox();
-    var state = this.model.attributes.state;
-    var data = this.model.attributes.data;
+    var state = this.model.get('state');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
 
     // Render ports width
     this.$('.port-wire').css('stroke-width', 2 * state.zoom);
-    for (var i in data.ports.in) {
-      port = data.ports.in[i];
+    for (var i in leftPorts) {
+      port = leftPorts[i];
       wireWidth = (port.size > 1) ? 8 : 2;
-      this.$('#port-wire-' + port.name).css('stroke-width', wireWidth * state.zoom);
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
     }
-    for (var o in data.ports.out) {
-      port = data.ports.out[o];
+    for (var o in rightPorts) {
+      port = rightPorts[o];
       wireWidth = (port.size > 1) ? 8 : 2;
-      this.$('#port-wire-' + port.name).css('stroke-width', wireWidth * state.zoom);
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
     }
 
     this.$box.css({ width: bbox.width * state.zoom,
@@ -738,8 +705,8 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
-    this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
+    this.$box.find('#' + editorLabel).append(this.model.get('data').info);
+    this.$box.find('#' + contentLabel).append(this.model.get('data').info);
   },
 
   render: function () {
@@ -759,7 +726,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
 
   updateBox: function() {
     var bbox = this.model.getBBox();
-    var state = this.model.attributes.state;
+    var state = this.model.get('state');
 
     this.$box.css({ width: bbox.width * state.zoom,
                     height: bbox.height * state.zoom,
@@ -841,34 +808,22 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
     var self = this;
     setTimeout(function() {
-      var portName = self.model.attributes.source.port;
-      var dataSource = self.sourceView.model.attributes.data;
-      var rightPorts = self.sourceView.model.attributes.rightPorts;
+      var portName = self.model.get('source').port;
+      var rightPorts = self.sourceView.model.get('rightPorts');
 
       // Initialize wire properties
-      var size;
-      if (dataSource.pins) {
-        // I/O port block
-        size = dataSource.pins.length;
-      }
-      else {
-        // Code/Generic block
-        var port;
-        for (var o in rightPorts) {
-          port = rightPorts[o];
-          if (portName === port.id) {
-            size = port.size;
-            break;
-          }
+      var port;
+      for (var o in rightPorts) {
+        port = rightPorts[o];
+        if (portName === port.id) {
+          self.model.attributes.size = port.size; // For wire size connection validation
+          self.$('.connection').css('stroke-width', (port.size > 1) ? 8 : 2);
+          self.model.label(0, {attrs: { text: { text: (port.size > 1) ? '' + port.size + '' : '' } } });
+          self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, (port.size > 1) ? 8 : 4);
+          self.update();
+          break;
         }
       }
-      if (size) {
-        self.model.attributes.size = size; // For wire size connection validation
-        self.$('.connection').css('stroke-width', (size > 1) ? 8 : 2);
-        self.model.label(0, {attrs: { text: { text: (size > 1) ? '' + size + '' : '' } } });
-        self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, (size > 1) ? 8 : 4);
-      }
-      self.update();
     }, 0);
   },
 
@@ -940,15 +895,17 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       // Find all the wires in the same port
       var portWires = [];
       _.each(allWires, function(wire) {
-        if ((wire.attributes.source.id === currentWire.attributes.source.id) &&
-            (wire.attributes.source.port === currentWire.attributes.source.port))
+        var wireSource = wire.get('source');
+        var cwireSource = currentWire.get('source');
+        if ((wireSource.id === cwireSource.id) &&
+            (wireSource.port === cwireSource.port))
         {
           // Wire with the same source of currentWire
           var wireView = self.paper.findViewByModel(wire);
           // Clean the wire bifurcations
           var markerBifurcations = $(wireView._V.markerBifurcations.node).empty();
           portWires.push({
-            id: wire.attributes.id,
+            id: wire.get('id'),
             view: wireView,
             markers: markerBifurcations
           });

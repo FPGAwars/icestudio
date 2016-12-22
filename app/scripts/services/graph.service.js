@@ -153,22 +153,13 @@ angular.module('icestudio')
           // Prevent different size connections
           var tsize;
           var lsize = linkView.model.attributes.size;
-          var tdata = cellViewT.model.attributes.data;
-          var tLeftPorts = cellViewT.model.attributes.leftPorts;
           var portId = magnetT.getAttribute('port');
-          if (tdata.pins) {
-            // I/O port block
-            tsize = tdata.pins ? tdata.pins.length : 1;
-          }
-          else {
-            // Code/Generic block
-            var port;
-            for (i in tLeftPorts) {
-              port = tLeftPorts[i];
-              if (portId === port.id) {
-                tsize = port.size;
-                break;
-              }
+          var tLeftPorts = cellViewT.model.attributes.leftPorts;
+          for (i in tLeftPorts) {
+            var port = tLeftPorts[i];
+            if (portId === port.id) {
+              tsize = port.size;
+              break;
             }
           }
           tsize = tsize || 1;
