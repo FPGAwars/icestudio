@@ -106,11 +106,11 @@ angular.module('icestudio')
       var pins = [];
       if (portInfo.range) {
         for (var r in portInfo.range) {
-          pins.push({ index: portInfo.range[r].toString(), name: '', value: 0 });
+          pins.push({ index: portInfo.range[r].toString(), name: '', value: '0' });
         }
       }
       else {
-        pins.push({ index: '0', name: '', value: 0 });
+        pins.push({ index: '0', name: '', value: '0' });
       }
       return pins;
     }
@@ -224,7 +224,7 @@ angular.module('icestudio')
           for (i in inPorts) {
             if (inPorts[i]) {
               inPortInfo = utils.parsePortLabel(inPorts[i]);
-              if (inPortInfo) {
+              if (inPortInfo && inPortInfo.name) {
                 evt.cancel = false;
                 inPortInfos.push(inPortInfo);
               }
@@ -239,7 +239,7 @@ angular.module('icestudio')
           for (o in outPorts) {
             if (outPorts[o]) {
               outPortInfo = utils.parsePortLabel(outPorts[o]);
-              if (outPortInfo) {
+              if (outPortInfo && outPortInfo.name) {
                 evt.cancel = false;
                 outPortInfos.push(outPortInfo);
               }

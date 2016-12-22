@@ -80,20 +80,53 @@ angular.module('icestudio')
           project = data;
           break;
         default:
-          var blocks = data.graph.blocks;
-          for (var b in blocks) {
-            var block = blocks[b];
-            if (block.type === 'basic.input' ||
-                block.type === 'basic.output') {
-              block.data.name = block.data.label;
-              block.data.range = '';
-              block.data.pins = [{
-                index: '0',
-                name: block.data.pin ? block.data.pin.name : '',
-                value: block.data.pin ? block.data.pin.value : 0
-              }];
-              block.data.virtual = false;
-              delete block.data.pin;
+          for (var b in data.graph.blocks) {
+            var block = data.graph.blocks[b];
+            switch(block.type) {
+              case 'basic.input':
+              case 'basic.output':
+                block.data = {
+                  name: block.data.label,
+                  pins: [{
+                    index: '0',
+                    name: '',
+                    value: '0'
+                  }],
+                  virtual: false
+                };
+                break;
+              case 'basic.constant':
+                block.data = {
+                  name: block.data.label,
+                  value: block.data.value,
+                  local: false
+                };
+                break;
+              case 'basic.code':
+                var params = [];
+                for (var p in block.data.params) {
+                  params.push({
+                    name: block.data.params[p]
+                  });
+                }
+                block.data.params = params;
+                var inPorts = [];
+                for (var i in block.data.ports.in) {
+                  params.push({
+                    name: block.data.ports.in[i],
+                    size: 1
+                  });
+                }
+                block.data.ports.in = inPorts;
+                var outPorts = [];
+                for (var o in block.data.ports.out) {
+                  params.push({
+                    name: block.data.ports.out[o],
+                    size: 1
+                  });
+                }
+                block.data.ports.out = outPorts;
+                break;
             }
           }
           project = _default();
