@@ -390,8 +390,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   renderBlock: function() {
     var virtualPortId = '#virtualPort' + this.id;
     var fpgaPortId = '#fpgaPort' + this.id;
-    var name = this.model.get('data').label;
-    var virtual = this.model.get('data').virtual || this.model.get('disabled');
+    var data = this.model.get('data');
+    var name = data.name + (data.range ? data.range : '');
+    var virtual = data.virtual || this.model.get('disabled');
 
     this.$box.find('label').text(name ? name : ' ');
 
@@ -509,7 +510,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
   },
 
   renderLabel: function () {
-    var name = this.model.get('data').label;
+    var name = this.model.get('data').name;
     this.$box.find('label').text(name);
   },
 

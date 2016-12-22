@@ -78,15 +78,18 @@ angular.module('icestudio')
                 return;
               }
             }
+            else {
+              evt.cancel = true;
+              //return;
+            }
           }
           // Create blocks
           for (var p in portInfos) {
             portInfo = portInfos[p];
             var pins = getPins(portInfo);
             blockInstance.data = {
-              label: portInfo.input,
               name: portInfo.name,
-              range: portInfo.rangestr ? portInfo.rangestr : '',
+              range: portInfo.rangestr,
               pins: pins,
               virtual: virtual
             };
@@ -144,14 +147,18 @@ angular.module('icestudio')
                 return;
               }
             }
+            else {
+              evt.cancel = true;
+              //return;
+            }
           }
           // Create blocks
           for (var p in paramInfos) {
             paramInfo = paramInfos[p];
             blockInstance.data = {
-              label: paramInfo.input,
-              local: local,
-              value: ''
+              name: paramInfo.name,
+              value: '',
+              local: local
             };
             if (addCellCallback) {
               addCellCallback(loadBasicConstant(blockInstance));
@@ -179,23 +186,25 @@ angular.module('icestudio')
       ];
       if (block) {
         blockInstance = block;
-        var index;
+        var index, port;
         if (block.data.ports) {
           var inPorts = [];
           for (index in block.data.ports.in) {
-            inPorts.push(block.data.ports.in[index].label);
+            port = block.data.ports.in[index];
+            inPorts.push(port.name + (port.range ? port.range : ''));
           }
           defaultValues[0] = inPorts.join(' , ');
           var outPorts = [];
           for (index in block.data.ports.out) {
-            outPorts.push(block.data.ports.out[index].label);
+            port = block.data.ports.out[index];
+            outPorts.push(port.name + (port.range ? port.range : ''));
           }
           defaultValues[1] = outPorts.join(' , ');
         }
         if (block.data.params) {
           var params = [];
           for (index in block.data.params) {
-            params.push(block.data.params[index].label);
+            params.push(block.data.params[index].name);
           }
           defaultValues[2] = params.join(' , ');
         }
@@ -263,7 +272,6 @@ angular.module('icestudio')
             if (inPortInfos[i]) {
               pins = getPins(inPortInfos[i]);
               blockInstance.data.ports.in.push({
-                label: inPortInfos[i].input,
                 name: inPortInfos[i].name,
                 range: inPortInfos[i].rangestr,
                 size: pins.length
@@ -276,7 +284,6 @@ angular.module('icestudio')
             if (outPortInfos[o]) {
               pins = getPins(outPortInfos[o]);
               blockInstance.data.ports.out.push({
-                label: outPortInfos[o].input,
                 name: outPortInfos[o].name,
                 range: outPortInfos[o].rangestr,
                 size: pins.length
@@ -288,7 +295,6 @@ angular.module('icestudio')
           for (p in paramInfos) {
             if (paramInfos[p]) {
               blockInstance.data.params.push({
-                label: paramInfos[p].input,
                 name: paramInfos[p].name
               });
               allNames.push(paramInfos[p].name);
@@ -419,32 +425,36 @@ angular.module('icestudio')
     }
 
     function loadBasicCode(instance, disabled) {
+      var port;
       var leftPorts = [];
       var rightPorts = [];
       var topPorts = [];
 
       for (var i in instance.data.ports.in) {
+        port = instance.data.ports.in[i];
         leftPorts.push({
-          id: instance.data.ports.in[i].name,
-          label: instance.data.ports.in[i].label,
-          size: instance.data.ports.in[i].size,
+          id: port.name,
+          label: port.name + (port.range ? port.range : ''),
+          size: port.size,
           gridUnits: 32
         });
       }
 
       for (var o in instance.data.ports.out) {
+        port = instance.data.ports.out[o];
         rightPorts.push({
-          id: instance.data.ports.out[o].name,
-          label: instance.data.ports.out[o].label,
-          size: instance.data.ports.out[o].size,
+          id: port.name,
+          label: port.name + (port.range ? port.range : ''),
+          size: port.size,
           gridUnits: 32
         });
       }
 
       for (var p in instance.data.params) {
+        port = instance.data.params[p];
         topPorts.push({
-          id: instance.data.params[p].name,
-          label: instance.data.params[p].label,
+          id: port.name,
+          label: port.name,
           gridUnits: 48
         });
       }
@@ -486,14 +496,14 @@ angular.module('icestudio')
         if (item.type === 'basic.input') {
           leftPorts.push({
             id: item.id,
-            label: item.data.label,
+            label: item.data.name + (item.data.range ? item.data.range : ''),
             size: block.design.graph.blocks[i].data.pins.length
           });
         }
         else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
-            label: item.data.label,
+            label: item.data.name + (item.data.range ? item.data.range : ''),
             size: block.design.graph.blocks[i].data.pins.length
           });
         }
@@ -501,7 +511,7 @@ angular.module('icestudio')
           if (!item.data.local) {
             topPorts.push({
               id: item.id,
-              label: item.data.label
+              label: item.data.name
             });
           }
         }
@@ -634,7 +644,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Update the port'),
         gettextCatalog.getString('Virtual port')
       ], [
-        block.data.label,
+        block.data.name + (block.data.range ? block.data.range : ''),
         block.data.virtual
       ],
         function(evt, values) {
@@ -644,20 +654,14 @@ angular.module('icestudio')
           var portInfo = utils.parsePortLabel(label);
           if (portInfo) {
             evt.cancel = false;
-            if (!block.data.range) {
-              block.data.range = '';
-            }
-            if (!portInfo.rangestr) {
-              portInfo.rangestr = '';
-            }
-            if (block.data.range !== portInfo.rangestr) {
+            if ((block.data.range ? block.data.range : '') !==
+                (portInfo.rangestr ? portInfo.rangestr : '')) {
               // Create new block
               var blockInstance = {
                 id: null,
                 data: {
-                  label: portInfo.input,
                   name: portInfo.name,
-                  range: portInfo.rangestr ? portInfo.rangestr : '',
+                  range: portInfo.rangestr,
                   pins: getPins(portInfo),
                   virtual: virtual
                 },
@@ -673,7 +677,6 @@ angular.module('icestudio')
             else if (block.data.name !== portInfo.name ||
                      block.data.virtual !== virtual) {
               // Edit block
-              block.data.label = portInfo.input;
               block.data.name = portInfo.name;
               block.data.virtual = virtual;
               cellView.render();
@@ -693,17 +696,17 @@ angular.module('icestudio')
         gettextCatalog.getString('Update the block label'),
         gettextCatalog.getString('Local parameter')
       ], [
-        block.data.label,
+        block.data.name,
         block.data.local
       ],
         function(evt, values) {
-          var label = values[0].replace(/ /g, '');
+          var name = values[0].replace(/ /g, '');
           var local = values[1];
           // Edit block
-          if (block.data.name !== label ||
+          if (block.data.name !== name ||
               block.data.local !== local) {
             // Edit block
-            block.data.label = label;
+            block.data.name = name;
             block.data.local = local;
             cellView.renderLabel();
             cellView.renderLocal();
