@@ -17,19 +17,9 @@ Supported boards:
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
 * [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
-## Version 0.2.3
+## Version 0.3.0-beta
 
-### Installation
-
-1. Install [Python 2.7](https://www.python.org)
-
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unzip and execute **icestudio**
-
-**Documentation: http://icestudio.readthedocs.io**
-
-Supported on Linux, Windows and Mac OSX.
-
-<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
+If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
 
 ## Development
 
@@ -95,6 +85,19 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
  We use the GitHub issues to schedule our new features and improvements.
 
+## Version 0.2.3 (stable)
+
+### Installation
+
+1. Install [Python 2.7](https://www.python.org)
+
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unzip and execute **icestudio**
+
+**Documentation: http://icestudio.readthedocs.io**
+
+Supported on Linux, Windows and Mac OSX.
+
+<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
 
 ## Version 0.1
 
