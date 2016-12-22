@@ -13,6 +13,6 @@ Contents
 
    source/gui
    source/howto
-   source/blocks
    source/project
+   source/blocks
    source/compiler

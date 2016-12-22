@@ -6,62 +6,126 @@ Project
 Definition
 ----------
 
-A project is a composition of blocks. It includes the FPGA board information.
-
-Its *input* and *output* block instances have also the FPGA I/O values to allow the synthesis.
-
-It can be exported as a block, by removing the FPGA board and I/O data.
+* Version: 1.0
+* Package: project information
+* Design: board information and circuit design
 
 Extension: **.ice**
 
 .. code-block:: json
 
- {
-   "board": "",
-   "graph": {
-     "blocks" : [],
-     "wires": []
-   },
-   "deps" : {},
-   "image": "",
-   "state": {
-     "pan": {
-       "x": 0,
-       "y": 0
-     },
-     "zoom": 1
-   }
- }
+    {
+      "version": "1.0",
+      "package": {
+        "name": "",
+        "version": "",
+        "description": "",
+        "author": "",
+        "image": ""
+      },
+      "design": {
+        "board": "",
+        "graph": {
+          "blocks": [],
+          "wires": []
+        },
+        "dependencies": {},
+        "state": {
+          "pan": {
+            "x": 0,
+            "y": 0
+          },
+          "zoom": 1
+        }
+      }
+    }
 
-Examples
---------
+Block instances
+'''''''''''''''
 
-Low project
+.. code-block:: json
+
+    {
+      "id": "",
+      "type": "",
+      "data": {},
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+
+
+Wire instances
+''''''''''''''
+
+Wire
+~~~~
+
+.. code-block:: json
+
+    {
+      "source": {
+        "block": "",
+        "port": ""
+      },
+      "target": {
+        "block": "",
+        "port": ""
+      },
+      "vertices": [
+        {
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+
+Bus
+~~~
+
+.. code-block:: json
+
+    {
+      "source": {
+        "block": "",
+        "port": ""
+      },
+      "target": {
+        "block": "",
+        "port": ""
+      },
+      "vertices": [
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "size": 2
+    }
+
+Project information
+-------------------
+
+* Name
+* Version
+* Description
+* Author
+* Image
+
+.. image:: ../resources/images/project/information.png
+
+Samples
+-------
+
+1. in-out
 ```````````
 
-.. image:: ../resources/images/low-project.png
-
-File: **low.ice**
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../resources/examples/low/low.ice
-       :language: json
+.. image:: ../resources/images/project/1-in-out.png
 
 |
 
-Not project
-```````````
-
-.. image:: ../resources/images/not-project.png
-
-File: **not.ice**
+File: **in-out.ice**
 
 .. container:: toggle
 
@@ -71,67 +135,7 @@ File: **not.ice**
 
     |
 
-    .. literalinclude:: ../resources/examples/not/not.ice
-       :language: json
-
-|
-
-Or project
-``````````
-
-.. image:: ../resources/images/or-project.png
-
-File: **or.ice**
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../resources/examples/or/or.ice
-       :language: json
-
-|
-
-Cnot project
-````````````
-
-.. image:: ../resources/images/cnot-project.png
-
-File: **cnot.ice**
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../resources/examples/cnot/cnot.ice
-       :language: json
-
-|
-
-Dnot project
-````````````
-
-.. image:: ../resources/images/dnot-project.png
-
-File: **dnot.ice**
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../resources/examples/dnot/dnot.ice
+    .. literalinclude:: ../resources/samples/1-in-out.ice
        :language: json
 
 |
