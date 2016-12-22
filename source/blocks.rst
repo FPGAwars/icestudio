@@ -79,7 +79,7 @@ E.g.: basic input block with value *in[1:0]*
     }
 
 Output block
-```````````
+````````````
 
 * Type: ``basic.output``
 * States:
@@ -227,11 +227,11 @@ Any project can be added as a read-only **generic block**:
 * The *output blocks* become *output ports*
 * The *constant blocks* become *parameters*
 
-E.g.: this project
+E.g.: this project *block.ice*
 
 .. image:: ../resources/images/blocks/generic-project.png
 
-Becomes into this block
+becomes this block
 
 .. image:: ../resources/images/blocks/generic-block.png
 
@@ -243,7 +243,7 @@ Becomes into this block
 
     |
 
-    .. literalinclude:: ../resources/samples/generic.ice
+    .. literalinclude:: ../resources/samples/block.ice
        :language: json
 
 |
