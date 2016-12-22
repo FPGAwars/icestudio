@@ -6,7 +6,7 @@ Blocks
 Definition
 ----------
 
-A block is an entity with *input* and *output* ports and some content.
+A block is an entity with *input* and *output* ports, parameters and some content.
 
   .. image:: ../resources/images/blocks/definition.png
 

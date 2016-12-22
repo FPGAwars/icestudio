@@ -3,7 +3,7 @@
 GUI
 ===
 
-.. image:: ../resources/images/gui.png
+.. image:: ../resources/images/gui/main.png
 
 Source code: https://github.com/fpgawars/icestudio
 
@@ -139,7 +139,7 @@ Pan & Zoom
 
 Pan is performed using the **mouse left button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *View > Reset view*.
 
-.. image:: ../resources/images/gui-pan-zoom.png
+.. image:: ../resources/images/gui/pan-zoom.png
 
 
 Select
@@ -147,7 +147,7 @@ Select
 
 Block selection is performed using the **mouse right button**. Blocks can be selected/unselected individually using right-click/Ctrl+right-click, respectively. In addition, several blocks can be selected by a selection box. Selection is cancelled when the background is clicked.
 
-.. image:: ../resources/images/gui-select.png
+.. image:: ../resources/images/gui/select.png
 
 
 Blocks examination
@@ -157,7 +157,7 @@ Non-basic blocks can be read only examined by **double clicking** the block usin
 
 During the examination, pan, zoom and code navigation are enabled.
 
-.. image:: ../resources/images/gui-examination.png
+.. image:: ../resources/images/gui/examination.png
 
 .. note::
 

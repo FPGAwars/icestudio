@@ -111,7 +111,7 @@ Project information
 * Version
 * Description
 * Author
-* Image
+* Image (SVG)
 
 .. image:: ../resources/images/project/information.png
 
