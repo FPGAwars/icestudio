@@ -35,7 +35,6 @@ E.g.: basic input block with value *in*
 
    {
      "data": {
-       "label": "in",
        "name": "in",
        "pins": [
          {
@@ -61,7 +60,6 @@ E.g.: basic input block with value *in[1:0]*
 
     {
       "data": {
-        "label": "in[1:0]",
         "name": "in",
         "range": "[1:0]",
         "pins": [
@@ -100,7 +98,6 @@ E.g.: basic output block with value *out*
 
    {
      "data": {
-       "label": "out",
        "name": "out",
        "pins": [
          {
@@ -124,7 +121,6 @@ E.g.: basic output block with value *out[1:0]*
 
     {
       "data": {
-        "label": "out[1:0]",
         "name": "out",
         "range": "[1:0]",
         "pins": [
@@ -159,10 +155,9 @@ E.g.: basic constant block with value *C*
 
    {
      "data": {
-       "label": "C",
        "name": "C",
        "value": "4'b1001",
-       "local": true,
+       "local": true
      }
    }
 
@@ -182,24 +177,21 @@ E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters 
        "code": "reg [3:0] b_aux;\n\nalways @(a)\nbegin\n  if (a == 1)\n    b_aux = C;\n  else\n    b_aux = D;\nend\n\nassign b = b_aux;\n",
        "params": [
          {
-           "label": "C",
            "name": "C"
          },
          {
-           "label": "D",
            "name": "D"
          }
        ],
       "ports": {
         "in": [
           {
-            "label": "a",
-            "name": "a"
+            "name": "a",
+            "size": 1
           }
         ],
         "out": [
           {
-            "label": "b[3:0]",
             "name": "b",
             "range": "[3:0]",
             "size": 4
