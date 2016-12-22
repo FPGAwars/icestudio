@@ -89,8 +89,8 @@ angular.module('icestudio')
                   name: block.data.label,
                   pins: [{
                     index: '0',
-                    name: '',
-                    value: '0'
+                    name: block.data.pin ? block.data.pin.name : '',
+                    value: block.data.pin? block.data.pin.value : '0'
                   }],
                   virtual: false
                 };
@@ -109,23 +109,29 @@ angular.module('icestudio')
                     name: block.data.params[p]
                   });
                 }
-                block.data.params = params;
                 var inPorts = [];
                 for (var i in block.data.ports.in) {
-                  params.push({
+                  inPorts.push({
                     name: block.data.ports.in[i],
                     size: 1
                   });
                 }
-                block.data.ports.in = inPorts;
+
                 var outPorts = [];
                 for (var o in block.data.ports.out) {
-                  params.push({
+                  outPorts.push({
                     name: block.data.ports.out[o],
                     size: 1
                   });
                 }
-                block.data.ports.out = outPorts;
+                block.data = {
+                  code: block.data.code,
+                  params: params,
+                  ports: {
+                    in: inPorts,
+                    out: outPorts
+                  }
+                };
                 break;
             }
           }

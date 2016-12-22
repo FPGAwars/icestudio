@@ -15,11 +15,19 @@
           "id": "91e2ff2d-2430-41e5-9d21-bc9ec4082aaa",
           "type": "basic.output",
           "data": {
-            "label": "o0"
+            "name": "o0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 760,
-            "y": 40
+            "x": 800,
+            "y": 64
           }
         },
         {
@@ -27,89 +35,159 @@
           "type": "basic.code",
           "data": {
             "code": "assign {out3,out2,out1,out0} = in0 << {sel1,sel0};",
+            "params": [],
             "ports": {
               "in": [
-                "in0",
-                "sel0",
-                "sel1"
+                {
+                  "name": "in0",
+                  "size": 1
+                },
+                {
+                  "name": "sel0",
+                  "size": 1
+                },
+                {
+                  "name": "sel1",
+                  "size": 1
+                }
               ],
               "out": [
-                "out0",
-                "out1",
-                "out2",
-                "out3"
+                {
+                  "name": "out0",
+                  "size": 1
+                },
+                {
+                  "name": "out1",
+                  "size": 1
+                },
+                {
+                  "name": "out2",
+                  "size": 1
+                },
+                {
+                  "name": "out3",
+                  "size": 1
+                }
               ]
             }
           },
           "position": {
-            "x": 208,
-            "y": 64
+            "x": 248,
+            "y": 88
           }
         },
         {
           "id": "5fc9a8e9-d463-4c1f-b6a3-185d5cabb406",
           "type": "basic.input",
           "data": {
-            "label": "i"
+            "name": "i",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 72
+            "x": 56,
+            "y": 96
           }
         },
         {
           "id": "c6dc7002-dfc0-45fd-88e2-b5e5a75231f2",
           "type": "basic.output",
           "data": {
-            "label": "o1"
+            "name": "o1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 760,
-            "y": 120
+            "x": 800,
+            "y": 144
           }
         },
         {
           "id": "75cafe5a-1968-49ed-9e05-70d1bc3fbd0f",
           "type": "basic.input",
           "data": {
-            "label": "sel0"
+            "name": "sel0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 160
+            "x": 56,
+            "y": 184
           }
         },
         {
           "id": "5e246f93-51ad-4d6f-83f1-4fcce69c5ae3",
           "type": "basic.output",
           "data": {
-            "label": "o2"
+            "name": "o2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 760,
-            "y": 200
+            "x": 800,
+            "y": 224
           }
         },
         {
           "id": "657dab9e-6580-4f02-b54f-66477863f26a",
           "type": "basic.input",
           "data": {
-            "label": "sel1"
+            "name": "sel1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 248
+            "x": 56,
+            "y": 272
           }
         },
         {
           "id": "b9d764ea-538a-420f-a8d3-45af7a8e30a2",
           "type": "basic.output",
           "data": {
-            "label": "o3"
+            "name": "o3",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 760,
-            "y": 280
+            "x": 800,
+            "y": 304
           }
         }
       ],
@@ -189,10 +267,10 @@
     "deps": {},
     "state": {
       "pan": {
-        "x": 75.84442855228853,
-        "y": 63.15803102316195
+        "x": 11.176135344899718,
+        "y": 3.2150526334643024
       },
-      "zoom": 0.8586960434913635
+      "zoom": 0.9234510996506167
     }
   }
 }

@@ -16,12 +16,19 @@
           "type": "basic.code",
           "data": {
             "code": "// Pull up\n\nwire din, dout, outen;\n\nassign o = din;\n\nSB_IO #(\n    .PIN_TYPE(6'b 1010_01),\n    .PULLUP(1'b 1)\n) io_pin (\n    .PACKAGE_PIN(i),\n    .OUTPUT_ENABLE(outen),\n    .D_OUT_0(dout),\n    .D_IN_0(din)\n);",
+            "params": [],
             "ports": {
               "in": [
-                "i"
+                {
+                  "name": "i",
+                  "size": 1
+                }
               ],
               "out": [
-                "o"
+                {
+                  "name": "o",
+                  "size": 1
+                }
               ]
             }
           },
@@ -34,7 +41,15 @@
           "id": "bb4a1ca9-1b30-471e-92ca-ca7ff2fc1150",
           "type": "basic.input",
           "data": {
-            "label": ""
+            "name": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 64,
@@ -45,7 +60,15 @@
           "id": "a139fa0d-9b45-4480-a251-f4a66b49aa23",
           "type": "basic.output",
           "data": {
-            "label": ""
+            "name": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 760,
@@ -79,8 +102,8 @@
     "deps": {},
     "state": {
       "pan": {
-        "x": -23,
-        "y": 8
+        "x": 0,
+        "y": 0
       },
       "zoom": 1
     }

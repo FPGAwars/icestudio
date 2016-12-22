@@ -15,7 +15,15 @@
           "id": "b32a6101-5bd1-4bcf-ae5f-e569b958a6a2",
           "type": "basic.input",
           "data": {
-            "label": "D"
+            "name": "D",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 168,
@@ -27,16 +35,35 @@
           "type": "basic.code",
           "data": {
             "code": "// D flip-flop with asynchronous reset\n\nreg _q = 1'b0;\n\nalways @(posedge clk or negedge rst_n)\nbegin\n    if(rst_n == 0)\n        _q = 1'b0;\n    else if(en)\n        _q <= d;\nend\n\nassign {q, q_n} = {_q, ~_q};\n",
+            "params": [],
             "ports": {
               "in": [
-                "d",
-                "en",
-                "rst_n",
-                "clk"
+                {
+                  "name": "d",
+                  "size": 1
+                },
+                {
+                  "name": "en",
+                  "size": 1
+                },
+                {
+                  "name": "rst_n",
+                  "size": 1
+                },
+                {
+                  "name": "clk",
+                  "size": 1
+                }
               ],
               "out": [
-                "q",
-                "q_n"
+                {
+                  "name": "q",
+                  "size": 1
+                },
+                {
+                  "name": "q_n",
+                  "size": 1
+                }
               ]
             }
           },
@@ -49,7 +76,15 @@
           "id": "ffdd9aa2-aea3-4aa9-8431-80e799226774",
           "type": "basic.output",
           "data": {
-            "label": "Q"
+            "name": "Q",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 824,
@@ -60,7 +95,15 @@
           "id": "50d69ac2-949d-476e-a711-420ba9f510cd",
           "type": "basic.input",
           "data": {
-            "label": "en"
+            "name": "en",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 168,
@@ -71,7 +114,15 @@
           "id": "07105e68-401b-49e9-b85f-2cddbfee9fbe",
           "type": "basic.input",
           "data": {
-            "label": "rst*"
+            "name": "rst*",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 168,
@@ -82,7 +133,15 @@
           "id": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
           "type": "basic.output",
           "data": {
-            "label": "Q*"
+            "name": "Q*",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 824,
@@ -93,7 +152,15 @@
           "id": "6855f64f-fa1c-4371-b2e1-a98970674a96",
           "type": "basic.input",
           "data": {
-            "label": "clk"
+            "name": "clk",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 168,
@@ -170,7 +237,7 @@
         "x": -100,
         "y": 0
       },
-      "zoom": 1.0000000596046377
+      "zoom": 1
     }
   }
 }

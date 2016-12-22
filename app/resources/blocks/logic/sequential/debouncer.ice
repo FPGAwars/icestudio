@@ -16,52 +16,86 @@
           "type": "basic.code",
           "data": {
             "code": "//-- Debouncer Circuit\n//-- It produces a stable output when the\n//-- input signal is bouncing\n\nreg btn_prev = 0;\nreg btn_out_r = 0;\n\nreg [16:0] counter = 0;\n\n\nalways @(posedge clk) begin\n\n  //-- If btn_prev and btn_in are differents\n  if (btn_prev ^ in == 1'b1) begin\n    \n      //-- Reset the counter\n      counter <= 0;\n      \n      //-- Capture the button status\n      btn_prev <= in;\n  end\n    \n  //-- If no timeout, increase the counter\n  else if (counter[16] == 1'b0)\n      counter <= counter + 1;\n      \n  else\n    //-- Set the output to the stable value\n    btn_out_r <= btn_prev;\n\nend\n\nassign out = btn_out_r;\n",
+            "params": [],
             "ports": {
               "in": [
-                "clk",
-                "in"
+                {
+                  "name": "clk",
+                  "size": 1
+                },
+                {
+                  "name": "in",
+                  "size": 1
+                }
               ],
               "out": [
-                "out"
+                {
+                  "name": "out",
+                  "size": 1
+                }
               ]
             }
           },
           "position": {
-            "x": 368,
-            "y": 120
+            "x": 264,
+            "y": 112
           }
         },
         {
           "id": "4bf41c17-a2da-4140-95f7-2a80d51b1e1a",
           "type": "basic.input",
           "data": {
-            "label": "clk"
+            "name": "clk",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 152,
-            "y": 152
+            "x": 48,
+            "y": 144
           }
         },
         {
           "id": "22ff3fa1-943b-4d1a-bd89-36e1c054d077",
           "type": "basic.output",
           "data": {
-            "label": "out"
+            "name": "out",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 872,
-            "y": 216
+            "x": 768,
+            "y": 208
           }
         },
         {
           "id": "c9e1af2a-6f09-4cf6-a5b3-fdf7ec2c6530",
           "type": "basic.input",
           "data": {
-            "label": "in"
+            "name": "in",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 152,
-            "y": 280
+            "x": 48,
+            "y": 272
           }
         }
       ],
@@ -104,7 +138,7 @@
         "x": 0,
         "y": 0
       },
-      "zoom": 0.9999999623653131
+      "zoom": 1
     }
   }
 }

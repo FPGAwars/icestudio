@@ -16,14 +16,27 @@
           "type": "basic.code",
           "data": {
             "code": "  SB_IO #(\n      .PIN_TYPE(6'b1010_01),\n      .PULLUP(1'b0)\n  ) triState (\n      .PACKAGE_PIN(pin),\n      .OUTPUT_ENABLE(oe),\n      .D_OUT_0(din),\n      .D_IN_0(dout)\n  );",
+            "params": [],
             "ports": {
               "in": [
-                "pin",
-                "oe",
-                "din"
+                {
+                  "name": "pin",
+                  "size": 1
+                },
+                {
+                  "name": "oe",
+                  "size": 1
+                },
+                {
+                  "name": "din",
+                  "size": 1
+                }
               ],
               "out": [
-                "dout"
+                {
+                  "name": "dout",
+                  "size": 1
+                }
               ]
             }
           },
@@ -36,7 +49,15 @@
           "id": "076fd025-aa42-4f23-ae97-b65aec2298ce",
           "type": "basic.input",
           "data": {
-            "label": "pin"
+            "name": "pin",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 32,
@@ -47,7 +68,15 @@
           "id": "f96a1baf-fc8b-4c25-b132-12552605743f",
           "type": "basic.input",
           "data": {
-            "label": "oe"
+            "name": "oe",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 32,
@@ -58,7 +87,15 @@
           "id": "0b2a85b3-b6ac-4e8a-8b16-dd5a195fb058",
           "type": "basic.output",
           "data": {
-            "label": "dout"
+            "name": "dout",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 760,
@@ -69,7 +106,15 @@
           "id": "04fdb7a7-2740-4ff1-ad26-56407ef5b958",
           "type": "basic.input",
           "data": {
-            "label": "din"
+            "name": "din",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 32,

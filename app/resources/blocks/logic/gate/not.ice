@@ -16,12 +16,19 @@
           "type": "basic.code",
           "data": {
             "code": "// NOT logic gate\n\nassign c = ~ a;",
+            "params": [],
             "ports": {
               "in": [
-                "a"
+                {
+                  "name": "a",
+                  "size": 1
+                }
               ],
               "out": [
-                "c"
+                {
+                  "name": "c",
+                  "size": 1
+                }
               ]
             }
           },
@@ -34,7 +41,15 @@
           "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
           "type": "basic.input",
           "data": {
-            "label": ""
+            "name": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 64,
@@ -45,7 +60,15 @@
           "id": "664caf9e-5f40-4df4-800a-b626af702e62",
           "type": "basic.output",
           "data": {
-            "label": ""
+            "name": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 752,
