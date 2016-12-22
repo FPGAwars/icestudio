@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "package": {
-    "name": "",
-    "version": "",
+    "name": "Led on",
+    "version": "1.0.0",
     "description": "",
     "author": "",
     "image": ""
@@ -12,9 +12,8 @@
     "graph": {
       "blocks": [
         {
-          "id": "f9239f87-12a4-4141-85f7-c3862615af3a",
+          "id": "eaf792b5-de98-4e2f-b78a-4023eb9a7f2b",
           "type": "bit.1",
-          "data": {},
           "position": {
             "x": 80,
             "y": 64
@@ -24,9 +23,7 @@
           "id": "949075cb-26c0-49da-ba76-2496ea9aa7cc",
           "type": "basic.output",
           "data": {
-            "label": "led",
             "name": "led",
-            "range": "",
             "pins": [
               {
                 "index": "0",
@@ -67,7 +64,7 @@
       "wires": [
         {
           "source": {
-            "block": "f9239f87-12a4-4141-85f7-c3862615af3a",
+            "block": "eaf792b5-de98-4e2f-b78a-4023eb9a7f2b",
             "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
           },
           "target": {
@@ -96,10 +93,14 @@
                 "type": "basic.code",
                 "data": {
                   "code": "// Bit 1\n\nassign v = 1'b1;",
+                  "params": [],
                   "ports": {
                     "in": [],
                     "out": [
-                      "v"
+                      {
+                        "name": "v",
+                        "size": 1
+                      }
                     ]
                   }
                 },
@@ -112,7 +113,15 @@
                 "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
                 "type": "basic.output",
                 "data": {
-                  "label": ""
+                  "name": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": "0"
+                    }
+                  ],
+                  "virtual": true
                 },
                 "position": {
                   "x": 608,

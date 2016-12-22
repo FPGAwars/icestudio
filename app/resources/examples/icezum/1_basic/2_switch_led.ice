@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "package": {
-    "name": "",
-    "version": "",
+    "name": "Switch led",
+    "version": "1.0.0",
     "description": "",
     "author": "",
     "image": ""
@@ -15,9 +15,7 @@
           "id": "aac1b394-533e-4410-9f35-ba80af8abd63",
           "type": "basic.input",
           "data": {
-            "label": "button",
             "name": "button",
-            "range": "",
             "pins": [
               {
                 "index": "0",
@@ -36,9 +34,7 @@
           "id": "30a83e46-176d-40a8-ac0e-f19a131ea9d9",
           "type": "basic.output",
           "data": {
-            "label": "led",
             "name": "led",
-            "range": "",
             "pins": [
               {
                 "index": "0",

@@ -15,9 +15,7 @@
           "id": "aa8bab8b-61e4-4e28-b444-0e68d9484ea1",
           "type": "basic.input",
           "data": {
-            "label": "button1",
             "name": "button1",
-            "range": "",
             "pins": [
               {
                 "index": "0",
@@ -33,11 +31,10 @@
           }
         },
         {
-          "id": "81f8eceb-3742-4350-8833-78fef262c542",
+          "id": "840e71b2-bf5a-4e20-8413-d386500c87fa",
           "type": "logic.gate.and",
-          "data": {},
           "position": {
-            "x": 248,
+            "x": 256,
             "y": 80
           }
         },
@@ -45,9 +42,7 @@
           "id": "3cad6e72-e7d3-4273-be1c-ce5f9b4c020a",
           "type": "basic.output",
           "data": {
-            "label": "led",
             "name": "led",
-            "range": "",
             "pins": [
               {
                 "index": "0",
@@ -66,9 +61,7 @@
           "id": "5d1b4f33-ae65-4154-b4f4-ff1403437600",
           "type": "basic.input",
           "data": {
-            "label": "button2",
             "name": "button2",
-            "range": "",
             "pins": [
               {
                 "index": "0",
@@ -109,11 +102,21 @@
       "wires": [
         {
           "source": {
+            "block": "840e71b2-bf5a-4e20-8413-d386500c87fa",
+            "port": "664caf9e-5f40-4df4-800a-b626af702e62"
+          },
+          "target": {
+            "block": "3cad6e72-e7d3-4273-be1c-ce5f9b4c020a",
+            "port": "in"
+          }
+        },
+        {
+          "source": {
             "block": "aa8bab8b-61e4-4e28-b444-0e68d9484ea1",
             "port": "out"
           },
           "target": {
-            "block": "81f8eceb-3742-4350-8833-78fef262c542",
+            "block": "840e71b2-bf5a-4e20-8413-d386500c87fa",
             "port": "18c2ebc7-5152-439c-9b3f-851c59bac834"
           }
         },
@@ -123,18 +126,8 @@
             "port": "out"
           },
           "target": {
-            "block": "81f8eceb-3742-4350-8833-78fef262c542",
+            "block": "840e71b2-bf5a-4e20-8413-d386500c87fa",
             "port": "97b51945-d716-4b6c-9db9-970d08541249"
-          }
-        },
-        {
-          "source": {
-            "block": "81f8eceb-3742-4350-8833-78fef262c542",
-            "port": "664caf9e-5f40-4df4-800a-b626af702e62"
-          },
-          "target": {
-            "block": "3cad6e72-e7d3-4273-be1c-ce5f9b4c020a",
-            "port": "in"
           }
         }
       ]
@@ -158,13 +151,23 @@
                 "type": "basic.code",
                 "data": {
                   "code": "// AND logic gate\n\nassign c = a & b;",
+                  "params": [],
                   "ports": {
                     "in": [
-                      "a",
-                      "b"
+                      {
+                        "name": "a",
+                        "size": 1
+                      },
+                      {
+                        "name": "b",
+                        "size": 1
+                      }
                     ],
                     "out": [
-                      "c"
+                      {
+                        "name": "c",
+                        "size": 1
+                      }
                     ]
                   }
                 },
@@ -177,7 +180,15 @@
                 "id": "18c2ebc7-5152-439c-9b3f-851c59bac834",
                 "type": "basic.input",
                 "data": {
-                  "label": ""
+                  "name": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": "0"
+                    }
+                  ],
+                  "virtual": true
                 },
                 "position": {
                   "x": 64,
@@ -188,7 +199,15 @@
                 "id": "664caf9e-5f40-4df4-800a-b626af702e62",
                 "type": "basic.output",
                 "data": {
-                  "label": ""
+                  "name": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": "0"
+                    }
+                  ],
+                  "virtual": true
                 },
                 "position": {
                   "x": 752,
@@ -199,7 +218,15 @@
                 "id": "97b51945-d716-4b6c-9db9-970d08541249",
                 "type": "basic.input",
                 "data": {
-                  "label": ""
+                  "name": "",
+                  "pins": [
+                    {
+                      "index": "0",
+                      "name": "",
+                      "value": "0"
+                    }
+                  ],
+                  "virtual": true
                 },
                 "position": {
                   "x": 64,
@@ -246,7 +273,7 @@
               "x": 0,
               "y": 0
             },
-            "zoom": 0.9999999784900666
+            "zoom": 1
           }
         }
       }

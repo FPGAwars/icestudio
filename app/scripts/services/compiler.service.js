@@ -44,7 +44,7 @@ angular.module('icestudio')
          return 'v' + nodeSha1(id).toString().substring(0, 6);
        }
        else {
-         return id.replace('.', '_');
+         return id.replace(/\./g, '_');
        }
     }
 
@@ -242,7 +242,6 @@ angular.module('icestudio')
             block.type !== 'basic.info') {
 
           // Header
-
           instance += name;
           if (block.type === 'basic.code') {
             instance += '_' + digestId(block.id);
