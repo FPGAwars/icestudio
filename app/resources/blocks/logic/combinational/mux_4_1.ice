@@ -15,7 +15,15 @@
           "id": "c3f73f68-1074-4355-b69f-6a20f7bea3e7",
           "type": "basic.input",
           "data": {
-            "label": "i0"
+            "name": "i0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -26,7 +34,15 @@
           "id": "5fb29465-2ee7-45bb-afa4-9a3de895c774",
           "type": "basic.input",
           "data": {
-            "label": "i1"
+            "name": "i1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -38,17 +54,39 @@
           "type": "basic.code",
           "data": {
             "code": "reg _o;\nwire [1:0] _sel;\n\nassign _sel = {sel1, sel0};\n\nalways @(*) begin\n    case(_sel)\n        0: _o = in0;\n        1: _o = in1;\n        2: _o = in2;\n        3: _o = in3;\n        default: _o = in0;\n    endcase\nend\n\nassign o = _o;",
+            "params": [],
             "ports": {
               "in": [
-                "in0",
-                "in1",
-                "in2",
-                "in3",
-                "sel0",
-                "sel1"
+                {
+                  "name": "in0",
+                  "size": 1
+                },
+                {
+                  "name": "in1",
+                  "size": 1
+                },
+                {
+                  "name": "in2",
+                  "size": 1
+                },
+                {
+                  "name": "in3",
+                  "size": 1
+                },
+                {
+                  "name": "sel0",
+                  "size": 1
+                },
+                {
+                  "name": "sel1",
+                  "size": 1
+                }
               ],
               "out": [
-                "o"
+                {
+                  "name": "o",
+                  "size": 1
+                }
               ]
             }
           },
@@ -61,7 +99,15 @@
           "id": "67ed5e09-486d-4f97-929f-aefea9c43951",
           "type": "basic.input",
           "data": {
-            "label": "i2"
+            "name": "i2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -72,7 +118,15 @@
           "id": "061aa997-2f30-4591-8841-fb6abf5c3b2e",
           "type": "basic.output",
           "data": {
-            "label": "o"
+            "name": "o",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 776,
@@ -83,7 +137,15 @@
           "id": "8be9cded-6d06-4b23-b73c-94c7ff311dbc",
           "type": "basic.input",
           "data": {
-            "label": "i3"
+            "name": "i3",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -94,7 +156,15 @@
           "id": "1b7db016-c89a-4f65-b6f0-0f87c851c077",
           "type": "basic.input",
           "data": {
-            "label": "sel0"
+            "name": "sel0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -105,7 +175,15 @@
           "id": "a014971e-5470-490b-9058-b4b00f2dd125",
           "type": "basic.input",
           "data": {
-            "label": "sel1"
+            "name": "sel1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 40,
@@ -204,7 +282,7 @@
         "x": 0,
         "y": 0
       },
-      "zoom": 0.9999999999994884
+      "zoom": 1
     }
   }
 }

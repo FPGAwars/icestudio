@@ -76,6 +76,9 @@ angular.module('icestudio')
           if (name) {
             project.new(name);
           }
+          else {
+            evt.cancel = true;
+          }
         });
     };
 

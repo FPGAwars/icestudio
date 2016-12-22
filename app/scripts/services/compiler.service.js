@@ -39,13 +39,13 @@ angular.module('icestudio')
       return header;
     }
 
-    function digestId(id, force) {
-      if (id.indexOf('-') !== -1 || force) {
-        return 'v' + nodeSha1(id).toString().substring(0, 6);
-      }
-      else {
-        return id.replace('.', '_');
-      }
+    function digestId(id) {
+      if (id.indexOf('-') !== -1) {
+         return 'v' + nodeSha1(id).toString().substring(0, 6);
+       }
+       else {
+         return id.replace(/\./g, '_');
+       }
     }
 
     function module(data) {
@@ -61,12 +61,7 @@ angular.module('icestudio')
         var params = [];
         for (var p in data.params) {
           if (data.params[p] instanceof Object) {
-            // Generic block
             params.push(' parameter ' + data.params[p].name + ' = ' + (data.params[p].value ? data.params[p].value : '0'));
-          }
-          else {
-            // Code block
-            params.push(' parameter ' + data.params[p] + ' = 0');
           }
         }
 
@@ -80,10 +75,12 @@ angular.module('icestudio')
 
         var ports = [];
         for (var i in data.ports.in) {
-          ports.push(' input ' + data.ports.in[i]);
+          var _in = data.ports.in[i];
+          ports.push(' input ' + (_in.range ? (_in.range + ' ') : '') + _in.name);
         }
         for (var o in data.ports.out) {
-          ports.push(' output ' + data.ports.out[o]);
+          var _out = data.ports.out[o];
+          ports.push(' output ' + (_out.range ? (_out.range + ' ') : '') + _out.name);
         }
 
         if (ports.length > 0) {
@@ -142,10 +139,16 @@ angular.module('icestudio')
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === 'basic.input') {
-          ports.in.push(digestId(block.id));
+          ports.in.push({
+            name: digestId(block.id),
+            range: block.data.range ? block.data.range : ''
+          });
         }
         else if (block.type === 'basic.output') {
-          ports.out.push(digestId(block.id));
+          ports.out.push({
+            name: digestId(block.id),
+            range: block.data.range ? block.data.range : ''
+          });
         }
       }
 
@@ -174,7 +177,8 @@ angular.module('icestudio')
         }
         else {
           // Wires
-          connections.wire.push('wire w' + w + ';');
+          var range = wire.size ? ' [0:' + (wire.size-1) +'] ' : ' ';
+          connections.wire.push('wire' + range + 'w' + w + ';');
         }
         // Assignations
         for (i in graph.blocks) {
@@ -238,12 +242,13 @@ angular.module('icestudio')
             block.type !== 'basic.info') {
 
           // Header
-
-          var id = digestId(block.type, true);
+          instance += name;
           if (block.type === 'basic.code') {
-            id += '_' + digestId(block.id);
+            instance += '_' + digestId(block.id);
           }
-          instance += name + '_' + digestId(id);
+          else {
+            instance += '_' + digestId(block.type);
+          }
 
           //-- Parameters
 
@@ -323,10 +328,6 @@ angular.module('icestudio')
         var graph = project.design.graph;
         var deps = project.design.deps;
 
-        // Scape dot in name
-
-        name = digestId(name);
-
         // Main module
 
         if (name) {
@@ -342,7 +343,7 @@ angular.module('icestudio')
         // Dependencies modules
 
         for (var d in deps) {
-          code += verilogCompiler(name + '_' + digestId(d, true), deps[d]);
+          code += verilogCompiler(name + '_' + digestId(d), deps[d]);
         }
 
         // Code modules
@@ -352,7 +353,7 @@ angular.module('icestudio')
           if (block) {
             if (block.type === 'basic.code') {
               data = {
-                name: name + '_' + digestId(block.type, true) + '_' + digestId(block.id),
+                name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
                 content: block.data.code
@@ -374,11 +375,24 @@ angular.module('icestudio')
         var block = graph.blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
-          code += 'set_io ';
-          code += digestId(block.id);
-          code += ' ';
-          code += block.data.pin.value;
-          code += '\n';
+
+          if (block.data.pins.length > 1) {
+            for (var p in block.data.pins) {
+              var pin = block.data.pins[p];
+              code += 'set_io ';
+              code += digestId(block.id);
+              code += '[' + pin.index + '] ';
+              code += block.data.virtual ? '' : pin.value;
+              code += '\n';
+            }
+          }
+          else {
+            code += 'set_io ';
+            code += digestId(block.id);
+            code += ' ';
+            code += block.data.virtual ? '' : block.data.pins[0].value;
+            code += '\n';
+          }
         }
       }
 

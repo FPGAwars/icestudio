@@ -56,6 +56,9 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
+      if (!data.version) {
+        alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
+      }
       this.project = _safeLoad(data);
       var ret = graph.loadDesign(this.project.design, false, function() {
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -77,6 +80,61 @@ angular.module('icestudio')
           project = data;
           break;
         default:
+          for (var b in data.graph.blocks) {
+            var block = data.graph.blocks[b];
+            switch(block.type) {
+              case 'basic.input':
+              case 'basic.output':
+                block.data = {
+                  name: block.data.label,
+                  pins: [{
+                    index: '0',
+                    name: block.data.pin ? block.data.pin.name : '',
+                    value: block.data.pin? block.data.pin.value : '0'
+                  }],
+                  virtual: false
+                };
+                break;
+              case 'basic.constant':
+                block.data = {
+                  name: block.data.label,
+                  value: block.data.value,
+                  local: false
+                };
+                break;
+              case 'basic.code':
+                var params = [];
+                for (var p in block.data.params) {
+                  params.push({
+                    name: block.data.params[p]
+                  });
+                }
+                var inPorts = [];
+                for (var i in block.data.ports.in) {
+                  inPorts.push({
+                    name: block.data.ports.in[i],
+                    size: 1
+                  });
+                }
+
+                var outPorts = [];
+                for (var o in block.data.ports.out) {
+                  outPorts.push({
+                    name: block.data.ports.out[o],
+                    size: 1
+                  });
+                }
+                block.data = {
+                  code: block.data.code,
+                  params: params,
+                  ports: {
+                    in: inPorts,
+                    out: outPorts
+                  }
+                };
+                break;
+            }
+          }
           project = _default();
           project.design.board = data.board;
           project.design.graph = data.graph;
@@ -126,6 +184,9 @@ angular.module('icestudio')
     this.addAsBlock = function(filepath) {
       var self = this;
       utils.readFile(filepath, function(data) {
+        if (!data.version) {
+          alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
+        }
         var block = _safeLoad(data);
         if (block) {
           var name = utils.basename(filepath);
@@ -227,7 +288,7 @@ angular.module('icestudio')
             }
           }
           // Add block
-          graph.importBlock(name, block);
+          graph.createBlock(name, block);
           self.project.design.deps[name] = block;
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
         }
@@ -266,6 +327,9 @@ angular.module('icestudio')
           var wire = {};
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
+          if (cell.size > 1) {
+            wire.size = cell.size;
+          }
           wire.vertices = cell.vertices;
           wires.push(wire);
         }

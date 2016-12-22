@@ -15,7 +15,15 @@
           "id": "8b73e273-3603-443a-b952-0ab9ad826a96",
           "type": "basic.output",
           "data": {
-            "label": "a"
+            "name": "a",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -26,7 +34,15 @@
           "id": "f2fce5fa-be07-46fe-bee1-bb2a497fe747",
           "type": "basic.output",
           "data": {
-            "label": "b"
+            "name": "b",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -37,7 +53,15 @@
           "id": "16e44a6a-853a-4264-9e9d-2269827ed136",
           "type": "basic.input",
           "data": {
-            "label": "h0"
+            "name": "h0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 312,
@@ -49,21 +73,55 @@
           "type": "basic.code",
           "data": {
             "code": "// Catodo común\n//                 gfe_dcba\nlocalparam BCD_0 = 7'b011_1111,\n        BCD_1 = 7'b000_0110,\n        BCD_2 = 7'b101_1011,\n        BCD_3 = 7'b100_1111,\n        BCD_4 = 7'b110_0110,\n        BCD_5 = 7'b110_1101,\n        BCD_6 = 7'b111_1101,\n        BCD_7 = 7'b000_0111,\n        BCD_8 = 7'b111_1111,\n        BCD_9 = 7'b110_1111,\n        BCD_A = 7'b111_0111,\n        BCD_B = 7'b111_1100,\n        BCD_C = 7'b011_1001,\n        BCD_D = 7'b101_1110,\n        BCD_E = 7'b111_1001,\n        BCD_F = 7'b111_0001;\n\nreg [6:0] _o;\n\nalways @(*)\nbegin\n\n    case({h3, h2, h1, h0})\n        4'h0: _o <= BCD_0;\n        4'h1: _o <= BCD_1;\n        4'h2: _o <= BCD_2;\n        4'h3: _o <= BCD_3;\n        4'h4: _o <= BCD_4;\n        4'h5: _o <= BCD_5;\n        4'h6: _o <= BCD_6;\n        4'h7: _o <= BCD_7;\n        4'h8: _o <= BCD_8;\n        4'h9: _o <= BCD_9;\n        4'hA: _o <= BCD_A;\n        4'hB: _o <= BCD_B;\n        4'hC: _o <= BCD_C;\n        4'hD: _o <= BCD_D;\n        4'hE: _o <= BCD_E;\n        4'hF: _o <= BCD_F;\n        default: _o <= 0;\n    endcase\nend\n\nassign {g, f, e, d, c, b, a} = _o;",
+            "params": [],
             "ports": {
               "in": [
-                "h0",
-                "h1",
-                "h2",
-                "h3"
+                {
+                  "name": "h0",
+                  "size": 1
+                },
+                {
+                  "name": "h1",
+                  "size": 1
+                },
+                {
+                  "name": "h2",
+                  "size": 1
+                },
+                {
+                  "name": "h3",
+                  "size": 1
+                }
               ],
               "out": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f",
-                "g"
+                {
+                  "name": "a",
+                  "size": 1
+                },
+                {
+                  "name": "b",
+                  "size": 1
+                },
+                {
+                  "name": "c",
+                  "size": 1
+                },
+                {
+                  "name": "d",
+                  "size": 1
+                },
+                {
+                  "name": "e",
+                  "size": 1
+                },
+                {
+                  "name": "f",
+                  "size": 1
+                },
+                {
+                  "name": "g",
+                  "size": 1
+                }
               ]
             }
           },
@@ -76,7 +134,15 @@
           "id": "bf0ea22e-3ac2-4756-87d5-020a6ea6a1a8",
           "type": "basic.output",
           "data": {
-            "label": "c"
+            "name": "c",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -87,7 +153,15 @@
           "id": "9cdbdf9f-f086-4427-9719-e13470658d97",
           "type": "basic.input",
           "data": {
-            "label": "h1"
+            "name": "h1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 312,
@@ -98,7 +172,15 @@
           "id": "4687e984-3f19-44d7-baee-ca89513f8f1a",
           "type": "basic.output",
           "data": {
-            "label": "d"
+            "name": "d",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -109,7 +191,15 @@
           "id": "f40ab7a8-10e5-4e7f-94f9-cefd697d5d40",
           "type": "basic.input",
           "data": {
-            "label": "h2"
+            "name": "h2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 312,
@@ -120,7 +210,15 @@
           "id": "1691b072-9102-4986-a900-fefd1a5a7b9e",
           "type": "basic.output",
           "data": {
-            "label": "e"
+            "name": "e",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -131,7 +229,15 @@
           "id": "2d774807-3ec8-492c-98e2-f1c9da8d68ff",
           "type": "basic.input",
           "data": {
-            "label": "h3"
+            "name": "h3",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 312,
@@ -142,7 +248,15 @@
           "id": "7c14afe7-1ac0-4394-b38e-fa8a00ffa21c",
           "type": "basic.output",
           "data": {
-            "label": "f"
+            "name": "f",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -153,7 +267,15 @@
           "id": "2565c42b-00b0-4b1d-92a4-66c715834b33",
           "type": "basic.output",
           "data": {
-            "label": "g"
+            "name": "g",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 1016,
@@ -230,7 +352,13 @@
           "target": {
             "block": "f2fce5fa-be07-46fe-bee1-bb2a497fe747",
             "port": "in"
-          }
+          },
+          "vertices": [
+            {
+              "x": 952,
+              "y": 528
+            }
+          ]
         },
         {
           "source": {
@@ -240,7 +368,13 @@
           "target": {
             "block": "8b73e273-3603-443a-b952-0ab9ad826a96",
             "port": "in"
-          }
+          },
+          "vertices": [
+            {
+              "x": 928,
+              "y": 448
+            }
+          ]
         },
         {
           "source": {
@@ -260,7 +394,13 @@
           "target": {
             "block": "7c14afe7-1ac0-4394-b38e-fa8a00ffa21c",
             "port": "in"
-          }
+          },
+          "vertices": [
+            {
+              "x": 952,
+              "y": 776
+            }
+          ]
         },
         {
           "source": {
@@ -270,7 +410,13 @@
           "target": {
             "block": "2565c42b-00b0-4b1d-92a4-66c715834b33",
             "port": "in"
-          }
+          },
+          "vertices": [
+            {
+              "x": 928,
+              "y": 824
+            }
+          ]
         }
       ]
     },
@@ -280,7 +426,7 @@
         "x": -152.07320110504,
         "y": -209.21075900090992
       },
-      "zoom": 0.7373584508895874
+      "zoom": 0.7373584371699413
     }
   }
 }

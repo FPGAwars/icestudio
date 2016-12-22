@@ -16,10 +16,14 @@
           "type": "basic.code",
           "data": {
             "code": "// Bit 0\n\nassign v = 1'b0;",
+            "params": [],
             "ports": {
               "in": [],
               "out": [
-                "v"
+                {
+                  "name": "v",
+                  "size": 1
+                }
               ]
             }
           },
@@ -32,7 +36,15 @@
           "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
           "type": "basic.output",
           "data": {
-            "label": ""
+            "name": "",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
             "x": 608,

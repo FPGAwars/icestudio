@@ -104,9 +104,9 @@
   color: #444;
 }
 
-.io-block {
+.virtual-port {
   position: absolute;
-  background: #fafacd;
+  background: #E2FBC9;
   border-radius: 5px;
   border: 2px solid #888;
   pointer-events: none;
@@ -115,25 +115,61 @@
   z-index: 0;
 }
 
-.io-block label {
+.virtual-port label {
   display: block;
-  margin-top: 4px;
+  margin-top: 20px;
   text-align: center;
   font-size: 1em;
   color: #444;
 }
 
-.io-block .select2 {
+.fpga-port {
   position: absolute;
-  left: 5px;
-  bottom: 5px;
+  background: #FBFBC9;
+  border-radius: 5px;
+  border: 2px solid #888;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.fpga-port label {
+  display: block;
+  margin-top: 3px;
+  margin-bottom: 4px;
+  text-align: center;
+  font-size: 1em;
+  color: #444;
+}
+
+.fpga-port div p {
+  position: relative;
+  top: 0px;
+  left: -20px;
+  float: left;
+}
+
+.fpga-port div .select2 {
+  position: relative;
   width: 82px;
+  left: 5px;
+  margin-bottom: 4px;
   pointer-events: auto;
+}
+
+.select2-selection__rendered {
+  font-size: 13px;
+}
+
+.bigdrop {
+  width: 92px !important;
+  font-size: 13px;
 }
 
 .constant-block {
   position: absolute;
-  background: #faeaaf;
+  background: #FBF0C9;
   border-radius: 5px;
   border: 2px solid #888;
   pointer-events: none;
@@ -164,6 +200,7 @@
   left: 5px;
   bottom: 5px;
   width: 82px;
+  font-size: 13px;
   pointer-events: auto;
 }
 

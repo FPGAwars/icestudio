@@ -15,44 +15,76 @@
           "id": "91e2ff2d-2430-41e5-9d21-bc9ec4082aaa",
           "type": "basic.output",
           "data": {
-            "label": "o0"
+            "name": "o0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": -128
+            "x": 760,
+            "y": -120
           }
         },
         {
           "id": "c6dc7002-dfc0-45fd-88e2-b5e5a75231f2",
           "type": "basic.output",
           "data": {
-            "label": "o1"
+            "name": "o1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": -48
+            "x": 760,
+            "y": -40
           }
         },
         {
           "id": "5e246f93-51ad-4d6f-83f1-4fcce69c5ae3",
           "type": "basic.output",
           "data": {
-            "label": "o2"
+            "name": "o2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 32
+            "x": 760,
+            "y": 40
           }
         },
         {
           "id": "5fc9a8e9-d463-4c1f-b6a3-185d5cabb406",
           "type": "basic.input",
           "data": {
-            "label": "i"
+            "name": "i",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 40
+            "x": -8,
+            "y": 48
           }
         },
         {
@@ -60,116 +92,217 @@
           "type": "basic.code",
           "data": {
             "code": "assign {out7,out6,out5,out4,out3,out2,out1,out0} = in0 << {sel2,sel1,sel0};",
+            "params": [],
             "ports": {
               "in": [
-                "in0",
-                "sel0",
-                "sel1",
-                "sel2"
+                {
+                  "name": "in0",
+                  "size": 1
+                },
+                {
+                  "name": "sel0",
+                  "size": 1
+                },
+                {
+                  "name": "sel1",
+                  "size": 1
+                },
+                {
+                  "name": "sel2",
+                  "size": 1
+                }
               ],
               "out": [
-                "out0",
-                "out1",
-                "out2",
-                "out3",
-                "out4",
-                "out5",
-                "out6",
-                "out7"
+                {
+                  "name": "out0",
+                  "size": 1
+                },
+                {
+                  "name": "out1",
+                  "size": 1
+                },
+                {
+                  "name": "out2",
+                  "size": 1
+                },
+                {
+                  "name": "out3",
+                  "size": 1
+                },
+                {
+                  "name": "out4",
+                  "size": 1
+                },
+                {
+                  "name": "out5",
+                  "size": 1
+                },
+                {
+                  "name": "out6",
+                  "size": 1
+                },
+                {
+                  "name": "out7",
+                  "size": 1
+                }
               ]
             }
           },
           "position": {
-            "x": 208,
-            "y": 64
+            "x": 184,
+            "y": 72
           }
         },
         {
           "id": "b9d764ea-538a-420f-a8d3-45af7a8e30a2",
           "type": "basic.output",
           "data": {
-            "label": "o3"
+            "name": "o3",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 112
+            "x": 760,
+            "y": 120
           }
         },
         {
           "id": "75cafe5a-1968-49ed-9e05-70d1bc3fbd0f",
           "type": "basic.input",
           "data": {
-            "label": "sel0"
+            "name": "sel0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 120
+            "x": -8,
+            "y": 128
           }
         },
         {
           "id": "657dab9e-6580-4f02-b54f-66477863f26a",
           "type": "basic.input",
           "data": {
-            "label": "sel1"
+            "name": "sel1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 200
+            "x": -8,
+            "y": 208
           }
         },
         {
           "id": "1b8510ac-d723-4226-bf28-c7329d0f73fb",
           "type": "basic.output",
           "data": {
-            "label": "o4"
+            "name": "o4",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 208
+            "x": 760,
+            "y": 216
           }
         },
         {
           "id": "e1a156c8-5813-46f6-a4d4-c672857f3396",
           "type": "basic.input",
           "data": {
-            "label": "sel2"
+            "name": "sel2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 16,
-            "y": 280
+            "x": -8,
+            "y": 288
           }
         },
         {
           "id": "65f31fca-d607-4d5c-82cc-878a93b8e580",
           "type": "basic.output",
           "data": {
-            "label": "o5"
+            "name": "o5",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 304
+            "x": 760,
+            "y": 312
           }
         },
         {
           "id": "c8fadd68-77e1-47be-a262-b076e878e6fd",
           "type": "basic.output",
           "data": {
-            "label": "o6"
+            "name": "o6",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 384
+            "x": 760,
+            "y": 392
           }
         },
         {
           "id": "99ca2a23-7e0d-4c34-9ab1-988c6bf69633",
           "type": "basic.output",
           "data": {
-            "label": "o7"
+            "name": "o7",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
           },
           "position": {
-            "x": 784,
-            "y": 464
+            "x": 760,
+            "y": 472
           }
         }
       ],
@@ -225,8 +358,8 @@
           },
           "vertices": [
             {
-              "x": 664,
-              "y": -24
+              "x": 640,
+              "y": -16
             }
           ]
         },
@@ -241,8 +374,8 @@
           },
           "vertices": [
             {
-              "x": 664,
-              "y": 416
+              "x": 640,
+              "y": 424
             }
           ]
         },
@@ -257,8 +390,8 @@
           },
           "vertices": [
             {
-              "x": 680,
-              "y": 32
+              "x": 656,
+              "y": 40
             }
           ]
         },
@@ -273,8 +406,8 @@
           },
           "vertices": [
             {
-              "x": 696,
-              "y": 112
+              "x": 672,
+              "y": 120
             }
           ]
         },
@@ -289,8 +422,8 @@
           },
           "vertices": [
             {
-              "x": 712,
-              "y": 176
+              "x": 688,
+              "y": 184
             }
           ]
         },
@@ -315,8 +448,8 @@
           },
           "vertices": [
             {
-              "x": 696,
-              "y": 288
+              "x": 672,
+              "y": 296
             }
           ]
         },
@@ -331,20 +464,20 @@
           },
           "vertices": [
             {
-              "x": 680,
-              "y": 320
+              "x": 656,
+              "y": 328
             },
             {
-              "x": 680,
-              "y": 360
+              "x": 656,
+              "y": 368
             },
             {
-              "x": 680,
-              "y": 376
+              "x": 656,
+              "y": 384
             },
             {
-              "x": 688,
-              "y": 416
+              "x": 664,
+              "y": 424
             }
           ]
         }
@@ -353,10 +486,10 @@
     "deps": {},
     "state": {
       "pan": {
-        "x": 75.69774669071234,
-        "y": 148.91048230054443
+        "x": 143.76402059142058,
+        "y": 110.755583226028
       },
-      "zoom": 0.6331667332315369
+      "zoom": 0.7272029968400818
     }
   }
 }

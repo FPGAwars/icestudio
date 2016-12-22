@@ -633,16 +633,13 @@ angular.module('icestudio')
       });
     };
 
-    this.constantprompt = function(messages, values, callback) {
+    this.inputcheckboxprompt = function(messages, values, callback) {
       var content = [];
       content.push('<div>');
       content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input class="ajs-input" id="label" type="text" value="' + values[0] + '"/>');
+      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '"/>');
       content.push('  <br>');
-      content.push('  <p>' + messages[1] + '</p>');
-      content.push('  <ul>');
-      content.push('  <li><p>' + messages[2] + ' <input id="local" type="checkbox" ' + (values[1] ? 'checked' : '') + '/></p></li>');
-      content.push('  </ul>');
+      content.push('  <div class="checkbox"><label><input id="local" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
       content.push('</div>');
       // Restore values
       $('#label').val(values[0]);
@@ -867,6 +864,39 @@ angular.module('icestudio')
       if(!$rootScope.$$phase) {
         $rootScope.$apply();
       }
+    };
+
+    this.parsePortLabel = function(data) {
+      // e.g: name[x:y]
+      var match, ret = {};
+      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*){0,1}(\[([0-9]+):([0-9]+)\]){0,1}/g;
+      match = pattern.exec(data);
+      if (match && (match[0] === match.input)) {
+        ret.name = match[1] ? match[1] : '';
+        ret.rangestr = match[2];
+        if (match[2]) {
+          if (match[3] > match[4]) {
+            ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+          }
+          else {
+            ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+          }
+        }
+        return ret;
+      }
+      return null;
+    };
+
+    this.parseParamLabel = function(data) {
+      // e.g: name
+      var match, ret = {};
+      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*){0,1}/g;
+      match = pattern.exec(data);
+      if (match && (match[0] === match.input)) {
+        ret.name = match[1] ? match[1] : '';
+        return ret;
+      }
+      return null;
     };
 
   });
