@@ -206,14 +206,12 @@
                   "ports": {
                     "in": [
                       {
-                        "name": "a",
-                        "size": 1
+                        "name": "a"
                       }
                     ],
                     "out": [
                       {
-                        "name": "b",
-                        "size": 1
+                        "name": "b"
                       }
                     ]
                   }
@@ -227,8 +225,7 @@
                 "id": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
                 "type": "basic.input",
                 "data": {
-                  "name": "",
-                  "size": 1
+                  "name": ""
                 },
                 "position": {
                   "x": 72,
@@ -239,8 +236,7 @@
                 "id": "07895985-9d14-4a6f-8f2d-b2a6ddf61852",
                 "type": "basic.output",
                 "data": {
-                  "name": "",
-                  "size": 1
+                  "name": ""
                 },
                 "position": {
                   "x": 728,
@@ -314,8 +310,7 @@
                     ],
                     "out": [
                       {
-                        "name": "out",
-                        "size": 1
+                        "name": "out"
                       }
                     ]
                   }
@@ -342,8 +337,7 @@
                 "id": "60d40fc8-3388-4066-8f0a-af17e179a9bd",
                 "type": "basic.output",
                 "data": {
-                  "name": "out",
-                  "size": 1
+                  "name": "out"
                 },
                 "position": {
                   "x": 760,

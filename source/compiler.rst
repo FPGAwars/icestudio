@@ -3,12 +3,10 @@
 Compiler
 ========
 
-The JSON structure of a project is a block definition.
-
 Output verilog structure:
 
-1. Modules
-2. Main module
+1. Main module
+2. Modules
 
    a. Wires definition
    b. Wires connections
@@ -17,167 +15,88 @@ Output verilog structure:
 Implementation
 --------------
 
+Compiler `source code <https://github.com/FPGAwars/icestudio/blob/develop/app/scripts/services/compiler.service.js>`_.
+
+Sample
+------
+
+Counter
+```````````
+
+.. image:: ../resources/images/project/counter.png
+
 .. container:: toggle
 
     .. container:: header
 
-        **Show/Hide code**
+        **counter.ice**
 
     |
 
-    .. literalinclude:: ../compiler/compiler.js
-       :language: javascript
-       :linenos:
+    .. literalinclude:: ../resources/samples/counter.ice
+       :language: json
 
 |
 
-.. code-block:: bash
+.. container:: toggle
 
-  npm install fs sha1
+    .. container:: header
 
-.. code-block:: bash
+        **div.v**
 
-  node compiler.js
+    |
 
-Examples
---------
+    .. literalinclude:: ../resources/samples/div.v
 
-Low project
-```````````
+|
 
-.. image:: ../resources/images/low-project.png
-
-File: **low.ice**
+**Generates**
 
 .. container:: toggle
 
     .. container:: header
 
-        **Show/Hide code**
+        **counter.v**
 
     |
 
-    .. literalinclude:: ../resources/examples/low/low.ice
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../resources/examples/low/low.v
-       :language: verilog
-
-    .. literalinclude:: ../resources/examples/low/low.pcf
+    .. literalinclude:: ../resources/samples/counter.v
        :language: verilog
 
 |
 
-Not project
-```````````
-
-.. image:: ../resources/images/not-project.png
-
-File: **not.ice**
-
 .. container:: toggle
 
-    .. container:: header
+   .. container:: header
 
-        **Show/Hide code**
+       **counter.pcf**
 
-    |
+   |
 
-    .. literalinclude:: ../resources/examples/not/not.ice
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../resources/examples/not/not.v
-        :language: verilog
-
-    .. literalinclude:: ../resources/examples/not/not.pcf
-        :language: verilog
+   .. literalinclude:: ../resources/samples/counter.pcf
 
 |
 
-Or project
-``````````
-
-.. image:: ../resources/images/or-project.png
-
-File: **or.ice**
-
 .. container:: toggle
 
-    .. container:: header
+   .. container:: header
 
-        **Show/Hide code**
+       **counter_tb.v**
 
-    |
+   |
 
-    .. literalinclude:: ../resources/examples/or/or.ice
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../resources/examples/or/or.v
-        :language: verilog
-
-    .. literalinclude:: ../resources/examples/or/or.pcf
-        :language: verilog
+   .. literalinclude:: ../resources/samples/counter_tb.v
 
 |
 
-Cnot project
-````````````
-
-.. image:: ../resources/images/cnot-project.png
-
-File: **cnot.ice**
-
 .. container:: toggle
 
-    .. container:: header
+   .. container:: header
 
-        **Show/Hide code**
+       **counter_tb.gtkw**
 
-    |
+   |
 
-    .. literalinclude:: ../resources/examples/cnot/cnot.ice
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../resources/examples/cnot/cnot.v
-        :language: verilog
-
-    .. literalinclude:: ../resources/examples/cnot/cnot.pcf
-        :language: verilog
-
-|
-
-Dnot project
-````````````
-
-.. image:: ../resources/images/dnot-project.png
-
-File: **dnot.ice**
-
-.. container:: toggle
-
-    .. container:: header
-
-        **Show/Hide code**
-
-    |
-
-    .. literalinclude:: ../resources/examples/dnot/dnot.ice
-       :language: json
-
-    Generates
-
-    .. literalinclude:: ../resources/examples/dnot/dnot.v
-        :language: verilog
-
-    .. literalinclude:: ../resources/examples/dnot/dnot.pcf
-        :language: verilog
+   .. literalinclude:: ../resources/samples/counter_tb.gtkw
 
 |

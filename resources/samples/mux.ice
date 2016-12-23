@@ -32,8 +32,7 @@
               ],
               "out": [
                 {
-                  "name": "out",
-                  "size": 1
+                  "name": "out"
                 }
               ]
             }
