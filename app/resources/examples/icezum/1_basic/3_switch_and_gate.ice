@@ -143,7 +143,6 @@
           "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%22-252%20400.9%2090%2040%22%3E%3Cpath%20d=%22M-252%20409.9h26v2h-26zM-252%20429.9h27v2h-27z%22/%3E%3Cpath%20d=%22M-227%20400.9v39.9h20.4c11.3%200%2020-9%2020-20s-8.7-20-20-20H-227zm2.9%202.8h17.6c9.8%200%2016.7%207.6%2016.7%2017.1%200%209.5-7.4%2017.1-17.1%2017.1H-224c-.1.1-.1-34.2-.1-34.2z%22/%3E%3Cpath%20d=%22M-187.911%20419.9H-162v2h-25.911z%22/%3E%3C/svg%3E"
         },
         "design": {
-          "board": "icezum",
           "graph": {
             "blocks": [
               {
@@ -181,14 +180,7 @@
                 "type": "basic.input",
                 "data": {
                   "name": "",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": "0"
-                    }
-                  ],
-                  "virtual": true
+                  "size": 1
                 },
                 "position": {
                   "x": 64,
@@ -200,14 +192,7 @@
                 "type": "basic.output",
                 "data": {
                   "name": "",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": "0"
-                    }
-                  ],
-                  "virtual": true
+                  "size": 1
                 },
                 "position": {
                   "x": 752,
@@ -219,14 +204,7 @@
                 "type": "basic.input",
                 "data": {
                   "name": "",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": "0"
-                    }
-                  ],
-                  "virtual": true
+                  "size": 1
                 },
                 "position": {
                   "x": 64,

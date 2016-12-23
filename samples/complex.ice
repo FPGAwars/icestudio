@@ -25,7 +25,7 @@
           }
         },
         {
-          "id": "6c168fad-742d-42aa-a286-ec235bf61951",
+          "id": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
           "type": "assign",
           "position": {
             "x": 120,
@@ -33,15 +33,15 @@
           }
         },
         {
-          "id": "731465bb-f103-4cf5-a273-79b43e628246",
+          "id": "85073adf-db9b-4850-83de-8f9af24478ee",
           "type": "mux",
           "position": {
-            "x": 352,
+            "x": 336,
             "y": 200
           }
         },
         {
-          "id": "fab70b68-1a4e-426c-8a29-fa02328401e7",
+          "id": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
           "type": "not",
           "position": {
             "x": 528,
@@ -121,34 +121,14 @@
       "wires": [
         {
           "source": {
-            "block": "bfebb831-8b03-43e1-9b87-013f1b5a9cdf",
-            "port": "constant-out"
+            "block": "21e9e7f9-9b8a-4fca-904d-e266f1496454",
+            "port": "out"
           },
           "target": {
-            "block": "6c168fad-742d-42aa-a286-ec235bf61951",
-            "port": "909655b9-5ef0-4c45-9494-c0238d2e4732"
-          }
-        },
-        {
-          "source": {
-            "block": "6c168fad-742d-42aa-a286-ec235bf61951",
-            "port": "ef743d41-5941-4831-becd-0d930c4eed54"
+            "block": "6c809d38-547d-4c70-92eb-2d5c389429e7",
+            "port": "in"
           },
-          "target": {
-            "block": "731465bb-f103-4cf5-a273-79b43e628246",
-            "port": "95f8c313-6e18-4ee3-b9cf-7266dec53c93"
-          },
-          "size": 4
-        },
-        {
-          "source": {
-            "block": "731465bb-f103-4cf5-a273-79b43e628246",
-            "port": "60d40fc8-3388-4066-8f0a-af17e179a9bd"
-          },
-          "target": {
-            "block": "fab70b68-1a4e-426c-8a29-fa02328401e7",
-            "port": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd"
-          }
+          "size": 2
         },
         {
           "source": {
@@ -156,14 +136,24 @@
             "port": "out"
           },
           "target": {
-            "block": "731465bb-f103-4cf5-a273-79b43e628246",
+            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
             "port": "f6528039-852b-41f9-aa41-268994b3f631"
           },
           "size": 2
         },
         {
           "source": {
-            "block": "fab70b68-1a4e-426c-8a29-fa02328401e7",
+            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
+            "port": "60d40fc8-3388-4066-8f0a-af17e179a9bd"
+          },
+          "target": {
+            "block": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
+            "port": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd"
+          }
+        },
+        {
+          "source": {
+            "block": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
             "port": "07895985-9d14-4a6f-8f2d-b2a6ddf61852"
           },
           "target": {
@@ -173,18 +163,252 @@
         },
         {
           "source": {
-            "block": "21e9e7f9-9b8a-4fca-904d-e266f1496454",
-            "port": "out"
+            "block": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
+            "port": "ef743d41-5941-4831-becd-0d930c4eed54"
           },
           "target": {
-            "block": "6c809d38-547d-4c70-92eb-2d5c389429e7",
-            "port": "in"
+            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
+            "port": "95f8c313-6e18-4ee3-b9cf-7266dec53c93"
           },
-          "size": 2
+          "size": 4
+        },
+        {
+          "source": {
+            "block": "bfebb831-8b03-43e1-9b87-013f1b5a9cdf",
+            "port": "constant-out"
+          },
+          "target": {
+            "block": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
+            "port": "909655b9-5ef0-4c45-9494-c0238d2e4732"
+          }
         }
       ]
     },
     "deps": {
+      "not": {
+        "version": "1.0",
+        "package": {
+          "name": "",
+          "version": "",
+          "description": "",
+          "author": "",
+          "image": ""
+        },
+        "design": {
+          "graph": {
+            "blocks": [
+              {
+                "id": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
+                "type": "basic.code",
+                "data": {
+                  "code": "// NOT logic gate\nassign b = ~a;",
+                  "params": [],
+                  "ports": {
+                    "in": [
+                      {
+                        "name": "a",
+                        "size": 1
+                      }
+                    ],
+                    "out": [
+                      {
+                        "name": "b",
+                        "size": 1
+                      }
+                    ]
+                  }
+                },
+                "position": {
+                  "x": 248,
+                  "y": 88
+                }
+              },
+              {
+                "id": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
+                "type": "basic.input",
+                "data": {
+                  "name": "",
+                  "size": 1
+                },
+                "position": {
+                  "x": 72,
+                  "y": 184
+                }
+              },
+              {
+                "id": "07895985-9d14-4a6f-8f2d-b2a6ddf61852",
+                "type": "basic.output",
+                "data": {
+                  "name": "",
+                  "size": 1
+                },
+                "position": {
+                  "x": 728,
+                  "y": 184
+                }
+              }
+            ],
+            "wires": [
+              {
+                "source": {
+                  "block": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
+                  "port": "out"
+                },
+                "target": {
+                  "block": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
+                  "port": "a"
+                }
+              },
+              {
+                "source": {
+                  "block": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
+                  "port": "b"
+                },
+                "target": {
+                  "block": "07895985-9d14-4a6f-8f2d-b2a6ddf61852",
+                  "port": "in"
+                }
+              }
+            ]
+          },
+          "deps": {},
+          "state": {
+            "pan": {
+              "x": 0,
+              "y": 0
+            },
+            "zoom": 1
+          }
+        }
+      },
+      "mux": {
+        "version": "1.0",
+        "package": {
+          "name": "",
+          "version": "",
+          "description": "",
+          "author": "",
+          "image": ""
+        },
+        "design": {
+          "graph": {
+            "blocks": [
+              {
+                "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+                "type": "basic.code",
+                "data": {
+                  "code": "// Multiplexer 4 to 1 \nassign out = data[sel];",
+                  "params": [],
+                  "ports": {
+                    "in": [
+                      {
+                        "name": "data",
+                        "range": "[3:0]",
+                        "size": 4
+                      },
+                      {
+                        "name": "sel",
+                        "range": "[1:0]",
+                        "size": 2
+                      }
+                    ],
+                    "out": [
+                      {
+                        "name": "out",
+                        "size": 1
+                      }
+                    ]
+                  }
+                },
+                "position": {
+                  "x": 288,
+                  "y": 112
+                }
+              },
+              {
+                "id": "95f8c313-6e18-4ee3-b9cf-7266dec53c93",
+                "type": "basic.input",
+                "data": {
+                  "name": "d",
+                  "range": "[3:0]",
+                  "size": 4
+                },
+                "position": {
+                  "x": 48,
+                  "y": 144
+                }
+              },
+              {
+                "id": "60d40fc8-3388-4066-8f0a-af17e179a9bd",
+                "type": "basic.output",
+                "data": {
+                  "name": "out",
+                  "size": 1
+                },
+                "position": {
+                  "x": 760,
+                  "y": 208
+                }
+              },
+              {
+                "id": "f6528039-852b-41f9-aa41-268994b3f631",
+                "type": "basic.input",
+                "data": {
+                  "name": "s",
+                  "range": "[1:0]",
+                  "size": 2
+                },
+                "position": {
+                  "x": 48,
+                  "y": 272
+                }
+              }
+            ],
+            "wires": [
+              {
+                "source": {
+                  "block": "95f8c313-6e18-4ee3-b9cf-7266dec53c93",
+                  "port": "out"
+                },
+                "target": {
+                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+                  "port": "data"
+                },
+                "size": 4
+              },
+              {
+                "source": {
+                  "block": "f6528039-852b-41f9-aa41-268994b3f631",
+                  "port": "out"
+                },
+                "target": {
+                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+                  "port": "sel"
+                },
+                "size": 2
+              },
+              {
+                "source": {
+                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+                  "port": "out"
+                },
+                "target": {
+                  "block": "60d40fc8-3388-4066-8f0a-af17e179a9bd",
+                  "port": "in"
+                }
+              }
+            ]
+          },
+          "deps": {},
+          "state": {
+            "pan": {
+              "x": 0,
+              "y": 0
+            },
+            "zoom": 1
+          }
+        }
+      },
       "assign": {
         "version": "1.0",
         "package": {
@@ -258,33 +482,11 @@
                 "data": {
                   "name": "out",
                   "range": "[3:0]",
-                  "pins": [
-                    {
-                      "index": "3",
-                      "name": "LED3",
-                      "value": "98"
-                    },
-                    {
-                      "index": "2",
-                      "name": "LED2",
-                      "value": "97"
-                    },
-                    {
-                      "index": "1",
-                      "name": "LED1",
-                      "value": "96"
-                    },
-                    {
-                      "index": "0",
-                      "name": "LED0",
-                      "value": "95"
-                    }
-                  ],
-                  "virtual": false
+                  "size": 4
                 },
                 "position": {
-                  "x": 672,
-                  "y": 248
+                  "x": 680,
+                  "y": 296
                 }
               }
             ],
@@ -319,285 +521,6 @@
                   "port": "in"
                 },
                 "size": 4
-              }
-            ]
-          },
-          "deps": {},
-          "state": {
-            "pan": {
-              "x": 0,
-              "y": 0
-            },
-            "zoom": 1
-          }
-        }
-      },
-      "mux": {
-        "version": "1.0",
-        "package": {
-          "name": "",
-          "version": "",
-          "description": "",
-          "author": "",
-          "image": ""
-        },
-        "design": {
-          "graph": {
-            "blocks": [
-              {
-                "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-                "type": "basic.code",
-                "data": {
-                  "code": "// Multiplexer 4 to 1 \nassign out = data[sel];",
-                  "params": [],
-                  "ports": {
-                    "in": [
-                      {
-                        "name": "data",
-                        "range": "[3:0]",
-                        "size": 4
-                      },
-                      {
-                        "name": "sel",
-                        "range": "[1:0]",
-                        "size": 2
-                      }
-                    ],
-                    "out": [
-                      {
-                        "name": "out",
-                        "size": 1
-                      }
-                    ]
-                  }
-                },
-                "position": {
-                  "x": 288,
-                  "y": 112
-                }
-              },
-              {
-                "id": "95f8c313-6e18-4ee3-b9cf-7266dec53c93",
-                "type": "basic.input",
-                "data": {
-                  "name": "d",
-                  "range": "[3:0]",
-                  "pins": [
-                    {
-                      "index": "3",
-                      "name": "",
-                      "value": 0
-                    },
-                    {
-                      "index": "2",
-                      "name": "",
-                      "value": 0
-                    },
-                    {
-                      "index": "1",
-                      "name": "",
-                      "value": 0
-                    },
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": 0
-                    }
-                  ],
-                  "virtual": true
-                },
-                "position": {
-                  "x": 48,
-                  "y": 144
-                }
-              },
-              {
-                "id": "60d40fc8-3388-4066-8f0a-af17e179a9bd",
-                "type": "basic.output",
-                "data": {
-                  "name": "out",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": 0
-                    }
-                  ],
-                  "virtual": true
-                },
-                "position": {
-                  "x": 760,
-                  "y": 208
-                }
-              },
-              {
-                "id": "f6528039-852b-41f9-aa41-268994b3f631",
-                "type": "basic.input",
-                "data": {
-                  "name": "s",
-                  "range": "[1:0]",
-                  "pins": [
-                    {
-                      "index": "1",
-                      "name": "",
-                      "value": 0
-                    },
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": 0
-                    }
-                  ],
-                  "virtual": true
-                },
-                "position": {
-                  "x": 48,
-                  "y": 272
-                }
-              }
-            ],
-            "wires": [
-              {
-                "source": {
-                  "block": "95f8c313-6e18-4ee3-b9cf-7266dec53c93",
-                  "port": "out"
-                },
-                "target": {
-                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-                  "port": "data"
-                },
-                "size": 4
-              },
-              {
-                "source": {
-                  "block": "f6528039-852b-41f9-aa41-268994b3f631",
-                  "port": "out"
-                },
-                "target": {
-                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-                  "port": "sel"
-                },
-                "size": 2
-              },
-              {
-                "source": {
-                  "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-                  "port": "out"
-                },
-                "target": {
-                  "block": "60d40fc8-3388-4066-8f0a-af17e179a9bd",
-                  "port": "in"
-                }
-              }
-            ]
-          },
-          "deps": {},
-          "state": {
-            "pan": {
-              "x": 0,
-              "y": 0
-            },
-            "zoom": 1
-          }
-        }
-      },
-      "not": {
-        "version": "1.0",
-        "package": {
-          "name": "",
-          "version": "",
-          "description": "",
-          "author": "",
-          "image": ""
-        },
-        "design": {
-          "graph": {
-            "blocks": [
-              {
-                "id": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
-                "type": "basic.code",
-                "data": {
-                  "code": "// NOT logic gate\nassign b = ~a;",
-                  "params": [],
-                  "ports": {
-                    "in": [
-                      {
-                        "name": "a",
-                        "size": 1
-                      }
-                    ],
-                    "out": [
-                      {
-                        "name": "b",
-                        "size": 1
-                      }
-                    ]
-                  }
-                },
-                "position": {
-                  "x": 248,
-                  "y": 88
-                }
-              },
-              {
-                "id": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
-                "type": "basic.input",
-                "data": {
-                  "name": "",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": 0
-                    }
-                  ],
-                  "virtual": true
-                },
-                "position": {
-                  "x": 72,
-                  "y": 184
-                }
-              },
-              {
-                "id": "07895985-9d14-4a6f-8f2d-b2a6ddf61852",
-                "type": "basic.output",
-                "data": {
-                  "name": "",
-                  "pins": [
-                    {
-                      "index": "0",
-                      "name": "",
-                      "value": 0
-                    }
-                  ],
-                  "virtual": true
-                },
-                "position": {
-                  "x": 728,
-                  "y": 184
-                }
-              }
-            ],
-            "wires": [
-              {
-                "source": {
-                  "block": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
-                  "port": "out"
-                },
-                "target": {
-                  "block": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
-                  "port": "a"
-                }
-              },
-              {
-                "source": {
-                  "block": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
-                  "port": "b"
-                },
-                "target": {
-                  "block": "07895985-9d14-4a6f-8f2d-b2a6ddf61852",
-                  "port": "in"
-                }
               }
             ]
           },

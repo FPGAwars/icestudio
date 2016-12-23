@@ -370,10 +370,11 @@ angular.module('icestudio')
     }
 
     function loadBasicInput(instance, disabled) {
+      var data = instance.data;
       var rightPorts = [{
         id: 'out',
         label: '',
-        size: instance.data.pins.length,
+        size: data.pins ? data.pins.length : data.size,
         gridUnits: 8
       }];
       var cell = new joint.shapes.ice.Input({
@@ -389,10 +390,11 @@ angular.module('icestudio')
     }
 
     function loadBasicOutput(instance, disabled) {
+      var data = instance.data;
       var leftPorts = [{
         id: 'in',
         label: '',
-        size: instance.data.pins.length,
+        size: data.pins ? data.pins.length : data.size,
         gridUnits: 8
       }];
       var cell = new joint.shapes.ice.Output({
@@ -492,19 +494,22 @@ angular.module('icestudio')
       var gridsize = 8;
 
       for (i in block.design.graph.blocks) {
+        var data;
         var item = block.design.graph.blocks[i];
         if (item.type === 'basic.input') {
+          data = block.design.graph.blocks[i].data;
           leftPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range ? item.data.range : ''),
-            size: block.design.graph.blocks[i].data.pins.length
+            size: data.pins ? data.pins.length : data.size
           });
         }
         else if (item.type === 'basic.output') {
+          data = block.design.graph.blocks[i].data;
           rightPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range ? item.data.range : ''),
-            size: block.design.graph.blocks[i].data.pins.length
+            size: data.pins ? data.pins.length : data.size
           });
         }
         else if (item.type === 'basic.constant') {

@@ -279,21 +279,31 @@ angular.module('icestudio')
         }
 
         function doImportBlock(name, block) {
-          // Convert project to block
-          delete block.design.board;
-          for (var i in block.design.graph.blocks) {
-            if (block.design.graph.blocks[i].type === 'basic.input' ||
-                block.design.graph.blocks[i].type === 'basic.output') {
-              delete block.design.graph.blocks[i].data.pin;
-            }
-          }
           // Add block
-          graph.createBlock(name, block);
+          block = pruneDependency(block);
           self.project.design.deps[name] = block;
+          graph.createBlock(name, block);
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
         }
       });
     };
+
+    function pruneDependency(block) {
+      // Remove all unnecessary information for a dependency:
+      // - board, FPGA I/O pins (->size), virtual flag
+      delete block.design.board;
+      var i, size;
+      for (i in block.design.graph.blocks) {
+        if (block.design.graph.blocks[i].type === 'basic.input' ||
+            block.design.graph.blocks[i].type === 'basic.output') {
+          size = block.design.graph.blocks[i].data.pins.length;
+          block.design.graph.blocks[i].data.size = size;
+          delete block.design.graph.blocks[i].data.pins;
+          delete block.design.graph.blocks[i].data.virtual;
+        }
+      }
+      return block;
+    }
 
     this.update = function(callback) {
       var graphData = graph.toJSON();
@@ -363,6 +373,7 @@ angular.module('icestudio')
     this.addBlock = function(type, block) {
       if (block) {
         block = _safeLoad(block);
+        block = pruneDependency(block);
         this.project.design.deps[type] = block;
       }
       graph.createBlock(type, block);
