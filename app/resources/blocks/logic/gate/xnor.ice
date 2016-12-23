@@ -20,18 +20,15 @@
             "ports": {
               "in": [
                 {
-                  "name": "a",
-                  "size": 1
+                  "name": "a"
                 },
                 {
-                  "name": "b",
-                  "size": 1
+                  "name": "b"
                 }
               ],
               "out": [
                 {
-                  "name": "c",
-                  "size": 1
+                  "name": "c"
                 }
               ]
             }

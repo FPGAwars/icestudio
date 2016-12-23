@@ -191,13 +191,13 @@ angular.module('icestudio')
           var inPorts = [];
           for (index in block.data.ports.in) {
             port = block.data.ports.in[index];
-            inPorts.push(port.name + (port.range ? port.range : ''));
+            inPorts.push(port.name + (port.range || ''));
           }
           defaultValues[0] = inPorts.join(' , ');
           var outPorts = [];
           for (index in block.data.ports.out) {
             port = block.data.ports.out[index];
-            outPorts.push(port.name + (port.range ? port.range : ''));
+            outPorts.push(port.name + (port.range || ''));
           }
           defaultValues[1] = outPorts.join(' , ');
         }
@@ -274,7 +274,7 @@ angular.module('icestudio')
               blockInstance.data.ports.in.push({
                 name: inPortInfos[i].name,
                 range: inPortInfos[i].rangestr,
-                size: pins.length
+                size: (pins.length > 1) ? pins.length : undefined
               });
               allNames.push(inPortInfos[i].name);
             }
@@ -286,7 +286,7 @@ angular.module('icestudio')
               blockInstance.data.ports.out.push({
                 name: outPortInfos[o].name,
                 range: outPortInfos[o].rangestr,
-                size: pins.length
+                size: (pins.length > 1) ? pins.length : undefined
               });
               allNames.push(outPortInfos[o].name);
             }
@@ -374,7 +374,7 @@ angular.module('icestudio')
       var rightPorts = [{
         id: 'out',
         label: '',
-        size: data.pins ? data.pins.length : data.size,
+        size: data.pins ? data.pins.length : (data.size || 1),
         gridUnits: 8
       }];
       var cell = new joint.shapes.ice.Input({
@@ -394,7 +394,7 @@ angular.module('icestudio')
       var leftPorts = [{
         id: 'in',
         label: '',
-        size: data.pins ? data.pins.length : data.size,
+        size: data.pins ? data.pins.length : (data.size || 1),
         gridUnits: 8
       }];
       var cell = new joint.shapes.ice.Output({
@@ -436,8 +436,8 @@ angular.module('icestudio')
         port = instance.data.ports.in[i];
         leftPorts.push({
           id: port.name,
-          label: port.name + (port.range ? port.range : ''),
-          size: port.size,
+          label: port.name + (port.range || ''),
+          size: port.size || 1,
           gridUnits: 32
         });
       }
@@ -446,8 +446,8 @@ angular.module('icestudio')
         port = instance.data.ports.out[o];
         rightPorts.push({
           id: port.name,
-          label: port.name + (port.range ? port.range : ''),
-          size: port.size,
+          label: port.name + (port.range || ''),
+          size: port.size || 1,
           gridUnits: 32
         });
       }
@@ -500,16 +500,16 @@ angular.module('icestudio')
           data = block.design.graph.blocks[i].data;
           leftPorts.push({
             id: item.id,
-            label: item.data.name + (item.data.range ? item.data.range : ''),
-            size: data.pins ? data.pins.length : data.size
+            label: item.data.name + (item.data.range || ''),
+            size: data.pins ? data.pins.length : (data.size || 1)
           });
         }
         else if (item.type === 'basic.output') {
           data = block.design.graph.blocks[i].data;
           rightPorts.push({
             id: item.id,
-            label: item.data.name + (item.data.range ? item.data.range : ''),
-            size: data.pins ? data.pins.length : data.size
+            label: item.data.name + (item.data.range || ''),
+            size: data.pins ? data.pins.length : (data.size || 1)
           });
         }
         else if (item.type === 'basic.constant') {
@@ -649,7 +649,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Update the port'),
         gettextCatalog.getString('Virtual port')
       ], [
-        block.data.name + (block.data.range ? block.data.range : ''),
+        block.data.name + (block.data.range || ''),
         block.data.virtual
       ],
         function(evt, values) {
@@ -660,8 +660,8 @@ angular.module('icestudio')
           var portInfo = utils.parsePortLabel(label);
           if (portInfo) {
             evt.cancel = false;
-            if ((block.data.range ? block.data.range : '') !==
-                (portInfo.rangestr ? portInfo.rangestr : '')) {
+            if ((block.data.range || '') !==
+                (portInfo.rangestr || '')) {
               var pins = getPins(portInfo);
               oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
               newSize = virtual ? 1 : (pins ? pins.length : 1);

@@ -97,8 +97,7 @@
                     "in": [],
                     "out": [
                       {
-                        "name": "v",
-                        "size": 1
+                        "name": "v"
                       }
                     ]
                   }
@@ -112,8 +111,7 @@
                 "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
                 "type": "basic.output",
                 "data": {
-                  "name": "",
-                  "size": 1
+                  "name": ""
                 },
                 "position": {
                   "x": 608,

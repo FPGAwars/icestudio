@@ -391,10 +391,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var virtualPortId = '#virtualPort' + this.id;
     var fpgaPortId = '#fpgaPort' + this.id;
     var data = this.model.get('data');
-    var name = data.name + (data.range ? data.range : '');
+    var name = data.name + (data.range || '');
     var virtual = data.virtual || this.model.get('disabled');
 
-    this.$box.find('label').text(name ? name : ' ');
+    this.$box.find('label').text(name || '');
 
     if (virtual) {
       // Virtual port (green)

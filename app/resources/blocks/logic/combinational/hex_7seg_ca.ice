@@ -77,50 +77,39 @@
             "ports": {
               "in": [
                 {
-                  "name": "h0",
-                  "size": 1
+                  "name": "h0"
                 },
                 {
-                  "name": "h1",
-                  "size": 1
+                  "name": "h1"
                 },
                 {
-                  "name": "h2",
-                  "size": 1
+                  "name": "h2"
                 },
                 {
-                  "name": "h3",
-                  "size": 1
+                  "name": "h3"
                 }
               ],
               "out": [
                 {
-                  "name": "a",
-                  "size": 1
+                  "name": "a"
                 },
                 {
-                  "name": "b",
-                  "size": 1
+                  "name": "b"
                 },
                 {
-                  "name": "c",
-                  "size": 1
+                  "name": "c"
                 },
                 {
-                  "name": "d",
-                  "size": 1
+                  "name": "d"
                 },
                 {
-                  "name": "e",
-                  "size": 1
+                  "name": "e"
                 },
                 {
-                  "name": "f",
-                  "size": 1
+                  "name": "f"
                 },
                 {
-                  "name": "g",
-                  "size": 1
+                  "name": "g"
                 }
               ]
             }

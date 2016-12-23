@@ -56,7 +56,3 @@ gettext('tff_ar');
 gettext('tff_sr');
 /// Debouncer
 gettext('debouncer');
-/// contadorAsc
-gettext('contadorAsc');
-/// contadorDes
-gettext('contadorDes');

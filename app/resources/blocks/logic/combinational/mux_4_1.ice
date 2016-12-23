@@ -58,34 +58,27 @@
             "ports": {
               "in": [
                 {
-                  "name": "in0",
-                  "size": 1
+                  "name": "in0"
                 },
                 {
-                  "name": "in1",
-                  "size": 1
+                  "name": "in1"
                 },
                 {
-                  "name": "in2",
-                  "size": 1
+                  "name": "in2"
                 },
                 {
-                  "name": "in3",
-                  "size": 1
+                  "name": "in3"
                 },
                 {
-                  "name": "sel0",
-                  "size": 1
+                  "name": "sel0"
                 },
                 {
-                  "name": "sel1",
-                  "size": 1
+                  "name": "sel1"
                 }
               ],
               "out": [
                 {
-                  "name": "o",
-                  "size": 1
+                  "name": "o"
                 }
               ]
             }

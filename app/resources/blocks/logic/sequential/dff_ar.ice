@@ -39,30 +39,24 @@
             "ports": {
               "in": [
                 {
-                  "name": "d",
-                  "size": 1
+                  "name": "d"
                 },
                 {
-                  "name": "en",
-                  "size": 1
+                  "name": "en"
                 },
                 {
-                  "name": "rst_n",
-                  "size": 1
+                  "name": "rst_n"
                 },
                 {
-                  "name": "clk",
-                  "size": 1
+                  "name": "clk"
                 }
               ],
               "out": [
                 {
-                  "name": "q",
-                  "size": 1
+                  "name": "q"
                 },
                 {
-                  "name": "q_n",
-                  "size": 1
+                  "name": "q_n"
                 }
               ]
             }

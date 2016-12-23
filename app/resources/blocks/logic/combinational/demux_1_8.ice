@@ -96,54 +96,42 @@
             "ports": {
               "in": [
                 {
-                  "name": "in0",
-                  "size": 1
+                  "name": "in0"
                 },
                 {
-                  "name": "sel0",
-                  "size": 1
+                  "name": "sel0"
                 },
                 {
-                  "name": "sel1",
-                  "size": 1
+                  "name": "sel1"
                 },
                 {
-                  "name": "sel2",
-                  "size": 1
+                  "name": "sel2"
                 }
               ],
               "out": [
                 {
-                  "name": "out0",
-                  "size": 1
+                  "name": "out0"
                 },
                 {
-                  "name": "out1",
-                  "size": 1
+                  "name": "out1"
                 },
                 {
-                  "name": "out2",
-                  "size": 1
+                  "name": "out2"
                 },
                 {
-                  "name": "out3",
-                  "size": 1
+                  "name": "out3"
                 },
                 {
-                  "name": "out4",
-                  "size": 1
+                  "name": "out4"
                 },
                 {
-                  "name": "out5",
-                  "size": 1
+                  "name": "out5"
                 },
                 {
-                  "name": "out6",
-                  "size": 1
+                  "name": "out6"
                 },
                 {
-                  "name": "out7",
-                  "size": 1
+                  "name": "out7"
                 }
               ]
             }

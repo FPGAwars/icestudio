@@ -20,22 +20,18 @@
             "ports": {
               "in": [
                 {
-                  "name": "pin",
-                  "size": 1
+                  "name": "pin"
                 },
                 {
-                  "name": "oe",
-                  "size": 1
+                  "name": "oe"
                 },
                 {
-                  "name": "din",
-                  "size": 1
+                  "name": "din"
                 }
               ],
               "out": [
                 {
-                  "name": "dout",
-                  "size": 1
+                  "name": "dout"
                 }
               ]
             }

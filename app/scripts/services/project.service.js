@@ -112,16 +112,14 @@ angular.module('icestudio')
                 var inPorts = [];
                 for (var i in block.data.ports.in) {
                   inPorts.push({
-                    name: block.data.ports.in[i],
-                    size: 1
+                    name: block.data.ports.in[i]
                   });
                 }
 
                 var outPorts = [];
                 for (var o in block.data.ports.out) {
                   outPorts.push({
-                    name: block.data.ports.out[o],
-                    size: 1
+                    name: block.data.ports.out[o]
                   });
                 }
                 block.data = {
@@ -290,14 +288,14 @@ angular.module('icestudio')
 
     function pruneDependency(block) {
       // Remove all unnecessary information for a dependency:
-      // - board, FPGA I/O pins (->size), virtual flag
+      // - board, FPGA I/O pins (->size if >1), virtual flag
       delete block.design.board;
-      var i, size;
+      var i, pins;
       for (i in block.design.graph.blocks) {
         if (block.design.graph.blocks[i].type === 'basic.input' ||
             block.design.graph.blocks[i].type === 'basic.output') {
-          size = block.design.graph.blocks[i].data.pins.length;
-          block.design.graph.blocks[i].data.size = size;
+          pins = block.design.graph.blocks[i].data.pins;
+          block.design.graph.blocks[i].data.size = (pins.length > 1) ? pins.length : undefined;
           delete block.design.graph.blocks[i].data.pins;
           delete block.design.graph.blocks[i].data.virtual;
         }
@@ -337,17 +335,22 @@ angular.module('icestudio')
           var wire = {};
           wire.source = { block: cell.source.id, port: cell.source.port };
           wire.target = { block: cell.target.id, port: cell.target.port };
-          if (cell.size > 1) {
-            wire.size = cell.size;
-          }
           wire.vertices = cell.vertices;
+          wire.size = (cell.size > 1) ? cell.size : undefined;
           wires.push(wire);
         }
       }
 
-      this.project.design.state = graph.getState();
+      var state = graph.getState();
       this.project.design.board = boards.selectedBoard.name;
       this.project.design.graph = { blocks: blocks, wires: wires };
+      this.project.design.state = {
+        pan: {
+          x: parseFloat(state.pan.x.toFixed(4)),
+          y: parseFloat(state.pan.y.toFixed(4))
+        },
+        zoom: parseFloat(state.zoom.toFixed(4))
+      };
 
       if (callback) {
         callback();
