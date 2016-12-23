@@ -653,6 +653,7 @@ angular.module('icestudio')
         block.data.virtual
       ],
         function(evt, values) {
+          var oldSize, newSize, offset = 0;
           var label = values[0].replace(/ /g, '');
           var virtual = values[1];
           // Validate values
@@ -661,17 +662,25 @@ angular.module('icestudio')
             evt.cancel = false;
             if ((block.data.range ? block.data.range : '') !==
                 (portInfo.rangestr ? portInfo.rangestr : '')) {
+              var pins = getPins(portInfo);
+              oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+              newSize = virtual ? 1 : (pins ? pins.length : 1);
+              // Update block position when size changes
+              offset = 16 * (oldSize - newSize);
               // Create new block
               var blockInstance = {
                 id: null,
                 data: {
                   name: portInfo.name,
                   range: portInfo.rangestr,
-                  pins: getPins(portInfo),
+                  pins: pins,
                   virtual: virtual
                 },
                 type: block.blockType,
-                position: block.position
+                position: {
+                  x: block.position.x,
+                  y: block.position.y + offset
+                }
               };
               if (addCellCallback) {
                 addCellCallback(loadBasic(blockInstance));
@@ -681,9 +690,15 @@ angular.module('icestudio')
             }
             else if (block.data.name !== portInfo.name ||
                      block.data.virtual !== virtual) {
+              var size = block.data.pins ? block.data.pins.length : 1;
+              oldSize = block.data.virtual ? 1 : size;
+              newSize = virtual ? 1 : size;
+              // Update block position when size changes
+              offset = 16 * (oldSize - newSize);
               // Edit block
               block.data.name = portInfo.name;
               block.data.virtual = virtual;
+              block.position.y += offset;
               cellView.render();
               alertify.success(gettextCatalog.getString('Block updated'));
             }

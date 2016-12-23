@@ -396,9 +396,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     this.$box.find('label').text(name ? name : ' ');
 
-    // Virtual -> FPGA I/O
-    // FPGA I/O -> Virtual
-
     if (virtual) {
       // Virtual port (green)
       $(fpgaPortId).addClass('hidden');
@@ -411,10 +408,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       $(fpgaPortId).removeClass('hidden');
       if (this.pins) {
         this.model.attributes.size.height = 32 + 32 * this.pins.length;
-        // TODO: move block and wire
-        //var bbox = this.model.getBBox();
-        //var state = this.model.attributes.state;
-        //this.$box.css({ top: bbox.y * state.zoom + state.pan.y });
       }
     }
   },
