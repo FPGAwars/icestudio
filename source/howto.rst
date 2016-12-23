@@ -19,6 +19,7 @@ Install the toolchain
   .. image:: ../resources/images/howto/installtoolchain.png
 
 |
+
 .. note::
 
   When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**. Also, the toolchain can be restored to default in **Tools > Toolchain > Reset default**.
@@ -50,7 +51,7 @@ Create a project
 
 1. **Create a new project**
 
-   Go to **Edit > New project**, write your project's name and press OK.
+   Go to **Edit > New**, write your project's name and press OK.
 
    .. image:: ../resources/images/howto/new.png
 
@@ -58,7 +59,29 @@ Create a project
 
 2. **Add your blocks**
 
- 1. *Code blocks*
+ 1. *Input/Output blocks*
+
+    Click on **Basic > Input** or **Basic > Output**, write the block's name and press OK or Enter.
+
+    These blocks can be configured as **virtual** (green). Then, the FPGA pin selector won't be shown.
+
+    Also, it can be configured as **buses** using the ``[x:y]`` notation (``x`` is the most significant bit).
+
+    .. image:: ../resources/images/howto/io.png
+
+ |
+
+ 2. *Constant blocks*
+
+    Click on **Basic > Constant**, write the block's name and press OK or Enter.
+
+    These blocks can be configures as **local**. Then, this parameter won't be exported.
+
+    .. image:: ../resources/images/howto/constant.png
+
+ |
+
+ 3. *Code blocks*
 
     Click on **Basic > Code**, add the code ports. Port names are separated by a comma. E.g.: ``a, b``.
 
@@ -70,9 +93,9 @@ Create a project
 
     .. image:: ../resources/images/howto/code.png
 
-|
+ |
 
- 2. *Info blocks*
+ 4. *Info blocks*
 
     Click on **Basic > Info**.
 
@@ -80,19 +103,9 @@ Create a project
 
     .. image:: ../resources/images/howto/info.png
 
-|
+ |
 
- 3. *Input/Output blocks*
-
-    Click on **Basic > Input** or **Basic > Output**, write the block's name and press OK.
-
-    These blocks contain a FPGA pin selector depending on the selected board.
-
-    .. image:: ../resources/images/howto/io.png
-
-|
-
- 4. *Bit blocks*
+ 5. *Bit blocks*
 
     Click on **Bit > 0** or **Bit > 1**.
 
@@ -100,9 +113,9 @@ Create a project
 
     .. image:: ../resources/images/howto/bit.png
 
-|
+ |
 
- 5. *Config block*
+ 6. *Config block*
 
     Click on **Config > Pull up / Pull up inv / Tri-state**.
 
@@ -110,9 +123,9 @@ Create a project
 
     .. image:: ../resources/images/howto/config.png
 
-|
+ |
 
- 6. *Logic blocks*
+ 7. *Logic blocks*
 
     Go to the **Logic** menu and select. This menu contains **Logic Gates**, **Combinational blocks** and **Sequential flip-flops**.
 
@@ -162,7 +175,7 @@ Upload a bitstream
 
 1. **Open a project**
 
-   Go to **Edit > Open project** and select an **.ice** file.
+   Go to **Edit > Open...** and select an **.ice** file.
 
    |
 
@@ -212,23 +225,26 @@ Create a block
 
 |
 
-3. **Export the project as a block**
+2. **Add the project information**
 
-   Go to **Edit > Export as block**.
+   Go to **Edit > Preferences > Project information**.
 
-   It will be saved as an **.iceb** file.
-
-   .. image:: ../resources/images/howto/export.png
+   .. image:: ../resources/images/howto/project-info.png
 
    |
 
-.. note::
+|
 
-  Input/Output blocks will become new Block I/O pins.
+3. **Save the project**
 
+   Go to **Edit > Save as...**.
 
-Use a custom block
-------------------
+   .. image:: ../resources/images/howto/saveas.png
+
+   |
+
+Add a project as block
+----------------------
 
 1. **Open or create a new project**
 
@@ -236,9 +252,9 @@ Use a custom block
 
 2. **Import the custom block**
 
-   Go to **Edit > Import block** and select an **.iceb** file.
+   Go to **Edit > Add as block...** and select an **.ice** file.
 
-   .. image:: ../resources/images/howto/import.png
+   .. image:: ../resources/images/howto/addasblock.png
 
    |
 
