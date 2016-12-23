@@ -227,6 +227,12 @@ Any project can be added as a read-only **generic block**:
 * The *output blocks* become *output ports*
 * The *constant blocks* become *parameters*
 
+The block information is stored in **design.deps**, without the unnecessary information:
+
+* The FPGA *board* is removed
+* The FPGA *data.pins* are removed (an additional field *data.size* with the pins.length is created)
+* The *data.virtual* flag is removed
+
 E.g.: this project *block.ice*
 
 .. image:: ../resources/images/blocks/generic-project.png
