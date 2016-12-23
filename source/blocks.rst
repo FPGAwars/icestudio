@@ -186,8 +186,7 @@ E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters 
       "ports": {
         "in": [
           {
-            "name": "a",
-            "size": 1
+            "name": "a"
           }
         ],
         "out": [
@@ -230,7 +229,7 @@ Any project can be added as a read-only **generic block**:
 The block information is stored in **design.deps**, without the unnecessary information:
 
 * The FPGA *board* is removed
-* The FPGA *data.pins* are removed (an additional field *data.size* with the pins.length is created)
+* The FPGA *data.pins* are removed (an additional field *data.size* with the pins.length is created if >1)
 * The *data.virtual* flag is removed
 
 E.g.: this project *block.ice*
