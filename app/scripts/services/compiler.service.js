@@ -400,7 +400,7 @@ angular.module('icestudio')
     }
 
     function testbenchCompiler(project) {
-      var i, o, w;
+      var i, o, p;
       var code = '';
 
       code += '// Testbench template\n\n';
@@ -413,37 +413,61 @@ angular.module('icestudio')
       var content = '\n';
 
       content += '// Simulation time: 100ns (10 * 10ns)\n';
-      content += 'parameter DURATION = 10;\n\n';
+      content += 'parameter DURATION = 10;\n';
 
-      var io = mainIO(project);
-      var input = io[0];
-      var output = io[1];
+      // Parameters
+      var _params = [];
+      var params = mainParams(project);
+      if (params.length > 0) {
+        content += '\n// TODO: edit the module parameters here\n';
+        content += '// e.g. localparam constant_value = 1;\n';
+        for (p in params) {
+          content += 'localparam ' + params[p].name + ' = ' + params[p].value + ';\n';
+          _params.push(' .' + params[p].id + '(' + params[p].name + ')');
+        }
+      }
 
       // Input/Output
-      content += '// Input/Output\n';
+      var io = mainIO(project);
+      var input = io.input;
+      var output = io.output;
+      content += '\n// Input/Output\n';
+      var _ports = [];
       for (i in input) {
-        content += 'reg ' + input[i].label + ';\n';
+        content += 'reg ' + (input[i].range ? input[i].range + ' ': '') + input[i].name + ';\n';
+        _ports.push(' .' + input[i].id + '(' + input[i].name + ')');
       }
       for (o in output) {
-        content += 'wire ' + output[o].label + ';\n';
+        content += 'wire ' + (output[o].range ? output[o].range + ' ': '') + output[o].name + ';\n';
+        _ports.push(' .' + output[o].id + '(' + output[o].name + ')');
       }
-
-      var wires = input.concat(output);
 
       // Module instance
       content += '\n// Module instance\n';
-      content += 'main MAIN (\n';
-      var connections = [];
-      for (w in wires) {
-        connections.push(' .' + wires[w].id + '(' + wires[w].label + ')');
+      content += 'main';
+
+      //-- Parameters
+      if (_params.length > 0) {
+        content += ' #(\n';
+        content += _params.join(',\n');
+        content += '\n)';
       }
-      content += connections.join(',\n');
-      content += '\n);\n';
+
+      content += ' MAIN';
+
+      //-- Ports
+      if (_ports.length > 0) {
+        content += ' (\n';
+        content += _ports.join(',\n');
+        content += '\n)';
+      }
+
+      content += ';\n';
 
       // Clock signal
       var hasClk = false;
       for (i in input) {
-        if (input[i].label.toLowerCase() === 'input_clk') {
+        if (input[i].name.toLowerCase() === 'input_clk') {
           hasClk = true;
           break;
         }
@@ -461,7 +485,7 @@ angular.module('icestudio')
       content += ' // e.g. input_value = 1;\n';
       content += ' // e.g. #2 input_value = 0;\n';
       for (i in input) {
-        content += ' ' + input[i].label + ' = 0;\n';
+        content += ' ' + input[i].name + ' = 0;\n';
       }
       content += '\n';
       content += ' #(DURATION) $display("End of simulation");\n';
@@ -482,12 +506,14 @@ angular.module('icestudio')
       var code = '';
 
       var io = mainIO(project);
-      var input = io[0];
-      var output = io[1];
+      var input = io.input;
+      var output = io.output;
 
-      var wires = input.concat(output);
-      for (var w in wires) {
-        code += 'main_tb.' + wires[w].label + '\n';
+      for (var i in input) {
+        code += 'main_tb.' + input[i].name + (input[i].range ? input[i].range: '') + '\n';
+      }
+      for (var o in output) {
+        code += 'main_tb.' + output[o].name + (output[o].range ? output[o].range: '') + '\n';
       }
 
       return code;
@@ -502,26 +528,73 @@ angular.module('icestudio')
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         if (block.type === 'basic.input') {
-          if (block.data.label) {
-            input.push({ id: digestId(block.id), label: 'input_' + block.data.label.replace(' ', '_') });
+          if (block.data.name) {
+            input.push({
+              id: digestId(block.id),
+              name: 'input_' + block.data.name,
+              range: block.data.range
+            });
           }
           else {
-            input.push({ id: digestId(block.id), label: 'input_' + inputUnnamed.toString() });
+            input.push({
+              id: digestId(block.id),
+              name: 'input_' + inputUnnamed.toString(),
+            });
             inputUnnamed += 1;
           }
         }
         else if (block.type === 'basic.output') {
-          if (block.data.label) {
-            output.push({ id: digestId(block.id), label: 'output_' + block.data.label.replace(' ', '_') });
+          if (block.data.name) {
+            output.push({
+              id: digestId(block.id),
+              name: 'output_' + block.data.name,
+              range: block.data.range
+            });
           }
           else {
-            output.push({ id: digestId(block.id), label: 'output_' + outputUnnamed.toString() });
+            output.push({
+              id: digestId(block.id),
+              name: 'output_' + outputUnnamed.toString()
+            });
             outputUnnamed += 1;
           }
         }
       }
 
-      return [input, output];
+      return {
+        input: input,
+        output: output
+      };
+    }
+
+    function mainParams(project) {
+      var params = [];
+      var paramsUnnamed = 0;
+      var graph = project.design.graph;
+      for (var i in graph.blocks) {
+        var block = graph.blocks[i];
+        if (block.type === 'basic.constant') {
+          if (!block.data.local) {
+            if (block.data.name) {
+              params.push({
+                id: digestId(block.id),
+                name: 'constant_' + block.data.name,
+                value: block.data.value
+              });
+            }
+            else {
+              params.push({
+                id: digestId(block.id),
+                name: 'constant_' + paramsUnnamed.toString(),
+                value: block.data.value
+              });
+              paramsUnnamed += 1;
+            }
+          }
+        }
+      }
+
+      return params;
     }
 
   });
