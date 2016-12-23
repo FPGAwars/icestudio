@@ -19,7 +19,7 @@ File
 * **Add as block...**: add a project as a block.
 * **Save**: save the current project.
 * **Save as...**: show a save file dialog to save the current project.
-* **Export**: show a save file dialog to export
+* **Export...**: show a save file dialog to export
 
   * **Verilog**: the current verilog code file (.v).
   * **PCF**: the current pcf file (.pcf).
@@ -96,12 +96,9 @@ Help
 
 * **View license**: open the Icestudio's license in a web browser.
 * **Version**: show the current version.
-
 * **Documentation**: open the Icestudio's documentation in a web browser.
 * **Source code**: open the Icestudio's source code in a web browser.
-
 * **Community forum**: open the FPGAwars forum in a web browser.
-
 * **About Icestudio**: information about the application.
 
 Blocks menu
@@ -177,7 +174,7 @@ During the examination, pan, zoom and code navigation are enabled.
 
   The examination path is stored in the **breadcrumbs**. This allows you to go back to any previous block.
 
-Take snapshot
-`````````````
+Take a snapshot
+```````````````
 
 Taking a **png** snapshot of the application is as easy as press `Ctrl+p`. A save dialog appears to set the name and the path of the captured image.
