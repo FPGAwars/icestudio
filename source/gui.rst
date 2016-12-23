@@ -13,14 +13,12 @@ Menu
 File
 ````
 
-* **New project**: create a new project.
-* **Open project**: show a file dialog to open a project (.ice).
-* **Examples**: contains all stored examples depending on the selected board. A example is loaded as a project.
-* **Templates**: contains all stored templates. A template is loaded as a project.
-* **Save**: save the current project (.ice).
-* **Save as**: show a save file dialog to save the current project (.ice).
-* **Import block**: load a block file (.iceb) into the current project.
-* **Export as block**: show a save file dialog to export the current project as a block file (.iceb).
+* **New**: create a new project.
+* **Open...**: show a file dialog to open a project.
+* **Examples**: contains all stored examples depending on the selected board.
+* **Add as block...**: add a project as a block.
+* **Save**: save the current project.
+* **Save as...**: show a save file dialog to save the current project.
 * **Export**: show a save file dialog to export
 
   * **Verilog**: the current verilog code file (.v).
@@ -28,27 +26,33 @@ File
   * **Testbench**: an auto-generated testbench (.v).
   * **GTKWave**: a GTKWave file with all signals showed (.gtkw).
 
+* **Quit**: exit the application
+
 .. note::
 
-  When a project is exported as a block, all FPGA I/O information is removed.
+  When a project is added as a block, all FPGA information is removed before being stored.
 
 
 .. hint::
 
-  Examples and templates are stored in `app/resources/examples` and `app/resources/templates` respectively. To create a new examples/templates category just create a directory there. To create a new example/template copy and paste an **.ice** file.
+  Examples are stored in `app/resources/examples`. To create a new examples category just create a directory there. To create a new example copy and paste an **.ice** file.
 
 Edit
 ````
 
 * **Reset view**: reset pan and zoom to its default values.
-* **Clear all**: remove all blocks and wires from the graph.
 * **Clone selected**: clone the selected block. It can also be done with *Ctrl + c* key.
 * **Remove selected**: remove the selected block. It can also be done with *Ctrl + x* and *Supr* keys.
+* **Clear all**: remove all blocks and wires from the graph.
 * **Preferences**:
 
-  * **Image path**: set the project's relative image path. This image will be shown in the exported block. For example, a valid value can be: 'resources/images/and.svg'.
+  * **Project information**: show a menu to edit the information of the project.
   * **Remote hostname**: set the hostame of a remote device with a FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
   * **Language**: select the application language: English, Spanish, Galician, Basque and French. This selection is stored in the app profile.
+
+.. note::
+
+  The Project information contains the name, version, description, author and image of the project.
 
 View
 ````
@@ -108,16 +112,26 @@ Basic
 
 It contains the basic blocks:
 
-* **Code**: code block. Ports are asked in a prompt dialog.
-* **Info**: info block. Text box for comments and notes.
-* **Input**: input block. Block name is asked in a prompt dialog.
-* **Output**: output block. Block name is asked in a prompt dialog.
+* **Input**: show a dialog to insert the name and type of the input block.
+* **Output**: show a dialog to insert the name and type of the output block.
+* **Constant**: show a dialog to insert the name and type of the constant block.
+* **Code**: show a dialog to insert the ports and parameters of the code block.
+* **Info**: create an empty text box block.
 
 .. note::
 
-  Multiple **input** and **output** blocks can be created using the `comma` separator. For example: ``x, y, z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
-  Double click over **input** and **output** blocks allows to modify the block label.
-  In **code** block ports definition,  multiple *input* and *output* ports can be created also using the `comma` separator.
+  **Input** and **output** ports can be set to **virtual**. Virtual ports allow to easily visualize independent-FPGA projects.
+  Also, they can be configured as a **bus** by adding the notation ``[x:y]`` to the port name.
+
+.. note::
+
+  **Constant** blocks can be set to **local**. Local parameters are not exposed when the project is added as a block.
+
+.. hint::
+
+  Multiple **input**, **output** and **constant** blocks can be created using the `comma` separator. For example: ``x, y, z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
+  Double click over **input**, **output** or **constant** block allows to modify the block name and type.
+  In **code** block ports definition, multiple *input* and *output* ports, and *parameters*, can be created also using the `comma` separator.
 
 Stored blocks
 `````````````
@@ -126,7 +140,7 @@ It contains all stored blocks sorted by categories. These menu is generated when
 
 .. hint::
 
-  Blocks are stored in `app/resources/blocks`. To create a new block category just create a directory there. To create a new block copy and paste an **.iceb** file.
+  Blocks are stored in `app/resources/blocks`. To create a new block category just create a directory there. To create a new block copy and paste an **.ice** file.
 
 
 Graph
