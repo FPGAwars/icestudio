@@ -1,4 +1,4 @@
 _build/*
-compiler/node_modules/*
 *.out
+*.vcd
 *.sconsign.dblite
