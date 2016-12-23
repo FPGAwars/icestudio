@@ -75,15 +75,15 @@ msgstr "Básico"
 msgid "Basque"
 msgstr "Euskera"
 
-#: app/scripts/services/blocks.service.js:674
-#: app/scripts/services/blocks.service.js:683
-#: app/scripts/services/blocks.service.js:713
-#: app/scripts/services/blocks.service.js:730
+#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:703
+#: app/scripts/services/blocks.service.js:733
+#: app/scripts/services/blocks.service.js:750
 #, fuzzy
 msgid "Block updated"
 msgstr "Etiqueta actualizada"
 
-#: app/scripts/services/project.service.js:293
+#: app/scripts/services/project.service.js:284
 msgid "Block {{name}} imported"
 msgstr "Bloque {{name}} importado"
 
@@ -277,7 +277,7 @@ msgstr "Portos E/S da FPGA non definidos"
 msgid "File"
 msgstr "Ficheiro"
 
-#: app/scripts/services/project.service.js:241
+#: app/scripts/services/project.service.js:239
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -286,7 +286,7 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "O ficheiro {{file}} non existe"
 
-#: app/scripts/services/project.service.js:273
+#: app/scripts/services/project.service.js:271
 msgid "File {{file}} imported"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgid "Invalid connection"
 msgstr ""
 
 #: app/scripts/services/graph.service.js:168
-msgid "Invalid connection:  →"
+msgid "Invalid connection: {{a}} → {{b}}"
 msgstr ""
 
 #: app/scripts/services/graph.service.js:126
@@ -380,7 +380,7 @@ msgid "Language"
 msgstr "Idioma"
 
 #: app/scripts/services/blocks.service.js:127
-#: app/scripts/services/blocks.service.js:697
+#: app/scripts/services/blocks.service.js:717
 msgid "Local parameter"
 msgstr ""
 
@@ -404,7 +404,7 @@ msgstr "Novo proxecto {{name}} creado"
 msgid "OK"
 msgstr ""
 
-#: app/scripts/services/project.service.js:188
+#: app/scripts/services/project.service.js:186
 #: app/scripts/services/project.service.js:60
 #, fuzzy
 msgid "Old project format"
@@ -418,7 +418,7 @@ msgstr ""
 msgid "Open SVG"
 msgstr ""
 
-#: app/scripts/services/project.service.js:276
+#: app/scripts/services/project.service.js:274
 msgid "Original file {{file}} does not exist"
 msgstr ""
 
@@ -442,7 +442,7 @@ msgstr ""
 msgid "Project {{name}} loaded"
 msgstr "Proxecto {{name}} cargado"
 
-#: app/scripts/services/project.service.js:160
+#: app/scripts/services/project.service.js:158
 msgid "Project {{name}} saved"
 msgstr "Proxecto {{name}} gardado"
 
@@ -548,7 +548,7 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/project.service.js:210
+#: app/scripts/services/project.service.js:208
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -588,12 +588,12 @@ msgstr "Placa desconocida"
 msgid "Update"
 msgstr ""
 
-#: app/scripts/services/blocks.service.js:696
+#: app/scripts/services/blocks.service.js:716
 #, fuzzy
 msgid "Update the block label"
 msgstr "Introduza a etiqueta para o bloque"
 
-#: app/scripts/services/blocks.service.js:644
+#: app/scripts/services/blocks.service.js:649
 msgid "Update the port"
 msgstr ""
 
@@ -622,7 +622,7 @@ msgid "View license"
 msgstr "Ver licenza"
 
 #: app/scripts/services/blocks.service.js:58
-#: app/scripts/services/blocks.service.js:645
+#: app/scripts/services/blocks.service.js:650
 msgid "Virtual port"
 msgstr ""
 
@@ -638,7 +638,7 @@ msgstr "Formato de proxecto incorrecto: {{name}}\""
 
 #: app/scripts/services/blocks.service.js:233
 #: app/scripts/services/blocks.service.js:248
-#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:708
 #: app/scripts/services/blocks.service.js:77
 #, fuzzy
 msgid "Wrong port name {{name}}"
@@ -677,12 +677,12 @@ msgid "config"
 msgstr "Config"
 
 #. contadorAsc
-#: app/resources/blocks/labels.js:60
+#: app/resources/examples/labels.js:12
 msgid "contadorAsc"
 msgstr ""
 
 #. contadorDes
-#: app/resources/blocks/labels.js:62
+#: app/resources/examples/labels.js:14
 msgid "contadorDes"
 msgstr ""
 

@@ -65,13 +65,12 @@ msgid "Add a block to start"
 msgstr "Añade un bloque para comenzar"
 
 #: app/views/menu.html:50
-#, fuzzy
 msgid "Add as block"
-msgstr "Añade un bloque para comenzar"
+msgstr "Añadir como bloque"
 
 #: app/scripts/services/utils.service.js:668
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: app/views/menu.html:270
 msgid "Basic"
@@ -81,15 +80,14 @@ msgstr "Básico"
 msgid "Basque"
 msgstr "Euskera"
 
-#: app/scripts/services/blocks.service.js:674
-#: app/scripts/services/blocks.service.js:683
-#: app/scripts/services/blocks.service.js:713
-#: app/scripts/services/blocks.service.js:730
-#, fuzzy
+#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:703
+#: app/scripts/services/blocks.service.js:733
+#: app/scripts/services/blocks.service.js:750
 msgid "Block updated"
-msgstr "Etiqueta actualizada"
+msgstr "Bloque actualizado"
 
-#: app/scripts/services/project.service.js:293
+#: app/scripts/services/project.service.js:284
 msgid "Block {{name}} imported"
 msgstr "Bloque {{name}} importado"
 
@@ -139,7 +137,7 @@ msgstr "Foro de la comunidad"
 
 #: app/views/menu.html:275
 msgid "Constant"
-msgstr ""
+msgstr "Constante"
 
 #: app/views/menu.html:165
 msgid "Datasheet"
@@ -155,7 +153,7 @@ msgstr ""
 
 #: app/scripts/services/utils.service.js:667
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: app/views/menu.html:230
 msgid "Disable"
@@ -166,9 +164,8 @@ msgid "Do you want to clear all?"
 msgstr "¿Deseas borrar todo?"
 
 #: app/scripts/controllers/menu.js:192
-#, fuzzy
 msgid "Do you want to exit the application?"
-msgstr "¿Deseas eliminar el bloque seleccionado?"
+msgstr "¿Deseas salir de la aplicación?"
 
 #: app/scripts/controllers/menu.js:213
 msgid "Do you want to remove the selected block?"
@@ -198,7 +195,7 @@ msgstr "Puertos E/S de la FPGA duplicados"
 
 #: app/scripts/services/blocks.service.js:314
 msgid "Duplicated block attributes"
-msgstr ""
+msgstr "Atributos del bloque duplicados"
 
 #: app/views/menu.html:85
 msgid "Edit"
@@ -213,9 +210,8 @@ msgid "English"
 msgstr "Inglés"
 
 #: app/scripts/services/blocks.service.js:126
-#, fuzzy
 msgid "Enter the constant blocks"
-msgstr "Introduce los puertos de salida"
+msgstr "Introduce los bloques constante"
 
 #: app/scripts/services/blocks.service.js:213
 msgid "Enter the input ports"
@@ -226,19 +222,16 @@ msgid "Enter the output ports"
 msgstr "Introduce los puertos de salida"
 
 #: app/scripts/services/blocks.service.js:215
-#, fuzzy
 msgid "Enter the parameters"
-msgstr "Introduce los puertos de entrada"
+msgstr "Introduce los parámetros"
 
 #: app/scripts/services/blocks.service.js:57
-#, fuzzy
 msgid "Enter the ports"
-msgstr "Introduce los puertos de entrada"
+msgstr "Introduce los puertos"
 
 #: app/scripts/controllers/menu.js:73
-#, fuzzy
 msgid "Enter the project name"
-msgstr "Introduce el título del proyecto"
+msgstr "Introduce el nombre del proyecto"
 
 #: app/scripts/controllers/menu.js:249
 msgid "Enter the remote hostname user@host (experimental)"
@@ -285,7 +278,7 @@ msgstr "Puertos E/S de la FPGA no definidos"
 msgid "File"
 msgstr "Archivo"
 
-#: app/scripts/services/project.service.js:241
+#: app/scripts/services/project.service.js:239
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -296,7 +289,7 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "El archivo {{file}} no existe"
 
-#: app/scripts/services/project.service.js:273
+#: app/scripts/services/project.service.js:271
 msgid "File {{file}} imported"
 msgstr "Archivo {{file}} importado"
 
@@ -321,9 +314,8 @@ msgid "Homebrew is required"
 msgstr "Es necesario Homebrew"
 
 #: app/scripts/services/utils.service.js:681
-#, fuzzy
 msgid "Image"
-msgstr "Ruta de la imagen"
+msgstr "Imagen"
 
 #: app/scripts/controllers/menu.js:309
 msgid "Image {{name}} saved"
@@ -380,9 +372,8 @@ msgid "Invalid connection"
 msgstr "Conexión no válida"
 
 #: app/scripts/services/graph.service.js:168
-#, fuzzy
-msgid "Invalid connection:  →"
-msgstr "Conexión no válida"
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Conexión no válida: {{a}} → {{b}}"
 
 #: app/scripts/services/graph.service.js:126
 msgid "Invalid multiple input connections"
@@ -393,9 +384,9 @@ msgid "Language"
 msgstr "Idioma"
 
 #: app/scripts/services/blocks.service.js:127
-#: app/scripts/services/blocks.service.js:697
+#: app/scripts/services/blocks.service.js:717
 msgid "Local parameter"
-msgstr ""
+msgstr "Parámetro local"
 
 #: app/scripts/services/tools.service.js:454
 msgid "Make virtual env..."
@@ -403,11 +394,11 @@ msgstr "Crear virtual env..."
 
 #: app/scripts/services/utils.service.js:665
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: app/views/menu.html:27
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: app/scripts/services/project.service.js:44
 msgid "New project {{name}} created"
@@ -417,21 +408,20 @@ msgstr "Nuevo proyecto {{name}} creado"
 msgid "OK"
 msgstr "OK"
 
-#: app/scripts/services/project.service.js:188
+#: app/scripts/services/project.service.js:186
 #: app/scripts/services/project.service.js:60
-#, fuzzy
 msgid "Old project format"
-msgstr "Formato de proyecto incorrecto: {{name}}"
+msgstr "Formato de proyecto antiguo"
 
 #: app/views/menu.html:30
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: app/scripts/services/utils.service.js:688
 msgid "Open SVG"
-msgstr ""
+msgstr "Abrir SVG"
 
-#: app/scripts/services/project.service.js:276
+#: app/scripts/services/project.service.js:274
 msgid "Original file {{file}} does not exist"
 msgstr "El archivo original {{file}} no existe"
 
@@ -449,13 +439,13 @@ msgstr "Preferencias"
 
 #: app/views/menu.html:105
 msgid "Project information"
-msgstr ""
+msgstr "Información del proyecto"
 
 #: app/scripts/services/project.service.js:64
 msgid "Project {{name}} loaded"
 msgstr "Proyecto {{name}} cargado"
 
-#: app/scripts/services/project.service.js:160
+#: app/scripts/services/project.service.js:158
 msgid "Project {{name}} saved"
 msgstr "Proyecto {{name}} guardado"
 
@@ -465,7 +455,7 @@ msgstr "Es necesario Python 2.7"
 
 #: app/views/menu.html:79
 msgid "Quit"
-msgstr ""
+msgstr "Salir"
 
 #: app/views/design.html:4
 msgid "Read only"
@@ -488,9 +478,8 @@ msgid "Remove selected"
 msgstr "Eliminar seleccionado"
 
 #: app/scripts/services/utils.service.js:690
-#, fuzzy
 msgid "Reset SVG"
-msgstr "Resetear vista"
+msgstr "Resetear SVG"
 
 #: app/views/menu.html:213
 msgid "Reset default"
@@ -505,9 +494,8 @@ msgid "Save"
 msgstr "Guardar"
 
 #: app/scripts/services/utils.service.js:689
-#, fuzzy
 msgid "Save SVG"
-msgstr "Guardar como"
+msgstr "Guardar SVG"
 
 #: app/views/menu.html:57
 msgid "Save as"
@@ -564,7 +552,7 @@ msgstr ""
 "La toolchain será actualizada. Esta operación requiere conexión a Internet. "
 "¿Deseas continuar?"
 
-#: app/scripts/services/project.service.js:210
+#: app/scripts/services/project.service.js:208
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -606,15 +594,13 @@ msgstr "Placa desconocida"
 msgid "Update"
 msgstr "Actualizar"
 
-#: app/scripts/services/blocks.service.js:696
-#, fuzzy
+#: app/scripts/services/blocks.service.js:716
 msgid "Update the block label"
-msgstr "Actualizar la etiqueta del puerto"
+msgstr "Actualizar la etiqueta del bloque"
 
-#: app/scripts/services/blocks.service.js:644
-#, fuzzy
+#: app/scripts/services/blocks.service.js:649
 msgid "Update the port"
-msgstr "Actualizar la etiqueta del puerto"
+msgstr "Actualizar el puerto"
 
 #: app/views/menu.html:192
 msgid "Upload"
@@ -641,9 +627,9 @@ msgid "View license"
 msgstr "Ver licencia"
 
 #: app/scripts/services/blocks.service.js:58
-#: app/scripts/services/blocks.service.js:645
+#: app/scripts/services/blocks.service.js:650
 msgid "Virtual port"
-msgstr ""
+msgstr "Puerto virtual"
 
 #: app/scripts/services/blocks.service.js:348
 msgid "Wrong block format: {{type}}"
@@ -651,17 +637,15 @@ msgstr "Formato de bloque incorrecto: {{type}}"
 
 #: app/scripts/services/blocks.service.js:146
 #: app/scripts/services/blocks.service.js:263
-#, fuzzy
 msgid "Wrong parameter name {{name}}"
-msgstr "Nombre del host remoto incorrecto {{name}}"
+msgstr "Nombre del parámetro {{name}} incorrecto"
 
 #: app/scripts/services/blocks.service.js:233
 #: app/scripts/services/blocks.service.js:248
-#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:708
 #: app/scripts/services/blocks.service.js:77
-#, fuzzy
 msgid "Wrong port name {{name}}"
-msgstr "Nombre del host remoto incorrecto {{name}}"
+msgstr "Nombre del puerto {{name}} incorrecto"
 
 #: app/scripts/services/project.service.js:72
 msgid "Wrong project format: {{name}}"
@@ -696,14 +680,14 @@ msgid "config"
 msgstr "Config"
 
 #. contadorAsc
-#: app/resources/blocks/labels.js:60
+#: app/resources/examples/labels.js:12
 msgid "contadorAsc"
-msgstr ""
+msgstr "Contador ascendente"
 
 #. contadorDes
-#: app/resources/blocks/labels.js:62
+#: app/resources/examples/labels.js:14
 msgid "contadorDes"
-msgstr ""
+msgstr "Contador descendente"
 
 #. Debouncer
 #: app/resources/blocks/labels.js:58

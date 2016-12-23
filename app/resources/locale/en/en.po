@@ -15,7 +15,7 @@ msgstr ""
 #. 1. Basic
 #: app/resources/examples/labels.js:4
 msgid "1_basic"
-msgstr "1_basic"
+msgstr "1. Basic"
 
 #. 1. Led on
 #: app/resources/examples/labels.js:6
@@ -79,14 +79,14 @@ msgstr "Basic"
 msgid "Basque"
 msgstr "Basque"
 
-#: app/scripts/services/blocks.service.js:674
-#: app/scripts/services/blocks.service.js:683
-#: app/scripts/services/blocks.service.js:713
-#: app/scripts/services/blocks.service.js:730
+#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:703
+#: app/scripts/services/blocks.service.js:733
+#: app/scripts/services/blocks.service.js:750
 msgid "Block updated"
 msgstr "Block updated"
 
-#: app/scripts/services/project.service.js:293
+#: app/scripts/services/project.service.js:284
 msgid "Block {{name}} imported"
 msgstr "Block {{name}} imported"
 
@@ -277,7 +277,7 @@ msgstr "FPGA I/O ports not defined"
 msgid "File"
 msgstr "File"
 
-#: app/scripts/services/project.service.js:241
+#: app/scripts/services/project.service.js:239
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -287,7 +287,7 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "File {{file}} does not exist"
 
-#: app/scripts/services/project.service.js:273
+#: app/scripts/services/project.service.js:271
 msgid "File {{file}} imported"
 msgstr "File {{file}} imported"
 
@@ -368,8 +368,8 @@ msgid "Invalid connection"
 msgstr "Invalid connection"
 
 #: app/scripts/services/graph.service.js:168
-msgid "Invalid connection:  →"
-msgstr "Invalid connection:  →"
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Invalid connection: {{a}} → {{b}}"
 
 #: app/scripts/services/graph.service.js:126
 msgid "Invalid multiple input connections"
@@ -380,7 +380,7 @@ msgid "Language"
 msgstr "Language"
 
 #: app/scripts/services/blocks.service.js:127
-#: app/scripts/services/blocks.service.js:697
+#: app/scripts/services/blocks.service.js:717
 msgid "Local parameter"
 msgstr "Local parameter"
 
@@ -404,7 +404,7 @@ msgstr "New project {{name}} created"
 msgid "OK"
 msgstr "OK"
 
-#: app/scripts/services/project.service.js:188
+#: app/scripts/services/project.service.js:186
 #: app/scripts/services/project.service.js:60
 msgid "Old project format"
 msgstr "Old project format"
@@ -417,7 +417,7 @@ msgstr "Open"
 msgid "Open SVG"
 msgstr "Open SVG"
 
-#: app/scripts/services/project.service.js:276
+#: app/scripts/services/project.service.js:274
 msgid "Original file {{file}} does not exist"
 msgstr "Original file {{file}} does not exist"
 
@@ -441,7 +441,7 @@ msgstr "Project information"
 msgid "Project {{name}} loaded"
 msgstr "Project {{name}} loaded"
 
-#: app/scripts/services/project.service.js:160
+#: app/scripts/services/project.service.js:158
 msgid "Project {{name}} saved"
 msgstr "Project {{name}} saved"
 
@@ -549,7 +549,7 @@ msgstr ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
 
-#: app/scripts/services/project.service.js:210
+#: app/scripts/services/project.service.js:208
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -591,11 +591,11 @@ msgstr "Unknown board"
 msgid "Update"
 msgstr "Update"
 
-#: app/scripts/services/blocks.service.js:696
+#: app/scripts/services/blocks.service.js:716
 msgid "Update the block label"
 msgstr "Update the block label"
 
-#: app/scripts/services/blocks.service.js:644
+#: app/scripts/services/blocks.service.js:649
 msgid "Update the port"
 msgstr "Update the port"
 
@@ -624,7 +624,7 @@ msgid "View license"
 msgstr "View license"
 
 #: app/scripts/services/blocks.service.js:58
-#: app/scripts/services/blocks.service.js:645
+#: app/scripts/services/blocks.service.js:650
 msgid "Virtual port"
 msgstr "Virtual port"
 
@@ -639,7 +639,7 @@ msgstr "Wrong parameter name {{name}}"
 
 #: app/scripts/services/blocks.service.js:233
 #: app/scripts/services/blocks.service.js:248
-#: app/scripts/services/blocks.service.js:688
+#: app/scripts/services/blocks.service.js:708
 #: app/scripts/services/blocks.service.js:77
 msgid "Wrong port name {{name}}"
 msgstr "Wrong port name {{name}}"
@@ -677,12 +677,12 @@ msgid "config"
 msgstr "Config"
 
 #. contadorAsc
-#: app/resources/blocks/labels.js:60
+#: app/resources/examples/labels.js:12
 msgid "contadorAsc"
 msgstr "contadorAsc"
 
 #. contadorDes
-#: app/resources/blocks/labels.js:62
+#: app/resources/examples/labels.js:14
 msgid "contadorDes"
 msgstr "contadorDes"
 
