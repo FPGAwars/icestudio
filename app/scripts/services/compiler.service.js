@@ -531,7 +531,7 @@ angular.module('icestudio')
           if (block.data.name) {
             input.push({
               id: digestId(block.id),
-              name: 'input_' + block.data.name,
+              name: 'input_' + block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
@@ -547,7 +547,7 @@ angular.module('icestudio')
           if (block.data.name) {
             output.push({
               id: digestId(block.id),
-              name: 'output_' + block.data.name,
+              name: 'output_' + block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
@@ -578,7 +578,7 @@ angular.module('icestudio')
             if (block.data.name) {
               params.push({
                 id: digestId(block.id),
-                name: 'constant_' + block.data.name,
+                name: 'constant_' + block.data.name.replace(/ /g, '_'),
                 value: block.data.value
               });
             }
