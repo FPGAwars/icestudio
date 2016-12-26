@@ -83,8 +83,8 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
+| Basque     | ![Progress](http://progressed.io/bar/100)  |
 | French     | ![Progress](http://progressed.io/bar/81)   |
-| Basque     | ![Progress](http://progressed.io/bar/56)   |
 | Galician   | ![Progress](http://progressed.io/bar/54)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
