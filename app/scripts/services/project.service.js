@@ -295,7 +295,7 @@ angular.module('icestudio')
         if (block.design.graph.blocks[i].type === 'basic.input' ||
             block.design.graph.blocks[i].type === 'basic.output') {
           pins = block.design.graph.blocks[i].data.pins;
-          block.design.graph.blocks[i].data.size = (pins.length > 1) ? pins.length : undefined;
+          block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
           delete block.design.graph.blocks[i].data.pins;
           delete block.design.graph.blocks[i].data.virtual;
         }
