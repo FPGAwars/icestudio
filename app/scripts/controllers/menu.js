@@ -283,11 +283,19 @@ angular.module('icestudio')
     $(document).on('keydown', function(event) {
       if (graph.isEnabled() && !promptShown) {
         if (event.keyCode === 46 || // Supr
-            (event.keyCode === 88 && event.ctrlKey)) { // Ctrl + x
+           (event.ctrlKey && event.keyCode === 88)) { // Ctrl + X
           $scope.removeSelected();
         }
-        else if (event.keyCode === 67 && event.ctrlKey) { // Ctrl + c
+        else if (event.ctrlKey && event.keyCode === 67) { // Ctrl + C
           $scope.cloneSelected();
+        }
+        else if (event.ctrlKey && event.keyCode === 90) {
+          if (event.shiftKey) { // Ctrl + Shift + Z
+            $scope.redoGraph();
+          }
+          else { // Ctrl + Z
+            $scope.undoGraph();
+          }
         }
         if (process.platform === 'darwin') {
           if (event.keyCode === 8) { // Back
@@ -295,7 +303,7 @@ angular.module('icestudio')
           }
         }
       }
-      if (event.keyCode === 80 && event.ctrlKey) { // Ctrl + p
+      if (event.ctrlKey && event.keyCode === 80) { // Ctrl + P
         // Print and save a window snapshot
         takeSnapshot();
       }

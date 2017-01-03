@@ -52,6 +52,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
+    if (cmdName === 'change:labels') {
+      return;
+    }
+
     if (!this.get('cmdNameRegex').test(cmdName)) {
       return;
     }
