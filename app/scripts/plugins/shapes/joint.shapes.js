@@ -572,6 +572,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.getSession().on("change", function () {\
             $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
           });\
+          ' + editorLabel + '.on("focus", function() {\
+            $(document).trigger("disableSelected");\
+          });\
           $("#' + blockLabel + '").resize(function () {\
             ' + editorLabel + '.resize();\
           });\
@@ -682,6 +685,9 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.getSession().on("change", function () {\
             $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
+          });\
+          ' + editorLabel + '.on("focus", function() {\
+            $(document).trigger("disableSelected");\
           });\
           $("#' + blockLabel + '").resize(function () {\
             ' + editorLabel + '.resize();\

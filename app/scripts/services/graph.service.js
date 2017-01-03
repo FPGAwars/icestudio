@@ -377,10 +377,12 @@ angular.module('icestudio')
     };
 
     this.undo = function() {
+      disableSelected();
       commandManager.undo();
     };
 
     this.redo = function() {
+      disableSelected();
       commandManager.redo();
     };
 
@@ -518,6 +520,17 @@ angular.module('icestudio')
         });
       }
     };
+
+    $(document).on('disableSelected', function() {
+      disableSelected();
+    });
+
+    function disableSelected() {
+      if (selection) {
+        selection.reset();
+        selectionView.cancelSelection();
+      }
+    }
 
     function typeInGraph(type) {
       var cells = graph.getCells();
