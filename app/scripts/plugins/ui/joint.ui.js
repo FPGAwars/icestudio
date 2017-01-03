@@ -2,7 +2,7 @@
 
 Copyright (c) 2013 client IO
 
-Adapted to Icestudio Project. 2016
+Adapted to Icestudio Project. 2016-2017
 
 This Source Code Form is subject to the terms of the JointJS+ License
 , v. 1.0. If a copy of the JointJS+ License was not distributed with this

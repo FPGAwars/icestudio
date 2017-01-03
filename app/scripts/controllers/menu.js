@@ -199,8 +199,12 @@ angular.module('icestudio')
 
     //-- Edit
 
-    $scope.resetView = function() {
-      graph.resetState();
+    $scope.undoGraph = function() {
+      graph.undo();
+    };
+
+    $scope.redoGraph = function() {
+      graph.redo();
     };
 
     $scope.cloneSelected = function() {
@@ -224,6 +228,10 @@ angular.module('icestudio')
           project.clear();
         });
       }, function() {});
+    };
+
+    $scope.resetView = function() {
+      graph.resetState();
     };
 
     $scope.setProjectInformation = function() {

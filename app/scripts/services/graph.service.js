@@ -17,6 +17,7 @@ angular.module('icestudio')
     var paper = null;
     var selection = null;
     var selectionView = null;
+    var commandManager = null;
 
     var dependencies = {};
     this.breadcrumbs = [{ name: '' }];
@@ -226,6 +227,14 @@ angular.module('icestudio')
         }
       });
 
+      // Command Manager
+
+      commandManager = new joint.dia.CommandManager({
+        graph: graph
+      });
+
+      // Selection View
+
      selection = new Backbone.Collection();
      selectionView = new joint.ui.SelectionView({
        paper: paper,
@@ -365,6 +374,14 @@ angular.module('icestudio')
           }*/
         }
       });
+    };
+
+    this.undo = function() {
+      commandManager.undo();
+    };
+
+    this.redo = function() {
+      commandManager.redo();
     };
 
     this.clearAll = function() {

@@ -85,7 +85,10 @@
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li>
-                <a href ng-click="resetView()">{{ 'Reset view' | translate }}</a>
+                <a href ng-click="undoGraph()">{{ 'Undo' | translate }}</a>
+              </li>
+              <li>
+                <a href ng-click="redoGraph()">{{ 'Redo' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -96,6 +99,10 @@
               </li>
               <li>
                 <a href ng-click="clearGraph()">{{ 'Clear all' | translate }}</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="resetView()">{{ 'Reset view' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
