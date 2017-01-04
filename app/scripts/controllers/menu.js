@@ -220,7 +220,9 @@ angular.module('icestudio')
     };
 
     $scope.selectAll = function() {
-      // TODO:
+      checkGraph(function() {
+        graph.selectAll();
+      });
     };
 
     function removeSelected() {

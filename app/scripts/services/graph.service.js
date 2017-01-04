@@ -389,7 +389,6 @@ angular.module('icestudio')
     this.clearAll = function() {
       graph.clear();
       this.appEnable(true);
-      selection.reset();
       selectionView.cancelSelection();
     };
 
@@ -499,6 +498,19 @@ angular.module('icestudio')
       }
     };
 
+    this.selectAll = function() {
+      disableSelected();
+      var cells = graph.getCells();
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          selection.add(cell);
+          selectionView.createSelectionBox(cellView);
+          cellView.$box.removeClass('highlight');
+        }
+      });
+    };
+
     this.hasSelection = function() {
       return selection.length > 0;
     };
@@ -506,8 +518,6 @@ angular.module('icestudio')
     this.removeSelected = function(removeDep) {
       if (selection) {
         selection.each(function(cell) {
-          selection.reset(selection.without(cell));
-          selectionView.cancelSelection();
           var type = cell.attributes.blockType;
           cell.remove();
           if (!typeInGraph(type)) {
@@ -518,6 +528,7 @@ angular.module('icestudio')
             }
           }
         });
+        selectionView.cancelSelection();
       }
     };
 
@@ -527,7 +538,6 @@ angular.module('icestudio')
 
     function disableSelected() {
       if (selection) {
-        selection.reset();
         selectionView.cancelSelection();
       }
     }
@@ -597,6 +607,9 @@ angular.module('icestudio')
 
           self.appEnable(!disabled);
           $('body').removeClass('waiting');
+
+          // TODO: reset undo after loading a design?
+          commandManager.reset();
 
           if (callback) {
             callback();
