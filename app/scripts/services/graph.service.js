@@ -474,6 +474,18 @@ angular.module('icestudio')
       }
     };
 
+    this.cutSelected = function() {
+      // TODO:
+    };
+
+    this.copySelected = function() {
+      // TODO:
+    };
+
+    this.pasteSelected = function() {
+      // TODO:
+    };
+
     this.cloneSelected = function() {
       var self = this;
       if (selection) {
@@ -539,6 +551,33 @@ angular.module('icestudio')
     function disableSelected() {
       if (selection) {
         selectionView.cancelSelection();
+      }
+    }
+
+    var stepValue = 8;
+
+    this.stepLeft = function() {
+      step({ x: -stepValue, y: 0 });
+    };
+
+    this.stepUp = function() {
+      step({ x: 0, y: -stepValue });
+    };
+
+    this.stepRight = function() {
+      step({ x: stepValue, y: 0 });
+    };
+
+    this.stepDown = function() {
+      step({ x: 0, y: stepValue });
+    };
+
+    function step(offset) {
+      if (selection) {
+        selection.each(function(cell) {
+          cell.translate(offset.x, offset.y);
+          selectionView.updateBox(cell);
+        });
       }
     }
 

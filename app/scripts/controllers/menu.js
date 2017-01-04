@@ -208,15 +208,19 @@ angular.module('icestudio')
     };
 
     $scope.cutSelected = function() {
-      // TODO:
+      if (graph.hasSelection()) {
+        graph.cutSelected();
+      }
     };
 
     $scope.copySelected = function() {
-      // TODO:
+      if (graph.hasSelection()) {
+        graph.copySelected();
+      }
     };
 
     $scope.pasteSelected = function() {
-      // TODO:
+      graph.pasteSelected();
     };
 
     $scope.selectAll = function() {
@@ -284,6 +288,8 @@ angular.module('icestudio')
       }
     });
 
+    // Shortcuts
+
     $(document).on('keydown', function(event) {
       if (graph.isEnabled() && !promptShown) {
         if (event.ctrlKey) {
@@ -338,6 +344,29 @@ angular.module('icestudio')
               $scope.uploadCode();
               break;
           }
+        }
+
+        switch (event.keyCode) {
+          case 37: // Arrow Left
+            if (graph.hasSelection()) {
+              graph.stepLeft();
+            }
+            break;
+          case 38: // Arrow Up
+            if (graph.hasSelection()) {
+              graph.stepUp();
+            }
+            break;
+          case 39: // Arrow Right
+            if (graph.hasSelection()) {
+              graph.stepRight();
+            }
+            break;
+          case 40: // Arrow Down
+            if (graph.hasSelection()) {
+              graph.stepDown();
+            }
+            break;
         }
 
         if (event.keyCode === 46) { // Supr
