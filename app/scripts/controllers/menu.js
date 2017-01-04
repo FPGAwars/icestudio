@@ -213,11 +213,10 @@ angular.module('icestudio')
 
     $scope.removeSelected = function() {
       if (graph.hasSelection()) {
-        // TODO: don't show again checkbox
-        alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
-          function() {
-            project.removeSelected();
-        });
+        //alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
+          //function() {
+        project.removeSelected();
+        //});
       }
     };
 
