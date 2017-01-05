@@ -84,28 +84,34 @@
 
 .generic-block .tooltiptext {
   visibility: hidden;
-  width: 240px;
-  background-color: black;
-  color: #fff;
+  width: 120px;
+  color: #333;
+  background-color: white;
+  border: 1px solid #888;
   text-align: center;
   border-radius: 5px;
   padding: 5px 5px;
   position: absolute;
-  z-index: 1501;
-  bottom: 130%;
+  bottom: 100%;
+  margin-bottom: 16px;
   left: 50%;
-  margin-left: -120px;
+  margin-left: -60px;
 }
 
 .generic-block .tooltiptext::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
+  margin-left: -6px;
+  border-width: 6px;
   border-style: solid;
-  border-color: black transparent transparent transparent;
+  border-color: #888 transparent transparent transparent;
+}
+
+.generic-block .tooltip-large {
+  width: 240px;
+  margin-left: -120px;
 }
 
 .config-block {

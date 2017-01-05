@@ -296,23 +296,34 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   enter: false,
   down: false,
+  timer: null,
 
   mouseovercard: function(/*evt, x, y*/) {
     if (this.tooltip) {
       this.enter = true;
       var self = this;
-      setTimeout(function() {
+      this.timer = setTimeout(function() {
         if (self.enter && !self.down) {
           self.tooltiptext.text(self.tooltip);
           self.tooltiptext.css('visibility', 'visible');
+          if (self.tooltip.length > 30) {
+            self.tooltiptext.addClass('tooltip-large');
+          }
+          else {
+            self.tooltiptext.removeClass('tooltip-large');
+          }
         }
-      }, 1500);
+      }, 1000);
     }
   },
 
   mouseoutcard: function(/*evt, x, y*/) {
     if (this.tooltip) {
       this.enter = false;
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
       this.tooltiptext.css('visibility', 'hidden');
     }
   },
