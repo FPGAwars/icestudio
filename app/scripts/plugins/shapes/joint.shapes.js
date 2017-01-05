@@ -288,8 +288,8 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   ',
 
   events: {
-    'mouseenter': 'mouseentercard',
-    'mouseleave': 'mouseleavecard',
+    'mouseover': 'mouseovercard',
+    'mouseout': 'mouseoutcard',
     'mouseup': 'mouseupcard',
     'mousedown': 'mousedowncard'
   },
@@ -297,7 +297,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   enter: false,
   down: false,
 
-  mouseentercard: function(/*evt, x, y*/) {
+  mouseovercard: function(/*evt, x, y*/) {
     if (this.tooltip) {
       this.enter = true;
       var self = this;
@@ -310,7 +310,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  mouseleavecard: function(/*evt, x, y*/) {
+  mouseoutcard: function(/*evt, x, y*/) {
     if (this.tooltip) {
       this.enter = false;
       this.tooltiptext.css('visibility', 'hidden');
@@ -323,7 +323,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   mousedowncard: function(/*evt, x, y*/) {
     this.down = true;
-    this.mouseleavecard();
+    this.mouseoutcard();
   },
 
   initialize: function() {

@@ -84,17 +84,17 @@
 
 .generic-block .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: 240px;
   background-color: black;
   color: #fff;
   text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
+  border-radius: 5px;
+  padding: 5px 5px;
   position: absolute;
-  z-index: 1;
-  bottom: 150%;
+  z-index: 1501;
+  bottom: 130%;
   left: 50%;
-  margin-left: -60px;
+  margin-left: -120px;
 }
 
 .generic-block .tooltiptext::after {
