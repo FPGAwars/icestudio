@@ -6,10 +6,10 @@ var sha1 = require('sha1');
 const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
 
 if (DARWIN) {
-  var fontSize = '12';
+  var aceFontSize = '12';
 }
 else {
-  var fontSize = '15';
+  var aceFontSize = '15';
 }
 
 // Model element
@@ -283,14 +283,56 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   <div class="generic-block">\
     <img>\
     <label></label>\
+    <span class="tooltiptext"></span>\
   </div>\
   ',
+
+  events: {
+    'mouseenter': 'mouseentercard',
+    'mouseleave': 'mouseleavecard',
+    'mouseup': 'mouseupcard',
+    'mousedown': 'mousedowncard'
+  },
+
+  enter: false,
+  down: false,
+
+  mouseentercard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = true;
+      var self = this;
+      setTimeout(function() {
+        if (self.enter && !self.down) {
+          self.tooltiptext.text(self.tooltip);
+          self.tooltiptext.css('visibility', 'visible');
+        }
+      }, 1500);
+    }
+  },
+
+  mouseleavecard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = false;
+      this.tooltiptext.css('visibility', 'hidden');
+    }
+  },
+
+  mouseupcard: function(/*evt, x, y*/) {
+    this.down = false;
+  },
+
+  mousedowncard: function(/*evt, x, y*/) {
+    this.down = true;
+    this.mouseleavecard();
+  },
 
   initialize: function() {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
     var image = this.model.get('image');
     var name = this.model.get('label');
+    this.tooltip = this.model.get('tooltip');
+    this.tooltiptext = this.$box.find('.tooltiptext');
 
     if (image) {
       this.$box.find('img').attr('src', 'data:image/svg+xml,' + image);
@@ -566,7 +608,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + fontSize + ');\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
@@ -678,7 +720,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + fontSize + ');\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.getSession().on("change", function () {\

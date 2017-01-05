@@ -82,6 +82,32 @@
   z-index: 0;
 }
 
+.generic-block .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.generic-block .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
 .config-block {
   background: #fafacd;
 }
@@ -98,10 +124,12 @@
 
 .generic-block label {
   display: block;
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
-  font-size: 1em;
+  font-size: 14px;
   color: #444;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .virtual-port {
@@ -119,8 +147,10 @@
   display: block;
   margin-top: 20px;
   text-align: center;
-  font-size: 1em;
+  font-size: 0.9em;
   color: #444;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .fpga-port {
@@ -136,11 +166,13 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 3px;
-  margin-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 5px;
   text-align: center;
-  font-size: 1em;
+  font-size: 13px;
   color: #444;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .fpga-port div p {
@@ -188,10 +220,12 @@
 
 .constant-block label {
   display: block;
-  margin-top: 4px;
+  margin-top: 8px;
   text-align: center;
-  font-size: 1em;
+  font-size: 13px;
   color: #444;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .constant-block input {
