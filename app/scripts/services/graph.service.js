@@ -18,6 +18,8 @@ angular.module('icestudio')
     var selection = null;
     var selectionView = null;
     var commandManager = null;
+    var clipboard = [];
+    var mousePosition = { x: 0, y: 0 };
 
     var dependencies = {};
     this.breadcrumbs = [{ name: '' }];
@@ -247,6 +249,13 @@ angular.module('icestudio')
 
      var self = this;
 
+     $('#paper').mousemove(function(event) {
+       mousePosition = {
+         x: event.offsetX,
+         y: event.offsetY
+       };
+     });
+
      selectionView.on('selection-box:pointerdown', function(evt) {
        // Selection to top view
        if (selection) {
@@ -475,37 +484,29 @@ angular.module('icestudio')
     };
 
     this.cutSelected = function() {
-      // TODO:
+      if (selection) {
+        clipboard = selection.clone();
+        this.removeSelected();
+      }
     };
 
     this.copySelected = function() {
-      // TODO:
+      if (selection) {
+        clipboard = selection.clone();
+        selectionView.cancelSelection();
+      }
     };
 
     this.pasteSelected = function() {
-      // TODO:
-    };
-
-    this.cloneSelected = function() {
-      var self = this;
-      if (selection) {
-        selection.each(function(cell) {
+      if (clipboard && clipboard.length > 0) {
+        var offset = clipboard.models[0].attributes.position;
+        clipboard.each(function(cell) {
           var newCell = cell.clone();
-          var type = cell.attributes.blockType;
-          var content = self.getContent(cell.id);
-          if (type === 'basic.code') {
-            newCell.attributes.data.code = content;
-          }
-          else if (type === 'basic.info') {
-            newCell.attributes.data.info = content;
-          }
-          newCell.translate(6 * gridsize, 6 * gridsize);
+          newCell.translate(
+            Math.round(((mousePosition.x - state.pan.x) / state.zoom - offset.x) / gridsize) * gridsize,
+            Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
+          );
           addCell(newCell);
-          if (type.indexOf('config.') !== -1) {
-            paper.findViewByModel(newCell).$box.addClass('config-block');
-          }
-          selection.reset(selection.without(cell));
-          selectionView.cancelSelection();
         });
       }
     };

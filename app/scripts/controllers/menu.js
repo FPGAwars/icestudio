@@ -219,8 +219,16 @@ angular.module('icestudio')
       }
     };
 
+    var paste = true;
+
     $scope.pasteSelected = function() {
-      graph.pasteSelected();
+      if (paste) {
+        paste = false;
+        graph.pasteSelected();
+        setTimeout(function() {
+          paste = true;
+        }, 250);
+      }
     };
 
     $scope.selectAll = function() {
