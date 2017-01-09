@@ -392,7 +392,7 @@ angular.module('icestudio')
 
     this.redo = function() {
       disableSelected();
-      commandManager.redo();
+      commandManager.redo(state);
     };
 
     this.clearAll = function() {
@@ -668,9 +668,6 @@ angular.module('icestudio')
         var cellView = paper.findViewByModel(cell);
         if (cellView.$box.css('z-index') < zIndex) {
           cellView.$box.css('z-index', ++zIndex);
-        }
-        if (cell.attributes.blockType.indexOf('config.') !== -1) {
-          cellView.$box.addClass('config-block');
         }
       }
     }

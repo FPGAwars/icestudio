@@ -280,11 +280,15 @@ joint.dia.CommandManager = Backbone.Model.extend({
   },
 
 
-  redo: function() {
+  redo: function(state) {
 
     var command = this.redoStack.pop();
 
     if (command) {
+
+      if (command.action === 'add') {
+        command.data.attributes.state = state;
+      }
 
       this.applyCommand(command);
       this.undoStack.push(command);

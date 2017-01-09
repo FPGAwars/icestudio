@@ -301,6 +301,9 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.find('img').addClass('hidden');
       this.$box.find('label').removeClass('hidden');
     }
+    if (this.model.get('blockType').indexOf('config.') !== -1) {
+      this.$box.addClass('config-block');
+    }
   }
 });
 
