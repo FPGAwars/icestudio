@@ -33,6 +33,8 @@ angular.module('icestudio')
       },
       zoom: 1.0
     };
+    const ZOOM_MAX = 2;
+    const ZOOM_MIN = 0.2;
 
     // Functions
 
@@ -63,23 +65,48 @@ angular.module('icestudio')
       this.setState(null);
     };
 
-    this.centerContent = function() {
+    this.fitContent = function() {
+      // Target box
+      var margin = 50;
       var menuFooterHeight = 93;
-      var win = {
-        x: window.get().width / 2,
-        y: (window.get().height - menuFooterHeight) / 2
+      var tbox = {
+        x: margin,
+        y: margin,
+        width: window.get().width - 2 * margin,
+        height: window.get().height - menuFooterHeight - 2 * margin
       };
-      var vbox = V(paper.viewport).bbox(true, paper.svg);
-      var content = {
-        x: vbox.x + vbox.width / 2,
-        y: vbox.y + vbox.height / 2
+      // Source box
+      var sbox = V(paper.viewport).bbox(true, paper.svg);
+      sbox = {
+        x: sbox.x * state.zoom,
+        y: sbox.y * state.zoom,
+        width: sbox.width * state.zoom,
+        height: sbox.height * state.zoom
+      };
+      var scale = 1;
+      if (tbox.width/sbox.width > tbox.height/sbox.height) {
+        scale = tbox.height / sbox.height;
+      }
+      else {
+        scale = tbox.width / sbox.width;
+      }
+      if (state.zoom * scale > ZOOM_MAX) {
+        scale = ZOOM_MAX / state.zoom;
+      }
+      var target = {
+        x: tbox.x + tbox.width / 2,
+        y: tbox.y + tbox.height / 2
+      };
+      var source = {
+        x: sbox.x + sbox.width / 2,
+        y: sbox.y + sbox.height / 2
       };
       this.setState({
         pan: {
-          x: win.x - content.x,
-          y: win.y - content.y
+          x: target.x - source.x * scale,
+          y: target.y - source.y * scale
         },
-        zoom: state.zoom
+        zoom: state.zoom * scale
       });
     };
 
@@ -221,8 +248,8 @@ angular.module('icestudio')
         panEnabled: false,
         zoomScaleSensitivity: 0.1,
         dblClickZoomEnabled: false,
-        minZoom: 0.2,
-        maxZoom: 2,
+        minZoom: ZOOM_MIN,
+        maxZoom: ZOOM_MAX,
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {

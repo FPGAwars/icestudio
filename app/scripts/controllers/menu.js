@@ -250,8 +250,8 @@ angular.module('icestudio')
       graph.resetState();
     };
 
-    $scope.centerContent = function () {
-      graph.centerContent();
+    $scope.fitContent = function () {
+      graph.fitContent();
     };
 
     $scope.setProjectInformation = function() {
@@ -346,8 +346,8 @@ angular.module('icestudio')
             case 48: // Ctrl+0
               $scope.resetView();
               break;
-            case 77: // Ctrl+M
-              $scope.centerContent();
+            case 70: // Ctrl+F
+              $scope.fitContent();
               break;
             case 82: // Ctrl+R
               $scope.verifyCode();
