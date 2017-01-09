@@ -11,7 +11,9 @@ angular.module('icestudio')
                              nodeSha1) {
     // Variables
 
-    var zIndex = 100;
+    var z = {
+      index: 100
+    };
     var ctrlPressed = false;
 
     var graph = null;
@@ -311,8 +313,8 @@ angular.module('icestudio')
            var cellView = paper.findViewByModel(cell);
            if (cellView) {
              if (!cellView.model.isLink()) {
-               if (cellView.$box.css('z-index') < zIndex) {
-                 cellView.$box.css('z-index', ++zIndex);
+               if (cellView.$box.css('z-index') < z.index) {
+                 cellView.$box.css('z-index', ++z.index);
                }
              }
            }
@@ -352,8 +354,8 @@ angular.module('icestudio')
       paper.on('cell:pointerdown', function(cellView) {
         if (paper.options.enabled) {
           if (!cellView.model.isLink()) {
-            if (cellView.$box.css('z-index') < zIndex) {
-              cellView.$box.css('z-index', ++zIndex);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
             }
           }
         }
@@ -375,7 +377,7 @@ angular.module('icestudio')
         else {
           self.breadcrumbs.push({ name: type });
           utils.rootScopeSafeApply();
-          zIndex = 1;
+          z.index = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
               self.loadDesign(dependencies[type].design, true);
@@ -584,7 +586,6 @@ angular.module('icestudio')
       if (selection) {
         selection.each(function(cell) {
           var type = cell.attributes.blockType;
-          cell.remove();
           if (!typeInGraph(type)) {
             // Check if it is the last "type" block
             if (removeDep) {
@@ -593,6 +594,7 @@ angular.module('icestudio')
             }
           }
         });
+        graph.removeCells(selection.models);
         selectionView.cancelSelection();
       }
     };
@@ -669,6 +671,8 @@ angular.module('icestudio')
 
         $('body').addClass('waiting');
 
+        commandManager.stopListening();
+
         this.clearAll();
         this.setState(design.state);
 
@@ -700,8 +704,9 @@ angular.module('icestudio')
           self.appEnable(!disabled);
           $('body').removeClass('waiting');
 
-          // TODO: reset undo after loading a design?
-          commandManager.reset();
+          if (!disabled) {
+            commandManager.listen();
+          }
 
           if (callback) {
             callback();
@@ -715,11 +720,12 @@ angular.module('icestudio')
 
     function addCell(cell) {
       cell.attributes.state = state;
+      //cell.attributes.zindex = z.index;
       graph.addCell(cell);
       if (!cell.isLink()) {
         var cellView = paper.findViewByModel(cell);
-        if (cellView.$box.css('z-index') < zIndex) {
-          cellView.$box.css('z-index', ++zIndex);
+        if (cellView.$box.css('z-index') < z.index) {
+          cellView.$box.css('z-index', ++z.index);
         }
       }
     }
