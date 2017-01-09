@@ -225,15 +225,15 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         default:
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          console.log('revert', cmd.action);
+          console.log('revert', cmd.action, cmd);
           cell.set(attribute, cmd.data.previous[attribute]);
           break;
       }
 
       if (cell) {
         var cellView = this.paper.findViewByModel(cell);
-        if (cellView && cellView.renderData) {
-          cellView.renderData();
+        if (cellView && cellView.render) {
+          cellView.render();
         }
       }
     }
@@ -269,15 +269,15 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         default:
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
+          console.log('apply', cmd.action, cmd);
           cell.set(attribute, cmd.data.next[attribute]);
-          console.log('apply', cmd.action);
           break;
       }
 
       if (cell) {
         var cellView = this.paper.findViewByModel(cell);
-        if (cellView && cellView.renderData) {
-          cellView.renderData();
+        if (cellView && cellView.render) {
+          cellView.render();
         }
       }
     }

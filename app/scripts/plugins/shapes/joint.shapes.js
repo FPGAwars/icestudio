@@ -347,16 +347,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     var selectCode = '';
     var selectScript = '';
-    this.pins = this.model.get('data').pins;
+    var data = this.model.get('data');
 
-    if (this.pins) {
-      for (var i in this.pins) {
+    if (data.pins) {
+      for (var i in data.pins) {
         //selectCode += '<p style="top:' + (30 + 38*i) + 'px">' + this.pins[i].index + '</p>';
-        selectCode +='<select id="' + comboId + this.pins[i].index + '"';
+        selectCode +='<select id="' + comboId + data.pins[i].index + '"';
         selectCode += 'class="select2" i="' + i + '">';
         selectCode += '</select>';
 
-        selectScript += '$("#' + comboId + this.pins[i].index + '").select2(';
+        selectScript += '$("#' + comboId + data.pins[i].index + '").select2(';
         selectScript += '{placeholder: "", allowClear: true, dropdownCssClass: "bigdrop"});';
       }
     }
@@ -382,8 +382,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var i = target.attr('i');
       var name = target.find('option:selected').text();
       var value = target.val();
-      this.model.attributes.data.pins[i].name = name;
-      this.model.attributes.data.pins[i].value = value;
+      var data = JSON.parse(JSON.stringify(this.model.get('data')));
+      data.pins[i].name = name;
+      data.pins[i].value = value;
+      this.model.set('data', data);
       //comboSelector.find('.select2-selection').css('font-size', this.computeFontSize(name));
     }, this));
 
@@ -413,27 +415,29 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       // FPGA I/O port (yellow)
       $(virtualPortId).addClass('hidden');
       $(fpgaPortId).removeClass('hidden');
-      if (this.pins) {
-        this.model.attributes.size.height = 32 + 32 * this.pins.length;
+      if (data.pins) {
+        this.model.attributes.size.height = 32 + 32 * data.pins.length;
       }
     }
   },
 
   renderChoices: function() {
-    if (this.pins) {
-      for (var i in this.pins) {
-        this.$box.find('#combo' + this.id + this.pins[i].index).empty().append(this.model.get('choices'));
+    var data = this.model.get('data');
+    if (data.pins) {
+      for (var i in data.pins) {
+        this.$box.find('#combo' + this.id + data.pins[i].index).empty().append(this.model.get('choices'));
       }
     }
   },
 
   renderValue: function() {
-    if (this.pins) {
-      for (var i in this.pins) {
-        var index = this.pins[i].index;
-        var comboId = 'combo' + this.id + index;
-        var comboSelector = this.$box.find('#' + comboId);
-        comboSelector.val(this.pins[i].value);
+    var data = this.model.get('data');
+    if (data.pins) {
+      for (var i in data.pins) {
+        var index = data.pins[i].index;
+        var comboId = '#combo' + this.id + index;
+        var comboSelector = this.$box.find(comboId);
+        comboSelector.val(data.pins[i].value).change();
         //var fontSize = this.computeFontSize(this.pins[i].name);
         //$('#select2-' + comboId + '-container').css('font-size', fontSize);
       }
@@ -441,9 +445,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   },
 
   clearValue: function () {
-    if (this.pins) {
-      for (var i in this.pins) {
-        this.$box.find('#combo' + this.id + this.pins[i].index).val('');
+    var data = this.model.get('data');
+    if (data.pins) {
+      for (var i in data.pins) {
+        this.$box.find('#combo' + this.id + data.pins[i].index).val('');
         this.model.attributes.data.pins[i].name = '';
         this.model.attributes.data.pins[i].value = 0;
       }
@@ -458,6 +463,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   update: function () {
     this.renderPorts();
     this.renderBlock();
+    this.renderValue();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   }
 });
@@ -496,25 +502,14 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
     this.$box.find('.constant-input').on('change', _.bind(function(evt) {
-      var data = this.model.get('data');
-      this.model.set('data', {
-        local: data.local,
-        name: data.name,
-        value: $(evt.target).val()
-      });
+      var data = JSON.parse(JSON.stringify(this.model.get('data')));
+      data.value = $(evt.target).val();
+      this.model.set('data', data);
     }, this));
   },
 
-  renderLocal: function() {
-    if (this.model.get('data').local) {
-      this.$box.find('p').removeClass('hidden');
-    }
-    else {
-      this.$box.find('p').addClass('hidden');
-    }
-  },
 
-  renderLabel: function () {
+  renderName: function () {
     var name = this.model.get('data').name;
     this.$box.find('label').text(name);
   },
@@ -526,19 +521,24 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     this.$box.find('.constant-input').val(this.model.get('data').value);
   },
 
+  renderLocal: function() {
+    if (this.model.get('data').local) {
+      this.$box.find('p').removeClass('hidden');
+    }
+    else {
+      this.$box.find('p').addClass('hidden');
+    }
+  },
+
   clearValue: function () {
     this.$box.find('.constant-input').val('');
   },
 
-  renderData: function() {
-    this.renderLocal();
-    this.renderLabel();
-    this.renderValue();
-  },
-
   update: function () {
     this.renderPorts();
-    this.renderData();
+    this.renderName();
+    this.renderValue();
+    this.renderLocal();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   }
 });

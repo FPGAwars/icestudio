@@ -46,7 +46,7 @@ angular.module('icestudio')
 
     this.getState = function() {
       // Clone state
-      return JSON.parse(JSON.stringify(state));
+      return utils.clone(state);
     };
 
     this.setState = function(_state) {

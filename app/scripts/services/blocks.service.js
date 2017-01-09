@@ -644,6 +644,7 @@ angular.module('icestudio')
     }
 
     function editBasicIO(cellView, addCellCallback) {
+      var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Update the port'),
@@ -683,8 +684,10 @@ angular.module('icestudio')
                 }
               };
               if (addCellCallback) {
+                graph.startBatch('change');
                 addCellCallback(loadBasic(blockInstance));
                 cellView.model.remove();
+                graph.stopBatch('change');
                 alertify.success(gettextCatalog.getString('Block updated'));
               }
             }
@@ -695,10 +698,19 @@ angular.module('icestudio')
               newSize = virtual ? 1 : size;
               // Update block position when size changes
               offset = 16 * (oldSize - newSize);
+              console.log('offset',offset);
               // Edit block
-              block.data.name = portInfo.name;
-              block.data.virtual = virtual;
-              block.position.y += offset;
+              graph.startBatch('change');
+              var data = utils.clone(cellView.model.get('data'));
+              data.name = portInfo.name;
+              data.virtual = virtual;
+              cellView.model.set('data', data);
+              //block.position.y += offset;
+              cellView.model.set('position', {
+                x: block.position.x,
+                y: block.position.y + offset
+              });
+              graph.stopBatch('change');
               cellView.render();
               alertify.success(gettextCatalog.getString('Block updated'));
             }
@@ -727,12 +739,11 @@ angular.module('icestudio')
               block.data.local !== local) {
             // Edit block
             cellView.model.set('data', {
-              local: local,
               name: name,
-              value: block.data.value
+              value: block.data.value,
+              local: local
             });
-            cellView.renderLabel();
-            cellView.renderLocal();
+            cellView.render();
             alertify.success(gettextCatalog.getString('Block updated'));
           }
       });
