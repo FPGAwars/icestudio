@@ -1,13 +1,7 @@
-/*! JointJS+ - Set of JointJS compatible plugins
-
+/*
+Copyright (c) 2016-2017 FPGAwars
 Copyright (c) 2013 client IO
-
-Adapted to Icestudio Project. 2016-2017
-
-This Source Code Form is subject to the terms of the JointJS+ License
-, v. 1.0. If a copy of the JointJS+ License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/jointjs_plus_v1.txt
- or from the JointJS+ archive as was distributed by client IO. See the LICENSE file.*/
+*/
 
 'use strict';
 
@@ -25,6 +19,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     _.bindAll(this, 'initBatchCommand', 'storeBatchCommand');
 
+    this.paper = options.paper;
     this.graph = options.graph;
 
     this.reset();
@@ -51,6 +46,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
   },
 
   addCommand: function(cmdName, cell, graph, options) {
+
+    console.log('all', cmdName);
 
     if (cmdName === 'change:labels') {
       return;
@@ -153,6 +150,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   initBatchCommand: function() {
 
+    console.log('initBatchCommand', this.batchCommand);
+
     if (!this.batchCommand) {
 
       this.batchCommand = [this.createCommand({ batch:  true})];
@@ -170,6 +169,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
   },
 
   storeBatchCommand: function() {
+
+    console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
 
     // In order to store batch command it is necesary to run storeBatchCommand as many times as
     // initBatchCommand was executed
@@ -224,8 +225,16 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         default:
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
+          console.log('revert', cmd.action);
           cell.set(attribute, cmd.data.previous[attribute]);
           break;
+      }
+
+      if (cell) {
+        var cellView = this.paper.findViewByModel(cell);
+        if (cellView && cellView.renderData) {
+          cellView.renderData();
+        }
       }
     }
 
@@ -261,16 +270,26 @@ joint.dia.CommandManager = Backbone.Model.extend({
         default:
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
           cell.set(attribute, cmd.data.next[attribute]);
+          console.log('apply', cmd.action);
           break;
+      }
+
+      if (cell) {
+        var cellView = this.paper.findViewByModel(cell);
+        if (cellView && cellView.renderData) {
+          cellView.renderData();
+        }
       }
     }
 
-      this.listen();
+    this.listen();
   },
 
   undo: function(state) {
 
     var command = this.undoStack.pop();
+
+    console.log('undo', command);
 
     if (command) {
 
@@ -287,6 +306,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
   redo: function(state) {
 
     var command = this.redoStack.pop();
+
+    console.log('redo', command);
 
     if (command) {
 

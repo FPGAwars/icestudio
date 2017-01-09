@@ -39,6 +39,7 @@ angular.module('icestudio')
       this.updateName(name);
 
       graph.clearAll();
+      graph.resetCommandStack();
       graph.setState(this.project.design.state);
 
       alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
@@ -61,6 +62,7 @@ angular.module('icestudio')
       }
       this.project = _safeLoad(data);
       var ret = graph.loadDesign(this.project.design, false, function() {
+        graph.resetCommandStack();
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
       });
 
@@ -393,6 +395,7 @@ angular.module('icestudio')
       this.project = _default();
       graph.clearAll();
       graph.resetBreadcrumbs();
+      graph.resetCommandStack();
     };
 
   });

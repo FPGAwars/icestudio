@@ -282,6 +282,7 @@ angular.module('icestudio')
       // Command Manager
 
       commandManager = new joint.dia.CommandManager({
+        paper: paper,
         graph: graph
       });
 
@@ -533,6 +534,10 @@ angular.module('icestudio')
       }
     };
 
+    this.resetCommandStack = function() {
+      commandManager.reset();
+    };
+
     this.cutSelected = function() {
       if (selection) {
         clipboard = selection.clone();
@@ -550,17 +555,24 @@ angular.module('icestudio')
       if (clipboard && clipboard.length > 0) {
         var offset = clipboard.models[0].attributes.position;
         selectionView.cancelSelection();
+        var newCells = [];
         clipboard.each(function(cell) {
           var newCell = cell.clone();
           newCell.translate(
             Math.round(((mousePosition.x - state.pan.x) / state.zoom - offset.x) / gridsize) * gridsize,
             Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
           );
-          addCell(newCell);
-          // Select new cells
-          var cellView = paper.findViewByModel(newCell);
-          selection.add(newCell);
-          selectionView.createSelectionBox(cellView);
+          newCells.push(newCell);
+        });
+        graph.addCells(newCells);
+        // Select pasted cells
+        _.each(newCells, function(cell) {
+          if (!cell.isLink()) {
+            var cellView = paper.findViewByModel(cell);
+            selection.add(cell);
+            selectionView.createSelectionBox(cellView);
+            cellView.$box.removeClass('highlight');
+          }
         });
       }
     };

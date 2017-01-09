@@ -1,13 +1,7 @@
-/*! JointJS+ - Set of JointJS compatible plugins
-
+/*
+Copyright (c) 2016-2017 FPGAwars
 Copyright (c) 2013 client IO
-
-Adapted to Icestudio Project. 2016-2017
-
-This Source Code Form is subject to the terms of the JointJS+ License
-, v. 1.0. If a copy of the JointJS+ License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/jointjs_plus_v1.txt
- or from the JointJS+ archive as was distributed by client IO. See the LICENSE file.*/
+*/
 
 
 'use strict';

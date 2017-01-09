@@ -726,8 +726,11 @@ angular.module('icestudio')
           if (block.data.name !== name ||
               block.data.local !== local) {
             // Edit block
-            block.data.name = name;
-            block.data.local = local;
+            cellView.model.set('data', {
+              local: local,
+              name: name,
+              value: block.data.value
+            });
             cellView.renderLabel();
             cellView.renderLocal();
             alertify.success(gettextCatalog.getString('Block updated'));

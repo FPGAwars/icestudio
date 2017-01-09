@@ -253,6 +253,10 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
     }
 
+    /*if (this.$box.css('z-index') > this.model.attributes.zindex) {
+      this.$box.css('z-index', ++this.model.attributes.zindex);
+    }*/
+
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
@@ -491,8 +495,13 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('.constant-input').on('input', _.bind(function(evt) {
-      this.model.attributes.data.value = $(evt.target).val();
+    this.$box.find('.constant-input').on('change', _.bind(function(evt) {
+      var data = this.model.get('data');
+      this.model.set('data', {
+        local: data.local,
+        name: data.name,
+        value: $(evt.target).val()
+      });
     }, this));
   },
 
@@ -521,11 +530,15 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     this.$box.find('.constant-input').val('');
   },
 
-  update: function () {
+  renderData: function() {
     this.renderLocal();
     this.renderLabel();
-    this.renderPorts();
     this.renderValue();
+  },
+
+  update: function () {
+    this.renderPorts();
+    this.renderData();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   }
 });
