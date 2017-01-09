@@ -264,8 +264,8 @@
 
 .selectionarea {
   position: absolute;
-  border: 2px solid #EB2222;
-  opacity: .7;
+  border: 1px solid rgba(42, 118, 198, 1);
+  background-color: rgba(42, 118, 198, 0.2);
   overflow: visible;
   z-index: 1500;
 }
@@ -284,8 +284,8 @@
 
 .selection-box {
   position: absolute;
-  border: 2px dashed #EB2222;
-  opacity: .7;
+  border: 1px dotted rgba(42, 118, 198, 1);
+  background-color: rgba(42, 118, 198, 0.2);
   border-radius: 5px;
   z-index: 1500;
 }
