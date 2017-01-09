@@ -7,6 +7,7 @@ angular.module('icestudio')
                              blocks,
                              utils,
                              gettextCatalog,
+                             window,
                              nodeSha1) {
     // Variables
 
@@ -60,6 +61,26 @@ angular.module('icestudio')
 
     this.resetState = function() {
       this.setState(null);
+    };
+
+    this.centerContent = function() {
+      var menuFooterHeight = 93;
+      var win = {
+        x: window.get().width / 2,
+        y: (window.get().height - menuFooterHeight) / 2
+      };
+      var vbox = V(paper.viewport).bbox(true, paper.svg);
+      var content = {
+        x: vbox.x + vbox.width / 2,
+        y: vbox.y + vbox.height / 2
+      };
+      this.setState({
+        pan: {
+          x: win.x - content.x,
+          y: win.y - content.y
+        },
+        zoom: state.zoom
+      });
     };
 
     this.resetBreadcrumbs = function(name) {

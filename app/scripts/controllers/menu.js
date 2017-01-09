@@ -250,6 +250,10 @@ angular.module('icestudio')
       graph.resetState();
     };
 
+    $scope.centerContent = function () {
+      graph.centerContent();
+    };
+
     $scope.setProjectInformation = function() {
       var p = project.project.package;
       var values = [
@@ -341,6 +345,9 @@ angular.module('icestudio')
               break;
             case 48: // Ctrl+0
               $scope.resetView();
+              break;
+            case 77: // Ctrl+M
+              $scope.centerContent();
               break;
             case 82: // Ctrl+R
               $scope.verifyCode();
