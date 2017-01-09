@@ -268,11 +268,15 @@ joint.dia.CommandManager = Backbone.Model.extend({
       this.listen();
   },
 
-  undo: function() {
+  undo: function(state) {
 
     var command = this.undoStack.pop();
 
     if (command) {
+
+      if (command.action === 'add') {
+        command.data.attributes.state = state;
+      }
 
       this.revertCommand(command);
       this.redoStack.push(command);

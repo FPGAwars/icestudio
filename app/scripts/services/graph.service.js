@@ -67,7 +67,7 @@ angular.module('icestudio')
 
     this.fitContent = function() {
       // Target box
-      var margin = 50;
+      var margin = 40;
       var menuFooterHeight = 93;
       var tbox = {
         x: margin,
@@ -435,7 +435,7 @@ angular.module('icestudio')
 
     this.undo = function() {
       disableSelected();
-      commandManager.undo();
+      commandManager.undo(state);
     };
 
     this.redo = function() {
@@ -541,13 +541,13 @@ angular.module('icestudio')
     this.copySelected = function() {
       if (selection) {
         clipboard = selection.clone();
-        selectionView.cancelSelection();
       }
     };
 
     this.pasteSelected = function() {
       if (clipboard && clipboard.length > 0) {
         var offset = clipboard.models[0].attributes.position;
+        selectionView.cancelSelection();
         clipboard.each(function(cell) {
           var newCell = cell.clone();
           newCell.translate(
@@ -555,6 +555,10 @@ angular.module('icestudio')
             Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
           );
           addCell(newCell);
+          // Select new cells
+          var cellView = paper.findViewByModel(newCell);
+          selection.add(newCell);
+          selectionView.createSelectionBox(cellView);
         });
       }
     };
