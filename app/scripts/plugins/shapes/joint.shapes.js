@@ -720,7 +720,6 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.editor.commands.removeCommand('redo');
     this.editor.getSession().on('change', function () {
       if (!self.updating) {
-        console.log('change INFO');
         var value = self.editor.getSession().getValue();
         self.model.set('data', {
           info: value,

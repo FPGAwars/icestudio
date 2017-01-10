@@ -47,7 +47,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-    console.log('all', cmdName);
+    console.log('all', cmdName, options);
 
     if (cmdName === 'change:labels') {
       return;
@@ -224,9 +224,14 @@ joint.dia.CommandManager = Backbone.Model.extend({
         	break;
 
         default:
+          var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
           console.log('revert', cmd.action, cmd);
-          cell.set(attribute, cmd.data.previous[attribute]);
+          if (attribute === 'data' && cmd.options.translateBy) {
+            cmd.options.ty *= -1;
+            options = cmd.options;
+          }
+          cell.set(attribute, cmd.data.previous[attribute], options);
           break;
       }
 
@@ -268,9 +273,14 @@ joint.dia.CommandManager = Backbone.Model.extend({
           break;
 
         default:
+          var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
           console.log('apply', cmd.action, cmd);
-          cell.set(attribute, cmd.data.next[attribute]);
+          if (attribute === 'data' && cmd.options.translateBy) {
+            cmd.options.ty *= -1;
+            options = cmd.options;
+          }
+          cell.set(attribute, cmd.data.next[attribute], options);
           break;
       }
 

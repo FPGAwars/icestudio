@@ -700,15 +700,11 @@ angular.module('icestudio')
               offset = 16 * (oldSize - newSize);
               // Edit block
               graph.startBatch('change');
-              var data = utils.clone(cellView.model.get('data'));
+              var data = utils.clone(block.data);
               data.name = portInfo.name;
               data.virtual = virtual;
-              cellView.model.set('data', data);
-              //block.position.y += offset;
-              cellView.model.set('position', {
-                x: block.position.x,
-                y: block.position.y + offset
-              });
+              cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+              cellView.model.translate(0, offset);
               graph.stopBatch('change');
               cellView.render();
               alertify.success(gettextCatalog.getString('Block updated'));
