@@ -319,7 +319,7 @@ angular.module('icestudio')
     function newBasicInfo(addCellCallback) {
       var blockInstance = {
         id: null,
-        data: { info: '' },
+        data: { info: '', cursor: { row: 0, column: 0 } },
         type: 'basic.info',
         position: { x: 4 * gridsize, y: 30 * gridsize }
       };
@@ -698,7 +698,6 @@ angular.module('icestudio')
               newSize = virtual ? 1 : size;
               // Update block position when size changes
               offset = 16 * (oldSize - newSize);
-              console.log('offset',offset);
               // Edit block
               graph.startBatch('change');
               var data = utils.clone(cellView.model.get('data'));

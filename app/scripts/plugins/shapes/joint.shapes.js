@@ -687,27 +687,16 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
     var blockLabel = 'block' + id;
     var editorLabel = 'editor' + id;
-    var contentLabel = 'content' + id;
     this.$box = $(joint.util.template(
       '\
       <div class="info-block" id="' + blockLabel + '">\
         <div class="info-editor" id="' + editorLabel + '"></div>\
-        <textarea class="hidden" id="' + contentLabel + '"></textarea>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.setFontSize(' + fontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.getSession().on("change", function () {\
-            $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-          });\
-          ' + editorLabel + '.on("focus", function() {\
-            $(document).trigger("disableSelected");\
-          });\
-          $("#' + blockLabel + '").resize(function () {\
-            ' + editorLabel + '.resize();\
-          });\
         </script>\
       </div>\
       '
@@ -717,26 +706,59 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.model.on('remove', this.removeBox, this);
 
     this.updateBox();
+    this.updating = false;
+
+    var selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
+    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#' + editorLabel).append(this.model.get('data').info);
-    this.$box.find('#' + contentLabel).append(this.model.get('data').info);
+    var self = this;
+    this.editor = ace.edit(selector[0]);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.commands.removeCommand('undo');
+    this.editor.commands.removeCommand('redo');
+    this.editor.getSession().on('change', function () {
+      if (!self.updating) {
+        console.log('change INFO');
+        var value = self.editor.getSession().getValue();
+        self.model.set('data', {
+          info: value,
+          cursor: self.editor.getCursorPosition()
+        });
+      }
+    });
+    this.editor.on('focus', function() {
+      $(document).trigger('disableSelected');
+    });
+    $('#' + blockLabel).resize(function () {
+      self.editor.resize();
+    });
+
+    this.renderValue();
   },
 
   render: function () {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
-      this.paper.$el.append(this.$box);
-      this.updateBox();
-      return this;
+    this.paper.$el.append(this.$box);
+    this.updateBox();
+    return this;
+  },
+
+  renderValue: function() {
+    this.updating = true;
+    var data = this.model.get('data');
+    this.editor.moveCursorTo(0, 0);
+    this.editor.getSession().setValue(data.info);
+    if (data.cursor) {
+      this.editor.moveCursorTo(data.cursor.row, data.cursor.column + 1);
+    }
+    this.updating = false;
   },
 
   update: function () {
-    var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var editorLabel = 'editor' + id;
-    var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
-    editor.setReadOnly(this.model.get('disabled'));
+    this.renderValue();
+    this.editor.setReadOnly(this.model.get('disabled'));
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
