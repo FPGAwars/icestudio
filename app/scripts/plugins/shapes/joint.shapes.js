@@ -383,9 +383,11 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var name = target.find('option:selected').text();
       var value = target.val();
       var data = JSON.parse(JSON.stringify(this.model.get('data')));
+      //if (name !== null && value !== null) {
       data.pins[i].name = name;
       data.pins[i].value = value;
       this.model.set('data', data);
+      //}
       //comboSelector.find('.select2-selection').css('font-size', this.computeFontSize(name));
     }, this));
 
@@ -437,7 +439,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         var index = data.pins[i].index;
         var comboId = '#combo' + this.id + index;
         var comboSelector = this.$box.find(comboId);
-        comboSelector.val(data.pins[i].value).change();
+        var value = data.pins[i].value;
+        if (value !== '0') {
+          comboSelector.val(value).change();
+        }
         //var fontSize = this.computeFontSize(this.pins[i].name);
         //$('#select2-' + comboId + '-container').css('font-size', fontSize);
       }

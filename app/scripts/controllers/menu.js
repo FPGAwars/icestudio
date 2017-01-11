@@ -247,7 +247,7 @@ angular.module('icestudio')
     }
 
     $scope.resetView = function() {
-      graph.resetState();
+      graph.resetView();
     };
 
     $scope.fitContent = function () {

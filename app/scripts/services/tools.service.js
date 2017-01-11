@@ -18,6 +18,7 @@ angular.module('icestudio')
                              nodeRSync) {
 
     var currentAlert = null;
+    var taskRunning = false;
     var toolchain = { apio: '-', installed: false, disabled: false };
 
     this.toolchain = toolchain;
@@ -46,6 +47,10 @@ angular.module('icestudio')
 
     this.apio = function(commands) {
       var check = true;
+      if (taskRunning) {
+        return;
+      }
+      taskRunning = true;
       var code = this.generateCode();
       if (code) {
         if (toolchain.installed || toolchain.disabled) {
@@ -69,6 +74,7 @@ angular.module('icestudio')
                   setTimeout(function() {
                     angular.element('#menu').removeClass('disable-menu');
                     currentAlert.dismiss(true);
+                    taskRunning = false;
                   }, 1000);
                 }
               });
@@ -77,6 +83,7 @@ angular.module('icestudio')
               setTimeout(function() {
                 angular.element('#menu').removeClass('disable-menu');
                 currentAlert.dismiss(true);
+                taskRunning = false;
                 $('body').removeClass('waiting');
               }, 2000);
             }

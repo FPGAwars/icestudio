@@ -377,6 +377,7 @@ angular.module('icestudio')
         size: data.pins ? data.pins.length : (data.size || 1),
         gridUnits: 8
       }];
+
       var cell = new joint.shapes.ice.Input({
         id: instance.id,
         blockType: instance.type,

@@ -63,53 +63,58 @@ angular.module('icestudio')
       this.panAndZoom.pan(_state.pan);
     };
 
-    this.resetState = function() {
+    this.resetView = function() {
       this.setState(null);
     };
 
     this.fitContent = function() {
-      // Target box
-      var margin = 40;
-      var menuFooterHeight = 93;
-      var tbox = {
-        x: margin,
-        y: margin,
-        width: window.get().width - 2 * margin,
-        height: window.get().height - menuFooterHeight - 2 * margin
-      };
-      // Source box
-      var sbox = V(paper.viewport).bbox(true, paper.svg);
-      sbox = {
-        x: sbox.x * state.zoom,
-        y: sbox.y * state.zoom,
-        width: sbox.width * state.zoom,
-        height: sbox.height * state.zoom
-      };
-      var scale = 1;
-      if (tbox.width/sbox.width > tbox.height/sbox.height) {
-        scale = tbox.height / sbox.height;
+      if (!this.isEmpty()) {
+        // Target box
+        var margin = 40;
+        var menuFooterHeight = 93;
+        var tbox = {
+          x: margin,
+          y: margin,
+          width: window.get().width - 2 * margin,
+          height: window.get().height - menuFooterHeight - 2 * margin
+        };
+        // Source box
+        var sbox = V(paper.viewport).bbox(true, paper.svg);
+        sbox = {
+          x: sbox.x * state.zoom,
+          y: sbox.y * state.zoom,
+          width: sbox.width * state.zoom,
+          height: sbox.height * state.zoom
+        };
+        var scale = 1;
+        if (tbox.width/sbox.width > tbox.height/sbox.height) {
+          scale = tbox.height / sbox.height;
+        }
+        else {
+          scale = tbox.width / sbox.width;
+        }
+        if (state.zoom * scale > ZOOM_MAX) {
+          scale = ZOOM_MAX / state.zoom;
+        }
+        var target = {
+          x: tbox.x + tbox.width / 2,
+          y: tbox.y + tbox.height / 2
+        };
+        var source = {
+          x: sbox.x + sbox.width / 2,
+          y: sbox.y + sbox.height / 2
+        };
+        this.setState({
+          pan: {
+            x: target.x - source.x * scale,
+            y: target.y - source.y * scale
+          },
+          zoom: state.zoom * scale
+        });
       }
       else {
-        scale = tbox.width / sbox.width;
+        this.resetView();
       }
-      if (state.zoom * scale > ZOOM_MAX) {
-        scale = ZOOM_MAX / state.zoom;
-      }
-      var target = {
-        x: tbox.x + tbox.width / 2,
-        y: tbox.y + tbox.height / 2
-      };
-      var source = {
-        x: sbox.x + sbox.width / 2,
-        y: sbox.y + sbox.height / 2
-      };
-      this.setState({
-        pan: {
-          x: target.x - source.x * scale,
-          y: target.y - source.y * scale
-        },
-        zoom: state.zoom * scale
-      });
     };
 
     this.resetBreadcrumbs = function(name) {
