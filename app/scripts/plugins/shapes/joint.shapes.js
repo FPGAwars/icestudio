@@ -200,6 +200,10 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
   },
 
+  apply: function() {
+    // No operation required
+  },
+
   render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
@@ -214,16 +218,16 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var $bottomPorts = this.$('.bottomPorts').empty();
     var portTemplate = _.template(this.model.portMarkup);
 
-    _.each(_.filter(this.model.ports, function (p) { return p.type === 'left'; }), function (port, index) {
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'left'; }), function(port, index) {
       $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
     });
-    _.each(_.filter(this.model.ports, function (p) { return p.type === 'right'; }), function (port, index) {
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'right'; }), function(port, index) {
       $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
     });
-    _.each(_.filter(this.model.ports, function (p) { return p.type === 'top'; }), function (port, index) {
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'top'; }), function(port, index) {
       $topPorts.append(V(portTemplate({ id: index, port: port })).node);
     });
-    _.each(_.filter(this.model.ports, function (p) { return p.type === 'bottom'; }), function (port, index) {
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'bottom'; }), function(port, index) {
       $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
     });
   },
@@ -383,22 +387,23 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var name = target.find('option:selected').text();
       var value = target.val();
       var data = JSON.parse(JSON.stringify(this.model.get('data')));
-      //if (name !== null && value !== null) {
-      data.pins[i].name = name;
-      data.pins[i].value = value;
-      this.model.set('data', data);
-      //}
+      if (name !== null && value !== null) {
+        data.pins[i].name = name;
+        data.pins[i].value = value;
+        this.model.set('data', data);
+      }
       //comboSelector.find('.select2-selection').css('font-size', this.computeFontSize(name));
     }, this));
 
-    // Render data
+    // Apply data
     if (!this.model.get('disabled')) {
-      this.renderChoices();
-      this.renderValue();
+      this.applyChoices();
+      this.applyShape();
+      this.applyValue();
     }
   },
 
-  renderBlock: function() {
+  applyShape: function() {
     var virtualPortId = '#virtualPort' + this.id;
     var fpgaPortId = '#fpgaPort' + this.id;
     var data = this.model.get('data');
@@ -423,7 +428,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  renderChoices: function() {
+  applyChoices: function() {
     var data = this.model.get('data');
     if (data.pins) {
       for (var i in data.pins) {
@@ -432,7 +437,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  renderValue: function() {
+  applyValue: function() {
     var data = this.model.get('data');
     if (data.pins) {
       for (var i in data.pins) {
@@ -440,16 +445,14 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         var comboId = '#combo' + this.id + index;
         var comboSelector = this.$box.find(comboId);
         var value = data.pins[i].value;
-        if (value !== '0') {
-          comboSelector.val(value).change();
-        }
+        comboSelector.val(value).change();
         //var fontSize = this.computeFontSize(this.pins[i].name);
         //$('#select2-' + comboId + '-container').css('font-size', fontSize);
       }
     }
   },
 
-  clearValue: function () {
+  clearValue: function() {
     var data = this.model.get('data');
     if (data.pins) {
       for (var i in data.pins) {
@@ -465,10 +468,14 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     return Math.min(13, 17-n).toString() + 'px';
   },
 
-  update: function () {
+  apply: function() {
+    this.applyShape();
+    this.applyValue();
+    this.render();
+  },
+
+  update: function() {
     this.renderPorts();
-    this.renderBlock();
-    this.renderValue();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   }
 });
@@ -511,22 +518,24 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
       data.value = $(evt.target).val();
       this.model.set('data', data);
     }, this));
+
+    // Apply data
+    this.apply();
   },
 
-
-  renderName: function () {
+  applyName: function() {
     var name = this.model.get('data').name;
     this.$box.find('label').text(name);
   },
 
-  renderValue: function() {
+  applyValue: function() {
     if (this.model.get('disabled')) {
       this.$box.find('.constant-input').css({'pointer-events': 'none'});
     }
     this.$box.find('.constant-input').val(this.model.get('data').value);
   },
 
-  renderLocal: function() {
+  applyLocal: function() {
     if (this.model.get('data').local) {
       this.$box.find('p').removeClass('hidden');
     }
@@ -535,15 +544,18 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  clearValue: function () {
+  clearValue: function() {
     this.$box.find('.constant-input').val('');
   },
 
-  update: function () {
+  apply: function() {
+    this.applyName();
+    this.applyValue();
+    this.applyLocal();
+  },
+
+  update: function() {
     this.renderPorts();
-    this.renderName();
-    this.renderValue();
-    this.renderLocal();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   }
 });
@@ -577,28 +589,17 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
     var blockLabel = 'block' + id;
     var editorLabel = 'editor' + id;
-    var contentLabel = 'content' + id;
     this.$box = $(joint.util.template(
       '\
       <div class="code-block" id="' + blockLabel + '">\
         <div class="code-editor" id="' + editorLabel + '"></div>\
-        <textarea class="hidden" id="' + contentLabel + '"></textarea>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.setFontSize(' + fontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
-          ' + editorLabel + '.getSession().on("change", function () {\
-            $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-          });\
-          ' + editorLabel + '.on("focus", function() {\
-            $(document).trigger("disableSelected");\
-          });\
-          $("#' + blockLabel + '").resize(function () {\
-            ' + editorLabel + '.resize();\
-          });\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
       </div>\
       '
@@ -608,27 +609,71 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.model.on('remove', this.removeBox, this);
 
     this.updateBox();
+    this.updating = false;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
+    var selector = this.$box.find('#' + editorLabel);
+
     // Prevent paper from handling pointerdown.
-    this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
+    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-    this.$box.find('#' + editorLabel).append(this.model.get('data').code);
-    this.$box.find('#' + contentLabel).append(this.model.get('data').code);
+    var self = this;
+    this.editor = ace.edit(selector[0]);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.commands.removeCommand('undo');
+    this.editor.commands.removeCommand('redo');
+    this.editor.session.on('change', function(delta) {
+      if (!self.updating) {
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        data.code = self.editor.session.getValue();
+        data.delta = delta;
+        self.model.set('data', data);
+      }
+    });
+    this.editor.on('focus', function() {
+      $(document).trigger('disableSelected');
+    });
+    $('#' + blockLabel).resize(function() {
+      self.editor.resize();
+    });
+
+    // Apply data
+    this.apply();
   },
 
-  renderValue: function() {
-    var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var editorLabel = 'editor' + id;
-    var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
-    editor.setReadOnly(this.model.get('disabled'));
+  applyValue: function(opt) {
+    this.updating = true;
+    var dontselect = false;
+    var data = this.model.get('data');
+    if (data.delta) {
+      var changes = [{
+        group: 'doc',
+        deltas:[data.delta]
+      }];
+      if (opt.undo) {
+        this.editor.session.undoChanges(changes, dontselect);
+      }
+      else {
+        this.editor.session.redoChanges(changes, dontselect);
+      }
+    }
+    else {
+      this.editor.session.setValue(data.code);
+    }
+    setTimeout(function(self) {
+      self.updating = false;
+    }, 0, this);
   },
 
-  update: function () {
+  apply: function(opt) {
+    this.applyValue(opt);
+  },
+
+  update: function() {
     this.renderPorts();
-    this.renderValue();
+    this.editor.setReadOnly(this.model.get('disabled'));
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
@@ -723,45 +768,61 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
-    this.editor.getSession().on('change', function () {
+    this.editor.session.on('change', function(delta) {
       if (!self.updating) {
-        var value = self.editor.getSession().getValue();
-        self.model.set('data', {
-          info: value,
-          cursor: self.editor.getCursorPosition()
-        });
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        data.info = self.editor.session.getValue();
+        data.delta = delta;
+        self.model.set('data', data);
       }
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
     });
-    $('#' + blockLabel).resize(function () {
+    $('#' + blockLabel).resize(function() {
       self.editor.resize();
     });
 
-    this.renderValue();
+    // Apply data
+    this.apply();
   },
 
-  render: function () {
+  render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
     this.updateBox();
     return this;
   },
 
-  renderValue: function() {
+  applyValue: function(opt) {
     this.updating = true;
+    var dontselect = false;
     var data = this.model.get('data');
-    this.editor.moveCursorTo(0, 0);
-    this.editor.getSession().setValue(data.info);
-    if (data.cursor) {
-      this.editor.moveCursorTo(data.cursor.row, data.cursor.column + 1);
+    if (data.delta) {
+      var changes = [{
+        group: 'doc',
+        deltas:[data.delta]
+      }];
+      if (opt.undo) {
+        this.editor.session.undoChanges(changes, dontselect);
+      }
+      else {
+        this.editor.session.redoChanges(changes, dontselect);
+      }
     }
-    this.updating = false;
+    else {
+      this.editor.session.setValue(data.info);
+    }
+    setTimeout(function(self) {
+      self.updating = false;
+    }, 10, this);
   },
 
-  update: function () {
-    this.renderValue();
+  apply: function(opt) {
+    this.applyValue(opt);
+  },
+
+  update: function() {
     this.editor.setReadOnly(this.model.get('disabled'));
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
@@ -774,6 +835,12 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
                     height: bbox.height * state.zoom,
                     left: bbox.x * state.zoom + state.pan.x,
                     top: bbox.y * state.zoom + state.pan.y });
+  },
+
+  remove: function() {
+    // Remove delta to allow Session Value restore
+    delete this.model.attributes.data.delta;
+    joint.dia.LinkView.prototype.remove.apply(this, arguments);
   },
 
   removeBox: function(/*evt*/) {
@@ -867,6 +934,10 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         }
       }
     }, 0);
+  },
+
+  apply: function() {
+    this.render();
   },
 
   render: function() {

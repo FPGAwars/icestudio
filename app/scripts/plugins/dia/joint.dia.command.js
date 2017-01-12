@@ -47,7 +47,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-    console.log('all', cmdName, options);
+    console.log('all', cmdName, cell, graph, options);
 
     if (cmdName === 'change:labels') {
       return;
@@ -224,22 +224,30 @@ joint.dia.CommandManager = Backbone.Model.extend({
         	break;
 
         default:
+          var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          console.log('revert', cmd.action, cmd);
+          console.log('UNDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
+            // Invert relative movement
             cmd.options.ty *= -1;
             options = cmd.options;
           }
-          cell.set(attribute, cmd.data.previous[attribute], options);
+          if (cmd.data.type === 'ice.Code' ||
+              cmd.data.type === 'ice.Info') {
+            data = cmd.data.next[attribute];
+          }
+          else {
+            data = cmd.data.previous[attribute];
+          }
+          cell.set(attribute, data, options);
+          if (cell) {
+            var cellView = this.paper.findViewByModel(cell);
+            if (cellView) {
+              cellView.apply({ undo: true });
+            }
+          }
           break;
-      }
-
-      if (cell) {
-        var cellView = this.paper.findViewByModel(cell);
-        if (cellView && cellView.render) {
-          cellView.render();
-        }
       }
     }
 
@@ -273,22 +281,23 @@ joint.dia.CommandManager = Backbone.Model.extend({
           break;
 
         default:
+          var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          console.log('apply', cmd.action, cmd);
+          console.log('REDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
             cmd.options.ty *= -1;
             options = cmd.options;
           }
-          cell.set(attribute, cmd.data.next[attribute], options);
+          data = cmd.data.next[attribute];
+          cell.set(attribute, data, options);
+          if (cell) {
+            var cellView = this.paper.findViewByModel(cell);
+            if (cellView) {
+              cellView.apply({ undo: false });
+            }
+          }
           break;
-      }
-
-      if (cell) {
-        var cellView = this.paper.findViewByModel(cell);
-        if (cellView && cellView.render) {
-          cellView.render();
-        }
       }
     }
 
@@ -298,8 +307,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
   undo: function(state) {
 
     var command = this.undoStack.pop();
-
-    console.log('undo', command);
 
     if (command) {
 
@@ -316,8 +323,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
   redo: function(state) {
 
     var command = this.redoStack.pop();
-
-    console.log('redo', command);
 
     if (command) {
 

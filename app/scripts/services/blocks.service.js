@@ -319,7 +319,7 @@ angular.module('icestudio')
     function newBasicInfo(addCellCallback) {
       var blockInstance = {
         id: null,
-        data: { info: '', cursor: { row: 0, column: 0 } },
+        data: { info: '' },
         type: 'basic.info',
         position: { x: 4 * gridsize, y: 30 * gridsize }
       };
@@ -707,7 +707,7 @@ angular.module('icestudio')
               cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
               cellView.model.translate(0, offset);
               graph.stopBatch('change');
-              cellView.render();
+              cellView.apply();
               alertify.success(gettextCatalog.getString('Block updated'));
             }
           }

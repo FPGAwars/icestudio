@@ -371,10 +371,6 @@ angular.module('icestudio')
         var type =  cellView.model.attributes.blockType;
         if (type.indexOf('basic.') !== -1) {
           if (paper.options.enabled) {
-            if (type === 'basic.code') {
-              var content = self.getContent(cellView.model.id);
-              cellView.model.attributes.data.code = content;
-            }
             blocks.editBasic(type, cellView, function(cell) {
               addCell(cell);
             });
@@ -516,11 +512,6 @@ angular.module('icestudio')
 
     this.setCells = function(cells) {
       graph.attributes.cells.models = cells;
-    };
-
-    this.getContent = function(id) {
-      return paper.findViewByModel(id).$box.find(
-        '#content' + nodeSha1(id).toString().substring(0, 6)).val();
     };
 
     this.resetIOChoices = function() {

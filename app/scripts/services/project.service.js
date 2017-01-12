@@ -325,11 +325,9 @@ angular.module('icestudio')
           block.type = cell.blockType;
           block.data = cell.data;
           block.position = cell.position;
-          if (cell.type === 'ice.Code') {
-            block.data.code = graph.getContent(cell.id);
-          }
-          else if (cell.type === 'ice.Info') {
-            block.data.info = graph.getContent(cell.id);
+          if (cell.type === 'ice.Code' ||
+              cell.type === 'ice.Info') {
+            delete block.data.delta;
           }
           blocks.push(block);
         }
