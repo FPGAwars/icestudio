@@ -326,9 +326,11 @@ angular.module('icestudio')
             case 90:
               if (event.shiftKey) { // Ctrl+Shift+Z
                 $scope.redoGraph();
+                event.preventDefault();
               }
               else { // Ctrl+Z
                 $scope.undoGraph();
+                event.preventDefault();
               }
               break;
             case 88: // Ctrl+X

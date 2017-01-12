@@ -734,18 +734,18 @@ angular.module('icestudio')
           if (block.data.name !== name ||
               block.data.local !== local) {
             // Edit block
-            cellView.model.set('data', {
-              name: name,
-              value: block.data.value,
-              local: local
-            });
-            cellView.render();
+            var data = utils.clone(block.data);
+            data.name = name;
+            data.local = local;
+            cellView.model.set('data', data);
+            cellView.apply();
             alertify.success(gettextCatalog.getString('Block updated'));
           }
       });
     }
 
     function editBasicCode(cellView, addCellCallback) {
+      var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       var blockInstance = {
         id: null,
@@ -755,8 +755,10 @@ angular.module('icestudio')
       };
       newBasicCode(function(cell) {
         if (addCellCallback) {
+          graph.startBatch('change');
           addCellCallback(cell);
           cellView.model.remove();
+          graph.stopBatch('change');
           alertify.success(gettextCatalog.getString('Block updated'));
         }
       }, blockInstance);
