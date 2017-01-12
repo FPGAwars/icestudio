@@ -7,8 +7,7 @@ angular.module('icestudio')
                              blocks,
                              utils,
                              gettextCatalog,
-                             window,
-                             nodeSha1) {
+                             window) {
     // Variables
 
     var z = {

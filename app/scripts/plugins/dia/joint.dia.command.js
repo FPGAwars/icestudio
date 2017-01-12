@@ -236,6 +236,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           if (attribute === 'data' &&
               (cmd.data.type === 'ice.Code' ||
                cmd.data.type === 'ice.Info')) {
+            // Ace editor requires the next deltas to revert
             data = cmd.data.next[attribute];
           }
           else {

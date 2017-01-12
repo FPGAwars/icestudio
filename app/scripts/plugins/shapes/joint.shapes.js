@@ -618,6 +618,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
+    this.deltas = [];
+    this.counter = 0;
+    this.timer = null;
+    var undoGroupingInterval = 300;
+
     var self = this;
     this.editor = ace.edit(selector[0]);
     this.editor.$blockScrolling = Infinity;
@@ -625,10 +630,25 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor.commands.removeCommand('redo');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
-        var data = JSON.parse(JSON.stringify(self.model.get('data')));
-        data.code = self.editor.session.getValue();
-        data.delta = delta;
-        self.model.set('data', data);
+        // Check consecutive-change interval
+        if (Date.now() - self.counter < undoGroupingInterval) {
+          clearTimeout(self.timer);
+        }
+        // Update deltas
+        self.deltas = self.deltas.concat([delta]);
+        // Reset counter
+        self.counter = Date.now();
+        // Launch timer to
+        self.timer = setTimeout(function() {
+          // Set data
+          var data = {
+            code: self.editor.session.getValue(),
+            deltas: self.deltas
+          };
+          self.model.set('data', data);
+          // Reset deltas
+          self.deltas = [];
+        }, undoGroupingInterval);
       }
     });
     this.editor.on('focus', function() {
@@ -646,10 +666,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.delta) {
+    if (data.deltas) {
       var changes = [{
         group: 'doc',
-        deltas:[data.delta]
+        deltas: data.deltas
       }];
       if (opt.undo) {
         this.editor.session.undoChanges(changes, dontselect);
@@ -663,7 +683,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
     setTimeout(function(self) {
       self.updating = false;
-    }, 0, this);
+    }, 10, this);
   },
 
   apply: function(opt) {
@@ -762,6 +782,11 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     // Prevent paper from handling pointerdown.
     selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
+    this.deltas = [];
+    this.counter = 0;
+    this.timer = null;
+    var undoGroupingInterval = 300;
+
     var self = this;
     this.editor = ace.edit(selector[0]);
     this.editor.$blockScrolling = Infinity;
@@ -769,10 +794,25 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.editor.commands.removeCommand('redo');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
-        var data = JSON.parse(JSON.stringify(self.model.get('data')));
-        data.info = self.editor.session.getValue();
-        data.delta = delta;
-        self.model.set('data', data);
+        // Check consecutive-change interval
+        if (Date.now() - self.counter < undoGroupingInterval) {
+          clearTimeout(self.timer);
+        }
+        // Update deltas
+        self.deltas = self.deltas.concat([delta]);
+        // Reset counter
+        self.counter = Date.now();
+        // Launch timer to
+        self.timer = setTimeout(function() {
+          // Set data
+          var data = {
+            info: self.editor.session.getValue(),
+            deltas: self.deltas
+          };
+          self.model.set('data', data);
+          // Reset deltas
+          self.deltas = [];
+        }, undoGroupingInterval);
       }
     });
     this.editor.on('focus', function() {
@@ -786,21 +826,14 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.apply();
   },
 
-  render: function() {
-    joint.dia.ElementView.prototype.render.apply(this, arguments);
-    this.paper.$el.append(this.$box);
-    this.updateBox();
-    return this;
-  },
-
   applyValue: function(opt) {
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.delta) {
+    if (data.deltas) {
       var changes = [{
         group: 'doc',
-        deltas:[data.delta]
+        deltas: data.deltas
       }];
       if (opt.undo) {
         this.editor.session.undoChanges(changes, dontselect);
@@ -819,6 +852,13 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
 
   apply: function(opt) {
     this.applyValue(opt);
+  },
+
+  render: function() {
+    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    this.paper.$el.append(this.$box);
+    this.updateBox();
+    return this;
   },
 
   update: function() {

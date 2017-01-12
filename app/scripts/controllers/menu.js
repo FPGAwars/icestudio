@@ -333,6 +333,10 @@ angular.module('icestudio')
                 event.preventDefault();
               }
               break;
+            case 89: // Ctrl+Y
+              $scope.redoGraph();
+              event.preventDefault();
+              break;
             case 88: // Ctrl+X
               $scope.cutSelected();
               break;
