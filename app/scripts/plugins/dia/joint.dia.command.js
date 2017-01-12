@@ -233,8 +233,9 @@ joint.dia.CommandManager = Backbone.Model.extend({
             cmd.options.ty *= -1;
             options = cmd.options;
           }
-          if (cmd.data.type === 'ice.Code' ||
-              cmd.data.type === 'ice.Info') {
+          if (attribute === 'data' &&
+              (cmd.data.type === 'ice.Code' ||
+               cmd.data.type === 'ice.Info')) {
             data = cmd.data.next[attribute];
           }
           else {

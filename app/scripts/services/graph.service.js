@@ -637,10 +637,12 @@ angular.module('icestudio')
 
     function step(offset) {
       if (selection) {
+        graph.startBatch('change');
         selection.each(function(cell) {
           cell.translate(offset.x, offset.y);
           selectionView.updateBox(cell);
         });
+        graph.stopBatch('change');
       }
     }
 
