@@ -327,7 +327,7 @@ angular.module('icestudio')
           block.position = cell.position;
           if (cell.type === 'ice.Code' ||
               cell.type === 'ice.Info') {
-            delete block.data.delta;
+            delete block.data.deltas;
           }
           blocks.push(block);
         }

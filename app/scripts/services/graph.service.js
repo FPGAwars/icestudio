@@ -523,7 +523,7 @@ angular.module('icestudio')
             type === 'basic.output') {
           cell.attributes.choices = boards.getPinoutHTML();
           var view = paper.findViewByModel(cell.id);
-          view.renderChoices();
+          view.applyChoices();
           view.clearValue();
         }
       }

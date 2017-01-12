@@ -47,10 +47,16 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-    console.log('all', cmdName, cell, graph, options);
-
-    if (cmdName === 'change:labels') {
+    if (cmdName === 'change:labels' ||
+        cmdName === 'change:z') {
       return;
+    }
+
+    if (cmdName === 'change:target') {
+      if (!graph.id) {
+        // Invalid target
+        return;
+      }
     }
 
     if (!this.get('cmdNameRegex').test(cmdName)) {
@@ -111,6 +117,16 @@ joint.dia.CommandManager = Backbone.Model.extend({
     }
 
     if (cmdName === 'add' || cmdName === 'remove') {
+
+      // In a batch: delete an "add-remove" sequence if it is applied to the same cell
+      if (cmdName === 'remove' && this.batchCommand && this.lastCmdIndex > 0) {
+        var prevCommand = this.batchCommand[this.lastCmdIndex-1];
+        if (prevCommand.action === 'add' && prevCommand.data.id === cell.id) {
+          this.batchCommand.pop();
+          this.batchCommand.pop();
+          return;
+        }
+      }
 
       command.action = cmdName;
       command.data.id = cell.id;

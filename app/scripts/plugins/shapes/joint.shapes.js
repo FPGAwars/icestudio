@@ -621,7 +621,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
-    var undoGroupingInterval = 300;
+    var undoGroupingInterval = 200;
 
     var self = this;
     this.editor = ace.edit(selector[0]);
@@ -636,8 +636,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }
         // Update deltas
         self.deltas = self.deltas.concat([delta]);
-        // Reset counter
-        self.counter = Date.now();
         // Launch timer to
         self.timer = setTimeout(function() {
           // Set data
@@ -649,6 +647,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           // Reset deltas
           self.deltas = [];
         }, undoGroupingInterval);
+        // Reset counter
+        self.counter = Date.now();
       }
     });
     this.editor.on('focus', function() {
@@ -666,7 +666,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas) {
+    if (data.deltas && opt) {
       var changes = [{
         group: 'doc',
         deltas: data.deltas
@@ -785,7 +785,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
-    var undoGroupingInterval = 300;
+    var undoGroupingInterval = 200;
 
     var self = this;
     this.editor = ace.edit(selector[0]);
@@ -800,8 +800,6 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
         }
         // Update deltas
         self.deltas = self.deltas.concat([delta]);
-        // Reset counter
-        self.counter = Date.now();
         // Launch timer to
         self.timer = setTimeout(function() {
           // Set data
@@ -813,6 +811,8 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
           // Reset deltas
           self.deltas = [];
         }, undoGroupingInterval);
+        // Reset counter
+        self.counter = Date.now();
       }
     });
     this.editor.on('focus', function() {
@@ -830,7 +830,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas) {
+    if (data.deltas && opt) {
       var changes = [{
         group: 'doc',
         deltas: data.deltas
