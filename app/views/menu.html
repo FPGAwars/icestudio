@@ -83,12 +83,12 @@
 
           <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" is-open="status.edit">
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu style="min-width: 200px">
+            <ul uib-dropdown-menu style="min-width: 180px">
               <li>
                 <a href ng-click="undoGraph()">{{ 'Undo' | translate }}<span class="shortcut">Ctrl+Z</span></a>
               </li>
               <li>
-                <a href ng-click="redoGraph()">{{ 'Redo' | translate }}<span class="shortcut">Ctrl+Shift+Z</span></a>
+                <a href ng-click="redoGraph()">{{ 'Redo' | translate }}<span class="shortcut">Ctrl+Y</span></a>
               </li>
               <li class="divider"></li>
               <li>

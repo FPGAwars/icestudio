@@ -37,9 +37,7 @@ angular.module('icestudio')
     // Configure window
     var win = gui.Window.get();
     win.on('close', function() {
-      this.hide();
-      profile.save();
-      this.close(true);
+      exit();
     });
 
     // Darwin fix for shortcuts
@@ -69,17 +67,22 @@ angular.module('icestudio')
     //-- File
 
     $scope.newProject = function() {
-      alertify.prompt(
-        gettextCatalog.getString('Enter the project name'),
-        gettextCatalog.getString('Untitled'),
-        function(evt, name) {
-          if (name) {
-            project.new(name);
-          }
-          else {
-            evt.cancel = true;
-          }
-        });
+      // TODO: issue if the first window is removed new windows
+      //       are not well created. Fix: reload the new window
+      /* jshint -W106 */
+      gui.Window.open('index.html', {
+        focus: true,
+        width: 900,
+        height: 620,
+        min_width: 800,
+        min_height: 200,
+        toolbar: false,
+        resizable: true,
+        x: (win ? win.x : 0) + 50,
+        y: (win ? win.y : 0) + 50,
+        icon: 'resources/images/icestudio-logo.png'
+      });
+      /* jshint +W106 */
     };
 
     $scope.openProject = function() {
@@ -193,6 +196,7 @@ angular.module('icestudio')
       alertify.confirm(
         gettextCatalog.getString('Do you want to exit the application?'),
         function() {
+          //win.hide();
           profile.save();
           win.close(true);
         });
