@@ -13,6 +13,7 @@ angular.module('icestudio')
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
     this.project = _default();
+    this.changed = false;
 
     function _default() {
       return {
@@ -36,7 +37,7 @@ angular.module('icestudio')
     this.new = function(name) {
       this.path = '';
       this.project = _default();
-      this.updateName(name);
+      this.updateTitle(name);
 
       graph.clearAll();
       graph.resetCommandStack();
@@ -68,7 +69,7 @@ angular.module('icestudio')
 
       if (ret) {
         boards.selectBoard(this.project.design.board);
-        this.updateName(name);
+        this.updateTitle(name);
       }
       else {
         alertify.notify(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 'error', 30);
@@ -152,7 +153,7 @@ angular.module('icestudio')
     this.save = function(filepath) {
       var name = utils.basename(filepath);
       this.path = filepath;
-      this.updateName(name);
+      this.updateTitle(name);
 
       sortGraph();
       this.update();
@@ -357,12 +358,13 @@ angular.module('icestudio')
       }
     };
 
-    this.updateName = function(name) {
+    this.updateTitle = function(name) {
       if (name) {
         this.name = name;
         graph.resetBreadcrumbs(name);
-        utils.updateWindowTitle(name + ' - Icestudio');
       }
+      var title = (this.changed ? '●' : '') + this.name + ' ─ Icestudio';
+      utils.updateWindowTitle(title);
     };
 
     this.export = function(target, filepath, message) {

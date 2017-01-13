@@ -900,7 +900,7 @@ angular.module('icestudio')
     };
 
     this.clone = function(data) {
-      return JSON.parse(JSON.stringify(data));
+      return _.clone(data);
     };
 
   });

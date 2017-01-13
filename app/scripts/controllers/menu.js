@@ -71,7 +71,7 @@ angular.module('icestudio')
     $scope.newProject = function() {
       alertify.prompt(
         gettextCatalog.getString('Enter the project name'),
-        gettextCatalog.getString('untitled'),
+        gettextCatalog.getString('Untitled'),
         function(evt, name) {
           if (name) {
             project.new(name);
@@ -117,6 +117,7 @@ angular.module('icestudio')
       var filepath = project.path;
       if (filepath) {
         project.save(filepath);
+        resetChanged();
       }
       else {
         $scope.saveProjectAs();
@@ -127,6 +128,7 @@ angular.module('icestudio')
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath);
+        resetChanged();
         if (localCallback) {
           localCallback();
         }
@@ -287,147 +289,6 @@ angular.module('icestudio')
       }
     };
 
-    // Key events
-
-    var promptShown = false;
-
-    alertify.prompt().set({
-      onshow: function() {
-        promptShown = true;
-      },
-      onclose: function() {
-        promptShown = false;
-      }
-    });
-
-    // Shortcuts
-
-    $(document).on('keydown', function(event) {
-      if (graph.isEnabled() && !promptShown) {
-        if (event.ctrlKey) {
-          switch (event.keyCode) {
-            case 78:  // Ctrl+N
-              $scope.newProject();
-              break;
-            case 79:  // Ctrl+O
-              $scope.openProject();
-              break;
-            case 83:
-              if (event.shiftKey) { // Ctrl+Shift+S
-                $scope.saveProjectAs();
-              }
-              else { // Ctrl+S
-                $scope.saveProject();
-              }
-              break;
-            case 81:  // Ctrl+Q
-              $scope.quit();
-              break;
-            case 90:
-              if (event.shiftKey) { // Ctrl+Shift+Z
-                $scope.redoGraph();
-                event.preventDefault();
-              }
-              else { // Ctrl+Z
-                $scope.undoGraph();
-                event.preventDefault();
-              }
-              break;
-            case 89: // Ctrl+Y
-              $scope.redoGraph();
-              event.preventDefault();
-              break;
-            case 88: // Ctrl+X
-              $scope.cutSelected();
-              break;
-            case 67: // Ctrl+C
-              $scope.copySelected();
-              break;
-            case 86: // Ctrl+V
-              $scope.pasteSelected();
-              break;
-            case 65: // Ctrl+A
-              $scope.selectAll();
-              break;
-            case 48: // Ctrl+0
-              $scope.resetView();
-              break;
-            case 70: // Ctrl+F
-              $scope.fitContent();
-              break;
-            case 82: // Ctrl+R
-              $scope.verifyCode();
-              break;
-            case 66: // Ctrl+B
-              $scope.buildCode();
-              break;
-            case 85: // Ctrl+U
-              $scope.uploadCode();
-              break;
-          }
-        }
-
-        switch (event.keyCode) {
-          case 37: // Arrow Left
-            if (graph.hasSelection()) {
-              graph.stepLeft();
-            }
-            break;
-          case 38: // Arrow Up
-            if (graph.hasSelection()) {
-              graph.stepUp();
-            }
-            break;
-          case 39: // Arrow Right
-            if (graph.hasSelection()) {
-              graph.stepRight();
-            }
-            break;
-          case 40: // Arrow Down
-            if (graph.hasSelection()) {
-              graph.stepDown();
-            }
-            break;
-        }
-
-        if (event.keyCode === 46) { // Supr
-          removeSelected();
-        }
-
-        if (process.platform === 'darwin') {
-          if (event.keyCode === 8) { // Back
-            removeSelected();
-          }
-        }
-      }
-      if (event.ctrlKey && event.keyCode === 80) { // Ctrl+P
-        // Print and save a window snapshot
-        takeSnapshot();
-      }
-    });
-
-    function takeSnapshot() {
-      win.capturePage(function(img) {
-        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
-        saveSnapshot(base64Data);
-      }, 'png');
-    }
-
-    function saveSnapshot(base64Data) {
-      utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
-        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
-          $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
-          $scope.$apply();
-          if (!err) {
-            alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
-          }
-          else {
-            throw err;
-          }
-        });
-      });
-    }
-
 
     //-- View
 
@@ -555,5 +416,162 @@ angular.module('icestudio')
         '</div>'].join('\n');
       alertify.alert(content);
     };
+
+
+    // Events
+
+    var storedUndoStack = [];
+    var currentUndoStack = [];
+
+    $(document).on('stackChanged', function(evt, undoStack) {
+      currentUndoStack = undoStack;
+      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+      project.updateTitle();
+    });
+
+    function resetChanged() {
+      storedUndoStack = currentUndoStack;
+      project.changed = false;
+      project.updateTitle();
+    }
+
+    // Shortcuts
+
+    var promptShown = false;
+
+    alertify.prompt().set({
+      onshow: function() {
+        promptShown = true;
+      },
+      onclose: function() {
+        promptShown = false;
+      }
+    });
+
+    $(document).on('keydown', function(event) {
+      if (graph.isEnabled() && !promptShown) {
+        if (event.ctrlKey) {
+          switch (event.keyCode) {
+            case 78:  // Ctrl+N
+              $scope.newProject();
+              break;
+            case 79:  // Ctrl+O
+              $scope.openProject();
+              break;
+            case 83:
+              if (event.shiftKey) { // Ctrl+Shift+S
+                $scope.saveProjectAs();
+              }
+              else { // Ctrl+S
+                $scope.saveProject();
+              }
+              break;
+            case 81:  // Ctrl+Q
+              $scope.quit();
+              break;
+            case 90:
+              if (event.shiftKey) { // Ctrl+Shift+Z
+                $scope.redoGraph();
+                event.preventDefault();
+              }
+              else { // Ctrl+Z
+                $scope.undoGraph();
+                event.preventDefault();
+              }
+              break;
+            case 89: // Ctrl+Y
+              $scope.redoGraph();
+              event.preventDefault();
+              break;
+            case 88: // Ctrl+X
+              $scope.cutSelected();
+              break;
+            case 67: // Ctrl+C
+              $scope.copySelected();
+              break;
+            case 86: // Ctrl+V
+              $scope.pasteSelected();
+              break;
+            case 65: // Ctrl+A
+              $scope.selectAll();
+              break;
+            case 48: // Ctrl+0
+              $scope.resetView();
+              break;
+            case 70: // Ctrl+F
+              $scope.fitContent();
+              break;
+            case 82: // Ctrl+R
+              $scope.verifyCode();
+              break;
+            case 66: // Ctrl+B
+              $scope.buildCode();
+              break;
+            case 85: // Ctrl+U
+              $scope.uploadCode();
+              break;
+          }
+        }
+
+        switch (event.keyCode) {
+          case 37: // Arrow Left
+            if (graph.hasSelection()) {
+              graph.stepLeft();
+            }
+            break;
+          case 38: // Arrow Up
+            if (graph.hasSelection()) {
+              graph.stepUp();
+            }
+            break;
+          case 39: // Arrow Right
+            if (graph.hasSelection()) {
+              graph.stepRight();
+            }
+            break;
+          case 40: // Arrow Down
+            if (graph.hasSelection()) {
+              graph.stepDown();
+            }
+            break;
+        }
+
+        if (event.keyCode === 46) { // Supr
+          removeSelected();
+        }
+
+        if (process.platform === 'darwin') {
+          if (event.keyCode === 8) { // Back
+            removeSelected();
+          }
+        }
+      }
+      if (event.ctrlKey && event.keyCode === 80) { // Ctrl+P
+        // Print and save a window snapshot
+        takeSnapshot();
+      }
+    });
+
+    function takeSnapshot() {
+      win.capturePage(function(img) {
+        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+        saveSnapshot(base64Data);
+      }, 'png');
+    }
+
+    function saveSnapshot(base64Data) {
+      utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
+        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+          $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
+          $scope.$apply();
+          if (!err) {
+            alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
+          }
+          else {
+            throw err;
+          }
+        });
+      });
+    }
 
   });

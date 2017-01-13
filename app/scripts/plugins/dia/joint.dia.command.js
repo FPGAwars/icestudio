@@ -52,13 +52,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return;
     }
 
-    if (cmdName === 'change:target') {
-      if (!graph.id) {
-        // Invalid target
-        return;
-      }
-    }
-
     if (!this.get('cmdNameRegex').test(cmdName)) {
       return;
     }
@@ -73,6 +66,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
       if (!cmd.batch) {
       	this.undoStack.push(cmd);
+        this.triggerChange();
       	this.trigger('add', cmd);
       } else {
         this.lastCmdIndex = Math.max(this.lastCmdIndex, 0);
@@ -166,7 +160,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   initBatchCommand: function() {
 
-    console.log('initBatchCommand', this.batchCommand);
+    //console.log('initBatchCommand', this.batchCommand);
 
     if (!this.batchCommand) {
 
@@ -186,7 +180,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   storeBatchCommand: function() {
 
-    console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
+    //console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
 
     // In order to store batch command it is necesary to run storeBatchCommand as many times as
     // initBatchCommand was executed
@@ -198,8 +192,9 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
 	    this.redoStack = [];
 
-    	this.undoStack.push(this.batchCommand);
-    	this.trigger('add', this.batchCommand);
+      this.undoStack.push(this.batchCommand);
+      this.triggerChange();
+      this.trigger('add', this.batchCommand);
     }
 
     delete this.batchCommand;
@@ -243,7 +238,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          console.log('UNDO', cmd.action, cmd);
+          //console.log('UNDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
             // Invert relative movement
             cmd.options.ty *= -1;
@@ -302,7 +297,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          console.log('REDO', cmd.action, cmd);
+          //console.log('REDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
             cmd.options.ty *= -1;
             options = cmd.options;
@@ -325,6 +320,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
   undo: function(state) {
 
     var command = this.undoStack.pop();
+    this.triggerChange();
 
     if (command) {
 
@@ -350,6 +346,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
       this.applyCommand(command);
       this.undoStack.push(command);
+      this.triggerChange();
     }
   },
 
@@ -376,6 +373,11 @@ joint.dia.CommandManager = Backbone.Model.extend({
   hasRedo: function() {
 
     return this.redoStack.length > 0;
+  },
+
+  triggerChange: function() {
+    var currentUndoStack = _.clone(this.undoStack);
+    $(document).trigger('stackChanged', [currentUndoStack]);
   }
 
 });

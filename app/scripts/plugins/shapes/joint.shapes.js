@@ -387,7 +387,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var i = target.attr('i');
       var name = target.find('option:selected').text();
       var value = target.val();
-      var data = JSON.parse(JSON.stringify(self.model.get('data')));
+      var data = _.clone(self.model.get('data'));
       if (name !== null && value !== null) {
         data.pins[i].name = name;
         data.pins[i].value = value;
@@ -516,7 +516,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
     this.$box.find('.constant-input').on('input', function(evt) {
       var target = $(evt.target);
-      var data = JSON.parse(JSON.stringify(self.model.get('data')));
+      var data = _.clone(self.model.get('data'));
       data.value = target.val();
       self.model.set('data', data);
     });
