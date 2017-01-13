@@ -193,13 +193,22 @@ angular.module('icestudio')
     };
 
     function exit() {
-      alertify.confirm(
-        gettextCatalog.getString('Do you want to exit the application?'),
-        function() {
-          //win.hide();
-          profile.save();
-          win.close(true);
-        });
+      if (project.changed) {
+        alertify.confirm(
+          '<b>' + gettextCatalog.getString('Do you want to exit the application?') + '</b><br>' +
+          gettextCatalog.getString('Your changes will be lost if you don’t save them'),
+          function() {
+            _exit();
+          });
+      }
+      else {
+        _exit();
+      }
+      function _exit() {
+        //win.hide();
+        profile.save();
+        win.close(true);
+      }
     }
 
 
