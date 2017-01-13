@@ -10,9 +10,9 @@ angular.module('icestudio')
                                     resources,
                                     graph,
                                     tools,
-                                    gui,
                                     utils,
                                     gettextCatalog,
+                                    gui,
                                     _package,
                                     nodeFs,
                                     nodePath) {
@@ -34,10 +34,31 @@ angular.module('icestudio')
     $scope.workingdir = '';
     $scope.snapshotdir = '';
 
-    // Configure window
+    var zeroProject = true;  // New project without changes
+
+    // Window events
     var win = gui.Window.get();
     win.on('close', function() {
       exit();
+    });
+
+    var openProject = false;
+    win.on('openProject', function(args) {
+      if (!openProject) {
+        updateWorkingdir(args.filepath);
+        project.open(args.filepath);
+        openProject = true;
+        zeroProject = false;
+      }
+    });
+
+    var loadProject = false;
+    win.on('loadProject', function(args) {
+      if (!loadProject) {
+        project.load(args.name, args.data);
+        loadProject = true;
+        zeroProject = false;
+      }
     });
 
     // Darwin fix for shortcuts
@@ -66,53 +87,72 @@ angular.module('icestudio')
 
     //-- File
 
-    $scope.newProject = function() {
+    function newWindow() {
       // TODO: issue if the first window is removed new windows
       //       are not well created. Fix: reload the new window
       /* jshint -W106 */
-      gui.Window.open('index.html', {
+      var _win = gui.Window.open('index.html', {
         focus: true,
         width: 900,
         height: 620,
         min_width: 800,
         min_height: 200,
-        toolbar: false,
+        toolbar: true,
         resizable: true,
         x: (win ? win.x : 0) + 50,
         y: (win ? win.y : 0) + 50,
         icon: 'resources/images/icestudio-logo.png'
       });
       /* jshint +W106 */
+      return _win;
+    }
+
+    $scope.newProject = function() {
+      newWindow();
     };
 
     $scope.openProject = function() {
       utils.openDialog('#input-open-project', '.ice', function(filepath) {
-        updateWorkingdir(filepath);
-        checkGraph(function() {
-          alertify.confirm(
-            gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-            function() {
-              project.open(filepath);
-            });
-        },
-        function() {
+        if (zeroProject) {
+          // If this is the first action, open
+          // the projec in the same window
+          updateWorkingdir(filepath);
           project.open(filepath);
-        });
+          zeroProject = false;
+        }
+        else if (project.changed || !equalWorkingFilepath(filepath)) {
+          // If this is not the first action, and
+          // the file path is different, open
+          // the project in a new window
+          var _win = newWindow();
+          _win.on('loaded', function() {
+            setTimeout(function() {
+              _win.emit('openProject', { filepath: filepath });
+            }, 200);
+          });
+        }
       });
     };
 
     $scope.loadProject = function(name, data) {
       if (data) {
-        checkGraph(function() {
-          alertify.confirm(
-            gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-            function() {
-              project.load(name, data);
-            });
-        },
-        function() {
+        if (zeroProject) {
+          // If this is the first action, load
+          // the projec in the same window
           project.load(name, data);
-        });
+          zeroProject = false;
+        }
+        else if (project.changed || (project.name !== name)) {
+          // If this is not the first action, and
+          // the project name is different, load
+          // the project in a new window
+          var _win = newWindow();
+          _win.on('loaded', function() {
+            setTimeout(function() {
+              _win.emit('loadProject', { name: name, data: data });
+            }, 200);
+          });
+        }
       }
     };
 
@@ -188,6 +228,10 @@ angular.module('icestudio')
       $scope.workingdir = utils.dirname(filepath) + utils.sep;
     }
 
+    function equalWorkingFilepath(filepath) {
+      return $scope.workingdir + project.name + '.ice' === filepath;
+    }
+
     $scope.quit = function() {
       exit();
     };
@@ -195,7 +239,7 @@ angular.module('icestudio')
     function exit() {
       if (project.changed) {
         alertify.confirm(
-          '<b>' + gettextCatalog.getString('Do you want to exit the application?') + '</b><br>' +
+          '<b>' + gettextCatalog.getString('Do you want to close the application?') + '</b><br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
           function() {
             _exit();
@@ -388,19 +432,14 @@ angular.module('icestudio')
       });
     };
 
-    function checkGraph(callback, callback2) {
+    function checkGraph(callback) {
       if (!graph.isEmpty()) {
         if (callback) {
           callback();
         }
       }
       else {
-        if (callback2) {
-          callback2();
-        }
-        else {
-          alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
-        }
+        alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
     }
 
@@ -440,12 +479,14 @@ angular.module('icestudio')
       currentUndoStack = undoStack;
       project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
       project.updateTitle();
+      zeroProject = false;
     });
 
     function resetChanged() {
       storedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
+      zeroProject = false;
     }
 
     // Shortcuts
