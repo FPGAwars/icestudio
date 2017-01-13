@@ -378,29 +378,32 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       '
     )());
 
+    this.updating = false;
+
     // Prevent paper from handling pointerdown.
     var self = this;
     var comboSelector = this.$box.find('.select2');
     comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
     comboSelector.on('change', function(evt) {
-      var target = $(evt.target);
-      var i = target.attr('i');
-      var name = target.find('option:selected').text();
-      var value = target.val();
-      var data = _.clone(self.model.get('data'));
-      if (name !== null && value !== null) {
-        data.pins[i].name = name;
-        data.pins[i].value = value;
-        self.model.set('data', data);
+      if (!self.updating) {
+        var target = $(evt.target);
+        var i = target.attr('i');
+        var name = target.find('option:selected').text();
+        var value = target.val();
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        if (name !== null && value !== null) {
+          data.pins[i].name = name;
+          data.pins[i].value = value;
+          self.model.set('data', data);
+        }
       }
-      //comboSelector.find('.select2-selection').css('font-size', this.computeFontSize(name));
     });
 
     // Apply data
     if (!this.model.get('disabled')) {
       this.applyChoices();
+      this.applyValues();
       this.applyShape();
-      this.applyValue();
     }
   },
 
@@ -438,30 +441,34 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  applyValue: function() {
+  applyValues: function() {
+    this.updating = true;
     var data = this.model.get('data');
-    if (data.pins) {
-      for (var i in data.pins) {
-        var index = data.pins[i].index;
-        var comboId = '#combo' + this.id + index;
-        var comboSelector = this.$box.find(comboId);
-        var value = data.pins[i].value;
-        comboSelector.val(value).change();
-        //var fontSize = this.computeFontSize(this.pins[i].name);
-        //$('#select2-' + comboId + '-container').css('font-size', fontSize);
-      }
+    for (var i in data.pins) {
+      var index = data.pins[i].index;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId);
+      var value = data.pins[i].value;
+      comboSelector.val(value).change();
     }
+    this.updating = false;
   },
 
-  clearValue: function() {
-    var data = this.model.get('data');
-    if (data.pins) {
-      for (var i in data.pins) {
-        this.$box.find('#combo' + this.id + data.pins[i].index).val('');
-        this.model.attributes.data.pins[i].name = '';
-        this.model.attributes.data.pins[i].value = 0;
-      }
+  clearValues: function() {
+    this.updating = true;
+    var name = '';
+    var value = 0;
+    var data = JSON.parse(JSON.stringify(this.model.get('data')));
+    for (var i in data.pins) {
+      var index = data.pins[i].index;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId);
+      comboSelector.val(value).change();
+      data.pins[i].name = name;
+      data.pins[i].value = value;
     }
+    this.model.set('data', data);
+    this.updating = false;
   },
 
   computeFontSize: function(name) {
@@ -470,8 +477,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   },
 
   apply: function() {
+    this.applyChoices();
+    this.applyValues();
     this.applyShape();
-    this.applyValue();
     this.render();
   },
 
@@ -511,14 +519,18 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
   initialize: function() {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
+    this.updating = false;
+
     // Prevent paper from handling pointerdown.
     var self = this;
     this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
     this.$box.find('.constant-input').on('input', function(evt) {
-      var target = $(evt.target);
-      var data = _.clone(self.model.get('data'));
-      data.value = target.val();
-      self.model.set('data', data);
+      if (!self.updating) {
+        var target = $(evt.target);
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        data.value = target.val();
+        self.model.set('data', data);
+      }
     });
 
     // Apply data
@@ -531,11 +543,13 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
   },
 
   applyValue: function() {
+    this.updating = true;
     if (this.model.get('disabled')) {
       this.$box.find('.constant-input').css({'pointer-events': 'none'});
     }
     var value = this.model.get('data').value;
     this.$box.find('.constant-input').val(value);
+    this.updating = false;
   },
 
   applyLocal: function() {

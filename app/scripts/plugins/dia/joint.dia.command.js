@@ -9,7 +9,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   defaults: {
     cmdBeforeAdd: null,
-    cmdNameRegex: /^(?:add|remove|change:\w+)$/
+    cmdNameRegex: /^(?:add|remove|board|change:\w+)$/
   },
 
   // length of prefix 'change:' in the event name
@@ -131,6 +131,14 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return push(command);
     }
 
+    if (cmdName === 'board') {
+
+      command.action = cmdName;
+      command.data = cell.data;
+
+      return push(command);
+    }
+
     // `changedAttribute` holds the attribute name corresponding
     // to the change event triggered on the model.
     var changedAttribute = cmdName.substr(this.PREFIX_LENGTH);
@@ -234,6 +242,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
         	this.graph.addCell(cmd.data.attributes);
         	break;
 
+        case 'board':
+          this.triggerBoard(cmd.data.previous);
+          break;
+
         default:
           var data = null;
           var options = null;
@@ -291,6 +303,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         case 'remove':
           cell.remove();
+          break;
+
+        case 'board':
+          this.triggerBoard(cmd.data.next);
           break;
 
         default:
@@ -378,6 +394,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
   triggerChange: function() {
     var currentUndoStack = _.clone(this.undoStack);
     $(document).trigger('stackChanged', [currentUndoStack]);
+  },
+
+  triggerBoard: function(name) {
+    $(document).trigger('boardChanged', [name]);
   }
 
 });

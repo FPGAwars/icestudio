@@ -397,17 +397,16 @@ angular.module('icestudio')
         if (!graph.isEmpty()) {
           alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: utils.bold(board.info.label) }),
             function() {
-              boards.selectBoard(board.name);
-              graph.resetIOChoices();
-              alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
-              utils.rootScopeSafeApply();
+              _boardSelected();
           });
         }
         else {
-          boards.selectBoard(board.name);
-          graph.resetIOChoices();
-          alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
+          _boardSelected();
         }
+      }
+      function _boardSelected() {
+        graph.selectBoard(board.name);
+        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
       }
     };
 

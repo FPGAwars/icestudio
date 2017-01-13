@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('boards', function(nodeFs,
+  .service('boards', function(utils,
+                              nodeFs,
                               nodePath) {
     this.pinoutHTML = '';
     this.selectedBoard = null;
@@ -37,6 +38,12 @@ angular.module('icestudio')
       return ret;
     }
 
+    var self = this;
+
+    $(document).on('boardChanged', function(evt, name) {
+      self.selectBoard(name);
+    });
+
     this.selectBoard = function(name) {
       for (var i in this.currentBoards) {
         if (name === this.currentBoards[i].name) {
@@ -45,6 +52,7 @@ angular.module('icestudio')
           break;
         }
       }
+      utils.rootScopeSafeApply();
     };
 
     // Set default board

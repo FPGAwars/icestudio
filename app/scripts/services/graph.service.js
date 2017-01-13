@@ -513,20 +513,29 @@ angular.module('icestudio')
       graph.attributes.cells.models = cells;
     };
 
-    this.resetIOChoices = function() {
+    this.selectBoard = function(boardName) {
+      graph.startBatch('change');
+      // Trigger board event
+      var data = {
+        previous: boards.selectedBoard.name,
+        next: boardName
+      };
+      graph.trigger('board', { data: data });
+      boards.selectBoard(boardName);
       var cells = graph.getCells();
-      // Reset choices in all i/o blocks
+      // Reset choices in all I/O blocks
       for (var i in cells) {
         var cell = cells[i];
         var type = cell.attributes.blockType;
         if (type === 'basic.input' ||
             type === 'basic.output') {
-          cell.attributes.choices = boards.getPinoutHTML();
           var view = paper.findViewByModel(cell.id);
+          cell.set('choices', boards.getPinoutHTML());
+          view.clearValues();
           view.applyChoices();
-          view.clearValue();
         }
       }
+      graph.stopBatch('change');
     };
 
     this.resetCommandStack = function() {
