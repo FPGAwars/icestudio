@@ -6,10 +6,10 @@ var sha1 = require('sha1');
 const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
 
 if (DARWIN) {
-  var fontSize = '12';
+  var aceFontSize = '12';
 }
 else {
-  var fontSize = '15';
+  var aceFontSize = '15';
 }
 
 // Model element
@@ -42,7 +42,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         'fill-opacity': 0
       },
       '.port-body': {
-        r: 16,
+        r: 8,
         opacity: 0
       },
       '.leftPorts .port-body': {
@@ -136,44 +136,45 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       attrs[portWireSelector]['pointer-events'] = 'none';
     }
 
+    var offset = (port.size && port.size > 1) ? 6 : 0;
     var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
 
     switch (type) {
       case 'left':
-        attrs[portSelector]['ref-x'] = -16;
+        attrs[portSelector]['ref-x'] = -8;
         attrs[portSelector]['ref-y'] = pos;
-        attrs[portLabelSelector]['dx'] = 10;
-        attrs[portLabelSelector]['y'] = -10;
+        attrs[portLabelSelector]['dx'] = 4;
+        attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'end';
         attrs[portWireSelector]['y'] = pos;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
         break;
       case 'right':
-        attrs[portSelector]['ref-dx'] = 16;
+        attrs[portSelector]['ref-dx'] = 8;
         attrs[portSelector]['ref-y'] = pos;
-        attrs[portLabelSelector]['dx'] = -10;
-        attrs[portLabelSelector]['y'] = -10;
+        attrs[portLabelSelector]['dx'] = -4;
+        attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['y'] = pos;
-        attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L -16 0';
         break;
       case 'top':
-        attrs[portSelector]['ref-y'] = -16;
+        attrs[portSelector]['ref-y'] = -8;
         attrs[portSelector]['ref-x'] = pos;
-        attrs[portLabelSelector]['dx'] = 10;
-        attrs[portLabelSelector]['dy'] = 0;
+        attrs[portLabelSelector]['dx'] = 5+offset;
+        attrs[portLabelSelector]['y'] = 4;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = pos;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 32';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 16';
         break;
       case 'bottom':
-        attrs[portSelector]['ref-dy'] = 16;
+        attrs[portSelector]['ref-dy'] = 8;
         attrs[portSelector]['ref-x'] = pos;
-        attrs[portLabelSelector]['dx'] = 10;
-        attrs[portLabelSelector]['y'] = 0;
+        attrs[portLabelSelector]['dx'] = 5+offset;
+        attrs[portLabelSelector]['y'] = -4;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = pos;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -32';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -16';
         break;
     }
 
@@ -290,14 +291,67 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   <div class="generic-block">\
     <img>\
     <label></label>\
+    <span class="tooltiptext"></span>\
   </div>\
   ',
+
+  events: {
+    'mouseover': 'mouseovercard',
+    'mouseout': 'mouseoutcard',
+    'mouseup': 'mouseupcard',
+    'mousedown': 'mousedowncard'
+  },
+
+  enter: false,
+  down: false,
+  timer: null,
+
+  mouseovercard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = true;
+      var self = this;
+      this.timer = setTimeout(function() {
+        if (self.enter && !self.down) {
+          self.tooltiptext.text(self.tooltip);
+          self.tooltiptext.css('visibility', 'visible');
+          if (self.tooltip.length > 30) {
+            self.tooltiptext.addClass('tooltip-large');
+          }
+          else {
+            self.tooltiptext.removeClass('tooltip-large');
+          }
+        }
+      }, 1000);
+    }
+  },
+
+  mouseoutcard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = false;
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      this.tooltiptext.css('visibility', 'hidden');
+    }
+  },
+
+  mouseupcard: function(/*evt, x, y*/) {
+    this.down = false;
+  },
+
+  mousedowncard: function(/*evt, x, y*/) {
+    this.down = true;
+    this.mouseoutcard();
+  },
 
   initialize: function() {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
     var image = this.model.get('image');
     var name = this.model.get('label');
+    this.tooltip = this.model.get('tooltip');
+    this.tooltiptext = this.$box.find('.tooltiptext');
 
     if (image) {
       this.$box.find('img').attr('src', 'data:image/svg+xml,' + image);
@@ -609,7 +663,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + fontSize + ');\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
@@ -777,7 +831,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + fontSize + ');\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
         </script>\

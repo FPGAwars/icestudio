@@ -9,7 +9,7 @@ joint.connectors.ice = function(sourcePoint, targetPoint, vertices) {
   });
   points.push({ x: targetPoint.x, y: targetPoint.y });
 
-  var step = 16;
+  var step = 8;
   var n = points.length;
 
   var sq = { x: points[0].x - points[1].x, y: points[0].y - points[1].y };

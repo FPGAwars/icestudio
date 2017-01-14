@@ -303,7 +303,7 @@ angular.module('icestudio')
      // Events
 
      var self = this;
-
+     var mousedown = false;
      $('#paper').mousemove(function(event) {
        mousePosition = {
          x: event.offsetX,
@@ -316,11 +316,9 @@ angular.module('icestudio')
        if (selection) {
          selection.each(function(cell) {
            var cellView = paper.findViewByModel(cell);
-           if (cellView) {
-             if (!cellView.model.isLink()) {
-               if (cellView.$box.css('z-index') < z.index) {
-                 cellView.$box.css('z-index', ++z.index);
-               }
+           if (!cellView.model.isLink()) {
+             if (cellView.$box.css('z-index') < z.index) {
+               cellView.$box.css('z-index', ++z.index);
              }
            }
          });
@@ -334,6 +332,7 @@ angular.module('icestudio')
      });
 
      paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
+       mousedown = false;
        if (paper.options.enabled) {
          if (!cellView.model.isLink()) {
            if (evt.which === 3) {
@@ -356,14 +355,15 @@ angular.module('icestudio')
        }
      });
 
-      paper.on('cell:pointerdown', function(cellView) {
-        if (paper.options.enabled) {
+      paper.on('cell:pointerdown', function(/*cellView*/) {
+        mousedown = true;
+        /*if (paper.options.enabled) {
           if (!cellView.model.isLink()) {
             if (cellView.$box.css('z-index') < z.index) {
               cellView.$box.css('z-index', ++z.index);
             }
           }
-        }
+        }*/
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
@@ -413,6 +413,11 @@ angular.module('icestudio')
       paper.on('cell:mouseover', function(cellView/*, evt*/) {
         if (!cellView.model.isLink()) {
           cellView.$box.addClass('highlight');
+          if (!mousedown && cellView && !cellView.model.isLink()) {
+            if (cellView.$box.css('z-index') < zIndex) {
+              cellView.$box.css('z-index', ++zIndex);
+            }
+          }
         }
       });
 

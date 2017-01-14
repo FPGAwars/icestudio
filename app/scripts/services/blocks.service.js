@@ -579,6 +579,7 @@ angular.module('icestudio')
         blockType: instance.type,
         image: blockImage,
         label: blockLabel,
+        tooltip: block.package.description,
         position: instance.position,
         leftPorts: leftPorts,
         rightPorts: rightPorts,
