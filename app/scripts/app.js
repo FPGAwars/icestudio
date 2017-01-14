@@ -39,6 +39,6 @@ angular
       }
     });
     setTimeout(function() {
-      project.updateName(gettextCatalog.getString('untitled'));
+      project.updateTitle(gettextCatalog.getString('Untitled'));
     }, 100);
   });

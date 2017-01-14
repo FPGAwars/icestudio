@@ -15,6 +15,12 @@
   margin-right: 0;
 }
 
+.shortcut {
+  display: inline;
+  float: right;
+  color: #999;
+}
+
 .dropdown-submenu {
   position: relative;
 }

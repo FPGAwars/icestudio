@@ -7,16 +7,21 @@ angular.module('icestudio')
                              blocks,
                              utils,
                              gettextCatalog,
-                             nodeSha1) {
+                             window) {
     // Variables
 
-    var zIndex = 100;
+    var z = {
+      index: 100
+    };
     var ctrlPressed = false;
 
     var graph = null;
     var paper = null;
     var selection = null;
     var selectionView = null;
+    var commandManager = null;
+    var clipboard = [];
+    var mousePosition = { x: 0, y: 0 };
 
     var dependencies = {};
     this.breadcrumbs = [{ name: '' }];
@@ -29,6 +34,8 @@ angular.module('icestudio')
       },
       zoom: 1.0
     };
+    const ZOOM_MAX = 2;
+    const ZOOM_MIN = 0.2;
 
     // Functions
 
@@ -38,7 +45,7 @@ angular.module('icestudio')
 
     this.getState = function() {
       // Clone state
-      return JSON.parse(JSON.stringify(state));
+      return utils.clone(state);
     };
 
     this.setState = function(_state) {
@@ -55,8 +62,58 @@ angular.module('icestudio')
       this.panAndZoom.pan(_state.pan);
     };
 
-    this.resetState = function() {
+    this.resetView = function() {
       this.setState(null);
+    };
+
+    this.fitContent = function() {
+      if (!this.isEmpty()) {
+        // Target box
+        var margin = 40;
+        var menuFooterHeight = 93;
+        var tbox = {
+          x: margin,
+          y: margin,
+          width: window.get().width - 2 * margin,
+          height: window.get().height - menuFooterHeight - 2 * margin
+        };
+        // Source box
+        var sbox = V(paper.viewport).bbox(true, paper.svg);
+        sbox = {
+          x: sbox.x * state.zoom,
+          y: sbox.y * state.zoom,
+          width: sbox.width * state.zoom,
+          height: sbox.height * state.zoom
+        };
+        var scale = 1;
+        if (tbox.width/sbox.width > tbox.height/sbox.height) {
+          scale = tbox.height / sbox.height;
+        }
+        else {
+          scale = tbox.width / sbox.width;
+        }
+        if (state.zoom * scale > ZOOM_MAX) {
+          scale = ZOOM_MAX / state.zoom;
+        }
+        var target = {
+          x: tbox.x + tbox.width / 2,
+          y: tbox.y + tbox.height / 2
+        };
+        var source = {
+          x: sbox.x + sbox.width / 2,
+          y: sbox.y + sbox.height / 2
+        };
+        this.setState({
+          pan: {
+            x: target.x - source.x * scale,
+            y: target.y - source.y * scale
+          },
+          zoom: state.zoom * scale
+        });
+      }
+      else {
+        this.resetView();
+      }
     };
 
     this.resetBreadcrumbs = function(name) {
@@ -197,8 +254,8 @@ angular.module('icestudio')
         panEnabled: false,
         zoomScaleSensitivity: 0.1,
         dblClickZoomEnabled: false,
-        minZoom: 0.2,
-        maxZoom: 2,
+        minZoom: ZOOM_MIN,
+        maxZoom: ZOOM_MAX,
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
@@ -226,6 +283,15 @@ angular.module('icestudio')
         }
       });
 
+      // Command Manager
+
+      commandManager = new joint.dia.CommandManager({
+        paper: paper,
+        graph: graph
+      });
+
+      // Selection View
+
      selection = new Backbone.Collection();
      selectionView = new joint.ui.SelectionView({
        paper: paper,
@@ -237,17 +303,22 @@ angular.module('icestudio')
      // Events
 
      var self = this;
-
      var mousedown = false;
+     $('#paper').mousemove(function(event) {
+       mousePosition = {
+         x: event.offsetX,
+         y: event.offsetY
+       };
+     });
 
      selectionView.on('selection-box:pointerdown', function(evt) {
        // Selection to top view
        if (selection) {
          selection.each(function(cell) {
            var cellView = paper.findViewByModel(cell);
-           if (cellView && !cellView.model.isLink()) {
-             if (cellView.$box.css('z-index') < zIndex) {
-               cellView.$box.css('z-index', ++zIndex);
+           if (!cellView.model.isLink()) {
+             if (cellView.$box.css('z-index') < z.index) {
+               cellView.$box.css('z-index', ++z.index);
              }
            }
          });
@@ -288,8 +359,8 @@ angular.module('icestudio')
         mousedown = true;
         /*if (paper.options.enabled) {
           if (!cellView.model.isLink()) {
-            if (cellView.$box.css('z-index') < zIndex) {
-              cellView.$box.css('z-index', ++zIndex);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
             }
           }
         }*/
@@ -299,10 +370,6 @@ angular.module('icestudio')
         var type =  cellView.model.attributes.blockType;
         if (type.indexOf('basic.') !== -1) {
           if (paper.options.enabled) {
-            if (type === 'basic.code') {
-              var content = self.getContent(cellView.model.id);
-              cellView.model.attributes.data.code = content;
-            }
             blocks.editBasic(type, cellView, function(cell) {
               addCell(cell);
             });
@@ -311,7 +378,7 @@ angular.module('icestudio')
         else {
           self.breadcrumbs.push({ name: type });
           utils.rootScopeSafeApply();
-          zIndex = 1;
+          z.index = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
               self.loadDesign(dependencies[type].design, true);
@@ -374,10 +441,19 @@ angular.module('icestudio')
       });
     };
 
+    this.undo = function() {
+      disableSelected();
+      commandManager.undo(state);
+    };
+
+    this.redo = function() {
+      disableSelected();
+      commandManager.redo(state);
+    };
+
     this.clearAll = function() {
       graph.clear();
       this.appEnable(true);
-      selection.reset();
       selectionView.cancelSelection();
     };
 
@@ -442,49 +518,85 @@ angular.module('icestudio')
       graph.attributes.cells.models = cells;
     };
 
-    this.getContent = function(id) {
-      return paper.findViewByModel(id).$box.find(
-        '#content' + nodeSha1(id).toString().substring(0, 6)).val();
-    };
-
-    this.resetIOChoices = function() {
+    this.selectBoard = function(boardName) {
+      graph.startBatch('change');
+      // Trigger board event
+      var data = {
+        previous: boards.selectedBoard.name,
+        next: boardName
+      };
+      graph.trigger('board', { data: data });
+      boards.selectBoard(boardName);
       var cells = graph.getCells();
-      // Reset choices in all i/o blocks
+      // Reset choices in all I/O blocks
       for (var i in cells) {
         var cell = cells[i];
         var type = cell.attributes.blockType;
         if (type === 'basic.input' ||
             type === 'basic.output') {
-          cell.attributes.choices = boards.getPinoutHTML();
           var view = paper.findViewByModel(cell.id);
-          view.renderChoices();
-          view.clearValue();
+          cell.set('choices', boards.getPinoutHTML());
+          view.clearValues();
+          view.applyChoices();
         }
+      }
+      graph.stopBatch('change');
+    };
+
+    this.resetCommandStack = function() {
+      commandManager.reset();
+    };
+
+    this.cutSelected = function() {
+      if (selection) {
+        clipboard = selection.clone();
+        this.removeSelected();
       }
     };
 
-    this.cloneSelected = function() {
-      var self = this;
+    this.copySelected = function() {
       if (selection) {
-        selection.each(function(cell) {
+        clipboard = selection.clone();
+      }
+    };
+
+    this.pasteSelected = function() {
+      if (clipboard && clipboard.length > 0) {
+        var offset = clipboard.models[0].attributes.position;
+        selectionView.cancelSelection();
+        var newCells = [];
+        clipboard.each(function(cell) {
           var newCell = cell.clone();
-          var type = cell.attributes.blockType;
-          var content = self.getContent(cell.id);
-          if (type === 'basic.code') {
-            newCell.attributes.data.code = content;
+          newCell.translate(
+            Math.round(((mousePosition.x - state.pan.x) / state.zoom - offset.x) / gridsize) * gridsize,
+            Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
+          );
+          newCells.push(newCell);
+        });
+        graph.addCells(newCells);
+        // Select pasted cells
+        _.each(newCells, function(cell) {
+          if (!cell.isLink()) {
+            var cellView = paper.findViewByModel(cell);
+            selection.add(cell);
+            selectionView.createSelectionBox(cellView);
+            cellView.$box.removeClass('highlight');
           }
-          else if (type === 'basic.info') {
-            newCell.attributes.data.info = content;
-          }
-          newCell.translate(6 * gridsize, 6 * gridsize);
-          addCell(newCell);
-          if (type.indexOf('config.') !== -1) {
-            paper.findViewByModel(newCell).$box.addClass('config-block');
-          }
-          selection.reset(selection.without(cell));
-          selectionView.cancelSelection();
         });
       }
+    };
+
+    this.selectAll = function() {
+      disableSelected();
+      var cells = graph.getCells();
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          selection.add(cell);
+          selectionView.createSelectionBox(cellView);
+          cellView.$box.removeClass('highlight');
+        }
+      });
     };
 
     this.hasSelection = function() {
@@ -494,10 +606,7 @@ angular.module('icestudio')
     this.removeSelected = function(removeDep) {
       if (selection) {
         selection.each(function(cell) {
-          selection.reset(selection.without(cell));
-          selectionView.cancelSelection();
           var type = cell.attributes.blockType;
-          cell.remove();
           if (!typeInGraph(type)) {
             // Check if it is the last "type" block
             if (removeDep) {
@@ -506,8 +615,49 @@ angular.module('icestudio')
             }
           }
         });
+        graph.removeCells(selection.models);
+        selectionView.cancelSelection();
       }
     };
+
+    $(document).on('disableSelected', function() {
+      disableSelected();
+    });
+
+    function disableSelected() {
+      if (selection) {
+        selectionView.cancelSelection();
+      }
+    }
+
+    var stepValue = 8;
+
+    this.stepLeft = function() {
+      step({ x: -stepValue, y: 0 });
+    };
+
+    this.stepUp = function() {
+      step({ x: 0, y: -stepValue });
+    };
+
+    this.stepRight = function() {
+      step({ x: stepValue, y: 0 });
+    };
+
+    this.stepDown = function() {
+      step({ x: 0, y: stepValue });
+    };
+
+    function step(offset) {
+      if (selection) {
+        graph.startBatch('change');
+        selection.each(function(cell) {
+          cell.translate(offset.x, offset.y);
+          selectionView.updateBox(cell);
+        });
+        graph.stopBatch('change');
+      }
+    }
 
     function typeInGraph(type) {
       var cells = graph.getCells();
@@ -544,6 +694,8 @@ angular.module('icestudio')
 
         $('body').addClass('waiting');
 
+        commandManager.stopListening();
+
         this.clearAll();
         this.setState(design.state);
 
@@ -575,6 +727,10 @@ angular.module('icestudio')
           self.appEnable(!disabled);
           $('body').removeClass('waiting');
 
+          if (!disabled) {
+            commandManager.listen();
+          }
+
           if (callback) {
             callback();
           }
@@ -587,14 +743,12 @@ angular.module('icestudio')
 
     function addCell(cell) {
       cell.attributes.state = state;
+      //cell.attributes.zindex = z.index;
       graph.addCell(cell);
       if (!cell.isLink()) {
         var cellView = paper.findViewByModel(cell);
-        if (cellView.$box.css('z-index') < zIndex) {
-          cellView.$box.css('z-index', ++zIndex);
-        }
-        if (cell.attributes.blockType.indexOf('config.') !== -1) {
-          cellView.$box.addClass('config-block');
+        if (cellView.$box.css('z-index') < z.index) {
+          cellView.$box.css('z-index', ++z.index);
         }
       }
     }

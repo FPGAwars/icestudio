@@ -1,13 +1,7 @@
-/*! JointJS+ - Set of JointJS compatible plugins
-
+/*
+Copyright (c) 2016-2017 FPGAwars
 Copyright (c) 2013 client IO
-
-Adapted to Icestudio Project. 2016
-
-This Source Code Form is subject to the terms of the JointJS+ License
-, v. 1.0. If a copy of the JointJS+ License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/jointjs_plus_v1.txt
- or from the JointJS+ archive as was distributed by client IO. See the LICENSE file.*/
+*/
 
 
 'use strict';
@@ -270,18 +264,18 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   updateBox: function(element) {
 
-    var border = 12;
+    var margin = 4;
 
     var bbox = element.getBBox();
     var state = this.options.state;
 
     $('div[data-model=\'' + element.get('id') + '\']').css({
       left: bbox.x * state.zoom + state.pan.x +
-            bbox.width / 2.0 * (state.zoom - 1) - border / 2,
+            bbox.width / 2.0 * (state.zoom - 1) - margin,
       top: bbox.y * state.zoom + state.pan.y +
-           bbox.height / 2.0 * (state.zoom - 1) - border / 2,
-      width: bbox.width + border,
-      height: bbox.height + border,
+           bbox.height / 2.0 * (state.zoom - 1) - margin,
+      width: bbox.width + 2 * margin,
+      height: bbox.height + 2 * margin,
       transform: 'scale(' + state.zoom + ')'
     });
   }

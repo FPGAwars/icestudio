@@ -377,6 +377,7 @@ angular.module('icestudio')
         size: data.pins ? data.pins.length : (data.size || 1),
         gridUnits: 8
       }];
+
       var cell = new joint.shapes.ice.Input({
         id: instance.id,
         blockType: instance.type,
@@ -645,6 +646,7 @@ angular.module('icestudio')
     }
 
     function editBasicIO(cellView, addCellCallback) {
+      var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Update the port'),
@@ -684,8 +686,10 @@ angular.module('icestudio')
                 }
               };
               if (addCellCallback) {
+                graph.startBatch('change');
                 addCellCallback(loadBasic(blockInstance));
                 cellView.model.remove();
+                graph.stopBatch('change');
                 alertify.success(gettextCatalog.getString('Block updated'));
               }
             }
@@ -697,10 +701,14 @@ angular.module('icestudio')
               // Update block position when size changes
               offset = 16 * (oldSize - newSize);
               // Edit block
-              block.data.name = portInfo.name;
-              block.data.virtual = virtual;
-              block.position.y += offset;
-              cellView.render();
+              graph.startBatch('change');
+              var data = utils.clone(block.data);
+              data.name = portInfo.name;
+              data.virtual = virtual;
+              cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+              cellView.model.translate(0, offset);
+              graph.stopBatch('change');
+              cellView.apply();
               alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
@@ -727,16 +735,18 @@ angular.module('icestudio')
           if (block.data.name !== name ||
               block.data.local !== local) {
             // Edit block
-            block.data.name = name;
-            block.data.local = local;
-            cellView.renderLabel();
-            cellView.renderLocal();
+            var data = utils.clone(block.data);
+            data.name = name;
+            data.local = local;
+            cellView.model.set('data', data);
+            cellView.apply();
             alertify.success(gettextCatalog.getString('Block updated'));
           }
       });
     }
 
     function editBasicCode(cellView, addCellCallback) {
+      var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       var blockInstance = {
         id: null,
@@ -746,8 +756,10 @@ angular.module('icestudio')
       };
       newBasicCode(function(cell) {
         if (addCellCallback) {
+          graph.startBatch('change');
           addCellCallback(cell);
           cellView.model.remove();
+          graph.stopBatch('change');
           alertify.success(gettextCatalog.getString('Block updated'));
         }
       }, blockInstance);

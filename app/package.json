@@ -6,6 +6,7 @@
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "main": "index.html",
+  "single-instance": false,
   "window": {
     "width": 900,
     "height": 620,
