@@ -302,8 +302,9 @@ angular.module('icestudio')
 
      // Events
 
+     this.mousedown = false;
+
      var self = this;
-     var mousedown = false;
      $('#paper').mousemove(function(event) {
        mousePosition = {
          x: event.offsetX,
@@ -332,7 +333,7 @@ angular.module('icestudio')
      });
 
      paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
-       mousedown = false;
+       self.mousedown = false;
        if (paper.options.enabled) {
          if (!cellView.model.isLink()) {
            if (evt.which === 3) {
@@ -356,7 +357,7 @@ angular.module('icestudio')
      });
 
       paper.on('cell:pointerdown', function(/*cellView*/) {
-        mousedown = true;
+        self.mousedown = true;
         /*if (paper.options.enabled) {
           if (!cellView.model.isLink()) {
             if (cellView.$box.css('z-index') < z.index) {
@@ -391,6 +392,7 @@ angular.module('icestudio')
       });
 
       paper.on('blank:pointerdown', function(evt, x, y) {
+        self.mousedown = true;
         // Disable current focus
         document.activeElement.blur();
 
@@ -407,37 +409,42 @@ angular.module('icestudio')
       });
 
       paper.on('cell:pointerup blank:pointerup', function(/*cellView, evt*/) {
+        self.mousedown = false;
         self.panAndZoom.disablePan();
       });
 
       paper.on('cell:mouseover', function(cellView/*, evt*/) {
-        if (!cellView.model.isLink()) {
-          cellView.$box.addClass('highlight');
-          if (!mousedown && cellView && !cellView.model.isLink()) {
-            if (cellView.$box.css('z-index') < zIndex) {
-              cellView.$box.css('z-index', ++zIndex);
+        if (!self.mousedown) {
+          if (!cellView.model.isLink()) {
+            cellView.$box.addClass('highlight');
+            if (cellView && !cellView.model.isLink()) {
+              if (cellView.$box.css('z-index') < z.index) {
+                cellView.$box.css('z-index', ++z.index);
+              }
             }
           }
         }
       });
 
       paper.on('cell:mouseout', function(cellView/*, evt*/) {
-        if (!cellView.model.isLink()) {
-          cellView.$box.removeClass('highlight');
+        if (!self.mousedown) {
+          if (!cellView.model.isLink()) {
+            cellView.$box.removeClass('highlight');
+          }
         }
       });
 
       graph.on('change:position', function(/*cell*/) {
-        if (!selectionView.isTranslating()) {
+        /*if (!selectionView.isTranslating()) {
           // Update wires on obstacles motion
-          /*var cells = graph.getCells();
+          var cells = graph.getCells();
           for (var i in cells) {
             var cell = cells[i];
             if (cell.isLink()) {
               paper.findViewByModel(cell).update();
             }
-          }*/
-        }
+          }
+        }*/
       });
     };
 
@@ -482,6 +489,7 @@ angular.module('icestudio')
           }
         }
         else if (cells[i].attributes.type !== 'ice.Wire') {
+          // TODO: also on !mousedown
           if (value) {
             cellView.$el.find('.port-body').removeClass('disable-graph');
           }

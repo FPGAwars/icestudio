@@ -74,7 +74,9 @@ angular.module('icestudio')
     // mouseover event
     $scope.showMenu = function (menu) {
       $timeout.cancel(timer);
-      $scope.status[menu] = true;
+      if (!graph.mousedown) {
+        $scope.status[menu] = true;
+      }
     };
 
     // mouseleave event
@@ -97,7 +99,7 @@ angular.module('icestudio')
         height: 620,
         min_width: 800,
         min_height: 200,
-        toolbar: true,
+        toolbar: false,
         resizable: true,
         x: (win ? win.x : 0) + 50,
         y: (win ? win.y : 0) + 50,
