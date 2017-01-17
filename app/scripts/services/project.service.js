@@ -64,6 +64,10 @@ angular.module('icestudio')
       }
     };
 
+    this.getProject = function() {
+      return project;
+    };
+
     this.getAllDependencies = function() {
       return allDependencies;
     };
@@ -373,10 +377,10 @@ angular.module('icestudio')
 
       // Update dependencies
       if (updateDependencies !== false) {
-        project.dependencies = [];
+        project.dependencies = {};
         var types = findSubDependencies(project);
         for (var i in types) {
-          project.dependencies.push(allDependencies[types[i]]);
+          project.dependencies[types[i]] = allDependencies[types[i]];
         }
       }
 
@@ -390,9 +394,11 @@ angular.module('icestudio')
       var blocks = dependency.design.graph.blocks;
       for (var i in blocks) {
         var type = blocks[i].type;
-        subDependencies.push(type);
-        var newSubDependencies = findSubDependencies(allDependencies[type]);
-        subDependencies = subDependencies.concat(newSubDependencies);
+        if (type.indexOf('basic.') === -1) {
+          subDependencies.push(type);
+          var newSubDependencies = findSubDependencies(allDependencies[type]);
+          subDependencies = subDependencies.concat(newSubDependencies);
+        }
       }
       return _.unique(subDependencies);
     }

@@ -706,11 +706,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         self.deltas = self.deltas.concat([delta]);
         // Launch timer to
         self.timer = setTimeout(function() {
+          var data = JSON.parse(JSON.stringify(self.model.get('data')));
           // Set data
-          var data = {
-            code: self.editor.session.getValue(),
-            deltas: self.deltas
-          };
+          data.code = self.editor.session.getValue();
+          data.deltas = self.deltas;
           self.model.set('data', data);
           // Reset deltas
           self.deltas = [];
