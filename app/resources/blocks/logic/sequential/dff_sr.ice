@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "package": {
     "name": "DFF",
     "version": "1.0.0",
@@ -225,7 +225,6 @@
         }
       ]
     },
-    "deps": {},
     "state": {
       "pan": {
         "x": -100,
@@ -233,5 +232,6 @@
       },
       "zoom": 1
     }
-  }
+  },
+  "dependencies": {}
 }

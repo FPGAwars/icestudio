@@ -471,14 +471,14 @@ angular.module('icestudio')
       // Clock signal
       var hasClk = false;
       for (i in input) {
-        if (input[i].name.toLowerCase() === 'input_clk') {
+        if (input[i].name.toLowerCase() === 'clk') {
           hasClk = true;
           break;
         }
       }
       if (hasClk) {
         content += '\n// Clock signal\n';
-        content += 'always #0.5 input_clk = ~input_clk;\n';
+        content += 'always #0.5 clk = ~clk;\n';
       }
 
       content += '\ninitial begin\n';
@@ -486,8 +486,8 @@ angular.module('icestudio')
       content += ' $dumpfile(`DUMPSTR(`VCD_OUTPUT));\n';
       content += ' $dumpvars(0, main_tb);\n\n';
       content += ' // TODO: initialize the registers here\n';
-      content += ' // e.g. input_value = 1;\n';
-      content += ' // e.g. #2 input_value = 0;\n';
+      content += ' // e.g. value = 1;\n';
+      content += ' // e.g. #2 value = 0;\n';
       for (i in input) {
         content += ' ' + input[i].name + ' = 0;\n';
       }
@@ -535,14 +535,14 @@ angular.module('icestudio')
           if (block.data.name) {
             input.push({
               id: digestId(block.id),
-              name: 'input_' + block.data.name.replace(/ /g, '_'),
+              name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
           else {
             input.push({
               id: digestId(block.id),
-              name: 'input_' + inputUnnamed.toString(),
+              name: inputUnnamed.toString(),
             });
             inputUnnamed += 1;
           }
@@ -551,14 +551,14 @@ angular.module('icestudio')
           if (block.data.name) {
             output.push({
               id: digestId(block.id),
-              name: 'output_' + block.data.name.replace(/ /g, '_'),
+              name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
           else {
             output.push({
               id: digestId(block.id),
-              name: 'output_' + outputUnnamed.toString()
+              name: outputUnnamed.toString()
             });
             outputUnnamed += 1;
           }

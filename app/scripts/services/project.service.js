@@ -14,12 +14,14 @@ angular.module('icestudio')
     this.path = '';  // Used in Save / Save as
     this.changed = false;
 
+    const VERSION = '1.1';
+
     var project = _default();
     var allDependencies = {};
 
     function _default() {
       return {
-        version: '1.1',
+        version: VERSION,
         package: {
           name: '',
           version: '',
@@ -56,16 +58,15 @@ angular.module('icestudio')
       if (key in project) {
         return project[key];
       }
+      else {
+        return project;
+      }
     };
 
     this.set = function(key, obj) {
       if (key in project) {
         project[key] = obj;
       }
-    };
-
-    this.getProject = function() {
-      return project;
     };
 
     this.getAllDependencies = function() {
@@ -96,7 +97,7 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
-      if (!data.version) {
+      if (data.version !== VERSION) {
         alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
       }
       project = _safeLoad(data);
@@ -119,11 +120,16 @@ angular.module('icestudio')
     function _safeLoad(data) {
       var project = {};
       switch(data.version) {
-        case '1.1':
+        case VERSION:
           project = data;
           break;
         case '1.0':
-          project = data;
+          project = _default();
+          project.package = data.package;
+          project.design.board = data.design.board;
+          project.design.graph = convertTypes10to11(data.design.graph);
+          project.design.state = data.design.state;
+          project.dependencies = findDependencies10to11(data.design.deps);
           break;
         default:
           for (var b in data.graph.blocks) {
@@ -182,8 +188,8 @@ angular.module('icestudio')
           project = _default();
           project.design.board = data.board;
           project.design.graph = data.graph;
-          project.design.deps = data.deps;
           project.design.state = data.state;
+          project.dependencies = data.deps;
           break;
       }
       // Safe load all dependencies recursively
@@ -191,6 +197,14 @@ angular.module('icestudio')
         project.design.deps[d] = _safeLoad(project.design.deps[d]);
       }*/
       return project;
+    }
+
+    function convertTypes10to11(graph) {
+      return graph;
+    }
+
+    function findDependencies10to11(dependencies) {
+      return dependencies;
     }
 
     this.save = function(filepath) {
@@ -228,7 +242,7 @@ angular.module('icestudio')
     this.addAsBlock = function(filepath) {
       var self = this;
       utils.readFile(filepath, function(data) {
-        if (!data.version) {
+        if (data.version !== VERSION) {
           alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
         }
         var block = _safeLoad(data);
