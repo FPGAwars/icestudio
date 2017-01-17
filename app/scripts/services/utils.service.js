@@ -16,6 +16,7 @@ angular.module('icestudio')
                              nodeSudo,
                              nodeOnline,
                              nodeGlob,
+                             nodeSha1,
                              SVGO) {
 
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
@@ -901,6 +902,13 @@ angular.module('icestudio')
 
     this.clone = function(data) {
       return JSON.parse(JSON.stringify(data));
+    };
+
+    this.dependencyID = function(dependency) {
+      if (dependency.package && dependency.design) {
+        return nodeSha1(JSON.stringify(dependency.package) +
+                        JSON.stringify(dependency.design));
+      }
     };
 
   });

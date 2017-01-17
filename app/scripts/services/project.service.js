@@ -12,12 +12,13 @@ angular.module('icestudio')
 
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
-    this.project = _default();
     this.changed = false;
+
+    var project = _default();
 
     function _default() {
       return {
-        version: '1.0',
+        version: '1.1',
         package: {
           name: '',
           version: '',
@@ -28,20 +29,48 @@ angular.module('icestudio')
         design: {
           board: '',
           graph: { blocks: [], wires: [] },
-          deps: {},
           state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
-        }
+        },
+        dependencies: {}
       };
     }
 
+    /* Dependency format
+    {
+      package: {
+        name: '',
+        version: '',
+        description: '',
+        author: '',
+        image: ''
+      },
+      design: {
+        graph: { blocks: [], wires: [] }
+        state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
+      },
+    }
+    */
+
+    this.get = function(key) {
+      if (key in project) {
+        return project[key];
+      }
+    };
+
+    this.set = function(key, obj) {
+      if (key in project) {
+        project[key] = obj;
+      }
+    };
+
     this.new = function(name) {
       this.path = '';
-      this.project = _default();
+      project = _default();
       this.updateTitle(name);
 
       graph.clearAll();
       graph.resetCommandStack();
-      graph.setState(this.project.design.state);
+      graph.setState(project.design.state);
 
       alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
     };
@@ -61,14 +90,14 @@ angular.module('icestudio')
       if (!data.version) {
         alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
       }
-      this.project = _safeLoad(data);
-      var ret = graph.loadDesign(this.project.design, false, function() {
+      project = _safeLoad(data);
+      var ret = graph.loadDesign(project.design, false, project.dependencies, function() {
         graph.resetCommandStack();
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
       });
 
       if (ret) {
-        boards.selectBoard(this.project.design.board);
+        boards.selectBoard(project.design.board);
         this.updateTitle(name);
       }
       else {
@@ -79,6 +108,9 @@ angular.module('icestudio')
     function _safeLoad(data) {
       var project = {};
       switch(data.version) {
+        case '1.1':
+          project = data;
+          break;
         case '1.0':
           project = data;
           break;
@@ -157,7 +189,7 @@ angular.module('icestudio')
 
       sortGraph();
       this.update();
-      utils.saveFile(filepath, this.project, function() {
+      utils.saveFile(filepath, project, function() {
         alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
       }, true);
     };
@@ -190,7 +222,6 @@ angular.module('icestudio')
         }
         var block = _safeLoad(data);
         if (block) {
-          var name = utils.basename(filepath);
           var path = utils.dirname(filepath);
           // 1. Parse and find included files
           var code = JSON.stringify(block);
@@ -203,7 +234,7 @@ angular.module('icestudio')
               copyIncludedFiles(function(success) {
                 if (success) {
                   // 4. Success: import block
-                  doImportBlock(name, block);
+                  doImportBlock(block);
                 }
               });
             }
@@ -216,7 +247,7 @@ angular.module('icestudio')
                       copyIncludedFiles(function(success) {
                         if (success) {
                           // 4. Success: import block
-                          doImportBlock(name, block);
+                          doImportBlock(block);
                         }
                       });
                     }, 500);
@@ -227,7 +258,7 @@ angular.module('icestudio')
           else {
             // No included files to copy
             // 4. Import block
-            doImportBlock(name, block);
+            doImportBlock(block);
           }
         }
 
@@ -279,19 +310,21 @@ angular.module('icestudio')
           return success;
         }
 
-        function doImportBlock(name, block) {
+        function doImportBlock(block) {
           // Add block
           block = pruneDependency(block);
-          self.project.design.deps[name] = block;
-          graph.createBlock(name, block);
-          alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(name) }));
+          var type = utils.dependencyID(block);
+          mergeDependencies(type, block);
+          graph.createBlock(type, block);
+          alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
         }
       });
     };
 
     function pruneDependency(block) {
       // Remove all unnecessary information for a dependency:
-      // - board, FPGA I/O pins (->size if >1), virtual flag
+      // - version, board, FPGA I/O pins (->size if >1), virtual flag
+      delete block.version;
       delete block.design.board;
       var i, pins;
       for (i in block.design.graph.blocks) {
@@ -304,6 +337,23 @@ angular.module('icestudio')
         }
       }
       return block;
+    }
+
+    function mergeDependencies(type, block) {
+      if (type in project.dependencies) {
+        return; // If the block is already in dependencies
+      }
+      // Merge the block dependencies
+      var deps = block.dependencies;
+      for (var i in deps) {
+        var depType = utils.dependencyID(deps[i]);
+        if (!(depType in project.dependencies)) {
+          project.dependencies[depType] = deps[i];
+        }
+      }
+      // Add the block as a dependency
+      delete block.dependencies;
+      project.dependencies[type] = block;
     }
 
     this.update = function(callback) {
@@ -343,9 +393,9 @@ angular.module('icestudio')
       }
 
       var state = graph.getState();
-      this.project.design.board = boards.selectedBoard.name;
-      this.project.design.graph = { blocks: blocks, wires: wires };
-      this.project.design.state = {
+      project.design.board = boards.selectedBoard.name;
+      project.design.graph = { blocks: blocks, wires: wires };
+      project.design.state = {
         pan: {
           x: parseFloat(state.pan.x.toFixed(4)),
           y: parseFloat(state.pan.y.toFixed(4))
@@ -369,30 +419,34 @@ angular.module('icestudio')
 
     this.export = function(target, filepath, message) {
       this.update();
-      var data = compiler.generate(target, this.project);
+      var data = compiler.generate(target, project);
       utils.saveFile(filepath, data, function() {
         alertify.success(message);
       }, false);
     };
 
-    this.addBlock = function(type, block) {
-      if (block) {
-        block = _safeLoad(block);
-        block = pruneDependency(block);
-        this.project.design.deps[type] = block;
+    this.addBlock = function(arg) {
+      if (typeof arg === 'string' && arg.match(/basic\..+/g)) {
+        graph.createBasicBlock(arg);
       }
-      graph.createBlock(type, block);
+      else if (arg) {
+        var block = _safeLoad(arg);
+        block = pruneDependency(block);
+        var dependency = _.clone(block);
+        var type = utils.dependencyID(dependency);
+        project.design.deps[type] = block;
+        graph.createBlock(type, block);
+      }
     };
 
     this.removeSelected = function() {
-      var self = this;
       graph.removeSelected(function(type) {
-        delete self.project.design.deps[type];
+        delete project.design.deps[type];
       });
     };
 
     this.clear = function() {
-      this.project = _default();
+      project = _default();
       graph.clearAll();
       graph.resetBreadcrumbs();
       graph.resetCommandStack();

@@ -22,9 +22,9 @@ angular.module('icestudio')
     var commandManager = null;
     var clipboard = [];
     var mousePosition = { x: 0, y: 0 };
-
     var dependencies = {};
-    this.breadcrumbs = [{ name: '' }];
+
+    this.breadcrumbs = [{ name: '', type: '' }];
 
     var gridsize = 8;
     var state = {
@@ -117,10 +117,7 @@ angular.module('icestudio')
     };
 
     this.resetBreadcrumbs = function(name) {
-      if (this.breadcrumbs.length > 1) {
-        this.breadcrumbs = [{ name: name }];
-      }
-      this.breadcrumbs[0].name = name;
+      this.breadcrumbs = [{ name: name, type: '' }];
       utils.rootScopeSafeApply();
     };
 
@@ -377,16 +374,18 @@ angular.module('icestudio')
           }
         }
         else {
-          self.breadcrumbs.push({ name: type });
+          var name = dependencies[type].package.name;
+          var design = dependencies[type].design;
+          self.breadcrumbs.push({ name: name, type: type });
           utils.rootScopeSafeApply();
           z.index = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
-              self.loadDesign(dependencies[type].design, true);
+              self.loadDesign(design, true);
             });
           }
           else {
-            self.loadDesign(dependencies[type].design, true);
+            self.loadDesign(design, true);
           }
         }
       });
@@ -501,17 +500,15 @@ angular.module('icestudio')
     };
 
     this.createBlock = function(type, block) {
-      if (type.indexOf('basic.') !== -1) {
-        blocks.newBasic(type, function(cell) {
-          addCell(cell);
-        });
-      }
-      else {
-        dependencies[type] = block;
-        blocks.newGeneric(type, block, function(cell) {
-          addCell(cell);
-        });
-      }
+      blocks.newGeneric(type, block, function(cell) {
+        addCell(cell);
+      });
+    };
+
+    this.createBasicBlock = function(type) {
+      blocks.newBasic(type, function(cell) {
+        addCell(cell);
+      });
     };
 
     this.toJSON = function() {
@@ -685,20 +682,19 @@ angular.module('icestudio')
       return paper.options.enabled;
     };
 
-    this.loadDesign = function(design, disabled, callback) {
+    this.loadDesign = function(design, disabled, deps, callback) {
       if (design &&
           design.graph &&
           design.graph.blocks &&
-          design.graph.wires &&
-          design.deps) {
+          design.graph.wires) {
 
         var i;
         var self = this;
         var blockInstances = design.graph.blocks;
         var wires = design.graph.wires;
-        var deps = design.deps;
-
-        dependencies = design.deps;
+        if (deps) {
+          dependencies = deps;
+        }
 
         $('body').addClass('waiting');
 
@@ -717,8 +713,8 @@ angular.module('icestudio')
               cell = blocks.loadBasic(blockInstance, disabled);
             }
             else {
-              if (deps && deps[blockInstance.type]) {
-                cell = blocks.loadGeneric(blockInstance, deps[blockInstance.type]);
+              if (blockInstance.type in dependencies) {
+                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type]);
               }
             }
             addCell(cell);

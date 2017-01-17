@@ -338,8 +338,7 @@ angular.module('icestudio')
           block.design &&
           block.design.graph &&
           block.design.graph.blocks &&
-          block.design.graph.wires &&
-          block.design.deps) {
+          block.design.graph.wires) {
         if (addCellCallback) {
           addCellCallback(loadGeneric(blockInstance, block));
         }

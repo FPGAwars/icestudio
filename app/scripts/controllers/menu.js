@@ -99,7 +99,7 @@ angular.module('icestudio')
         height: 620,
         min_width: 800,
         min_height: 200,
-        toolbar: false,
+        toolbar: true,
         resizable: true,
         x: (win ? win.x : 0) + 50,
         y: (win ? win.y : 0) + 50,
@@ -161,8 +161,10 @@ angular.module('icestudio')
     $scope.saveProject = function() {
       var filepath = project.path;
       if (filepath) {
-        project.save(filepath);
-        resetChanged();
+        if (project.changed) {
+          project.save(filepath);
+          resetChanged();
+        }
       }
       else {
         $scope.saveProjectAs();
@@ -316,7 +318,7 @@ angular.module('icestudio')
     };
 
     $scope.setProjectInformation = function() {
-      var p = project.project.package;
+      var p = project.get('package');
       var values = [
         p.name,
         p.version,
@@ -325,11 +327,13 @@ angular.module('icestudio')
         p.image
       ];
       utils.projectinfoprompt(values, function(evt, values) {
-        project.project.package.name = values[0];
-        project.project.package.version = values[1];
-        project.project.package.description = values[2];
-        project.project.package.author = values[3];
-        project.project.package.image = values[4];
+        project.set('package', {
+          name: values[0],
+          version: values[1],
+          description: values[2],
+          author: values[3],
+          image: values[4]
+        });
       });
     };
 
