@@ -91,7 +91,8 @@ angular.module('icestudio')
         alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
       }
       project = _safeLoad(data);
-      var ret = graph.loadDesign(project.design, false, project.dependencies, function() {
+      graph.setDependencies(project.dependencies);
+      var ret = graph.loadDesign(project.design, false, function() {
         graph.resetCommandStack();
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
       });
@@ -311,50 +312,11 @@ angular.module('icestudio')
         }
 
         function doImportBlock(block) {
-          // Add block
-          block = pruneDependency(block);
-          var type = utils.dependencyID(block);
-          mergeDependencies(type, block);
-          graph.createBlock(type, block);
+          self.addBlock(block);
           alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
         }
       });
     };
-
-    function pruneDependency(block) {
-      // Remove all unnecessary information for a dependency:
-      // - version, board, FPGA I/O pins (->size if >1), virtual flag
-      delete block.version;
-      delete block.design.board;
-      var i, pins;
-      for (i in block.design.graph.blocks) {
-        if (block.design.graph.blocks[i].type === 'basic.input' ||
-            block.design.graph.blocks[i].type === 'basic.output') {
-          pins = block.design.graph.blocks[i].data.pins;
-          block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
-          delete block.design.graph.blocks[i].data.pins;
-          delete block.design.graph.blocks[i].data.virtual;
-        }
-      }
-      return block;
-    }
-
-    function mergeDependencies(type, block) {
-      if (type in project.dependencies) {
-        return; // If the block is already in dependencies
-      }
-      // Merge the block dependencies
-      var deps = block.dependencies;
-      for (var i in deps) {
-        var depType = utils.dependencyID(deps[i]);
-        if (!(depType in project.dependencies)) {
-          project.dependencies[depType] = deps[i];
-        }
-      }
-      // Add the block as a dependency
-      delete block.dependencies;
-      project.dependencies[type] = block;
-    }
 
     this.update = function(callback) {
       var graphData = graph.toJSON();
@@ -431,13 +393,48 @@ angular.module('icestudio')
       }
       else if (arg) {
         var block = _safeLoad(arg);
-        block = pruneDependency(block);
-        var dependency = _.clone(block);
-        var type = utils.dependencyID(dependency);
-        project.design.deps[type] = block;
+        block = pruneBlock(block);
+        var type = utils.dependencyID(block);
+        mergeDependencies(type, block);
         graph.createBlock(type, block);
+        graph.setDependencies(project.dependencies);
       }
     };
+
+    function pruneBlock(block) {
+      // Remove all unnecessary information for a dependency:
+      // - version, board, FPGA I/O pins (->size if >1), virtual flag
+      delete block.version;
+      delete block.design.board;
+      var i, pins;
+      for (i in block.design.graph.blocks) {
+        if (block.design.graph.blocks[i].type === 'basic.input' ||
+            block.design.graph.blocks[i].type === 'basic.output') {
+          pins = block.design.graph.blocks[i].data.pins;
+          block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
+          delete block.design.graph.blocks[i].data.pins;
+          delete block.design.graph.blocks[i].data.virtual;
+        }
+      }
+      return block;
+    }
+
+    function mergeDependencies(type, block) {
+      if (type in project.dependencies) {
+        return; // If the block is already in dependencies
+      }
+      // Merge the block dependencies
+      var deps = block.dependencies;
+      for (var i in deps) {
+        var depType = utils.dependencyID(deps[i]);
+        if (!(depType in project.dependencies)) {
+          project.dependencies[depType] = deps[i];
+        }
+      }
+      // Add the block as a dependency
+      delete block.dependencies;
+      project.dependencies[type] = block;
+    }
 
     this.removeSelected = function() {
       graph.removeSelected(function(type) {

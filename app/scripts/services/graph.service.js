@@ -376,7 +376,7 @@ angular.module('icestudio')
         else {
           var name = dependencies[type].package.name;
           var design = dependencies[type].design;
-          self.breadcrumbs.push({ name: name, type: type });
+          self.breadcrumbs.push({ name: name ? name : '#', type: type });
           utils.rootScopeSafeApply();
           z.index = 1;
           if (self.breadcrumbs.length === 2) {
@@ -682,7 +682,11 @@ angular.module('icestudio')
       return paper.options.enabled;
     };
 
-    this.loadDesign = function(design, disabled, deps, callback) {
+    this.setDependencies = function(_dependencies) {
+      dependencies = _dependencies;
+    };
+
+    this.loadDesign = function(design, disabled, callback) {
       if (design &&
           design.graph &&
           design.graph.blocks &&
@@ -692,9 +696,6 @@ angular.module('icestudio')
         var self = this;
         var blockInstances = design.graph.blocks;
         var wires = design.graph.wires;
-        if (deps) {
-          dependencies = deps;
-        }
 
         $('body').addClass('waiting');
 

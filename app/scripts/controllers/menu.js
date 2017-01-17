@@ -161,10 +161,8 @@ angular.module('icestudio')
     $scope.saveProject = function() {
       var filepath = project.path;
       if (filepath) {
-        if (project.changed) {
-          project.save(filepath);
-          resetChanged();
-        }
+        project.save(filepath);
+        resetChanged();
       }
       else {
         $scope.saveProjectAs();
