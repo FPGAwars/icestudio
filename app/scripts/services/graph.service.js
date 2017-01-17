@@ -373,7 +373,7 @@ angular.module('icestudio')
             });
           }
         }
-        else {
+        else if (dependencies[type]) {
           var name = dependencies[type].package.name;
           var design = dependencies[type].design;
           self.breadcrumbs.push({ name: name ? name : '#', type: type });
@@ -608,18 +608,8 @@ angular.module('icestudio')
       return selection.length > 0;
     };
 
-    this.removeSelected = function(removeDep) {
+    this.removeSelected = function() {
       if (selection) {
-        selection.each(function(cell) {
-          var type = cell.attributes.blockType;
-          if (!typeInGraph(type)) {
-            // Check if it is the last "type" block
-            if (removeDep) {
-              // Remove "type" dependency in the project
-              removeDep(type);
-            }
-          }
-        });
         graph.removeCells(selection.models);
         selectionView.cancelSelection();
       }
@@ -662,16 +652,6 @@ angular.module('icestudio')
         });
         graph.stopBatch('change');
       }
-    }
-
-    function typeInGraph(type) {
-      var cells = graph.getCells();
-      for (var i in cells) {
-        if (cells[i].attributes.blockType === type) {
-          return true;
-        }
-      }
-      return false;
     }
 
     this.isEmpty = function() {

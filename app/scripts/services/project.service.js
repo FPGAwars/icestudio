@@ -15,6 +15,7 @@ angular.module('icestudio')
     this.changed = false;
 
     var project = _default();
+    var allDependencies = {};
 
     function _default() {
       return {
@@ -63,6 +64,10 @@ angular.module('icestudio')
       }
     };
 
+    this.getAllDependencies = function() {
+      return allDependencies;
+    };
+
     this.new = function(name) {
       this.path = '';
       project = _default();
@@ -91,7 +96,8 @@ angular.module('icestudio')
         alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
       }
       project = _safeLoad(data);
-      graph.setDependencies(project.dependencies);
+      allDependencies = project.dependencies;
+      graph.setDependencies(allDependencies);
       var ret = graph.loadDesign(project.design, false, function() {
         graph.resetCommandStack();
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -177,9 +183,9 @@ angular.module('icestudio')
           break;
       }
       // Safe load all dependencies recursively
-      for (var d in project.design.deps) {
+      /*for (var d in project.design.deps) {
         project.design.deps[d] = _safeLoad(project.design.deps[d]);
-      }
+      }*/
       return project;
     }
 
@@ -318,7 +324,7 @@ angular.module('icestudio')
       });
     };
 
-    this.update = function(callback) {
+    this.update = function(callback, updateDependencies) {
       var graphData = graph.toJSON();
 
       var blocks = [];
@@ -365,10 +371,31 @@ angular.module('icestudio')
         zoom: parseFloat(state.zoom.toFixed(4))
       };
 
+      // Update dependencies
+      if (updateDependencies !== false) {
+        project.dependencies = [];
+        var types = findSubDependencies(project);
+        for (var i in types) {
+          project.dependencies.push(allDependencies[types[i]]);
+        }
+      }
+
       if (callback) {
         callback();
       }
     };
+
+    function findSubDependencies(dependency) {
+      var subDependencies = [];
+      var blocks = dependency.design.graph.blocks;
+      for (var i in blocks) {
+        var type = blocks[i].type;
+        subDependencies.push(type);
+        var newSubDependencies = findSubDependencies(allDependencies[type]);
+        subDependencies = subDependencies.concat(newSubDependencies);
+      }
+      return _.unique(subDependencies);
+    }
 
     this.updateTitle = function(name) {
       if (name) {
@@ -397,7 +424,7 @@ angular.module('icestudio')
         var type = utils.dependencyID(block);
         mergeDependencies(type, block);
         graph.createBlock(type, block);
-        graph.setDependencies(project.dependencies);
+        graph.setDependencies(allDependencies);
       }
     };
 
@@ -420,26 +447,24 @@ angular.module('icestudio')
     }
 
     function mergeDependencies(type, block) {
-      if (type in project.dependencies) {
+      if (type in allDependencies) {
         return; // If the block is already in dependencies
       }
       // Merge the block dependencies
       var deps = block.dependencies;
       for (var i in deps) {
         var depType = utils.dependencyID(deps[i]);
-        if (!(depType in project.dependencies)) {
-          project.dependencies[depType] = deps[i];
+        if (!(depType in allDependencies)) {
+          allDependencies[depType] = deps[i];
         }
       }
       // Add the block as a dependency
       delete block.dependencies;
-      project.dependencies[type] = block;
+      allDependencies[type] = block;
     }
 
     this.removeSelected = function() {
-      graph.removeSelected(function(type) {
-        delete project.design.deps[type];
-      });
+      graph.removeSelected();
     };
 
     this.clear = function() {

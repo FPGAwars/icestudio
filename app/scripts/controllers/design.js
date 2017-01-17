@@ -38,14 +38,14 @@ angular.module('icestudio')
         graph.loadDesign(design, false);
       }
       else {
-        var dependencies = project.get('dependencies');
+        var dependencies = project.getAllDependencies();
         var type = graph.breadcrumbs[n-1].type;
         graph.loadDesign(dependencies[type].design, true);
       }
     }
 
     $rootScope.$on('updateProject', function(event, callback) {
-      project.update(callback);
+      project.update(callback, false);
     });
 
   });
