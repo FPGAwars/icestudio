@@ -527,7 +527,7 @@ angular.module('icestudio')
 
       var height = 8 * gridsize;
       height = Math.max(4 * gridsize * numPortsHeight, height);
-      var blockLabel = block.package.name ? block.package.name : instance.type;
+      var blockLabel = block.package.name;
       var width = 12 * gridsize;
 
       width = Math.max(4 * gridsize * numPortsWidth, width);

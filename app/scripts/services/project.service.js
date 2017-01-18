@@ -98,7 +98,7 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       if (data.version !== VERSION) {
-        alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
+        alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
       }
       project = _safeLoad(data);
       allDependencies = project.dependencies;
@@ -119,17 +119,25 @@ angular.module('icestudio')
 
     function _safeLoad(data) {
       var project = {};
+      console.log(data.version);
       switch(data.version) {
         case VERSION:
           project = data;
           break;
         case '1.0':
+          var depsInfo = findSubDependencies10(data.design.deps);
+          console.log(depsInfo);
           project = _default();
           project.package = data.package;
           project.design.board = data.design.board;
-          project.design.graph = convertTypes10to11(data.design.graph);
           project.design.state = data.design.state;
-          project.dependencies = findDependencies10to11(data.design.deps);
+          project.design.graph = data.design.graph;
+          replaceType10(project, depsInfo);
+          for (var d in depsInfo) {
+            var dep = depsInfo[d];
+            replaceType10(dep.content, depsInfo);
+            project.dependencies[dep.id] = dep.content;
+          }
           break;
         default:
           for (var b in data.graph.blocks) {
@@ -185,26 +193,67 @@ angular.module('icestudio')
                 break;
             }
           }
-          project = _default();
-          project.design.board = data.board;
-          project.design.graph = data.graph;
-          project.design.state = data.state;
-          project.dependencies = data.deps;
+          project = {
+            version: '1.0',
+            package: {
+              name: '',
+              version: '',
+              description: '',
+              author: '',
+              image: ''
+            },
+            design: {
+              board: data.board,
+              graph: data.graph,
+              deps: {},
+              state: data.state
+            },
+          };
+          // Safe load all dependencies recursively
+          for (var j in data.deps) {
+            project.design.deps[j] = _safeLoad(data.deps[j]);
+          }
+          console.log('PROJECT', project.version, project);
+          project = _safeLoad(project);
           break;
       }
-      // Safe load all dependencies recursively
-      /*for (var d in project.design.deps) {
-        project.design.deps[d] = _safeLoad(project.design.deps[d]);
-      }*/
+      console.log('PROJECT', project.version, project);
       return project;
     }
 
-    function convertTypes10to11(graph) {
-      return graph;
+    function findSubDependencies10(deps) {
+      var depsInfo = {};
+      for (var key in deps) {
+        var block = utils.clone(deps[key]);
+        // Go recursive
+        var subDepsInfo = findSubDependencies10(block.design.deps);
+        for (var name in subDepsInfo) {
+          if (!(name in depsInfo)) {
+            depsInfo[name] = subDepsInfo[name];
+          }
+        }
+        // Add current dependency
+        block = pruneBlock(block);
+        delete block.design.deps;
+        block.package.name = block.package.name || key;
+        block.package.description = block.package.description || key;
+        if (!(key in depsInfo)) {
+          depsInfo[key] = {
+            id: utils.dependencyID(block),
+            content: block
+          };
+        }
+      }
+      return depsInfo;
     }
 
-    function findDependencies10to11(dependencies) {
-      return dependencies;
+    function replaceType10(project, depsInfo) {
+      for (var i in project.design.graph.blocks) {
+        var type = project.design.graph.blocks[i].type;
+        if (type.indexOf('basic.') === -1) {
+          project.design.graph.blocks[i].type = depsInfo[type].id;
+        }
+      }
     }
 
     this.save = function(filepath) {
@@ -243,7 +292,7 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(filepath, function(data) {
         if (data.version !== VERSION) {
-          alertify.notify(gettextCatalog.getString('Old project format'), 'warning', 5);
+          alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
         }
         var block = _safeLoad(data);
         if (block) {
@@ -405,16 +454,19 @@ angular.module('icestudio')
 
     function findSubDependencies(dependency) {
       var subDependencies = [];
-      var blocks = dependency.design.graph.blocks;
-      for (var i in blocks) {
-        var type = blocks[i].type;
-        if (type.indexOf('basic.') === -1) {
-          subDependencies.push(type);
-          var newSubDependencies = findSubDependencies(allDependencies[type]);
-          subDependencies = subDependencies.concat(newSubDependencies);
+      if (dependency) {
+        var blocks = dependency.design.graph.blocks;
+        for (var i in blocks) {
+          var type = blocks[i].type;
+          if (type.indexOf('basic.') === -1) {
+            subDependencies.push(type);
+            var newSubDependencies = findSubDependencies(allDependencies[type]);
+            subDependencies = subDependencies.concat(newSubDependencies);
+          }
         }
+        return _.unique(subDependencies);
       }
-      return _.unique(subDependencies);
+      return subDependencies;
     }
 
     this.updateTitle = function(name) {
@@ -457,8 +509,10 @@ angular.module('icestudio')
       for (i in block.design.graph.blocks) {
         if (block.design.graph.blocks[i].type === 'basic.input' ||
             block.design.graph.blocks[i].type === 'basic.output') {
-          pins = block.design.graph.blocks[i].data.pins;
-          block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
+          if (block.design.graph.blocks[i].data.size === undefined) {
+            pins = block.design.graph.blocks[i].data.pins;
+            block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
+          }
           delete block.design.graph.blocks[i].data.pins;
           delete block.design.graph.blocks[i].data.virtual;
         }
