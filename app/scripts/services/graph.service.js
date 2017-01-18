@@ -22,9 +22,9 @@ angular.module('icestudio')
     var commandManager = null;
     var clipboard = [];
     var mousePosition = { x: 0, y: 0 };
-
     var dependencies = {};
-    this.breadcrumbs = [{ name: '' }];
+
+    this.breadcrumbs = [{ name: '', type: '' }];
 
     var gridsize = 8;
     var state = {
@@ -117,10 +117,7 @@ angular.module('icestudio')
     };
 
     this.resetBreadcrumbs = function(name) {
-      if (this.breadcrumbs.length > 1) {
-        this.breadcrumbs = [{ name: name }];
-      }
-      this.breadcrumbs[0].name = name;
+      this.breadcrumbs = [{ name: name, type: '' }];
       utils.rootScopeSafeApply();
     };
 
@@ -376,17 +373,19 @@ angular.module('icestudio')
             });
           }
         }
-        else {
-          self.breadcrumbs.push({ name: type });
+        else if (dependencies[type]) {
+          var name = dependencies[type].package.name;
+          var design = dependencies[type].design;
+          self.breadcrumbs.push({ name: name ? name : '#', type: type });
           utils.rootScopeSafeApply();
           z.index = 1;
           if (self.breadcrumbs.length === 2) {
             $rootScope.$broadcast('updateProject', function() {
-              self.loadDesign(dependencies[type].design, true);
+              self.loadDesign(design, true);
             });
           }
           else {
-            self.loadDesign(dependencies[type].design, true);
+            self.loadDesign(design, true);
           }
         }
       });
@@ -501,17 +500,15 @@ angular.module('icestudio')
     };
 
     this.createBlock = function(type, block) {
-      if (type.indexOf('basic.') !== -1) {
-        blocks.newBasic(type, function(cell) {
-          addCell(cell);
-        });
-      }
-      else {
-        dependencies[type] = block;
-        blocks.newGeneric(type, block, function(cell) {
-          addCell(cell);
-        });
-      }
+      blocks.newGeneric(type, block, function(cell) {
+        addCell(cell);
+      });
+    };
+
+    this.createBasicBlock = function(type) {
+      blocks.newBasic(type, function(cell) {
+        addCell(cell);
+      });
     };
 
     this.toJSON = function() {
@@ -611,18 +608,8 @@ angular.module('icestudio')
       return selection.length > 0;
     };
 
-    this.removeSelected = function(removeDep) {
+    this.removeSelected = function() {
       if (selection) {
-        selection.each(function(cell) {
-          var type = cell.attributes.blockType;
-          if (!typeInGraph(type)) {
-            // Check if it is the last "type" block
-            if (removeDep) {
-              // Remove "type" dependency in the project
-              removeDep(type);
-            }
-          }
-        });
         graph.removeCells(selection.models);
         selectionView.cancelSelection();
       }
@@ -667,16 +654,6 @@ angular.module('icestudio')
       }
     }
 
-    function typeInGraph(type) {
-      var cells = graph.getCells();
-      for (var i in cells) {
-        if (cells[i].attributes.blockType === type) {
-          return true;
-        }
-      }
-      return false;
-    }
-
     this.isEmpty = function() {
       return (graph.getCells().length === 0);
     };
@@ -685,20 +662,20 @@ angular.module('icestudio')
       return paper.options.enabled;
     };
 
+    this.setDependencies = function(_dependencies) {
+      dependencies = _dependencies;
+    };
+
     this.loadDesign = function(design, disabled, callback) {
       if (design &&
           design.graph &&
           design.graph.blocks &&
-          design.graph.wires &&
-          design.deps) {
+          design.graph.wires) {
 
         var i;
         var self = this;
         var blockInstances = design.graph.blocks;
         var wires = design.graph.wires;
-        var deps = design.deps;
-
-        dependencies = design.deps;
 
         $('body').addClass('waiting');
 
@@ -717,8 +694,8 @@ angular.module('icestudio')
               cell = blocks.loadBasic(blockInstance, disabled);
             }
             else {
-              if (deps && deps[blockInstance.type]) {
-                cell = blocks.loadGeneric(blockInstance, deps[blockInstance.type]);
+              if (blockInstance.type in dependencies) {
+                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type]);
               }
             }
             addCell(cell);

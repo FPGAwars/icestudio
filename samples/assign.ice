@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "package": {
     "name": "",
     "version": "",
@@ -136,7 +136,6 @@
         }
       ]
     },
-    "deps": {},
     "state": {
       "pan": {
         "x": 0,
@@ -144,5 +143,6 @@
       },
       "zoom": 1
     }
-  }
+  },
+  "dependencies": {}
 }

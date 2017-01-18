@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "package": {
     "name": "Switch led",
     "version": "1.0.0",
@@ -96,7 +96,6 @@
         }
       ]
     },
-    "deps": {},
     "state": {
       "pan": {
         "x": 0,
@@ -104,5 +103,6 @@
       },
       "zoom": 1
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -132,8 +132,8 @@ angular.module('icestudio')
         nodeFs.mkdirSync(buildPath);
       }
       project.update();
-      var verilog = compiler.generate('verilog', project.project);
-      var pcf = compiler.generate('pcf', project.project);
+      var verilog = compiler.generate('verilog', project.get());
+      var pcf = compiler.generate('pcf', project.get());
       nodeFs.writeFileSync(nodePath.join(buildPath, 'main.v'), verilog, 'utf8');
       nodeFs.writeFileSync(nodePath.join(buildPath, 'main.pcf'), pcf, 'utf8');
       return verilog;

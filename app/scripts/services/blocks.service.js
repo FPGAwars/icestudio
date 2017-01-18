@@ -338,8 +338,7 @@ angular.module('icestudio')
           block.design &&
           block.design.graph &&
           block.design.graph.blocks &&
-          block.design.graph.wires &&
-          block.design.deps) {
+          block.design.graph.wires) {
         if (addCellCallback) {
           addCellCallback(loadGeneric(blockInstance, block));
         }
@@ -528,19 +527,9 @@ angular.module('icestudio')
 
       var height = 8 * gridsize;
       height = Math.max(4 * gridsize * numPortsHeight, height);
-      var blockLabel = instance.type.toUpperCase();
-      var blockLabels = instance.type.split('.');
-      var maxBlockLabel = '';
+      var blockLabel = block.package.name;
       var width = 12 * gridsize;
 
-      for (var l in blockLabels) {
-        if (blockLabels[l].length > maxBlockLabel.length) {
-          maxBlockLabel = blockLabels[l];
-        }
-      }
-      if (maxBlockLabel.length > 4) {
-        width = Math.min((maxBlockLabel.length + 8) * gridsize, 24 * gridsize);
-      }
       width = Math.max(4 * gridsize * numPortsWidth, width);
 
       var gridUnitsHeight = height / gridsize;
@@ -557,10 +546,6 @@ angular.module('icestudio')
       }
       for (i in bottomPorts) {
         bottomPorts[i].gridUnits = gridUnitsWidth;
-      }
-
-      if (blockLabels.length > 1) {
-        blockLabel = blockLabels.join('<br>').toUpperCase();
       }
 
       var blockImage = '';

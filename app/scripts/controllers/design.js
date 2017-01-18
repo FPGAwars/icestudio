@@ -5,7 +5,8 @@ angular.module('icestudio')
                                       $scope,
                                       project,
                                       boards,
-                                      graph) {
+                                      graph,
+                                      utils) {
 
     $scope.boards = boards;
     $scope.graph = graph;
@@ -32,22 +33,25 @@ angular.module('icestudio')
     };
 
     function loadSelectedGraph() {
-      if (graph.breadcrumbs.length === 1) {
-        graph.loadDesign(project.project.design, false);
+      var n = graph.breadcrumbs.length;
+      if (n === 1) {
+        var design = project.get('design');
+        graph.loadDesign(design, false);
       }
       else {
-        var p = project.project;
-        for (var i = 1; i < graph.breadcrumbs.length; i++) {
-          if (p.design && p.design.deps) {
-            p = p.design.deps[graph.breadcrumbs[i].name];
-          }
-        }
-        graph.loadDesign(p.design, true);
+        var dependencies = project.getAllDependencies();
+        var type = graph.breadcrumbs[n-1].type;
+        graph.loadDesign(dependencies[type].design, true);
       }
     }
 
     $rootScope.$on('updateProject', function(event, callback) {
-      project.update(callback);
+      project.update(callback, false);
+    });
+
+    $rootScope.$on('breadcrumbsBack', function(/*event*/) {
+      $scope.breadcrumbsBack();
+      utils.rootScopeSafeApply();
     });
 
   });

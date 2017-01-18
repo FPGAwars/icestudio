@@ -296,7 +296,7 @@
             <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
-                <a href ng-click="project.addBlock(blocks.name + '.' + block.name, block.content)" ng-if="block.content">
+                <a href ng-click="project.addBlock(block.content)" ng-if="block.content">
                   {{ block.name | translate }}
                 </a>
                 <a href uib-dropdown-toggle ng-if="block.children">
@@ -304,7 +304,7 @@
                 </a>
                 <ul uib-dropdown-menu ng-if="block.children">
                   <li ng-repeat="sblock in block.children">
-                    <a href ng-click="project.addBlock(blocks.name + '.' + block.name + '.' + sblock.name, sblock.content)" ng-if="sblock.content">
+                    <a href ng-click="project.addBlock(sblock.content)" ng-if="sblock.content">
                       {{ sblock.name | translate }}
                     </a>
                   </li>
