@@ -118,106 +118,38 @@ angular.module('icestudio')
     };
 
     function _safeLoad(data) {
+      // Backwards compatibility
       var project = {};
-      console.log(data.version);
       switch(data.version) {
         case VERSION:
           project = data;
           break;
         case '1.0':
-          var depsInfo = findSubDependencies10(data.design.deps);
-          console.log(depsInfo);
-          project = _default();
-          project.package = data.package;
-          project.design.board = data.design.board;
-          project.design.state = data.design.state;
-          project.design.graph = data.design.graph;
-          replaceType10(project, depsInfo);
-          for (var d in depsInfo) {
-            var dep = depsInfo[d];
-            replaceType10(dep.content, depsInfo);
-            project.dependencies[dep.id] = dep.content;
-          }
+          project = convert10To11(data);
           break;
         default:
-          for (var b in data.graph.blocks) {
-            var block = data.graph.blocks[b];
-            switch(block.type) {
-              case 'basic.input':
-              case 'basic.output':
-                block.data = {
-                  name: block.data.label,
-                  pins: [{
-                    index: '0',
-                    name: block.data.pin ? block.data.pin.name : '',
-                    value: block.data.pin? block.data.pin.value : '0'
-                  }],
-                  virtual: false
-                };
-                break;
-              case 'basic.constant':
-                block.data = {
-                  name: block.data.label,
-                  value: block.data.value,
-                  local: false
-                };
-                break;
-              case 'basic.code':
-                var params = [];
-                for (var p in block.data.params) {
-                  params.push({
-                    name: block.data.params[p]
-                  });
-                }
-                var inPorts = [];
-                for (var i in block.data.ports.in) {
-                  inPorts.push({
-                    name: block.data.ports.in[i]
-                  });
-                }
-
-                var outPorts = [];
-                for (var o in block.data.ports.out) {
-                  outPorts.push({
-                    name: block.data.ports.out[o]
-                  });
-                }
-                block.data = {
-                  code: block.data.code,
-                  params: params,
-                  ports: {
-                    in: inPorts,
-                    out: outPorts
-                  }
-                };
-                break;
-            }
-          }
-          project = {
-            version: '1.0',
-            package: {
-              name: '',
-              version: '',
-              description: '',
-              author: '',
-              image: ''
-            },
-            design: {
-              board: data.board,
-              graph: data.graph,
-              deps: {},
-              state: data.state
-            },
-          };
-          // Safe load all dependencies recursively
-          for (var j in data.deps) {
-            project.design.deps[j] = _safeLoad(data.deps[j]);
-          }
-          console.log('PROJECT', project.version, project);
-          project = _safeLoad(project);
+          project = convertTo10(data);
+          project = convert10To11(project);
           break;
       }
-      console.log('PROJECT', project.version, project);
+      return project;
+    }
+
+    function convert10To11(data) {
+      var project = _default();
+      project.package = data.package;
+      project.design.board = data.design.board;
+      project.design.state = data.design.state;
+      project.design.graph = data.design.graph;
+
+      var depsInfo = findSubDependencies10(data.design.deps);
+      replaceType10(project, depsInfo);
+      for (var d in depsInfo) {
+        var dep = depsInfo[d];
+        replaceType10(dep.content, depsInfo);
+        project.dependencies[dep.id] = dep.content;
+      }
+
       return project;
     }
 
@@ -254,6 +186,87 @@ angular.module('icestudio')
           project.design.graph.blocks[i].type = depsInfo[type].id;
         }
       }
+    }
+
+    function convertTo10(data) {
+      var project = {
+        version: '1.0',
+        package: {
+          name: '',
+          version: '',
+          description: '',
+          author: '',
+          image: ''
+        },
+        design: {
+          board: '',
+          graph: {},
+          deps: {},
+          state: {}
+        },
+      };
+      for (var b in data.graph.blocks) {
+        var block = data.graph.blocks[b];
+        switch(block.type) {
+          case 'basic.input':
+          case 'basic.output':
+            block.data = {
+              name: block.data.label,
+              pins: [{
+                index: '0',
+                name: block.data.pin ? block.data.pin.name : '',
+                value: block.data.pin? block.data.pin.value : '0'
+              }],
+              virtual: false
+            };
+            break;
+          case 'basic.constant':
+            block.data = {
+              name: block.data.label,
+              value: block.data.value,
+              local: false
+            };
+            break;
+          case 'basic.code':
+            var params = [];
+            for (var p in block.data.params) {
+              params.push({
+                name: block.data.params[p]
+              });
+            }
+            var inPorts = [];
+            for (var i in block.data.ports.in) {
+              inPorts.push({
+                name: block.data.ports.in[i]
+              });
+            }
+
+            var outPorts = [];
+            for (var o in block.data.ports.out) {
+              outPorts.push({
+                name: block.data.ports.out[o]
+              });
+            }
+            block.data = {
+              code: block.data.code,
+              params: params,
+              ports: {
+                in: inPorts,
+                out: outPorts
+              }
+            };
+            break;
+        }
+      }
+      project.design.board = data.board;
+      project.design.graph = data.graph;
+      project.design.state = data.state;
+      // Safe load all dependencies recursively
+      for (var j in data.deps) {
+        project.design.deps[j] = convertTo10(data.deps[j]);
+      }
+
+      return project;
     }
 
     this.save = function(filepath) {
