@@ -406,6 +406,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var selectCode = '';
     var selectScript = '';
     var data = this.model.get('data');
+    var name = data.name + (data.range || '');
 
     if (data.pins) {
       for (var i in data.pins) {
@@ -422,7 +423,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
-        <label></label>\
+        <label>' + name + '</label>\
       </div>\
       <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
         <label></label>\
