@@ -920,6 +920,12 @@ angular.module('icestudio')
       if (filepath) {
         command.push(filepath);
       }
+      /*var win = window.get();
+      var position = {
+        x: win.x + 30,
+        y: win.y + 30
+      };
+      command.push(position.x + 'x' + position.y);*/
       nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
         if (error) {
           throw error;

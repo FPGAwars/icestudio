@@ -68,20 +68,30 @@ angular.module('icestudio')
     };
 
     // Load app arguments
-    console.log('ARGV', gui.App.argv);
     setTimeout(function() {
-      if (gui.App.argv.length > 0) {
-        var filepath = gui.App.argv[0];
-        if (nodeFs.existsSync(filepath)) {
-          updateWorkingdir(filepath);
-          project.open(filepath);
-          zeroProject = false;
-        }
-        else {
-          alertify.notify(gettextCatalog.getString('Invalid argument {{arg}}',  { arg: filepath }), 'warning', 5);
-        }
+      for (var i in gui.App.argv) {
+        processArg(gui.App.argv[i]);
       }
     }, 0);
+
+    function processArg(arg) {
+      if (nodeFs.existsSync(arg)) {
+        // Open filepath
+        var filepath = arg;
+        updateWorkingdir(filepath);
+        project.open(filepath);
+        zeroProject = false;
+      }
+      else {
+        // Move window
+        var data = arg.split('x');
+        var offset = {
+          x: parseInt(data[0]),
+          y: parseInt(data[1])
+        };
+        win.moveTo(offset.x, offset.y);
+      }
+    }
 
 
     //-- File
