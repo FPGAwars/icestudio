@@ -23,10 +23,12 @@ angular.module('icestudio')
     $scope.profile = profile;
     $scope.project = project;
     $scope.tools = tools;
+    $scope.resources = resources;
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
     $scope.menuBlocks = resources.getMenuBlocks();
+    $scope.collections = resources.getCollections();
 
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
@@ -361,6 +363,13 @@ angular.module('icestudio')
       }
       else {
         alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+      }
+    };
+
+    $scope.selectCollection = function(collection) {
+      if (resources.selectedCollection.name !== collection.name) {
+        resources.selectCollection(collection.name);
+        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(collection.name) }));
       }
     };
 

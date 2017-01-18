@@ -5,9 +5,7 @@ angular.module('icestudio')
                                nodeFs,
                                nodePath) {
 
-    const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
-    const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
-    const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
+    const PROFILE_PATH = nodePath.join(utils.ICESTUDIO_DIR, 'profile.json');
 
     this.data = {
       'language': '',
@@ -28,8 +26,8 @@ angular.module('icestudio')
     };
 
     this.save = function() {
-      if (!nodeFs.existsSync(ICESTUDIO_DIR)) {
-        nodeFs.mkdirSync(ICESTUDIO_DIR);
+      if (!nodeFs.existsSync(utils.ICESTUDIO_DIR)) {
+        nodeFs.mkdirSync(utils.ICESTUDIO_DIR);
       }
       utils.saveFile(PROFILE_PATH, this.data, function() {
         console.log('Profile saved');

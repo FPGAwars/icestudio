@@ -177,6 +177,18 @@
               <li>
                 <a href ng-click="showDatasheet()">{{ 'Datasheet' | translate }}</a>
               </li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li ng-repeat="collection in collections">
+                    <a href ng-click="selectCollection(collection)">
+                      {{ collection.name | translate }}
+                      <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
 
