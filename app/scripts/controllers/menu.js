@@ -479,91 +479,89 @@ angular.module('icestudio')
           if (event.ctrlKey) {
             switch (event.keyCode) {
               case 78:  // Ctrl+N
-              $scope.newProject();
-              break;
+                $scope.newProject();
+                break;
               case 79:  // Ctrl+O
-              $scope.openProject();
-              break;
+                $scope.openProject();
+                break;
               case 83:
-              if (event.shiftKey) { // Ctrl+Shift+S
-                $scope.saveProjectAs();
-              }
-              else { // Ctrl+S
-                $scope.saveProject();
-              }
-              break;
+                if (event.shiftKey) { // Ctrl+Shift+S
+                  $scope.saveProjectAs();
+                }
+                else { // Ctrl+S
+                  $scope.saveProject();
+                }
+                break;
               case 81:  // Ctrl+Q
-              $scope.quit();
-              break;
+                $scope.quit();
+                break;
               case 90:
-              if (event.shiftKey) { // Ctrl+Shift+Z
+                if (event.shiftKey) { // Ctrl+Shift+Z
+                  $scope.redoGraph();
+                  event.preventDefault();
+                }
+                else { // Ctrl+Z
+                  $scope.undoGraph();
+                  event.preventDefault();
+                }
+                break;
+              case 89: // Ctrl+Y
                 $scope.redoGraph();
                 event.preventDefault();
-              }
-              else { // Ctrl+Z
-                $scope.undoGraph();
-                event.preventDefault();
-              }
-              break;
-              case 89: // Ctrl+Y
-              $scope.redoGraph();
-              event.preventDefault();
-              break;
+                break;
               case 88: // Ctrl+X
-              $scope.cutSelected();
-              break;
+                $scope.cutSelected();
+                break;
               case 67: // Ctrl+C
-              $scope.copySelected();
-              break;
+                $scope.copySelected();
+                break;
               case 86: // Ctrl+V
-              $scope.pasteSelected();
-              break;
+                $scope.pasteSelected();
+                break;
               case 65: // Ctrl+A
-              $scope.selectAll();
-              break;
-              case 48: // Ctrl+0
-              $scope.resetView();
-              break;
-              case 70: // Ctrl+F
-              $scope.fitContent();
-              break;
+                $scope.selectAll();
+                break;
               case 82: // Ctrl+R
-              $scope.verifyCode();
-              break;
+                $scope.verifyCode();
+                break;
               case 66: // Ctrl+B
-              $scope.buildCode();
-              break;
+                $scope.buildCode();
+                break;
               case 85: // Ctrl+U
-              $scope.uploadCode();
-              break;
+                $scope.uploadCode();
+                break;
             }
           }
 
-          switch (event.keyCode) {
-            case 37: // Arrow Left
-            if (graph.hasSelection()) {
-              graph.stepLeft();
+          if (graph.hasSelection()) {
+            switch (event.keyCode) {
+              case 37: // Arrow Left
+                graph.stepLeft();
+                break;
+              case 38: // Arrow Up
+                graph.stepUp();
+                break;
+              case 39: // Arrow Right
+                graph.stepRight();
+                break;
+              case 40: // Arrow Down
+                graph.stepDown();
+                break;
             }
-            break;
-            case 38: // Arrow Up
-            if (graph.hasSelection()) {
-              graph.stepUp();
-            }
-            break;
-            case 39: // Arrow Right
-            if (graph.hasSelection()) {
-              graph.stepRight();
-            }
-            break;
-            case 40: // Arrow Down
-            if (graph.hasSelection()) {
-              graph.stepDown();
-            }
-            break;
           }
 
           if (event.keyCode === 46) { // Supr
             removeSelected();
+          }
+        }
+        if (event.ctrlKey) {
+          switch (event.keyCode) {
+            case 48: // Ctrl+0
+              $scope.resetView();
+              break;
+            case 70: // Ctrl+F
+              $scope.fitContent();
+              break;
           }
         }
         if (event.keyCode === 8) { // Back
