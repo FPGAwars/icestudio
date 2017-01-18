@@ -1,10 +1,10 @@
 {
   "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "counter",
+    "version": "1.0",
+    "description": "4-bit counter. N is the number of bits to count.",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
@@ -36,7 +36,7 @@
           "id": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
           "type": "basic.output",
           "data": {
-            "name": "LED 5",
+            "name": "LED5",
             "pins": [
               {
                 "index": "0",
@@ -55,7 +55,7 @@
           "id": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
           "type": "basic.output",
           "data": {
-            "name": "LED 4",
+            "name": "LED4",
             "pins": [
               {
                 "index": "0",
@@ -164,7 +164,7 @@
           "id": "9803de82-f844-48f0-9f6a-b428395073b4",
           "type": "basic.input",
           "data": {
-            "name": "Button 1",
+            "name": "Enable",
             "pins": [
               {
                 "index": "0",
@@ -183,7 +183,7 @@
           "id": "4caf869e-5202-4aa0-acbf-14fac565eaf1",
           "type": "basic.input",
           "data": {
-            "name": "Button 2",
+            "name": "Reset",
             "pins": [
               {
                 "index": "0",
@@ -275,10 +275,10 @@
     },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": -0.5941,
+        "y": -4.4208
       },
-      "zoom": 1
+      "zoom": 1.0149
     }
   },
   "dependencies": {

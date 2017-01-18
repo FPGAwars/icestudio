@@ -1,10 +1,10 @@
 {
   "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "Assign",
+    "version": "1.0",
+    "description": "Assign the value plus an offset to the 4bit output",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
@@ -138,10 +138,10 @@
     },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": -64.05,
+        "y": -22.58
       },
-      "zoom": 1
+      "zoom": 1.1175
     }
   },
   "dependencies": {}

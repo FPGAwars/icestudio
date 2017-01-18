@@ -1,10 +1,10 @@
 {
   "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "in-out",
+    "version": "1.0",
+    "description": "Assign the input to both outputs",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
