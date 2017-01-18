@@ -55,14 +55,14 @@ angular.module('icestudio')
       };
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Enter the ports'),
-        gettextCatalog.getString('Virtual port')
+        gettextCatalog.getString('FPGA pin')
       ], [
         config._default,
-        true
+        false
       ],
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
-          var virtual = values[1];
+          var virtual = !values[1];
           // Validate values
           var portInfo, portInfos = [];
           for (var l in labels) {
@@ -637,15 +637,15 @@ angular.module('icestudio')
       var block = cellView.model.attributes;
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Update the port'),
-        gettextCatalog.getString('Virtual port')
+        gettextCatalog.getString('FPGA pin')
       ], [
         block.data.name + (block.data.range || ''),
-        block.data.virtual
+        !block.data.virtual
       ],
         function(evt, values) {
           var oldSize, newSize, offset = 0;
           var label = values[0].replace(/ /g, '');
-          var virtual = values[1];
+          var virtual = !values[1];
           // Validate values
           var portInfo = utils.parsePortLabel(label);
           if (portInfo) {
