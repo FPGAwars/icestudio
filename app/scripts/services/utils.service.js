@@ -911,4 +911,16 @@ angular.module('icestudio')
       }
     };
 
+    this.newWindow = function() {
+      var command = [
+        process.execPath,
+        nodePath.dirname(process.mainModule.filename)
+      ];
+      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
+        if (error) {
+          throw error;
+        }
+      });
+    };
+
   });

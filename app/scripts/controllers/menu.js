@@ -86,31 +86,10 @@ angular.module('icestudio')
       }, 700);
     };
 
-
     //-- File
 
-    function newWindow() {
-      // TODO: issue if the first window is removed new windows
-      //       are not well created. Fix: reload the new window
-      /* jshint -W106 */
-      var _win = gui.Window.open('index.html', {
-        focus: true,
-        width: 900,
-        height: 620,
-        min_width: 800,
-        min_height: 200,
-        toolbar: true,
-        resizable: true,
-        x: (win ? win.x : 0) + 50,
-        y: (win ? win.y : 0) + 50,
-        icon: 'resources/images/icestudio-logo.png'
-      });
-      /* jshint +W106 */
-      return _win;
-    }
-
     $scope.newProject = function() {
-      newWindow();
+      utils.newWindow();
     };
 
     $scope.openProject = function() {
@@ -126,7 +105,7 @@ angular.module('icestudio')
           // If this is not the first action, and
           // the file path is different, open
           // the project in a new window
-          var _win = newWindow();
+          var _win = utils.newWindow();
           _win.on('loaded', function() {
             setTimeout(function() {
               _win.emit('openProject', { filepath: filepath });
