@@ -42,25 +42,6 @@ angular.module('icestudio')
       exit();
     });
 
-    var openProject = false;
-    win.on('openProject', function(args) {
-      if (!openProject) {
-        updateWorkingdir(args.filepath);
-        project.open(args.filepath);
-        openProject = true;
-        zeroProject = false;
-      }
-    });
-
-    var loadProject = false;
-    win.on('loadProject', function(args) {
-      if (!loadProject) {
-        project.load(args.name, args.data);
-        loadProject = true;
-        zeroProject = false;
-      }
-    });
-
     // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
       var mb = new gui.Menu({type: 'menubar'});
@@ -86,35 +67,49 @@ angular.module('icestudio')
       }, 700);
     };
 
+    // Load app arguments
+    setTimeout(function() {
+      for (var i in gui.App.argv) {
+        processArg(gui.App.argv[i]);
+      }
+    }, 0);
+
+    function processArg(arg) {
+      if (nodeFs.existsSync(arg)) {
+        // Open filepath
+        var filepath = arg;
+        updateWorkingdir(filepath);
+        project.open(filepath);
+        zeroProject = false;
+      }
+      else {
+        // Move window
+        var data = arg.split('x');
+        var offset = {
+          x: parseInt(data[0]),
+          y: parseInt(data[1])
+        };
+        win.moveTo(offset.x, offset.y);
+      }
+    }
+
 
     //-- File
 
-    function newWindow() {
-      // TODO: issue if the first window is removed new windows
-      //       are not well created. Fix: reload the new window
-      /* jshint -W106 */
-      var _win = gui.Window.open('index.html', {
-        focus: true,
-        width: 900,
-        height: 620,
-        min_width: 800,
-        min_height: 200,
-        toolbar: true,
-        resizable: true,
-        x: (win ? win.x : 0) + 50,
-        y: (win ? win.y : 0) + 50,
-        icon: 'resources/images/icestudio-logo.png'
-      });
-      /* jshint +W106 */
-      return _win;
-    }
-
     $scope.newProject = function() {
-      newWindow();
+      utils.newWindow();
     };
 
-    $scope.openProject = function() {
-      utils.openDialog('#input-open-project', '.ice', function(filepath) {
+    $scope.openProject = function(filepath) {
+      if (filepath) {
+        _open(filepath);
+      }
+      else {
+        utils.openDialog('#input-open-project', '.ice', function(filepath) {
+          _open(filepath);
+        });
+      }
+      function _open(filepath) {
         if (zeroProject) {
           // If this is the first action, open
           // the projec in the same window
@@ -126,34 +121,7 @@ angular.module('icestudio')
           // If this is not the first action, and
           // the file path is different, open
           // the project in a new window
-          var _win = newWindow();
-          _win.on('loaded', function() {
-            setTimeout(function() {
-              _win.emit('openProject', { filepath: filepath });
-            }, 200);
-          });
-        }
-      });
-    };
-
-    $scope.loadProject = function(name, data) {
-      if (data) {
-        if (zeroProject) {
-          // If this is the first action, load
-          // the projec in the same window
-          project.load(name, data);
-          zeroProject = false;
-        }
-        else if (project.changed || (project.name !== name)) {
-          // If this is not the first action, and
-          // the project name is different, load
-          // the project in a new window
-          var _win = newWindow();
-          _win.on('loaded', function() {
-            setTimeout(function() {
-              _win.emit('loadProject', { name: name, data: data });
-            }, 200);
-          });
+          utils.newWindow(filepath);
         }
       }
     };
@@ -185,8 +153,11 @@ angular.module('icestudio')
     });
 
     $scope.addAsBlock = function() {
-      utils.openDialog('#input-add-as-block', '.ice', function(filepath) {
-        project.addAsBlock(filepath);
+      utils.openDialog('#input-add-as-block', '.ice', function(filepaths) {
+        filepaths = filepaths.split(';');
+        for (var i in filepaths) {
+          project.addAsBlock(filepaths[i]);
+        }
       });
     };
 
@@ -511,91 +482,89 @@ angular.module('icestudio')
           if (event.ctrlKey) {
             switch (event.keyCode) {
               case 78:  // Ctrl+N
-              $scope.newProject();
-              break;
+                $scope.newProject();
+                break;
               case 79:  // Ctrl+O
-              $scope.openProject();
-              break;
+                $scope.openProject();
+                break;
               case 83:
-              if (event.shiftKey) { // Ctrl+Shift+S
-                $scope.saveProjectAs();
-              }
-              else { // Ctrl+S
-                $scope.saveProject();
-              }
-              break;
+                if (event.shiftKey) { // Ctrl+Shift+S
+                  $scope.saveProjectAs();
+                }
+                else { // Ctrl+S
+                  $scope.saveProject();
+                }
+                break;
               case 81:  // Ctrl+Q
-              $scope.quit();
-              break;
+                $scope.quit();
+                break;
               case 90:
-              if (event.shiftKey) { // Ctrl+Shift+Z
+                if (event.shiftKey) { // Ctrl+Shift+Z
+                  $scope.redoGraph();
+                  event.preventDefault();
+                }
+                else { // Ctrl+Z
+                  $scope.undoGraph();
+                  event.preventDefault();
+                }
+                break;
+              case 89: // Ctrl+Y
                 $scope.redoGraph();
                 event.preventDefault();
-              }
-              else { // Ctrl+Z
-                $scope.undoGraph();
-                event.preventDefault();
-              }
-              break;
-              case 89: // Ctrl+Y
-              $scope.redoGraph();
-              event.preventDefault();
-              break;
+                break;
               case 88: // Ctrl+X
-              $scope.cutSelected();
-              break;
+                $scope.cutSelected();
+                break;
               case 67: // Ctrl+C
-              $scope.copySelected();
-              break;
+                $scope.copySelected();
+                break;
               case 86: // Ctrl+V
-              $scope.pasteSelected();
-              break;
+                $scope.pasteSelected();
+                break;
               case 65: // Ctrl+A
-              $scope.selectAll();
-              break;
-              case 48: // Ctrl+0
-              $scope.resetView();
-              break;
-              case 70: // Ctrl+F
-              $scope.fitContent();
-              break;
+                $scope.selectAll();
+                break;
               case 82: // Ctrl+R
-              $scope.verifyCode();
-              break;
+                $scope.verifyCode();
+                break;
               case 66: // Ctrl+B
-              $scope.buildCode();
-              break;
+                $scope.buildCode();
+                break;
               case 85: // Ctrl+U
-              $scope.uploadCode();
-              break;
+                $scope.uploadCode();
+                break;
             }
           }
 
-          switch (event.keyCode) {
-            case 37: // Arrow Left
-            if (graph.hasSelection()) {
-              graph.stepLeft();
+          if (graph.hasSelection()) {
+            switch (event.keyCode) {
+              case 37: // Arrow Left
+                graph.stepLeft();
+                break;
+              case 38: // Arrow Up
+                graph.stepUp();
+                break;
+              case 39: // Arrow Right
+                graph.stepRight();
+                break;
+              case 40: // Arrow Down
+                graph.stepDown();
+                break;
             }
-            break;
-            case 38: // Arrow Up
-            if (graph.hasSelection()) {
-              graph.stepUp();
-            }
-            break;
-            case 39: // Arrow Right
-            if (graph.hasSelection()) {
-              graph.stepRight();
-            }
-            break;
-            case 40: // Arrow Down
-            if (graph.hasSelection()) {
-              graph.stepDown();
-            }
-            break;
           }
 
           if (event.keyCode === 46) { // Supr
             removeSelected();
+          }
+        }
+        if (event.ctrlKey) {
+          switch (event.keyCode) {
+            case 48: // Ctrl+0
+              $scope.resetView();
+              break;
+            case 70: // Ctrl+F
+              $scope.fitContent();
+              break;
           }
         }
         if (event.keyCode === 8) { // Back

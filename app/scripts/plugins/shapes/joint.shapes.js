@@ -363,7 +363,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.find('img').addClass('hidden');
       this.$box.find('label').removeClass('hidden');
     }
-    if (this.model.get('blockType').indexOf('config.') !== -1) {
+    if (this.model.get('config')) {
       this.$box.addClass('config-block');
     }
   }
@@ -406,6 +406,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var selectCode = '';
     var selectScript = '';
     var data = this.model.get('data');
+    var name = data.name + (data.range || '');
 
     if (data.pins) {
       for (var i in data.pins) {
@@ -422,7 +423,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
-        <label></label>\
+        <label>' + name + '</label>\
       </div>\
       <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
         <label></label>\

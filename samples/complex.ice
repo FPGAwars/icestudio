@@ -1,10 +1,10 @@
 {
   "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "Complex",
+    "version": "1.0",
+    "description": "Example including projects as blocks",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
@@ -20,29 +20,29 @@
             "local": false
           },
           "position": {
-            "x": 128,
-            "y": 40
+            "x": 120,
+            "y": 56
           }
         },
         {
-          "id": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
-          "type": "8be60c981ee16ae78ea91d5b17181c7a72c5e6fe",
+          "id": "ceadef15-e833-414a-93e7-aea6f85a882b",
+          "type": "894ab7f455e1e77e336f2e96457b1da7381a61bd",
           "position": {
             "x": 120,
             "y": 184
           }
         },
         {
-          "id": "85073adf-db9b-4850-83de-8f9af24478ee",
-          "type": "739ddadeeb546b401f15a37331dac9d9165a15f9",
+          "id": "00824624-3f88-4f18-9983-3e45d52b19c7",
+          "type": "88119a9ec745ebab0cf9098d339d2bbdd803db40",
           "position": {
-            "x": 336,
+            "x": 344,
             "y": 200
           }
         },
         {
-          "id": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
-          "type": "a18ef3d9a87624c0875cb79ca115f0e625bf67d8",
+          "id": "bf4b5914-c791-42d3-b876-df0e03d5a9a4",
+          "type": "dd6af852895fb14362cdc5cb5f47c76353d7c7ad",
           "position": {
             "x": 528,
             "y": 200
@@ -132,28 +132,17 @@
         },
         {
           "source": {
-            "block": "21e9e7f9-9b8a-4fca-904d-e266f1496454",
-            "port": "out"
+            "block": "bfebb831-8b03-43e1-9b87-013f1b5a9cdf",
+            "port": "constant-out"
           },
           "target": {
-            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
-            "port": "f6528039-852b-41f9-aa41-268994b3f631"
-          },
-          "size": 2
-        },
-        {
-          "source": {
-            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
-            "port": "60d40fc8-3388-4066-8f0a-af17e179a9bd"
-          },
-          "target": {
-            "block": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
-            "port": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd"
+            "block": "ceadef15-e833-414a-93e7-aea6f85a882b",
+            "port": "909655b9-5ef0-4c45-9494-c0238d2e4732"
           }
         },
         {
           "source": {
-            "block": "28a13e1c-47e8-4b22-b3f1-271bd5762ed7",
+            "block": "bf4b5914-c791-42d3-b876-df0e03d5a9a4",
             "port": "07895985-9d14-4a6f-8f2d-b2a6ddf61852"
           },
           "target": {
@@ -163,42 +152,53 @@
         },
         {
           "source": {
-            "block": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
+            "block": "ceadef15-e833-414a-93e7-aea6f85a882b",
             "port": "ef743d41-5941-4831-becd-0d930c4eed54"
           },
           "target": {
-            "block": "85073adf-db9b-4850-83de-8f9af24478ee",
+            "block": "00824624-3f88-4f18-9983-3e45d52b19c7",
             "port": "95f8c313-6e18-4ee3-b9cf-7266dec53c93"
           },
           "size": 4
         },
         {
           "source": {
-            "block": "bfebb831-8b03-43e1-9b87-013f1b5a9cdf",
-            "port": "constant-out"
+            "block": "21e9e7f9-9b8a-4fca-904d-e266f1496454",
+            "port": "out"
           },
           "target": {
-            "block": "6f0cbf26-fd2e-4fa2-b55a-5f93e7af02c7",
-            "port": "909655b9-5ef0-4c45-9494-c0238d2e4732"
+            "block": "00824624-3f88-4f18-9983-3e45d52b19c7",
+            "port": "f6528039-852b-41f9-aa41-268994b3f631"
+          },
+          "size": 2
+        },
+        {
+          "source": {
+            "block": "00824624-3f88-4f18-9983-3e45d52b19c7",
+            "port": "60d40fc8-3388-4066-8f0a-af17e179a9bd"
+          },
+          "target": {
+            "block": "bf4b5914-c791-42d3-b876-df0e03d5a9a4",
+            "port": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd"
           }
         }
       ]
     },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": -24.6892,
+        "y": 38.6221
       },
-      "zoom": 1
+      "zoom": 1.0164
     }
   },
   "dependencies": {
-    "8be60c981ee16ae78ea91d5b17181c7a72c5e6fe": {
+    "894ab7f455e1e77e336f2e96457b1da7381a61bd": {
       "package": {
-        "name": "",
-        "version": "",
-        "description": "",
-        "author": "",
+        "name": "Assign",
+        "version": "1.0",
+        "description": "Assign the value plus an offset to the 4bit output",
+        "author": "Jesús Arroyo",
         "image": ""
       },
       "design": {
@@ -309,20 +309,20 @@
         },
         "state": {
           "pan": {
-            "x": 0,
-            "y": 0
+            "x": -64.05,
+            "y": -22.58
           },
-          "zoom": 1
+          "zoom": 1.1175
         }
       }
     },
-    "739ddadeeb546b401f15a37331dac9d9165a15f9": {
+    "88119a9ec745ebab0cf9098d339d2bbdd803db40": {
       "package": {
-        "name": "",
-        "version": "",
-        "description": "",
-        "author": "",
-        "image": ""
+        "name": "Mux4:1",
+        "version": "1.0",
+        "description": "Multiplexer 4 to 1",
+        "author": "Jesús Arroyo",
+        "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%22-252%20400.9%2081%2040%22%20width=%2281%22%20height=%2240%22%3E%3Cpath%20d=%22M-191%20419.9v-7.2l-41-11.8v40l41-11.7v-7.4zm-39%2018.5v-35l37%2010.8v13.5z%22/%3E%3C/svg%3E"
       },
       "design": {
         "graph": {
@@ -433,20 +433,20 @@
         },
         "state": {
           "pan": {
-            "x": 0,
-            "y": 0
+            "x": -8.7129,
+            "y": 19.9356
           },
-          "zoom": 1
+          "zoom": 1.0149
         }
       }
     },
-    "a18ef3d9a87624c0875cb79ca115f0e625bf67d8": {
+    "dd6af852895fb14362cdc5cb5f47c76353d7c7ad": {
       "package": {
-        "name": "",
-        "version": "",
-        "description": "",
-        "author": "",
-        "image": ""
+        "name": "Not",
+        "version": "1.0",
+        "description": "NOT logic gate",
+        "author": "Jesús Arroyo",
+        "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2291.33%22%20height=%2245.752%22%20version=%221%22%3E%3Cpath%20d=%22M0%2020.446h27v2H0zm70.322.001h15.3v2h-15.3z%22/%3E%3Cpath%20d=%22M66.05%2026.746c-2.9%200-5.3-2.4-5.3-5.3s2.4-5.3%205.3-5.3%205.3%202.4%205.3%205.3-2.4%205.3-5.3%205.3zm0-8.6c-1.8%200-3.3%201.5-3.3%203.3%200%201.8%201.5%203.3%203.3%203.3%201.8%200%203.3-1.5%203.3-3.3%200-1.8-1.5-3.3-3.3-3.3z%22/%3E%3Cpath%20d=%22M25.962%202.563l33.624%2018.883L25.962%2040.33V2.563z%22%20fill=%22none%22%20stroke=%22#000%22%20stroke-width=%223%22/%3E%3C/svg%3E"
       },
       "design": {
         "graph": {
@@ -523,10 +523,10 @@
         },
         "state": {
           "pan": {
-            "x": 0,
-            "y": 0
+            "x": -38.5106,
+            "y": 27.9681
           },
-          "zoom": 1
+          "zoom": 1.0904
         }
       }
     }

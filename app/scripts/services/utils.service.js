@@ -357,7 +357,7 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    function getFilesRecursive(folder, extension) {
+    function getFilesRecursive(folder, extension, onlyFilepath) {
       var fileContents = nodeFs.readdirSync(folder),
           fileTree = [],
           stats;
@@ -369,11 +369,11 @@ angular.module('icestudio')
         if (stats.isDirectory()) {
           fileTree.push({
             name: fileName,
-            children: getFilesRecursive(filePath, extension)
+            children: getFilesRecursive(filePath, extension, onlyFilepath)
           });
         } else {
           if (fileName.endsWith(extension)) {
-            var content = JSON.parse(nodeFs.readFileSync(filePath).toString());
+            var content = onlyFilepath ? filePath : JSON.parse(nodeFs.readFileSync(filePath).toString());
             fileTree.push({
               name: basename(fileName),
               content: content
@@ -909,6 +909,28 @@ angular.module('icestudio')
         return nodeSha1(JSON.stringify(dependency.package) +
                         JSON.stringify(dependency.design));
       }
+    };
+
+    this.newWindow = function(filepath) {
+      var execPath = process.execPath;
+      var command = [ execPath ];
+      if (execPath.endsWith('nw')) {
+        command.push(nodePath.dirname(process.mainModule.filename));
+      }
+      if (filepath) {
+        command.push(filepath);
+      }
+      /*var win = window.get();
+      var position = {
+        x: win.x + 30,
+        y: win.y + 30
+      };
+      command.push(position.x + 'x' + position.y);*/
+      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
+        if (error) {
+          throw error;
+        }
+      });
     };
 
   });

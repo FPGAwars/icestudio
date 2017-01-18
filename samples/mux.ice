@@ -1,11 +1,11 @@
 {
   "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
-    "image": ""
+    "name": "Mux4:1",
+    "version": "1.0",
+    "description": "Multiplexer 4 to 1",
+    "author": "Jesús Arroyo",
+    "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%22-252%20400.9%2081%2040%22%20width=%2281%22%20height=%2240%22%3E%3Cpath%20d=%22M-191%20419.9v-7.2l-41-11.8v40l41-11.7v-7.4zm-39%2018.5v-35l37%2010.8v13.5z%22/%3E%3C/svg%3E"
   },
   "design": {
     "board": "icezum",
@@ -159,10 +159,10 @@
     },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": -8.7129,
+        "y": 19.9356
       },
-      "zoom": 1
+      "zoom": 1.0149
     }
   },
   "dependencies": {}
