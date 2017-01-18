@@ -7,7 +7,7 @@
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + project.name }}.ice"/>
     <input id="input-save-snapshot" type="file" accept=".png" class="hidden" nwsaveas="{{ (snapshotdir ? snapshotdir : workingdir) + project.name }}.png"/>
 
-    <input id="input-add-as-block" type="file" accept=".ice,.iceb" class="hidden"/>
+    <input id="input-add-as-block" type="file" accept=".ice,.iceb" class="hidden" multiple/>
 
     <input id="input-export-verilog" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + project.name }}.v"/>
     <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + project.name }}.pcf"/>
