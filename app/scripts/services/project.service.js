@@ -504,7 +504,7 @@ angular.module('icestudio')
         graph.createBasicBlock(arg);
       }
       else if (arg) {
-        var block = _safeLoad(arg);
+        var block = utils.clone(_safeLoad(arg));
         block = pruneBlock(block);
         var type = utils.dependencyID(block);
         mergeDependencies(type, block);

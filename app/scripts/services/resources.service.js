@@ -28,6 +28,7 @@ angular.module('icestudio')
     };
 
     this.selectCollection = function(name) {
+      name = name || DEFAULT;
       for (var i in this.currentCollections) {
         if (name === this.currentCollections[i].name) {
           this.selectedCollection = this.currentCollections[i];
@@ -35,9 +36,6 @@ angular.module('icestudio')
         }
       }
     };
-
-    // Select default collection
-    this.selectCollection(DEFAULT);
 
     this.getCollections = function() {
       return this.currentCollections;

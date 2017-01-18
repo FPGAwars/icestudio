@@ -27,7 +27,6 @@ angular.module('icestudio')
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
-    $scope.menuBlocks = resources.getMenuBlocks();
     $scope.collections = resources.getCollections();
 
     $scope.version = _package.version;
@@ -37,6 +36,9 @@ angular.module('icestudio')
     $scope.snapshotdir = '';
 
     var zeroProject = true;  // New project without changes
+
+    // Select collection
+    resources.selectCollection(profile.data.collection);
 
     // Window events
     var win = gui.Window.get();
@@ -369,6 +371,7 @@ angular.module('icestudio')
     $scope.selectCollection = function(collection) {
       if (resources.selectedCollection.name !== collection.name) {
         resources.selectCollection(collection.name);
+        profile.data.collection = collection.name;
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(collection.name) }));
       }
     };

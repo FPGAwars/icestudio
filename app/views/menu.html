@@ -304,7 +304,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-repeat="blocks in menuBlocks" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
+          <li uib-dropdown ng-repeat="blocks in resources.selectedCollection.children" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
             <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
