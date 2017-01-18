@@ -5,7 +5,8 @@ angular.module('icestudio')
                                       $scope,
                                       project,
                                       boards,
-                                      graph) {
+                                      graph,
+                                      utils) {
 
     $scope.boards = boards;
     $scope.graph = graph;
@@ -46,6 +47,11 @@ angular.module('icestudio')
 
     $rootScope.$on('updateProject', function(event, callback) {
       project.update(callback, false);
+    });
+
+    $rootScope.$on('breadcrumbsBack', function(/*event*/) {
+      $scope.breadcrumbsBack();
+      utils.rootScopeSafeApply();
     });
 
   });
