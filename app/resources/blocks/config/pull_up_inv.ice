@@ -9,6 +9,8 @@
   },
   "design": {
     "board": "icezum",
+    "config": "true",
+    "pullup": "true",
     "graph": {
       "blocks": [
         {

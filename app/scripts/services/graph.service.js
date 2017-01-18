@@ -181,23 +181,20 @@ angular.module('icestudio')
               return false;
             }
             // Prevent to connect a pull-up if other blocks are connected
-            if ((cellViewT.model.attributes.blockType === 'config.pull_up' ||
-                 cellViewT.model.attributes.blockType === 'config.pull_up_inv') &&
+            if ((cellViewT.model.attributes.pullup) &&
                  (cellViewS.model.id === links[i].get('source').id)) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
               return false;
             }
             // Prevent to connect other blocks if a pull-up is connected
-            if ((linkIView.targetView.model.attributes.blockType === 'config.pull_up' ||
-                 linkIView.targetView.model.attributes.blockType === 'config.pull_up_inv') &&
+            if ((linkIView.targetView.model.attributes.pullup) &&
                  (cellViewS.model.id === links[i].get('source').id)) {
               warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
               return false;
             }
           }
           // Ensure input -> pull-up connections
-          if (cellViewT.model.attributes.blockType === 'config.pull_up' ||
-              cellViewT.model.attributes.blockType === 'config.pull_up_inv') {
+          if (cellViewT.model.attributes.pullup) {
             var ret = (cellViewS.model.attributes.blockType === 'basic.input');
             if (!ret) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));

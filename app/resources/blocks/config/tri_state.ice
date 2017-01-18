@@ -9,6 +9,7 @@
   },
   "design": {
     "board": "icezum",
+    "config": "true",
     "graph": {
       "blocks": [
         {

@@ -562,6 +562,8 @@ angular.module('icestudio')
       var cell = new joint.shapes.ice.Generic({
         id: instance.id,
         blockType: instance.type,
+        config: block.design.config,
+        pullup: block.design.pullup,
         image: blockImage,
         label: blockLabel,
         tooltip: block.package.description,
