@@ -5,7 +5,7 @@ angular.module('icestudio')
                                  nodePath) {
 
     this.getExamples = function() {
-      return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
+      return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice', true); // onlyFilepath
     };
 
     this.getMenuBlocks = function() {

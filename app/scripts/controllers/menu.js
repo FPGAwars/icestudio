@@ -42,25 +42,6 @@ angular.module('icestudio')
       exit();
     });
 
-    var openProject = false;
-    win.on('openProject', function(args) {
-      if (!openProject) {
-        updateWorkingdir(args.filepath);
-        project.open(args.filepath);
-        openProject = true;
-        zeroProject = false;
-      }
-    });
-
-    var loadProject = false;
-    win.on('loadProject', function(args) {
-      if (!loadProject) {
-        project.load(args.name, args.data);
-        loadProject = true;
-        zeroProject = false;
-      }
-    });
-
     // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
       var mb = new gui.Menu({type: 'menubar'});
@@ -86,14 +67,39 @@ angular.module('icestudio')
       }, 700);
     };
 
+    // Load app arguments
+    console.log('ARGV', gui.App.argv);
+    setTimeout(function() {
+      if (gui.App.argv.length > 0) {
+        var filepath = gui.App.argv[0];
+        if (nodeFs.existsSync(filepath)) {
+          updateWorkingdir(filepath);
+          project.open(filepath);
+          zeroProject = false;
+        }
+        else {
+          alertify.notify(gettextCatalog.getString('Invalid argument {{arg}}',  { arg: filepath }), 'warning', 5);
+        }
+      }
+    }, 0);
+
+
     //-- File
 
     $scope.newProject = function() {
       utils.newWindow();
     };
 
-    $scope.openProject = function() {
-      utils.openDialog('#input-open-project', '.ice', function(filepath) {
+    $scope.openProject = function(filepath) {
+      if (filepath) {
+        _open(filepath);
+      }
+      else {
+        utils.openDialog('#input-open-project', '.ice', function(filepath) {
+          _open(filepath);
+        });
+      }
+      function _open(filepath) {
         if (zeroProject) {
           // If this is the first action, open
           // the projec in the same window
@@ -105,34 +111,7 @@ angular.module('icestudio')
           // If this is not the first action, and
           // the file path is different, open
           // the project in a new window
-          var _win = utils.newWindow();
-          _win.on('loaded', function() {
-            setTimeout(function() {
-              _win.emit('openProject', { filepath: filepath });
-            }, 200);
-          });
-        }
-      });
-    };
-
-    $scope.loadProject = function(name, data) {
-      if (data) {
-        if (zeroProject) {
-          // If this is the first action, load
-          // the projec in the same window
-          project.load(name, data);
-          zeroProject = false;
-        }
-        else if (project.changed || (project.name !== name)) {
-          // If this is not the first action, and
-          // the project name is different, load
-          // the project in a new window
-          var _win = newWindow();
-          _win.on('loaded', function() {
-            setTimeout(function() {
-              _win.emit('loadProject', { name: name, data: data });
-            }, 200);
-          });
+          utils.newWindow(filepath);
         }
       }
     };
