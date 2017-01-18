@@ -912,10 +912,11 @@ angular.module('icestudio')
     };
 
     this.newWindow = function(filepath) {
-      var command = [
-        process.execPath,
-        nodePath.dirname(process.mainModule.filename)
-      ];
+      var execPath = process.execPath;
+      var command = [ execPath ];
+      if (execPath.endsWith('nw')) {
+        command.push(nodePath.dirname(process.mainModule.filename));
+      }
       if (filepath) {
         command.push(filepath);
       }
