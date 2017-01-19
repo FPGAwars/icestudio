@@ -255,6 +255,10 @@ angular.module('icestudio')
       deleteFolderRecursive(APIO_HOME_DIR);
     };
 
+    this.removeCollections = function() {
+      deleteFolderRecursive(COLLECTIONS_DIR);
+    };
+
     var deleteFolderRecursive = function(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {

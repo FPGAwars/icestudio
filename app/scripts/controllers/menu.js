@@ -36,8 +36,8 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
-    // Select collection
-    profile.data.collection = resources.selectCollection(profile.data.collection);
+    // Initialize selected collection
+    updateSelectedCollection();
 
     // Window events
     var win = gui.Window.get();
@@ -367,13 +367,17 @@ angular.module('icestudio')
       }
     };
 
-    $scope.selectCollection = function(collection) {
-      if (resources.selectedCollection.name !== collection.name) {
-        var name = resources.selectCollection(collection.name);
+    $scope.selectCollection = function(name) {
+      if (resources.selectedCollection.name !== name) {
+        name = resources.selectCollection(name);
         profile.data.collection = name;
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
     };
+
+    function updateSelectedCollection() {
+      profile.data.collection = resources.selectCollection(profile.data.collection);
+    }
 
 
     //-- Boards
@@ -438,11 +442,21 @@ angular.module('icestudio')
     };
 
     $scope.removeCollection = function(name) {
-
+      tools.removeCollection(name);
     };
 
     $scope.removeAllCollections = function() {
-
+      if (resources.currentCollections.length > 1) {
+        alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
+        function() {
+          tools.removeAllCollections();
+          updateSelectedCollection();
+          utils.rootScopeSafeApply();
+        });
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('No collections stored'), 'warning', 5);
+      }
     };
 
 

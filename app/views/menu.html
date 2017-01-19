@@ -185,11 +185,11 @@
                 <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-repeat="collection in resources.currentCollections">
-                    <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
+                    <a href ng-click="selectCollection()" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}
                       <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
-                    <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
+                    <a href ng-click="selectCollection(collection.name)" ng-hide="collection.name == ''">
                       {{ collection.name }}
                       <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
                     </a>

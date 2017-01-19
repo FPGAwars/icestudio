@@ -578,5 +578,14 @@ angular.module('icestudio')
       });
     };
 
+    this.removeCollection = function(name) {
+      // TODO
+    };
+
+    this.removeAllCollections = function() {
+      utils.removeCollections();
+      resources.loadCollections();
+      alertify.success(gettextCatalog.getString('All collections removed'));
+    };
 
   });
