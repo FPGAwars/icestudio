@@ -503,17 +503,28 @@ angular.module('icestudio')
       graph.createBasicBlock(type);
     };
 
-    this.addBlock = function(filepath) {
-      utils.readFile(filepath, function(data) {
-        if (data) {
-          var block = _safeLoad(data);
+    this.addBlock = function(arg) {
+      if (typeof arg === 'string') {
+        // arg is a filepath
+        utils.readFile(arg, function(block) {
+          _addBlock(block);
+        });
+      }
+      else {
+        // arg is a block
+        _addBlock(arg);
+      }
+
+      function _addBlock(block) {
+        if (block) {
+          block = _safeLoad(block);
           block = pruneBlock(block);
           var type = utils.dependencyID(block);
           mergeDependencies(type, block);
           graph.createBlock(type, block);
           graph.setDependencies(allDependencies);
         }
-      });
+      }
     };
 
     function pruneBlock(block) {
