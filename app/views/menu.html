@@ -24,7 +24,7 @@
 
           <li uib-dropdown ng-mouseover="showMenu('file')" ng-mouseleave="hideMenu('file')" is-open="status.file">
             <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu style="min-width: 200px">
+            <ul uib-dropdown-menu style="min-width: 220px">
               <li>
                 <a href ng-click="newProject()">{{ 'New' | translate }}<span class="shortcut">Ctrl+N</span></a>
               </li>
@@ -86,7 +86,7 @@
 
           <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" is-open="status.edit">
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu style="min-width: 180px">
+            <ul uib-dropdown-menu style="min-width: 200px">
               <li>
                 <a href ng-click="undoGraph()">{{ 'Undo' | translate }}<span class="shortcut">Ctrl+Z</span></a>
               </li>
@@ -331,11 +331,22 @@
             <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
-                <a href ng-click="project.addBasicBlock('basic.input')">{{ 'Input' | translate }}</a>
-                <a href ng-click="project.addBasicBlock('basic.output')">{{ 'Output' | translate }}</a>
-                <a href ng-click="project.addBasicBlock('basic.constant')">{{ 'Constant' | translate }}</a>
-                <a href ng-click="project.addBasicBlock('basic.code')">{{ 'Code' | translate }}</a>
-                <a href ng-click="project.addBasicBlock('basic.info')">{{ 'Info' | translate }}</a>
+                <!-- #ccf8a0 -->
+                <a href ng-click="project.addBasicBlock('basic.input')">
+                  <font color="#f6f688">🌑&ensp;</font> {{ 'Input' | translate }}
+                </a>
+                <a href ng-click="project.addBasicBlock('basic.output')">
+                  <font color="#f6f688">🌑&ensp;</font> {{ 'Output' | translate }}
+                </a>
+                <a href ng-click="project.addBasicBlock('basic.constant')">
+                  <font color="#f8e5a0">🌑&ensp;</font> {{ 'Constant' | translate }}
+                </a>
+                <a href ng-click="project.addBasicBlock('basic.code')">
+                  <font color="#c0dfeb">🌑&ensp;</font> {{ 'Code' | translate }}
+                </a>
+                <a href ng-click="project.addBasicBlock('basic.info')">
+                  <font color="#ddd">🌑&ensp;</font> {{ 'Information' | translate }}
+                </a>
               </li>
             </ul>
           </li>

@@ -357,8 +357,8 @@ msgid "Image {{name}} saved"
 msgstr "{{name}} izeneko irudia gorde da"
 
 #: app/views/menu.html:338
-msgid "Info"
-msgstr "Info"
+msgid "Information"
+msgstr ""
 
 #: app/views/menu.html:334
 msgid "Input"
@@ -898,6 +898,9 @@ msgstr "{{board}} ez zehaztua"
 #: app/scripts/controllers/menu.js:356
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} pinout ez zehaztua"
+
+#~ msgid "Info"
+#~ msgstr "Info"
 
 #~ msgid "Clear all"
 #~ msgstr "Dena ezabatu"

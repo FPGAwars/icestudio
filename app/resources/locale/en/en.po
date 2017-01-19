@@ -353,8 +353,8 @@ msgid "Image {{name}} saved"
 msgstr "Image {{name}} saved"
 
 #: app/views/menu.html:338
-msgid "Info"
-msgstr "Info"
+msgid "Information"
+msgstr "Information"
 
 #: app/views/menu.html:334
 msgid "Input"
@@ -891,6 +891,9 @@ msgstr "{{board}} datasheet not defined"
 #: app/scripts/controllers/menu.js:356
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} pinout not defined"
+
+#~ msgid "Info"
+#~ msgstr "Info"
 
 #~ msgid "Clear all"
 #~ msgstr "Clear all"

@@ -330,7 +330,7 @@ msgid "Image {{name}} saved"
 msgstr ""
 
 #: app/views/menu.html:338
-msgid "Info"
+msgid "Information"
 msgstr ""
 
 #: app/views/menu.html:334
