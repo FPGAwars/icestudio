@@ -62,7 +62,7 @@ msgstr "Sobre Icestudio"
 
 #: app/views/menu.html:275
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: app/scripts/controllers/menu.js:431
 msgid "Add a block to start"
@@ -74,11 +74,11 @@ msgstr "Añadir como bloque"
 
 #: app/scripts/services/tools.service.js:590
 msgid "All collections removed"
-msgstr ""
+msgstr "Colecciones eliminadas"
 
 #: app/scripts/controllers/menu.js:455
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr ""
+msgstr "Todas las colecciones almacenadas se perderán. ¿Deseas continuar?"
 
 #: app/scripts/services/utils.service.js:681
 msgid "Author"
@@ -137,19 +137,19 @@ msgstr "Código"
 
 #: app/scripts/services/tools.service.js:577
 msgid "Collection file {{name}} added"
-msgstr ""
+msgstr "Fichero de colecciones {{name}} añadido"
 
 #: app/scripts/services/tools.service.js:584
 msgid "Collection {{name}} removed"
-msgstr ""
+msgstr "Colección {{name}} eliminada"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Collection {{name}} selected"
-msgstr ""
+msgstr "Colección {{name}} seleccionada"
 
 #: app/views/menu.html:185 app/views/menu.html:271
 msgid "Collections"
-msgstr ""
+msgstr "Colecciones"
 
 #: app/views/menu.html:317
 msgid "Community forum"
@@ -161,11 +161,11 @@ msgstr "Constante"
 
 #: app/views/menu.html:101
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: app/views/menu.html:98
 msgid "Cut"
-msgstr ""
+msgstr "Cortar"
 
 #: app/views/menu.html:181
 msgid "Datasheet"
@@ -173,7 +173,7 @@ msgstr "Datasheet"
 
 #: app/views/menu.html:189
 msgid "Default"
-msgstr ""
+msgstr "Por defecto"
 
 #: app/scripts/services/tools.service.js:315
 msgid ""
@@ -193,11 +193,11 @@ msgstr "Deshabilitar"
 
 #: app/scripts/controllers/menu.js:218
 msgid "Do you want to close the application?"
-msgstr ""
+msgstr "¿Deseas cerrar la aplicación?"
 
 #: app/scripts/controllers/menu.js:445
 msgid "Do you want to remove the {{name}} collection?"
-msgstr ""
+msgstr "¿Deseas eliminar la colección {{name}}?"
 
 #: app/views/menu.html:310
 msgid "Documentation"
@@ -301,7 +301,7 @@ msgstr "Puertos E/S de la FPGA no definidos"
 #: app/scripts/services/blocks.service.js:58
 #: app/scripts/services/blocks.service.js:640
 msgid "FPGA pin"
-msgstr ""
+msgstr "FPGA pin"
 
 #: app/views/menu.html:26
 msgid "File"
@@ -324,7 +324,7 @@ msgstr "Archivo {{file}} importado"
 
 #: app/views/menu.html:114
 msgid "Fit content"
-msgstr ""
+msgstr "Ajustar contenido"
 
 #: app/views/menu.html:160
 msgid "French"
@@ -439,7 +439,7 @@ msgstr "Nuevo proyecto {{name}} creado"
 
 #: app/scripts/controllers/menu.js:463
 msgid "No collections stored"
-msgstr ""
+msgstr "Ninguna colección almacenada"
 
 #: app/scripts/controllers/main.js:15
 msgid "OK"
@@ -448,7 +448,7 @@ msgstr "OK"
 #: app/scripts/services/project.service.js:101
 #: app/scripts/services/project.service.js:308
 msgid "Old project format {{version}}"
-msgstr ""
+msgstr "Formato de proyecto antiguo {{version}}"
 
 #: app/views/menu.html:32
 msgid "Open"
@@ -472,7 +472,7 @@ msgstr "Fichero PCF exportado"
 
 #: app/views/menu.html:104
 msgid "Paste"
-msgstr ""
+msgstr "Pegar"
 
 #: app/views/menu.html:118
 msgid "Preferences"
@@ -504,7 +504,7 @@ msgstr "Solo lectura"
 
 #: app/views/menu.html:94
 msgid "Redo"
-msgstr ""
+msgstr "Rehacer"
 
 #: app/scripts/services/tools.service.js:264
 msgid "Remote host {{name}} not connected"
@@ -520,7 +520,7 @@ msgstr "Eliminar"
 
 #: app/views/menu.html:291
 msgid "Remove all"
-msgstr ""
+msgstr "Eliminar todo"
 
 #: app/scripts/services/utils.service.js:703
 msgid "Reset SVG"
@@ -548,7 +548,7 @@ msgstr "Guardar como"
 
 #: app/views/menu.html:107
 msgid "Select all"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: app/views/menu.html:313
 msgid "Source code"
@@ -631,7 +631,7 @@ msgstr "Herramientas"
 
 #: app/views/menu.html:91
 msgid "Undo"
-msgstr ""
+msgstr "Deshacer"
 
 #: app/scripts/services/tools.service.js:230
 msgid "Unknown board"
@@ -639,7 +639,7 @@ msgstr "Placa desconocida"
 
 #: app/scripts/app.js:42
 msgid "Untitled"
-msgstr ""
+msgstr "Sin título"
 
 #: app/views/menu.html:235
 msgid "Update"
@@ -703,7 +703,7 @@ msgstr "Nombre del host remoto incorrecto {{name}}"
 
 #: app/scripts/controllers/menu.js:219
 msgid "Your changes will be lost if you don’t save them"
-msgstr ""
+msgstr "Tus cambios se perderán si no los guardas"
 
 #. And
 #: app/resources/blocks/labels.js:34
