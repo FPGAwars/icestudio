@@ -44,7 +44,7 @@
                     <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                     <ul uib-dropdown-menu>
                       <li ng-repeat="child in example.children">
-                        <a href ng-click="openProject(child.content)" ng-if="child.content">
+                        <a href ng-click="openProject(child.path)" ng-if="child.path">
                         {{ child.name | translate }}
                         </a>
                       </li>
@@ -187,9 +187,9 @@
                   <li ng-repeat="collection in resources.currentCollections">
                     <a href ng-click="selectCollection()" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}
-                      <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
+                      <span ng-show="resources.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
-                    <a href ng-click="selectCollection(collection.name)" ng-hide="collection.name == ''">
+                    <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}
                       <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
@@ -280,7 +280,7 @@
                     <ul uib-dropdown-menu
                         ng-show="resources.currentCollections.length > 1">
                       <li ng-repeat="collection in resources.currentCollections">
-                        <a href ng-click="removeCollection(collection.name)" ng-if="collection.name != ''">
+                        <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>
                       </li>

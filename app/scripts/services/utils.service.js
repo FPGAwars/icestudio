@@ -259,7 +259,9 @@ angular.module('icestudio')
       deleteFolderRecursive(COLLECTIONS_DIR);
     };
 
-    var deleteFolderRecursive = function(path) {
+    this.deleteFolderRecursive = deleteFolderRecursive;
+
+    function deleteFolderRecursive(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
           var curPath = nodePath.join(path, file);
@@ -272,7 +274,7 @@ angular.module('icestudio')
         });
         nodeFs.rmdirSync(path);
       }
-    };
+    }
 
     this.sep = nodePath.sep;
 
@@ -379,14 +381,15 @@ angular.module('icestudio')
           if (stats.isDirectory()) {
             fileTree.push({
               name: fileName,
+              path: filePath,
               children: getFilesRecursive(filePath, extension, onlyFilepath)
             });
           } else {
             if (fileName.endsWith(extension)) {
-              var content = onlyFilepath ? filePath : JSON.parse(nodeFs.readFileSync(filePath).toString());
               fileTree.push({
                 name: basename(fileName),
-                content: content
+                path: filePath,
+                content: onlyFilepath ? null : JSON.parse(nodeFs.readFileSync(filePath).toString())
               });
             }
           }

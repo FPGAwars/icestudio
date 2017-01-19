@@ -367,9 +367,9 @@ angular.module('icestudio')
       }
     };
 
-    $scope.selectCollection = function(name) {
-      if (resources.selectedCollection.name !== name) {
-        name = resources.selectCollection(name);
+    $scope.selectCollection = function(collection) {
+      if (resources.selectedCollection.name !== collection.name) {
+        var name = resources.selectCollection(collection.name);
         profile.data.collection = name;
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
@@ -441,8 +441,13 @@ angular.module('icestudio')
       });
     };
 
-    $scope.removeCollection = function(name) {
-      tools.removeCollection(name);
+    $scope.removeCollection = function(collection) {
+      alertify.confirm(gettextCatalog.getString('Do you want to remove the {{name}} collection?', { name: utils.bold(collection.name) }),
+      function() {
+        tools.removeCollection(collection);
+        updateSelectedCollection();
+        utils.rootScopeSafeApply();
+      });
     };
 
     $scope.removeAllCollections = function() {
