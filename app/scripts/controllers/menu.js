@@ -25,9 +25,6 @@ angular.module('icestudio')
     $scope.tools = tools;
     $scope.resources = resources;
 
-    $scope.examples = resources.getExamples();
-    $scope.currentBoards = boards.getBoards();
-
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
 

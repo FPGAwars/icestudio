@@ -8,6 +8,7 @@ angular.module('icestudio')
 
     this.selectedCollection = null;
     this.currentCollections = [];
+    this.currentExamples = [];
 
     this.loadCollections = function() {
       var defaultPath = nodePath.join('resources', 'blocks');
@@ -19,11 +20,12 @@ angular.module('icestudio')
       this.currentCollections = collections.concat(utils.getFilesRecursive(utils.COLLECTIONS_DIR, '.ice'));
     };
 
-    this.loadCollections();
-
-    this.getExamples = function() {
-      return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
+    this.loadExamples = function() {
+      this.currentExamples = utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
     };
+
+    this.loadCollections();
+    this.loadExamples();
 
     this.selectCollection = function(name) {
       name = name || DEFAULT;

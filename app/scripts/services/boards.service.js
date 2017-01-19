@@ -58,10 +58,6 @@ angular.module('icestudio')
     // Set default board
     this.selectBoard('icezum');
 
-    this.getBoards = function() {
-      return this.currentBoards;
-    };
-
     this.getPinoutHTML = function() {
       return this.pinoutHTML;
     };
