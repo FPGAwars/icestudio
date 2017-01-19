@@ -359,30 +359,31 @@ angular.module('icestudio')
     this.getFilesRecursive = getFilesRecursive;
 
     function getFilesRecursive(folder, extension, onlyFilepath) {
-      var fileContents = nodeFs.readdirSync(folder),
-          fileTree = [],
-          stats;
+      var fileTree = [];
+      if (nodeFs.existsSync(folder)) {
+        var fileContents = nodeFs.readdirSync(folder);
+        var stats;
 
-      fileContents.forEach(function (fileName) {
-        var filePath = nodePath.join(folder, fileName);
-        stats = nodeFs.lstatSync(filePath);
+        fileContents.forEach(function (fileName) {
+          var filePath = nodePath.join(folder, fileName);
+          stats = nodeFs.lstatSync(filePath);
 
-        if (stats.isDirectory()) {
-          fileTree.push({
-            name: fileName,
-            children: getFilesRecursive(filePath, extension, onlyFilepath)
-          });
-        } else {
-          if (fileName.endsWith(extension)) {
-            var content = onlyFilepath ? filePath : JSON.parse(nodeFs.readFileSync(filePath).toString());
+          if (stats.isDirectory()) {
             fileTree.push({
-              name: basename(fileName),
-              content: content
+              name: fileName,
+              children: getFilesRecursive(filePath, extension, onlyFilepath)
             });
+          } else {
+            if (fileName.endsWith(extension)) {
+              var content = onlyFilepath ? filePath : JSON.parse(nodeFs.readFileSync(filePath).toString());
+              fileTree.push({
+                name: basename(fileName),
+                content: content
+              });
+            }
           }
-        }
-      });
-
+        });
+      }
       return fileTree;
     }
 

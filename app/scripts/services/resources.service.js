@@ -4,8 +4,10 @@ angular.module('icestudio')
   .service('resources', function(utils,
                                  nodePath) {
 
-    const DEFAULT = 'Default';
+    const DEFAULT = '';
     const COLLECTIONS_DIR = nodePath.join(utils.ICESTUDIO_DIR, 'collections');
+
+    console.log(utils.getFilesRecursive(COLLECTIONS_DIR, '.ice'));
 
     this.selectedCollection = null;
     this.currentCollections = loadCollections();
@@ -29,12 +31,19 @@ angular.module('icestudio')
 
     this.selectCollection = function(name) {
       name = name || DEFAULT;
+      var selectedCollection = null;
       for (var i in this.currentCollections) {
         if (name === this.currentCollections[i].name) {
-          this.selectedCollection = this.currentCollections[i];
+          selectedCollection = this.currentCollections[i];
           break;
         }
       }
+      if (selectedCollection === null) {
+        // Collection not found: select default collection
+        selectedCollection = this.currentCollections[0];
+      }
+      this.selectedCollection = selectedCollection;
+      return selectedCollection.name;
     };
 
     this.getCollections = function() {

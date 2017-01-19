@@ -38,7 +38,7 @@ angular.module('icestudio')
     var zeroProject = true;  // New project without changes
 
     // Select collection
-    resources.selectCollection(profile.data.collection);
+    profile.data.collection = resources.selectCollection(profile.data.collection);
 
     // Window events
     var win = gui.Window.get();
@@ -370,9 +370,9 @@ angular.module('icestudio')
 
     $scope.selectCollection = function(collection) {
       if (resources.selectedCollection.name !== collection.name) {
-        resources.selectCollection(collection.name);
-        profile.data.collection = collection.name;
-        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(collection.name) }));
+        var name = resources.selectCollection(collection.name);
+        profile.data.collection = name;
+        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
     };
 
