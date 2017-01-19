@@ -926,13 +926,12 @@ angular.module('icestudio')
     this.newWindow = function(filepath) {
       var execPath = process.execPath;
       var command = [ '"' + execPath + '"' ];
-      if (execPath.endsWith('nw') || execPath.endsWith('nwjs Helper')) {
+      if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
         command.push('"' + nodePath.dirname(process.mainModule.filename) + '"');
       }
       if (filepath) {
         command.push('"' + filepath + '"');
       }
-      console.log(command);
       /*var win = window.get();
       var position = {
         x: win.x + 30,
