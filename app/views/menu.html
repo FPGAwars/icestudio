@@ -44,7 +44,7 @@
                     <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
                     <ul uib-dropdown-menu>
                       <li ng-repeat="child in example.children">
-                        <a href ng-click="openProject(child.path)" ng-if="!child.children">
+                        <a href ng-click="openExample(child.path)" ng-if="!child.children">
                         {{ child.name | translate }}
                         </a>
                       </li>

@@ -85,9 +85,9 @@ angular.module('icestudio')
       alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
     };
 
-    this.open = function(filepath) {
+    this.open = function(filepath, emptyPath) {
       var self = this;
-      this.path = filepath;
+      this.path = emptyPath ? '' : filepath;
       utils.readFile(filepath, function(data) {
         if (data) {
           var name = utils.basename(filepath);

@@ -78,8 +78,11 @@ angular.module('icestudio')
       if (nodeFs.existsSync(arg)) {
         // Open filepath
         var filepath = arg;
-        updateWorkingdir(filepath);
-        project.open(filepath);
+        var emptyPath = filepath.startsWith('resources'); // it is an example
+        if (!emptyPath) {
+          updateWorkingdir(filepath);
+        }
+        project.open(filepath, emptyPath);
         zeroProject = false;
       }
       else {
@@ -100,16 +103,8 @@ angular.module('icestudio')
       utils.newWindow();
     };
 
-    $scope.openProject = function(filepath) {
-      if (filepath) {
-        _open(filepath);
-      }
-      else {
-        utils.openDialog('#input-open-project', '.ice', function(filepath) {
-          _open(filepath);
-        });
-      }
-      function _open(filepath) {
+    $scope.openProject = function() {
+      utils.openDialog('#input-open-project', '.ice', function(filepath) {
         if (zeroProject) {
           // If this is the first action, open
           // the projec in the same window
@@ -123,6 +118,21 @@ angular.module('icestudio')
           // the project in a new window
           utils.newWindow(filepath);
         }
+      });
+    };
+
+    $scope.openExample = function(filepath) {
+      if (zeroProject) {
+        // If this is the first action, open
+        // the projec in the same window
+        project.open(filepath, true);
+        zeroProject = false;
+      }
+      else {
+        // If this is not the first action, and
+        // the file path is different, open
+        // the project in a new window
+        utils.newWindow(filepath);
       }
     };
 
