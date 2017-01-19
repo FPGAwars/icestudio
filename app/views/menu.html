@@ -14,6 +14,8 @@
     <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.v"/>
     <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.gtkw"/>
 
+    <input id="input-add-collection" type="file" accept=".zip" class="hidden" multiple/>
+
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
 
       <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
@@ -182,7 +184,7 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in collections">
+                  <li ng-repeat="collection in resources.currentCollections">
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}
                       <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
@@ -253,11 +255,13 @@
                 <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="tools.enableDrivers()">{{ 'Enable' | translate }}
+                    <a href ng-click="tools.enableDrivers()">
+                      {{ 'Enable' | translate }}
                     </a>
                   </li>
                   <li>
-                    <a href ng-click="tools.disableDrivers()">{{ 'Disable' | translate }}
+                    <a href ng-click="tools.disableDrivers()">
+                      {{ 'Disable' | translate }}
                     </a>
                   </li>
                 </ul>
@@ -267,22 +271,24 @@
                 <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="">{{ 'Add' | translate }}
+                    <a href ng-click="addCollection()">
+                      {{ 'Add' | translate }}
                     </a>
                   </li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="collections.length > 1">
-                      <li ng-repeat="collection in collections">
-                        <a href ng-click="" ng-if="collection.name != ''">
+                        ng-show="resources.currentCollections.length > 1">
+                      <li ng-repeat="collection in resources.currentCollections">
+                        <a href ng-click="removeCollection(collection.name)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href ng-click="">{{ 'Remove all' | translate }}
+                    <a href ng-click="removeAllCollections()">
+                      {{ 'Remove all' | translate }}
                     </a>
                   </li>
                 </ul>

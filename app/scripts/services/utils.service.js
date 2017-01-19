@@ -47,7 +47,11 @@ angular.module('icestudio')
     const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
     this.ICESTUDIO_DIR = ICESTUDIO_DIR;
+    const COLLECTIONS_DIR = nodePath.join(ICESTUDIO_DIR, 'collections');
+    this.COLLECTIONS_DIR = COLLECTIONS_DIR;
     const APIO_HOME_DIR = nodePath.join(ICESTUDIO_DIR, 'apio');
+    const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
+    this.PROFILE_PATH = PROFILE_PATH;
 
     const ENV_DIR = _getEnvDir(nodePath.join(ICESTUDIO_DIR, 'venv'));
     const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');

@@ -27,7 +27,6 @@ angular.module('icestudio')
 
     $scope.examples = resources.getExamples();
     $scope.currentBoards = boards.getBoards();
-    $scope.collections = resources.getCollections();
 
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
@@ -428,6 +427,23 @@ angular.module('icestudio')
         alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
     }
+
+    $scope.addCollection = function() {
+      utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
+        filepaths = filepaths.split(';');
+        for (var i in filepaths) {
+          tools.addCollection(filepaths[i]);
+        }
+      });
+    };
+
+    $scope.removeCollection = function(name) {
+
+    };
+
+    $scope.removeAllCollections = function() {
+
+    };
 
 
     //-- Help

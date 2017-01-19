@@ -5,6 +5,7 @@ angular.module('icestudio')
                              boards,
                              compiler,
                              profile,
+                             resources,
                              utils,
                              gettextCatalog,
                              gettext,
@@ -15,7 +16,8 @@ angular.module('icestudio')
                              nodeProcess,
                              nodeChildProcess,
                              nodeSSHexec,
-                             nodeRSync) {
+                             nodeRSync,
+                             nodeUnzip) {
 
     var currentAlert = null;
     var taskRunning = false;
@@ -563,5 +565,18 @@ angular.module('icestudio')
         .attr('aria-valuenow', 100)
         .css('width', '100%');
     }
+
+    // Collections management
+
+    this.addCollection = function(filepath) {
+      var name = utils.basename(filepath);
+      nodeFs.createReadStream(filepath)
+      .pipe(nodeUnzip.Extract({ path: utils.COLLECTIONS_DIR }))
+      .on('close', function() {
+        resources.loadCollections();
+        alertify.success(gettextCatalog.getString('Collection file {{name}} added', { name: utils.bold(name) }));
+      });
+    };
+
 
   });

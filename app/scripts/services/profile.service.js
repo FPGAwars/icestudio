@@ -2,10 +2,7 @@
 
 angular.module('icestudio')
   .service('profile', function(utils,
-                               nodeFs,
-                               nodePath) {
-
-    const PROFILE_PATH = nodePath.join(utils.ICESTUDIO_DIR, 'profile.json');
+                               nodeFs) {
 
     this.data = {
       'language': '',
@@ -15,7 +12,7 @@ angular.module('icestudio')
 
     this.load = function(callback) {
       var self = this;
-      utils.readFile(PROFILE_PATH, function(data) {
+      utils.readFile(utils.PROFILE_PATH, function(data) {
         if (data) {
           self.data = data;
         }
@@ -30,7 +27,7 @@ angular.module('icestudio')
       if (!nodeFs.existsSync(utils.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(utils.ICESTUDIO_DIR);
       }
-      utils.saveFile(PROFILE_PATH, this.data, function() {
+      utils.saveFile(utils.PROFILE_PATH, this.data, function() {
         console.log('Profile saved');
       }, true);
     };
