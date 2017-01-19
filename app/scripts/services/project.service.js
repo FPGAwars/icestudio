@@ -499,18 +499,21 @@ angular.module('icestudio')
       }, false);
     };
 
-    this.addBlock = function(arg) {
-      if (typeof arg === 'string' && arg.match(/basic\..+/g)) {
-        graph.createBasicBlock(arg);
-      }
-      else if (arg) {
-        var block = utils.clone(_safeLoad(arg));
-        block = pruneBlock(block);
-        var type = utils.dependencyID(block);
-        mergeDependencies(type, block);
-        graph.createBlock(type, block);
-        graph.setDependencies(allDependencies);
-      }
+    this.addBasicBlock = function(type) {
+      graph.createBasicBlock(type);
+    };
+
+    this.addBlock = function(filepath) {
+      utils.readFile(filepath, function(data) {
+        if (data) {
+          var block = _safeLoad(data);
+          block = pruneBlock(block);
+          var type = utils.dependencyID(block);
+          mergeDependencies(type, block);
+          graph.createBlock(type, block);
+          graph.setDependencies(allDependencies);
+        }
+      });
     };
 
     function pruneBlock(block) {

@@ -22,7 +22,7 @@ angular.module('icestudio')
     this.loadCollections();
 
     this.getExamples = function() {
-      return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice', true); // onlyFilepath
+      return utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
     };
 
     this.selectCollection = function(name) {

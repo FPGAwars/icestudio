@@ -581,7 +581,7 @@ angular.module('icestudio')
     this.removeCollection = function(collection) {
       utils.deleteFolderRecursive(collection.path);
       resources.loadCollections();
-      alertify.success(gettextCatalog.getString('Collections {{name}} removed', { name: utils.bold(collection.name) }));
+      alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
     };
 
     this.removeAllCollections = function() {
