@@ -240,12 +240,12 @@ angular.module('icestudio')
 
           // Header
 
-          var instance = '';
+          var instance = name + '_';
           if (block.type === 'basic.code') {
-            instance = digestId(block.id);
+            instance += digestId(block.id);
           }
           else {
-            instance = digestId(block.type);
+            instance += digestId(block.type);
           }
 
           //-- Parameters
@@ -347,7 +347,7 @@ angular.module('icestudio')
         // Dependencies modules
 
         for (var d in dependencies) {
-          code += verilogCompiler(digestId(d), dependencies[d]);
+          code += verilogCompiler(name + '_' + digestId(d), dependencies[d]);
         }
 
         // Code modules
@@ -357,7 +357,7 @@ angular.module('icestudio')
           if (block) {
             if (block.type === 'basic.code') {
               data = {
-                name: digestId(block.id),
+                name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
                 content: block.data.code
