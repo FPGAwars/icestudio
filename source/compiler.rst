@@ -5,12 +5,12 @@ Compiler
 
 Output verilog structure:
 
-1. Main module
-2. Modules
+1. Main module.
+2. Modules.
 
-   a. Wires definition
-   b. Wires connections
-   c. Blocks instances
+   a. Wires definition.
+   b. Wires connections.
+   c. Blocks instances.
 
 Implementation
 --------------
