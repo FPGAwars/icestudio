@@ -179,7 +179,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*', ].concat(appFiles),
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*', ].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
@@ -190,7 +190,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', '*.so', 'toolchain/*.*'].concat(appFiles),
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux64'
         }]
       },
@@ -201,7 +201,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win32/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'].concat(appFiles),
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win32'
         }]
       },
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win64/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', '*.dll', 'toolchain/*.*'].concat(appFiles),
+          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win64'
         }]
       },
