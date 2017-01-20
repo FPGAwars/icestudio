@@ -167,8 +167,8 @@ set_io --warn-no-port F16 F16
 set_io --warn-no-port E14 E14
 set_io --warn-no-port E16 E16
 set_io --warn-no-port D15 D15
+set_io --warn-no-port D16 D16
 set_io --warn-no-port D14 D14
-set_io --warn-no-port B16 B16
 set_io --warn-no-port C16 C16
 set_io --warn-no-port B16 B16
 
@@ -296,5 +296,5 @@ set_io --warn-no-port D1  D1
 set_io --warn-no-port D2  D2
 set_io --warn-no-port C1  C1
 set_io --warn-no-port C2  C2
-set_io --warn-no-port B2  B2
 set_io --warn-no-port B1  B1
+set_io --warn-no-port B2  B2

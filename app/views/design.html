@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<div ng-controller="DesignCtrl">
+  <div id="banner" class="hidden">
+    <div id="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
+    <a id="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
+  </div>
+  <div id="paper" class="paper"></div>
+  <div id="footer">
+    <ol id="breadcrumbs" class="breadcrumb">
+      <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
+        <span ng-switch-when="true">{{ item.name }}</span>
+        <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
+      </li>
+    </ol>
+    <div id="board">{{ boards.selectedBoard.info.label }}</div>
+  </div>
+</div>

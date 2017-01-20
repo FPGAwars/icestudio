@@ -1,7 +1,8 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable/)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
 
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
@@ -17,25 +18,31 @@ Supported boards:
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
 * [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
-## Version 0.2.3
+Supported operating systems:
+
+* GNU/Linux
+* Windows
+* Mac OS X
+
+## Version 0.3.0-beta2 (latest)
 
 ### Installation
 
 1. Install [Python 2.7](https://www.python.org)
 
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases), unzip and execute **icestudio**
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta2), unzip and execute **icestudio**
 
-**Documentation: http://icestudio.readthedocs.io**
+Documentation: http://icestudio.readthedocs.io/en/latest
 
-Supported on Linux, Windows and Mac OSX.
+NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
 
-<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.3.0-beta2.png" width="700" align="center">
 
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/release/python-2711/)
+Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
 
-Install [nodejs](https://github.com/nodejs/node)
+Using [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint).
 
 ##### Ubuntu
 
@@ -77,9 +84,9 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/84)   |
-| Basque     | ![Progress](http://progressed.io/bar/69)   |
-| Galician   | ![Progress](http://progressed.io/bar/67)   |
+| Basque     | ![Progress](http://progressed.io/bar/88)   |
+| French     | ![Progress](http://progressed.io/bar/72)   |
+| Galician   | ![Progress](http://progressed.io/bar/47)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
@@ -93,6 +100,17 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
  We use the GitHub issues to schedule our new features and improvements.
 
+## Version 0.2.3 (stable)
+
+### Installation
+
+1. Install [Python 2.7](https://www.python.org)
+
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.2.3), unzip and execute **icestudio**
+
+Documentation: http://icestudio.readthedocs.io/en/stable
+
+<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
 
 ## Version 0.1
 
@@ -121,6 +139,11 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 ## Contributors
 
+* v0.3
+ * [Martoni](https://github.com/Martoni)
+ * [Carlos Díaz](https://github.com/C47D)
+ * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
+
 * v0.2
  * [Tomás Calvo](https://github.com/tocalvo)
  * [Juan González (Obijuan)](https://github.com/Obijuan)
@@ -129,12 +152,13 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
  * [Salvador E. Tropea](https://github.com/set-soft)
  * [Democrito](https://github.com/Democrito)
  * [Martoni](https://github.com/Martoni)
+ * [Pascal Cotret](https://github.com/pcotret)
 * v0.1
  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
 ## Credits
 
-* v0.2: using [JointJS](https://github.com/clientIO/joint)
+* v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 * Sponsored by [BQ](https://www.bq.com)
 

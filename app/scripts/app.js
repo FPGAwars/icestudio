@@ -5,9 +5,9 @@ angular
     'ngRoute',
     'ui.bootstrap',
     'gettext'
-  ]).config(['$routeProvider',
+  ])
+  .config(['$routeProvider',
     function($routeProvider) {
-
       $routeProvider
         .when('/', {
           templateUrl: 'views/main.html',
@@ -18,9 +18,13 @@ angular
         });
     }
   ])
-  .run(function(profile, common, utils, nodeLangInfo, gettextCatalog) {
+  .run(function(profile,
+                project,
+                utils,
+                gettextCatalog,
+                nodeLangInfo) {
     // Load language
-    profile.load(function(data) {
+    profile.load(function() {
       var lang = profile.data.language;
       if (lang) {
         utils.setLocale(lang);
@@ -35,6 +39,6 @@ angular
       }
     });
     setTimeout(function() {
-      common.updateProjectName(gettextCatalog.getString('untitled'));
+      project.updateTitle(gettextCatalog.getString('Untitled'));
     }, 100);
   });

@@ -6,19 +6,19 @@ var sha1 = require('sha1');
 const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
 
 if (DARWIN) {
-  var fontSize = '12';
+  var aceFontSize = '12';
 }
 else {
-  var fontSize = '15';
+  var aceFontSize = '15';
 }
 
 // Model element
 
 joint.shapes.ice = {};
-joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.shapes.basic.PortsModelInterface, {
+joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="inPorts"/><g class="outPorts"/></g>',
-  portMarkup: '<g class="port port<%= id %>"><path class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
+  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
+  portMarkup: '<g class="port port<%= id %>"><path id="port-wire-<%= port.id %>" class="port-wire"/><circle class="port-body"/><text class="port-label"/></g>',
 
   defaults: joint.util.deepSupplement({
     type: 'ice.Model',
@@ -26,8 +26,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       width: 1,
       height: 1
     },
-    inPorts: [],
-    outPorts: [],
+    leftPorts: [],
+    rightPorts: [],
+    topPorts: [],
+    bottomPorts: [],
     attrs: {
       gridUnits: 1,
       '.': {
@@ -40,27 +42,30 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
         'fill-opacity': 0
       },
       '.port-body': {
-        r: 16,
+        r: 8,
         opacity: 0
       },
-      '.inPorts .port-body': {
+      '.leftPorts .port-body': {
+        pos: 'left',
         type: 'input',
         magnet: false
       },
-      '.outPorts .port-body': {
+      '.rightPorts .port-body': {
+        pos: 'right',
         type: 'output',
         magnet: true
       },
-      '.inPorts .port-label': {
-        x: 12,
-        y: -10,
-        'text-anchor': 'end',
-        fill: '#888'
+      '.topPorts .port-body': {
+        pos: 'top',
+        type: 'input',
+        magnet: false
       },
-      '.outPorts .port-label': {
-        x: -12,
-        y: -10,
-        'text-anchor': 'start',
+      '.bottomPorts .port-body': {
+        pos: 'bottom',
+        type: 'output',
+        magnet: true
+      },
+      '.port-label': {
         fill: '#888'
       },
       '.port-wire': {
@@ -69,6 +74,35 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     }
   }, joint.shapes.basic.Generic.prototype.defaults),
+
+
+  initialize: function() {
+    this.updatePortsAttrs();
+    this.on('change:leftPorts change:rightPorts change:topPorts change:bottomPorts', this.updatePortsAttrs, this);
+    this.constructor.__super__.constructor.__super__.initialize.apply(this, arguments);
+  },
+
+  updatePortsAttrs: function(/*eventName*/) {
+    if (this._portSelectors) {
+      var newAttrs = _.omit(this.get('attrs'), this._portSelectors);
+      this.set('attrs', newAttrs, { silent: true });
+    }
+    this._portSelectors = [];
+    var attrs = {};
+
+    _.each(['left', 'right', 'top', 'bottom'], function(type) {
+      var port = type + 'Ports';
+      _.each(this.get(port), function(portName, index, ports) {
+          var portAttributes = this.getPortAttrs(portName, index, ports.length, '.' + port, type);
+          this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
+          _.extend(attrs, portAttributes);
+      }, this);
+    }, this);
+
+    this.attr(attrs, { silent: true });
+    this.processPorts();
+    this.trigger('process:ports');
+  },
 
   getPortAttrs: function(port, index, total, selector, type) {
 
@@ -80,9 +114,15 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
     var portWireSelector = portSelector + '>.port-wire';
     var portBodySelector = portSelector + '>.port-body';
 
+    attrs[portSelector] = {
+      ref: '.body'
+    };
+
     attrs[portLabelSelector] = {
       text: port.label
     };
+
+    attrs[portWireSelector] = {};
 
     attrs[portBodySelector] = {
       port: {
@@ -91,91 +131,149 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend(_.extend({}, joint.sh
       }
     };
 
-    var portY = (index + 0.5) / total;
-
-    portY = Math.round(portY * port.gridUnits) / port.gridUnits;
-
-    attrs[portSelector] = {
-      ref: '.body',
-      'ref-y': portY
-    };
-
-    attrs[portWireSelector] = {
-      y: portY
-    };
-
-    if (type === 'in') {
-      attrs[portSelector]['ref-x'] = -16;
-      attrs[portWireSelector]['d'] = 'M 0 0 L 32 0';
+    if ((type === 'leftPorts') || (type === 'topPorts')) {
       attrs[portSelector]['pointer-events'] = 'none';
       attrs[portWireSelector]['pointer-events'] = 'none';
     }
-    else {
-      attrs[portSelector]['ref-dx'] = 16;
-      attrs[portWireSelector]['d'] = 'M 0 0 L -32 0';
+
+    var offset = (port.size && port.size > 1) ? 6 : 0;
+    var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
+
+    switch (type) {
+      case 'left':
+        attrs[portSelector]['ref-x'] = -8;
+        attrs[portSelector]['ref-y'] = pos;
+        attrs[portLabelSelector]['dx'] = 4;
+        attrs[portLabelSelector]['y'] = -5-offset;
+        attrs[portLabelSelector]['text-anchor'] = 'end';
+        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
+        break;
+      case 'right':
+        attrs[portSelector]['ref-dx'] = 8;
+        attrs[portSelector]['ref-y'] = pos;
+        attrs[portLabelSelector]['dx'] = -4;
+        attrs[portLabelSelector]['y'] = -5-offset;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L -16 0';
+        break;
+      case 'top':
+        attrs[portSelector]['ref-y'] = -8;
+        attrs[portSelector]['ref-x'] = pos;
+        attrs[portLabelSelector]['dx'] = 5+offset;
+        attrs[portLabelSelector]['y'] = 4;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 16';
+        break;
+      case 'bottom':
+        attrs[portSelector]['ref-dy'] = 8;
+        attrs[portSelector]['ref-x'] = pos;
+        attrs[portLabelSelector]['dx'] = 5+offset;
+        attrs[portLabelSelector]['y'] = -4;
+        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -16';
+        break;
     }
 
     return attrs;
   }
-}));
+});
 
 joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
-    template: '',
+  template: '',
 
-    initialize: function() {
-      _.bindAll(this, 'updateBox');
-      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      this.$box = $(joint.util.template(this.template)());
+    this.$box = $(joint.util.template(this.template)());
 
-      this.model.on('change', this.updateBox, this);
-      this.model.on('remove', this.removeBox, this);
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
 
-      this.updateBox();
+    this.updateBox();
 
-      this.listenTo(this.model, 'process:ports', this.update);
-      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-    },
-    render: function() {
-      joint.dia.ElementView.prototype.render.apply(this, arguments);
-      this.paper.$el.append(this.$box);
-      this.updateBox();
-      return this;
-    },
-    renderPorts: function() {
-      var $inPorts = this.$('.inPorts').empty();
-      var $outPorts = this.$('.outPorts').empty();
-      var portTemplate = _.template(this.model.portMarkup);
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  },
 
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'in' }), function (port, index) {
-        $inPorts.append(V(portTemplate({ id: index, port: port })).node);
-      });
-      _.each(_.filter(this.model.ports, function (p) { return p.type === 'out' }), function (port, index) {
-        $outPorts.append(V(portTemplate({ id: index, port: port })).node);
-      });
-    },
-    update: function() {
-      this.renderPorts();
-      joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-    updateBox: function() {
-      var bbox = this.model.getBBox();
-      var state = this.model.attributes.state;
+  apply: function() {
+    // No operation required
+  },
 
-      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+  render: function() {
+    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    this.paper.$el.append(this.$box);
+    this.updateBox();
+    return this;
+  },
 
-      this.$box.css({
-        left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
-        top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
-        width: bbox.width,
-        height: bbox.height,
-        transform: 'scale(' + state.zoom + ')'
-      });
-    },
-    removeBox: function(evt) {
-      this.$box.remove();
+  renderPorts: function() {
+    var $leftPorts = this.$('.leftPorts').empty();
+    var $rightPorts = this.$('.rightPorts').empty();
+    var $topPorts = this.$('.topPorts').empty();
+    var $bottomPorts = this.$('.bottomPorts').empty();
+    var portTemplate = _.template(this.model.portMarkup);
+
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'left'; }), function(port, index) {
+      $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'right'; }), function(port, index) {
+      $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'top'; }), function(port, index) {
+      $topPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+    _.each(_.filter(this.model.ports, function(p) { return p.type === 'bottom'; }), function(port, index) {
+      $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
+    });
+  },
+
+  update: function() {
+    this.renderPorts();
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    var port, wireWidth;
+    var bbox = this.model.getBBox();
+    var state = this.model.get('state');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
+
+    // Render ports width
+    this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+    for (var i in leftPorts) {
+      port = leftPorts[i];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
     }
+    for (var o in rightPorts) {
+      port = rightPorts[o];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+    }
+
+    /*if (this.$box.css('z-index') > this.model.attributes.zindex) {
+      this.$box.css('z-index', ++this.model.attributes.zindex);
+    }*/
+
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
+    });
+  },
+
+  removeBox: function(/*evt*/) {
+    this.$box.remove();
+  }
 });
 
 
@@ -189,30 +287,86 @@ joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
-    template: '\
-    <div class="generic-block">\
-      <img>\
-      <label></label>\
-    </div>\
-    ',
+  template: '\
+  <div class="generic-block">\
+    <img>\
+    <label></label>\
+    <span class="tooltiptext"></span>\
+  </div>\
+  ',
 
-    initialize: function() {
-      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+  events: {
+    'mouseover': 'mouseovercard',
+    'mouseout': 'mouseoutcard',
+    'mouseup': 'mouseupcard',
+    'mousedown': 'mousedowncard'
+  },
 
-      var image = this.model.get('image');
-      var name = this.model.get('label');
+  enter: false,
+  down: false,
+  timer: null,
 
-      if (image) {
-        this.$box.find('img').attr('src', image);
-        this.$box.find('img').removeClass('hidden');
-        this.$box.find('label').addClass('hidden');
-      }
-      else {
-        this.$box.find('label').text(name);
-        this.$box.find('img').addClass('hidden');
-        this.$box.find('label').removeClass('hidden');
-      }
+  mouseovercard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = true;
+      var self = this;
+      this.timer = setTimeout(function() {
+        if (self.enter && !self.down) {
+          self.tooltiptext.text(self.tooltip);
+          self.tooltiptext.css('visibility', 'visible');
+          if (self.tooltip.length > 30) {
+            self.tooltiptext.addClass('tooltip-large');
+          }
+          else {
+            self.tooltiptext.removeClass('tooltip-large');
+          }
+        }
+      }, 1000);
     }
+  },
+
+  mouseoutcard: function(/*evt, x, y*/) {
+    if (this.tooltip) {
+      this.enter = false;
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      this.tooltiptext.css('visibility', 'hidden');
+    }
+  },
+
+  mouseupcard: function(/*evt, x, y*/) {
+    this.down = false;
+  },
+
+  mousedowncard: function(/*evt, x, y*/) {
+    this.down = true;
+    this.mouseoutcard();
+  },
+
+  initialize: function() {
+    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+
+    var image = this.model.get('image');
+    var name = this.model.get('label');
+    this.tooltip = this.model.get('tooltip');
+    this.tooltiptext = this.$box.find('.tooltiptext');
+
+    if (image) {
+      this.$box.find('img').attr('src', 'data:image/svg+xml,' + image);
+      this.$box.find('img').removeClass('hidden');
+      this.$box.find('label').addClass('hidden');
+    }
+    else {
+      this.$box.find('label').html(name);
+      this.$box.find('img').addClass('hidden');
+      this.$box.find('label').removeClass('hidden');
+    }
+    if (this.model.get('config')) {
+      this.$box.addClass('config-block');
+    }
+  }
 });
 
 // I/O blocks
@@ -220,12 +374,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Input',
-    choices: [],
-    outPorts: [{
-      id: "out",
-      label: "",
-      gridUnits: 8
-    }],
     size: {
       width: 96,
       height: 64
@@ -236,12 +384,6 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
 joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Output',
-    choices: [],
-    inPorts: [{
-      id: "in",
-      label: "",
-      gridUnits: 8
-    }],
     size: {
       width: 96,
       height: 64
@@ -252,79 +394,254 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
-    template: '\
-    <div class="io-block">\
-      <label></label>\
-      <select class="io-combo select2"></select>\
-      <script>\
-        $(".select2").select2({placeholder: "", allowClear: true});\
-      </script>\
-    </div>\
-    ',
+  initialize: function() {
+    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
-    initialize: function() {
-      joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+    this.id = sha1(this.model.get('id')).toString().substring(0, 6);
+    var virtualPortId = 'virtualPort' + this.id;
+    var fpgaPortId = 'fpgaPort' + this.id;
+    var comboId = 'combo' + this.id;
+    var virtual = this.model.get('data').virtual || this.model.get('disabled');
 
-      // Prevent paper from handling pointerdown.
-      this.$box.find('.io-combo').on('mousedown click', function(evt) { evt.stopPropagation(); });
+    var selectCode = '';
+    var selectScript = '';
+    var data = this.model.get('data');
+    var name = data.name + (data.range || '');
 
-      this.$box.find('.io-combo').on('change', _.bind(function(evt) {
-        this.model.attributes.data.pin.name = $(evt.target).find("option:selected").text();
-        this.model.attributes.data.pin.value = $(evt.target).val();
-      }, this));
-    },
-    renderLabel: function () {
-      var name = this.model.attributes.data.label;
-      this.$box.find('label').text(name);
-    },
-    renderChoices: function() {
-      if (this.model.get('disabled')) {
-        this.$box.find('.io-combo').removeClass('select2');
-        this.$box.find('.io-combo').css({'display': 'none'});
+    if (data.pins) {
+      for (var i in data.pins) {
+        //selectCode += '<p style="top:' + (30 + 38*i) + 'px">' + this.pins[i].index + '</p>';
+        selectCode +='<select id="' + comboId + data.pins[i].index + '"';
+        selectCode += 'class="select2" i="' + i + '">';
+        selectCode += '</select>';
+
+        selectScript += '$("#' + comboId + data.pins[i].index + '").select2(';
+        selectScript += '{placeholder: "", allowClear: true, dropdownCssClass: "bigdrop"});';
       }
-      else {
-        var choices = this.model.get('choices');
-        var $select = this.$box.find('.io-combo').empty();
-
-        $select.append('<option></option>');
-        for (var c in choices) {
-          $select.append('<option value="' + choices[c].value + '">' + choices[c].name + '</option>');
-        }
-
-        if (this.model.get('data').pin) {
-          this.$box.find('.io-combo').val(this.model.get('data').pin.value);
-        }
-      }
-    },
-    clearValue: function () {
-      this.model.attributes.data.pin.name = '';
-      this.model.attributes.data.pin.value = 0;
-      this.$box.find('.io-combo').val('');
-    },
-    update: function () {
-      this.renderLabel();
-      this.renderPorts();
-      this.renderChoices();
-      joint.dia.ElementView.prototype.update.apply(this, arguments);
     }
+
+    this.$box = $(joint.util.template(
+      '\
+      <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
+        <label>' + name + '</label>\
+      </div>\
+      <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
+        <label></label>\
+        <div>' + selectCode + '</div>\
+        <script>' + selectScript + '</script>\
+      </div>\
+      '
+    )());
+
+    this.updating = false;
+
+    // Prevent paper from handling pointerdown.
+    var self = this;
+    var comboSelector = this.$box.find('.select2');
+    comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
+    comboSelector.on('change', function(evt) {
+      if (!self.updating) {
+        var target = $(evt.target);
+        var i = target.attr('i');
+        var name = target.find('option:selected').text();
+        var value = target.val();
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        if (name !== null && value !== null) {
+          data.pins[i].name = name;
+          data.pins[i].value = value;
+          self.model.set('data', data);
+        }
+      }
+    });
+
+    // Apply data
+    if (!this.model.get('disabled')) {
+      this.applyChoices();
+      this.applyValues();
+      this.applyShape();
+    }
+  },
+
+  applyShape: function() {
+    var virtualPortId = '#virtualPort' + this.id;
+    var fpgaPortId = '#fpgaPort' + this.id;
+    var data = this.model.get('data');
+    var name = data.name + (data.range || '');
+    var virtual = data.virtual || this.model.get('disabled');
+
+    this.$box.find('label').text(name || '');
+
+    if (virtual) {
+      // Virtual port (green)
+      $(fpgaPortId).addClass('hidden');
+      $(virtualPortId).removeClass('hidden');
+      this.model.attributes.size.height = 64;
+    }
+    else {
+      // FPGA I/O port (yellow)
+      $(virtualPortId).addClass('hidden');
+      $(fpgaPortId).removeClass('hidden');
+      if (data.pins) {
+        this.model.attributes.size.height = 32 + 32 * data.pins.length;
+      }
+    }
+  },
+
+  applyChoices: function() {
+    var data = this.model.get('data');
+    if (data.pins) {
+      for (var i in data.pins) {
+        this.$box.find('#combo' + this.id + data.pins[i].index).empty().append(this.model.get('choices'));
+      }
+    }
+  },
+
+  applyValues: function() {
+    this.updating = true;
+    var data = this.model.get('data');
+    for (var i in data.pins) {
+      var index = data.pins[i].index;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId);
+      var value = data.pins[i].value;
+      comboSelector.val(value).change();
+    }
+    this.updating = false;
+  },
+
+  clearValues: function() {
+    this.updating = true;
+    var name = '';
+    var value = 0;
+    var data = JSON.parse(JSON.stringify(this.model.get('data')));
+    for (var i in data.pins) {
+      var index = data.pins[i].index;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId);
+      comboSelector.val(value).change();
+      data.pins[i].name = name;
+      data.pins[i].value = value;
+    }
+    this.model.set('data', data);
+    this.updating = false;
+  },
+
+  computeFontSize: function(name) {
+    var n = name.length;
+    return Math.min(13, 17-n).toString() + 'px';
+  },
+
+  apply: function() {
+    this.applyChoices();
+    this.applyValues();
+    this.applyShape();
+    this.render();
+  },
+
+  update: function() {
+    this.renderPorts();
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  }
 });
 
 joint.shapes.ice.InputView = joint.shapes.ice.IOView;
 joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 
 
+// Constant blocks
+
+joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Constant',
+    size: {
+      width: 96,
+      height: 64
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+
+joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
+
+  template: '\
+  <div class="constant-block">\
+    <p>*</p>\
+    <label></label>\
+    <input class="constant-input"></input>\
+  </div>\
+  ',
+
+  initialize: function() {
+    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+
+    this.updating = false;
+
+    // Prevent paper from handling pointerdown.
+    var self = this;
+    this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
+    this.$box.find('.constant-input').on('input', function(evt) {
+      if (!self.updating) {
+        var target = $(evt.target);
+        var data = JSON.parse(JSON.stringify(self.model.get('data')));
+        data.value = target.val();
+        self.model.set('data', data);
+      }
+    });
+
+    // Apply data
+    this.apply();
+  },
+
+  applyName: function() {
+    var name = this.model.get('data').name;
+    this.$box.find('label').text(name);
+  },
+
+  applyValue: function() {
+    this.updating = true;
+    if (this.model.get('disabled')) {
+      this.$box.find('.constant-input').css({'pointer-events': 'none'});
+    }
+    var value = this.model.get('data').value;
+    this.$box.find('.constant-input').val(value);
+    this.updating = false;
+  },
+
+  applyLocal: function() {
+    if (this.model.get('data').local) {
+      this.$box.find('p').removeClass('hidden');
+    }
+    else {
+      this.$box.find('p').addClass('hidden');
+    }
+  },
+
+  apply: function() {
+    this.applyName();
+    this.applyValue();
+    this.applyLocal();
+  },
+
+  update: function() {
+    this.renderPorts();
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  }
+});
+
+
 // Code block
+// Size: 64 * x
 
 joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Code',
     size: {
-      width: 400,
+      width: 384,
       height: 256
     },
     attrs: {
       '.body': {
-        width: 400,
+        width: 384,
         height: 256
       }
     }
@@ -333,70 +650,146 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
-    initialize: function() {
-      _.bindAll(this, 'updateBox');
-      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      var id = sha1(this.model.get('id')).toString().substring(0, 6);
-      var blockLabel = 'block' + id;
-      var editorLabel = 'editor' + id;
-      var contentLabel = 'content' + id;
-      this.$box = $(joint.util.template(
-        '\
-        <div class="code-block" id="' + blockLabel + '">\
-          <div class="code-editor" id="' + editorLabel + '"></div>\
-          <textarea class="hidden" id="' + contentLabel + '"></textarea>\
-          <script>\
-            var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
-            ' + editorLabel + '.setTheme("ace/theme/chrome");\
-            ' + editorLabel + '.setFontSize(' + fontSize + ');\
-            ' + editorLabel + '.renderer.setShowGutter(true);\
-            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-            ' + editorLabel + '.getSession().setMode("ace/mode/verilog");\
-            ' + editorLabel + '.getSession().on("change", function () {\
-              $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-            });\
-            $("#' + blockLabel + '").resize(function () {\
-              ' + editorLabel + '.resize();\
-            });\
-          </script>\
-        </div>\
-        '
-      )());
+    var id = sha1(this.model.get('id')).toString().substring(0, 6);
+    var blockLabel = 'block' + id;
+    var editorLabel = 'editor' + id;
+    this.$box = $(joint.util.template(
+      '\
+      <div class="code-block" id="' + blockLabel + '">\
+        <div class="code-editor" id="' + editorLabel + '"></div>\
+        <script>\
+          var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
+          ' + editorLabel + '.setTheme("ace/theme/chrome");\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
+          ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+        </script>\
+      </div>\
+      '
+    )());
 
-      this.model.on('change', this.updateBox, this);
-      this.model.on('remove', this.removeBox, this);
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
 
-      this.updateBox();
+    this.updateBox();
+    this.updating = false;
 
-      this.listenTo(this.model, 'process:ports', this.update);
-      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      // Prevent paper from handling pointerdown.
-      this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
+    var selector = this.$box.find('#' + editorLabel);
 
-      this.$box.find('#' + editorLabel).append(this.model.attributes.data.code);
-      this.$box.find('#' + contentLabel).append(this.model.attributes.data.code);
-    },
-    update: function () {
-      this.renderPorts();
-      var id = sha1(this.model.get('id')).toString().substring(0, 6);
-      var editorLabel = 'editor' + id;
-      var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
-      editor.setReadOnly(this.model.get('disabled'));
-      joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-    updateBox: function() {
-      var bbox = this.model.getBBox();
-      var state = this.model.attributes.state;
+    // Prevent paper from handling pointerdown.
+    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-      this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+    this.deltas = [];
+    this.counter = 0;
+    this.timer = null;
+    var undoGroupingInterval = 200;
 
-      this.$box.css({ width: bbox.width * state.zoom,
-                      height: bbox.height * state.zoom,
-                      left: bbox.x * state.zoom + state.pan.x,
-                      top: bbox.y * state.zoom + state.pan.y });
+    var self = this;
+    this.editor = ace.edit(selector[0]);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.commands.removeCommand('undo');
+    this.editor.commands.removeCommand('redo');
+    this.editor.session.on('change', function(delta) {
+      if (!self.updating) {
+        // Check consecutive-change interval
+        if (Date.now() - self.counter < undoGroupingInterval) {
+          clearTimeout(self.timer);
+        }
+        // Update deltas
+        self.deltas = self.deltas.concat([delta]);
+        // Launch timer to
+        self.timer = setTimeout(function() {
+          var data = JSON.parse(JSON.stringify(self.model.get('data')));
+          // Set data
+          data.code = self.editor.session.getValue();
+          data.deltas = self.deltas;
+          self.model.set('data', data);
+          // Reset deltas
+          self.deltas = [];
+        }, undoGroupingInterval);
+        // Reset counter
+        self.counter = Date.now();
+      }
+    });
+    this.editor.on('focus', function() {
+      $(document).trigger('disableSelected');
+    });
+    $('#' + blockLabel).resize(function() {
+      self.editor.resize();
+    });
+
+    // Apply data
+    this.apply();
+  },
+
+  applyValue: function(opt) {
+    this.updating = true;
+    var dontselect = false;
+    var data = this.model.get('data');
+    if (data.deltas && opt) {
+      var changes = [{
+        group: 'doc',
+        deltas: data.deltas
+      }];
+      if (opt.undo) {
+        this.editor.session.undoChanges(changes, dontselect);
+      }
+      else {
+        this.editor.session.redoChanges(changes, dontselect);
+      }
     }
+    else {
+      this.editor.session.setValue(data.code);
+    }
+    setTimeout(function(self) {
+      self.updating = false;
+    }, 10, this);
+  },
+
+  apply: function(opt) {
+    this.applyValue(opt);
+  },
+
+  update: function() {
+    this.renderPorts();
+    this.editor.setReadOnly(this.model.get('disabled'));
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    var port, wireWidth;
+    var bbox = this.model.getBBox();
+    var state = this.model.get('state');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
+
+    // Render ports width
+    this.$('.port-wire').css('stroke-width', 2 * state.zoom);
+    for (var i in leftPorts) {
+      port = leftPorts[i];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+    }
+    for (var o in rightPorts) {
+      port = rightPorts[o];
+      wireWidth = (port.size > 1) ? 8 : 2;
+      this.$('#port-wire-' + port.id).css('stroke-width', wireWidth * state.zoom);
+    }
+
+    this.$box.css({ width: bbox.width * state.zoom,
+                    height: bbox.height * state.zoom,
+                    left: bbox.x * state.zoom + state.pan.x,
+                    top: bbox.y * state.zoom + state.pan.y });
+                    // 'border-width': 2 * state.zoom: problem int instead of float
+  }
 });
 
 
@@ -424,72 +817,142 @@ joint.shapes.ice.Info = joint.shapes.basic.Rect.extend({
 
 joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
 
-    initialize: function() {
-      _.bindAll(this, 'updateBox');
-      joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-      var id = sha1(this.model.get('id')).toString().substring(0, 6);
-      var blockLabel = 'block' + id;
-      var editorLabel = 'editor' + id;
-      var contentLabel = 'content' + id;
-      this.$box = $(joint.util.template(
-        '\
-        <div class="info-block" id="' + blockLabel + '">\
-          <div class="info-editor" id="' + editorLabel + '"></div>\
-          <textarea class="hidden" id="' + contentLabel + '"></textarea>\
-          <script>\
-            var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
-            ' + editorLabel + '.setTheme("ace/theme/chrome");\
-            ' + editorLabel + '.setFontSize(' + fontSize + ');\
-            ' + editorLabel + '.renderer.setShowGutter(false);\
-            ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-            ' + editorLabel + '.getSession().on("change", function () {\
-              $("#' + contentLabel + '").val(' + editorLabel + '.getSession().getValue());\
-            });\
-            $("#' + blockLabel + '").resize(function () {\
-              ' + editorLabel + '.resize();\
-            });\
-          </script>\
-        </div>\
-        '
-      )());
+    var id = sha1(this.model.get('id')).toString().substring(0, 6);
+    var blockLabel = 'block' + id;
+    var editorLabel = 'editor' + id;
+    this.$box = $(joint.util.template(
+      '\
+      <div class="info-block" id="' + blockLabel + '">\
+        <div class="info-editor" id="' + editorLabel + '"></div>\
+        <script>\
+          var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
+          ' + editorLabel + '.setTheme("ace/theme/chrome");\
+          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
+          ' + editorLabel + '.renderer.setShowGutter(false);\
+          ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+        </script>\
+      </div>\
+      '
+    )());
 
-      this.model.on('change', this.updateBox, this);
-      this.model.on('remove', this.removeBox, this);
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
 
-      this.updateBox();
+    this.updateBox();
+    this.updating = false;
 
-      // Prevent paper from handling pointerdown.
-      this.$box.find('#' + editorLabel).on('mousedown click', function(evt) { evt.stopPropagation(); });
+    var selector = this.$box.find('#' + editorLabel);
 
-      this.$box.find('#' + editorLabel).append(this.model.attributes.data.info);
-      this.$box.find('#' + contentLabel).append(this.model.attributes.data.info);
-    },
-    render: function () {
-      joint.dia.ElementView.prototype.render.apply(this, arguments);
-        this.paper.$el.append(this.$box);
-        this.updateBox();
-        return this;
-    },
-    update: function () {
-      var id = sha1(this.model.get('id')).toString().substring(0, 6);
-      var editorLabel = 'editor' + id;
-      var editor = ace.edit(this.$box.find('#' + editorLabel)[0]);
-      editor.setReadOnly(this.model.get('disabled'));
-      joint.dia.ElementView.prototype.update.apply(this, arguments);
-    },
-    updateBox: function() {
-      var bbox = this.model.getBBox();
-      var state = this.model.attributes.state;
+    // Prevent paper from handling pointerdown.
+    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
 
-      this.$box.css({ width: bbox.width * state.zoom,
-                      height: bbox.height * state.zoom,
-                      left: bbox.x * state.zoom + state.pan.x,
-                      top: bbox.y * state.zoom + state.pan.y });
-    },
-    removeBox: function(evt) {
-      this.$box.remove();
+    this.deltas = [];
+    this.counter = 0;
+    this.timer = null;
+    var undoGroupingInterval = 200;
+
+    var self = this;
+    this.editor = ace.edit(selector[0]);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.commands.removeCommand('undo');
+    this.editor.commands.removeCommand('redo');
+    this.editor.session.on('change', function(delta) {
+      if (!self.updating) {
+        // Check consecutive-change interval
+        if (Date.now() - self.counter < undoGroupingInterval) {
+          clearTimeout(self.timer);
+        }
+        // Update deltas
+        self.deltas = self.deltas.concat([delta]);
+        // Launch timer to
+        self.timer = setTimeout(function() {
+          // Set data
+          var data = {
+            info: self.editor.session.getValue(),
+            deltas: self.deltas
+          };
+          self.model.set('data', data);
+          // Reset deltas
+          self.deltas = [];
+        }, undoGroupingInterval);
+        // Reset counter
+        self.counter = Date.now();
+      }
+    });
+    this.editor.on('focus', function() {
+      $(document).trigger('disableSelected');
+    });
+    $('#' + blockLabel).resize(function() {
+      self.editor.resize();
+    });
+
+    // Apply data
+    this.apply();
+  },
+
+  applyValue: function(opt) {
+    this.updating = true;
+    var dontselect = false;
+    var data = this.model.get('data');
+    if (data.deltas && opt) {
+      var changes = [{
+        group: 'doc',
+        deltas: data.deltas
+      }];
+      if (opt.undo) {
+        this.editor.session.undoChanges(changes, dontselect);
+      }
+      else {
+        this.editor.session.redoChanges(changes, dontselect);
+      }
     }
+    else {
+      this.editor.session.setValue(data.info);
+    }
+    setTimeout(function(self) {
+      self.updating = false;
+    }, 10, this);
+  },
+
+  apply: function(opt) {
+    this.applyValue(opt);
+  },
+
+  render: function() {
+    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    this.paper.$el.append(this.$box);
+    this.updateBox();
+    return this;
+  },
+
+  update: function() {
+    this.editor.setReadOnly(this.model.get('disabled'));
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    var bbox = this.model.getBBox();
+    var state = this.model.get('state');
+
+    this.$box.css({ width: bbox.width * state.zoom,
+                    height: bbox.height * state.zoom,
+                    left: bbox.x * state.zoom + state.pan.x,
+                    top: bbox.y * state.zoom + state.pan.y });
+  },
+
+  remove: function() {
+    // Remove delta to allow Session Value restore
+    delete this.model.attributes.data.delta;
+    joint.dia.LinkView.prototype.remove.apply(this, arguments);
+  },
+
+  removeBox: function(/*evt*/) {
+    this.$box.remove();
+  }
 });
 
 
@@ -511,7 +974,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   bifurcationMarkup: [
     '<g class="marker-bifurcation-group" transform="translate(<%= x %>, <%= y %>)">',
-    '<circle class="marker-bifurcation" idx="<%= idx %>" r="4" fill="#888"/>',
+    '<circle class="marker-bifurcation" idx="<%= idx %>" r="<%= r %>" fill="#888"/>',
     '</g>'
   ].join(''),
 
@@ -525,18 +988,19 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     type: 'ice.Wire',
 
-    /*labels: [
+    labels: [
       {
-        position: .5,
+        position: 0.5,
         attrs: {
           text: {
-            text: ' /8 ' || '',
+            text: '',
             'font-weight': 'bold',
-            'font-size': '150%'
+            'font-size': '150%',
+            'y': '12px'
           }
         }
       }
-    ],*/
+    ],
 
     attrs: {
       '.connection': {
@@ -554,6 +1018,34 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 });
 
 joint.shapes.ice.WireView = joint.dia.LinkView.extend({
+
+  initialize: function() {
+    joint.dia.LinkView.prototype.initialize.apply(this, arguments);
+
+    var self = this;
+    setTimeout(function() {
+      var portName = self.model.get('source').port;
+      var rightPorts = self.sourceView.model.get('rightPorts');
+
+      // Initialize wire properties
+      var port;
+      for (var o in rightPorts) {
+        port = rightPorts[o];
+        if (portName === port.id) {
+          self.model.attributes.size = port.size; // For wire size connection validation
+          self.$('.connection').css('stroke-width', (port.size > 1) ? 8 : 2);
+          self.model.label(0, {attrs: { text: { text: (port.size > 1) ? '' + port.size + '' : '' } } });
+          self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, (port.size > 1) ? 8 : 4);
+          self.update();
+          break;
+        }
+      }
+    }, 0);
+  },
+
+  apply: function() {
+    this.render();
+  },
 
   render: function() {
     joint.dia.LinkView.prototype.render.apply(this, arguments);
@@ -607,7 +1099,9 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
     // The markup needs to contain a `.connection`
     this._V.connection.attr('d', pathData.full);
-    this._V.connectionWrap && this._V.connectionWrap.attr('d', pathData.wrap);
+    if(this._V.connectionWrap) {
+      this._V.connectionWrap.attr('d', pathData.wrap);
+    }
 
     this._translateAndAutoOrientArrows(this._V.markerSource, this._V.markerTarget);
   },
@@ -621,15 +1115,17 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       // Find all the wires in the same port
       var portWires = [];
       _.each(allWires, function(wire) {
-        if ((wire.attributes.source.id == currentWire.attributes.source.id) &&
-            (wire.attributes.source.port == currentWire.attributes.source.port))
+        var wireSource = wire.get('source');
+        var cwireSource = currentWire.get('source');
+        if ((wireSource.id === cwireSource.id) &&
+            (wireSource.port === cwireSource.port))
         {
           // Wire with the same source of currentWire
           var wireView = self.paper.findViewByModel(wire);
           // Clean the wire bifurcations
           var markerBifurcations = $(wireView._V.markerBifurcations.node).empty();
           portWires.push({
-            id: wire.attributes.id,
+            id: wire.get('id'),
             view: wireView,
             markers: markerBifurcations
           });
@@ -644,13 +1140,15 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         );
         _.each(portWires, function(wireA) {
           _.each(portWires, function(wireB) {
-            if (wireA.id != wireB.id) {
+            if (wireA.id !== wireB.id) {
               // Not the same wire
               findBifurcations(wireA.view, wireB.view, wireA.markers);
             }
           });
         });
       }
+
+      /* jshint -W082 */
 
       function findBifurcations(wireA, wireB, markersA) {
         // Find the corners in A that intersects with any B segment
@@ -659,7 +1157,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
         if (vA.length > 2) {
           for (var i = 1; i < vA.length - 1; i++) {
-            if ((vA[i-1].x != vA[i+1].x) && (vA[i-1].y != vA[i+1].y)) {
+            if ((vA[i-1].x !== vA[i+1].x) && (vA[i-1].y !== vA[i+1].y)) {
               // vA[i] is a corner
               for (var j = 0; j < vB.length - 1; j++) {
                 // Eval if intersects any segment of wire vB
@@ -682,20 +1180,22 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       }
 
       function evalIntersection(point, segment) {
-        if (segment[0].x == segment[1].x) {
+        if (segment[0].x === segment[1].x) {
           // Vertical
-          return ((point.x == segment[0].x) &&
+          return ((point.x === segment[0].x) &&
             (point.y > Math.min(segment[0].y, segment[1].y)) &&
             (point.y < Math.max(segment[0].y, segment[1].y)));
         }
         else {
           // Horizontal
-          return ((point.y == segment[0].y) &&
+          return ((point.y === segment[0].y) &&
           (point.x > Math.min(segment[0].x, segment[1].x)) &&
           (point.x < Math.max(segment[0].x, segment[1].x)));
         }
       }
     }
+
+    /* jshint +W082 */
 
     return this;
   }

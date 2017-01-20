@@ -1,940 +1,738 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', ['$rootScope', 'gettextCatalog', 'nodeFs', 'joint', 'boards', 'utils',
-      function($rootScope, gettextCatalog, nodeFs, joint, boards, utils) {
+  .service('graph', function($rootScope,
+                             joint,
+                             boards,
+                             blocks,
+                             utils,
+                             gettextCatalog,
+                             window) {
+    // Variables
 
-        // Variables
+    var z = {
+      index: 100
+    };
+    var ctrlPressed = false;
 
-        var zIndex = 100;
-        var ctrlPressed = false;
+    var graph = null;
+    var paper = null;
+    var selection = null;
+    var selectionView = null;
+    var commandManager = null;
+    var clipboard = [];
+    var mousePosition = { x: 0, y: 0 };
+    var dependencies = {};
 
-        var graph = null;
-        var paper = null;
-        var selection = null;
-        var selectionView = null;
+    this.breadcrumbs = [{ name: '', type: '' }];
 
-        var dependencies = {};
-        this.breadcrumbs = [{ name: '' }];
+    var gridsize = 8;
+    var state = {
+      pan: {
+        x: 0,
+        y: 0
+      },
+      zoom: 1.0
+    };
+    const ZOOM_MAX = 2;
+    const ZOOM_MIN = 0.2;
 
-        var gridsize = 8;
-        var state = {
+    // Functions
+
+    $(document).on('keydown', function(event) {
+      ctrlPressed = event.keyCode === 17;
+    });
+
+    this.getState = function() {
+      // Clone state
+      return utils.clone(state);
+    };
+
+    this.setState = function(_state) {
+      if (!_state) {
+        _state = {
           pan: {
             x: 0,
             y: 0
           },
-          zoom: 1
+          zoom: 1.0
         };
+      }
+      this.panAndZoom.zoom(_state.zoom);
+      this.panAndZoom.pan(_state.pan);
+    };
 
-        // Functions
+    this.resetView = function() {
+      this.setState(null);
+    };
 
-        $(document).on('keydown', function(event) {
-          ctrlPressed = event.keyCode == 17;
+    this.fitContent = function() {
+      if (!this.isEmpty()) {
+        // Target box
+        var margin = 40;
+        var menuFooterHeight = 93;
+        var tbox = {
+          x: margin,
+          y: margin,
+          width: window.get().width - 2 * margin,
+          height: window.get().height - menuFooterHeight - 2 * margin
+        };
+        // Source box
+        var sbox = V(paper.viewport).bbox(true, paper.svg);
+        sbox = {
+          x: sbox.x * state.zoom,
+          y: sbox.y * state.zoom,
+          width: sbox.width * state.zoom,
+          height: sbox.height * state.zoom
+        };
+        var scale = 1;
+        if (tbox.width/sbox.width > tbox.height/sbox.height) {
+          scale = tbox.height / sbox.height;
+        }
+        else {
+          scale = tbox.width / sbox.width;
+        }
+        if (state.zoom * scale > ZOOM_MAX) {
+          scale = ZOOM_MAX / state.zoom;
+        }
+        var target = {
+          x: tbox.x + tbox.width / 2,
+          y: tbox.y + tbox.height / 2
+        };
+        var source = {
+          x: sbox.x + sbox.width / 2,
+          y: sbox.y + sbox.height / 2
+        };
+        this.setState({
+          pan: {
+            x: target.x - source.x * scale,
+            y: target.y - source.y * scale
+          },
+          zoom: state.zoom * scale
         });
+      }
+      else {
+        this.resetView();
+      }
+    };
 
-        this.getState = function() {
-          // Clone state
-          return JSON.parse(JSON.stringify(state));
-        }
+    this.resetBreadcrumbs = function(name) {
+      this.breadcrumbs = [{ name: name, type: '' }];
+      utils.rootScopeSafeApply();
+    };
 
-        this.setState = function(_state) {
-          if (!_state) {
-            _state = {
-              pan: {
-                x: 0,
-                y: 0
-              },
-              zoom: 1
-            };
-          }
-          this.panAndZoom.zoom(_state.zoom);
-          this.panAndZoom.pan(_state.pan);
-          setGrid(paper, gridsize*2*_state.zoom, _state.pan);
-        }
-
-        this.resetState = function() {
-          this.setState(null);
-        }
-
-        function setGrid(paper, size, offset) {
-
-          // TODO: draw grid in a SVG because 'background' truncates the parameters
-
-          /*
-          // Set grid size on the JointJS paper object (joint.dia.Paper instance)
-          paper.options.gridsize = gridsize;
-          // Draw a grid into the HTML 5 canvas and convert it to a data URI image
-          var canvas = $('<canvas/>', { width: size, height: size });
-          canvas[0].width = size;
-          canvas[0].height = size;
-          var context = canvas[0].getContext('2d');
-          context.beginPath();
-          context.rect(1, 1, 1, 1);
-          context.fillStyle = '#555';
-          context.globalAlpha = size / gridsize / 2;
-          context.fill();
-          // Finally, set the grid background image of the paper container element.
-          var gridBackgroundImage = canvas[0].toDataURL('image/png');
-          $(paper.el.childNodes[0]).css(
-            'background-image', 'url("' + gridBackgroundImage + '")');
-          if(typeof(offset) != 'undefined'){
-            $(paper.el.childNodes[0]).css(
-              'background-position', offset.x + 'px ' + offset.y + 'px');
-          }*/
-        }
-
-        this.createPaper = function(element) {
-          graph = new joint.dia.Graph();
-          paper = new joint.dia.Paper({
-            el: element,
-            width: 2000,
-            height: 1000,
-            model: graph,
-            gridSize: gridsize,
-            snapLinks: { radius: 15 },
-            linkPinning: false,
-            embeddingMode: false,
-            //markAvailable: true,
-            defaultLink: new joint.shapes.ice.Wire(),
-            guard: function(evt, view) {
-              // FALSE means the event isn't guarded.
-              return false;
-            },
-            validateMagnet: function(cellView, magnet) {
-              // Prevent to start wires from an input port
-              return (magnet.getAttribute('type') == 'output');
-            },
-            validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
-              // Prevent output-output links
-              if (magnetS.getAttribute('type') == 'output' &&
-                  magnetT.getAttribute('type') == 'output') {
-                if (magnetS !== magnetT){
-                  // Show warning if source and target blocks are different
-                  warning(gettextCatalog.getString('Invalid connection'));
-                }
-                return false;
-              }
-              var links = graph.getLinks();
-              for (var i in links) {
-                var linkIView = links[i].findView(paper);
-                if (linkView == linkIView) {
-                  //Skip the wire the user is drawing
-                  continue;
-                }
-                // Prevent multiple input links
-                if ((cellViewT.model.id == links[i].get('target').id) &&
-                    (magnetT.getAttribute('port') == links[i].get('target').port)) {
-                  warning(gettextCatalog.getString('Invalid multiple input connections'));
-                  return false;
-                }
-                // Prevent to connect a pull-up if other blocks are connected
-                if ((cellViewT.model.attributes.blockType == 'config.pull_up' ||
-                     cellViewT.model.attributes.blockType == 'config.pull_up_inv') &&
-                     (cellViewS.model.id == links[i].get('source').id)) {
-                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
-                  return false;
-                }
-                // Prevent to connect other blocks if a pull-up is connected
-                if ((linkIView.targetView.model.attributes.blockType == 'config.pull_up' ||
-                     linkIView.targetView.model.attributes.blockType == 'config.pull_up_inv') &&
-                     (cellViewS.model.id == links[i].get('source').id)) {
-                  warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
-                  return false;
-                }
-              }
-              // Ensure input -> pull-up connections
-              if (cellViewT.model.attributes.blockType == 'config.pull_up' ||
-                  cellViewT.model.attributes.blockType == 'config.pull_up_inv') {
-                var ret = (cellViewS.model.attributes.blockType == 'basic.input');
-                if (!ret) {
-                  warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
-                }
-                return ret;
-              }
-              // Prevent loop links
-              return magnetS !== magnetT;
-            }
-          });
-
-          paper.options.enabled = true;
-          paper.options.warningTimer = false;
-
-          function warning(message) {
-            if (!paper.options.warningTimer) {
-              paper.options.warningTimer = true;
-              alertify.notify(message, 'warning', 5);
-              setTimeout(function() {
-                paper.options.warningTimer = false;
-              }, 4000);
-            }
-          };
-
-          setGrid(paper, gridsize * 2);
-
-          var targetElement= element[0];
-
-          this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
-          {
-            viewportSelector: targetElement.childNodes[0].childNodes[0],
-            fit: false,
-            center: false,
-            zoomEnabled: true,
-            panEnabled: false,
-            zoomScaleSensitivity: 0.1,
-            dblClickZoomEnabled: false,
-            minZoom: 0.2,
-            maxZoom: 2,
-            beforeZoom: function(oldzoom, newzoom) {
-            },
-            onZoom: function(scale) {
-              state.zoom = scale;
-              setGrid(paper, gridsize*2*state.zoom);
-              // Already rendered in pan
-            },
-            beforePan: function(oldpan, newpan) {
-              setGrid(paper, gridsize*2*state.zoom, newpan);
-            },
-            onPan: function(newPan) {
-              state.pan = newPan;
-              selectionView.options.state = state;
-
-              var cells = graph.getCells();
-
-              _.each(cells, function(cell) {
-                if (!cell.isLink()) {
-                  cell.attributes.state = state;
-                  var elementView = paper.findViewByModel(cell);
-                  // Pan blocks
-                  elementView.updateBox();
-                  // Pan selection boxes
-                  selectionView.updateBox(elementView.model);
-                }
-              });
-            }
-          });
-
-         selection = new Backbone.Collection;
-         selectionView = new joint.ui.SelectionView({
-           paper: paper,
-           graph: graph,
-           model: selection,
-           state: state
-         });
-
-         // Events
-
-         var self = this;
-
-         selectionView.on('selection-box:pointerdown', function(evt) {
-           // Selection to top view
-           if (selection) {
-             selection.each(function(cell) {
-               var cellView = paper.findViewByModel(cell);
-               if (cellView) {
-                 if (!cellView.model.isLink()) {
-                   if (cellView.$box.css('z-index') < zIndex) {
-                     cellView.$box.css('z-index', ++zIndex);
-                   }
-                 }
-               }
-             });
-           }
-           // Toggle selection
-           if ((evt.which == 3) && (evt.ctrlKey || evt.metaKey)) {
-             var cell = selection.get($(evt.target).data('model'));
-             selection.reset(selection.without(cell));
-             selectionView.destroySelectionBox(paper.findViewByModel(cell));
-           }
-         });
-
-         paper.on('cell:pointerup',
-           function(cellView, evt, x, y) {
-             if (paper.options.enabled) {
-               if (!cellView.model.isLink()) {
-                 if (evt.which == 3) {
-                   // Disable current focus
-                   document.activeElement.blur();
-                   // Right button
-                   selection.add(cellView.model);
-                   selectionView.createSelectionBox(cellView);
-                   cellView.$box.removeClass('highlight');
-                 }
-                 // Update wires on obstacles
-                 var cells = graph.getCells();
-                 for (var i in cells) {
-                   var cell = cells[i];
-                   if (cell.isLink()) {
-                     paper.findViewByModel(cell).update();
-                   }
-                 }
-               }
-             }
-           }
-         );
-
-          paper.on('cell:pointerdown',
-            function(cellView, evt, x, y) {
-              if (paper.options.enabled) {
-                if (!cellView.model.isLink()) {
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                }
-              }
-            }
-          );
-
-          paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
-            var data = cellView.model.attributes;
-            if (data.blockType == 'basic.input' ||
-                data.blockType == 'basic.output') {
-              if (paper.options.enabled) {
-                alertify.prompt(gettextCatalog.getString('Update the port label'), data.data.label ? ' ' + data.data.label + ' ' : '',
-                  function(evt, label) {
-                    label = label.replace(/ /g, '');
-                    if (data.data.label != label) {
-                      data.data.label = label;
-                      cellView.renderLabel();
-                      alertify.success(gettextCatalog.getString('Label updated'));
-                    }
-                });
-              }
-            }
-            else if (data.blockType == 'basic.code') {
-              if (paper.options.enabled) {
-                var block = {
-                  data: {
-                    code: self.getContent(cellView.model.id)
-                  },
-                  position: cellView.model.attributes.position
-                };
-                self.createBlock('basic.code', block, function() {
-                  cellView.model.remove();
-                });
-              }
-            }
-            else if (data.type != 'ice.Wire' && data.type != 'ice.Info') {
-              self.breadcrumbs.push({ name: data.blockType });
-              if(!$rootScope.$$phase) {
-                $rootScope.$apply();
-              }
-              var disabled = true;
-              zIndex = 1;
-              if (self.breadcrumbs.length == 2) {
-                $rootScope.$broadcast('refreshProject', function() {
-                  self.loadGraph(dependencies[data.blockType], disabled);
-                  self.appEnable(false);
-                });
-              }
-              else {
-                self.loadGraph(dependencies[data.blockType], disabled);
-                self.appEnable(false);
-              }
-            }
-          });
-
-          paper.on('blank:pointerdown', function(evt, x, y) {
-            // Disable current focus
-            document.activeElement.blur();
-
-            if (evt.which == 3) {
-              // Right button
-              if (paper.options.enabled) {
-                selectionView.startSelecting(evt, x, y);
-              }
-            }
-            else if (evt.which == 1) {
-              // Left button
-              self.panAndZoom.enablePan();
-            }
-          });
-
-          paper.on('cell:pointerup blank:pointerup', function(cellView, evt) {
-            self.panAndZoom.disablePan();
-          });
-
-          paper.on('cell:mouseover',
-            function(cellView, evt) {
-              if (!cellView.model.isLink()) {
-                cellView.$box.addClass('highlight');
-              }
-            }
-          );
-
-          paper.on('cell:mouseout',
-            function(cellView, evt) {
-              if (!cellView.model.isLink()) {
-                cellView.$box.removeClass('highlight');
-              }
-            }
-          );
-
-          graph.on('change:position', function(cell) {
-            if (!selectionView.isTranslating()) {
-              // Update wires on obstacles motion
-              /*var cells = graph.getCells();
-              for (var i in cells) {
-                var cell = cells[i];
-                if (cell.isLink()) {
-                  paper.findViewByModel(cell).update();
-                }
-              }*/
-            }
-          });
-        };
-
-        this.clearAll = function() {
-          graph.clear();
-          this.appEnable(true);
-          selection.reset();
-          selectionView.cancelSelection();
-        };
-
-        this.appEnable = function(value) {
-          paper.options.enabled = value;
-          if (value) {
-            angular.element('#menu').removeClass('disable-menu');
-            angular.element('#paper').removeClass('disable-paper');
-            angular.element('#banner').addClass('hidden');
-          }
-          else {
-            angular.element('#menu').addClass('disable-menu');
-            angular.element('#paper').addClass('disable-paper');
-            angular.element('#banner').removeClass('hidden');
-          }
-          var cells = graph.getCells();
-          for (var i in cells) {
-            var cellView = paper.findViewByModel(cells[i].id);
-            cellView.options.interactive = value;
-            if (cells[i].attributes.type != 'ice.Generic') {
-              if (value) {
-                cellView.$el.removeClass('disable-graph');
-              }
-              else {
-                cellView.$el.addClass('disable-graph');
-              }
-            }
-            else if (cells[i].attributes.type != 'ice.Wire') {
-              if (value) {
-                cellView.$el.find('.port-body').removeClass('disable-graph');
-              }
-              else {
-                cellView.$el.find('.port-body').addClass('disable-graph');
-              }
-            }
-          }
-        };
-
-        this.createBlock = function(type, block, callback) {
-          var blockInstance = {
-            id: null,
-            data: {},
-            type: type,
-            position: { x: 4 * gridsize, y: 4 * gridsize }
-          };
-
-          if (type == 'basic.code') {
-            utils.multiprompt(
-              [ gettextCatalog.getString('Enter the input ports'),
-                gettextCatalog.getString('Enter the output ports') ],
-              [ ' a , b ',
-                ' c , d ' ],
-              function(evt, ports) {
-                if (ports && (ports[0].length || ports[1].length)) {
-                  blockInstance.data = {
-                    code: '',
-                    ports: { in: [], out: [] }
-                  };
-                  // Parse ports
-                  var inPorts = [];
-                  var outPorts = [];
-                  if (ports.length > 0) {
-                    inPorts = ports[0].replace(/ /g, '').split(',');
-                  }
-                  if (ports.length > 1) {
-                    outPorts = ports[1].replace(/ /g, '').split(',');
-                  }
-
-                  for (var i in inPorts) {
-                    if (inPorts[i])
-                      blockInstance.data.ports.in.push(inPorts[i]);
-                  }
-                  for (var o in outPorts) {
-                    if (outPorts[o])
-                      blockInstance.data.ports.out.push(outPorts[o]);
-                  }
-                  blockInstance.position.x = 31 * gridsize;
-
-                  if (block) {
-                    blockInstance.data.code = block.data.code;
-                    blockInstance.position = block.position;
-                  }
-                  var cell = addBasicCodeBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-
-                  if (callback)
-                    callback();
-                }
-            });
-          }
-          else if (type == 'basic.info') {
-            blockInstance.data = {
-              info: ''
-            };
-            blockInstance.position.x = 31 * gridsize;
-            blockInstance.position.y = 26 * gridsize;
-            var cell = addBasicInfoBlock(blockInstance);
-            var cellView = paper.findViewByModel(cell);
-            if (cellView.$box.css('z-index') < zIndex) {
-              cellView.$box.css('z-index', ++zIndex);
-            }
-          }
-          else if (type == 'basic.input') {
-            alertify.prompt(gettextCatalog.getString('Enter the input ports'), ' in ',
-              function(evt, name) {
-                if (name) {
-                  var names = name.replace(/ /g, '').split(',');
-                  for (var n in names) {
-                    if (names[n]) {
-                      blockInstance.data = {
-                        label: names[n],
-                        pin: {
-                          name: '',
-                          value: 0
-                        }
-                      };
-                      var cell = addBasicInputBlock(blockInstance);
-                      var cellView = paper.findViewByModel(cell);
-                      if (cellView.$box.css('z-index') < zIndex) {
-                        cellView.$box.css('z-index', ++zIndex);
-                      }
-                      blockInstance.position.y += 10 * gridsize;
-                    }
-                  }
-                }
-                else {
-                  /*blockInstance.data = {
-                    label: '',
-                    pin: {
-                      name: '',
-                      value: 0
-                    }
-                  };
-                  var cell = addBasicInputBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                  blockInstance.position.y += 10 * gridsize;*/
-                }
-            });
-          }
-          else if (type == 'basic.output') {
-            alertify.prompt(gettextCatalog.getString('Enter the output ports'), ' out ',
-              function(evt, name) {
-                if (name) {
-                  var names = name.replace(/ /g, '').split(',');
-                  blockInstance.position.x = 95 * gridsize;
-                  for (var n in names) {
-                    if (names[n]) {
-                      blockInstance.data = {
-                        label: names[n],
-                        pin: {
-                          name: '',
-                          value: 0
-                        }
-                      };
-                      var cell = addBasicOutputBlock(blockInstance);
-                      var cellView = paper.findViewByModel(cell);
-                      if (cellView.$box.css('z-index') < zIndex) {
-                        cellView.$box.css('z-index', ++zIndex);
-                      }
-                      blockInstance.position.y += 10 * gridsize;
-                    }
-                  }
-                }
-                else {
-                  /*blockInstance.position.x = 95 * gridsize;
-                  blockInstance.data = {
-                    label: '',
-                    pin: {
-                      name: '',
-                      value: 0
-                    }
-                  };
-                  var cell = addBasicOutputBlock(blockInstance);
-                  var cellView = paper.findViewByModel(cell);
-                  if (cellView.$box.css('z-index') < zIndex) {
-                    cellView.$box.css('z-index', ++zIndex);
-                  }
-                  blockInstance.position.y += 10 * gridsize;*/
-                }
-            });
-          }
-          else {
-            if (block &&
-                block.graph &&
-                block.graph.blocks &&
-                block.graph.wires &&
-                block.deps) {
-              dependencies[type] = block;
-              blockInstance.position.x = 6 * gridsize;
-              blockInstance.position.y = 16 * gridsize;
-              var cell = addGenericBlock(blockInstance, block);
-              var cellView = paper.findViewByModel(cell);
-              if (cellView.$box.css('z-index') < zIndex) {
-                cellView.$box.css('z-index', ++zIndex);
-              }
-            }
-            else {
-              alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
-            }
-          }
-        };
-
-        this.toJSON = function() {
-          return graph.toJSON();
-        }
-
-        this.getContent = function(id) {
-          return paper.findViewByModel(id).$box.find(
-            '#content' + sha1(id).toString().substring(0, 6)).val();
-        }
-
-        this.resetIOChoices = function() {
-          var cells = graph.getCells();
-          // Reset choices in all i/o blocks
-          for (var i in cells) {
-            var cell = cells[i];
-            var type = cell.attributes.blockType;
-            if (type == 'basic.input' || type == 'basic.output') {
-              cell.attributes.choices = boards.getPinout();
-              var view = paper.findViewByModel(cell.id);
-              view.renderChoices();
-              view.clearValue();
-            }
-          }
-        }
-
-        this.cloneSelected = function() {
-          var self = this;
-          if (selection) {
-            selection.each(function(cell) {
-              var newCell = cell.clone();
-              var type = cell.attributes.blockType;
-              var content = self.getContent(cell.id);
-              if (type == 'basic.code') {
-                newCell.attributes.data.code = content;
-              }
-              else if (type == 'basic.info') {
-                newCell.attributes.data.info = content;
-              }
-              newCell.translate(6 * gridsize, 6 * gridsize);
-              addCell(newCell);
-              if (type.indexOf('config.') != -1) {
-                paper.findViewByModel(newCell).$box.addClass('config-block');
-              }
-              var cellView = paper.findViewByModel(newCell);
-              if (cellView.$box.css('z-index') < zIndex) {
-                cellView.$box.css('z-index', ++zIndex);
-              }
-              selection.reset(selection.without(cell));
-              selectionView.cancelSelection();
-            });
-          }
-        }
-
-        this.hasSelection = function() {
-          return selection.length > 0;
-        }
-
-        this.removeSelected = function(removeDep) {
-          if (selection) {
-            selection.each(function(cell) {
-              selection.reset(selection.without(cell));
-              selectionView.cancelSelection();
-              var type = cell.attributes.blockType;
-              cell.remove();
-              if (!typeInGraph(type)) {
-                // Check if it is the last "type" block
-                if (removeDep) {
-                  // Remove "type" dependency in the project
-                  removeDep(type);
-                }
-              }
-            });
-          }
-        }
-
-        function typeInGraph(type) {
-          var cells = graph.getCells();
-          for (var i in cells) {
-            if (cells[i].attributes.blockType == type) {
-              return true;
-            }
-          }
+    this.createPaper = function(element) {
+      graph = new joint.dia.Graph();
+      paper = new joint.dia.Paper({
+        el: element,
+        width: 2000,
+        height: 1000,
+        model: graph,
+        gridSize: gridsize,
+        snapLinks: { radius: 15 },
+        linkPinning: false,
+        embeddingMode: false,
+        //markAvailable: true,
+        defaultLink: new joint.shapes.ice.Wire(),
+        /*guard: function(evt, view) {
+          // FALSE means the event isn't guarded.
           return false;
-        };
-
-        this.isEmpty = function() {
-          return (graph.getCells().length == 0);
-        }
-
-        this.isEnabled = function() {
-          return paper.options.enabled;
-        }
-
-        this.loadGraph = function(project, disabled) {
-          if (project &&
-              project.graph &&
-              project.graph.blocks &&
-              project.graph.wires &&
-              project.deps) {
-
-            var blockInstances = project.graph.blocks;
-            var wires = project.graph.wires;
-            var deps = project.deps;
-
-            dependencies = project.deps;
-
-            this.clearAll();
-
-            this.setState(project.state);
-
-            // Blocks
-            for (var i in blockInstances) {
-              var blockInstance = blockInstances[i];
-              if (blockInstance.type == 'basic.code') {
-                addBasicCodeBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.info') {
-                addBasicInfoBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.input') {
-                addBasicInputBlock(blockInstance, disabled);
-              }
-              else if (blockInstance.type == 'basic.output') {
-                addBasicOutputBlock(blockInstance, disabled);
-              }
-              else {
-                addGenericBlock(blockInstance, deps[blockInstance.type]);
-              }
+        },*/
+        validateMagnet: function(cellView, magnet) {
+          // Prevent to start wires from an input port
+          return (magnet.getAttribute('type') === 'output');
+        },
+        validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+          // Prevent output-output links
+          if (magnetS.getAttribute('type') === 'output' &&
+              magnetT.getAttribute('type') === 'output') {
+            if (magnetS !== magnetT) {
+              // Show warning if source and target blocks are different
+              warning(gettextCatalog.getString('Invalid connection'));
             }
-
-            // Wires
-            for (var i in wires) {
-              addWire(wires[i]);
-            }
-
-            return true;
+            return false;
           }
-        }
-
-        this.importBlock = function(type, block) {
-          var blockInstance = {
-            id: null,
-            data: {},
-            type: type,
-            position: { x: 6 * gridsize, y: 16 * gridsize }
-          }
-          dependencies[type] = block;
-          var cell = addGenericBlock(blockInstance, block);
-          var cellView = paper.findViewByModel(cell);
-          if (cellView.$box.css('z-index') < zIndex) {
-            cellView.$box.css('z-index', ++zIndex);
-          }
-        }
-
-        function addBasicInputBlock(blockInstances, disabled) {
-          var cell = new joint.shapes.ice.Input({
-            id: blockInstances.id,
-            blockType: blockInstances.type,
-            data: blockInstances.data,
-            label: blockInstances.data.label,
-            position: blockInstances.position,
-            disabled: disabled,
-            choices: boards.getPinout()
-          });
-
-          addCell(cell);
-          return cell;
-        };
-
-        function addBasicOutputBlock(blockInstances, disabled) {
-          var cell = new joint.shapes.ice.Output({
-            id: blockInstances.id,
-            blockType: blockInstances.type,
-            data: blockInstances.data,
-            label: blockInstances.data.label,
-            position: blockInstances.position,
-            disabled: disabled,
-            choices: boards.getPinout()
-          });
-
-          addCell(cell);
-          return cell;
-        };
-
-        function addBasicCodeBlock(blockInstances, disabled) {
-          var inPorts = [];
-          var outPorts = [];
-
-          for (var i in blockInstances.data.ports.in) {
-            inPorts.push({
-              id: blockInstances.data.ports.in[i],
-              label: blockInstances.data.ports.in[i],
-              gridUnits: 32
-            });
-          }
-
-          for (var o in blockInstances.data.ports.out) {
-            outPorts.push({
-              id: blockInstances.data.ports.out[o],
-              label: blockInstances.data.ports.out[o],
-              gridUnits: 32
-            });
-          }
-
-          var cell = new joint.shapes.ice.Code({
-            id: blockInstances.id,
-            blockType: blockInstances.type,
-            data: blockInstances.data,
-            position: blockInstances.position,
-            disabled: disabled,
-            inPorts: inPorts,
-            outPorts: outPorts
-          });
-
-          addCell(cell);
-          return cell;
-        };
-
-        function addBasicInfoBlock(blockInstances, disabled) {
-          var cell = new joint.shapes.ice.Info({
-            id: blockInstances.id,
-            blockType: blockInstances.type,
-            data: blockInstances.data,
-            position: blockInstances.position,
-            disabled: disabled
-          });
-
-          addCell(cell);
-          return cell;
-        };
-
-        function addGenericBlock(blockInstance, block) {
-          var inPorts = [];
-          var outPorts = [];
-
-          for (var i in block.graph.blocks) {
-            var item = block.graph.blocks[i];
-            if (item.type == 'basic.input') {
-              inPorts.push({
-                id: item.id,
-                label: item.data.label
-              });
-            }
-            else if (item.type == 'basic.output') {
-              outPorts.push({
-                id: item.id,
-                label: item.data.label
-              });
+          // Ensure right -> left connections
+          if (magnetS.getAttribute('pos') === 'right') {
+            if (magnetT.getAttribute('pos') !== 'left') {
+              warning(gettextCatalog.getString('Invalid connection'));
+              return false;
             }
           }
-
-          var numPorts = Math.max(inPorts.length, outPorts.length);
-          var height = Math.max(4 * gridsize * numPorts, 8 * gridsize);
-
-          var gridUnits = height / gridsize;
-
-          for (var i in inPorts) {
-            inPorts[i].gridUnits = gridUnits;
-          }
-          for (var o in outPorts) {
-            outPorts[o].gridUnits = gridUnits;
-          }
-
-
-          var blockLabel = blockInstance.type.toUpperCase();
-          var width = Math.min((blockLabel.length + 8) * gridsize, 24 * gridsize);
-          if (blockInstance.type.indexOf('.') != -1) {
-            blockLabel = blockInstance.type.split('.').join(' ');
-          }
-
-          var blockImage = '';
-          if (block.image &&
-              nodeFs.existsSync(block.image) &&
-              nodeFs.lstatSync(block.image).isFile()) {
-            blockImage = block.image;
-            width = 12 * gridsize;
-          }
-
-          var cell = new joint.shapes.ice.Generic({
-            id: blockInstance.id,
-            blockType: blockInstance.type,
-            data: {},
-            image: blockImage,
-            label: blockLabel,
-            position: blockInstance.position,
-            inPorts: inPorts,
-            outPorts: outPorts,
-            size: {
-              width: width,
-              height: height
+          // Ensure bottom -> top connections
+          if (magnetS.getAttribute('pos') === 'bottom') {
+            if (magnetT.getAttribute('pos') !== 'top') {
+              warning(gettextCatalog.getString('Invalid connection'));
+              return false;
             }
-          });
-
-          addCell(cell);
-
-          if (blockInstance.type.indexOf('config.') != -1) {
-            paper.findViewByModel(cell).$box.addClass('config-block');
           }
-
-          return cell;
-        }
-
-        function addWire(wire) {
-          var source = graph.getCell(wire.source.block);
-          var target = graph.getCell(wire.target.block);
-
-          // Find selectors
-          var sourceSelector, targetSelector;
-          for (var _out = 0; _out < source.attributes.outPorts.length; _out++) {
-            if (source.attributes.outPorts[_out] == wire.source.port) {
-              sourcePort = _out;
+          var i;
+          var links = graph.getLinks();
+          for (i in links) {
+            var linkIView = links[i].findView(paper);
+            if (linkView === linkIView) {
+              //Skip the wire the user is drawing
+              continue;
+            }
+            // Prevent multiple input links
+            if ((cellViewT.model.id === links[i].get('target').id) &&
+                (magnetT.getAttribute('port') === links[i].get('target').port)) {
+              warning(gettextCatalog.getString('Invalid multiple input connections'));
+              return false;
+            }
+            // Prevent to connect a pull-up if other blocks are connected
+            if ((cellViewT.model.attributes.pullup) &&
+                 (cellViewS.model.id === links[i].get('source').id)) {
+              warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
+              return false;
+            }
+            // Prevent to connect other blocks if a pull-up is connected
+            if ((linkIView.targetView.model.attributes.pullup) &&
+                 (cellViewS.model.id === links[i].get('source').id)) {
+              warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
+              return false;
+            }
+          }
+          // Ensure input -> pull-up connections
+          if (cellViewT.model.attributes.pullup) {
+            var ret = (cellViewS.model.attributes.blockType === 'basic.input');
+            if (!ret) {
+              warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
+            }
+            return ret;
+          }
+          // Prevent different size connections
+          var tsize;
+          var lsize = linkView.model.attributes.size;
+          var portId = magnetT.getAttribute('port');
+          var tLeftPorts = cellViewT.model.attributes.leftPorts;
+          for (i in tLeftPorts) {
+            var port = tLeftPorts[i];
+            if (portId === port.id) {
+              tsize = port.size;
               break;
             }
           }
-          for (var _in = 0; _in < source.attributes.inPorts.length; _in++) {
-            if (target.attributes.inPorts[_in] == wire.target.port) {
-              targetPort = _in;
-              break;
-            }
+          tsize = tsize || 1;
+          lsize = lsize || 1;
+          if (tsize !== lsize) {
+            warning(gettextCatalog.getString('Invalid connection: {{a}} → {{b}}', { a: lsize, b: tsize }));
+            return false;
           }
-
-          var _wire = new joint.shapes.ice.Wire({
-            source: {
-              id: source.id,
-              selector: sourceSelector,
-              port: wire.source.port
-            },
-            target: {
-              id: target.id,
-              selector: targetSelector,
-              port: wire.target.port
-            },
-            vertices: wire.vertices
-          });
-
-          addCell(_wire);
+          // Prevent loop links
+          return magnetS !== magnetT;
         }
+      });
 
-      function addCell(cell) {
-        cell.attributes.state = state;
-        graph.addCell(cell);
+      paper.options.enabled = true;
+      paper.options.warningTimer = false;
+
+      function warning(message) {
+        if (!paper.options.warningTimer) {
+          paper.options.warningTimer = true;
+          alertify.notify(message, 'warning', 5);
+          setTimeout(function() {
+            paper.options.warningTimer = false;
+          }, 4000);
+        }
       }
 
-    }]);
+      var targetElement= element[0];
+
+      this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
+      {
+        viewportSelector: targetElement.childNodes[0].childNodes[0],
+        fit: false,
+        center: false,
+        zoomEnabled: true,
+        panEnabled: false,
+        zoomScaleSensitivity: 0.1,
+        dblClickZoomEnabled: false,
+        minZoom: ZOOM_MIN,
+        maxZoom: ZOOM_MAX,
+        /*beforeZoom: function(oldzoom, newzoom) {
+        },*/
+        onZoom: function(scale) {
+          state.zoom = scale;
+          // Already rendered in pan
+        },
+        /*beforePan: function(oldpan, newpan) {
+        },*/
+        onPan: function(newPan) {
+          state.pan = newPan;
+          selectionView.options.state = state;
+
+          var cells = graph.getCells();
+
+          _.each(cells, function(cell) {
+            if (!cell.isLink()) {
+              cell.attributes.state = state;
+              var elementView = paper.findViewByModel(cell);
+              // Pan blocks
+              elementView.updateBox();
+              // Pan selection boxes
+              selectionView.updateBox(elementView.model);
+            }
+          });
+        }
+      });
+
+      // Command Manager
+
+      commandManager = new joint.dia.CommandManager({
+        paper: paper,
+        graph: graph
+      });
+
+      // Selection View
+
+     selection = new Backbone.Collection();
+     selectionView = new joint.ui.SelectionView({
+       paper: paper,
+       graph: graph,
+       model: selection,
+       state: state
+     });
+
+     // Events
+
+     this.mousedown = false;
+
+     var self = this;
+     $('#paper').mousemove(function(event) {
+       mousePosition = {
+         x: event.offsetX,
+         y: event.offsetY
+       };
+     });
+
+     selectionView.on('selection-box:pointerdown', function(evt) {
+       // Selection to top view
+       if (selection) {
+         selection.each(function(cell) {
+           var cellView = paper.findViewByModel(cell);
+           if (!cellView.model.isLink()) {
+             if (cellView.$box.css('z-index') < z.index) {
+               cellView.$box.css('z-index', ++z.index);
+             }
+           }
+         });
+       }
+       // Toggle selection
+       if ((evt.which === 3) && (evt.ctrlKey || evt.metaKey)) {
+         var cell = selection.get($(evt.target).data('model'));
+         selection.reset(selection.without(cell));
+         selectionView.destroySelectionBox(paper.findViewByModel(cell));
+       }
+     });
+
+     paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
+       self.mousedown = false;
+       if (paper.options.enabled) {
+         if (!cellView.model.isLink()) {
+           if (evt.which === 3) {
+             // Disable current focus
+             document.activeElement.blur();
+             // Right button
+             selection.add(cellView.model);
+             selectionView.createSelectionBox(cellView);
+             cellView.$box.removeClass('highlight');
+           }
+           // Update wires on obstacles
+           var cells = graph.getCells();
+           for (var i in cells) {
+             var cell = cells[i];
+             if (cell.isLink()) {
+               paper.findViewByModel(cell).update();
+             }
+           }
+         }
+       }
+     });
+
+      paper.on('cell:pointerdown', function(/*cellView*/) {
+        self.mousedown = true;
+        /*if (paper.options.enabled) {
+          if (!cellView.model.isLink()) {
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
+            }
+          }
+        }*/
+      });
+
+      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
+        var type =  cellView.model.attributes.blockType;
+        if (type.indexOf('basic.') !== -1) {
+          if (paper.options.enabled) {
+            blocks.editBasic(type, cellView, function(cell) {
+              addCell(cell);
+            });
+          }
+        }
+        else if (dependencies[type]) {
+          var name = dependencies[type].package.name;
+          var design = dependencies[type].design;
+          self.breadcrumbs.push({ name: name ? name : '#', type: type });
+          utils.rootScopeSafeApply();
+          z.index = 1;
+          if (self.breadcrumbs.length === 2) {
+            $rootScope.$broadcast('updateProject', function() {
+              self.loadDesign(design, true);
+            });
+          }
+          else {
+            self.loadDesign(design, true);
+          }
+        }
+      });
+
+      paper.on('blank:pointerdown', function(evt, x, y) {
+        self.mousedown = true;
+        // Disable current focus
+        document.activeElement.blur();
+
+        if (evt.which === 3) {
+          // Right button
+          if (paper.options.enabled) {
+            selectionView.startSelecting(evt, x, y);
+          }
+        }
+        else if (evt.which === 1) {
+          // Left button
+          self.panAndZoom.enablePan();
+        }
+      });
+
+      paper.on('cell:pointerup blank:pointerup', function(/*cellView, evt*/) {
+        self.mousedown = false;
+        self.panAndZoom.disablePan();
+      });
+
+      paper.on('cell:mouseover', function(cellView/*, evt*/) {
+        if (!self.mousedown) {
+          if (!cellView.model.isLink()) {
+            cellView.$box.addClass('highlight');
+            if (cellView && !cellView.model.isLink()) {
+              if (cellView.$box.css('z-index') < z.index) {
+                cellView.$box.css('z-index', ++z.index);
+              }
+            }
+          }
+        }
+      });
+
+      paper.on('cell:mouseout', function(cellView/*, evt*/) {
+        if (!self.mousedown) {
+          if (!cellView.model.isLink()) {
+            cellView.$box.removeClass('highlight');
+          }
+        }
+      });
+
+      graph.on('change:position', function(/*cell*/) {
+        /*if (!selectionView.isTranslating()) {
+          // Update wires on obstacles motion
+          var cells = graph.getCells();
+          for (var i in cells) {
+            var cell = cells[i];
+            if (cell.isLink()) {
+              paper.findViewByModel(cell).update();
+            }
+          }
+        }*/
+      });
+    };
+
+    this.undo = function() {
+      disableSelected();
+      commandManager.undo(state);
+    };
+
+    this.redo = function() {
+      disableSelected();
+      commandManager.redo(state);
+    };
+
+    this.clearAll = function() {
+      graph.clear();
+      this.appEnable(true);
+      selectionView.cancelSelection();
+    };
+
+    this.appEnable = function(value) {
+      paper.options.enabled = value;
+      if (value) {
+        angular.element('#menu').removeClass('disable-menu');
+        angular.element('#paper').removeClass('disable-paper');
+        angular.element('#banner').addClass('hidden');
+      }
+      else {
+        angular.element('#menu').addClass('disable-menu');
+        angular.element('#paper').addClass('disable-paper');
+        angular.element('#banner').removeClass('hidden');
+      }
+      var cells = graph.getCells();
+      for (var i in cells) {
+        var cellView = paper.findViewByModel(cells[i].id);
+        cellView.options.interactive = value;
+        if (cells[i].attributes.type !== 'ice.Generic') {
+          if (value) {
+            cellView.$el.removeClass('disable-graph');
+          }
+          else {
+            cellView.$el.addClass('disable-graph');
+          }
+        }
+        else if (cells[i].attributes.type !== 'ice.Wire') {
+          // TODO: also on !mousedown
+          if (value) {
+            cellView.$el.find('.port-body').removeClass('disable-graph');
+          }
+          else {
+            cellView.$el.find('.port-body').addClass('disable-graph');
+          }
+        }
+      }
+    };
+
+    this.createBlock = function(type, block) {
+      blocks.newGeneric(type, block, function(cell) {
+        addCell(cell);
+      });
+    };
+
+    this.createBasicBlock = function(type) {
+      blocks.newBasic(type, function(cell) {
+        addCell(cell);
+      });
+    };
+
+    this.toJSON = function() {
+      return graph.toJSON();
+    };
+
+    this.getCells = function() {
+      return graph.getCells();
+    };
+
+    this.setCells = function(cells) {
+      graph.attributes.cells.models = cells;
+    };
+
+    this.selectBoard = function(boardName) {
+      graph.startBatch('change');
+      // Trigger board event
+      var data = {
+        previous: boards.selectedBoard.name,
+        next: boardName
+      };
+      graph.trigger('board', { data: data });
+      boards.selectBoard(boardName);
+      var cells = graph.getCells();
+      // Reset choices in all I/O blocks
+      for (var i in cells) {
+        var cell = cells[i];
+        var type = cell.attributes.blockType;
+        if (type === 'basic.input' ||
+            type === 'basic.output') {
+          var view = paper.findViewByModel(cell.id);
+          cell.set('choices', boards.getPinoutHTML());
+          view.clearValues();
+          view.applyChoices();
+        }
+      }
+      graph.stopBatch('change');
+    };
+
+    this.resetCommandStack = function() {
+      commandManager.reset();
+    };
+
+    this.cutSelected = function() {
+      if (selection) {
+        clipboard = selection.clone();
+        this.removeSelected();
+      }
+    };
+
+    this.copySelected = function() {
+      if (selection) {
+        clipboard = selection.clone();
+      }
+    };
+
+    this.pasteSelected = function() {
+      if (clipboard && clipboard.length > 0) {
+        var offset = clipboard.models[0].attributes.position;
+        selectionView.cancelSelection();
+        var newCells = [];
+        clipboard.each(function(cell) {
+          var newCell = cell.clone();
+          newCell.translate(
+            Math.round(((mousePosition.x - state.pan.x) / state.zoom - offset.x) / gridsize) * gridsize,
+            Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
+          );
+          newCells.push(newCell);
+        });
+        graph.addCells(newCells);
+        // Select pasted cells
+        _.each(newCells, function(cell) {
+          if (!cell.isLink()) {
+            var cellView = paper.findViewByModel(cell);
+            selection.add(cell);
+            selectionView.createSelectionBox(cellView);
+            cellView.$box.removeClass('highlight');
+          }
+        });
+      }
+    };
+
+    this.selectAll = function() {
+      disableSelected();
+      var cells = graph.getCells();
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          selection.add(cell);
+          selectionView.createSelectionBox(cellView);
+          cellView.$box.removeClass('highlight');
+        }
+      });
+    };
+
+    this.hasSelection = function() {
+      return selection.length > 0;
+    };
+
+    this.removeSelected = function() {
+      if (selection) {
+        graph.removeCells(selection.models);
+        selectionView.cancelSelection();
+      }
+    };
+
+    $(document).on('disableSelected', function() {
+      disableSelected();
+    });
+
+    function disableSelected() {
+      if (selection) {
+        selectionView.cancelSelection();
+      }
+    }
+
+    var stepValue = 8;
+
+    this.stepLeft = function() {
+      step({ x: -stepValue, y: 0 });
+    };
+
+    this.stepUp = function() {
+      step({ x: 0, y: -stepValue });
+    };
+
+    this.stepRight = function() {
+      step({ x: stepValue, y: 0 });
+    };
+
+    this.stepDown = function() {
+      step({ x: 0, y: stepValue });
+    };
+
+    function step(offset) {
+      if (selection) {
+        graph.startBatch('change');
+        selection.each(function(cell) {
+          cell.translate(offset.x, offset.y);
+          selectionView.updateBox(cell);
+        });
+        graph.stopBatch('change');
+      }
+    }
+
+    this.isEmpty = function() {
+      return (graph.getCells().length === 0);
+    };
+
+    this.isEnabled = function() {
+      return paper.options.enabled;
+    };
+
+    this.setDependencies = function(_dependencies) {
+      dependencies = _dependencies;
+    };
+
+    this.loadDesign = function(design, disabled, callback) {
+      if (design &&
+          design.graph &&
+          design.graph.blocks &&
+          design.graph.wires) {
+
+        var i;
+        var self = this;
+        var blockInstances = design.graph.blocks;
+        var wires = design.graph.wires;
+
+        $('body').addClass('waiting');
+
+        commandManager.stopListening();
+
+        this.clearAll();
+        this.setState(design.state);
+
+        setTimeout(function() {
+          var cell;
+
+          // Blocks
+          for (i in blockInstances) {
+            var blockInstance = blockInstances[i];
+            if (blockInstance.type.indexOf('basic.') !== -1) {
+              cell = blocks.loadBasic(blockInstance, disabled);
+            }
+            else {
+              if (blockInstance.type in dependencies) {
+                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type]);
+              }
+            }
+            addCell(cell);
+          }
+
+          // Wires
+          for (i in wires) {
+            var source = graph.getCell(wires[i].source.block);
+            var target = graph.getCell(wires[i].target.block);
+            cell = blocks.loadWire(wires[i], source, target);
+            addCell(cell);
+          }
+
+          self.appEnable(!disabled);
+          $('body').removeClass('waiting');
+
+          if (!disabled) {
+            commandManager.listen();
+          }
+
+          if (callback) {
+            callback();
+          }
+
+        }, 20);
+
+        return true;
+      }
+    };
+
+    function addCell(cell) {
+      cell.attributes.state = state;
+      //cell.attributes.zindex = z.index;
+      graph.addCell(cell);
+      if (!cell.isLink()) {
+        var cellView = paper.findViewByModel(cell);
+        if (cellView.$box.css('z-index') < z.index) {
+          cellView.$box.css('z-index', ++z.index);
+        }
+      }
+    }
+
+  });

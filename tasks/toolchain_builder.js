@@ -25,7 +25,7 @@ function ToolchainBuilder(options) {
   // Assign options
   this.options = _.defaults(options, defaults);
 
-  if (this.options.platforms.length == 0)
+  if (this.options.platforms.length === 0)
     throw new Error('No platform to build!');
 
   var venvRelease = 'virtualenv-15.0.1';
@@ -40,8 +40,8 @@ function ToolchainBuilder(options) {
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, (process.platform === 'win32' ? 'Scripts' : 'bin'));
-  this.options.venvPip = path.join(this.options.venvBinDir, 'pip')
-  this.options.venvApio = path.join(this.options.venvBinDir, 'apio')
+  this.options.venvPip = path.join(this.options.venvBinDir, 'pip');
+  this.options.venvApio = path.join(this.options.venvBinDir, 'apio');
 }
 
 
@@ -78,14 +78,14 @@ ToolchainBuilder.prototype.build = function (callback) {
       });
 
     return hasCallback ? true : done.promise;
-}
+};
 
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
   return new Promise(function(resolve, reject) {
     if (getPythonExecutable()) { resolve(); }
     else { reject('Python 2.7 is not available'); }
   });
-}
+};
 
 ToolchainBuilder.prototype.extractVirtualenv = function () {
   var self = this;
@@ -94,9 +94,9 @@ ToolchainBuilder.prototype.extractVirtualenv = function () {
     targz().extract(self.options.venvTarPath, self.options.toolchainDir, function (error) {
       if (error) { reject(error); }
       else { resolve(); }
-    })
+    });
   });
-}
+};
 
 ToolchainBuilder.prototype.createVirtualenv = function () {
   var self = this;
@@ -114,7 +114,7 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
       }
     );
   });
-}
+};
 
 ToolchainBuilder.prototype.downloadApio = function () {
   var self = this;
@@ -131,7 +131,7 @@ ToolchainBuilder.prototype.downloadApio = function () {
       }
     );
   });
-}
+};
 
 ToolchainBuilder.prototype.installApio = function () {
   var self = this;
@@ -150,9 +150,9 @@ ToolchainBuilder.prototype.installApio = function () {
           }
         );
       }
-    })
   });
-}
+  });
+};
 
 ToolchainBuilder.prototype.downloadApioPackages = function () {
   var self = this;
@@ -163,7 +163,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
-    };
+    }
     self.pFound = [];
     self.options.platforms.forEach(function(platform) {
       var p = getRealPlatform(platform);
@@ -180,7 +180,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
     });
     resolve();
   });
-}
+};
 
 ToolchainBuilder.prototype.packageApio = function () {
   var self = this;
@@ -194,7 +194,7 @@ ToolchainBuilder.prototype.packageApio = function () {
         else { resolve(); }
       });
   });
-}
+};
 
 ToolchainBuilder.prototype.packageApioPackages = function () {
   var self = this;
@@ -211,7 +211,7 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
             path.join(self.options.apioPackagesDir, p),
             path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.tar.gz'),
             function (error) {
-              if (error) { reject(error) }
+              if (error) { reject(error); }
               callback();
             }
           );
@@ -224,7 +224,7 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
       resolve();
     });
   });
-}
+};
 
 ToolchainBuilder.prototype.createDefaultToolchains = function () {
   var self = this;
@@ -252,7 +252,7 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
     });
     resolve();
   });
-}
+};
 
 // Auxiliar functions
 

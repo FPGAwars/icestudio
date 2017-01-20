@@ -4,44 +4,42 @@ angular.module('icestudio')
   .controller('MenuCtrl', function ($rootScope,
                                     $scope,
                                     $timeout,
-                                    nodeLangInfo,
-                                    nodeFs,
-                                    nodePath,
-                                    common,
+                                    boards,
+                                    profile,
+                                    project,
+                                    resources,
                                     graph,
                                     tools,
-                                    boards,
-                                    resources,
-                                    profile,
-                                    gui,
                                     utils,
                                     gettextCatalog,
-                                    _package) {
+                                    gui,
+                                    _package,
+                                    nodeFs,
+                                    nodePath) {
 
-    // Initialize scope
+    //-- Initialize scope
 
-    $scope.common = common;
     $scope.boards = boards;
     $scope.profile = profile;
-
-    $scope.examples = resources.getExamples();
-    $scope.templates = resources.getTemplates();
-    $scope.currentBoards = boards.getBoards();
-    $scope.menuBlocks = resources.getMenuBlocks();
+    $scope.project = project;
+    $scope.tools = tools;
+    $scope.resources = resources;
 
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
 
     $scope.workingdir = '';
     $scope.snapshotdir = '';
-    $scope.currentProjectPath = '';
 
-    // Configure window
+    var zeroProject = true;  // New project without changes
+
+    // Initialize selected collection
+    updateSelectedCollection();
+
+    // Window events
     var win = gui.Window.get();
     win.on('close', function() {
-      this.hide();
-      profile.save();
-      this.close(true);
+      exit();
     });
 
     // Darwin fix for shortcuts
@@ -51,190 +49,272 @@ angular.module('icestudio')
       win.menu = mb;
     }
 
-    function pathSync() {
-      if ($scope.currentProjectPath) {
-        var projectPath = utils.dirname($scope.currentProjectPath);
-        tools.setProjectPath(projectPath);
-        common.setProjectPath(projectPath);
-      }
-    }
-
-    // Menu
-
+    // Menu timer
     var timer;
 
     // mouseover event
     $scope.showMenu = function (menu) {
       $timeout.cancel(timer);
-      $scope.status[menu] = true;
+      if (!graph.mousedown) {
+        $scope.status[menu] = true;
+      }
     };
 
     // mouseleave event
     $scope.hideMenu = function (menu) {
       timer = $timeout(function () {
-          $scope.status[menu] = false;
-      }, 500);
+        $scope.status[menu] = false;
+      }, 700);
     };
 
-    // File
+    // Load app arguments
+    setTimeout(function() {
+      for (var i in gui.App.argv) {
+        processArg(gui.App.argv[i]);
+      }
+    }, 0);
 
-    $scope.newProject = function() {
-      alertify.prompt(gettextCatalog.getString('Enter the project\'s title'),
-                      gettextCatalog.getString('untitled'),
-        function(evt, name) {
-          if (name) {
-            common.newProject(name);
-            $scope.currentProjectPath = '';
-            pathSync();
-          }
-      });
-    }
-
-    $scope.openProject = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-open-project');
-        ctrl.on('change', function(event) {
-          var file = event.target.files[0];
-          event.target.files.clear();
-          if (file) {
-            if (file.path.endsWith('.ice')) {
-              $scope.workingdir = utils.dirname(file.path) + utils.sep;
-              if (!graph.isEmpty()) {
-                alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-                  function() {
-                    common.openProject(file.path);
-                    $scope.currentProjectPath = file.path;
-                    pathSync();
-                });
-              }
-              else {
-                common.openProject(file.path);
-                $scope.currentProjectPath = file.path;
-                pathSync();
-              }
-
-            }
-          }
-        });
-        ctrl.click();
-      }, 0);
-    }
-
-    $scope.openStoredProject = function(name, project) {
-      if (project) {
-        if (!graph.isEmpty()) {
-          alertify.confirm(gettextCatalog.getString('The current project will be removed. Do you want to continue loading the project?'),
-          function() {
-            common.loadProject(name, project);
-            $scope.currentProjectPath = '';
-            pathSync();
-          });
+    function processArg(arg) {
+      if (nodeFs.existsSync(arg)) {
+        // Open filepath
+        var filepath = arg;
+        var emptyPath = filepath.startsWith('resources'); // it is an example
+        if (!emptyPath) {
+          updateWorkingdir(filepath);
         }
-        else {
-          common.loadProject(name, project);
-          $scope.currentProjectPath = '';
-          pathSync();
-        }
+        project.open(filepath, emptyPath);
+        zeroProject = false;
+      }
+      else {
+        // Move window
+        var data = arg.split('x');
+        var offset = {
+          x: parseInt(data[0]),
+          y: parseInt(data[1])
+        };
+        win.moveTo(offset.x, offset.y);
       }
     }
 
+
+    //-- File
+
+    $scope.newProject = function() {
+      utils.newWindow();
+    };
+
+    $scope.openProject = function() {
+      utils.openDialog('#input-open-project', '.ice', function(filepath) {
+        if (zeroProject) {
+          // If this is the first action, open
+          // the projec in the same window
+          updateWorkingdir(filepath);
+          project.open(filepath);
+          zeroProject = false;
+        }
+        else if (project.changed || !equalWorkingFilepath(filepath)) {
+          // If this is not the first action, and
+          // the file path is different, open
+          // the project in a new window
+          utils.newWindow(filepath);
+        }
+      });
+    };
+
+    $scope.openExample = function(filepath) {
+      if (zeroProject) {
+        // If this is the first action, open
+        // the projec in the same window
+        project.open(filepath, true);
+        zeroProject = false;
+      }
+      else {
+        // If this is not the first action, and
+        // the file path is different, open
+        // the project in a new window
+        utils.newWindow(filepath);
+      }
+    };
+
     $scope.saveProject = function() {
-      var filepath = $scope.currentProjectPath;
+      var filepath = project.path;
       if (filepath) {
-        common.saveProject(filepath);
+        project.save(filepath);
+        resetChanged();
       }
       else {
         $scope.saveProjectAs();
       }
-    }
+    };
 
     $scope.saveProjectAs = function(localCallback) {
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + utils.sep;
-        common.saveProject(filepath);
-        $scope.currentProjectPath = filepath;
-        pathSync();
-        if (localCallback)
+        updateWorkingdir(filepath);
+        project.save(filepath);
+        resetChanged();
+        if (localCallback) {
           localCallback();
+        }
       });
-    }
+    };
 
     $rootScope.$on('saveProjectAs', function(event, callback) {
       $scope.saveProjectAs(callback);
-    })
+    });
 
-    $scope.importBlock = function() {
-      setTimeout(function() {
-        var ctrl = angular.element('#input-import-block');
-        ctrl.on('change', function(event) {
-          var files = JSON.parse(JSON.stringify(event.target.files));
-          for (var i in files) {
-            if (files[i] &&
-                files[i].path &&
-                files[i].path.endsWith('.iceb')) {
-              common.importBlock(files[i].path);
-            }
-          }
-          event.target.files.clear();
-        });
-        ctrl.click();
-      }, 0);
-    }
-
-    $scope.exportAsBlock = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-block', '.iceb', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportAsBlock(filepath);
-        });
+    $scope.addAsBlock = function() {
+      utils.openDialog('#input-add-as-block', '.ice', function(filepaths) {
+        filepaths = filepaths.split(';');
+        for (var i in filepaths) {
+          project.addAsBlock(filepaths[i]);
+        }
       });
-    }
+    };
 
     $scope.exportVerilog = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-verilog', '.v', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportVerilog(filepath);
+          project.export('verilog', filepath, gettextCatalog.getString('Verilog code exported'));
+          updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportPCF = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-pcf', '.pcf', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportPCF(filepath);
+          project.export('pcf', filepath, gettextCatalog.getString('PCF file exported'));
+          updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportTestbench = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-testbench', '.v', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportTestbench(filepath);
+          project.export('testbench', filepath, gettextCatalog.getString('Testbench exported'));
+          updateWorkingdir(filepath);
         });
       });
-    }
+    };
 
     $scope.exportGTKwave = function() {
       checkGraph(function() {
         utils.saveDialog('#input-export-gtkwave', '.gtkw', function(filepath) {
-          $scope.workingdir = utils.dirname(filepath) + utils.sep;
-          common.exportGTKWave(filepath);
+          project.export('gtkwave', filepath, gettextCatalog.getString('GTKWave exported'));
+          updateWorkingdir(filepath);
         });
       });
+    };
+
+    function updateWorkingdir(filepath) {
+      $scope.workingdir = utils.dirname(filepath) + utils.sep;
     }
 
-    // Edit
+    function equalWorkingFilepath(filepath) {
+      return $scope.workingdir + project.name + '.ice' === filepath;
+    }
 
-    $scope.setImagePath = function() {
-      var current = common.project.image;
-      alertify.prompt(gettextCatalog.getString('Enter the project\'s image path'), (current) ? current : '',
-        function(evt, imagePath) {
-          common.setImagePath(imagePath);
+    $scope.quit = function() {
+      exit();
+    };
+
+    function exit() {
+      if (project.changed) {
+        alertify.confirm(
+          '<b>' + gettextCatalog.getString('Do you want to close the application?') + '</b><br>' +
+          gettextCatalog.getString('Your changes will be lost if you don’t save them'),
+          function() {
+            _exit();
+          });
+      }
+      else {
+        _exit();
+      }
+      function _exit() {
+        //win.hide();
+        profile.save();
+        win.close(true);
+      }
+    }
+
+
+    //-- Edit
+
+    $scope.undoGraph = function() {
+      graph.undo();
+    };
+
+    $scope.redoGraph = function() {
+      graph.redo();
+    };
+
+    $scope.cutSelected = function() {
+      if (graph.hasSelection()) {
+        graph.cutSelected();
+      }
+    };
+
+    $scope.copySelected = function() {
+      if (graph.hasSelection()) {
+        graph.copySelected();
+      }
+    };
+
+    var paste = true;
+
+    $scope.pasteSelected = function() {
+      if (paste) {
+        paste = false;
+        graph.pasteSelected();
+        setTimeout(function() {
+          paste = true;
+        }, 250);
+      }
+    };
+
+    $scope.selectAll = function() {
+      checkGraph(function() {
+        graph.selectAll();
       });
+    };
+
+    function removeSelected() {
+      if (graph.hasSelection()) {
+        //alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
+          //function() {
+        project.removeSelected();
+        //});
+      }
     }
+
+    $scope.resetView = function() {
+      graph.resetView();
+    };
+
+    $scope.fitContent = function () {
+      graph.fitContent();
+    };
+
+    $scope.setProjectInformation = function() {
+      var p = project.get('package');
+      var values = [
+        p.name,
+        p.version,
+        p.description,
+        p.author,
+        p.image
+      ];
+      utils.projectinfoprompt(values, function(evt, values) {
+        project.set('package', {
+          name: values[0],
+          version: values[1],
+          description: values[2],
+          author: values[3],
+          image: values[4]
+        });
+      });
+    };
 
     $scope.setRemoteHostname = function() {
       var current = profile.data.remoteHostname;
@@ -242,94 +322,17 @@ angular.module('icestudio')
         function(evt, remoteHostname) {
           profile.data.remoteHostname = remoteHostname;
       });
-    }
+    };
 
     $scope.selectLanguage = function(language) {
-      if (profile.data.language != language) {
+      if (profile.data.language !== language) {
         profile.data.language = language;
         utils.setLocale(language);
       }
-    }
+    };
 
-    $scope.clearGraph = function() {
-      checkGraph(function() {
-        alertify.confirm(gettextCatalog.getString('Do you want to clear all?'),
-        function() {
-          common.clearProject();
-        });
-      });
-    }
 
-    $scope.cloneSelected = function() {
-      common.cloneSelected();
-    }
-
-    $scope.removeSelected = function() {
-      if (graph.hasSelection()) {
-        alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
-          function() {
-            common.removeSelected();
-        });
-      }
-    }
-
-    // Key events
-
-    var promptShown = false;
-
-    alertify.prompt().set({
-      onshow: function() {
-        promptShown = true;
-      },
-      onclose: function() {
-        promptShown = false;
-      }
-    });
-
-    $(document).on('keydown', function(event) {
-      if (graph.isEnabled() && !promptShown) {
-        if (event.keyCode == 46 || // Supr
-            (event.keyCode == 88 && event.ctrlKey)) { // Ctrl + x
-          $scope.removeSelected();
-        }
-        else if (event.keyCode == 67 && event.ctrlKey) { // Ctrl + c
-          $scope.cloneSelected();
-        }
-        if (process.platform === 'darwin') {
-          if (event.keyCode == 8) { // Back
-            $scope.removeSelected();
-          }
-        }
-      }
-      if (event.keyCode == 80 && event.ctrlKey) { // Ctrl + p
-        // Print and save a window snapshot
-        takeSnapshot();
-      }
-    });
-
-    function takeSnapshot() {
-      win.capturePage(function(img) {
-        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-        saveSnapshot(base64Data);
-      }, 'png');
-    }
-
-    function saveSnapshot(base64Data) {
-      utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
-        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
-          $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
-          $scope.$apply();
-          if (!err) alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
-          else throw err;
-        });
-      });
-    }
-
-    // View
-
-    $scope.resetState = function() {
-      graph.resetState();
-    }
+    //-- View
 
     $scope.showPCF = function() {
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + boards.selectedBoard.name, {
@@ -341,7 +344,7 @@ angular.module('icestudio')
         height: 700,
         icon: 'resources/images/icestudio-logo.png'
       });
-    }
+    };
 
     $scope.showPinout = function() {
       var board = boards.selectedBoard;
@@ -359,7 +362,7 @@ angular.module('icestudio')
       else {
         alertify.notify(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 'warning', 5);
       }
-    }
+    };
 
     $scope.showDatasheet = function() {
       var board = boards.selectedBoard;
@@ -369,93 +372,112 @@ angular.module('icestudio')
       else {
         alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
       }
+    };
+
+    $scope.selectCollection = function(collection) {
+      if (resources.selectedCollection.name !== collection.name) {
+        var name = resources.selectCollection(collection.name);
+        profile.data.collection = name;
+        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
+      }
+    };
+
+    function updateSelectedCollection() {
+      profile.data.collection = resources.selectCollection(profile.data.collection);
     }
 
-    // Boards
+
+    //-- Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard.name != board.name) {
+      if (boards.selectedBoard.name !== board.name) {
         if (!graph.isEmpty()) {
           alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: utils.bold(board.info.label) }),
             function() {
-              boards.selectBoard(board.name);
-              graph.resetIOChoices();
-              alertify.success(gettextCatalog.getString('Board {{name}} selected', { name: utils.bold(board.info.label) }));
-              $rootScope.$apply();
+              _boardSelected();
           });
         }
         else {
-          boards.selectBoard(board.name);
-          graph.resetIOChoices();
-          alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
+          _boardSelected();
         }
       }
-    }
+      function _boardSelected() {
+        graph.selectBoard(board.name);
+        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
+      }
+    };
 
-    // Tools
+
+    //-- Tools
 
     $scope.verifyCode = function() {
       checkGraph(function() {
         tools.verifyCode();
       });
-    }
+    };
 
     $scope.buildCode = function() {
       checkGraph(function() {
         tools.buildCode();
       });
-    }
+    };
 
     $scope.uploadCode = function() {
       checkGraph(function() {
         tools.uploadCode();
       });
-    }
+    };
 
     function checkGraph(callback) {
       if (!graph.isEmpty()) {
-        if (callback)
+        if (callback) {
           callback();
+        }
       }
       else {
         alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
       }
     }
 
-    $scope.installToolchain = function() {
-      tools.installToolchain();
-    }
+    $scope.addCollection = function() {
+      utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
+        filepaths = filepaths.split(';');
+        for (var i in filepaths) {
+          tools.addCollection(filepaths[i]);
+        }
+      });
+    };
 
-    $scope.updateToolchain = function() {
-      tools.updateToolchain();
-    }
+    $scope.removeCollection = function(collection) {
+      alertify.confirm(gettextCatalog.getString('Do you want to remove the {{name}} collection?', { name: utils.bold(collection.name) }),
+      function() {
+        tools.removeCollection(collection);
+        updateSelectedCollection();
+        utils.rootScopeSafeApply();
+      });
+    };
 
-    $scope.removeToolchain = function() {
-      tools.removeToolchain();
-    }
+    $scope.removeAllCollections = function() {
+      if (resources.currentCollections.length > 1) {
+        alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
+        function() {
+          tools.removeAllCollections();
+          updateSelectedCollection();
+          utils.rootScopeSafeApply();
+        });
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('No collections stored'), 'warning', 5);
+      }
+    };
 
-    $scope.resetToolchain = function() {
-      tools.resetToolchain();
-    }
 
-    $scope.enableDrivers = function() {
-      tools.enableDrivers();
-    }
-
-    $scope.disableDrivers = function() {
-      tools.disableDrivers();
-    }
-
-    // Help
+    //-- Help
 
     $scope.openUrl = function(url) {
-      /*gui.Window.open(url, {
-        nodejs: false,
-        "new-instance": false
-      });*/
       event.preventDefault();
       gui.Shell.openExternal(url);
-    }
+    };
 
     $scope.about = function() {
       var content = [
@@ -469,9 +491,173 @@ angular.module('icestudio')
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2017</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
+    };
+
+
+    // Events
+
+    var storedUndoStack = [];
+    var currentUndoStack = [];
+
+    $(document).on('stackChanged', function(evt, undoStack) {
+      currentUndoStack = undoStack;
+      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+      project.updateTitle();
+      zeroProject = false;
+    });
+
+    function resetChanged() {
+      storedUndoStack = currentUndoStack;
+      project.changed = false;
+      project.updateTitle();
+      zeroProject = false;
     }
+
+    // Shortcuts
+
+    var promptShown = false;
+
+    alertify.prompt().set({
+      onshow: function() {
+        promptShown = true;
+      },
+      onclose: function() {
+        promptShown = false;
+      }
+    });
+
+    $(document).on('keydown', function(event) {
+      if (!promptShown) {
+        if (graph.isEnabled()) {
+          if (event.ctrlKey) {
+            switch (event.keyCode) {
+              case 78:  // Ctrl+N
+                $scope.newProject();
+                break;
+              case 79:  // Ctrl+O
+                $scope.openProject();
+                break;
+              case 83:
+                if (event.shiftKey) { // Ctrl+Shift+S
+                  $scope.saveProjectAs();
+                }
+                else { // Ctrl+S
+                  $scope.saveProject();
+                }
+                break;
+              case 81:  // Ctrl+Q
+                $scope.quit();
+                break;
+              case 90:
+                if (event.shiftKey) { // Ctrl+Shift+Z
+                  $scope.redoGraph();
+                  event.preventDefault();
+                }
+                else { // Ctrl+Z
+                  $scope.undoGraph();
+                  event.preventDefault();
+                }
+                break;
+              case 89: // Ctrl+Y
+                $scope.redoGraph();
+                event.preventDefault();
+                break;
+              case 88: // Ctrl+X
+                $scope.cutSelected();
+                break;
+              case 67: // Ctrl+C
+                $scope.copySelected();
+                break;
+              case 86: // Ctrl+V
+                $scope.pasteSelected();
+                break;
+              case 65: // Ctrl+A
+                $scope.selectAll();
+                break;
+              case 82: // Ctrl+R
+                $scope.verifyCode();
+                break;
+              case 66: // Ctrl+B
+                $scope.buildCode();
+                break;
+              case 85: // Ctrl+U
+                $scope.uploadCode();
+                break;
+            }
+          }
+
+          if (graph.hasSelection()) {
+            switch (event.keyCode) {
+              case 37: // Arrow Left
+                graph.stepLeft();
+                break;
+              case 38: // Arrow Up
+                graph.stepUp();
+                break;
+              case 39: // Arrow Right
+                graph.stepRight();
+                break;
+              case 40: // Arrow Down
+                graph.stepDown();
+                break;
+            }
+          }
+
+          if (event.keyCode === 46) { // Supr
+            removeSelected();
+          }
+        }
+        if (event.ctrlKey) {
+          switch (event.keyCode) {
+            case 48: // Ctrl+0
+              $scope.resetView();
+              break;
+            case 70: // Ctrl+F
+              $scope.fitContent();
+              break;
+          }
+        }
+        if (event.keyCode === 8) { // Back
+          if (!graph.isEnabled()) {
+            $rootScope.$broadcast('breadcrumbsBack');
+          }
+          else {
+            if (process.platform === 'darwin') {
+              removeSelected();
+            }
+          }
+        }
+      }
+      if (event.ctrlKey && event.keyCode === 80) { // Ctrl+P
+        // Print and save a window snapshot
+        takeSnapshot();
+      }
+    });
+
+    function takeSnapshot() {
+      win.capturePage(function(img) {
+        var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+        saveSnapshot(base64Data);
+      }, 'png');
+    }
+
+    function saveSnapshot(base64Data) {
+      utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
+        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+          $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
+          $scope.$apply();
+          if (!err) {
+            alertify.success(gettextCatalog.getString('Image {{name}} saved', { name: utils.bold(utils.basename(filepath)) }));
+          }
+          else {
+            throw err;
+          }
+        });
+      });
+    }
+
   });
