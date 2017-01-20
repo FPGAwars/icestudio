@@ -102,6 +102,7 @@ module.exports = function(grunt) {
     nwjs: {
       options: {
         version: '0.12.3',
+        flavor: 'normal',
         buildDir: 'dist/',
         winIco: 'doc/images/icestudio-logo.ico',
         macIcns: 'doc/images/icestudio-logo.icns',
