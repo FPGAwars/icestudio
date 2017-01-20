@@ -25,7 +25,7 @@ Input block
 Wire
 ~~~~
 
-E.g.: basic input block with value *in*
+E.g.: basic input block with value *in*.
 
 .. image:: ../resources/images/blocks/basic-input.png
 
@@ -50,7 +50,7 @@ E.g.: basic input block with value *in*
 Bus
 ~~~
 
-E.g.: basic input block with value *in[1:0]*
+E.g.: basic input block with value *in[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-input-bus.png
 
@@ -90,7 +90,7 @@ Output block
 Wire
 ~~~~
 
-E.g.: basic output block with value *out*
+E.g.: basic output block with value *out*.
 
 .. image:: ../resources/images/blocks/basic-output.png
 
@@ -113,7 +113,7 @@ E.g.: basic output block with value *out*
 Bus
 ~~~
 
-E.g.: basic output block with value *out[1:0]*
+E.g.: basic output block with value *out[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-output-bus.png
 
@@ -147,7 +147,7 @@ Constant block
 
   * Local parameter: *\**
 
-E.g.: basic constant block with value *C*
+E.g.: basic constant block with value *C*.
 
 .. image:: ../resources/images/blocks/basic-constant.png
 
@@ -166,7 +166,7 @@ Code block
 
 * Type: ``basic.code``
 
-E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters *C* and *D*
+E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters *C* and *D*.
 
 .. image:: ../resources/images/blocks/basic-code.png
 
@@ -200,14 +200,14 @@ E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters 
     }
   }
 
-Info block
-``````````
+Information block
+`````````````````
 
 * Type: ``basic.info``
 
-E.g.: basic info block
+E.g.: basic infomation block.
 
-.. image:: ../resources/images/blocks/basic-info.png
+.. image:: ../resources/images/blocks/basic-information.png
 
 .. code-block:: json
 
@@ -222,21 +222,23 @@ Generic blocks
 
 Any project can be added as a read-only **generic block**:
 
-* The *input blocks* become *input ports*
-* The *output blocks* become *output ports*
-* The *constant blocks* become *parameters*
+* The *input blocks* become *input ports*.
+* The *output blocks* become *output ports*.
+* The *constant blocks* become *parameters*.
 
-The block information is stored in **design.deps**, without the unnecessary information:
+The block information is stored in **dependencies**, without the unnecessary information:
 
-* The FPGA *board* is removed
-* The FPGA *data.pins* are removed (an additional field *data.size* with the pins.length is created if >1)
-* The *data.virtual* flag is removed
+* The version number is removed.
+* The FPGA *board* is removed.
+* The FPGA *data.pins* are removed.
+* An additional field *data.size* with the pins.length is created if greatter than 1.
+* The *data.virtual* flag is removed.
 
-E.g.: this project *block.ice*
+E.g.: this project *block.ice*.
 
 .. image:: ../resources/images/blocks/generic-project.png
 
-becomes this block
+becomes this block:
 
 .. image:: ../resources/images/blocks/generic-block.png
 

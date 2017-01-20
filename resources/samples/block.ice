@@ -1,10 +1,10 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "Block",
+    "version": "1.0",
+    "description": "out = in ? C : D; p = q;",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
@@ -217,13 +217,13 @@
         }
       ]
     },
-    "deps": {},
     "state": {
       "pan": {
-        "x": 24.988850906836912,
-        "y": 53.895818245976436
+        "x": -1.6949,
+        "y": 61.9746
       },
-      "zoom": 0.8154432847623143
+      "zoom": 0.8686
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -6,16 +6,17 @@ Project
 Definition
 ----------
 
-* Version: 1.0
-* Package: project information
-* Design: board information and circuit design
+* Version: 1.1.
+* Package: project information.
+* Design: board information and circuit design.
+* Dependencies: all used dependencies in one level.
 
 Extension: **.ice**
 
 .. code-block:: json
 
     {
-      "version": "1.0",
+      "version": "1.1",
       "package": {
         "name": "",
         "version": "",
@@ -29,7 +30,6 @@ Extension: **.ice**
           "blocks": [],
           "wires": []
         },
-        "deps": {},
         "state": {
           "pan": {
             "x": 0,
@@ -37,7 +37,8 @@ Extension: **.ice**
           },
           "zoom": 1
         }
-      }
+      },
+      "dependencies": {}
     }
 
 Block instances

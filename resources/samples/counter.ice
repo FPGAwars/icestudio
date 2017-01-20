@@ -1,10 +1,10 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "package": {
-    "name": "",
-    "version": "",
-    "description": "",
-    "author": "",
+    "name": "counter",
+    "version": "1.0",
+    "description": "4-bit counter. N is the number of bits to count.",
+    "author": "Jesús Arroyo",
     "image": ""
   },
   "design": {
@@ -26,7 +26,7 @@
         },
         {
           "id": "51e4e6a6-ef05-48e6-8f22-a355e6eda3ae",
-          "type": "bit.0",
+          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
           "position": {
             "x": 568,
             "y": 64
@@ -36,7 +36,7 @@
           "id": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
           "type": "basic.output",
           "data": {
-            "name": "LED 5",
+            "name": "LED5",
             "pins": [
               {
                 "index": "0",
@@ -55,7 +55,7 @@
           "id": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
           "type": "basic.output",
           "data": {
-            "name": "LED 4",
+            "name": "LED4",
             "pins": [
               {
                 "index": "0",
@@ -164,7 +164,7 @@
           "id": "9803de82-f844-48f0-9f6a-b428395073b4",
           "type": "basic.input",
           "data": {
-            "name": "Button 1",
+            "name": "Enable",
             "pins": [
               {
                 "index": "0",
@@ -183,7 +183,7 @@
           "id": "4caf869e-5202-4aa0-acbf-14fac565eaf1",
           "type": "basic.input",
           "data": {
-            "name": "Button 2",
+            "name": "Reset",
             "pins": [
               {
                 "index": "0",
@@ -273,81 +273,79 @@
         }
       ]
     },
-    "deps": {
-      "bit.0": {
-        "version": "1.0",
-        "package": {
-          "name": "Bit 0",
-          "version": "1.0.0",
-          "description": "Assign 0 to the output wire",
-          "author": "Jesús Arroyo",
-          "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2247.303%22%20height=%2227.648%22%20viewBox=%220%200%2044.346456%2025.919999%22%3E%3Ctext%20style=%22line-height:125%25%22%20x=%22325.37%22%20y=%22315.373%22%20font-weight=%22400%22%20font-size=%2212.669%22%20font-family=%22sans-serif%22%20letter-spacing=%220%22%20word-spacing=%220%22%20transform=%22translate(-307.01%20-298.51)%22%3E%3Ctspan%20x=%22325.37%22%20y=%22315.373%22%20style=%22-inkscape-font-specification:'Courier%2010%20Pitch'%22%20font-family=%22Courier%2010%20Pitch%22%3E0%3C/tspan%3E%3C/text%3E%3C/svg%3E"
-        },
-        "design": {
-          "graph": {
-            "blocks": [
-              {
-                "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
-                "type": "basic.code",
-                "data": {
-                  "code": "// Bit 0\n\nassign v = 1'b0;",
-                  "params": [],
-                  "ports": {
-                    "in": [],
-                    "out": [
-                      {
-                        "name": "v"
-                      }
-                    ]
-                  }
-                },
-                "position": {
-                  "x": 96,
-                  "y": 96
-                }
-              },
-              {
-                "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
-                "type": "basic.output",
-                "data": {
-                  "name": ""
-                },
-                "position": {
-                  "x": 608,
-                  "y": 192
-                }
-              }
-            ],
-            "wires": [
-              {
-                "source": {
-                  "block": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
-                  "port": "v"
-                },
-                "target": {
-                  "block": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
-                  "port": "in"
-                }
-              }
-            ]
-          },
-          "deps": {},
-          "state": {
-            "pan": {
-              "x": 0,
-              "y": 0
-            },
-            "zoom": 1
-          }
-        }
-      }
-    },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": -0.5941,
+        "y": -4.4208
       },
-      "zoom": 1
+      "zoom": 1.0149
+    }
+  },
+  "dependencies": {
+    "862d2a36c72ddee13ea44bf906fe1b60efa90941": {
+      "package": {
+        "name": "Bit 0",
+        "version": "1.0.0",
+        "description": "Assign 0 to the output wire",
+        "author": "Jesús Arroyo",
+        "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2247.303%22%20height=%2227.648%22%20viewBox=%220%200%2044.346456%2025.919999%22%3E%3Ctext%20style=%22line-height:125%25%22%20x=%22325.37%22%20y=%22315.373%22%20font-weight=%22400%22%20font-size=%2212.669%22%20font-family=%22sans-serif%22%20letter-spacing=%220%22%20word-spacing=%220%22%20transform=%22translate(-307.01%20-298.51)%22%3E%3Ctspan%20x=%22325.37%22%20y=%22315.373%22%20style=%22-inkscape-font-specification:'Courier%2010%20Pitch'%22%20font-family=%22Courier%2010%20Pitch%22%3E0%3C/tspan%3E%3C/text%3E%3C/svg%3E"
+      },
+      "design": {
+        "graph": {
+          "blocks": [
+            {
+              "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
+              "type": "basic.code",
+              "data": {
+                "code": "// Bit 0\n\nassign v = 1'b0;",
+                "params": [],
+                "ports": {
+                  "in": [],
+                  "out": [
+                    {
+                      "name": "v"
+                    }
+                  ]
+                }
+              },
+              "position": {
+                "x": 96,
+                "y": 96
+              }
+            },
+            {
+              "id": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
+              "type": "basic.output",
+              "data": {
+                "name": ""
+              },
+              "position": {
+                "x": 608,
+                "y": 192
+              }
+            }
+          ],
+          "wires": [
+            {
+              "source": {
+                "block": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
+                "port": "v"
+              },
+              "target": {
+                "block": "19c8f68d-5022-487f-9ab0-f0a3cd58bead",
+                "port": "in"
+              }
+            }
+          ]
+        },
+        "state": {
+          "pan": {
+            "x": 0,
+            "y": 0
+          },
+          "zoom": 1
+        }
+      }
     }
   }
 }
