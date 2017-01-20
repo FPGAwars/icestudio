@@ -26,10 +26,10 @@ module main #(
  assign w5 = vb8a806;
  assign w6 = ve0befb;
  assign w1 = w0;
- v862d2a v2a3316 (
+ main_v862d2a v2a3316 (
   .v608bd9(w0)
  );
- v4549a6 #(
+ main_v4549a6 #(
   .N(p4)
  ) v4549a6 (
   .c(w2),
@@ -39,17 +39,17 @@ module main #(
  );
 endmodule
 
-module v862d2a (
+module main_v862d2a (
  output v608bd9
 );
  wire w0;
  assign v608bd9 = w0;
- v68c173 v68c173 (
+ main_v862d2a_v68c173 v68c173 (
   .v(w0)
  );
 endmodule
 
-module v68c173 (
+module main_v862d2a_v68c173 (
  output v
 );
  // Bit 0
@@ -57,7 +57,7 @@ module v68c173 (
  assign v = 1'b0;
 endmodule
 
-module v4549a6 #(
+module main_v4549a6 #(
  parameter N = 0
 ) (
  input clk,
