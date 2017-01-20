@@ -24,6 +24,7 @@ Install the toolchain
 
   When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**. Also, the toolchain can be restored to default in **Tools > Toolchain > Reset default**.
 
+
 Update the toolchain
 ---------------------
 
@@ -32,6 +33,7 @@ Update the toolchain
 2. **Launch the toolchain updating process**
 
   Go to **Tools > Toolchain > Update**. Be patient for the toolchain update.
+
 
 Install the drivers
 -------------------
@@ -45,6 +47,48 @@ Install the drivers
 .. note::
 
   To revert the drivers configuration go to **Tools > Drivers > Disable**
+
+
+Create a collection package
+---------------------------
+
+1. **Create one or more collections**
+
+  .. code::
+
+    Category 1
+    ├── block1.ice
+    ├── Subcategory 1
+    │   ├── block11.ice
+    │   └── block12.ice
+    └── Subcategory 2
+        └── block21.ice
+
+2. **ZIP all your collections**
+
+  Create a ZIP file with all your created collections at the main level.
+
+  .. code::
+
+    myCollections.zip
+    |
+    ├── Category 1
+    │   └── ...
+    └── Category 2
+        └── ...
+
+
+Add a collection
+----------------
+
+Go to **Tools > Collections > Add** and select a collection package (ZIP file).
+
+
+Select a collection
+-------------------
+
+Go to **View > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
+
 
 Create a project
 ----------------
