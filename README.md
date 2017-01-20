@@ -2,6 +2,7 @@
 
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
 
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
@@ -23,19 +24,19 @@ Supported operating systems:
 * Windows
 * Mac OS X
 
-## Version 0.3.0-beta (latest)
+## Version 0.3.0-beta2 (latest)
 
 ### Installation
 
 1. Install [Python 2.7](https://www.python.org)
 
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta), unzip and execute **icestudio**
+2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta2), unzip and execute **icestudio**
 
 Documentation: http://icestudio.readthedocs.io/en/latest
 
 NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
 
-<img src="./doc/images/icestudio-0.3.0-beta.png" width="700" align="center">
+<img src="./doc/images/icestudio-0.3.0-beta2.png" width="700" align="center">
 
 ## Development
 
@@ -82,7 +83,7 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |  Language  | Translated strings                         |
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
-| Spanish    | ![Progress](http://progressed.io/bar/88)   |
+| Spanish    | ![Progress](http://progressed.io/bar/100)  |
 | Basque     | ![Progress](http://progressed.io/bar/88)   |
 | French     | ![Progress](http://progressed.io/bar/72)   |
 | Galician   | ![Progress](http://progressed.io/bar/47)   |
@@ -139,6 +140,9 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 ## Contributors
 
 * v0.3
+ * [Martoni](https://github.com/Martoni)
+ * [Carlos Díaz](https://github.com/C47D)
+ * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
 
 * v0.2
  * [Tomás Calvo](https://github.com/tocalvo)
