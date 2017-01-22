@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. 1. Basic
@@ -63,7 +63,7 @@ msgstr "Icestudio-ri buruz..."
 
 #: app/views/menu.html:275
 msgid "Add"
-msgstr ""
+msgstr "Gehitu"
 
 #: app/scripts/controllers/menu.js:431
 msgid "Add a block to start"
@@ -75,11 +75,11 @@ msgstr "Blokea sortu"
 
 #: app/scripts/services/tools.service.js:590
 msgid "All collections removed"
-msgstr ""
+msgstr "Bildumak ezabatu dira"
 
 #: app/scripts/controllers/menu.js:455
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr ""
+msgstr "Gordetako bildumak galduko dira. Jarraitu nahi al duzu?"
 
 #: app/scripts/services/utils.service.js:681
 msgid "Author"
@@ -138,19 +138,19 @@ msgstr "Kodea"
 
 #: app/scripts/services/tools.service.js:577
 msgid "Collection file {{name}} added"
-msgstr ""
+msgstr "{{name}} bildumen fitxategia gehitu da"
 
 #: app/scripts/services/tools.service.js:584
 msgid "Collection {{name}} removed"
-msgstr ""
+msgstr "{{name}} bilduma ezabatu da"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Collection {{name}} selected"
-msgstr ""
+msgstr "{{name}} bilduma hautatu da"
 
 #: app/views/menu.html:185 app/views/menu.html:271
 msgid "Collections"
-msgstr ""
+msgstr "Bildumak"
 
 #: app/views/menu.html:317
 msgid "Community forum"
@@ -162,11 +162,11 @@ msgstr "Konstantea"
 
 #: app/views/menu.html:101
 msgid "Copy"
-msgstr ""
+msgstr "Kopiatu"
 
 #: app/views/menu.html:98
 msgid "Cut"
-msgstr ""
+msgstr "Ebaki"
 
 #: app/views/menu.html:181
 msgid "Datasheet"
@@ -174,7 +174,7 @@ msgstr "Datu-fitxa"
 
 #: app/views/menu.html:189
 msgid "Default"
-msgstr ""
+msgstr "Lehenetsia"
 
 #: app/scripts/services/tools.service.js:315
 msgid ""
@@ -194,11 +194,11 @@ msgstr "Desgaitu"
 
 #: app/scripts/controllers/menu.js:218
 msgid "Do you want to close the application?"
-msgstr ""
+msgstr "Aplikazioa itxi nahi al duzu?"
 
 #: app/scripts/controllers/menu.js:445
 msgid "Do you want to remove the {{name}} collection?"
-msgstr ""
+msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
 #: app/views/menu.html:310
 msgid "Documentation"
@@ -303,7 +303,7 @@ msgstr "FPGAren E/S portuak definitu gabe daude"
 #: app/scripts/services/blocks.service.js:58
 #: app/scripts/services/blocks.service.js:640
 msgid "FPGA pin"
-msgstr ""
+msgstr "FPGA pina"
 
 #: app/views/menu.html:26
 msgid "File"
@@ -326,7 +326,7 @@ msgstr "{{file}} fitxategia inportatu da"
 
 #: app/views/menu.html:114
 msgid "Fit content"
-msgstr ""
+msgstr "Edukia doitu"
 
 #: app/views/menu.html:160
 msgid "French"
@@ -358,7 +358,7 @@ msgstr "{{name}} izeneko irudia gorde da"
 
 #: app/views/menu.html:338
 msgid "Information"
-msgstr ""
+msgstr "Informazioa"
 
 #: app/views/menu.html:334
 msgid "Input"
@@ -442,7 +442,7 @@ msgstr "{{name}} proiektua sortu da"
 
 #: app/scripts/controllers/menu.js:463
 msgid "No collections stored"
-msgstr ""
+msgstr "Ez dago gordeta bildumarik"
 
 #: app/scripts/controllers/main.js:15
 msgid "OK"
@@ -451,7 +451,7 @@ msgstr "Ok"
 #: app/scripts/services/project.service.js:101
 #: app/scripts/services/project.service.js:308
 msgid "Old project format {{version}}"
-msgstr ""
+msgstr "{{version}} formatuko proiektu zaharra"
 
 #: app/views/menu.html:32
 msgid "Open"
@@ -475,7 +475,7 @@ msgstr "PCF fitxategia esportatu da"
 
 #: app/views/menu.html:104
 msgid "Paste"
-msgstr ""
+msgstr "Itsatsi"
 
 #: app/views/menu.html:118
 msgid "Preferences"
@@ -507,7 +507,7 @@ msgstr "Irakurtzeko soilik"
 
 #: app/views/menu.html:94
 msgid "Redo"
-msgstr ""
+msgstr "Berregin"
 
 #: app/scripts/services/tools.service.js:264
 msgid "Remote host {{name}} not connected"
@@ -523,7 +523,7 @@ msgstr "Ezabatu"
 
 #: app/views/menu.html:291
 msgid "Remove all"
-msgstr ""
+msgstr "Dena ezabatu"
 
 #: app/scripts/services/utils.service.js:703
 msgid "Reset SVG"
@@ -551,7 +551,7 @@ msgstr "Gorde honela"
 
 #: app/views/menu.html:107
 msgid "Select all"
-msgstr ""
+msgstr "Dena hautatu"
 
 #: app/views/menu.html:313
 msgid "Source code"
@@ -633,7 +633,7 @@ msgstr "Tresnak"
 
 #: app/views/menu.html:91
 msgid "Undo"
-msgstr ""
+msgstr "Desegin"
 
 #: app/scripts/services/tools.service.js:230
 msgid "Unknown board"
@@ -641,7 +641,7 @@ msgstr "Plaka ezezaguna"
 
 #: app/scripts/app.js:42
 msgid "Untitled"
-msgstr ""
+msgstr "Izenik gabe"
 
 #: app/views/menu.html:235
 msgid "Update"
@@ -705,7 +705,7 @@ msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 
 #: app/scripts/controllers/menu.js:219
 msgid "Your changes will be lost if you don’t save them"
-msgstr ""
+msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
 
 #. And
 #: app/resources/blocks/labels.js:34
