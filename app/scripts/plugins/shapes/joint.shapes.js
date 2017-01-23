@@ -349,19 +349,28 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
     var image = this.model.get('image');
-    var name = this.model.get('label');
+    var label = this.model.get('label');
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
 
+    var imageSelector = this.$box.find('img');
+    var labelSelector = this.$box.find('label');
+
     if (image) {
-      this.$box.find('img').attr('src', 'data:image/svg+xml,' + image);
-      this.$box.find('img').removeClass('hidden');
-      this.$box.find('label').addClass('hidden');
+      imageSelector.attr('src', 'data:image/svg+xml,' + image);
+      if (imageSelector[0].width > imageSelector[0].height) {
+        imageSelector.css('width', '80%');
+      }
+      else {
+        imageSelector.css('height', '80%');
+      }
+      imageSelector.removeClass('hidden');
+      labelSelector.addClass('hidden');
     }
     else {
-      this.$box.find('label').html(name);
-      this.$box.find('img').addClass('hidden');
-      this.$box.find('label').removeClass('hidden');
+      labelSelector.html(label);
+      labelSelector.removeClass('hidden');
+      imageSelector.addClass('hidden');
     }
     if (this.model.get('config')) {
       this.$box.addClass('config-block');
