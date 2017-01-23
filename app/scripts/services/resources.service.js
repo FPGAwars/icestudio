@@ -31,7 +31,7 @@ angular.module('icestudio')
       name = name || DEFAULT;
       var selectedCollection = null;
       for (var i in this.currentCollections) {
-        if (name === this.currentCollections[i].name) {
+        if (this.currentCollections[i].name === name) {
           selectedCollection = this.currentCollections[i];
           break;
         }

@@ -528,7 +528,7 @@ angular.module('icestudio')
         next: boardName
       };
       graph.trigger('board', { data: data });
-      boards.selectBoard(boardName);
+      boardName = boards.selectBoard(boardName);
       var cells = graph.getCells();
       // Reset choices in all I/O blocks
       for (var i in cells) {
@@ -543,6 +543,7 @@ angular.module('icestudio')
         }
       }
       graph.stopBatch('change');
+      return boardName;
     };
 
     this.resetCommandStack = function() {

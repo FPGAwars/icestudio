@@ -7,7 +7,8 @@ angular.module('icestudio')
     this.data = {
       'language': '',
       'remoterHostname': '',
-      'collection': ''
+      'collection': '',
+      'board': ''
     };
 
     this.load = function(callback) {

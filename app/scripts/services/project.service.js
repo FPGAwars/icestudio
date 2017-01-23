@@ -5,6 +5,7 @@ angular.module('icestudio')
                                graph,
                                boards,
                                compiler,
+                               profile,
                                utils,
                                gettextCatalog,
                                nodeFs,
@@ -109,7 +110,7 @@ angular.module('icestudio')
       });
 
       if (ret) {
-        boards.selectBoard(project.design.board);
+        profile.data.board = boards.selectBoard(project.design.board);
         this.updateTitle(name);
       }
       else {

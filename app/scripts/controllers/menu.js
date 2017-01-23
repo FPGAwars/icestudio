@@ -33,7 +33,8 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
-    // Initialize selected collection
+    // Initialize
+    updateSelectedBoard();
     updateSelectedCollection();
 
     // Window events
@@ -402,10 +403,14 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        graph.selectBoard(board.name);
+        profile.data.board = graph.selectBoard(board.name);
         alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
       }
     };
+
+    function updateSelectedBoard() {
+      profile.data.board = boards.selectBoard(profile.data.board);
+    }
 
 
     //-- Tools

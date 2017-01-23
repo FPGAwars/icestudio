@@ -4,6 +4,8 @@ angular.module('icestudio')
   .service('boards', function(utils,
                               nodeFs,
                               nodePath) {
+    const DEFAULT = 'icezum';
+
     this.pinoutHTML = '';
     this.selectedBoard = null;
     this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
@@ -45,18 +47,29 @@ angular.module('icestudio')
     });
 
     this.selectBoard = function(name) {
-      for (var i in this.currentBoards) {
-        if (name === this.currentBoards[i].name) {
-          this.selectedBoard = this.currentBoards[i];
-          this.pinoutHTML = generateHTMLOptions(this.selectedBoard.pinout);
+      name = name || DEFAULT;
+      var i;
+      var selectedBoard = null;
+      for (i in this.currentBoards) {
+        if (this.currentBoards[i].name === name) {
+          selectedBoard = this.currentBoards[i];
           break;
         }
       }
+      if (selectedBoard === null) {
+        // Board not found: select default board
+        for (i in this.currentBoards) {
+          if (this.currentBoards[i].name === DEFAULT) {
+            selectedBoard = this.currentBoards[i];
+            break;
+          }
+        }
+      }
+      this.selectedBoard = selectedBoard;
+      this.pinoutHTML = generateHTMLOptions(this.selectedBoard.pinout);
       utils.rootScopeSafeApply();
+      return this.selectedBoard.name;
     };
-
-    // Set default board
-    this.selectBoard('icezum');
 
     this.getPinoutHTML = function() {
       return this.pinoutHTML;
