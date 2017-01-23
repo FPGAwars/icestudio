@@ -358,7 +358,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     if (image) {
       imageSelector.attr('src', 'data:image/svg+xml,' + image);
-      if (imageSelector[0].width > imageSelector[0].height) {
+      if (imageSelector[0].width / imageSelector[0].height > 1.5) {
         imageSelector.css('width', '80%');
       }
       else {
