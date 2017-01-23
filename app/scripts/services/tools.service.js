@@ -17,7 +17,7 @@ angular.module('icestudio')
                              nodeChildProcess,
                              nodeSSHexec,
                              nodeRSync,
-                             nodeUnzip) {
+                             nodeExtract) {
 
     var currentAlert = null;
     var taskRunning = false;
@@ -570,9 +570,10 @@ angular.module('icestudio')
 
     this.addCollection = function(filepath) {
       var name = utils.basename(filepath);
-      nodeFs.createReadStream(filepath)
-      .pipe(nodeUnzip.Extract({ path: utils.COLLECTIONS_DIR }))
-      .on('close', function() {
+      nodeExtract(filepath, { dir: utils.COLLECTIONS_DIR }, function (err) {
+        if (err) {
+          throw err;
+        }
         resources.loadCollections();
         alertify.success(gettextCatalog.getString('Collection file {{name}} added', { name: utils.bold(name) }));
       });

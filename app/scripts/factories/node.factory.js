@@ -49,8 +49,8 @@ angular.module('icestudio')
   .factory('nodeLangInfo', function() {
     return require('node-lang-info');
   })
-  .factory('nodeUnzip', function() {
-    return require('unzip');
+  .factory('nodeExtract', function() {
+    return require('extract-zip');
   })
   .factory('SVGO', function() {
     return require('svgo');

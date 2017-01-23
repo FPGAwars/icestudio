@@ -25,6 +25,7 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "extract-zip": "^1.6.0",
     "fs-extra": "^1.0.0",
     "glob": "^7.1.1",
     "is-online": "^5.2.0",
@@ -38,8 +39,7 @@
     "ssh-exec": "^2.0.0",
     "sudo-prompt": "^6.2.0",
     "svgo": "^0.7.1",
-    "tarball-extract": "0.0.3",
-    "unzip": "^0.1.11"
+    "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",
   "keywords": [
