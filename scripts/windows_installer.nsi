@@ -114,7 +114,19 @@ Section "${NAME} ${VERSION}"
   SetOutPath $INSTDIR
 
   # install app files
-  File /r "${APP}\"
+  File "${APP}\icestudio.exe"
+  File "${APP}\icudtl.dat"
+  File "${APP}\nw.pak"
+  File /r "${APP}\toolchain"
+
+  File "${APP}\index.html"
+  File "${APP}\package.json"
+  File /r "${APP}\fonts"
+  File /r "${APP}\node_modules"
+  File /r "${APP}\resources"
+  File /r "${APP}\scripts"
+  File /r "${APP}\styles"
+  File /r "${APP}\views"
 
   # define the uninstaller name
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"

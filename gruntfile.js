@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   else {
     var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
+    var distCommands = ['wget:python', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
   }
 
   function all(dir) {
@@ -340,8 +340,7 @@ module.exports = function(grunt) {
     'cssmin',
     'usemin',
     'nwjs',
-    'toolchain',
-    'wget:python'
+    'toolchain'
   ]
   .concat(distCommands)
   .concat([
