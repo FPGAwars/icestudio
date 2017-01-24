@@ -7,12 +7,12 @@ module.exports = function(grunt) {
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'darwinDependencies'] };
-    var distCommands = ['nwjs', 'toolchain', 'appdmg', 'compress:osx32', 'compress:osx64'];
+    var distCommands = ['appdmg', 'compress:osx32', 'compress:osx64'];
   }
   else {
     var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['nwjs', 'toolchain', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
+    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
   }
 
   function all(dir) {
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // Executes nw application
+    // Execute nw application
     exec: {
       nw: 'nw app',
       stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)'
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // Copies dist files
+    // Copy dist files
     copy: {
       dist: {
         files: [
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'app/bower_components/bootstrap/fonts',
-            dest: 'dist/tmp/fonts/',
+            dest: 'dist/tmp/fonts',
             src: '*.*'
           }
         ]
@@ -107,12 +107,12 @@ module.exports = function(grunt) {
       }
     },
 
-    // Performs rewrites based on filerev and the useminPrepare configuration
+    // Rewrite based on filerev and the useminPrepare configuration
     usemin: {
       html: ['dist/tmp/index.html']
     },
 
-    // Executes nw-build packaging
+    // Execute nw-build packaging
     nwjs: {
       options: {
         version: '0.12.3',
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
       src: ['dist/tmp/**']
     },
 
-    // Creates standalone toolchains for each platform
+    // Create standalone toolchains for each platform
     toolchain: {
       options: {
         apioMin: _package.apio.min,
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // ONLY MAC: generates a dmg package
+    // ONLY MAC: generate a dmg package
     appdmg: {
       options: {
         basepath: '.',
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*', ].concat(appFiles),
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
@@ -240,7 +240,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // Watches files for changes and runs tasks based on the changed files
+    // Watch files for changes and runs tasks based on the changed files
     watch: {
       scripts: {
         files: [
@@ -261,7 +261,18 @@ module.exports = function(grunt) {
       }
     },
 
-    // Empties folders to start fresh
+    // Wget Python installer
+    wget: {
+      python: {
+         options: {
+           overwrite: false
+         },
+         src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
+         dest: 'cache/python/python-2.7.13.amd64.msi'
+      }
+    },
+
+    // Empty folders to start fresh
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
@@ -327,7 +338,10 @@ module.exports = function(grunt) {
     'json-minify',
     'uglify',
     'cssmin',
-    'usemin'
+    'usemin',
+    'nwjs',
+    'toolchain',
+    'wget:python'
   ]
   .concat(distCommands)
   .concat([

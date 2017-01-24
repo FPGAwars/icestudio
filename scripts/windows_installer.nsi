@@ -2,9 +2,10 @@
 !define VERSION  "0.3.0-dev"
 !define ARCH     "win64"
 !define DIST     "..\dist"
+!define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
 !define PYTHON   "python-2.7.13.amd64.msi"
-!define PYPATH   "${APP}\python\${PYTHON}"
+!define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
 
 # define name of installer
