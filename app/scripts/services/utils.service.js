@@ -22,27 +22,9 @@ angular.module('icestudio')
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
 
-    const CACHE = '_cache';
-
-    const VENV = 'virtualenv-15.0.1';
-    const VENV_DIR = nodePath.join(CACHE, VENV);
-    const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
-
+    const LOCALE_DIR = nodePath.join('resources', 'locale');
     const SAMPLE_DIR = nodePath.join('resources', 'sample');
     this.SAMPLE_DIR = SAMPLE_DIR;
-
-    const LOCALE_DIR = nodePath.join('resources', 'locale');
-
-    const APP_DIR = nodePath.dirname(process.execPath);
-    const TOOLCHAIN_DIR = nodePath.join(APP_DIR, 'toolchain');
-    this.TOOLCHAIN_DIR = TOOLCHAIN_DIR;
-
-    const DEFAULT_APIO = 'default-apio';
-    const DEFAULT_APIO_DIR = nodePath.join(CACHE, DEFAULT_APIO);
-    const DEFAULT_APIO_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO + '.tar.gz');
-
-    const DEFAULT_APIO_PACKAGES = 'default-apio-packages';
-    const DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO_PACKAGES + '.tar.gz');
 
     const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
@@ -52,6 +34,24 @@ angular.module('icestudio')
     const APIO_HOME_DIR = nodePath.join(ICESTUDIO_DIR, 'apio');
     const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
     this.PROFILE_PATH = PROFILE_PATH;
+    const CACHE_DIR = nodePath.join(ICESTUDIO_DIR, '.cache');
+    const BUILD_DIR = nodePath.join(ICESTUDIO_DIR, '.build');
+    this.BUILD_DIR = BUILD_DIR;
+
+    const VENV = 'virtualenv-15.0.1';
+    const VENV_DIR = nodePath.join(CACHE_DIR, VENV);
+    const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
+
+    const APP_DIR = nodePath.dirname(process.execPath);
+    const TOOLCHAIN_DIR = nodePath.join(APP_DIR, 'toolchain');
+    this.TOOLCHAIN_DIR = TOOLCHAIN_DIR;
+
+    const DEFAULT_APIO = 'default-apio';
+    const DEFAULT_APIO_DIR = nodePath.join(CACHE_DIR, DEFAULT_APIO);
+    const DEFAULT_APIO_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO + '.tar.gz');
+
+    const DEFAULT_APIO_PACKAGES = 'default-apio-packages';
+    const DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO_PACKAGES + '.tar.gz');
 
     const ENV_DIR = _getEnvDir(nodePath.join(ICESTUDIO_DIR, 'venv'));
     const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
@@ -129,7 +129,7 @@ angular.module('icestudio')
     };
 
     this.extractVirtualEnv = function(callback) {
-      this.extractTargz(VENV_TARGZ, CACHE, callback);
+      this.extractTargz(VENV_TARGZ, CACHE_DIR, callback);
     };
 
     function disableClick(e) {

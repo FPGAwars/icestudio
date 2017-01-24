@@ -24,7 +24,6 @@ angular.module('icestudio')
     var toolchain = { apio: '-', installed: false, disabled: false };
 
     this.toolchain = toolchain;
-    const buildPath = '_build';
 
     // Check if the toolchain is installed
     checkToolchain();
@@ -33,7 +32,7 @@ angular.module('icestudio')
     updateToolchainInfo();
 
     // Remove _build directory on start
-    nodeFse.removeSync(buildPath);
+    nodeFse.removeSync(utils.BUILD_DIR);
 
     this.verifyCode = function() {
       this.apio(['verify']);
@@ -67,7 +66,7 @@ angular.module('icestudio')
           var message = 'start_' + commands[0];
           currentAlert = alertify.notify(gettextCatalog.getString(message), 'message', 100000);
           $('body').addClass('waiting');
-          nodeProcess.chdir(buildPath);
+          nodeProcess.chdir(utils.BUILD_DIR);
           check = this.syncResources(code);
           try {
             if (check) {
@@ -130,14 +129,14 @@ angular.module('icestudio')
     }
 
     this.generateCode = function() {
-      if (!nodeFs.existsSync(buildPath)) {
-        nodeFs.mkdirSync(buildPath);
+      if (!nodeFs.existsSync(utils.BUILD_DIR)) {
+        nodeFs.mkdirSync(utils.BUILD_DIR);
       }
       project.update();
       var verilog = compiler.generate('verilog', project.get());
       var pcf = compiler.generate('pcf', project.get());
-      nodeFs.writeFileSync(nodePath.join(buildPath, 'main.v'), verilog, 'utf8');
-      nodeFs.writeFileSync(nodePath.join(buildPath, 'main.pcf'), pcf, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.v'), verilog, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
       return verilog;
     };
 
@@ -185,7 +184,7 @@ angular.module('icestudio')
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
           src: nodeProcess.cwd() + '/',
-          dest: remoteHostname + ':' + buildPath + '/',
+          dest: remoteHostname + ':' + utils.BUILD_DIR + '/',
           ssh: true,
           recursive: true,
           delete: true,
@@ -194,7 +193,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
-            nodeSSHexec('cd ' + buildPath + '; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
+            nodeSSHexec('cd ' + utils.BUILD_DIR + '; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
               function (error, stdout, stderr) {
                 processExecute(label, callback, error, stdout, stderr);
               });
