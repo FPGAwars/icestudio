@@ -1,18 +1,16 @@
 module.exports = function(grunt) {
   var os = require('os');
-  // Load apio info
-  var _package = require('./package.json');
 
   const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'darwinDependencies'] };
-    var distCommands = ['appdmg', 'compress:osx32', 'compress:osx64'];
+    var distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
   }
   else {
     var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['wget:python', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
+    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
@@ -51,7 +49,9 @@ module.exports = function(grunt) {
     // Execute nw application
     exec: {
       nw: 'nw app',
-      stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)'
+      stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)',
+      nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -130,8 +130,8 @@ module.exports = function(grunt) {
     // Create standalone toolchains for each platform
     toolchain: {
       options: {
-        apioMin: _package.apio.min,
-        apioMax: _package.apio.max,
+        apioMin: '<%=pkg.apio.min%>',
+        apioMax: '<%=pkg.apio.max%>',
         buildDir: 'dist/',
         platforms: platforms
       }
