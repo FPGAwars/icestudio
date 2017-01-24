@@ -28,7 +28,8 @@ RequestExecutionLevel admin
 
 
 !include MUI2.nsh
-!include Library.nsh
+!include FileFunc.nsh
+!include FileAssociation.nsh
 
 !define MUI_ICON "${ICON}"
 !define MUI_BGCOLOR FFFFFF
@@ -89,7 +90,7 @@ Section "Install Python"
 
     continue:
       # define output path
-      SetOutPath $INSTDIR\python
+      SetOutPath "$INSTDIR\python"
 
       # copy Python msi
       File ${PYPATH}
@@ -133,19 +134,26 @@ Section "${NAME} ${VERSION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString" '"$INSTDIR\uninstaller.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoRepair" 1
-  WriteUninstaller $INSTDIR\uninstaller.exe
+  WriteUninstaller "$INSTDIR\uninstaller.exe"
+
+  # write start menu entries for all users
+  SetShellVarContext all
 
   # define shortcut
   CreateDirectory "$SMPROGRAMS\{NAME}"
-  CreateShortCut "$SMPROGRAMS\{NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\resources\images\icestudio-logo.ico" 0
-  CreateShortCut "$SMPROGRAMS\{NAME}\Uninstall ${NAME}.lnk" "$INSTDIR\uninstaller.exe" "" "$INSTDIR\uninstaller.exe" 0
+  CreateShortCut "$SMPROGRAMS\{NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe"
+  CreateShortCut "$SMPROGRAMS\{NAME}\Uninstall ${NAME}.lnk" "$INSTDIR\uninstaller.exe"
+
+  # register .ice files
+  ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
+  ${RefreshShellIcons}
 
 SectionEnd
 
 
 Function LaunchLink
 
- Exec $INSTDIR\icestudio.exe
+ Exec "$INSTDIR\icestudio.exe"
 
 FunctionEnd
 
@@ -154,12 +162,17 @@ Section "Uninstall"
 
   # delete the uninstaller
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
-  Delete $INSTDIR\uninstaller.exe
+  Delete "$INSTDIR\uninstaller.exe"
+
+  # write start menu entries for all users
+  SetShellVarContext all
 
   # delete the installed files
-  Delete "$SMPROGRAMS\{NAME}\${NAME}.lnk"
-  Delete "$SMPROGRAMS\{NAME}\Uninstall ${NAME}.lnk"
   Delete "$SMPROGRAMS\{NAME}"
   RMDir /r $INSTDIR
+
+  # unregister .ice files
+  ${unregisterExtension} ".ice" "Icestudio project"
+  ${RefreshShellIcons}
 
 SectionEnd
