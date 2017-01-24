@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('compiler', function(nodeSha1,
+  .service('compiler', function(boards,
+                                nodeSha1,
                                 _package) {
 
     this.generate = function(target, project) {
@@ -321,6 +322,30 @@ angular.module('icestudio')
       return null;
     }
 
+    function getInitPins(blocks) {
+      var initPins = [];
+      var usedPins = [];
+
+      for (var i in blocks) {
+        var block = blocks[i];
+        if (block.type === 'basic.input' ||
+            block.type === 'basic.output') {
+          for (var p in block.data.pins) {
+            usedPins.push(block.data.virtual ? '' : block.data.pins[p].value);
+          }
+        }
+      }
+
+      var allInitPins = boards.selectedBoard.rules.initialize;
+      for (var j in allInitPins) {
+        if (usedPins.indexOf(allInitPins[j].pin) === -1) {
+          initPins.push(allInitPins[j]);
+        }
+      }
+
+      return initPins;
+    }
+
     function verilogCompiler(name, project) {
       var data;
       var code = '';
@@ -329,17 +354,45 @@ angular.module('icestudio')
           project.design &&
           project.design.graph) {
 
-        var graph = project.design.graph;
+        var blocks = project.design.graph.blocks;
         var dependencies = project.dependencies;
 
         // Main module
 
         if (name) {
+
+          var params = getParams(project);
+          var ports = getPorts(project);
+          var content = getContent(name, project);
+
+          if (name === 'main') {
+
+            // Initialize pins
+
+            var initPins = getInitPins(blocks);
+            var n = initPins.length;
+
+            if (n > 0) {
+              // Declare m port
+              ports.out.push({
+                name: 'm',
+                range: '[0:' + (n-1) + ']'
+              });
+              // Generate port value
+              var value = n.toString() + '\'b';
+              for (var j in initPins) {
+                value += initPins[j].bit;
+              }
+              // Assign m port
+              content += '\nassign m = ' + value + ';';
+            }
+          }
+
           data = {
             name: name,
-            params: getParams(project),
-            ports: getPorts(project),
-            content: getContent(name, project)
+            params: params,
+            ports: ports,
+            content: content
           };
           code += module(data);
         }
@@ -352,8 +405,8 @@ angular.module('icestudio')
 
         // Code modules
 
-        for (var i in graph.blocks) {
-          var block = graph.blocks[i];
+        for (var i in blocks) {
+          var block = blocks[i];
           if (block) {
             if (block.type === 'basic.code') {
               data = {
@@ -373,31 +426,50 @@ angular.module('icestudio')
 
     function pcfCompiler(project) {
       var code = '';
-      var graph = project.design.graph;
+      var blocks = project.design.graph.blocks;
+      var pin, value;
 
-      for (var i in graph.blocks) {
-        var block = graph.blocks[i];
+      for (var i in blocks) {
+        var block = blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
-              var pin = block.data.pins[p];
+              pin = block.data.pins[p];
+              value = block.data.virtual ? '' : pin.value;
               code += 'set_io ';
               code += digestId(block.id);
               code += '[' + pin.index + '] ';
-              code += block.data.virtual ? '' : pin.value;
+              code += value;
               code += '\n';
             }
           }
           else {
+            pin = block.data.pins[0];
+            value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
             code += digestId(block.id);
             code += ' ';
-            code += block.data.virtual ? '' : block.data.pins[0].value;
+            code += value;
             code += '\n';
           }
         }
+      }
+
+      // Set port of initialized pins
+      var initPins = getInitPins(blocks);
+      if (initPins.length > 1) {
+        for (var j in initPins) {
+          code += 'set_io m[' + j + '] ';
+          code += initPins[j].pin;
+          code += '\n';
+        }
+      }
+      else {
+        code += 'set_io m ';
+        code += initPins[0].pin;
+        code += '\n';
       }
 
       return code;

@@ -19,10 +19,12 @@ angular.module('icestudio')
           if (!content.startsWith('_')) {
             var info = readJSONFile(contentPath, 'info.json');
             var pinout = readJSONFile(contentPath, 'pinout.json');
+            var rules = readJSONFile(contentPath, 'rules.json');
             boards.push({
               'name': content,
               'info': info,
-              'pinout': pinout
+              'pinout': pinout,
+              'rules': rules
             });
           }
         }
