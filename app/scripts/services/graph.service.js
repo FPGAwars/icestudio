@@ -537,7 +537,7 @@ angular.module('icestudio')
         if (type === 'basic.input' ||
             type === 'basic.output') {
           var view = paper.findViewByModel(cell.id);
-          cell.set('choices', boards.getPinoutHTML());
+          cell.set('choices', (type === 'basic.input') ? boards.pinoutInputHTML : boards.pinoutOutputHTML);
           view.clearValues();
           view.applyChoices();
         }

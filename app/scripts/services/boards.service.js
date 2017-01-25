@@ -6,7 +6,8 @@ angular.module('icestudio')
                               nodePath) {
     const DEFAULT = 'icezum';
 
-    this.pinoutHTML = '';
+    this.pinoutInputHTML = '';
+    this.pinoutOutputHTML = '';
     this.selectedBoard = null;
     this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
 
@@ -68,19 +69,18 @@ angular.module('icestudio')
         }
       }
       this.selectedBoard = selectedBoard;
-      this.pinoutHTML = generateHTMLOptions(this.selectedBoard.pinout);
+      this.pinoutInputHTML = generateHTMLOptions(this.selectedBoard.pinout, 'input');
+      this.pinoutOutputHTML = generateHTMLOptions(this.selectedBoard.pinout, 'output');
       utils.rootScopeSafeApply();
       return this.selectedBoard.name;
     };
 
-    this.getPinoutHTML = function() {
-      return this.pinoutHTML;
-    };
-
-    function generateHTMLOptions(pinout) {
+    function generateHTMLOptions(pinout, type) {
       var code = '<option></option>';
       for (var i in pinout) {
-        code += '<option value="' + pinout[i].value + '">' + pinout[i].name + '</option>';
+        if (pinout[i].type === type || pinout[i].type === 'inout' ) {
+          code += '<option value="' + pinout[i].value + '">' + pinout[i].name + '</option>';
+        }
       }
       return code;
     }

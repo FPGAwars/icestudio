@@ -384,7 +384,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         rightPorts: rightPorts,
-        choices: boards.getPinoutHTML()
+        choices: boards.pinoutInputHTML
       });
       return cell;
     }
@@ -404,7 +404,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         leftPorts: leftPorts,
-        choices: boards.getPinoutHTML()
+        choices: boards.pinoutOutputHTML
       });
       return cell;
     }
