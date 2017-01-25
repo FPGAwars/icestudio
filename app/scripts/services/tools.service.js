@@ -13,7 +13,6 @@ angular.module('icestudio')
                              nodeFse,
                              nodeOs,
                              nodePath,
-                             nodeProcess,
                              nodeChildProcess,
                              nodeSSHexec,
                              nodeRSync,
@@ -31,7 +30,7 @@ angular.module('icestudio')
     // Update toolchain information
     updateToolchainInfo();
 
-    // Remove _build directory on start
+    // Remove build directory on start
     nodeFse.removeSync(utils.BUILD_DIR);
 
     this.verifyCode = function() {
@@ -39,11 +38,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function() {
-      this.apio(['build', '--board', boards.selectedBoard.name]);
+      this.apio(['build', '-b', boards.selectedBoard.name]);
     };
 
     this.uploadCode = function() {
-      this.apio(['upload', '--board', boards.selectedBoard.name]);
+      this.apio(['upload', '-b', boards.selectedBoard.name]);
     };
 
     this.apio = function(commands) {
@@ -66,7 +65,6 @@ angular.module('icestudio')
           var message = 'start_' + commands[0];
           currentAlert = alertify.notify(gettextCatalog.getString(message), 'message', 100000);
           $('body').addClass('waiting');
-          nodeProcess.chdir(utils.BUILD_DIR);
           check = this.syncResources(code);
           try {
             if (check) {
@@ -92,7 +90,6 @@ angular.module('icestudio')
           catch(e) {
           }
           finally {
-            nodeProcess.chdir('..');
           }
         }
         else {
@@ -104,9 +101,7 @@ angular.module('icestudio')
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
       toolchain.disabled = utils.toolchainDisabled;
-      nodeChildProcess.exec([
-        'cd', utils.SAMPLE_DIR, (process.platform === 'win32' ? '&' : ';'),
-        apio, 'clean'].join(' '), function(error/*, stdout, stderr*/) {
+      nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
           if (!toolchain.disabled) {
             toolchain.installed = !error;
             if (callback) {
@@ -183,8 +178,8 @@ angular.module('icestudio')
       if (remoteHostname) {
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
-          src: nodeProcess.cwd() + '/',
-          dest: remoteHostname + ':' + utils.BUILD_DIR + '/',
+          src: utils.BUILD_DIR + '/',
+          dest: remoteHostname + ':.build/',
           ssh: true,
           recursive: true,
           delete: true,
@@ -193,7 +188,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
-            nodeSSHexec('cd ' + utils.BUILD_DIR + '; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
+            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), remoteHostname,
               function (error, stdout, stderr) {
                 processExecute(label, callback, error, stdout, stderr);
               });
@@ -206,7 +201,7 @@ angular.module('icestudio')
       else {
         var apio = utils.getApioExecutable();
         toolchain.disabled = utils.toolchainDisabled;
-        nodeChildProcess.exec(([apio].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(utils.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
             // console.log(error, stdout, stderr);
             processExecute(label, callback, error, stdout, stderr);

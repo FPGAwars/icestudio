@@ -948,6 +948,7 @@ angular.module('icestudio')
       });
     };
 
+    this.coverPath = coverPath;
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }

@@ -22,9 +22,6 @@ angular.module('icestudio')
   .factory('nodeChildProcess', function() {
     return require('child_process');
   })
-  .factory('nodeProcess', function() {
-    return require('process');
-  })
   .factory('nodeTarball', function() {
     return require('tarball-extract');
   })
