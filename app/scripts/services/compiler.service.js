@@ -446,7 +446,7 @@ angular.module('icestudio')
               code += '\n';
             }
           }
-          else {
+          else if (block.data.pins.length > 0) {
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
@@ -467,7 +467,7 @@ angular.module('icestudio')
           code += '\n';
         }
       }
-      else {
+      else if (initPins.length > 0) {
         code += 'set_io m ';
         code += initPins[0].pin;
         code += '\n';
