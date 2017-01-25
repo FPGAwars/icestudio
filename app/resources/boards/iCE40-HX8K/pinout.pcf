@@ -7,38 +7,38 @@
 
 #---------------------------- LEDS --------------------------------------------
 
-set_io --warn-no-port LED0  B5
-set_io --warn-no-port LED1  B4
-set_io --warn-no-port LED2  A2
-set_io --warn-no-port LED3  A1
-set_io --warn-no-port LED4  C5
-set_io --warn-no-port LED5  C4
-set_io --warn-no-port LED6  B3
-set_io --warn-no-port LED7  C3
+set_io --warn-no-port LED0  B5  # output
+set_io --warn-no-port LED1  B4  # output
+set_io --warn-no-port LED2  A2  # output
+set_io --warn-no-port LED3  A1  # output
+set_io --warn-no-port LED4  C5  # output
+set_io --warn-no-port LED5  C4  # output
+set_io --warn-no-port LED6  B3  # output
+set_io --warn-no-port LED7  C3  # output
 
 # -------------------------- SYSTEM CLOCK -------------------------------------
 
-set_io --warn-no-port CLK   J3
+set_io --warn-no-port CLK   J3  # input
 
 # ------------------------------ FTDI 0 ---------------------------------------
 # SPI
-set_io --warn-no-port MISO  P12
-set_io --warn-no-port MOSI  P11
-set_io --warn-no-port SCK   R11
-set_io --warn-no-port SS    R12  #J7.1
-set_io --warn-no-port RTS   B13
+set_io --warn-no-port MISO  P12  # input
+set_io --warn-no-port MOSI  P11  # output
+set_io --warn-no-port SCK   R11  # output
+set_io --warn-no-port SS    R12  # output  #J7.1
+set_io --warn-no-port RTS   B13  # output
 
-set_io --warn-no-port RESET N11
-set_io --warn-no-port DONE  M10
+set_io --warn-no-port RESET N11  # input
+set_io --warn-no-port DONE  M10  # output
 
 # ------------------------------ FTDI 1 ---------------------------------------
 # UART
-set_io --warn-no-port TX    B12
-set_io --warn-no-port RX    B10
-set_io --warn-no-port DCD   B15
-set_io --warn-no-port DSR   B14
-set_io --warn-no-port DTR   A16
-set_io --warn-no-port CTS   A15
+set_io --warn-no-port TX    B12  # output
+set_io --warn-no-port RX    B10  # input
+set_io --warn-no-port DCD   B15  # output
+set_io --warn-no-port DSR   B14  # output
+set_io --warn-no-port DTR   A16  # input
+set_io --warn-no-port CTS   A15  # output
 
 
 #                     ************************************

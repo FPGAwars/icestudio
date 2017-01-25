@@ -85,17 +85,17 @@ set_io --warn-no-port GP6  49
 set_io --warn-no-port GP7  50
 
 # -------------------------- I2C ADC ------------------------------------------
-set_io --warn-no-port ADC_SCL  91
+set_io --warn-no-port ADC_SCL  91  # output
 set_io --warn-no-port ADC_SDA  90
-set_io --warn-no-port ADc_INT  93
+set_io --warn-no-port ADC_INT  93  # input
 
 # -------------------------- SYSTEM CLOCK -------------------------------------
 set_io --warn-no-port CLK 21  # input
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
-set_io --warn-no-port RES  66
-set_io --warn-no-port DONE 65
+set_io --warn-no-port RES  66  # input
+set_io --warn-no-port DONE 65  # output
 set_io --warn-no-port SS   71  # output
 set_io --warn-no-port MISO 67  # input
 set_io --warn-no-port MOSI 68  # output

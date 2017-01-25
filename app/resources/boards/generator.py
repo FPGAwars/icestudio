@@ -33,7 +33,6 @@ with open(os.path.join(name, 'pinout.pcf')) as file:
 
     # Build json
     pinout = re.findall(pattern, data)
-    print(pinout)
     format_pinout = []
     for item in pinout:
         format_pinout += [{ 'name': item[1], 'value': item[2], 'type': item[4] or 'inout' }]

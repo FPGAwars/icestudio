@@ -1,4 +1,13 @@
 {
+  "connect" : [
+    {
+      "pin": "21",
+      "port" : {
+        "name": "clk",
+        "type": "input"
+      }
+    }
+  ],
   "initialize": [
     {
       "pin": "95",
