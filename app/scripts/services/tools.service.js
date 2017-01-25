@@ -167,7 +167,7 @@ angular.module('icestudio')
       var match;
       while (match = pattern.exec(code)) {
         var file = match[1];
-        var destPath = nodePath.join('.', file);
+        var destPath = nodePath.join(utils.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.path), file);
 
         // Copy included file
