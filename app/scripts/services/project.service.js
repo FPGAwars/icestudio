@@ -488,7 +488,7 @@ angular.module('icestudio')
         this.name = name;
         graph.resetBreadcrumbs(name);
       }
-      var title = (this.changed ? '●' : '') + this.name + ' ─ Icestudio';
+      var title = (this.changed ? '*' : '') + this.name + ' ─ Icestudio';
       utils.updateWindowTitle(title);
     };
 

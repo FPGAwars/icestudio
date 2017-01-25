@@ -5,17 +5,17 @@ angular.module('icestudio')
                                 nodeSha1,
                                 _package) {
 
-    this.generate = function(target, project) {
+    this.generate = function(target, project, opt) {
       var code = '';
       switch(target) {
         case 'verilog':
           code += header('//');
           code += '`default_nettype none\n';
-          code += verilogCompiler('main', project);
+          code += verilogCompiler('main', project, opt);
           break;
         case 'pcf':
           code += header('#');
-          code += pcfCompiler(project);
+          code += pcfCompiler(project, opt);
           break;
         case 'testbench':
           code += header('//');
@@ -322,6 +322,7 @@ angular.module('icestudio')
       return null;
     }
 
+    this.getInitPins = getInitPins;
     function getInitPins(blocks) {
       var initPins = [];
       var usedPins = [];
@@ -346,7 +347,7 @@ angular.module('icestudio')
       return initPins;
     }
 
-    function verilogCompiler(name, project) {
+    function verilogCompiler(name, project, opt) {
       var data;
       var code = '';
 
@@ -369,7 +370,7 @@ angular.module('icestudio')
 
             // Initialize pins
 
-            var initPins = getInitPins(blocks);
+            var initPins = opt && opt.initPins || getInitPins(blocks);
             var n = initPins.length;
 
             if (n > 0) {
@@ -424,7 +425,7 @@ angular.module('icestudio')
       return code;
     }
 
-    function pcfCompiler(project) {
+    function pcfCompiler(project, opt) {
       var code = '';
       var blocks = project.design.graph.blocks;
       var pin, value;
@@ -458,7 +459,7 @@ angular.module('icestudio')
       }
 
       // Set port of initialized pins
-      var initPins = getInitPins(blocks);
+      var initPins = opt && opt.initPins || getInitPins(blocks);
       if (initPins.length > 1) {
         for (var j in initPins) {
           code += 'set_io m[' + j + '] ';
