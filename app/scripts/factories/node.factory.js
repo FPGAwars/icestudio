@@ -49,6 +49,9 @@ angular.module('icestudio')
   .factory('nodeExtract', function() {
     return require('extract-zip');
   })
+  .factory('nodeSemver', function() {
+    return require('semver');
+  })
   .factory('SVGO', function() {
     return require('svgo');
   });

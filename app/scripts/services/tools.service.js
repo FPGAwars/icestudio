@@ -16,7 +16,9 @@ angular.module('icestudio')
                              nodeChildProcess,
                              nodeSSHexec,
                              nodeRSync,
-                             nodeExtract) {
+                             nodeExtract,
+                             nodeSemver,
+                             _package) {
 
     var currentAlert = null;
     var taskRunning = false;
@@ -26,9 +28,6 @@ angular.module('icestudio')
 
     // Check if the toolchain is installed
     checkToolchain();
-
-    // Update toolchain information
-    updateToolchainInfo();
 
     // Remove build directory on start
     nodeFse.removeSync(utils.BUILD_DIR);
@@ -89,38 +88,49 @@ angular.module('icestudio')
           }
           catch(e) {
           }
-          finally {
-          }
         }
         else {
           alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
+          taskRunning = false;
         }
+      }
+      else {
+        taskRunning = false;
       }
     };
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
       toolchain.disabled = utils.toolchainDisabled;
-      nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
-          if (!toolchain.disabled) {
-            toolchain.installed = !error;
+      if (!toolchain.disabled) {
+        nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
+          if (error) {
+            toolchain.apio = '';
+            toolchain.installed = false;
             if (callback) {
-              callback(toolchain.installed);
+              callback();
+            }
+          }
+          else {
+            toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+            toolchain.installed = nodeSemver.gte(toolchain.apio, _package.apio.min) &&
+                                  nodeSemver.lt(toolchain.apio, _package.apio.max);
+            if (toolchain.installed) {
+              nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+                toolchain.installed = !error;
+                if (callback) {
+                  callback();
+                }
+              });
+            }
+            else {
+              if (callback) {
+                callback();
+              }
             }
           }
         });
-    }
-
-    function updateToolchainInfo() {
-      var apio = utils.getApioExecutable();
-      nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
-        if (error) {
-          toolchain.apio = '-';
-        }
-        else {
-          toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-        }
-      });
+      }
     }
 
     this.generateCode = function() {
@@ -203,7 +213,6 @@ angular.module('icestudio')
         toolchain.disabled = utils.toolchainDisabled;
         nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(utils.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
             processExecute(label, callback, error, stdout, stderr);
           });
       }
@@ -337,6 +346,7 @@ angular.module('icestudio')
       alertify.confirm(gettextCatalog.getString('The toolchain will be removed. Do you want to continue?'),
         function() {
           utils.removeToolchain();
+          toolchain.apio = '';
           toolchain.installed = false;
           alertify.success(gettextCatalog.getString('Toolchain removed'));
       });
@@ -513,11 +523,10 @@ angular.module('icestudio')
     }
 
     function installationCompleted(callback) {
-      checkToolchain(function(installed) {
-        if (installed) {
+      checkToolchain(function() {
+        if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
           alertify.success(gettextCatalog.getString('Toolchain installed'));
-          updateToolchainInfo();
         }
         else {
           errorProgress(gettextCatalog.getString('Toolchain not installed'));
