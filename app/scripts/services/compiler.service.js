@@ -322,25 +322,116 @@ angular.module('icestudio')
       return null;
     }
 
+    this.getInitPorts = getInitPorts;
+    function getInitPorts(project) {
+      // Find not connected input wire ports to initialize
+
+      var i, j;
+      var initPorts = [];
+      var inputPorts = [];
+      var ncInputPorts = [];
+      var blocks = project.design.graph.blocks;
+      var wires = project.design.graph.wires;
+      var dependencies = project.dependencies;
+
+      // Find all input ports in:
+      // - Code blocks
+      // - Generic blocks
+      for (i in blocks) {
+        var block = blocks[i];
+        if (block) {
+          if (block.type === 'basic.code') {
+            // Code block
+            for (j in block.data.ports.in) {
+              if (!block.data.ports.in[j].range) {
+                inputPorts.push({
+                  block: block.id,
+                  port: block.data.ports.in[j].name
+                });
+              }
+            }
+            // block.data.ports.in
+          }
+          else if (!block.type.startsWith('basic.')) {
+            // Generic block
+            var genericBlock = dependencies[block.type];
+            var subBlocks = genericBlock.design.graph.blocks;
+            for (j in subBlocks) {
+              if (subBlocks[j].type === 'basic.input' && !subBlocks[j].data.range) {
+                inputPorts.push({
+                  block: block.id,
+                  port: subBlocks[j].id,
+                  name: subBlocks[j].data.name
+                });
+              }
+            }
+          }
+        }
+      }
+
+      //console.log('INPUT PORTS', inputPorts);
+
+      // Filter not connected input ports
+      for (i in inputPorts) {
+        var connected = false;
+        var inputPort = inputPorts[i];
+        for (j in wires) {
+          var target = wires[j].target;
+          if (target.block === inputPort.block && target.port === inputPort.port) {
+            connected = true;
+            break;
+          }
+        }
+        if (!connected) {
+          ncInputPorts.push(inputPort);
+        }
+      }
+
+      //console.log('NC INPUT PORTS', ncInputPorts);
+
+      // Filter ports defined in rules
+      var allInitPorts = boards.selectedBoard.rules.input;
+      for (i in allInitPorts) {
+        for (j in ncInputPorts) {
+          if (ncInputPorts[j].name === allInitPorts[i].port) {
+            initPorts.push({
+              block: ncInputPorts[j].block,
+              port: ncInputPorts[j].port,
+              name: ncInputPorts[j].name,
+              pin: allInitPorts[i].pin
+            });
+          }
+        }
+      }
+
+      console.log('INIT PORTS', initPorts);
+
+      return initPorts;
+    }
+
     this.getInitPins = getInitPins;
     function getInitPins(blocks) {
+      // Find not used output pins to initialize
+
+      var i;
       var initPins = [];
       var usedPins = [];
 
-      for (var i in blocks) {
+      // Find all set output pins
+      for (i in blocks) {
         var block = blocks[i];
-        if (block.type === 'basic.input' ||
-            block.type === 'basic.output') {
+        if (block.type === 'basic.output') {
           for (var p in block.data.pins) {
             usedPins.push(block.data.virtual ? '' : block.data.pins[p].value);
           }
         }
       }
 
-      var allInitPins = boards.selectedBoard.rules.initialize;
-      for (var j in allInitPins) {
-        if (usedPins.indexOf(allInitPins[j].pin) === -1) {
-          initPins.push(allInitPins[j]);
+      // Filter pins defined in rules
+      var allInitPins = boards.selectedBoard.rules.output;
+      for (i in allInitPins) {
+        if (usedPins.indexOf(allInitPins[i].pin) === -1) {
+          initPins.push(allInitPins[i]);
         }
       }
 
@@ -348,8 +439,7 @@ angular.module('icestudio')
     }
 
     function verilogCompiler(name, project, opt) {
-      var data;
-      var code = '';
+      var i, data, block, code = '';
 
       if (project &&
           project.design &&
@@ -362,13 +452,72 @@ angular.module('icestudio')
 
         if (name) {
 
+          // Initialize input ports
+
+          if (name === 'main') {
+
+            var initPorts = opt && opt.initPorts || getInitPorts(project);
+            for (i in initPorts) {
+              var initPort = initPorts[i];
+
+              // Find existing input block with the initPort value
+              var found = false;
+              var source = {
+                block: initPort.name,
+                port: 'out'
+              };
+              for (i in blocks) {
+                block = blocks[i];
+                if (block.type === 'basic.input' && !block.data.range && !block.data.virtual) {
+                  if (initPort.pin === block.data.pins[0].value) {
+                    found = true;
+                    source.block = block.id;
+                    break;
+                  }
+                }
+              }
+
+              if (!found) {
+                // Add imaginary input block with the initPort value
+                project.design.graph.blocks.push({
+                  id: initPort.name,
+                  type: 'basic.input',
+                  data: {
+                    name: initPort.name,
+                    pins: [
+                      {
+                        index: '0',
+                        value: initPort.pin
+                      }
+                    ],
+                    virtual: false
+                  }
+                });
+              }
+
+              // Add imaginary wire between the imaginary input block and the initPort
+              project.design.graph.wires.push({
+                source: {
+                  block: source.block,
+                  port: source.port
+                },
+                target: {
+                  block: initPort.block,
+                  port: initPort.port
+                }
+              });
+            }
+          }
+
           var params = getParams(project);
           var ports = getPorts(project);
           var content = getContent(name, project);
 
+          // Initialize output pins
+
           if (name === 'main') {
 
-            // Initialize pins
+            // Initialize output pins
 
             var initPins = opt && opt.initPins || getInitPins(blocks);
             var n = initPins.length;
@@ -376,16 +525,16 @@ angular.module('icestudio')
             if (n > 0) {
               // Declare m port
               ports.out.push({
-                name: 'm',
+                name: 'vinit',
                 range: '[0:' + (n-1) + ']'
               });
               // Generate port value
               var value = n.toString() + '\'b';
-              for (var j in initPins) {
-                value += initPins[j].bit;
+              for (i in initPins) {
+                value += initPins[i].bit;
               }
               // Assign m port
-              content += '\nassign m = ' + value + ';';
+              content += '\nassign vinit = ' + value + ';';
             }
           }
 
@@ -406,15 +555,15 @@ angular.module('icestudio')
 
         // Code modules
 
-        for (var i in blocks) {
-          var block = blocks[i];
+        for (i in blocks) {
+          block = blocks[i];
           if (block) {
             if (block.type === 'basic.code') {
               data = {
                 name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
-                content: block.data.code
+                content: block.data.code.replace(/\n+/g, '\n').replace(/\n$/g, '')
               };
               code += module(data);
             }
@@ -426,12 +575,12 @@ angular.module('icestudio')
     }
 
     function pcfCompiler(project, opt) {
-      var code = '';
+      var i, j, block, code = '';
       var blocks = project.design.graph.blocks;
       var pin, value;
 
-      for (var i in blocks) {
-        var block = blocks[i];
+      for (i in blocks) {
+        block = blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
 
@@ -458,17 +607,45 @@ angular.module('icestudio')
         }
       }
 
-      // Set port of initialized pins
+      // Declare init input ports
+
+      var initPorts = opt && opt.initPorts || getInitPorts(project);
+      for (i in initPorts) {
+        var initPort = initPorts[i];
+
+        // Find existing input block with the initPort value
+        var found = false;
+        for (j in blocks) {
+          block = blocks[j];
+          if (block.type === 'basic.input' && !block.data.range && !block.data.virtual) {
+            if (initPort.pin === block.data.pins[0].value) {
+              found = true;
+              break;
+            }
+          }
+        }
+
+        if (!found) {
+          code += 'set_io v';
+          code += initPorts[i].name;
+          code += ' ';
+          code += initPorts[i].pin;
+          code += '\n';
+        }
+      }
+
+      // Declare init output pins
+
       var initPins = opt && opt.initPins || getInitPins(blocks);
       if (initPins.length > 1) {
-        for (var j in initPins) {
-          code += 'set_io m[' + j + '] ';
-          code += initPins[j].pin;
+        for (i in initPins) {
+          code += 'set_io vinit[' + i + '] ';
+          code += initPins[i].pin;
           code += '\n';
         }
       }
       else if (initPins.length > 0) {
-        code += 'set_io m ';
+        code += 'set_io vinit ';
         code += initPins[0].pin;
         code += '\n';
       }
