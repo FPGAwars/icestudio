@@ -393,11 +393,11 @@ angular.module('icestudio')
       var allInitPorts = boards.selectedBoard.rules.input;
       for (i in allInitPorts) {
         for (j in ncInputPorts) {
-          if (ncInputPorts[j].name === allInitPorts[i].port) {
+          if (ncInputPorts[j].name === allInitPorts[i].port || ncInputPorts[j].port === allInitPorts[i].port) {
             initPorts.push({
               block: ncInputPorts[j].block,
               port: ncInputPorts[j].port,
-              name: ncInputPorts[j].name,
+              name: ncInputPorts[j].name || ncInputPorts[j].port,
               pin: allInitPorts[i].pin
             });
           }
