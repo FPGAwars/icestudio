@@ -404,18 +404,19 @@ angular.module('icestudio')
         }
       }
 
-      console.log('INIT PORTS', initPorts);
+      //console.log('INIT PORTS', initPorts);
 
       return initPorts;
     }
 
     this.getInitPins = getInitPins;
-    function getInitPins(blocks) {
+    function getInitPins(project) {
       // Find not used output pins to initialize
 
       var i;
       var initPins = [];
       var usedPins = [];
+      var blocks = project.design.graph.blocks;
 
       // Find all set output pins
       for (i in blocks) {
@@ -519,7 +520,7 @@ angular.module('icestudio')
 
             // Initialize output pins
 
-            var initPins = opt && opt.initPins || getInitPins(blocks);
+            var initPins = opt && opt.initPins || getInitPins(project);
             var n = initPins.length;
 
             if (n > 0) {
@@ -609,9 +610,14 @@ angular.module('icestudio')
 
       // Declare init input ports
 
+      var used = [];
       var initPorts = opt && opt.initPorts || getInitPorts(project);
       for (i in initPorts) {
         var initPort = initPorts[i];
+        if (used.indexOf(initPort.pin) !== -1) {
+          break;
+        }
+        used.push(initPort.pin);
 
         // Find existing input block with the initPort value
         var found = false;
@@ -620,6 +626,7 @@ angular.module('icestudio')
           if (block.type === 'basic.input' && !block.data.range && !block.data.virtual) {
             if (initPort.pin === block.data.pins[0].value) {
               found = true;
+              used.push(initPort.pin);
               break;
             }
           }
@@ -636,7 +643,7 @@ angular.module('icestudio')
 
       // Declare init output pins
 
-      var initPins = opt && opt.initPins || getInitPins(blocks);
+      var initPins = opt && opt.initPins || getInitPins(project);
       if (initPins.length > 1) {
         for (i in initPins) {
           code += 'set_io vinit[' + i + '] ';
