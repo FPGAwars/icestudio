@@ -248,8 +248,12 @@ angular.module('icestudio')
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
-          state.zoom = scale;
-          // Already rendered in pan
+          state.zoom = scale; // Already rendered in pan
+
+          // Close expanded combo
+          if (document.activeElement.className === 'select2-search__field') {
+            $('select').select2('close');
+          }
         },
         /*beforePan: function(oldpan, newpan) {
         },*/
