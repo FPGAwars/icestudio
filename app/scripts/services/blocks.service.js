@@ -58,7 +58,7 @@ angular.module('icestudio')
         gettextCatalog.getString('FPGA pin')
       ], [
         config._default,
-        false
+        true
       ],
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
@@ -738,18 +738,28 @@ angular.module('icestudio')
         block.data.local
       ],
         function(evt, values) {
-          var name = values[0].replace(/ /g, '');
+          var label = values[0].replace(/ /g, '');
           var local = values[1];
-          // Edit block
-          if (block.data.name !== name ||
-              block.data.local !== local) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            cellView.model.set('data', data);
-            cellView.apply();
-            alertify.success(gettextCatalog.getString('Block updated'));
+          // Validate values
+          var paramInfo = utils.parseParamLabel(label);
+          if (paramInfo) {
+            var name = paramInfo.name;
+            evt.cancel = false;
+            if (block.data.name !== name ||
+                block.data.local !== local) {
+              // Edit block
+              var data = utils.clone(block.data);
+              data.name = name;
+              data.local = local;
+              cellView.model.set('data', data);
+              cellView.apply();
+              alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else {
+            evt.cancel = true;
+            alertify.notify(gettextCatalog.getString('Wrong parameter name {{name}}', { name: label }), 'warning', 3);
+            return;
           }
       });
     }
