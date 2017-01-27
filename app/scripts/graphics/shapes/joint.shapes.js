@@ -274,7 +274,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
-    this.$('.port-default').css('stroke-width', width);
+    this.$('.port-default').css('stroke-width', state.zoom);
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];

@@ -75,7 +75,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -141,7 +141,7 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -162,7 +162,7 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -171,7 +171,7 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
   font-size: 13px;
@@ -189,7 +189,7 @@
 
 .fpga-port div .select2 {
   position: relative;
-  width: 82px;
+  width: 84px;
   left: 5px;
   margin-bottom: 4px;
   pointer-events: auto;
@@ -197,6 +197,14 @@
 
 .select2-selection__rendered {
   font-size: 13px;
+}
+
+.select2-container--default .select2-selection--single {
+  border: 1px solid #888;
+}
+
+.select2-dropdown {
+  border: 1px solid #888;
 }
 
 .bigdrop {
@@ -208,7 +216,7 @@
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -225,7 +233,8 @@
 
 .constant-block label {
   display: block;
-  margin-top: 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   text-align: center;
   font-size: 13px;
   color: #444;
@@ -238,8 +247,11 @@
   text-align: center;
   left: 5px;
   bottom: 5px;
-  width: 82px;
+  width: 84px;
+  height: 28px;
   font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #888;
   pointer-events: auto;
 }
 
@@ -247,7 +259,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -272,7 +284,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #888;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -298,7 +310,7 @@
 }
 
 .highlight {
-  box-shadow: 0 0 30px 0 rgba(200,200,200,1);
+  box-shadow: 0 0 8px 8px rgba(42, 118, 198, 0.2);
 }
 
 .selectionarea {

@@ -13,7 +13,6 @@ angular.module('icestudio')
     var z = {
       index: 100
     };
-    var ctrlPressed = false;
 
     var graph = null;
     var paper = null;
@@ -38,10 +37,6 @@ angular.module('icestudio')
     const ZOOM_MIN = 0.2;
 
     // Functions
-
-    $(document).on('keydown', function(event) {
-      ctrlPressed = event.keyCode === 17;
-    });
 
     this.getState = function() {
       // Clone state
@@ -319,7 +314,7 @@ angular.module('icestudio')
          });
        }
        // Toggle selection
-       if ((evt.which === 3) && (evt.ctrlKey || evt.metaKey)) {
+       if (evt.which === 3) {
          var cell = selection.get($(evt.target).data('model'));
          selection.reset(selection.without(cell));
          selectionView.destroySelectionBox(paper.findViewByModel(cell));
