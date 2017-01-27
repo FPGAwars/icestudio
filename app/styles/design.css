@@ -75,7 +75,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -87,7 +87,7 @@
   width: 120px;
   color: #333;
   background-color: white;
-  border: 1px solid #444;
+  border: 1px solid #777;
   text-align: center;
   border-radius: 5px;
   padding: 5px 5px;
@@ -106,7 +106,7 @@
   margin-left: -6px;
   border-width: 6px;
   border-style: solid;
-  border-color: #444 transparent transparent transparent;
+  border-color: #777 transparent transparent transparent;
 }
 
 .generic-block .tooltip-large {
@@ -132,7 +132,7 @@
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #222;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -141,7 +141,7 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -153,7 +153,7 @@
   margin-top: 22px;
   text-align: center;
   font-size: 13px;
-  color: #222;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -162,7 +162,7 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -171,11 +171,12 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   text-align: center;
   font-size: 13px;
-  color: #222;
+  height: 18px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -191,12 +192,17 @@
   position: relative;
   width: 84px;
   left: 5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   pointer-events: auto;
 }
 
 .select2-selection__rendered {
+  line-height: 24px !important;
+}
+
+.select2-selection {
   font-size: 13px;
+  height: 26px !important;
 }
 
 .select2-container--default .select2-selection--single {
@@ -208,15 +214,15 @@
 }
 
 .bigdrop {
-  width: 92px !important;
   font-size: 13px;
+  width: 92px !important;
 }
 
 .constant-block {
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -228,16 +234,17 @@
   top: 0;
   right: 5px;
   font-size: 1.5em;
-  color: #444;
+  color: #555;
 }
 
 .constant-block label {
   display: block;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   text-align: center;
   font-size: 13px;
-  color: #222;
+  height: 18px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -246,9 +253,9 @@
   position: absolute;
   text-align: center;
   left: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   width: 84px;
-  height: 28px;
+  height: 26px;
   font-size: 13px;
   border-radius: 4px;
   border: 1px solid #777;
@@ -259,7 +266,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -284,7 +291,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;

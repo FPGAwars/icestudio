@@ -332,7 +332,7 @@ angular.module('icestudio')
       var blockInstance = {
         id: null,
         type: type,
-        position: { x: 6 * gridsize, y: 16 * gridsize }
+        position: { x: 10 * gridsize, y: 16 * gridsize }
       };
       if (block &&
           block.design &&

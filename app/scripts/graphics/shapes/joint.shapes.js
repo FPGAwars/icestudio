@@ -86,7 +86,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         height: '20',
         rx: '3',
         ry: '3',
-        stroke: '#777',
+        stroke: '#555',
         'stroke-width': 1,
         fill: '#FBFBC9'
       }
@@ -1020,7 +1020,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
   labelMarkup: [
     '<g class="label hidden">',
     '<rect x="-8" y="-9" width="16" height="16" fill="white" stroke="#777"/>',
-    '<text fill="#444"/>',
+    '<text fill="#555"/>',
     '</g>'
   ].join(''),
 
