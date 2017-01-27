@@ -75,7 +75,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -87,7 +87,7 @@
   width: 120px;
   color: #333;
   background-color: white;
-  border: 1px solid #888;
+  border: 1px solid #444;
   text-align: center;
   border-radius: 5px;
   padding: 5px 5px;
@@ -106,7 +106,7 @@
   margin-left: -6px;
   border-width: 6px;
   border-style: solid;
-  border-color: #888 transparent transparent transparent;
+  border-color: #444 transparent transparent transparent;
 }
 
 .generic-block .tooltip-large {
@@ -132,7 +132,7 @@
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #444;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -141,7 +141,7 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -150,10 +150,10 @@
 
 .virtual-port label {
   display: block;
-  margin-top: 20px;
+  margin-top: 22px;
   text-align: center;
-  font-size: 0.9em;
-  color: #444;
+  font-size: 13px;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -162,7 +162,7 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -175,7 +175,7 @@
   margin-bottom: 5px;
   text-align: center;
   font-size: 13px;
-  color: #444;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -200,11 +200,11 @@
 }
 
 .select2-container--default .select2-selection--single {
-  border: 1px solid #888;
+  border: 1px solid #777;
 }
 
 .select2-dropdown {
-  border: 1px solid #888;
+  border: 1px solid #777;
 }
 
 .bigdrop {
@@ -216,7 +216,7 @@
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -237,7 +237,7 @@
   margin-bottom: 5px;
   text-align: center;
   font-size: 13px;
-  color: #444;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -251,7 +251,7 @@
   height: 28px;
   font-size: 13px;
   border-radius: 4px;
-  border: 1px solid #888;
+  border: 1px solid #777;
   pointer-events: auto;
 }
 
@@ -259,7 +259,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -284,7 +284,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 1px solid #888;
+  border: 1px solid #444;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -310,23 +310,23 @@
 }
 
 .highlight-yellow {
-  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.8);
+  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
 }
 
 .highlight-green {
-  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.8);
+  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.5);
 }
 
 .highlight-orange {
-  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.8);
+  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.5);
 }
 
 .highlight-blue {
-  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.8);
+  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.5);
 }
 
 .highlight-gray {
-  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.8);
+  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.5);
 }
 
 .selectionarea {

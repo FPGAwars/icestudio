@@ -219,6 +219,23 @@ angular.module('icestudio')
         }
       });
 
+      // Command Manager
+
+      commandManager = new joint.dia.CommandManager({
+        paper: paper,
+        graph: graph
+      });
+
+      // Selection View
+
+     selection = new Backbone.Collection();
+     selectionView = new joint.ui.SelectionView({
+       paper: paper,
+       graph: graph,
+       model: selection,
+       state: state
+     });
+
       paper.options.enabled = true;
       paper.options.warningTimer = false;
 
@@ -276,23 +293,6 @@ angular.module('icestudio')
         }
       });
 
-      // Command Manager
-
-      commandManager = new joint.dia.CommandManager({
-        paper: paper,
-        graph: graph
-      });
-
-      // Selection View
-
-     selection = new Backbone.Collection();
-     selectionView = new joint.ui.SelectionView({
-       paper: paper,
-       graph: graph,
-       model: selection,
-       state: state
-     });
-
      // Events
 
      this.mousedown = false;
@@ -349,15 +349,14 @@ angular.module('icestudio')
        }
      });
 
-      paper.on('cell:pointerdown', function(/*cellView*/) {
+      paper.on('cell:pointerdown', function(cellView) {
         self.mousedown = true;
-        /*if (paper.options.enabled) {
-          if (!cellView.model.isLink()) {
-            if (cellView.$box.css('z-index') < z.index) {
-              cellView.$box.css('z-index', ++z.index);
-            }
+        if (paper.options.enabled) {
+          if (cellView.model.isLink()) {
+            // Unhighlight source block of the wire
+            unhighlight(paper.findViewByModel(cellView.model.attributes.source.id));
           }
-        }*/
+        }
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {

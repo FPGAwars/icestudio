@@ -72,10 +72,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         magnet: true
       },
       '.port-label': {
-        fill: '#888'
+        fill: '#777'
       },
       '.port-wire': {
-        stroke: '#888',
+        stroke: '#777',
         'stroke-width': WIRE_WIDTH
       },
       '.port-default': {
@@ -86,7 +86,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         height: '20',
         rx: '3',
         ry: '3',
-        stroke: '#888',
+        stroke: '#777',
         'stroke-width': 1,
         fill: '#FBFBC9'
       }
@@ -161,7 +161,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       attrs[portWireSelector]['pointer-events'] = 'none';
     }
 
-    var offset = (port.size && port.size > 1) ? 6 : 1;
+    var offset = (port.size && port.size > 1) ? 4 : 1;
     var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
     var lineX = (port.default && port.default.apply) ? '-20' : '0';
 
@@ -279,13 +279,13 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 4);
+        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width  * 4);
+        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
     }
 
@@ -819,13 +819,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 4);
+        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width  * 4);
+        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
     }
 
@@ -1006,7 +1006,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
 joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   markup: [
-    '<path class="connection" stroke="black" d="M 0 0 0 0"/>',
+    '<path class="connection" d="M 0 0 0 0"/>',
     '<path class="connection-wrap" d="M 0 0 0 0"/>',
     '<path class="marker-source" d="M 0 0 0 0"/>',
     '<path class="marker-target" d="M 0 0 0 0"/>',
@@ -1017,9 +1017,16 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     '<g class="link-tools"/>'
   ].join(''),
 
+  labelMarkup: [
+    '<g class="label hidden">',
+    '<rect x="-8" y="-9" width="16" height="16" fill="white" stroke="#777"/>',
+    '<text fill="#444"/>',
+    '</g>'
+  ].join(''),
+
   bifurcationMarkup: [
     '<g class="marker-bifurcation-group" transform="translate(<%= x %>, <%= y %>)">',
-    '<circle class="marker-bifurcation" idx="<%= idx %>" r="<%= r %>" fill="#888"/>',
+    '<circle class="marker-bifurcation" idx="<%= idx %>" r="<%= r %>" fill="#777"/>',
     '</g>'
   ].join(''),
 
@@ -1060,8 +1067,9 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
           text: {
             text: '',
             'font-weight': 'bold',
-            'font-size': '150%',
-            'y': '12px'
+            'font-size': '13px',
+            'text-anchor': 'middle',
+            'y': '4px'
           }
         }
       }
@@ -1069,8 +1077,8 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     attrs: {
       '.connection': {
-        'stroke-width': 2,
-        stroke: '#888'
+        'stroke-width': WIRE_WIDTH,
+        stroke: '#777'
       }
     },
 
@@ -1090,27 +1098,21 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     setTimeout(function() {
       var i, port, portName = self.model.get('source').port;
       var rightPorts = self.sourceView.model.get('rightPorts');
-      var bottomPorts = self.sourceView.model.get('bottomPorts');
 
       // Initialize wire properties
       for (i in rightPorts) {
         port = rightPorts[i];
         if (portName === port.id) {
           self.model.attributes.size = port.size; // For wire size connection validation
-          self.$('.connection').css('stroke-width', WIRE_WIDTH * ((port.size > 1) ? 4 : 1));
-          self.model.label(0, {attrs: { text: { text: (port.size > 1) ? '' + port.size + '' : '' } } });
-          self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * ((port.size > 1) ? 4 : 3));
-          self.update();
-          break;
-        }
-      }
-      for (i in bottomPorts) {
-        port = bottomPorts[i];
-        if (portName === port.id) {
-          self.model.attributes.size = port.size; // For wire size connection validation
-          self.$('.connection').css('stroke-width', WIRE_WIDTH * ((port.size > 1) ? 4 : 1));
-          self.model.label(0, {attrs: { text: { text: (port.size > 1) ? '' + port.size + '' : '' } } });
-          self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * ((port.size > 1) ? 4 : 3));
+          if (port.size > 1) {
+            self.$('.connection').css('stroke-width', WIRE_WIDTH * 3);
+            self.model.label(0, {attrs: { text: { text: port.size } } });
+            self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 4);
+          }
+          else {
+            self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 2);
+          }
+
           self.update();
           break;
         }
@@ -1139,6 +1141,50 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     joint.dia.LinkView.prototype.update.apply(this, arguments);
     // console.log('update');
     this.updateBifurcations();
+    return this;
+  },
+
+  renderLabels: function() {
+    if (!this._V.labels) {
+      return this;
+    }
+
+    this._labelCache = {};
+    var $labels = $(this._V.labels.node).empty();
+
+    var labels = this.model.get('labels') || [];
+    if (!labels.length) {
+      return this;
+    }
+
+    var labelTemplate = joint.util.template(this.model.get('labelMarkup') || this.model.labelMarkup);
+    // This is a prepared instance of a vectorized SVGDOM node for the label element resulting from
+    // compilation of the labelTemplate. The purpose is that all labels will just `clone()` this
+    // node to create a duplicate.
+    var labelNodeInstance = V(labelTemplate());
+
+    _.each(labels, function(label, idx) {
+
+      var labelNode = labelNodeInstance.clone().node;
+      V(labelNode).attr('label-idx', idx);
+      this._labelCache[idx] = V(labelNode);
+
+      var $text = $(labelNode).find('text');
+      var textAttributes = _.extend({ 'text-anchor': 'middle', 'font-size': 13 }, joint.util.getByPath(label, 'attrs/text', '/'));
+
+      $text.attr(_.omit(textAttributes, 'text'));
+
+      if (label.attrs.text.text) {
+        $(labelNode).removeClass('hidden');
+      }
+
+      if (!_.isUndefined(textAttributes.text)) {
+        V($text[0]).text(textAttributes.text + '', { annotations: textAttributes.annotations });
+      }
+      $labels.append(labelNode);
+
+    }, this);
+
     return this;
   },
 
