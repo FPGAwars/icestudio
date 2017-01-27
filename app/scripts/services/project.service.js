@@ -477,6 +477,9 @@ angular.module('icestudio')
             var newSubDependencies = findSubDependencies(allDependencies[type]);
             subDependencies = subDependencies.concat(newSubDependencies);
           }
+          else if (type === 'basic.input') {
+            delete blocks[i].data.default;
+          }
         }
         return _.unique(subDependencies);
       }

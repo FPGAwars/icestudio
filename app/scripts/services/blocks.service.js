@@ -485,6 +485,24 @@ angular.module('icestudio')
       return cell;
     }
 
+    function hasInputRule(port) {
+      var _default;
+      var rules = boards.selectedBoard.rules;
+      if (rules) {
+        var allInitPorts = rules.input;
+        if (allInitPorts) {
+          for (var i in allInitPorts) {
+            if (port === allInitPorts[i].port){
+              _default = allInitPorts[i].pin;
+              _default.apply = true;
+              break;
+            }
+          }
+        }
+      }
+      return _default;
+    }
+
     function loadGeneric(instance, block) {
       var i;
       var leftPorts = [];
@@ -498,10 +516,14 @@ angular.module('icestudio')
         var item = block.design.graph.blocks[i];
         if (item.type === 'basic.input') {
           data = block.design.graph.blocks[i].data;
+          if (!item.data.range) {
+            data.default = hasInputRule(item.data.name);
+          }
           leftPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range || ''),
-            size: data.pins ? data.pins.length : (data.size || 1)
+            size: data.pins ? data.pins.length : (data.size || 1),
+            default: data.default
           });
         }
         else if (item.type === 'basic.output') {
