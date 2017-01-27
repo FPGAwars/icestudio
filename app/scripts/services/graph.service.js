@@ -331,7 +331,7 @@ angular.module('icestudio')
              // Right button
              selection.add(cellView.model);
              selectionView.createSelectionBox(cellView);
-             cellView.$box.removeClass('highlight');
+             unhighlight(cellView);
            }
            // Update wires on obstacles
            var cells = graph.getCells();
@@ -407,11 +407,9 @@ angular.module('icestudio')
       paper.on('cell:mouseover', function(cellView/*, evt*/) {
         if (!self.mousedown) {
           if (!cellView.model.isLink()) {
-            cellView.$box.addClass('highlight');
-            if (cellView && !cellView.model.isLink()) {
-              if (cellView.$box.css('z-index') < z.index) {
-                cellView.$box.css('z-index', ++z.index);
-              }
+            highlight(cellView);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
             }
           }
         }
@@ -420,7 +418,7 @@ angular.module('icestudio')
       paper.on('cell:mouseout', function(cellView/*, evt*/) {
         if (!self.mousedown) {
           if (!cellView.model.isLink()) {
-            cellView.$box.removeClass('highlight');
+            unhighlight(cellView);
           }
         }
       });
@@ -578,7 +576,7 @@ angular.module('icestudio')
             var cellView = paper.findViewByModel(cell);
             selection.add(cell);
             selectionView.createSelectionBox(cellView);
-            cellView.$box.removeClass('highlight');
+            unhighlight(cellView);
           }
         });
       }
@@ -592,10 +590,62 @@ angular.module('icestudio')
           var cellView = paper.findViewByModel(cell);
           selection.add(cell);
           selectionView.createSelectionBox(cellView);
-          cellView.$box.removeClass('highlight');
+          unhighlight(cellView);
         }
       });
     };
+
+    function highlight(cellView) {
+      if (cellView) {
+        switch(cellView.model.attributes.type) {
+          case 'ice.Input':
+          case 'ice.Output':
+            if (cellView.model.attributes.data.virtual) {
+              cellView.$box.addClass('highlight-green');
+            }
+            else {
+              cellView.$box.addClass('highlight-yellow');
+            }
+            break;
+          case 'ice.Constant':
+            cellView.$box.addClass('highlight-orange');
+            break;
+          case 'ice.Code':
+          case 'ice.Generic':
+            cellView.$box.addClass('highlight-blue');
+            break;
+          case 'ice.Info':
+            cellView.$box.addClass('highlight-gray');
+            break;
+        }
+      }
+    }
+
+    function unhighlight(cellView) {
+      if (cellView) {
+        switch(cellView.model.attributes.type) {
+          case 'ice.Input':
+          case 'ice.Output':
+            if (cellView.model.attributes.data.virtual) {
+              cellView.$box.removeClass('highlight-green');
+            }
+            else {
+              cellView.$box.removeClass('highlight-yellow');
+            }
+            break;
+          case 'ice.Constant':
+            cellView.$box.removeClass('highlight-orange');
+            break;
+          case 'ice.Code':
+          case 'ice.Generic':
+            cellView.$box.removeClass('highlight-blue');
+            break;
+          case 'ice.Info':
+            cellView.$box.removeClass('highlight-gray');
+            break;
+        }
+      }
+    }
 
     this.hasSelection = function() {
       return selection.length > 0;

@@ -309,8 +309,24 @@
   fill: yellow;
 }
 
-.highlight {
-  box-shadow: 0 0 8px 8px rgba(42, 118, 198, 0.2);
+.highlight-yellow {
+  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.8);
+}
+
+.highlight-green {
+  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.8);
+}
+
+.highlight-orange {
+  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.8);
+}
+
+.highlight-blue {
+  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.8);
+}
+
+.highlight-gray {
+  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.8);
 }
 
 .selectionarea {
