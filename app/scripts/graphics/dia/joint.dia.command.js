@@ -29,6 +29,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   listen: function() {
 
+    this.listenTo(this.graph, 'state', this.updateState, this);
+
     this.listenTo(this.graph, 'all', this.addCommand, this);
 
     this.listenTo(this.graph, 'batch:start', this.initBatchCommand, this);
@@ -44,6 +46,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
     };
 
     return cmd;
+  },
+
+  updateState: function(state) {
+    this.state = state;
   },
 
   addCommand: function(cmdName, cell, graph, options) {
@@ -248,8 +254,9 @@ joint.dia.CommandManager = Backbone.Model.extend({
         	break;
 
         case 'remove':
-        	this.graph.addCell(cmd.data.attributes);
-        	break;
+          cmd.data.attributes.state = this.state;
+          this.graph.addCell(cmd.data.attributes);
+          break;
 
         case 'board':
           this.triggerBoard(cmd.data.previous);
@@ -307,6 +314,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       switch (cmd.action) {
 
         case 'add':
+          cmd.data.attributes.state = this.state;
           this.graph.addCell(cmd.data.attributes);
           break;
 
@@ -342,33 +350,23 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.listen();
   },
 
-  undo: function(state) {
+  undo: function() {
 
     var command = this.undoStack.pop();
     this.triggerChange();
 
     if (command) {
-
-      if (command.action === 'add') {
-        command.data.attributes.state = state;
-      }
-
       this.revertCommand(command);
       this.redoStack.push(command);
     }
   },
 
 
-  redo: function(state) {
+  redo: function() {
 
     var command = this.redoStack.pop();
 
     if (command) {
-
-      if (command.action === 'add') {
-        command.data.attributes.state = state;
-      }
-
       this.applyCommand(command);
       this.undoStack.push(command);
       this.triggerChange();

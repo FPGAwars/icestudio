@@ -261,21 +261,24 @@ angular.module('icestudio')
         onPan: function(newPan) {
           state.pan = newPan;
           selectionView.options.state = state;
-
-          var cells = graph.getCells();
-
-          _.each(cells, function(cell) {
-            if (!cell.isLink()) {
-              cell.attributes.state = state;
-              var elementView = paper.findViewByModel(cell);
-              // Pan blocks
-              elementView.updateBox();
-              // Pan selection boxes
-              selectionView.updateBox(elementView.model);
-            }
-          });
+          graph.trigger('state', state);
+          updateCellBoxes();
         }
       });
+
+      function updateCellBoxes() {
+        var cells = graph.getCells();
+        _.each(cells, function(cell) {
+          if (!cell.isLink()) {
+            cell.attributes.state = state;
+            var elementView = paper.findViewByModel(cell);
+            // Pan blocks
+            elementView.updateBox();
+            // Pan selection boxes
+            selectionView.updateBox(elementView.model);
+          }
+        });
+      }
 
       // Command Manager
 
@@ -446,12 +449,12 @@ angular.module('icestudio')
 
     this.undo = function() {
       disableSelected();
-      commandManager.undo(state);
+      commandManager.undo();
     };
 
     this.redo = function() {
       disableSelected();
-      commandManager.redo(state);
+      commandManager.redo();
     };
 
     this.clearAll = function() {
