@@ -3,19 +3,19 @@
 # -----------------------------------------------------------------------------
 
 # Capacitive-sense buttons
-set_io --warn-no-port BTN1 136
-set_io --warn-no-port BTN2 134
-set_io --warn-no-port BTN3 128
-set_io --warn-no-port BTN4 122
+set_io --warn-no-port BTN1 136  # input
+set_io --warn-no-port BTN2 134  # input
+set_io --warn-no-port BTN3 128  # input
+set_io --warn-no-port BTN4 122  # input
 
 # LED outputs
-set_io --warn-no-port LED1 137
-set_io --warn-no-port LED2 135
-set_io --warn-no-port LED3 129
-set_io --warn-no-port LED4 121
+set_io --warn-no-port LED1 137  # output
+set_io --warn-no-port LED2 135  # output
+set_io --warn-no-port LED3 129  # output
+set_io --warn-no-port LED4 121  # output
 
 # Clock input
-set_io --warn-no-port CLK 49
+set_io --warn-no-port CLK 49  # input
 
 # SPI Flash enable control
 set_io --warn-no-port SS_B 71

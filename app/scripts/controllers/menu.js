@@ -325,6 +325,18 @@ angular.module('icestudio')
       });
     };
 
+    $scope.enableBoardRules = function() {
+      profile.data.boardRules = true;
+      graph.refreshBoardRules();
+      alertify.success(gettextCatalog.getString('Board rules enabled'));
+    };
+
+    $scope.disableBoardRules = function() {
+      profile.data.boardRules = false;
+      graph.refreshBoardRules();
+      alertify.success(gettextCatalog.getString('Board rules disabled'));
+    };
+
     $scope.selectLanguage = function(language) {
       if (profile.data.language !== language) {
         profile.data.language = language;
@@ -372,6 +384,25 @@ angular.module('icestudio')
       }
       else {
         alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+      }
+    };
+
+    $scope.showBoardRules = function() {
+      var board = boards.selectedBoard;
+      var rules = JSON.stringify(board.rules);
+      if (rules !== '{}') {
+        gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
+          title: boards.selectedBoard.info.label + ' - Rules',
+          focus: true,
+          toolbar: false,
+          resizable: false,
+          width: 500,
+          height: 500,
+          icon: 'resources/images/icestudio-logo.png'
+        });
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 'error', 5);
       }
     };
 
@@ -509,10 +540,11 @@ angular.module('icestudio')
     var currentUndoStack = [];
 
     $(document).on('stackChanged', function(evt, undoStack) {
-      currentUndoStack = undoStack;
-      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
-      project.updateTitle();
-      zeroProject = false;
+      if (!zeroProject) {
+        currentUndoStack = undoStack;
+        project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+        project.updateTitle();
+      }
     });
 
     function resetChanged() {

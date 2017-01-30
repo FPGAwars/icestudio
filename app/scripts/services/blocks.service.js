@@ -58,7 +58,7 @@ angular.module('icestudio')
         gettextCatalog.getString('FPGA pin')
       ], [
         config._default,
-        false
+        true
       ],
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
@@ -332,7 +332,7 @@ angular.module('icestudio')
       var blockInstance = {
         id: null,
         type: type,
-        position: { x: 6 * gridsize, y: 16 * gridsize }
+        position: { x: 10 * gridsize, y: 16 * gridsize }
       };
       if (block &&
           block.design &&
@@ -384,7 +384,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         rightPorts: rightPorts,
-        choices: boards.getPinoutHTML()
+        choices: boards.pinoutInputHTML
       });
       return cell;
     }
@@ -404,7 +404,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         leftPorts: leftPorts,
-        choices: boards.getPinoutHTML()
+        choices: boards.pinoutOutputHTML
       });
       return cell;
     }
@@ -434,11 +434,15 @@ angular.module('icestudio')
 
       for (var i in instance.data.ports.in) {
         port = instance.data.ports.in[i];
+        if (!port.range) {
+          port.default = hasInputRule(port.name);
+        }
         leftPorts.push({
           id: port.name,
           label: port.name + (port.range || ''),
           size: port.size || 1,
-          gridUnits: 32
+          gridUnits: 32,
+          default: port.default
         });
       }
 
@@ -485,6 +489,24 @@ angular.module('icestudio')
       return cell;
     }
 
+    function hasInputRule(port) {
+      var _default;
+      var rules = boards.selectedBoard.rules;
+      if (rules) {
+        var allInitPorts = rules.input;
+        if (allInitPorts) {
+          for (var i in allInitPorts) {
+            if (port === allInitPorts[i].port){
+              _default = allInitPorts[i];
+              _default.apply = true;
+              break;
+            }
+          }
+        }
+      }
+      return _default;
+    }
+
     function loadGeneric(instance, block) {
       var i;
       var leftPorts = [];
@@ -498,10 +520,14 @@ angular.module('icestudio')
         var item = block.design.graph.blocks[i];
         if (item.type === 'basic.input') {
           data = block.design.graph.blocks[i].data;
+          if (!item.data.range) {
+            data.default = hasInputRule(item.data.name);
+          }
           leftPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range || ''),
-            size: data.pins ? data.pins.length : (data.size || 1)
+            size: data.pins ? data.pins.length : (data.size || 1),
+            default: data.default
           });
         }
         else if (item.type === 'basic.output') {
@@ -716,18 +742,28 @@ angular.module('icestudio')
         block.data.local
       ],
         function(evt, values) {
-          var name = values[0].replace(/ /g, '');
+          var label = values[0].replace(/ /g, '');
           var local = values[1];
-          // Edit block
-          if (block.data.name !== name ||
-              block.data.local !== local) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            cellView.model.set('data', data);
-            cellView.apply();
-            alertify.success(gettextCatalog.getString('Block updated'));
+          // Validate values
+          var paramInfo = utils.parseParamLabel(label);
+          if (paramInfo) {
+            var name = paramInfo.name;
+            evt.cancel = false;
+            if (block.data.name !== name ||
+                block.data.local !== local) {
+              // Edit block
+              var data = utils.clone(block.data);
+              data.name = name;
+              data.local = local;
+              cellView.model.set('data', data);
+              cellView.apply();
+              alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else {
+            evt.cancel = true;
+            alertify.notify(gettextCatalog.getString('Wrong parameter name {{name}}', { name: label }), 'warning', 3);
+            return;
           }
       });
     }

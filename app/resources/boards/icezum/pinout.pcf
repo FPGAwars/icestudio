@@ -8,18 +8,18 @@
 # --  Pinout: https://github.com/FPGAwars/icezum/blob/master/doc/pinout/icezum-pinout.pdf
 
 # ------------ User Leds ------------------------------------------------------
-set_io --warn-no-port LED0  95
-set_io --warn-no-port LED1  96
-set_io --warn-no-port LED2  97
-set_io --warn-no-port LED3  98
-set_io --warn-no-port LED4  99
-set_io --warn-no-port LED5  101
-set_io --warn-no-port LED6  102
-set_io --warn-no-port LED7  104
+set_io --warn-no-port LED0  95   # output
+set_io --warn-no-port LED1  96   # output
+set_io --warn-no-port LED2  97   # output
+set_io --warn-no-port LED3  98   # output
+set_io --warn-no-port LED4  99   # output
+set_io --warn-no-port LED5  101  # output
+set_io --warn-no-port LED6  102  # output
+set_io --warn-no-port LED7  104  # output
 
 # ------------ User push buttons ----------------------------------------------
-set_io --warn-no-port SW1  10
-set_io --warn-no-port SW2  11
+set_io --warn-no-port SW1  10  # input
+set_io --warn-no-port SW2  11  # input
 
 # ------------ 5v Digital I/O -------------------------------------------------
 
@@ -85,27 +85,27 @@ set_io --warn-no-port GP6  49
 set_io --warn-no-port GP7  50
 
 # -------------------------- I2C ADC ------------------------------------------
-set_io --warn-no-port ADC_SCL  91
+set_io --warn-no-port ADC_SCL  91  # output
 set_io --warn-no-port ADC_SDA  90
-set_io --warn-no-port ADc_INT  93
+set_io --warn-no-port ADC_INT  93  # input
 
 # -------------------------- SYSTEM CLOCK -------------------------------------
-set_io --warn-no-port CLK 21
+set_io --warn-no-port CLK 21  # input
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
-set_io --warn-no-port RES  66
-set_io --warn-no-port DONE 65
-set_io --warn-no-port SS   71
-set_io --warn-no-port MISO 67
-set_io --warn-no-port MOSI 68
-set_io --warn-no-port SCK  70
+set_io --warn-no-port RES  66  # input
+set_io --warn-no-port DONE 65  # output
+set_io --warn-no-port SS   71  # output
+set_io --warn-no-port MISO 67  # input
+set_io --warn-no-port MOSI 68  # output
+set_io --warn-no-port SCK  70  # output
 #
 # --- FTDI 1: (Serial port)
-set_io --warn-no-port DCD 1
-set_io --warn-no-port DSR 2
-set_io --warn-no-port DTR 3
-set_io --warn-no-port CTS 4
-set_io --warn-no-port RTS 7
-set_io --warn-no-port TX  8
-set_io --warn-no-port RX  9
+set_io --warn-no-port DCD 1  # output
+set_io --warn-no-port DSR 2  # output
+set_io --warn-no-port DTR 3  # input
+set_io --warn-no-port CTS 4  # output
+set_io --warn-no-port RTS 7  # output
+set_io --warn-no-port TX  8  # output
+set_io --warn-no-port RX  9  # input

@@ -1,20 +1,21 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('compiler', function(nodeSha1,
+  .service('compiler', function(boards,
+                                nodeSha1,
                                 _package) {
 
-    this.generate = function(target, project) {
+    this.generate = function(target, project, opt) {
       var code = '';
       switch(target) {
         case 'verilog':
           code += header('//');
           code += '`default_nettype none\n';
-          code += verilogCompiler('main', project);
+          code += verilogCompiler('main', project, opt);
           break;
         case 'pcf':
           code += header('#');
-          code += pcfCompiler(project);
+          code += pcfCompiler(project, opt);
           break;
         case 'testbench':
           code += header('//');
@@ -321,25 +322,196 @@ angular.module('icestudio')
       return null;
     }
 
-    function verilogCompiler(name, project) {
-      var data;
-      var code = '';
+    this.getInitPorts = getInitPorts;
+    function getInitPorts(project) {
+      // Find not connected input wire ports to initialize
+
+      var i, j;
+      var initPorts = [];
+      var blocks = project.design.graph.blocks;
+      var dependencies = project.dependencies;
+
+      // Find all not connected input ports:
+      // - Code blocks
+      // - Generic blocks
+      for (i in blocks) {
+        var block = blocks[i];
+        if (block) {
+          if (block.type === 'basic.code') {
+            // Code block
+            for (j in block.data.ports.in) {
+              var inPort = block.data.ports.in[j];
+              if (inPort.default && inPort.default.apply) {
+                initPorts.push({
+                  block: block.id,
+                  port: inPort.name,
+                  name: inPort.default.port,
+                  pin: inPort.default.pin
+                });
+              }
+            }
+            // block.data.ports.in
+          }
+          else if (!block.type.startsWith('basic.')) {
+            // Generic block
+            var genericBlock = dependencies[block.type];
+            var subBlocks = genericBlock.design.graph.blocks;
+            for (j in subBlocks) {
+              var subBlock = subBlocks[j];
+              if (subBlock.type === 'basic.input' &&
+                  subBlock.data.default && subBlock.data.default.apply) {
+                initPorts.push({
+                  block: block.id,
+                  port: subBlock.id,
+                  name: subBlock.data.default.port,
+                  pin: subBlock.data.default.pin
+                });
+              }
+            }
+          }
+        }
+      }
+
+      return initPorts;
+    }
+
+    this.getInitPins = getInitPins;
+    function getInitPins(project) {
+      // Find not used output pins to initialize
+
+      var i;
+      var initPins = [];
+      var usedPins = [];
+      var blocks = project.design.graph.blocks;
+
+      // Find all set output pins
+      for (i in blocks) {
+        var block = blocks[i];
+        if (block.type === 'basic.output') {
+          for (var p in block.data.pins) {
+            usedPins.push(block.data.virtual ? '' : block.data.pins[p].value);
+          }
+        }
+      }
+
+      // Filter pins defined in rules
+      var allInitPins = boards.selectedBoard.rules.output;
+      for (i in allInitPins) {
+        if (usedPins.indexOf(allInitPins[i].pin) === -1) {
+          initPins.push(allInitPins[i]);
+        }
+      }
+
+      return initPins;
+    }
+
+    function verilogCompiler(name, project, opt) {
+      var i, data, block, code = '';
+      opt = opt || {};
 
       if (project &&
           project.design &&
           project.design.graph) {
 
-        var graph = project.design.graph;
+        var blocks = project.design.graph.blocks;
         var dependencies = project.dependencies;
 
         // Main module
 
         if (name) {
+
+          // Initialize input ports
+
+          if (name === 'main' && opt.boardRules) {
+
+            var initPorts = opt.initPorts || getInitPorts(project);
+            for (i in initPorts) {
+              var initPort = initPorts[i];
+
+              // Find existing input block with the initPort value
+              var found = false;
+              var source = {
+                block: initPort.name,
+                port: 'out'
+              };
+              for (i in blocks) {
+                block = blocks[i];
+                if (block.type === 'basic.input' &&
+                    !block.data.range &&
+                    !block.data.virtual &&
+                    initPort.pin === block.data.pins[0].value) {
+                  found = true;
+                  source.block = block.id;
+                  break;
+                }
+              }
+
+              if (!found) {
+                // Add imaginary input block with the initPort value
+                project.design.graph.blocks.push({
+                  id: initPort.name,
+                  type: 'basic.input',
+                  data: {
+                    name: initPort.name,
+                    pins: [
+                      {
+                        index: '0',
+                        value: initPort.pin
+                      }
+                    ],
+                    virtual: false
+                  }
+                });
+              }
+
+              // Add imaginary wire between the input block and the initPort
+              project.design.graph.wires.push({
+                source: {
+                  block: source.block,
+                  port: source.port
+                },
+                target: {
+                  block: initPort.block,
+                  port: initPort.port
+                }
+              });
+            }
+          }
+
+          var params = getParams(project);
+          var ports = getPorts(project);
+          var content = getContent(name, project);
+
+          // Initialize output pins
+
+          if (name === 'main' && opt.boardRules) {
+
+            // Initialize output pins
+
+            var initPins = opt.initPins || getInitPins(project);
+            var n = initPins.length;
+
+            if (n > 0) {
+              // Declare m port
+              ports.out.push({
+                name: 'vinit',
+                range: '[0:' + (n-1) + ']'
+              });
+              // Generate port value
+              var value = n.toString() + '\'b';
+              for (i in initPins) {
+                value += initPins[i].bit;
+              }
+              // Assign m port
+              content += '\nassign vinit = ' + value + ';';
+            }
+          }
+
           data = {
             name: name,
-            params: getParams(project),
-            ports: getPorts(project),
-            content: getContent(name, project)
+            params: params,
+            ports: ports,
+            content: content
           };
           code += module(data);
         }
@@ -352,15 +524,15 @@ angular.module('icestudio')
 
         // Code modules
 
-        for (var i in graph.blocks) {
-          var block = graph.blocks[i];
+        for (i in blocks) {
+          block = blocks[i];
           if (block) {
             if (block.type === 'basic.code') {
               data = {
                 name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
-                content: block.data.code
+                content: block.data.code.replace(/\n+/g, '\n').replace(/\n$/g, '')
               };
               code += module(data);
             }
@@ -371,32 +543,88 @@ angular.module('icestudio')
       return code;
     }
 
-    function pcfCompiler(project) {
-      var code = '';
-      var graph = project.design.graph;
+    function pcfCompiler(project, opt) {
+      var i, j, block, pin, value, code = '';
+      var blocks = project.design.graph.blocks;
+      opt = opt || {};
 
-      for (var i in graph.blocks) {
-        var block = graph.blocks[i];
+      for (i in blocks) {
+        block = blocks[i];
         if (block.type === 'basic.input' ||
             block.type === 'basic.output') {
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
-              var pin = block.data.pins[p];
+              pin = block.data.pins[p];
+              value = block.data.virtual ? '' : pin.value;
               code += 'set_io ';
               code += digestId(block.id);
               code += '[' + pin.index + '] ';
-              code += block.data.virtual ? '' : pin.value;
+              code += value;
               code += '\n';
             }
           }
-          else {
+          else if (block.data.pins.length > 0) {
+            pin = block.data.pins[0];
+            value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
             code += digestId(block.id);
             code += ' ';
-            code += block.data.virtual ? '' : block.data.pins[0].value;
+            code += value;
             code += '\n';
           }
+        }
+      }
+
+      if (opt.boardRules) {
+        // Declare init input ports
+
+        var used = [];
+        var initPorts = opt.initPorts || getInitPorts(project);
+        for (i in initPorts) {
+          var initPort = initPorts[i];
+          if (used.indexOf(initPort.pin) !== -1) {
+            break;
+          }
+          used.push(initPort.pin);
+
+          // Find existing input block with the initPort value
+          var found = false;
+          for (j in blocks) {
+            block = blocks[j];
+            if (block.type === 'basic.input' &&
+            !block.data.range &&
+            !block.data.virtual &&
+            initPort.pin === block.data.pins[0].value) {
+              found = true;
+              used.push(initPort.pin);
+              break;
+            }
+          }
+
+          if (!found) {
+            code += 'set_io v';
+            code += initPorts[i].name;
+            code += ' ';
+            code += initPorts[i].pin;
+            code += '\n';
+          }
+        }
+
+        // Declare init output pins
+
+        var initPins = opt.initPins || getInitPins(project);
+        if (initPins.length > 1) {
+          for (i in initPins) {
+            code += 'set_io vinit[' + i + '] ';
+            code += initPins[i].pin;
+            code += '\n';
+          }
+        }
+        else if (initPins.length > 0) {
+          code += 'set_io vinit ';
+          code += initPins[0].pin;
+          code += '\n';
         }
       }
 

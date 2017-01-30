@@ -121,47 +121,66 @@
                     <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
                   </li>
                   <li class="divider"></li>
-                  <li>
-                    <a href ng-click="setRemoteHostname()">
-                      {{ 'Remote hostname' | translate }}
-                      <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                  </li>
-                  <li class="divider"></li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
                     <ul uib-dropdown-menu>
                       <li>
                         <a href ng-click="selectLanguage('en')">
-                          {{ 'English' | translate }}
+                          {{ 'English' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                       <li>
                         <a href ng-click="selectLanguage('es_ES')">
-                          {{ 'Spanish' | translate }}
+                          {{ 'Spanish' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'es_ES'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                       <li>
                         <a href ng-click="selectLanguage('gl_ES')">
-                          {{ 'Galician' | translate }}
+                          {{ 'Galician' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'gl_ES'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                       <li>
                         <a href ng-click="selectLanguage('eu_ES')">
-                          {{ 'Basque' | translate }}
+                          {{ 'Basque' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'eu_ES'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                       <li>
                         <a href ng-click="selectLanguage('fr_FR')">
-                          {{ 'French' | translate }}
+                          {{ 'French' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
                       </li>
                     </ul>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      {{ 'Board rules' | translate }}&ensp;
+                      <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                    <ul uib-dropdown-menu>
+                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
+                          {{ 'Enable' | translate }}
+                        </a>
+                      </li>
+                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
+                          {{ 'Disable' | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href ng-click="setRemoteHostname()">
+                      {{ 'Remote hostname' | translate }}
+                      <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -180,17 +199,20 @@
               <li>
                 <a href ng-click="showDatasheet()">{{ 'Datasheet' | translate }}</a>
               </li>
+              <li>
+                <a href ng-click="showBoardRules()">{{ 'Board rules' | translate }}</a>
+              </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-repeat="collection in resources.currentCollections">
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
-                      {{ 'Default' | translate }}
+                      {{ 'Default' | translate }}&ensp;
                       <span ng-show="resources.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
-                      {{ collection.name }}
+                      {{ collection.name }}&ensp;
                       <span ng-show="resources.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
@@ -204,7 +226,7 @@
             <ul uib-dropdown-menu>
               <li ng-repeat="board in boards.currentBoards">
                 <a href ng-click="selectBoard(board)">
-                  {{ board.info.label }}
+                  {{ board.info.label }}&ensp;
                   <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
                 </a>
               </li>

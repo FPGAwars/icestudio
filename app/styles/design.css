@@ -75,7 +75,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -87,7 +87,7 @@
   width: 120px;
   color: #333;
   background-color: white;
-  border: 1px solid #888;
+  border: 1px solid #777;
   text-align: center;
   border-radius: 5px;
   padding: 5px 5px;
@@ -106,7 +106,7 @@
   margin-left: -6px;
   border-width: 6px;
   border-style: solid;
-  border-color: #888 transparent transparent transparent;
+  border-color: #777 transparent transparent transparent;
 }
 
 .generic-block .tooltip-large {
@@ -132,7 +132,7 @@
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #444;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -141,7 +141,7 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -150,10 +150,10 @@
 
 .virtual-port label {
   display: block;
-  margin-top: 20px;
+  margin-top: 22px;
   text-align: center;
-  font-size: 0.9em;
-  color: #444;
+  font-size: 13px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -162,7 +162,7 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -171,11 +171,12 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 4px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   text-align: center;
   font-size: 13px;
-  color: #444;
+  height: 18px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -189,26 +190,39 @@
 
 .fpga-port div .select2 {
   position: relative;
-  width: 82px;
+  width: 84px;
   left: 5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   pointer-events: auto;
 }
 
 .select2-selection__rendered {
+  line-height: 25px !important;
+}
+
+.select2-selection {
   font-size: 13px;
+  height: 26px !important;
+}
+
+.select2-container--default .select2-selection--single {
+  border: 1px solid #aaa;
+}
+
+.select2-dropdown {
+  border: 1px solid #aaa;
 }
 
 .bigdrop {
-  width: 92px !important;
   font-size: 13px;
+  width: 92px !important;
 }
 
 .constant-block {
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -219,16 +233,18 @@
   position: absolute;
   top: 0;
   right: 5px;
-  font-size: 1.5em;
-  color: #444;
+  font-size: 12px;
+  color: #555;
 }
 
 .constant-block label {
   display: block;
-  margin-top: 8px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   text-align: center;
   font-size: 13px;
-  color: #444;
+  height: 18px;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -237,9 +253,12 @@
   position: absolute;
   text-align: center;
   left: 5px;
-  bottom: 5px;
-  width: 82px;
+  margin-bottom: 6px;
+  width: 84px;
+  height: 26px;
   font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
   pointer-events: auto;
 }
 
@@ -247,7 +266,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -272,7 +291,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -294,11 +313,30 @@
 }
 
 .port-body:hover {
-  fill: yellow;
 }
 
-.highlight {
-  box-shadow: 0 0 30px 0 rgba(200,200,200,1);
+.joint-highlight-stroke.joint-theme-default {
+  display: none;
+}
+
+.highlight-yellow {
+  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
+}
+
+.highlight-green {
+  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.5);
+}
+
+.highlight-orange {
+  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.5);
+}
+
+.highlight-blue {
+  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.5);
+}
+
+.highlight-gray {
+  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.5);
 }
 
 .selectionarea {

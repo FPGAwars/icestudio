@@ -21,7 +21,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     this.paper = options.paper;
     this.graph = options.graph;
-    this.zeroProject = true;
 
     this.reset();
     this.listen();
@@ -54,10 +53,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-    if (this.zeroProject && cmdName === 'board') {
-      return;
-    }
-
     if (cmdName === 'change:labels' ||
         cmdName === 'change:z') {
       return;
@@ -71,22 +66,18 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return;
     }
 
-    if (this.zeroProject) {
-      this.zeroProject = false;
-    }
-
     var push = _.bind(function(cmd) {
 
       this.redoStack = [];
 
       if (!cmd.batch) {
-      	this.undoStack.push(cmd);
+        this.undoStack.push(cmd);
         this.triggerChange();
-      	this.trigger('add', cmd);
+        this.trigger('add', cmd);
       } else {
         this.lastCmdIndex = Math.max(this.lastCmdIndex, 0);
-      	// Commands possible thrown away. Someone might be interested.
-      	this.trigger('batch', cmd);
+        // Commands possible thrown away. Someone might be interested.
+        this.trigger('batch', cmd);
       }
 
     }, this);
@@ -125,17 +116,20 @@ joint.dia.CommandManager = Backbone.Model.extend({
       command.batch = false;
     }
 
-    if (cmdName === 'add' || cmdName === 'remove') {
-
-      // In a batch: delete an "add-remove" sequence if it is applied to the same cell
-      if (cmdName === 'remove' && this.batchCommand && this.lastCmdIndex > 0) {
-        var prevCommand = this.batchCommand[this.lastCmdIndex-1];
+    // In a batch: delete an "add-*-remove" sequence if it is applied to the same cell
+    if (cmdName === 'remove' && this.batchCommand && this.lastCmdIndex > 0) {
+      for (var i = 0; i < this.lastCmdIndex; i++) {
+        var prevCommand = this.batchCommand[i];
         if (prevCommand.action === 'add' && prevCommand.data.id === cell.id) {
-          this.batchCommand.pop();
-          this.batchCommand.pop();
+          delete this.batchCommand;
+          delete this.lastCmdIndex;
+          delete this.batchLevel;
           return;
         }
       }
+    }
+
+    if (cmdName === 'add' || cmdName === 'remove') {
 
       command.action = cmdName;
       command.data.id = cell.id;

@@ -5,6 +5,7 @@ angular.module('icestudio')
                              joint,
                              boards,
                              blocks,
+                             profile,
                              utils,
                              gettextCatalog,
                              window) {
@@ -13,7 +14,6 @@ angular.module('icestudio')
     var z = {
       index: 100
     };
-    var ctrlPressed = false;
 
     var graph = null;
     var paper = null;
@@ -38,10 +38,6 @@ angular.module('icestudio')
     const ZOOM_MIN = 0.2;
 
     // Functions
-
-    $(document).on('keydown', function(event) {
-      ctrlPressed = event.keyCode === 17;
-    });
 
     this.getState = function() {
       // Clone state
@@ -129,7 +125,7 @@ angular.module('icestudio')
         height: 1000,
         model: graph,
         gridSize: gridsize,
-        snapLinks: { radius: 15 },
+        snapLinks: { radius: 16 },
         linkPinning: false,
         embeddingMode: false,
         //markAvailable: true,
@@ -224,6 +220,23 @@ angular.module('icestudio')
         }
       });
 
+      // Command Manager
+
+      commandManager = new joint.dia.CommandManager({
+        paper: paper,
+        graph: graph
+      });
+
+      // Selection View
+
+     selection = new Backbone.Collection();
+     selectionView = new joint.ui.SelectionView({
+       paper: paper,
+       graph: graph,
+       model: selection,
+       state: state
+     });
+
       paper.options.enabled = true;
       paper.options.warningTimer = false;
 
@@ -253,8 +266,12 @@ angular.module('icestudio')
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
-          state.zoom = scale;
-          // Already rendered in pan
+          state.zoom = scale; // Already rendered in pan
+
+          // Close expanded combo
+          if (document.activeElement.className === 'select2-search__field') {
+            $('select').select2('close');
+          }
         },
         /*beforePan: function(oldpan, newpan) {
         },*/
@@ -322,7 +339,7 @@ angular.module('icestudio')
          });
        }
        // Toggle selection
-       if ((evt.which === 3) && (evt.ctrlKey || evt.metaKey)) {
+       if (evt.which === 3) {
          var cell = selection.get($(evt.target).data('model'));
          selection.reset(selection.without(cell));
          selectionView.destroySelectionBox(paper.findViewByModel(cell));
@@ -339,7 +356,7 @@ angular.module('icestudio')
              // Right button
              selection.add(cellView.model);
              selectionView.createSelectionBox(cellView);
-             cellView.$box.removeClass('highlight');
+             unhighlight(cellView);
            }
            // Update wires on obstacles
            var cells = graph.getCells();
@@ -353,15 +370,14 @@ angular.module('icestudio')
        }
      });
 
-      paper.on('cell:pointerdown', function(/*cellView*/) {
+      paper.on('cell:pointerdown', function(cellView) {
         self.mousedown = true;
-        /*if (paper.options.enabled) {
-          if (!cellView.model.isLink()) {
-            if (cellView.$box.css('z-index') < z.index) {
-              cellView.$box.css('z-index', ++z.index);
-            }
+        if (paper.options.enabled) {
+          if (cellView.model.isLink()) {
+            // Unhighlight source block of the wire
+            unhighlight(paper.findViewByModel(cellView.model.attributes.source.id));
           }
-        }*/
+        }
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
@@ -415,11 +431,9 @@ angular.module('icestudio')
       paper.on('cell:mouseover', function(cellView/*, evt*/) {
         if (!self.mousedown) {
           if (!cellView.model.isLink()) {
-            cellView.$box.addClass('highlight');
-            if (cellView && !cellView.model.isLink()) {
-              if (cellView.$box.css('z-index') < z.index) {
-                cellView.$box.css('z-index', ++z.index);
-              }
+            highlight(cellView);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
             }
           }
         }
@@ -428,7 +442,7 @@ angular.module('icestudio')
       paper.on('cell:mouseout', function(cellView/*, evt*/) {
         if (!self.mousedown) {
           if (!cellView.model.isLink()) {
-            cellView.$box.removeClass('highlight');
+            unhighlight(cellView);
           }
         }
       });
@@ -444,6 +458,65 @@ angular.module('icestudio')
             }
           }
         }*/
+      });
+
+      graph.on('add change:source change:target', function(cell) {
+        if (cell.isLink() && cell.get('source').id) {
+          // Link connected
+          var target = cell.get('target');
+          if (target.id) {
+            // Connected to a port
+            cell.attributes.lastTarget = target;
+            updatePortDefault(target, false);
+          }
+          else {
+            // Moving the wire connection
+            target = cell.get('lastTarget');
+            updatePortDefault(target, true);
+          }
+        }
+      });
+
+      graph.on('remove', function(cell) {
+        if (cell.isLink()) {
+          // Link removed
+          var target = cell.get('target');
+          if (!target.id) {
+            target = cell.get('lastTarget');
+          }
+          updatePortDefault(target, true);
+        }
+      });
+
+      function updatePortDefault(target, value) {
+        if (target) {
+          var block = graph.getCell(target.id);
+          if (block) {
+            var ports = block.get('leftPorts');
+            for (var i in ports) {
+              if (ports[i].id === target.port && ports[i].default) {
+                ports[i].default.apply = value;
+                var selector = '.leftPorts>.port' + i + '>.port-default';
+                block.attributes.attrs[selector].display = (value && profile.data.boardRules) ? 'inline' : 'none';
+                break;
+              }
+            }
+            paper.findViewByModel(block.id).update();
+          }
+        }
+      }
+
+    };
+
+    this.refreshBoardRules = function() {
+      var cells = graph.getCells();
+
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          cell.attributes.rules = profile.data.boardRules;
+          var cellView = paper.findViewByModel(cell);
+          cellView.updateBox();
+        }
       });
     };
 
@@ -540,7 +613,7 @@ angular.module('icestudio')
         if (type === 'basic.input' ||
             type === 'basic.output') {
           var view = paper.findViewByModel(cell.id);
-          cell.set('choices', boards.getPinoutHTML());
+          cell.set('choices', (type === 'basic.input') ? boards.pinoutInputHTML : boards.pinoutOutputHTML);
           view.clearValues();
           view.applyChoices();
         }
@@ -586,7 +659,7 @@ angular.module('icestudio')
             var cellView = paper.findViewByModel(cell);
             selection.add(cell);
             selectionView.createSelectionBox(cellView);
-            cellView.$box.removeClass('highlight');
+            unhighlight(cellView);
           }
         });
       }
@@ -600,10 +673,62 @@ angular.module('icestudio')
           var cellView = paper.findViewByModel(cell);
           selection.add(cell);
           selectionView.createSelectionBox(cellView);
-          cellView.$box.removeClass('highlight');
+          unhighlight(cellView);
         }
       });
     };
+
+    function highlight(cellView) {
+      if (cellView) {
+        switch(cellView.model.attributes.type) {
+          case 'ice.Input':
+          case 'ice.Output':
+            if (cellView.model.attributes.data.virtual) {
+              cellView.$box.addClass('highlight-green');
+            }
+            else {
+              cellView.$box.addClass('highlight-yellow');
+            }
+            break;
+          case 'ice.Constant':
+            cellView.$box.addClass('highlight-orange');
+            break;
+          case 'ice.Code':
+          case 'ice.Generic':
+            cellView.$box.addClass('highlight-blue');
+            break;
+          case 'ice.Info':
+            cellView.$box.addClass('highlight-gray');
+            break;
+        }
+      }
+    }
+
+    function unhighlight(cellView) {
+      if (cellView) {
+        switch(cellView.model.attributes.type) {
+          case 'ice.Input':
+          case 'ice.Output':
+            if (cellView.model.attributes.data.virtual) {
+              cellView.$box.removeClass('highlight-green');
+            }
+            else {
+              cellView.$box.removeClass('highlight-yellow');
+            }
+            break;
+          case 'ice.Constant':
+            cellView.$box.removeClass('highlight-orange');
+            break;
+          case 'ice.Code':
+          case 'ice.Generic':
+            cellView.$box.removeClass('highlight-blue');
+            break;
+          case 'ice.Info':
+            cellView.$box.removeClass('highlight-gray');
+            break;
+        }
+      }
+    }
 
     this.hasSelection = function() {
       return selection.length > 0;
@@ -729,6 +854,7 @@ angular.module('icestudio')
 
     function addCell(cell) {
       cell.attributes.state = state;
+      cell.attributes.rules = profile.data.boardRules;
       //cell.attributes.zindex = z.index;
       graph.addCell(cell);
       if (!cell.isLink()) {

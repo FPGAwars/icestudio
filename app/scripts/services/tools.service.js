@@ -138,8 +138,13 @@ angular.module('icestudio')
         nodeFs.mkdirSync(utils.BUILD_DIR);
       }
       project.update();
-      var verilog = compiler.generate('verilog', project.get());
-      var pcf = compiler.generate('pcf', project.get());
+      var opt = { boardRules: profile.data.boardRules };
+      if (opt.boardRules) {
+        opt.initPorts = compiler.getInitPorts(project.get());
+        opt.initPins = compiler.getInitPins(project.get());
+      }
+      var verilog = compiler.generate('verilog', project.get(), opt);
+      var pcf = compiler.generate('pcf', project.get(), opt);
       nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.v'), verilog, 'utf8');
       nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
       return verilog;

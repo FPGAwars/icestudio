@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>PCF</title>
     <style type="text/css">
       body {
         overflow: hidden;
@@ -24,21 +25,22 @@
     </div>
     <textarea id="pcf" readonly="true"></textarea>
     <script>
+      'use strict';
       function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-      };
+      }
       window.onload = function() {
         var board = getURLParameter('board');
-        var data = "../../boards/" + board + "/pinout.pcf";
+        var data = '../../boards/' + board + '/pinout.pcf';
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open('GET', data, false);
         xmlhttp.send();
         var text = xmlhttp.responseText;
         if (text) {
-          document.getElementById("pcf").value = text;
+          document.getElementById('pcf').value = text;
         }
         else {
-          document.getElementById("pcf").style.visibility = 'hidden';
+          document.getElementById('pcf').style.visibility = 'hidden';
         }
       };
     </script>

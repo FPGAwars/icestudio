@@ -46,7 +46,7 @@ angular.module('icestudio')
     }
 
     $rootScope.$on('updateProject', function(event, callback) {
-      project.update(callback, false);
+      project.update({ deps: false }, callback);
     });
 
     $rootScope.$on('breadcrumbsBack', function(/*event*/) {
