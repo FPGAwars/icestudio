@@ -283,10 +283,13 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      if (port.default && port.default.apply) {
-        this.$('#port-default-' + port.id).css('display', rules ? 'inline' : 'none');
+      if (rules && port.default && port.default.apply) {
+        this.$('#port-default-' + port.id).css('display', 'inline');
         this.$('#port-default-wire-' + port.id).css('stroke-width', width);
         this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      }
+      else {
+        this.$('#port-default-' + port.id).css('display', 'none');
       }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
@@ -829,10 +832,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      if (port.default && port.default.apply) {
-        this.$('#port-default-' + port.id).css('display', rules ? 'inline' : 'none');
+      if (rules && port.default && port.default.apply) {
+        this.$('#port-default-' + port.id).css('display', 'inline');
         this.$('#port-default-wire-' + port.id).css('stroke-width', width);
         this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      }
+      else {
+        this.$('#port-default-' + port.id).css('display', 'none');
       }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
@@ -1128,8 +1134,6 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
           else {
             self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 2);
           }
-
-          self.update();
           break;
         }
       }

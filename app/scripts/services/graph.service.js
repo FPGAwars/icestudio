@@ -496,12 +496,10 @@ angular.module('icestudio')
             for (var i in ports) {
               if (ports[i].id === target.port && ports[i].default) {
                 ports[i].default.apply = value;
-                var selector = '.leftPorts>.port' + i + '>.port-default';
-                block.attributes.attrs[selector].display = (value && profile.data.boardRules) ? 'inline' : 'none';
                 break;
               }
             }
-            paper.findViewByModel(block.id).update();
+            paper.findViewByModel(block.id).updateBox();
           }
         }
       }
