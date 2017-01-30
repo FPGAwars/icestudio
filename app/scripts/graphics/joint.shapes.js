@@ -20,7 +20,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
   markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"> \
-                 <rect class="port-default"/> \
+                 <g class="port-default"><path id="port-default-wire-<%= port.id %>"/><rect id="port-default-rect-<%= port.id %>"/></g> \
                  <path id="port-wire-<%= port.id %>" class="port-wire"/> \
                  <circle class="port-body"/> \
                  <text class="port-label"/> \
@@ -79,7 +79,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         'stroke-width': WIRE_WIDTH
       },
       '.port-default': {
-        display: 'none',
+        display: 'none'
+      },
+      '.port-default rect': {
         x: '-40',
         y: '-10',
         width: '20',
@@ -89,7 +91,13 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         stroke: '#555',
         'stroke-width': 1,
         fill: '#FBFBC9'
+      },
+      '.port-default path': {
+        d: 'M 0 0 L -20 0',
+        stroke: '#777',
+        'stroke-width': WIRE_WIDTH
       }
+
     }
   }, joint.shapes.basic.Generic.prototype.defaults),
 
@@ -163,7 +171,6 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
     var offset = (port.size && port.size > 1) ? 4 : 1;
     var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
-    var lineX = (port.default && port.default.apply) ? '-20' : '0';
 
     switch (type) {
       case 'left':
@@ -173,7 +180,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'end';
         attrs[portWireSelector]['y'] = pos;
-        attrs[portWireSelector]['d'] = 'M ' + lineX + ' 0 L 16 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
         break;
       case 'right':
         attrs[portSelector]['ref-dx'] = 8;
@@ -274,10 +281,11 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
-    this.$('.port-default').css('stroke-width', state.zoom);
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
+      this.$('#port-default-wire-' + port.id).css('stroke-width', width);
+      this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
@@ -818,6 +826,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
+      this.$('#port-default-wire-' + port.id).css('stroke-width', width);
+      this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }

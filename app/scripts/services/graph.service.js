@@ -478,12 +478,9 @@ angular.module('icestudio')
                 var selector = '.leftPorts>.port' + i + '>.port-default';
                 block.attributes.attrs[selector].display = value ? 'visible' : 'none';
                 paper.findViewByModel(block.id).update();
-                //block.processPorts();
-                //block.trigger('process:ports');
                 break;
               }
             }
-            //block.updatePortsAttrs();
           }
         }
       }

@@ -313,13 +313,10 @@
 }
 
 .port-body:hover {
-  fill: yellow;
 }
 
 .joint-highlight-stroke.joint-theme-default {
-  fill: yellow;
-  opacity: 0.5;
-  stroke-width: 0px;
+  display: none;
 }
 
 .highlight-yellow {
