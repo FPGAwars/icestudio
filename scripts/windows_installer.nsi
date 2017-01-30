@@ -140,9 +140,9 @@ Section "${NAME} ${VERSION}"
   SetShellVarContext all
 
   # define shortcut
-  CreateDirectory "$SMPROGRAMS\{NAME}"
-  CreateShortCut "$SMPROGRAMS\{NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe"
-  CreateShortCut "$SMPROGRAMS\{NAME}\Uninstall ${NAME}.lnk" "$INSTDIR\uninstaller.exe"
+  CreateDirectory "$SMPROGRAMS\${NAME}"
+  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe"
+  CreateShortCut "$SMPROGRAMS\${NAME}\Uninstall ${NAME}.lnk" "$INSTDIR\uninstaller.exe"
 
   # register .ice files
   ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
@@ -168,7 +168,7 @@ Section "Uninstall"
   SetShellVarContext all
 
   # delete the installed files
-  Delete "$SMPROGRAMS\{NAME}"
+  Delete "$SMPROGRAMS\${NAME}"
   RMDir /r $INSTDIR
 
   # unregister .ice files

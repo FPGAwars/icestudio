@@ -13,11 +13,12 @@ angular.module('icestudio')
                              nodeFse,
                              nodeOs,
                              nodePath,
-                             nodeProcess,
                              nodeChildProcess,
                              nodeSSHexec,
                              nodeRSync,
-                             nodeExtract) {
+                             nodeExtract,
+                             nodeSemver,
+                             _package) {
 
     var currentAlert = null;
     var taskRunning = false;
@@ -28,10 +29,7 @@ angular.module('icestudio')
     // Check if the toolchain is installed
     checkToolchain();
 
-    // Update toolchain information
-    updateToolchainInfo();
-
-    // Remove _build directory on start
+    // Remove build directory on start
     nodeFse.removeSync(utils.BUILD_DIR);
 
     this.verifyCode = function() {
@@ -39,11 +37,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function() {
-      this.apio(['build', '--board', boards.selectedBoard.name]);
+      this.apio(['build', '-b', boards.selectedBoard.name]);
     };
 
     this.uploadCode = function() {
-      this.apio(['upload', '--board', boards.selectedBoard.name]);
+      this.apio(['upload', '-b', boards.selectedBoard.name]);
     };
 
     this.apio = function(commands) {
@@ -66,7 +64,6 @@ angular.module('icestudio')
           var message = 'start_' + commands[0];
           currentAlert = alertify.notify(gettextCatalog.getString(message), 'message', 100000);
           $('body').addClass('waiting');
-          nodeProcess.chdir(utils.BUILD_DIR);
           check = this.syncResources(code);
           try {
             if (check) {
@@ -91,41 +88,49 @@ angular.module('icestudio')
           }
           catch(e) {
           }
-          finally {
-            nodeProcess.chdir('..');
-          }
         }
         else {
           alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
+          taskRunning = false;
         }
+      }
+      else {
+        taskRunning = false;
       }
     };
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
       toolchain.disabled = utils.toolchainDisabled;
-      nodeChildProcess.exec([
-        'cd', utils.SAMPLE_DIR, (process.platform === 'win32' ? '&' : ';'),
-        apio, 'clean'].join(' '), function(error/*, stdout, stderr*/) {
-          if (!toolchain.disabled) {
-            toolchain.installed = !error;
+      if (!toolchain.disabled) {
+        nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
+          if (error) {
+            toolchain.apio = '';
+            toolchain.installed = false;
             if (callback) {
-              callback(toolchain.installed);
+              callback();
+            }
+          }
+          else {
+            toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+            toolchain.installed = nodeSemver.gte(toolchain.apio, _package.apio.min) &&
+                                  nodeSemver.lt(toolchain.apio, _package.apio.max);
+            if (toolchain.installed) {
+              nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+                toolchain.installed = !error;
+                if (callback) {
+                  callback();
+                }
+              });
+            }
+            else {
+              if (callback) {
+                callback();
+              }
             }
           }
         });
-    }
-
-    function updateToolchainInfo() {
-      var apio = utils.getApioExecutable();
-      nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
-        if (error) {
-          toolchain.apio = '-';
-        }
-        else {
-          toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-        }
-      });
+      }
     }
 
     this.generateCode = function() {
@@ -167,7 +172,7 @@ angular.module('icestudio')
       var match;
       while (match = pattern.exec(code)) {
         var file = match[1];
-        var destPath = nodePath.join('.', file);
+        var destPath = nodePath.join(utils.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.path), file);
 
         // Copy included file
@@ -188,8 +193,8 @@ angular.module('icestudio')
       if (remoteHostname) {
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
-          src: nodeProcess.cwd() + '/',
-          dest: remoteHostname + ':' + utils.BUILD_DIR + '/',
+          src: utils.BUILD_DIR + '/',
+          dest: remoteHostname + ':.build/',
           ssh: true,
           recursive: true,
           delete: true,
@@ -198,7 +203,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
-            nodeSSHexec('cd ' + utils.BUILD_DIR + '; ' + (['apio'].concat(commands)).join(' '), remoteHostname,
+            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), remoteHostname,
               function (error, stdout, stderr) {
                 processExecute(label, callback, error, stdout, stderr);
               });
@@ -211,9 +216,8 @@ angular.module('icestudio')
       else {
         var apio = utils.getApioExecutable();
         toolchain.disabled = utils.toolchainDisabled;
-        nodeChildProcess.exec(([apio].concat(commands)).join(' '), { maxBuffer: 5000 * 1024 },
+        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(utils.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
             processExecute(label, callback, error, stdout, stderr);
           });
       }
@@ -347,6 +351,7 @@ angular.module('icestudio')
       alertify.confirm(gettextCatalog.getString('The toolchain will be removed. Do you want to continue?'),
         function() {
           utils.removeToolchain();
+          toolchain.apio = '';
           toolchain.installed = false;
           alertify.success(gettextCatalog.getString('Toolchain removed'));
       });
@@ -523,11 +528,10 @@ angular.module('icestudio')
     }
 
     function installationCompleted(callback) {
-      checkToolchain(function(installed) {
-        if (installed) {
+      checkToolchain(function() {
+        if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
           alertify.success(gettextCatalog.getString('Toolchain installed'));
-          updateToolchainInfo();
         }
         else {
           errorProgress(gettextCatalog.getString('Toolchain not installed'));

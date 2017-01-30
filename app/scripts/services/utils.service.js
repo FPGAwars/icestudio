@@ -57,7 +57,7 @@ angular.module('icestudio')
     const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
     const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
     const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
-    const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + (WIN32 ? '& ' : '; ') + ENV_APIO;
+    const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + (WIN32 ? '& ' : '; ') + coverPath(ENV_APIO);
     const SYSTEM_APIO = '/usr/bin/apio';
 
     function _getEnvDir(defaultEnvDir) {
@@ -178,7 +178,9 @@ angular.module('icestudio')
       if (!nodeFs.existsSync(ENV_DIR)) {
         nodeFs.mkdirSync(ENV_DIR);
         this.executeCommand(
-          [this.getPythonExecutable(), nodePath.join(VENV_DIR, 'virtualenv.py'), ENV_DIR], callback);
+          [this.getPythonExecutable(),
+           coverPath(nodePath.join(VENV_DIR, 'virtualenv.py')),
+           coverPath(ENV_DIR)], callback);
       }
       else {
         callback();
@@ -203,7 +205,8 @@ angular.module('icestudio')
       var self = this;
       nodeGlob(nodePath.join(DEFAULT_APIO_DIR, '*.*'), {}, function (error, files) {
         if (!error) {
-          self.executeCommand([ENV_PIP, 'install', '-U', '--no-deps'].concat(files), callback);
+          files = files.map(function(item) { return coverPath(item); });
+          self.executeCommand([coverPath(ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
     };
@@ -227,7 +230,7 @@ angular.module('icestudio')
     };
 
     this.installOnlineApio = function(callback) {
-      this.executeCommand([ENV_PIP, 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
+      this.executeCommand([coverPath(ENV_PIP), 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
     };
 
     this.apioInstall = function(_package, callback) {
@@ -244,7 +247,7 @@ angular.module('icestudio')
           alertify.notify('Using system wide apio', 'message', 5);
         }
         this.toolchainDisabled = true;
-        return candidateApio;
+        return coverPath(candidateApio);
       }
       this.toolchainDisabled = false;
       return APIO_CMD;
@@ -925,12 +928,12 @@ angular.module('icestudio')
 
     this.newWindow = function(filepath) {
       var execPath = process.execPath;
-      var command = [ '"' + execPath + '"' ];
+      var command = [ coverPath(execPath) ];
       if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
-        command.push('"' + nodePath.dirname(process.mainModule.filename) + '"');
+        command.push(coverPath(nodePath.dirname(process.mainModule.filename)));
       }
       if (filepath) {
-        command.push('"' + filepath + '"');
+        command.push(coverPath(filepath));
       }
       /*var win = window.get();
       var position = {
@@ -944,5 +947,10 @@ angular.module('icestudio')
         }
       });
     };
+
+    this.coverPath = coverPath;
+    function coverPath(filepath) {
+      return '"' + filepath + '"';
+    }
 
   });
