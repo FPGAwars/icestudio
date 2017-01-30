@@ -434,11 +434,15 @@ angular.module('icestudio')
 
       for (var i in instance.data.ports.in) {
         port = instance.data.ports.in[i];
+        if (!port.range) {
+          port.default = hasInputRule(port.name);
+        }
         leftPorts.push({
           id: port.name,
           label: port.name + (port.range || ''),
           size: port.size || 1,
-          gridUnits: 32
+          gridUnits: 32,
+          default: port.default
         });
       }
 

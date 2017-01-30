@@ -429,6 +429,11 @@ angular.module('icestudio')
               cell.type === 'ice.Info') {
             delete block.data.deltas;
           }
+          if (cell.type === 'ice.Code') {
+            for (var i in block.data.ports.in) {
+              delete block.data.ports.in[i].default;
+            }
+          }
           blocks.push(block);
         }
         else if (cell.type === 'ice.Wire') {
@@ -456,8 +461,8 @@ angular.module('icestudio')
       if (updateDependencies !== false) {
         project.dependencies = {};
         var types = findSubDependencies(project);
-        for (var i in types) {
-          project.dependencies[types[i]] = allDependencies[types[i]];
+        for (var t in types) {
+          project.dependencies[types[t]] = allDependencies[types[t]];
         }
       }
 
