@@ -497,7 +497,7 @@ angular.module('icestudio')
         if (allInitPorts) {
           for (var i in allInitPorts) {
             if (port === allInitPorts[i].port){
-              _default = allInitPorts[i].pin;
+              _default = allInitPorts[i];
               _default.apply = true;
               break;
             }

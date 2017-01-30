@@ -2,10 +2,7 @@
   "input" : [
     {
       "port" : "clk",
-      "pin": {
-        "name": "CLK",
-        "value": "21"
-      }
+      "pin": "21"
     }
   ],
   "output": [

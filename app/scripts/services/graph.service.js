@@ -441,6 +441,7 @@ angular.module('icestudio')
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
+          // Link connected
           var target = cell.get('target');
           if (target.id) {
             // Connected to a port
@@ -452,18 +453,17 @@ angular.module('icestudio')
             target = cell.get('lastTarget');
             updatePortDefault(target, true);
           }
-          //console.log('Connect link', cell, target);
         }
       });
 
       graph.on('remove', function(cell) {
         if (cell.isLink()) {
+          // Link removed
           var target = cell.get('target');
           if (!target.id) {
             target = cell.get('lastTarget');
           }
           updatePortDefault(target, true);
-          //console.log('Remove link', cell);
         }
       });
 

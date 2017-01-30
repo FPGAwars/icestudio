@@ -328,13 +328,10 @@ angular.module('icestudio')
 
       var i, j;
       var initPorts = [];
-      var inputPorts = [];
-      var ncInputPorts = [];
       var blocks = project.design.graph.blocks;
-      var wires = project.design.graph.wires;
       var dependencies = project.dependencies;
 
-      // Find all input ports in:
+      // Find all not connected input ports:
       // - Code blocks
       // - Generic blocks
       for (i in blocks) {
@@ -343,10 +340,13 @@ angular.module('icestudio')
           if (block.type === 'basic.code') {
             // Code block
             for (j in block.data.ports.in) {
-              if (!block.data.ports.in[j].range) {
-                inputPorts.push({
+              var inPort = block.data.ports.in[j];
+              if (inPort.default && inPort.default.apply) {
+                initPorts.push({
                   block: block.id,
-                  port: block.data.ports.in[j].name
+                  port: inPort.name,
+                  name: inPort.default.port,
+                  pin: inPort.default.pin
                 });
               }
             }
@@ -357,54 +357,20 @@ angular.module('icestudio')
             var genericBlock = dependencies[block.type];
             var subBlocks = genericBlock.design.graph.blocks;
             for (j in subBlocks) {
-              if (subBlocks[j].type === 'basic.input' && !subBlocks[j].data.range) {
-                inputPorts.push({
+              var subBlock = subBlocks[j];
+              if (subBlock.type === 'basic.input' &&
+                  subBlock.data.default && subBlock.data.default.apply) {
+                initPorts.push({
                   block: block.id,
-                  port: subBlocks[j].id,
-                  name: subBlocks[j].data.name
+                  port: subBlock.id,
+                  name: subBlock.data.default.port,
+                  pin: subBlock.data.default.pin
                 });
               }
             }
           }
         }
       }
-
-      //console.log('INPUT PORTS', inputPorts);
-
-      // Filter not connected input ports
-      for (i in inputPorts) {
-        var connected = false;
-        var inputPort = inputPorts[i];
-        for (j in wires) {
-          var target = wires[j].target;
-          if (target.block === inputPort.block && target.port === inputPort.port) {
-            connected = true;
-            break;
-          }
-        }
-        if (!connected) {
-          ncInputPorts.push(inputPort);
-        }
-      }
-
-      //console.log('NC INPUT PORTS', ncInputPorts);
-
-      // Filter ports defined in rules
-      var allInitPorts = boards.selectedBoard.rules.input;
-      for (i in allInitPorts) {
-        for (j in ncInputPorts) {
-          if (ncInputPorts[j].name === allInitPorts[i].port || ncInputPorts[j].port === allInitPorts[i].port) {
-            initPorts.push({
-              block: ncInputPorts[j].block,
-              port: ncInputPorts[j].port,
-              name: ncInputPorts[j].name || ncInputPorts[j].port,
-              pin: allInitPorts[i].pin
-            });
-          }
-        }
-      }
-
-      //console.log('INIT PORTS', initPorts);
 
       return initPorts;
     }
@@ -469,12 +435,13 @@ angular.module('icestudio')
               };
               for (i in blocks) {
                 block = blocks[i];
-                if (block.type === 'basic.input' && !block.data.range && !block.data.virtual) {
-                  if (initPort.pin === block.data.pins[0].value) {
-                    found = true;
-                    source.block = block.id;
-                    break;
-                  }
+                if (block.type === 'basic.input' &&
+                    !block.data.range &&
+                    !block.data.virtual &&
+                    initPort.pin === block.data.pins[0].value) {
+                  found = true;
+                  source.block = block.id;
+                  break;
                 }
               }
 
@@ -496,7 +463,7 @@ angular.module('icestudio')
                 });
               }
 
-              // Add imaginary wire between the imaginary input block and the initPort
+              // Add imaginary wire between the input block and the initPort
               project.design.graph.wires.push({
                 source: {
                   block: source.block,
@@ -623,12 +590,13 @@ angular.module('icestudio')
         var found = false;
         for (j in blocks) {
           block = blocks[j];
-          if (block.type === 'basic.input' && !block.data.range && !block.data.virtual) {
-            if (initPort.pin === block.data.pins[0].value) {
-              found = true;
-              used.push(initPort.pin);
-              break;
-            }
+          if (block.type === 'basic.input' &&
+              !block.data.range &&
+              !block.data.virtual &&
+              initPort.pin === block.data.pins[0].value) {
+            found = true;
+            used.push(initPort.pin);
+            break;
           }
         }
 

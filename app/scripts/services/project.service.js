@@ -276,7 +276,7 @@ angular.module('icestudio')
       this.updateTitle(name);
 
       sortGraph();
-      this.update();
+      this.update({ full: true });
       utils.saveFile(filepath, project, function() {
         alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
       }, true);
@@ -405,11 +405,13 @@ angular.module('icestudio')
       });
     };
 
-    this.update = function(callback, updateDependencies) {
+    this.update = function(opt, callback) {
       var graphData = graph.toJSON();
 
       var blocks = [];
       var wires = [];
+
+      opt = opt || {};
 
       for (var c = 0; c < graphData.cells.length; c++) {
         var cell = graphData.cells[c];
@@ -429,7 +431,7 @@ angular.module('icestudio')
               cell.type === 'ice.Info') {
             delete block.data.deltas;
           }
-          if (cell.type === 'ice.Code') {
+          if (opt.full && cell.type === 'ice.Code') {
             for (var i in block.data.ports.in) {
               delete block.data.ports.in[i].default;
             }
@@ -458,9 +460,9 @@ angular.module('icestudio')
       };
 
       // Update dependencies
-      if (updateDependencies !== false) {
+      if (opt.deps !== false) {
         project.dependencies = {};
-        var types = findSubDependencies(project);
+        var types = findSubDependencies(project, opt);
         for (var t in types) {
           project.dependencies[types[t]] = allDependencies[types[t]];
         }
@@ -471,7 +473,7 @@ angular.module('icestudio')
       }
     };
 
-    function findSubDependencies(dependency) {
+    function findSubDependencies(dependency, opt) {
       var subDependencies = [];
       if (dependency) {
         var blocks = dependency.design.graph.blocks;
@@ -479,10 +481,10 @@ angular.module('icestudio')
           var type = blocks[i].type;
           if (type.indexOf('basic.') === -1) {
             subDependencies.push(type);
-            var newSubDependencies = findSubDependencies(allDependencies[type]);
+            var newSubDependencies = findSubDependencies(allDependencies[type], opt);
             subDependencies = subDependencies.concat(newSubDependencies);
           }
-          else if (type === 'basic.input') {
+          else if (opt.full && type === 'basic.input') {
             delete blocks[i].data.default;
           }
         }
