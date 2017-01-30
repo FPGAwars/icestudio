@@ -20,7 +20,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
   markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
   portMarkup: '<g class="port port<%= id %>"> \
-                 <g class="port-default"><path id="port-default-wire-<%= port.id %>"/><rect id="port-default-rect-<%= port.id %>"/></g> \
+                 <g id="port-default-<%= port.id %>" class="port-default"><path id="port-default-wire-<%= port.id %>"/><rect id="port-default-rect-<%= port.id %>"/></g> \
                  <path id="port-wire-<%= port.id %>" class="port-wire"/> \
                  <circle class="port-body"/> \
                  <text class="port-label"/> \
@@ -158,11 +158,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       }
     };
 
-    if (port.default && port.default.apply) {
-      attrs[portDefaultSelector] = {
-        display: 'visible'
-      };
-    }
+    attrs[portDefaultSelector] = {
+      display: (port.default && port.default.apply) ? 'inline' : 'none'
+    };
 
     if ((type === 'leftPorts') || (type === 'topPorts')) {
       attrs[portSelector]['pointer-events'] = 'none';
@@ -275,6 +273,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var i, port;
     var bbox = this.model.getBBox();
     var state = this.model.get('state');
+    var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
 
@@ -284,8 +283,11 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      this.$('#port-default-wire-' + port.id).css('stroke-width', width);
-      this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      if (port.default && port.default.apply) {
+        this.$('#port-default-' + port.id).css('display', rules ? 'inline' : 'none');
+        this.$('#port-default-wire-' + port.id).css('stroke-width', width);
+        this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
@@ -817,6 +819,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var i, port;
     var bbox = this.model.getBBox();
     var state = this.model.get('state');
+    var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
 
@@ -826,8 +829,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Render buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      this.$('#port-default-wire-' + port.id).css('stroke-width', width);
-      this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      if (port.default && port.default.apply) {
+        this.$('#port-default-' + port.id).css('display', rules ? 'inline' : 'none');
+        this.$('#port-default-wire-' + port.id).css('stroke-width', width);
+        this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
+      }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }

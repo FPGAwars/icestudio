@@ -5,6 +5,7 @@ angular.module('icestudio')
                              joint,
                              boards,
                              blocks,
+                             profile,
                              utils,
                              gettextCatalog,
                              window) {
@@ -476,15 +477,27 @@ angular.module('icestudio')
               if (ports[i].id === target.port && ports[i].default) {
                 ports[i].default.apply = value;
                 var selector = '.leftPorts>.port' + i + '>.port-default';
-                block.attributes.attrs[selector].display = value ? 'visible' : 'none';
-                paper.findViewByModel(block.id).update();
+                block.attributes.attrs[selector].display = (value && profile.data.boardRules) ? 'inline' : 'none';
                 break;
               }
             }
+            paper.findViewByModel(block.id).update();
           }
         }
       }
 
+    };
+
+    this.refreshBoardRules = function() {
+      var cells = graph.getCells();
+
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          cell.attributes.rules = profile.data.boardRules;
+          var cellView = paper.findViewByModel(cell);
+          cellView.updateBox();
+        }
+      });
     };
 
     this.undo = function() {
@@ -821,6 +834,7 @@ angular.module('icestudio')
 
     function addCell(cell) {
       cell.attributes.state = state;
+      cell.attributes.rules = profile.data.boardRules;
       //cell.attributes.zindex = z.index;
       graph.addCell(cell);
       if (!cell.isLink()) {

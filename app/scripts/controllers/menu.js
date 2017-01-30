@@ -325,6 +325,18 @@ angular.module('icestudio')
       });
     };
 
+    $scope.enableBoardRules = function() {
+      profile.data.boardRules = true;
+      graph.refreshBoardRules();
+      alertify.success(gettextCatalog.getString('Board rules enabled'));
+    };
+
+    $scope.disableBoardRules = function() {
+      profile.data.boardRules = false;
+      graph.refreshBoardRules();
+      alertify.success(gettextCatalog.getString('Board rules disabled'));
+    };
+
     $scope.selectLanguage = function(language) {
       if (profile.data.language !== language) {
         profile.data.language = language;
