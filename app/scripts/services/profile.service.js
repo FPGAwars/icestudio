@@ -16,7 +16,7 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(utils.PROFILE_PATH, function(data) {
         if (data) {
-          self.data = _.merge({}, self.data);
+          self.data = _.merge(self.data, data);
         }
         if (callback) {
           callback();

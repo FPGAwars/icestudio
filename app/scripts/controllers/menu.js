@@ -540,10 +540,11 @@ angular.module('icestudio')
     var currentUndoStack = [];
 
     $(document).on('stackChanged', function(evt, undoStack) {
-      currentUndoStack = undoStack;
-      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
-      project.updateTitle();
-      zeroProject = false;
+      if (!zeroProject) {
+        currentUndoStack = undoStack;
+        project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+        project.updateTitle();
+      }
     });
 
     function resetChanged() {

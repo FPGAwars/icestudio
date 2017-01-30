@@ -21,7 +21,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     this.paper = options.paper;
     this.graph = options.graph;
-    this.zeroProject = true;
 
     this.reset();
     this.listen();
@@ -48,10 +47,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-    if (this.zeroProject && cmdName === 'board') {
-      return;
-    }
-
     if (cmdName === 'change:labels' ||
         cmdName === 'change:z') {
       return;
@@ -63,10 +58,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     if (typeof this.get('cmdBeforeAdd') === 'function' && !this.get('cmdBeforeAdd').apply(this, arguments)) {
       return;
-    }
-
-    if (this.zeroProject) {
-      this.zeroProject = false;
     }
 
     var push = _.bind(function(cmd) {
