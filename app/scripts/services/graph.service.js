@@ -124,7 +124,7 @@ angular.module('icestudio')
         height: 1000,
         model: graph,
         gridSize: gridsize,
-        snapLinks: { radius: 15 },
+        snapLinks: { radius: 16 },
         linkPinning: false,
         embeddingMode: false,
         //markAvailable: true,
@@ -438,6 +438,56 @@ angular.module('icestudio')
           }
         }*/
       });
+
+      graph.on('add change:source change:target', function(cell) {
+        if (cell.isLink() && cell.get('source').id) {
+          var target = cell.get('target');
+          if (target.id) {
+            // Connected to a port
+            cell.attributes.lastTarget = target;
+            updatePortDefault(target, false);
+          }
+          else {
+            // Moving the wire connection
+            target = cell.get('lastTarget');
+            updatePortDefault(target, true);
+          }
+          //console.log('Connect link', cell, target);
+        }
+      });
+
+      graph.on('remove', function(cell) {
+        if (cell.isLink()) {
+          var target = cell.get('target');
+          if (!target.id) {
+            target = cell.get('lastTarget');
+          }
+          updatePortDefault(target, true);
+          //console.log('Remove link', cell);
+        }
+      });
+
+      function updatePortDefault(target, value) {
+        if (target) {
+          var block = graph.getCell(target.id);
+          if (block) {
+            var ports = block.get('leftPorts');
+            for (var i in ports) {
+              if (ports[i].id === target.port && ports[i].default) {
+                ports[i].default.apply = value;
+                var selector = '.leftPorts>.port' + i + '>.port-default';
+                block.attributes.attrs[selector].display = value ? 'visible' : 'none';
+                paper.findViewByModel(block.id).update();
+                //block.processPorts();
+                //block.trigger('process:ports');
+                break;
+              }
+            }
+            //block.updatePortsAttrs();
+          }
+        }
+      }
+
     };
 
     this.undo = function() {

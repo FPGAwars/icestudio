@@ -316,6 +316,12 @@
   fill: yellow;
 }
 
+.joint-highlight-stroke.joint-theme-default {
+  fill: yellow;
+  opacity: 0.5;
+  stroke-width: 0px;
+}
+
 .highlight-yellow {
   box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
 }
