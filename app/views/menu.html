@@ -163,13 +163,13 @@
                       <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                     <ul uib-dropdown-menu>
-                      <li>
-                        <a href ng-click="enableBoardRules()">
+                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
                           {{ 'Enable' | translate }}
                         </a>
                       </li>
-                      <li>
-                        <a href ng-click="disableBoardRules()">
+                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
                           {{ 'Disable' | translate }}
                         </a>
                       </li>

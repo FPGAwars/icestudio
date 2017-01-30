@@ -407,6 +407,7 @@ angular.module('icestudio')
 
     function verilogCompiler(name, project, opt) {
       var i, data, block, code = '';
+      opt = opt || {};
 
       if (project &&
           project.design &&
@@ -421,9 +422,9 @@ angular.module('icestudio')
 
           // Initialize input ports
 
-          if (name === 'main') {
+          if (name === 'main' && opt.boardRules) {
 
-            var initPorts = opt && opt.initPorts || getInitPorts(project);
+            var initPorts = opt.initPorts || getInitPorts(project);
             for (i in initPorts) {
               var initPort = initPorts[i];
 
@@ -483,11 +484,11 @@ angular.module('icestudio')
 
           // Initialize output pins
 
-          if (name === 'main') {
+          if (name === 'main' && opt.boardRules) {
 
             // Initialize output pins
 
-            var initPins = opt && opt.initPins || getInitPins(project);
+            var initPins = opt.initPins || getInitPins(project);
             var n = initPins.length;
 
             if (n > 0) {
@@ -543,9 +544,9 @@ angular.module('icestudio')
     }
 
     function pcfCompiler(project, opt) {
-      var i, j, block, code = '';
+      var i, j, block, pin, value, code = '';
       var blocks = project.design.graph.blocks;
-      var pin, value;
+      opt = opt || {};
 
       for (i in blocks) {
         block = blocks[i];
@@ -575,54 +576,56 @@ angular.module('icestudio')
         }
       }
 
-      // Declare init input ports
+      if (opt.boardRules) {
+        // Declare init input ports
 
-      var used = [];
-      var initPorts = opt && opt.initPorts || getInitPorts(project);
-      for (i in initPorts) {
-        var initPort = initPorts[i];
-        if (used.indexOf(initPort.pin) !== -1) {
-          break;
-        }
-        used.push(initPort.pin);
-
-        // Find existing input block with the initPort value
-        var found = false;
-        for (j in blocks) {
-          block = blocks[j];
-          if (block.type === 'basic.input' &&
-              !block.data.range &&
-              !block.data.virtual &&
-              initPort.pin === block.data.pins[0].value) {
-            found = true;
-            used.push(initPort.pin);
+        var used = [];
+        var initPorts = opt.initPorts || getInitPorts(project);
+        for (i in initPorts) {
+          var initPort = initPorts[i];
+          if (used.indexOf(initPort.pin) !== -1) {
             break;
+          }
+          used.push(initPort.pin);
+
+          // Find existing input block with the initPort value
+          var found = false;
+          for (j in blocks) {
+            block = blocks[j];
+            if (block.type === 'basic.input' &&
+            !block.data.range &&
+            !block.data.virtual &&
+            initPort.pin === block.data.pins[0].value) {
+              found = true;
+              used.push(initPort.pin);
+              break;
+            }
+          }
+
+          if (!found) {
+            code += 'set_io v';
+            code += initPorts[i].name;
+            code += ' ';
+            code += initPorts[i].pin;
+            code += '\n';
           }
         }
 
-        if (!found) {
-          code += 'set_io v';
-          code += initPorts[i].name;
-          code += ' ';
-          code += initPorts[i].pin;
+        // Declare init output pins
+
+        var initPins = opt.initPins || getInitPins(project);
+        if (initPins.length > 1) {
+          for (i in initPins) {
+            code += 'set_io vinit[' + i + '] ';
+            code += initPins[i].pin;
+            code += '\n';
+          }
+        }
+        else if (initPins.length > 0) {
+          code += 'set_io vinit ';
+          code += initPins[0].pin;
           code += '\n';
         }
-      }
-
-      // Declare init output pins
-
-      var initPins = opt && opt.initPins || getInitPins(project);
-      if (initPins.length > 1) {
-        for (i in initPins) {
-          code += 'set_io vinit[' + i + '] ';
-          code += initPins[i].pin;
-          code += '\n';
-        }
-      }
-      else if (initPins.length > 0) {
-        code += 'set_io vinit ';
-        code += initPins[0].pin;
-        code += '\n';
       }
 
       return code;

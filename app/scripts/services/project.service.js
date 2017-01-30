@@ -504,7 +504,8 @@ angular.module('icestudio')
 
     this.export = function(target, filepath, message) {
       this.update();
-      var data = compiler.generate(target, project);
+      var opt = { boardRules: profile.data.boardRules };
+      var data = compiler.generate(target, project, opt);
       utils.saveFile(filepath, data, function() {
         alertify.success(message);
       }, false);

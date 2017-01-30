@@ -8,14 +8,15 @@ angular.module('icestudio')
       'language': '',
       'remoterHostname': '',
       'collection': '',
-      'board': ''
+      'board': '',
+      'boardRules': true
     };
 
     this.load = function(callback) {
       var self = this;
       utils.readFile(utils.PROFILE_PATH, function(data) {
         if (data) {
-          self.data = data;
+          self.data = _.merge({}, self.data);
         }
         if (callback) {
           callback();
