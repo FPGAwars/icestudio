@@ -88,7 +88,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         height: '20',
         rx: '3',
         ry: '3',
-        stroke: '#555',
+        stroke: '#777',
         'stroke-width': 1,
         fill: '#FBFBC9'
       },
@@ -614,7 +614,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   template: '\
   <div class="constant-block">\
-    <p>*</p>\
+    <p>●</p>\
     <label></label>\
     <input class="constant-input"></input>\
   </div>\

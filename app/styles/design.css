@@ -75,7 +75,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -141,7 +141,7 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -162,7 +162,7 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -197,7 +197,7 @@
 }
 
 .select2-selection__rendered {
-  line-height: 24px !important;
+  line-height: 25px !important;
 }
 
 .select2-selection {
@@ -206,11 +206,11 @@
 }
 
 .select2-container--default .select2-selection--single {
-  border: 1px solid #777;
+  border: 1px solid #aaa;
 }
 
 .select2-dropdown {
-  border: 1px solid #777;
+  border: 1px solid #aaa;
 }
 
 .bigdrop {
@@ -222,7 +222,7 @@
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -233,7 +233,7 @@
   position: absolute;
   top: 0;
   right: 5px;
-  font-size: 1.5em;
+  font-size: 12px;
   color: #555;
 }
 
@@ -258,7 +258,7 @@
   height: 26px;
   font-size: 13px;
   border-radius: 4px;
-  border: 1px solid #777;
+  border: 1px solid #aaa;
   pointer-events: auto;
 }
 
@@ -266,7 +266,7 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -291,7 +291,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 1px solid #555;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
