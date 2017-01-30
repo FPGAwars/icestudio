@@ -387,6 +387,25 @@ angular.module('icestudio')
       }
     };
 
+    $scope.showBoardRules = function() {
+      var board = boards.selectedBoard;
+      var rules = JSON.stringify(board.rules);
+      if (rules !== '{}') {
+        gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
+          title: boards.selectedBoard.info.label + ' - Rules',
+          focus: true,
+          toolbar: false,
+          resizable: false,
+          width: 500,
+          height: 500,
+          icon: 'resources/images/icestudio-logo.png'
+        });
+      }
+      else {
+        alertify.notify(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+      }
+    };
+
     $scope.selectCollection = function(collection) {
       if (resources.selectedCollection.name !== collection.name) {
         var name = resources.selectCollection(collection.name);
