@@ -623,19 +623,69 @@ angular.module('icestudio')
 
     this.pasteSelected = function() {
       if (clipboard && clipboard.length > 0) {
-        var offset = clipboard.models[0].attributes.position;
-        selectionView.cancelSelection();
+        var origin = clipboardOrigin();
+        var offset = {
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
+          y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
+        };
         var newCells = [];
-        clipboard.each(function(cell) {
-          var newCell = cell.clone();
-          newCell.translate(
-            Math.round(((mousePosition.x - state.pan.x) / state.zoom - offset.x) / gridsize) * gridsize,
-            Math.round(((mousePosition.y - state.pan.y) / state.zoom - offset.y) / gridsize) * gridsize
-          );
-          newCells.push(newCell);
+        var blocksMap = {};
+        var processedWires = {};
+        selectionView.cancelSelection();
+        clipboard.each(function(block) {
+
+          // Create new cell
+          var newBlock = block.clone();
+          newBlock.translate(offset.x, offset.y);
+          newCells.push(newBlock);
+
+          // Map old and new cells
+          blocksMap[block.id] = newBlock;
+
+          // Create new wires
+          var connectedWires = graph.getConnectedLinks(block);
+          _.each(connectedWires, function(wire) {
+
+            if (processedWires[wire.id]) {
+              return;
+            }
+
+            var newSource = blocksMap[wire.get('source').id];
+            var newTarget = blocksMap[wire.get('target').id];
+
+            if (newSource && newTarget) {
+
+              // Translate the new vertices
+              var newVertices = [];
+              var vertices = wire.get('vertices');
+              if (vertices && vertices.length) {
+                _.each(vertices, function(vertex) {
+                  newVertices.push({
+                    x: vertex.x + offset.x,
+                    y: vertex.y + offset.y
+                  });
+                });
+              }
+
+              // Create a new wire
+              var instance = {
+                source: { block: newSource.id, port: wire.get('source').port },
+                target: { block: newTarget.id, port: wire.get('target').port },
+                vertices: newVertices,
+                size: wire.get('size')
+              };
+              var newWire = blocks.loadWire(instance, newSource, newTarget);
+              newCells.push(newWire);
+              processedWires[wire.id] = true;
+            }
+
+          });
         });
+
+        // All all cells: blocks and wires
         graph.addCells(newCells);
-        // Select pasted cells
+
+        // Select pasted elements
         _.each(newCells, function(cell) {
           if (!cell.isLink()) {
             var cellView = paper.findViewByModel(cell);
@@ -646,6 +696,17 @@ angular.module('icestudio')
         });
       }
     };
+
+    function clipboardOrigin() {
+      var origin = { x: Infinity, y: Infinity };
+      clipboard.each(function(cell) {
+        var position = cell.get('position');
+        if (position.x < origin.x) {
+          origin = position;
+        }
+      });
+      return origin;
+    }
 
     this.selectAll = function() {
       disableSelected();
@@ -754,29 +815,29 @@ angular.module('icestudio')
     function step(offset) {
       if (selection) {
         graph.startBatch('change');
-        var processedLinks = {};
+        var processedWires = {};
         // Translate blocks
         selection.each(function(cell) {
           cell.translate(offset.x, offset.y);
           selectionView.updateBox(cell);
           // Translate link vertices
-          var connectedLinks = graph.getConnectedLinks(cell);
-          _.each(connectedLinks, function(link) {
+          var connectedWires = graph.getConnectedLinks(cell);
+          _.each(connectedWires, function(wire) {
 
-            if (processedLinks[link.id]) {
+            if (processedWires[wire.id]) {
               return;
             }
 
-            var vertices = link.get('vertices');
+            var vertices = wire.get('vertices');
             if (vertices && vertices.length) {
               var newVertices = [];
               _.each(vertices, function(vertex) {
                 newVertices.push({ x: vertex.x + offset.x, y: vertex.y + offset.y });
               });
-              link.set('vertices', newVertices);
+              wire.set('vertices', newVertices);
             }
 
-            processedLinks[link.id] = true;
+            processedWires[wire.id] = true;
           });
         });
 
