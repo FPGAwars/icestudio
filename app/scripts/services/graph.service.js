@@ -27,13 +27,7 @@ angular.module('icestudio')
     this.breadcrumbs = [{ name: '', type: '' }];
 
     var gridsize = 8;
-    var state = {
-      pan: {
-        x: 0,
-        y: 0
-      },
-      zoom: 1.0
-    };
+    var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
     const ZOOM_MAX = 2;
     const ZOOM_MIN = 0.2;
 
@@ -342,26 +336,19 @@ angular.module('icestudio')
              selectionView.createSelectionBox(cellView);
              unhighlight(cellView);
            }
-           // Update wires on obstacles
-           var cells = graph.getCells();
-           for (var i in cells) {
-             var cell = cells[i];
-             if (cell.isLink()) {
-               paper.findViewByModel(cell).update();
-             }
-           }
+           updateWiresOnObstacles();
          }
        }
      });
 
-      paper.on('cell:pointerdown', function(cellView) {
-        self.mousedown = true;
-        if (paper.options.enabled) {
-          if (cellView.model.isLink()) {
-            // Unhighlight source block of the wire
-            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
-          }
-        }
+     paper.on('cell:pointerdown', function(cellView) {
+       self.mousedown = true;
+       if (paper.options.enabled) {
+         if (cellView.model.isLink()) {
+           // Unhighlight source block of the wire
+           unhighlight(paper.findViewByModel(cellView.model.get('source').id));
+         }
+       }
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
@@ -488,7 +475,20 @@ angular.module('icestudio')
         }
       }
 
+      // Initialize state
+      graph.trigger('state', state);
+
     };
+
+    function updateWiresOnObstacles() {
+      var cells = graph.getCells();
+      for (var i in cells) {
+        var cell = cells[i];
+        if (cell.isLink()) {
+          paper.findViewByModel(cell).update();
+        }
+      }
+    }
 
     this.refreshBoardRules = function() {
       var cells = graph.getCells();
@@ -781,6 +781,7 @@ angular.module('icestudio')
       if (selection) {
         graph.removeCells(selection.models);
         selectionView.cancelSelection();
+        updateWiresOnObstacles();
       }
     };
 
@@ -870,10 +871,11 @@ angular.module('icestudio')
 
         $('body').addClass('waiting');
 
+        this.setState(design.state);
+
         commandManager.stopListening();
 
         this.clearAll();
-        this.setState(design.state);
 
         setTimeout(function() {
           var cell;
