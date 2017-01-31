@@ -276,8 +276,8 @@ angular.module('icestudio')
       this.updateTitle(name);
 
       sortGraph();
-      this.update({ full: true });
-      utils.saveFile(filepath, project, function() {
+      this.update();
+      utils.saveFile(filepath, pruneProject(project), function() {
         alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
       }, true);
     };
@@ -405,6 +405,37 @@ angular.module('icestudio')
       });
     };
 
+    function pruneProject (project) {
+      var _project = utils.clone(project);
+
+      _prune(_project);
+      for (var d in _project.dependencies) {
+        _prune(_project.dependencies[d]);
+      }
+
+      function _prune(_project) {
+        for (var i in _project.design.graph.blocks) {
+          var block = _project.design.graph.blocks[i];
+          switch (block.type) {
+            case 'basic.input':
+              delete block.data.default;
+              break;
+            case 'basic.code':
+              for (var j in block.data.ports.in) {
+                delete block.data.ports.in[j].default;
+              }
+              delete block.data.deltas;
+              break;
+            case 'basic.info':
+              delete block.data.deltas;
+              break;
+          }
+        }
+      }
+
+      return _project;
+    }
+
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
 
@@ -427,15 +458,6 @@ angular.module('icestudio')
           block.type = cell.blockType;
           block.data = cell.data;
           block.position = cell.position;
-          if (cell.type === 'ice.Code' ||
-              cell.type === 'ice.Info') {
-            delete block.data.deltas;
-          }
-          if (opt.full && cell.type === 'ice.Code') {
-            for (var i in block.data.ports.in) {
-              delete block.data.ports.in[i].default;
-            }
-          }
           blocks.push(block);
         }
         else if (cell.type === 'ice.Wire') {
@@ -462,7 +484,7 @@ angular.module('icestudio')
       // Update dependencies
       if (opt.deps !== false) {
         project.dependencies = {};
-        var types = findSubDependencies(project, opt);
+        var types = findSubDependencies(project);
         for (var t in types) {
           project.dependencies[types[t]] = allDependencies[types[t]];
         }
@@ -473,7 +495,7 @@ angular.module('icestudio')
       }
     };
 
-    function findSubDependencies(dependency, opt) {
+    function findSubDependencies(dependency) {
       var subDependencies = [];
       if (dependency) {
         var blocks = dependency.design.graph.blocks;
@@ -481,11 +503,8 @@ angular.module('icestudio')
           var type = blocks[i].type;
           if (type.indexOf('basic.') === -1) {
             subDependencies.push(type);
-            var newSubDependencies = findSubDependencies(allDependencies[type], opt);
+            var newSubDependencies = findSubDependencies(allDependencies[type]);
             subDependencies = subDependencies.concat(newSubDependencies);
-          }
-          else if (opt.full && type === 'basic.input') {
-            delete blocks[i].data.default;
           }
         }
         return _.unique(subDependencies);
