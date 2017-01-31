@@ -148,11 +148,20 @@
   z-index: 0;
 }
 
+.virtual-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
 .virtual-port label {
   display: block;
   margin-top: 22px;
   text-align: center;
   font-size: 13px;
+  height: 18px;
   color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -167,6 +176,14 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+}
+
+.fpga-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
 }
 
 .fpga-port label {

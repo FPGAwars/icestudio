@@ -477,10 +477,12 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
+        <p>&gt;</p>\
         <label>' + name + '</label>\
       </div>\
       <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
-        <label></label>\
+        <p>&gt;</p>\
+        <label>' + name + '</label>\
         <div>' + selectCode + '</div>\
         <script>' + selectScript + '</script>\
       </div>\
@@ -512,6 +514,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     if (!this.model.get('disabled')) {
       this.applyChoices();
       this.applyValues();
+      this.applyClock();
       this.applyShape();
     }
   },
@@ -563,6 +566,15 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.updating = false;
   },
 
+  applyClock: function() {
+    if (this.model.get('data').clock) {
+      this.$box.find('p').removeClass('hidden');
+    }
+    else {
+      this.$box.find('p').addClass('hidden');
+    }
+  },
+
   clearValues: function() {
     this.updating = true;
     var name = '';
@@ -588,6 +600,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   apply: function() {
     this.applyChoices();
     this.applyValues();
+    this.applyClock();
     this.applyShape();
     this.render();
   },
