@@ -310,6 +310,7 @@ angular.module('icestudio')
      });
 
      selectionView.on('selection-box:pointerdown', function(evt) {
+       self.mousedown = true;
        // Selection to top view
        if (selection) {
          selection.each(function(cell) {
@@ -753,10 +754,32 @@ angular.module('icestudio')
     function step(offset) {
       if (selection) {
         graph.startBatch('change');
+        var processedLinks = {};
+        // Translate blocks
         selection.each(function(cell) {
           cell.translate(offset.x, offset.y);
           selectionView.updateBox(cell);
+          // Translate link vertices
+          var connectedLinks = graph.getConnectedLinks(cell);
+          _.each(connectedLinks, function(link) {
+
+            if (processedLinks[link.id]) {
+              return;
+            }
+
+            var vertices = link.get('vertices');
+            if (vertices && vertices.length) {
+              var newVertices = [];
+              _.each(vertices, function(vertex) {
+                newVertices.push({ x: vertex.x + offset.x, y: vertex.y + offset.y });
+              });
+              link.set('vertices', newVertices);
+            }
+
+            processedLinks[link.id] = true;
+          });
         });
+
         graph.stopBatch('change');
       }
     }
