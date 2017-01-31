@@ -177,21 +177,21 @@ angular.module('icestudio')
               return false;
             }
             // Prevent to connect a pull-up if other blocks are connected
-            if ((cellViewT.model.attributes.pullup) &&
+            if ((cellViewT.model.get('pullup')) &&
                  (cellViewS.model.id === links[i].get('source').id)) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
               return false;
             }
             // Prevent to connect other blocks if a pull-up is connected
-            if ((linkIView.targetView.model.attributes.pullup) &&
+            if ((linkIView.targetView.model.get('pullup')) &&
                  (cellViewS.model.id === links[i].get('source').id)) {
               warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
               return false;
             }
           }
           // Ensure input -> pull-up connections
-          if (cellViewT.model.attributes.pullup) {
-            var ret = (cellViewS.model.attributes.blockType === 'basic.input');
+          if (cellViewT.model.get('pullup')) {
+            var ret = (cellViewS.model.get('blockType') === 'basic.input');
             if (!ret) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
             }
@@ -199,9 +199,9 @@ angular.module('icestudio')
           }
           // Prevent different size connections
           var tsize;
-          var lsize = linkView.model.attributes.size;
+          var lsize = linkView.model.get('size');
           var portId = magnetT.getAttribute('port');
-          var tLeftPorts = cellViewT.model.attributes.leftPorts;
+          var tLeftPorts = cellViewT.model.get('leftPorts');
           for (i in tLeftPorts) {
             var port = tLeftPorts[i];
             if (portId === port.id) {
@@ -359,13 +359,13 @@ angular.module('icestudio')
         if (paper.options.enabled) {
           if (cellView.model.isLink()) {
             // Unhighlight source block of the wire
-            unhighlight(paper.findViewByModel(cellView.model.attributes.source.id));
+            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
           }
         }
       });
 
       paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
-        var type =  cellView.model.attributes.blockType;
+        var type =  cellView.model.get('blockType');
         if (type.indexOf('basic.') !== -1) {
           if (paper.options.enabled) {
             blocks.editBasic(type, cellView, function(cell) {
@@ -534,7 +534,7 @@ angular.module('icestudio')
       for (var i in cells) {
         var cellView = paper.findViewByModel(cells[i].id);
         cellView.options.interactive = value;
-        if (cells[i].attributes.type !== 'ice.Generic') {
+        if (cells[i].get('type') !== 'ice.Generic') {
           if (value) {
             cellView.$el.removeClass('disable-graph');
           }
@@ -542,7 +542,7 @@ angular.module('icestudio')
             cellView.$el.addClass('disable-graph');
           }
         }
-        else if (cells[i].attributes.type !== 'ice.Wire') {
+        else if (cells[i].get('type') !== 'ice.Wire') {
           // TODO: also on !mousedown
           if (value) {
             cellView.$el.find('.port-body').removeClass('disable-graph');
@@ -591,7 +591,7 @@ angular.module('icestudio')
       // Reset choices in all I/O blocks
       for (var i in cells) {
         var cell = cells[i];
-        var type = cell.attributes.blockType;
+        var type = cell.get('blockType');
         if (type === 'basic.input' ||
             type === 'basic.output') {
           var view = paper.findViewByModel(cell.id);
@@ -723,10 +723,10 @@ angular.module('icestudio')
 
     function highlight(cellView) {
       if (cellView) {
-        switch(cellView.model.attributes.type) {
+        switch(cellView.model.get('type')) {
           case 'ice.Input':
           case 'ice.Output':
-            if (cellView.model.attributes.data.virtual) {
+            if (cellView.model.get('data').virtual) {
               cellView.$box.addClass('highlight-green');
             }
             else {
@@ -749,10 +749,10 @@ angular.module('icestudio')
 
     function unhighlight(cellView) {
       if (cellView) {
-        switch(cellView.model.attributes.type) {
+        switch(cellView.model.get('type')) {
           case 'ice.Input':
           case 'ice.Output':
-            if (cellView.model.attributes.data.virtual) {
+            if (cellView.model.get('data').virtual) {
               cellView.$box.removeClass('highlight-green');
             }
             else {

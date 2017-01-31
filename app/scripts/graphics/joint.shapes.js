@@ -1118,25 +1118,24 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
     var self = this;
     setTimeout(function() {
-      var i, port, portName = self.model.get('source').port;
-      var rightPorts = self.sourceView.model.get('rightPorts');
+      var size = self.model.get('size');
 
-      // Initialize wire properties
-      for (i in rightPorts) {
-        port = rightPorts[i];
-        if (portName === port.id) {
-          self.model.attributes.size = port.size; // For wire size connection validation
-          if (port.size > 1) {
-            self.$('.connection').css('stroke-width', WIRE_WIDTH * 3);
-            self.model.label(0, {attrs: { text: { text: port.size } } });
-            self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 4);
+      if (!size) { // New wire
+        var i, port, portName = self.model.get('source').port;
+        var rightPorts = self.sourceView.model.get('rightPorts');
+        // Initialize wire properties
+        for (i in rightPorts) {
+          port = rightPorts[i];
+          if (portName === port.id) {
+            size = port.size;
+            // For wire size connection validation
+            self.model.attributes.size = size;
+            break;
           }
-          else {
-            self.model.bifurcationMarkup = self.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 2);
-          }
-          break;
         }
       }
+
+      self.updateWireProperties(size);
       self.updateBifurcations();
     }, 0);
   },
@@ -1207,6 +1206,17 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     }, this);
 
     return this;
+  },
+
+  updateWireProperties: function(size) {
+    if (size > 1) {
+      this.$('.connection').css('stroke-width', WIRE_WIDTH * 3);
+      this.model.label(0, {attrs: { text: { text: size } } });
+      this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 4);
+    }
+    else {
+      this.model.bifurcationMarkup = this.model.bifurcationMarkup.replace(/<%= r %>/g, WIRE_WIDTH * 2);
+    }
   },
 
   updateConnection: function(opt) {
