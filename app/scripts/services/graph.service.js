@@ -297,23 +297,6 @@ angular.module('icestudio')
         });
       }
 
-      // Command Manager
-
-      commandManager = new joint.dia.CommandManager({
-        paper: paper,
-        graph: graph
-      });
-
-      // Selection View
-
-     selection = new Backbone.Collection();
-     selectionView = new joint.ui.SelectionView({
-       paper: paper,
-       graph: graph,
-       model: selection,
-       state: state
-     });
-
      // Events
 
      this.mousedown = false;

@@ -201,7 +201,7 @@
 }
 
 .select2-selection {
-  font-size: 13px;
+  font-size: 12px;
   height: 26px !important;
 }
 
@@ -242,7 +242,7 @@
   margin-top: 6px;
   margin-bottom: 6px;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   height: 18px;
   color: #333;
   text-overflow: ellipsis;
@@ -370,45 +370,45 @@
 /* Wires makers */
 
 .joint-link.joint-theme-default .connection-wrap {
-    stroke: #000000;
-    stroke-width: 15;
-    stroke-linecap: butt;
-    stroke-linejoin: butt;
-    opacity: 0;
-    cursor: pointer;
+  stroke: #000000;
+  stroke-width: 15;
+  stroke-linecap: butt;
+  stroke-linejoin: butt;
+  opacity: 0;
+  cursor: pointer;
 }
 .joint-link.joint-theme-default .connection-wrap:hover {
-    opacity: .4;
-    stroke-opacity: .4;
+  opacity: .4;
+  stroke-opacity: .4;
 }
 .joint-link.joint-theme-default .connection {
-    stroke-linejoin: butt;
+  stroke-linejoin: butt;
 }
 .joint-link.joint-theme-default .link-tools .tool-remove circle {
-    fill: #EB2222;
+  fill: #EB2222;
 }
 .joint-link.joint-theme-default .link-tools .tool-remove path {
-    fill: #FFFFFF;
+  fill: #FFFFFF;
 }
 
 /* <circle> element inside .marker-vertex-group <g> element */
 .joint-link.joint-theme-default .marker-vertex {
-    fill: #64b0ce;
+  fill: #64b0ce;
 }
 .joint-link.joint-theme-default .marker-vertex:hover {
-    fill: #317d9b;
-    stroke: none;
+  fill: #317d9b;
+  stroke: none;
 }
 
 .joint-link.joint-theme-default .marker-arrowhead {
-    fill: #64b0ce;
+  fill: #64b0ce;
 }
 .joint-link.joint-theme-default .marker-arrowhead:hover {
-    fill: #317d9b;
-    stroke: none;
+  fill: #317d9b;
+  stroke: none;
 }
 
 /* <circle> element used to remove a vertex */
 .joint-link.joint-theme-default .marker-vertex-remove {
-    fill: #FFFFFF;
+  fill: #FFFFFF;
 }

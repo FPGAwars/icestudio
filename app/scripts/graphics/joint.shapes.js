@@ -721,7 +721,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog"); + \
+          $("#' + blockLabel + '").resize(function() {\
+            ' + editorLabel + '.resize();\
+          });\
         </script>\
       </div>\
       '
@@ -775,9 +778,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
-    });
-    $('#' + blockLabel).resize(function() {
-      self.editor.resize();
     });
 
     // Apply data
@@ -901,6 +901,9 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
           ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          $("#' + blockLabel + '").resize(function() {\
+            ' + editorLabel + '.resize();\
+          });\
         </script>\
       </div>\
       '
@@ -952,9 +955,6 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
-    });
-    $('#' + blockLabel).resize(function() {
-      self.editor.resize();
     });
 
     // Apply data
@@ -1137,11 +1137,12 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
           break;
         }
       }
+      self.updateBifurcations();
     }, 0);
   },
 
   apply: function() {
-    this.render();
+    // No operation required
   },
 
   render: function() {

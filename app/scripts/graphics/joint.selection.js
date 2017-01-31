@@ -115,8 +115,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         this.model.each(function(element) {
 
-          // TODO: snap to grid.
-
           // Translate the element itself.
           element.translate(dx, dy);
 
