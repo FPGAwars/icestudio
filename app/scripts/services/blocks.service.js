@@ -582,7 +582,8 @@ angular.module('icestudio')
             id: item.id,
             label: item.data.name + (item.data.range || ''),
             size: data.pins ? data.pins.length : (data.size || 1),
-            default: data.default
+            default: data.default,
+            clock: data.clock
           });
         }
         else if (item.type === 'basic.output') {

@@ -395,15 +395,25 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     var image = this.model.get('image');
     var label = this.model.get('label');
+    var ports = this.model.get('leftPorts');
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
+
+    // Render clocks
+    for (var i in ports) {
+      var port = ports[i];
+      if (port.clock) {
+        this.$box.prepend('<p style="top: ' + (3 + 32*i) + 'px;">&gt;</p>');
+      }
+    }
 
     var imageSelector = this.$box.find('img');
     var labelSelector = this.$box.find('label');
 
     if (image) {
+      // Render image
       imageSelector.attr('src', 'data:image/svg+xml,' + image);
-      if (imageSelector[0].width / imageSelector[0].height > 1.5) {
+      if (imageSelector[0].width / imageSelector[0].height > this.$box.width() / this.$box.height()) {
         imageSelector.css('width', '80%');
       }
       else {
@@ -413,6 +423,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       labelSelector.addClass('hidden');
     }
     else {
+      // Render label
       labelSelector.html(label);
       labelSelector.removeClass('hidden');
       imageSelector.addClass('hidden');
@@ -514,9 +525,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     if (!this.model.get('disabled')) {
       this.applyChoices();
       this.applyValues();
-      this.applyClock();
       this.applyShape();
     }
+    this.applyClock();
   },
 
   applyShape: function() {

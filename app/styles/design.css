@@ -82,6 +82,14 @@
   z-index: 0;
 }
 
+.generic-block p {
+  position: absolute;
+  top: 3px;
+  left: -1px;
+  font-size: 18px;
+  color: #777;
+}
+
 .generic-block .tooltiptext {
   visibility: hidden;
   width: 120px;
