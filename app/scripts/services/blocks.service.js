@@ -576,7 +576,7 @@ angular.module('icestudio')
         if (item.type === 'basic.input') {
           data = block.design.graph.blocks[i].data;
           if (!item.data.range) {
-            data.default = hasInputRule(item.data.name);
+            data.default = hasInputRule(item.data.name || (item.data.clock ? 'clk' : ''));
           }
           leftPorts.push({
             id: item.id,
