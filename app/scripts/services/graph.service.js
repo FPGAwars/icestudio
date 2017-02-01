@@ -798,52 +798,77 @@ angular.module('icestudio')
     var stepValue = 8;
 
     this.stepLeft = function() {
-      step({ x: -stepValue, y: 0 });
+      performStep({ x: -stepValue, y: 0 });
     };
 
     this.stepUp = function() {
-      step({ x: 0, y: -stepValue });
+      performStep({ x: 0, y: -stepValue });
     };
 
     this.stepRight = function() {
-      step({ x: stepValue, y: 0 });
+      performStep({ x: stepValue, y: 0 });
     };
 
     this.stepDown = function() {
-      step({ x: 0, y: stepValue });
+      performStep({ x: 0, y: stepValue });
     };
 
-    function step(offset) {
-      if (selection) {
-        graph.startBatch('change');
-        var processedWires = {};
-        // Translate blocks
-        selection.each(function(cell) {
-          cell.translate(offset.x, offset.y);
-          selectionView.updateBox(cell);
-          // Translate link vertices
-          var connectedWires = graph.getConnectedLinks(cell);
-          _.each(connectedWires, function(wire) {
+    var stepCounter = 0;
+    var stepTimer = null;
+    var stepGroupingInterval = 500;
+    var allowStep = true;
+    var allosStepInterval = 200;
 
-            if (processedWires[wire.id]) {
-              return;
-            }
-
-            var vertices = wire.get('vertices');
-            if (vertices && vertices.length) {
-              var newVertices = [];
-              _.each(vertices, function(vertex) {
-                newVertices.push({ x: vertex.x + offset.x, y: vertex.y + offset.y });
-              });
-              wire.set('vertices', newVertices);
-            }
-
-            processedWires[wire.id] = true;
-          });
-        });
-
-        graph.stopBatch('change');
+    function performStep(offset) {
+      if (selection && allowStep) {
+        allowStep = false;
+        // Check consecutive-change interval
+        if (Date.now() - stepCounter < stepGroupingInterval) {
+          clearTimeout(stepTimer);
+        }
+        else {
+          graph.startBatch('change');
+        }
+        // Move a step
+        step(offset);
+        // Launch timer
+        stepTimer = setTimeout(function() {
+          graph.stopBatch('change');
+        }, stepGroupingInterval);
+        // Reset counter
+        stepCounter = Date.now();
+        setTimeout(function() {
+          allowStep = true;
+        }, allosStepInterval);
       }
+    }
+
+    function step(offset) {
+      var processedWires = {};
+      // Translate blocks
+      selection.each(function(cell) {
+        cell.translate(offset.x, offset.y);
+        selectionView.updateBox(cell);
+        // Translate link vertices
+        var connectedWires = graph.getConnectedLinks(cell);
+        _.each(connectedWires, function(wire) {
+
+          if (processedWires[wire.id]) {
+            return;
+          }
+
+          var vertices = wire.get('vertices');
+          if (vertices && vertices.length) {
+            var newVertices = [];
+            _.each(vertices, function(vertex) {
+              newVertices.push({ x: vertex.x + offset.x, y: vertex.y + offset.y });
+            });
+            wire.set('vertices', newVertices);
+          }
+
+          processedWires[wire.id] = true;
+        });
+      });
     }
 
     this.isEmpty = function() {

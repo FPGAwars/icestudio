@@ -786,7 +786,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }
         // Update deltas
         self.deltas = self.deltas.concat([delta]);
-        // Launch timer to
+        // Launch timer
         self.timer = setTimeout(function() {
           var data = JSON.parse(JSON.stringify(self.model.get('data')));
           // Set data
