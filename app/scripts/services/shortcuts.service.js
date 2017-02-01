@@ -105,12 +105,12 @@ angular.module('icestudio')
         mac: { label: '⌘+C', meta: true, key: 67 }
       },
       pasteSelected: {
-        linux: { label: 'Ctrl+V', ctrl: true, key: 67 },
-        mac: { label: '⌘+V', meta: true, key: 67 }
+        linux: { label: 'Ctrl+V', ctrl: true, key: 86 },
+        mac: { label: '⌘+V', meta: true, key: 86 }
       },
       selectAll: {
-        linux: { label: 'Ctrl+A', ctrl: true, key: 67 },
-        mac: { label: '⌘+A', meta: true, key: 67 }
+        linux: { label: 'Ctrl+A', ctrl: true, key: 65 },
+        mac: { label: '⌘+A', meta: true, key: 65 }
       },
       resetView: {
         linux: { label: 'Ctrl+0', ctrl: true, key: 48 },
@@ -131,8 +131,8 @@ angular.module('icestudio')
         mac: { label: '⌘+B', meta: true, key: 66 }
       },
       uploadCode: {
-        linux: { label: 'Ctrl+U', ctrl: true, key: 66 },
-        mac: { label: '⌘+U', meta: true, key: 66 }
+        linux: { label: 'Ctrl+U', ctrl: true, key: 85 },
+        mac: { label: '⌘+U', meta: true, key: 85 }
       },
       stepUp: {
         linux: { label: 'Arrow up', key: 38 },
