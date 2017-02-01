@@ -23,7 +23,7 @@ angular.module('icestudio')
 
       var action = '';
       var method = null;
-      var system = utils.DARWIN ? 'mac' : 'unix';
+      var system = utils.DARWIN ? 'mac' : 'linux';
       var ret = { preventDefault: false };
       for (action in shortcuts) {
         var options = shortcuts[action].opt || {};
@@ -54,7 +54,7 @@ angular.module('icestudio')
           label = shortcuts[action].mac.label;
         }
         else {
-          label = shortcuts[action].unix.label;
+          label = shortcuts[action].linux.label;
         }
       }
       return label;
@@ -62,85 +62,107 @@ angular.module('icestudio')
 
     var shortcuts = {
       newProject: {
-        unix: { label: 'Ctrl+N', ctrl: true, key: 78 },
+        linux: { label: 'Ctrl+N', ctrl: true, key: 78 },
         mac: { label: '⌘+N', meta: true, key: 78 }
       },
       openProject: {
-        unix: { label: 'Ctrl+O', ctrl: true, key: 79 },
+        linux: { label: 'Ctrl+O', ctrl: true, key: 79 },
         mac: { label: '⌘+O', meta: true, key: 79 }
       },
       saveProject: {
-        unix: { label: 'Ctrl+S', ctrl: true, key: 83 }
+        linux: { label: 'Ctrl+S', ctrl: true, key: 83 },
+        mac: { label: '⌘+S', meta: true, key: 83 }
       },
       saveProjectAs: {
-        unix: { label: 'Ctrl+Shift+S', ctrl: true, shift: true, key: 83 }
+        linux: { label: 'Ctrl+Shift+S', ctrl: true, shift: true, key: 83 },
+        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 }
       },
       quit: {
-        unix: { label: 'Ctrl+Q', ctrl: true, key: 81 }
+        linux: { label: 'Ctrl+Q', ctrl: true, key: 81 },
+        mac: { label: '⌘+Q', meta: true, key: 81 }
       },
       undoGraph: {
-        unix: { label: 'Ctrl+Z', ctrl: true, key: 90 },
+        linux: { label: 'Ctrl+Z', ctrl: true, key: 90 },
+        mac: { label: '⌘+Z', meta: true, key: 90 },
         opt: { preventDefault: true }
       },
       redoGraph: {
-        unix: { label: 'Ctrl+Y', ctrl: true, key: 89 },
+        linux: { label: 'Ctrl+Y', ctrl: true, key: 89 },
+        mac: { label: '⌘+Y', meta: true, key: 89 },
         opt: { preventDefault: true }
       },
       redoGraph2: {
-        unix: { label: 'Ctrl+Shift+Z', ctrl: true, shift: true, key: 90 },
+        linux: { label: 'Ctrl+Shift+Z', ctrl: true, shift: true, key: 90 },
+        mac: { label: 'Shift+⌘+Z', meta: true, shift: true, key: 90 },
         opt: { preventDefault: true }
       },
       cutSelected: {
-        unix: { label: 'Ctrl+X', ctrl: true, key: 88 }
+        linux: { label: 'Ctrl+X', ctrl: true, key: 88 },
+        mac: { label: '⌘+X', meta: true, key: 88 }
       },
       copySelected: {
-        unix: { label: 'Ctrl+C', ctrl: true, key: 67 }
+        linux: { label: 'Ctrl+C', ctrl: true, key: 67 },
+        mac: { label: '⌘+C', meta: true, key: 67 }
       },
       pasteSelected: {
-        unix: { label: 'Ctrl+V', ctrl: true, key: 86 }
+        linux: { label: 'Ctrl+V', ctrl: true, key: 67 },
+        mac: { label: '⌘+V', meta: true, key: 67 }
       },
       selectAll: {
-        unix: { label: 'Ctrl+A', ctrl: true, key: 65 }
+        linux: { label: 'Ctrl+A', ctrl: true, key: 67 },
+        mac: { label: '⌘+A', meta: true, key: 67 }
       },
       resetView: {
-        unix: { label: 'Ctrl+0', ctrl: true, key: 48 },
+        linux: { label: 'Ctrl+0', ctrl: true, key: 48 },
+        mac: { label: '⌘+0', meta: true, key: 48 },
         opt: { disabled: true }
       },
       fitContent: {
-        unix: { label: 'Ctrl+F', ctrl: true, key: 70 },
+        linux: { label: 'Ctrl+1', ctrl: true, key: 49 },
+        mac: { label: '⌘+1', meta: true, key: 49 },
         opt: { disabled: true }
       },
       verifyCode: {
-        unix: { label: 'Ctrl+R', ctrl: true, key: 82 }
+        linux: { label: 'Ctrl+R', ctrl: true, key: 82 },
+        mac: { label: '⌘+R', meta: true, key: 82 }
       },
       buildCode: {
-        unix: { label: 'Ctrl+B', ctrl: true, key: 66 }
+        linux: { label: 'Ctrl+B', ctrl: true, key: 66 },
+        mac: { label: '⌘+B', meta: true, key: 66 }
       },
       uploadCode: {
-        unix: { label: 'Ctrl+U', ctrl: true, key: 85 }
+        linux: { label: 'Ctrl+U', ctrl: true, key: 66 },
+        mac: { label: '⌘+U', meta: true, key: 66 }
       },
       stepUp: {
-        unix: { label: 'Arrow up', key: 38 }
+        linux: { label: 'Arrow up', key: 38 },
+        mac: { label: 'Arrow up', key: 38 }
       },
       stepDown: {
-        unix: { label: 'Arrow down', key: 40 }
+        linux: { label: 'Arrow down', key: 40 },
+        mac: { label: 'Arrow down', key: 40 }
       },
       stepLeft: {
-        unix: { label: 'Arrow left', key: 37 }
+        linux: { label: 'Arrow left', key: 37 },
+        mac: { label: 'Arrow left', key: 37 }
       },
       stepRight: {
-        unix: { label: 'Arrow right', key: 39 }
+        linux: { label: 'Arrow right', key: 39 },
+        mac: { label: 'Arrow right', key: 39 }
       },
       removeSelected: {
-        unix: { label: 'Supr', key: 46 }
+        linux: { label: 'Supr', key: 46 },
+        mac: { label: 'Fn+Delete', key: 46 },
       },
       breadcrumbsBack: {
-        unix: { label: 'Back', key: 8 },
+        linux: { label: 'Back', key: 8 },
+        mac: { label: 'Delete', key: 8 },
         opt: { disabled: true }
       },
       takeSnapshot: {
-        unix: { label: 'Ctrl+P', ctrl: true, key: 80 },
-        opt: { prompt: true, disabled: true }
+        linux: { label: 'Ctrl+P', ctrl: true, key: 80 },
+        mac: { label: '⌘+P', meta: true, key: 80 },
+        opt: { prompt: true, disabled: true, preventDefault: true }
       }
     };
 
