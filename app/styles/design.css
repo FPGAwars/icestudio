@@ -42,28 +42,42 @@
   right: 15px;
 }
 
-#read-only {
-  font-family: Courier New;
+#banner {
+  position: relative;
+}
+
+#info {
+  position: absolute;
+  left: 20px;
   font-size: 15px;
-  color: #EB2222;
+  color: #656565;
   background-color: white;
   border-radius: 5px;
   cursor: default;
+  z-index: 1501;
+}
+
+#read-only {
   position: absolute;
-  right: 30px;
+  right: 20px;
+  font-size: 14px;
+  color: #f05c5c;
+  background-color: white;
+  border-radius: 5px;
+  cursor: default;
   z-index: 1501;
 }
 
 #back-button {
-  font-family: Courier New;
-  font-size: 15px;
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 14px;
+  color: #63afcf;
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  position: absolute;
-  top: 100px;
-  right: 30px;
   z-index: 1501;
 }
 

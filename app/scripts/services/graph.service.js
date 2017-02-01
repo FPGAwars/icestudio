@@ -361,19 +361,18 @@ angular.module('icestudio')
           }
         }
         else if (dependencies[type]) {
-          var name = dependencies[type].package.name;
-          var design = dependencies[type].design;
-          self.breadcrumbs.push({ name: name ? name : '#', type: type });
-          utils.rootScopeSafeApply();
           z.index = 1;
-          if (self.breadcrumbs.length === 2) {
-            $rootScope.$broadcast('updateProject', function() {
-              self.loadDesign(design, true);
-            });
-          }
-          else {
-            self.loadDesign(design, true);
-          }
+          var project = dependencies[type];
+          var breadcrumbsLength = self.breadcrumbs.length;
+          $rootScope.$broadcast('navigateProject', {
+            update: breadcrumbsLength === 1,
+            project: project,
+            callback: function() {
+              self.loadDesign(project.design, true);
+            }
+          });
+          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+          utils.rootScopeSafeApply();
         }
       });
 

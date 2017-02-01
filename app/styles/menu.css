@@ -1,10 +1,10 @@
 .disable-menu {
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .disable-paper {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .navbar {

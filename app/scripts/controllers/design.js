@@ -10,6 +10,7 @@ angular.module('icestudio')
 
     $scope.boards = boards;
     $scope.graph = graph;
+    $scope.information = {};
 
     // Intialization
 
@@ -37,16 +38,22 @@ angular.module('icestudio')
       if (n === 1) {
         var design = project.get('design');
         graph.loadDesign(design, false);
+        $scope.information = {};
       }
       else {
         var dependencies = project.getAllDependencies();
         var type = graph.breadcrumbs[n-1].type;
         graph.loadDesign(dependencies[type].design, true);
+        $scope.information = dependencies[type].package;
       }
     }
 
-    $rootScope.$on('updateProject', function(event, callback) {
-      project.update({ deps: false }, callback);
+    $rootScope.$on('navigateProject', function(event, args) {
+      if (args.update) {
+        project.update({ deps: false }, args.callback);
+      }
+      $scope.information = args.project.package;
+      utils.rootScopeSafeApply();
     });
 
     $rootScope.$on('breadcrumbsBack', function(/*event*/) {
