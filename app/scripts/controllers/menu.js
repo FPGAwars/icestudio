@@ -11,6 +11,7 @@ angular.module('icestudio')
                                     graph,
                                     tools,
                                     utils,
+                                    shortcuts,
                                     gettextCatalog,
                                     gui,
                                     _package,
@@ -566,8 +567,13 @@ angular.module('icestudio')
       }
     });
 
+    shortcuts.method('newProject', $scope.newProject);
+    shortcuts.method('openProject', $scope.openProject);
+
     $(document).on('keydown', function(event) {
-      if (!promptShown) {
+      console.log(event);
+      shortcuts.execute(event);
+      /*if (!promptShown) {
         if (graph.isEnabled()) {
           if (event.ctrlKey) {
             switch (event.keyCode) {
@@ -626,21 +632,19 @@ angular.module('icestudio')
             }
           }
 
-          if (graph.hasSelection()) {
-            switch (event.keyCode) {
-              case 37: // Arrow Left
-                graph.stepLeft();
-                break;
-              case 38: // Arrow Up
-                graph.stepUp();
-                break;
-              case 39: // Arrow Right
-                graph.stepRight();
-                break;
-              case 40: // Arrow Down
-                graph.stepDown();
-                break;
-            }
+          switch (event.keyCode) {
+            case 37: // Arrow Left
+              graph.stepLeft();
+              break;
+            case 38: // Arrow Up
+              graph.stepUp();
+              break;
+            case 39: // Arrow Right
+              graph.stepRight();
+              break;
+            case 40: // Arrow Down
+              graph.stepDown();
+              break;
           }
 
           if (event.keyCode === 46) { // Supr
@@ -671,7 +675,7 @@ angular.module('icestudio')
       if (event.ctrlKey && event.keyCode === 80) { // Ctrl+P
         // Print and save a window snapshot
         takeSnapshot();
-      }
+      }*/
     });
 
     function takeSnapshot() {

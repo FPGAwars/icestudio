@@ -26,10 +26,10 @@
             <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu style="min-width: 230px">
               <li>
-                <a href ng-click="newProject()">{{ 'New' | translate }}<span class="shortcut">Ctrl+N</span></a>
+                <a href ng-click="newProject()">{{ 'New' | translate }}<span class="shortcut">{{ 'newProject' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="openProject()">{{ 'Open' | translate }}...<span class="shortcut">Ctrl+O</span></a>
+                <a href ng-click="openProject()">{{ 'Open' | translate }}...<span class="shortcut">{{ 'openProject' | shortcut }}</span></a>
               </li>
               <li>
                 <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>

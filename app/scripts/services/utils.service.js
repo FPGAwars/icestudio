@@ -21,6 +21,7 @@ angular.module('icestudio')
 
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
+    this.DARWIN = DARWIN;
 
     const LOCALE_DIR = nodePath.join('resources', 'locale');
     const SAMPLE_DIR = nodePath.join('resources', 'sample');
