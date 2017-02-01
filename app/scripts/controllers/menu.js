@@ -554,7 +554,7 @@ angular.module('icestudio')
       zeroProject = false;
     }
 
-    // Shortcuts
+    // Detect prompt
 
     var promptShown = false;
 
@@ -567,115 +567,66 @@ angular.module('icestudio')
       }
     });
 
+    alertify.confirm().set({
+      onshow: function() {
+        promptShown = true;
+      },
+      onclose: function() {
+        promptShown = false;
+      }
+    });
+
+    // Configure all shortcuts
+
+    // -- File
     shortcuts.method('newProject', $scope.newProject);
     shortcuts.method('openProject', $scope.openProject);
+    shortcuts.method('saveProject', $scope.saveProject);
+    shortcuts.method('quit', $scope.quit);
+
+    // -- Edit
+    shortcuts.method('undoGraph', $scope.undoGraph);
+    shortcuts.method('redoGraph', $scope.redoGraph);
+    shortcuts.method('redoGraph2', $scope.redoGraph);
+    shortcuts.method('cutSelected', $scope.cutSelected);
+    shortcuts.method('copySelected', $scope.copySelected);
+    shortcuts.method('pasteSelected', $scope.pasteSelected);
+    shortcuts.method('selectAll', $scope.selectAll);
+    shortcuts.method('resetView', $scope.resetView);
+    shortcuts.method('fitContent', $scope.fitContent);
+
+    // -- Tools
+    shortcuts.method('verifyCode', $scope.verifyCode);
+    shortcuts.method('buildCode', $scope.buildCode);
+    shortcuts.method('uploadCode', $scope.uploadCode);
+
+    // -- Misc
+    shortcuts.method('stepUp', graph.stepUp);
+    shortcuts.method('stepDown', graph.stepDown);
+    shortcuts.method('stepLeft', graph.stepLeft);
+    shortcuts.method('stepRight', graph.stepRight);
+
+    shortcuts.method('removeSelected', removeSelected);
+    shortcuts.method('breadcrumbsBack', function() {
+      if (!graph.isEnabled()) {
+        $rootScope.$broadcast('breadcrumbsBack');
+      }
+    });
+
+    shortcuts.method('takeSnapshot', takeSnapshot);
+
+    // Detect shortcuts
 
     $(document).on('keydown', function(event) {
-      console.log(event);
-      shortcuts.execute(event);
-      /*if (!promptShown) {
-        if (graph.isEnabled()) {
-          if (event.ctrlKey) {
-            switch (event.keyCode) {
-              case 78:  // Ctrl+N
-                $scope.newProject();
-                break;
-              case 79:  // Ctrl+O
-                $scope.openProject();
-                break;
-              case 83:
-                if (event.shiftKey) { // Ctrl+Shift+S
-                  $scope.saveProjectAs();
-                }
-                else { // Ctrl+S
-                  $scope.saveProject();
-                }
-                break;
-              case 81:  // Ctrl+Q
-                $scope.quit();
-                break;
-              case 90:
-                if (event.shiftKey) { // Ctrl+Shift+Z
-                  $scope.redoGraph();
-                  event.preventDefault();
-                }
-                else { // Ctrl+Z
-                  $scope.undoGraph();
-                  event.preventDefault();
-                }
-                break;
-              case 89: // Ctrl+Y
-                $scope.redoGraph();
-                event.preventDefault();
-                break;
-              case 88: // Ctrl+X
-                $scope.cutSelected();
-                break;
-              case 67: // Ctrl+C
-                $scope.copySelected();
-                break;
-              case 86: // Ctrl+V
-                $scope.pasteSelected();
-                break;
-              case 65: // Ctrl+A
-                $scope.selectAll();
-                break;
-              case 82: // Ctrl+R
-                $scope.verifyCode();
-                break;
-              case 66: // Ctrl+B
-                $scope.buildCode();
-                break;
-              case 85: // Ctrl+U
-                $scope.uploadCode();
-                break;
-            }
-          }
+      var opt = {
+        prompt: promptShown,
+        disabled: !graph.isEnabled()
+      };
 
-          switch (event.keyCode) {
-            case 37: // Arrow Left
-              graph.stepLeft();
-              break;
-            case 38: // Arrow Up
-              graph.stepUp();
-              break;
-            case 39: // Arrow Right
-              graph.stepRight();
-              break;
-            case 40: // Arrow Down
-              graph.stepDown();
-              break;
-          }
-
-          if (event.keyCode === 46) { // Supr
-            removeSelected();
-          }
-        }
-        if (event.ctrlKey) {
-          switch (event.keyCode) {
-            case 48: // Ctrl+0
-              $scope.resetView();
-              break;
-            case 70: // Ctrl+F
-              $scope.fitContent();
-              break;
-          }
-        }
-        if (event.keyCode === 8) { // Back
-          if (!graph.isEnabled()) {
-            $rootScope.$broadcast('breadcrumbsBack');
-          }
-          else {
-            if (process.platform === 'darwin') {
-              removeSelected();
-            }
-          }
-        }
+      var ret = shortcuts.execute(event, opt);
+      if (ret.preventDefault) {
+        event.preventDefault();
       }
-      if (event.ctrlKey && event.keyCode === 80) { // Ctrl+P
-        // Print and save a window snapshot
-        takeSnapshot();
-      }*/
     });
 
     function takeSnapshot() {

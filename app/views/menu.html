@@ -54,10 +54,10 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="saveProject()">{{ 'Save' | translate }}<span class="shortcut">Ctrl+S</span></a>
+                <a href ng-click="saveProject()">{{ 'Save' | translate }}<span class="shortcut">{{ 'saveProject' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}...<span class="shortcut">Ctrl+Shift+S</span></a>
+                <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}...<span class="shortcut">{{ 'saveProjectAs' | shortcut }}</span></a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
@@ -79,7 +79,7 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="quit()">{{ 'Quit' | translate }}<span class="shortcut">Ctrl+Q</span></a>
+                <a href ng-click="quit()">{{ 'Quit' | translate }}<span class="shortcut">{{ 'quit' | shortcut }}</span></a>
               </li>
             </ul>
           </li>
@@ -88,30 +88,30 @@
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu style="min-width: 200px">
               <li>
-                <a href ng-click="undoGraph()">{{ 'Undo' | translate }}<span class="shortcut">Ctrl+Z</span></a>
+                <a href ng-click="undoGraph()">{{ 'Undo' | translate }}<span class="shortcut">{{ 'undoGraph' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="redoGraph()">{{ 'Redo' | translate }}<span class="shortcut">Ctrl+Y</span></a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a href ng-click="cutSelected()">{{ 'Cut' | translate }}<span class="shortcut">Ctrl+X</span></a>
-              </li>
-              <li>
-                <a href ng-click="copySelected()">{{ 'Copy' | translate }}<span class="shortcut">Ctrl+C</span></a>
-              </li>
-              <li>
-                <a href ng-click="pasteSelected()">{{ 'Paste' | translate }}<span class="shortcut">Ctrl+V</span></a>
-              </li>
-              <li>
-                <a href ng-click="selectAll()">{{ 'Select all' | translate }}<span class="shortcut">Ctrl+A</span></a>
+                <a href ng-click="redoGraph()">{{ 'Redo' | translate }}<span class="shortcut">{{ 'redoGraph' | shortcut }}</span></a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="resetView()">{{ 'Reset view' | translate }}<span class="shortcut">Ctrl+0</span></a>
+                <a href ng-click="cutSelected()">{{ 'Cut' | translate }}<span class="shortcut">{{ 'cutSelected' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="fitContent()">{{ 'Fit content' | translate }}<span class="shortcut">Ctrl+F</span></a>
+                <a href ng-click="copySelected()">{{ 'Copy' | translate }}<span class="shortcut">{{ 'copySelected' | shortcut }}</span></a>
+              </li>
+              <li>
+                <a href ng-click="pasteSelected()">{{ 'Paste' | translate }}<span class="shortcut">{{ 'pasteSelected' | shortcut }}</span></a>
+              </li>
+              <li>
+                <a href ng-click="selectAll()">{{ 'Select all' | translate }}<span class="shortcut">{{ 'selectAll' | shortcut }}</span></a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="resetView()">{{ 'Reset view' | translate }}<span class="shortcut">{{ 'resetView' | shortcut }}</span></a>
+              </li>
+              <li>
+                <a href ng-click="fitContent()">{{ 'Fit content' | translate }}<span class="shortcut">{{ 'fitContent' | shortcut }}</span></a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
@@ -237,13 +237,13 @@
             <a href uib-dropdown-toggle>{{ 'Tools' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
-                <a href ng-click="verifyCode()">{{ 'Verify' | translate }}<span class="shortcut">Ctrl+R</span></a>
+                <a href ng-click="verifyCode()">{{ 'Verify' | translate }}<span class="shortcut">{{ 'verifyCode' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="buildCode()">{{ 'Build' | translate }}<span class="shortcut">Ctrl+B</span></a>
+                <a href ng-click="buildCode()">{{ 'Build' | translate }}<span class="shortcut">{{ 'buildCode' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="uploadCode()">{{ 'Upload' | translate }}<span class="shortcut">Ctrl+U</span></a>
+                <a href ng-click="uploadCode()">{{ 'Upload' | translate }}<span class="shortcut">{{ 'uploadCode' | shortcut }}</span></a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
