@@ -336,6 +336,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     <img>\
     <label></label>\
     <span class="tooltiptext"></span>\
+    <div class="resizer"/>\
   </div>\
   ',
 
@@ -393,17 +394,35 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   initialize: function() {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
 
-    var image = this.model.get('image');
-    var label = this.model.get('label');
-    var ports = this.model.get('leftPorts');
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
 
+    if (this.model.get('config')) {
+      this.$box.addClass('config-block');
+    }
+
+    this.updateContent();
+
+    // Resizer
+    this.resizing = false;
+    this.resizer = this.$box.find('.resizer');
+    this.resizer.on('mousedown', { self: this }, this.startResizing);
+    $(document).on('mousemove', { self: this }, this.performResizing);
+    $(document).on('mouseup', { self: this }, this.stopResizing);
+  },
+
+  updateContent: function() {
+    var image = this.model.get('image');
+    var label = this.model.get('label');
+    var ports = this.model.get('leftPorts');
+    var size = this.model.get('size');
+
     // Render clocks
+    this.$box.find('p').remove();
     for (var i in ports) {
       var port = ports[i];
       if (port.clock) {
-        this.$box.prepend('<p style="top: ' + (3 + 32*i) + 'px;">&gt;</p>');
+        this.$box.prepend('<p style="top: ' + (3 + (size.height/4-16) + (size.height/2)*i) + 'px;">&gt;</p>');
       }
     }
 
@@ -413,7 +432,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     if (image) {
       // Render image
       imageSelector.attr('src', 'data:image/svg+xml,' + image);
-      if (imageSelector[0].width / imageSelector[0].height > this.$box.width() / this.$box.height()) {
+      if (imageSelector[0].width / imageSelector[0].height > size.width / size.height) {
         imageSelector.css('width', '80%');
       }
       else {
@@ -428,10 +447,70 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       labelSelector.removeClass('hidden');
       imageSelector.addClass('hidden');
     }
-    if (this.model.get('config')) {
-      this.$box.addClass('config-block');
+  },
+
+  startResizing: function(event) {
+    var self = event.data.self;
+
+    self.model.graph.trigger('batch:start');
+
+    self.resizing = true;
+    self._clientX = event.clientX;
+    self._clientY = event.clientY;
+  },
+
+  performResizing: function(event) {
+    var self = event.data.self;
+
+    if (!self.resizing) {
+      return;
     }
+
+    var size = self.model.get('size');
+    var state = self.model.get('state');
+    var gridsize = self.model.get('gridsize') * 4;
+    var minSize = { width: 96, height: 64 };
+
+    var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
+    var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
+
+    var dx = clientCoords.x - oldClientCoords.x;
+    var dy = clientCoords.y - oldClientCoords.y;
+
+    var width = Math.max(size.width + dx, minSize.width);
+    var height = Math.max(size.height + dy, minSize.height);
+
+    self.model.resize(width, height);
+
+    if (width > minSize.width) {
+      self._clientX = event.clientX;
+    }
+
+    if (height > minSize.height) {
+      self._clientY = event.clientY;
+    }
+
+    self.updateContent();
+
+    function snapToGrid(coords) {
+      return {
+        x: Math.round(coords.x / state.zoom / gridsize) * gridsize,
+        y: Math.round(coords.y / state.zoom / gridsize) * gridsize
+      };
+    }
+  },
+
+  stopResizing: function(event) {
+    var self = event.data.self;
+
+    if (!self.resizing) {
+      return;
+    }
+
+    self.resizing = false;
+    self.model.graph.trigger('batch:stop');
   }
+
 });
 
 // I/O blocks
@@ -875,6 +954,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       }
     }
 
+    this.$box.find('.code-editor').css('margin', 8 * state.zoom);
     this.$box.css({ width: bbox.width * state.zoom,
                     height: bbox.height * state.zoom,
                     left: bbox.x * state.zoom + state.pan.x,
@@ -1029,6 +1109,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     var bbox = this.model.getBBox();
     var state = this.model.get('state');
 
+    this.$box.find('.info-editor').css('margin', 8 * state.zoom);
     this.$box.css({ width: bbox.width * state.zoom,
                     height: bbox.height * state.zoom,
                     left: bbox.x * state.zoom + state.pan.x,

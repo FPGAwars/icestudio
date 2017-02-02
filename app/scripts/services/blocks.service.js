@@ -530,6 +530,7 @@ angular.module('icestudio')
         rightPorts: rightPorts,
         topPorts: topPorts
       });
+
       return cell;
     }
 
@@ -653,6 +654,7 @@ angular.module('icestudio')
         leftPorts: leftPorts,
         rightPorts: rightPorts,
         topPorts: topPorts,
+        gridsize: gridsize,
         size: {
           width: width,
           height: height

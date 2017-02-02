@@ -736,8 +736,15 @@ angular.module('icestudio')
             cellView.$box.addClass('highlight-orange');
             break;
           case 'ice.Code':
-          case 'ice.Generic':
             cellView.$box.addClass('highlight-blue');
+            break;
+          case 'ice.Generic':
+            if (cellView.model.get('config')) {
+              cellView.$box.addClass('highlight-yellow');
+            }
+            else {
+              cellView.$box.addClass('highlight-blue');
+            }
             break;
           case 'ice.Info':
             cellView.$box.addClass('highlight-gray');
@@ -762,8 +769,15 @@ angular.module('icestudio')
             cellView.$box.removeClass('highlight-orange');
             break;
           case 'ice.Code':
-          case 'ice.Generic':
             cellView.$box.removeClass('highlight-blue');
+            break;
+          case 'ice.Generic':
+            if (cellView.model.get('config')) {
+              cellView.$box.removeClass('highlight-yellow');
+            }
+            else {
+              cellView.$box.removeClass('highlight-blue');
+            }
             break;
           case 'ice.Info':
             cellView.$box.removeClass('highlight-gray');
