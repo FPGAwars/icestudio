@@ -927,7 +927,7 @@ angular.module('icestudio')
             }
             else {
               if (blockInstance.type in dependencies) {
-                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type]);
+                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type], disabled);
               }
             }
             addCell(cell);

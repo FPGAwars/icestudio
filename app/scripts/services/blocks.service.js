@@ -557,7 +557,7 @@ angular.module('icestudio')
       return _default;
     }
 
-    function loadGeneric(instance, block) {
+    function loadGeneric(instance, block, disabled) {
       var i;
       var leftPorts = [];
       var rightPorts = [];
@@ -630,6 +630,7 @@ angular.module('icestudio')
         label: blockLabel,
         tooltip: block.package.description,
         position: instance.position,
+        disabled: disabled,
         leftPorts: leftPorts,
         rightPorts: rightPorts,
         topPorts: topPorts,

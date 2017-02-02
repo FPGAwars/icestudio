@@ -38,7 +38,6 @@ angular.module('icestudio')
       if (n === 1) {
         var design = project.get('design');
         graph.loadDesign(design, false);
-        $scope.information = {};
       }
       else {
         var dependencies = project.getAllDependencies();

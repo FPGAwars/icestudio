@@ -412,17 +412,25 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('config-block');
     }
 
-    this.updateContent();
-
     // Resizer
-    this.resizing = false;
-    this.resizer = this.$box.find('.resizer');
-    this.resizer.on('mousedown', { self: this }, this.startResizing);
-    $(document).on('mousemove', { self: this }, this.performResizing);
-    $(document).on('mouseup', { self: this }, this.stopResizing);
+    if (!this.model.get('disabled')) {
+      this.resizing = false;
+      this.resizer = this.$box.find('.resizer');
+      this.resizer.css('cursor', 'se-resize');
+      this.resizer.on('mousedown', { self: this }, this.startResizing);
+      $(document).on('mousemove', { self: this }, this.performResizing);
+      $(document).on('mouseup', { self: this }, this.stopResizing);
+    }
+
+    // Apply data
+    this.apply();
   },
 
-  updateContent: function() {
+  apply: function() {
+    this.applyContent();
+  },
+
+  applyContent: function() {
     var image = this.model.get('image');
     var label = this.model.get('label');
     var ports = this.model.get('leftPorts');
@@ -430,10 +438,13 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     // Render clocks
     this.$box.find('p').remove();
+    var n = ports.length;
+    var gridsize = 8;
+    var height = this.model.get('size').height;
     for (var i in ports) {
       var port = ports[i];
       if (port.clock) {
-        this.$box.prepend('<p style="top: ' + (3 + (size.height/4-16) + (size.height/2)*i) + 'px;">&gt;</p>');
+        this.$box.prepend('<p style="top: ' + (Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 12) + 'px;">&gt;</p>');
       }
     }
 
@@ -500,8 +511,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
 
     self.model.resize(width, height);
-
-    self.updateContent();
+    self.apply();
 
     function snapToGrid(coords) {
       return {
