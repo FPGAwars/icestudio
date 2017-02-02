@@ -240,11 +240,83 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     this.updateBox();
 
     this.listenTo(this.model, 'process:ports', this.update);
-    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+  },
+
+  setupResizer: function() {
+    // Resizer
+    if (!this.model.get('disabled')) {
+      this.resizing = false;
+      this.resizer = this.$box.find('.resizer');
+      this.resizer.css('cursor', 'se-resize');
+      this.resizer.on('mousedown', { self: this }, this.startResizing);
+      $(document).on('mousemove', { self: this }, this.performResizing);
+      $(document).on('mouseup', { self: this }, this.stopResizing);
+    }
   },
 
   apply: function() {
     // No operation required
+  },
+
+  startResizing: function(event) {
+    var self = event.data.self;
+
+    self.model.graph.trigger('batch:start');
+
+    self.resizing = true;
+    self._clientX = event.clientX;
+    self._clientY = event.clientY;
+  },
+
+  performResizing: function(event) {
+    var self = event.data.self;
+
+    if (!self.resizing) {
+      return;
+    }
+
+    var size = self.model.get('size');
+    var state = self.model.get('state');
+    var gridstep = 8 * 2;
+    var minSize = { width: 96, height: 64 };
+
+    var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
+    var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
+
+    var dx = clientCoords.x - oldClientCoords.x;
+    var dy = clientCoords.y - oldClientCoords.y;
+
+    var width = Math.max(size.width + dx, minSize.width);
+    var height = Math.max(size.height + dy, minSize.height);
+
+    if (width > minSize.width) {
+      self._clientX = event.clientX;
+    }
+
+    if (height > minSize.height) {
+      self._clientY = event.clientY;
+    }
+
+    self.model.resize(width, height);
+    self.apply();
+
+    function snapToGrid(coords) {
+      return {
+        x: Math.round(coords.x / state.zoom / gridstep) * gridstep,
+        y: Math.round(coords.y / state.zoom / gridstep) * gridstep
+      };
+    }
+  },
+
+  stopResizing: function(event) {
+    var self = event.data.self;
+
+    if (!self.resizing) {
+      return;
+    }
+
+    self.resizing = false;
+    self.model.graph.trigger('batch:stop');
   },
 
   render: function() {
@@ -412,15 +484,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('config-block');
     }
 
-    // Resizer
-    if (!this.model.get('disabled')) {
-      this.resizing = false;
-      this.resizer = this.$box.find('.resizer');
-      this.resizer.css('cursor', 'se-resize');
-      this.resizer.on('mousedown', { self: this }, this.startResizing);
-      $(document).on('mousemove', { self: this }, this.performResizing);
-      $(document).on('mouseup', { self: this }, this.stopResizing);
-    }
+    this.setupResizer();
 
     // Apply data
     this.apply();
@@ -469,69 +533,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       labelSelector.removeClass('hidden');
       imageSelector.addClass('hidden');
     }
-  },
-
-  startResizing: function(event) {
-    var self = event.data.self;
-
-    self.model.graph.trigger('batch:start');
-
-    self.resizing = true;
-    self._clientX = event.clientX;
-    self._clientY = event.clientY;
-  },
-
-  performResizing: function(event) {
-    var self = event.data.self;
-
-    if (!self.resizing) {
-      return;
-    }
-
-    var size = self.model.get('size');
-    var state = self.model.get('state');
-    var gridstep = 8 * 2;
-    var minSize = { width: 96, height: 64 };
-
-    var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
-    var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
-
-    var dx = clientCoords.x - oldClientCoords.x;
-    var dy = clientCoords.y - oldClientCoords.y;
-
-    var width = Math.max(size.width + dx, minSize.width);
-    var height = Math.max(size.height + dy, minSize.height);
-
-    if (width > minSize.width) {
-      self._clientX = event.clientX;
-    }
-
-    if (height > minSize.height) {
-      self._clientY = event.clientY;
-    }
-
-    self.model.resize(width, height);
-    self.apply();
-
-    function snapToGrid(coords) {
-      return {
-        x: Math.round(coords.x / state.zoom / gridstep) * gridstep,
-        y: Math.round(coords.y / state.zoom / gridstep) * gridstep
-      };
-    }
-  },
-
-  stopResizing: function(event) {
-    var self = event.data.self;
-
-    if (!self.resizing) {
-      return;
-    }
-
-    self.resizing = false;
-    self.model.graph.trigger('batch:stop');
   }
-
 });
 
 // I/O blocks
@@ -850,6 +852,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             ' + editorLabel + '.resize();\
           });\
         </script>\
+        <div class="resizer"/>\
       </div>\
       '
     )());
@@ -903,6 +906,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
     });
+
+    this.setupResizer();
 
     // Apply data
     this.apply();
@@ -1030,6 +1035,7 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
             ' + editorLabel + '.resize();\
           });\
         </script>\
+        <div class="resizer"/>\
       </div>\
       '
     )());
@@ -1081,6 +1087,8 @@ joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
     });
+
+    this.setupResizer();
 
     // Apply data
     this.apply();

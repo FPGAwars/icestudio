@@ -519,6 +519,7 @@ angular.module('icestudio')
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
+        size: instance.size,
         disabled: disabled,
         leftPorts: leftPorts,
         rightPorts: rightPorts,
@@ -534,6 +535,7 @@ angular.module('icestudio')
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
+        size: instance.size,
         disabled: disabled
       });
       return cell;
@@ -630,11 +632,11 @@ angular.module('icestudio')
         label: blockLabel,
         tooltip: block.package.description,
         position: instance.position,
+        size: size,
         disabled: disabled,
         leftPorts: leftPorts,
         rightPorts: rightPorts,
-        topPorts: topPorts,
-        size: size
+        topPorts: topPorts
       });
       return cell;
     }
