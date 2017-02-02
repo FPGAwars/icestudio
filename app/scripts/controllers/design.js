@@ -40,16 +40,22 @@ angular.module('icestudio')
         graph.loadDesign(design, false);
       }
       else {
-        var dependencies = project.getAllDependencies();
         var type = graph.breadcrumbs[n-1].type;
-        graph.loadDesign(dependencies[type].design, true);
-        $scope.information = dependencies[type].package;
+        var dependency = project.getAllDependencies()[type];
+        graph.loadDesign(dependency.design, true);
+        $scope.information = dependency.package;
       }
     }
 
     $rootScope.$on('navigateProject', function(event, args) {
       if (args.update) {
-        project.update({ deps: false }, args.callback);
+        // Update the main project
+        project.update({ deps: false }, function() {
+          graph.loadDesign(args.project.design, true);
+        });
+      }
+      else {
+        graph.loadDesign(args.project.design, true);
       }
       $scope.information = args.project.package;
       utils.rootScopeSafeApply();

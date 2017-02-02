@@ -294,6 +294,8 @@ angular.module('icestudio')
      // Events
 
      this.mousedown = false;
+     $(document).on('mouseup', function() { self.mousedown = false; });
+     $(document).on('mousedown', function() { self.mousedown = true; });
 
      var self = this;
      $('#paper').mousemove(function(event) {
@@ -304,7 +306,6 @@ angular.module('icestudio')
      });
 
      selectionView.on('selection-box:pointerdown', function(evt) {
-       self.mousedown = true;
        // Selection to top view
        if (selection) {
          selection.each(function(cell) {
@@ -325,7 +326,6 @@ angular.module('icestudio')
      });
 
      paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
-       self.mousedown = false;
        if (paper.options.enabled) {
          if (!cellView.model.isLink()) {
            if (evt.which === 3) {
@@ -342,7 +342,6 @@ angular.module('icestudio')
      });
 
      paper.on('cell:pointerdown', function(cellView) {
-       self.mousedown = true;
        if (paper.options.enabled) {
          if (cellView.model.isLink()) {
            // Unhighlight source block of the wire
@@ -366,10 +365,7 @@ angular.module('icestudio')
           var breadcrumbsLength = self.breadcrumbs.length;
           $rootScope.$broadcast('navigateProject', {
             update: breadcrumbsLength === 1,
-            project: project,
-            callback: function() {
-              self.loadDesign(project.design, true);
-            }
+            project: project
           });
           self.breadcrumbs.push({ name: project.package.name || '#', type: type });
           utils.rootScopeSafeApply();
@@ -377,7 +373,6 @@ angular.module('icestudio')
       });
 
       paper.on('blank:pointerdown', function(evt, x, y) {
-        self.mousedown = true;
         // Disable current focus
         document.activeElement.blur();
 
@@ -394,7 +389,6 @@ angular.module('icestudio')
       });
 
       paper.on('cell:pointerup blank:pointerup', function(/*cellView, evt*/) {
-        self.mousedown = false;
         self.panAndZoom.disablePan();
       });
 
@@ -542,7 +536,6 @@ angular.module('icestudio')
           }
         }
         else if (cells[i].get('type') !== 'ice.Wire') {
-          // TODO: also on !mousedown
           if (value) {
             cellView.$el.find('.port-body').removeClass('disable-graph');
           }
@@ -942,7 +935,6 @@ angular.module('icestudio')
           }
 
           self.appEnable(!disabled);
-          $('body').removeClass('waiting');
 
           if (!disabled) {
             commandManager.listen();
@@ -951,6 +943,8 @@ angular.module('icestudio')
           if (callback) {
             callback();
           }
+
+          $('body').removeClass('waiting');
 
         }, 20);
 

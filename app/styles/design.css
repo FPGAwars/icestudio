@@ -48,7 +48,8 @@
 
 #info {
   position: absolute;
-  left: 20px;
+  top: -10px;
+  left: 10px;
   font-size: 15px;
   color: #656565;
   background-color: white;
@@ -59,7 +60,8 @@
 
 #read-only {
   position: absolute;
-  right: 20px;
+  top: -10px;
+  right: 10px;
   font-size: 14px;
   color: #f05c5c;
   background-color: white;
@@ -70,8 +72,8 @@
 
 #back-button {
   position: absolute;
-  top: 30px;
-  right: 20px;
+  top: 20px;
+  right: 10px;
   font-size: 14px;
   color: #63afcf;
   background-color: white;
