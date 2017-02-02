@@ -314,11 +314,10 @@
 
 .code-block .code-editor {
   position: absolute;
-  margin: 8px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
@@ -337,11 +336,10 @@
 
 .info-block .info-editor {
   position: absolute;
-  margin: 8px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;

@@ -255,7 +255,9 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
   apply: function() {
-    // No operation required
+  },
+
+  updateContent: function() {
   },
 
   startResizing: function(event) {
@@ -278,7 +280,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var size = self.model.get('size');
     var state = self.model.get('state');
     var gridstep = 8 * 2;
-    var minSize = { width: 96, height: 64 };
+    var minSize = { width: 64, height: 32 };
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
     var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
@@ -298,7 +300,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     }
 
     self.model.resize(width, height);
-    self.apply();
+    self.updateContent();
 
     function snapToGrid(coords) {
       return {
@@ -419,7 +421,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     <img>\
     <label></label>\
     <span class="tooltiptext"></span>\
-    <div class="resizer"/>\
   </div>\
   ',
 
@@ -484,17 +485,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('config-block');
     }
 
-    this.setupResizer();
-
     // Apply data
     this.apply();
   },
 
   apply: function() {
-    this.applyContent();
+    this.updateContent();
   },
 
-  applyContent: function() {
+  updateContent: function() {
     var image = this.model.get('image');
     var label = this.model.get('label');
     var ports = this.model.get('leftPorts');
@@ -810,19 +809,18 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
 
 // Code block
-// Size: 64 * x
 
 joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Code',
     size: {
-      width: 384,
-      height: 256
+      width: 192,
+      height: 128
     },
     attrs: {
       '.body': {
-        width: 384,
-        height: 256
+        width: 192,
+        height: 128
       }
     }
   }, joint.shapes.ice.Model.prototype.defaults)
@@ -992,17 +990,17 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
 // Info block
 
-joint.shapes.ice.Info = joint.shapes.basic.Rect.extend({
+joint.shapes.ice.Info = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Info',
     size: {
-      width: 400,
-      height: 256
+      width: 192,
+      height: 128
     },
     attrs: {
       '.body': {
-        width: 400,
-        height: 256
+        width: 192,
+        height: 128
       },
       rect: {
         stroke: 'none',
@@ -1012,7 +1010,7 @@ joint.shapes.ice.Info = joint.shapes.basic.Rect.extend({
   }, joint.shapes.basic.Rect.prototype.defaults)
 });
 
-joint.shapes.ice.InfoView = joint.dia.ElementView.extend({
+joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
   initialize: function() {
     _.bindAll(this, 'updateBox');
