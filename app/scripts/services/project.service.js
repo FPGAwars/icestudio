@@ -101,7 +101,7 @@ angular.module('icestudio')
       if (data.version !== VERSION) {
         alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
       }
-      project = _safeLoad(data);
+      project = _safeLoad(data, name);
       allDependencies = project.dependencies;
       graph.setDependencies(allDependencies);
       var ret = graph.loadDesign(project.design, false, function() {
@@ -118,7 +118,7 @@ angular.module('icestudio')
       }
     };
 
-    function _safeLoad(data) {
+    function _safeLoad(data, name) {
       // Backwards compatibility
       var project = {};
       switch(data.version) {
@@ -129,7 +129,7 @@ angular.module('icestudio')
           project = convert10To11(data);
           break;
         default:
-          project = convertTo10(data);
+          project = convertTo10(data, name);
           project = convert10To11(project);
           break;
       }
@@ -189,13 +189,13 @@ angular.module('icestudio')
       }
     }
 
-    function convertTo10(data) {
+    function convertTo10(data, name) {
       var project = {
         version: '1.0',
         package: {
-          name: '',
+          name: name || '',
           version: '',
-          description: '',
+          description: name || '',
           author: '',
           image: ''
         },
@@ -263,8 +263,8 @@ angular.module('icestudio')
       project.design.graph = data.graph;
       project.design.state = data.state;
       // Safe load all dependencies recursively
-      for (var j in data.deps) {
-        project.design.deps[j] = convertTo10(data.deps[j]);
+      for (var key in data.deps) {
+        project.design.deps[key] = convertTo10(data.deps[key], key);
       }
 
       return project;
@@ -308,7 +308,8 @@ angular.module('icestudio')
         if (data.version !== VERSION) {
           alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
         }
-        var block = _safeLoad(data);
+        var name = utils.basename(filepath);
+        var block = _safeLoad(data, name);
         if (block) {
           var path = utils.dirname(filepath);
           // 1. Parse and find included files
