@@ -428,8 +428,7 @@ angular.module('icestudio')
       var rightPorts = [{
         id: 'out',
         label: '',
-        size: data.pins ? data.pins.length : (data.size || 1),
-        gridUnits: 8
+        size: data.pins ? data.pins.length : (data.size || 1)
       }];
 
       var cell = new joint.shapes.ice.Input({
@@ -449,8 +448,7 @@ angular.module('icestudio')
       var leftPorts = [{
         id: 'in',
         label: '',
-        size: data.pins ? data.pins.length : (data.size || 1),
-        gridUnits: 8
+        size: data.pins ? data.pins.length : (data.size || 1)
       }];
       var cell = new joint.shapes.ice.Output({
         id: instance.id,
@@ -467,8 +465,7 @@ angular.module('icestudio')
     function loadBasicConstant(instance, disabled) {
       var bottomPorts = [{
         id: 'constant-out',
-        label: '',
-        gridUnits: 8
+        label: ''
       }];
       var cell = new joint.shapes.ice.Constant({
         id: instance.id,
@@ -496,7 +493,6 @@ angular.module('icestudio')
           id: port.name,
           label: port.name + (port.range || ''),
           size: port.size || 1,
-          gridUnits: 32,
           default: port.default
         });
       }
@@ -506,8 +502,7 @@ angular.module('icestudio')
         rightPorts.push({
           id: port.name,
           label: port.name + (port.range || ''),
-          size: port.size || 1,
-          gridUnits: 32
+          size: port.size || 1
         });
       }
 
@@ -515,8 +510,7 @@ angular.module('icestudio')
         port = instance.data.params[p];
         topPorts.push({
           id: port.name,
-          label: port.name,
-          gridUnits: 48
+          label: port.name
         });
       }
 
@@ -569,7 +563,6 @@ angular.module('icestudio')
       var rightPorts = [];
       var topPorts = [];
       var bottomPorts = [];
-      var gridsize = 8;
 
       for (i in block.design.graph.blocks) {
         var data;
@@ -605,35 +598,21 @@ angular.module('icestudio')
         }
       }
 
-      var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
-      var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
+      var size = instance.size;
 
-      var height = 8 * gridsize;
-      height = Math.max(4 * gridsize * numPortsHeight, height);
+      if (!size) {
+        var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
+        var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
+
+        size = {
+          width: Math.max(4 * gridsize * numPortsWidth, 12 * gridsize),
+          height: Math.max(4 * gridsize * numPortsHeight, 8 * gridsize)
+        };
+      }
+
       var blockLabel = block.package.name;
-      var width = 12 * gridsize;
-
-      width = Math.max(4 * gridsize * numPortsWidth, width);
-
-      var gridUnitsHeight = height / gridsize;
-      var gridUnitsWidth = width / gridsize;
-
-      for (i in leftPorts) {
-        leftPorts[i].gridUnits = gridUnitsHeight;
-      }
-      for (i in rightPorts) {
-        rightPorts[i].gridUnits = gridUnitsHeight;
-      }
-      for (i in topPorts) {
-        topPorts[i].gridUnits = gridUnitsWidth;
-      }
-      for (i in bottomPorts) {
-        bottomPorts[i].gridUnits = gridUnitsWidth;
-      }
-
       var blockImage = '';
       if (block.package.image) {
-        width = 12 * gridsize;
         if (block.package.image.startsWith('%3Csvg')) {
           blockImage = block.package.image;
         }
@@ -654,11 +633,7 @@ angular.module('icestudio')
         leftPorts: leftPorts,
         rightPorts: rightPorts,
         topPorts: topPorts,
-        gridsize: gridsize,
-        size: {
-          width: width,
-          height: height
-        }
+        size: size
       });
       return cell;
     }

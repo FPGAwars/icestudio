@@ -458,6 +458,11 @@ angular.module('icestudio')
           block.type = cell.blockType;
           block.data = cell.data;
           block.position = cell.position;
+          if (cell.type === 'ice.Generic' ||
+              cell.type === 'ice.Code' ||
+              cell.type === 'ice.Info') {
+            block.size = cell.size;
+          }
           blocks.push(block);
         }
         else if (cell.type === 'ice.Wire') {

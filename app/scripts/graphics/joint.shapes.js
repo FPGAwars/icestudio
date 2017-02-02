@@ -37,7 +37,6 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     topPorts: [],
     bottomPorts: [],
     attrs: {
-      gridUnits: 1,
       '.': {
         magnet: false
       },
@@ -104,7 +103,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
   initialize: function() {
     this.updatePortsAttrs();
-    this.on('change:leftPorts change:rightPorts change:topPorts change:bottomPorts', this.updatePortsAttrs, this);
+    this.processPorts();
+    this.trigger('process:ports');
+    this.on('change:size change:leftPorts change:rightPorts change:topPorts change:bottomPorts', this.updatePortsAttrs, this);
     this.constructor.__super__.constructor.__super__.initialize.apply(this, arguments);
   },
 
@@ -113,26 +114,36 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       var newAttrs = _.omit(this.get('attrs'), this._portSelectors);
       this.set('attrs', newAttrs, { silent: true });
     }
-    this._portSelectors = [];
-    var attrs = {};
 
-    _.each(['left', 'right', 'top', 'bottom'], function(type) {
+    var attrs = {};
+    this._portSelectors = [];
+
+    _.each(['left', 'right'], function(type) {
       var port = type + 'Ports';
       _.each(this.get(port), function(portName, index, ports) {
-          var portAttributes = this.getPortAttrs(portName, index, ports.length, '.' + port, type);
+          var portAttributes = this.getPortAttrs(portName, index, ports.length, '.' + port, type, this.get('size').height);
+          this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
+          _.extend(attrs, portAttributes);
+      }, this);
+    }, this);
+
+    _.each(['top', 'bottom'], function(type) {
+      var port = type + 'Ports';
+      _.each(this.get(port), function(portName, index, ports) {
+          var portAttributes = this.getPortAttrs(portName, index, ports.length, '.' + port, type, this.get('size').width);
           this._portSelectors = this._portSelectors.concat(_.keys(portAttributes));
           _.extend(attrs, portAttributes);
       }, this);
     }, this);
 
     this.attr(attrs, { silent: true });
-    this.processPorts();
-    this.trigger('process:ports');
   },
 
-  getPortAttrs: function(port, index, total, selector, type) {
+  getPortAttrs: function(port, index, total, selector, type, length) {
 
     var attrs = {};
+    var gridsize = 8;
+    var gridunits = length / gridsize;
 
     var portClass = 'port' + index;
     var portSelector = selector + '>.' + portClass;
@@ -168,43 +179,43 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     }
 
     var offset = (port.size && port.size > 1) ? 4 : 1;
-    var pos = Math.round((index + 0.5) / total * port.gridUnits) / port.gridUnits;
+    var position = Math.round((index + 0.5) / total * gridunits) / gridunits;
 
     switch (type) {
       case 'left':
         attrs[portSelector]['ref-x'] = -8;
-        attrs[portSelector]['ref-y'] = pos;
+        attrs[portSelector]['ref-y'] = position;
         attrs[portLabelSelector]['dx'] = 4;
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'end';
-        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['y'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
         break;
       case 'right':
         attrs[portSelector]['ref-dx'] = 8;
-        attrs[portSelector]['ref-y'] = pos;
+        attrs[portSelector]['ref-y'] = position;
         attrs[portLabelSelector]['dx'] = -4;
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
-        attrs[portWireSelector]['y'] = pos;
+        attrs[portWireSelector]['y'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L -16 0';
         break;
       case 'top':
         attrs[portSelector]['ref-y'] = -8;
-        attrs[portSelector]['ref-x'] = pos;
+        attrs[portSelector]['ref-x'] = position;
         attrs[portLabelSelector]['dx'] = 5+offset;
         attrs[portLabelSelector]['y'] = 2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
-        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 16';
         break;
       case 'bottom':
         attrs[portSelector]['ref-dy'] = 8;
-        attrs[portSelector]['ref-x'] = pos;
+        attrs[portSelector]['ref-x'] = position;
         attrs[portLabelSelector]['dx'] = 5+offset;
         attrs[portLabelSelector]['y'] = -2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
-        attrs[portWireSelector]['x'] = pos;
+        attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 -16';
         break;
     }
@@ -468,7 +479,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     var size = self.model.get('size');
     var state = self.model.get('state');
-    var gridsize = self.model.get('gridsize') * 4;
+    var gridstep = 8 * 2;
     var minSize = { width: 96, height: 64 };
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
@@ -480,8 +491,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     var width = Math.max(size.width + dx, minSize.width);
     var height = Math.max(size.height + dy, minSize.height);
 
-    self.model.resize(width, height);
-
     if (width > minSize.width) {
       self._clientX = event.clientX;
     }
@@ -490,12 +499,14 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       self._clientY = event.clientY;
     }
 
+    self.model.resize(width, height);
+
     self.updateContent();
 
     function snapToGrid(coords) {
       return {
-        x: Math.round(coords.x / state.zoom / gridsize) * gridsize,
-        y: Math.round(coords.y / state.zoom / gridsize) * gridsize
+        x: Math.round(coords.x / state.zoom / gridstep) * gridstep,
+        y: Math.round(coords.y / state.zoom / gridstep) * gridstep
       };
     }
   },

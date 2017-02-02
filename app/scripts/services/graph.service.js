@@ -909,13 +909,14 @@ angular.module('icestudio')
 
         $('body').addClass('waiting');
 
-        this.setState(design.state);
-
-        commandManager.stopListening();
-
-        this.clearAll();
-
         setTimeout(function() {
+
+          self.setState(design.state);
+
+          commandManager.stopListening();
+
+          self.clearAll();
+
           var cell;
 
           // Blocks
