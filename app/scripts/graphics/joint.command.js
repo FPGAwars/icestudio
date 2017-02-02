@@ -279,7 +279,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           if (cell) {
             var cellView = this.paper.findViewByModel(cell);
             if (cellView) {
-              cellView.apply({ undo: true });
+              cellView.apply({ undo: true, attribute: attribute });
             }
           }
           break;
@@ -334,7 +334,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           if (cell) {
             var cellView = this.paper.findViewByModel(cell);
             if (cellView) {
-              cellView.apply({ undo: false });
+              cellView.apply({ undo: false, attribute: attribute });
             }
           }
           break;

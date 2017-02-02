@@ -814,14 +814,8 @@ joint.shapes.ice.Code = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Code',
     size: {
-      width: 192,
-      height: 128
-    },
-    attrs: {
-      '.body': {
-        width: 192,
-        height: 128
-      }
+      width: 384,
+      height: 256
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -915,7 +909,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas && opt) {
+    if (data.deltas && opt && opt.attribute === 'data') {
       var changes = [{
         group: 'doc',
         deltas: data.deltas
@@ -994,20 +988,10 @@ joint.shapes.ice.Info = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Info',
     size: {
-      width: 192,
-      height: 128
-    },
-    attrs: {
-      '.body': {
-        width: 192,
-        height: 128
-      },
-      rect: {
-        stroke: 'none',
-        'fill-opacity': 0
-      }
+      width: 400,
+      height: 256
     }
-  }, joint.shapes.basic.Rect.prototype.defaults)
+  }, joint.shapes.ice.Model.prototype.defaults)
 });
 
 joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
@@ -1096,7 +1080,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updating = true;
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas && opt) {
+    if (data.deltas && opt && opt.attribute === 'data') {
       var changes = [{
         group: 'doc',
         deltas: data.deltas

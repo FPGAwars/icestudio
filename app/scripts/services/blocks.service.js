@@ -232,7 +232,8 @@ angular.module('icestudio')
           ports: { in: [], out: [] }
         },
         type: 'basic.code',
-        position: { x: 40 * gridsize, y: 16 * gridsize }
+        position: { x: 40 * gridsize, y: 16 * gridsize },
+        size: { width: 192, height: 128 }
       };
       var defaultValues = [
         'a , b',
@@ -376,7 +377,8 @@ angular.module('icestudio')
         id: null,
         data: { info: '' },
         type: 'basic.info',
-        position: { x: 40 * gridsize, y: 36 * gridsize }
+        position: { x: 40 * gridsize, y: 36 * gridsize },
+        size: { width: 192, height: 128 }
       };
       if (addCellCallback) {
         addCellCallback(loadBasicInfo(blockInstance));
