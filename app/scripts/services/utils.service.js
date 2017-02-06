@@ -256,6 +256,7 @@ angular.module('icestudio')
 
     this.removeToolchain = function() {
       deleteFolderRecursive(ENV_DIR);
+      deleteFolderRecursive(CACHE_DIR);
       deleteFolderRecursive(APIO_HOME_DIR);
     };
 

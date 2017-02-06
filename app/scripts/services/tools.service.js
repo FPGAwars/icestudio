@@ -17,7 +17,6 @@ angular.module('icestudio')
                              nodeSSHexec,
                              nodeRSync,
                              nodeExtract,
-                             nodeSemver,
                              _package) {
 
     var currentAlert = null;
@@ -113,8 +112,8 @@ angular.module('icestudio')
           }
           else {
             toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-            toolchain.installed = nodeSemver.gte(toolchain.apio, _package.apio.min) &&
-                                  nodeSemver.lt(toolchain.apio, _package.apio.max);
+            toolchain.installed = toolchain.apio >= _package.apio.min &&
+                                  toolchain.apio < _package.apio.max;
             if (toolchain.installed) {
               nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
                 toolchain.installed = !error;
@@ -315,8 +314,8 @@ angular.module('icestudio')
     }
 
     this.installToolchain = function() {
+      utils.removeToolchain();
       if (utils.checkDefaultToolchain()) {
-        utils.removeToolchain();
         installDefaultToolchain();
       }
       else {
