@@ -11,7 +11,6 @@ angular.module('icestudio')
                              gettext,
                              nodeFs,
                              nodeFse,
-                             nodeOs,
                              nodePath,
                              nodeChildProcess,
                              nodeSSHexec,
@@ -512,7 +511,7 @@ angular.module('icestudio')
     }
 
     function apioInstallDrivers(callback) {
-      if (nodeOs.platform().indexOf('win32') > -1) {
+      if (utils.WIN32) {
         updateProgress('apio install drivers', 80);
         utils.apioInstall('drivers', callback);
       }

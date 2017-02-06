@@ -13,9 +13,6 @@ angular.module('icestudio')
   .factory('nodeSha1', function() {
     return require('sha1');
   })
-  .factory('nodeOs', function() {
-    return require('os');
-  })
   .factory('nodePath', function() {
     return require('path');
   })

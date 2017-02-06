@@ -8,7 +8,6 @@ angular.module('icestudio')
                              window,
                              nodeFs,
                              nodeFse,
-                             nodeOs,
                              nodePath,
                              nodeChildProcess,
                              nodeTarball,
@@ -20,6 +19,7 @@ angular.module('icestudio')
                              SVGO) {
 
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
+    this.WIN32 = WIN32;
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
     this.DARWIN = DARWIN;
 
@@ -28,7 +28,7 @@ angular.module('icestudio')
     this.SAMPLE_DIR = SAMPLE_DIR;
 
     const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
-    const ICESTUDIO_DIR = nodePath.join(BASE_DIR, '.icestudio');
+    const ICESTUDIO_DIR = safeDir(nodePath.join(BASE_DIR, '.icestudio'));
     this.ICESTUDIO_DIR = ICESTUDIO_DIR;
     const COLLECTIONS_DIR = nodePath.join(ICESTUDIO_DIR, 'collections');
     this.COLLECTIONS_DIR = COLLECTIONS_DIR;
@@ -54,32 +54,30 @@ angular.module('icestudio')
     const DEFAULT_APIO_PACKAGES = 'default-apio-packages';
     const DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO_PACKAGES + '.tar.gz');
 
-    const ENV_DIR = _getEnvDir(nodePath.join(ICESTUDIO_DIR, 'venv'));
+    const ENV_DIR = nodePath.join(ICESTUDIO_DIR, 'venv');
     const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
     const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
     const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
     const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + (WIN32 ? '& ' : '; ') + coverPath(ENV_APIO);
     const SYSTEM_APIO = '/usr/bin/apio';
 
-    function _getEnvDir(defaultEnvDir) {
+    function safeDir(_dir) {
       if (WIN32) {
         // Put the env directory to the root of the current local disk when
         // default path contains non-ASCII characters. Virtualenv will fail to
-        for (var i in defaultEnvDir) {
-          var char = defaultEnvDir[i];
+        for (const char of _dir) {
           if (char.charCodeAt(0) > 127) {
-            var defaultEnvDirFormat = nodeOs.parse(defaultEnvDir);
-            return nodeOs.format({
-              root: defaultEnvDirFormat.root,
-              dir: defaultEnvDirFormat.root,
-              base: '.icestudiovenv',
-              name: '.icestudiovenv',
+            const _dirFormat = nodePath.parse(_dir);
+            return nodePath.format({
+              root: _dirFormat.root,
+              dir: _dirFormat.root,
+              base: '.icestudio',
+              name: '.icestudio',
             });
           }
         }
       }
-
-      return defaultEnvDir;
+      return _dir;
     }
 
     var _pythonExecutableCached = null;
