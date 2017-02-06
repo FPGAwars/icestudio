@@ -12,7 +12,7 @@
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install"
   },
   "apio": {
-    "min": "0.2.1",
+    "min": "0.2.1.2",
     "max": "0.2.2"
   },
   "devDependencies": {
