@@ -65,8 +65,8 @@ angular.module('icestudio')
       if (WIN32) {
         // Put the env directory to the root of the current local disk when
         // default path contains non-ASCII characters. Virtualenv will fail to
-        for (const char of _dir) {
-          if (char.charCodeAt(0) > 127) {
+        for (var i in _dir) {
+          if (_dir[i].charCodeAt(0) > 127) {
             const _dirFormat = nodePath.parse(_dir);
             return nodePath.format({
               root: _dirFormat.root,
@@ -525,7 +525,7 @@ angular.module('icestudio')
     function enableWindowsDrivers() {
       alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'), function() {
         beginLazyProcess();
-        nodeChildProcess.exec([APIO_CMD, 'drivers', '--enable'].join(' '), function(error, stdout, stderr) {
+        nodeSudo.exec([APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
