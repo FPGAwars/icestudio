@@ -33,6 +33,13 @@
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li ng-repeat="collection in resources.collections"
+                      ng-class="collection.content.blocks.length > 0 ? 'dropdown-submenu' : ''">
+                    <a href uib-dropdown-toggle>{{ collection.name }}</a>
+                    <menutree data="collection.content.blocks" callback="openProject(path)"></menutree>
+                  </li>
+                </ul>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
@@ -381,8 +388,8 @@
 
           <li uib-dropdown ng-repeat="blocks in resources.selectedCollection.children" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
             <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
-            <ul uib-dropdown-menu ng-show="blocks.children.length > 0">
-              <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
+            <ul uib-dropdown-menu ng-show="blocks.children.blocks.length > 0">
+              <li ng-repeat="block in blocks.children.blocks"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
                 <a href ng-click="project.addBlock(block.path)" ng-if="!block.children">
                   {{ block.name | translate }}
                 </a>

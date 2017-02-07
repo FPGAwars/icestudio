@@ -7,32 +7,72 @@ angular.module('icestudio')
     const DEFAULT = '';
 
     this.selectedCollection = null;
-    this.currentCollections = [];
+    this.collections = [];
     this.currentExamples = [];
 
     this.loadCollections = function() {
-      var defaultPath = nodePath.join('resources', 'blocks');
+      /*var defaultPath = nodePath.join('resources', 'blocks');
       var collections = [{
         'name': DEFAULT,
         'path': nodePath.resolve(defaultPath),
         'children': utils.getFilesRecursive(defaultPath, '.ice')
-      }];
-      this.currentCollections = collections.concat(utils.getFilesRecursive(utils.COLLECTIONS_DIR, '.ice'));
+      }];*/
+      this.data = utils.getFilesRecursive(utils.COLLECTIONS_DIR, /.*\.(ice|json)$/g);
+      for (var i in this.data) {
+        var collection = getCollection(this.data[i]);
+        if (collection) {
+          this.collections.push(collection);
+        }
+      }
+      console.log(this.collections);
     };
+
+    function getCollection(data) {
+      var collection = {
+        name: data.name,
+        path: data.path,
+        content: {
+          blocks: [],
+          examples: [],
+          package: {}
+        }
+      };
+      for (var i in data.children) {
+        var child = data.children[i];
+        switch (child.name) {
+          case ('blocks'):
+            if (child.children) {
+              collection.content.blocks = child.children;
+            }
+            break;
+          case ('examples'):
+            if (child.children) {
+              collection.content.examples = child.children;
+            }
+            break;
+          case ('package'):
+            if (!child.children) {
+              collection.content.package = require(child.path);
+            }
+            break;
+        }
+      }
+      return collection;
+    }
 
     this.loadExamples = function() {
       this.currentExamples = utils.getFilesRecursive(nodePath.join('resources', 'examples'), '.ice');
     };
 
     this.loadCollections();
-    this.loadExamples();
+    //this.loadExamples();
 
     this.selectCollection = function(name) {
       name = name || DEFAULT;
       var selectedCollection = null;
-      for (var i in this.currentCollections) {
-        if (this.currentCollections[i].name === name) {
-          selectedCollection = this.currentCollections[i];
+      for (var i in this.collections) {
+        if (this.collections[i].name === name) {
+          selectedCollection = this.collections[i];
           break;
         }
       }

@@ -371,7 +371,7 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    function getFilesRecursive(folder, extension) {
+    function getFilesRecursive(folder, validator) {
       var fileTree = [];
       if (nodeFs.existsSync(folder)) {
         var fileContents = nodeFs.readdirSync(folder);
@@ -385,10 +385,10 @@ angular.module('icestudio')
             fileTree.push({
               name: fileName,
               path: filePath,
-              children: getFilesRecursive(filePath, extension)
+              children: getFilesRecursive(filePath, validator)
             });
           } else {
-            if (fileName.endsWith(extension)) {
+            if (validator.test(fileName)) {
               fileTree.push({
                 name: basename(fileName),
                 path: filePath
