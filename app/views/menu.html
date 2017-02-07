@@ -31,8 +31,8 @@
               <li>
                 <a href ng-click="openProject()">{{ 'Open' | translate }}...<span class="shortcut">{{ 'openProject' | shortcut }}</span></a>
               </li>
-              <li>
-                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
@@ -51,6 +51,9 @@
                     </ul>
                   </li>
                 </ul>
+              </li>
+              <li>
+                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -120,6 +123,24 @@
                   <li>
                     <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
                   </li>
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      {{ 'Board rules' | translate }}&ensp;
+                      <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                    <ul uib-dropdown-menu>
+                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
+                          {{ 'Enable' | translate }}
+                        </a>
+                      </li>
+                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
+                          {{ 'Disable' | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <li class="divider"></li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
@@ -157,25 +178,6 @@
                     </ul>
                   </li>
                   <li class="divider"></li>
-                  <li class="dropdown-submenu" uib-dropdown>
-                    <a href uib-dropdown-toggle>
-                      {{ 'Board rules' | translate }}&ensp;
-                      <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                    <ul uib-dropdown-menu>
-                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
-                          {{ 'Enable' | translate }}
-                        </a>
-                      </li>
-                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
-                          {{ 'Disable' | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="divider"></li>
                   <li>
                     <a href ng-click="setRemoteHostname()">
                       {{ 'Remote hostname' | translate }}
@@ -202,9 +204,25 @@
               <li>
                 <a href ng-click="showBoardRules()">{{ 'Board rules' | translate }}</a>
               </li>
-              <li class="divider"></li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-mouseover="showMenu('select')" ng-mouseleave="hideMenu('select')" is-open="status.select">
+            <a href uib-dropdown-toggle>{{ 'Select' | translate }}<span class="caret"></span></a>
+            <ul uib-dropdown-menu>
               <li class="dropdown-submenu" uib-dropdown>
-                <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
+                <a href uib-dropdown-toggle>{{ 'Board' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li ng-repeat="board in boards.currentBoards">
+                    <a href ng-click="selectBoard(board)">
+                      {{ board.info.label }}&ensp;
+                      <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-repeat="collection in resources.currentCollections">
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
@@ -217,18 +235,6 @@
                     </a>
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </li>
-
-          <li uib-dropdown ng-mouseover="showMenu('boards')" ng-mouseleave="hideMenu('boards')" is-open="status.boards">
-            <a href uib-dropdown-toggle>{{ 'Boards' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu>
-              <li ng-repeat="board in boards.currentBoards">
-                <a href ng-click="selectBoard(board)">
-                  {{ board.info.label }}&ensp;
-                  <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
-                </a>
               </li>
             </ul>
           </li>
