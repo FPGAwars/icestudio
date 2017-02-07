@@ -223,7 +223,7 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in resources.currentCollections">
+                  <li ng-repeat="collection in resources.collections">
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
                       <span ng-show="resources.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
@@ -305,8 +305,8 @@
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="resources.currentCollections.length > 1">
-                      <li ng-repeat="collection in resources.currentCollections">
+                        ng-show="resources.collections.length > 1">
+                      <li ng-repeat="collection in resources.collections">
                         <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>

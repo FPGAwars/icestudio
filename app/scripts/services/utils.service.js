@@ -954,7 +954,7 @@ angular.module('icestudio')
       }
     };
 
-    this.newWindow = function(filepath) {
+    this.newWindow = function(filepath, local) {
       var execPath = process.execPath;
       var command = [ coverPath(execPath) ];
       if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
@@ -969,6 +969,9 @@ angular.module('icestudio')
         y: win.y + 30
       };
       command.push(position.x + 'x' + position.y);*/
+      if (local) {
+        command.push('local');
+      }
       nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
         if (error) {
           throw error;

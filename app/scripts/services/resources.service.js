@@ -78,7 +78,7 @@ angular.module('icestudio')
       }
       if (selectedCollection === null) {
         // Collection not found: select default collection
-        selectedCollection = this.currentCollections[0];
+        selectedCollection = this.collections[0];
       }
       this.selectedCollection = selectedCollection;
       return selectedCollection.name;

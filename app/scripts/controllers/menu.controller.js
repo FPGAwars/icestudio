@@ -71,8 +71,17 @@ angular.module('icestudio')
 
     // Load app arguments
     setTimeout(function() {
+      var local = false;
       for (var i in gui.App.argv) {
-        processArg(gui.App.argv[i]);
+        var arg = gui.App.argv[i];
+        processArg(arg);
+        local = arg === 'local' || local;
+      }
+      if (local) {
+        project.path = '';
+      }
+      else {
+        updateWorkingdir(project.path);
       }
     }, 0);
 
@@ -80,11 +89,7 @@ angular.module('icestudio')
       if (nodeFs.existsSync(arg)) {
         // Open filepath
         var filepath = arg;
-        var emptyPath = filepath.startsWith('resources'); // it is an example
-        if (!emptyPath) {
-          updateWorkingdir(filepath);
-        }
-        project.open(filepath, emptyPath);
+        project.open(filepath);
         zeroProject = false;
       }
       else {
@@ -134,7 +139,7 @@ angular.module('icestudio')
         // If this is not the first action, and
         // the file path is different, open
         // the project in a new window
-        utils.newWindow(filepath);
+        utils.newWindow(filepath, true);
       }
     };
 
