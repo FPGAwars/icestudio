@@ -17,14 +17,13 @@ angular.module('icestudio')
         'path': nodePath.resolve(defaultPath),
         'children': utils.getFilesRecursive(defaultPath, '.ice')
       }];*/
-      this.data = utils.getFilesRecursive(utils.COLLECTIONS_DIR, /.*\.(ice|json)$/g);
+      this.data = utils.getFilesRecursive(utils.COLLECTIONS_DIR);
       for (var i in this.data) {
         var collection = getCollection(this.data[i]);
         if (collection) {
           this.collections.push(collection);
         }
       }
-      console.log(this.collections);
     };
 
     function getCollection(data) {
@@ -52,7 +51,8 @@ angular.module('icestudio')
             break;
           case ('package'):
             if (!child.children) {
-              collection.content.package = require(child.path);
+              // TODO: use package data
+              //collection.content.package = require(child.path);
             }
             break;
         }

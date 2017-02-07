@@ -105,7 +105,7 @@ angular.module('icestudio')
       utils.newWindow();
     };
 
-    $scope.openProject = function() {
+    $scope.openProjectDialog = function() {
       utils.openDialog('#input-open-project', '.ice', function(filepath) {
         if (zeroProject) {
           // If this is the first action, open
@@ -123,7 +123,7 @@ angular.module('icestudio')
       });
     };
 
-    $scope.openExample = function(filepath) {
+    $scope.openProject = function(filepath) {
       if (zeroProject) {
         // If this is the first action, open
         // the projec in the same window
