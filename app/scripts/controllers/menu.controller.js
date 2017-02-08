@@ -229,7 +229,7 @@ angular.module('icestudio')
     function exit() {
       if (project.changed) {
         alertify.confirm(
-          '<b>' + gettextCatalog.getString('Do you want to close the application?') + '</b><br>' +
+          utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
           function() {
             _exit();
