@@ -280,26 +280,14 @@ angular.module('icestudio')
           var ports = [];
           var portsNames = [];
           for (w in graph.wires) {
-            var portName = '';
-            var isConstant = false;
             wire = graph.wires[w];
             if (block.id === wire.source.block) {
-              portName = wire.source.port;
+              connectPort(wire.source.port, portsNames, ports, block);
             }
-            else if (block.id === wire.target.block) {
-              portName = wire.target.port;
-              isConstant = wire.source.port === 'constant-out';
-            }
-            if (portName && block.type !== 'basic.code') {
-              portName = digestId(portName);
-            }
-            if (portName && !isConstant &&
-                portsNames.indexOf(portName) === -1) {
-              portsNames.push(portName);
-              var port = '';
-              port += ' .' + portName;
-              port += '(w' + w + ')';
-              ports.push(port);
+            if (block.id === wire.target.block) {
+              if (wire.source.port !== 'constant-out') {
+                connectPort(wire.target.port, portsNames, ports, block);
+              }
             }
           }
 
@@ -310,6 +298,22 @@ angular.module('icestudio')
           }
         }
       }
+
+      function connectPort(portName, portsNames, ports, block) {
+        if (portName) {
+          if (block.type !== 'basic.code') {
+            portName = digestId(portName);
+          }
+          if (portsNames.indexOf(portName) === -1) {
+            portsNames.push(portName);
+            var port = '';
+            port += ' .' + portName;
+            port += '(w' + w + ')';
+            ports.push(port);
+          }
+        }
+      }
+
       return instances;
     }
 
