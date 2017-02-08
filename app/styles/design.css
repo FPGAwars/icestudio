@@ -49,7 +49,7 @@
 #info {
   position: absolute;
   top: -10px;
-  left: 10px;
+  left: 15px;
   font-size: 15px;
   color: #656565;
   background-color: white;
@@ -61,7 +61,7 @@
 #read-only {
   position: absolute;
   top: -10px;
-  right: 10px;
+  right: 15px;
   font-size: 14px;
   color: #f05c5c;
   background-color: white;
@@ -73,7 +73,7 @@
 #back-button {
   position: absolute;
   top: 20px;
-  right: 10px;
+  right: 15px;
   font-size: 14px;
   color: #63afcf;
   background-color: white;

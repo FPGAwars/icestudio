@@ -243,7 +243,7 @@ angular.module('icestudio')
       if (nodeFs.existsSync(candidateApio)) {
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.notify('Using system wide apio', 'message', 5);
+          alertify.message('Using system wide apio', 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);
@@ -371,29 +371,29 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    function getFilesRecursive(folder, extension) {
+    function getFilesRecursive(folder) {
       var fileTree = [];
+      var validator = /.*\.(ice|json)$/;
+
       if (nodeFs.existsSync(folder)) {
         var fileContents = nodeFs.readdirSync(folder);
         var stats;
 
-        fileContents.forEach(function (fileName) {
-          var filePath = nodePath.join(folder, fileName);
-          stats = nodeFs.lstatSync(filePath);
+        fileContents.forEach(function (name) {
+          var path = nodePath.join(folder, name);
+          stats = nodeFs.lstatSync(path);
 
           if (stats.isDirectory()) {
             fileTree.push({
-              name: fileName,
-              path: filePath,
-              children: getFilesRecursive(filePath, extension)
+              name: name,
+              path: path,
+              children: getFilesRecursive(path, validator)
             });
-          } else {
-            if (fileName.endsWith(extension)) {
-              fileTree.push({
-                name: basename(fileName),
-                path: filePath
-              });
-            }
+          } else if (validator.test(name)) {
+            fileTree.push({
+              name: basename(name),
+              path: path
+            });
           }
         });
       }
@@ -452,7 +452,7 @@ angular.module('icestudio')
             alertify.warning(gettextCatalog.getString('Drivers disabled'));
           }
           setTimeout(function() {
-             alertify.notify(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 'message', 5);
+             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }, 1000);
         }
       });
@@ -487,14 +487,14 @@ angular.module('icestudio')
             if (error) {
               if ((stderr.indexOf('brew: command not found') !== -1) ||
                    (stderr.indexOf('brew: No such file or directory') !== -1)) {
-                alertify.notify(gettextCatalog.getString('Homebrew is required'), 'error', 30);
+                alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
                 // TODO: open web browser with Homebrew website on click
               }
               else if (stderr.indexOf('Error: Failed to download') !== -1) {
-                alertify.notify(gettextCatalog.getString('Internet connection required'), 'error', 30);
+                alertify.error(gettextCatalog.getString('Internet connection required'), 30);
               }
               else {
-                alertify.notify(stderr, 'error', 30);
+                alertify.error(stderr, 30);
               }
             }
             else {
@@ -529,10 +529,10 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
           }
           if (!error) {
-            alertify.notify(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 'message', 5);
+            alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }
         });
       });
@@ -545,7 +545,7 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.notify(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 'error', 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
           }
         });
       });
@@ -561,7 +561,7 @@ angular.module('icestudio')
       angular.element('#menu').removeClass('disable-menu');
     }
 
-    this.setLocale = function(locale) {
+    this.setLocale = function(locale, collections) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -569,7 +569,17 @@ angular.module('icestudio')
       // Set the best matching language
       var bestLang = bestLocale(locale, supported);
       gettextCatalog.setCurrentLanguage(bestLang);
+      // Application strings
       gettextCatalog.loadRemote(nodePath.join(LOCALE_DIR, bestLang, bestLang + '.json'));
+      // Collections strings
+      for (var c in collections) {
+        var collection = collections[c];
+        var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
+        if (nodeFs.existsSync(filepath)) {
+          gettextCatalog.loadRemote(filepath);
+        }
+      }
+      // COLLECTIONS_DIR
       return bestLang;
     };
 
@@ -841,7 +851,7 @@ angular.module('icestudio')
         }
       }
       catch (e) {
-        alertify.notify(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 'error', 30);
+        alertify.error(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 30);
         ret = false;
       }
       return ret;
@@ -954,7 +964,7 @@ angular.module('icestudio')
       }
     };
 
-    this.newWindow = function(filepath) {
+    this.newWindow = function(filepath, local) {
       var execPath = process.execPath;
       var command = [ coverPath(execPath) ];
       if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
@@ -969,6 +979,9 @@ angular.module('icestudio')
         y: win.y + 30
       };
       command.push(position.x + 'x' + position.y);*/
+      if (local) {
+        command.push('local');
+      }
       nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
         if (error) {
           throw error;

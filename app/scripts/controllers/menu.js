@@ -71,8 +71,17 @@ angular.module('icestudio')
 
     // Load app arguments
     setTimeout(function() {
+      var local = false;
       for (var i in gui.App.argv) {
-        processArg(gui.App.argv[i]);
+        var arg = gui.App.argv[i];
+        processArg(arg);
+        local = arg === 'local' || local;
+      }
+      if (local) {
+        project.path = '';
+      }
+      else {
+        updateWorkingdir(project.path);
       }
     }, 0);
 
@@ -80,11 +89,7 @@ angular.module('icestudio')
       if (nodeFs.existsSync(arg)) {
         // Open filepath
         var filepath = arg;
-        var emptyPath = filepath.startsWith('resources'); // it is an example
-        if (!emptyPath) {
-          updateWorkingdir(filepath);
-        }
-        project.open(filepath, emptyPath);
+        project.open(filepath);
         zeroProject = false;
       }
       else {
@@ -105,7 +110,7 @@ angular.module('icestudio')
       utils.newWindow();
     };
 
-    $scope.openProject = function() {
+    $scope.openProjectDialog = function() {
       utils.openDialog('#input-open-project', '.ice', function(filepath) {
         if (zeroProject) {
           // If this is the first action, open
@@ -123,7 +128,7 @@ angular.module('icestudio')
       });
     };
 
-    $scope.openExample = function(filepath) {
+    $scope.openProject = function(filepath) {
       if (zeroProject) {
         // If this is the first action, open
         // the projec in the same window
@@ -134,7 +139,7 @@ angular.module('icestudio')
         // If this is not the first action, and
         // the file path is different, open
         // the project in a new window
-        utils.newWindow(filepath);
+        utils.newWindow(filepath, true);
       }
     };
 
@@ -224,7 +229,7 @@ angular.module('icestudio')
     function exit() {
       if (project.changed) {
         alertify.confirm(
-          '<b>' + gettextCatalog.getString('Do you want to close the application?') + '</b><br>' +
+          utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
           function() {
             _exit();
@@ -341,7 +346,7 @@ angular.module('icestudio')
     $scope.selectLanguage = function(language) {
       if (profile.data.language !== language) {
         profile.data.language = language;
-        utils.setLocale(language);
+        utils.setLocale(language, resources.collections);
       }
     };
 
@@ -374,7 +379,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -384,7 +389,7 @@ angular.module('icestudio')
         gui.Shell.openExternal(board.info.datasheet);
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+        alertify.error(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -403,7 +408,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+        alertify.error(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -472,15 +477,15 @@ angular.module('icestudio')
         }
       }
       else {
-        alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
       }
     }
 
-    $scope.addCollection = function() {
+    $scope.addCollections = function() {
       utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
         filepaths = filepaths.split(';');
         for (var i in filepaths) {
-          tools.addCollection(filepaths[i]);
+          tools.addCollections(filepaths[i]);
         }
       });
     };
@@ -495,7 +500,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (resources.currentCollections.length > 1) {
+      if (resources.collections.length > 1) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();
@@ -504,7 +509,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('No collections stored'), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('No collections stored'), 5);
       }
     };
 

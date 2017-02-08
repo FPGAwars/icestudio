@@ -43,8 +43,11 @@ angular.module('icestudio')
   .factory('nodeLangInfo', function() {
     return require('node-lang-info');
   })
-  .factory('nodeExtract', function() {
-    return require('extract-zip');
+  .factory('nodeAdmZip', function() {
+    return require('adm-zip');
+  })
+  .factory('nodeGettext', function() {
+    return require('angular-gettext-tools');
   })
   .factory('SVGO', function() {
     return require('svgo');

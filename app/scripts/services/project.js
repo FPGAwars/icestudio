@@ -99,7 +99,7 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       if (data.version !== VERSION) {
-        alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
       }
       project = _safeLoad(data, name);
       allDependencies = project.dependencies;
@@ -114,7 +114,7 @@ angular.module('icestudio')
         this.updateTitle(name);
       }
       else {
-        alertify.notify(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 'error', 30);
+        alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
       }
     };
 
@@ -306,7 +306,7 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(filepath, function(data) {
         if (data.version !== VERSION) {
-          alertify.notify(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 'warning', 5);
+          alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
         }
         var name = utils.basename(filepath);
         var block = _safeLoad(data, name);
@@ -391,10 +391,10 @@ angular.module('icestudio')
         function doCopySync(orig, dest, filename) {
           var success = utils.copySync(orig, dest);
           if (success) {
-            alertify.notify(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 'message', 5);
+            alertify.message(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 5);
           }
           else {
-            alertify.notify(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 'error', 30);
+            alertify.error(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 30);
           }
           return success;
         }

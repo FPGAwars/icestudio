@@ -29,28 +29,18 @@
                 <a href ng-click="newProject()">{{ 'New' | translate }}<span class="shortcut">{{ 'newProject' | shortcut }}</span></a>
               </li>
               <li>
-                <a href ng-click="openProject()">{{ 'Open' | translate }}...<span class="shortcut">{{ 'openProject' | shortcut }}</span></a>
+                <a href ng-click="openProjectDialog()">{{ 'Open' | translate }}...<span class="shortcut">{{ 'openProject' | shortcut }}</span></a>
               </li>
-              <li>
-                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
+                <menutree data="resources.selectedCollection.content.blocks" callback="openProject(path)"></menutree>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
-                <ul uib-dropdown-menu
-                    ng-repeat="boardExamples in resources.currentExamples"
-                    ng-show="boardExamples.children.length > 0"
-                    ng-if="boardExamples.name == boards.selectedBoard.name">
-                  <li class="dropdown-submenu" ng-repeat="example in boardExamples.children">
-                    <a href uib-dropdown-toggle>{{ example.name | translate }}</a>
-                    <ul uib-dropdown-menu>
-                      <li ng-repeat="child in example.children">
-                        <a href ng-click="openExample(child.path)" ng-if="!child.children">
-                        {{ child.name | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+                <menutree data="resources.selectedCollection.content.examples" callback="openProject(path)"></menutree>
+              </li>
+              <li>
+                <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -120,6 +110,24 @@
                   <li>
                     <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
                   </li>
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>
+                      {{ 'Board rules' | translate }}&ensp;
+                      <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                    <ul uib-dropdown-menu>
+                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
+                          {{ 'Enable' | translate }}
+                        </a>
+                      </li>
+                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
+                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
+                          {{ 'Disable' | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <li class="divider"></li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
@@ -157,25 +165,6 @@
                     </ul>
                   </li>
                   <li class="divider"></li>
-                  <li class="dropdown-submenu" uib-dropdown>
-                    <a href uib-dropdown-toggle>
-                      {{ 'Board rules' | translate }}&ensp;
-                      <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                    <ul uib-dropdown-menu>
-                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
-                          {{ 'Enable' | translate }}
-                        </a>
-                      </li>
-                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
-                          {{ 'Disable' | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="divider"></li>
                   <li>
                     <a href ng-click="setRemoteHostname()">
                       {{ 'Remote hostname' | translate }}
@@ -202,11 +191,27 @@
               <li>
                 <a href ng-click="showBoardRules()">{{ 'Board rules' | translate }}</a>
               </li>
-              <li class="divider"></li>
+            </ul>
+          </li>
+
+          <li uib-dropdown ng-mouseover="showMenu('select')" ng-mouseleave="hideMenu('select')" is-open="status.select">
+            <a href uib-dropdown-toggle>{{ 'Select' | translate }}<span class="caret"></span></a>
+            <ul uib-dropdown-menu>
               <li class="dropdown-submenu" uib-dropdown>
-                <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
+                <a href uib-dropdown-toggle>{{ 'Board' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in resources.currentCollections">
+                  <li ng-repeat="board in boards.currentBoards">
+                    <a href ng-click="selectBoard(board)">
+                      {{ board.info.label }}&ensp;
+                      <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown>
+                <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li ng-repeat="collection in resources.collections">
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
                       <span ng-show="resources.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
@@ -217,18 +222,6 @@
                     </a>
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </li>
-
-          <li uib-dropdown ng-mouseover="showMenu('boards')" ng-mouseleave="hideMenu('boards')" is-open="status.boards">
-            <a href uib-dropdown-toggle>{{ 'Boards' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu>
-              <li ng-repeat="board in boards.currentBoards">
-                <a href ng-click="selectBoard(board)">
-                  {{ board.info.label }}&ensp;
-                  <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
-                </a>
               </li>
             </ul>
           </li>
@@ -293,15 +286,15 @@
                 <a href uib-dropdown-toggle>{{ 'Collections' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="addCollection()">
+                    <a href ng-click="addCollections()">
                       {{ 'Add' | translate }}
                     </a>
                   </li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="resources.currentCollections.length > 1">
-                      <li ng-repeat="collection in resources.currentCollections">
+                        ng-show="resources.collections.length > 1">
+                      <li ng-repeat="collection in resources.collections">
                         <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>
@@ -349,7 +342,8 @@
 
         <ul class="nav navbar-nav navbar-right">
 
-          <li uib-dropdown ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" is-open="status.basic">
+          <li uib-dropdown
+              ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" is-open="status.basic">
             <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
@@ -373,25 +367,11 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-repeat="blocks in resources.selectedCollection.children" ng-mouseover="showMenu(blocks.name)" ng-mouseleave="hideMenu(blocks.name)" is-open="status[blocks.name]">
-            <a href uib-dropdown-toggle>{{ blocks.name | translate }} <span class="caret"></span></a>
-            <ul uib-dropdown-menu ng-show="blocks.children.length > 0">
-              <li ng-repeat="block in blocks.children"  ng-class="block.children ? 'dropdown-submenu-right' : ''" ng-if="blocks.children">
-                <a href ng-click="project.addBlock(block.path)" ng-if="!block.children">
-                  {{ block.name | translate }}
-                </a>
-                <a href uib-dropdown-toggle ng-if="block.children">
-                  {{ block.name | translate }}
-                </a>
-                <ul uib-dropdown-menu ng-if="block.children" ng-show="block.children.length > 0">
-                  <li ng-repeat="sblock in block.children">
-                    <a href ng-click="project.addBlock(sblock.path)" ng-if="!sblock.children">
-                      {{ sblock.name | translate }}
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+          <li uib-dropdown
+              ng-repeat="block in resources.selectedCollection.content.blocks" ng-if="block.children"
+              ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu(block.name)" is-open="status[block.name]">
+            <a href uib-dropdown-toggle>{{ block.name | translate }} <span class="caret"></span></a>
+            <menutree data="block.children" callback="project.addBlock(path)" right="true"></menutree>
           </li>
 
         </ul>
