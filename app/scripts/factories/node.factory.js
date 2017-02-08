@@ -46,6 +46,9 @@ angular.module('icestudio')
   .factory('nodeAdmZip', function() {
     return require('adm-zip');
   })
+  .factory('nodeGettext', function() {
+    return require('angular-gettext-tools');
+  })
   .factory('SVGO', function() {
     return require('svgo');
   });

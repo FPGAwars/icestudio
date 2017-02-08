@@ -14,8 +14,4 @@ cache
 node_modules
 bower_components
 
-app/profile.json
-app/_cache
-app/_build
-app/resources/locale/**/*.json
-demo/*.v
+**/locale/**/*.json

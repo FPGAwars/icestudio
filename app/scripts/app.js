@@ -21,9 +21,16 @@ angular
   .run(function(profile,
                 project,
                 utils,
+                nodeFs,
+                nodePath,
+                nodeGettext,
                 gettextCatalog,
                 nodeLangInfo) {
     // Load language
+    //var compiler = new nodeGettext.Compiler({format: 'json'});
+    //var content = nodeFs.readFileSync(nodePath.resolve('resources/collection/locale/en/en.po')).toString();
+    //var result = compiler.convertPo([content]);
+    //console.log(gettextCatalog.strings);
     profile.load(function() {
       var lang = profile.data.language;
       if (lang) {

@@ -311,6 +311,14 @@ module.exports = function(grunt) {
             dest: "app/resources/locale",
             src: ["**/*.po"],
             ext: ".json"
+          },
+          {
+            expand: true,
+            dot: true,
+            cwd: "app/resources/collection/locale",
+            dest: "app/resources/collection/locale",
+            src: ["**/*.po"],
+            ext: ".json"
           }
         ]
       }

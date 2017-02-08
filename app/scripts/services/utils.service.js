@@ -23,6 +23,8 @@ angular.module('icestudio')
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
     this.DARWIN = DARWIN;
 
+    const COLLECTION_DIR = nodePath.join('resources', 'collection');
+    const COLLECTION_LOCALE_DIR = nodePath.join(COLLECTION_DIR, 'locale');
     const LOCALE_DIR = nodePath.join('resources', 'locale');
     const SAMPLE_DIR = nodePath.join('resources', 'sample');
     this.SAMPLE_DIR = SAMPLE_DIR;
@@ -569,7 +571,12 @@ angular.module('icestudio')
       // Set the best matching language
       var bestLang = bestLocale(locale, supported);
       gettextCatalog.setCurrentLanguage(bestLang);
+      // Application strings
       gettextCatalog.loadRemote(nodePath.join(LOCALE_DIR, bestLang, bestLang + '.json'));
+      // Default collection strings
+      gettextCatalog.loadRemote(nodePath.join(COLLECTION_LOCALE_DIR, bestLang, bestLang + '.json'));
+      // Installed collections strings
+      // COLLECTIONS_DIR
       return bestLang;
     };
 
