@@ -53,11 +53,6 @@ angular.module('icestudio')
               collection.content.examples = child.children;
             }
             break;
-          case ('locale'):
-            if (child.children) {
-              collection.content.locale = child.children;
-            }
-            break;
           case ('package'):
             if (!child.children) {
               // TODO: use package data

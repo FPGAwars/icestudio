@@ -23,8 +23,6 @@ angular.module('icestudio')
     const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
     this.DARWIN = DARWIN;
 
-    const COLLECTION_DIR = nodePath.join('resources', 'collection');
-    const COLLECTION_LOCALE_DIR = nodePath.join(COLLECTION_DIR, 'locale');
     const LOCALE_DIR = nodePath.join('resources', 'locale');
     const SAMPLE_DIR = nodePath.join('resources', 'sample');
     this.SAMPLE_DIR = SAMPLE_DIR;
@@ -563,7 +561,7 @@ angular.module('icestudio')
       angular.element('#menu').removeClass('disable-menu');
     }
 
-    this.setLocale = function(locale) {
+    this.setLocale = function(locale, collections) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -573,9 +571,14 @@ angular.module('icestudio')
       gettextCatalog.setCurrentLanguage(bestLang);
       // Application strings
       gettextCatalog.loadRemote(nodePath.join(LOCALE_DIR, bestLang, bestLang + '.json'));
-      // Default collection strings
-      gettextCatalog.loadRemote(nodePath.join(COLLECTION_LOCALE_DIR, bestLang, bestLang + '.json'));
-      // Installed collections strings
+      // Collections strings
+      for (var c in collections) {
+        var collection = collections[c];
+        var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
+        if (nodeFs.existsSync(filepath)) {
+          gettextCatalog.loadRemote(filepath);
+        }
+      }
       // COLLECTIONS_DIR
       return bestLang;
     };

@@ -20,27 +20,21 @@ angular
   ])
   .run(function(profile,
                 project,
+                resources,
                 utils,
-                nodeFs,
-                nodePath,
-                nodeGettext,
                 gettextCatalog,
                 nodeLangInfo) {
     // Load language
-    //var compiler = new nodeGettext.Compiler({format: 'json'});
-    //var content = nodeFs.readFileSync(nodePath.resolve('resources/collection/locale/en/en.po')).toString();
-    //var result = compiler.convertPo([content]);
-    //console.log(gettextCatalog.strings);
     profile.load(function() {
       var lang = profile.data.language;
       if (lang) {
-        utils.setLocale(lang);
+        utils.setLocale(lang, resources.collections);
       }
       else {
         // If lang is empty, use the system language
         nodeLangInfo(function(err, sysLang) {
           if (!err) {
-            profile.data.language = utils.setLocale(sysLang);
+            profile.data.language = utils.setLocale(sysLang, resources.collections);
           }
         });
       }

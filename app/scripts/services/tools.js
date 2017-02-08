@@ -9,6 +9,7 @@ angular.module('icestudio')
                              utils,
                              gettextCatalog,
                              gettext,
+                             nodeGettext,
                              nodeFs,
                              nodeFse,
                              nodePath,
@@ -585,7 +586,9 @@ angular.module('icestudio')
       zipEntries.forEach(function(zipEntry) {
         var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
         if (name) {
-          collections[name[1]] = { name: name[1], blocks: [], examples: [], package: '' };
+          collections[name[1]] = {
+            name: name[1], blocks: [], examples: [], locale: [], package: ''
+          };
         }
         name = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
         if (name) {
@@ -594,6 +597,10 @@ angular.module('icestudio')
         name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
         if (name) {
           collections[name[1]].examples.push(zipEntry.entryName);
+        }
+        name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
+        if (name) {
+          collections[name[1]].locale.push(zipEntry.entryName);
         }
         name = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
         if (name) {
@@ -608,6 +615,7 @@ angular.module('icestudio')
               gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
               gettextCatalog.getString('Do you want to replace it?'),
               function() {
+                utils.deleteFolderRecursive(destPath);
                 installCollection(collection, zip);
                 alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
                 next();
@@ -634,6 +642,18 @@ angular.module('icestudio')
       }
       for (var e in collection.examples) {
         safeExtract(collection.examples[e], zip);
+      }
+      for (var l in collection.locale) {
+        safeExtract(collection.locale[l], zip);
+        // Generate locale JSON files
+        var compiler = new nodeGettext.Compiler({ format: 'json' });
+        var sourcePath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l]);
+        var targetPath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l].replace(/\.po$/, '.json'));
+        var content = nodeFs.readFileSync(sourcePath).toString();
+        var json = compiler.convertPo([content]);
+        nodeFs.writeFileSync(targetPath, json);
+        // Add string to gettext
+        gettextCatalog.loadRemote(targetPath);
       }
       safeExtract(collection.package, zip);
     }
