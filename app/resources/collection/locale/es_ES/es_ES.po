@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-02-08 16:44+0100\n"
+"POT-Creation-Date: 2017-02-08 18:07+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,179 +12,179 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-SearchPath-0: tranlation.js\n"
+"X-Poedit-SearchPath-0: translation.js\n"
 
 #. / Bit
-#: tranlation.js:14
+#: translation.js:14
 msgid "bit"
 msgstr "Bit"
 
 #. / Config
-#: tranlation.js:16
+#: translation.js:16
 msgid "config"
 msgstr "Config"
 
 #. / Pull up
-#: tranlation.js:18
+#: translation.js:18
 msgid "pull_up"
 msgstr "Pull up"
 
 #. / Pull up inv
-#: tranlation.js:20
+#: translation.js:20
 msgid "pull_up_inv"
 msgstr "Pull up inv"
 
 #. / Tri-state
-#: tranlation.js:22
+#: translation.js:22
 msgid "tri_state"
 msgstr "Tri-estado"
 
 #. / Logic
-#: tranlation.js:24
+#: translation.js:24
 msgid "logic"
 msgstr "Lógica"
 
 #. / Combinational
-#: tranlation.js:26
+#: translation.js:26
 msgid "combinational"
 msgstr "Combinacional"
 
 #. / Demux 1:2
-#: tranlation.js:28
+#: translation.js:28
 msgid "demux_1_2"
 msgstr "Demux 1:2"
 
 #. / Demux 1:4
-#: tranlation.js:30
+#: translation.js:30
 msgid "demux_1_4"
 msgstr "Demux 1:4"
 
 #. / Demux 1:8
-#: tranlation.js:32
+#: translation.js:32
 msgid "demux_1_8"
 msgstr "Demux 1:8"
 
 #. / Hex 7 Segment CC
-#: tranlation.js:34
+#: translation.js:34
 msgid "hex_7seg_cc"
 msgstr "Hex 7 Segment CC"
 
 #. / Hex 7 Segment CA
-#: tranlation.js:36
+#: translation.js:36
 msgid "hex_7seg_ca"
 msgstr "Hex 7 Segment AC"
 
 #. / Mux 2:1
-#: tranlation.js:38
+#: translation.js:38
 msgid "mux_2_1"
 msgstr "Mux 2:1"
 
 #. / Mux 4:1
-#: tranlation.js:40
+#: translation.js:40
 msgid "mux_4_1"
 msgstr "Mux 4:1"
 
 #. / Gate
-#: tranlation.js:42
+#: translation.js:42
 msgid "gate"
 msgstr "Puerta"
 
 #. / And
-#: tranlation.js:44
+#: translation.js:44
 msgid "and"
 msgstr "And"
 
 #. / Nand
-#: tranlation.js:46
+#: translation.js:46
 msgid "nand"
 msgstr "Nand"
 
 #. / Nor
-#: tranlation.js:48
+#: translation.js:48
 msgid "nor"
 msgstr "Nor"
 
 #. / Not
-#: tranlation.js:50
+#: translation.js:50
 msgid "not"
 msgstr "Not"
 
 #. / Or
-#: tranlation.js:52
+#: translation.js:52
 msgid "or"
 msgstr "Or"
 
 #. / Xnor
-#: tranlation.js:54
+#: translation.js:54
 msgid "xnor"
 msgstr "Xnor"
 
 #. / Xor
-#: tranlation.js:56
+#: translation.js:56
 msgid "xor"
 msgstr "Xor"
 
 #. / Sequential
-#: tranlation.js:58
+#: translation.js:58
 msgid "sequential"
 msgstr "Secuencial"
 
 #. / D flip-flop async
-#: tranlation.js:60
+#: translation.js:60
 msgid "dff_ar"
 msgstr "Biestable D asinc"
 
 #. / D flip-flop
-#: tranlation.js:62
+#: translation.js:62
 msgid "dff_sr"
 msgstr "Biestable D"
 
 #. / T flip-flop async
-#: tranlation.js:64
+#: translation.js:64
 msgid "tff_ar"
 msgstr "Biestable T asinc"
 
 #. / T flip-flop
-#: tranlation.js:66
+#: translation.js:66
 msgid "tff_sr"
 msgstr "Biestable T"
 
 #. / Debouncer
-#: tranlation.js:68
+#: translation.js:68
 msgid "debouncer"
 msgstr "Antirrebotes"
 
 #. / 1. Basic
-#: tranlation.js:70
+#: translation.js:70
 msgid "1_basic"
 msgstr "1. Básico"
 
 #. / 2. Counter
-#: tranlation.js:72
+#: translation.js:72
 msgid "2_counter"
 msgstr "2. Counter"
 
 #. / 1. Led on
-#: tranlation.js:74
+#: translation.js:74
 msgid "1_led_on"
 msgstr "1. Encender led"
 
 #. / 2. Switch led
-#: tranlation.js:76
+#: translation.js:76
 msgid "2_switch_led"
 msgstr "2. Interruptor con led"
 
 #. / 3. Switch and gate
-#: tranlation.js:78
+#: translation.js:78
 msgid "3_switch_and_gate"
 msgstr "3. Interruptor con puerta and"
 
 #. / contadorAsc
-#: tranlation.js:80
+#: translation.js:80
 msgid "contadorAsc"
 msgstr "Contador ascendente"
 
 #. / contadorDes
-#: tranlation.js:82
+#: translation.js:82
 msgid "contadorDes"
 msgstr "Contador descendente"
