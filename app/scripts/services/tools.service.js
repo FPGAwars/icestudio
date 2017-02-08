@@ -15,7 +15,7 @@ angular.module('icestudio')
                              nodeChildProcess,
                              nodeSSHexec,
                              nodeRSync,
-                             nodeExtract,
+                             nodeAdmZip,
                              _package) {
 
     var currentAlert = null;
@@ -574,16 +574,71 @@ angular.module('icestudio')
 
     // Collections management
 
-    this.addCollection = function(filepath) {
-      var name = utils.basename(filepath);
-      nodeExtract(filepath, { dir: utils.COLLECTIONS_DIR }, function (err) {
-        if (err) {
-          throw err;
+    this.addCollections = function(filepath) {
+      alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath) + '.zip') }));
+
+      var collections = {};
+      var zip = nodeAdmZip(filepath);
+      var zipEntries = zip.getEntries();
+
+      // Validate collections
+      zipEntries.forEach(function(zipEntry) {
+        var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
+        if (name) {
+          collections[name[1]] = { blocks: [], examples: [], package: '' };
         }
-        resources.loadCollections();
-        alertify.success(gettextCatalog.getString('Collection file {{name}} added', { name: utils.bold(name) }));
+        var block = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
+        if (block) {
+          collections[block[1]].blocks.push(zipEntry.entryName);
+        }
+        var example = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
+        if (example) {
+          collections[example[1]].examples.push(zipEntry.entryName);
+        }
+        var _package = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
+        if (_package) {
+          collections[_package[1]].package = zipEntry.entryName;
+        }
       });
+      for (var name in collections) {
+        var collection = {
+          name: name,
+          content: collections[name]
+        };
+        if (collection.content.package && (collection.content.blocks || collection.content.examples)) {
+          var targetPath = nodePath.join(utils.COLLECTIONS_DIR, name);
+          // Check exising collections with the same name
+          if (nodeFs.existsSync(targetPath)) {
+            //installCollection(collection, zip);
+          }
+          else {
+            installCollection(collection, zip);
+          }
+        }
+        else {
+          alertify.notify(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }), 'error', 10);
+        }
+      }
     };
+
+    function installCollection(collection, zip) {
+      for (var b in collection.content.blocks) {
+        safeExtract(collection.content.blocks[b], zip);
+      }
+      for (var e in collection.content.examples) {
+        safeExtract(collection.content.examples[e], zip);
+      }
+      safeExtract(collection.content.package, zip);
+      resources.loadCollections();
+      alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
+    }
+
+    function safeExtract(entry, zip) {
+      try {
+        zip.extractEntryTo(entry, utils.COLLECTIONS_DIR);
+      }
+      catch(e) {}
+    }
 
     this.removeCollection = function(collection) {
       utils.deleteFolderRecursive(collection.path);

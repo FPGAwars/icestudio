@@ -481,11 +481,11 @@ angular.module('icestudio')
       }
     }
 
-    $scope.addCollection = function() {
+    $scope.addCollections = function() {
       utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
         filepaths = filepaths.split(';');
         for (var i in filepaths) {
-          tools.addCollection(filepaths[i]);
+          tools.addCollections(filepaths[i]);
         }
       });
     };
@@ -500,7 +500,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (resources.currentCollections.length > 1) {
+      if (resources.collections.length > 1) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();

@@ -6,10 +6,11 @@ angular.module('icestudio')
 
     const DEFAULT = '';
 
-    this.selectedCollection = null;
     this.collections = [];
+    this.selectedCollection = null;
 
     this.loadCollections = function() {
+      this.collections = [];
       // Add Default collection
       var defaultPath = nodePath.join('resources', 'collection');
       var defaultData = {
