@@ -33,23 +33,11 @@
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
-                <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in resources.collections"
-                      ng-class="collection.content.blocks.length > 0 ? 'dropdown-submenu' : ''">
-                    <a href uib-dropdown-toggle>{{ collection.name }}</a>
-                    <menutree data="collection.content.blocks" callback="openProject(path)"></menutree>
-                  </li>
-                </ul>
+                <menutree data="resources.selectedCollection.content.blocks" callback="openProject(path)"></menutree>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
-                <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in resources.collections"
-                      ng-class="collection.content.examples.length > 0 ? 'dropdown-submenu' : ''">
-                    <a href uib-dropdown-toggle>{{ collection.name }}</a>
-                    <menutree data="collection.content.examples" callback="openProject(path)"></menutree>
-                  </li>
-                </ul>
+                <menutree data="resources.selectedCollection.content.examples" callback="openProject(path)"></menutree>
               </li>
               <li>
                 <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
@@ -380,10 +368,10 @@
           </li>
 
           <li uib-dropdown
-              ng-repeat="collection in resources.collections"
-              ng-mouseover="showMenu(collection.name)" ng-mouseleave="hideMenu(collection.name)" is-open="status[collection.name]">
-            <a href uib-dropdown-toggle>{{ collection.name }} <span class="caret"></span></a>
-            <menutree data="collection.content.blocks" callback="project.addBlock(path)" right="true"></menutree>
+              ng-repeat="block in resources.selectedCollection.content.blocks" ng-if="block.children"
+              ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu(block.name)" is-open="status[block.name]">
+            <a href uib-dropdown-toggle>{{ block.name }} <span class="caret"></span></a>
+            <menutree data="block.children" callback="project.addBlock(path)" right="true"></menutree>
           </li>
 
         </ul>

@@ -8,7 +8,6 @@ angular.module('icestudio')
 
     this.selectedCollection = null;
     this.collections = [];
-    this.currentExamples = [];
 
     this.loadCollections = function() {
       /*var defaultPath = nodePath.join('resources', 'blocks');
