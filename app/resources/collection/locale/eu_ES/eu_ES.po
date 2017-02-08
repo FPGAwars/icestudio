@@ -1,0 +1,742 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-02-08 16:45+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: eu_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: tranlation.js\n"
+
+#. / Bit
+#: tranlation.js:14
+msgid "bit"
+msgstr "Bit"
+
+#. / Config
+#: tranlation.js:16
+msgid "config"
+msgstr "Config"
+
+#. / Pull up
+#: tranlation.js:18
+msgid "pull_up"
+msgstr "Pull up"
+
+#. / Pull up inv
+#: tranlation.js:20
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. / Tri-state
+#: tranlation.js:22
+msgid "tri_state"
+msgstr "Tri-state"
+
+#. / Logic
+#: tranlation.js:24
+msgid "logic"
+msgstr "Logika"
+
+#. / Combinational
+#: tranlation.js:26
+msgid "combinational"
+msgstr "Konbinazionala"
+
+#. / Demux 1:2
+#: tranlation.js:28
+msgid "demux_1_2"
+msgstr "Demux 1:2"
+
+#. / Demux 1:4
+#: tranlation.js:30
+msgid "demux_1_4"
+msgstr "Demux 1:4"
+
+#. / Demux 1:8
+#: tranlation.js:32
+msgid "demux_1_8"
+msgstr "Demux 1:8"
+
+#. / Hex 7 Segment CC
+#: tranlation.js:34
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. / Hex 7 Segment CA
+#: tranlation.js:36
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment CA"
+
+#. / Mux 2:1
+#: tranlation.js:38
+msgid "mux_2_1"
+msgstr "Mux 2:1"
+
+#. / Mux 4:1
+#: tranlation.js:40
+msgid "mux_4_1"
+msgstr "Mux 4:1"
+
+#. / Gate
+#: tranlation.js:42
+msgid "gate"
+msgstr "Atea"
+
+#. / And
+#: tranlation.js:44
+msgid "and"
+msgstr "And"
+
+#. / Nand
+#: tranlation.js:46
+msgid "nand"
+msgstr "Nand"
+
+#. / Nor
+#: tranlation.js:48
+msgid "nor"
+msgstr "Nor"
+
+#. / Not
+#: tranlation.js:50
+msgid "not"
+msgstr "Not"
+
+#. / Or
+#: tranlation.js:52
+msgid "or"
+msgstr "Or"
+
+#. / Xnor
+#: tranlation.js:54
+msgid "xnor"
+msgstr "Xnor"
+
+#. / Xor
+#: tranlation.js:56
+msgid "xor"
+msgstr "Xor"
+
+#. / Sequential
+#: tranlation.js:58
+msgid "sequential"
+msgstr "Sekuentziala"
+
+#. / D flip-flop async
+#: tranlation.js:60
+msgid "dff_ar"
+msgstr "D biegonkor asink"
+
+#. / D flip-flop
+#: tranlation.js:62
+msgid "dff_sr"
+msgstr "D biegonkorra"
+
+#. / T flip-flop async
+#: tranlation.js:64
+msgid "tff_ar"
+msgstr "T biegonkor asink"
+
+#. / T flip-flop
+#: tranlation.js:66
+msgid "tff_sr"
+msgstr "T biegonkorra"
+
+#. / Debouncer
+#: tranlation.js:68
+msgid "debouncer"
+msgstr "Erreboteen aurkakoa"
+
+#. / 1. Basic
+#: tranlation.js:70
+msgid "1_basic"
+msgstr "1. Oinarrizkoa"
+
+#. / 2. Counter
+#: tranlation.js:72
+msgid "2_counter"
+msgstr ""
+
+#. / 1. Led on
+#: tranlation.js:74
+msgid "1_led_on"
+msgstr "1. Leda piztu"
+
+#. / 2. Switch led
+#: tranlation.js:76
+msgid "2_switch_led"
+msgstr "2. Pultsadorea leda"
+
+#. / 3. Switch and gate
+#: tranlation.js:78
+msgid "3_switch_and_gate"
+msgstr "3. Pultsadorea eta AND atea"
+
+#. / contadorAsc
+#: tranlation.js:80
+msgid "contadorAsc"
+msgstr "Goranzko zenbatzailea"
+
+#. / contadorDes
+#: tranlation.js:82
+msgid "contadorDes"
+msgstr "Beheranzko zenbatzailea"
+
+#~ msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+#~ msgstr "<b>Plaka deskonektatu</b> eta <b>konekta ezazu</b> berriro"
+
+#~ msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
+#~ msgstr "<h4>FTDI driver-a instalatzeko instrukzioak</h4><ol><li>FPGA plaka konekta ezazu</li><li>Plakaren  <b>(Interface 0)</b> driver-a aldatu eta jar ezazu honakoa: <b>libusbK</b></li><li>Plaka deskonektatu eta konekta ezazu berriro</li></ol>"
+
+#~ msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+#~ msgstr "<h4>FTDI driver-a desinstalatzeko instrukzioak</h4><ol><li>FPGAren USB gailua bila ezazu</li><li>Plakaren interfazea hauta ezazu eta driver-a desinstalatu</li></ol>"
+
+#~ msgid "About Icestudio"
+#~ msgstr "Icestudio-ri buruz..."
+
+#~ msgid "Add"
+#~ msgstr "Gehitu"
+
+#~ msgid "Add a block to start"
+#~ msgstr "Gehi ezazu bloke bat hasteko"
+
+#~ msgid "Add as block"
+#~ msgstr "Blokea sortu"
+
+#~ msgid "All collections removed"
+#~ msgstr "Bildumak ezabatu dira"
+
+#~ msgid "All stored collections will be lost. Do you want to continue?"
+#~ msgstr "Gordetako bildumak galduko dira. Jarraitu nahi al duzu?"
+
+#~ msgid "Author"
+#~ msgstr "Egilea"
+
+#~ msgid "Basic"
+#~ msgstr "Oinarrizkoa"
+
+#~ msgid "Basque"
+#~ msgstr "Euskara"
+
+#~ msgid "Block updated"
+#~ msgstr "Etiketa freskatua dago"
+
+#~ msgid "Block {{name}} imported"
+#~ msgstr "{{name}} blokea inportatu duzu"
+
+#~ msgid "Board {{name}} not detected"
+#~ msgstr "{{name}} plaka ez da aurkitu"
+
+#~ msgid "Board {{name}} selected"
+#~ msgstr "{{name}} plaka hautatu duzu"
+
+#~ msgid "Boards"
+#~ msgstr "Plakak"
+
+#~ msgid "Build"
+#~ msgstr "Sintetizatu"
+
+#~ msgid "Cancel"
+#~ msgstr "Utzi"
+
+#~ msgid "Check Internet connection..."
+#~ msgstr "Interneteko sarbidea egiaztatu..."
+
+#~ msgid "Check Python..."
+#~ msgstr "Python egiaztatu..."
+
+#~ msgid "Code"
+#~ msgstr "Kodea"
+
+#~ msgid "Collection file {{name}} added"
+#~ msgstr "{{name}} bildumen fitxategia gehitu da"
+
+#~ msgid "Collection {{name}} removed"
+#~ msgstr "{{name}} bilduma ezabatu da"
+
+#~ msgid "Collection {{name}} selected"
+#~ msgstr "{{name}} bilduma hautatu da"
+
+#~ msgid "Collections"
+#~ msgstr "Bildumak"
+
+#~ msgid "Community forum"
+#~ msgstr "Komunitatearen foroa"
+
+#~ msgid "Constant"
+#~ msgstr "Konstantea"
+
+#~ msgid "Copy"
+#~ msgstr "Kopiatu"
+
+#~ msgid "Cut"
+#~ msgstr "Ebaki"
+
+#~ msgid "Datasheet"
+#~ msgstr "Datu-fitxa"
+
+#~ msgid "Default"
+#~ msgstr "Lehenetsia"
+
+#~ msgid "Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
+#~ msgstr "Toolchain lehenetsia ez da aurkitu. Hortaz, deskargatu egingo da. Eragiketak Interneteko sarbidea behar du, jarraitu nahi al duzu?"
+
+#~ msgid "Description"
+#~ msgstr "Azalpena"
+
+#~ msgid "Disable"
+#~ msgstr "Desgaitu"
+
+#~ msgid "Do you want to close the application?"
+#~ msgstr "Aplikazioa itxi nahi al duzu?"
+
+#~ msgid "Do you want to remove the {{name}} collection?"
+#~ msgstr "{{name}} bilduma ezabatu nahi al duzu?"
+
+#~ msgid "Documentation"
+#~ msgstr "Dokumentazioa"
+
+#~ msgid "Drivers"
+#~ msgstr "Driverrak"
+
+#~ msgid "Drivers disabled"
+#~ msgstr "Driverrak desgaitu dira"
+
+#~ msgid "Drivers enabled"
+#~ msgstr "Driverrak gaitu dira"
+
+#~ msgid "Duplicated FPGA I/O ports"
+#~ msgstr "FPGAren E/S portuak bikoiztu dira"
+
+#~ msgid "Duplicated block attributes"
+#~ msgstr "Blokearen ezaugarriak bikoiztu dira"
+
+#~ msgid "Edit"
+#~ msgstr "Editatu"
+
+#~ msgid "Enable"
+#~ msgstr "Onartu"
+
+#~ msgid "English"
+#~ msgstr "Ingelesa"
+
+#~ msgid "Enter the constant blocks"
+#~ msgstr "Konstante-blokeak sar itzazu"
+
+#~ msgid "Enter the input ports"
+#~ msgstr "Sarrerako portuak sar itzazu"
+
+#~ msgid "Enter the output ports"
+#~ msgstr "Irteerako portuak sar itzazu"
+
+#~ msgid "Enter the parameters"
+#~ msgstr "Parametroak sar itzazu"
+
+#~ msgid "Enter the ports"
+#~ msgstr "Portuak sar itzazu"
+
+#~ msgid "Enter the remote hostname user@host (experimental)"
+#~ msgstr "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host (esperimentala)"
+
+#~ msgid "Error: default toolchain not found in '{{dir}}'"
+#~ msgstr "Errorea: Toolchain lehenetsia ez da '{{dir}}'-en aurkitu"
+
+#~ msgid "Error: {{error}}"
+#~ msgstr "Errorea: {{error}}"
+
+#~ msgid "Examples"
+#~ msgstr "Adibideak"
+
+#~ msgid "Execute remote {{label}} ..."
+#~ msgstr "Exekutatu urrutiko {{label}} ..."
+
+#~ msgid "Export"
+#~ msgstr "Esportatu"
+
+#~ msgid "Extract default apio files..."
+#~ msgstr "Apio fitxategiak atera..."
+
+#~ msgid "Extract default apio packages..."
+#~ msgstr "Apio pakete lehenetsiak atera..."
+
+#~ msgid "Extract virtual env files..."
+#~ msgstr "Env birtualaren fitxategiak atera..."
+
+#~ msgid "FPGA I/O ports not defined"
+#~ msgstr "FPGAren E/S portuak definitu gabe daude"
+
+#~ msgid "FPGA pin"
+#~ msgstr "FPGA pina"
+
+#~ msgid "File"
+#~ msgstr "Fitxategia"
+
+#~ msgid "File {{file}} already exists in the project path. Do you want to replace it?"
+#~ msgstr "Proiektuaren direktorioan {{file}} fitxategia dagoeneko bada. Fitxategia ordeztu nahi al duzu?"
+
+#~ msgid "File {{file}} does not exist"
+#~ msgstr "Ez dago {{file}} izeneko fitxategirik"
+
+#~ msgid "File {{file}} imported"
+#~ msgstr "{{file}} fitxategia inportatu da"
+
+#~ msgid "Fit content"
+#~ msgstr "Edukia doitu"
+
+#~ msgid "French"
+#~ msgstr "Frantsesa"
+
+#~ msgid "GTKWave exported"
+#~ msgstr "GTKWave-a esportatu da"
+
+#~ msgid "Galician"
+#~ msgstr "Galegoa"
+
+#~ msgid "Help"
+#~ msgstr "Laguntza"
+
+#~ msgid "Homebrew is required"
+#~ msgstr "Homebrew-a behar da"
+
+#~ msgid "Image"
+#~ msgstr "Irudia"
+
+#~ msgid "Image {{name}} saved"
+#~ msgstr "{{name}} izeneko irudia gorde da"
+
+#~ msgid "Information"
+#~ msgstr "Informazioa"
+
+#~ msgid "Input"
+#~ msgstr "Sarrera"
+
+#~ msgid "Install"
+#~ msgstr "Instalatu"
+
+#~ msgid "Install default apio..."
+#~ msgstr "Apio lehenetsia instalatu..."
+
+#~ msgid "Installation completed"
+#~ msgstr "Instalazioa amaitu da"
+
+#~ msgid "Installing toolchain"
+#~ msgstr "Toolchain-a instalatzen ari da"
+
+#~ msgid "Internet connection required"
+#~ msgstr "Interneteko sarbidea behar da"
+
+#~ msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+#~ msgstr "<i>Pull up</i> konexio baliogabea:<br>blokea dagoeneko konektatua dago"
+
+#~ msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+#~ msgstr "<i>Pull up</i> konexio baliogabea:<br><i>sarrera</i> blokeak soilik dira onargarriak"
+
+#~ msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+#~ msgstr "Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
+
+#~ msgid "Invalid connection"
+#~ msgstr "Konexio baliogabea"
+
+#~ msgid "Invalid connection: {{a}} → {{b}}"
+#~ msgstr "Konexio baliogabea: {{a}} → {{b}}"
+
+#~ msgid "Invalid multiple input connections"
+#~ msgstr "Sarrerako konexio anitzak baliogabeak"
+
+#~ msgid "Language"
+#~ msgstr "Hizkuntza"
+
+#~ msgid "Local parameter"
+#~ msgstr "Parametro lokala"
+
+#~ msgid "Make virtual env..."
+#~ msgstr "Env birtuala sortu..."
+
+#~ msgid "Name"
+#~ msgstr "Izena"
+
+#~ msgid "New"
+#~ msgstr "Berria"
+
+#~ msgid "New project {{name}} created"
+#~ msgstr "{{name}} proiektua sortu da"
+
+#~ msgid "No collections stored"
+#~ msgstr "Ez dago gordeta bildumarik"
+
+#~ msgid "OK"
+#~ msgstr "Ok"
+
+#~ msgid "Old project format {{version}}"
+#~ msgstr "{{version}} formatuko proiektu zaharra"
+
+#~ msgid "Open"
+#~ msgstr "Ireki"
+
+#~ msgid "Open SVG"
+#~ msgstr "SVGa ireki"
+
+#~ msgid "Original file {{file}} does not exist"
+#~ msgstr "Jatorrizko {{file}} fitxategia ez dago"
+
+#~ msgid "Output"
+#~ msgstr "Irteera"
+
+#~ msgid "PCF file exported"
+#~ msgstr "PCF fitxategia esportatu da"
+
+#~ msgid "Paste"
+#~ msgstr "Itsatsi"
+
+#~ msgid "Preferences"
+#~ msgstr "Lehentasunak"
+
+#~ msgid "Project information"
+#~ msgstr "Proiektuaren informazioa"
+
+#~ msgid "Project {{name}} loaded"
+#~ msgstr "{{name}} proiektua kargatu da"
+
+#~ msgid "Project {{name}} saved"
+#~ msgstr "{{name}} proiektua gorde da"
+
+#~ msgid "Python 2.7 is required"
+#~ msgstr "Python 2.7 behar da"
+
+#~ msgid "Quit"
+#~ msgstr "Utzi"
+
+#~ msgid "Read only"
+#~ msgstr "Irakurtzeko soilik"
+
+#~ msgid "Redo"
+#~ msgstr "Berregin"
+
+#~ msgid "Remote host {{name}} not connected"
+#~ msgstr "{{name}} urrutiko ostalaria ez dago konektatua"
+
+#~ msgid "Remote hostname"
+#~ msgstr "Urrutiko ostalariaren izena"
+
+#~ msgid "Remove"
+#~ msgstr "Ezabatu"
+
+#~ msgid "Remove all"
+#~ msgstr "Dena ezabatu"
+
+#~ msgid "Reset SVG"
+#~ msgstr "SVGa berrezarri"
+
+#~ msgid "Reset default"
+#~ msgstr "Jatorrizkoa berrezarri"
+
+#~ msgid "Reset view"
+#~ msgstr "Bista berrezarri"
+
+#~ msgid "Save"
+#~ msgstr "Gorde"
+
+#~ msgid "Save SVG"
+#~ msgstr "SVGa gorde"
+
+#~ msgid "Save as"
+#~ msgstr "Gorde honela"
+
+#~ msgid "Select all"
+#~ msgstr "Dena hautatu"
+
+#~ msgid "Source code"
+#~ msgstr "Iturburu kodea"
+
+#~ msgid "Spanish"
+#~ msgstr "Gaztelera"
+
+#~ msgid "Synchronize remote files ..."
+#~ msgstr "Urrutiko fitxategiak sinkronizatu..."
+
+#~ msgid "Testbench"
+#~ msgstr "Testbench "
+
+#~ msgid "Testbench exported"
+#~ msgstr "Testbench-a esportatu da"
+
+#~ msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
+#~ msgstr "FPGAaren E/S konfigurazioa galduko da. {{name}} plaka aldatu nahi duzu?"
+
+#~ msgid "The toolchain will be removed. Do you want to continue?"
+#~ msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
+
+#~ msgid "The toolchain will be restored to default. Do you want to continue?"
+#~ msgstr "Toolchain-aren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
+
+#~ msgid "The toolchain will be updated. This operation requires Internet connection. Do you want to continue?"
+#~ msgstr "Toolchain-a eguneratuko da. Operazio horrek Interneteko sarbidea behar du. Jarraitu nahi al duzu?"
+
+#~ msgid "This import operation requires a project path. You need to save the current project. Do you want to continue?"
+#~ msgstr "Inportazio operazioak proiektu-bidea behar du.  Uneko proiektua gorde beharko duzu. Jarraitu nahi al duzu?"
+
+#~ msgid "Toolchain"
+#~ msgstr "Toolchain"
+
+#~ msgid "Toolchain installed"
+#~ msgstr "Toolchain-a instalatu da"
+
+#~ msgid "Toolchain not installed"
+#~ msgstr "Toolchain-a ez da instalatu"
+
+#~ msgid "Toolchain not installed. Please, install the toolchain"
+#~ msgstr "Toolchain-a ez da instalatu. Mesedez, toolchaina instala ezazu"
+
+#~ msgid "Toolchain removed"
+#~ msgstr "Toolchain-a ezabatu da"
+
+#~ msgid "Tools"
+#~ msgstr "Tresnak"
+
+#~ msgid "Undo"
+#~ msgstr "Desegin"
+
+#~ msgid "Unknown board"
+#~ msgstr "Plaka ezezaguna"
+
+#~ msgid "Untitled"
+#~ msgstr "Izenik gabe"
+
+#~ msgid "Update"
+#~ msgstr "Eguneratu"
+
+#~ msgid "Update the block label"
+#~ msgstr "Blokearen etiketa eguneratu"
+
+#~ msgid "Update the port"
+#~ msgstr "Portua eguneratu"
+
+#~ msgid "Upload"
+#~ msgstr "Kargatu"
+
+#~ msgid "Verify"
+#~ msgstr "Egiaztatu"
+
+#~ msgid "Verilog code exported"
+#~ msgstr "Verilog kodea esportatu da"
+
+#~ msgid "Version"
+#~ msgstr "Bertsioa"
+
+#~ msgid "View"
+#~ msgstr "Ikusi"
+
+#~ msgid "View license"
+#~ msgstr "Lizentzia ikusi"
+
+#~ msgid "Wrong block format: {{type}}"
+#~ msgstr "Blokearen formatua okerra da: {{type}}"
+
+#~ msgid "Wrong parameter name {{name}}"
+#~ msgstr "Parametroaren formatua okerra da: {{name}}"
+
+#~ msgid "Wrong port name {{name}}"
+#~ msgstr "Portuaren izena okerra da: {{name}}"
+
+#~ msgid "Wrong project format: {{name}}"
+#~ msgstr "Proiektuaren formatua okerra da: {{name}}"
+
+#~ msgid "Wrong remote hostname {{name}}"
+#~ msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
+
+#~ msgid "Your changes will be lost if you don’t save them"
+#~ msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
+
+#~ msgid "back"
+#~ msgstr "atzera"
+
+#~ msgid "done_build"
+#~ msgstr "Sintetizatua egin da"
+
+#~ msgid "done_upload"
+#~ msgstr "Karga egin da"
+
+#~ msgid "done_verify"
+#~ msgstr "Egiaztapena egin da"
+
+#~ msgid "start_build"
+#~ msgstr "Sintetizatua hasi ..."
+
+#~ msgid "start_upload"
+#~ msgstr "Karga hasi ..."
+
+#~ msgid "start_verify"
+#~ msgstr "Egiaztapena hasi ..."
+
+#~ msgid "{{board}} datasheet not defined"
+#~ msgstr "{{board}} ez zehaztua"
+
+#~ msgid "{{board}} pinout not defined"
+#~ msgstr "{{board}} pinout ez zehaztua"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Clear all"
+#~ msgstr "Dena ezabatu"
+
+#~ msgid "Clone selected"
+#~ msgstr "Hautua klonatu"
+
+#~ msgid "Do you want to clear all?"
+#~ msgstr "Dena ezabatu nahi al duzu?"
+
+#~ msgid "Do you want to exit the application?"
+#~ msgstr "Aplikazioa utzi nahi al duzu?"
+
+#~ msgid "Do you want to remove the selected block?"
+#~ msgstr "Hautatutako blokea ezabatu nahi al duzu?"
+
+#~ msgid "Enter the project name"
+#~ msgstr "Proiektuari izena eman"
+
+#~ msgid "Old project format"
+#~ msgstr "Proiektu formatu zaharra"
+
+#~ msgid "Remove selected"
+#~ msgstr "Hautua ezabatu"
+
+#~ msgid "The current project will be removed. Do you want to continue loading the project?"
+#~ msgstr "Proiektu hau ezabatuko da. Proiektua irekitzen jarraitu nahi al duzu?"
+
+#~ msgid "Virtual port"
+#~ msgstr "Portu birtuala"
+
+#~ msgid "untitled"
+#~ msgstr "Izenik gabe"
+
+#~ msgid "Block exported as {{name}}"
+#~ msgstr "Blokea {{name}} bezala esportatua"
+
+#~ msgid "Enter the project's image path"
+#~ msgstr "Proiektuaren irudi bidea sartu"
+
+#~ msgid "Import block"
+#~ msgstr "Blokea inportatu"
+
+#~ msgid "New project"
+#~ msgstr "Proiektu berria"
+
+#~ msgid "Open project"
+#~ msgstr "Ireki proiektua"
+
+#~ msgid "Templates"
+#~ msgstr "Ereduak"
+
+#~ msgid "comb"
+#~ msgstr "Comb"
+
+#~ msgid "sec"
+#~ msgstr "Sec"

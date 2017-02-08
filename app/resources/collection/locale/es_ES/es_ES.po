@@ -1,0 +1,757 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-02-08 16:44+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: tranlation.js\n"
+
+#. / Bit
+#: tranlation.js:14
+msgid "bit"
+msgstr "Bit"
+
+#. / Config
+#: tranlation.js:16
+msgid "config"
+msgstr "Config"
+
+#. / Pull up
+#: tranlation.js:18
+msgid "pull_up"
+msgstr "Pull up"
+
+#. / Pull up inv
+#: tranlation.js:20
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. / Tri-state
+#: tranlation.js:22
+msgid "tri_state"
+msgstr "Tri-estado"
+
+#. / Logic
+#: tranlation.js:24
+msgid "logic"
+msgstr "Lógica"
+
+#. / Combinational
+#: tranlation.js:26
+msgid "combinational"
+msgstr "Combinacional"
+
+#. / Demux 1:2
+#: tranlation.js:28
+msgid "demux_1_2"
+msgstr "Demux 1:2"
+
+#. / Demux 1:4
+#: tranlation.js:30
+msgid "demux_1_4"
+msgstr "Demux 1:4"
+
+#. / Demux 1:8
+#: tranlation.js:32
+msgid "demux_1_8"
+msgstr "Demux 1:8"
+
+#. / Hex 7 Segment CC
+#: tranlation.js:34
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. / Hex 7 Segment CA
+#: tranlation.js:36
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment AC"
+
+#. / Mux 2:1
+#: tranlation.js:38
+msgid "mux_2_1"
+msgstr "Mux 2:1"
+
+#. / Mux 4:1
+#: tranlation.js:40
+msgid "mux_4_1"
+msgstr "Mux 4:1"
+
+#. / Gate
+#: tranlation.js:42
+msgid "gate"
+msgstr "Puerta"
+
+#. / And
+#: tranlation.js:44
+msgid "and"
+msgstr "And"
+
+#. / Nand
+#: tranlation.js:46
+msgid "nand"
+msgstr "Nand"
+
+#. / Nor
+#: tranlation.js:48
+msgid "nor"
+msgstr "Nor"
+
+#. / Not
+#: tranlation.js:50
+msgid "not"
+msgstr "Not"
+
+#. / Or
+#: tranlation.js:52
+msgid "or"
+msgstr "Or"
+
+#. / Xnor
+#: tranlation.js:54
+msgid "xnor"
+msgstr "Xnor"
+
+#. / Xor
+#: tranlation.js:56
+msgid "xor"
+msgstr "Xor"
+
+#. / Sequential
+#: tranlation.js:58
+msgid "sequential"
+msgstr "Secuencial"
+
+#. / D flip-flop async
+#: tranlation.js:60
+msgid "dff_ar"
+msgstr "Biestable D asinc"
+
+#. / D flip-flop
+#: tranlation.js:62
+msgid "dff_sr"
+msgstr "Biestable D"
+
+#. / T flip-flop async
+#: tranlation.js:64
+msgid "tff_ar"
+msgstr "Biestable T asinc"
+
+#. / T flip-flop
+#: tranlation.js:66
+msgid "tff_sr"
+msgstr "Biestable T"
+
+#. / Debouncer
+#: tranlation.js:68
+msgid "debouncer"
+msgstr "Antirrebotes"
+
+#. / 1. Basic
+#: tranlation.js:70
+msgid "1_basic"
+msgstr "1. Básico"
+
+#. / 2. Counter
+#: tranlation.js:72
+msgid "2_counter"
+msgstr "2. Counter"
+
+#. / 1. Led on
+#: tranlation.js:74
+msgid "1_led_on"
+msgstr "1. Encender led"
+
+#. / 2. Switch led
+#: tranlation.js:76
+msgid "2_switch_led"
+msgstr "2. Interruptor con led"
+
+#. / 3. Switch and gate
+#: tranlation.js:78
+msgid "3_switch_and_gate"
+msgstr "3. Interruptor con puerta and"
+
+#. / contadorAsc
+#: tranlation.js:80
+msgid "contadorAsc"
+msgstr "Contador ascendente"
+
+#. / contadorDes
+#: tranlation.js:82
+msgid "contadorDes"
+msgstr "Contador descendente"
+
+#~ msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+#~ msgstr "<b>Desconecta</b> y <b>conecta</b> la placa"
+
+#~ msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
+#~ msgstr "<h4>Instrucciones de instalación del driver FTDI</h4><ol><li>Conecta la placa FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la placa por <b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol>"
+
+#~ msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+#~ msgstr "<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra el dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala el driver</li></ol>"
+
+#~ msgid "About Icestudio"
+#~ msgstr "Sobre Icestudio"
+
+#~ msgid "Add"
+#~ msgstr "Añadir"
+
+#~ msgid "Add a block to start"
+#~ msgstr "Añade un bloque para comenzar"
+
+#~ msgid "Add as block"
+#~ msgstr "Añadir como bloque"
+
+#~ msgid "All collections removed"
+#~ msgstr "Colecciones eliminadas"
+
+#~ msgid "All stored collections will be lost. Do you want to continue?"
+#~ msgstr "Todas las colecciones almacenadas se perderán. ¿Deseas continuar?"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
+
+#~ msgid "Basic"
+#~ msgstr "Básico"
+
+#~ msgid "Basque"
+#~ msgstr "Euskera"
+
+#~ msgid "Block updated"
+#~ msgstr "Bloque actualizado"
+
+#~ msgid "Block {{name}} imported"
+#~ msgstr "Bloque {{name}} importado"
+
+#~ msgid "Board {{name}} not detected"
+#~ msgstr "Placa {{name}} no detectada"
+
+#~ msgid "Board {{name}} selected"
+#~ msgstr "Placa {{name}} seleccionada"
+
+#~ msgid "Boards"
+#~ msgstr "Placas"
+
+#~ msgid "Build"
+#~ msgstr "Sintetizar"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Check Internet connection..."
+#~ msgstr "Comprobando conexión a Internet..."
+
+#~ msgid "Check Python..."
+#~ msgstr "Comprobando Python..."
+
+#~ msgid "Code"
+#~ msgstr "Código"
+
+#~ msgid "Collection file {{name}} added"
+#~ msgstr "Fichero de colecciones {{name}} añadido"
+
+#~ msgid "Collection {{name}} removed"
+#~ msgstr "Colección {{name}} eliminada"
+
+#~ msgid "Collection {{name}} selected"
+#~ msgstr "Colección {{name}} seleccionada"
+
+#~ msgid "Collections"
+#~ msgstr "Colecciones"
+
+#~ msgid "Community forum"
+#~ msgstr "Foro de la comunidad"
+
+#~ msgid "Constant"
+#~ msgstr "Constante"
+
+#~ msgid "Copy"
+#~ msgstr "Copiar"
+
+#~ msgid "Cut"
+#~ msgstr "Cortar"
+
+#~ msgid "Datasheet"
+#~ msgstr "Datasheet"
+
+#~ msgid "Default"
+#~ msgstr "Por defecto"
+
+#~ msgid "Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
+#~ msgstr "No se encuentra la toolchain por defecto, por lo que será descargada. Esta operación requiere conexión a Internet. ¿Deseas continuar?"
+
+#~ msgid "Description"
+#~ msgstr "Descripción"
+
+#~ msgid "Disable"
+#~ msgstr "Deshabilitar"
+
+#~ msgid "Do you want to close the application?"
+#~ msgstr "¿Deseas cerrar la aplicación?"
+
+#~ msgid "Do you want to remove the {{name}} collection?"
+#~ msgstr "¿Deseas eliminar la colección {{name}}?"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentación"
+
+#~ msgid "Drivers"
+#~ msgstr "Drivers"
+
+#~ msgid "Drivers disabled"
+#~ msgstr "Drivers deshabilitados"
+
+#~ msgid "Drivers enabled"
+#~ msgstr "Drivers habilitados"
+
+#~ msgid "Duplicated FPGA I/O ports"
+#~ msgstr "Puertos E/S de la FPGA duplicados"
+
+#~ msgid "Duplicated block attributes"
+#~ msgstr "Atributos del bloque duplicados"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "Enable"
+#~ msgstr "Habilitar"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
+
+#~ msgid "Enter the constant blocks"
+#~ msgstr "Introduce los bloques constante"
+
+#~ msgid "Enter the input ports"
+#~ msgstr "Introduce los puertos de entrada"
+
+#~ msgid "Enter the output ports"
+#~ msgstr "Introduce los puertos de salida"
+
+#~ msgid "Enter the parameters"
+#~ msgstr "Introduce los parámetros"
+
+#~ msgid "Enter the ports"
+#~ msgstr "Introduce los puertos"
+
+#~ msgid "Enter the remote hostname user@host (experimental)"
+#~ msgstr "Introduce el nombre del host remoto usuario@host (experimental)"
+
+#~ msgid "Error: default toolchain not found in '{{dir}}'"
+#~ msgstr "Error: toolchain por defecto no encontrada en '{{dir}}'"
+
+#~ msgid "Error: {{error}}"
+#~ msgstr "Error: {{error}}"
+
+#~ msgid "Examples"
+#~ msgstr "Ejemplos"
+
+#~ msgid "Execute remote {{label}} ..."
+#~ msgstr "Ejecutar {{label}} remoto ..."
+
+#~ msgid "Export"
+#~ msgstr "Exportar"
+
+#~ msgid "Extract default apio files..."
+#~ msgstr "Extraer ficheros de apio..."
+
+#~ msgid "Extract default apio packages..."
+#~ msgstr "Extraer paquetes de apio..."
+
+#~ msgid "Extract virtual env files..."
+#~ msgstr "Extraer ficheros del virtual env"
+
+#~ msgid "FPGA I/O ports not defined"
+#~ msgstr "Puertos E/S de la FPGA no definidos"
+
+#~ msgid "FPGA pin"
+#~ msgstr "FPGA pin"
+
+#~ msgid "File"
+#~ msgstr "Archivo"
+
+#~ msgid "File {{file}} already exists in the project path. Do you want to replace it?"
+#~ msgstr "El archivo {{file}} ya existe en el directorio del proyecto. ¿Deseas reemplazarlo?"
+
+#~ msgid "File {{file}} does not exist"
+#~ msgstr "El archivo {{file}} no existe"
+
+#~ msgid "File {{file}} imported"
+#~ msgstr "Archivo {{file}} importado"
+
+#~ msgid "Fit content"
+#~ msgstr "Ajustar contenido"
+
+#~ msgid "French"
+#~ msgstr "Francés"
+
+#~ msgid "GTKWave exported"
+#~ msgstr "GTKWave exportado"
+
+#~ msgid "Galician"
+#~ msgstr "Gallego"
+
+#~ msgid "Help"
+#~ msgstr "Ayuda"
+
+#~ msgid "Homebrew is required"
+#~ msgstr "Es necesario Homebrew"
+
+#~ msgid "Image"
+#~ msgstr "Imagen"
+
+#~ msgid "Image {{name}} saved"
+#~ msgstr "Imagen {{name}} guardada"
+
+#~ msgid "Information"
+#~ msgstr "Información"
+
+#~ msgid "Input"
+#~ msgstr "Entrada"
+
+#~ msgid "Install"
+#~ msgstr "Instalar"
+
+#~ msgid "Install default apio..."
+#~ msgstr "Instalar apio..."
+
+#~ msgid "Installation completed"
+#~ msgstr "Instalación completada"
+
+#~ msgid "Installing toolchain"
+#~ msgstr "Instalando la toolchain"
+
+#~ msgid "Internet connection required"
+#~ msgstr "Es necesario conexión a Internet"
+
+#~ msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+#~ msgstr "Conexión de <i>Pull up</i> no válida:<br>hay un bloque conectado"
+
+#~ msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+#~ msgstr "Conexión de <i>Pull up</i> no válida:<br>sólo se permiten bloques <i>Entrada</i>"
+
+#~ msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+#~ msgstr "Conexión de bloque no válida:<br>hay un <i>Pull up</i>  conectado"
+
+#~ msgid "Invalid connection"
+#~ msgstr "Conexión no válida"
+
+#~ msgid "Invalid connection: {{a}} → {{b}}"
+#~ msgstr "Conexión no válida: {{a}} → {{b}}"
+
+#~ msgid "Invalid multiple input connections"
+#~ msgstr "Conexiones de entrada múltiple no válidas"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "Local parameter"
+#~ msgstr "Parámetro local"
+
+#~ msgid "Make virtual env..."
+#~ msgstr "Crear virtual env..."
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
+#~ msgid "New"
+#~ msgstr "Nuevo"
+
+#~ msgid "New project {{name}} created"
+#~ msgstr "Nuevo proyecto {{name}} creado"
+
+#~ msgid "No collections stored"
+#~ msgstr "Ninguna colección almacenada"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Old project format {{version}}"
+#~ msgstr "Formato de proyecto antiguo {{version}}"
+
+#~ msgid "Open"
+#~ msgstr "Abrir"
+
+#~ msgid "Open SVG"
+#~ msgstr "Abrir SVG"
+
+#~ msgid "Original file {{file}} does not exist"
+#~ msgstr "El archivo original {{file}} no existe"
+
+#~ msgid "Output"
+#~ msgstr "Salida"
+
+#~ msgid "PCF file exported"
+#~ msgstr "Fichero PCF exportado"
+
+#~ msgid "Paste"
+#~ msgstr "Pegar"
+
+#~ msgid "Preferences"
+#~ msgstr "Preferencias"
+
+#~ msgid "Project information"
+#~ msgstr "Información del proyecto"
+
+#~ msgid "Project {{name}} loaded"
+#~ msgstr "Proyecto {{name}} cargado"
+
+#~ msgid "Project {{name}} saved"
+#~ msgstr "Proyecto {{name}} guardado"
+
+#~ msgid "Python 2.7 is required"
+#~ msgstr "Es necesario Python 2.7"
+
+#~ msgid "Quit"
+#~ msgstr "Salir"
+
+#~ msgid "Read only"
+#~ msgstr "Solo lectura"
+
+#~ msgid "Redo"
+#~ msgstr "Rehacer"
+
+#~ msgid "Remote host {{name}} not connected"
+#~ msgstr "Host remoto {{name}} no conectado"
+
+#~ msgid "Remote hostname"
+#~ msgstr "Nombre del host remoto"
+
+#~ msgid "Remove"
+#~ msgstr "Eliminar"
+
+#~ msgid "Remove all"
+#~ msgstr "Eliminar todo"
+
+#~ msgid "Reset SVG"
+#~ msgstr "Resetear SVG"
+
+#~ msgid "Reset default"
+#~ msgstr "Reset default"
+
+#~ msgid "Reset view"
+#~ msgstr "Resetear vista"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Save SVG"
+#~ msgstr "Guardar SVG"
+
+#~ msgid "Save as"
+#~ msgstr "Guardar como"
+
+#~ msgid "Select all"
+#~ msgstr "Seleccionar todo"
+
+#~ msgid "Source code"
+#~ msgstr "Código fuente"
+
+#~ msgid "Spanish"
+#~ msgstr "Español"
+
+#~ msgid "Synchronize remote files ..."
+#~ msgstr "Sincronizando ficheros remotos ..."
+
+#~ msgid "Testbench"
+#~ msgstr "Testbench"
+
+#~ msgid "Testbench exported"
+#~ msgstr "Testbench exportado"
+
+#~ msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
+#~ msgstr "La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la placa {{name}}?"
+
+#~ msgid "The toolchain will be removed. Do you want to continue?"
+#~ msgstr "La toolchain será eliminada. ¿Deseas continuar?"
+
+#~ msgid "The toolchain will be restored to default. Do you want to continue?"
+#~ msgstr "La toolchain será restaurada a los valores por defecto: ¿Deseas continuar?"
+
+#~ msgid "The toolchain will be updated. This operation requires Internet connection. Do you want to continue?"
+#~ msgstr "La toolchain será actualizada. Esta operación requiere conexión a Internet. ¿Deseas continuar?"
+
+#~ msgid "This import operation requires a project path. You need to save the current project. Do you want to continue?"
+#~ msgstr "Esta operación de importación requiere una ruta del proyecto. Debes guardar el proyecto actual. ¿Deseas continuar?"
+
+#~ msgid "Toolchain"
+#~ msgstr "Toolchain"
+
+#~ msgid "Toolchain installed"
+#~ msgstr "Toolchain instalada"
+
+#~ msgid "Toolchain not installed"
+#~ msgstr "La toolchain no está instalada"
+
+#~ msgid "Toolchain not installed. Please, install the toolchain"
+#~ msgstr "La toolchain no está instalada. Por favor, instala la toolchain"
+
+#~ msgid "Toolchain removed"
+#~ msgstr "Toolchain eliminada"
+
+#~ msgid "Tools"
+#~ msgstr "Herramientas"
+
+#~ msgid "Undo"
+#~ msgstr "Deshacer"
+
+#~ msgid "Unknown board"
+#~ msgstr "Placa desconocida"
+
+#~ msgid "Untitled"
+#~ msgstr "Sin título"
+
+#~ msgid "Update"
+#~ msgstr "Actualizar"
+
+#~ msgid "Update the block label"
+#~ msgstr "Actualizar la etiqueta del bloque"
+
+#~ msgid "Update the port"
+#~ msgstr "Actualizar el puerto"
+
+#~ msgid "Upload"
+#~ msgstr "Cargar"
+
+#~ msgid "Verify"
+#~ msgstr "Verificar"
+
+#~ msgid "Verilog code exported"
+#~ msgstr "Código Verilog exportado"
+
+#~ msgid "Version"
+#~ msgstr "Versión"
+
+#~ msgid "View"
+#~ msgstr "Ver"
+
+#~ msgid "View license"
+#~ msgstr "Ver licencia"
+
+#~ msgid "Wrong block format: {{type}}"
+#~ msgstr "Formato de bloque incorrecto: {{type}}"
+
+#~ msgid "Wrong parameter name {{name}}"
+#~ msgstr "Nombre del parámetro {{name}} incorrecto"
+
+#~ msgid "Wrong port name {{name}}"
+#~ msgstr "Nombre del puerto {{name}} incorrecto"
+
+#~ msgid "Wrong project format: {{name}}"
+#~ msgstr "Formato de proyecto incorrecto: {{name}}"
+
+#~ msgid "Wrong remote hostname {{name}}"
+#~ msgstr "Nombre del host remoto incorrecto {{name}}"
+
+#~ msgid "Your changes will be lost if you don’t save them"
+#~ msgstr "Tus cambios se perderán si no los guardas"
+
+#~ msgid "back"
+#~ msgstr "volver"
+
+#~ msgid "done_build"
+#~ msgstr "Sintetizado realizado"
+
+#~ msgid "done_upload"
+#~ msgstr "Carga realizada"
+
+#~ msgid "done_verify"
+#~ msgstr "Verificación realizada"
+
+#~ msgid "start_build"
+#~ msgstr "Comenzar sintetizado ..."
+
+#~ msgid "start_upload"
+#~ msgstr "Comenzar carga ..."
+
+#~ msgid "start_verify"
+#~ msgstr "Comenzar verificación ..."
+
+#~ msgid "{{board}} datasheet not defined"
+#~ msgstr "{{board}} datasheet no definido"
+
+#~ msgid "{{board}} pinout not defined"
+#~ msgstr "{{board}} pinout no definido"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Clear all"
+#~ msgstr "Borrar todo"
+
+#~ msgid "Clone selected"
+#~ msgstr "Clonar seleccionado"
+
+#~ msgid "Do you want to clear all?"
+#~ msgstr "¿Deseas borrar todo?"
+
+#~ msgid "Do you want to exit the application?"
+#~ msgstr "¿Deseas salir de la aplicación?"
+
+#~ msgid "Do you want to remove the selected block?"
+#~ msgstr "¿Deseas eliminar el bloque seleccionado?"
+
+#~ msgid "Enter the project name"
+#~ msgstr "Introduce el nombre del proyecto"
+
+#~ msgid "Old project format"
+#~ msgstr "Formato de proyecto antiguo"
+
+#~ msgid "Remove selected"
+#~ msgstr "Eliminar seleccionado"
+
+#~ msgid "The current project will be removed. Do you want to continue loading the project?"
+#~ msgstr "El actual proyecto se borrará. ¿Deseas continuar abriendo el proyecto?"
+
+#~ msgid "Virtual port"
+#~ msgstr "Puerto virtual"
+
+#~ msgid "untitled"
+#~ msgstr "Sin título"
+
+#~ msgid "Block exported as {{name}}"
+#~ msgstr "Bloque exportado como {{name}}"
+
+#~ msgid "Enter the project's image path"
+#~ msgstr "Introduce la ruta de la imagen del proyecto"
+
+#~ msgid "Export as block"
+#~ msgstr "Exportar como bloque"
+
+#~ msgid "Import block"
+#~ msgstr "Importar bloque"
+
+#~ msgid "New project"
+#~ msgstr "Nuevo proyecto"
+
+#~ msgid "Open project"
+#~ msgstr "Abrir proyecto"
+
+#~ msgid "Templates"
+#~ msgstr "Plantillas"
+
+#~ msgid "Datasheet not defined"
+#~ msgstr "Datasheet no definido"
+
+#~ msgid "comb"
+#~ msgstr "Comb"
+
+#~ msgid "sec"
+#~ msgstr "Sec"
+
+#~ msgid "This import operation requires a project path. Yo need to save the current project. Do you want to continue?"
+#~ msgstr "Esta operación de importación requiere un directorio de proyecto. "
+
+#~ msgid "Enter the block's label"
+#~ msgstr "Introduce la etiqueta del bloque"
+
+#~ msgid "Enter the block's ports"
+#~ msgstr "Introduce los puertos del bloque"
