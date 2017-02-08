@@ -72,7 +72,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -129,7 +129,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -198,7 +198,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -286,7 +286,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
                 return;
               }
             }
@@ -301,7 +301,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
                 return;
               }
             }
@@ -316,7 +316,7 @@ angular.module('icestudio')
               }
               else {
                 evt.cancel = true;
-                alertify.notify(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }), 'warning', 3);
+                alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
                 return;
               }
             }
@@ -367,7 +367,7 @@ angular.module('icestudio')
           }
           else {
             evt.cancel = true;
-            alertify.notify(gettextCatalog.getString('Duplicated block attributes'), 'warning', 3);
+            alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
           }
       });
     }
@@ -401,7 +401,7 @@ angular.module('icestudio')
         }
       }
       else {
-        alertify.notify(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 'error', 30);
+        alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 30);
       }
     }
 
@@ -773,7 +773,7 @@ angular.module('icestudio')
           }
           else {
             evt.cancel = true;
-            alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: label }), 'warning', 3);
+            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
           }
       });
     }
@@ -847,7 +847,7 @@ angular.module('icestudio')
           }
           else {
             evt.cancel = true;
-            alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: label }), 'warning', 3);
+            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
           }
       });
     }
@@ -882,7 +882,7 @@ angular.module('icestudio')
           }
           else {
             evt.cancel = true;
-            alertify.notify(gettextCatalog.getString('Wrong block name {{name}}', { name: label }), 'warning', 3);
+            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
             return;
           }
       });

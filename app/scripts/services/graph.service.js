@@ -237,7 +237,7 @@ angular.module('icestudio')
       function warning(message) {
         if (!paper.options.warningTimer) {
           paper.options.warningTimer = true;
-          alertify.notify(message, 'warning', 5);
+          alertify.warning(message, 5);
           setTimeout(function() {
             paper.options.warningTimer = false;
           }, 4000);

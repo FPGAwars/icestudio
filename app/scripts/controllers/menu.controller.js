@@ -379,7 +379,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('{{board}} pinout not defined',  { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -389,7 +389,7 @@ angular.module('icestudio')
         gui.Shell.openExternal(board.info.datasheet);
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+        alertify.error(gettextCatalog.getString('{{board}} datasheet not defined', { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -408,7 +408,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 'error', 5);
+        alertify.error(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 5);
       }
     };
 
@@ -477,7 +477,7 @@ angular.module('icestudio')
         }
       }
       else {
-        alertify.notify(gettextCatalog.getString('Add a block to start'), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
       }
     }
 
@@ -509,7 +509,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.notify(gettextCatalog.getString('No collections stored'), 'warning', 5);
+        alertify.warning(gettextCatalog.getString('No collections stored'), 5);
       }
     };
 
