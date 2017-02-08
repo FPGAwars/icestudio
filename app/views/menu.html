@@ -370,7 +370,7 @@
           <li uib-dropdown
               ng-repeat="block in resources.selectedCollection.content.blocks" ng-if="block.children"
               ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu(block.name)" is-open="status[block.name]">
-            <a href uib-dropdown-toggle>{{ block.name }} <span class="caret"></span></a>
+            <a href uib-dropdown-toggle>{{ block.name | translate }} <span class="caret"></span></a>
             <menutree data="block.children" callback="project.addBlock(path)" right="true"></menutree>
           </li>
 

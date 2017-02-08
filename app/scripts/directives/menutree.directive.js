@@ -30,8 +30,8 @@ angular.module('icestudio')
         callback: '&'
       },
       template: '<li ng-class="child.children ? (right ? \'dropdown-submenu-right\' : \'dropdown-submenu\') : \'\'">' +
-                  '<a href ng-click="click(child.path)" ng-if="!child.children">{{ child.name }}</a>' +
-                  '<a href uib-dropdown-toggle ng-if="child.children">{{ child.name }}</a>' +
+                  '<a href ng-click="click(child.path)" ng-if="!child.children">{{ child.name | translate }}</a>' +
+                  '<a href uib-dropdown-toggle ng-if="child.children">{{ child.name | translate }}</a>' +
                 '</li>',
       link: function (scope, element/*, attrs*/) {
         scope.click = function(path) {
