@@ -1,9 +1,9 @@
-
 'use strict';
 
 angular.module('icestudio')
   .service('utils', function($rootScope,
                              gettextCatalog,
+                             common,
                              _package,
                              window,
                              nodeFs,
@@ -16,6 +16,7 @@ angular.module('icestudio')
                              nodeOnline,
                              nodeGlob,
                              nodeSha1,
+                             nodeCP,
                              SVGO) {
 
     const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
@@ -993,5 +994,136 @@ angular.module('icestudio')
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }
+
+    this.copyToClipboard = function(selection, graph) {
+      var cells = selectionToCells(selection, graph);
+      var clipboard = {
+        icestudio: this.cellsToProject(cells, graph)
+      };
+      console.log('Copy', clipboard);
+      nodeCP.copy(JSON.stringify(clipboard), function() {
+        // Success
+      });
+    };
+
+    this.pasteFromClipboard = function(callback) {
+      nodeCP.paste(function(a, text) {
+        try {
+          var clipboard = JSON.parse(text);
+          if (callback && clipboard && clipboard.icestudio) {
+            // TODO
+            // callback(clipboard);
+          }
+        }
+        catch (e) {
+        }
+      });
+    };
+
+    function selectionToCells(selection, graph) {
+      var cells = [];
+      var blocksMap = {};
+      selection.each(function(block) {
+        // Add block
+        cells.push(block.attributes);
+        // Map blocks
+        blocksMap[block.id] = block;
+        // Add connected wires
+        var processedWires = {};
+        var connectedWires = graph.getConnectedLinks(block);
+        _.each(connectedWires, function(wire) {
+
+          if (processedWires[wire.id]) {
+            return;
+          }
+
+          var source = blocksMap[wire.get('source').id];
+          var target = blocksMap[wire.get('target').id];
+
+          if (source && target) {
+            cells.push(wire.attributes);
+            processedWires[wire.id] = true;
+          }
+        });
+      });
+      console.log(cells);
+      return cells;
+    }
+
+    this.cellsToProject = function(cells, opt) {
+      // Convert a list of cells into the following sections of a project:
+      // - design.graph
+      // - dependencies
+
+      var blocks = [];
+      var wires = [];
+      var p = {
+        version: common.VERSION,
+        design: {},
+        dependencies: {}
+      };
+
+      opt = opt || {};
+
+      for (var c = 0; c < cells.length; c++) {
+        var cell = cells[c];
+
+        if (cell.type === 'ice.Generic' ||
+            cell.type === 'ice.Input' ||
+            cell.type === 'ice.Output' ||
+            cell.type === 'ice.Code' ||
+            cell.type === 'ice.Info' ||
+            cell.type === 'ice.Constant') {
+          var block = {};
+          block.id = cell.id;
+          block.type = cell.blockType;
+          block.data = cell.data;
+          block.position = cell.position;
+          if (cell.type === 'ice.Generic' ||
+              cell.type === 'ice.Code' ||
+              cell.type === 'ice.Info') {
+            block.size = cell.size;
+          }
+          blocks.push(block);
+        }
+        else if (cell.type === 'ice.Wire') {
+          var wire = {};
+          wire.source = { block: cell.source.id, port: cell.source.port };
+          wire.target = { block: cell.target.id, port: cell.target.port };
+          wire.vertices = cell.vertices;
+          wire.size = (cell.size > 1) ? cell.size : undefined;
+          wires.push(wire);
+        }
+      }
+
+      p.design.graph = { blocks: blocks, wires: wires };
+
+      // Update dependencies
+      if (opt.deps !== false) {
+        var types = this.findSubDependencies(p, common.allDependencies);
+        for (var t in types) {
+          p.dependencies[types[t]] = common.allDependencies[types[t]];
+        }
+      }
+
+      return p;
+    };
+
+    this.findSubDependencies = function(dependency) {
+      var subDependencies = [];
+      if (dependency) {
+        var blocks = dependency.design.graph.blocks;
+        for (var i in blocks) {
+          var type = blocks[i].type;
+          if (type.indexOf('basic.') === -1) {
+            subDependencies.push(type);
+            var newSubDependencies = this.findSubDependencies(common.allDependencies[type]);
+            subDependencies = subDependencies.concat(newSubDependencies);
+          }
+        }
+        return _.unique(subDependencies);
+      }
+      return subDependencies;
+    };
 
   });

@@ -257,15 +257,11 @@ angular.module('icestudio')
     };
 
     $scope.cutSelected = function() {
-      if (graph.hasSelection()) {
-        graph.cutSelected();
-      }
+      graph.cutSelected();
     };
 
     $scope.copySelected = function() {
-      if (graph.hasSelection()) {
-        graph.copySelected();
-      }
+      graph.copySelected();
     };
 
     var paste = true;

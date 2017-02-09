@@ -6,7 +6,8 @@ angular.module('icestudio')
                                       project,
                                       boards,
                                       graph,
-                                      utils) {
+                                      utils,
+                                      common) {
 
     $scope.boards = boards;
     $scope.graph = graph;
@@ -41,7 +42,7 @@ angular.module('icestudio')
       }
       else {
         var type = graph.breadcrumbs[n-1].type;
-        var dependency = project.getAllDependencies()[type];
+        var dependency = common.allDependencies[type];
         graph.loadDesign(dependency.design, true);
         $scope.information = dependency.package;
       }

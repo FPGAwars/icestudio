@@ -7,6 +7,7 @@ angular.module('icestudio')
                                compiler,
                                profile,
                                utils,
+                               common,
                                gettextCatalog,
                                nodeFs,
                                nodePath) {
@@ -15,14 +16,11 @@ angular.module('icestudio')
     this.path = '';  // Used in Save / Save as
     this.changed = false;
 
-    const VERSION = '1.1';
-
     var project = _default();
-    var allDependencies = {};
 
     function _default() {
       return {
-        version: VERSION,
+        version: common.VERSION,
         package: {
           name: '',
           version: '',
@@ -70,10 +68,6 @@ angular.module('icestudio')
       }
     };
 
-    this.getAllDependencies = function() {
-      return allDependencies;
-    };
-
     this.new = function(name) {
       this.path = '';
       project = _default();
@@ -98,12 +92,11 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
-      if (data.version !== VERSION) {
+      if (data.version !== common.VERSION) {
         alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
       }
       project = _safeLoad(data, name);
-      allDependencies = project.dependencies;
-      graph.setDependencies(allDependencies);
+      common.allDependencies = project.dependencies;
       var ret = graph.loadDesign(project.design, false, function() {
         graph.resetCommandStack();
         alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -122,7 +115,7 @@ angular.module('icestudio')
       // Backwards compatibility
       var project = {};
       switch(data.version) {
-        case VERSION:
+        case common.VERSION:
           project = data;
           break;
         case '1.0':
@@ -305,7 +298,7 @@ angular.module('icestudio')
     this.addAsBlock = function(filepath) {
       var self = this;
       utils.readFile(filepath, function(data) {
-        if (data.version !== VERSION) {
+        if (data.version !== common.VERSION) {
           alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
         }
         var name = utils.basename(filepath);
@@ -439,46 +432,13 @@ angular.module('icestudio')
 
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
+      console.log(graphData.cells);
+      var p = utils.cellsToProject(graphData.cells, opt);
 
-      var blocks = [];
-      var wires = [];
-
-      opt = opt || {};
-
-      for (var c = 0; c < graphData.cells.length; c++) {
-        var cell = graphData.cells[c];
-
-        if (cell.type === 'ice.Generic' ||
-            cell.type === 'ice.Input' ||
-            cell.type === 'ice.Output' ||
-            cell.type === 'ice.Code' ||
-            cell.type === 'ice.Info' ||
-            cell.type === 'ice.Constant') {
-          var block = {};
-          block.id = cell.id;
-          block.type = cell.blockType;
-          block.data = cell.data;
-          block.position = cell.position;
-          if (cell.type === 'ice.Generic' ||
-              cell.type === 'ice.Code' ||
-              cell.type === 'ice.Info') {
-            block.size = cell.size;
-          }
-          blocks.push(block);
-        }
-        else if (cell.type === 'ice.Wire') {
-          var wire = {};
-          wire.source = { block: cell.source.id, port: cell.source.port };
-          wire.target = { block: cell.target.id, port: cell.target.port };
-          wire.vertices = cell.vertices;
-          wire.size = (cell.size > 1) ? cell.size : undefined;
-          wires.push(wire);
-        }
-      }
-
-      var state = graph.getState();
       project.design.board = boards.selectedBoard.name;
-      project.design.graph = { blocks: blocks, wires: wires };
+      project.design.graph = p.design.graph;
+      project.dependencies = p.dependencies;
+      var state = graph.getState();
       project.design.state = {
         pan: {
           x: parseFloat(state.pan.x.toFixed(4)),
@@ -487,36 +447,10 @@ angular.module('icestudio')
         zoom: parseFloat(state.zoom.toFixed(4))
       };
 
-      // Update dependencies
-      if (opt.deps !== false) {
-        project.dependencies = {};
-        var types = findSubDependencies(project);
-        for (var t in types) {
-          project.dependencies[types[t]] = allDependencies[types[t]];
-        }
-      }
-
       if (callback) {
         callback();
       }
     };
-
-    function findSubDependencies(dependency) {
-      var subDependencies = [];
-      if (dependency) {
-        var blocks = dependency.design.graph.blocks;
-        for (var i in blocks) {
-          var type = blocks[i].type;
-          if (type.indexOf('basic.') === -1) {
-            subDependencies.push(type);
-            var newSubDependencies = findSubDependencies(allDependencies[type]);
-            subDependencies = subDependencies.concat(newSubDependencies);
-          }
-        }
-        return _.unique(subDependencies);
-      }
-      return subDependencies;
-    }
 
     this.updateTitle = function(name) {
       if (name) {
@@ -559,7 +493,6 @@ angular.module('icestudio')
           var type = utils.dependencyID(block);
           mergeDependencies(type, block);
           graph.createBlock(type, block);
-          graph.setDependencies(allDependencies);
         }
       }
     };
@@ -585,20 +518,20 @@ angular.module('icestudio')
     }
 
     function mergeDependencies(type, block) {
-      if (type in allDependencies) {
+      if (type in common.allDependencies) {
         return; // If the block is already in dependencies
       }
       // Merge the block dependencies
       var deps = block.dependencies;
       for (var i in deps) {
         var depType = utils.dependencyID(deps[i]);
-        if (!(depType in allDependencies)) {
-          allDependencies[depType] = deps[i];
+        if (!(depType in common.allDependencies)) {
+          common.allDependencies[depType] = deps[i];
         }
       }
       // Add the block as a dependency
       delete block.dependencies;
-      allDependencies[type] = block;
+      common.allDependencies[type] = block;
     }
 
     this.removeSelected = function() {

@@ -49,6 +49,9 @@ angular.module('icestudio')
   .factory('nodeGettext', function() {
     return require('angular-gettext-tools');
   })
+  .factory('nodeCP', function() {
+    return require('copy-paste');
+  })
   .factory('SVGO', function() {
     return require('svgo');
   });

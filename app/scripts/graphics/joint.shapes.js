@@ -704,11 +704,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.updating = false;
   },
 
-  computeFontSize: function(name) {
-    var n = name.length;
-    return Math.min(13, 17-n).toString() + 'px';
-  },
-
   apply: function() {
     this.applyChoices();
     this.applyValues();

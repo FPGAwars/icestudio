@@ -7,6 +7,7 @@ angular.module('icestudio')
                              blocks,
                              profile,
                              utils,
+                             common,
                              gettextCatalog,
                              window) {
     // Variables
@@ -20,9 +21,7 @@ angular.module('icestudio')
     var selection = null;
     var selectionView = null;
     var commandManager = null;
-    var clipboard = [];
     var mousePosition = { x: 0, y: 0 };
-    var dependencies = {};
 
     this.breadcrumbs = [{ name: '', type: '' }];
 
@@ -359,9 +358,9 @@ angular.module('icestudio')
             });
           }
         }
-        else if (dependencies[type]) {
+        else if (common.allDependencies[type]) {
           z.index = 1;
-          var project = dependencies[type];
+          var project = common.allDependencies[type];
           var breadcrumbsLength = self.breadcrumbs.length;
           $rootScope.$broadcast('navigateProject', {
             update: breadcrumbsLength === 1,
@@ -602,94 +601,100 @@ angular.module('icestudio')
 
     this.cutSelected = function() {
       if (selection) {
-        clipboard = selection.clone();
+        utils.copyToClipboard(selection, graph);
         this.removeSelected();
       }
     };
 
     this.copySelected = function() {
       if (selection) {
-        clipboard = selection.clone();
+        utils.copyToClipboard(selection, graph);
       }
     };
 
     this.pasteSelected = function() {
-      if (clipboard && clipboard.length > 0) {
-        var origin = clipboardOrigin();
-        var offset = {
-          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
-          y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
-        };
-        var newCells = [];
-        var blocksMap = {};
-        var processedWires = {};
-        selectionView.cancelSelection();
-        clipboard.each(function(block) {
+      utils.pasteFromClipboard(function(clipboard) {
+        if (clipboard && clipboard.length > 0) {
+          var origin = clipboardOrigin(clipboard);
+          var offset = {
+            x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
+            y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
+          };
+          var newCells = [];
+          var blocksMap = {};
+          var processedWires = {};
+          console.log('MOMOMOMO');
+          selectionView.cancelSelection();
+          /*clipboard.each(function(block) {
 
-          // Create new cell
-          var newBlock = block.clone();
-          newBlock.translate(offset.x, offset.y);
-          newCells.push(newBlock);
+            console.log('BLOCK', block);
 
-          // Map old and new cells
-          blocksMap[block.id] = newBlock;
+            // Create new cell
+            var newBlock = block.clone();
+            console.log(newBlock);
+            newBlock.translate(offset.x, offset.y);
+            newCells.push(newBlock);
 
-          // Create new wires
-          var connectedWires = graph.getConnectedLinks(block);
-          _.each(connectedWires, function(wire) {
+            // Map old and new cells
+            blocksMap[block.id] = newBlock;
 
-            if (processedWires[wire.id]) {
-              return;
-            }
+            // Create new wires
+            var connectedWires = graph.getConnectedLinks(block);
+            _.each(connectedWires, function(wire) {
 
-            var newSource = blocksMap[wire.get('source').id];
-            var newTarget = blocksMap[wire.get('target').id];
-
-            if (newSource && newTarget) {
-
-              // Translate the new vertices
-              var newVertices = [];
-              var vertices = wire.get('vertices');
-              if (vertices && vertices.length) {
-                _.each(vertices, function(vertex) {
-                  newVertices.push({
-                    x: vertex.x + offset.x,
-                    y: vertex.y + offset.y
-                  });
-                });
+              if (processedWires[wire.id]) {
+                return;
               }
 
-              // Create a new wire
-              var instance = {
-                source: { block: newSource.id, port: wire.get('source').port },
-                target: { block: newTarget.id, port: wire.get('target').port },
-                vertices: newVertices,
-                size: wire.get('size')
-              };
-              var newWire = blocks.loadWire(instance, newSource, newTarget);
-              newCells.push(newWire);
-              processedWires[wire.id] = true;
+              var newSource = blocksMap[wire.get('source').id];
+              var newTarget = blocksMap[wire.get('target').id];
+
+              if (newSource && newTarget) {
+
+                // Translate the new vertices
+                var newVertices = [];
+                var vertices = wire.get('vertices');
+                if (vertices && vertices.length) {
+                  _.each(vertices, function(vertex) {
+                    newVertices.push({
+                      x: vertex.x + offset.x,
+                      y: vertex.y + offset.y
+                    });
+                  });
+                }
+
+                // Create a new wire
+                var instance = {
+                  source: { block: newSource.id, port: wire.get('source').port },
+                  target: { block: newTarget.id, port: wire.get('target').port },
+                  vertices: newVertices,
+                  size: wire.get('size')
+                };
+                var newWire = blocks.loadWire(instance, newSource, newTarget);
+                newCells.push(newWire);
+                processedWires[wire.id] = true;
+              }
+
+            });
+          });*/
+
+          // All all cells: blocks and wires
+          graph.addCells(newCells);
+
+          // Select pasted elements
+          _.each(newCells, function(cell) {
+            if (!cell.isLink()) {
+              var cellView = paper.findViewByModel(cell);
+              selection.add(cell);
+              selectionView.createSelectionBox(cellView);
+              unhighlight(cellView);
             }
-
           });
-        });
-
-        // All all cells: blocks and wires
-        graph.addCells(newCells);
-
-        // Select pasted elements
-        _.each(newCells, function(cell) {
-          if (!cell.isLink()) {
-            var cellView = paper.findViewByModel(cell);
-            selection.add(cell);
-            selectionView.createSelectionBox(cellView);
-            unhighlight(cellView);
-          }
-        });
-      }
+        }
+      });
     };
 
-    function clipboardOrigin() {
+    function clipboardOrigin(clipboard) {
       var origin = { x: Infinity, y: Infinity };
       clipboard.each(function(cell) {
         var position = cell.get('position');
@@ -885,10 +890,6 @@ angular.module('icestudio')
       return paper.options.enabled;
     };
 
-    this.setDependencies = function(_dependencies) {
-      dependencies = _dependencies;
-    };
-
     this.loadDesign = function(design, disabled, callback) {
       if (design &&
           design.graph &&
@@ -919,8 +920,8 @@ angular.module('icestudio')
               cell = blocks.loadBasic(blockInstance, disabled);
             }
             else {
-              if (blockInstance.type in dependencies) {
-                cell = blocks.loadGeneric(blockInstance, dependencies[blockInstance.type], disabled);
+              if (blockInstance.type in common.allDependencies) {
+                cell = blocks.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], disabled);
               }
             }
             addCell(cell);
