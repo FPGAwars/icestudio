@@ -238,15 +238,16 @@
 }
 
 .select2-selection__rendered {
-  line-height: 25px !important;
+  line-height: 24px !important;
 }
 
 .select2-selection {
-  font-size: 12px;
+  font-size: 13px;
   height: 26px !important;
 }
 
 .select2-container--default .select2-selection--single {
+  outline: none;
   border: 1px solid #aaa;
 }
 
@@ -301,6 +302,10 @@
   border-radius: 4px;
   border: 1px solid #aaa;
   pointer-events: auto;
+}
+
+.constant-block input:focus {
+  outline: none;
 }
 
 .code-block {

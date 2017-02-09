@@ -28,8 +28,8 @@ angular.module('icestudio')
 
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
-    const ZOOM_MAX = 2;
-    const ZOOM_MIN = 0.2;
+    const ZOOM_MAX = 2.0;
+    const ZOOM_MIN = 0.3;
 
     // Functions
 

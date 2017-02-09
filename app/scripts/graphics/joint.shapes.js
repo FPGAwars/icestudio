@@ -836,13 +836,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog"); + \
-          $("#' + blockLabel + '").resize(function() {\
-            ' + editorLabel + '.resize();\
-          });\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/>\
       </div>\
@@ -947,10 +943,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
 
-    // Render ports width
+    // Set font size
+    if (this.editor) {
+      this.editor.setFontSize(aceFontSize * state.zoom);
+      this.editor.resize();
+    }
+    // Set ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
-    // Render buses
+    // Set buses
     for (i in leftPorts) {
       port = leftPorts[i];
       if (rules && port.default && port.default.apply) {
@@ -1010,12 +1011,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.setFontSize(' + aceFontSize + ');\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          $("#' + blockLabel + '").resize(function() {\
-            ' + editorLabel + '.resize();\
-          });\
         </script>\
         <div class="resizer"/>\
       </div>\
@@ -1119,6 +1116,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   updateBox: function() {
     var bbox = this.model.getBBox();
     var state = this.model.get('state');
+
+    // Set font size
+    if (this.editor) {
+      this.editor.setFontSize(aceFontSize * state.zoom);
+      this.editor.resize();
+    }
 
     this.$box.find('.info-editor').css('margin', 8 * state.zoom);
     this.$box.css({ width: bbox.width * state.zoom,
