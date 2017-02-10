@@ -283,12 +283,7 @@ angular.module('icestudio')
     };
 
     function removeSelected() {
-      if (graph.hasSelection()) {
-        //alertify.confirm(gettextCatalog.getString('Do you want to remove the selected block?'),
-          //function() {
-        project.removeSelected();
-        //});
-      }
+      project.removeSelected();
     }
 
     $scope.resetView = function() {

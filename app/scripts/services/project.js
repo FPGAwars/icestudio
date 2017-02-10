@@ -432,7 +432,6 @@ angular.module('icestudio')
 
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
-      console.log(graphData.cells);
       var p = utils.cellsToProject(graphData.cells, opt);
 
       project.design.board = boards.selectedBoard.name;
@@ -491,7 +490,7 @@ angular.module('icestudio')
           block = _safeLoad(block);
           block = pruneBlock(block);
           var type = utils.dependencyID(block);
-          mergeDependencies(type, block);
+          utils.mergeDependencies(type, block);
           graph.createBlock(type, block);
         }
       }
@@ -515,23 +514,6 @@ angular.module('icestudio')
         }
       }
       return block;
-    }
-
-    function mergeDependencies(type, block) {
-      if (type in common.allDependencies) {
-        return; // If the block is already in dependencies
-      }
-      // Merge the block dependencies
-      var deps = block.dependencies;
-      for (var i in deps) {
-        var depType = utils.dependencyID(deps[i]);
-        if (!(depType in common.allDependencies)) {
-          common.allDependencies[depType] = deps[i];
-        }
-      }
-      // Add the block as a dependency
-      delete block.dependencies;
-      common.allDependencies[type] = block;
     }
 
     this.removeSelected = function() {

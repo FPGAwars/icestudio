@@ -995,12 +995,29 @@ angular.module('icestudio')
       return '"' + filepath + '"';
     }
 
+    this.mergeDependencies = function(type, block) {
+      if (type in common.allDependencies) {
+        return; // If the block is already in dependencies
+      }
+      // Merge the block dependencies
+      var deps = block.dependencies;
+      for (var i in deps) {
+        var depType = this.dependencyID(deps[i]);
+        if (!(depType in common.allDependencies)) {
+          common.allDependencies[depType] = deps[i];
+        }
+      }
+      // Add the block as a dependency
+      delete block.dependencies;
+      common.allDependencies[type] = block;
+    };
+
     this.copyToClipboard = function(selection, graph) {
       var cells = selectionToCells(selection, graph);
       var clipboard = {
         icestudio: this.cellsToProject(cells, graph)
       };
-      console.log('Copy', clipboard);
+      // Send the clipboard object the global clipboard as a string
       nodeCP.copy(JSON.stringify(clipboard), function() {
         // Success
       });
@@ -1009,14 +1026,13 @@ angular.module('icestudio')
     this.pasteFromClipboard = function(callback) {
       nodeCP.paste(function(a, text) {
         try {
+          // Parse the global clipboard
           var clipboard = JSON.parse(text);
           if (callback && clipboard && clipboard.icestudio) {
-            callback(clipboard, true);
+            callback(clipboard.icestudio);
           }
         }
-        catch (e) {
-          callback(text, false);
-        }
+        catch (e) { }
       });
     };
 
@@ -1046,7 +1062,6 @@ angular.module('icestudio')
           }
         });
       });
-      console.log(cells);
       return cells;
     }
 

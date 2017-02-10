@@ -613,103 +613,15 @@ angular.module('icestudio')
     };
 
     this.pasteSelected = function() {
-      utils.pasteFromClipboard(function(clipboard, isGraph) {
-        if (isGraph && document.activeElement.tagName === 'BODY') {
-          console.log(clipboard, isGraph, document.activeElement.tagName);
+      var self = this;
+      utils.pasteFromClipboard(function(object) {
+        if (object.version === common.VERSION &&
+            (document.activeElement.tagName === 'A' ||
+             document.activeElement.tagName === 'BODY')) {
+          self.appendDesign(object.design, object.dependencies);
         }
       });
-
-      /*utils.pasteFromClipboard(function(clipboard) {
-        if (clipboard && clipboard.length > 0) {
-          var origin = clipboardOrigin(clipboard);
-          var offset = {
-            x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
-            y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
-          };
-          var newCells = [];
-          var blocksMap = {};
-          var processedWires = {};
-          console.log('MOMOMOMO');
-          selectionView.cancelSelection();
-          /*clipboard.each(function(block) {
-
-            console.log('BLOCK', block);
-
-            // Create new cell
-            var newBlock = block.clone();
-            console.log(newBlock);
-            newBlock.translate(offset.x, offset.y);
-            newCells.push(newBlock);
-
-            // Map old and new cells
-            blocksMap[block.id] = newBlock;
-
-            // Create new wires
-            var connectedWires = graph.getConnectedLinks(block);
-            _.each(connectedWires, function(wire) {
-
-              if (processedWires[wire.id]) {
-                return;
-              }
-
-              var newSource = blocksMap[wire.get('source').id];
-              var newTarget = blocksMap[wire.get('target').id];
-
-              if (newSource && newTarget) {
-
-                // Translate the new vertices
-                var newVertices = [];
-                var vertices = wire.get('vertices');
-                if (vertices && vertices.length) {
-                  _.each(vertices, function(vertex) {
-                    newVertices.push({
-                      x: vertex.x + offset.x,
-                      y: vertex.y + offset.y
-                    });
-                  });
-                }
-
-                // Create a new wire
-                var instance = {
-                  source: { block: newSource.id, port: wire.get('source').port },
-                  target: { block: newTarget.id, port: wire.get('target').port },
-                  vertices: newVertices,
-                  size: wire.get('size')
-                };
-                var newWire = blocks.loadWire(instance, newSource, newTarget);
-                newCells.push(newWire);
-                processedWires[wire.id] = true;
-              }
-
-            });
-          });
-
-          // All all cells: blocks and wires
-          graph.addCells(newCells);
-
-          // Select pasted elements
-          _.each(newCells, function(cell) {
-            if (!cell.isLink()) {
-              var cellView = paper.findViewByModel(cell);
-              selection.add(cell);
-              selectionView.createSelectionBox(cellView);
-              unhighlight(cellView);
-            }
-          });
-        }
-      });*/
     };
-
-    function clipboardOrigin(clipboard) {
-      var origin = { x: Infinity, y: Infinity };
-      clipboard.each(function(cell) {
-        var position = cell.get('position');
-        if (position.x < origin.x) {
-          origin = position;
-        }
-      });
-      return origin;
-    }
 
     this.selectAll = function() {
       disableSelected();
@@ -902,10 +814,7 @@ angular.module('icestudio')
           design.graph.blocks &&
           design.graph.wires) {
 
-        var i;
         var self = this;
-        var blockInstances = design.graph.blocks;
-        var wires = design.graph.wires;
 
         $('body').addClass('waiting');
 
@@ -917,29 +826,9 @@ angular.module('icestudio')
 
           self.clearAll();
 
-          var cell;
-
-          // Blocks
-          for (i in blockInstances) {
-            var blockInstance = blockInstances[i];
-            if (blockInstance.type.indexOf('basic.') !== -1) {
-              cell = blocks.loadBasic(blockInstance, disabled);
-            }
-            else {
-              if (blockInstance.type in common.allDependencies) {
-                cell = blocks.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], disabled);
-              }
-            }
-            addCell(cell);
-          }
-
-          // Wires
-          for (i in wires) {
-            var source = graph.getCell(wires[i].source.block);
-            var target = graph.getCell(wires[i].target.block);
-            cell = blocks.loadWire(wires[i], source, target);
-            addCell(cell);
-          }
+          var opt = { disabled: disabled };
+          var cells = graphToCells(design.graph, opt);
+          graph.addCells(cells);
 
           self.appEnable(!disabled);
 
@@ -959,10 +848,131 @@ angular.module('icestudio')
       }
     };
 
-    function addCell(cell) {
+    function graphToCells(_graph, opt) {
+      // Options:
+      // - new: assign a new id to all the cells
+      // - disabled: set disabled flag to the blocks
+      // - offset: apply an offset to all the cells
+
+      var cell;
+      var cells = [];
+      var blocksMap = {};
+
+      opt = opt || {};
+
+      // Blocks
+      _.each(_graph.blocks, function(blockInstance) {
+        if (blockInstance.type.indexOf('basic.') !== -1) {
+          cell = blocks.loadBasic(blockInstance, opt.disabled);
+        }
+        else {
+          if (blockInstance.type in common.allDependencies) {
+            cell = blocks.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], opt.disabled);
+          }
+        }
+        blocksMap[cell.id] = cell;
+        if (opt.new) {
+          var oldId = cell.id;
+          cell = cell.clone();
+          blocksMap[oldId] = cell;
+        }
+        if (opt.offset) {
+          cell.translate(opt.offset.x, opt.offset.y);
+        }
+        updateCellAttributes(cell);
+        cells.push(cell);
+      });
+
+      // Wires
+      _.each(_graph.wires, function(wireInstance) {
+        var source = blocksMap[wireInstance.source.block];
+        var target = blocksMap[wireInstance.target.block];
+        if (opt.offset) {
+          var newVertices = [];
+          var vertices = wireInstance.vertices;
+          if (vertices && vertices.length) {
+            _.each(vertices, function(vertex) {
+              newVertices.push({
+                x: vertex.x + opt.offset.x,
+                y: vertex.y + opt.offset.y
+              });
+            });
+          }
+          wireInstance.verices = newVertices;
+        }
+        cell = blocks.loadWire(wireInstance, source, target);
+        if (opt.new) {
+          cell = cell.clone();
+        }
+        updateCellAttributes(cell);
+        cells.push(cell);
+      });
+
+      return cells;
+    }
+
+    this.appendDesign = function(design, dependencies) {
+      if (design &&
+          dependencies &&
+          design.graph &&
+          design.graph.blocks &&
+          design.graph.wires) {
+
+        selectionView.cancelSelection();
+
+        // Merge dependencies
+        for (var type in dependencies) {
+          if (!(type in common.allDependencies)) {
+            common.allDependencies[type] = dependencies[type];
+          }
+        }
+
+        // Append graph cells: blocks and wires
+        // - assign new UUIDs to the cells
+        // - add the graph in the mouse position
+        var origin = graphOrigin(design.graph);
+        var opt = {
+          new: true,
+          disabled: false,
+          offset: {
+            x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
+            y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
+          }
+        };
+        var cells = graphToCells(design.graph, opt);
+        graph.addCells(cells);
+
+        // Select pasted elements
+        _.each(cells, function(cell) {
+          if (!cell.isLink()) {
+            var cellView = paper.findViewByModel(cell);
+            selection.add(cell);
+            selectionView.createSelectionBox(cellView);
+            unhighlight(cellView);
+          }
+        });
+      }
+    };
+
+    function graphOrigin(graph) {
+      var origin = { x: Infinity, y: Infinity };
+      _.each(graph.blocks, function(block) {
+        var position = block.position;
+        if (position.x < origin.x) {
+          origin = position;
+        }
+      });
+      return origin;
+    }
+
+    function updateCellAttributes(cell) {
       cell.attributes.state = state;
       cell.attributes.rules = profile.data.boardRules;
       //cell.attributes.zindex = z.index;
+    }
+
+    function addCell(cell) {
+      updateCellAttributes(cell);
       graph.addCell(cell);
       if (!cell.isLink()) {
         var cellView = paper.findViewByModel(cell);
