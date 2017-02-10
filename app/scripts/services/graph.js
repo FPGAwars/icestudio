@@ -600,20 +600,26 @@ angular.module('icestudio')
     };
 
     this.cutSelected = function() {
-      if (selection) {
+      if (hasSelection()) {
         utils.copyToClipboard(selection, graph);
         this.removeSelected();
       }
     };
 
     this.copySelected = function() {
-      if (selection) {
+      if (hasSelection()) {
         utils.copyToClipboard(selection, graph);
       }
     };
 
     this.pasteSelected = function() {
-      utils.pasteFromClipboard(function(clipboard) {
+      utils.pasteFromClipboard(function(clipboard, isGraph) {
+        if (isGraph && document.activeElement.tagName === 'BODY') {
+          console.log(clipboard, isGraph, document.activeElement.tagName);
+        }
+      });
+
+      /*utils.pasteFromClipboard(function(clipboard) {
         if (clipboard && clipboard.length > 0) {
           var origin = clipboardOrigin(clipboard);
           var offset = {
@@ -676,7 +682,7 @@ angular.module('icestudio')
               }
 
             });
-          });*/
+          });
 
           // All all cells: blocks and wires
           graph.addCells(newCells);
@@ -691,7 +697,7 @@ angular.module('icestudio')
             }
           });
         }
-      });
+      });*/
     };
 
     function clipboardOrigin(clipboard) {
@@ -784,12 +790,12 @@ angular.module('icestudio')
       }
     }
 
-    this.hasSelection = function() {
-      return selection.length > 0;
-    };
+    function hasSelection() {
+      return selection && selection.length > 0;
+    }
 
     this.removeSelected = function() {
-      if (selection) {
+      if (hasSelection()) {
         graph.removeCells(selection.models);
         selectionView.cancelSelection();
         updateWiresOnObstacles();
@@ -801,7 +807,7 @@ angular.module('icestudio')
     });
 
     function disableSelected() {
-      if (selection) {
+      if (hasSelection()) {
         selectionView.cancelSelection();
       }
     }

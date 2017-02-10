@@ -400,7 +400,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     });
   },
 
-  removeBox: function(/*evt*/) {
+  removeBox: function(/*event*/) {
     this.$box.remove();
   }
 });
@@ -435,7 +435,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   down: false,
   timer: null,
 
-  mouseovercard: function(/*evt, x, y*/) {
+  mouseovercard: function(/*event, x, y*/) {
     if (this.tooltip) {
       this.enter = true;
       var self = this;
@@ -454,7 +454,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  mouseoutcard: function(/*evt, x, y*/) {
+  mouseoutcard: function(/*event, x, y*/) {
     if (this.tooltip) {
       this.enter = false;
       if (this.timer) {
@@ -465,12 +465,12 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  mouseupcard: function(/*evt, x, y*/) {
+  mouseupcard: function(/*event, x, y*/) {
     this.down = false;
     this.mouseovercard();
   },
 
-  mousedowncard: function(/*evt, x, y*/) {
+  mousedowncard: function(/*event, x, y*/) {
     this.down = true;
     this.mouseoutcard();
   },
@@ -576,13 +576,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     if (data.pins) {
       for (var i in data.pins) {
-        //selectCode += '<p style="top:' + (30 + 38*i) + 'px">' + this.pins[i].index + '</p>';
         selectCode +='<select id="' + comboId + data.pins[i].index + '"';
         selectCode += 'class="select2" i="' + i + '">';
         selectCode += '</select>';
 
         selectScript += '$("#' + comboId + data.pins[i].index + '").select2(';
-        selectScript += '{placeholder: "", allowClear: true, dropdownCssClass: "bigdrop"});';
+        selectScript += '{placeholder: "", allowClear: true, dropdownCssClass: "bigdrop",';
+        // Match only words that start with the selected search term
+        // http://stackoverflow.com/questions/31571864/select2-search-match-only-words-that-start-with-search-term
+        selectScript += 'matcher: function(params, data) {';
+        selectScript += '  params.term = params.term || "";';
+        selectScript += '  if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) { return data; }';
+        selectScript += '  return false; } })';
       }
     }
 
@@ -606,10 +611,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     var self = this;
     var comboSelector = this.$box.find('.select2');
-    comboSelector.on('mousedown click', function(evt) { evt.stopPropagation(); });
-    comboSelector.on('change', function(evt) {
+    comboSelector.on('mousedown click', function(event) { event.stopPropagation(); });
+    comboSelector.on('change', function(event) {
       if (!self.updating) {
-        var target = $(evt.target);
+        var target = $(event.target);
         var i = target.attr('i');
         var name = target.find('option:selected').text();
         var value = target.val();
@@ -752,13 +757,20 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
     // Prevent paper from handling pointerdown.
     var self = this;
-    this.$box.find('.constant-input').on('mousedown click', function(evt) { evt.stopPropagation(); });
-    this.$box.find('.constant-input').on('input', function(evt) {
+    this.$box.find('.constant-input').on('mousedown click', function(event) { event.stopPropagation(); });
+    this.$box.find('.constant-input').on('input', function(event) {
       if (!self.updating) {
-        var target = $(evt.target);
+        var target = $(event.target);
         var data = JSON.parse(JSON.stringify(self.model.get('data')));
         data.value = target.val();
         self.model.set('data', data);
+      }
+    });
+    this.$box.find('.constant-input').on('paste', function(event) {
+      var data = event.originalEvent.clipboardData.getData('text');
+      if (data.startsWith('{"icestudio":')) {
+        // Prevent paste blocks
+        event.preventDefault();
       }
     });
 
@@ -852,7 +864,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
+    selector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -1023,7 +1035,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    selector.on('mousedown click', function(evt) { evt.stopPropagation(); });
+    selector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -1131,7 +1143,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     joint.dia.LinkView.prototype.remove.apply(this, arguments);
   },
 
-  removeBox: function(/*evt*/) {
+  removeBox: function(/*event*/) {
     this.$box.remove();
   }
 });

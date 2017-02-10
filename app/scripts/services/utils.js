@@ -1011,11 +1011,11 @@ angular.module('icestudio')
         try {
           var clipboard = JSON.parse(text);
           if (callback && clipboard && clipboard.icestudio) {
-            // TODO
-            // callback(clipboard);
+            callback(clipboard, true);
           }
         }
         catch (e) {
+          callback(text, false);
         }
       });
     };
