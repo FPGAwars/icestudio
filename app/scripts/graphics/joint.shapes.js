@@ -587,7 +587,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         selectScript += 'matcher: function(params, data) {';
         selectScript += '  params.term = params.term || "";';
         selectScript += '  if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) { return data; }';
-        selectScript += '  return false; } })';
+        selectScript += '  return false; } });';
       }
     }
 
