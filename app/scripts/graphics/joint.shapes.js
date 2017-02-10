@@ -610,9 +610,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     // Prevent paper from handling pointerdown.
     var self = this;
-    var comboSelector = this.$box.find('.select2');
-    comboSelector.on('mousedown click', function(event) { event.stopPropagation(); });
-    comboSelector.on('change', function(event) {
+    var selector = this.$box.find('.select2');
+    selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    selector.on('change', function(event) {
       if (!self.updating) {
         var target = $(event.target);
         var i = target.attr('i');
@@ -720,7 +720,14 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   update: function() {
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  removeBox: function() {
+    // Close select options on remove
+    this.$box.find('select').select2('close');
+    this.$box.remove();
   }
+
 });
 
 joint.shapes.ice.InputView = joint.shapes.ice.IOView;
@@ -757,8 +764,9 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
     // Prevent paper from handling pointerdown.
     var self = this;
-    this.$box.find('.constant-input').on('mousedown click', function(event) { event.stopPropagation(); });
-    this.$box.find('.constant-input').on('input', function(event) {
+    var selector = this.$box.find('.constant-input');
+    selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    selector.on('input', function(event) {
       if (!self.updating) {
         var target = $(event.target);
         var data = JSON.parse(JSON.stringify(self.model.get('data')));
@@ -766,7 +774,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
         self.model.set('data', data);
       }
     });
-    this.$box.find('.constant-input').on('paste', function(event) {
+    selector.on('paste', function(event) {
       var data = event.originalEvent.clipboardData.getData('text');
       if (data.startsWith('{"icestudio":')) {
         // Prevent paste blocks
@@ -900,6 +908,12 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+    });
+    this.editor.on('paste', function(e) {
+      if (e.text.startsWith('{"icestudio":')) {
+        // Prevent paste blocks
+        e.text = '';
+      }
     });
 
     this.setupResizer();
@@ -1073,6 +1087,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
     });
+    this.editor.on('paste', function(e) {
+      if (e.text.startsWith('{"icestudio":')) {
+        // Prevent paste blocks
+        e.text = '';
+      }
+    });
 
     this.setupResizer();
 
@@ -1137,13 +1157,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
                     top: bbox.y * state.zoom + state.pan.y });
   },
 
-  remove: function() {
+  removeBox: function(/*event*/) {
     // Remove delta to allow Session Value restore
     delete this.model.attributes.data.delta;
-    joint.dia.LinkView.prototype.remove.apply(this, arguments);
-  },
-
-  removeBox: function(/*event*/) {
     this.$box.remove();
   }
 });
