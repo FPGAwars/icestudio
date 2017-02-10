@@ -609,26 +609,31 @@ angular.module('icestudio')
       });
       async.eachSeries(collections, function(collection, next) {
         setTimeout(function() {
-          var destPath = nodePath.join(utils.COLLECTIONS_DIR, collection.name);
-          if (nodeFs.existsSync(destPath)) {
-            alertify.confirm(
-              gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
-              gettextCatalog.getString('Do you want to replace it?'),
-              function() {
-                utils.deleteFolderRecursive(destPath);
-                installCollection(collection, zip);
-                alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
-                next();
-              },
-              function() {
-                alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
-                next();
-              });
+          if (collection.package && (collection.blocks || collection.examples)) {
+            var destPath = nodePath.join(utils.COLLECTIONS_DIR, collection.name);
+            if (nodeFs.existsSync(destPath)) {
+              alertify.confirm(
+                gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
+                gettextCatalog.getString('Do you want to replace it?'),
+                function() {
+                  utils.deleteFolderRecursive(destPath);
+                  installCollection(collection, zip);
+                  alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
+                  next();
+                },
+                function() {
+                  alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
+                  next();
+                });
+            }
+            else {
+              installCollection(collection, zip);
+              alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
+              next();
+            }
           }
           else {
-            installCollection(collection, zip);
-            alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
-            next();
+            alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(collection.name) }));
           }
         }, 0);
       }, function() {
