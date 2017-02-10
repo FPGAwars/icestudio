@@ -2,8 +2,8 @@
 
 angular.module('icestudio')
   .service('blocks', function(joint,
-                              boards,
                               utils,
+                              common,
                               gettextCatalog) {
     var gridsize = 8;
 
@@ -440,7 +440,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         rightPorts: rightPorts,
-        choices: boards.pinoutInputHTML
+        choices: common.pinoutInputHTML
       });
       return cell;
     }
@@ -459,7 +459,7 @@ angular.module('icestudio')
         position: instance.position,
         disabled: disabled,
         leftPorts: leftPorts,
-        choices: boards.pinoutOutputHTML
+        choices: common.pinoutOutputHTML
       });
       return cell;
     }
@@ -545,7 +545,7 @@ angular.module('icestudio')
 
     function hasInputRule(port) {
       var _default;
-      var rules = boards.selectedBoard.rules;
+      var rules = common.selectedBoard.rules;
       if (rules) {
         var allInitPorts = rules.input;
         if (allInitPorts) {

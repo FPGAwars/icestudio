@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('compiler', function(boards,
+  .service('compiler', function(common,
                                 nodeSha1,
                                 _package) {
 
@@ -399,7 +399,7 @@ angular.module('icestudio')
       }
 
       // Filter pins defined in rules
-      var allInitPins = boards.selectedBoard.rules.output;
+      var allInitPins = common.selectedBoard.rules.output;
       for (i in allInitPins) {
         if (usedPins.indexOf(allInitPins[i].pin) === -1) {
           initPins.push(allInitPins[i]);

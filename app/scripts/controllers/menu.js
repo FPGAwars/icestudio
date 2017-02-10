@@ -11,6 +11,7 @@ angular.module('icestudio')
                                     graph,
                                     tools,
                                     utils,
+                                    common,
                                     shortcuts,
                                     gettextCatalog,
                                     gui,
@@ -25,6 +26,7 @@ angular.module('icestudio')
     $scope.project = project;
     $scope.tools = tools;
     $scope.resources = resources;
+    $scope.common = common;
 
     $scope.version = _package.version;
     $scope.toolchain = tools.toolchain;
@@ -345,8 +347,8 @@ angular.module('icestudio')
     //-- View
 
     $scope.showPCF = function() {
-      gui.Window.open('resources/viewers/plain/pcf.html?board=' + boards.selectedBoard.name, {
-        title: boards.selectedBoard.info.label + ' - PCF',
+      gui.Window.open('resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name, {
+        title: common.selectedBoard.info.label + ' - PCF',
         focus: true,
         toolbar: false,
         resizable: true,
@@ -357,10 +359,10 @@ angular.module('icestudio')
     };
 
     $scope.showPinout = function() {
-      var board = boards.selectedBoard;
+      var board = common.selectedBoard;
       if (nodeFs.existsSync(nodePath.join('resources', 'boards', board.name, 'pinout.svg'))) {
         gui.Window.open('resources/viewers/svg/pinout.html?board=' + board.name, {
-          title: boards.selectedBoard.info.label + ' - Pinout',
+          title: common.selectedBoard.info.label + ' - Pinout',
           focus: true,
           toolbar: false,
           resizable: true,
@@ -375,7 +377,7 @@ angular.module('icestudio')
     };
 
     $scope.showDatasheet = function() {
-      var board = boards.selectedBoard;
+      var board = common.selectedBoard;
       if (board.info.datasheet) {
         gui.Shell.openExternal(board.info.datasheet);
       }
@@ -385,11 +387,11 @@ angular.module('icestudio')
     };
 
     $scope.showBoardRules = function() {
-      var board = boards.selectedBoard;
+      var board = common.selectedBoard;
       var rules = JSON.stringify(board.rules);
       if (rules !== '{}') {
         gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
-          title: boards.selectedBoard.info.label + ' - Rules',
+          title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
           toolbar: false,
           resizable: false,
@@ -419,7 +421,7 @@ angular.module('icestudio')
     //-- Boards
 
     $scope.selectBoard = function(board) {
-      if (boards.selectedBoard.name !== board.name) {
+      if (common.selectedBoard.name !== board.name) {
         if (!graph.isEmpty()) {
           alertify.confirm(gettextCatalog.getString('The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?', { name: utils.bold(board.info.label) }),
             function() {

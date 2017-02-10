@@ -573,12 +573,18 @@ angular.module('icestudio')
       graph.startBatch('change');
       // Trigger board event
       var data = {
-        previous: boards.selectedBoard.name,
+        previous: common.selectedBoard.name,
         next: boardName
       };
       graph.trigger('board', { data: data });
       boardName = boards.selectBoard(boardName);
       var cells = graph.getCells();
+      resetIOBlocks(cells);
+      graph.stopBatch('change');
+      return boardName;
+    };
+
+    function resetIOBlocks(cells) {
       // Reset choices in all I/O blocks
       for (var i in cells) {
         var cell = cells[i];
@@ -586,14 +592,12 @@ angular.module('icestudio')
         if (type === 'basic.input' ||
             type === 'basic.output') {
           var view = paper.findViewByModel(cell.id);
-          cell.set('choices', (type === 'basic.input') ? boards.pinoutInputHTML : boards.pinoutOutputHTML);
+          cell.set('choices', (type === 'basic.input') ? common.pinoutInputHTML : common.pinoutOutputHTML);
           view.clearValues();
           view.applyChoices();
         }
       }
-      graph.stopBatch('change');
-      return boardName;
-    };
+    }
 
     this.resetCommandStack = function() {
       commandManager.reset();
@@ -851,6 +855,7 @@ angular.module('icestudio')
     function graphToCells(_graph, opt) {
       // Options:
       // - new: assign a new id to all the cells
+      // - reset: clear I/O blocks values
       // - disabled: set disabled flag to the blocks
       // - offset: apply an offset to all the cells
 
@@ -863,6 +868,15 @@ angular.module('icestudio')
       // Blocks
       _.each(_graph.blocks, function(blockInstance) {
         if (blockInstance.type.indexOf('basic.') !== -1) {
+          if (opt.reset &&
+              (blockInstance.type === 'basic.input' ||
+               blockInstance.type === 'basic.output')) {
+            var pins = blockInstance.data.pins;
+            for (var i in pins) {
+              pins[i].name = '';
+              pins[i].value = 0;
+            }
+          }
           cell = blocks.loadBasic(blockInstance, opt.disabled);
         }
         else {
@@ -934,6 +948,7 @@ angular.module('icestudio')
         var opt = {
           new: true,
           disabled: false,
+          reset: design.board !== common.selectedBoard.name,
           offset: {
             x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
             y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,

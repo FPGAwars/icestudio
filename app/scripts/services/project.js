@@ -434,7 +434,7 @@ angular.module('icestudio')
       var graphData = graph.toJSON();
       var p = utils.cellsToProject(graphData.cells, opt);
 
-      project.design.board = boards.selectedBoard.name;
+      project.design.board = p.design.board;
       project.design.graph = p.design.graph;
       project.dependencies = p.dependencies;
       var state = graph.getState();

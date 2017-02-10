@@ -1111,6 +1111,7 @@ angular.module('icestudio')
         }
       }
 
+      p.design.board = common.selectedBoard.name;
       p.design.graph = { blocks: blocks, wires: wires };
 
       // Update dependencies

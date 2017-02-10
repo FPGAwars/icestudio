@@ -2,11 +2,11 @@
 
 angular.module('icestudio')
   .service('tools', function(project,
-                             boards,
                              compiler,
                              profile,
                              resources,
                              utils,
+                             common,
                              gettextCatalog,
                              gettext,
                              nodeGettext,
@@ -36,11 +36,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function() {
-      this.apio(['build', '-b', boards.selectedBoard.name]);
+      this.apio(['build', '-b', common.selectedBoard.name]);
     };
 
     this.uploadCode = function() {
-      this.apio(['upload', '-b', boards.selectedBoard.name]);
+      this.apio(['upload', '-b', common.selectedBoard.name]);
     };
 
     this.apio = function(commands) {
@@ -231,7 +231,7 @@ angular.module('icestudio')
           if (stdout) {
             if (stdout.indexOf('[upload] Error') !== -1 ||
                 stdout.indexOf('Error: board not detected') !== -1) {
-              alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(boards.selectedBoard.info.label) }), 30);
+              alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
             else if (stdout.indexOf('Error: unkown board') !== -1) {
               alertify.error(gettextCatalog.getString('Unknown board'), 30);

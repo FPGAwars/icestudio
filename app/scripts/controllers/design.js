@@ -4,12 +4,11 @@ angular.module('icestudio')
   .controller('DesignCtrl', function ($rootScope,
                                       $scope,
                                       project,
-                                      boards,
                                       graph,
                                       utils,
                                       common) {
 
-    $scope.boards = boards;
+    $scope.common = common;
     $scope.graph = graph;
     $scope.information = {};
 

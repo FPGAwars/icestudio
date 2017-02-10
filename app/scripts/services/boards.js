@@ -2,13 +2,11 @@
 
 angular.module('icestudio')
   .service('boards', function(utils,
+                              common,
                               nodeFs,
                               nodePath) {
     const DEFAULT = 'icezum';
 
-    this.pinoutInputHTML = '';
-    this.pinoutOutputHTML = '';
-    this.selectedBoard = null;
     this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
 
     function loadBoards(path) {
@@ -68,11 +66,11 @@ angular.module('icestudio')
           }
         }
       }
-      this.selectedBoard = selectedBoard;
-      this.pinoutInputHTML = generateHTMLOptions(this.selectedBoard.pinout, 'input');
-      this.pinoutOutputHTML = generateHTMLOptions(this.selectedBoard.pinout, 'output');
+      common.selectedBoard = selectedBoard;
+      common.pinoutInputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'input');
+      common.pinoutOutputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'output');
       utils.rootScopeSafeApply();
-      return this.selectedBoard.name;
+      return common.selectedBoard.name;
     };
 
     function generateHTMLOptions(pinout, type) {

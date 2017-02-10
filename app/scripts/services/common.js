@@ -9,6 +9,11 @@ angular.module('icestudio')
     // All project dependencies
     this.allDependencies = {};
 
+    // Selected board
+    this.selectedBoard = null;
+    this.pinoutInputHTML = '';
+    this.pinoutOutputHTML = '';
+
     // TODO: move all constants
 
   });

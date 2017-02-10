@@ -203,7 +203,7 @@
                   <li ng-repeat="board in boards.currentBoards">
                     <a href ng-click="selectBoard(board)">
                       {{ board.info.label }}&ensp;
-                      <span ng-show="boards.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
+                      <span ng-show="common.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
                 </ul>
