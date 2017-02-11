@@ -892,20 +892,44 @@ angular.module('icestudio')
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       var blockInstance = {
-        id: null,
+        id: block.id,
         data: block.data,
         type: 'basic.code',
-        position: block.position
+        position: block.position,
+        size: block.size
       };
       newBasicCode(function(cell) {
         if (addCellCallback) {
+          var connectedWires = graph.getConnectedLinks(cellView.model);
           graph.startBatch('change');
-          addCellCallback(cell);
           cellView.model.remove();
+          addCellCallback(cell);
+          // Restore previous connections
+          for (var w in connectedWires) {
+            var wire = connectedWires[w];
+            var source = wire.get('source');
+            var target = wire.get('target');
+            if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
+                (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
+                (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
+              graph.addCell(wire);
+            }
+          }
           graph.stopBatch('change');
           alertify.success(gettextCatalog.getString('Block updated'));
         }
       }, blockInstance);
+    }
+
+    function containsPort(port, ports) {
+      var found = false;
+      for (var i in ports) {
+        if (port === ports[i].label) {
+          found = true;
+          break;
+        }
+      }
+      return found;
     }
 
   });

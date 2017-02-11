@@ -578,7 +578,7 @@ angular.module('icestudio')
 
     // -- File
     shortcuts.method('newProject', $scope.newProject);
-    shortcuts.method('openProject', $scope.openProject);
+    shortcuts.method('openProject', $scope.openProjectDialog);
     shortcuts.method('saveProject', $scope.saveProject);
     shortcuts.method('saveProjectAs', $scope.saveProjectAs);
     shortcuts.method('quit', $scope.quit);
