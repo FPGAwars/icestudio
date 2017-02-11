@@ -893,7 +893,7 @@ angular.module('icestudio')
       var block = cellView.model.attributes;
       var blockInstance = {
         id: block.id,
-        data: block.data,
+        data: utils.clone(block.data),
         type: 'basic.code',
         position: block.position,
         size: block.size
