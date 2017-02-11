@@ -108,7 +108,7 @@
           "id": "8fa94192-fba9-4c2a-be61-b8ca88389423",
           "type": "basic.input",
           "data": {
-            "name": "rst*",
+            "name": "rst_n",
             "pins": [
               {
                 "index": "0",
@@ -127,7 +127,7 @@
           "id": "4a261f0b-523c-4fe0-ae1c-de05b8eb7e8a",
           "type": "basic.output",
           "data": {
-            "name": "Q*",
+            "name": "Q_n",
             "pins": [
               {
                 "index": "0",

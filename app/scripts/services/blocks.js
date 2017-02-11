@@ -633,7 +633,7 @@ angular.module('icestudio')
         pullup: block.design.pullup,
         image: blockImage,
         label: blockLabel,
-        tooltip: block.package.description,
+        tooltip: gettextCatalog.getString(block.package.description), // TODO: update on change language
         position: instance.position,
         size: size,
         disabled: disabled,

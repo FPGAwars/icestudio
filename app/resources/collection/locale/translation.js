@@ -12,6 +12,7 @@
 
 /// Bit
 gettext('bit');
+gettext('Assign 0 to the output wire');
 /// Config
 gettext('config');
 /// Pull up

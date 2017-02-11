@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-02-08 18:07+0100\n"
-"PO-Revision-Date: 2017-02-08 18:08+0100\n"
+"POT-Creation-Date: 2017-02-11 18:14+0100\n"
+"PO-Revision-Date: 2017-02-11 18:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -20,172 +20,176 @@ msgstr ""
 msgid "bit"
 msgstr "Bit"
 
+#: translation.js:15
+msgid "Assign 0 to the output wire"
+msgstr "Assign 0 to the output wire"
+
 #. / Config
-#: translation.js:16
+#: translation.js:17
 msgid "config"
 msgstr "Config"
 
 #. / Pull up
-#: translation.js:18
+#: translation.js:19
 msgid "pull_up"
 msgstr "Pull up"
 
 #. / Pull up inv
-#: translation.js:20
+#: translation.js:21
 msgid "pull_up_inv"
 msgstr "Pull up inv"
 
 #. / Tri-state
-#: translation.js:22
+#: translation.js:23
 msgid "tri_state"
 msgstr "Tri-state"
 
 #. / Logic
-#: translation.js:24
+#: translation.js:25
 msgid "logic"
 msgstr "Logic"
 
 #. / Combinational
-#: translation.js:26
+#: translation.js:27
 msgid "combinational"
 msgstr "Combinational"
 
 #. / Demux 1:2
-#: translation.js:28
+#: translation.js:29
 msgid "demux_1_2"
 msgstr "Demux 1:2"
 
 #. / Demux 1:4
-#: translation.js:30
+#: translation.js:31
 msgid "demux_1_4"
 msgstr "Demux 1:4"
 
 #. / Demux 1:8
-#: translation.js:32
+#: translation.js:33
 msgid "demux_1_8"
 msgstr "Demux 1:8"
 
 #. / Hex 7 Segment CC
-#: translation.js:34
+#: translation.js:35
 msgid "hex_7seg_cc"
 msgstr "Hex 7 Segment CC"
 
 #. / Hex 7 Segment CA
-#: translation.js:36
+#: translation.js:37
 msgid "hex_7seg_ca"
 msgstr "Hex 7 Segment CA"
 
 #. / Mux 2:1
-#: translation.js:38
+#: translation.js:39
 msgid "mux_2_1"
 msgstr "Mux 2:1"
 
 #. / Mux 4:1
-#: translation.js:40
+#: translation.js:41
 msgid "mux_4_1"
 msgstr "Mux 4:1"
 
 #. / Gate
-#: translation.js:42
+#: translation.js:43
 msgid "gate"
 msgstr "Gate"
 
 #. / And
-#: translation.js:44
+#: translation.js:45
 msgid "and"
 msgstr "And"
 
 #. / Nand
-#: translation.js:46
+#: translation.js:47
 msgid "nand"
 msgstr "Nand"
 
 #. / Nor
-#: translation.js:48
+#: translation.js:49
 msgid "nor"
 msgstr "Nor"
 
 #. / Not
-#: translation.js:50
+#: translation.js:51
 msgid "not"
 msgstr "Not"
 
 #. / Or
-#: translation.js:52
+#: translation.js:53
 msgid "or"
 msgstr "Or"
 
 #. / Xnor
-#: translation.js:54
+#: translation.js:55
 msgid "xnor"
 msgstr "Xnor"
 
 #. / Xor
-#: translation.js:56
+#: translation.js:57
 msgid "xor"
 msgstr "Xor"
 
 #. / Sequential
-#: translation.js:58
+#: translation.js:59
 msgid "sequential"
 msgstr "Sequential"
 
 #. / D flip-flop async
-#: translation.js:60
+#: translation.js:61
 msgid "dff_ar"
 msgstr "D flip-flop async"
 
 #. / D flip-flop
-#: translation.js:62
+#: translation.js:63
 msgid "dff_sr"
 msgstr "D flip-flop"
 
 #. / T flip-flop async
-#: translation.js:64
+#: translation.js:65
 msgid "tff_ar"
 msgstr "T flip-flop async"
 
 #. / T flip-flop
-#: translation.js:66
+#: translation.js:67
 msgid "tff_sr"
 msgstr "T flip-flop"
 
 #. / Debouncer
-#: translation.js:68
+#: translation.js:69
 msgid "debouncer"
 msgstr "Debouncer"
 
 #. / 1. Basic
-#: translation.js:70
+#: translation.js:71
 msgid "1_basic"
 msgstr "1. Basic"
 
 #. / 2. Counter
-#: translation.js:72
+#: translation.js:73
 msgid "2_counter"
 msgstr "2. Counter"
 
 #. / 1. Led on
-#: translation.js:74
+#: translation.js:75
 msgid "1_led_on"
 msgstr "1. Led on"
 
 #. / 2. Switch led
-#: translation.js:76
+#: translation.js:77
 msgid "2_switch_led"
 msgstr "2. Switch led"
 
 #. / 3. Switch and gate
-#: translation.js:78
+#: translation.js:79
 msgid "3_switch_and_gate"
 msgstr "3. Switch and gate"
 
 #. / contadorAsc
-#: translation.js:80
+#: translation.js:81
 msgid "contadorAsc"
 msgstr "contadorAsc"
 
 #. / contadorDes
-#: translation.js:82
+#: translation.js:83
 msgid "contadorDes"
 msgstr "contadorDes"
