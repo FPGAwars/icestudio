@@ -457,14 +457,16 @@ angular.module('icestudio')
           var block = graph.getCell(target.id);
           if (block) {
             var data = block.get('data');
-            for (i in data.ports.in) {
-              port = data.ports.in[i];
-              if (port.name === target.port && port.default) {
-                port.default.apply = value;
-                break;
+            if (data && data.ports && data.ports.in) {
+              for (i in data.ports.in) {
+                port = data.ports.in[i];
+                if (port.name === target.port && port.default) {
+                  port.default.apply = value;
+                  break;
+                }
               }
+              paper.findViewByModel(block.id).updateBox();
             }
-            paper.findViewByModel(block.id).updateBox();
           }
         }
       }
@@ -914,7 +916,7 @@ angular.module('icestudio')
               });
             });
           }
-          wireInstance.verices = newVertices;
+          wireInstance.vertices = newVertices;
         }
         cell = blocks.loadWire(wireInstance, source, target);
         if (opt.new) {

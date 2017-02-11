@@ -380,10 +380,10 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       }
     }
     // Render rules
-    if (rules && data && data.ports && data.ports.in) {
+    if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
-        if (port.default && port.default.apply) {
+        if (rules && port.default && port.default.apply) {
           this.$('#port-default-' + port.name).css('display', 'inline');
           this.$('#port-default-wire-' + port.name).css('stroke-width', width);
           this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
@@ -421,7 +421,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   template: '\
   <div class="generic-block">\
-    <img>\
+    <div class="image" style="text-align:center;"></div>\
     <label></label>\
     <span class="tooltiptext"></span>\
   </div>\
@@ -502,25 +502,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     var ports = this.model.get('leftPorts');
     var size = this.model.get('size');
 
-    // Render clocks
-    this.$box.find('p').remove();
-    var n = ports.length;
-    var gridsize = 8;
-    var height = this.model.get('size').height;
-    for (var i in ports) {
-      var port = ports[i];
-      if (port.clock) {
-        this.$box.prepend('<p style="top: ' + (Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 12) + 'px;">&gt;</p>');
-      }
-    }
-
-    var imageSelector = this.$box.find('img');
+    var imageSelector = this.$box.find('.image');
     var labelSelector = this.$box.find('label');
 
     if (image) {
       // Render image
-      imageSelector.attr('src', 'data:image/svg+xml,' + image);
-      if (imageSelector[0].width / imageSelector[0].height > size.width / size.height) {
+      imageSelector.empty();
+      imageSelector.append(decodeURI(image));
+      var rect = $(decodeURI(image))[0].viewBox.baseVal;
+      if (rect.width / rect.height > size.width / size.height) {
         imageSelector.css('width', '80%');
       }
       else {
@@ -534,6 +524,22 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       labelSelector.html(label);
       labelSelector.removeClass('hidden');
       imageSelector.addClass('hidden');
+    }
+
+    // Render clocks
+    this.$box.find('.clock').remove();
+    var n = ports.length;
+    var gridsize = 8;
+    var height = this.model.get('size').height;
+    for (var i in ports) {
+      var port = ports[i];
+      if (port.clock) {
+        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 12;
+        this.$box.append('\
+          <div class="clock" style="top: ' + top + 'px;">\
+            <svg width="10" height="12"><path d="M.0.0l9.318 5.4-9.318 5.4" fill="none" stroke="#555" stroke-width="1"/>\
+          </div>');
+      }
     }
   }
 });
@@ -990,10 +996,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       }
     }
     // Render rules
-    if (rules && data && data.ports && data.ports.in) {
+    if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
-        if (port.default && port.default.apply) {
+        if (rules && port.default && port.default.apply) {
           this.$('#port-default-' + port.name).css('display', 'inline');
           this.$('#port-default-wire-' + port.name).css('stroke-width', width);
           this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);

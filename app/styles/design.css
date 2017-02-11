@@ -98,7 +98,7 @@
   z-index: 0;
 }
 
-.generic-block p {
+.generic-block .clock {
   position: absolute;
   top: 3px;
   left: -1px;
@@ -142,13 +142,20 @@
   background: #fafacd;
 }
 
-.generic-block img {
+.generic-block .image {
   position: absolute;
   margin: auto;
+  height: 100%;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.generic-block .image svg {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .generic-block label {

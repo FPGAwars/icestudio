@@ -562,17 +562,18 @@ angular.module('icestudio')
 
     function loadGeneric(instance, block, disabled) {
       var i;
-      var data = { ports: { in: [] }};
       var leftPorts = [];
       var rightPorts = [];
       var topPorts = [];
       var bottomPorts = [];
 
+      instance.data = { ports: { in: [] }};
+
       for (i in block.design.graph.blocks) {
         var item = block.design.graph.blocks[i];
         if (item.type === 'basic.input') {
           if (!item.data.range) {
-            data.ports.in.push({
+            instance.data.ports.in.push({
               name: item.id,
               default: hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
             });
@@ -580,16 +581,15 @@ angular.module('icestudio')
           leftPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range || ''),
-            size: data.pins ? data.pins.length : (data.size || 1),
-            clock: data.clock
+            size: item.data.pins ? item.data.pins.length : (item.data.size || 1),
+            clock: item.data.clock
           });
         }
         else if (item.type === 'basic.output') {
-          data = block.design.graph.blocks[i].data;
           rightPorts.push({
             id: item.id,
             label: item.data.name + (item.data.range || ''),
-            size: data.pins ? data.pins.length : (data.size || 1)
+            size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
         }
         else if (item.type === 'basic.constant') {
@@ -628,7 +628,7 @@ angular.module('icestudio')
       var cell = new joint.shapes.ice.Generic({
         id: instance.id,
         blockType: instance.type,
-        data: data,
+        data: instance.data,
         config: block.design.config,
         pullup: block.design.pullup,
         image: blockImage,
