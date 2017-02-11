@@ -412,7 +412,8 @@ angular.module('icestudio')
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
             case 'basic.input':
-              delete block.data.default;
+            case 'basic.output':
+            case 'basic.constant':
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {
@@ -422,6 +423,10 @@ angular.module('icestudio')
               break;
             case 'basic.info':
               delete block.data.deltas;
+              break;
+            default:
+              // Generic block
+              delete block.data;
               break;
           }
         }

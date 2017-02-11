@@ -357,6 +357,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   updateBox: function() {
     var i, port;
     var bbox = this.model.getBBox();
+    var data = this.model.get('data');
     var state = this.model.get('state');
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
@@ -365,17 +366,9 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
-    // Render buses
+    // Set buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      if (rules && port.default && port.default.apply) {
-        this.$('#port-default-' + port.id).css('display', 'inline');
-        this.$('#port-default-wire-' + port.id).css('stroke-width', width);
-        this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
-      }
-      else {
-        this.$('#port-default-' + port.id).css('display', 'none');
-      }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
@@ -386,10 +379,20 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
     }
-
-    /*if (this.$box.css('z-index') > this.model.attributes.zindex) {
-      this.$box.css('z-index', ++this.model.attributes.zindex);
-    }*/
+    // Render rules
+    if (rules && data && data.ports && data.ports.in) {
+      for (i in data.ports.in) {
+        port = data.ports.in[i];
+        if (port.default && port.default.apply) {
+          this.$('#port-default-' + port.name).css('display', 'inline');
+          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
+          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+        }
+        else {
+          this.$('#port-default-' + port.name).css('display', 'none');
+        }
+      }
+    }
 
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
@@ -959,6 +962,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   updateBox: function() {
     var i, port;
     var bbox = this.model.getBBox();
+    var data = this.model.get('data');
     var state = this.model.get('state');
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
@@ -975,14 +979,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Set buses
     for (i in leftPorts) {
       port = leftPorts[i];
-      if (rules && port.default && port.default.apply) {
-        this.$('#port-default-' + port.id).css('display', 'inline');
-        this.$('#port-default-wire-' + port.id).css('stroke-width', width);
-        this.$('#port-default-rect-' + port.id).css('stroke-width', state.zoom);
-      }
-      else {
-        this.$('#port-default-' + port.id).css('display', 'none');
-      }
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
       }
@@ -991,6 +987,20 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       port = rightPorts[i];
       if (port.size > 1) {
         this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+      }
+    }
+    // Render rules
+    if (rules && data && data.ports && data.ports.in) {
+      for (i in data.ports.in) {
+        port = data.ports.in[i];
+        if (port.default && port.default.apply) {
+          this.$('#port-default-' + port.name).css('display', 'inline');
+          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
+          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+        }
+        else {
+          this.$('#port-default-' + port.name).css('display', 'none');
+        }
       }
     }
 

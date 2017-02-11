@@ -453,12 +453,14 @@ angular.module('icestudio')
 
       function updatePortDefault(target, value) {
         if (target) {
+          var i, port;
           var block = graph.getCell(target.id);
           if (block) {
-            var ports = block.get('leftPorts');
-            for (var i in ports) {
-              if (ports[i].id === target.port && ports[i].default) {
-                ports[i].default.apply = value;
+            var data = block.get('data');
+            for (i in data.ports.in) {
+              port = data.ports.in[i];
+              if (port.name === target.port && port.default) {
+                port.default.apply = value;
                 break;
               }
             }

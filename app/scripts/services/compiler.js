@@ -333,7 +333,6 @@ angular.module('icestudio')
       var i, j;
       var initPorts = [];
       var blocks = project.design.graph.blocks;
-      var dependencies = project.dependencies;
 
       // Find all not connected input ports:
       // - Code blocks
@@ -341,8 +340,8 @@ angular.module('icestudio')
       for (i in blocks) {
         var block = blocks[i];
         if (block) {
-          if (block.type === 'basic.code') {
-            // Code block
+          if (block.type === 'basic.code' || !block.type.startsWith('basic.')) {
+            // Code block or Generic block
             for (j in block.data.ports.in) {
               var inPort = block.data.ports.in[j];
               if (inPort.default && inPort.default.apply) {
@@ -351,24 +350,6 @@ angular.module('icestudio')
                   port: inPort.name,
                   name: inPort.default.port,
                   pin: inPort.default.pin
-                });
-              }
-            }
-            // block.data.ports.in
-          }
-          else if (!block.type.startsWith('basic.')) {
-            // Generic block
-            var genericBlock = dependencies[block.type];
-            var subBlocks = genericBlock.design.graph.blocks;
-            for (j in subBlocks) {
-              var subBlock = subBlocks[j];
-              if (subBlock.type === 'basic.input' &&
-                  subBlock.data.default && subBlock.data.default.apply) {
-                initPorts.push({
-                  block: block.id,
-                  port: subBlock.id,
-                  name: subBlock.data.default.port,
-                  pin: subBlock.data.default.pin
                 });
               }
             }
