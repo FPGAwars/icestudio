@@ -486,12 +486,13 @@ angular.module('icestudio')
       }
     }
 
-    this.refreshBoardRules = function() {
+    this.setBoardRules = function(value) {
       var cells = graph.getCells();
+      profile.data.boardRules = value;
 
       _.each(cells, function(cell) {
         if (!cell.isLink()) {
-          cell.attributes.rules = profile.data.boardRules;
+          cell.attributes.rules = value;
           var cellView = paper.findViewByModel(cell);
           cellView.updateBox();
         }
@@ -583,22 +584,36 @@ angular.module('icestudio')
       graph.trigger('board', { data: data });
       boardName = boards.selectBoard(boardName);
       var cells = graph.getCells();
-      resetIOBlocks(cells);
+      resetBlocks(cells);
       graph.stopBatch('change');
       return boardName;
     };
 
-    function resetIOBlocks(cells) {
-      // Reset choices in all I/O blocks
+    function resetBlocks(cells) {
       for (var i in cells) {
         var cell = cells[i];
         var type = cell.get('blockType');
-        if (type === 'basic.input' ||
-            type === 'basic.output') {
+        if (type === 'basic.input' || type === 'basic.output') {
+          // Reset choices in all Input / blocks
           var view = paper.findViewByModel(cell.id);
           cell.set('choices', (type === 'basic.input') ? common.pinoutInputHTML : common.pinoutOutputHTML);
           view.clearValues();
           view.applyChoices();
+        }
+        else if (type === 'basic.code') {
+          // Reset rules in Code block ports
+          var data = utils.clone(cell.get('data'));
+          if (data && data.ports && data.ports.in) {
+            for (var j in data.ports.in) {
+              var port = data.ports.in[j];
+              port.default = utils.hasInputRule(port.name);
+            }
+          }
+          cell.set('data', data);
+          paper.findViewByModel(cell.id).updateBox();
+        }
+        else if (type.indexOf('basic.') === -1) {
+          // Reset rules in Generic block ports
         }
       }
     }

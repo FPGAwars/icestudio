@@ -414,19 +414,16 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
+            case 'basic.info':
               break;
             case 'basic.code':
-              for (var j in block.data.ports.in) {
+              /*for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
-              }
-              delete block.data.deltas;
-              break;
-            case 'basic.info':
-              delete block.data.deltas;
+              }*/
               break;
             default:
               // Generic block
-              delete block.data;
+              //delete block.data;
               break;
           }
         }

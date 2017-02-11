@@ -421,7 +421,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   template: '\
   <div class="generic-block">\
-    <div class="image" style="text-align:center;"></div>\
+    <div class="image"></div>\
     <label></label>\
     <span class="tooltiptext"></span>\
   </div>\
@@ -903,13 +903,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         self.deltas = self.deltas.concat([delta]);
         // Launch timer
         self.timer = setTimeout(function() {
-          var data = JSON.parse(JSON.stringify(self.model.get('data')));
-          // Set data
-          data.code = self.editor.session.getValue();
-          data.deltas = self.deltas;
-          self.model.set('data', data);
+          var deltas = JSON.parse(JSON.stringify(self.deltas));
+          // Set deltas
+          self.model.set('deltas', deltas);
           // Reset deltas
           self.deltas = [];
+          // Set data.code
+          self.model.attributes.data.code = self.editor.session.getValue();
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
@@ -928,27 +928,45 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.setupResizer();
 
     // Apply data
-    this.apply();
+    this.apply({ ini: true });
   },
 
   applyValue: function(opt) {
     this.updating = true;
+
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas && opt && opt.attribute === 'data') {
-      var changes = [{
-        group: 'doc',
-        deltas: data.deltas
-      }];
-      if (opt.undo) {
-        this.editor.session.undoChanges(changes, dontselect);
-      }
-      else {
-        this.editor.session.redoChanges(changes, dontselect);
-      }
+    var deltas = this.model.get('deltas');
+
+    opt = opt || {};
+
+    switch (opt.attribute) {
+      case 'deltas':
+        if (deltas) {
+          var changes = [{
+            group: 'doc',
+            deltas: deltas
+          }];
+          if (opt.undo) {
+            this.editor.session.undoChanges(changes, dontselect);
+          }
+          else {
+            this.editor.session.redoChanges(changes, dontselect);
+          }
+        }
+        break;
+      case 'data':
+
+        break;
+      default:
+        break;
+    }
+    if (opt.ini) {
+      this.editor.session.setValue(data.code);
     }
     else {
-      this.editor.session.setValue(data.code);
+      // Set data.code
+      this.model.attributes.data.code = this.editor.session.getValue();
     }
     setTimeout(function(self) {
       self.updating = false;
@@ -1085,16 +1103,15 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         }
         // Update deltas
         self.deltas = self.deltas.concat([delta]);
-        // Launch timer to
+        // Launch timer
         self.timer = setTimeout(function() {
-          // Set data
-          var data = {
-            info: self.editor.session.getValue(),
-            deltas: self.deltas
-          };
-          self.model.set('data', data);
+          var deltas = JSON.parse(JSON.stringify(self.deltas));
+          // Set deltas
+          self.model.set('deltas', deltas);
           // Reset deltas
           self.deltas = [];
+          // Set data.code
+          self.model.attributes.data.info = self.editor.session.getValue();
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
@@ -1113,27 +1130,45 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.setupResizer();
 
     // Apply data
-    this.apply();
+    this.apply({ ini: true });
   },
 
   applyValue: function(opt) {
     this.updating = true;
+
     var dontselect = false;
     var data = this.model.get('data');
-    if (data.deltas && opt && opt.attribute === 'data') {
-      var changes = [{
-        group: 'doc',
-        deltas: data.deltas
-      }];
-      if (opt.undo) {
-        this.editor.session.undoChanges(changes, dontselect);
-      }
-      else {
-        this.editor.session.redoChanges(changes, dontselect);
-      }
+    var deltas = this.model.get('deltas');
+
+    opt = opt || {};
+
+    switch (opt.attribute) {
+      case 'deltas':
+        if (deltas) {
+          var changes = [{
+            group: 'doc',
+            deltas: deltas
+          }];
+          if (opt.undo) {
+            this.editor.session.undoChanges(changes, dontselect);
+          }
+          else {
+            this.editor.session.redoChanges(changes, dontselect);
+          }
+        }
+        break;
+      case 'data':
+
+        break;
+      default:
+        break;
+    }
+    if (opt.ini) {
+      this.editor.session.setValue(data.info);
     }
     else {
-      this.editor.session.setValue(data.info);
+      // Set data.code
+      this.model.attributes.data.info = this.editor.session.getValue();
     }
     setTimeout(function(self) {
       self.updating = false;

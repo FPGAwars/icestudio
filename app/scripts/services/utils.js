@@ -1142,4 +1142,22 @@ angular.module('icestudio')
       return subDependencies;
     };
 
+    this.hasInputRule = function(port) {
+      var _default;
+      var rules = common.selectedBoard.rules;
+      if (rules) {
+        var allInitPorts = rules.input;
+        if (allInitPorts) {
+          for (var i in allInitPorts) {
+            if (port === allInitPorts[i].port){
+              _default = allInitPorts[i];
+              _default.apply = true;
+              break;
+            }
+          }
+        }
+      }
+      return _.clone(_default);
+    };
+
   });

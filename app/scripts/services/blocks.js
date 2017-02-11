@@ -489,7 +489,7 @@ angular.module('icestudio')
       for (var i in instance.data.ports.in) {
         port = instance.data.ports.in[i];
         if (!port.range) {
-          port.default = hasInputRule(port.name);
+          port.default = utils.hasInputRule(port.name);
         }
         leftPorts.push({
           id: port.name,
@@ -542,24 +542,6 @@ angular.module('icestudio')
       return cell;
     }
 
-    function hasInputRule(port) {
-      var _default;
-      var rules = common.selectedBoard.rules;
-      if (rules) {
-        var allInitPorts = rules.input;
-        if (allInitPorts) {
-          for (var i in allInitPorts) {
-            if (port === allInitPorts[i].port){
-              _default = allInitPorts[i];
-              _default.apply = true;
-              break;
-            }
-          }
-        }
-      }
-      return _.clone(_default);
-    }
-
     function loadGeneric(instance, block, disabled) {
       var i;
       var leftPorts = [];
@@ -575,7 +557,7 @@ angular.module('icestudio')
           if (!item.data.range) {
             instance.data.ports.in.push({
               name: item.id,
-              default: hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
+              default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
             });
           }
           leftPorts.push({

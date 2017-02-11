@@ -325,14 +325,12 @@ angular.module('icestudio')
     };
 
     $scope.enableBoardRules = function() {
-      profile.data.boardRules = true;
-      graph.refreshBoardRules();
+      graph.setBoardRules(true);
       alertify.success(gettextCatalog.getString('Board rules enabled'));
     };
 
     $scope.disableBoardRules = function() {
-      profile.data.boardRules = false;
-      graph.refreshBoardRules();
+      graph.setBoardRules(false);
       alertify.success(gettextCatalog.getString('Board rules disabled'));
     };
 
