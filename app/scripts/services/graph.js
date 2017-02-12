@@ -488,7 +488,7 @@ angular.module('icestudio')
 
     this.setBoardRules = function(value) {
       var cells = graph.getCells();
-      profile.data.boardRules = value;
+      profile.set('boardRules', value);
 
       _.each(cells, function(cell) {
         if (!cell.isLink()) {
@@ -583,12 +583,12 @@ angular.module('icestudio')
       };
       graph.trigger('board', { data: data });
       boardName = boards.selectBoard(boardName);
-      this.resetBlocks();
+      resetBlocks();
       graph.stopBatch('change');
       return boardName;
     };
 
-    this.resetBlocks = function() {
+    function resetBlocks() {
       var data;
       var cells = graph.getCells();
       for (var i in cells) {
@@ -635,7 +635,7 @@ angular.module('icestudio')
           paper.findViewByModel(cell.id).updateBox();
         }
       }
-    };
+    }
 
     this.resetCommandStack = function() {
       commandManager.reset();
@@ -850,13 +850,15 @@ angular.module('icestudio')
       return paper.options.enabled;
     };
 
-    this.loadDesign = function(design, disabled, callback) {
+    this.loadDesign = function(design, opt, callback) {
       if (design &&
           design.graph &&
           design.graph.blocks &&
           design.graph.wires) {
 
         var self = this;
+
+        opt = opt || {};
 
         $('body').addClass('waiting');
 
@@ -868,13 +870,12 @@ angular.module('icestudio')
 
           self.clearAll();
 
-          var opt = { disabled: disabled };
           var cells = graphToCells(design.graph, opt);
           graph.addCells(cells);
 
-          self.appEnable(!disabled);
+          self.appEnable(!opt.disabled);
 
-          if (!disabled) {
+          if (!opt.disabled) {
             commandManager.listen();
           }
 
@@ -1020,7 +1021,7 @@ angular.module('icestudio')
 
     function updateCellAttributes(cell) {
       cell.attributes.state = state;
-      cell.attributes.rules = profile.data.boardRules;
+      cell.attributes.rules = profile.get('boardRules');
       //cell.attributes.zindex = z.index;
     }
 

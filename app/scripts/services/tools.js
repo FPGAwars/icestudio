@@ -137,7 +137,7 @@ angular.module('icestudio')
         nodeFs.mkdirSync(utils.BUILD_DIR);
       }
       project.update();
-      var opt = { boardRules: profile.data.boardRules };
+      var opt = { boardRules: profile.get('boardRules') };
       if (opt.boardRules) {
         opt.initPorts = compiler.getInitPorts(project.get());
         opt.initPins = compiler.getInitPins(project.get());
@@ -187,7 +187,7 @@ angular.module('icestudio')
     };
 
     function execute(commands, label, currentAlert, callback) {
-      var remoteHostname = profile.data.remoteHostname;
+      var remoteHostname = profile.get('remoteHostname');
 
       if (remoteHostname) {
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
@@ -265,10 +265,10 @@ angular.module('icestudio')
           else if (stderr) {
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
                 stderr.indexOf('Connection refused') !== -1) {
-              alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.data.remoteHostname }), 30);
+              alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
             }
             else if (stderr.indexOf('No route to host') !== -1) {
-              alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.data.remoteHostname }), 30);
+              alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
             }
             else {
               alertify.error(stderr, 30);

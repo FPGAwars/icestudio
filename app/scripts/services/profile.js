@@ -25,12 +25,23 @@ angular.module('icestudio')
       });
     };
 
+    this.set = function(key, value) {
+      if (this.data[key]) {
+        this.data[key] = value;
+        this.save();
+      }
+    };
+
+    this.get = function(key) {
+      return this.data[key];
+    };
+
     this.save = function() {
       if (!nodeFs.existsSync(utils.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(utils.ICESTUDIO_DIR);
       }
       utils.saveFile(utils.PROFILE_PATH, this.data, function() {
-        console.log('Profile saved');
+        // Success
       }, true);
     };
 

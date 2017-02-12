@@ -378,6 +378,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     this.undoStack = [];
     this.redoStack = [];
+
+    this.triggerChange();
   },
 
   hasUndo: function() {

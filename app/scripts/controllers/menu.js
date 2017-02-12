@@ -242,7 +242,7 @@ angular.module('icestudio')
       }
       function _exit() {
         //win.hide();
-        profile.save();
+        //profile.save();
         win.close(true);
       }
     }
@@ -317,10 +317,10 @@ angular.module('icestudio')
     };
 
     $scope.setRemoteHostname = function() {
-      var current = profile.data.remoteHostname;
+      var current = profile.get('remoteHostname');
       alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host (experimental)'), (current) ? current : '',
         function(evt, remoteHostname) {
-          profile.data.remoteHostname = remoteHostname;
+          profile.set('remoteHostname', remoteHostname);
       });
     };
 
@@ -335,8 +335,8 @@ angular.module('icestudio')
     };
 
     $scope.selectLanguage = function(language) {
-      if (profile.data.language !== language) {
-        profile.data.language = language;
+      if (profile.get('language') !== language) {
+        profile.set('language', language);
         utils.setLocale(language, resources.collections);
       }
     };
@@ -406,13 +406,13 @@ angular.module('icestudio')
     $scope.selectCollection = function(collection) {
       if (resources.selectedCollection.name !== collection.name) {
         var name = resources.selectCollection(collection.name);
-        profile.data.collection = name;
+        profile.set('collection', name);
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
     };
 
     function updateSelectedCollection() {
-      profile.data.collection = resources.selectCollection(profile.data.collection);
+      profile.set('collection', resources.selectCollection(profile.get('collection')));
     }
 
 
@@ -431,13 +431,13 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        profile.data.board = graph.selectBoard(board.name);
+        profile.set('board', graph.selectBoard(board.name));
         alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
       }
     };
 
     function updateSelectedBoard() {
-      profile.data.board = boards.selectBoard(profile.data.board);
+      profile.set('board', boards.selectBoard(profile.get('board')));
     }
 
 

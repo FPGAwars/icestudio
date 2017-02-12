@@ -116,16 +116,14 @@ angular.module('icestudio')
 
       function _load(reset) {
         common.allDependencies = project.dependencies;
-        var ret = graph.loadDesign(project.design, false, function() {
-          if (reset) {
-            graph.resetBlocks();
-          }
+        var opt = { reset: reset || false, disabled: false };
+        var ret = graph.loadDesign(project.design, opt, function() {
           graph.resetCommandStack();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
         });
 
         if (ret) {
-          profile.data.board = boards.selectBoard(project.design.board);
+          profile.set('board', boards.selectBoard(project.design.board));
           self.updateTitle(name);
         }
         else {
@@ -487,7 +485,7 @@ angular.module('icestudio')
 
     this.export = function(target, filepath, message) {
       this.update();
-      var opt = { boardRules: profile.data.boardRules };
+      var opt = { boardRules: profile.get('boardRules') };
       var data = compiler.generate(target, project, opt);
       utils.saveFile(filepath, data, function() {
         alertify.success(message);

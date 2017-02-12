@@ -35,27 +35,30 @@ angular.module('icestudio')
 
     function loadSelectedGraph() {
       var n = graph.breadcrumbs.length;
+      var opt = { disabled: true };
       if (n === 1) {
         var design = project.get('design');
-        graph.loadDesign(design, false);
+        opt.disabled = false;
+        graph.loadDesign(design, opt);
       }
       else {
         var type = graph.breadcrumbs[n-1].type;
         var dependency = common.allDependencies[type];
-        graph.loadDesign(dependency.design, true);
+        graph.loadDesign(dependency.design, opt);
         $scope.information = dependency.package;
       }
     }
 
     $rootScope.$on('navigateProject', function(event, args) {
+      var opt = { disabled: true };
       if (args.update) {
         // Update the main project
         project.update({ deps: false }, function() {
-          graph.loadDesign(args.project.design, true);
+          graph.loadDesign(args.project.design, opt);
         });
       }
       else {
-        graph.loadDesign(args.project.design, true);
+        graph.loadDesign(args.project.design, opt);
       }
       $scope.information = args.project.package;
       utils.rootScopeSafeApply();
