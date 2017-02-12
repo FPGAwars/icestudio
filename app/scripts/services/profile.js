@@ -6,7 +6,7 @@ angular.module('icestudio')
 
     this.data = {
       'language': '',
-      'remoterHostname': '',
+      'remoteHostname': '',
       'collection': '',
       'board': '',
       'boardRules': true
@@ -16,17 +16,22 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(utils.PROFILE_PATH, function(data) {
         if (data) {
-          self.data = _.merge(self.data, data);
+          self.data = {
+            'language': data.language || '',
+            'remoteHostname': data.remoteHostname || '',
+            'collection': data.collection || '',
+            'board': data.board || '',
+            'boardRules': data.remoteHostname || true
+          };
         }
         if (callback) {
           callback();
         }
-        // console.log('Profile loaded');
       });
     };
 
     this.set = function(key, value) {
-      if (this.data[key]) {
+      if (this.data.hasOwnProperty(key)) {
         this.data[key] = value;
         this.save();
       }
