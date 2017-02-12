@@ -583,16 +583,19 @@ angular.module('icestudio')
       };
       graph.trigger('board', { data: data });
       boardName = boards.selectBoard(boardName);
-      var cells = graph.getCells();
-      resetBlocks(cells);
+      this.resetBlocks();
       graph.stopBatch('change');
       return boardName;
     };
 
-    function resetBlocks(cells) {
+    this.resetBlocks = function() {
       var data;
+      var cells = graph.getCells();
       for (var i in cells) {
         var cell = cells[i];
+        if (cell.isLink()) {
+          break;
+        }
         var type = cell.get('blockType');
         if (type === 'basic.input' || type === 'basic.output') {
           // Reset choices in all Input / blocks
@@ -632,7 +635,7 @@ angular.module('icestudio')
           paper.findViewByModel(cell.id).updateBox();
         }
       }
-    }
+    };
 
     this.resetCommandStack = function() {
       commandManager.reset();

@@ -73,6 +73,15 @@ angular.module('icestudio')
       return common.selectedBoard.name;
     };
 
+    this.boardLabel = function(name) {
+      for (var i in this.currentBoards) {
+        if (this.currentBoards[i].name === name) {
+          return this.currentBoards[i].info.label;
+        }
+      }
+      return name;
+    };
+
     function generateHTMLOptions(pinout, type) {
       var code = '<option></option>';
       for (var i in pinout) {

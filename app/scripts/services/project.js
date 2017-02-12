@@ -92,22 +92,45 @@ angular.module('icestudio')
     };
 
     this.load = function(name, data) {
+      var self = this;
       if (data.version !== common.VERSION) {
         alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
       }
       project = _safeLoad(data, name);
-      common.allDependencies = project.dependencies;
-      var ret = graph.loadDesign(project.design, false, function() {
-        graph.resetCommandStack();
-        alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
-      });
-
-      if (ret) {
-        profile.data.board = boards.selectBoard(project.design.board);
-        this.updateTitle(name);
+      if (project.design.board !== common.selectedBoard.name) {
+        var projectBoard = boards.boardLabel(project.design.board);
+        alertify.confirm(
+          gettextCatalog.getString('This project is designed for the {{name}} board.', { name: utils.bold(projectBoard) }) + '<br>' +
+          gettextCatalog.getString('Do you want to convert it?'),
+        function() {
+          project.design.board = common.selectedBoard.name;
+          _load(true);
+        },
+        function() {
+          _load();
+        });
       }
       else {
-        alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
+        _load();
+      }
+
+      function _load(reset) {
+        common.allDependencies = project.dependencies;
+        var ret = graph.loadDesign(project.design, false, function() {
+          if (reset) {
+            graph.resetBlocks();
+          }
+          graph.resetCommandStack();
+          alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
+        });
+
+        if (ret) {
+          profile.data.board = boards.selectBoard(project.design.board);
+          self.updateTitle(name);
+        }
+        else {
+          alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
+        }
       }
     };
 
