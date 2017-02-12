@@ -417,13 +417,13 @@ angular.module('icestudio')
             case 'basic.info':
               break;
             case 'basic.code':
-              /*for (var j in block.data.ports.in) {
+              for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
-              }*/
+              }
               break;
             default:
               // Generic block
-              //delete block.data;
+              delete block.data;
               break;
           }
         }

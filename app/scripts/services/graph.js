@@ -590,6 +590,7 @@ angular.module('icestudio')
     };
 
     function resetBlocks(cells) {
+      var data;
       for (var i in cells) {
         var cell = cells[i];
         var type = cell.get('blockType');
@@ -602,7 +603,7 @@ angular.module('icestudio')
         }
         else if (type === 'basic.code') {
           // Reset rules in Code block ports
-          var data = utils.clone(cell.get('data'));
+          data = utils.clone(cell.get('data'));
           if (data && data.ports && data.ports.in) {
             for (var j in data.ports.in) {
               var port = data.ports.in[j];
@@ -614,6 +615,21 @@ angular.module('icestudio')
         }
         else if (type.indexOf('basic.') === -1) {
           // Reset rules in Generic block ports
+          var block = common.allDependencies[type];
+          data = { ports: { in: [] }};
+          for (i in block.design.graph.blocks) {
+            var item = block.design.graph.blocks[i];
+            if (item.type === 'basic.input') {
+              if (!item.data.range) {
+                data.ports.in.push({
+                  name: item.id,
+                  default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
+                });
+              }
+            }
+          }
+          cell.set('data', data);
+          paper.findViewByModel(cell.id).updateBox();
         }
       }
     }
