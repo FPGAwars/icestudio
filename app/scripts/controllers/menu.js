@@ -92,7 +92,7 @@ angular.module('icestudio')
         // Open filepath
         var filepath = arg;
         project.open(filepath);
-        zeroProject = false;
+        //zeroProject = false;
       }
       else {
         // Move window
@@ -119,7 +119,7 @@ angular.module('icestudio')
           // the projec in the same window
           updateWorkingdir(filepath);
           project.open(filepath);
-          zeroProject = false;
+          //zeroProject = false;
         }
         else if (project.changed || !equalWorkingFilepath(filepath)) {
           // If this is not the first action, and
@@ -135,7 +135,7 @@ angular.module('icestudio')
         // If this is the first action, open
         // the projec in the same window
         project.open(filepath, true);
-        zeroProject = false;
+        //zeroProject = false;
       }
       else {
         // If this is not the first action, and
