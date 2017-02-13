@@ -188,18 +188,21 @@ SectionEnd
 
 
 Section "un.Remove toolchain"
-  # .icestudio/.build
-  # .icestudio/.cache
-  # .icestudio/apio
-  # .icestudio/venv
+  RMDir /r "$PROFILE\.icestudio\.build"
+  RMDir /r "$PROFILE\.icestudio\.cache"
+  RMDir /r "$PROFILE\.icestudio\apio"
+  RMDir /r "$PROFILE\.icestudio\venv"
+  RMDir "$PROFILE\.icestudio"
 SectionEnd
 
 
 Section /o "un.Remove profile"
-  # .icestudio/profile.json
+  Delete "$PROFILE\.icestudio\profile.json"
+  RMDir "$PROFILE\.icestudio"
 SectionEnd
 
 
 Section /o "un.Remove collections"
-  # .icestudio/collections
+  RMDir /r "$PROFILE\.icestudio\collections"
+  RMDir "$PROFILE\.icestudio"
 SectionEnd
