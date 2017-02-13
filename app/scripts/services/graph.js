@@ -1013,7 +1013,10 @@ angular.module('icestudio')
       _.each(graph.blocks, function(block) {
         var position = block.position;
         if (position.x < origin.x) {
-          origin = position;
+          origin.x = position.x;
+        }
+        if (position.y < origin.y) {
+          origin.y = position.y;
         }
       });
       return origin;
