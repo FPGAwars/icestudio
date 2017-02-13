@@ -111,6 +111,8 @@ FunctionEnd
 
 Section "${NAME} ${VERSION}"
 
+  SetShellVarContext all
+
   # define output path
   SetOutPath $INSTDIR
 
@@ -134,15 +136,13 @@ Section "${NAME} ${VERSION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString" '"$INSTDIR\uninstaller.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoRepair" 1
-  WriteUninstaller "$INSTDIR\uninstaller.exe"
 
-  # write start menu entries for all users
-  SetShellVarContext all
+  # write uninstaller
+  WriteUninstaller "$INSTDIR\uninstaller.exe"
 
   # define shortcut
   CreateDirectory "$SMPROGRAMS\${NAME}"
   CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe"
-  CreateShortCut "$SMPROGRAMS\${NAME}\Uninstall ${NAME}.lnk" "$INSTDIR\uninstaller.exe"
 
   # register .ice files
   ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
@@ -160,16 +160,21 @@ FunctionEnd
 
 Section "Uninstall"
 
-  # delete the uninstaller
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
-  Delete "$INSTDIR\uninstaller.exe"
-
-  # write start menu entries for all users
   SetShellVarContext all
 
-  # delete the installed files
-  Delete "$SMPROGRAMS\${NAME}"
-  RMDir /r $INSTDIR
+  # delete shortcut
+  Delete "$SMPROGRAMS\${NAME}\${NAME}.lnk"
+  RMDir "$SMPROGRAMS\${NAME}"
+
+  # remove the app files
+  RMDir /r "$INSTDIR"
+
+  # delete uninstaller
+  Delete "$INSTDIR\uninstaller.exe"
+  RMDir "$INSTDIR"
+
+  # remove uninstaller information from the registry
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 
   # unregister .ice files
   ${unregisterExtension} ".ice" "Icestudio project"
