@@ -429,6 +429,7 @@ angular.module('icestudio')
       var data = instance.data;
       var rightPorts = [{
         id: 'out',
+        name: '',
         label: '',
         size: data.pins ? data.pins.length : (data.size || 1)
       }];
@@ -449,6 +450,7 @@ angular.module('icestudio')
       var data = instance.data;
       var leftPorts = [{
         id: 'in',
+        name: '',
         label: '',
         size: data.pins ? data.pins.length : (data.size || 1)
       }];
@@ -467,6 +469,7 @@ angular.module('icestudio')
     function loadBasicConstant(instance, disabled) {
       var bottomPorts = [{
         id: 'constant-out',
+        name: '',
         label: ''
       }];
       var cell = new joint.shapes.ice.Constant({
@@ -493,6 +496,7 @@ angular.module('icestudio')
         }
         leftPorts.push({
           id: port.name,
+          name: port.name,
           label: port.name + (port.range || ''),
           size: port.size || 1
         });
@@ -502,6 +506,7 @@ angular.module('icestudio')
         port = instance.data.ports.out[o];
         rightPorts.push({
           id: port.name,
+          name: port.name,
           label: port.name + (port.range || ''),
           size: port.size || 1
         });
@@ -511,6 +516,7 @@ angular.module('icestudio')
         port = instance.data.params[p];
         topPorts.push({
           id: port.name,
+          name: port.name,
           label: port.name
         });
       }
@@ -562,6 +568,7 @@ angular.module('icestudio')
           }
           leftPorts.push({
             id: item.id,
+            name: item.data.name,
             label: item.data.name + (item.data.range || ''),
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1),
             clock: item.data.clock
@@ -570,6 +577,7 @@ angular.module('icestudio')
         else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
+            name: item.data.name,
             label: item.data.name + (item.data.range || ''),
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
@@ -578,6 +586,7 @@ angular.module('icestudio')
           if (!item.data.local) {
             topPorts.push({
               id: item.id,
+              name: item.data.name,
               label: item.data.name
             });
           }
@@ -907,7 +916,7 @@ angular.module('icestudio')
     function containsPort(port, ports) {
       var found = false;
       for (var i in ports) {
-        if (port === ports[i].label) {
+        if (port === ports[i].name) {
           found = true;
           break;
         }
