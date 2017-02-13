@@ -106,7 +106,7 @@ Section "Install Python"
 
 SectionEnd
 
-Function ValidatePythonVersion
+Function "ValidatePythonVersion"
 
   nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(2,7)])"'
 
@@ -155,7 +155,7 @@ Section "${NAME} ${VERSION}"
 SectionEnd
 
 
-Function LaunchLink
+Function "LaunchLink"
 
  Exec "$INSTDIR\icestudio.exe"
 
@@ -186,23 +186,55 @@ Section "un.Uninstall Icestudio"
 
 SectionEnd
 
+Function "un.GetIcestudioDir"
+
+  ${If} ${FileExists} "$PROFILE\.icestudio\*.*"
+    StrCpy $0 "$PROFILE\.icestudio"
+  ${ElseIf} ${FileExists} "C:\.icestudio\*.*"
+    StrCpy $0 "C:\.icestudio"
+  ${EndIf}
+
+FunctionEnd
+
 
 Section "un.Remove toolchain"
-  RMDir /r "$PROFILE\.icestudio\.build"
-  RMDir /r "$PROFILE\.icestudio\.cache"
-  RMDir /r "$PROFILE\.icestudio\apio"
-  RMDir /r "$PROFILE\.icestudio\venv"
-  RMDir "$PROFILE\.icestudio"
+
+  Call un.GetIcestudioDir
+  Pop $0
+
+  ${If} $0 != ""
+    MessageBox MB_OK "$0"
+    RMDir /r "$0\.build"
+    RMDir /r "$0\.cache"
+    RMDir /r "$0\apio"
+    RMDir /r "$0\venv"
+    RMDir "$0"
+  ${EndIf}
+
 SectionEnd
 
 
 Section /o "un.Remove profile"
-  Delete "$PROFILE\.icestudio\profile.json"
-  RMDir "$PROFILE\.icestudio"
+
+  Call un.GetIcestudioDir
+  Pop $0
+
+  ${If} $0 != ""
+    Delete "$0\profile.json"
+    RMDir "$0"
+  ${EndIf}
+
 SectionEnd
 
 
 Section /o "un.Remove collections"
-  RMDir /r "$PROFILE\.icestudio\collections"
-  RMDir "$PROFILE\.icestudio"
+
+  Call un.GetIcestudioDir
+  Pop $0
+
+  ${If} $0 != ""
+    RMDir /r "$0\collections"
+    RMDir "$0"
+  ${EndIf}
+
 SectionEnd
