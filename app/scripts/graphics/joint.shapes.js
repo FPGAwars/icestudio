@@ -419,11 +419,19 @@ joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
+  // Image comments:
+  // - img: fast load, no interactive
+  // - object: slow load, interactive
+  // - inline SVG: fast load, interactive, but...
+  //               old SVG files have no viewBox, therefore no properly resize
+  //               Inkscape adds this field saving as "Optimize SVG" ("Enable viewboxing")
+
   template: '\
   <div class="generic-block">\
-    <div class="image"></div>\
+    <div class="img-container"><img></div>\
     <label></label>\
     <span class="tooltiptext"></span>\
+    <div class="resizer"/>\
   </div>\
   ',
 
@@ -488,34 +496,27 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('config-block');
     }
 
-    // Apply data
-    this.apply();
+    this.setupResizer();
+
+    // Initialize content
+    this.initializeContent();
   },
 
-  apply: function() {
-    this.updateContent();
-  },
-
-  updateContent: function() {
+  initializeContent: function() {
     var image = this.model.get('image');
     var label = this.model.get('label');
     var ports = this.model.get('leftPorts');
-    var size = this.model.get('size');
 
-    var imageSelector = this.$box.find('.image');
+    var imageSelector = this.$box.find('img');
     var labelSelector = this.$box.find('label');
 
     if (image) {
-      // Render image
-      imageSelector.empty();
-      imageSelector.append(decodeURI(image));
-      var rect = $(decodeURI(image))[0].viewBox.baseVal;
-      if (rect.width / rect.height > size.width / size.height) {
-        imageSelector.css('width', '80%');
-      }
-      else {
-        imageSelector.css('height', '80%');
-      }
+      // Render img
+      imageSelector.attr('src', 'data:image/svg+xml,' + image);
+
+      // Render SVG
+      //imageSelector.append(decodeURI(image));
+
       imageSelector.removeClass('hidden');
       labelSelector.addClass('hidden');
     }

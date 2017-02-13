@@ -142,18 +142,16 @@
   background: #fafacd;
 }
 
-.generic-block .image {
+.generic-block .img-container {
   position: absolute;
   margin: auto;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
 }
 
-.generic-block .image svg {
+.generic-block img {
   width: 100%;
   height: 100%;
 }
@@ -192,6 +190,7 @@
   margin-top: 22px;
   text-align: center;
   font-size: 13px;
+  font-weight: normal;
   height: 18px;
   color: #333;
   text-overflow: ellipsis;
@@ -223,6 +222,7 @@
   margin-bottom: 6px;
   text-align: center;
   font-size: 13px;
+  font-weight: normal;
   height: 18px;
   color: #333;
   text-overflow: ellipsis;
@@ -251,6 +251,10 @@
 
 .select2-selection__rendered {
   line-height: 24px !important;
+}
+
+.select2-selection__clear {
+  color: #777;
 }
 
 .select2-container--default .select2-selection--single {
@@ -296,7 +300,8 @@
   margin-top: 6px;
   margin-bottom: 6px;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: normal;
   height: 18px;
   color: #333;
   text-overflow: ellipsis;
