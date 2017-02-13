@@ -16,12 +16,12 @@
 Name "${NAME} ${VERSION}"
 
 # define output file
-OutFile ${DIST}\${NAME}-${VERSION}-${ARCH}.exe
+OutFile "${DIST}\${NAME}-${VERSION}-${ARCH}.exe"
 
 # define installation directory
-InstallDir $PROGRAMFILES\${NAME}
+InstallDir "$PROGRAMFILES\${NAME}"
 
-# Request application privileges
+# request application privileges
 RequestExecutionLevel admin
 
 # SetCompressor lzma
@@ -34,24 +34,27 @@ RequestExecutionLevel admin
 !define MUI_ICON "${ICON}"
 !define MUI_BGCOLOR FFFFFF
 
-# Directory page defines
+# directory page defines
 !define MUI_DIRECTORYPAGE_VERIFYONLEAVE
 
-# Run after installing
+# run after installing
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Start ${NAME} ${VERSION}"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 
-# Pages
+# installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
+
+# uninstaller pages
 !insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_COMPONENTS
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-# Languages
+# languages
 !insertmacro MUI_LANGUAGE "English"
 
 
@@ -68,9 +71,10 @@ Function .onInit
   IDOK uninst
   Abort
 
-  # run the uninstaller
+  # run uninstaller
   uninst:
-    ExecWait '$R0 _?=$INSTDIR'
+    ExecWait '$R0 /S _?=$INSTDIR'
+    RMDir /r "$INSTDIR"
 
   done:
 
@@ -114,7 +118,7 @@ Section "${NAME} ${VERSION}"
   SetShellVarContext all
 
   # define output path
-  SetOutPath $INSTDIR
+  SetOutPath "$INSTDIR"
 
   # install app files
   File "${APP}\icestudio.exe"
@@ -131,7 +135,7 @@ Section "${NAME} ${VERSION}"
   File /r "${APP}\styles"
   File /r "${APP}\views"
 
-  # define the uninstaller name
+  # define uninstaller name
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString" '"$INSTDIR\uninstaller.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoModify" 1
@@ -158,7 +162,7 @@ Function LaunchLink
 FunctionEnd
 
 
-Section "Uninstall"
+Section "un.Uninstall Icestudio"
 
   SetShellVarContext all
 
@@ -166,7 +170,7 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${NAME}\${NAME}.lnk"
   RMDir "$SMPROGRAMS\${NAME}"
 
-  # remove the app files
+  # remove app files
   RMDir /r "$INSTDIR"
 
   # delete uninstaller
@@ -180,4 +184,22 @@ Section "Uninstall"
   ${unregisterExtension} ".ice" "Icestudio project"
   ${RefreshShellIcons}
 
+SectionEnd
+
+
+Section "un.Remove toolchain"
+  # .icestudio/.build
+  # .icestudio/.cache
+  # .icestudio/apio
+  # .icestudio/venv
+SectionEnd
+
+
+Section /o "un.Remove profile"
+  # .icestudio/profile.json
+SectionEnd
+
+
+Section /o "un.Remove collections"
+  # .icestudio/collections
 SectionEnd
