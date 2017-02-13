@@ -137,6 +137,7 @@ Section "${NAME} ${VERSION}"
 
   # define uninstaller name
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayIcon" "$INSTDIR\icestudio.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "UninstallString" '"$INSTDIR\uninstaller.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "NoRepair" 1
@@ -146,7 +147,7 @@ Section "${NAME} ${VERSION}"
 
   # define shortcut
   CreateDirectory "$SMPROGRAMS\${NAME}"
-  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe"
+  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\icestudio.exe" 0
 
   # register .ice files
   ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
@@ -197,13 +198,12 @@ Function "un.GetIcestudioDir"
 FunctionEnd
 
 
-Section "un.Remove toolchain"
+Section /o "un.Remove toolchain"
 
   Call un.GetIcestudioDir
   Pop $0
 
   ${If} $0 != ""
-    MessageBox MB_OK "$0"
     RMDir /r "$0\.build"
     RMDir /r "$0\.cache"
     RMDir /r "$0\apio"
