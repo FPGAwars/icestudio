@@ -24,25 +24,41 @@ Supported operating systems:
 * Windows
 * Mac OS X
 
-## Version 0.3.0-beta2 (latest)
-
-### Installation
-
-1. Install [Python 2.7](https://www.python.org)
-
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta2), unzip and execute **icestudio**
+## Version 0.3.0-beta3 (latest)
 
 Documentation: http://icestudio.readthedocs.io/en/latest
 
-NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
+### Installation
 
-<img src="./doc/images/icestudio-0.3.0-beta2.png" width="700" align="center">
+* **GNU/Linux**
+
+  1. Install [Python 2.7](https://www.python.org)
+  2. Download the [zipped release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3), unzip and execute **icestudio**
+
+
+NOTE: GNU/Linux users must have **xclip** installed to enable Copy/Paste.
+
+
+* **Windows**
+
+  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+
+
+* **Mac OS X**
+
+  1. Install [Python 2.7](https://www.python.org)
+  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+
+<img src="./doc/images/icestudio-0.3.0-beta3.png" width="700" align="center">
 
 ## Development
 
 Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
 
 Using [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint).
+
+NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
+
 
 ##### Ubuntu
 
@@ -76,7 +92,9 @@ npm start
 npm run dist
 ```
 
-NOTE: in Mac OS X this command also generates a **dmg** package.
+Output
+* *GNU/Linux*: linux32.zip, linux64.zip, win32.zip, win64.zip, win32.exe, win64.exe.
+* *Mac OS X*: osx32.zip, osx64.zip, osx64.dmg.
 
 ## Languages
 
@@ -84,15 +102,25 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/88)   |
-| French     | ![Progress](http://progressed.io/bar/72)   |
-| Galician   | ![Progress](http://progressed.io/bar/47)   |
+| Basque     | ![Progress](http://progressed.io/bar/87)   |
+| French     | ![Progress](http://progressed.io/bar/61)   |
+| Galician   | ![Progress](http://progressed.io/bar/35)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
 ```bash
 npm run gettext
 ```
+
+## Troubleshooting
+
+If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, execute:
+
+```bash
+npm update -g
+```
+
+[More information](https://github.com/angular-fullstack/generator-angular-fullstack/issues/431)
 
 ## Roadmap
 

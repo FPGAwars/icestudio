@@ -1,18 +1,18 @@
 module.exports = function(grunt) {
-  var os = require('os');
-  // Load apio info
-  var _package = require('./package.json');
 
-  const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
+  const LINUX = process.platform === 'linux';
+  const WIN32 = process.platform === 'win32';
+  const DARWIN = process.platform === 'darwin';
+
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'darwinDependencies'] };
-    var distCommands = ['nwjs', 'toolchain', 'appdmg', 'compress:osx32', 'compress:osx64'];
+    var distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
   }
   else {
     var platforms = ['linux32', 'linux64', 'win32', 'win64'];
     var options = { scope: ['devDependencies'] };
-    var distCommands = ['nwjs', 'toolchain', 'compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64'];
+    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
@@ -48,10 +48,22 @@ module.exports = function(grunt) {
       }
     },
 
-    // Executes nw application
+    // Execute nw application
     exec: {
       nw: 'nw app',
-      stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)'
+      stop_NW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
+      nsis32: {
+        cmd: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
+        options: {
+          maxBuffer: 500 * 1024
+        }
+      },
+      nsis64: {
+        cmd: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
+        options: {
+          maxBuffer: 500 * 1024
+        }
+      }
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -64,12 +76,13 @@ module.exports = function(grunt) {
       }
     },
 
-    // Copies dist files
+    // Copy dist files
     copy: {
       dist: {
         files: [
           {
             expand: true,
+            dot: true,
             cwd: 'app',
             dest: 'dist/tmp',
             src: [
@@ -83,7 +96,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'app/bower_components/bootstrap/fonts',
-            dest: 'dist/tmp/fonts/',
+            dest: 'dist/tmp/fonts',
             src: '*.*'
           }
         ]
@@ -107,12 +120,12 @@ module.exports = function(grunt) {
       }
     },
 
-    // Performs rewrites based on filerev and the useminPrepare configuration
+    // Rewrite based on filerev and the useminPrepare configuration
     usemin: {
       html: ['dist/tmp/index.html']
     },
 
-    // Executes nw-build packaging
+    // Execute nw-build packaging
     nwjs: {
       options: {
         version: '0.12.3',
@@ -127,17 +140,17 @@ module.exports = function(grunt) {
       src: ['dist/tmp/**']
     },
 
-    // Creates standalone toolchains for each platform
+    // Create standalone toolchains for each platform
     toolchain: {
       options: {
-        apioMin: _package.apio.min,
-        apioMax: _package.apio.max,
+        apioMin: '<%=pkg.apio.min%>',
+        apioMax: '<%=pkg.apio.max%>',
         buildDir: 'dist/',
         platforms: platforms
       }
     },
 
-    // ONLY MAC: generates a dmg package
+    // ONLY MAC: generate a dmg package
     appdmg: {
       options: {
         basepath: '.',
@@ -179,7 +192,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*', ].concat(appFiles),
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
@@ -240,7 +253,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // Watches files for changes and runs tasks based on the changed files
+    // Watch files for changes and runs tasks based on the changed files
     watch: {
       scripts: {
         files: [
@@ -261,7 +274,18 @@ module.exports = function(grunt) {
       }
     },
 
-    // Empties folders to start fresh
+    // Wget Python installer
+    wget: {
+      python: {
+         options: {
+           overwrite: false
+         },
+         src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
+         dest: 'cache/python/python-2.7.13.amd64.msi'
+      }
+    },
+
+    // Empty folders to start fresh
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
@@ -278,8 +302,7 @@ module.exports = function(grunt) {
         files: {
           'app/resources/locale/template.pot': [
             'app/views/*.html',
-            'app/scripts/**/*.js',
-            'app/resources/**/*.js'
+            'app/scripts/**/*.js'
           ]
         }
       },
@@ -297,6 +320,14 @@ module.exports = function(grunt) {
             dot: true,
             cwd: "app/resources/locale",
             dest: "app/resources/locale",
+            src: ["**/*.po"],
+            ext: ".json"
+          },
+          {
+            expand: true,
+            dot: true,
+            cwd: "app/resources/collection/locale",
+            dest: "app/resources/collection/locale",
             src: ["**/*.po"],
             ext: ".json"
           }
@@ -327,7 +358,9 @@ module.exports = function(grunt) {
     'json-minify',
     'uglify',
     'cssmin',
-    'usemin'
+    'usemin',
+    'nwjs',
+    'toolchain'
   ]
   .concat(distCommands)
   .concat([

@@ -12,7 +12,7 @@ os:
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo dpkg --add-architecture i386; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y wine; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y wine nsis; fi
 
 install:
   - npm install
@@ -25,6 +25,7 @@ deploy:
   file:
     - dist/*.zip
     - dist/*.dmg
+    - dist/*.exe
   file_glob: true
   skip_cleanup: true
   on:

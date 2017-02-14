@@ -42,28 +42,44 @@
   right: 15px;
 }
 
-#read-only {
-  font-family: Courier New;
+#banner {
+  position: relative;
+}
+
+#info {
+  position: absolute;
+  top: -10px;
+  left: 15px;
   font-size: 15px;
-  color: #EB2222;
+  color: #656565;
   background-color: white;
   border-radius: 5px;
   cursor: default;
+  z-index: 1501;
+}
+
+#read-only {
   position: absolute;
-  right: 30px;
+  top: -10px;
+  right: 15px;
+  font-size: 14px;
+  color: #f05c5c;
+  background-color: white;
+  border-radius: 5px;
+  cursor: default;
   z-index: 1501;
 }
 
 #back-button {
-  font-family: Courier New;
-  font-size: 15px;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  font-size: 14px;
+  color: #63afcf;
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  position: absolute;
-  top: 100px;
-  right: 30px;
   z-index: 1501;
 }
 
@@ -75,11 +91,19 @@
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+}
+
+.generic-block .clock {
+  position: absolute;
+  top: 3px;
+  left: -1px;
+  font-size: 18px;
+  color: #777;
 }
 
 .generic-block .tooltiptext {
@@ -87,7 +111,7 @@
   width: 120px;
   color: #333;
   background-color: white;
-  border: 1px solid #888;
+  border: 1px solid #777;
   text-align: center;
   border-radius: 5px;
   padding: 5px 5px;
@@ -106,7 +130,7 @@
   margin-left: -6px;
   border-width: 6px;
   border-style: solid;
-  border-color: #888 transparent transparent transparent;
+  border-color: #777 transparent transparent transparent;
 }
 
 .generic-block .tooltip-large {
@@ -118,14 +142,18 @@
   background: #fafacd;
 }
 
-.generic-block img {
+.generic-block .img-container {
   position: absolute;
   margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 80%;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+}
+
+.generic-block img {
+  width: 100%;
+  height: 100%;
 }
 
 .generic-block label {
@@ -133,7 +161,7 @@
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #444;
+  color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -142,19 +170,29 @@
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
 }
 
+.virtual-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
 .virtual-port label {
   display: block;
-  margin-top: 20px;
+  margin-top: 22px;
   text-align: center;
-  font-size: 0.9em;
-  color: #444;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -163,20 +201,30 @@
   position: absolute;
   background: #FBFBC9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
 }
 
+.fpga-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
 .fpga-port label {
   display: block;
-  margin-top: 4px;
-  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 7px;
   text-align: center;
-  font-size: 13px;
-  color: #444;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -190,26 +238,49 @@
 
 .fpga-port div .select2 {
   position: relative;
-  width: 82px;
+  width: 84px;
   left: 5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   pointer-events: auto;
 }
 
-.select2-selection__rendered {
+.select2-selection {
   font-size: 13px;
+  height: 26px !important;
+}
+
+.select2-selection__rendered {
+  line-height: 24px !important;
+}
+
+.select2-selection__clear {
+  color: #777;
+}
+
+.select2-container--default .select2-selection--single {
+  outline: none;
+  border: 1px solid #aaa;
+}
+
+.select2-dropdown {
+}
+
+.select2-dropdown .select2-search__field {
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #777;
 }
 
 .bigdrop {
-  width: 92px !important;
   font-size: 13px;
+  width: 92px !important;
 }
 
 .constant-block {
   position: absolute;
   background: #FBF0C9;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -220,16 +291,19 @@
   position: absolute;
   top: 0;
   right: 5px;
-  font-size: 1.5em;
-  color: #444;
+  font-size: 12px;
+  color: #555;
 }
 
 .constant-block label {
   display: block;
-  margin-top: 8px;
+  margin-top: 5px;
+  margin-bottom: 7px;
   text-align: center;
-  font-size: 13px;
-  color: #444;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -238,17 +312,24 @@
   position: absolute;
   text-align: center;
   left: 5px;
-  bottom: 5px;
-  width: 82px;
+  margin-bottom: 6px;
+  width: 84px;
+  height: 26px;
   font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
   pointer-events: auto;
+}
+
+.constant-block input:focus {
+  outline: none;
 }
 
 .code-block {
   position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -257,13 +338,10 @@
 
 .code-block .code-editor {
   position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 95%;
-  height: 93%;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
@@ -273,7 +351,7 @@
   position: absolute;
   background: #DDD;
   border-radius: 5px;
-  border: 2px solid #888;
+  border: 1px solid #777;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -282,24 +360,40 @@
 
 .info-block .info-editor {
   position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 95%;
-  height: 93%;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
 }
 
 .port-body:hover {
-  fill: yellow;
 }
 
-.highlight {
-  box-shadow: 0 0 30px 0 rgba(200,200,200,1);
+.joint-highlight-stroke.joint-theme-default {
+  display: none;
+}
+
+.highlight-yellow {
+  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
+}
+
+.highlight-green {
+  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.5);
+}
+
+.highlight-orange {
+  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.5);
+}
+
+.highlight-blue {
+  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.5);
+}
+
+.highlight-gray {
+  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.5);
 }
 
 .selectionarea {
@@ -333,45 +427,56 @@
 /* Wires makers */
 
 .joint-link.joint-theme-default .connection-wrap {
-    stroke: #000000;
-    stroke-width: 15;
-    stroke-linecap: butt;
-    stroke-linejoin: butt;
-    opacity: 0;
-    cursor: pointer;
+  stroke: #000000;
+  stroke-width: 15;
+  stroke-linecap: butt;
+  stroke-linejoin: butt;
+  opacity: 0;
+  cursor: pointer;
 }
 .joint-link.joint-theme-default .connection-wrap:hover {
-    opacity: .4;
-    stroke-opacity: .4;
+  opacity: .4;
+  stroke-opacity: .4;
 }
 .joint-link.joint-theme-default .connection {
-    stroke-linejoin: butt;
+  stroke-linejoin: butt;
 }
 .joint-link.joint-theme-default .link-tools .tool-remove circle {
-    fill: #EB2222;
+  fill: #EB2222;
 }
 .joint-link.joint-theme-default .link-tools .tool-remove path {
-    fill: #FFFFFF;
+  fill: #FFFFFF;
 }
 
 /* <circle> element inside .marker-vertex-group <g> element */
 .joint-link.joint-theme-default .marker-vertex {
-    fill: #64b0ce;
+  fill: #64b0ce;
 }
 .joint-link.joint-theme-default .marker-vertex:hover {
-    fill: #317d9b;
-    stroke: none;
+  fill: #317d9b;
+  stroke: none;
 }
 
 .joint-link.joint-theme-default .marker-arrowhead {
-    fill: #64b0ce;
+  fill: #64b0ce;
 }
 .joint-link.joint-theme-default .marker-arrowhead:hover {
-    fill: #317d9b;
-    stroke: none;
+  fill: #317d9b;
+  stroke: none;
 }
 
 /* <circle> element used to remove a vertex */
 .joint-link.joint-theme-default .marker-vertex-remove {
-    fill: #FFFFFF;
+  fill: #FFFFFF;
+
+}
+/* Resizer */
+
+.resizer {
+  position: absolute;
+  pointer-events: auto;
+  bottom: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
 }

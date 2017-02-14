@@ -20,25 +20,26 @@ angular
   ])
   .run(function(profile,
                 project,
+                resources,
                 utils,
                 gettextCatalog,
                 nodeLangInfo) {
     // Load language
     profile.load(function() {
-      var lang = profile.data.language;
+      var lang = profile.get('language');
       if (lang) {
-        utils.setLocale(lang);
+        utils.setLocale(lang, resources.collections);
       }
       else {
         // If lang is empty, use the system language
         nodeLangInfo(function(err, sysLang) {
           if (!err) {
-            profile.data.language = utils.setLocale(sysLang);
+            profile.set('language', utils.setLocale(sysLang, resources.collections));
           }
         });
       }
     });
     setTimeout(function() {
       project.updateTitle(gettextCatalog.getString('Untitled'));
-    }, 100);
+    }, 200);
   });

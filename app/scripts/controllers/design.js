@@ -4,12 +4,13 @@ angular.module('icestudio')
   .controller('DesignCtrl', function ($rootScope,
                                       $scope,
                                       project,
-                                      boards,
                                       graph,
-                                      utils) {
+                                      utils,
+                                      common) {
 
-    $scope.boards = boards;
+    $scope.common = common;
     $scope.graph = graph;
+    $scope.information = {};
 
     // Intialization
 
@@ -34,19 +35,33 @@ angular.module('icestudio')
 
     function loadSelectedGraph() {
       var n = graph.breadcrumbs.length;
+      var opt = { disabled: true };
       if (n === 1) {
         var design = project.get('design');
-        graph.loadDesign(design, false);
+        opt.disabled = false;
+        graph.loadDesign(design, opt);
       }
       else {
-        var dependencies = project.getAllDependencies();
         var type = graph.breadcrumbs[n-1].type;
-        graph.loadDesign(dependencies[type].design, true);
+        var dependency = common.allDependencies[type];
+        graph.loadDesign(dependency.design, opt);
+        $scope.information = dependency.package;
       }
     }
 
-    $rootScope.$on('updateProject', function(event, callback) {
-      project.update(callback, false);
+    $rootScope.$on('navigateProject', function(event, args) {
+      var opt = { disabled: true };
+      if (args.update) {
+        // Update the main project
+        project.update({ deps: false }, function() {
+          graph.loadDesign(args.project.design, opt);
+        });
+      }
+      else {
+        graph.loadDesign(args.project.design, opt);
+      }
+      $scope.information = args.project.package;
+      utils.rootScopeSafeApply();
     });
 
     $rootScope.$on('breadcrumbsBack', function(/*event*/) {

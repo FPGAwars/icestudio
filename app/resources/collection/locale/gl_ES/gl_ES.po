@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-02-08 18:08+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: gl_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: translation.js\n"
+
+#. / Bit
+#: translation.js:14
+msgid "bit"
+msgstr "Bit"
+
+#. / Config
+#: translation.js:16
+msgid "config"
+msgstr "Config"
+
+#. / Pull up
+#: translation.js:18
+msgid "pull_up"
+msgstr "Pull up"
+
+#. / Pull up inv
+#: translation.js:20
+msgid "pull_up_inv"
+msgstr "Pull up inv"
+
+#. / Tri-state
+#: translation.js:22
+msgid "tri_state"
+msgstr "Tri-state"
+
+#. / Logic
+#: translation.js:24
+msgid "logic"
+msgstr "Lóxica"
+
+#. / Combinational
+#: translation.js:26
+msgid "combinational"
+msgstr ""
+
+#. / Demux 1:2
+#: translation.js:28
+msgid "demux_1_2"
+msgstr "Demux 1:2"
+
+#. / Demux 1:4
+#: translation.js:30
+msgid "demux_1_4"
+msgstr "Demux 1:4"
+
+#. / Demux 1:8
+#: translation.js:32
+msgid "demux_1_8"
+msgstr "Demux 1:8"
+
+#. / Hex 7 Segment CC
+#: translation.js:34
+msgid "hex_7seg_cc"
+msgstr "Hex 7 Segment CC"
+
+#. / Hex 7 Segment CA
+#: translation.js:36
+msgid "hex_7seg_ca"
+msgstr "Hex 7 Segment CA"
+
+#. / Mux 2:1
+#: translation.js:38
+msgid "mux_2_1"
+msgstr "Mux 2:1"
+
+#. / Mux 4:1
+#: translation.js:40
+msgid "mux_4_1"
+msgstr "Mux 4:1"
+
+#. / Gate
+#: translation.js:42
+msgid "gate"
+msgstr "Gate"
+
+#. / And
+#: translation.js:44
+msgid "and"
+msgstr "And"
+
+#. / Nand
+#: translation.js:46
+msgid "nand"
+msgstr "Nand"
+
+#. / Nor
+#: translation.js:48
+msgid "nor"
+msgstr "Nor"
+
+#. / Not
+#: translation.js:50
+msgid "not"
+msgstr "Not"
+
+#. / Or
+#: translation.js:52
+msgid "or"
+msgstr "Or"
+
+#. / Xnor
+#: translation.js:54
+msgid "xnor"
+msgstr "Xnor"
+
+#. / Xor
+#: translation.js:56
+msgid "xor"
+msgstr "Xor"
+
+#. / Sequential
+#: translation.js:58
+msgid "sequential"
+msgstr ""
+
+#. / D flip-flop async
+#: translation.js:60
+msgid "dff_ar"
+msgstr "Bistable D asinc"
+
+#. / D flip-flop
+#: translation.js:62
+msgid "dff_sr"
+msgstr "Bistable D"
+
+#. / T flip-flop async
+#: translation.js:64
+msgid "tff_ar"
+msgstr "Bistable T asinc"
+
+#. / T flip-flop
+#: translation.js:66
+msgid "tff_sr"
+msgstr "Bistable T"
+
+#. / Debouncer
+#: translation.js:68
+msgid "debouncer"
+msgstr ""
+
+#. / 1. Basic
+#: translation.js:70
+msgid "1_basic"
+msgstr "1. Básico"
+
+#. / 2. Counter
+#: translation.js:72
+msgid "2_counter"
+msgstr ""
+
+#. / 1. Led on
+#: translation.js:74
+msgid "1_led_on"
+msgstr "1. Acender led"
+
+#. / 2. Switch led
+#: translation.js:76
+msgid "2_switch_led"
+msgstr "2. Interruptor con led"
+
+#. / 3. Switch and gate
+#: translation.js:78
+msgid "3_switch_and_gate"
+msgstr "3. Interruptor con porta and"
+
+#. / contadorAsc
+#: translation.js:80
+msgid "contadorAsc"
+msgstr ""
+
+#. / contadorDes
+#: translation.js:82
+msgid "contadorDes"
+msgstr ""

@@ -21,15 +21,19 @@
           },
           "position": {
             "x": 376,
-            "y": 64
+            "y": 56
           }
         },
         {
-          "id": "51e4e6a6-ef05-48e6-8f22-a355e6eda3ae",
-          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
+          "id": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
+          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
           "position": {
-            "x": 568,
-            "y": 64
+            "x": 608,
+            "y": 56
+          },
+          "size": {
+            "width": 96,
+            "height": 64
           }
         },
         {
@@ -47,8 +51,8 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
-            "y": 64
+            "x": 760,
+            "y": 56
           }
         },
         {
@@ -66,15 +70,15 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
-            "y": 144
+            "x": 760,
+            "y": 136
           }
         },
         {
           "id": "e38831b6-fd92-4e35-9fea-17b439002721",
           "type": "basic.code",
           "data": {
-            "code": "// Counter 4 bit\n// @include div.v\n\nwire trig; reg c;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    c <= 0;\n  else if (ena == 1)\n    c <= c + 1;\nend\n",
+            "code": "// Counter 4 bits\n// @include div.v\n\nwire trig; reg out;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    out <= 0;\n  else if (ena == 1)\n    out <= out + 1;\nend\n",
             "params": [
               {
                 "name": "N"
@@ -94,7 +98,7 @@
               ],
               "out": [
                 {
-                  "name": "c",
+                  "name": "out",
                   "range": "[3:0]",
                   "size": 4
                 }
@@ -102,27 +106,12 @@
             }
           },
           "position": {
-            "x": 232,
-            "y": 208
-          }
-        },
-        {
-          "id": "289670b6-0d76-4c0e-91ce-23f62b106fa5",
-          "type": "basic.input",
-          "data": {
-            "name": "clk",
-            "pins": [
-              {
-                "index": "0",
-                "name": "CLK",
-                "value": "21"
-              }
-            ],
-            "virtual": false
+            "x": 248,
+            "y": 184
           },
-          "position": {
-            "x": 40,
-            "y": 216
+          "size": {
+            "width": 352,
+            "height": 288
           }
         },
         {
@@ -156,8 +145,8 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
-            "y": 256
+            "x": 760,
+            "y": 248
           }
         },
         {
@@ -176,7 +165,7 @@
           },
           "position": {
             "x": 40,
-            "y": 304
+            "y": 296
           }
         },
         {
@@ -200,47 +189,6 @@
         }
       ],
       "wires": [
-        {
-          "source": {
-            "block": "51e4e6a6-ef05-48e6-8f22-a355e6eda3ae",
-            "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
-          },
-          "target": {
-            "block": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
-            "port": "in"
-          }
-        },
-        {
-          "source": {
-            "block": "51e4e6a6-ef05-48e6-8f22-a355e6eda3ae",
-            "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
-          },
-          "target": {
-            "block": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
-            "port": "in"
-          }
-        },
-        {
-          "source": {
-            "block": "e38831b6-fd92-4e35-9fea-17b439002721",
-            "port": "c"
-          },
-          "target": {
-            "block": "4c30cdb0-f1af-4af1-bb4b-12e443b84a17",
-            "port": "in"
-          },
-          "size": 4
-        },
-        {
-          "source": {
-            "block": "289670b6-0d76-4c0e-91ce-23f62b106fa5",
-            "port": "out"
-          },
-          "target": {
-            "block": "e38831b6-fd92-4e35-9fea-17b439002721",
-            "port": "clk"
-          }
-        },
         {
           "source": {
             "block": "02460189-14a0-48d0-ad87-74faf9a1177e",
@@ -270,25 +218,56 @@
             "block": "e38831b6-fd92-4e35-9fea-17b439002721",
             "port": "rst"
           }
+        },
+        {
+          "source": {
+            "block": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
+            "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
+          },
+          "target": {
+            "block": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
+            "port": "in"
+          }
+        },
+        {
+          "source": {
+            "block": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
+            "port": "19c8f68d-5022-487f-9ab0-f0a3cd58bead"
+          },
+          "target": {
+            "block": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
+            "port": "in"
+          }
+        },
+        {
+          "source": {
+            "block": "e38831b6-fd92-4e35-9fea-17b439002721",
+            "port": "out"
+          },
+          "target": {
+            "block": "4c30cdb0-f1af-4af1-bb4b-12e443b84a17",
+            "port": "in"
+          },
+          "size": 4
         }
       ]
     },
     "state": {
       "pan": {
-        "x": -0.5941,
-        "y": -4.4208
+        "x": 0,
+        "y": 0
       },
-      "zoom": 1.0149
+      "zoom": 1
     }
   },
   "dependencies": {
-    "862d2a36c72ddee13ea44bf906fe1b60efa90941": {
+    "3e6c249e205080168c1bf4ee8dbc33b50653d5f4": {
       "package": {
-        "name": "Bit 0",
+        "name": "Bit 1",
         "version": "1.0.0",
-        "description": "Assign 0 to the output wire",
+        "description": "Assign 1 to the output wire",
         "author": "Jesús Arroyo",
-        "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2247.303%22%20height=%2227.648%22%20viewBox=%220%200%2044.346456%2025.919999%22%3E%3Ctext%20style=%22line-height:125%25%22%20x=%22325.37%22%20y=%22315.373%22%20font-weight=%22400%22%20font-size=%2212.669%22%20font-family=%22sans-serif%22%20letter-spacing=%220%22%20word-spacing=%220%22%20transform=%22translate(-307.01%20-298.51)%22%3E%3Ctspan%20x=%22325.37%22%20y=%22315.373%22%20style=%22-inkscape-font-specification:'Courier%2010%20Pitch'%22%20font-family=%22Courier%2010%20Pitch%22%3E0%3C/tspan%3E%3C/text%3E%3C/svg%3E"
+        "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2247.303%22%20height=%2227.648%22%20viewBox=%220%200%2044.346456%2025.919999%22%3E%3Ctext%20style=%22line-height:125%25%22%20x=%22325.218%22%20y=%22315.455%22%20font-weight=%22400%22%20font-size=%2212.669%22%20font-family=%22sans-serif%22%20letter-spacing=%220%22%20word-spacing=%220%22%20transform=%22translate(-307.01%20-298.51)%22%3E%3Ctspan%20x=%22325.218%22%20y=%22315.455%22%20style=%22-inkscape-font-specification:'Courier%2010%20Pitch'%22%20font-family=%22Courier%2010%20Pitch%22%3E1%3C/tspan%3E%3C/text%3E%3C/svg%3E"
       },
       "design": {
         "graph": {
@@ -297,7 +276,7 @@
               "id": "b959fb96-ac67-4aea-90b3-ed35a4c17bf5",
               "type": "basic.code",
               "data": {
-                "code": "// Bit 0\n\nassign v = 1'b0;",
+                "code": "// Bit 1\n\nassign v = 1'b1;",
                 "params": [],
                 "ports": {
                   "in": [],

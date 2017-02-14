@@ -12,19 +12,19 @@
 
 
 # -------------------------- System Clock -------------------------------------
-set_io --warn-no-port CLK  13   # JP3.1 [Config: JP2.1 JP2.2 JP2.3 -> NCC=333kHz, NNN=3.33MHz, CCN=33.3MHz]
+set_io --warn-no-port CLK  13   # input JP3.1 [Config: JP2.1 JP2.2 JP2.3 -> NCC=333kHz, NNN=3.33MHz, CCN=33.3MHz]
 
 # ------------ User Leds ------------------------------------------------------
-set_io --warn-no-port LED1 59   # J12.1
-set_io --warn-no-port LED2 56   # J12.2
-set_io --warn-no-port LED3 53   # J12.3
-set_io --warn-no-port LED4 51   # J12.4
+set_io --warn-no-port LED1 59   # output J12.1
+set_io --warn-no-port LED2 56   # output J12.2
+set_io --warn-no-port LED3 53   # output J12.3
+set_io --warn-no-port LED4 51   # output J12.4
 
 # ------------ Capacitive buttons ---------------------------------------------
-set_io --warn-no-port BTN1 60   # Capacitive button 1
-set_io --warn-no-port BTN2 57   # Capacitive button 2
-set_io --warn-no-port BTN3 54   # Capacitive button 3
-set_io --warn-no-port BTN4 52   # Capacitive button 4
+set_io --warn-no-port BTN1 60   # input Capacitive button 1
+set_io --warn-no-port BTN2 57   # input Capacitive button 2
+set_io --warn-no-port BTN3 54   # input Capacitive button 3
+set_io --warn-no-port BTN4 52   # input Capacitive button 4
 
 # ----------------- Pins I/O --------------------------------------------------
 set_io --warn-no-port J2U1 66   # J2.1

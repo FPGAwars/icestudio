@@ -8,12 +8,13 @@
   </head>
   <body>
     <script>
+      'use strict';
       function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-      };
+      }
       function loadEmbedSVG() {
         var board = getURLParameter('board');
-        var data = "../../boards/" + board + "/pinout.svg";
+        var data = '../../boards/' + board + '/pinout.svg';
         var embed = document.createElement('embed');
         embed.setAttribute('id', 'pinout');
         embed.setAttribute('width', '100%');
@@ -28,7 +29,7 @@
             maxZoom: 5
           });
         }, 300);
-      };
+      }
       window.onload = function() {
         loadEmbedSVG();
       };
