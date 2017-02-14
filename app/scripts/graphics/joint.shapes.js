@@ -431,7 +431,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     <div class="img-container"><img></div>\
     <label></label>\
     <span class="tooltiptext"></span>\
-    <div class="resizer"/>\
   </div>\
   ',
 
@@ -495,8 +494,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     if (this.model.get('config')) {
       this.$box.addClass('config-block');
     }
-
-    this.setupResizer();
 
     // Initialize content
     this.initializeContent();
