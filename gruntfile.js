@@ -1,7 +1,9 @@
 module.exports = function(grunt) {
-  var os = require('os');
 
-  const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
+  const LINUX = process.platform === 'linux';
+  const WIN32 = process.platform === 'win32';
+  const DARWIN = process.platform === 'darwin';
+
   if (DARWIN) {
     var platforms = ['osx32', 'osx64'];
     var options = { scope: ['devDependencies', 'darwinDependencies'] };
@@ -49,9 +51,19 @@ module.exports = function(grunt) {
     // Execute nw application
     exec: {
       nw: 'nw app',
-      stop_NW: 'killall nw || killall nwjs || taskkill /F /IM nw.exe || (exit 0)',
-      nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi'
+      stop_NW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
+      nsis32: {
+        cmd: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
+        options: {
+          maxBuffer: 500 * 1024
+        }
+      },
+      nsis64: {
+        cmd: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
+        options: {
+          maxBuffer: 500 * 1024
+        }
+      }
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
