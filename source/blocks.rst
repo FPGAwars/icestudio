@@ -31,8 +31,6 @@ E.g.: basic input block with value *in*.
 
 .. image:: ../resources/images/blocks/basic-input.png
 
-|
-
 .. code-block:: json
 
    {
@@ -56,8 +54,6 @@ Bus
 E.g.: basic input block with value *in[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-input-bus.png
-
-|
 
 .. code-block:: json
 

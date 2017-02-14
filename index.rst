@@ -24,4 +24,5 @@ Welcome to icestudio's documentation!
 
     source/project
     source/blocks
+    source/rules
     source/compiler
