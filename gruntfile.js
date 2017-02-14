@@ -53,16 +53,10 @@ module.exports = function(grunt) {
       nw: 'nw app',
       stop_NW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
       nsis32: {
-        cmd: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
-        options: {
-          maxBuffer: 500 * 1024
-        }
+        cmd: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
       },
       nsis64: {
-        cmd: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
-        options: {
-          maxBuffer: 500 * 1024
-        }
+        cmd: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
       }
     },
 
