@@ -32,6 +32,8 @@ Supported operating systems:
 
 2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta2), unzip and execute **icestudio**
 
+NOTE: Linux users must have **xclip** installed to enable Copy/Paste.
+
 Documentation: http://icestudio.readthedocs.io/en/latest
 
 NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
@@ -84,9 +86,9 @@ NOTE: in Mac OS X this command also generates a **dmg** package.
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/72)   |
-| Galician   | ![Progress](http://progressed.io/bar/47)   |
+| Basque     | ![Progress](http://progressed.io/bar/87)   |
+| French     | ![Progress](http://progressed.io/bar/61)   |
+| Galician   | ![Progress](http://progressed.io/bar/35)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
