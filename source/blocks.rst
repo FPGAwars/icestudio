@@ -22,6 +22,8 @@ Input block
   * Virtual: *green*
   * FPGA I/O: *yellow*
 
+* Show clock
+
 Wire
 ~~~~
 
@@ -43,7 +45,8 @@ E.g.: basic input block with value *in*.
            "value": "10"
          }
        ],
-       "virtual": false
+       "virtual": false,
+       "clock": false
      }
    }
 
@@ -74,7 +77,8 @@ E.g.: basic input block with value *in[1:0]*.
             "value": "11"
           }
         ],
-        "virtual": false
+        "virtual": false,
+        "clock": false
       }
     }
 
@@ -86,6 +90,8 @@ Output block
 
   * Virtual: *green*
   * FPGA I/O: *yellow*
+
+* Show clock
 
 Wire
 ~~~~
@@ -106,7 +112,8 @@ E.g.: basic output block with value *out*.
            "value": "95"
          }
        ],
-       "virtual": false
+       "virtual": false,
+       "clock": false
      }
    }
 
@@ -135,7 +142,8 @@ E.g.: basic output block with value *out[1:0]*.
             "value": "96"
           }
         ],
-        "virtual": false
+        "virtual": false,
+        "clock": false
       }
     }
 
@@ -145,9 +153,9 @@ Constant block
 * Type: ``basic.constant``
 * States:
 
-  * Local parameter: *\**
+  * Local parameter: ●
 
-E.g.: basic constant block with value *C*.
+E.g.: basic constant block with value *V*.
 
 .. image:: ../resources/images/blocks/basic-constant.png
 
@@ -155,7 +163,7 @@ E.g.: basic constant block with value *C*.
 
    {
      "data": {
-       "name": "C",
+       "name": "V",
        "value": "4'b1001",
        "local": true
      }
