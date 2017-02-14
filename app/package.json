@@ -40,7 +40,7 @@
     "sha1": "^1.1.1",
     "ssh-exec": "^2.0.0",
     "sudo-prompt": "^6.2.0",
-    "svgo": "^0.7.1",
+    "svgo": "~0.7.1",
     "tarball-extract": "0.0.3"
   },
   "readme": "../README.md",

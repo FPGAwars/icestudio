@@ -76,7 +76,6 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            dot: true,
             cwd: 'app',
             dest: 'dist/tmp',
             src: [
@@ -311,7 +310,6 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            dot: true,
             cwd: "app/resources/locale",
             dest: "app/resources/locale",
             src: ["**/*.po"],
@@ -319,7 +317,6 @@ module.exports = function(grunt) {
           },
           {
             expand: true,
-            dot: true,
             cwd: "app/resources/collection/locale",
             dest: "app/resources/collection/locale",
             src: ["**/*.po"],

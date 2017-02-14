@@ -769,18 +769,26 @@ angular.module('icestudio')
         chooserOpen.unbind('change');
         chooserOpen.change(function(/*evt*/) {
           var filepath = $(this).val();
-          var svgo = new SVGO();
+
           nodeFs.readFile(filepath, 'utf8', function(err, data) {
             if (err) {
               throw err;
             }
-            svgo.optimize(data, function(result) {
+            optimizeSVG(data, function(result) {
               image = encodeURI(result.data);
               registerSave();
               $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
             });
           });
           $(this).val('');
+        });
+      }
+
+      function optimizeSVG(data, callback) {
+        SVGO.optimize(data, function(result) {
+          if (callback) {
+            callback(result);
+          }
         });
       }
 
