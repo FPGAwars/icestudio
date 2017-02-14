@@ -1,4 +1,4 @@
-.. sec-howto
+.. _howto:
 
 How to...
 =========

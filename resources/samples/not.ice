@@ -15,7 +15,7 @@
           "id": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
           "type": "basic.code",
           "data": {
-            "code": "// NOT logic gate\nassign b = ~a;",
+            "code": "// NOT logic gate\n\nassign b = ~a;",
             "params": [],
             "ports": {
               "in": [
@@ -33,6 +33,10 @@
           "position": {
             "x": 248,
             "y": 88
+          },
+          "size": {
+            "width": 384,
+            "height": 256
           }
         },
         {
@@ -99,10 +103,10 @@
     },
     "state": {
       "pan": {
-        "x": -38.5106,
-        "y": 27.9681
+        "x": 0,
+        "y": 0
       },
-      "zoom": 1.0904
+      "zoom": 1
     }
   },
   "dependencies": {}

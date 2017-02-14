@@ -2,7 +2,7 @@
   "version": "1.1",
   "package": {
     "name": "Mux4:1",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Multiplexer 4 to 1",
     "author": "Jesús Arroyo",
     "image": "%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%22-252%20400.9%2081%2040%22%20width=%2281%22%20height=%2240%22%3E%3Cpath%20d=%22M-191%20419.9v-7.2l-41-11.8v40l41-11.7v-7.4zm-39%2018.5v-35l37%2010.8v13.5z%22/%3E%3C/svg%3E"
@@ -11,37 +11,6 @@
     "board": "icezum",
     "graph": {
       "blocks": [
-        {
-          "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-          "type": "basic.code",
-          "data": {
-            "code": "// Multiplexer 4 to 1 \nassign out = data[sel];",
-            "params": [],
-            "ports": {
-              "in": [
-                {
-                  "name": "data",
-                  "range": "[3:0]",
-                  "size": 4
-                },
-                {
-                  "name": "sel",
-                  "range": "[1:0]",
-                  "size": 2
-                }
-              ],
-              "out": [
-                {
-                  "name": "out"
-                }
-              ]
-            }
-          },
-          "position": {
-            "x": 288,
-            "y": 112
-          }
-        },
         {
           "id": "95f8c313-6e18-4ee3-b9cf-7266dec53c93",
           "type": "basic.input",
@@ -73,8 +42,43 @@
             "virtual": true
           },
           "position": {
-            "x": 48,
-            "y": 144
+            "x": 64,
+            "y": 120
+          }
+        },
+        {
+          "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+          "type": "basic.code",
+          "data": {
+            "code": "// Multiplexer 4 to 1\n\nassign out = data[sel];",
+            "params": [],
+            "ports": {
+              "in": [
+                {
+                  "name": "data",
+                  "range": "[3:0]",
+                  "size": 4
+                },
+                {
+                  "name": "sel",
+                  "range": "[1:0]",
+                  "size": 2
+                }
+              ],
+              "out": [
+                {
+                  "name": "out"
+                }
+              ]
+            }
+          },
+          "position": {
+            "x": 312,
+            "y": 152
+          },
+          "size": {
+            "width": 272,
+            "height": 144
           }
         },
         {
@@ -92,8 +96,8 @@
             "virtual": true
           },
           "position": {
-            "x": 760,
-            "y": 208
+            "x": 720,
+            "y": 192
           }
         },
         {
@@ -117,8 +121,8 @@
             "virtual": true
           },
           "position": {
-            "x": 48,
-            "y": 272
+            "x": 64,
+            "y": 232
           }
         }
       ],
@@ -132,6 +136,12 @@
             "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
             "port": "data"
           },
+          "vertices": [
+            {
+              "x": 232,
+              "y": 176
+            }
+          ],
           "size": 4
         },
         {
@@ -159,10 +169,10 @@
     },
     "state": {
       "pan": {
-        "x": -8.7129,
-        "y": 19.9356
+        "x": 0,
+        "y": 0
       },
-      "zoom": 1.0149
+      "zoom": 1
     }
   },
   "dependencies": {}

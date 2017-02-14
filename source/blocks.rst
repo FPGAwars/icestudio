@@ -1,7 +1,7 @@
-.. sec-blocks
+.. _blocks:
 
-Blocks
-======
+Blocks description
+==================
 
 Definition
 ----------

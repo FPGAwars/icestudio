@@ -1,4 +1,4 @@
-.. sec-gui
+.. _gui:
 
 GUI
 ===
@@ -272,7 +272,7 @@ This is the main panel. It contains the blocks and the wires.
 Pan & Zoom
 ``````````
 
-Pan is performed using the **mouse left button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *View > Reset view*.
+Pan is performed using the **mouse left button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *Edit > Reset view*.
 
 .. image:: ../resources/images/gui/pan-zoom.png
 

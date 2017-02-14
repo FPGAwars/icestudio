@@ -1,7 +1,7 @@
-.. sec-project
+.. _project:
 
-Project
-=======
+Project description
+===================
 
 Definition
 ----------
@@ -53,6 +53,10 @@ Block instances
       "position": {
         "x": 0,
         "y": 0
+      },
+      "size": {
+        "width": 0,
+        "height": 0
       }
     }
 
@@ -105,8 +109,8 @@ Bus
       "size": 2
     }
 
-Project information
--------------------
+Package
+-------
 
 * Name
 * Version

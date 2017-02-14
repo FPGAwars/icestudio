@@ -1,27 +1,23 @@
-.. sec-compiler
+.. _compiler:
 
-Compiler
-========
+Compilers
+=========
 
-Output verilog structure:
-
-1. Main module.
-2. Modules.
-
-   a. Wires definition.
-   b. Wires connections.
-   c. Blocks instances.
+1. Verilog
+2. PCF
+3. Testbench
+4. GTKWave
 
 Implementation
 --------------
 
-Compiler `source code <https://github.com/FPGAwars/icestudio/blob/develop/app/scripts/services/compiler.service.js>`_.
+Compiler `source code <https://github.com/FPGAwars/icestudio/blob/develop/app/scripts/services/compiler.js>`_.
 
 Sample
 ------
 
 Counter
-```````````
+```````
 
 .. image:: ../resources/images/project/counter.png
 
@@ -50,7 +46,8 @@ Counter
 
 |
 
-**Generates**
+Generates
+~~~~~~~~~
 
 .. container:: toggle
 
