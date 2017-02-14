@@ -28,7 +28,7 @@
           "id": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
           "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
           "position": {
-            "x": 600,
+            "x": 608,
             "y": 56
           },
           "size": {
@@ -51,7 +51,7 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
+            "x": 760,
             "y": 56
           }
         },
@@ -70,7 +70,7 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
+            "x": 760,
             "y": 136
           }
         },
@@ -78,7 +78,7 @@
           "id": "e38831b6-fd92-4e35-9fea-17b439002721",
           "type": "basic.code",
           "data": {
-            "code": "// Counter 4 bits\n// @include div.v\n\nwire trig; reg c;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    c <= 0;\n  else if (ena == 1)\n    c <= c + 1;\nend\n",
+            "code": "// Counter 4 bits\n// @include div.v\n\nwire trig; reg out;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    out <= 0;\n  else if (ena == 1)\n    out <= out + 1;\nend\n",
             "params": [
               {
                 "name": "N"
@@ -98,7 +98,7 @@
               ],
               "out": [
                 {
-                  "name": "c",
+                  "name": "out",
                   "range": "[3:0]",
                   "size": 4
                 }
@@ -145,7 +145,7 @@
             "virtual": false
           },
           "position": {
-            "x": 752,
+            "x": 760,
             "y": 248
           }
         },
@@ -189,17 +189,6 @@
         }
       ],
       "wires": [
-        {
-          "source": {
-            "block": "e38831b6-fd92-4e35-9fea-17b439002721",
-            "port": "c"
-          },
-          "target": {
-            "block": "4c30cdb0-f1af-4af1-bb4b-12e443b84a17",
-            "port": "in"
-          },
-          "size": 4
-        },
         {
           "source": {
             "block": "02460189-14a0-48d0-ad87-74faf9a1177e",
@@ -249,15 +238,26 @@
             "block": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
             "port": "in"
           }
+        },
+        {
+          "source": {
+            "block": "e38831b6-fd92-4e35-9fea-17b439002721",
+            "port": "out"
+          },
+          "target": {
+            "block": "4c30cdb0-f1af-4af1-bb4b-12e443b84a17",
+            "port": "in"
+          },
+          "size": 4
         }
       ]
     },
     "state": {
       "pan": {
-        "x": -0.5941,
-        "y": -8.4802
+        "x": 0,
+        "y": 0
       },
-      "zoom": 1.0149
+      "zoom": 1
     }
   },
   "dependencies": {

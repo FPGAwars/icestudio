@@ -189,7 +189,7 @@
   display: block;
   margin-top: 22px;
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   height: 18px;
   color: #222;
@@ -218,10 +218,10 @@
 
 .fpga-port label {
   display: block;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 5px;
+  margin-bottom: 7px;
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   height: 18px;
   color: #222;
@@ -297,10 +297,10 @@
 
 .constant-block label {
   display: block;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 5px;
+  margin-bottom: 7px;
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   height: 18px;
   color: #222;
