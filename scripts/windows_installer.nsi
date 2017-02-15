@@ -23,10 +23,10 @@ RequestExecutionLevel admin
 
 # SetCompressor lzma
 
-
-!include MUI2.nsh
-!include FileFunc.nsh
-!include FileAssociation.nsh
+!include "x64.nsh"
+!include "MUI2.nsh"
+!include "FileFunc.nsh"
+!include "FileAssociation.nsh"
 
 !define MUI_ICON "${ICON}"
 !define MUI_BGCOLOR FFFFFF
@@ -53,15 +53,35 @@ RequestExecutionLevel admin
 
 # languages
 !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "Galician"
+!insertmacro MUI_LANGUAGE "Basque"
+!insertmacro MUI_LANGUAGE "French"
 
 
 Function .onInit
 
-  # define installation directory
-  ${If} "${ARCH}" == "win64"
-    StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+  # check system architecture
+  ${If} ${RunningX64}
+    ${If} "${ARCH}" == "win64"
+      SetRegView 64
+      StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+    ${Else}
+      MessageBox MB_OK|MB_ICONSTOP \
+      "This installer does not match your current architecture. \
+      $\n$\nPlease, run the 64-bit installer."
+      Abort
+    ${EndIf}
   ${Else}
-    StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+    ${If} "${ARCH}" == "win32"
+      SetRegView 32
+      StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+    ${Else}
+      MessageBox MB_OK|MB_ICONSTOP \
+      "This installer does not match your current architecture. \
+      $\n$\nPlease, run the 32-bit installer."
+      Abort
+    ${EndIf}
   ${EndIf}
 
   ReadRegStr $R0 HKLM \
@@ -70,8 +90,8 @@ Function .onInit
   StrCmp $R0 "" done
 
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "${NAME} is already installed. $\n$\nClick OK to remove the \
-  previous version or Cancel to cancel this upgrade." \
+  "${NAME} is already installed.$\n$\nClick `OK` to remove the \
+  previous version or `Cancel` to cancel this upgrade." \
   IDOK uninst
   Abort
 
@@ -151,6 +171,7 @@ Section "${NAME} ${VERSION}"
   # define shortcut
   CreateDirectory "$SMPROGRAMS\${NAME}"
   CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\icestudio.exe" 0
+
 
   # register .ice files
   ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
