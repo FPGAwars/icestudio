@@ -59,7 +59,7 @@ RequestExecutionLevel admin
 !insertmacro MUI_LANGUAGE "French"
 
 
-Function .onInit
+Function ".onInit"
 
   # check system architecture
   ${If} ${RunningX64}
@@ -183,6 +183,20 @@ SectionEnd
 Function "LaunchLink"
 
  Exec "$INSTDIR\icestudio.exe"
+
+FunctionEnd
+
+
+Function "un.onInit"
+
+  # check system architecture
+  ${If} ${RunningX64}
+    SetRegView 64
+    StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+  ${Else}
+    SetRegView 32
+    StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+  ${EndIf}
 
 FunctionEnd
 
