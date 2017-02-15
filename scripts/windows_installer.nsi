@@ -170,7 +170,7 @@ Section "${NAME} ${VERSION}"
 
   # define shortcut
   CreateDirectory "$SMPROGRAMS\${NAME}"
-  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\icestudio.exe" 0
+  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\resources\images\icestudio-logo.ico" 0
 
 
   # register .ice files
