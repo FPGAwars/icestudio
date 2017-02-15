@@ -18,9 +18,6 @@ Name "${NAME} ${VERSION}"
 # define output file
 OutFile "${DIST}\${NAME}-${VERSION}-${ARCH}.exe"
 
-# define installation directory
-InstallDir "$PROGRAMFILES\${NAME}"
-
 # request application privileges
 RequestExecutionLevel admin
 
@@ -60,6 +57,13 @@ RequestExecutionLevel admin
 
 Function .onInit
 
+  # define installation directory
+  ${If} "${ARCH}" == "win64"
+    StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+  ${Else}
+    StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+  ${EndIf}
+
   ReadRegStr $R0 HKLM \
   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" \
   "UninstallString"
@@ -73,8 +77,7 @@ Function .onInit
 
   # run uninstaller
   uninst:
-    ExecWait '$R0 /S _?=$INSTDIR'
-    RMDir /r "$INSTDIR"
+    ExecWait '$R0 /S'
 
   done:
 
