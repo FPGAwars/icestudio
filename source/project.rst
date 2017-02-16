@@ -1,7 +1,7 @@
 .. _project:
 
-Project description
-===================
+Project
+=======
 
 Definition
 ----------

@@ -1,7 +1,7 @@
 .. _blocks:
 
-Blocks description
-==================
+Blocks
+======
 
 Definition
 ----------

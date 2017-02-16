@@ -1,6 +1,6 @@
 .. _rules:
 
-Board rules
+Board Rules
 ===========
 
 Icestudio *board rules* allow to automate tasks such as connecting all input *CLK* wires in a sequential circuit or initializing certain output ports to 1 or 0. The result is an easier and cleaner design. In Icestudio, rules can be enabled or disabled in "Edit > Preferences > Board rules".
