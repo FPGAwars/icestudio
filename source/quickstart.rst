@@ -26,15 +26,12 @@ Connect your FPGA board and select **Tools > Drivers > Enable**. This operation 
     .. image:: ../resources/images/quickstart/zadig.png
         :align: center
 
-Select your FPGA board
-----------------------
+Upload a design
+---------------
 
 Go to **Select > Board**
 
 .. image:: ../resources/images/quickstart/board.png
-
-Upload an example
------------------
 
 Go to **File > Examples > 1. Basic > 1. Led on**
 
