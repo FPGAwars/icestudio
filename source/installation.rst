@@ -26,7 +26,7 @@ Windows
 
 .. note::
 
-  Python 2.7 will be installed if required. This installer registers the *.ice* files as *Icestudio project*.
+  Python 2.7 will install if it is not installed. This installer registers the *.ice* files as *Icestudio project*.
 
 Mac OS X
 --------

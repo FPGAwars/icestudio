@@ -8,10 +8,6 @@ Install the toolchain
 
 1. **Install Python 2.7**
 
-  .. warning::
-
-    Windows users: DON’T FORGET to select Add python.exe to Path feature on the “Customize” stage.
-
 2. **Launch the toolchain installation process**
 
   Go to **Tools > Toolchain > Install**. Be patient for the toolchain installation.
@@ -46,6 +42,13 @@ Install the drivers
 
 .. note::
 
+    In Windows, an external application (Zadig) is launched to replace the existing FTDI driver of the **Interface 0** by **libusbK**.
+
+    .. image:: ../resources/images/quickstart/zadig.png
+        :align: center
+
+.. hint::
+
   To revert the drivers configuration go to **Tools > Drivers > Disable**
 
 
@@ -56,13 +59,28 @@ Create a collection package
 
   .. code::
 
-    Category 1
-    ├── block1.ice
-    ├── Subcategory 1
-    │   ├── block11.ice
-    │   └── block12.ice
-    └── Subcategory 2
-        └── block21.ice
+    Collection/
+    ├── blocks
+    │   ├── category1
+    │   │   ├── block1.ice
+    │   │   └── subcategory1
+    │   │       ├── block11.ice
+    │   │       └── block12.ice
+    │   └── category2
+    │       └── block2.ice
+    ├── examples
+    │   ├── example1.ice
+    │   ├── example2.ice
+    │   └── example3.ice
+    ├── locale
+    │   ├── en
+    │   │   └── en.po
+    │   ├── es_ES
+    │   │   └── es_ES.po
+    │   └── translation.js
+    └── package.json
+
+
 
 2. **ZIP all your collections**
 
@@ -70,12 +88,16 @@ Create a collection package
 
   .. code::
 
-    myCollections.zip
+    Collections.zip
     |
-    ├── Category 1
+    ├── Collections 1
     │   └── ...
-    └── Category 2
+    └── Collections 2
         └── ...
+
+.. note::
+
+    The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/icestudio/tree/develop/app/resources/collection>`_.
 
 
 Add a collection
@@ -87,7 +109,7 @@ Go to **Tools > Collections > Add** and select a collection package (ZIP file).
 Select a collection
 -------------------
 
-Go to **View > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
+Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
 
 
 Create a project
@@ -95,7 +117,7 @@ Create a project
 
 1. **Create a new project**
 
-   Go to **Edit > New**, write your project's name and press OK.
+   Go to **Edit > New**. A new window will be opened.
 
    .. image:: ../resources/images/howto/new.png
 
@@ -189,7 +211,7 @@ Create a project
 
 4. **Select your board**
 
-   Go to **Boards** menu and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra**, **icoBOARD 1.0** or **Kéfir I**.
+   Go to **Select > Board** and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra**, **icoBOARD 1.0** or **Kéfir I**.
 
    .. image:: ../resources/images/howto/board.png
 
@@ -205,11 +227,11 @@ Create a project
 
 6. **Save the project**
 
-   Go to **Edit > Save**:
+   Go to **Edit > Save as** and select the project name.
 
    It will be saved as an **.ice** file.
 
-   .. image:: ../resources/images/howto/save.png
+   .. image:: ../resources/images/howto/saveas.png
 
 |
 
@@ -281,9 +303,9 @@ Create a block
 
 3. **Save the project**
 
-   Go to **Edit > Save as...**.
+   Go to **Edit > Save**.
 
-   .. image:: ../resources/images/howto/saveas.png
+   .. image:: ../resources/images/howto/save.png
 
    |
 
@@ -375,3 +397,26 @@ I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio 
    |
 
 4. **Now, Verify, Build and Upload tools will run in the selected host**
+
+
+View the board rules
+--------------------
+
+Go to **View > Board rules**
+
+.. image:: ../resources/images/howto/icezum-rules.png
+
+|
+
+Disable the board rules
+-----------------------
+
+Go to **Edit > Preferences > Board rules > Disable**
+
+.. image:: ../resources/images/howto/disable-rules.png
+
+|
+
+.. image:: ../resources/images/howto/rules-disabled.png
+
+|
