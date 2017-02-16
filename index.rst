@@ -5,6 +5,9 @@ Welcome to icestudio's documentation!
 .. image:: resources/images/icestudio-logo-label.svg
    :width: 400 px
 
+Source code: https://github.com/fpgawars/icestudio
+
+
 .. toctree::
     :maxdepth: 2
 
@@ -17,6 +20,7 @@ Welcome to icestudio's documentation!
     source/installation
     source/quickstart
     source/userguide
+    source/howto
 
 .. toctree::
     :caption: Development
