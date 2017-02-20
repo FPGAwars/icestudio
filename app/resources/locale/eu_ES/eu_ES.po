@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.12\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/utils.js:456 app/scripts/services/utils.js:536
@@ -84,23 +84,23 @@ msgstr "{{name}} blokea inportatu duzu"
 
 #: app/views/menu.html:35
 msgid "Blocks"
-msgstr ""
+msgstr "Blokeak"
 
 #: app/views/menu.html:201
 msgid "Board"
-msgstr ""
+msgstr "Plaka"
 
 #: app/views/menu.html:115 app/views/menu.html:192
 msgid "Board rules"
-msgstr ""
+msgstr "Plakaren erregelak"
 
 #: app/scripts/controllers/menu.js:334
 msgid "Board rules disabled"
-msgstr ""
+msgstr "Plakaren erregelak desgaituta"
 
 #: app/scripts/controllers/menu.js:329
 msgid "Board rules enabled"
-msgstr ""
+msgstr "Plakaren erregelak gaituta"
 
 #: app/scripts/services/tools.js:234
 msgid "Board {{name}} not detected"
@@ -132,15 +132,15 @@ msgstr "Kodea"
 
 #: app/views/menu.html:212
 msgid "Collection"
-msgstr ""
+msgstr "Bilduma"
 
 #: app/scripts/services/tools.js:631
 msgid "Collection {{name}} added"
-msgstr ""
+msgstr "{{name}} bilduma gehitu da"
 
 #: app/scripts/services/tools.js:625
 msgid "Collection {{name}} not replaced"
-msgstr ""
+msgstr "{{name}} bilduma ez da ordeztu"
 
 #: app/scripts/services/tools.js:676
 msgid "Collection {{name}} removed"
@@ -148,7 +148,7 @@ msgstr "{{name}} bilduma ezabatu da"
 
 #: app/scripts/services/tools.js:621
 msgid "Collection {{name}} replaced"
-msgstr ""
+msgstr "{{name}} bilduma ordeztu da"
 
 #: app/scripts/controllers/menu.js:410
 msgid "Collection {{name}} selected"
@@ -204,7 +204,7 @@ msgstr "Aplikazioa itxi nahi al duzu?"
 
 #: app/scripts/services/project.js:104
 msgid "Do you want to convert it?"
-msgstr ""
+msgstr "Bihurtu nahi al duzu?"
 
 #: app/scripts/controllers/menu.js:485
 msgid "Do you want to remove the {{name}} collection?"
@@ -212,7 +212,7 @@ msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
 #: app/scripts/services/tools.js:617
 msgid "Do you want to replace it?"
-msgstr ""
+msgstr "Ordeztu nahi al duzu?"
 
 #: app/views/menu.html:325
 msgid "Documentation"
@@ -256,7 +256,7 @@ msgstr "Konstante-blokeak sar itzazu"
 
 #: app/scripts/services/blocks.js:52
 msgid "Enter the input blocks"
-msgstr ""
+msgstr "Sarrerako blokeak sar itzazu"
 
 #: app/scripts/services/blocks.js:269
 msgid "Enter the input ports"
@@ -264,7 +264,7 @@ msgstr "Sarrerako portuak sar itzazu"
 
 #: app/scripts/services/blocks.js:112
 msgid "Enter the output blocks"
-msgstr ""
+msgstr "Irteerako blokeak sar itzazu"
 
 #: app/scripts/services/blocks.js:270
 msgid "Enter the output ports"
@@ -416,7 +416,7 @@ msgstr ""
 
 #: app/scripts/services/tools.js:636
 msgid "Invalid collection {{name}}"
-msgstr ""
+msgstr "{{name}} bilduma baliogabea"
 
 #: app/scripts/services/graph.js:140 app/scripts/services/graph.js:147
 #: app/scripts/services/graph.js:154
@@ -437,7 +437,7 @@ msgstr "Hizkuntza"
 
 #: app/scripts/services/tools.js:579
 msgid "Load {{name}} ..."
-msgstr ""
+msgstr "{{name}} karga ezazu..."
 
 #: app/scripts/services/blocks.js:182 app/scripts/services/blocks.js:851
 msgid "Local parameter"
@@ -469,7 +469,7 @@ msgstr "Ok"
 
 #: app/scripts/services/project.js:323 app/scripts/services/project.js:97
 msgid "Old project format {{version}}"
-msgstr "{{version}} formatuko proiektu zaharra"
+msgstr "{{version}} formatu zaharra duen proiektua"
 
 #: app/views/menu.html:32
 msgid "Open"
@@ -569,7 +569,7 @@ msgstr "Gorde honela"
 
 #: app/views/menu.html:198
 msgid "Select"
-msgstr ""
+msgstr "Hautatu"
 
 #: app/views/menu.html:97
 msgid "Select all"
@@ -577,7 +577,7 @@ msgstr "Dena hautatu"
 
 #: app/scripts/services/blocks.js:54 app/scripts/services/blocks.js:699
 msgid "Show clock"
-msgstr ""
+msgstr "Erakutsi ordularia"
 
 #: app/views/menu.html:328
 msgid "Source code"
@@ -601,7 +601,7 @@ msgstr "Testbench-a esportatu da"
 
 #: app/scripts/services/tools.js:616
 msgid "The collection {{name}} already exists."
-msgstr ""
+msgstr "{{name}} bilduma existitzen da"
 
 #: app/scripts/controllers/menu.js:424
 msgid ""
@@ -637,7 +637,7 @@ msgstr ""
 
 #: app/scripts/services/project.js:103
 msgid "This project is designed for the {{name}} board."
-msgstr ""
+msgstr "Proiektua {{name}} plakarentzat diseinatu da."
 
 #: app/views/menu.html:243
 msgid "Toolchain"
@@ -683,7 +683,7 @@ msgstr "Eguneratu"
 #: app/scripts/services/blocks.js:697 app/scripts/services/blocks.js:777
 #: app/scripts/services/blocks.js:850
 msgid "Update the block name"
-msgstr ""
+msgstr "Blokearen izena egunera ezazu"
 
 #: app/views/menu.html:239
 msgid "Upload"
@@ -717,7 +717,7 @@ msgstr "Blokearen formatua okerra da: {{type}}"
 #: app/scripts/services/blocks.js:75 app/scripts/services/blocks.js:768
 #: app/scripts/services/blocks.js:842 app/scripts/services/blocks.js:877
 msgid "Wrong block name {{name}}"
-msgstr ""
+msgstr "{{name}} blokearen izena okerra da"
 
 #: app/scripts/services/blocks.js:319
 msgid "Wrong parameter name {{name}}"
@@ -783,7 +783,7 @@ msgstr "{{board}} pinout ez zehaztua"
 
 #: app/scripts/controllers/menu.js:402
 msgid "{{board}} rules not defined"
-msgstr ""
+msgstr "{{board}} erregelak ez daude definituta"
 
 #~ msgid "1_basic"
 #~ msgstr "1. Oinarrizkoa"
