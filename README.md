@@ -32,11 +32,8 @@ Documentation: http://icestudio.readthedocs.io/en/latest
 
 * **GNU/Linux**
 
-  1. Install [Python 2.7](https://www.python.org)
+  1. Install [Python 2.7](https://www.python.org) and **xclip** (to enable Copy/Paste)
   2. Download the [zipped release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3), unzip and execute **icestudio**
-
-
-NOTE: GNU/Linux users must have **xclip** installed to enable Copy/Paste.
 
 
 * **Windows**
@@ -102,9 +99,9 @@ Output
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/87)   |
+| Galician   | ![Progress](http://progressed.io/bar/100)  |
+| Basque     | ![Progress](http://progressed.io/bar/100)  |
 | French     | ![Progress](http://progressed.io/bar/61)   |
-| Galician   | ![Progress](http://progressed.io/bar/35)   |
 
 **Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
 
