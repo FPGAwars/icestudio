@@ -157,31 +157,31 @@ angular.module('icestudio')
           }
           var i;
           var links = graph.getLinks();
-          for (i in links) {
-            var linkIView = links[i].findView(paper);
+          _.each(links, function(link) {
+            var linkIView = link.findView(paper);
             if (linkView === linkIView) {
               //Skip the wire the user is drawing
-              continue;
+              return;
             }
             // Prevent multiple input links
-            if ((cellViewT.model.id === links[i].get('target').id) &&
-                (magnetT.getAttribute('port') === links[i].get('target').port)) {
+            if ((cellViewT.model.id === link.get('target').id) &&
+                (magnetT.getAttribute('port') === link.get('target').port)) {
               warning(gettextCatalog.getString('Invalid multiple input connections'));
               return false;
             }
             // Prevent to connect a pull-up if other blocks are connected
             if ((cellViewT.model.get('pullup')) &&
-                 (cellViewS.model.id === links[i].get('source').id)) {
+                 (cellViewS.model.id === link.get('source').id)) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
               return false;
             }
             // Prevent to connect other blocks if a pull-up is connected
             if ((linkIView.targetView.model.get('pullup')) &&
-                 (cellViewS.model.id === links[i].get('source').id)) {
+                 (cellViewS.model.id === link.get('source').id)) {
               warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
               return false;
             }
-          }
+          });
           // Ensure input -> pull-up connections
           if (cellViewT.model.get('pullup')) {
             var ret = (cellViewS.model.get('blockType') === 'basic.input');
@@ -478,12 +478,11 @@ angular.module('icestudio')
 
     function updateWiresOnObstacles() {
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cell = cells[i];
+      _.each(cells, function(cell) {
         if (cell.isLink()) {
           paper.findViewByModel(cell).update();
         }
-      }
+      });
     }
 
     this.setBoardRules = function(value) {
@@ -528,10 +527,10 @@ angular.module('icestudio')
         angular.element('#banner').removeClass('hidden');
       }
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cellView = paper.findViewByModel(cells[i].id);
+      _.each(cells, function(cell) {
+        var cellView = paper.findViewByModel(cell.id);
         cellView.options.interactive = value;
-        if (cells[i].get('type') !== 'ice.Generic') {
+        if (cell.get('type') !== 'ice.Generic') {
           if (value) {
             cellView.$el.removeClass('disable-graph');
           }
@@ -539,7 +538,7 @@ angular.module('icestudio')
             cellView.$el.addClass('disable-graph');
           }
         }
-        else if (cells[i].get('type') !== 'ice.Wire') {
+        else if (cell.get('type') !== 'ice.Wire') {
           if (value) {
             cellView.$el.find('.port-body').removeClass('disable-graph');
           }
@@ -547,7 +546,7 @@ angular.module('icestudio')
             cellView.$el.find('.port-body').addClass('disable-graph');
           }
         }
-      }
+      });
     };
 
     this.createBlock = function(type, block) {
@@ -591,10 +590,9 @@ angular.module('icestudio')
     function resetBlocks() {
       var data;
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cell = cells[i];
+      _.each(cells, function(cell) {
         if (cell.isLink()) {
-          break;
+          return;
         }
         var type = cell.get('blockType');
         if (type === 'basic.input' || type === 'basic.output') {
@@ -620,7 +618,7 @@ angular.module('icestudio')
           // Reset rules in Generic block ports
           var block = common.allDependencies[type];
           data = { ports: { in: [] }};
-          for (i in block.design.graph.blocks) {
+          for (var i in block.design.graph.blocks) {
             var item = block.design.graph.blocks[i];
             if (item.type === 'basic.input') {
               if (!item.data.range) {
@@ -634,7 +632,7 @@ angular.module('icestudio')
           cell.set('data', data);
           paper.findViewByModel(cell.id).updateBox();
         }
-      }
+      });
     }
 
     this.resetCommandStack = function() {
@@ -871,6 +869,7 @@ angular.module('icestudio')
           self.clearAll();
 
           var cells = graphToCells(design.graph, opt);
+
           graph.addCells(cells);
 
           self.appEnable(!opt.disabled);
