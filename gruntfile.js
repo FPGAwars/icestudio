@@ -139,7 +139,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // ONLY MAC: generate a dmg package
+    // ONLY MAC: generate a DMG package
     appdmg: {
       options: {
         basepath: '.',
@@ -170,6 +170,40 @@ module.exports = function(grunt) {
       target: {
         dest: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg'
       }
+    },
+
+    // ONLY LINUX: generate AppImage packages
+    appimage: {
+      linux32: {
+        options: {
+          name: 'Icestudio',
+          exec: 'icestudio',
+          arch: '32bit',
+          icons: 'doc/icons',
+          comment: 'Experimental graphic editor for open FPGAs',
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/icestudio/linux32/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+        }]
+      },
+      linux64: {
+        options: {
+          name: 'Icestudio',
+          exec: 'icestudio',
+          arch: '64bit',
+          icons: 'doc/icons',
+          comment: 'Experimental graphic editor for open FPGAs',
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/icestudio/linux64/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+        }]
+      },
     },
 
     // Compress packages usin zip
