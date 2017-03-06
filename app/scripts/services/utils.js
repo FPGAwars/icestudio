@@ -12,109 +12,46 @@ angular.module('icestudio')
                              nodeChildProcess,
                              nodeTarball,
                              nodeZlib,
-                             nodeSudo,
                              nodeOnline,
                              nodeGlob,
                              nodeSha1,
                              nodeCP,
                              SVGO) {
 
-    const WIN32 = Boolean(process.platform.indexOf('win32') > -1);
-    this.WIN32 = WIN32;
-    const DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
-    this.DARWIN = DARWIN;
+     var _pythonExecutableCached = null;
+     // Get the system executable
+     this.getPythonExecutable = function() {
+       if (!_pythonExecutableCached) {
+         const possibleExecutables = [];
 
-    const LOCALE_DIR = nodePath.join('resources', 'locale');
-    const SAMPLE_DIR = nodePath.join('resources', 'sample');
-    this.SAMPLE_DIR = SAMPLE_DIR;
+         if (common.WIN32) {
+           possibleExecutables.push('python.exe');
+           possibleExecutables.push('C:\\Python27\\python.exe');
+         } else {
+           possibleExecutables.push('python2.7');
+           possibleExecutables.push('python');
+         }
 
-    const BASE_DIR = process.env.HOME || process.env.USERPROFILE;
-    const ICESTUDIO_DIR = safeDir(nodePath.join(BASE_DIR, '.icestudio'));
-    this.ICESTUDIO_DIR = ICESTUDIO_DIR;
-    const COLLECTIONS_DIR = nodePath.join(ICESTUDIO_DIR, 'collections');
-    this.COLLECTIONS_DIR = COLLECTIONS_DIR;
-    const APIO_HOME_DIR = nodePath.join(ICESTUDIO_DIR, 'apio');
-    const PROFILE_PATH = nodePath.join(ICESTUDIO_DIR, 'profile.json');
-    this.PROFILE_PATH = PROFILE_PATH;
-    const CACHE_DIR = nodePath.join(ICESTUDIO_DIR, '.cache');
-    const BUILD_DIR = nodePath.join(ICESTUDIO_DIR, '.build');
-    this.BUILD_DIR = BUILD_DIR;
+         for (var i in possibleExecutables) {
+           var executable = possibleExecutables[i];
+           if (isPython2(executable)) {
+             _pythonExecutableCached = executable;
+             break;
+           }
+         }
+       }
+       return _pythonExecutableCached;
+     };
 
-    const VENV = 'virtualenv-15.0.1';
-    const VENV_DIR = nodePath.join(CACHE_DIR, VENV);
-    const VENV_TARGZ = nodePath.join('resources', 'virtualenv', VENV + '.tar.gz');
-
-    const APP_DIR = nodePath.dirname(process.execPath);
-    const TOOLCHAIN_DIR = nodePath.join(APP_DIR, 'toolchain');
-    this.TOOLCHAIN_DIR = TOOLCHAIN_DIR;
-
-    const DEFAULT_APIO = 'default-apio';
-    const DEFAULT_APIO_DIR = nodePath.join(CACHE_DIR, DEFAULT_APIO);
-    const DEFAULT_APIO_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO + '.tar.gz');
-
-    const DEFAULT_APIO_PACKAGES = 'default-apio-packages';
-    const DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(TOOLCHAIN_DIR, DEFAULT_APIO_PACKAGES + '.tar.gz');
-
-    const ENV_DIR = nodePath.join(ICESTUDIO_DIR, 'venv');
-    const ENV_BIN_DIR = nodePath.join(ENV_DIR, WIN32 ? 'Scripts' : 'bin');
-    const ENV_PIP = nodePath.join(ENV_BIN_DIR, 'pip');
-    const ENV_APIO = nodePath.join(ENV_BIN_DIR, WIN32 ? 'apio.exe' : 'apio');
-    const APIO_CMD = (WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + APIO_HOME_DIR + (WIN32 ? '& ' : '; ') + coverPath(ENV_APIO);
-    const SYSTEM_APIO = '/usr/bin/apio';
-
-    function safeDir(_dir) {
-      if (WIN32) {
-        // Put the env directory to the root of the current local disk when
-        // default path contains non-ASCII characters. Virtualenv will fail to
-        for (var i in _dir) {
-          if (_dir[i].charCodeAt(0) > 127) {
-            const _dirFormat = nodePath.parse(_dir);
-            return nodePath.format({
-              root: _dirFormat.root,
-              dir: _dirFormat.root,
-              base: '.icestudio',
-              name: '.icestudio',
-            });
-          }
-        }
-      }
-      return _dir;
-    }
-
-    var _pythonExecutableCached = null;
-    // Get the system executable
-    this.getPythonExecutable = function() {
-      if (!_pythonExecutableCached) {
-        const possibleExecutables = [];
-
-        if (WIN32) {
-          possibleExecutables.push('python.exe');
-          possibleExecutables.push('C:\\Python27\\python.exe');
-        } else {
-          possibleExecutables.push('python2.7');
-          possibleExecutables.push('python');
-        }
-
-        for (var i in possibleExecutables) {
-          var executable = possibleExecutables[i];
-          if (isPython2(executable)) {
-            _pythonExecutableCached = executable;
-            break;
-          }
-        }
-      }
-      return _pythonExecutableCached;
-    };
-
-    function isPython2(executable) {
-      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
-      try {
-        const result = nodeChildProcess.spawnSync(executable, args);
-        return 0 === result.status && result.stdout.toString().startsWith('2.7');
-      } catch(e) {
-        return false;
-      }
-    }
+     function isPython2(executable) {
+       const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+       try {
+         const result = nodeChildProcess.spawnSync(executable, args);
+         return 0 === result.status && result.stdout.toString().startsWith('2.7');
+       } catch(e) {
+         return false;
+       }
+     }
 
     this.extractTargz = function(source, destination, callback) {
       nodeTarball.extractTarball(source, destination, function(err) {
@@ -129,7 +66,7 @@ angular.module('icestudio')
     };
 
     this.extractVirtualEnv = function(callback) {
-      this.extractTargz(VENV_TARGZ, CACHE_DIR, callback);
+      this.extractTargz(common.VENV_TARGZ, common.CACHE_DIR, callback);
     };
 
     function disableClick(e) {
@@ -172,15 +109,15 @@ angular.module('icestudio')
     };
 
     this.makeVenvDirectory = function(callback) {
-      if (!nodeFs.existsSync(ICESTUDIO_DIR)) {
-        nodeFs.mkdirSync(ICESTUDIO_DIR);
+      if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
+        nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
-      if (!nodeFs.existsSync(ENV_DIR)) {
-        nodeFs.mkdirSync(ENV_DIR);
+      if (!nodeFs.existsSync(common.ENV_DIR)) {
+        nodeFs.mkdirSync(common.ENV_DIR);
         this.executeCommand(
           [this.getPythonExecutable(),
-           coverPath(nodePath.join(VENV_DIR, 'virtualenv.py')),
-           coverPath(ENV_DIR)], callback);
+           coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
+           coverPath(common.ENV_DIR)], callback);
       }
       else {
         callback();
@@ -190,7 +127,7 @@ angular.module('icestudio')
     this.checkDefaultToolchain = function() {
       try {
         // TODO: use tar.gz with sha1
-        return nodeFs.statSync(TOOLCHAIN_DIR).isDirectory();
+        return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
       }
       catch (err) {
         return false;
@@ -198,21 +135,21 @@ angular.module('icestudio')
     };
 
     this.extractDefaultApio = function(callback) {
-      this.extractTargz(DEFAULT_APIO_TARGZ, DEFAULT_APIO_DIR, callback);
+      this.extractTargz(common.DEFAULT_APIO_TARGZ, common.DEFAULT_APIO_DIR, callback);
     };
 
     this.installDefaultApio = function(callback) {
       var self = this;
-      nodeGlob(nodePath.join(DEFAULT_APIO_DIR, '*.*'), {}, function (error, files) {
+      nodeGlob(nodePath.join(common.DEFAULT_APIO_DIR, '*.*'), {}, function (error, files) {
         if (!error) {
           files = files.map(function(item) { return coverPath(item); });
-          self.executeCommand([coverPath(ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
+          self.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
     };
 
     this.extractDefaultApioPackages = function(callback) {
-      this.extractTargz(DEFAULT_APIO_PACKAGES_TARGZ, APIO_HOME_DIR, callback);
+      this.extractTargz(common.DEFAULT_APIO_PACKAGES_TARGZ, common.APIO_HOME_DIR, callback);
     };
 
     this.isOnline = function(callback, error) {
@@ -230,17 +167,17 @@ angular.module('icestudio')
     };
 
     this.installOnlineApio = function(callback) {
-      this.executeCommand([coverPath(ENV_PIP), 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
+      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
     };
 
     this.apioInstall = function(_package, callback) {
-      this.executeCommand([APIO_CMD, 'install', _package], callback);
+      this.executeCommand([common.APIO_CMD, 'install', _package], callback);
     };
 
     this.toolchainDisabled = false;
 
     this.getApioExecutable = function() {
-      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : SYSTEM_APIO;
+      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : common.SYSTEM_APIO;
       if (nodeFs.existsSync(candidateApio)) {
         if (!this.toolchainDisabled) {
           // Show message only on start
@@ -250,17 +187,17 @@ angular.module('icestudio')
         return coverPath(candidateApio);
       }
       this.toolchainDisabled = false;
-      return APIO_CMD;
+      return common.APIO_CMD;
     };
 
     this.removeToolchain = function() {
-      deleteFolderRecursive(ENV_DIR);
-      deleteFolderRecursive(CACHE_DIR);
-      deleteFolderRecursive(APIO_HOME_DIR);
+      deleteFolderRecursive(common.ENV_DIR);
+      deleteFolderRecursive(common.CACHE_DIR);
+      deleteFolderRecursive(common.APIO_HOME_DIR);
     };
 
     this.removeCollections = function() {
-      deleteFolderRecursive(COLLECTIONS_DIR);
+      deleteFolderRecursive(common.COLLECTIONS_DIR);
     };
 
     this.deleteFolderRecursive = deleteFolderRecursive;
@@ -401,167 +338,6 @@ angular.module('icestudio')
       return fileTree;
     }
 
-    this.enableDrivers = function() {
-      if (WIN32) {
-        enableWindowsDrivers();
-      }
-      else if (DARWIN) {
-        enableDarwinDrivers();
-      }
-      else {
-        linuxDrivers(true);
-      }
-    };
-
-    this.disableDrivers = function() {
-      if (WIN32) {
-        disableWindowsDrivers();
-      }
-      else if (DARWIN) {
-        disableDarwinDrivers();
-      }
-      else {
-        linuxDrivers(false);
-      }
-    };
-
-    function linuxDrivers(enable) {
-      var commands;
-      if (enable) {
-        commands = [
-          'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
-          'service udev restart'
-        ];
-      }
-      else {
-        commands = [
-          'rm /etc/udev/rules.d/80-icestick.rules',
-          'service udev restart'
-        ];
-      }
-      var command = 'sh -c "' + commands.join('; ') + '"';
-
-      beginLazyProcess();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-        // console.log(error, stdout, stderr);
-        endLazyProcess();
-        if (!error) {
-          if (enable) {
-            alertify.success(gettextCatalog.getString('Drivers enabled'));
-          }
-          else {
-            alertify.warning(gettextCatalog.getString('Drivers disabled'));
-          }
-          setTimeout(function() {
-             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
-          }, 1000);
-        }
-      });
-    }
-
-    function enableDarwinDrivers() {
-      var commands = [
-        'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
-        'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
-      ];
-      var command = 'sh -c "' + commands.join('; ') + '"';
-
-      beginLazyProcess();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-        // console.log(error, stdout, stderr);
-        if (error) {
-          endLazyProcess();
-        }
-        else {
-          var brewCommands = [
-            '/usr/local/bin/brew update',
-            '/usr/local/bin/brew install --force libftdi',
-            '/usr/local/bin/brew unlink libftdi',
-            '/usr/local/bin/brew link --force libftdi',
-            '/usr/local/bin/brew install --force libffi',
-            '/usr/local/bin/brew unlink libffi',
-            '/usr/local/bin/brew link --force libffi'
-          ];
-          nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
-            endLazyProcess();
-            if (error) {
-              if ((stderr.indexOf('brew: command not found') !== -1) ||
-                   (stderr.indexOf('brew: No such file or directory') !== -1)) {
-                alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
-                // TODO: open web browser with Homebrew website on click
-              }
-              else if (stderr.indexOf('Error: Failed to download') !== -1) {
-                alertify.error(gettextCatalog.getString('Internet connection required'), 30);
-              }
-              else {
-                alertify.error(stderr, 30);
-              }
-            }
-            else {
-              alertify.success(gettextCatalog.getString('Drivers enabled'));
-            }
-          });
-        }
-      });
-    }
-
-    function disableDarwinDrivers() {
-      var commands = [
-        'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
-        'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
-      ];
-      var command = 'sh -c "' + commands.join('; ') + '"';
-
-      beginLazyProcess();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-        // console.log(error, stdout, stderr);
-        endLazyProcess();
-        if (!error) {
-          alertify.warning(gettextCatalog.getString('Drivers disabled'));
-        }
-      });
-    }
-
-    function enableWindowsDrivers() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'), function() {
-        beginLazyProcess();
-        nodeSudo.exec([APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
-          // console.log(error, stdout, stderr);
-          endLazyProcess();
-          if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
-          }
-          if (!error) {
-            alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
-          }
-        });
-      });
-    }
-
-    function disableWindowsDrivers() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'), function() {
-        beginLazyProcess();
-        nodeChildProcess.exec([APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
-          // console.log(error, stdout, stderr);
-          endLazyProcess();
-          if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
-          }
-        });
-      });
-    }
-
-    function beginLazyProcess() {
-      $('body').addClass('waiting');
-      angular.element('#menu').addClass('disable-menu');
-    }
-
-    function endLazyProcess() {
-      $('body').removeClass('waiting');
-      angular.element('#menu').removeClass('disable-menu');
-    }
-
     this.setLocale = function(locale, collections) {
       // Update current locale format
       locale = splitLocale(locale);
@@ -571,7 +347,7 @@ angular.module('icestudio')
       var bestLang = bestLocale(locale, supported);
       gettextCatalog.setCurrentLanguage(bestLang);
       // Application strings
-      gettextCatalog.loadRemote(nodePath.join(LOCALE_DIR, bestLang, bestLang + '.json'));
+      gettextCatalog.loadRemote(nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json'));
       // Collections strings
       for (var c in collections) {
         var collection = collections[c];
@@ -598,8 +374,8 @@ angular.module('icestudio')
 
     function getSupportedLanguages() {
       var supported = [];
-      nodeFs.readdirSync(LOCALE_DIR).forEach(function(element/*, index*/) {
-        var curPath = nodePath.join(LOCALE_DIR, element);
+      nodeFs.readdirSync(common.LOCALE_DIR).forEach(function(element/*, index*/) {
+        var curPath = nodePath.join(common.LOCALE_DIR, element);
         if (nodeFs.lstatSync(curPath).isDirectory()) {
           supported.push(splitLocale(element));
         }

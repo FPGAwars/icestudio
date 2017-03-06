@@ -1,0 +1,199 @@
+'use strict';
+
+angular.module('icestudio')
+  .service('drivers', function(gettextCatalog,
+                               profile,
+                               common,
+                               nodePath,
+                               nodeSudo,
+                               nodeChildProcess) {
+
+    this.enable = function() {
+      if (common.WIN32) {
+       enableWindowsDrivers();
+     }
+     else if (common.DARWIN) {
+       enableDarwinDrivers();
+     }
+     else {
+       linuxDrivers(true);
+     }
+    };
+
+    this.disable = function() {
+     if (common.WIN32) {
+       disableWindowsDrivers();
+     }
+     else if (common.DARWIN) {
+       disableDarwinDrivers();
+     }
+     else {
+       linuxDrivers(false);
+     }
+    };
+
+    /*this.preUpload = function() {
+     if (common.DARWIN) {
+       preUploadDarwin();
+     }
+    };
+
+    this.postUpload = function() {
+     if (common.DARWIN) {
+       postUploadDarwin();
+     }
+   };*/
+
+    function linuxDrivers(enable) {
+     var commands;
+     if (enable) {
+       commands = [
+         'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
+         'service udev restart'
+       ];
+     }
+     else {
+       commands = [
+         'rm /etc/udev/rules.d/80-icestick.rules',
+         'service udev restart'
+       ];
+     }
+     var command = 'sh -c "' + commands.join('; ') + '"';
+
+     beginLazyProcess();
+     nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
+       // console.log(error, stdout, stderr);
+       endLazyProcess();
+       if (!error) {
+         if (enable) {
+           alertify.success(gettextCatalog.getString('Drivers enabled'));
+         }
+         else {
+           alertify.warning(gettextCatalog.getString('Drivers disabled'));
+         }
+         setTimeout(function() {
+            alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
+         }, 1000);
+       }
+     });
+    }
+
+    function enableDarwinDrivers() {
+     var commands = [
+       'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+       'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
+     ];
+     var command = 'sh -c "' + commands.join('; ') + '"';
+
+     //profile.set('macosDrivers', true);
+
+     beginLazyProcess();
+     nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
+       // console.log(error, stdout, stderr);
+       if (error) {
+         endLazyProcess();
+       }
+       else {
+         var brewCommands = [
+           '/usr/local/bin/brew update',
+           '/usr/local/bin/brew install --force libftdi',
+           '/usr/local/bin/brew unlink libftdi',
+           '/usr/local/bin/brew link --force libftdi',
+           '/usr/local/bin/brew install --force libffi',
+           '/usr/local/bin/brew unlink libffi',
+           '/usr/local/bin/brew link --force libffi'
+         ];
+         nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
+           // console.log(error, stdout, stderr);
+           endLazyProcess();
+           if (error) {
+             if ((stderr.indexOf('brew: command not found') !== -1) ||
+                  (stderr.indexOf('brew: No such file or directory') !== -1)) {
+               alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
+               // TODO: open web browser with Homebrew website on click
+             }
+             else if (stderr.indexOf('Error: Failed to download') !== -1) {
+               alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+             }
+             else {
+               alertify.error(stderr, 30);
+             }
+           }
+           else {
+             alertify.success(gettextCatalog.getString('Drivers enabled'));
+           }
+         });
+       }
+     });
+    }
+
+    function disableDarwinDrivers() {
+     var commands = [
+       'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
+       'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
+     ];
+     var command = 'sh -c "' + commands.join('; ') + '"';
+
+     beginLazyProcess();
+     nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
+       // console.log(error, stdout, stderr);
+       endLazyProcess();
+       if (!error) {
+         alertify.warning(gettextCatalog.getString('Drivers disabled'));
+       }
+     });
+    }
+
+    /*function preUploadDarwin() {
+
+    }
+
+    function postUploadDarwin() {
+
+    }
+
+    function checkDriverDarwin(driver) {
+     var output = nodeChildProcess.execSync('echo hello').toString();
+     return driver.indexOf(output) > -1;
+   }*/
+
+    function enableWindowsDrivers() {
+     alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'), function() {
+       beginLazyProcess();
+       nodeSudo.exec([common.APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
+         // console.log(error, stdout, stderr);
+         endLazyProcess();
+         if (stderr) {
+           alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+         }
+         if (!error) {
+           alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
+         }
+       });
+     });
+    }
+
+    function disableWindowsDrivers() {
+     alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'), function() {
+       beginLazyProcess();
+       nodeChildProcess.exec([common.APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+         // console.log(error, stdout, stderr);
+         endLazyProcess();
+         if (stderr) {
+           alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+         }
+       });
+     });
+    }
+
+    function beginLazyProcess() {
+     $('body').addClass('waiting');
+     angular.element('#menu').addClass('disable-menu');
+    }
+
+    function endLazyProcess() {
+     $('body').removeClass('waiting');
+     angular.element('#menu').removeClass('disable-menu');
+    }
+
+  });

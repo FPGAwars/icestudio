@@ -6,7 +6,7 @@ angular.module('icestudio')
       return shortcuts.label(action);
     };
   })
-  .service('shortcuts', function(utils) {
+  .service('shortcuts', function(common) {
 
     this.method = function(action, method) {
       // Configure shortcut method
@@ -23,7 +23,7 @@ angular.module('icestudio')
 
       var action = '';
       var method = null;
-      var system = utils.DARWIN ? 'mac' : 'linux';
+      var system = common.DARWIN ? 'mac' : 'linux';
       var ret = { preventDefault: false };
       for (action in shortcuts) {
         var options = shortcuts[action].opt || {};
@@ -50,7 +50,7 @@ angular.module('icestudio')
       // Return shortcut label
       var label = '';
       if (action in shortcuts) {
-        if (utils.DARWIN) {
+        if (common.DARWIN) {
           label = shortcuts[action].mac.label;
         }
         else {

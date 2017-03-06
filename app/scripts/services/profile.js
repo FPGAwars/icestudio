@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .service('profile', function(utils,
+                               common,
                                nodeFs) {
 
     this.data = {
@@ -12,17 +13,24 @@ angular.module('icestudio')
       'boardRules': true
     };
 
+    if (common.DARWIN) {
+      this.data['macosDrivers'] = false;
+    }
+
     this.load = function(callback) {
       var self = this;
-      utils.readFile(utils.PROFILE_PATH, function(data) {
+      utils.readFile(common.PROFILE_PATH, function(data) {
         if (data) {
           self.data = {
             'language': data.language || '',
             'remoteHostname': data.remoteHostname || '',
             'collection': data.collection || '',
             'board': data.board || '',
-            'boardRules': data.remoteHostname || true
+            'boardRules': data.boardRules || true
           };
+          if (common.DARWIN) {
+            self.data['macosDrivers'] = data.macosDrivers || false;
+          }
         }
         if (callback) {
           callback();
@@ -42,10 +50,10 @@ angular.module('icestudio')
     };
 
     this.save = function() {
-      if (!nodeFs.existsSync(utils.ICESTUDIO_DIR)) {
-        nodeFs.mkdirSync(utils.ICESTUDIO_DIR);
+      if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
+        nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
-      utils.saveFile(utils.PROFILE_PATH, this.data, function() {
+      utils.saveFile(common.PROFILE_PATH, this.data, function() {
         // Success
       }, true);
     };

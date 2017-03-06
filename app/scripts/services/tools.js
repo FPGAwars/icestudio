@@ -5,6 +5,7 @@ angular.module('icestudio')
                              compiler,
                              profile,
                              resources,
+                             drivers,
                              utils,
                              common,
                              gettextCatalog,
@@ -29,7 +30,7 @@ angular.module('icestudio')
     checkToolchain();
 
     // Remove build directory on start
-    nodeFse.removeSync(utils.BUILD_DIR);
+    nodeFse.removeSync(common.BUILD_DIR);
 
     this.verifyCode = function() {
       this.apio(['verify']);
@@ -115,7 +116,7 @@ angular.module('icestudio')
             toolchain.installed = toolchain.apio >= _package.apio.min &&
                                   toolchain.apio < _package.apio.max;
             if (toolchain.installed) {
-              nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+              nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
                 toolchain.installed = !error;
                 if (callback) {
                   callback();
@@ -133,8 +134,8 @@ angular.module('icestudio')
     }
 
     this.generateCode = function() {
-      if (!nodeFs.existsSync(utils.BUILD_DIR)) {
-        nodeFs.mkdirSync(utils.BUILD_DIR);
+      if (!nodeFs.existsSync(common.BUILD_DIR)) {
+        nodeFs.mkdirSync(common.BUILD_DIR);
       }
       project.update();
       var opt = { boardRules: profile.get('boardRules') };
@@ -144,8 +145,8 @@ angular.module('icestudio')
       }
       var verilog = compiler.generate('verilog', project.get(), opt);
       var pcf = compiler.generate('pcf', project.get(), opt);
-      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.v'), verilog, 'utf8');
-      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.v'), verilog, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
       return verilog;
     };
 
@@ -171,7 +172,7 @@ angular.module('icestudio')
       var match;
       while (match = pattern.exec(code)) {
         var file = match[1];
-        var destPath = nodePath.join(utils.BUILD_DIR, file);
+        var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.path), file);
 
         // Copy included file
@@ -192,7 +193,7 @@ angular.module('icestudio')
       if (remoteHostname) {
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
-          src: utils.BUILD_DIR + '/',
+          src: common.BUILD_DIR + '/',
           dest: remoteHostname + ':.build/',
           ssh: true,
           recursive: true,
@@ -215,7 +216,7 @@ angular.module('icestudio')
       else {
         var apio = utils.getApioExecutable();
         toolchain.disabled = utils.toolchainDisabled;
-        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(utils.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
+        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
             processExecute(label, callback, error, stdout, stderr);
           });
@@ -342,7 +343,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: utils.TOOLCHAIN_DIR}));
+        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: common.TOOLCHAIN_DIR}));
       }
     };
 
@@ -357,11 +358,11 @@ angular.module('icestudio')
     };
 
     this.enableDrivers = function() {
-      utils.enableDrivers();
+      drivers.enable();
     };
 
     this.disableDrivers = function() {
-      utils.disableDrivers();
+      drivers.disable();
     };
 
     function installDefaultToolchain() {
@@ -512,7 +513,7 @@ angular.module('icestudio')
     }
 
     function apioInstallDrivers(callback) {
-      if (utils.WIN32) {
+      if (common.WIN32) {
         updateProgress('apio install drivers', 80);
         utils.apioInstall('drivers', callback);
       }
@@ -610,7 +611,7 @@ angular.module('icestudio')
       async.eachSeries(collections, function(collection, next) {
         setTimeout(function() {
           if (collection.package && (collection.blocks || collection.examples)) {
-            var destPath = nodePath.join(utils.COLLECTIONS_DIR, collection.name);
+            var destPath = nodePath.join(common.COLLECTIONS_DIR, collection.name);
             if (nodeFs.existsSync(destPath)) {
               alertify.confirm(
                 gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
@@ -652,8 +653,8 @@ angular.module('icestudio')
         safeExtract(collection.locale[l], zip);
         // Generate locale JSON files
         var compiler = new nodeGettext.Compiler({ format: 'json' });
-        var sourcePath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l]);
-        var targetPath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l].replace(/\.po$/, '.json'));
+        var sourcePath = nodePath.join(common.COLLECTIONS_DIR, collection.locale[l]);
+        var targetPath = nodePath.join(common.COLLECTIONS_DIR, collection.locale[l].replace(/\.po$/, '.json'));
         var content = nodeFs.readFileSync(sourcePath).toString();
         var json = compiler.convertPo([content]);
         nodeFs.writeFileSync(targetPath, json);
@@ -665,7 +666,7 @@ angular.module('icestudio')
 
     function safeExtract(entry, zip) {
       try {
-        zip.extractEntryTo(entry, utils.COLLECTIONS_DIR);
+        zip.extractEntryTo(entry, common.COLLECTIONS_DIR);
       }
       catch(e) {}
     }
