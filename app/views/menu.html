@@ -129,44 +129,10 @@
                     </ul>
                   </li>
                   <li class="divider"></li>
+
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
-                    <ul uib-dropdown-menu>
-                      <li>
-                        <a href ng-click="selectLanguage('en')">
-                          {{ 'English' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'en'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href ng-click="selectLanguage('es_ES')">
-                          {{ 'Spanish' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'es_ES'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href ng-click="selectLanguage('gl_ES')">
-                          {{ 'Galician' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'gl_ES'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href ng-click="selectLanguage('eu_ES')">
-                          {{ 'Basque' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'eu_ES'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href ng-click="selectLanguage('fr_FR')">
-                          {{ 'French' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                        <a href ng-click="selectLanguage('ca_ES')">
-                          {{ 'Catalan' | translate }}&ensp;
-                          <span ng-show="profile.data.language == 'ca_ES'" class="glyphicon glyphicon-ok-circle"></span>
-                        </a>
-                      </li>
-                    </ul>
+                    <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
                   </li>
                   <li class="divider"></li>
                   <li>
