@@ -604,8 +604,11 @@ angular.module('icestudio')
     shortcuts.method('stepRight', graph.stepRight);
 
     shortcuts.method('removeSelected', removeSelected);
-    shortcuts.method('breadcrumbsBack', function() {
-      if (!graph.isEnabled()) {
+    shortcuts.method('back', function() {
+      if (graph.isEnabled()) {
+        removeSelected();
+      }
+      else {
         $rootScope.$broadcast('breadcrumbsBack');
       }
     });

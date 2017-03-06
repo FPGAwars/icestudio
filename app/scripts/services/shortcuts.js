@@ -154,7 +154,7 @@ angular.module('icestudio')
         linux: { label: 'Supr', key: 46 },
         mac: { label: 'Fn+Delete', key: 46 },
       },
-      breadcrumbsBack: {
+      back: {
         linux: { label: 'Back', key: 8 },
         mac: { label: 'Delete', key: 8 },
         opt: { disabled: true }
