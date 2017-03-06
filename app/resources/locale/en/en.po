@@ -116,6 +116,10 @@ msgstr "Build"
 msgid "Cancel"
 msgstr "Cancel"
 
+#: app/views/menu.html:165
+msgid "Catalan"
+msgstr "Catalan"
+
 #: app/scripts/services/tools.js:446
 msgid "Check Internet connection..."
 msgstr "Check Internet connection..."
