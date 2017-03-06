@@ -117,6 +117,10 @@ msgstr "Sintetizar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#: app/views/menu.html:165
+msgid "Catalan"
+msgstr "Catalán"
+
 #: app/scripts/services/tools.js:446
 msgid "Check Internet connection..."
 msgstr "Comprobando conexión a Internet..."

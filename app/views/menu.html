@@ -161,6 +161,10 @@
                           {{ 'French' | translate }}&ensp;
                           <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
                         </a>
+                        <a href ng-click="selectLanguage('ca_ES')">
+                          {{ 'Catalan' | translate }}&ensp;
+                          <span ng-show="profile.data.language == 'ca_ES'" class="glyphicon glyphicon-ok-circle"></span>
+                        </a>
                       </li>
                     </ul>
                   </li>

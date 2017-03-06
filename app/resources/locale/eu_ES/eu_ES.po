@@ -118,6 +118,10 @@ msgstr "Sintetizatu"
 msgid "Cancel"
 msgstr "Utzi"
 
+#: app/views/menu.html:165
+msgid "Catalan"
+msgstr "Katalan"
+
 #: app/scripts/services/tools.js:446
 msgid "Check Internet connection..."
 msgstr "Interneteko sarbidea egiaztatu..."
