@@ -31,6 +31,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     this._action = 'translating';
 
+    this.options.graph.trigger('batch:stop');
     this.options.graph.trigger('batch:start');
 
     var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
@@ -39,7 +40,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     this.trigger('selection-box:pointerdown', evt);
 
-    evt.stopPropagation();
+    if (evt.stopPropagation) {
+      evt.stopPropagation();
+    }
   },
 
   isTranslating: function() {

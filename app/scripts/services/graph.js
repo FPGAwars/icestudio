@@ -22,6 +22,7 @@ angular.module('icestudio')
     var selectionView = null;
     var commandManager = null;
     var mousePosition = { x: 0, y: 0 };
+    var menuHeight = 51;
 
     this.breadcrumbs = [{ name: '', type: '' }];
 
@@ -297,10 +298,11 @@ angular.module('icestudio')
      $(document).on('mousedown', function() { self.mousedown = true; });
 
      var self = this;
-     $('#paper').mousemove(function(event) {
+
+     $('body').mousemove(function(event) {
        mousePosition = {
-         x: event.offsetX,
-         y: event.offsetY
+         x: event.pageX,
+         y: event.pageY
        };
      });
 
@@ -551,13 +553,31 @@ angular.module('icestudio')
 
     this.createBlock = function(type, block) {
       blocks.newGeneric(type, block, function(cell) {
+        cell.attributes.position = {
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
+          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
+        };
         addCell(cell);
+        disableSelected();
+        var cellView = paper.findViewByModel(cell);
+        selection.add(cell);
+        selectionView.createSelectionBox(cellView);
+        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
       });
     };
 
     this.createBasicBlock = function(type) {
       blocks.newBasic(type, function(cell) {
+        cell.attributes.position = {
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
+          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
+        };
         addCell(cell);
+        disableSelected();
+        var cellView = paper.findViewByModel(cell);
+        selection.add(cell);
+        selectionView.createSelectionBox(cellView);
+        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
       });
     };
 
@@ -989,7 +1009,7 @@ angular.module('icestudio')
           reset: design.board !== common.selectedBoard.name,
           offset: {
             x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
-            y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
+            y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - origin.y) / gridsize) * gridsize,
           }
         };
         var cells = graphToCells(design.graph, opt);
@@ -999,6 +1019,9 @@ angular.module('icestudio')
         _.each(cells, function(cell) {
           if (!cell.isLink()) {
             var cellView = paper.findViewByModel(cell);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
+            }
             selection.add(cell);
             selectionView.createSelectionBox(cellView);
             unhighlight(cellView);
