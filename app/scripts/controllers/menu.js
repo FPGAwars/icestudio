@@ -56,10 +56,15 @@ angular.module('icestudio')
     // Menu timer
     var timer;
 
+    // mousedown event
+    var mousedown = false;
+    $(document).on('mouseup', function() { mousedown = false; });
+    $(document).on('mousedown', function() { mousedown = true; });
+
     // mouseover event
     $scope.showMenu = function (menu) {
       $timeout.cancel(timer);
-      if (!graph.mousedown) {
+      if (!mousedown) {
         $scope.status[menu] = true;
       }
     };

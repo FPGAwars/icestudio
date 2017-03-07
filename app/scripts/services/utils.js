@@ -944,4 +944,28 @@ angular.module('icestudio')
       return _.clone(_default);
     };
 
+    this.hasLeftButton = function(evt) {
+      return evt.which === 1;
+    };
+
+    this.hasMiddleButton = function(evt) {
+      return evt.which === 2;
+    };
+
+    this.hasRightButton = function(evt) {
+      return evt.which === 3;
+    };
+
+    this.hasButtonPressed = function(evt) {
+      return evt.which !== 0;
+    };
+
+    this.hasShift = function(evt) {
+      return evt.shiftKey;
+    };
+
+    this.hasCtrl = function(evt) {
+      return evt.ctrlKey;
+    };
+
   });

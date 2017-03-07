@@ -291,85 +291,109 @@ angular.module('icestudio')
         });
       }
 
-     // Events
+      // Events
 
-     this.mousedown = false;
-     $(document).on('mouseup', function() { self.mousedown = false; });
-     $(document).on('mousedown', function() { self.mousedown = true; });
+      var self = this;
 
-     var self = this;
-
-     $('body').mousemove(function(event) {
-       mousePosition = {
-         x: event.pageX,
-         y: event.pageY
-       };
-     });
-
-     selectionView.on('selection-box:pointerdown', function(evt) {
-       // Selection to top view
-       if (selection) {
-         selection.each(function(cell) {
-           var cellView = paper.findViewByModel(cell);
-           if (!cellView.model.isLink()) {
-             if (cellView.$box.css('z-index') < z.index) {
-               cellView.$box.css('z-index', ++z.index);
-             }
-           }
-         });
-       }
-       // Toggle selection
-       if (evt.which === 3) {
-         var cell = selection.get($(evt.target).data('model'));
-         selection.reset(selection.without(cell));
-         selectionView.destroySelectionBox(paper.findViewByModel(cell));
-       }
-     });
-
-     paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
-       if (paper.options.enabled) {
-         if (!cellView.model.isLink()) {
-           if (evt.which === 3) {
-             // Disable current focus
-             document.activeElement.blur();
-             // Right button
-             selection.add(cellView.model);
-             selectionView.createSelectionBox(cellView);
-             unhighlight(cellView);
-           }
-           updateWiresOnObstacles();
-         }
-       }
-     });
-
-     paper.on('cell:pointerdown', function(cellView) {
-       if (paper.options.enabled) {
-         if (cellView.model.isLink()) {
-           // Unhighlight source block of the wire
-           unhighlight(paper.findViewByModel(cellView.model.get('source').id));
-         }
-       }
+      $('body').mousemove(function(event) {
+        mousePosition = {
+          x: event.pageX,
+          y: event.pageY
+        };
       });
 
-      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
-        var type =  cellView.model.get('blockType');
-        if (type.indexOf('basic.') !== -1) {
+      selectionView.on('selection-box:pointerdown', function(/*evt*/) {
+        // Move selection to top view
+        if (selection) {
+          selection.each(function(cell) {
+            var cellView = paper.findViewByModel(cell);
+            if (!cellView.model.isLink()) {
+              if (cellView.$box.css('z-index') < z.index) {
+                cellView.$box.css('z-index', ++z.index);
+              }
+            }
+          });
+        }
+      });
+
+      selectionView.on('selection-box:pointerclick', function(evt) {
+        // Toggle selected cell
+        if (utils.hasLeftButton(evt) && utils.hasShift(evt)) {
+          var cell = selection.get($(evt.target).data('model'));
+          selection.reset(selection.without(cell));
+          selectionView.destroySelectionBox(paper.findViewByModel(cell));
+        }
+      });
+
+      var pointerDown = false;
+      var dblClickCell = false;
+
+      paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
+        if (utils.hasShift(evt)) {
+          // If Shift is pressed process the click (no Shift+dblClick allowed)
+          processCellClick();
+        }
+        else {
+          // If not, wait 120ms to ensure that it's not a dblclick
+          var ensureTime = 120;
+          pointerDown = false;
+          setTimeout(function() {
+            if (!dblClickCell && !pointerDown) {
+              processCellClick();
+            }
+          }, ensureTime);
+        }
+
+        function processCellClick() {
           if (paper.options.enabled) {
-            blocks.editBasic(type, cellView, function(cell) {
-              addCell(cell);
-            });
+            if (!cellView.model.isLink()) {
+              // Disable current focus
+              document.activeElement.blur();
+              if (utils.hasLeftButton(evt)) {
+                if (!utils.hasShift(evt)) {
+                  // Cancel previous selection
+                  disableSelected();
+                }
+                // Add cell to selection
+                selection.add(cellView.model);
+                selectionView.createSelectionBox(cellView);
+                //unhighlight(cellView);
+              }
+              updateWiresOnObstacles();
+            }
           }
         }
-        else if (common.allDependencies[type]) {
-          z.index = 1;
-          var project = common.allDependencies[type];
-          var breadcrumbsLength = self.breadcrumbs.length;
-          $rootScope.$broadcast('navigateProject', {
-            update: breadcrumbsLength === 1,
-            project: project
-          });
-          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-          utils.rootScopeSafeApply();
+      });
+
+      paper.on('cell:pointerdown', function(/*cellView, evt, x, y*/) {
+        pointerDown = true;
+      });
+
+      paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
+        if (!utils.hasShift(evt)) {
+          // Allow dblClick if Shift is not pressed
+          dblClickCell = true;
+          var type =  cellView.model.get('blockType');
+          if (type.indexOf('basic.') !== -1) {
+            if (paper.options.enabled) {
+              blocks.editBasic(type, cellView, function(cell) {
+                addCell(cell);
+              });
+            }
+          }
+          else if (common.allDependencies[type]) {
+            z.index = 1;
+            var project = common.allDependencies[type];
+            var breadcrumbsLength = self.breadcrumbs.length;
+            $rootScope.$broadcast('navigateProject', {
+              update: breadcrumbsLength === 1,
+              project: project
+            });
+            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+            utils.rootScopeSafeApply();
+          }
+          // Enable click event
+          setTimeout(function() { dblClickCell = false; }, 200);
         }
       });
 
@@ -377,26 +401,25 @@ angular.module('icestudio')
         // Disable current focus
         document.activeElement.blur();
 
-        if (evt.which === 3) {
-          // Right button
-          if (paper.options.enabled) {
+        if (utils.hasLeftButton(evt)) {
+          if (utils.hasCtrl(evt)) {
+            self.panAndZoom.enablePan();
+          }
+          else if (paper.options.enabled) {
             selectionView.startSelecting(evt, x, y);
           }
         }
-        else if (evt.which === 1) {
-          // Left button
-          self.panAndZoom.enablePan();
-        }
       });
 
-      paper.on('cell:pointerup blank:pointerup', function(/*cellView, evt*/) {
+      paper.on('blank:pointerup', function(/*cellView, evt*/) {
         self.panAndZoom.disablePan();
       });
 
-      paper.on('cell:mouseover', function(cellView/*, evt*/) {
-        if (!self.mousedown) {
+      paper.on('cell:mouseover', function(cellView, evt) {
+        // Move selection to top view if !mousedown
+        if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
-            highlight(cellView);
+            //highlight(cellView);
             if (cellView.$box.css('z-index') < z.index) {
               cellView.$box.css('z-index', ++z.index);
             }
@@ -404,26 +427,29 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:mouseout', function(cellView/*, evt*/) {
-        if (!self.mousedown) {
+      /*paper.on('cell:mouseout', function(cellView, evt) {
+        if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
             unhighlight(cellView);
           }
         }
+      });*/
+
+      /*paper.on('cell:pointerdown', function(cellView) {
+        if (paper.options.enabled) {
+          if (cellView.model.isLink()) {
+            // Unhighlight source block of the wire
+            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
+          }
+        }
       });
 
-      graph.on('change:position', function(/*cell*/) {
-        /*if (!selectionView.isTranslating()) {
+      graph.on('change:position', function(cell) {
+        if (!selectionView.isTranslating()) {
           // Update wires on obstacles motion
-          var cells = graph.getCells();
-          for (var i in cells) {
-            var cell = cells[i];
-            if (cell.isLink()) {
-              paper.findViewByModel(cell).update();
-            }
-          }
-        }*/
-      });
+          updateWiresOnObstacles();
+        }
+      });*/
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
@@ -691,12 +717,12 @@ angular.module('icestudio')
           var cellView = paper.findViewByModel(cell);
           selection.add(cell);
           selectionView.createSelectionBox(cellView);
-          unhighlight(cellView);
+          //unhighlight(cellView);
         }
       });
     };
 
-    function highlight(cellView) {
+    /*function highlight(cellView) {
       if (cellView) {
         switch(cellView.model.get('type')) {
           case 'ice.Input':
@@ -760,7 +786,7 @@ angular.module('icestudio')
             break;
         }
       }
-    }
+    }*/
 
     function hasSelection() {
       return selection && selection.length > 0;
@@ -1024,7 +1050,7 @@ angular.module('icestudio')
             }
             selection.add(cell);
             selectionView.createSelectionBox(cellView);
-            unhighlight(cellView);
+            //unhighlight(cellView);
           }
         });
       }

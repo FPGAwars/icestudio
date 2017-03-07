@@ -12,12 +12,13 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   events: {
 
+    'click .selection-box': 'click',
     'mousedown .selection-box': 'startTranslatingSelection'
   },
 
   initialize: function(options) {
 
-    _.bindAll(this, 'startSelecting', 'stopSelecting', 'adjustSelection');
+    _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
     $(document.body).on('mouseup touchend', this.stopSelecting);
     $(document.body).on('mousemove touchmove', this.adjustSelection);
@@ -25,6 +26,11 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.options = options;
 
     this.options.paper.$el.append(this.$el);
+  },
+
+  click: function(evt) {
+
+    this.trigger('selection-box:pointerclick', evt);
   },
 
   startTranslatingSelection: function(evt) {
@@ -52,6 +58,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   startSelecting: function(evt/*, x, y*/) {
 
+    // Reset previous selection
     this.$el.removeClass('selected');
     this.$el.empty();
     this.model.reset([]);
@@ -160,7 +167,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  stopSelecting: function() {
+  stopSelecting: function(/*evt*/) {
 
     switch (this._action) {
 
