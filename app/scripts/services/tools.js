@@ -214,11 +214,17 @@ angular.module('icestudio')
         });
       }
       else {
+        if (commands[0] === 'upload') {
+          drivers.preUpload();
+        }
         var apio = utils.getApioExecutable();
         toolchain.disabled = utils.toolchainDisabled;
         nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
             processExecute(label, callback, error, stdout, stderr);
+            if (commands[0] === 'upload') {
+              drivers.postUpload();
+            }
           });
       }
     }
