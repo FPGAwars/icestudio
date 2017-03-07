@@ -54,8 +54,8 @@ module.exports = function(grunt) {
 
     // Execute nw application
     exec: {
-      nw: 'nw app',
-      stopNW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
+      nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
+      stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
       nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
       nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
