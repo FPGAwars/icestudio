@@ -297,6 +297,18 @@ module.exports = function(grunt) {
       }
     },
 
+    // Check all js files
+    jshint: {
+      all: [
+        'app/scripts/**/*.js',
+        'tasks/*.js',
+        'gruntfile.js'
+      ],
+      options: {
+        jshintrc: 'app/.jshintrc'
+      }
+    },
+
     // Wget Python installer
     wget: {
       python: {
@@ -370,6 +382,7 @@ module.exports = function(grunt) {
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
+    'jshint',
     'clean:dist',
     'clean:toolchain',
     'nggettext_compile',
