@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('drivers', function(gettextCatalog,
                                profile,
                                common,
+                               gui,
                                nodePath,
                                nodeSudo,
                                nodeChildProcess) {
@@ -99,8 +100,12 @@ angular.module('icestudio')
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
               (stderr.indexOf('brew: No such file or directory') !== -1)) {
-            alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
-            // TODO: open web browser with Homebrew website on click
+            alertify.error(gettextCatalog.getString('<u>Homebrew</u> is required'), 30)
+            .callback = function(isClicked) {
+              if (isClicked) {
+                gui.Shell.openExternal('https://brew.sh');
+              }
+            };
           }
           else if (stderr.indexOf('Error: Failed to download') !== -1) {
             alertify.error(gettextCatalog.getString('Internet connection required'), 30);
