@@ -4,6 +4,7 @@
 
 var fse = require('fs-extra');
 var path = require('path');
+var async = require('async');
 var childProcess = require('child_process');
 var _ = require('lodash');
 var glob = require('glob');

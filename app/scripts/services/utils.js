@@ -18,40 +18,40 @@ angular.module('icestudio')
                              nodeCP,
                              SVGO) {
 
-     var _pythonExecutableCached = null;
-     // Get the system executable
-     this.getPythonExecutable = function() {
-       if (!_pythonExecutableCached) {
-         const possibleExecutables = [];
+    var _pythonExecutableCached = null;
+    // Get the system executable
+    this.getPythonExecutable = function() {
+      if (!_pythonExecutableCached) {
+        const possibleExecutables = [];
 
-         if (common.WIN32) {
-           possibleExecutables.push('python.exe');
-           possibleExecutables.push('C:\\Python27\\python.exe');
-         } else {
-           possibleExecutables.push('python2.7');
-           possibleExecutables.push('python');
-         }
+        if (common.WIN32) {
+          possibleExecutables.push('python.exe');
+          possibleExecutables.push('C:\\Python27\\python.exe');
+        } else {
+          possibleExecutables.push('python2.7');
+          possibleExecutables.push('python');
+        }
 
-         for (var i in possibleExecutables) {
-           var executable = possibleExecutables[i];
-           if (isPython2(executable)) {
-             _pythonExecutableCached = executable;
-             break;
-           }
-         }
-       }
-       return _pythonExecutableCached;
-     };
+        for (var i in possibleExecutables) {
+          var executable = possibleExecutables[i];
+          if (isPython2(executable)) {
+            _pythonExecutableCached = executable;
+            break;
+          }
+        }
+      }
+      return _pythonExecutableCached;
+    };
 
-     function isPython2(executable) {
-       const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
-       try {
-         const result = nodeChildProcess.spawnSync(executable, args);
-         return 0 === result.status && result.stdout.toString().startsWith('2.7');
-       } catch(e) {
-         return false;
-       }
-     }
+    function isPython2(executable) {
+      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+      try {
+        const result = nodeChildProcess.spawnSync(executable, args);
+        return 0 === result.status && result.stdout.toString().startsWith('2.7');
+      } catch(e) {
+        return false;
+      }
+    }
 
     this.extractTargz = function(source, destination, callback) {
       nodeTarball.extractTarball(source, destination, function(err) {

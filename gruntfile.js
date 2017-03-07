@@ -15,7 +15,8 @@ module.exports = function(grunt) {
   else {
     platforms = ['linux32', 'linux64', 'win32', 'win64'];
     options = { scope: ['devDependencies'] };
-    distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
+    distCommands = ['compress:linux32', 'compress:linux64', 'appimage:linux32', 'appimage:linux64',
+                    'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
