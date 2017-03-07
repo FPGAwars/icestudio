@@ -1,18 +1,21 @@
+'use strict';
+
 module.exports = function(grunt) {
 
-  const LINUX = process.platform === 'linux';
   const WIN32 = process.platform === 'win32';
   const DARWIN = process.platform === 'darwin';
 
+  var platforms, options, distCommands;
+
   if (DARWIN) {
-    var platforms = ['osx32', 'osx64'];
-    var options = { scope: ['devDependencies', 'darwinDependencies'] };
-    var distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
+    platforms = ['osx32', 'osx64'];
+    options = { scope: ['devDependencies', 'darwinDependencies'] };
+    distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
   }
   else {
-    var platforms = ['linux32', 'linux64', 'win32', 'win64'];
-    var options = { scope: ['devDependencies'] };
-    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
+    platforms = ['linux32', 'linux64', 'win32', 'win64'];
+    options = { scope: ['devDependencies'] };
+    distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
@@ -51,7 +54,7 @@ module.exports = function(grunt) {
     // Execute nw application
     exec: {
       nw: 'nw app',
-      stop_NW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
+      stopNW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
       nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
       nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
@@ -287,7 +290,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'wiredep',
-          'exec:stop_NW',
+          'exec:stopNW',
           'exec:nw'
         ],
         options: {
@@ -305,7 +308,7 @@ module.exports = function(grunt) {
         'gruntfile.js'
       ],
       options: {
-        jshintrc: 'app/.jshintrc'
+        jshintrc: '.jshintrc'
       }
     },
 
@@ -332,7 +335,7 @@ module.exports = function(grunt) {
     },
 
     // Generate POT file
-    nggettext_extract: {
+    'nggettext_extract': {
       pot: {
         files: {
           'app/resources/locale/template.pot': [
@@ -344,7 +347,7 @@ module.exports = function(grunt) {
     },
 
     // Compile PO files into JSON
-    nggettext_compile: {
+    'nggettext_compile': {
       all: {
         options: {
           format: 'json'
@@ -352,17 +355,17 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: "app/resources/locale",
-            dest: "app/resources/locale",
-            src: ["**/*.po"],
-            ext: ".json"
+            cwd: 'app/resources/locale',
+            dest: 'app/resources/locale',
+            src: ['**/*.po'],
+            ext: '.json'
           },
           {
             expand: true,
-            cwd: "app/resources/collection/locale",
-            dest: "app/resources/collection/locale",
-            src: ["**/*.po"],
-            ext: ".json"
+            cwd: 'app/resources/collection/locale',
+            dest: 'app/resources/collection/locale',
+            src: ['**/*.po'],
+            ext: '.json'
           }
         ]
       }
