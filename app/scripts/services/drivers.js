@@ -32,9 +32,14 @@ angular.module('icestudio')
       }
     };
 
-    this.preUpload = function() {
+    this.preUpload = function(callback) {
       if (common.DARWIN) {
-        preUploadDarwin();
+        preUploadDarwin(callback);
+      }
+      else {
+        if (callback) {
+          callback();
+        }
       }
     };
 
@@ -79,82 +84,99 @@ angular.module('icestudio')
     }
 
     function enableDarwinDrivers() {
-      var commands = [
-        'kextunload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
-        'kextunload -b com.apple.driver.AppleUSBFTDI -q || true'
+      var brewCommands = [
+        '/usr/local/bin/brew update',
+        '/usr/local/bin/brew install --force libftdi',
+        '/usr/local/bin/brew unlink libftdi',
+        '/usr/local/bin/brew link --force libftdi',
+        '/usr/local/bin/brew install --force libffi',
+        '/usr/local/bin/brew unlink libffi',
+        '/usr/local/bin/brew link --force libffi'
       ];
-      var command = 'sh -c "' + commands.join('; ') + '"';
-
-      //profile.set('macosDrivers', true);
-
       beginLazyProcess();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
+      nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
         // console.log(error, stdout, stderr);
         if (error) {
-          endLazyProcess();
+          if ((stderr.indexOf('brew: command not found') !== -1) ||
+              (stderr.indexOf('brew: No such file or directory') !== -1)) {
+            alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
+            // TODO: open web browser with Homebrew website on click
+          }
+          else if (stderr.indexOf('Error: Failed to download') !== -1) {
+            alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+          }
+          else {
+            alertify.error(stderr, 30);
+          }
         }
         else {
-          var brewCommands = [
-            '/usr/local/bin/brew update',
-            '/usr/local/bin/brew install --force libftdi',
-            '/usr/local/bin/brew unlink libftdi',
-            '/usr/local/bin/brew link --force libftdi',
-            '/usr/local/bin/brew install --force libffi',
-            '/usr/local/bin/brew unlink libffi',
-            '/usr/local/bin/brew link --force libffi'
-          ];
-          nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
-            // console.log(error, stdout, stderr);
-            endLazyProcess();
-            if (error) {
-              if ((stderr.indexOf('brew: command not found') !== -1) ||
-                  (stderr.indexOf('brew: No such file or directory') !== -1)) {
-                alertify.error(gettextCatalog.getString('Homebrew is required'), 30);
-                // TODO: open web browser with Homebrew website on click
-              }
-              else if (stderr.indexOf('Error: Failed to download') !== -1) {
-                alertify.error(gettextCatalog.getString('Internet connection required'), 30);
-              }
-              else {
-                alertify.error(stderr, 30);
-              }
-            }
-            else {
-              alertify.success(gettextCatalog.getString('Drivers enabled'));
-            }
-          });
+          profile.set('macosDrivers', true);
+          alertify.success(gettextCatalog.getString('Drivers enabled'));
         }
+        endLazyProcess();
       });
     }
 
     function disableDarwinDrivers() {
-      var commands = [
-        'kextload -b com.FTDI.driver.FTDIUSBSerialDriver -q || true',
-        'kextload -b com.apple.driver.AppleUSBFTDI -q || true'
-      ];
-      var command = 'sh -c "' + commands.join('; ') + '"';
-
-      beginLazyProcess();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-        // console.log(error, stdout, stderr);
-        endLazyProcess();
-        if (!error) {
-          alertify.warning(gettextCatalog.getString('Drivers disabled'));
-        }
-      });
+      profile.set('macosDrivers', false);
+      alertify.warning(gettextCatalog.getString('Drivers disabled'));
     }
 
-    function preUploadDarwin() {
+    var driverC = '';
 
+    function preUploadDarwin(callback) {
+      if (profile.get('macosDrivers')) {
+        // Check and unload the Drivers
+        var driverA = 'com.FTDI.driver.FTDIUSBSerialDriver';
+        var driverB = 'com.apple.driver.AppleUSBFTDI';
+        if (checkDriverDarwin(driverA)) {
+          driverC = driverA;
+          processDriverDarwin(driverA, false, callback);
+        }
+        else if (checkDriverDarwin(driverB)) {
+          driverC = driverB;
+          processDriverDarwin(driverB, false, callback);
+        }
+        else {
+          driverC = '';
+          if (callback) {
+            callback();
+          }
+        }
+      }
+      else {
+        if (callback) {
+          callback();
+        }
+      }
     }
 
     function postUploadDarwin() {
-
+      if (profile.get('macosDrivers')) {
+        processDriverDarwin(driverC, true);
+      }
     }
 
     function checkDriverDarwin(driver) {
-      var output = nodeChildProcess.execSync('echo hello').toString();
-      return driver.indexOf(output) > -1;
+      var output = nodeChildProcess.execSync('kextstat').toString();
+      return output.indexOf(driver) > -1;
+    }
+
+    function processDriverDarwin(driver, load, callback) {
+      if (driver) {
+        var command = (load ? 'kextload' : 'kextunload') + ' -b ' + driver;
+        nodeSudo.exec(command, {name: 'Icestudio'}, function(/*error, stdout, stderr*/) {
+          //console.log(error, stdout, stderr);
+          if (callback) {
+            callback();
+          }
+        });
+      }
+      else {
+        if (callback) {
+          callback();
+        }
+      }
     }
 
     function enableWindowsDrivers() {
