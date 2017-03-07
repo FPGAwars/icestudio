@@ -162,7 +162,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform === 'windows' ? 'drivers' : '')];
+      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform.startsWith('windows') ? 'drivers' : '')];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
@@ -301,8 +301,9 @@ function getRealPlatform(platform) {
     case 'linux64':
       return 'linux_x86_64';
     case 'win32':
+      return 'windows_x86';
     case 'win64':
-      return 'windows';
+      return 'windows_amd64';
     case 'osx32':
     case 'osx64':
       return 'darwin';
