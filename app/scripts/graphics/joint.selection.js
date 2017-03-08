@@ -61,8 +61,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   startSelecting: function(evt/*, x, y*/) {
 
-    this.cancelSelection();
-
     this.createSelectionArea();
 
     this._action = 'selecting';
@@ -168,14 +166,16 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  stopSelecting: function(/*evt*/) {
+  stopSelecting: function(evt) {
 
     switch (this._action) {
 
       case 'selecting':
 
-        // Reset previous selection
-        //this.cancelSelection();
+        if (!evt.shiftKey) {
+          // Reset previous selection
+          this.cancelSelection();
+        }
 
         var offset = this.$selectionArea.offset();
         var width = this.$selectionArea.width();
