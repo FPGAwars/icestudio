@@ -28,8 +28,9 @@ angular.module('icestudio')
 
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
-    const ZOOM_MAX = 2.0;
+    const ZOOM_MAX = 2.1;
     const ZOOM_MIN = 0.3;
+    const ZOOM_SENS = 0.3;
 
     // Functions
 
@@ -254,7 +255,7 @@ angular.module('icestudio')
         center: false,
         zoomEnabled: true,
         panEnabled: false,
-        zoomScaleSensitivity: 0.1,
+        zoomScaleSensitivity: ZOOM_SENS,
         dblClickZoomEnabled: false,
         minZoom: ZOOM_MIN,
         maxZoom: ZOOM_MAX,

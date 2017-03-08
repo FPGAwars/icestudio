@@ -38,16 +38,18 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   startTranslatingSelection: function(evt) {
 
-    this._action = 'translating';
+    if (!evt.shiftKey) {
+      this._action = 'translating';
 
-    this.options.graph.trigger('batch:stop');
-    this.options.graph.trigger('batch:start');
+      this.options.graph.trigger('batch:stop');
+      this.options.graph.trigger('batch:start');
 
-    var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
-    this._snappedClientX = snappedClientCoords.x;
-    this._snappedClientY = snappedClientCoords.y;
+      var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
+      this._snappedClientX = snappedClientCoords.x;
+      this._snappedClientY = snappedClientCoords.y;
 
-    this.trigger('selection-box:pointerdown', evt);
+      this.trigger('selection-box:pointerdown', evt);
+    }
 
     if (evt.stopPropagation) {
       evt.stopPropagation();
