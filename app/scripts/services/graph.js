@@ -119,6 +119,7 @@ angular.module('icestudio')
         height: 1000,
         model: graph,
         gridSize: gridsize,
+        clickThreshold: 6,
         snapLinks: { radius: 16 },
         linkPinning: false,
         embeddingMode: false,
