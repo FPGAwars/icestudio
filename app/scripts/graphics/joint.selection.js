@@ -52,10 +52,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
       this.trigger('selection-box:pointerdown', evt);
     }
-
-    if (evt.stopPropagation) {
-      evt.stopPropagation();
-    }
   },
 
   isTranslating: function() {
@@ -204,12 +200,11 @@ joint.ui.SelectionView = Backbone.View.extend({
 
           // Create a `selection-box` `<div>` for each element covering its bounding box area.
           _.each(elementViews, this.createSelectionBox, this);
-
         }
 
         this.destroySelectionArea();
 
-        this.model.reset(_.pluck(elementViews, 'model'));
+        this.model.add(_.pluck(elementViews, 'model'));
         break;
 
       case 'translating':

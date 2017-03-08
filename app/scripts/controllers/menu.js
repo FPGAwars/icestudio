@@ -64,7 +64,7 @@ angular.module('icestudio')
     // mouseover event
     $scope.showMenu = function (menu) {
       $timeout.cancel(timer);
-      if (!mousedown) {
+      if (!mousedown && !graph.addingDraggableBlock) {
         $scope.status[menu] = true;
       }
     };

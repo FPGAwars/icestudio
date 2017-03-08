@@ -12,10 +12,7 @@ angular.module('icestudio')
                              window) {
     // Variables
 
-    var z = {
-      index: 100
-    };
-
+    var z = { index: 100 };
     var graph = null;
     var paper = null;
     var selection = null;
@@ -23,14 +20,17 @@ angular.module('icestudio')
     var commandManager = null;
     var mousePosition = { x: 0, y: 0 };
     var menuHeight = 51;
-
-    this.breadcrumbs = [{ name: '', type: '' }];
-
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
+
+    var self = this;
+
     const ZOOM_MAX = 2.1;
     const ZOOM_MIN = 0.3;
     const ZOOM_SENS = 0.3;
+
+    this.breadcrumbs = [{ name: '', type: '' }];
+    this.addingDraggableBlock = false;
 
     // Functions
 
@@ -295,8 +295,6 @@ angular.module('icestudio')
 
       // Events
 
-      var self = this;
-
       $('body').mousemove(function(event) {
         mousePosition = {
           x: event.pageX,
@@ -319,12 +317,19 @@ angular.module('icestudio')
       });
 
       selectionView.on('selection-box:pointerclick', function(evt) {
+        if (self.addingDraggableBlock) {
+          // Set new block position
+          self.addingDraggableBlock = false;
+          disableSelected();
+        }
+        else {
         // Toggle selected cell
         if (utils.hasLeftButton(evt) && utils.hasShift(evt)) {
           var cell = selection.get($(evt.target).data('model'));
           selection.reset(selection.without(cell));
           selectionView.destroySelectionBox(paper.findViewByModel(cell));
         }
+      }
       });
 
       var pointerDown = false;
@@ -581,17 +586,18 @@ angular.module('icestudio')
 
     this.createBlock = function(type, block) {
       blocks.newGeneric(type, block, function(cell) {
-        addDraggableBlock(cell);
+        self.addDraggableBlock(cell);
       });
     };
 
     this.createBasicBlock = function(type) {
       blocks.newBasic(type, function(cell) {
-        addDraggableBlock(cell);
+        self.addDraggableBlock(cell);
       });
     };
 
-    function addDraggableBlock(cell) {
+    this.addDraggableBlock = function(cell) {
+      this.addingDraggableBlock = true;
       cell.attributes.position = {
         x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
         y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
@@ -603,7 +609,7 @@ angular.module('icestudio')
       selection.add(cell);
       selectionView.createSelectionBox(cellView);
       selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
-    }
+    };
 
     this.toJSON = function() {
       return graph.toJSON();
@@ -697,7 +703,6 @@ angular.module('icestudio')
     };
 
     this.pasteSelected = function() {
-      var self = this;
       utils.pasteFromClipboard(function(object) {
         if (object.version === common.VERSION &&
             (document.activeElement.tagName === 'A' ||
@@ -897,8 +902,6 @@ angular.module('icestudio')
           design.graph &&
           design.graph.blocks &&
           design.graph.wires) {
-
-        var self = this;
 
         opt = opt || {};
 
