@@ -36,13 +36,15 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.trigger('selection-box:pointerclick', evt);
   },
 
-  startTranslatingSelection: function(evt) {
+  startTranslatingSelection: function(evt, noBatch) {
 
     if (!evt.shiftKey) {
       this._action = 'translating';
 
-      this.options.graph.trigger('batch:stop');
-      this.options.graph.trigger('batch:start');
+      if (!noBatch) {
+        this.options.graph.trigger('batch:stop');
+        this.options.graph.trigger('batch:start');
+      }
 
       var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
       this._snappedClientX = snappedClientCoords.x;
@@ -223,9 +225,6 @@ joint.ui.SelectionView = Backbone.View.extend({
         break;
 
     default:
-        // Hide selection if the user clicked somehwere else in the document.
-        // this.$el.hide().empty();
-        // this.model.reset([]);
         break;
     }
 

@@ -336,8 +336,8 @@ angular.module('icestudio')
           processCellClick();
         }
         else {
-          // If not, wait 120ms to ensure that it's not a dblclick
-          var ensureTime = 120;
+          // If not, wait 150ms to ensure that it's not a dblclick
+          var ensureTime = 150;
           pointerDown = false;
           setTimeout(function() {
             if (!dblClickCell && !pointerDown) {
@@ -581,33 +581,29 @@ angular.module('icestudio')
 
     this.createBlock = function(type, block) {
       blocks.newGeneric(type, block, function(cell) {
-        cell.attributes.position = {
-          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
-          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
-        };
-        addCell(cell);
-        disableSelected();
-        var cellView = paper.findViewByModel(cell);
-        selection.add(cell);
-        selectionView.createSelectionBox(cellView);
-        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
+        addDraggableBlock(cell);
       });
     };
 
     this.createBasicBlock = function(type) {
       blocks.newBasic(type, function(cell) {
-        cell.attributes.position = {
-          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
-          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
-        };
-        addCell(cell);
-        disableSelected();
-        var cellView = paper.findViewByModel(cell);
-        selection.add(cell);
-        selectionView.createSelectionBox(cellView);
-        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
+        addDraggableBlock(cell);
       });
     };
+
+    function addDraggableBlock(cell) {
+      cell.attributes.position = {
+        x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
+        y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
+      };
+      graph.trigger('batch:start');
+      addCell(cell);
+      disableSelected();
+      var cellView = paper.findViewByModel(cell);
+      selection.add(cell);
+      selectionView.createSelectionBox(cellView);
+      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+    }
 
     this.toJSON = function() {
       return graph.toJSON();
