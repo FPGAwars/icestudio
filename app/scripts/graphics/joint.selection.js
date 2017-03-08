@@ -22,7 +22,14 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
-    $(document.body).on('mouseup touchend', this.stopSelecting);
+    var self = this;
+
+    $(document.body).on('mouseup touchend', function(evt) {
+      if (evt.which === 1) {
+        // Mouse left button
+        self.stopSelecting(evt);
+      }
+    });
     $(document.body).on('mousemove touchmove', this.adjustSelection);
 
     this.options = options;
@@ -33,24 +40,32 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   click: function(evt) {
 
-    this.trigger('selection-box:pointerclick', evt);
+    if (evt.which === 1) {
+      // Mouse left button
+
+      this.trigger('selection-box:pointerclick', evt);
+    }
   },
 
   startTranslatingSelection: function(evt, noBatch) {
 
-    if (!evt.shiftKey) {
-      this._action = 'translating';
+    if (evt.which === 1 || noBatch) {
+      // Mouse left button
 
-      if (!noBatch) {
-        this.options.graph.trigger('batch:stop');
-        this.options.graph.trigger('batch:start');
+      if (!evt.shiftKey) {
+        this._action = 'translating';
+
+        if (!noBatch) {
+          this.options.graph.trigger('batch:stop');
+          this.options.graph.trigger('batch:start');
+        }
+
+        var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
+        this._snappedClientX = snappedClientCoords.x;
+        this._snappedClientY = snappedClientCoords.y;
+
+        this.trigger('selection-box:pointerdown', evt);
       }
-
-      var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
-      this._snappedClientX = snappedClientCoords.x;
-      this._snappedClientY = snappedClientCoords.y;
-
-      this.trigger('selection-box:pointerdown', evt);
     }
   },
 

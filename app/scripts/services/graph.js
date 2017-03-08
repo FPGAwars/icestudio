@@ -323,12 +323,12 @@ angular.module('icestudio')
           disableSelected();
         }
         else {
-        // Toggle selected cell
-        if (utils.hasLeftButton(evt) && utils.hasShift(evt)) {
-          var cell = selection.get($(evt.target).data('model'));
-          selection.reset(selection.without(cell));
-          selectionView.destroySelectionBox(paper.findViewByModel(cell));
-        }
+          // Toggle selected cell
+          if (utils.hasShift(evt)) {
+            var cell = selection.get($(evt.target).data('model'));
+            selection.reset(selection.without(cell));
+            selectionView.destroySelectionBox(paper.findViewByModel(cell));
+          }
       }
       });
 
@@ -410,10 +410,17 @@ angular.module('icestudio')
 
         if (utils.hasLeftButton(evt)) {
           if (utils.hasCtrl(evt)) {
-            self.panAndZoom.enablePan();
+            if (!self.isEmpty()) {
+              self.panAndZoom.enablePan();
+            }
           }
           else if (paper.options.enabled) {
             selectionView.startSelecting(evt, x, y);
+          }
+        }
+        else if (utils.hasRightButton(evt)) {
+          if (!self.isEmpty()) {
+            self.panAndZoom.enablePan();
           }
         }
       });
@@ -586,17 +593,17 @@ angular.module('icestudio')
 
     this.createBlock = function(type, block) {
       blocks.newGeneric(type, block, function(cell) {
-        self.addDraggableBlock(cell);
+        self.addDraggableCell(cell);
       });
     };
 
     this.createBasicBlock = function(type) {
-      blocks.newBasic(type, function(cell) {
-        self.addDraggableBlock(cell);
+      blocks.newBasic(type, function(cells) {
+        self.addDraggableCells(cells);
       });
     };
 
-    this.addDraggableBlock = function(cell) {
+    this.addDraggableCell = function(cell) {
       this.addingDraggableBlock = true;
       cell.attributes.position = {
         x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
@@ -609,6 +616,30 @@ angular.module('icestudio')
       selection.add(cell);
       selectionView.createSelectionBox(cellView);
       selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+    };
+
+    this.addDraggableCells = function(cells) {
+      this.addingDraggableBlock = true;
+      if (cells.length > 0) {
+        var firstCellAttrs = cells[0].attributes;
+        var offset = {
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCellAttrs.size.width/2) / gridsize) * gridsize - firstCellAttrs.position.x,
+          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCellAttrs.size.height/2) / gridsize) * gridsize - firstCellAttrs.position.y,
+        };
+        _.each(cells, function(cell) {
+          cell.attributes.position.x += offset.x;
+          cell.attributes.position.y += offset.y;
+        });
+        graph.trigger('batch:start');
+        addCells(cells);
+        disableSelected();
+        _.each(cells, function(cell) {
+          var cellView = paper.findViewByModel(cell);
+          selection.add(cell);
+          selectionView.createSelectionBox(cellView);
+        });
+        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+      }
     };
 
     this.toJSON = function() {
@@ -1086,6 +1117,21 @@ angular.module('icestudio')
           cellView.$box.css('z-index', ++z.index);
         }
       }
+    }
+
+    function addCells(cells) {
+      _.each(cells, function(cell) {
+        updateCellAttributes(cell);
+      });
+      graph.addCells(cells);
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          if (cellView.$box.css('z-index') < z.index) {
+            cellView.$box.css('z-index', ++z.index);
+          }
+        }
+      });
     }
 
   });

@@ -19,29 +19,29 @@ angular.module('icestudio')
 
     //-- New
 
-    function newBasic(type, addCellCallback) {
+    function newBasic(type, addCellsCallback) {
       switch(type) {
         case 'basic.input':
-          newBasicInput(addCellCallback);
+          newBasicInput(addCellsCallback);
           break;
         case 'basic.output':
-          newBasicOutput(addCellCallback);
+          newBasicOutput(addCellsCallback);
           break;
         case 'basic.constant':
-          newBasicConstant(addCellCallback);
+          newBasicConstant(addCellsCallback);
           break;
         case 'basic.code':
-          newBasicCode(addCellCallback);
+          newBasicCode(addCellsCallback);
           break;
         case 'basic.info':
-          newBasicInfo(addCellCallback);
+          newBasicInfo(addCellsCallback);
           break;
         default:
           break;
       }
     }
 
-    function newBasicInput(addCellCallback) {
+    function newBasicInput(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -82,6 +82,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in portInfos) {
             portInfo = portInfos[p];
             var pins = getPins(portInfo);
@@ -92,16 +93,17 @@ angular.module('icestudio')
               virtual: virtual,
               clock: clock
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasic(blockInstance));
-            }
+            cells.push(loadBasic(blockInstance));
             // Next block position
             blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
 
-    function newBasicOutput(addCellCallback) {
+    function newBasicOutput(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -139,6 +141,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in portInfos) {
             portInfo = portInfos[p];
             var pins = getPins(portInfo);
@@ -148,11 +151,12 @@ angular.module('icestudio')
               pins: pins,
               virtual: virtual
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasic(blockInstance));
-            }
+            cells.push(loadBasic(blockInstance));
             // Next block position
             blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
@@ -170,7 +174,7 @@ angular.module('icestudio')
       return pins;
     }
 
-    function newBasicConstant(addCellCallback) {
+    function newBasicConstant(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -208,6 +212,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in paramInfos) {
             paramInfo = paramInfos[p];
             blockInstance.data = {
@@ -215,15 +220,16 @@ angular.module('icestudio')
               value: '',
               local: local
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasicConstant(blockInstance));
-            }
+            cells.push(loadBasicConstant(blockInstance));
             blockInstance.position.x += 15 * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
 
-    function newBasicCode(addCellCallback, block) {
+    function newBasicCode(addCellsCallback, block) {
       var blockInstance = {
         id: null,
         data: {
@@ -361,8 +367,8 @@ angular.module('icestudio')
           if (numNames === $.unique(allNames).length) {
             evt.cancel = false;
             // Create block
-            if (addCellCallback) {
-              addCellCallback(loadBasicCode(blockInstance));
+            if (addCellsCallback) {
+              addCellsCallback([loadBasicCode(blockInstance)]);
             }
           }
           else {
@@ -372,7 +378,7 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicInfo(addCellCallback) {
+    function newBasicInfo(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: { info: '' },
@@ -380,8 +386,8 @@ angular.module('icestudio')
         position: { x: 40 * gridsize, y: 36 * gridsize },
         size: { width: 192, height: 128 }
       };
-      if (addCellCallback) {
-        addCellCallback(loadBasicInfo(blockInstance));
+      if (addCellsCallback) {
+        addCellsCallback([loadBasicInfo(blockInstance)]);
       }
     }
 

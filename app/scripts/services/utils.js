@@ -440,7 +440,7 @@ angular.module('icestudio')
       var content = [];
       content.push('<div>');
       content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '"/>');
+      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
       content.push('  <br>');
       content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
       content.push('</div>');
@@ -465,7 +465,7 @@ angular.module('icestudio')
       var content = [];
       content.push('<div>');
       content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '"/>');
+      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
       content.push('  <br>');
       content.push('  <div class="checkbox"><label><input id="check1" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
       content.push('  <div class="checkbox"><label><input id="check2" type="checkbox" value="" ' + (values[2] ? 'checked' : '') + '>' + messages[2] + '</label></div></li>');
@@ -507,7 +507,7 @@ angular.module('icestudio')
           //content.push('<br>');
         }
         content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
+        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '">');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
