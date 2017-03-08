@@ -28,7 +28,7 @@ angular.module('icestudio')
           }
         }
       });
-      return boards;
+      return _.sortBy(boards, 'info.label');
     }
 
     function readJSONFile(filepath, filename) {

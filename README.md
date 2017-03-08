@@ -12,11 +12,11 @@
 Supported boards:
 
 * [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
+* [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
-* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
-* [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
-* [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 Supported operating systems:
 
