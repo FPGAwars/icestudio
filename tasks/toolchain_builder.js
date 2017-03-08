@@ -1,14 +1,16 @@
+'use strict';
+
 // Toolchain builder
 
 var fse = require('fs-extra');
-    path = require('path');
-    childProcess = require('child_process');
-    async = require('async');
-    _ = require('lodash');
-    glob = require('glob');
-    targz = require('tar.gz');
-    inherits = require('inherits');
-    EventEmitter = require('events').EventEmitter;
+var path = require('path');
+var async = require('async');
+var childProcess = require('child_process');
+var _ = require('lodash');
+var glob = require('glob');
+var targz = require('tar.gz');
+var inherits = require('inherits');
+var EventEmitter = require('events').EventEmitter;
 
 // We inherit from EventEmitter for logging
 inherits(ToolchainBuilder, EventEmitter);
@@ -25,8 +27,9 @@ function ToolchainBuilder(options) {
   // Assign options
   this.options = _.defaults(options, defaults);
 
-  if (this.options.platforms.length === 0)
+  if (this.options.platforms.length === 0) {
     throw new Error('No platform to build!');
+  }
 
   var venvRelease = 'virtualenv-15.0.1';
 
@@ -108,7 +111,7 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
       self.options.venvDir
     ];
     childProcess.exec(command.join(' '),
-      function (error, stdout, stderr) {
+      function (error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -125,7 +128,7 @@ ToolchainBuilder.prototype.downloadApio = function () {
       'apio">=' + self.options.apioMin + ',<' + self.options.apioMax + '"'
     ];
     childProcess.exec(command.join(' '),
-      function (error, stdout, stderr) {
+      function (error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -144,7 +147,7 @@ ToolchainBuilder.prototype.installApio = function () {
           self.options.venvPip, 'install', '-U', '--no-deps'
         ].concat(files);
         childProcess.exec(command.join(' '),
-          function (error, stdout, stderr) {
+          function (error/*, stdout, stderr*/) {
             if (error) { reject(error); }
             else { resolve(); }
           }
@@ -159,7 +162,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform === 'windows' ? 'drivers' : '')];
+      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform.startsWith('windows') ? 'drivers' : '')];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
@@ -167,12 +170,12 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
     self.pFound = [];
     self.options.platforms.forEach(function(platform) {
       var p = getRealPlatform(platform);
-      if (p && self.pFound.indexOf(p) == -1) {
+      if (p && self.pFound.indexOf(p) === -1) {
         self.pFound.push(p);
         self.emit('log', '  - ' + p);
         var cmd = command(path.join(self.options.apioPackagesDir, p), p);
         childProcess.execSync(cmd.join(' '),
-          function (error, stdout, stderr) {
+          function (error/*, stdout, stderr*/) {
             if (error) { reject(error); }
           }
         );
@@ -204,7 +207,7 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
     async.eachSeries(self.options.platforms, function iteratee(platform, callback) {
       async.setImmediate(function () {
         var p = getRealPlatform(platform);
-        if (p && self.pFound.indexOf(p) == -1) {
+        if (p && self.pFound.indexOf(p) === -1) {
           self.pFound.push(p);
           self.emit('log', '  - ' + p);
           targz({}, {fromBase: true}).compress(
@@ -229,11 +232,11 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
 ToolchainBuilder.prototype.createDefaultToolchains = function () {
   var self = this;
   self.emit('log', '> Create default toolchains');
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve/*, reject*/) {
     self.options.platforms.forEach(function(platform) {
       self.emit('log', '  - ' + platform);
       var destPath = path.join(self.options.buildDir, 'icestudio', platform);
-      if (platform == 'osx32' || platform == 'osx64') {
+      if (platform === 'osx32' || platform === 'osx64') {
         destPath = path.join(destPath, 'icestudio.app', 'Contents', 'Frameworks',
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
@@ -298,8 +301,9 @@ function getRealPlatform(platform) {
     case 'linux64':
       return 'linux_x86_64';
     case 'win32':
+      return 'windows_x86';
     case 'win64':
-      return 'windows';
+      return 'windows_amd64';
     case 'osx32':
     case 'osx64':
       return 'darwin';

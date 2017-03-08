@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .service('resources', function(utils,
+                                 common,
                                  nodePath) {
 
     const DEFAULT = '';
@@ -21,7 +22,7 @@ angular.module('icestudio')
       var defaultCollection = getCollection(defaultData);
       this.collections.push(defaultCollection);
       // Add installed collections
-      var data = utils.getFilesRecursive(utils.COLLECTIONS_DIR);
+      var data = utils.getFilesRecursive(common.COLLECTIONS_DIR);
       for (var i in data) {
         var collection = getCollection(data[i]);
         if (collection) {

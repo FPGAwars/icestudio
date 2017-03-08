@@ -56,10 +56,15 @@ angular.module('icestudio')
     // Menu timer
     var timer;
 
+    // mousedown event
+    var mousedown = false;
+    $(document).on('mouseup', function() { mousedown = false; });
+    $(document).on('mousedown', function() { mousedown = true; });
+
     // mouseover event
     $scope.showMenu = function (menu) {
       $timeout.cancel(timer);
-      if (!graph.mousedown) {
+      if (!mousedown && !graph.addingDraggableBlock) {
         $scope.status[menu] = true;
       }
     };
@@ -604,8 +609,11 @@ angular.module('icestudio')
     shortcuts.method('stepRight', graph.stepRight);
 
     shortcuts.method('removeSelected', removeSelected);
-    shortcuts.method('breadcrumbsBack', function() {
-      if (!graph.isEnabled()) {
+    shortcuts.method('back', function() {
+      if (graph.isEnabled()) {
+        removeSelected();
+      }
+      else {
         $rootScope.$broadcast('breadcrumbsBack');
       }
     });

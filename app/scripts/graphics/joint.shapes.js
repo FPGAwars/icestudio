@@ -1273,20 +1273,18 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
     type: 'ice.Wire',
 
-    labels: [
-      {
-        position: 0.5,
-        attrs: {
-          text: {
-            text: '',
-            'font-weight': 'bold',
-            'font-size': '13px',
-            'text-anchor': 'middle',
-            'y': '4px'
-          }
+    labels: [{
+      position: 0.5,
+      attrs: {
+        text: {
+          text: '',
+          y: '4px',
+          'font-weight': 'bold',
+          'font-size': '13px',
+          'text-anchor': 'middle'
         }
       }
-    ],
+    }],
 
     attrs: {
       '.connection': {
@@ -1303,6 +1301,12 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 });
 
 joint.shapes.ice.WireView = joint.dia.LinkView.extend({
+
+  options: {
+    shortLinkLength: 100,
+    longLinkLength: 160,
+    linkToolsOffset: 40,
+  },
 
   initialize: function() {
     joint.dia.LinkView.prototype.initialize.apply(this, arguments);
@@ -1395,6 +1399,29 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       $labels.append(labelNode);
 
     }, this);
+
+    return this;
+  },
+
+  updateToolsPosition: function() {
+    if (!this._V.linkTools) {
+      return this;
+    }
+
+    var scale = '';
+    var offset = this.options.linkToolsOffset;
+    var connectionLength = this.getConnectionLength();
+
+    if (!_.isNaN(connectionLength)) {
+      // If the link is too short, make the tools half the size and the offset twice as low.
+      if (connectionLength < this.options.shortLinkLength) {
+        scale = 'scale(.5)';
+        offset /= 2;
+      }
+
+      var toolPosition = this.getPointAtLength(connectionLength - offset);
+      this._toolCache.attr('transform', 'translate(' + toolPosition.x + ', ' + toolPosition.y + ') ' + scale);
+    }
 
     return this;
   },

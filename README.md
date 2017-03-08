@@ -1,9 +1,9 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0-beta3)](https://travis-ci.org/FPGAwars/icestudio)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
-
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
 
@@ -12,11 +12,11 @@
 Supported boards:
 
 * [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
+* [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
-* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
-* [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
-* [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 Supported operating systems:
 

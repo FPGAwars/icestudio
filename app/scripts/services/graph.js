@@ -12,23 +12,25 @@ angular.module('icestudio')
                              window) {
     // Variables
 
-    var z = {
-      index: 100
-    };
-
+    var z = { index: 100 };
     var graph = null;
     var paper = null;
     var selection = null;
     var selectionView = null;
     var commandManager = null;
     var mousePosition = { x: 0, y: 0 };
-
-    this.breadcrumbs = [{ name: '', type: '' }];
-
+    var menuHeight = 51;
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
-    const ZOOM_MAX = 2.0;
+
+    var self = this;
+
+    const ZOOM_MAX = 2.1;
     const ZOOM_MIN = 0.3;
+    const ZOOM_SENS = 0.3;
+
+    this.breadcrumbs = [{ name: '', type: '' }];
+    this.addingDraggableBlock = false;
 
     // Functions
 
@@ -118,6 +120,7 @@ angular.module('icestudio')
         height: 1000,
         model: graph,
         gridSize: gridsize,
+        clickThreshold: 6,
         snapLinks: { radius: 16 },
         linkPinning: false,
         embeddingMode: false,
@@ -157,31 +160,31 @@ angular.module('icestudio')
           }
           var i;
           var links = graph.getLinks();
-          for (i in links) {
-            var linkIView = links[i].findView(paper);
+          _.each(links, function(link) {
+            var linkIView = link.findView(paper);
             if (linkView === linkIView) {
               //Skip the wire the user is drawing
-              continue;
+              return;
             }
             // Prevent multiple input links
-            if ((cellViewT.model.id === links[i].get('target').id) &&
-                (magnetT.getAttribute('port') === links[i].get('target').port)) {
+            if ((cellViewT.model.id === link.get('target').id) &&
+                (magnetT.getAttribute('port') === link.get('target').port)) {
               warning(gettextCatalog.getString('Invalid multiple input connections'));
               return false;
             }
             // Prevent to connect a pull-up if other blocks are connected
             if ((cellViewT.model.get('pullup')) &&
-                 (cellViewS.model.id === links[i].get('source').id)) {
+                 (cellViewS.model.id === link.get('source').id)) {
               warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>block already connected'));
               return false;
             }
             // Prevent to connect other blocks if a pull-up is connected
             if ((linkIView.targetView.model.get('pullup')) &&
-                 (cellViewS.model.id === links[i].get('source').id)) {
+                 (cellViewS.model.id === link.get('source').id)) {
               warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
               return false;
             }
-          }
+          });
           // Ensure input -> pull-up connections
           if (cellViewT.model.get('pullup')) {
             var ret = (cellViewS.model.get('blockType') === 'basic.input');
@@ -252,7 +255,7 @@ angular.module('icestudio')
         center: false,
         zoomEnabled: true,
         panEnabled: false,
-        zoomScaleSensitivity: 0.1,
+        zoomScaleSensitivity: ZOOM_SENS,
         dblClickZoomEnabled: false,
         minZoom: ZOOM_MIN,
         maxZoom: ZOOM_MAX,
@@ -290,84 +293,114 @@ angular.module('icestudio')
         });
       }
 
-     // Events
+      // Events
 
-     this.mousedown = false;
-     $(document).on('mouseup', function() { self.mousedown = false; });
-     $(document).on('mousedown', function() { self.mousedown = true; });
-
-     var self = this;
-     $('#paper').mousemove(function(event) {
-       mousePosition = {
-         x: event.offsetX,
-         y: event.offsetY
-       };
-     });
-
-     selectionView.on('selection-box:pointerdown', function(evt) {
-       // Selection to top view
-       if (selection) {
-         selection.each(function(cell) {
-           var cellView = paper.findViewByModel(cell);
-           if (!cellView.model.isLink()) {
-             if (cellView.$box.css('z-index') < z.index) {
-               cellView.$box.css('z-index', ++z.index);
-             }
-           }
-         });
-       }
-       // Toggle selection
-       if (evt.which === 3) {
-         var cell = selection.get($(evt.target).data('model'));
-         selection.reset(selection.without(cell));
-         selectionView.destroySelectionBox(paper.findViewByModel(cell));
-       }
-     });
-
-     paper.on('cell:pointerup', function(cellView, evt/*, x, y*/) {
-       if (paper.options.enabled) {
-         if (!cellView.model.isLink()) {
-           if (evt.which === 3) {
-             // Disable current focus
-             document.activeElement.blur();
-             // Right button
-             selection.add(cellView.model);
-             selectionView.createSelectionBox(cellView);
-             unhighlight(cellView);
-           }
-           updateWiresOnObstacles();
-         }
-       }
-     });
-
-     paper.on('cell:pointerdown', function(cellView) {
-       if (paper.options.enabled) {
-         if (cellView.model.isLink()) {
-           // Unhighlight source block of the wire
-           unhighlight(paper.findViewByModel(cellView.model.get('source').id));
-         }
-       }
+      $('body').mousemove(function(event) {
+        mousePosition = {
+          x: event.pageX,
+          y: event.pageY
+        };
       });
 
-      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
-        var type =  cellView.model.get('blockType');
-        if (type.indexOf('basic.') !== -1) {
+      selectionView.on('selection-box:pointerdown', function(/*evt*/) {
+        // Move selection to top view
+        if (selection) {
+          selection.each(function(cell) {
+            var cellView = paper.findViewByModel(cell);
+            if (!cellView.model.isLink()) {
+              if (cellView.$box.css('z-index') < z.index) {
+                cellView.$box.css('z-index', ++z.index);
+              }
+            }
+          });
+        }
+      });
+
+      selectionView.on('selection-box:pointerclick', function(evt) {
+        if (self.addingDraggableBlock) {
+          // Set new block position
+          self.addingDraggableBlock = false;
+          disableSelected();
+        }
+        else {
+          // Toggle selected cell
+          if (utils.hasShift(evt)) {
+            var cell = selection.get($(evt.target).data('model'));
+            selection.reset(selection.without(cell));
+            selectionView.destroySelectionBox(paper.findViewByModel(cell));
+          }
+      }
+      });
+
+      var pointerDown = false;
+      var dblClickCell = false;
+
+      paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
+        if (utils.hasShift(evt)) {
+          // If Shift is pressed process the click (no Shift+dblClick allowed)
+          processCellClick();
+        }
+        else {
+          // If not, wait 150ms to ensure that it's not a dblclick
+          var ensureTime = 150;
+          pointerDown = false;
+          setTimeout(function() {
+            if (!dblClickCell && !pointerDown) {
+              processCellClick();
+            }
+          }, ensureTime);
+        }
+
+        function processCellClick() {
           if (paper.options.enabled) {
-            blocks.editBasic(type, cellView, function(cell) {
-              addCell(cell);
-            });
+            if (!cellView.model.isLink()) {
+              // Disable current focus
+              document.activeElement.blur();
+              if (utils.hasLeftButton(evt)) {
+                if (!utils.hasShift(evt)) {
+                  // Cancel previous selection
+                  disableSelected();
+                }
+                // Add cell to selection
+                selection.add(cellView.model);
+                selectionView.createSelectionBox(cellView);
+                //unhighlight(cellView);
+              }
+              updateWiresOnObstacles();
+            }
           }
         }
-        else if (common.allDependencies[type]) {
-          z.index = 1;
-          var project = common.allDependencies[type];
-          var breadcrumbsLength = self.breadcrumbs.length;
-          $rootScope.$broadcast('navigateProject', {
-            update: breadcrumbsLength === 1,
-            project: project
-          });
-          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-          utils.rootScopeSafeApply();
+      });
+
+      paper.on('cell:pointerdown', function(/*cellView, evt, x, y*/) {
+        pointerDown = true;
+      });
+
+      paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
+        if (!utils.hasShift(evt)) {
+          // Allow dblClick if Shift is not pressed
+          dblClickCell = true;
+          var type =  cellView.model.get('blockType');
+          if (type.indexOf('basic.') !== -1) {
+            if (paper.options.enabled) {
+              blocks.editBasic(type, cellView, function(cell) {
+                addCell(cell);
+              });
+            }
+          }
+          else if (common.allDependencies[type]) {
+            z.index = 1;
+            var project = common.allDependencies[type];
+            var breadcrumbsLength = self.breadcrumbs.length;
+            $rootScope.$broadcast('navigateProject', {
+              update: breadcrumbsLength === 1,
+              project: project
+            });
+            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+            utils.rootScopeSafeApply();
+          }
+          // Enable click event
+          setTimeout(function() { dblClickCell = false; }, 200);
         }
       });
 
@@ -375,26 +408,32 @@ angular.module('icestudio')
         // Disable current focus
         document.activeElement.blur();
 
-        if (evt.which === 3) {
-          // Right button
-          if (paper.options.enabled) {
+        if (utils.hasLeftButton(evt)) {
+          if (utils.hasCtrl(evt)) {
+            if (!self.isEmpty()) {
+              self.panAndZoom.enablePan();
+            }
+          }
+          else if (paper.options.enabled) {
             selectionView.startSelecting(evt, x, y);
           }
         }
-        else if (evt.which === 1) {
-          // Left button
-          self.panAndZoom.enablePan();
+        else if (utils.hasRightButton(evt)) {
+          if (!self.isEmpty()) {
+            self.panAndZoom.enablePan();
+          }
         }
       });
 
-      paper.on('cell:pointerup blank:pointerup', function(/*cellView, evt*/) {
+      paper.on('blank:pointerup', function(/*cellView, evt*/) {
         self.panAndZoom.disablePan();
       });
 
-      paper.on('cell:mouseover', function(cellView/*, evt*/) {
-        if (!self.mousedown) {
+      paper.on('cell:mouseover', function(cellView, evt) {
+        // Move selection to top view if !mousedown
+        if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
-            highlight(cellView);
+            //highlight(cellView);
             if (cellView.$box.css('z-index') < z.index) {
               cellView.$box.css('z-index', ++z.index);
             }
@@ -402,26 +441,29 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:mouseout', function(cellView/*, evt*/) {
-        if (!self.mousedown) {
+      /*paper.on('cell:mouseout', function(cellView, evt) {
+        if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
             unhighlight(cellView);
           }
         }
+      });*/
+
+      /*paper.on('cell:pointerdown', function(cellView) {
+        if (paper.options.enabled) {
+          if (cellView.model.isLink()) {
+            // Unhighlight source block of the wire
+            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
+          }
+        }
       });
 
-      graph.on('change:position', function(/*cell*/) {
-        /*if (!selectionView.isTranslating()) {
+      graph.on('change:position', function(cell) {
+        if (!selectionView.isTranslating()) {
           // Update wires on obstacles motion
-          var cells = graph.getCells();
-          for (var i in cells) {
-            var cell = cells[i];
-            if (cell.isLink()) {
-              paper.findViewByModel(cell).update();
-            }
-          }
-        }*/
-      });
+          updateWiresOnObstacles();
+        }
+      });*/
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
@@ -478,12 +520,11 @@ angular.module('icestudio')
 
     function updateWiresOnObstacles() {
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cell = cells[i];
+      _.each(cells, function(cell) {
         if (cell.isLink()) {
           paper.findViewByModel(cell).update();
         }
-      }
+      });
     }
 
     this.setBoardRules = function(value) {
@@ -528,10 +569,10 @@ angular.module('icestudio')
         angular.element('#banner').removeClass('hidden');
       }
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cellView = paper.findViewByModel(cells[i].id);
+      _.each(cells, function(cell) {
+        var cellView = paper.findViewByModel(cell.id);
         cellView.options.interactive = value;
-        if (cells[i].get('type') !== 'ice.Generic') {
+        if (cell.get('type') !== 'ice.Generic') {
           if (value) {
             cellView.$el.removeClass('disable-graph');
           }
@@ -539,7 +580,7 @@ angular.module('icestudio')
             cellView.$el.addClass('disable-graph');
           }
         }
-        else if (cells[i].get('type') !== 'ice.Wire') {
+        else if (cell.get('type') !== 'ice.Wire') {
           if (value) {
             cellView.$el.find('.port-body').removeClass('disable-graph');
           }
@@ -547,19 +588,58 @@ angular.module('icestudio')
             cellView.$el.find('.port-body').addClass('disable-graph');
           }
         }
-      }
+      });
     };
 
     this.createBlock = function(type, block) {
       blocks.newGeneric(type, block, function(cell) {
-        addCell(cell);
+        self.addDraggableCell(cell);
       });
     };
 
     this.createBasicBlock = function(type) {
-      blocks.newBasic(type, function(cell) {
-        addCell(cell);
+      blocks.newBasic(type, function(cells) {
+        self.addDraggableCells(cells);
       });
+    };
+
+    this.addDraggableCell = function(cell) {
+      this.addingDraggableBlock = true;
+      cell.attributes.position = {
+        x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
+        y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
+      };
+      graph.trigger('batch:start');
+      addCell(cell);
+      disableSelected();
+      var cellView = paper.findViewByModel(cell);
+      selection.add(cell);
+      selectionView.createSelectionBox(cellView);
+      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+    };
+
+    this.addDraggableCells = function(cells) {
+      this.addingDraggableBlock = true;
+      if (cells.length > 0) {
+        var firstCellAttrs = cells[0].attributes;
+        var offset = {
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCellAttrs.size.width/2) / gridsize) * gridsize - firstCellAttrs.position.x,
+          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCellAttrs.size.height/2) / gridsize) * gridsize - firstCellAttrs.position.y,
+        };
+        _.each(cells, function(cell) {
+          cell.attributes.position.x += offset.x;
+          cell.attributes.position.y += offset.y;
+        });
+        graph.trigger('batch:start');
+        addCells(cells);
+        disableSelected();
+        _.each(cells, function(cell) {
+          var cellView = paper.findViewByModel(cell);
+          selection.add(cell);
+          selectionView.createSelectionBox(cellView);
+        });
+        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+      }
     };
 
     this.toJSON = function() {
@@ -591,10 +671,9 @@ angular.module('icestudio')
     function resetBlocks() {
       var data;
       var cells = graph.getCells();
-      for (var i in cells) {
-        var cell = cells[i];
+      _.each(cells, function(cell) {
         if (cell.isLink()) {
-          break;
+          return;
         }
         var type = cell.get('blockType');
         if (type === 'basic.input' || type === 'basic.output') {
@@ -620,7 +699,7 @@ angular.module('icestudio')
           // Reset rules in Generic block ports
           var block = common.allDependencies[type];
           data = { ports: { in: [] }};
-          for (i in block.design.graph.blocks) {
+          for (var i in block.design.graph.blocks) {
             var item = block.design.graph.blocks[i];
             if (item.type === 'basic.input') {
               if (!item.data.range) {
@@ -634,7 +713,7 @@ angular.module('icestudio')
           cell.set('data', data);
           paper.findViewByModel(cell.id).updateBox();
         }
-      }
+      });
     }
 
     this.resetCommandStack = function() {
@@ -655,7 +734,6 @@ angular.module('icestudio')
     };
 
     this.pasteSelected = function() {
-      var self = this;
       utils.pasteFromClipboard(function(object) {
         if (object.version === common.VERSION &&
             (document.activeElement.tagName === 'A' ||
@@ -673,12 +751,12 @@ angular.module('icestudio')
           var cellView = paper.findViewByModel(cell);
           selection.add(cell);
           selectionView.createSelectionBox(cellView);
-          unhighlight(cellView);
+          //unhighlight(cellView);
         }
       });
     };
 
-    function highlight(cellView) {
+    /*function highlight(cellView) {
       if (cellView) {
         switch(cellView.model.get('type')) {
           case 'ice.Input':
@@ -742,7 +820,7 @@ angular.module('icestudio')
             break;
         }
       }
-    }
+    }*/
 
     function hasSelection() {
       return selection && selection.length > 0;
@@ -856,8 +934,6 @@ angular.module('icestudio')
           design.graph.blocks &&
           design.graph.wires) {
 
-        var self = this;
-
         opt = opt || {};
 
         $('body').addClass('waiting');
@@ -871,6 +947,7 @@ angular.module('icestudio')
           self.clearAll();
 
           var cells = graphToCells(design.graph, opt);
+
           graph.addCells(cells);
 
           self.appEnable(!opt.disabled);
@@ -990,7 +1067,7 @@ angular.module('icestudio')
           reset: design.board !== common.selectedBoard.name,
           offset: {
             x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - origin.x) / gridsize) * gridsize,
-            y: Math.round(((mousePosition.y - state.pan.y) / state.zoom - origin.y) / gridsize) * gridsize,
+            y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - origin.y) / gridsize) * gridsize,
           }
         };
         var cells = graphToCells(design.graph, opt);
@@ -1000,9 +1077,12 @@ angular.module('icestudio')
         _.each(cells, function(cell) {
           if (!cell.isLink()) {
             var cellView = paper.findViewByModel(cell);
+            if (cellView.$box.css('z-index') < z.index) {
+              cellView.$box.css('z-index', ++z.index);
+            }
             selection.add(cell);
             selectionView.createSelectionBox(cellView);
-            unhighlight(cellView);
+            //unhighlight(cellView);
           }
         });
       }
@@ -1037,6 +1117,21 @@ angular.module('icestudio')
           cellView.$box.css('z-index', ++z.index);
         }
       }
+    }
+
+    function addCells(cells) {
+      _.each(cells, function(cell) {
+        updateCellAttributes(cell);
+      });
+      graph.addCells(cells);
+      _.each(cells, function(cell) {
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          if (cellView.$box.css('z-index') < z.index) {
+            cellView.$box.css('z-index', ++z.index);
+          }
+        }
+      });
     }
 
   });
