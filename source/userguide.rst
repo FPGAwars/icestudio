@@ -86,7 +86,14 @@ More information in the `Board rules section <./rules.html>`_.
 
 **Language**
 
-Select the application language: English, Spanish, Galician, Basque and French.
+The supported languages are:
+
+* English
+* Spanish
+* Galician
+* Basque
+* French
+* Catalan
 
 **Remote hostname**
 
@@ -113,7 +120,16 @@ Select
 
 **Board**
 
-Select the FPGA board. The supported boards are: **IceZUM Alhambra**, **Go board**, **iCEstick**, **iCE40-HX8K**, **icoBOARD 1.0**, **Kéfir I**. When a board is selected all I/O block combos are updated and its current values reset.
+Select the FPGA board. The supported boards are:
+
+* `IceZUM Alhambra <https://github.com/FPGAwars/icezum>`_
+* `Kéfir I iCE40-HX4K <http://fpgalibre.sourceforge.net/Kefir/>`_
+* `Nandland Go board <https://www.nandland.com/goboard/introduction.html>`_
+* `iCE40-HX8K Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx>`_
+* `iCEstick Evaluation Kit <http://www.pighixxx.com/test/portfolio-items/icestick/>`_
+* `icoBOARD 1.0 <http://icoboard.org/about-icoboard.html>`_
+
+When a board is selected all I/O block combos are updated and its current values reset.
 
 .. hint::
 
@@ -270,7 +286,7 @@ This is the main panel. It contains the blocks and the wires.
 Pan & Zoom
 ``````````
 
-Pan is performed using the **mouse left button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *Edit > Reset view*.
+Pan is performed using the **Ctrl + mouse left button** or **mouse right button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *Edit > Reset view*.
 
 .. image:: ../resources/images/userguide/pan-zoom.png
 
@@ -278,11 +294,10 @@ Pan is performed using the **mouse left button** over the background. Zoom is pe
 Select
 ``````
 
-Block selection is performed using the **mouse right button**. Blocks can be selected/unselected individually using `Right-click/Ctrl+Right-click`, respectively. In addition, several blocks can be selected by a selection box. A selection is canceled when the background is `Right-clicked`.
+Block selection is performed using the **mouse left button**. Blocks can be **selected/unselected** individually using **left-click/Shift+left-click**, respectively. In addition, several blocks can be selected by a **selection box**. When using the **Shift key**, the new selection is added to the previous one. A selection is canceled when the background is **left-clicked**.
 
 .. image:: ../resources/images/userguide/select.png
 
-f
 Move blocks
 ```````````
 
@@ -293,7 +308,7 @@ Any block or blocks selection can be moved in the design using the **mouse left 
 Resize text blocks
 ``````````````````
 
-**Code** and **Information** blocks can be resized with the resize tool in the **bottom-right** corner of the block.
+**Code** and **Information** blocks can be resized with the resize tool in the **bottom-right corner** of the block.
 
 .. image:: ../resources/images/userguide/resize.png
 
@@ -329,4 +344,4 @@ Icestudio allows to undo/redo the following actions:
 Take a snapshot
 ---------------
 
-Taking a **png** snapshot of the application is as easy as press `Ctrl+P`. A save dialog appears to set the name and the path of the captured image.
+Taking a **png** snapshot of the application is as easy as press **Ctrl+P**. A save dialog appears to set the name and the path of the captured image.

@@ -7,14 +7,15 @@ GNU/Linux
 ---------
 
 1. Install `Python 2.7 <https://www.python.org>`_ and **xclip** (to enable Copy/Paste).
-2. Download the `zipped release <https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3>`_, unzip and execute **icestudio**.
+2. Download the `AppImage <https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc1>`_ file and make it executable:
+
+.. code::
+
+  $ chmod a+x icestudio-0.3.0*.AppImage
 
 .. hint::
 
-  Execute the script `linux_installer.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_installer.sh>`_ to generate a desktop access to your unzipped Icestudio. This script also registers the *.ice* files as *Icestudio project*. There is also a `linux_uninstaller.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_uninstaller.sh>`_ to revert the previous configuration.
-
-  .. image:: ../resources/images/installation/linux.png
-     :align: center
+  You can download the ZIP release and install it in the system using the script `linux_installer.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_installer.sh>`_. This script registers the *.ice* files as *Icestudio project*. There is also a `linux_uninstaller.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_uninstaller.sh>`_ to revert the previous configuration.
 
 Windows
 -------
@@ -26,7 +27,7 @@ Windows
 
 .. note::
 
-  Python 2.7 will install if it is not installed. This installer registers the *.ice* files as *Icestudio project*.
+  Python 2.7 will be installed automatically if it is not installed. This installer registers the *.ice* files as *Icestudio project*.
 
 Mac OS X
 --------

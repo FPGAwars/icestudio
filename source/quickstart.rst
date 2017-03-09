@@ -10,7 +10,7 @@ Go to **Tools > Toolchain > Install**
 
 .. image:: ../resources/images/quickstart/toolchain.png
 
-`Apio <https://github.com/FPGAwars/apio>`_ backend will be installed, and all its needed `packages <https://github.com/FPGAwars/apio#apio-packages>`_.
+`Apio <https://github.com/FPGAwars/apio>`_ backend will be installed, and all its needed `packages <https://github.com/FPGAwars/apio#apio-packages>`_. This operation does not require Internet connection.
 
 Setup the drivers
 -----------------
