@@ -123,7 +123,16 @@ Create a project
 
 |
 
-2. **Add your blocks**
+2. **Add blocks**
+
+
+.. raw:: html
+
+  <video src="add-blocks.webm" width="100%" height="auto" autoplay loop></video>
+
+|
+
+There are different types of blocks:
 
  1. *Input/Output blocks*
 
@@ -199,7 +208,7 @@ Create a project
 
 |
 
-3. **Connect your blocks**
+3. **Connect the blocks**
 
 .. image:: ../resources/images/howto/bwire.png
 
