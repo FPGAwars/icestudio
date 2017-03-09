@@ -101,7 +101,7 @@ Output
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
 | Galician   | ![Progress](http://progressed.io/bar/100)  |
 | Basque     | ![Progress](http://progressed.io/bar/100)  |
-| Catala     | ![Progress](http://progressed.io/bar/100)  |
+| Catalan    | ![Progress](http://progressed.io/bar/100)  |
 | French     | ![Progress](http://progressed.io/bar/61)   |
 
 **Contribute**: add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) and the [blocks translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/collection/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).

@@ -100,7 +100,7 @@ angular.module('icestudio')
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
               (stderr.indexOf('brew: No such file or directory') !== -1)) {
-            alertify.error(gettextCatalog.getString('<u>Homebrew</u> is required'), 30)
+            alertify.error('<u>' + gettextCatalog.getString('Homebrew is required') + '</u>', 30)
             .callback = function(isClicked) {
               if (isClicked) {
                 gui.Shell.openExternal('https://brew.sh');
