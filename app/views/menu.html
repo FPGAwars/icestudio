@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <div ng-controller="MenuCtrl">
 
-  <div id="menu">
+  <div id="menu" ondragstart="return false;" ondrop="return false;">
 
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
     <input id="input-save-project" type="file" accept=".ice" class="hidden" nwsaveas="{{ workingdir + project.name }}.ice"/>
