@@ -138,10 +138,6 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 
 <img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
 
-## Version 0.1
-
-![][icestudio-0.1-demo]
-
 ## Videos
 
 ### Version 0.2
@@ -152,13 +148,6 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 
 [![Icestudio: block factory](http://img.youtube.com/vi/mAIKb47z2Do/0.jpg)](http://www.youtube.com/watch?v=mAIKb47z2Do "Icestudio: block factory")
 
-
-### Version 0.1
-
-[![Icestudio: GUI for open FPGAs](http://img.youtube.com/vi/Okl4Rr_i6Qk/0.jpg)](http://www.youtube.com/watch?v=Okl4Rr_i6Qk "Icestudio: GUI for open FPGAs")
-
-[![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")
-
 ## Authors
 
 * [Jesús Arroyo Torrens](https://github.com/Jesus89)
@@ -166,9 +155,12 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 ## Contributors
 
 * v0.3
- * [Martoni](https://github.com/Martoni)
- * [Carlos Díaz](https://github.com/C47D)
  * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
+ * [Carlos Díaz](https://github.com/C47D)
+ * [Martoni](https://github.com/Martoni)
+ * [Xoan Sampaiño](https://github.com/xoan)
+ * [Unai](https://github.com/1138-4EB)
+ * [Francisco Sayas](https://github.com/fsayas)
 
 * v0.2
  * [Tomás Calvo](https://github.com/tocalvo)
