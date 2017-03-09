@@ -35,7 +35,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.options = options;
 
     this.options.paper.$el.append(this.$el);
-    this.$el.show();
+    this.$el.addClass('selected').show();
   },
 
   click: function(evt) {
@@ -261,9 +261,9 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.$el.removeClass('selected');
   },
 
-  destroySelectionBox: function(elementView) {
+  destroySelectionBox: function(element) {
 
-    this.$('[data-model="' + elementView.model.get('id') + '"]').remove();
+    this.$('[data-model="' + element.get('id') + '"]').remove();
   },
 
   createSelectionBox: function(element, opt) {

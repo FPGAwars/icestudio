@@ -328,7 +328,7 @@ angular.module('icestudio')
           if (utils.hasShift(evt)) {
             var cell = selection.get($(evt.target).data('model'));
             selection.reset(selection.without(cell));
-            selectionView.destroySelectionBox(paper.findViewByModel(cell));
+            selectionView.destroySelectionBox(cell);
           }
       }
       });
