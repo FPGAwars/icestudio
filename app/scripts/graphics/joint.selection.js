@@ -269,7 +269,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.$('[data-model="' + elementView.model.get('id') + '"]').remove();
   },
 
-  createSelectionBox: function(elementView) {
+  createSelectionBox: function(elementView, transparent) {
 
     var element = elementView.model;
 
@@ -280,6 +280,9 @@ joint.ui.SelectionView = Backbone.View.extend({
           'data-model': element.get('id')
       });
       if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
+        if (transparent) {
+          $selectionBox.css({ opacity: 0 });
+        }
         this.$el.append($selectionBox);
       }
 

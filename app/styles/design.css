@@ -424,6 +424,12 @@
   z-index: 1500;
 }
 
+.selection-box-transparent {
+  position: absolute;
+  border-radius: 5px;
+  z-index: 1500;
+}
+
 /* Wires makers */
 
 .joint-link.joint-theme-default .connection-wrap {

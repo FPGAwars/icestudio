@@ -321,6 +321,7 @@ angular.module('icestudio')
           // Set new block position
           self.addingDraggableBlock = false;
           disableSelected();
+          updateWiresOnObstacles();
         }
         else {
           // Toggle selected cell
@@ -338,7 +339,7 @@ angular.module('icestudio')
       paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
         if (utils.hasShift(evt)) {
           // If Shift is pressed process the click (no Shift+dblClick allowed)
-          processCellClick();
+          processCellClick(cellView, evt);
         }
         else {
           // If not, wait 150ms to ensure that it's not a dblclick
@@ -346,12 +347,12 @@ angular.module('icestudio')
           pointerDown = false;
           setTimeout(function() {
             if (!dblClickCell && !pointerDown) {
-              processCellClick();
+              processCellClick(cellView, evt);
             }
           }, ensureTime);
         }
 
-        function processCellClick() {
+        function processCellClick(cellView, evt) {
           if (paper.options.enabled) {
             if (!cellView.model.isLink()) {
               // Disable current focus
@@ -366,14 +367,21 @@ angular.module('icestudio')
                 selectionView.createSelectionBox(cellView);
                 //unhighlight(cellView);
               }
-              updateWiresOnObstacles();
             }
           }
         }
       });
 
       paper.on('cell:pointerdown', function(/*cellView, evt, x, y*/) {
-        pointerDown = true;
+        if (paper.options.enabled) {
+          pointerDown = true;
+        }
+      });
+
+      paper.on('cell:pointerup', function(/*cellView, evt, x, y*/) {
+        if (paper.options.enabled) {
+          updateWiresOnObstacles();
+        }
       });
 
       paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
@@ -613,9 +621,11 @@ angular.module('icestudio')
       addCell(cell);
       disableSelected();
       var cellView = paper.findViewByModel(cell);
+      var transparent = true;
+      var noBatch = true;
       selection.add(cell);
-      selectionView.createSelectionBox(cellView);
-      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+      selectionView.createSelectionBox(cellView, transparent);
+      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
     };
 
     this.addDraggableCells = function(cells) {
@@ -633,12 +643,14 @@ angular.module('icestudio')
         graph.trigger('batch:start');
         addCells(cells);
         disableSelected();
+        var transparent = true;
+        var noBatch = true;
         _.each(cells, function(cell) {
           var cellView = paper.findViewByModel(cell);
           selection.add(cell);
-          selectionView.createSelectionBox(cellView);
+          selectionView.createSelectionBox(cellView, transparent);
         });
-        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, true);
+        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
       }
     };
 
