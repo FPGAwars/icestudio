@@ -364,7 +364,7 @@ angular.module('icestudio')
                 }
                 // Add cell to selection
                 selection.add(cellView.model);
-                selectionView.createSelectionBox(cellView);
+                selectionView.createSelectionBox(cellView.model);
                 //unhighlight(cellView);
               }
             }
@@ -620,11 +620,10 @@ angular.module('icestudio')
       graph.trigger('batch:start');
       addCell(cell);
       disableSelected();
-      var cellView = paper.findViewByModel(cell);
-      var transparent = true;
+      var opt = { transparent: true };
       var noBatch = true;
       selection.add(cell);
-      selectionView.createSelectionBox(cellView, transparent);
+      selectionView.createSelectionBox(cell, opt);
       selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
     };
 
@@ -643,12 +642,11 @@ angular.module('icestudio')
         graph.trigger('batch:start');
         addCells(cells);
         disableSelected();
-        var transparent = true;
+        var opt = { transparent: true };
         var noBatch = true;
         _.each(cells, function(cell) {
-          var cellView = paper.findViewByModel(cell);
           selection.add(cell);
-          selectionView.createSelectionBox(cellView, transparent);
+          selectionView.createSelectionBox(cell, opt);
         });
         selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
       }
@@ -760,9 +758,8 @@ angular.module('icestudio')
       var cells = graph.getCells();
       _.each(cells, function(cell) {
         if (!cell.isLink()) {
-          var cellView = paper.findViewByModel(cell);
           selection.add(cell);
-          selectionView.createSelectionBox(cellView);
+          selectionView.createSelectionBox(cell);
           //unhighlight(cellView);
         }
       });
@@ -1093,7 +1090,7 @@ angular.module('icestudio')
               cellView.$box.css('z-index', ++z.index);
             }
             selection.add(cell);
-            selectionView.createSelectionBox(cellView);
+            selectionView.createSelectionBox(cell);
             //unhighlight(cellView);
           }
         });

@@ -211,15 +211,12 @@ joint.ui.SelectionView = Backbone.View.extend({
             height / this.options.state.zoom
         ));
 
-        if (elementViews.length) {
+        this.model.add(_.pluck(elementViews, 'model'));
 
-          // Create a `selection-box` `<div>` for each element covering its bounding box area.
-          _.each(elementViews, this.createSelectionBox, this);
-        }
+        _.each(this.model.models, this.createSelectionBox, this);
 
         this.destroySelectionArea();
 
-        this.model.add(_.pluck(elementViews, 'model'));
         break;
 
       case 'translating':
@@ -269,9 +266,9 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.$('[data-model="' + elementView.model.get('id') + '"]').remove();
   },
 
-  createSelectionBox: function(elementView, transparent) {
+  createSelectionBox: function(element, opt) {
 
-    var element = elementView.model;
+    opt = opt || {};
 
     if (!element.isLink()) {
 
@@ -280,11 +277,9 @@ joint.ui.SelectionView = Backbone.View.extend({
           'data-model': element.get('id')
       });
       if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
-        if (transparent) {
-          $selectionBox.css({ opacity: 0 });
-        }
         this.$el.append($selectionBox);
       }
+      $selectionBox.css({ opacity: (opt.transparent ? 0 : 1) });
 
       this.updateBox(element);
 
