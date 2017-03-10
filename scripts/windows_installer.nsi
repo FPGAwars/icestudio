@@ -1,4 +1,4 @@
-!define NAME       "Icestudio"
+!define NAME       "icestudio"
 !ifndef VERSION
   !define VERSION  "dev"
 !endif

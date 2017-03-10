@@ -459,6 +459,10 @@ angular.module('icestudio')
       })
       .set('oncancel', function(/*evt*/) {
       });
+
+      setTimeout(function(){
+        $('#label').select();
+      }, 50);
     };
 
     this.inputcheckbox2prompt = function(messages, values, callback) {
@@ -487,6 +491,10 @@ angular.module('icestudio')
       })
       .set('oncancel', function(/*evt*/) {
       });
+
+      setTimeout(function(){
+        $('#label').select();
+      }, 50);
     };
 
     this.projectinfoprompt = function(values, callback) {
