@@ -182,9 +182,9 @@ msgstr "3. Switch and gate"
 #. / contadorAsc
 #: translation.js:80
 msgid "contadorAsc"
-msgstr ""
+msgstr "compteur croissant"
 
 #. / contadorDes
 #: translation.js:82
 msgid "contadorDes"
-msgstr ""
+msgstr "compteur décroissant"
