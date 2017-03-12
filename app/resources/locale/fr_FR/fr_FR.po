@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.12\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:197 app/scripts/services/drivers.js:81
@@ -94,7 +94,7 @@ msgstr "Carte"
 
 #: app/views/menu.html:115 app/views/menu.html:162
 msgid "Board rules"
-msgstr ""
+msgstr "Règles de la carte"
 
 #: app/scripts/controllers/menu.js:339
 msgid "Board rules disabled"
@@ -106,7 +106,7 @@ msgstr "Règles de la carte activées"
 
 #: app/scripts/services/tools.js:251
 msgid "Board {{name}} not detected"
-msgstr "Carte {{name}}  non détectée"
+msgstr "Carte {{name}} non détectée"
 
 #: app/scripts/controllers/menu.js:440
 msgid "Board {{name}} selected"
@@ -194,7 +194,7 @@ msgid ""
 "requires Internet connection. Do you want to continue?"
 msgstr ""
 "La toolchain par défaut n'a pas été trouvée. La toolchain va être "
-"téléchargée. Cette opération nécessite une connexion internet. Voulez-vous "
+"téléchargée. Cette opération nécessite une connexion Internet. Voulez-vous "
 "continuer ?"
 
 #: app/scripts/services/utils.js:498
@@ -264,7 +264,7 @@ msgstr "Entrer les constantes du bloc"
 
 #: app/scripts/services/blocks.js:52
 msgid "Enter the input blocks"
-msgstr "Entrer les ports d'entrée"
+msgstr "Entrer les blocs d'entrée"
 
 #: app/scripts/services/blocks.js:275
 msgid "Enter the input ports"
@@ -272,7 +272,7 @@ msgstr "Entrer les ports d'entrée"
 
 #: app/scripts/services/blocks.js:114
 msgid "Enter the output blocks"
-msgstr "Entrer les ports de sortie"
+msgstr "Entrer les blocs de sortie"
 
 #: app/scripts/services/blocks.js:276
 msgid "Enter the output ports"
@@ -313,7 +313,7 @@ msgstr "Extraction des fichiers apio par défaut..."
 
 #: app/scripts/services/tools.js:505
 msgid "Extract default apio packages..."
-msgstr "Extraction des paquets apio par défaut"
+msgstr "Extraction des paquets apio par défaut..."
 
 #: app/scripts/services/tools.js:483
 msgid "Extract virtual env files..."
@@ -321,7 +321,7 @@ msgstr "Extraction des fichiers d'environnement virtuels..."
 
 #: app/scripts/services/tools.js:257 app/scripts/services/tools.js:260
 msgid "FPGA I/O ports not defined"
-msgstr "Ports d'entrée/sortie FPGA non définits"
+msgstr "Ports d'entrée/sortie FPGA non définis"
 
 #: app/scripts/services/blocks.js:115 app/scripts/services/blocks.js:53
 #: app/scripts/services/blocks.js:704 app/scripts/services/blocks.js:784
@@ -410,12 +410,13 @@ msgstr "Une connexion Internet est requise"
 
 #: app/scripts/services/graph.js:178
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
-msgstr "Connexion de <i>Pull up</i> invalide:<br> Le bloc est déjà connecté"
+msgstr "Connexion de <i>Pull up</i> invalide:<br>le bloc est déjà connecté"
 
 #: app/scripts/services/graph.js:192
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
-"Connexion de <i>Pull up</i> invalide:<br> Seules les entrées sont autorisées"
+"Connexion de <i>Pull up</i> invalide:<br>seules les <i>entrées</i> sont "
+"autorisées"
 
 #: app/scripts/services/graph.js:184
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
@@ -552,9 +553,8 @@ msgid "Remove all"
 msgstr "Supprimer tout"
 
 #: app/scripts/services/utils.js:521
-#, fuzzy
 msgid "Reset SVG"
-msgstr "Réinitialiser la vue"
+msgstr "Réinitialiser le SVG"
 
 #: app/views/menu.html:230
 msgid "Reset default"
@@ -569,9 +569,8 @@ msgid "Save"
 msgstr "Sauvegarder"
 
 #: app/scripts/services/utils.js:520
-#, fuzzy
 msgid "Save SVG"
-msgstr "Sauvegarder SVG"
+msgstr "Sauvegarder le SVG"
 
 #: app/views/menu.html:50
 msgid "Save as"
@@ -795,7 +794,7 @@ msgstr "Pinout {{board}} non défini"
 
 #: app/scripts/controllers/menu.js:407
 msgid "{{board}} rules not defined"
-msgstr "Régles {{board}} non définies"
+msgstr "Règles {{board}} non définies"
 
 #~ msgid "1_basic"
 #~ msgstr "1. Basique"
