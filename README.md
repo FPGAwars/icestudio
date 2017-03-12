@@ -102,13 +102,13 @@ Output
 | Galician   | ![Progress](http://progressed.io/bar/100)  |
 | Basque     | ![Progress](http://progressed.io/bar/100)  |
 | Catalan    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/61)   |
+| French     | ![Progress](http://progressed.io/bar/100)  |
 
-**Contribute**: add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) and the [blocks translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/collection/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
+**Contribute!**
 
-```bash
-npm run gettext
-```
+Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
+
+*Developer note*: use `npm run gettext` to extract the labels from the code.
 
 ## Troubleshooting
 
@@ -161,6 +161,7 @@ Documentation: http://icestudio.readthedocs.io/en/stable
  * [Xoan Sampaiño](https://github.com/xoan)
  * [Unai](https://github.com/1138-4EB)
  * [Francisco Sayas](https://github.com/fsayas)
+ * [Pascal Cotret](https://github.com/pcotret)
 
 * v0.2
  * [Tomás Calvo](https://github.com/tocalvo)

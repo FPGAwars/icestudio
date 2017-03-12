@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:197 app/scripts/services/drivers.js:81
@@ -48,7 +48,6 @@ msgid "Add a block to start"
 msgstr "Ajouter un bloc pour commencer"
 
 #: app/views/menu.html:43
-#, fuzzy
 msgid "Add as block"
 msgstr "Ajouter un bloc"
 
@@ -76,7 +75,6 @@ msgstr "Basque"
 #: app/scripts/services/blocks.js:748 app/scripts/services/blocks.js:769
 #: app/scripts/services/blocks.js:824 app/scripts/services/blocks.js:843
 #: app/scripts/services/blocks.js:878 app/scripts/services/blocks.js:917
-#, fuzzy
 msgid "Block updated"
 msgstr "Bloc mis à jour"
 
@@ -258,7 +256,6 @@ msgid "English"
 msgstr "Anglais"
 
 #: app/scripts/services/blocks.js:185
-#, fuzzy
 msgid "Enter the constant blocks"
 msgstr "Entrer les constantes du bloc"
 
@@ -279,7 +276,6 @@ msgid "Enter the output ports"
 msgstr "Entrer les ports de sortie"
 
 #: app/scripts/services/blocks.js:277
-#, fuzzy
 msgid "Enter the parameters"
 msgstr "Entrer les paramètres"
 
@@ -372,7 +368,6 @@ msgid "Homebrew is required"
 msgstr "Homebrew est requis"
 
 #: app/scripts/services/utils.js:512
-#, fuzzy
 msgid "Image"
 msgstr "Image"
 
@@ -432,7 +427,6 @@ msgid "Invalid connection"
 msgstr "Connexion invalide"
 
 #: app/scripts/services/graph.js:211
-#, fuzzy
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Connexion invalide: {{a}} → {{b}}"
 
@@ -729,12 +723,10 @@ msgid "Wrong block name {{name}}"
 msgstr "Mauvais nom de bloc {{name}}"
 
 #: app/scripts/services/blocks.js:325
-#, fuzzy
 msgid "Wrong parameter name {{name}}"
 msgstr "Mauvais nom de paramètre {{name}}"
 
 #: app/scripts/services/blocks.js:295 app/scripts/services/blocks.js:310
-#, fuzzy
 msgid "Wrong port name {{name}}"
 msgstr "Mauvais nom de port {{name}}"
 
