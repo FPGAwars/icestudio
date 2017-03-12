@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.12\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: translation.js\n"
@@ -152,7 +152,7 @@ msgstr "T flip-flop"
 #. / Debouncer
 #: translation.js:68
 msgid "debouncer"
-msgstr ""
+msgstr "Débouncer"
 
 #. / 1. Basic
 #: translation.js:70
@@ -162,7 +162,7 @@ msgstr "1. Basique"
 #. / 2. Counter
 #: translation.js:72
 msgid "2_counter"
-msgstr ""
+msgstr "2. Compteur"
 
 #. / 1. Led on
 #: translation.js:74
