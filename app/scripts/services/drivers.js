@@ -186,7 +186,9 @@ angular.module('icestudio')
     }
 
     function enableWindowsDrivers() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'), function() {
+      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
+                       gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports'),
+      function() {
         beginLazyProcess();
         nodeSudo.exec([common.APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
           // console.log(error, stdout, stderr);
@@ -194,7 +196,7 @@ angular.module('icestudio')
           if (stderr) {
             alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
           }
-          if (!error) {
+          else if (!error) {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }
         });
