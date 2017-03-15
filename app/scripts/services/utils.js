@@ -16,6 +16,7 @@ angular.module('icestudio')
                              nodeGlob,
                              nodeSha1,
                              nodeCP,
+                             nodeGetOS,
                              SVGO) {
 
     var _pythonExecutableCached = null;
@@ -816,15 +817,47 @@ angular.module('icestudio')
     };
 
     this.pasteFromClipboard = function(callback) {
-      nodeCP.paste(function(a, text) {
-        try {
+      nodeCP.paste(function(err, text) {
+        if (err) {
+          if (common.LINUX) {
+            // xclip installation message
+            var cmd = 'command';
+            var message = gettextCatalog.getString('{{app}} is required.', { app: '<b>xclip</b>' });
+            nodeGetOS(function(e, os) {
+              if (!e) {
+                if (os.dist.indexOf('Debian') !== -1 ||
+                    os.dist.indexOf('Ubuntu Linux') !== -1 ||
+                    os.dist.indexOf('Linux Mint') !== -1)
+                {
+                  cmd = 'sudo apt-get install xclip';
+                }
+                else if (os.dist.indexOf('Fedora') !== -1 ||
+                         os.dist.indexOf('RHEL') !== -1 ||
+                         os.dist.indexOf('RHAS') !== -1 ||
+                         os.dist.indexOf('Centos') !== -1 ||
+                         os.dist.indexOf('Red Hat Linux') !== -1)
+                {
+                  cmd = 'sudo yum install xclip';
+                }
+                else if (os.dist.indexOf('Arch Linux') !== -1)
+                {
+                  cmd = 'sudo pacman install xclip';
+                }
+                if (cmd) {
+                  message += ' ' + gettextCatalog.getString('Please run: {{cmd}}', { cmd: '<br><b><code>' + cmd + '</code></b>' });
+                }
+              }
+              alertify.warning(message, 30);
+            });
+          }
+        }
+        else {
           // Parse the global clipboard
           var clipboard = JSON.parse(text);
           if (callback && clipboard && clipboard.icestudio) {
             callback(clipboard.icestudio);
           }
         }
-        catch (e) { }
       });
     };
 

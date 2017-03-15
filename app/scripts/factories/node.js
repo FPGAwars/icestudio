@@ -52,6 +52,9 @@ angular.module('icestudio')
   .factory('nodeCP', function() {
     return require('copy-paste');
   })
+  .factory('nodeGetOS', function() {
+    return require('getos');
+  })
   .factory('SVGO', function() {
     var config = {
       full: true,

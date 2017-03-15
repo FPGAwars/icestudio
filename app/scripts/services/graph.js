@@ -744,13 +744,15 @@ angular.module('icestudio')
     };
 
     this.pasteSelected = function() {
-      utils.pasteFromClipboard(function(object) {
-        if (object.version === common.VERSION &&
-            (document.activeElement.tagName === 'A' ||
-             document.activeElement.tagName === 'BODY')) {
-          self.appendDesign(object.design, object.dependencies);
-        }
-      });
+      if (document.activeElement.tagName === 'A' ||
+          document.activeElement.tagName === 'BODY')
+      {
+        utils.pasteFromClipboard(function(object) {
+          if (object.version === common.VERSION) {
+            self.appendDesign(object.design, object.dependencies);
+          }
+        });
+      }
     };
 
     this.selectAll = function() {
