@@ -1245,7 +1245,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="8"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="6"/>',
     '</g>'
   ].join(''),
 

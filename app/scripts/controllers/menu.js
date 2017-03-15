@@ -62,7 +62,7 @@ angular.module('icestudio')
     $(document).on('mousedown', function() { mousedown = true; });
 
     // mouseover event
-    $scope.showMenu = function (menu) {
+    $scope.showMenu = function(menu) {
       $timeout.cancel(timer);
       if (!mousedown && !graph.addingDraggableBlock) {
         $scope.status[menu] = true;
@@ -70,8 +70,8 @@ angular.module('icestudio')
     };
 
     // mouseleave event
-    $scope.hideMenu = function (menu) {
-      timer = $timeout(function () {
+    $scope.hideMenu = function(menu) {
+      timer = $timeout(function() {
         $scope.status[menu] = false;
       }, 700);
     };
@@ -297,7 +297,7 @@ angular.module('icestudio')
       graph.resetView();
     };
 
-    $scope.fitContent = function () {
+    $scope.fitContent = function() {
       graph.fitContent();
     };
 
@@ -643,7 +643,7 @@ angular.module('icestudio')
 
     function saveSnapshot(base64Data) {
       utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
-        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+        nodeFs.writeFile(filepath, base64Data, 'base64', function(err) {
           $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
           $scope.$apply();
           if (!err) {
