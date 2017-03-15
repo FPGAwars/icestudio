@@ -821,7 +821,7 @@ angular.module('icestudio')
         if (err) {
           if (common.LINUX) {
             // xclip installation message
-            var cmd = 'command';
+            var cmd = '';
             var message = gettextCatalog.getString('{{app}} is required.', { app: '<b>xclip</b>' });
             nodeGetOS(function(e, os) {
               if (!e) {
@@ -831,8 +831,11 @@ angular.module('icestudio')
                 {
                   cmd = 'sudo apt-get install xclip';
                 }
-                else if (os.dist.indexOf('Fedora') !== -1 ||
-                         os.dist.indexOf('RHEL') !== -1 ||
+                else if (os.dist.indexOf('Fedora'))
+                {
+                  cmd = 'sudo dnf install xclip';
+                }
+                else if (os.dist.indexOf('RHEL') !== -1 ||
                          os.dist.indexOf('RHAS') !== -1 ||
                          os.dist.indexOf('Centos') !== -1 ||
                          os.dist.indexOf('Red Hat Linux') !== -1)
