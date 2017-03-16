@@ -26,7 +26,7 @@ angular.module('icestudio')
             'remoteHostname': data.remoteHostname || '',
             'collection': data.collection || '',
             'board': data.board || '',
-            'boardRules': data.boardRules || true
+            'boardRules': data.boardRules !== false
           };
           if (common.DARWIN) {
             self.data['macosDrivers'] = data.macosDrivers || false;
