@@ -896,25 +896,28 @@ angular.module('icestudio')
         position: block.position,
         size: block.size
       };
-      newBasicCode(function(cell) {
+      newBasicCode(function(cells) {
         if (addCellCallback) {
-          var connectedWires = graph.getConnectedLinks(cellView.model);
-          graph.startBatch('change');
-          cellView.model.remove();
-          addCellCallback(cell);
-          // Restore previous connections
-          for (var w in connectedWires) {
-            var wire = connectedWires[w];
-            var source = wire.get('source');
-            var target = wire.get('target');
-            if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
-                (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
-                (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
-              graph.addCell(wire);
+          var cell = cells[0];
+          if (cell) {
+            var connectedWires = graph.getConnectedLinks(cellView.model);
+            graph.startBatch('change');
+            cellView.model.remove();
+            addCellCallback(cell);
+            // Restore previous connections
+            for (var w in connectedWires) {
+              var wire = connectedWires[w];
+              var source = wire.get('source');
+              var target = wire.get('target');
+              if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
+              (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
+              (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
+                graph.addCell(wire);
+              }
             }
+            graph.stopBatch('change');
+            alertify.success(gettextCatalog.getString('Block updated'));
           }
-          graph.stopBatch('change');
-          alertify.success(gettextCatalog.getString('Block updated'));
         }
       }, blockInstance);
     }
