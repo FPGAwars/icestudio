@@ -592,75 +592,78 @@ angular.module('icestudio')
 
     // Collections management
 
-    this.addCollections = function(filepath) {
-      alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath) + '.zip') }));
+    this.addCollections = function(filepaths) {
+      async.eachSeries(filepaths, function(filepath, nextzip) {
+        alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath) + '.zip') }));
 
-      var collections = {};
-      var zip = nodeAdmZip(filepath);
-      var zipEntries = zip.getEntries();
+        var collections = {};
+        var zip = nodeAdmZip(filepath);
+        var zipEntries = zip.getEntries();
 
-      // Validate collections
-      zipEntries.forEach(function(zipEntry) {
-        var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
-        if (name) {
-          collections[name[1]] = {
-            name: name[1], blocks: [], examples: [], locale: [], package: ''
-          };
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
-        if (name) {
-          collections[name[1]].blocks.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
-        if (name) {
-          collections[name[1]].examples.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
-        if (name) {
-          collections[name[1]].locale.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
-        if (name) {
-          collections[name[1]].package = zipEntry.entryName;
-        }
-      });
-      async.eachSeries(collections, function(collection, next) {
-        setTimeout(function() {
-          if (collection.package && (collection.blocks || collection.examples)) {
-            var destPath = nodePath.join(common.COLLECTIONS_DIR, collection.name);
-            if (nodeFs.existsSync(destPath)) {
-              alertify.confirm(
-                gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
-                gettextCatalog.getString('Do you want to replace it?'),
-                function() {
-                  utils.deleteFolderRecursive(destPath);
+        // Validate collections
+        zipEntries.forEach(function(zipEntry) {
+          var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
+          if (name) {
+            collections[name[1]] = {
+              name: name[1], blocks: [], examples: [], locale: [], package: ''
+            };
+          }
+          name = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
+          if (name) {
+            collections[name[1]].blocks.push(zipEntry.entryName);
+          }
+          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
+          if (name) {
+            collections[name[1]].examples.push(zipEntry.entryName);
+          }
+          name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
+          if (name) {
+            collections[name[1]].locale.push(zipEntry.entryName);
+          }
+          name = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
+          if (name) {
+            collections[name[1]].package = zipEntry.entryName;
+          }
+        });
+        async.eachSeries(collections, function(collection, next) {
+          setTimeout(function() {
+            if (collection.package && (collection.blocks || collection.examples)) {
+              var destPath = nodePath.join(common.COLLECTIONS_DIR, collection.name);
+              if (nodeFs.existsSync(destPath)) {
+                alertify.confirm(
+                  gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
+                  gettextCatalog.getString('Do you want to replace it?'),
+                  function() {
+                    utils.deleteFolderRecursive(destPath);
+                    installCollection(collection, zip);
+                    alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
+                    next();
+                  },
+                  function() {
+                    alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
+                    next();
+                  });
+                }
+                else {
                   installCollection(collection, zip);
-                  alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
+                  alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
                   next();
-                },
-                function() {
-                  alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
-                  next();
-                });
+                }
+              }
+              else {
+                alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(collection.name) }));
+              }
+            }, 0);
+          }, function() {
+            resources.loadCollections();
+            // If the selected collection is replaced, load it again
+            var selected = resources.selectedCollection.name;
+            if (Object.keys(collections).indexOf(selected) !== -1) {
+              resources.selectCollection(selected);
             }
-            else {
-              installCollection(collection, zip);
-              alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
-              next();
-            }
-          }
-          else {
-            alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(collection.name) }));
-          }
-        }, 0);
-      }, function() {
-        resources.loadCollections();
-        // If the selected collection is replaced, load it again
-        var selected = resources.selectedCollection.name;
-        if (Object.keys(collections).indexOf(selected) !== -1) {
-          resources.selectCollection(selected);
-        }
-        utils.rootScopeSafeApply();
+            utils.rootScopeSafeApply();
+            nextzip();
+          });
       });
     };
 

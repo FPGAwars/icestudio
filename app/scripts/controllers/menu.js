@@ -480,9 +480,7 @@ angular.module('icestudio')
     $scope.addCollections = function() {
       utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
         filepaths = filepaths.split(';');
-        for (var i in filepaths) {
-          tools.addCollections(filepaths[i]);
-        }
+        tools.addCollections(filepaths);
       });
     };
 
