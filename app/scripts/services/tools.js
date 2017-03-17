@@ -655,6 +655,12 @@ angular.module('icestudio')
         }, 0);
       }, function() {
         resources.loadCollections();
+        // If the selected collection is replaced, load it again
+        var selected = resources.selectedCollection.name;
+        if (Object.keys(collections).indexOf(selected) !== -1) {
+          resources.selectCollection(selected);
+        }
+        utils.rootScopeSafeApply();
       });
     };
 
