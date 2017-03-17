@@ -222,7 +222,8 @@ angular.module('icestudio')
 
     this.basename = basename;
     function basename(filepath) {
-      return nodePath.basename(filepath).split('.')[0];
+      var b = nodePath.basename(filepath);
+      return b.substr(0, b.lastIndexOf('.'));
     }
 
     this.dirname = function(filepath) {
