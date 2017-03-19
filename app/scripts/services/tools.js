@@ -616,6 +616,14 @@ angular.module('icestudio')
           if (name) {
             collections[name[1]].examples.push(zipEntry.entryName);
           }
+          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
+          if (name) {
+            collections[name[1]].examples.push(zipEntry.entryName);
+          }
+          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
+          if (name) {
+            collections[name[1]].examples.push(zipEntry.entryName);
+          }
           name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
           if (name) {
             collections[name[1]].locale.push(zipEntry.entryName);
