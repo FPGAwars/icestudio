@@ -14,6 +14,7 @@ angular.module('icestudio')
 
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
+    this.filepath = ''; // Used to find external resources (*.v, *.list)
     this.changed = false;
 
     var project = _default();
@@ -83,6 +84,7 @@ angular.module('icestudio')
     this.open = function(filepath, emptyPath) {
       var self = this;
       this.path = emptyPath ? '' : filepath;
+      this.filepath = filepath;
       utils.readFile(filepath, function(data) {
         if (data) {
           var name = utils.basename(filepath);
@@ -287,6 +289,7 @@ angular.module('icestudio')
     this.save = function(filepath) {
       var name = utils.basename(filepath);
       this.path = filepath;
+      this.filepath = filepath;
       this.updateTitle(name);
 
       sortGraph();
