@@ -180,7 +180,7 @@ angular.module('icestudio')
       utils.openDialog('#input-add-as-block', '.ice', function(filepaths) {
         filepaths = filepaths.split(';');
         for (var i in filepaths) {
-          project.addAsBlock(filepaths[i]);
+          project.addBlockFile(filepaths[i]);
         }
       });
     };
