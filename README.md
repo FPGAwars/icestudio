@@ -179,7 +179,7 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
-* Sponsored by [BQ](https://www.bq.com)
+* [BQ](https://www.bq.com). Thanks for sponsoring this project from 2016-02 to 2017-02.
 
 ![](https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png)
 
