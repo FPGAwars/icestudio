@@ -655,7 +655,7 @@ angular.module('icestudio')
     this.findIncludedFiles = function(code) {
       var ret = [];
       var patterns = [
-        /(\n|\s)\/\/\s*@include\s+(.*?)(\n|\s)/g,
+        /(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
         /(\n|\s)[^\/]?\"(.*\.list?)\"/g
       ];
       for (var p in patterns) {

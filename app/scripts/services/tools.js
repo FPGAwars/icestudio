@@ -157,7 +157,7 @@ angular.module('icestudio')
       nodeFse.removeSync('!(main.*)');
 
       // Sync included files
-      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+(.*?)(\n|\s)/g, code);
+      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
 
       // Sync list files
       if (ret) {
