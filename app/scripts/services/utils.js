@@ -655,13 +655,13 @@ angular.module('icestudio')
     this.findIncludedFiles = function(code) {
       var ret = [];
       var patterns = [
-        /@include\s(.*?)(\\n|\n|\s)/g,
-        /\\"(.*\.list?)\\"/g
+        /(\n|\s)\/\/\s*@include\s+(.*?)(\n|\s)/g,
+        /(\n|\s)[^\/]?\"(.*\.list?)\"/g
       ];
       for (var p in patterns) {
         var match;
         while (match = patterns[p].exec(code)) {
-          var file = match[1].replace(/ /g, '');
+          var file = match[2].replace(/ /g, '');
           if (ret.indexOf(file) === -1) {
             ret.push(file);
           }

@@ -295,6 +295,7 @@ angular.module('icestudio')
       sortGraph();
       this.update();
       utils.saveFile(filepath, pruneProject(project), function() {
+        // TODO: save external resources (*.v, *.list)
         alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
       }, true);
     };
@@ -330,7 +331,7 @@ angular.module('icestudio')
         if (block) {
           var path = utils.dirname(filepath);
           // 1. Parse and find included files
-          var code = JSON.stringify(block);
+          var code = compiler.generate('verilog', block);
           var files = utils.findIncludedFiles(code);
           // Are there included files?
           if (files.length > 0) {

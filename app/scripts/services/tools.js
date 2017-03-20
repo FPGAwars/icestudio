@@ -157,11 +157,11 @@ angular.module('icestudio')
       nodeFse.removeSync('!(main.*)');
 
       // Sync included files
-      ret = this.syncFiles(/@include\s(.*?)(\\n|\n|\s)/g, code);
+      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+(.*?)(\n|\s)/g, code);
 
       // Sync list files
       if (ret) {
-        ret = this.syncFiles(/\"(.*\.list?)\"/g, code);
+        ret = this.syncFiles(/(\n|\s)[^\/]?\"(.*\.list?)\"/g, code);
       }
 
       return ret;
@@ -171,7 +171,7 @@ angular.module('icestudio')
       var ret = true;
       var match;
       while (match = pattern.exec(code)) {
-        var file = match[1];
+        var file = match[2];
         var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
