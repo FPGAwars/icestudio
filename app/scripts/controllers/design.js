@@ -44,7 +44,9 @@ angular.module('icestudio')
       else {
         var type = graph.breadcrumbs[n-1].type;
         var dependency = common.allDependencies[type];
-        graph.loadDesign(dependency.design, opt);
+        graph.loadDesign(dependency.design, opt, function() {
+          graph.fitContent();
+        });
         $scope.information = dependency.package;
       }
     }
@@ -54,11 +56,15 @@ angular.module('icestudio')
       if (args.update) {
         // Update the main project
         project.update({ deps: false }, function() {
-          graph.loadDesign(args.project.design, opt);
+          graph.loadDesign(args.project.design, opt, function() {
+            graph.fitContent();
+          });
         });
       }
       else {
-        graph.loadDesign(args.project.design, opt);
+        graph.loadDesign(args.project.design, opt, function() {
+          graph.fitContent();
+        });
       }
       $scope.information = args.project.package;
       utils.rootScopeSafeApply();
