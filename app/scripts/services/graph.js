@@ -83,8 +83,8 @@ angular.module('icestudio')
         else {
           scale = tbox.width / sbox.width;
         }
-        if (state.zoom * scale > ZOOM_MAX) {
-          scale = ZOOM_MAX / state.zoom;
+        if (state.zoom * scale > 1) {
+          scale = 1 / state.zoom;
         }
         var target = {
           x: tbox.x + tbox.width / 2,

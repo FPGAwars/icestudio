@@ -121,6 +121,7 @@ angular.module('icestudio')
         var opt = { reset: reset || false, disabled: false };
         var ret = graph.loadDesign(project.design, opt, function() {
           graph.resetCommandStack();
+          graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
         });
 
