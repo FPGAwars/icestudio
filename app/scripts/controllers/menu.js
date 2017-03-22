@@ -177,10 +177,11 @@ angular.module('icestudio')
     });
 
     $scope.addAsBlock = function() {
+      var notification = true;
       utils.openDialog('#input-add-as-block', '.ice', function(filepaths) {
         filepaths = filepaths.split(';');
         for (var i in filepaths) {
-          project.addBlockFile(filepaths[i]);
+          project.addBlockFile(filepaths[i], notification);
         }
       });
     };

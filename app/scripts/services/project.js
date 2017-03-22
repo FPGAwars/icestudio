@@ -357,7 +357,7 @@ angular.module('icestudio')
       graph.setCells(cells);
     }
 
-    this.addBlockFile = function(filepath) {
+    this.addBlockFile = function(filepath, notification) {
       var self = this;
       utils.readFile(filepath, function(data) {
         if (data.version !== common.VERSION) {
@@ -409,7 +409,9 @@ angular.module('icestudio')
 
         function doImportBlock() {
           self.addBlock(block);
-          alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
+          if (notification) {
+            alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
+          }
         }
       });
     };
