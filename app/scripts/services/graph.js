@@ -160,11 +160,12 @@ angular.module('icestudio')
           }
           var i;
           var links = graph.getLinks();
-          _.each(links, function(link) {
+          for (i in links) {
+            var link = links[i];
             var linkIView = link.findView(paper);
             if (linkView === linkIView) {
               //Skip the wire the user is drawing
-              return;
+              continue;
             }
             // Prevent multiple input links
             if ((cellViewT.model.id === link.get('target').id) &&
@@ -184,7 +185,7 @@ angular.module('icestudio')
               warning(gettextCatalog.getString('Invalid block connection:<br><i>Pull up</i> already connected'));
               return false;
             }
-          });
+          }
           // Ensure input -> pull-up connections
           if (cellViewT.model.get('pullup')) {
             var ret = (cellViewS.model.get('blockType') === 'basic.input');
