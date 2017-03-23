@@ -1,17 +1,14 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('resources', function(utils,
+  .service('collections', function(utils,
                                  common,
                                  nodePath) {
 
     const DEFAULT = '';
 
-    this.collections = [];
-    this.selectedCollection = null;
-
     this.loadCollections = function() {
-      this.collections = [];
+      common.collections = [];
       // Add Default collection
       var defaultPath = nodePath.join('resources', 'collection');
       var defaultData = {
@@ -20,13 +17,13 @@ angular.module('icestudio')
         'children': utils.getFilesRecursive(defaultPath)
       };
       var defaultCollection = getCollection(defaultData);
-      this.collections.push(defaultCollection);
+      common.collections.push(defaultCollection);
       // Add installed collections
       var data = utils.getFilesRecursive(common.COLLECTIONS_DIR);
       for (var i in data) {
         var collection = getCollection(data[i]);
         if (collection) {
-          this.collections.push(collection);
+          common.collections.push(collection);
         }
       }
     };
@@ -65,22 +62,20 @@ angular.module('icestudio')
       return collection;
     }
 
-    this.loadCollections();
-
     this.selectCollection = function(name) {
       name = name || DEFAULT;
       var selectedCollection = null;
-      for (var i in this.collections) {
-        if (this.collections[i].name === name) {
-          selectedCollection = this.collections[i];
+      for (var i in common.collections) {
+        if (common.collections[i].name === name) {
+          selectedCollection = common.collections[i];
           break;
         }
       }
       if (selectedCollection === null) {
         // Collection not found: select default collection
-        selectedCollection = this.collections[0];
+        selectedCollection = common.collections[0];
       }
-      this.selectedCollection = selectedCollection;
+      common.selectedCollection = selectedCollection;
       return selectedCollection.name;
     };
 

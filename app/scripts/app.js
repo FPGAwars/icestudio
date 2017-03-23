@@ -20,21 +20,27 @@ angular
   ])
   .run(function(profile,
                 project,
-                resources,
+                common,
                 utils,
+                boards,
+                collections,
                 gettextCatalog,
                 nodeLangInfo) {
+    // Load boards
+    boards.loadBoards();
+    // Load collections
+    collections.loadCollections();
     // Load language
     profile.load(function() {
       var lang = profile.get('language');
       if (lang) {
-        utils.setLocale(lang, resources.collections);
+        utils.setLocale(lang, common.collections);
       }
       else {
         // If lang is empty, use the system language
         nodeLangInfo(function(err, sysLang) {
           if (!err) {
-            profile.set('language', utils.setLocale(sysLang, resources.collections));
+            profile.set('language', utils.setLocale(sysLang, common.collections));
           }
         });
       }

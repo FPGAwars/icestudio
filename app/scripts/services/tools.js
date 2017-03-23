@@ -4,7 +4,7 @@ angular.module('icestudio')
   .service('tools', function(project,
                              compiler,
                              profile,
-                             resources,
+                             collections,
                              drivers,
                              utils,
                              common,
@@ -638,11 +638,11 @@ angular.module('icestudio')
               }
             }, 0);
           }, function() {
-            resources.loadCollections();
+            collections.loadCollections();
             // If the selected collection is replaced, load it again
-            var selected = resources.selectedCollection.name;
+            var selected = common.selectedCollection.name;
             if (Object.keys(collections).indexOf(selected) !== -1) {
-              resources.selectCollection(selected);
+              collections.selectCollection(selected);
             }
             utils.rootScopeSafeApply();
             nextzip();
@@ -740,13 +740,13 @@ angular.module('icestudio')
 
     this.removeCollection = function(collection) {
       utils.deleteFolderRecursive(collection.path);
-      resources.loadCollections();
+      collections.loadCollections();
       alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
     };
 
     this.removeAllCollections = function() {
       utils.removeCollections();
-      resources.loadCollections();
+      collections.loadCollections();
       alertify.success(gettextCatalog.getString('All collections removed'));
     };
 

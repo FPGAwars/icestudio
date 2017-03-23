@@ -7,7 +7,7 @@ angular.module('icestudio')
                                     boards,
                                     profile,
                                     project,
-                                    resources,
+                                    collections,
                                     graph,
                                     tools,
                                     utils,
@@ -21,11 +21,9 @@ angular.module('icestudio')
 
     //-- Initialize scope
 
-    $scope.boards = boards;
     $scope.profile = profile;
     $scope.project = project;
     $scope.tools = tools;
-    $scope.resources = resources;
     $scope.common = common;
 
     $scope.version = _package.version;
@@ -343,7 +341,7 @@ angular.module('icestudio')
     $scope.selectLanguage = function(language) {
       if (profile.get('language') !== language) {
         profile.set('language', language);
-        utils.setLocale(language, resources.collections);
+        utils.setLocale(language, common.collections);
       }
     };
 
@@ -351,6 +349,7 @@ angular.module('icestudio')
     //-- View
 
     $scope.showPCF = function() {
+      console.log(common.selectedCollection);
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name, {
         title: common.selectedBoard.info.label + ' - PCF',
         focus: true,
@@ -410,15 +409,15 @@ angular.module('icestudio')
     };
 
     $scope.selectCollection = function(collection) {
-      if (resources.selectedCollection.name !== collection.name) {
-        var name = resources.selectCollection(collection.name);
+      if (common.selectedCollection.name !== collection.name) {
+        var name = collections.selectCollection(collection.name);
         profile.set('collection', name);
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
     };
 
     function updateSelectedCollection() {
-      profile.set('collection', resources.selectCollection(profile.get('collection')));
+      profile.set('collection', collections.selectCollection(profile.get('collection')));
     }
 
 
@@ -495,7 +494,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (resources.collections.length > 1) {
+      if (common.collections.length > 1) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();

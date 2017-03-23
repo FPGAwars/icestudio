@@ -10,9 +10,14 @@ angular.module('icestudio')
     this.allDependencies = {};
 
     // Selected board
+    this.boards = [];
     this.selectedBoard = null;
     this.pinoutInputHTML = '';
     this.pinoutOutputHTML = '';
+
+    // Selected collection
+    this.collections = [];
+    this.selectedCollection = null;
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
