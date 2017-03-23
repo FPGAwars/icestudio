@@ -314,7 +314,7 @@ angular.module('icestudio')
 
     function getFilesRecursive(folder) {
       var fileTree = [];
-      var validator = /.*\.(ice|json)$/;
+      var validator = /.*\.(ice|json|md)$/;
 
       if (nodeFs.existsSync(folder)) {
         var fileContents = nodeFs.readdirSync(folder);

@@ -349,7 +349,6 @@ angular.module('icestudio')
     //-- View
 
     $scope.showPCF = function() {
-      console.log(common.selectedCollection);
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name, {
         title: common.selectedBoard.info.label + ' - PCF',
         focus: true,
@@ -405,6 +404,25 @@ angular.module('icestudio')
       }
       else {
         alertify.error(gettextCatalog.getString('{{board}} rules not defined', { board: utils.bold(board.info.label) }), 5);
+      }
+    };
+
+    $scope.showCollectionData = function() {
+      var collection = common.selectedCollection;
+      var readme = collection.content.readme;
+      if (readme) {
+        gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
+          title: collection.name + ' - Data',
+          focus: true,
+          toolbar: false,
+          resizable: true,
+          width: 700,
+          height: 700,
+          icon: 'resources/images/icestudio-logo.png'
+        });
+      }
+      else {
+        alertify.error(gettextCatalog.getString('Collection {{collection}} data not defined', { collection: utils.bold(collection.name) }), 5);
       }
     };
 

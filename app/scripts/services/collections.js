@@ -14,7 +14,7 @@ angular.module('icestudio')
       var defaultData = {
         'name': DEFAULT,
         'path': nodePath.resolve(defaultPath),
-        'children': utils.getFilesRecursive(defaultPath)
+        'children': utils.getFilesRecursive(nodePath.resolve(defaultPath))
       };
       var defaultCollection = getCollection(defaultData);
       common.collections.push(defaultCollection);
@@ -35,7 +35,8 @@ angular.module('icestudio')
         content: {
           blocks: [],
           examples: [],
-          package: {}
+          package: {},
+          readme: ''
         }
       };
       for (var i in data.children) {
@@ -55,6 +56,11 @@ angular.module('icestudio')
             if (!child.children) {
               // TODO: use package data
               //collection.content.package = require(child.path);
+            }
+            break;
+          case ('README'):
+            if (!child.children) {
+              collection.content.readme = child.path;
             }
             break;
         }
