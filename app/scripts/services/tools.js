@@ -593,73 +593,48 @@ angular.module('icestudio')
     // Collections management
 
     this.addCollections = function(filepaths) {
+      // Load zip file
       async.eachSeries(filepaths, function(filepath, nextzip) {
-        alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath) + '.zip') }));
+        //alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
+        var zipData = nodeAdmZip(filepath);
+        var collections = getCollections(zipData);
 
-        var collections = {};
-        var zip = nodeAdmZip(filepath);
-        var zipEntries = zip.getEntries();
-
-        // Validate collections
-        zipEntries.forEach(function(zipEntry) {
-          var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
-          if (name) {
-            collections[name[1]] = {
-              name: name[1], blocks: [], examples: [], locale: [], package: ''
-            };
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
-          if (name) {
-            collections[name[1]].blocks.push(zipEntry.entryName);
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
-          if (name) {
-            collections[name[1]].examples.push(zipEntry.entryName);
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
-          if (name) {
-            collections[name[1]].examples.push(zipEntry.entryName);
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
-          if (name) {
-            collections[name[1]].examples.push(zipEntry.entryName);
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
-          if (name) {
-            collections[name[1]].locale.push(zipEntry.entryName);
-          }
-          name = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
-          if (name) {
-            collections[name[1]].package = zipEntry.entryName;
-          }
-        });
         async.eachSeries(collections, function(collection, next) {
           setTimeout(function() {
             if (collection.package && (collection.blocks || collection.examples)) {
-              var destPath = nodePath.join(common.COLLECTIONS_DIR, collection.name);
-              if (nodeFs.existsSync(destPath)) {
-                alertify.confirm(
-                  gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
-                  gettextCatalog.getString('Do you want to replace it?'),
-                  function() {
-                    utils.deleteFolderRecursive(destPath);
-                    installCollection(collection, zip);
-                    alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
-                    next();
-                  },
-                  function() {
-                    alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
-                    next();
-                  });
-                }
-                else {
-                  installCollection(collection, zip);
-                  alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
-                  next();
-                }
+
+              alertify.prompt(gettextCatalog.getString('Edit the collection name'), collection.origName,
+                function(evt, name) {
+                  if (!name) {
+                    return false;
+                  }
+                  collection.name = name;
+
+                  var destPath = nodePath.join(common.COLLECTIONS_DIR, name);
+                  if (nodeFs.existsSync(destPath)) {
+                    alertify.confirm(
+                      gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(name) }) + '<br>' +
+                      gettextCatalog.getString('Do you want to replace it?'),
+                      function() {
+                        utils.deleteFolderRecursive(destPath);
+                        installCollection(collection, zipData);
+                        alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(name) }));
+                        next();
+                      },
+                      function() {
+                        alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(name) }));
+                        next();
+                      });
+                    }
+                    else {
+                      installCollection(collection, zipData);
+                      alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
+                      next();
+                    }
+                });
               }
               else {
-                alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(collection.name) }));
+                alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
               }
             }, 0);
           }, function() {
@@ -671,35 +646,87 @@ angular.module('icestudio')
             }
             utils.rootScopeSafeApply();
             nextzip();
-          });
+        });
       });
     };
 
+    function getCollections(zipData) {
+      var data = '';
+      var collections = {};
+      var zipEntries = zipData.getEntries();
+
+      // Validate collections
+      zipEntries.forEach(function(zipEntry) {
+        data = zipEntry.entryName.match(/^([^\/]+)\/$/);
+        if (data) {
+          collections[data[1]] = {
+            origName: data[1], blocks: [], examples: [], locale: [], package: ''
+          };
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
+        if (data) {
+          collections[data[1]].blocks.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
+        if (data) {
+          collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
+        if (data) {
+          collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.vh$/);
+        if (data) {
+          collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
+        if (data) {
+          collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
+        if (data) {
+          collections[data[1]].locale.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
+        if (data) {
+          collections[data[1]].package = zipEntry.entryName;
+        }
+      });
+
+      return collections;
+    }
+
     function installCollection(collection, zip) {
-      for (var b in collection.blocks) {
-        safeExtract(collection.blocks[b], zip);
+      var i, dest = '';
+      var pattern = RegExp('^' + collection.origName);
+      for (i in collection.blocks) {
+        dest = collection.blocks[i].replace(pattern, collection.name);
+        safeExtract(collection.blocks[i], dest, zip);
       }
-      for (var e in collection.examples) {
-        safeExtract(collection.examples[e], zip);
+      for (i in collection.examples) {
+        dest = collection.examples[i].replace(pattern, collection.name);
+        safeExtract(collection.examples[i], dest, zip);
       }
-      for (var l in collection.locale) {
-        safeExtract(collection.locale[l], zip);
+      for (i in collection.locale) {
+        dest = collection.locale[i].replace(pattern, collection.name);
+        safeExtract(collection.locale[i], dest, zip);
         // Generate locale JSON files
         var compiler = new nodeGettext.Compiler({ format: 'json' });
-        var sourcePath = nodePath.join(common.COLLECTIONS_DIR, collection.locale[l]);
-        var targetPath = nodePath.join(common.COLLECTIONS_DIR, collection.locale[l].replace(/\.po$/, '.json'));
+        var sourcePath = nodePath.join(common.COLLECTIONS_DIR, dest);
+        var targetPath = nodePath.join(common.COLLECTIONS_DIR, dest.replace(/\.po$/, '.json'));
         var content = nodeFs.readFileSync(sourcePath).toString();
         var json = compiler.convertPo([content]);
         nodeFs.writeFileSync(targetPath, json);
-        // Add string to gettext
+        // Add strings to gettext
         gettextCatalog.loadRemote(targetPath);
       }
       safeExtract(collection.package, zip);
     }
 
-    function safeExtract(entry, zip) {
+    function safeExtract(entry, dest, zip) {
       try {
-        zip.extractEntryTo(entry, common.COLLECTIONS_DIR);
+        var newPath = nodePath.join(common.COLLECTIONS_DIR, dest);
+        zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/false);
       }
       catch(e) {}
     }
