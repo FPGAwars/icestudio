@@ -155,25 +155,24 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 ## Contributors
 
 * v0.3
- * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
- * [Carlos Díaz](https://github.com/C47D)
- * [Martoni](https://github.com/Martoni)
- * [Xoan Sampaiño](https://github.com/xoan)
- * [Unai](https://github.com/1138-4EB)
- * [Francisco Sayas](https://github.com/fsayas)
- * [Pascal Cotret](https://github.com/pcotret)
-
+  * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
+  * [Carlos Díaz](https://github.com/C47D)
+  * [Martoni](https://github.com/Martoni)
+  * [Xoan Sampaiño](https://github.com/xoan)
+  * [Unai](https://github.com/1138-4EB)
+  * [Francisco Sayas](https://github.com/fsayas)
+  * [Pascal Cotret](https://github.com/pcotret)
 * v0.2
- * [Tomás Calvo](https://github.com/tocalvo)
- * [Juan González (Obijuan)](https://github.com/Obijuan)
- * [Carlos Díaz](https://github.com/C47D)
- * [Xoan Sampaiño](https://github.com/xoan)
- * [Salvador E. Tropea](https://github.com/set-soft)
- * [Democrito](https://github.com/Democrito)
- * [Martoni](https://github.com/Martoni)
- * [Pascal Cotret](https://github.com/pcotret)
+  * [Tomás Calvo](https://github.com/tocalvo)
+  * [Juan González (Obijuan)](https://github.com/Obijuan)
+  * [Carlos Díaz](https://github.com/C47D)
+  * [Xoan Sampaiño](https://github.com/xoan)
+  * [Salvador E. Tropea](https://github.com/set-soft)
+  * [Democrito](https://github.com/Democrito)
+  * [Martoni](https://github.com/Martoni)
+  * [Pascal Cotret](https://github.com/pcotret)
 * v0.1
- * [Miguel Sánchez de León Peque](https://github.com/Peque)
+  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
 ## Credits
 
@@ -186,5 +185,3 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 ## License
 
 Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
-
-[icestudio-0.1-demo]: doc/images/icestudio-demo.gif
