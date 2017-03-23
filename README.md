@@ -1,8 +1,8 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
-[![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0-beta3)](https://travis-ci.org/FPGAwars/icestudio)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
+[![Version](https://img.shields.io/badge/version-v0.3.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
@@ -24,37 +24,33 @@ Supported operating systems:
 * Windows
 * Mac OS X
 
-## Version 0.3.0-beta3 (latest)
-
-Documentation: http://icestudio.readthedocs.io/en/latest
-
-### Installation
+## Installation
 
 * **GNU/Linux**
 
-  1. Install [Python 2.7](https://www.python.org) and **xclip** (to enable Copy/Paste)
-  2. Download the [zipped release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3), unzip and execute **icestudio**
+  1. Install [Python 2.7](https://www.python.org) and **xclip**
+  2. Download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
 
 
 * **Windows**
 
-  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
 
 
 * **Mac OS X**
 
   1. Install [Python 2.7](https://www.python.org)
-  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
 
 <img src="./doc/images/icestudio-0.3.0-beta3.png" width="700" align="center">
 
+Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
+
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
+Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node). Also [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
-Using [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint).
-
-NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
+If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
 
 
 ##### Ubuntu
@@ -89,9 +85,12 @@ npm start
 npm run dist
 ```
 
-Output
-* *GNU/Linux*: linux32.zip, linux64.zip, win32.zip, win64.zip, win32.exe, win64.exe.
-* *Mac OS X*: osx32.zip, osx64.zip, osx64.dmg.
+| OS | Development OS | Output files |
+|:---:|:-------------:|:-----------------:|
+| GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
+| Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
+|  Mac OS X | Mac OS X | (osx32,osx64).zip, osx64.dmg  |
+
 
 ## Languages
 
@@ -125,18 +124,6 @@ npm update -g
 There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-proposed-features) in the wiki with the features proposed by the Community. If you want to contribute with new features and ideas write in the [Google Group](https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre).
 
  We use the GitHub issues to schedule our new features and improvements.
-
-## Version 0.2.3 (stable)
-
-### Installation
-
-1. Install [Python 2.7](https://www.python.org)
-
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.2.3), unzip and execute **icestudio**
-
-Documentation: http://icestudio.readthedocs.io/en/stable
-
-<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
 
 ## Videos
 
@@ -178,10 +165,10 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
-* [BQ](https://www.bq.com). Thanks for sponsoring this project from 2016-02 to 2017-02.
+* [BQ](https://www.bq.com) sponsored this project from 02-2016 to 02-2017. Thanks
 
 ![](https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png)
 
 ## License
 
-Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
+Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
