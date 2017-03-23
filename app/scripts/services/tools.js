@@ -691,6 +691,10 @@ angular.module('icestudio')
         if (data) {
           collections[data[1]].package = zipEntry.entryName;
         }
+        data = zipEntry.entryName.match(/^([^\/]+)\/README\.md$/);
+        if (data) {
+          collections[data[1]].readme = zipEntry.entryName;
+        }
       });
 
       return collections;
@@ -720,7 +724,10 @@ angular.module('icestudio')
         // Add strings to gettext
         gettextCatalog.loadRemote(targetPath);
       }
-      safeExtract(collection.package, zip);
+      dest = collection.package.replace(pattern, collection.name);
+      safeExtract(collection.package, dest, zip);
+      dest = collection.readme.replace(pattern, collection.name);
+      safeExtract(collection.readme, dest, zip);
     }
 
     function safeExtract(entry, dest, zip) {
