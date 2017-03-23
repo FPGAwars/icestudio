@@ -2,8 +2,8 @@
 
 angular.module('icestudio')
   .service('collections', function(utils,
-                                 common,
-                                 nodePath) {
+                                   common,
+                                   nodePath) {
 
     const DEFAULT = '';
 

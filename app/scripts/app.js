@@ -24,27 +24,15 @@ angular
                 utils,
                 boards,
                 collections,
-                gettextCatalog,
-                nodeLangInfo) {
+                gettextCatalog)
+  {
     // Load boards
     boards.loadBoards();
     // Load collections
     collections.loadCollections();
     // Load language
-    profile.load(function() {
-      var lang = profile.get('language');
-      if (lang) {
-        utils.setLocale(lang, common.collections);
-      }
-      else {
-        // If lang is empty, use the system language
-        nodeLangInfo(function(err, sysLang) {
-          if (!err) {
-            profile.set('language', utils.setLocale(sysLang, common.collections));
-          }
-        });
-      }
-    });
+    utils.loadLanguage(profile);
+
     setTimeout(function() {
       project.updateTitle(gettextCatalog.getString('Untitled'));
     }, 200);

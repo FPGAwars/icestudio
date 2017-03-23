@@ -341,7 +341,7 @@ angular.module('icestudio')
     $scope.selectLanguage = function(language) {
       if (profile.get('language') !== language) {
         profile.set('language', language);
-        utils.setLocale(language, common.collections);
+        utils.setLocale(language);
       }
     };
 

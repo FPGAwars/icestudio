@@ -17,6 +17,7 @@ angular.module('icestudio')
                              nodeSha1,
                              nodeCP,
                              nodeGetOS,
+                             nodeLangInfo,
                              SVGO) {
 
     var _pythonExecutableCached = null;
@@ -340,7 +341,7 @@ angular.module('icestudio')
       return fileTree;
     }
 
-    this.setLocale = function(locale, collections) {
+    this.setLocale = function(locale) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -351,8 +352,8 @@ angular.module('icestudio')
       // Application strings
       gettextCatalog.loadRemote(nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json'));
       // Collections strings
-      for (var c in collections) {
-        var collection = collections[c];
+      for (var c in common.collections) {
+        var collection = common.collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
           gettextCatalog.loadRemote(filepath);
@@ -1011,6 +1012,24 @@ angular.module('icestudio')
 
     this.hasCtrl = function(evt) {
       return evt.ctrlKey;
+    };
+
+    this.loadLanguage = function(profile) {
+      var self = this;
+      profile.load(function() {
+        var lang = profile.get('language');
+        if (lang) {
+          self.setLocale(lang);
+        }
+        else {
+          // If lang is empty, use the system language
+          nodeLangInfo(function(err, sysLang) {
+            if (!err) {
+              profile.set('language', self.setLocale(sysLang));
+            }
+          });
+        }
+      });
     };
 
   });

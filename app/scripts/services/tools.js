@@ -597,9 +597,9 @@ angular.module('icestudio')
       async.eachSeries(filepaths, function(filepath, nextzip) {
         //alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
         var zipData = nodeAdmZip(filepath);
-        var collections = getCollections(zipData);
+        var _collections = getCollections(zipData);
 
-        async.eachSeries(collections, function(collection, next) {
+        async.eachSeries(_collections, function(collection, next) {
           setTimeout(function() {
             if (collection.package && (collection.blocks || collection.examples)) {
 
@@ -619,17 +619,17 @@ angular.module('icestudio')
                         utils.deleteFolderRecursive(destPath);
                         installCollection(collection, zipData);
                         alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(name) }));
-                        next();
+                        next(name);
                       },
                       function() {
                         alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(name) }));
-                        next();
+                        next(name);
                       });
                     }
                     else {
                       installCollection(collection, zipData);
                       alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
-                      next();
+                      next(name);
                     }
                 });
               }
@@ -637,12 +637,11 @@ angular.module('icestudio')
                 alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
               }
             }, 0);
-          }, function() {
+          }, function(name) {
             collections.loadCollections();
             // If the selected collection is replaced, load it again
-            var selected = common.selectedCollection.name;
-            if (Object.keys(collections).indexOf(selected) !== -1) {
-              collections.selectCollection(selected);
+            if (common.selectedCollection.name === name) {
+              collections.selectCollection(name);
             }
             utils.rootScopeSafeApply();
             nextzip();
@@ -652,52 +651,52 @@ angular.module('icestudio')
 
     function getCollections(zipData) {
       var data = '';
-      var collections = {};
+      var _collections = {};
       var zipEntries = zipData.getEntries();
 
       // Validate collections
       zipEntries.forEach(function(zipEntry) {
         data = zipEntry.entryName.match(/^([^\/]+)\/$/);
         if (data) {
-          collections[data[1]] = {
+          _collections[data[1]] = {
             origName: data[1], blocks: [], examples: [], locale: [], package: ''
           };
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
         if (data) {
-          collections[data[1]].blocks.push(zipEntry.entryName);
+          _collections[data[1]].blocks.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
         if (data) {
-          collections[data[1]].examples.push(zipEntry.entryName);
+          _collections[data[1]].examples.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
         if (data) {
-          collections[data[1]].examples.push(zipEntry.entryName);
+          _collections[data[1]].examples.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.vh$/);
         if (data) {
-          collections[data[1]].examples.push(zipEntry.entryName);
+          _collections[data[1]].examples.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
         if (data) {
-          collections[data[1]].examples.push(zipEntry.entryName);
+          _collections[data[1]].examples.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
         if (data) {
-          collections[data[1]].locale.push(zipEntry.entryName);
+          _collections[data[1]].locale.push(zipEntry.entryName);
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
         if (data) {
-          collections[data[1]].package = zipEntry.entryName;
+          _collections[data[1]].package = zipEntry.entryName;
         }
         data = zipEntry.entryName.match(/^([^\/]+)\/README\.md$/);
         if (data) {
-          collections[data[1]].readme = zipEntry.entryName;
+          _collections[data[1]].readme = zipEntry.entryName;
         }
       });
 
-      return collections;
+      return _collections;
     }
 
     function installCollection(collection, zip) {
@@ -724,10 +723,14 @@ angular.module('icestudio')
         // Add strings to gettext
         gettextCatalog.loadRemote(targetPath);
       }
-      dest = collection.package.replace(pattern, collection.name);
-      safeExtract(collection.package, dest, zip);
-      dest = collection.readme.replace(pattern, collection.name);
-      safeExtract(collection.readme, dest, zip);
+      if (collection.package) {
+        dest = collection.package.replace(pattern, collection.name);
+        safeExtract(collection.package, dest, zip);
+      }
+      if (collection.readme) {
+        dest = collection.readme.replace(pattern, collection.name);
+        safeExtract(collection.readme, dest, zip);
+      }
     }
 
     function safeExtract(entry, dest, zip) {
