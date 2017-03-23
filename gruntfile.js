@@ -313,14 +313,32 @@ module.exports = function(grunt) {
       }
     },
 
-    // Wget Python installer
+    // Wget: Python installer and Default collection
     wget: {
       python: {
-         options: {
-           overwrite: false
-         },
-         src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
-         dest: 'cache/python/python-2.7.13.amd64.msi'
+        options: {
+          overwrite: false
+        },
+        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
+        dest: 'cache/python/python-2.7.13.amd64.msi'
+      },
+      collection: {
+        options: {
+          overwrite: false
+        },
+        src: 'https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip',
+        dest: 'cache/collection/collection-default-v<%=pkg.collection%>.zip'
+      }
+    },
+
+    // Unzip Default collection
+    unzip: {
+      'using-router': {
+        router: function (filepath) {
+          return filepath.replace(/^collection-default-[0-9]\.[0-9]\.[0-9]/g, 'collection');
+        },
+        src: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
+        dest: 'app/resources/'
       }
     },
 
@@ -380,6 +398,10 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('gettext', [
     'nggettext_extract'
+  ]);
+  grunt.registerTask('getcollection', [
+    'wget:collection',
+    'unzip'
   ]);
   grunt.registerTask('serve', [
     'nggettext_compile',
