@@ -916,6 +916,12 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
     });
+    this.editor.on('blur', function() {
+      var selection = self.editor.session.selection;
+      if (selection) {
+        selection.clearSelection();
+      }
+    });
     this.editor.on('paste', function(e) {
       if (e.text.startsWith('{"icestudio":')) {
         // Prevent paste blocks
@@ -1065,6 +1071,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.renderer.setShowGutter(false);\
+          ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
         </script>\
         <div class="resizer"/>\
@@ -1117,6 +1124,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+    });
+    this.editor.on('blur', function() {
+      var selection = self.editor.session.selection;
+      if (selection) {
+        selection.clearSelection();
+      }
     });
     this.editor.on('paste', function(e) {
       if (e.text.startsWith('{"icestudio":')) {
