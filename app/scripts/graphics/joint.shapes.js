@@ -1207,6 +1207,11 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.disableResizer();
       // Hide cursor
       this.editor.renderer.$cursorLayer.element.style.opacity = 0;
+      // Clear selection
+      var selection = this.editor.session.selection;
+      if (selection) {
+        selection.clearSelection();
+      }
     }
     else {
       this.$box.removeClass('info-block-readonly');
