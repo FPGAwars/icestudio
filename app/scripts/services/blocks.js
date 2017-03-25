@@ -953,6 +953,8 @@ angular.module('icestudio')
           var data = utils.clone(block.data);
           data.readonly = readonly;
           cellView.model.set('data', data);
+          cellView.apply();
+          alertify.success(gettextCatalog.getString('Block updated'));
       });
     }
 

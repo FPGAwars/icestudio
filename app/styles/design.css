@@ -349,7 +349,7 @@
 
 .info-block {
   position: absolute;
-  background: #EEE;
+  background: #DDD;
   border-radius: 5px;
   border: 1px solid #777;
   pointer-events: none;
@@ -367,6 +367,11 @@
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
+}
+
+.info-block-readonly {
+  background: #FFF;
+  border: none;
 }
 
 .port-body:hover {

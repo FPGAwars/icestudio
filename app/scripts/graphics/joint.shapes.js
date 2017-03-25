@@ -254,6 +254,16 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     }
   },
 
+  enableResizer: function() {
+    this.resizerDisabled = false;
+    this.resizer.css('cursor', 'se-resize');
+  },
+
+  disableResizer: function() {
+    this.resizerDisabled = true;
+    this.resizer.css('cursor', 'move');
+  },
+
   apply: function() {
   },
 
@@ -262,6 +272,10 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   startResizing: function(event) {
     var self = event.data.self;
+
+    if (self.resizerDisabled) {
+      return;
+    }
 
     self.model.graph.trigger('batch:start');
 
@@ -273,7 +287,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   performResizing: function(event) {
     var self = event.data.self;
 
-    if (!self.resizing) {
+    if (!self.resizing || self.resizerDisabled) {
       return;
     }
 
@@ -313,7 +327,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   stopResizing: function(event) {
     var self = event.data.self;
 
-    if (!self.resizing) {
+    if (!self.resizing || self.resizerDisabled) {
       return;
     }
 
@@ -1169,7 +1183,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         }
         break;
       case 'data':
-
         break;
       default:
         break;
@@ -1186,8 +1199,24 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }, 10, this);
   },
 
+  applyReadonly: function() {
+    var readonly = this.model.get('data').readonly;
+    if (readonly) {
+      this.$box.addClass('info-block-readonly');
+      this.$box.find('info-editor').addClass('info-block-readonly');
+      this.disableResizer();
+    }
+    else {
+      this.$box.removeClass('info-block-readonly');
+      this.$box.find('info-editor').removeClass('info-block-readonly');
+      this.enableResizer();
+    }
+    this.editor.setReadOnly(readonly);
+  },
+
   apply: function(opt) {
     this.applyValue(opt);
+    this.applyReadonly();
   },
 
   render: function() {
