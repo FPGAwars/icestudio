@@ -946,7 +946,7 @@ angular.module('icestudio')
       utils.checkboxprompt([
         gettextCatalog.getString('Read only')
       ], [
-        block.data.readonly,
+        block.data.readonly || false,
       ],
         function(evt, values) {
           var readonly = values[0];
