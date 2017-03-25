@@ -439,6 +439,26 @@ angular.module('icestudio')
       });
     };
 
+    this.checkboxprompt = function(messages, values, callback) {
+      var content = [];
+      content.push('<div>');
+      content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[0] ? 'checked' : '') + '>' + messages[0] + '</label></div></li>');
+      content.push('</div>');
+      // Restore values
+      $('#check').prop('checked', values[0]);
+
+      alertify.confirm(content.join('\n'))
+      .set('onok', function(evt) {
+        var values = [];
+        values.push($('#check').prop('checked'));
+        if (callback) {
+          callback(evt, values);
+        }
+      })
+      .set('oncancel', function(/*evt*/) {
+      });
+    };
+
     this.inputcheckboxprompt = function(messages, values, callback) {
       var content = [];
       content.push('<div>');

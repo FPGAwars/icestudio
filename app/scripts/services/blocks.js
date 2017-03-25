@@ -381,7 +381,7 @@ angular.module('icestudio')
     function newBasicInfo(addCellsCallback) {
       var blockInstance = {
         id: null,
-        data: { info: '' },
+        data: { info: '', readonly: false },
         type: 'basic.info',
         position: { x: 40 * gridsize, y: 36 * gridsize },
         size: { width: 192, height: 128 }
@@ -696,6 +696,9 @@ angular.module('icestudio')
         case 'basic.code':
           editBasicCode(cellView, addCellCallback);
           break;
+        case 'basic.info':
+          editBasicInfo(cellView);
+          break;
         default:
           break;
       }
@@ -936,6 +939,21 @@ angular.module('icestudio')
         }
       }
       return found;
+    }
+
+    function editBasicInfo(cellView) {
+      var block = cellView.model.attributes;
+      utils.checkboxprompt([
+        gettextCatalog.getString('Read only')
+      ], [
+        block.data.readonly,
+      ],
+        function(evt, values) {
+          var readonly = values[0];
+          var data = utils.clone(block.data);
+          data.readonly = readonly;
+          cellView.model.set('data', data);
+      });
     }
 
   });
