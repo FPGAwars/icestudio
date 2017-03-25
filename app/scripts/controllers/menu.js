@@ -345,6 +345,10 @@ angular.module('icestudio')
       if (profile.get('language') !== language) {
         profile.set('language', language);
         utils.setLocale(language);
+        // Reload the project
+        project.update({ deps: false }, function() {
+          graph.loadDesign(project.get('design'), { disabled: false });
+        });
       }
     };
 

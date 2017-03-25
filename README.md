@@ -29,18 +29,18 @@ Supported operating systems:
 * **GNU/Linux**
 
   1. Install [Python 2.7](https://www.python.org) and **xclip**
-  2. Download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
+  2. Download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
 
 
 * **Windows**
 
-  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
+  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
 
 
 * **Mac OS X**
 
   1. Install [Python 2.7](https://www.python.org)
-  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc)
+  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
 
 <img src="./doc/images/icestudio-0.3.0-beta3.png" width="700" align="center">
 
