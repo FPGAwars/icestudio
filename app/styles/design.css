@@ -358,6 +358,11 @@
   z-index: 0;
 }
 
+.info-block-readonly {
+  background: #FFF;
+  border: none;
+}
+
 .info-block .info-editor {
   position: absolute;
   top: -2px;
@@ -369,9 +374,9 @@
   pointer-events: auto;
 }
 
-.info-block-readonly {
-  background: #FFF;
+.info-block .info-editor-readonly {
   border: none;
+  pointer-events: none;
 }
 
 .port-body:hover {

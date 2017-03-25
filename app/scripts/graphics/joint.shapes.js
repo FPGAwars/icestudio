@@ -1099,10 +1099,10 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updateBox();
     this.updating = false;
 
-    var selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -1110,7 +1110,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(selector[0]);
+    this.editor = ace.edit(this.selector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1203,13 +1203,17 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
-      this.$box.find('info-editor').addClass('info-block-readonly');
+      this.selector.addClass('info-editor-readonly');
       this.disableResizer();
+      // Hide cursor
+      this.editor.renderer.$cursorLayer.element.style.opacity = 0;
     }
     else {
       this.$box.removeClass('info-block-readonly');
-      this.$box.find('info-editor').removeClass('info-block-readonly');
+      this.selector.removeClass('info-editor-readonly');
       this.enableResizer();
+      // Show cursor
+      this.editor.renderer.$cursorLayer.element.style.opacity = 1;
     }
     this.editor.setReadOnly(readonly);
   },
