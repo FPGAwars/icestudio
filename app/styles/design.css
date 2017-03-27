@@ -100,10 +100,6 @@
 
 .generic-block .clock {
   position: absolute;
-  top: 3px;
-  left: -1px;
-  font-size: 18px;
-  color: #777;
 }
 
 .generic-block .tooltiptext {
@@ -359,8 +355,21 @@
 }
 
 .info-block-readonly {
-  background: #FFF;
-  border: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.info-block .info-text {
+  position: absolute;
+  background: transparent;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  pointer-events: none;
 }
 
 .info-block .info-editor {
@@ -369,14 +378,10 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
+  margin: 8px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
-}
-
-.info-block .info-editor-readonly {
-  border: none;
-  pointer-events: none;
 }
 
 .port-body:hover {

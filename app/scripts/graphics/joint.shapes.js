@@ -546,10 +546,10 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     for (var i in ports) {
       var port = ports[i];
       if (port.clock) {
-        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 12;
+        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 10;
         this.$box.append('\
-          <div class="clock" style="top: ' + top + 'px;">\
-            <svg width="10" height="12"><path d="M.0.0l9.318 5.4-9.318 5.4" fill="none" stroke="#555" stroke-width="1"/>\
+          <div class="clock" style="top: ' + top + 'px; left: -1px;">\
+            <svg width="12" height="12"><path d="M.0.0l12 6-12 6" fill="none" stroke="#555" stroke-width="1.2"/>\
           </div>');
       }
     }
@@ -929,12 +929,16 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+      // Show cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
     this.editor.on('blur', function() {
       var selection = self.editor.session.selection;
       if (selection) {
         selection.clearSelection();
       }
+      // Hide cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 0;
     });
     this.editor.on('paste', function(e) {
       if (e.text.startsWith('{"icestudio":')) {
@@ -1012,9 +1016,14 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     // Set font size
     if (this.editor) {
-      this.editor.setFontSize(aceFontSize * state.zoom);
+      this.$box.find('.code-editor').css({
+        margin: 8 * state.zoom,
+        'border-radius': 5 * state.zoom
+      });
+      this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
+
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
@@ -1046,7 +1055,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       }
     }
 
-    this.$box.find('.code-editor').css('margin', 8 * state.zoom);
+    this.$box.css({
+      'border-radius': 5 * state.zoom
+    });
     this.$box.css({ width: bbox.width * state.zoom,
                     height: bbox.height * state.zoom,
                     left: bbox.x * state.zoom + state.pan.x,
@@ -1076,11 +1087,16 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
     var blockLabel = 'block' + id;
+    var textLabel = 'text' + id;
     var editorLabel = 'editor' + id;
+    var readonly = this.model.get('data').readonly;
     this.$box = $(joint.util.template(
       '\
       <div class="info-block" id="' + blockLabel + '">\
-        <div class="info-editor" id="' + editorLabel + '"></div>\
+        <div class="info-text ace_editor ace-chrome ' + (readonly ? '' : ' hidden') + '" " id="' + textLabel + '" style="font-size: ' + aceFontSize + 'px;">\
+          <div class="ace_layer ace_text-layer" style="padding: 0px 4px;"></div>\
+        </div>\
+        <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
@@ -1099,10 +1115,11 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updateBox();
     this.updating = false;
 
-    this.selector = this.$box.find('#' + editorLabel);
+    this.textSelector = this.$box.find('#' + textLabel);
+    this.editorSelector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -1110,7 +1127,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(this.selector[0]);
+    this.editor = ace.edit(this.editorSelector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1135,15 +1152,20 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         // Reset counter
         self.counter = Date.now();
       }
+      self.setText( self.editor.session.getValue());
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+      // Show cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
     this.editor.on('blur', function() {
       var selection = self.editor.session.selection;
       if (selection) {
         selection.clearSelection();
       }
+      // Hide cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 0;
     });
     this.editor.on('paste', function(e) {
       if (e.text.startsWith('{"icestudio":')) {
@@ -1203,7 +1225,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
-      this.selector.addClass('info-editor-readonly');
+      this.textSelector.removeClass('hidden');
+      this.editorSelector.addClass('hidden');
       this.disableResizer();
       // Hide cursor
       this.editor.renderer.$cursorLayer.element.style.opacity = 0;
@@ -1215,17 +1238,22 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else {
       this.$box.removeClass('info-block-readonly');
-      this.selector.removeClass('info-editor-readonly');
+      this.textSelector.addClass('hidden');
+      this.editorSelector.removeClass('hidden');
       this.enableResizer();
       // Show cursor
       this.editor.renderer.$cursorLayer.element.style.opacity = 1;
     }
-    this.editor.setReadOnly(readonly);
   },
 
   apply: function(opt) {
     this.applyValue(opt);
     this.applyReadonly();
+    this.updateBox();
+  },
+
+  setText: function(text) {
+    this.textSelector.children().html(text);
   },
 
   render: function() {
@@ -1243,14 +1271,27 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   updateBox: function() {
     var bbox = this.model.getBBox();
     var state = this.model.get('state');
+    var data = this.model.get('data');
 
-    // Set font size
-    if (this.editor) {
-      this.editor.setFontSize(aceFontSize * state.zoom);
+    if (data.readonly) {
+      this.textSelector.css({
+        margin: 8 * state.zoom,
+        'border-radius': 5 * state.zoom,
+        fontSize: Math.round(aceFontSize * state.zoom)
+      });
+    }
+    else if (this.editor) {
+      this.$box.find('.info-editor').css({
+        margin: 8 * state.zoom,
+        'border-radius': 5 * state.zoom
+      });
+      this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
 
-    this.$box.find('.info-editor').css('margin', 8 * state.zoom);
+    this.$box.css({
+      'border-radius': 5 * state.zoom
+    });
     this.$box.css({ width: bbox.width * state.zoom,
                     height: bbox.height * state.zoom,
                     left: bbox.x * state.zoom + state.pan.x,
