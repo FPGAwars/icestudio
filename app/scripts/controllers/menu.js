@@ -341,13 +341,17 @@ angular.module('icestudio')
       alertify.success(gettextCatalog.getString('Board rules disabled'));
     };
 
+    $(document).on('langChanged', function(evt, lang) {
+      $scope.selectLanguage(lang);
+    });
+
     $scope.selectLanguage = function(language) {
       if (profile.get('language') !== language) {
-        profile.set('language', language);
-        utils.setLocale(language);
+        profile.set('language', graph.selectLanguage(language));
         // Reload the project
         project.update({ deps: false }, function() {
           graph.loadDesign(project.get('design'), { disabled: false });
+          //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
         });
       }
     };
@@ -448,6 +452,10 @@ angular.module('icestudio')
 
     //-- Boards
 
+    $(document).on('boardChanged', function(evt, board) {
+      $scope.selectBoard(board);
+    });
+
     $scope.selectBoard = function(board) {
       if (common.selectedBoard.name !== board.name) {
         if (!graph.isEmpty()) {
@@ -461,13 +469,14 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        profile.set('board', graph.selectBoard(board.name));
-        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
+        var newBoard = graph.selectBoard(board);
+        profile.set('board', newBoard.name);
+        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
       }
     };
 
     function updateSelectedBoard() {
-      profile.set('board', boards.selectBoard(profile.get('board')));
+      profile.set('board', boards.selectBoard(profile.get('board')).name);
     }
 
 

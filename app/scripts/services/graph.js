@@ -665,18 +665,31 @@ angular.module('icestudio')
       graph.attributes.cells.models = cells;
     };
 
-    this.selectBoard = function(boardName) {
+    this.selectBoard = function(board) {
       graph.startBatch('change');
       // Trigger board event
       var data = {
-        previous: common.selectedBoard.name,
-        next: boardName
+        previous: common.selectedBoard,
+        next: board
       };
       graph.trigger('board', { data: data });
-      boardName = boards.selectBoard(boardName);
+      var newBoard = boards.selectBoard(board.name);
       resetBlocks();
       graph.stopBatch('change');
-      return boardName;
+      return newBoard;
+    };
+
+    this.selectLanguage = function(language) {
+      graph.startBatch('change');
+      // Trigger lang event
+      var data = {
+        previous: profile.get('language'),
+        next: language
+      };
+      graph.trigger('lang', { data: data });
+      language = utils.setLocale(language);
+      graph.stopBatch('change');
+      return language;
     };
 
     function resetBlocks() {

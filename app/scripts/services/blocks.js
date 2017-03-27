@@ -544,9 +544,8 @@ angular.module('icestudio')
 
     function loadBasicInfo(instance, disabled) {
       // Translate info content
-      if (instance.data.info) {
-        // TODO: update on change language
-        instance.data.info = gettextCatalog.getString(instance.data.info);
+      if (instance.data.info && instance.data.readonly) {
+        instance.data.text = gettextCatalog.getString(instance.data.info);
       }
       var cell = new joint.shapes.ice.Info({
         id: instance.id,
@@ -952,6 +951,10 @@ angular.module('icestudio')
           var readonly = values[0];
           var data = utils.clone(block.data);
           data.readonly = readonly;
+          // Translate info content
+          if (data.info && data.readonly) {
+            data.text = gettextCatalog.getString(data.info);
+          }
           cellView.model.set('data', data);
           cellView.apply();
           alertify.success(gettextCatalog.getString('Block updated'));

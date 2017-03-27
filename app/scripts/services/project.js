@@ -126,7 +126,7 @@ angular.module('icestudio')
         });
 
         if (ret) {
-          profile.set('board', boards.selectBoard(project.design.board));
+          profile.set('board', boards.selectBoard(project.design.board).name);
           self.updateTitle(name);
         }
         else {

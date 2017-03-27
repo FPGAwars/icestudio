@@ -359,7 +359,7 @@ angular.module('icestudio')
           gettextCatalog.loadRemote(filepath);
         }
       }
-      // COLLECTIONS_DIR
+      // Return the best language
       return bestLang;
     };
 

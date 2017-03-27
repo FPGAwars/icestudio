@@ -40,12 +40,6 @@ angular.module('icestudio')
       return ret;
     }
 
-    var self = this;
-
-    $(document).on('boardChanged', function(evt, name) {
-      self.selectBoard(name);
-    });
-
     this.selectBoard = function(name) {
       name = name || DEFAULT;
       var i;
@@ -69,7 +63,7 @@ angular.module('icestudio')
       common.pinoutInputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'input');
       common.pinoutOutputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'output');
       utils.rootScopeSafeApply();
-      return common.selectedBoard.name;
+      return common.selectedBoard;
     };
 
     this.boardLabel = function(name) {

@@ -1152,7 +1152,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         // Reset counter
         self.counter = Date.now();
       }
-      self.setText( self.editor.session.getValue());
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
@@ -1246,14 +1245,16 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
   },
 
+  applyText: function() {
+    var data = this.model.get('data');
+    this.textSelector.children().html(data.text || '');
+  },
+
   apply: function(opt) {
     this.applyValue(opt);
     this.applyReadonly();
+    this.applyText();
     this.updateBox();
-  },
-
-  setText: function(text) {
-    this.textSelector.children().html(text);
   },
 
   render: function() {
@@ -1274,7 +1275,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
-      this.textSelector.css({
+      this.$box.find('.info-text').css({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom,
         fontSize: Math.round(aceFontSize * state.zoom)
