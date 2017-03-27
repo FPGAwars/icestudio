@@ -266,17 +266,34 @@ angular.module('icestudio')
             }
             else {
               var matchError, codeErrors = [];
-              // - Iverilog & Yosys errors
+              // - Iverilog errors
               // main.v:#: syntax error
-              matchError = /main.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
+              // main.v:#: error: ...
+              matchError = /\nmain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]) - 1,
                   msg: 'Syntax error'
                 });
               }
-              // main.v:#: error: ...
               matchError = /\nmain.v:([0-9]+):\serror:\s(.*?)\n/g.exec(stdout);
+              if (matchError) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]),
+                  msg: matchError[2]
+                });
+              }
+              // - Yosys errors
+              // ERROR: Parser error in line main.v:#: syntax error, ...
+              matchError = /\nERROR:\sParser\serror\sin\sline\smain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
+              if (matchError) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]) - 1,
+                  msg: 'Syntax error'
+                });
+              }
+              // ERROR: Parser error in line main.v:#: ...
+              matchError = /\nERROR:\sParser\serror\sin\sline\smain.v:([0-9]+):\s(?!.*?syntax\serror)(.*?)\n/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
