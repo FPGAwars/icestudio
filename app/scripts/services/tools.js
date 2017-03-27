@@ -272,7 +272,7 @@ angular.module('icestudio')
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]) - 1,
-                  msg: 'syntax error'
+                  msg: 'Syntax error'
                 });
               }
               // main.v:#: error: ...
@@ -284,12 +284,14 @@ angular.module('icestudio')
                 });
               }
 
-              // Extract map modules from code
+              // Extract modules map from code
               var modules = mapCodeModules(code);
 
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
-                alertify.error(gettextCatalog.getString('{{block}}:{{line}} {{msg}}', codeError), 30);
+                alertify.error(gettextCatalog.getString('{{type}} {{block}}:{{line}}<br>{{msg}}', codeError), 30);
+
+                // Launch codeError event
               }
 
               if (codeErrors.length === 0) {
@@ -401,6 +403,7 @@ angular.module('icestudio')
 
     function normalizeCodeError(codeError, modules) {
       var newCodeError = {
+        type: '',
         block: '',
         line: codeError.line,
         msg: codeError.msg
@@ -409,7 +412,17 @@ angular.module('icestudio')
       for (var i in modules) {
         var module = modules[i];
         if ((codeError.line > module.begin) && (codeError.line < module.end)) {
-          newCodeError.block = module.name;
+          if (module.name.startsWith('main_')) {
+            // Code block
+            newCodeError.type = 'code';
+            newCodeError.block = module.name.split('_')[1];
+          }
+          else {
+            // Generic block
+            newCodeError.type = 'generic';
+            newCodeError.block = module.name.split('_')[0];
+          }
+
           newCodeError.line = codeError.line - module.begin;
           break;
         }
