@@ -517,7 +517,7 @@ angular.module('icestudio')
                 name: name + '_' + digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
-                content: block.data.code.replace(/\n+/g, '\n').replace(/\n$/g, '')
+                content: block.data.code //.replace(/\n+/g, '\n').replace(/\n$/g, '')
               };
               code += module(data);
             }
