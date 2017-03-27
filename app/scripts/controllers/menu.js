@@ -453,7 +453,10 @@ angular.module('icestudio')
     //-- Boards
 
     $(document).on('boardChanged', function(evt, board) {
-      $scope.selectBoard(board);
+      if (common.selectedBoard.name !== board.name) {
+        var newBoard = graph.selectBoard(board);
+        profile.set('board', newBoard.name);
+      }
     });
 
     $scope.selectBoard = function(board) {

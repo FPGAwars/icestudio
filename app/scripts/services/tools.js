@@ -61,13 +61,14 @@ angular.module('icestudio')
           gettext('start_build');
           /// Start uploading ...
           gettext('start_upload');
-          var message = 'start_' + commands[0];
+          var label = commands[0];
+          var message = 'start_' + label;
           currentAlert = alertify.message(gettextCatalog.getString(message), 100000);
           $('body').addClass('waiting');
           check = this.syncResources(code);
           try {
             if (check) {
-              execute(commands, commands[0], currentAlert, function() {
+              execute(commands, label, code, currentAlert, function() {
                 if (currentAlert) {
                   setTimeout(function() {
                     angular.element('#menu').removeClass('disable-menu');
@@ -187,7 +188,7 @@ angular.module('icestudio')
       return ret;
     };
 
-    function execute(commands, label, currentAlert, callback) {
+    function execute(commands, label, code, currentAlert, callback) {
       var remoteHostname = profile.get('remoteHostname');
 
       if (remoteHostname) {
@@ -205,11 +206,11 @@ angular.module('icestudio')
             currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
             nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), remoteHostname,
               function (error, stdout, stderr) {
-                processExecute(label, callback, error, stdout, stderr);
+                processExecute(label, code, callback, error, stdout, stderr);
               });
           }
           else {
-            processExecute(label, callback, error, stdout, stderr);
+            processExecute(label, code, callback, error, stdout, stderr);
           }
         });
       }
@@ -234,18 +235,20 @@ angular.module('icestudio')
                 drivers.postUpload();
               }
             }
-            processExecute(label, callback, error, stdout, stderr);
+            processExecute(label, code, callback, error, stdout, stderr);
           });
       }
     }
 
-    function processExecute(label, callback, error, stdout, stderr) {
+    function processExecute(label, code, callback, error, stdout, stderr) {
       if (callback) {
         callback();
       }
+      //console.log(label, error, stdout, stderr)
       if (label) {
         if (error || stderr) {
           if (stdout) {
+            // - Apio errors
             if (stdout.indexOf('[upload] Error') !== -1 ||
                 stdout.indexOf('Error: board not detected') !== -1) {
               alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
@@ -253,33 +256,64 @@ angular.module('icestudio')
             else if (stdout.indexOf('Error: unkown board') !== -1) {
               alertify.error(gettextCatalog.getString('Unknown board'), 30);
             }
-            else if (stdout.indexOf('set_io: too few arguments') !== -1) {
+            // - Arachne-pnr errors
+            else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
+                     stdout.indexOf('fatal error: unknown pin') !== -1) {
               alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
             }
-            else if (stdout.indexOf('error: unknown pin') !== -1) {
-              alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
-            }
-            else if (stdout.indexOf('error: duplicate pin constraints') !== -1) {
+            else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
               alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
-              var stdoutError = stdout.split('\n').filter(function (line) {
-                return (line.indexOf('syntax error') !== -1 ||
-                        line.indexOf('not installed') !== -1 ||
-                        line.indexOf('error: ') !== -1 ||
-                        line.indexOf('ERROR: ') !== -1 ||
-                        line.indexOf('Error: ') !== -1 ||
-                        line.indexOf('already declared') !== -1);
-              });
-              if (stdoutError.length > 0) {
-                alertify.error(stdoutError[0], 30);
+              var matchError, codeErrors = [];
+              // - Iverilog & Yosys errors
+              // main.v:#: syntax error
+              matchError = /main.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
+              if (matchError) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]) - 1,
+                  msg: 'syntax error'
+                });
               }
-              else {
-                alertify.error(stdout, 30);
+              // main.v:#: error: ...
+              matchError = /\nmain.v:([0-9]+):\serror:\s(.*?)\n/g.exec(stdout);
+              if (matchError) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]),
+                  msg: matchError[2]
+                });
+              }
+
+              // Extract map modules from code
+              var modules = mapCodeModules(code);
+
+              for (var i in codeErrors) {
+                var codeError = normalizeCodeError(codeErrors[i], modules);
+                alertify.error(gettextCatalog.getString('{{block}}:{{line}} {{msg}}', codeError), 30);
+              }
+
+              if (codeErrors.length === 0) {
+                // TODO: remove
+                var stdoutError = stdout.split('\n').filter(function (line) {
+                  return (line.indexOf('syntax error') !== -1 ||
+                          line.indexOf('not installed') !== -1 ||
+                          line.indexOf('error: ') !== -1 ||
+                          line.indexOf('ERROR: ') !== -1 ||
+                          line.indexOf('Error: ') !== -1 ||
+                          line.indexOf('already declared') !== -1);
+                });
+                if (stdoutError.length > 0) {
+                  alertify.error(stdoutError[0], 30);
+                }
+                else {
+                  alertify.error(stdout, 30);
+                }
+                // TODO: remove
               }
             }
           }
           else if (stderr) {
+            // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
                 stderr.indexOf('Connection refused') !== -1) {
               alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
@@ -328,6 +362,59 @@ angular.module('icestudio')
         }
         $('body').removeClass('waiting');
       }
+    }
+
+    function mapCodeModules(code) {
+      var codelines = code.split('\n');
+      var match, module = {}, modules = [];
+      // Find begin/end lines of the modules
+      for (var i in codelines) {
+        var codeline = codelines[i];
+        // Get the module name
+        if (!module.name) {
+          match = /module\s+(.*?)[\s|\(|$]/.exec(codeline);
+          if (match) {
+            module.name = match[1];
+            continue;
+          }
+        }
+        // Get the begin of the module code
+        if (!module.begin) {
+          match = /;/.exec(codeline);
+          if (match) {
+            module.begin = parseInt(i) + 1;
+            continue;
+          }
+        }
+        // Get the end of the module code
+        if (!module.end) {
+          match = /endmodule/.exec(codeline);
+          if (match) {
+            module.end = parseInt(i) + 1;
+            modules.push(module);
+            module = {};
+          }
+        }
+      }
+      return modules;
+    }
+
+    function normalizeCodeError(codeError, modules) {
+      var newCodeError = {
+        block: '',
+        line: codeError.line,
+        msg: codeError.msg
+      };
+      // Find the module with the error
+      for (var i in modules) {
+        var module = modules[i];
+        if ((codeError.line > module.begin) && (codeError.line < module.end)) {
+          newCodeError.block = module.name;
+          newCodeError.line = codeError.line - module.begin;
+          break;
+        }
+      }
+      return newCodeError;
     }
 
     this.installToolchain = function() {
