@@ -464,7 +464,7 @@ angular.module('icestudio')
       return success;
     }
 
-    function pruneProject (project) {
+    function pruneProject(project) {
       var _project = utils.clone(project);
 
       _prune(_project);
@@ -479,7 +479,9 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
+              break;
             case 'basic.info':
+              delete block.data.text;
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {

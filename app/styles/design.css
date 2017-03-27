@@ -338,6 +338,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
+  margin: 8px;
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
@@ -361,6 +362,7 @@
 
 .info-block .info-text {
   position: absolute;
+  overflow: visible;
   background: transparent;
   top: -2px;
   left: -2px;
