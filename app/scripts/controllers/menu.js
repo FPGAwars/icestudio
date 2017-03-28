@@ -433,7 +433,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.error(gettextCatalog.getString('Collection {{collection}} data not defined', { collection: utils.bold(collection.name) }), 5);
+        alertify.error(gettextCatalog.getString('Collection {{collection}} info not defined', { collection: utils.bold(collection.name) }), 5);
       }
     };
 

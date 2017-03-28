@@ -146,8 +146,8 @@ msgid "Collection info"
 msgstr "Collection info"
 
 #: app/scripts/controllers/menu.js:436
-msgid "Collection {{collection}} data not defined"
-msgstr "Collection {{collection}} data not defined"
+msgid "Collection {{collection}} info not defined"
+msgstr "Collection {{collection}} info not defined"
 
 #: app/scripts/services/tools.js:777
 msgid "Collection {{name}} added"
@@ -802,6 +802,9 @@ msgstr "{{board}} pinout not defined"
 #: app/scripts/controllers/menu.js:417
 msgid "{{board}} rules not defined"
 msgstr "{{board}} rules not defined"
+
+#~ msgid "Collection {{collection}} data not defined"
+#~ msgstr "Collection {{collection}} data not defined"
 
 #~ msgid "Homebrew is required"
 #~ msgstr "Homebrew is required"

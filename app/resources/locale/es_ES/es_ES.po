@@ -132,7 +132,7 @@ msgstr "Comprobando Python..."
 
 #: app/scripts/services/drivers.js:104
 msgid "Click here to install it"
-msgstr ""
+msgstr "Haga clic aquí para instalarlo"
 
 #: app/views/menu.html:334
 msgid "Code"
@@ -144,11 +144,11 @@ msgstr "Colección"
 
 #: app/views/menu.html:165
 msgid "Collection info"
-msgstr ""
+msgstr "Información de la colección"
 
 #: app/scripts/controllers/menu.js:436
-msgid "Collection {{collection}} data not defined"
-msgstr ""
+msgid "Collection {{collection}} info not defined"
+msgstr "Información de la colección {{collection}} no definida"
 
 #: app/scripts/services/tools.js:777
 msgid "Collection {{name}} added"
@@ -260,7 +260,7 @@ msgstr "Editar"
 
 #: app/scripts/services/tools.js:752
 msgid "Edit the collection name"
-msgstr ""
+msgstr "Edita el nombre de la colección"
 
 #: app/views/menu.html:121 app/views/menu.html:247
 msgid "Enable"
@@ -447,7 +447,7 @@ msgstr "Conexiones de entrada múltiple no válidas"
 
 #: app/scripts/services/drivers.js:190
 msgid "It is recommended to use <b>USB 2.0</b> ports"
-msgstr ""
+msgstr "Se recomienda utilizar puertos <b>USB 2.0</b>"
 
 #: app/views/menu.html:134
 msgid "Language"
@@ -511,7 +511,7 @@ msgstr "Pegar"
 
 #: app/scripts/services/utils.js:872
 msgid "Please run: {{cmd}}"
-msgstr ""
+msgstr "Por favor ejecuta: {{cmd}}"
 
 #: app/views/menu.html:108
 msgid "Preferences"
@@ -794,7 +794,7 @@ msgstr "Comenzar verificación ..."
 
 #: app/scripts/services/drivers.js:103 app/scripts/services/utils.js:847
 msgid "{{app}} is required."
-msgstr ""
+msgstr "Es necesario {{app}}."
 
 #: app/scripts/controllers/menu.js:398
 msgid "{{board}} datasheet not defined"

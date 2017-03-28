@@ -133,7 +133,7 @@ msgid "Collection info"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:436
-msgid "Collection {{collection}} data not defined"
+msgid "Collection {{collection}} info not defined"
 msgstr ""
 
 #: app/scripts/services/tools.js:777
