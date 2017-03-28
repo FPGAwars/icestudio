@@ -208,6 +208,8 @@ Information block
 `````````````````
 
 * Type: ``basic.info``
+* States:
+  * Readonly
 
 E.g.: basic infomation block.
 
@@ -217,7 +219,8 @@ E.g.: basic infomation block.
 
    {
      "data": {
-       "info": "Lorem ipsum\n...\n"
+       "info": "Lorem ipsum\n...\n",
+       "readonly": false
      }
    }
 
