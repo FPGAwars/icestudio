@@ -335,7 +335,7 @@ module.exports = function(grunt) {
     unzip: {
       'using-router': {
         router: function (filepath) {
-          return filepath.replace(/^collection-default-[0-9]\.[0-9]\.[0-9]/g, 'collection');
+          return filepath.replace(/^collection-default-.*?\//g, 'collection/');
         },
         src: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
         dest: 'app/resources/'
@@ -347,6 +347,7 @@ module.exports = function(grunt) {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
       toolchain: ['cache/toolchain/default-apio', 'cache/toolchain/*.tar.gz'],
+      collection: ['app/resources/collection']
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
@@ -400,6 +401,7 @@ module.exports = function(grunt) {
     'nggettext_extract'
   ]);
   grunt.registerTask('getcollection', [
+    'clean:collection',
     'wget:collection',
     'unzip'
   ]);
