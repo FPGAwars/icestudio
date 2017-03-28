@@ -33,11 +33,11 @@ Go to **Select > Board**
 
 .. image:: ../resources/images/quickstart/board.png
 
-Go to **File > Examples > 1. Basic > 1. Led on**
+Go to **File > Examples > 1. Basic > 01. One LED**
 
 .. image:: ../resources/images/quickstart/example.png
 
-.. image:: ../resources/images/quickstart/1_led_on.png
+.. image:: ../resources/images/quickstart/01_one_led.png
 
 Then, you can verify, build or upload the project in **Tools > Verify | Build | Upload**.
 
