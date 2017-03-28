@@ -296,9 +296,11 @@ angular.module('icestudio')
                 });
               }
               // - Yosys errors
+              var yerrFound = false;
               // ERROR: Parser error in line main.v:#: syntax error, ...
               matchError = /\nERROR:\sParser\serror\sin\sline\smain\.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
               if (matchError) {
+                yerrFound = true;
                 codeErrors.push({
                   line: parseInt(matchError[1]),
                   msg: 'Syntax error',
@@ -308,20 +310,24 @@ angular.module('icestudio')
               // ERROR: Parser error in line main.v:#: ...
               matchError = /\nERROR:\sParser\serror\sin\sline\smain\.v:([0-9]+):\s(?!.*?syntax\serror)(.*?)\n/g.exec(stdout);
               if (matchError) {
+                yerrFound = true;
                 codeErrors.push({
                   line: parseInt(matchError[1]),
                   msg: matchError[2],
                   type: 'error'
                 });
               }
-              // ERROR: ... main.v:#: ...
-              matchError = /\nERROR:\s(.*\smain\.v:([0-9]+).*?)\n/g.exec(stdout);
-              if (matchError) {
-                codeErrors.push({
-                  line: parseInt(matchError[2]),
-                  msg: matchError[1].replace(' at main.v:' + matchError[2], ''),
-                  type: 'error'
-                });
+              if (!yerrFound) {
+                // assign a = e;
+                // ERROR: ... main.v:#: ...
+                matchError = /\nERROR:\s(.*\smain\.v:([0-9]+).*?)\n/g.exec(stdout);
+                if (matchError) {
+                  codeErrors.push({
+                    line: parseInt(matchError[2]),
+                    msg: matchError[1].replace(' at main.v:' + matchError[2], ''),
+                    type: 'error'
+                  });
+                }
               }
 
               // Extract modules map from code
