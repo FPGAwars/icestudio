@@ -102,17 +102,19 @@ Set the hostame of a remote device with an FPGA board connected. The format is u
 View
 ````
 
-+-------------+---------------------------------------------+
-|   Action    |                 Description                 |
-+=============+=============================================+
-|     PCF     |           Show the board PCF file           |
-+-------------+---------------------------------------------+
-|    Pinout   |          Show the board SVG pinout          |
-+-------------+---------------------------------------------+
-|  Datasheet  | Open a web browser with the board datasheet |
-+-------------+---------------------------------------------+
-| Board rules |         Show the current board rules        |
-+-------------+---------------------------------------------+
++-----------------+---------------------------------------------+
+|   Action        |             Description                     |
++=================+=============================================+
+|     PCF         |       Show the board PCF file               |
++-----------------+---------------------------------------------+
+|    Pinout       |      Show the board SVG pinout              |
++-----------------+---------------------------------------------+
+|  Datasheet      | Open a web browser with the board datasheet |
++-----------------+---------------------------------------------+
+| Board rules     |         Show the current board rules        |
++-----------------+---------------------------------------------+
+| Collection info |   Show the current collection README file   |
++-----------------+---------------------------------------------+
 
 
 Select
@@ -145,7 +147,7 @@ Select the Collection from the installed collections (**Tools > Collections**). 
 
 .. note::
 
-  The *Default* collection is always available, and contains the blocks and examples distributed within the application.
+  The *Default collection* is always available, and contains the blocks and examples distributed within the application.
 
 Tools
 `````
@@ -201,20 +203,22 @@ Collections
 
 .. note::
 
-  A collection is composed by **blocks** and **examples** sorted by categories (directories). The **package.json** file is required and contains information about the collection. The **locale** directory is optional and contains the translations for the blocks and examples. A collection must have the following structure:
+  A collection is composed by **blocks** and **examples** sorted by categories (directories). The **package.json** file is required and contains information about the collection. The **locale** directory is optional and contains the translations for the blocks and examples. A collection has the following structure:
 
   .. code::
 
     Collection/
-    ├── blocks
-    ├── examples
-    ├── locale
-    └── package.json
+    ├── blocks/
+    ├── examples/
+    ├── locale/
+    ├── LICENSE
+    ├── package.json
+    └── README.md
 
 
   A ZIP file of collections contains one or more *Collection directories* at the main level. A collection can be selected in **Select > Collections**.
 
-  More information in the `Default collection <https://github.com/FPGAwars/icestudio/tree/develop/app/resources/collection>`_.
+  More information in the `Default collection <https://github.com/FPGAwars/collection-default>`_.
 
 .. hint::
 
@@ -275,7 +279,7 @@ It contains the basic blocks:
 Stored blocks and collections
 `````````````````````````````
 
-It contains all stored blocks sorted by categories. This menu is generated when the application starts. It can show the Default blocks or any installed collection.
+It contains all stored blocks sorted by categories. This menu is generated when the application starts. It can show the Default collection or any installed collection.
 
 Design
 ------
@@ -337,8 +341,9 @@ Icestudio allows to undo/redo the following actions:
 * Edit an I/O block: name, type and value.
 * Edit a Constant block: name, type and value.
 * Edit a Code block: ports, parameters and content.
-* Edit an Information block: content.
+* Edit an Information block: type and content.
 * Change the board.
+* Change the language.
 
 
 Take a snapshot
