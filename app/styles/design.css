@@ -393,6 +393,10 @@
   display: none;
 }
 
+.highlight-error {
+  background: #ff8084;
+}
+
 .highlight-yellow {
   box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
 }

@@ -999,6 +999,20 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.applyValue(opt);
   },
 
+  setAnnotation: function(line, msg) {
+    this.editor.gotoLine(line);
+    this.editor.session.setAnnotations([{
+      row: line-1,
+      column: 0,
+      text: msg,
+      type: 'error'
+    }]);
+  },
+
+  clearAnnotations: function() {
+    this.editor.session.clearAnnotations();
+  },
+
   update: function() {
     this.renderPorts();
     this.editor.setReadOnly(this.model.get('disabled'));

@@ -1159,4 +1159,44 @@ angular.module('icestudio')
       });
     }
 
+    this.resetCodeErrors = function() {
+      var cells = graph.getCells();
+      _.each(cells, function(cell) {
+        var cellView;
+        if (cell.attributes.type === 'ice.Code') {
+          cellView = paper.findViewByModel(cell);
+          cellView.clearAnnotations();
+        }
+        else if (cell.attributes.type === 'ice.Generic') {
+          cellView = paper.findViewByModel(cell);
+        }
+        if (cellView) {
+          cellView.$box.removeClass('highlight-error');
+        }
+      });
+    };
+
+    $(document).on('codeError', function(evt, codeError) {
+      console.log(codeError);
+      var cells = graph.getCells();
+      _.each(cells, function(cell) {
+        var blockId, cellView;
+        if (codeError.type === 'code' && cell.attributes.type === 'ice.Code') {
+          blockId = utils.digestId(cell.id);
+          if (codeError.blockId === blockId) {
+            cellView = paper.findViewByModel(cell);
+            cellView.$box.addClass('highlight-error');
+            cellView.setAnnotation(codeError.line, codeError.msg);
+          }
+        }
+        else if (codeError.type === 'generic' && cell.attributes.type === 'ice.Generic') {
+          blockId = utils.digestId(cell.attributes.blockType);
+          if (codeError.blockId === blockId) {
+            cellView = paper.findViewByModel(cell);
+            cellView.$box.addClass('highlight-error');
+          }
+        }
+      });
+    });
+
   });

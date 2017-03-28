@@ -272,7 +272,7 @@ angular.module('icestudio')
               matchError = /\nmain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
-                  line: parseInt(matchError[1]) - 1,
+                  line: parseInt(matchError[1]),
                   msg: 'Syntax error'
                 });
               }
@@ -288,7 +288,7 @@ angular.module('icestudio')
               matchError = /\nERROR:\sParser\serror\sin\sline\smain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
-                  line: parseInt(matchError[1]) - 1,
+                  line: parseInt(matchError[1]),
                   msg: 'Syntax error'
                 });
               }
@@ -306,16 +306,16 @@ angular.module('icestudio')
 
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
-                alertify.error(gettextCatalog.getString('{{type}} {{block}}:{{line}}<br>{{msg}}', codeError), 30);
+                alertify.error(codeError.msg, 5);
 
                 // Launch codeError event
+                $(document).trigger('codeError', [codeError]);
               }
 
               if (codeErrors.length === 0) {
                 // TODO: remove
                 var stdoutError = stdout.split('\n').filter(function (line) {
-                  return (line.indexOf('syntax error') !== -1 ||
-                          line.indexOf('not installed') !== -1 ||
+                  return (line.indexOf('not installed') !== -1 ||
                           line.indexOf('error: ') !== -1 ||
                           line.indexOf('ERROR: ') !== -1 ||
                           line.indexOf('Error: ') !== -1 ||
@@ -421,26 +421,25 @@ angular.module('icestudio')
     function normalizeCodeError(codeError, modules) {
       var newCodeError = {
         type: '',
-        block: '',
+        blockId: '',
         line: codeError.line,
-        msg: codeError.msg
+        msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
       };
       // Find the module with the error
       for (var i in modules) {
         var module = modules[i];
-        if ((codeError.line > module.begin) && (codeError.line < module.end)) {
+        if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
           if (module.name.startsWith('main_')) {
             // Code block
             newCodeError.type = 'code';
-            newCodeError.block = module.name.split('_')[1];
+            newCodeError.blockId = module.name.split('_')[1];
           }
           else {
             // Generic block
             newCodeError.type = 'generic';
-            newCodeError.block = module.name.split('_')[0];
+            newCodeError.blockId = module.name.split('_')[0];
           }
-
-          newCodeError.line = codeError.line - module.begin;
+          newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
           break;
         }
       }

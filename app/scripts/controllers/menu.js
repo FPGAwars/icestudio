@@ -487,18 +487,21 @@ angular.module('icestudio')
 
     $scope.verifyCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.verifyCode();
       });
     };
 
     $scope.buildCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.buildCode();
       });
     };
 
     $scope.uploadCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.uploadCode();
       });
     };

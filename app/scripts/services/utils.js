@@ -1052,4 +1052,11 @@ angular.module('icestudio')
       });
     };
 
+    this.digestId = function(id) {
+      if (id.indexOf('-') !== -1) {
+        id = nodeSha1(id).toString();
+      }
+      return 'v' + id.substring(0, 6);
+    };
+
   });
