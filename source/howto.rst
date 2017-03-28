@@ -57,6 +57,8 @@ Create a collection package
 
 1. **Create one or more collections**
 
+You can use the `icm cli tool <https://github.com/FPGAwars/icm>`_ to create and update a collection.
+
   .. code::
 
     Collection/
@@ -78,8 +80,9 @@ Create a collection package
     │   ├── es_ES
     │   │   └── es_ES.po
     │   └── translation.js
-    └── package.json
-
+    ├── LICENSE
+    ├── package.json
+    └── README.md
 
 
 2. **ZIP all your collections**
@@ -97,7 +100,7 @@ Create a collection package
 
 .. note::
 
-    The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/icestudio/tree/develop/app/resources/collection>`_.
+    The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/collection-default>`_.
 
 
 Add a collection
@@ -110,6 +113,12 @@ Select a collection
 -------------------
 
 Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
+
+
+View the selected collection info
+---------------------------------
+
+Go to **View > Collection info**. A new window will appear with the README.md file content.
 
 
 Create a project
@@ -178,6 +187,16 @@ There are different types of blocks:
 
     .. image:: ../resources/images/howto/info.png
 
+    |
+
+    It can be converted into a Readonly text block by editing the block (double-click).
+
+    .. image:: ../resources/images/howto/info-prompt.png
+
+    |
+
+    .. image:: ../resources/images/howto/info-readonly.png
+
  |
 
  5. *Bit blocks*
@@ -190,21 +209,21 @@ There are different types of blocks:
 
  |
 
- 6. *Config block*
+ 6. *Logic blocks*
 
-    Click on **Config > Pull up / Pull up inv / Tri-state**.
+    Go to the **Logic** menu and select a block. This menu contains **Gates**, **Combinational blocks** and **Sequential blocks**.
 
-    The *Pull up* block must be connected to input ports in order to configure a pull up in the FPGA.
-
-    .. image:: ../resources/images/howto/config.png
+    .. image:: ../resources/images/howto/logic.png
 
  |
 
- 7. *Logic blocks*
+ 7. *Setup blocks*
 
-    Go to the **Logic** menu and select. This menu contains **Logic Gates**, **Combinational blocks** and **Sequential flip-flops**.
+    Click on **Setup > Pull up** or **Setup > Tri-state**.
 
-    .. image:: ../resources/images/howto/logic.png
+    The *Pull up* block must be connected to input ports in order to configure a pull up in the FPGA.
+
+    .. image:: ../resources/images/howto/setup.png
 
 |
 
@@ -220,7 +239,7 @@ There are different types of blocks:
 
 4. **Select your board**
 
-   Go to **Select > Board** and select **Go board**, **iCE40-HX8K**, **iCEstick**, **Icezum Alhambra**, **icoBOARD 1.0** or **Kéfir I**.
+   Go to **Select > Board** and select **IceZUM Alhambra**, **Kéfir I iCE40-HX4K**, **Nandland Go board**, **iCE40-HX8K Breakout Board**, **iCEstick Evaluation Kit** or **icoBOARD 1.0**.
 
    .. image:: ../resources/images/howto/board.png
 
