@@ -999,13 +999,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.applyValue(opt);
   },
 
-  setAnnotation: function(line, msg) {
-    this.editor.gotoLine(line);
+  setAnnotation: function(codeError) {
+    this.editor.gotoLine(codeError.line);
     this.editor.session.setAnnotations([{
-      row: line-1,
+      row: codeError.line-1,
       column: 0,
-      text: msg,
-      type: 'error'
+      text: codeError.msg,
+      type: codeError.type
     }]);
   },
 

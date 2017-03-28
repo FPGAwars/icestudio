@@ -266,21 +266,32 @@ angular.module('icestudio')
             }
             else {
               var matchError, codeErrors = [];
-              // - Iverilog errors
-              // main.v:#: syntax error
+              // - Iverilog errors & warnings
+              // main.v:#: warning: ...
               // main.v:#: error: ...
-              matchError = /\nmain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
+              // main.v:#: syntax error
+              matchError = /\nmain.v:([0-9]+):\swarning:\s(.*?)\n/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: 'Syntax error'
+                  msg: matchError[2],
+                  type: 'warning'
                 });
               }
               matchError = /\nmain.v:([0-9]+):\serror:\s(.*?)\n/g.exec(stdout);
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: matchError[2]
+                  msg: matchError[2],
+                  type: 'error'
+                });
+              }
+              matchError = /\nmain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
+              if (matchError) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]),
+                  msg: 'Syntax error',
+                  type: 'error'
                 });
               }
               // - Yosys errors
@@ -289,7 +300,8 @@ angular.module('icestudio')
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: 'Syntax error'
+                  msg: 'Syntax error',
+                  type: 'error'
                 });
               }
               // ERROR: Parser error in line main.v:#: ...
@@ -297,7 +309,8 @@ angular.module('icestudio')
               if (matchError) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: matchError[2]
+                  msg: matchError[2],
+                  type: 'error'
                 });
               }
 
@@ -306,7 +319,7 @@ angular.module('icestudio')
 
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
-                alertify.error(codeError.msg, 5);
+                alertify.notify(codeError.msg, codeError.type, 5);
 
                 // Launch codeError event
                 $(document).trigger('codeError', [codeError]);
@@ -420,8 +433,9 @@ angular.module('icestudio')
 
     function normalizeCodeError(codeError, modules) {
       var newCodeError = {
-        type: '',
         blockId: '',
+        blockType: '',
+        type: codeError.type,
         line: codeError.line,
         msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
       };
@@ -431,13 +445,13 @@ angular.module('icestudio')
         if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
           if (module.name.startsWith('main_')) {
             // Code block
-            newCodeError.type = 'code';
             newCodeError.blockId = module.name.split('_')[1];
+            newCodeError.blockType = 'code';
           }
           else {
             // Generic block
-            newCodeError.type = 'generic';
             newCodeError.blockId = module.name.split('_')[0];
+            newCodeError.blockType = 'generic';
           }
           newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
           break;

@@ -1177,19 +1177,18 @@ angular.module('icestudio')
     };
 
     $(document).on('codeError', function(evt, codeError) {
-      console.log(codeError);
       var cells = graph.getCells();
       _.each(cells, function(cell) {
         var blockId, cellView;
-        if (codeError.type === 'code' && cell.attributes.type === 'ice.Code') {
+        if (codeError.blockType === 'code' && cell.attributes.type === 'ice.Code') {
           blockId = utils.digestId(cell.id);
           if (codeError.blockId === blockId) {
             cellView = paper.findViewByModel(cell);
             cellView.$box.addClass('highlight-error');
-            cellView.setAnnotation(codeError.line, codeError.msg);
+            cellView.setAnnotation(codeError);
           }
         }
-        else if (codeError.type === 'generic' && cell.attributes.type === 'ice.Generic') {
+        else if (codeError.blockType === 'generic' && cell.attributes.type === 'ice.Generic') {
           blockId = utils.digestId(cell.attributes.blockType);
           if (codeError.blockId === blockId) {
             cellView = paper.findViewByModel(cell);
