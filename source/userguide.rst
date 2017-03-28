@@ -330,6 +330,24 @@ During the examination, pan, zoom and code navigation are enabled. Also the 'Res
   The examination path is stored in the **breadcrumbs**. This allows to go back to any previous block.
 
 
+Verilog error detection
+```````````````````````
+The Verify, Build and Upload errors are captured and showed in the design with a notification.
+
+.. image:: ../resources/images/userguide/code-error-notification.png
+|
+
+If the error comes a Code block an inline annotation is set:
+
+.. image:: ../resources/images/userguide/code-error-annotation.png
+
+|
+
+If the error comes from a Generic block it is marked in red.
+
+.. image:: ../resources/images/userguide/code-error-block.png
+
+
 Undo/Redo
 ``````````
 
