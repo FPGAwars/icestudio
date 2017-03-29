@@ -279,7 +279,7 @@ angular.module('icestudio')
                   type: matchError[2]
                 });
               }
-              re = /main.v:([0-9]+):\ssyntax\serror/g;
+              re = /main.v:([0-9]+):\ssyntax\serror\n/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
