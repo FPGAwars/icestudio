@@ -337,7 +337,7 @@ The Verify, Build and Upload errors are captured and showed in the design with a
 .. image:: ../resources/images/userguide/code-error-notification.png
 |
 
-If the error comes a Code block an inline annotation is set:
+If the error comes from a Code block an inline annotation is set:
 
 .. image:: ../resources/images/userguide/code-error-annotation.png
 
