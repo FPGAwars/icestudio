@@ -266,35 +266,28 @@ angular.module('icestudio')
             }
             else {
               // TODO: multiple errors
-              var matchError, codeErrors = [];
+              var re, matchError, codeErrors = [];
               // - Iverilog errors & warnings
               // main.v:#: warning: ...
               // main.v:#: error: ...
               // main.v:#: syntax error
-              matchError = /\nmain.v:([0-9]+):\swarning:\s(.*?)\n/g.exec(stdout);
-              if (matchError) {
+              re = /main.v:([0-9]+):\s(warning|error):\s(.*?)\n/g;
+              while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: matchError[2],
-                  type: 'warning'
+                  msg: matchError[3],
+                  type: matchError[2]
                 });
               }
-              matchError = /\nmain.v:([0-9]+):\serror:\s(.*?)\n/g.exec(stdout);
-              if (matchError) {
-                codeErrors.push({
-                  line: parseInt(matchError[1]),
-                  msg: matchError[2],
-                  type: 'error'
-                });
-              }
-              matchError = /\nmain.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
-              if (matchError) {
+              re = /main.v:([0-9]+):\ssyntax\serror/g;
+              while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
                   msg: 'Syntax error',
                   type: 'error'
                 });
               }
+
               // - Yosys errors
               var yerrFound = false;
               // ERROR: Parser error in line main.v:#: syntax error, ...
@@ -335,13 +328,17 @@ angular.module('icestudio')
 
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
-                alertify.notify(codeError.msg, codeError.type, 5);
-
-                // Launch codeError event
-                $(document).trigger('codeError', [codeError]);
+                if (codeError) {
+                  // Launch codeError event
+                  $(document).trigger('codeError', [codeError]);
+                  //alertify.notify(codeError.msg, codeError.type, 5);
+                }
               }
 
-              if (codeErrors.length === 0) {
+              if (codeErrors.length !== 0) {
+                alertify.error(gettextCatalog.getString('Errors detected in the code'), 5);
+              }
+              else {
                 // TODO: remove
                 var stdoutError = stdout.split('\n').filter(function (line) {
                   return (line.indexOf('not installed') !== -1 ||
@@ -448,17 +445,16 @@ angular.module('icestudio')
     }
 
     function normalizeCodeError(codeError, modules) {
-      var newCodeError = {
-        blockId: '',
-        blockType: '',
-        type: codeError.type,
-        line: codeError.line,
-        msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
-      };
+      var newCodeError;
       // Find the module with the error
       for (var i in modules) {
         var module = modules[i];
         if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
+          newCodeError = {
+           type: codeError.type,
+           line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
+           msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
+         };
           if (module.name.startsWith('main_')) {
             // Code block
             newCodeError.blockId = module.name.split('_')[1];
@@ -469,7 +465,6 @@ angular.module('icestudio')
             newCodeError.blockId = module.name.split('_')[0];
             newCodeError.blockType = 'generic';
           }
-          newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
           break;
         }
       }

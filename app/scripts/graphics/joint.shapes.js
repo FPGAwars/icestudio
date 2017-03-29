@@ -1005,12 +1005,14 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
   setAnnotation: function(codeError) {
     this.editor.gotoLine(codeError.line);
-    this.editor.session.setAnnotations([{
+    var annotations = this.editor.session.getAnnotations();
+    annotations.push({
       row: codeError.line-1,
       column: 0,
       text: codeError.msg,
       type: codeError.type
-    }]);
+    });
+    this.editor.session.setAnnotations(annotations);
   },
 
   clearAnnotations: function() {
