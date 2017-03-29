@@ -8,38 +8,65 @@ Copyright (c) 2013 client IO
 
 joint.ui.SelectionView = Backbone.View.extend({
 
-  className: 'selectionarea',
+  className: 'selection',
 
   events: {
 
+    'click .selection-box': 'click',
     'mousedown .selection-box': 'startTranslatingSelection'
   },
 
+  $selectionArea: null,
+
   initialize: function(options) {
 
-    _.bindAll(this, 'startSelecting', 'stopSelecting', 'adjustSelection');
+    _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
-    $(document.body).on('mouseup touchend', this.stopSelecting);
+    var self = this;
+
+    $(document.body).on('mouseup touchend', function(evt) {
+      if (evt.which === 1) {
+        // Mouse left button
+        self.stopSelecting(evt);
+      }
+    });
     $(document.body).on('mousemove touchmove', this.adjustSelection);
 
     this.options = options;
 
     this.options.paper.$el.append(this.$el);
+    this.$el.addClass('selected').show();
   },
 
-  startTranslatingSelection: function(evt) {
+  click: function(evt) {
 
-    this._action = 'translating';
+    if (evt.which === 1) {
+      // Mouse left button
 
-    this.options.graph.trigger('batch:start');
+      this.trigger('selection-box:pointerclick', evt);
+    }
+  },
 
-    var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
-    this._snappedClientX = snappedClientCoords.x;
-    this._snappedClientY = snappedClientCoords.y;
+  startTranslatingSelection: function(evt, noBatch) {
 
-    this.trigger('selection-box:pointerdown', evt);
+    if (evt.which === 1 || noBatch) {
+      // Mouse left button
 
-    evt.stopPropagation();
+      if (!evt.shiftKey) {
+        this._action = 'translating';
+
+        if (!noBatch) {
+          this.options.graph.trigger('batch:stop');
+          this.options.graph.trigger('batch:start');
+        }
+
+        var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
+        this._snappedClientX = snappedClientCoords.x;
+        this._snappedClientY = snappedClientCoords.y;
+
+        this.trigger('selection-box:pointerdown', evt);
+      }
+    }
   },
 
   isTranslating: function() {
@@ -49,9 +76,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   startSelecting: function(evt/*, x, y*/) {
 
-    this.$el.removeClass('selected');
-    this.$el.empty();
-    this.model.reset([]);
+    this.createSelectionArea();
 
     this._action = 'selecting';
 
@@ -67,13 +92,12 @@ joint.ui.SelectionView = Backbone.View.extend({
     this._offsetX = evt.offsetX === undefined ? evt.clientX - paperOffset.left + window.pageXOffset + paperScrollLeft : evt.offsetX;
     this._offsetY = evt.offsetY === undefined ? evt.clientY - paperOffset.top + window.pageYOffset + paperScrollTop : evt.offsetY;
 
-    this.$el.css({
+    this.$selectionArea.css({
       width: 1,
       height: 1,
       left: this._offsetX,
       top: this._offsetY
-
-    }).show();
+    });
   },
 
   adjustSelection: function(evt) {
@@ -88,10 +112,10 @@ joint.ui.SelectionView = Backbone.View.extend({
         dx = evt.clientX - this._clientX;
         dy = evt.clientY - this._clientY;
 
-        var left = parseInt(this.$el.css('left'), 10);
-        var top = parseInt(this.$el.css('top'), 10);
+        var left = parseInt(this.$selectionArea.css('left'), 10);
+        var top = parseInt(this.$selectionArea.css('top'), 10);
 
-        this.$el.css({
+        this.$selectionArea.css({
           left: dx < 0 ? this._offsetX + dx : left,
           top: dy < 0 ? this._offsetY + dy : top,
           width: Math.abs(dx),
@@ -157,15 +181,20 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  stopSelecting: function() {
+  stopSelecting: function(evt) {
 
     switch (this._action) {
 
       case 'selecting':
 
-        var offset = this.$el.offset();
-        var width = this.$el.width();
-        var height = this.$el.height();
+        if (!evt.shiftKey) {
+          // Reset previous selection
+          this.cancelSelection();
+        }
+
+        var offset = this.$selectionArea.offset();
+        var width = this.$selectionArea.width();
+        var height = this.$selectionArea.height();
 
         // Convert offset coordinates to the local point of the <svg> root element.
         var localPoint = V(this.options.paper.svg).toLocalPoint(offset.left, offset.top);
@@ -182,24 +211,12 @@ joint.ui.SelectionView = Backbone.View.extend({
             height / this.options.state.zoom
         ));
 
-        if (elementViews.length) {
+        this.model.add(_.pluck(elementViews, 'model'));
 
-          // Create a `selection-box` `<div>` for each element covering its bounding box area.
-          _.each(elementViews, this.createSelectionBox, this);
+        _.each(this.model.models, this.createSelectionBox, this);
 
-          // The root element of the selection switches `position` to `static` when `selected`. This
-          // is neccessary in order for the `selection-box` coordinates to be relative to the
-          // `paper` element, not the `selection` `<div>`.
-          this.$el.addClass('selected');
+        this.destroySelectionArea();
 
-        } else {
-
-          // Hide the selection box if there was no element found in the area covered by the
-          // selection box.
-          this.$el.hide();
-        }
-
-        this.model.reset(_.pluck(elementViews, 'model'));
         break;
 
       case 'translating':
@@ -215,9 +232,6 @@ joint.ui.SelectionView = Backbone.View.extend({
         break;
 
     default:
-        // Hide selection if the user clicked somehwere else in the document.
-        // this.$el.hide().empty();
-        // this.model.reset([]);
         break;
     }
 
@@ -227,22 +241,34 @@ joint.ui.SelectionView = Backbone.View.extend({
   cancelSelection: function() {
 
     this.$('.selection-box').remove();
-    this.$el.hide().removeClass('selected');
     this.model.reset([]);
   },
 
-  destroySelectionBox: function(elementView) {
+  destroySelectionArea: function() {
 
-    this.$('[data-model="' + elementView.model.get('id') + '"]').remove();
-    if (this.$('.selection-box').length === 0) {
-
-      this.$el.hide().removeClass('selected');
-    }
+    this.$selectionArea.remove();
+    this.$selectionArea = this.$('.selection-area');
+    this.$el.addClass('selected');
   },
 
-  createSelectionBox: function(elementView) {
+  createSelectionArea: function() {
 
-    var element = elementView.model;
+    var $selectionArea = $('<div/>', {
+        'class': 'selection-area'
+    });
+    this.$el.append($selectionArea);
+    this.$selectionArea = this.$('.selection-area');
+    this.$el.removeClass('selected');
+  },
+
+  destroySelectionBox: function(element) {
+
+    this.$('[data-model="' + element.get('id') + '"]').remove();
+  },
+
+  createSelectionBox: function(element, opt) {
+
+    opt = opt || {};
 
     if (!element.isLink()) {
 
@@ -250,11 +276,12 @@ joint.ui.SelectionView = Backbone.View.extend({
           'class': 'selection-box',
           'data-model': element.get('id')
       });
-      this.$el.append($selectionBox);
+      if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
+        this.$el.append($selectionBox);
+      }
+      $selectionBox.css({ opacity: (opt.transparent ? 0 : 1) });
 
       this.updateBox(element);
-
-      this.$el.addClass('selected').show();
 
       this._action = 'cherry-picking';
     }

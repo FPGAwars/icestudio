@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-  .directive('menutree', function () {
+  .directive('menutree', function() {
     return {
       restrict: 'E',
       replace: true,
@@ -13,14 +13,14 @@ angular.module('icestudio')
       template: '<ul uib-dropdown-menu ng-show="data.length > 0">' +
                   '<child ng-repeat="child in data" child="child" callback="click(path)" right="right"></child>' +
                 '</ul>',
-      link: function (scope/*, element, attrs*/) {
+      link: function(scope/*, element, attrs*/) {
         scope.click = function(path) {
           scope.callback({ path: path });
         };
       }
     };
   })
-  .directive('child', function ($compile) {
+  .directive('child', function($compile) {
     return {
       restrict: 'E',
       replace: true,
@@ -29,11 +29,11 @@ angular.module('icestudio')
         right: '=',
         callback: '&'
       },
-      template: '<li ng-class="child.children ? (right ? \'dropdown-submenu-right\' : \'dropdown-submenu\') : \'\'">' +
+      template: '<li ng-class="child.children ? (right ? \'dropdown-submenu-right\' : \'dropdown-submenu\') : \'\'" uib-dropdown>' +
                   '<a href ng-click="click(child.path)" ng-if="!child.children">{{ child.name | translate }}</a>' +
                   '<a href uib-dropdown-toggle ng-if="child.children">{{ child.name | translate }}</a>' +
                 '</li>',
-      link: function (scope, element/*, attrs*/) {
+      link: function(scope, element/*, attrs*/) {
         scope.click = function(path) {
           scope.callback({ path: path });
         };

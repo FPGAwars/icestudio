@@ -35,6 +35,6 @@
     "svg-pan-zoom": "^3.2.9",
     "alertify-js": "^1.8.0",
     "jquery-resize": "*",
-    "angular-gettext": "^2.3.8"
+    "angular-gettext": "https://github.com/Jesus89/angular-gettext.git#master"
   }
 }

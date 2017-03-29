@@ -1,22 +1,22 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0-rc)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.3.0--rc-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
 
-
-**Experimental** graphic editor for open FPGAs. Built on top of the [icestorm project](http://www.clifford.at/icestorm/).
+**Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/).
 
     GUI -> JSON -> Verilog, PCF
 
 Supported boards:
 
 * [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
+* [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/)
 * [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
-* [iCEstick](http://www.pighixxx.com/test/portfolio-items/icestick/)
-* [iCE40-HX8K](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
+* [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/)
 * [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
-* [Kéfir I](http://fpgalibre.sourceforge.net/Kefir/)
 
 Supported operating systems:
 
@@ -24,40 +24,35 @@ Supported operating systems:
 * Windows
 * Mac OS X
 
-## Version 0.3.0-beta3 (latest)
-
-Documentation: http://icestudio.readthedocs.io/en/latest
-
-### Installation
+## Installation
 
 * **GNU/Linux**
 
-  1. Install [Python 2.7](https://www.python.org)
-  2. Download the [zipped release](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3), unzip and execute **icestudio**
-
-
-NOTE: GNU/Linux users must have **xclip** installed to enable Copy/Paste.
+  1. Install [Python 2.7](https://www.python.org) and **xclip**
+  2. Download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases)
 
 
 * **Windows**
 
-  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases)
 
 
 * **Mac OS X**
 
   1. Install [Python 2.7](https://www.python.org)
-  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3)
+  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
-<img src="./doc/images/icestudio-0.3.0-beta3.png" width="700" align="center">
+<img src="./doc/images/main.png" width="700" align="center">
+
+Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 
 ## Development
 
 Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
 
-Using [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint).
+[Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
-NOTE: if you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks) or [icestudio-examples](https://github.com/FPGAwars/icestudio-examples).
+If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
 
 
 ##### Ubuntu
@@ -92,9 +87,12 @@ npm start
 npm run dist
 ```
 
-Output
-* *GNU/Linux*: linux32.zip, linux64.zip, win32.zip, win64.zip, win32.exe, win64.exe.
-* *Mac OS X*: osx32.zip, osx64.zip, osx64.dmg.
+| OS | Development OS | Output files |
+|:---:|:-------------:|:-----------------:|
+| GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
+| Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
+|  Mac OS X | Mac OS X | (osx32,osx64).zip, osx64.dmg  |
+
 
 ## Languages
 
@@ -102,15 +100,16 @@ Output
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/87)   |
-| French     | ![Progress](http://progressed.io/bar/61)   |
-| Galician   | ![Progress](http://progressed.io/bar/35)   |
+| Galician   | ![Progress](http://progressed.io/bar/95)   |
+| Basque     | ![Progress](http://progressed.io/bar/95)   |
+| Catalan    | ![Progress](http://progressed.io/bar/95)   |
+| French     | ![Progress](http://progressed.io/bar/95)   |
 
-**Contribute**: add or update the [translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) by following the [next instructions](https://angular-gettext.rocketeer.be/dev-guide/translate/#poedit).
+**Contribute!**
 
-```bash
-npm run gettext
-```
+Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
+
+*Developer note*: use `npm run gettext` to extract the labels from the code.
 
 ## Troubleshooting
 
@@ -128,22 +127,6 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
  We use the GitHub issues to schedule our new features and improvements.
 
-## Version 0.2.3 (stable)
-
-### Installation
-
-1. Install [Python 2.7](https://www.python.org)
-
-2. Download the [release](https://github.com/FPGAwars/icestudio/releases/tag/0.2.3), unzip and execute **icestudio**
-
-Documentation: http://icestudio.readthedocs.io/en/stable
-
-<img src="./doc/images/icestudio-0.2.3.png" width="700" align="center">
-
-## Version 0.1
-
-![][icestudio-0.1-demo]
-
 ## Videos
 
 ### Version 0.2
@@ -154,13 +137,6 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 
 [![Icestudio: block factory](http://img.youtube.com/vi/mAIKb47z2Do/0.jpg)](http://www.youtube.com/watch?v=mAIKb47z2Do "Icestudio: block factory")
 
-
-### Version 0.1
-
-[![Icestudio: GUI for open FPGAs](http://img.youtube.com/vi/Okl4Rr_i6Qk/0.jpg)](http://www.youtube.com/watch?v=Okl4Rr_i6Qk "Icestudio: GUI for open FPGAs")
-
-[![Icestudio: code generation](http://img.youtube.com/vi/pG1DsF9MIj0/0.jpg)](http://www.youtube.com/watch?v=pG1DsF9MIj0 "Icestudio: code generation")
-
 ## Authors
 
 * [Jesús Arroyo Torrens](https://github.com/Jesus89)
@@ -168,32 +144,33 @@ Documentation: http://icestudio.readthedocs.io/en/stable
 ## Contributors
 
 * v0.3
- * [Martoni](https://github.com/Martoni)
- * [Carlos Díaz](https://github.com/C47D)
- * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
-
+  * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
+  * [Carlos Díaz](https://github.com/C47D)
+  * [Martoni](https://github.com/Martoni)
+  * [Xoan Sampaiño](https://github.com/xoan)
+  * [Unai](https://github.com/1138-4EB)
+  * [Francisco Sayas](https://github.com/fsayas)
+  * [Pascal Cotret](https://github.com/pcotret)
 * v0.2
- * [Tomás Calvo](https://github.com/tocalvo)
- * [Juan González (Obijuan)](https://github.com/Obijuan)
- * [Carlos Díaz](https://github.com/C47D)
- * [Xoan Sampaiño](https://github.com/xoan)
- * [Salvador E. Tropea](https://github.com/set-soft)
- * [Democrito](https://github.com/Democrito)
- * [Martoni](https://github.com/Martoni)
- * [Pascal Cotret](https://github.com/pcotret)
+  * [Tomás Calvo](https://github.com/tocalvo)
+  * [Juan González (Obijuan)](https://github.com/Obijuan)
+  * [Carlos Díaz](https://github.com/C47D)
+  * [Xoan Sampaiño](https://github.com/xoan)
+  * [Salvador E. Tropea](https://github.com/set-soft)
+  * [Democrito](https://github.com/Democrito)
+  * [Martoni](https://github.com/Martoni)
+  * [Pascal Cotret](https://github.com/pcotret)
 * v0.1
- * [Miguel Sánchez de León Peque](https://github.com/Peque)
+  * [Miguel Sánchez de León Peque](https://github.com/Peque)
 
 ## Credits
 
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
-* Sponsored by [BQ](https://www.bq.com)
+* [BQ](https://www.bq.com) sponsored this project from 02-2016 to 02-2017. Thanks
 
 ![](https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png)
 
 ## License
 
-Licensed under [GPLv2](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
-
-[icestudio-0.1-demo]: doc/images/icestudio-demo.gif
+Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).

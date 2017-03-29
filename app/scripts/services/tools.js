@@ -4,7 +4,8 @@ angular.module('icestudio')
   .service('tools', function(project,
                              compiler,
                              profile,
-                             resources,
+                             collections,
+                             drivers,
                              utils,
                              common,
                              gettextCatalog,
@@ -29,7 +30,7 @@ angular.module('icestudio')
     checkToolchain();
 
     // Remove build directory on start
-    nodeFse.removeSync(utils.BUILD_DIR);
+    nodeFse.removeSync(common.BUILD_DIR);
 
     this.verifyCode = function() {
       this.apio(['verify']);
@@ -60,13 +61,14 @@ angular.module('icestudio')
           gettext('start_build');
           /// Start uploading ...
           gettext('start_upload');
-          var message = 'start_' + commands[0];
+          var label = commands[0];
+          var message = 'start_' + label;
           currentAlert = alertify.message(gettextCatalog.getString(message), 100000);
           $('body').addClass('waiting');
           check = this.syncResources(code);
           try {
             if (check) {
-              execute(commands, commands[0], currentAlert, function() {
+              execute(commands, label, code, currentAlert, function() {
                 if (currentAlert) {
                   setTimeout(function() {
                     angular.element('#menu').removeClass('disable-menu');
@@ -115,7 +117,7 @@ angular.module('icestudio')
             toolchain.installed = toolchain.apio >= _package.apio.min &&
                                   toolchain.apio < _package.apio.max;
             if (toolchain.installed) {
-              nodeChildProcess.exec([apio, 'clean', '-p', utils.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+              nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
                 toolchain.installed = !error;
                 if (callback) {
                   callback();
@@ -133,8 +135,8 @@ angular.module('icestudio')
     }
 
     this.generateCode = function() {
-      if (!nodeFs.existsSync(utils.BUILD_DIR)) {
-        nodeFs.mkdirSync(utils.BUILD_DIR);
+      if (!nodeFs.existsSync(common.BUILD_DIR)) {
+        nodeFs.mkdirSync(common.BUILD_DIR);
       }
       project.update();
       var opt = { boardRules: profile.get('boardRules') };
@@ -144,8 +146,8 @@ angular.module('icestudio')
       }
       var verilog = compiler.generate('verilog', project.get(), opt);
       var pcf = compiler.generate('pcf', project.get(), opt);
-      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.v'), verilog, 'utf8');
-      nodeFs.writeFileSync(nodePath.join(utils.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.v'), verilog, 'utf8');
+      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
       return verilog;
     };
 
@@ -156,11 +158,11 @@ angular.module('icestudio')
       nodeFse.removeSync('!(main.*)');
 
       // Sync included files
-      ret = this.syncFiles(/@include\s(.*?)(\\n|\n|\s)/g, code);
+      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
 
       // Sync list files
       if (ret) {
-        ret = this.syncFiles(/\"(.*\.list?)\"/g, code);
+        ret = this.syncFiles(/(\n|\s)[^\/]?\"(.*\.list?)\"/g, code);
       }
 
       return ret;
@@ -170,9 +172,9 @@ angular.module('icestudio')
       var ret = true;
       var match;
       while (match = pattern.exec(code)) {
-        var file = match[1];
-        var destPath = nodePath.join(utils.BUILD_DIR, file);
-        var origPath = nodePath.join(utils.dirname(project.path), file);
+        var file = match[2];
+        var destPath = nodePath.join(common.BUILD_DIR, file);
+        var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
         // Copy included file
         var copySuccess = utils.copySync(origPath, destPath);
@@ -186,13 +188,13 @@ angular.module('icestudio')
       return ret;
     };
 
-    function execute(commands, label, currentAlert, callback) {
+    function execute(commands, label, code, currentAlert, callback) {
       var remoteHostname = profile.get('remoteHostname');
 
       if (remoteHostname) {
         currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
-          src: utils.BUILD_DIR + '/',
+          src: common.BUILD_DIR + '/',
           dest: remoteHostname + ':.build/',
           ssh: true,
           recursive: true,
@@ -204,31 +206,49 @@ angular.module('icestudio')
             currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
             nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), remoteHostname,
               function (error, stdout, stderr) {
-                processExecute(label, callback, error, stdout, stderr);
+                processExecute(label, code, callback, error, stdout, stderr);
               });
           }
           else {
-            processExecute(label, callback, error, stdout, stderr);
+            processExecute(label, code, callback, error, stdout, stderr);
           }
         });
       }
       else {
+        if (commands[0] === 'upload') {
+          drivers.preUpload(function() {
+            _execute();
+          });
+        }
+        else {
+          _execute();
+        }
+      }
+
+      function _execute() {
         var apio = utils.getApioExecutable();
         toolchain.disabled = utils.toolchainDisabled;
-        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(utils.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
+        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
           function(error, stdout, stderr) {
-            processExecute(label, callback, error, stdout, stderr);
+            if (!error && !stderr) {
+              if (commands[0] === 'upload') {
+                drivers.postUpload();
+              }
+            }
+            processExecute(label, code, callback, error, stdout, stderr);
           });
       }
     }
 
-    function processExecute(label, callback, error, stdout, stderr) {
+    function processExecute(label, code, callback, error, stdout, stderr) {
       if (callback) {
         callback();
       }
+      //console.log(label, error, stdout, stderr)
       if (label) {
         if (error || stderr) {
           if (stdout) {
+            // - Apio errors
             if (stdout.indexOf('[upload] Error') !== -1 ||
                 stdout.indexOf('Error: board not detected') !== -1) {
               alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
@@ -236,33 +256,110 @@ angular.module('icestudio')
             else if (stdout.indexOf('Error: unkown board') !== -1) {
               alertify.error(gettextCatalog.getString('Unknown board'), 30);
             }
-            else if (stdout.indexOf('set_io: too few arguments') !== -1) {
+            // - Arachne-pnr errors
+            else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
+                     stdout.indexOf('fatal error: unknown pin') !== -1) {
               alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
             }
-            else if (stdout.indexOf('error: unknown pin') !== -1) {
-              alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
-            }
-            else if (stdout.indexOf('error: duplicate pin constraints') !== -1) {
+            else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
               alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
-              var stdoutError = stdout.split('\n').filter(function (line) {
-                return (line.indexOf('syntax error') !== -1 ||
-                        line.indexOf('not installed') !== -1 ||
-                        line.indexOf('error: ') !== -1 ||
-                        line.indexOf('ERROR: ') !== -1 ||
-                        line.indexOf('Error: ') !== -1 ||
-                        line.indexOf('already declared') !== -1);
-              });
-              if (stdoutError.length > 0) {
-                alertify.error(stdoutError[0], 30);
+              var re, matchError, codeErrors = [];
+
+              // - Iverilog errors & warnings
+              // main.v:#: error: ...
+              // main.v:#: warning: ...
+              // main.v:#: syntax error
+              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)\n/g;
+              while (matchError = re.exec(stdout)) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]),
+                  msg: matchError[3],
+                  type: matchError[2]
+                });
+              }
+              re = /main.v:([0-9]+):\ssyntax\serror\n/g;
+              while (matchError = re.exec(stdout)) {
+                codeErrors.push({
+                  line: parseInt(matchError[1]),
+                  msg: 'Syntax error',
+                  type: 'error'
+                });
+              }
+
+              // - Yosys errors
+              // ERROR: ... main.v:#...\n
+              // Warning: ... main.v:#...\n
+              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)\n/g;
+              while (matchError = re.exec(stdout)) {
+                var msg = '';
+                var line = parseInt(matchError[3]);
+                var type = matchError[1].toLowerCase();
+                var preContent = matchError[2];
+                var postContent = matchError[4];
+                // Process error
+                if (preContent === 'Parser error in line') {
+                  postContent = postContent.substring(2); // remove :\s
+                  if (postContent.startsWith('syntax error')) {
+                    postContent = 'Syntax error';
+                  }
+                  msg = postContent;
+                }
+                else if (preContent.endsWith(' in line ')) {
+                  msg = preContent.replace(/\sin\sline\s$/, ' ') + postContent;
+                }
+                else {
+                  preContent = preContent.replace(/\sat\s$/, '');
+                  preContent = preContent.replace(/\sin\s$/, '');
+                  msg = preContent;
+                }
+                codeErrors.push({
+                  line: line,
+                  msg: msg,
+                  type: type
+                });
+              }
+
+              // Extract modules map from code
+              var modules = mapCodeModules(code);
+
+              for (var i in codeErrors) {
+                var codeError = normalizeCodeError(codeErrors[i], modules);
+                if (codeError) {
+                  // Launch codeError event
+                  $(document).trigger('codeError', [codeError]);
+                }
+              }
+
+              if (codeErrors.length !== 0) {
+                alertify.error(gettextCatalog.getString('Errors detected in the code'), 5);
               }
               else {
-                alertify.error(stdout, 30);
+                var stdoutWarning = stdout.split('\n').filter(function (line) {
+                  line = line.toLowerCase();
+                  return (line.indexOf('warning: ') !== -1);
+                });
+                var stdoutError = stdout.split('\n').filter(function (line) {
+                  line = line.toLowerCase();
+                  return (line.indexOf('error: ') !== -1 ||
+                          line.indexOf('not installed') !== -1 ||
+                          line.indexOf('already declared') !== -1);
+                });
+                if (stdoutWarning.length > 0) {
+                  alertify.warning(stdoutWarning[0]);
+                }
+                if (stdoutError.length > 0) {
+                  alertify.error(stdoutError[0], 30);
+                }
+                else {
+                  alertify.error(stdout, 30);
+                }
               }
             }
           }
           else if (stderr) {
+            // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
                 stderr.indexOf('Connection refused') !== -1) {
               alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
@@ -313,6 +410,68 @@ angular.module('icestudio')
       }
     }
 
+    function mapCodeModules(code) {
+      var codelines = code.split('\n');
+      var match, module = {}, modules = [];
+      // Find begin/end lines of the modules
+      for (var i in codelines) {
+        var codeline = codelines[i];
+        // Get the module name
+        if (!module.name) {
+          match = /module\s+(.*?)[\s|\(|$]/.exec(codeline);
+          if (match) {
+            module.name = match[1];
+            continue;
+          }
+        }
+        // Get the begin of the module code
+        if (!module.begin) {
+          match = /;/.exec(codeline);
+          if (match) {
+            module.begin = parseInt(i) + 1;
+            continue;
+          }
+        }
+        // Get the end of the module code
+        if (!module.end) {
+          match = /endmodule/.exec(codeline);
+          if (match) {
+            module.end = parseInt(i) + 1;
+            modules.push(module);
+            module = {};
+          }
+        }
+      }
+      return modules;
+    }
+
+    function normalizeCodeError(codeError, modules) {
+      var newCodeError;
+      // Find the module with the error
+      for (var i in modules) {
+        var module = modules[i];
+        if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
+          newCodeError = {
+           type: codeError.type,
+           line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
+           msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
+         };
+          if (module.name.startsWith('main_')) {
+            // Code block
+            newCodeError.blockId = module.name.split('_')[1];
+            newCodeError.blockType = 'code';
+          }
+          else {
+            // Generic block
+            newCodeError.blockId = module.name.split('_')[0];
+            newCodeError.blockType = 'generic';
+          }
+          break;
+        }
+      }
+      return newCodeError;
+    }
+
     this.installToolchain = function() {
       utils.removeToolchain();
       if (utils.checkDefaultToolchain()) {
@@ -342,7 +501,7 @@ angular.module('icestudio')
         });
       }
       else {
-        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: utils.TOOLCHAIN_DIR}));
+        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: common.TOOLCHAIN_DIR}));
       }
     };
 
@@ -357,11 +516,11 @@ angular.module('icestudio')
     };
 
     this.enableDrivers = function() {
-      utils.enableDrivers();
+      drivers.enable();
     };
 
     this.disableDrivers = function() {
-      utils.disableDrivers();
+      drivers.disable();
     };
 
     function installDefaultToolchain() {
@@ -512,7 +671,7 @@ angular.module('icestudio')
     }
 
     function apioInstallDrivers(callback) {
-      if (utils.WIN32) {
+      if (common.WIN32) {
         updateProgress('apio install drivers', 80);
         utils.apioInstall('drivers', callback);
       }
@@ -575,110 +734,164 @@ angular.module('icestudio')
 
     // Collections management
 
-    this.addCollections = function(filepath) {
-      alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath) + '.zip') }));
+    this.addCollections = function(filepaths) {
+      // Load zip file
+      async.eachSeries(filepaths, function(filepath, nextzip) {
+        //alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
+        var zipData = nodeAdmZip(filepath);
+        var _collections = getCollections(zipData);
 
-      var collections = {};
-      var zip = nodeAdmZip(filepath);
-      var zipEntries = zip.getEntries();
+        async.eachSeries(_collections, function(collection, next) {
+          setTimeout(function() {
+            if (collection.package && (collection.blocks || collection.examples)) {
 
-      // Validate collections
-      zipEntries.forEach(function(zipEntry) {
-        var name = zipEntry.entryName.match(/^([^\/]+)\/$/);
-        if (name) {
-          collections[name[1]] = {
-            name: name[1], blocks: [], examples: [], locale: [], package: ''
-          };
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
-        if (name) {
-          collections[name[1]].blocks.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
-        if (name) {
-          collections[name[1]].examples.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
-        if (name) {
-          collections[name[1]].locale.push(zipEntry.entryName);
-        }
-        name = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
-        if (name) {
-          collections[name[1]].package = zipEntry.entryName;
-        }
-      });
-      async.eachSeries(collections, function(collection, next) {
-        setTimeout(function() {
-          if (collection.package && (collection.blocks || collection.examples)) {
-            var destPath = nodePath.join(utils.COLLECTIONS_DIR, collection.name);
-            if (nodeFs.existsSync(destPath)) {
-              alertify.confirm(
-                gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(collection.name) }) + '<br>' +
-                gettextCatalog.getString('Do you want to replace it?'),
-                function() {
-                  utils.deleteFolderRecursive(destPath);
-                  installCollection(collection, zip);
-                  alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(collection.name) }));
-                  next();
-                },
-                function() {
-                  alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(collection.name) }));
-                  next();
+              alertify.prompt(gettextCatalog.getString('Edit the collection name'), collection.origName,
+                function(evt, name) {
+                  if (!name) {
+                    return false;
+                  }
+                  collection.name = name;
+
+                  var destPath = nodePath.join(common.COLLECTIONS_DIR, name);
+                  if (nodeFs.existsSync(destPath)) {
+                    alertify.confirm(
+                      gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(name) }) + '<br>' +
+                      gettextCatalog.getString('Do you want to replace it?'),
+                      function() {
+                        utils.deleteFolderRecursive(destPath);
+                        installCollection(collection, zipData);
+                        alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(name) }));
+                        next(name);
+                      },
+                      function() {
+                        alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(name) }));
+                        next(name);
+                      });
+                    }
+                    else {
+                      installCollection(collection, zipData);
+                      alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
+                      next(name);
+                    }
                 });
+              }
+              else {
+                alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
+              }
+            }, 0);
+          }, function(name) {
+            collections.loadCollections();
+            // If the selected collection is replaced, load it again
+            if (common.selectedCollection.name === name) {
+              collections.selectCollection(name);
             }
-            else {
-              installCollection(collection, zip);
-              alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(collection.name) }));
-              next();
-            }
-          }
-          else {
-            alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(collection.name) }));
-          }
-        }, 0);
-      }, function() {
-        resources.loadCollections();
+            utils.rootScopeSafeApply();
+            nextzip();
+        });
       });
     };
 
+    function getCollections(zipData) {
+      var data = '';
+      var _collections = {};
+      var zipEntries = zipData.getEntries();
+
+      // Validate collections
+      zipEntries.forEach(function(zipEntry) {
+        data = zipEntry.entryName.match(/^([^\/]+)\/$/);
+        if (data) {
+          _collections[data[1]] = {
+            origName: data[1], blocks: [], examples: [], locale: [], package: ''
+          };
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
+        if (data) {
+          _collections[data[1]].blocks.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
+        if (data) {
+          _collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
+        if (data) {
+          _collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.vh$/);
+        if (data) {
+          _collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
+        if (data) {
+          _collections[data[1]].examples.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
+        if (data) {
+          _collections[data[1]].locale.push(zipEntry.entryName);
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
+        if (data) {
+          _collections[data[1]].package = zipEntry.entryName;
+        }
+        data = zipEntry.entryName.match(/^([^\/]+)\/README\.md$/);
+        if (data) {
+          _collections[data[1]].readme = zipEntry.entryName;
+        }
+      });
+
+      return _collections;
+    }
+
     function installCollection(collection, zip) {
-      for (var b in collection.blocks) {
-        safeExtract(collection.blocks[b], zip);
+      var i, dest = '';
+      var pattern = RegExp('^' + collection.origName);
+      for (i in collection.blocks) {
+        dest = collection.blocks[i].replace(pattern, collection.name);
+        safeExtract(collection.blocks[i], dest, zip);
       }
-      for (var e in collection.examples) {
-        safeExtract(collection.examples[e], zip);
+      for (i in collection.examples) {
+        dest = collection.examples[i].replace(pattern, collection.name);
+        safeExtract(collection.examples[i], dest, zip);
       }
-      for (var l in collection.locale) {
-        safeExtract(collection.locale[l], zip);
+      for (i in collection.locale) {
+        dest = collection.locale[i].replace(pattern, collection.name);
+        safeExtract(collection.locale[i], dest, zip);
         // Generate locale JSON files
         var compiler = new nodeGettext.Compiler({ format: 'json' });
-        var sourcePath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l]);
-        var targetPath = nodePath.join(utils.COLLECTIONS_DIR, collection.locale[l].replace(/\.po$/, '.json'));
+        var sourcePath = nodePath.join(common.COLLECTIONS_DIR, dest);
+        var targetPath = nodePath.join(common.COLLECTIONS_DIR, dest.replace(/\.po$/, '.json'));
         var content = nodeFs.readFileSync(sourcePath).toString();
         var json = compiler.convertPo([content]);
         nodeFs.writeFileSync(targetPath, json);
-        // Add string to gettext
+        // Add strings to gettext
         gettextCatalog.loadRemote(targetPath);
       }
-      safeExtract(collection.package, zip);
+      if (collection.package) {
+        dest = collection.package.replace(pattern, collection.name);
+        safeExtract(collection.package, dest, zip);
+      }
+      if (collection.readme) {
+        dest = collection.readme.replace(pattern, collection.name);
+        safeExtract(collection.readme, dest, zip);
+      }
     }
 
-    function safeExtract(entry, zip) {
+    function safeExtract(entry, dest, zip) {
       try {
-        zip.extractEntryTo(entry, utils.COLLECTIONS_DIR);
+        var newPath = nodePath.join(common.COLLECTIONS_DIR, dest);
+        zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/false);
       }
       catch(e) {}
     }
 
     this.removeCollection = function(collection) {
       utils.deleteFolderRecursive(collection.path);
-      resources.loadCollections();
+      collections.loadCollections();
       alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
     };
 
     this.removeAllCollections = function() {
       utils.removeCollections();
-      resources.loadCollections();
+      collections.loadCollections();
       alertify.success(gettextCatalog.getString('All collections removed'));
     };
 

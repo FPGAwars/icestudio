@@ -137,6 +137,6 @@ set_io --warn-no-port DCD 1  # output
 set_io --warn-no-port DSR 2  # output
 set_io --warn-no-port DTR 3  # input
 set_io --warn-no-port CTS 4  # output
-set_io --warn-no-port RTS 7  # output
+set_io --warn-no-port RTS 7  # input
 set_io --warn-no-port TX  8  # output
 set_io --warn-no-port RX  9  # input

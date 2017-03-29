@@ -7,9 +7,8 @@ angular.module('icestudio')
                               nodePath) {
     const DEFAULT = 'icezum';
 
-    this.currentBoards = loadBoards(nodePath.join('resources', 'boards'));
-
-    function loadBoards(path) {
+    this.loadBoards = function(path) {
+      path = path || nodePath.join('resources', 'boards');
       var boards = [];
       var contents = nodeFs.readdirSync(path);
       contents.forEach(function (content) {
@@ -28,8 +27,8 @@ angular.module('icestudio')
           }
         }
       });
-      return boards;
-    }
+      common.boards = _.sortBy(boards, 'info.label');
+    };
 
     function readJSONFile(filepath, filename) {
       var ret = {};
@@ -41,27 +40,21 @@ angular.module('icestudio')
       return ret;
     }
 
-    var self = this;
-
-    $(document).on('boardChanged', function(evt, name) {
-      self.selectBoard(name);
-    });
-
     this.selectBoard = function(name) {
       name = name || DEFAULT;
       var i;
       var selectedBoard = null;
-      for (i in this.currentBoards) {
-        if (this.currentBoards[i].name === name) {
-          selectedBoard = this.currentBoards[i];
+      for (i in common.boards) {
+        if (common.boards[i].name === name) {
+          selectedBoard = common.boards[i];
           break;
         }
       }
       if (selectedBoard === null) {
         // Board not found: select default board
-        for (i in this.currentBoards) {
-          if (this.currentBoards[i].name === DEFAULT) {
-            selectedBoard = this.currentBoards[i];
+        for (i in common.boards) {
+          if (common.boards[i].name === DEFAULT) {
+            selectedBoard = common.boards[i];
             break;
           }
         }
@@ -70,13 +63,13 @@ angular.module('icestudio')
       common.pinoutInputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'input');
       common.pinoutOutputHTML = generateHTMLOptions(common.selectedBoard.pinout, 'output');
       utils.rootScopeSafeApply();
-      return common.selectedBoard.name;
+      return common.selectedBoard;
     };
 
     this.boardLabel = function(name) {
-      for (var i in this.currentBoards) {
-        if (this.currentBoards[i].name === name) {
-          return this.currentBoards[i].info.label;
+      for (var i in common.boards) {
+        if (common.boards[i].name === name) {
+          return common.boards[i].info.label;
         }
       }
       return name;

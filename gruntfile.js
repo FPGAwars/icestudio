@@ -1,18 +1,22 @@
+'use strict';
+
 module.exports = function(grunt) {
 
-  const LINUX = process.platform === 'linux';
   const WIN32 = process.platform === 'win32';
   const DARWIN = process.platform === 'darwin';
 
+  var platforms, options, distCommands;
+
   if (DARWIN) {
-    var platforms = ['osx32', 'osx64'];
-    var options = { scope: ['devDependencies', 'darwinDependencies'] };
-    var distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
+    platforms = ['osx32', 'osx64'];
+    options = { scope: ['devDependencies', 'darwinDependencies'] };
+    distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
   }
   else {
-    var platforms = ['linux32', 'linux64', 'win32', 'win64'];
-    var options = { scope: ['devDependencies'] };
-    var distCommands = ['compress:linux32', 'compress:linux64', 'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
+    platforms = ['linux32', 'linux64', 'win32', 'win64'];
+    options = { scope: ['devDependencies'] };
+    distCommands = ['compress:linux32', 'compress:linux64', 'appimage:linux32', 'appimage:linux64',
+                    'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
@@ -50,20 +54,10 @@ module.exports = function(grunt) {
 
     // Execute nw application
     exec: {
-      nw: 'nw app',
-      stop_NW: (WIN32 ? 'taskkill /F /IM nw.exe' : 'killall nw || killall nwjs') + ' || (exit 0)',
-      nsis32: {
-        cmd: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
-        options: {
-          maxBuffer: 500 * 1024
-        }
-      },
-      nsis64: {
-        cmd: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> scripts/windows_installer.nsi',
-        options: {
-          maxBuffer: 500 * 1024
-        }
-      }
+      nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
+      stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
+      nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -82,7 +76,6 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            dot: true,
             cwd: 'app',
             dest: 'dist/tmp',
             src: [
@@ -150,7 +143,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // ONLY MAC: generate a dmg package
+    // ONLY MAC: generate a DMG package
     appdmg: {
       options: {
         basepath: '.',
@@ -181,6 +174,40 @@ module.exports = function(grunt) {
       target: {
         dest: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg'
       }
+    },
+
+    // ONLY LINUX: generate AppImage packages
+    appimage: {
+      linux32: {
+        options: {
+          name: 'Icestudio',
+          exec: 'icestudio',
+          arch: '32bit',
+          icons: 'doc/icons',
+          comment: 'Experimental graphic editor for open FPGAs',
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/icestudio/linux32/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+        }]
+      },
+      linux64: {
+        options: {
+          name: 'Icestudio',
+          exec: 'icestudio',
+          arch: '64bit',
+          icons: 'doc/icons',
+          comment: 'Experimental graphic editor for open FPGAs',
+          archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
+        },
+        files: [{
+          expand: true,
+          cwd: 'dist/icestudio/linux64/',
+          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+        }]
+      },
     },
 
     // Compress packages usin zip
@@ -264,7 +291,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'wiredep',
-          'exec:stop_NW',
+          'exec:stopNW',
           'exec:nw'
         ],
         options: {
@@ -274,14 +301,44 @@ module.exports = function(grunt) {
       }
     },
 
-    // Wget Python installer
+    // Check all js files
+    jshint: {
+      all: [
+        'app/scripts/**/*.js',
+        'tasks/*.js',
+        'gruntfile.js'
+      ],
+      options: {
+        jshintrc: '.jshintrc'
+      }
+    },
+
+    // Wget: Python installer and Default collection
     wget: {
       python: {
-         options: {
-           overwrite: false
-         },
-         src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
-         dest: 'cache/python/python-2.7.13.amd64.msi'
+        options: {
+          overwrite: false
+        },
+        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
+        dest: 'cache/python/python-2.7.13.amd64.msi'
+      },
+      collection: {
+        options: {
+          overwrite: false
+        },
+        src: 'https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip',
+        dest: 'cache/collection/collection-default-v<%=pkg.collection%>.zip'
+      }
+    },
+
+    // Unzip Default collection
+    unzip: {
+      'using-router': {
+        router: function (filepath) {
+          return filepath.replace(/^collection-default-.*?\//g, 'collection/');
+        },
+        src: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
+        dest: 'app/resources/'
       }
     },
 
@@ -290,6 +347,7 @@ module.exports = function(grunt) {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
       toolchain: ['cache/toolchain/default-apio', 'cache/toolchain/*.tar.gz'],
+      collection: ['app/resources/collection']
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
       // appbower: ['app/bower_components'],
@@ -297,7 +355,7 @@ module.exports = function(grunt) {
     },
 
     // Generate POT file
-    nggettext_extract: {
+    'nggettext_extract': {
       pot: {
         files: {
           'app/resources/locale/template.pot': [
@@ -309,7 +367,7 @@ module.exports = function(grunt) {
     },
 
     // Compile PO files into JSON
-    nggettext_compile: {
+    'nggettext_compile': {
       all: {
         options: {
           format: 'json'
@@ -317,19 +375,17 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            dot: true,
-            cwd: "app/resources/locale",
-            dest: "app/resources/locale",
-            src: ["**/*.po"],
-            ext: ".json"
+            cwd: 'app/resources/locale',
+            dest: 'app/resources/locale',
+            src: ['**/*.po'],
+            ext: '.json'
           },
           {
             expand: true,
-            dot: true,
-            cwd: "app/resources/collection/locale",
-            dest: "app/resources/collection/locale",
-            src: ["**/*.po"],
-            ext: ".json"
+            cwd: 'app/resources/collection/locale',
+            dest: 'app/resources/collection/locale',
+            src: ['**/*.po'],
+            ext: '.json'
           }
         ]
       }
@@ -344,11 +400,17 @@ module.exports = function(grunt) {
   grunt.registerTask('gettext', [
     'nggettext_extract'
   ]);
+  grunt.registerTask('getcollection', [
+    'clean:collection',
+    'wget:collection',
+    'unzip'
+  ]);
   grunt.registerTask('serve', [
     'nggettext_compile',
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
+    'jshint',
     'clean:dist',
     'clean:toolchain',
     'nggettext_compile',

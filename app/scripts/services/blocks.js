@@ -19,29 +19,29 @@ angular.module('icestudio')
 
     //-- New
 
-    function newBasic(type, addCellCallback) {
+    function newBasic(type, addCellsCallback) {
       switch(type) {
         case 'basic.input':
-          newBasicInput(addCellCallback);
+          newBasicInput(addCellsCallback);
           break;
         case 'basic.output':
-          newBasicOutput(addCellCallback);
+          newBasicOutput(addCellsCallback);
           break;
         case 'basic.constant':
-          newBasicConstant(addCellCallback);
+          newBasicConstant(addCellsCallback);
           break;
         case 'basic.code':
-          newBasicCode(addCellCallback);
+          newBasicCode(addCellsCallback);
           break;
         case 'basic.info':
-          newBasicInfo(addCellCallback);
+          newBasicInfo(addCellsCallback);
           break;
         default:
           break;
       }
     }
 
-    function newBasicInput(addCellCallback) {
+    function newBasicInput(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -82,6 +82,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in portInfos) {
             portInfo = portInfos[p];
             var pins = getPins(portInfo);
@@ -92,16 +93,17 @@ angular.module('icestudio')
               virtual: virtual,
               clock: clock
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasic(blockInstance));
-            }
+            cells.push(loadBasic(blockInstance));
             // Next block position
             blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
 
-    function newBasicOutput(addCellCallback) {
+    function newBasicOutput(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -139,6 +141,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in portInfos) {
             portInfo = portInfos[p];
             var pins = getPins(portInfo);
@@ -148,11 +151,12 @@ angular.module('icestudio')
               pins: pins,
               virtual: virtual
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasic(blockInstance));
-            }
+            cells.push(loadBasic(blockInstance));
             // Next block position
             blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
@@ -170,7 +174,7 @@ angular.module('icestudio')
       return pins;
     }
 
-    function newBasicConstant(addCellCallback) {
+    function newBasicConstant(addCellsCallback) {
       var blockInstance = {
         id: null,
         data: {},
@@ -208,6 +212,7 @@ angular.module('icestudio')
             }
           }
           // Create blocks
+          var cells = [];
           for (var p in paramInfos) {
             paramInfo = paramInfos[p];
             blockInstance.data = {
@@ -215,15 +220,16 @@ angular.module('icestudio')
               value: '',
               local: local
             };
-            if (addCellCallback) {
-              addCellCallback(loadBasicConstant(blockInstance));
-            }
+            cells.push(loadBasicConstant(blockInstance));
             blockInstance.position.x += 15 * gridsize;
+          }
+          if (addCellsCallback) {
+            addCellsCallback(cells);
           }
       });
     }
 
-    function newBasicCode(addCellCallback, block) {
+    function newBasicCode(addCellsCallback, block) {
       var blockInstance = {
         id: null,
         data: {
@@ -361,8 +367,8 @@ angular.module('icestudio')
           if (numNames === $.unique(allNames).length) {
             evt.cancel = false;
             // Create block
-            if (addCellCallback) {
-              addCellCallback(loadBasicCode(blockInstance));
+            if (addCellsCallback) {
+              addCellsCallback([loadBasicCode(blockInstance)]);
             }
           }
           else {
@@ -372,16 +378,16 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicInfo(addCellCallback) {
+    function newBasicInfo(addCellsCallback) {
       var blockInstance = {
         id: null,
-        data: { info: '' },
+        data: { info: '', readonly: false },
         type: 'basic.info',
         position: { x: 40 * gridsize, y: 36 * gridsize },
         size: { width: 192, height: 128 }
       };
-      if (addCellCallback) {
-        addCellCallback(loadBasicInfo(blockInstance));
+      if (addCellsCallback) {
+        addCellsCallback([loadBasicInfo(blockInstance)]);
       }
     }
 
@@ -537,6 +543,10 @@ angular.module('icestudio')
     }
 
     function loadBasicInfo(instance, disabled) {
+      // Translate info content
+      if (instance.data.info && instance.data.readonly) {
+        instance.data.text = gettextCatalog.getString(instance.data.info);
+      }
       var cell = new joint.shapes.ice.Info({
         id: instance.id,
         blockType: instance.type,
@@ -624,7 +634,7 @@ angular.module('icestudio')
         pullup: block.design.pullup,
         image: blockImage,
         label: blockLabel,
-        tooltip: gettextCatalog.getString(block.package.description), // TODO: update on change language
+        tooltip: gettextCatalog.getString(block.package.description),
         position: instance.position,
         size: size,
         disabled: disabled,
@@ -684,6 +694,9 @@ angular.module('icestudio')
           break;
         case 'basic.code':
           editBasicCode(cellView, addCellCallback);
+          break;
+        case 'basic.info':
+          editBasicInfo(cellView);
           break;
         default:
           break;
@@ -890,25 +903,28 @@ angular.module('icestudio')
         position: block.position,
         size: block.size
       };
-      newBasicCode(function(cell) {
+      newBasicCode(function(cells) {
         if (addCellCallback) {
-          var connectedWires = graph.getConnectedLinks(cellView.model);
-          graph.startBatch('change');
-          cellView.model.remove();
-          addCellCallback(cell);
-          // Restore previous connections
-          for (var w in connectedWires) {
-            var wire = connectedWires[w];
-            var source = wire.get('source');
-            var target = wire.get('target');
-            if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
-                (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
-                (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
-              graph.addCell(wire);
+          var cell = cells[0];
+          if (cell) {
+            var connectedWires = graph.getConnectedLinks(cellView.model);
+            graph.startBatch('change');
+            cellView.model.remove();
+            addCellCallback(cell);
+            // Restore previous connections
+            for (var w in connectedWires) {
+              var wire = connectedWires[w];
+              var source = wire.get('source');
+              var target = wire.get('target');
+              if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
+              (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
+              (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
+                graph.addCell(wire);
+              }
             }
+            graph.stopBatch('change');
+            alertify.success(gettextCatalog.getString('Block updated'));
           }
-          graph.stopBatch('change');
-          alertify.success(gettextCatalog.getString('Block updated'));
         }
       }, blockInstance);
     }
@@ -922,6 +938,27 @@ angular.module('icestudio')
         }
       }
       return found;
+    }
+
+    function editBasicInfo(cellView) {
+      var block = cellView.model.attributes;
+      utils.checkboxprompt([
+        gettextCatalog.getString('Read only')
+      ], [
+        block.data.readonly || false,
+      ],
+        function(evt, values) {
+          var readonly = values[0];
+          var data = utils.clone(block.data);
+          data.readonly = readonly;
+          // Translate info content
+          if (data.info && data.readonly) {
+            data.text = gettextCatalog.getString(data.info);
+          }
+          cellView.model.set('data', data);
+          cellView.apply();
+          alertify.success(gettextCatalog.getString('Block updated'));
+      });
     }
 
   });

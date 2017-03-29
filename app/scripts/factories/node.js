@@ -52,6 +52,57 @@ angular.module('icestudio')
   .factory('nodeCP', function() {
     return require('copy-paste');
   })
+  .factory('nodeGetOS', function() {
+    return require('getos');
+  })
   .factory('SVGO', function() {
-    return require('svgo');
+    var config = {
+      full: true,
+      plugins: [
+        'removeDoctype',
+        'removeXMLProcInst',
+        'removeComments',
+        'removeMetadata',
+        'removeXMLNS',
+        'removeEditorsNSData',
+        'cleanupAttrs',
+        'minifyStyles',
+        'convertStyleToAttrs',
+        'cleanupIDs',
+        'removeRasterImages',
+        'removeUselessDefs',
+        'cleanupNumericValues',
+        'cleanupListOfValues',
+        'convertColors',
+        'removeUnknownsAndDefaults',
+        'removeNonInheritableGroupAttrs',
+        'removeUselessStrokeAndFill',
+        'removeViewBox',
+        'cleanupEnableBackground',
+        'removeHiddenElems',
+        'removeEmptyText',
+        'convertShapeToPath',
+        'moveElemsAttrsToGroup',
+        'moveGroupAttrsToElems',
+        'collapseGroups',
+        'convertPathData',
+        'convertTransform',
+        'removeEmptyAttrs',
+        'removeEmptyContainers',
+        'mergePaths',
+        'removeUnusedNS',
+        'transformsWithOnePath',
+        'sortAttrs',
+        'removeTitle',
+        'removeDesc',
+        'removeDimensions',
+        'removeAttrs',
+        'removeElementsByAttr',
+        'addClassesToSVGElement',
+        'removeStyleElement',
+        'removeStyleElement'
+      ]
+    };
+    var SVGO = require('svgo');
+    return new SVGO(config);
   });

@@ -26,6 +26,7 @@ deploy:
     - dist/*.zip
     - dist/*.dmg
     - dist/*.exe
+    - dist/*.AppImage
   file_glob: true
   skip_cleanup: true
   on:

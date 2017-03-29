@@ -2,6 +2,7 @@
 
 angular.module('icestudio')
   .service('compiler', function(common,
+                                utils,
                                 nodeSha1,
                                 _package) {
 
@@ -38,13 +39,6 @@ angular.module('icestudio')
       header += comment + ' ' + date.toUTCString() + '\n';
       header += '\n';
       return header;
-    }
-
-    function digestId(id) {
-      if (id.indexOf('-') !== -1) {
-        id = nodeSha1(id).toString();
-      }
-      return 'v' + id.substring(0, 6);
     }
 
     function module(data) {
@@ -119,7 +113,7 @@ angular.module('icestudio')
         var block = graph.blocks[i];
         if (block.type === 'basic.constant') {
           params.push({
-            name: digestId(block.id),
+            name: utils.digestId(block.id),
             value: block.data.value
           });
         }
@@ -139,13 +133,13 @@ angular.module('icestudio')
         var block = graph.blocks[i];
         if (block.type === 'basic.input') {
           ports.in.push({
-            name: digestId(block.id),
+            name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
         }
         else if (block.type === 'basic.output') {
           ports.out.push({
-            name: digestId(block.id),
+            name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
         }
@@ -169,7 +163,7 @@ angular.module('icestudio')
         if (wire.source.port === 'constant-out') {
           // Local Parameters
           var constantBlock = findBlock(wire.source.block, graph);
-          var paramValue = digestId(constantBlock.id);
+          var paramValue = utils.digestId(constantBlock.id);
           if (paramValue) {
             connections.localparam.push('localparam p' + w + ' = ' + paramValue  + ';');
           }
@@ -184,7 +178,7 @@ angular.module('icestudio')
           var block = graph.blocks[i];
           if (block.type === 'basic.input') {
             if (wire.source.block === block.id) {
-              connections.assign.push('assign w' + w + ' = ' + digestId(block.id) + ';');
+              connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id) + ';');
             }
           }
           else if (block.type === 'basic.output') {
@@ -193,7 +187,7 @@ angular.module('icestudio')
                 // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
               }
               else {
-                connections.assign.push('assign ' + digestId(block.id) + ' = w' + w + ';');
+                connections.assign.push('assign ' + utils.digestId(block.id) + ' = w' + w + ';');
               }
             }
           }
@@ -243,10 +237,10 @@ angular.module('icestudio')
 
           var instance;
           if (block.type === 'basic.code') {
-            instance = name + '_' + digestId(block.id);
+            instance = name + '_' + utils.digestId(block.id);
           }
           else {
-            instance = digestId(block.type);
+            instance = utils.digestId(block.type);
           }
 
           //-- Parameters
@@ -258,7 +252,7 @@ angular.module('icestudio')
                 (wire.source.port === 'constant-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
-                paramName = digestId(paramName);
+                paramName = utils.digestId(paramName);
               }
               var param = '';
               param += ' .' + paramName;
@@ -273,7 +267,7 @@ angular.module('icestudio')
 
           //-- Instance name
 
-          instance += ' ' +  digestId(block.id);
+          instance += ' ' +  utils.digestId(block.id);
 
           //-- Ports
 
@@ -302,7 +296,7 @@ angular.module('icestudio')
       function connectPort(portName, portsNames, ports, block) {
         if (portName) {
           if (block.type !== 'basic.code') {
-            portName = digestId(portName);
+            portName = utils.digestId(portName);
           }
           if (portsNames.indexOf(portName) === -1) {
             portsNames.push(portName);
@@ -504,7 +498,7 @@ angular.module('icestudio')
         // Dependencies modules
 
         for (var d in dependencies) {
-          code += verilogCompiler(digestId(d), dependencies[d]);
+          code += verilogCompiler(utils.digestId(d), dependencies[d]);
         }
 
         // Code modules
@@ -514,10 +508,10 @@ angular.module('icestudio')
           if (block) {
             if (block.type === 'basic.code') {
               data = {
-                name: name + '_' + digestId(block.id),
+                name: name + '_' + utils.digestId(block.id),
                 params: block.data.params,
                 ports: block.data.ports,
-                content: block.data.code.replace(/\n+/g, '\n').replace(/\n$/g, '')
+                content: block.data.code //.replace(/\n+/g, '\n').replace(/\n$/g, '')
               };
               code += module(data);
             }
@@ -543,7 +537,7 @@ angular.module('icestudio')
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'set_io ';
-              code += digestId(block.id);
+              code += utils.digestId(block.id);
               code += '[' + pin.index + '] ';
               code += value;
               code += '\n';
@@ -553,7 +547,7 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
-            code += digestId(block.id);
+            code += utils.digestId(block.id);
             code += ' ';
             code += value;
             code += '\n';
@@ -747,14 +741,14 @@ angular.module('icestudio')
         if (block.type === 'basic.input') {
           if (block.data.name) {
             input.push({
-              id: digestId(block.id),
+              id: utils.digestId(block.id),
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
           else {
             input.push({
-              id: digestId(block.id),
+              id: utils.digestId(block.id),
               name: inputUnnamed.toString(),
             });
             inputUnnamed += 1;
@@ -763,14 +757,14 @@ angular.module('icestudio')
         else if (block.type === 'basic.output') {
           if (block.data.name) {
             output.push({
-              id: digestId(block.id),
+              id: utils.digestId(block.id),
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           }
           else {
             output.push({
-              id: digestId(block.id),
+              id: utils.digestId(block.id),
               name: outputUnnamed.toString()
             });
             outputUnnamed += 1;
@@ -794,14 +788,14 @@ angular.module('icestudio')
           if (!block.data.local) {
             if (block.data.name) {
               params.push({
-                id: digestId(block.id),
+                id: utils.digestId(block.id),
                 name: 'constant_' + block.data.name.replace(/ /g, '_'),
                 value: block.data.value
               });
             }
             else {
               params.push({
-                id: digestId(block.id),
+                id: utils.digestId(block.id),
                 name: 'constant_' + paramsUnnamed.toString(),
                 value: block.data.value
               });

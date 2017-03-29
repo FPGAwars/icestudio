@@ -1,4 +1,4 @@
-!define NAME       "Icestudio"
+!define NAME       "icestudio"
 !ifndef VERSION
   !define VERSION  "dev"
 !endif
@@ -18,18 +18,15 @@ Name "${NAME} ${VERSION}"
 # define output file
 OutFile "${DIST}\${NAME}-${VERSION}-${ARCH}.exe"
 
-# define installation directory
-InstallDir "$PROGRAMFILES\${NAME}"
-
 # request application privileges
 RequestExecutionLevel admin
 
 # SetCompressor lzma
 
-
-!include MUI2.nsh
-!include FileFunc.nsh
-!include FileAssociation.nsh
+!include "x64.nsh"
+!include "MUI2.nsh"
+!include "FileFunc.nsh"
+!include "FileAssociation.nsh"
 
 !define MUI_ICON "${ICON}"
 !define MUI_BGCOLOR FFFFFF
@@ -56,9 +53,36 @@ RequestExecutionLevel admin
 
 # languages
 !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "Galician"
+!insertmacro MUI_LANGUAGE "Basque"
+!insertmacro MUI_LANGUAGE "French"
 
 
-Function .onInit
+Function ".onInit"
+
+  # check system architecture
+  ${If} ${RunningX64}
+    ${If} "${ARCH}" == "win64"
+      SetRegView 64
+      StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+    ${Else}
+      MessageBox MB_OK|MB_ICONSTOP \
+      "This installer does not match your current architecture. \
+      $\n$\nPlease, run the 64-bit installer."
+      Abort
+    ${EndIf}
+  ${Else}
+    ${If} "${ARCH}" == "win32"
+      SetRegView 32
+      StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+    ${Else}
+      MessageBox MB_OK|MB_ICONSTOP \
+      "This installer does not match your current architecture. \
+      $\n$\nPlease, run the 32-bit installer."
+      Abort
+    ${EndIf}
+  ${EndIf}
 
   ReadRegStr $R0 HKLM \
   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" \
@@ -66,15 +90,14 @@ Function .onInit
   StrCmp $R0 "" done
 
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "${NAME} is already installed. $\n$\nClick OK to remove the \
-  previous version or Cancel to cancel this upgrade." \
+  "${NAME} is already installed.$\n$\nClick `OK` to remove the \
+  previous version or `Cancel` to cancel this upgrade." \
   IDOK uninst
   Abort
 
   # run uninstaller
   uninst:
-    ExecWait '$R0 /S _?=$INSTDIR'
-    RMDir /r "$INSTDIR"
+    ExecWait '$R0 /S'
 
   done:
 
@@ -147,7 +170,8 @@ Section "${NAME} ${VERSION}"
 
   # define shortcut
   CreateDirectory "$SMPROGRAMS\${NAME}"
-  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\icestudio.exe" 0
+  CreateShortCut "$SMPROGRAMS\${NAME}\${NAME}.lnk" "$INSTDIR\icestudio.exe" "" "$INSTDIR\resources\images\icestudio-logo.ico" 0
+
 
   # register .ice files
   ${registerExtension} "$INSTDIR\icestudio.exe" ".ice" "Icestudio project"
@@ -159,6 +183,20 @@ SectionEnd
 Function "LaunchLink"
 
  Exec "$INSTDIR\icestudio.exe"
+
+FunctionEnd
+
+
+Function "un.onInit"
+
+  # check system architecture
+  ${If} ${RunningX64}
+    SetRegView 64
+    StrCpy $INSTDIR "$PROGRAMFILES64\${NAME}"
+  ${Else}
+    SetRegView 32
+    StrCpy $INSTDIR "$PROGRAMFILES32\${NAME}"
+  ${EndIf}
 
 FunctionEnd
 

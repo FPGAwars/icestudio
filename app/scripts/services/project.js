@@ -14,6 +14,7 @@ angular.module('icestudio')
 
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
+    this.filepath = ''; // Used to find external resources (.v, .vh, .list)
     this.changed = false;
 
     var project = _default();
@@ -83,6 +84,7 @@ angular.module('icestudio')
     this.open = function(filepath, emptyPath) {
       var self = this;
       this.path = emptyPath ? '' : filepath;
+      this.filepath = filepath;
       utils.readFile(filepath, function(data) {
         if (data) {
           var name = utils.basename(filepath);
@@ -119,11 +121,12 @@ angular.module('icestudio')
         var opt = { reset: reset || false, disabled: false };
         var ret = graph.loadDesign(project.design, opt, function() {
           graph.resetCommandStack();
+          graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
         });
 
         if (ret) {
-          profile.set('board', boards.selectBoard(project.design.board));
+          profile.set('board', boards.selectBoard(project.design.board).name);
           self.updateTitle(name);
         }
         else {
@@ -286,14 +289,52 @@ angular.module('icestudio')
 
     this.save = function(filepath) {
       var name = utils.basename(filepath);
-      this.path = filepath;
       this.updateTitle(name);
-
       sortGraph();
       this.update();
-      utils.saveFile(filepath, pruneProject(project), function() {
-        alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
-      }, true);
+
+      // Copy included files if the previous filepath
+      // is different from the new filepath
+      if (this.filepath !== filepath) {
+        var origPath = utils.dirname(this.filepath);
+        var destPath =  utils.dirname(filepath);
+        // 1. Parse and find included files
+        var code = compiler.generate('verilog', project);
+        var files = utils.findIncludedFiles(code);
+        // Are there included files?
+        if (files.length > 0) {
+          // 2. Check project's directory
+          if (filepath) {
+            // 3. Copy the included files
+            copyIncludedFiles(files, origPath, destPath, function(success) {
+              if (success) {
+                // 4. Success: save project
+                doSaveProject();
+              }
+            });
+          }
+        }
+        else {
+          // No included files to copy
+          // 4. Save project
+          doSaveProject();
+        }
+      }
+      else {
+        // Same filepath
+        // 4. Save project
+        doSaveProject();
+      }
+
+      this.path = filepath;
+      this.filepath = filepath;
+
+      function doSaveProject() {
+        utils.saveFile(filepath, pruneProject(project), function() {
+          alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
+        }, true);
+      }
+
     };
 
     function sortGraph() {
@@ -316,7 +357,7 @@ angular.module('icestudio')
       graph.setCells(cells);
     }
 
-    this.addAsBlock = function(filepath) {
+    this.addBlockFile = function(filepath, notification) {
       var self = this;
       utils.readFile(filepath, function(data) {
         if (data.version !== common.VERSION) {
@@ -325,19 +366,20 @@ angular.module('icestudio')
         var name = utils.basename(filepath);
         var block = _safeLoad(data, name);
         if (block) {
-          var path = utils.dirname(filepath);
+          var origPath = utils.dirname(filepath);
+          var destPath =  utils.dirname(self.path);
           // 1. Parse and find included files
-          var code = JSON.stringify(block);
+          var code = compiler.generate('verilog', block);
           var files = utils.findIncludedFiles(code);
           // Are there included files?
           if (files.length > 0) {
             // 2. Check project's directory
             if (self.path) {
               // 3. Copy the included files
-              copyIncludedFiles(function(success) {
+              copyIncludedFiles(files, origPath, destPath, function(success) {
                 if (success) {
                   // 4. Success: import block
-                  doImportBlock(block);
+                  doImportBlock();
                 }
               });
             }
@@ -347,10 +389,10 @@ angular.module('icestudio')
                   $rootScope.$emit('saveProjectAs', function() {
                     setTimeout(function() {
                       // 3. Copy the included files
-                      copyIncludedFiles(function(success) {
+                      copyIncludedFiles(files, origPath, destPath, function(success) {
                         if (success) {
                           // 4. Success: import block
-                          doImportBlock(block);
+                          doImportBlock();
                         }
                       });
                     }, 500);
@@ -361,66 +403,68 @@ angular.module('icestudio')
           else {
             // No included files to copy
             // 4. Import block
-            doImportBlock(block);
+            doImportBlock();
           }
         }
 
-        function copyIncludedFiles(callback) {
-          var success = true;
-          async.eachSeries(files, function(filename, next) {
-            setTimeout(function() {
-              var origPath = nodePath.join(path, filename);
-              var destPath = nodePath.join(utils.dirname(self.path), filename);
-              if (origPath !== destPath) {
-                if (nodeFs.existsSync(destPath)) {
-                  alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
-                  function() {
-                    success = success && doCopySync(origPath, destPath, filename);
-                    if (!success) {
-                      return next(); // break
-                    }
-                    next();
-                  },
-                  function() {
-                    next();
-                  });
-                }
-                else {
-                  success = success && doCopySync(origPath, destPath, filename);
-                  if (!success) {
-                    return next(); // break
-                  }
-                  next();
-                }
-              }
-              else {
-                return next(); // break
-              }
-            }, 0);
-          }, function(/*result*/) {
-            return callback(success);
-          });
-        }
-
-        function doCopySync(orig, dest, filename) {
-          var success = utils.copySync(orig, dest);
-          if (success) {
-            alertify.message(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 5);
-          }
-          else {
-            alertify.error(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 30);
-          }
-          return success;
-        }
-
-        function doImportBlock(block) {
+        function doImportBlock() {
           self.addBlock(block);
-          alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
+          if (notification) {
+            alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
+          }
         }
       });
     };
 
-    function pruneProject (project) {
+    function copyIncludedFiles(files, origPath, destPath, callback) {
+      var success = true;
+      async.eachSeries(files, function(filename, next) {
+        setTimeout(function() {
+          if (origPath !== destPath) {
+            if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
+              alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
+              function() {
+                success = success && doCopySync(origPath, destPath, filename);
+                if (!success) {
+                  return next(); // break
+                }
+                next();
+              },
+              function() {
+                next();
+              });
+            }
+            else {
+              success = success && doCopySync(origPath, destPath, filename);
+              if (!success) {
+                return next(); // break
+              }
+              next();
+            }
+          }
+          else {
+            return next(); // break
+          }
+        }, 0);
+      }, function(/*result*/) {
+        return callback(success);
+      });
+    }
+
+    function doCopySync(origPath, destPath, filename) {
+      var orig = nodePath.join(origPath, filename);
+      var dest = nodePath.join(destPath, filename);
+      var success = utils.copySync(orig, dest);
+      if (success) {
+        alertify.message(gettextCatalog.getString('File {{file}} imported', { file: utils.bold(filename) }), 5);
+      }
+      else {
+        alertify.error(gettextCatalog.getString('Original file {{file}} does not exist', { file: utils.bold(filename) }), 30);
+      }
+      return success;
+    }
+
+    function pruneProject(project) {
       var _project = utils.clone(project);
 
       _prune(_project);
@@ -435,7 +479,9 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
+              break;
             case 'basic.info':
+              delete block.data.text;
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {
@@ -496,26 +542,13 @@ angular.module('icestudio')
       graph.createBasicBlock(type);
     };
 
-    this.addBlock = function(arg) {
-      if (typeof arg === 'string') {
-        // arg is a filepath
-        utils.readFile(arg, function(block) {
-          _addBlock(block);
-        });
-      }
-      else {
-        // arg is a block
-        _addBlock(arg);
-      }
-
-      function _addBlock(block) {
-        if (block) {
-          block = _safeLoad(block);
-          block = pruneBlock(block);
-          var type = utils.dependencyID(block);
-          utils.mergeDependencies(type, block);
-          graph.createBlock(type, block);
-        }
+    this.addBlock = function(block) {
+      if (block) {
+        block = _safeLoad(block);
+        block = pruneBlock(block);
+        var type = utils.dependencyID(block);
+        utils.mergeDependencies(type, block);
+        graph.createBlock(type, block);
       }
     };
 

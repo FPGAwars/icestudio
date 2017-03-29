@@ -7,7 +7,7 @@ angular.module('icestudio')
                                     boards,
                                     profile,
                                     project,
-                                    resources,
+                                    collections,
                                     graph,
                                     tools,
                                     utils,
@@ -21,11 +21,9 @@ angular.module('icestudio')
 
     //-- Initialize scope
 
-    $scope.boards = boards;
     $scope.profile = profile;
     $scope.project = project;
     $scope.tools = tools;
-    $scope.resources = resources;
     $scope.common = common;
 
     $scope.version = _package.version;
@@ -45,6 +43,9 @@ angular.module('icestudio')
     win.on('close', function() {
       exit();
     });
+    win.on('resize', function() {
+      graph.fitContent();
+    });
 
     // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
@@ -56,17 +57,22 @@ angular.module('icestudio')
     // Menu timer
     var timer;
 
+    // mousedown event
+    var mousedown = false;
+    $(document).on('mouseup', function() { mousedown = false; });
+    $(document).on('mousedown', function() { mousedown = true; });
+
     // mouseover event
-    $scope.showMenu = function (menu) {
+    $scope.showMenu = function(menu) {
       $timeout.cancel(timer);
-      if (!graph.mousedown) {
+      if (!mousedown && !graph.addingDraggableBlock) {
         $scope.status[menu] = true;
       }
     };
 
     // mouseleave event
-    $scope.hideMenu = function (menu) {
-      timer = $timeout(function () {
+    $scope.hideMenu = function(menu) {
+      timer = $timeout(function() {
         $scope.status[menu] = false;
       }, 700);
     };
@@ -172,10 +178,11 @@ angular.module('icestudio')
     });
 
     $scope.addAsBlock = function() {
+      var notification = true;
       utils.openDialog('#input-add-as-block', '.ice', function(filepaths) {
         filepaths = filepaths.split(';');
         for (var i in filepaths) {
-          project.addAsBlock(filepaths[i]);
+          project.addBlockFile(filepaths[i], notification);
         }
       });
     };
@@ -292,7 +299,7 @@ angular.module('icestudio')
       graph.resetView();
     };
 
-    $scope.fitContent = function () {
+    $scope.fitContent = function() {
       graph.fitContent();
     };
 
@@ -334,10 +341,18 @@ angular.module('icestudio')
       alertify.success(gettextCatalog.getString('Board rules disabled'));
     };
 
+    $(document).on('langChanged', function(evt, lang) {
+      $scope.selectLanguage(lang);
+    });
+
     $scope.selectLanguage = function(language) {
       if (profile.get('language') !== language) {
-        profile.set('language', language);
-        utils.setLocale(language, resources.collections);
+        profile.set('language', graph.selectLanguage(language));
+        // Reload the project
+        project.update({ deps: false }, function() {
+          graph.loadDesign(project.get('design'), { disabled: false });
+          //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
+        });
       }
     };
 
@@ -403,20 +418,46 @@ angular.module('icestudio')
       }
     };
 
+    $scope.showCollectionData = function() {
+      var collection = common.selectedCollection;
+      var readme = collection.content.readme;
+      if (readme) {
+        gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
+          title: collection.name + ' - Data',
+          focus: true,
+          toolbar: false,
+          resizable: true,
+          width: 700,
+          height: 700,
+          icon: 'resources/images/icestudio-logo.png'
+        });
+      }
+      else {
+        alertify.error(gettextCatalog.getString('Collection {{collection}} info not defined', { collection: utils.bold(collection.name) }), 5);
+      }
+    };
+
     $scope.selectCollection = function(collection) {
-      if (resources.selectedCollection.name !== collection.name) {
-        var name = resources.selectCollection(collection.name);
+      if (common.selectedCollection.name !== collection.name) {
+        var name = collections.selectCollection(collection.name);
         profile.set('collection', name);
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
       }
     };
 
     function updateSelectedCollection() {
-      profile.set('collection', resources.selectCollection(profile.get('collection')));
+      profile.set('collection', collections.selectCollection(profile.get('collection')));
     }
 
 
     //-- Boards
+
+    $(document).on('boardChanged', function(evt, board) {
+      if (common.selectedBoard.name !== board.name) {
+        var newBoard = graph.selectBoard(board);
+        profile.set('board', newBoard.name);
+      }
+    });
 
     $scope.selectBoard = function(board) {
       if (common.selectedBoard.name !== board.name) {
@@ -431,13 +472,14 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        profile.set('board', graph.selectBoard(board.name));
-        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(board.info.label) }));
+        var newBoard = graph.selectBoard(board);
+        profile.set('board', newBoard.name);
+        alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
       }
     };
 
     function updateSelectedBoard() {
-      profile.set('board', boards.selectBoard(profile.get('board')));
+      profile.set('board', boards.selectBoard(profile.get('board')).name);
     }
 
 
@@ -445,18 +487,21 @@ angular.module('icestudio')
 
     $scope.verifyCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.verifyCode();
       });
     };
 
     $scope.buildCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.buildCode();
       });
     };
 
     $scope.uploadCode = function() {
       checkGraph(function() {
+        graph.resetCodeErrors();
         tools.uploadCode();
       });
     };
@@ -475,9 +520,7 @@ angular.module('icestudio')
     $scope.addCollections = function() {
       utils.openDialog('#input-add-collection', '.zip', function(filepaths) {
         filepaths = filepaths.split(';');
-        for (var i in filepaths) {
-          tools.addCollections(filepaths[i]);
-        }
+        tools.addCollections(filepaths);
       });
     };
 
@@ -491,7 +534,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (resources.collections.length > 1) {
+      if (common.collections.length > 1) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();
@@ -604,8 +647,11 @@ angular.module('icestudio')
     shortcuts.method('stepRight', graph.stepRight);
 
     shortcuts.method('removeSelected', removeSelected);
-    shortcuts.method('breadcrumbsBack', function() {
-      if (!graph.isEnabled()) {
+    shortcuts.method('back', function() {
+      if (graph.isEnabled()) {
+        removeSelected();
+      }
+      else {
         $rootScope.$broadcast('breadcrumbsBack');
       }
     });
@@ -635,7 +681,7 @@ angular.module('icestudio')
 
     function saveSnapshot(base64Data) {
       utils.saveDialog('#input-save-snapshot', '.png', function(filepath) {
-        nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
+        nodeFs.writeFile(filepath, base64Data, 'base64', function(err) {
           $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
           $scope.$apply();
           if (!err) {

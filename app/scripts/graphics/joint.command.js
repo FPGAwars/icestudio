@@ -9,7 +9,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   defaults: {
     cmdBeforeAdd: null,
-    cmdNameRegex: /^(?:add|remove|board|change:\w+)$/
+    cmdNameRegex: /^(?:add|remove|board|lang|change:\w+)$/
   },
 
   // length of prefix 'change:' in the event name
@@ -140,7 +140,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return push(command);
     }
 
-    if (cmdName === 'board') {
+    if (cmdName === 'board' || cmdName === 'lang') {
 
       command.action = cmdName;
       command.data = cell.data;
@@ -210,7 +210,11 @@ joint.dia.CommandManager = Backbone.Model.extend({
 	    this.redoStack = [];
 
       this.undoStack.push(this.batchCommand);
-      this.triggerChange();
+      if (this.batchCommand && this.batchCommand[0] && this.batchCommand[0].action !== 'lang') {
+        // Do not store lang in changesStack
+        this.changesStack.push(this.batchCommand);
+        this.triggerChange();
+      }
       this.trigger('add', this.batchCommand);
     }
 
@@ -254,6 +258,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         case 'board':
           this.triggerBoard(cmd.data.previous);
+          break;
+
+        case 'lang':
+          this.triggerLanguage(cmd.data.previous);
           break;
 
         default:
@@ -318,6 +326,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
           this.triggerBoard(cmd.data.next);
           break;
 
+        case 'lang':
+          this.triggerLanguage(cmd.data.next);
+          break;
+
         default:
           var data = null;
           var options = null;
@@ -345,7 +357,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
   undo: function() {
 
     var command = this.undoStack.pop();
-    this.triggerChange();
+    if (command && command[0] && command[0].action !== 'lang') {
+      this.changesStack.pop();
+      this.triggerChange();
+    }
 
     if (command) {
       this.revertCommand(command);
@@ -361,7 +376,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
     if (command) {
       this.applyCommand(command);
       this.undoStack.push(command);
-      this.triggerChange();
+      if (command && command[0] && command[0].action !== 'lang') {
+        this.changesStack.push(command);
+        this.triggerChange();
+      }
     }
   },
 
@@ -378,6 +396,8 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
     this.undoStack = [];
     this.redoStack = [];
+
+    this.changesStack = [];
   },
 
   hasUndo: function() {
@@ -391,12 +411,16 @@ joint.dia.CommandManager = Backbone.Model.extend({
   },
 
   triggerChange: function() {
-    var currentUndoStack = _.clone(this.undoStack);
+    var currentUndoStack = _.clone(this.changesStack);
     $(document).trigger('stackChanged', [currentUndoStack]);
   },
 
-  triggerBoard: function(name) {
-    $(document).trigger('boardChanged', [name]);
+  triggerBoard: function(board) {
+    $(document).trigger('boardChanged', [board]);
+  },
+
+  triggerLanguage: function(lang) {
+    $(document).trigger('langChanged', [lang]);
   }
 
 });

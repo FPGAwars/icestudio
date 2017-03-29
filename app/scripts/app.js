@@ -20,25 +20,19 @@ angular
   ])
   .run(function(profile,
                 project,
-                resources,
+                common,
                 utils,
-                gettextCatalog,
-                nodeLangInfo) {
+                boards,
+                collections,
+                gettextCatalog)
+  {
+    // Load boards
+    boards.loadBoards();
+    // Load collections
+    collections.loadCollections();
     // Load language
-    profile.load(function() {
-      var lang = profile.get('language');
-      if (lang) {
-        utils.setLocale(lang, resources.collections);
-      }
-      else {
-        // If lang is empty, use the system language
-        nodeLangInfo(function(err, sysLang) {
-          if (!err) {
-            profile.set('language', utils.setLocale(sysLang, resources.collections));
-          }
-        });
-      }
-    });
+    utils.loadLanguage(profile);
+
     setTimeout(function() {
       project.updateTitle(gettextCatalog.getString('Untitled'));
     }, 200);
