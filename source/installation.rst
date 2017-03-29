@@ -7,7 +7,7 @@ GNU/Linux
 ---------
 
 1. Install `Python 2.7 <https://www.python.org>`_ and **xclip** (to enable Copy/Paste).
-2. Download the `AppImage <https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-rc1>`_ file and make it executable:
+2. Download the `AppImage <https://github.com/FPGAwars/icestudio/releases>`_ file and make it executable:
 
 .. code::
 
@@ -20,7 +20,7 @@ GNU/Linux
 Windows
 -------
 
-1. Download and execute the `Windows installer <https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3>`_.
+1. Download and execute the `Windows installer <https://github.com/FPGAwars/icestudio/releases>`_.
 
 .. image:: ../resources/images/installation/windows.png
    :align: center
@@ -33,7 +33,7 @@ Mac OS X
 --------
 
 1. Install `Python 2.7 <https://www.python.org>`_.
-2. Download and execute the `DMG package <https://github.com/FPGAwars/icestudio/releases/tag/0.3.0-beta3>`_.
+2. Download and execute the `DMG package <https://github.com/FPGAwars/icestudio/releases>`_.
 
 .. image:: ../resources/images/installation/macosx.png
    :align: center
