@@ -255,13 +255,17 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
   enableResizer: function() {
-    this.resizerDisabled = false;
-    this.resizer.css('cursor', 'se-resize');
+    if (!this.model.get('disabled')) {
+      this.resizerDisabled = false;
+      this.resizer.css('cursor', 'se-resize');
+    }
   },
 
   disableResizer: function() {
-    this.resizerDisabled = true;
-    this.resizer.css('cursor', 'move');
+    if (!this.model.get('disabled')) {
+      this.resizerDisabled = true;
+      this.resizer.css('cursor', 'move');
+    }
   },
 
   apply: function() {
