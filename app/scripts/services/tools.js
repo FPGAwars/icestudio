@@ -265,13 +265,13 @@ angular.module('icestudio')
               alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
-              // TODO: multiple errors
               var re, matchError, codeErrors = [];
+
               // - Iverilog errors & warnings
-              // main.v:#: warning: ...
               // main.v:#: error: ...
+              // main.v:#: warning: ...
               // main.v:#: syntax error
-              re = /main.v:([0-9]+):\s(warning|error):\s(.*?)\n/g;
+              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)\n/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
@@ -289,38 +289,36 @@ angular.module('icestudio')
               }
 
               // - Yosys errors
-              var yerrFound = false;
-              // ERROR: Parser error in line main.v:#: syntax error, ...
-              matchError = /\nERROR:\sParser\serror\sin\sline\smain\.v:([0-9]+):\ssyntax\serror/g.exec(stdout);
-              if (matchError) {
-                yerrFound = true;
-                codeErrors.push({
-                  line: parseInt(matchError[1]),
-                  msg: 'Syntax error',
-                  type: 'error'
-                });
-              }
-              // ERROR: Parser error in line main.v:#: ...
-              matchError = /\nERROR:\sParser\serror\sin\sline\smain\.v:([0-9]+):\s(?!.*?syntax\serror)(.*?)\n/g.exec(stdout);
-              if (matchError) {
-                yerrFound = true;
-                codeErrors.push({
-                  line: parseInt(matchError[1]),
-                  msg: matchError[2],
-                  type: 'error'
-                });
-              }
-              if (!yerrFound) {
-                // assign a = e;
-                // ERROR: ... main.v:#: ...
-                matchError = /\nERROR:\s(.*\smain\.v:([0-9]+).*?)\n/g.exec(stdout);
-                if (matchError) {
-                  codeErrors.push({
-                    line: parseInt(matchError[2]),
-                    msg: matchError[1].replace(' at main.v:' + matchError[2], ''),
-                    type: 'error'
-                  });
+              // ERROR: ... main.v:#...\n
+              // Warning: ... main.v:#...\n
+              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)\n/g;
+              while (matchError = re.exec(stdout)) {
+                var msg = '';
+                var line = parseInt(matchError[3]);
+                var type = matchError[1].toLowerCase();
+                var preContent = matchError[2];
+                var postContent = matchError[4];
+                // Process error
+                if (preContent === 'Parser error in line') {
+                  postContent = postContent.substring(2); // remove :\s
+                  if (postContent.startsWith('syntax error')) {
+                    postContent = 'Syntax error';
+                  }
+                  msg = postContent;
                 }
+                else if (preContent.endsWith(' in line ')) {
+                  msg = preContent.replace(/\sin\sline\s$/, ' ') + postContent;
+                }
+                else {
+                  preContent = preContent.replace(/\sat\s$/, '');
+                  preContent = preContent.replace(/\sin\s$/, '');
+                  msg = preContent;
+                }
+                codeErrors.push({
+                  line: line,
+                  msg: msg,
+                  type: type
+                });
               }
 
               // Extract modules map from code
@@ -331,7 +329,6 @@ angular.module('icestudio')
                 if (codeError) {
                   // Launch codeError event
                   $(document).trigger('codeError', [codeError]);
-                  //alertify.notify(codeError.msg, codeError.type, 5);
                 }
               }
 
@@ -339,21 +336,25 @@ angular.module('icestudio')
                 alertify.error(gettextCatalog.getString('Errors detected in the code'), 5);
               }
               else {
-                // TODO: remove
+                var stdoutWarning = stdout.split('\n').filter(function (line) {
+                  line = line.toLowerCase();
+                  return (line.indexOf('warning: ') !== -1);
+                });
                 var stdoutError = stdout.split('\n').filter(function (line) {
-                  return (line.indexOf('not installed') !== -1 ||
-                          line.indexOf('error: ') !== -1 ||
-                          line.indexOf('ERROR: ') !== -1 ||
-                          line.indexOf('Error: ') !== -1 ||
+                  line = line.toLowerCase();
+                  return (line.indexOf('error: ') !== -1 ||
+                          line.indexOf('not installed') !== -1 ||
                           line.indexOf('already declared') !== -1);
                 });
+                if (stdoutWarning.length > 0) {
+                  alertify.warning(stdoutWarning[0]);
+                }
                 if (stdoutError.length > 0) {
                   alertify.error(stdoutError[0], 30);
                 }
                 else {
                   alertify.error(stdout, 30);
                 }
-                // TODO: remove
               }
             }
           }
