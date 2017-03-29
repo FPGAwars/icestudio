@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0-rc)](https://travis-ci.org/FPGAwars/icestudio)
 [![Version](https://img.shields.io/badge/version-v0.3.0--rc-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable)
+[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/).
 
