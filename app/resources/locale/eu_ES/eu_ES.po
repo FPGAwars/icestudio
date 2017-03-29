@@ -52,7 +52,7 @@ msgstr "Gehi ezazu bloke bat hasteko"
 msgid "Add as block"
 msgstr "Blokea sortu"
 
-#: app/scripts/services/tools.js:899
+#: app/scripts/services/tools.js:895
 msgid "All collections removed"
 msgstr "Bildumak ezabatu dira"
 
@@ -123,11 +123,11 @@ msgstr "Utzi"
 msgid "Catalan"
 msgstr "Katalan"
 
-#: app/scripts/services/tools.js:609
+#: app/scripts/services/tools.js:605
 msgid "Check Internet connection..."
 msgstr "Interneteko sarbidea egiaztatu..."
 
-#: app/scripts/services/tools.js:617
+#: app/scripts/services/tools.js:613
 msgid "Check Python..."
 msgstr "Python egiaztatu..."
 
@@ -151,19 +151,19 @@ msgstr ""
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
-#: app/scripts/services/tools.js:777
+#: app/scripts/services/tools.js:773
 msgid "Collection {{name}} added"
 msgstr "{{name}} bilduma gehitu da"
 
-#: app/scripts/services/tools.js:771
+#: app/scripts/services/tools.js:767
 msgid "Collection {{name}} not replaced"
 msgstr "{{name}} bilduma ez da ordeztu"
 
-#: app/scripts/services/tools.js:893
+#: app/scripts/services/tools.js:889
 msgid "Collection {{name}} removed"
 msgstr "{{name}} bilduma ezabatu da"
 
-#: app/scripts/services/tools.js:767
+#: app/scripts/services/tools.js:763
 msgid "Collection {{name}} replaced"
 msgstr "{{name}} bilduma ordeztu da"
 
@@ -199,7 +199,7 @@ msgstr "Datu-fitxa"
 msgid "Default"
 msgstr "Lehenetsia"
 
-#: app/scripts/services/tools.js:485
+#: app/scripts/services/tools.js:481
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -227,7 +227,7 @@ msgstr "Bihurtu nahi al duzu?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
-#: app/scripts/services/tools.js:763
+#: app/scripts/services/tools.js:759
 msgid "Do you want to replace it?"
 msgstr "Ordeztu nahi al duzu?"
 
@@ -259,7 +259,7 @@ msgstr "Blokearen ezaugarriak bikoiztu dira"
 msgid "Edit"
 msgstr "Editatu"
 
-#: app/scripts/services/tools.js:752
+#: app/scripts/services/tools.js:748
 msgid "Edit the collection name"
 msgstr ""
 
@@ -300,13 +300,17 @@ msgid "Enter the remote hostname user@host (experimental)"
 msgstr ""
 "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host (esperimentala)"
 
-#: app/scripts/services/tools.js:508
+#: app/scripts/services/tools.js:504
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Errorea: Toolchain lehenetsia ez da '{{dir}}'-en aurkitu"
 
 #: app/scripts/services/utils.js:670
 msgid "Error: {{error}}"
 msgstr "Errorea: {{error}}"
+
+#: app/scripts/services/tools.js:336
+msgid "Errors detected in the code"
+msgstr ""
 
 #: app/views/menu.html:39
 msgid "Examples"
@@ -320,15 +324,15 @@ msgstr "Exekutatu urrutiko {{label}} ..."
 msgid "Export"
 msgstr "Esportatu"
 
-#: app/scripts/services/tools.js:641
+#: app/scripts/services/tools.js:637
 msgid "Extract default apio files..."
 msgstr "Apio fitxategiak atera..."
 
-#: app/scripts/services/tools.js:651
+#: app/scripts/services/tools.js:647
 msgid "Extract default apio packages..."
 msgstr "Apio pakete lehenetsiak atera..."
 
-#: app/scripts/services/tools.js:629
+#: app/scripts/services/tools.js:625
 msgid "Extract virtual env files..."
 msgstr "Env birtualaren fitxategiak atera..."
 
@@ -400,19 +404,19 @@ msgstr "Sarrera"
 msgid "Install"
 msgstr "Instalatu"
 
-#: app/scripts/services/tools.js:646
+#: app/scripts/services/tools.js:642
 msgid "Install default apio..."
 msgstr "Apio lehenetsia instalatu..."
 
-#: app/scripts/services/tools.js:695
+#: app/scripts/services/tools.js:691
 msgid "Installation completed"
 msgstr "Instalazioa amaitu da"
 
-#: app/scripts/services/tools.js:538 app/scripts/services/tools.js:575
+#: app/scripts/services/tools.js:534 app/scripts/services/tools.js:571
 msgid "Installing toolchain"
 msgstr "Toolchain-a instalatzen ari da"
 
-#: app/scripts/services/drivers.js:112 app/scripts/services/tools.js:611
+#: app/scripts/services/drivers.js:112 app/scripts/services/tools.js:607
 msgid "Internet connection required"
 msgstr "Interneteko sarbidea behar da"
 
@@ -431,7 +435,7 @@ msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 "Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
 
-#: app/scripts/services/tools.js:783
+#: app/scripts/services/tools.js:779
 msgid "Invalid collection {{name}}"
 msgstr "{{name}} bilduma baliogabea"
 
@@ -460,7 +464,7 @@ msgstr "Hizkuntza"
 msgid "Local parameter"
 msgstr "Parametro lokala"
 
-#: app/scripts/services/tools.js:634
+#: app/scripts/services/tools.js:630
 msgid "Make virtual env..."
 msgstr "Env birtuala sortu..."
 
@@ -532,7 +536,7 @@ msgstr "{{name}} proiektua kargatu da"
 msgid "Project {{name}} saved"
 msgstr "{{name}} proiektua gorde da"
 
-#: app/scripts/services/tools.js:622
+#: app/scripts/services/tools.js:618
 msgid "Python 2.7 is required"
 msgstr "Python 2.7 behar da"
 
@@ -548,7 +552,7 @@ msgstr "Irakurtzeko soilik"
 msgid "Redo"
 msgstr "Berregin"
 
-#: app/scripts/services/tools.js:370
+#: app/scripts/services/tools.js:368
 msgid "Remote host {{name}} not connected"
 msgstr "{{name}} urrutiko ostalaria ez dago konektatua"
 
@@ -620,7 +624,7 @@ msgstr "Testbench "
 msgid "Testbench exported"
 msgstr "Testbench-a esportatu da"
 
-#: app/scripts/services/tools.js:762
+#: app/scripts/services/tools.js:758
 msgid "The collection {{name}} already exists."
 msgstr "{{name}} bilduma badago"
 
@@ -631,16 +635,16 @@ msgid ""
 msgstr ""
 "FPGAaren E/S konfigurazioa galduko da. {{name}} txartela aldatu nahi al duzu?"
 
-#: app/scripts/services/tools.js:513
+#: app/scripts/services/tools.js:509
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:501
+#: app/scripts/services/tools.js:497
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 "Toolchain-aren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:493
+#: app/scripts/services/tools.js:489
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -664,11 +668,11 @@ msgstr "Proiektua {{name}} txartelarentzat diseinatu da."
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:696
+#: app/scripts/services/tools.js:692
 msgid "Toolchain installed"
 msgstr "Toolchain-a instalatu da"
 
-#: app/scripts/services/tools.js:699
+#: app/scripts/services/tools.js:695
 msgid "Toolchain not installed"
 msgstr "Toolchain-a ez da instalatu"
 
@@ -677,7 +681,7 @@ msgstr "Toolchain-a ez da instalatu"
 msgid "Toolchain not installed. Please, install the toolchain"
 msgstr "Toolchain-a ez da instalatu. Mesedez, toolchaina instala ezazu"
 
-#: app/scripts/services/tools.js:518
+#: app/scripts/services/tools.js:514
 msgid "Toolchain removed"
 msgstr "Toolchain-a ezabatu da"
 
@@ -752,7 +756,7 @@ msgstr "Portuaren izena okerra da: {{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Proiektuaren formatua okerra da: {{name}}"
 
-#: app/scripts/services/tools.js:367
+#: app/scripts/services/tools.js:365
 msgid "Wrong remote hostname {{name}}"
 msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 
@@ -765,17 +769,17 @@ msgid "back"
 msgstr "atzera"
 
 #. Build done
-#: app/scripts/services/tools.js:382
+#: app/scripts/services/tools.js:380
 msgid "done_build"
 msgstr "Sintetizatua egin da"
 
 #. Upload done
-#: app/scripts/services/tools.js:384
+#: app/scripts/services/tools.js:382
 msgid "done_upload"
 msgstr "Karga egin da"
 
 #. Verification done
-#: app/scripts/services/tools.js:380
+#: app/scripts/services/tools.js:378
 msgid "done_verify"
 msgstr "Egiaztapena egin da"
 

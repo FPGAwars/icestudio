@@ -51,7 +51,7 @@ msgstr "Ajouter un bloc pour commencer"
 msgid "Add as block"
 msgstr "Ajouter un bloc"
 
-#: app/scripts/services/tools.js:899
+#: app/scripts/services/tools.js:895
 msgid "All collections removed"
 msgstr "Toutes les collections ont été supprimées"
 
@@ -123,11 +123,11 @@ msgstr "Annuler"
 msgid "Catalan"
 msgstr "Catalan"
 
-#: app/scripts/services/tools.js:609
+#: app/scripts/services/tools.js:605
 msgid "Check Internet connection..."
 msgstr "Vérifier la connexion Internet..."
 
-#: app/scripts/services/tools.js:617
+#: app/scripts/services/tools.js:613
 msgid "Check Python..."
 msgstr "Vérifier Python..."
 
@@ -151,19 +151,19 @@ msgstr ""
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
-#: app/scripts/services/tools.js:777
+#: app/scripts/services/tools.js:773
 msgid "Collection {{name}} added"
 msgstr "Collection {{name}} ajoutée"
 
-#: app/scripts/services/tools.js:771
+#: app/scripts/services/tools.js:767
 msgid "Collection {{name}} not replaced"
 msgstr "Collection {{name}} non remplacée"
 
-#: app/scripts/services/tools.js:893
+#: app/scripts/services/tools.js:889
 msgid "Collection {{name}} removed"
 msgstr "Collection {{name}} supprimée"
 
-#: app/scripts/services/tools.js:767
+#: app/scripts/services/tools.js:763
 msgid "Collection {{name}} replaced"
 msgstr "Collection {{name}} remplacée"
 
@@ -199,7 +199,7 @@ msgstr "Documentation"
 msgid "Default"
 msgstr "Défaut"
 
-#: app/scripts/services/tools.js:485
+#: app/scripts/services/tools.js:481
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -228,7 +228,7 @@ msgstr "Voulez-vous le convertir ?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Voulez-vous supprimer la collection {{name}} ?"
 
-#: app/scripts/services/tools.js:763
+#: app/scripts/services/tools.js:759
 msgid "Do you want to replace it?"
 msgstr "Voulez-vous le remplacer ?"
 
@@ -260,7 +260,7 @@ msgstr "Attributs de bloc dupliqués"
 msgid "Edit"
 msgstr "Édition"
 
-#: app/scripts/services/tools.js:752
+#: app/scripts/services/tools.js:748
 msgid "Edit the collection name"
 msgstr ""
 
@@ -300,13 +300,17 @@ msgstr "Entrer les paramètres"
 msgid "Enter the remote hostname user@host (experimental)"
 msgstr "Entrer le nom d'hôte distant user@host (expérimental)"
 
-#: app/scripts/services/tools.js:508
+#: app/scripts/services/tools.js:504
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Erreur: La toolchain par défaut n'a pas été trouvée dans '{{dir}}'"
 
 #: app/scripts/services/utils.js:670
 msgid "Error: {{error}}"
 msgstr "Erreur : {{error}}"
+
+#: app/scripts/services/tools.js:336
+msgid "Errors detected in the code"
+msgstr ""
 
 #: app/views/menu.html:39
 msgid "Examples"
@@ -320,15 +324,15 @@ msgstr "Exécuter à distance {{label}} ..."
 msgid "Export"
 msgstr "Exporter"
 
-#: app/scripts/services/tools.js:641
+#: app/scripts/services/tools.js:637
 msgid "Extract default apio files..."
 msgstr "Extraction des fichiers apio par défaut..."
 
-#: app/scripts/services/tools.js:651
+#: app/scripts/services/tools.js:647
 msgid "Extract default apio packages..."
 msgstr "Extraction des paquets apio par défaut..."
 
-#: app/scripts/services/tools.js:629
+#: app/scripts/services/tools.js:625
 msgid "Extract virtual env files..."
 msgstr "Extraction des fichiers d'environnement virtuels..."
 
@@ -400,19 +404,19 @@ msgstr "Entrée"
 msgid "Install"
 msgstr "Installation"
 
-#: app/scripts/services/tools.js:646
+#: app/scripts/services/tools.js:642
 msgid "Install default apio..."
 msgstr "Installer l'apio par défaut..."
 
-#: app/scripts/services/tools.js:695
+#: app/scripts/services/tools.js:691
 msgid "Installation completed"
 msgstr "Installation terminée"
 
-#: app/scripts/services/tools.js:538 app/scripts/services/tools.js:575
+#: app/scripts/services/tools.js:534 app/scripts/services/tools.js:571
 msgid "Installing toolchain"
 msgstr "Installation de la toolchain"
 
-#: app/scripts/services/drivers.js:112 app/scripts/services/tools.js:611
+#: app/scripts/services/drivers.js:112 app/scripts/services/tools.js:607
 msgid "Internet connection required"
 msgstr "Une connexion Internet est requise"
 
@@ -430,7 +434,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Connexion de bloc invalide:<br> <i>Pull up</i> déjà connectée"
 
-#: app/scripts/services/tools.js:783
+#: app/scripts/services/tools.js:779
 msgid "Invalid collection {{name}}"
 msgstr "Collection {{name}} invalide"
 
@@ -459,7 +463,7 @@ msgstr "Langue"
 msgid "Local parameter"
 msgstr "Paramètre local"
 
-#: app/scripts/services/tools.js:634
+#: app/scripts/services/tools.js:630
 msgid "Make virtual env..."
 msgstr "Créer l'environnement virtuel..."
 
@@ -531,7 +535,7 @@ msgstr "Projet {{name}} chargé"
 msgid "Project {{name}} saved"
 msgstr "Projet {{name}} sauvegardé"
 
-#: app/scripts/services/tools.js:622
+#: app/scripts/services/tools.js:618
 msgid "Python 2.7 is required"
 msgstr "Python 2.7 est requis"
 
@@ -547,7 +551,7 @@ msgstr "Lecture seule"
 msgid "Redo"
 msgstr "Refaire"
 
-#: app/scripts/services/tools.js:370
+#: app/scripts/services/tools.js:368
 msgid "Remote host {{name}} not connected"
 msgstr "Hôte distant {{name}} non connecté"
 
@@ -619,7 +623,7 @@ msgstr "Testbench"
 msgid "Testbench exported"
 msgstr "Testbench exporté"
 
-#: app/scripts/services/tools.js:762
+#: app/scripts/services/tools.js:758
 msgid "The collection {{name}} already exists."
 msgstr "La collection {{name}} existe déjà."
 
@@ -631,15 +635,15 @@ msgstr ""
 "La configuration actuelle des entrées/sorties du FPGA va être perdue. Voulez-"
 "vous changer pour la carte {{name}}?"
 
-#: app/scripts/services/tools.js:513
+#: app/scripts/services/tools.js:509
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "La toolchain va être supprimée. Voulez-vous continuer ?"
 
-#: app/scripts/services/tools.js:501
+#: app/scripts/services/tools.js:497
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr "La toolchain par défaut va être restaurée. Voulez vous continuer ?"
 
-#: app/scripts/services/tools.js:493
+#: app/scripts/services/tools.js:489
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -663,11 +667,11 @@ msgstr "Ce projet est conçu pour la carte {{name}}"
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:696
+#: app/scripts/services/tools.js:692
 msgid "Toolchain installed"
 msgstr "La toolchain est installée"
 
-#: app/scripts/services/tools.js:699
+#: app/scripts/services/tools.js:695
 msgid "Toolchain not installed"
 msgstr "La toolchain n'est pas installée"
 
@@ -676,7 +680,7 @@ msgstr "La toolchain n'est pas installée"
 msgid "Toolchain not installed. Please, install the toolchain"
 msgstr "La toolchain n'est pas installée. Veuillez installer la toolchain"
 
-#: app/scripts/services/tools.js:518
+#: app/scripts/services/tools.js:514
 msgid "Toolchain removed"
 msgstr "Toolchain supprimée"
 
@@ -751,7 +755,7 @@ msgstr "Mauvais nom de port {{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Mauvais format de projet: {{name}}"
 
-#: app/scripts/services/tools.js:367
+#: app/scripts/services/tools.js:365
 msgid "Wrong remote hostname {{name}}"
 msgstr "Mauvais nom d'hôte distant {{name}}"
 
@@ -764,17 +768,17 @@ msgid "back"
 msgstr "retour"
 
 #. Build done
-#: app/scripts/services/tools.js:382
+#: app/scripts/services/tools.js:380
 msgid "done_build"
 msgstr "Construction terminée"
 
 #. Upload done
-#: app/scripts/services/tools.js:384
+#: app/scripts/services/tools.js:382
 msgid "done_upload"
 msgstr "Téléchargement terminé"
 
 #. Verification done
-#: app/scripts/services/tools.js:380
+#: app/scripts/services/tools.js:378
 msgid "done_verify"
 msgstr "Vérification faite"
 
