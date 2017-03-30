@@ -56,7 +56,6 @@ clean:
 .PHONY: html
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	cp resources/webm/*.webm $(BUILDDIR)/html/source
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

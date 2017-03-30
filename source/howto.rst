@@ -137,7 +137,7 @@ Create a project
 
 .. raw:: html
 
-  <video src="add-blocks.webm" width="100%" height="auto" autoplay loop></video>
+  <video src="../_static/webm/add-blocks.webm" width="100%" height="auto" autoplay loop></video>
 
 |
 
