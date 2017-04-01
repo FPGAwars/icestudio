@@ -804,30 +804,17 @@ angular.module('icestudio')
             origName: data[1], blocks: [], examples: [], locale: [], package: ''
           };
         }
-        data = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
-        if (data) {
-          _collections[data[1]].blocks.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.vh$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
-        if (data) {
-          _collections[data[1]].locale.push(zipEntry.entryName);
-        }
+
+        addCollectionItem('blocks', 'ice', _collections, zipEntry);
+        addCollectionItem('blocks', 'v', _collections, zipEntry);
+        addCollectionItem('blocks', 'vh', _collections, zipEntry);
+        addCollectionItem('blocks', 'list', _collections, zipEntry);
+        addCollectionItem('examples', 'ice', _collections, zipEntry);
+        addCollectionItem('examples', 'v', _collections, zipEntry);
+        addCollectionItem('examples', 'vh', _collections, zipEntry);
+        addCollectionItem('examples', 'list', _collections, zipEntry);
+        addCollectionItem('locale', 'po', _collections, zipEntry);
+
         data = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
         if (data) {
           _collections[data[1]].package = zipEntry.entryName;
@@ -839,6 +826,13 @@ angular.module('icestudio')
       });
 
       return _collections;
+    }
+
+    function addCollectionItem(key, ext, collections, zipEntry) {
+      var data = zipEntry.entryName.match(RegExp('^([^\/]+)\/' + key + '\/.*\.' + ext + '$'));
+      if (data) {
+        collections[data[1]][key].push(zipEntry.entryName);
+      }
     }
 
     function installCollection(collection, zip) {
