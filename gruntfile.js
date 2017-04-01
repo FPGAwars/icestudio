@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     platforms = ['linux32', 'linux64', 'win32', 'win64'];
     options = { scope: ['devDependencies'] };
     distCommands = ['compress:linux32', 'compress:linux64', 'appimage:linux32', 'appimage:linux64',
-                    'compress:win32', 'compress:win64', 'wget:python', 'exec:nsis32', 'exec:nsis64'];
+                    'compress:win32', 'compress:win64', 'wget:python32', 'wget:python64', 'exec:nsis32', 'exec:nsis64'];
   }
 
   function all(dir) {
@@ -56,8 +56,8 @@ module.exports = function(grunt) {
     exec: {
       nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
-      nsis32: 'makensis -DARCH=win32 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
+      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-2.7.13.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-2.7.13.amd64.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -315,7 +315,14 @@ module.exports = function(grunt) {
 
     // Wget: Python installer and Default collection
     wget: {
-      python: {
+      python32: {
+        options: {
+          overwrite: false
+        },
+        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi',
+        dest: 'cache/python/python-2.7.13.msi'
+      },
+      python64: {
         options: {
           overwrite: false
         },
