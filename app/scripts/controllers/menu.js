@@ -34,10 +34,6 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
-    // Initialize
-    updateSelectedBoard();
-    updateSelectedCollection();
-
     // Window events
     var win = gui.Window.get();
     win.on('close', function() {
@@ -477,10 +473,6 @@ angular.module('icestudio')
         alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
       }
     };
-
-    function updateSelectedBoard() {
-      profile.set('board', boards.selectBoard(profile.get('board')).name);
-    }
 
 
     //-- Tools

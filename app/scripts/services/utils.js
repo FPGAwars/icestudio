@@ -341,7 +341,7 @@ angular.module('icestudio')
       return fileTree;
     }
 
-    this.setLocale = function(locale) {
+    this.setLocale = function(locale, callback) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -358,6 +358,11 @@ angular.module('icestudio')
         if (nodeFs.existsSync(filepath)) {
           gettextCatalog.loadRemote(filepath);
         }
+      }
+      if (callback) {
+        setTimeout(function() {
+          callback();
+        }, 50);
       }
       // Return the best language
       return bestLang;
@@ -1034,18 +1039,18 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
-    this.loadLanguage = function(profile) {
+    this.loadLanguage = function(profile, callback) {
       var self = this;
       profile.load(function() {
         var lang = profile.get('language');
         if (lang) {
-          self.setLocale(lang);
+          self.setLocale(lang, callback);
         }
         else {
           // If lang is empty, use the system language
           nodeLangInfo(function(err, sysLang) {
             if (!err) {
-              profile.set('language', self.setLocale(sysLang));
+              profile.set('language', self.setLocale(sysLang, callback));
             }
           });
         }

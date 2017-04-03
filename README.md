@@ -101,7 +101,7 @@ npm run dist
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
 | Galician   | ![Progress](http://progressed.io/bar/95)   |
-| Basque     | ![Progress](http://progressed.io/bar/95)   |
+| Basque     | ![Progress](http://progressed.io/bar/100)  |
 | Catalan    | ![Progress](http://progressed.io/bar/95)   |
 | French     | ![Progress](http://progressed.io/bar/95)   |
 

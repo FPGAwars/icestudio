@@ -31,9 +31,14 @@ angular
     // Load collections
     collections.loadCollections();
     // Load language
-    utils.loadLanguage(profile);
-
-    setTimeout(function() {
+    utils.loadLanguage(profile, function() {
+      // Initialize selected board
+      var selectedBoard = boards.selectBoard(profile.get('board')).name;
+      profile.set('board', selectedBoard);
+      // Initialize selected collection
+      var selectedCollection = collections.selectCollection(profile.get('collection'));
+      profile.set('collection', selectedCollection);
+      // Initialize title
       project.updateTitle(gettextCatalog.getString('Untitled'));
-    }, 200);
+    });
   });
