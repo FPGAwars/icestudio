@@ -133,7 +133,7 @@ msgstr "Python egiaztatu..."
 
 #: app/scripts/services/drivers.js:104
 msgid "Click here to install it"
-msgstr ""
+msgstr "Instalatzeko hemen klik egin"
 
 #: app/views/menu.html:334
 msgid "Code"
@@ -145,11 +145,11 @@ msgstr "Bilduma"
 
 #: app/views/menu.html:165
 msgid "Collection info"
-msgstr ""
+msgstr "Bildumaren informazioa"
 
 #: app/scripts/controllers/menu.js:436
 msgid "Collection {{collection}} info not defined"
-msgstr ""
+msgstr "{{collection}} bildumaren informazioa zehaztuta gabe dago"
 
 #: app/scripts/services/tools.js:773
 msgid "Collection {{name}} added"
@@ -257,11 +257,11 @@ msgstr "Blokearen ezaugarriak bikoiztu dira"
 
 #: app/views/menu.html:78
 msgid "Edit"
-msgstr "Editatu"
+msgstr "Aldatu"
 
 #: app/scripts/services/tools.js:748
 msgid "Edit the collection name"
-msgstr ""
+msgstr "Bildumaren izena aldatu"
 
 #: app/views/menu.html:121 app/views/menu.html:247
 msgid "Enable"
@@ -297,8 +297,7 @@ msgstr "Parametroak sar itzazu"
 
 #: app/scripts/controllers/menu.js:328
 msgid "Enter the remote hostname user@host (experimental)"
-msgstr ""
-"Urrutiko ostalariaren izena sar ezazu erabiltzailea@host (esperimentala)"
+msgstr "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host (esperimentala)"
 
 #: app/scripts/services/tools.js:504
 msgid "Error: default toolchain not found in '{{dir}}'"
@@ -310,7 +309,7 @@ msgstr "Errorea: {{error}}"
 
 #: app/scripts/services/tools.js:336
 msgid "Errors detected in the code"
-msgstr ""
+msgstr "Kodean erroreak aurkitu dira"
 
 #: app/views/menu.html:39
 msgid "Examples"
@@ -426,14 +425,11 @@ msgstr "<i>Pull up</i> konexio baliogabea:<br>blokea dagoeneko konektatua dago"
 
 #: app/scripts/services/graph.js:193
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
-msgstr ""
-"<i>Pull up</i> konexio baliogabea:<br><i>sarrera</i> blokeak soilik dira "
-"onargarriak"
+msgstr "<i>Pull up</i> konexio baliogabea:<br><i>sarrera</i> blokeak soilik dira onargarriak"
 
 #: app/scripts/services/graph.js:185
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
-msgstr ""
-"Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
+msgstr "Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
 
 #: app/scripts/services/tools.js:779
 msgid "Invalid collection {{name}}"
@@ -454,7 +450,7 @@ msgstr "Sarrerako konexio anitzak baliogabeak"
 
 #: app/scripts/services/drivers.js:190
 msgid "It is recommended to use <b>USB 2.0</b> ports"
-msgstr ""
+msgstr "USB 2.0 atakak erabiltzea gomendatzen da"
 
 #: app/views/menu.html:134
 msgid "Language"
@@ -518,7 +514,7 @@ msgstr "Itsatsi"
 
 #: app/scripts/services/utils.js:872
 msgid "Please run: {{cmd}}"
-msgstr ""
+msgstr "Mesedez {{cmd}} exekutatu"
 
 #: app/views/menu.html:108
 msgid "Preferences"
@@ -641,8 +637,7 @@ msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
 
 #: app/scripts/services/tools.js:497
 msgid "The toolchain will be restored to default. Do you want to continue?"
-msgstr ""
-"Toolchain-aren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
+msgstr "Toolchain-aren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
 
 #: app/scripts/services/tools.js:489
 msgid ""
@@ -800,7 +795,7 @@ msgstr "Egiaztapena hasi ..."
 
 #: app/scripts/services/drivers.js:103 app/scripts/services/utils.js:847
 msgid "{{app}} is required."
-msgstr ""
+msgstr "{{app}} behar da"
 
 #: app/scripts/controllers/menu.js:398
 msgid "{{board}} datasheet not defined"
