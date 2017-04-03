@@ -271,7 +271,7 @@ angular.module('icestudio')
               // main.v:#: error: ...
               // main.v:#: warning: ...
               // main.v:#: syntax error
-              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)\n/g;
+              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
@@ -279,7 +279,7 @@ angular.module('icestudio')
                   type: matchError[2]
                 });
               }
-              re = /main.v:([0-9]+):\ssyntax\serror\n/g;
+              re = /main.v:([0-9]+):\ssyntax\serror[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
@@ -289,9 +289,9 @@ angular.module('icestudio')
               }
 
               // - Yosys errors
-              // ERROR: ... main.v:#...\n
-              // Warning: ... main.v:#...\n
-              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)\n/g;
+              // ERROR: ... main.v:#...
+              // Warning: ... main.v:#...
+              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 var msg = '';
                 var line = parseInt(matchError[3]);
