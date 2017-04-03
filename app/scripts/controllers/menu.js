@@ -349,6 +349,8 @@ angular.module('icestudio')
           graph.loadDesign(project.get('design'), { disabled: false });
           //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
         });
+        // Rearrange the collections content
+        collections.sort();
       }
     };
 
