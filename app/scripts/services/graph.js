@@ -251,7 +251,6 @@ angular.module('icestudio')
 
       this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
       {
-        viewportSelector: targetElement.childNodes[0].childNodes[0],
         fit: false,
         center: false,
         zoomEnabled: true,
@@ -260,11 +259,11 @@ angular.module('icestudio')
         dblClickZoomEnabled: false,
         minZoom: ZOOM_MIN,
         maxZoom: ZOOM_MAX,
+        eventsListenerElement: targetElement,
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
           state.zoom = scale; // Already rendered in pan
-
           // Close expanded combo
           if (document.activeElement.className === 'select2-search__field') {
             $('select').select2('close');
@@ -693,7 +692,7 @@ angular.module('icestudio')
     };
 
     function resetBlocks() {
-      var data;
+      var data, connectedLinks;
       var cells = graph.getCells();
       _.each(cells, function(cell) {
         if (cell.isLink()) {
@@ -710,32 +709,47 @@ angular.module('icestudio')
         else if (type === 'basic.code') {
           // Reset rules in Code block ports
           data = utils.clone(cell.get('data'));
+          connectedLinks = graph.getConnectedLinks(cell);
           if (data && data.ports && data.ports.in) {
-            for (var j in data.ports.in) {
-              var port = data.ports.in[j];
-              port.default = utils.hasInputRule(port.name);
-            }
+            _.each(data.ports.in, function(port) {
+              var connected = false;
+              _.each(connectedLinks, function(connectedLink) {
+                if (connectedLink.get('target').port === port.name) {
+                  connected = true;
+                  return false;
+                }
+              });
+              port.default = utils.hasInputRule(port.name, !connected);
+              cell.set('data', data);
+              paper.findViewByModel(cell.id).updateBox();
+            });
           }
-          cell.set('data', data);
-          paper.findViewByModel(cell.id).updateBox();
         }
         else if (type.indexOf('basic.') === -1) {
           // Reset rules in Generic block ports
           var block = common.allDependencies[type];
           data = { ports: { in: [] }};
-          for (var i in block.design.graph.blocks) {
-            var item = block.design.graph.blocks[i];
-            if (item.type === 'basic.input') {
-              if (!item.data.range) {
+          connectedLinks = graph.getConnectedLinks(cell);
+          if (block.design.graph.blocks) {
+            _.each(block.design.graph.blocks, function(item) {
+              if (item.type === 'basic.input' && !item.data.range) {
+                console.log(item, connectedLinks);
+                var connected = false;
+                _.each(connectedLinks, function(connectedLink) {
+                  if (connectedLink.get('target').port === item.id) {
+                    connected = true;
+                    return false;
+                  }
+                });
                 data.ports.in.push({
                   name: item.id,
-                  default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
+                  default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name, !connected)
                 });
               }
-            }
+              cell.set('data', data);
+              paper.findViewByModel(cell.id).updateBox();
+            });
           }
-          cell.set('data', data);
-          paper.findViewByModel(cell.id).updateBox();
         }
       });
     }

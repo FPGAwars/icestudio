@@ -997,7 +997,8 @@ angular.module('icestudio')
       return subDependencies;
     };
 
-    this.hasInputRule = function(port) {
+    this.hasInputRule = function(port, apply) {
+      apply = (apply === undefined) ? true : apply;
       var _default;
       var rules = common.selectedBoard.rules;
       if (rules) {
@@ -1006,7 +1007,7 @@ angular.module('icestudio')
           for (var i in allInitPorts) {
             if (port === allInitPorts[i].port){
               _default = allInitPorts[i];
-              _default.apply = true;
+              _default.apply = apply;
               break;
             }
           }
