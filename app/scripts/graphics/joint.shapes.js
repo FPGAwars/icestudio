@@ -894,10 +894,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    var selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -905,7 +905,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(selector[0]);
+    this.editor = ace.edit(this.selector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -953,7 +953,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('mousewheel', function(event) {
       // Stop mousewheel event propagation when target is active
-      if (document.activeElement.className === 'ace_text-input') { // TODO: is the same code block?
+      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
         // Enable only scroll
         event.stopPropagation();
       }
@@ -1208,7 +1208,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('mousewheel', function(event) {
       // Stop mousewheel event propagation when target is active
-      if (document.activeElement.className === 'ace_text-input') { // TODO: is the same info block?
+      if (document.activeElement.parentNode.id === self.editorSelector.attr('id')) {
         // Enable only scroll
         event.stopPropagation();
       }
