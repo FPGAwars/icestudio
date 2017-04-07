@@ -929,6 +929,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
+        self.editor.resize();
       }
     });
     this.editor.on('focus', function() {
@@ -948,6 +949,17 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (e.text.startsWith('{"icestudio":')) {
         // Prevent paste blocks
         e.text = '';
+      }
+    });
+    this.editor.on('mousewheel', function(event) {
+      // Stop mousewheel event propagation when target is active
+      if (document.activeElement.className === 'ace_text-input') { // TODO: is the same code block?
+        // Enable only scroll
+        event.stopPropagation();
+      }
+      else {
+        // Enable only zoom
+        event.stopImmediatePropagation();
       }
     });
 
@@ -1122,6 +1134,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
+          ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
         </script>\
         <div class="resizer"/>\
@@ -1171,6 +1184,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
+        self.editor.resize();
       }
     });
     this.editor.on('focus', function() {
@@ -1190,6 +1204,17 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       if (e.text.startsWith('{"icestudio":')) {
         // Prevent paste blocks
         e.text = '';
+      }
+    });
+    this.editor.on('mousewheel', function(event) {
+      // Stop mousewheel event propagation when target is active
+      if (document.activeElement.className === 'ace_text-input') { // TODO: is the same info block?
+        // Enable only scroll
+        event.stopPropagation();
+      }
+      else {
+        // Enable only zoom
+        event.stopImmediatePropagation();
       }
     });
 

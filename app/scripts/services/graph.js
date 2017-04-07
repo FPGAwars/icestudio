@@ -247,7 +247,7 @@ angular.module('icestudio')
         }
       }
 
-      var targetElement= element[0];
+      var targetElement = element[0];
 
       this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
       {
