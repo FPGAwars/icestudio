@@ -32,6 +32,8 @@ angular
     collections.loadCollections();
     // Load language
     utils.loadLanguage(profile, function() {
+      // Rearrange collections
+      collections.sort();
       // Initialize selected board
       var selectedBoard = boards.selectBoard(profile.get('board')).name;
       profile.set('board', selectedBoard);
