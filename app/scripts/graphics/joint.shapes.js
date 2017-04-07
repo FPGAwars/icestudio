@@ -550,10 +550,10 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     for (var i in ports) {
       var port = ports[i];
       if (port.clock) {
-        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 10;
+        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 9;
         this.$box.append('\
-          <div class="clock" style="top: ' + top + 'px; left: -1px;">\
-            <svg width="12" height="12"><path d="M.0.0l12 6-12 6" fill="none" stroke="#555" stroke-width="1.2"/>\
+          <div class="clock" style="top: ' + top + 'px;">\
+            <svg width="12" height="18"><path d="M-1 0 l10 8-10 8" fill="none" stroke="#555" stroke-width="1.2" stroke-linejoin="round"/>\
           </div>');
       }
     }
