@@ -959,7 +959,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       }
       else {
         // Enable only zoom
-        event.stopImmediatePropagation();
+        event.preventDefault();
       }
     });
 
@@ -1214,7 +1214,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       }
       else {
         // Enable only zoom
-        event.stopImmediatePropagation();
+        event.preventDefault();
       }
     });
 
