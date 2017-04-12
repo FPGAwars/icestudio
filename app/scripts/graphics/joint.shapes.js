@@ -909,6 +909,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
+    this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
         // Check consecutive-change interval
@@ -1164,6 +1165,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
+    this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
         // Check consecutive-change interval
