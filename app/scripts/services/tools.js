@@ -275,7 +275,7 @@ angular.module('icestudio')
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: matchError[3],
+                  msg: matchError[3].replace(/\sin\smain\..*$/, ''),
                   type: matchError[2]
                 });
               }
@@ -454,7 +454,7 @@ angular.module('icestudio')
           newCodeError = {
            type: codeError.type,
            line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
-           msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
+           msg: codeError.msg
          };
           if (module.name.startsWith('main_')) {
             // Code block
