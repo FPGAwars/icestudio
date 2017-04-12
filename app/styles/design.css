@@ -392,9 +392,6 @@
   pointer-events: auto;
 }
 
-.port-body:hover {
-}
-
 .joint-highlight-stroke.joint-theme-default {
   display: none;
 }

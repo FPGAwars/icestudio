@@ -136,8 +136,8 @@ angular.module('icestudio')
         },
         validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
           // Prevent output-output links
-          if (magnetS.getAttribute('type') === 'output' &&
-              magnetT.getAttribute('type') === 'output') {
+          if (magnetS && magnetS.getAttribute('type') === 'output' &&
+              magnetT && magnetT.getAttribute('type') === 'output') {
             if (magnetS !== magnetT) {
               // Show warning if source and target blocks are different
               warning(gettextCatalog.getString('Invalid connection'));
@@ -145,15 +145,15 @@ angular.module('icestudio')
             return false;
           }
           // Ensure right -> left connections
-          if (magnetS.getAttribute('pos') === 'right') {
-            if (magnetT.getAttribute('pos') !== 'left') {
+          if (magnetS && magnetS.getAttribute('pos') === 'right') {
+            if (magnetT && magnetT.getAttribute('pos') !== 'left') {
               warning(gettextCatalog.getString('Invalid connection'));
               return false;
             }
           }
           // Ensure bottom -> top connections
-          if (magnetS.getAttribute('pos') === 'bottom') {
-            if (magnetT.getAttribute('pos') !== 'top') {
+          if (magnetS && magnetS.getAttribute('pos') === 'bottom') {
+            if (magnetT && magnetT.getAttribute('pos') !== 'top') {
               warning(gettextCatalog.getString('Invalid connection'));
               return false;
             }
@@ -263,17 +263,17 @@ angular.module('icestudio')
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
-          state.zoom = scale; // Already rendered in pan
+          state.zoom = scale;
           // Close expanded combo
           if (document.activeElement.className === 'select2-search__field') {
             $('select').select2('close');
           }
+          updateCellBoxes();
         },
         /*beforePan: function(oldpan, newpan) {
         },*/
         onPan: function(newPan) {
           state.pan = newPan;
-          selectionView.options.state = state;
           graph.trigger('state', state);
           updateCellBoxes();
         }
@@ -281,6 +281,7 @@ angular.module('icestudio')
 
       function updateCellBoxes() {
         var cells = graph.getCells();
+        selectionView.options.state = state;
         _.each(cells, function(cell) {
           if (!cell.isLink()) {
             cell.attributes.state = state;

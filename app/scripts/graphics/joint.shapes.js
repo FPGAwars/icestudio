@@ -43,8 +43,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       '.body': {
         width: 1,
         height: 1,
-        stroke: 'none',
-        'fill-opacity': 0
+        stroke: 'none'
       },
       '.port-body': {
         r: 8,
@@ -936,7 +935,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
-        self.editor.resize();
       }
     });
     this.editor.on('focus', function() {
@@ -1062,6 +1060,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
+
+    // Update gutter
+    //console.log($('.ace_gutter-cell').css('padding-left'), $('.ace_scroller').css('left'));
+    $('.ace_scroller').css('left', Math.round(41 * state.zoom).toString() + 'px');
+    $('.ace_gutter-layer').css('width', Math.round(41 * state.zoom).toString() + 'px');
+    $('.ace_gutter-cell').css('padding-left', Math.round(19 * state.zoom).toString() + 'px');
+    $('.ace_gutter-cell').css('padding-right', Math.round(13 * state.zoom).toString() + 'px');
 
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
@@ -1192,7 +1197,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
-        self.editor.resize();
       }
     });
     this.editor.on('focus', function() {
@@ -1391,7 +1395,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="6"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
     '</g>'
   ].join(''),
 
@@ -1648,6 +1652,8 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         }
       });
 
+      var points = [];
+
       // Update all the portWires combinations
       if (portWires.length > 0) {
         var markupTemplate = joint.util.template(
@@ -1679,7 +1685,11 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
                 // Eval if intersects any segment of wire vB
                 if (evalIntersection(vA[i], [vB[j], vB[j+1]])) {
                   // Bifurcation found!
-                  markersA.append(V(markupTemplate(vA[i])).node);
+                  var point = vA[i];
+                  if (!contains(point, points)) {
+                    points.push(point);
+                    markersA.append(V(markupTemplate(point)).node);
+                  }
                 }
               }
             }
@@ -1687,11 +1697,25 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         }
       }
 
+      function contains(point, points) {
+        var found = false;
+        _.each(points, function(p) {
+          if (p.x === point.x && p.y === point.y) {
+            found = true;
+            return;
+          }
+        });
+        return found;
+      }
+
       function v(wire) {
         var v = [];
         v.push(wire.sourcePoint);
         v = v.concat(wire.route);
-        v.push(wire.targetPoint);
+        v.push({
+          x: wire.targetPoint.x + 9,
+          y: wire.targetPoint.y
+        });
         return v;
       }
 
@@ -1699,14 +1723,14 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         if (segment[0].x === segment[1].x) {
           // Vertical
           return ((point.x === segment[0].x) &&
-            (point.y > Math.min(segment[0].y, segment[1].y)) &&
-            (point.y < Math.max(segment[0].y, segment[1].y)));
+                  (point.y > Math.min(segment[0].y, segment[1].y)) &&
+                  (point.y < Math.max(segment[0].y, segment[1].y)));
         }
         else {
           // Horizontal
           return ((point.y === segment[0].y) &&
-          (point.x > Math.min(segment[0].x, segment[1].x)) &&
-          (point.x < Math.max(segment[0].x, segment[1].x)));
+                  (point.x > Math.min(segment[0].x, segment[1].x)) &&
+                  (point.x < Math.max(segment[0].x, segment[1].x)));
         }
       }
     }
