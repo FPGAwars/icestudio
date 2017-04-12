@@ -165,6 +165,7 @@
   color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .virtual-port {

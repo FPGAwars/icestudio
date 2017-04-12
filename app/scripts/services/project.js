@@ -340,16 +340,17 @@ angular.module('icestudio')
     function sortGraph() {
       var cells = graph.getCells();
 
-      // Sort cells by x-coordinate
+      // Sort Constant cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink()) {
+        if (cell.get('type') === 'ice.Constant') {
           return cell.attributes.position.x;
         }
       });
 
-      // Sort cells by y-coordinate
+      // Sort I/O cells by y-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink()) {
+        if (cell.get('type') === 'ice.Input' ||
+            cell.get('type') === 'ice.Output') {
           return cell.attributes.position.y;
         }
       });
