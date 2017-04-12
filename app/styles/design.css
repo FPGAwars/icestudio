@@ -129,6 +129,11 @@
   border-color: #777 transparent transparent transparent;
 }
 
+.generic-block .tooltip-medium {
+  width: 180px;
+  margin-left: -90px;
+}
+
 .generic-block .tooltip-large {
   width: 240px;
   margin-left: -120px;

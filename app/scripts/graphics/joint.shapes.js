@@ -471,10 +471,16 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         if (self.enter && !self.down) {
           self.tooltiptext.text(self.tooltip);
           self.tooltiptext.css('visibility', 'visible');
-          if (self.tooltip.length > 30) {
+          if (self.tooltip.length > 13) {
+            self.tooltiptext.addClass('tooltip-medium');
+            self.tooltiptext.removeClass('tooltip-large');
+          }
+          else if (self.tooltip.length > 20) {
             self.tooltiptext.addClass('tooltip-large');
+            self.tooltiptext.removeClass('tooltip-medium');
           }
           else {
+            self.tooltiptext.removeClass('tooltip-medium');
             self.tooltiptext.removeClass('tooltip-large');
           }
         }
