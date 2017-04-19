@@ -72,6 +72,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
       if (!cmd.batch) {
         this.undoStack.push(cmd);
+        this.changesStack.push(cmd);
         this.triggerChange();
         this.trigger('add', cmd);
       } else {
@@ -357,14 +358,11 @@ joint.dia.CommandManager = Backbone.Model.extend({
   undo: function() {
 
     var command = this.undoStack.pop();
-    if (command && command[0] && command[0].action !== 'lang') {
-      this.changesStack.pop();
-      this.triggerChange();
-    }
-
     if (command) {
       this.revertCommand(command);
       this.redoStack.push(command);
+      this.changesStack.pop();
+      this.triggerChange();
     }
   },
 
@@ -376,8 +374,11 @@ joint.dia.CommandManager = Backbone.Model.extend({
     if (command) {
       this.applyCommand(command);
       this.undoStack.push(command);
-      if (command && command[0] && command[0].action !== 'lang') {
-        this.changesStack.push(command);
+      if (command) {
+        if (!(command[0] && command[0].action === 'lang')) {
+          // Avoid lang changes
+          this.changesStack.push(command);
+        }
         this.triggerChange();
       }
     }
