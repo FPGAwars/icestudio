@@ -55,7 +55,6 @@ angular.module('icestudio')
     this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
-    this.SYSTEM_APIO = '/usr/bin/apio';
 
     function safeDir(_dir, self) {
       if (self.WIN32) {

@@ -179,11 +179,11 @@ angular.module('icestudio')
     this.toolchainDisabled = false;
 
     this.getApioExecutable = function() {
-      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : common.SYSTEM_APIO;
+      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
       if (nodeFs.existsSync(candidateApio)) {
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.message('Using system wide apio', 5);
+          alertify.message('Using external apio: ' + candidateApio, 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);
