@@ -167,6 +167,8 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
+
+
 * [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
 
   <img src="https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png" width="80">

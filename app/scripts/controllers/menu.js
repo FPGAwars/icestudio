@@ -421,7 +421,7 @@ angular.module('icestudio')
       var readme = collection.content.readme;
       if (readme) {
         gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
-          title: collection.name + ' - Data',
+          title: (collection.name ? collection.name : 'Default') + ' Collection - Data',
           focus: true,
           toolbar: false,
           resizable: true,
