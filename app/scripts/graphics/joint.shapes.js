@@ -725,7 +725,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   clearValues: function() {
     this.updating = true;
     var name = '';
-    var value = 0;
+    var value = '0';
     var data = JSON.parse(JSON.stringify(this.model.get('data')));
     for (var i in data.pins) {
       var index = data.pins[i].index;

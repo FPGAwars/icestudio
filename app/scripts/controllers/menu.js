@@ -470,7 +470,8 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        var newBoard = graph.selectBoard(board);
+        var reset = true;
+        var newBoard = graph.selectBoard(board, reset);
         profile.set('board', newBoard.name);
         alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
       }

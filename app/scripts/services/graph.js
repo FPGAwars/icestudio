@@ -665,7 +665,7 @@ angular.module('icestudio')
       graph.attributes.cells.models = cells;
     };
 
-    this.selectBoard = function(board) {
+    this.selectBoard = function(board, reset) {
       graph.startBatch('change');
       // Trigger board event
       var data = {
@@ -674,7 +674,9 @@ angular.module('icestudio')
       };
       graph.trigger('board', { data: data });
       var newBoard = boards.selectBoard(board.name);
-      resetBlocks();
+      if (reset) {
+        resetBlocks();
+      }
       graph.stopBatch('change');
       return newBoard;
     };
