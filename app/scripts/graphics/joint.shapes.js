@@ -1382,7 +1382,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   labelMarkup: [
     '<g class="label hidden">',
-    '<rect x="-8" y="-9" width="16" height="16" fill="white" stroke="#777"/>',
+    '<rect x="-8" y="-6" width="16" height="12" rx="2" ry="2" fill="white" stroke="#777"/>',
     '<text fill="#555"/>',
     '</g>'
   ].join(''),
@@ -1430,7 +1430,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
           text: '',
           y: '4px',
           'font-weight': 'bold',
-          'font-size': '13px',
+          'font-size': '11px',
           'text-anchor': 'middle'
         }
       }
