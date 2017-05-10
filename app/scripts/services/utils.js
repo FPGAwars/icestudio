@@ -744,17 +744,24 @@ angular.module('icestudio')
     this.parsePortLabel = function(data) {
       // e.g: name[x:y]
       var match, ret = {};
+      var maxSize = 95;
       var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?/g;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';
         ret.rangestr = match[2];
         if (match[2]) {
-          if (match[3] > match[4]) {
-            ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+          if (match[3] > maxSize || match[4] > maxSize) {
+            alertify.warning(gettextCatalog.getString('Maximum bus size: 96 bits'), 5);
+            return null;
           }
           else {
-            ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+            if (match[3] > match[4]) {
+              ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+            }
+            else {
+              ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+            }
           }
         }
         return ret;
