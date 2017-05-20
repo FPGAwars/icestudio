@@ -15,7 +15,7 @@
     "min": "0.2.3",
     "max": "0.2.4"
   },
-  "collection": "0.3.0-rc1",
+  "collection": "0.3.0",
   "devDependencies": {
     "bower": "^1.8.0",
     "grunt": "^1.0.1",
