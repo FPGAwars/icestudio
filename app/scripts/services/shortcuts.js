@@ -72,11 +72,13 @@ angular.module('icestudio')
       },
       saveProject: {
         linux: { label: 'Ctrl+S', ctrl: true, key: 83 },
-        mac: { label: '⌘+S', meta: true, key: 83 }
+        mac: { label: '⌘+S', meta: true, key: 83 },
+        opt: { prompt: true }
       },
       saveProjectAs: {
         linux: { label: 'Ctrl+Shift+S', ctrl: true, shift: true, key: 83 },
-        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 }
+        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 },
+        opt: { prompt: true }
       },
       quit: {
         linux: { label: 'Ctrl+Q', ctrl: true, key: 81 },
