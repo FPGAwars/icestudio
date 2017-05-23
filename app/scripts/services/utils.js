@@ -568,8 +568,11 @@ angular.module('icestudio')
         $('#preview-svg').attr('src', blankImage);
       }
 
+      var prevOnshow = alertify.confirm().get('onshow') || function() {};
+
       alertify.confirm()
       .set('onshow', function() {
+        prevOnshow();
         registerOpen();
         registerSave();
         registerReset();
@@ -653,10 +656,12 @@ angular.module('icestudio')
         if (callback) {
           callback(evt, values);
         }
-        alertify.confirm().set('onshow', function() {});
+        // Restore onshow
+        alertify.confirm().set('onshow', prevOnshow);
       })
       .set('oncancel', function(/*evt*/) {
-        alertify.confirm().set('onshow', function() {});
+        // Restore onshow
+        alertify.confirm().set('onshow', prevOnshow);
       });
     };
 
