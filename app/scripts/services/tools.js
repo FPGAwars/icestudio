@@ -139,7 +139,10 @@ angular.module('icestudio')
         nodeFs.mkdirSync(common.BUILD_DIR);
       }
       project.update();
-      var opt = { boardRules: profile.get('boardRules') };
+      var opt = {
+        datetime: false,
+        boardRules: profile.get('boardRules')
+      };
       if (opt.boardRules) {
         opt.initPorts = compiler.getInitPorts(project.get());
         opt.initPins = compiler.getInitPins(project.get());
@@ -158,11 +161,11 @@ angular.module('icestudio')
       nodeFse.removeSync('!(main.*)');
 
       // Sync included files
-      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
+      ret = this.syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
 
       // Sync list files
       if (ret) {
-        ret = this.syncFiles(/(\n|\s)[^\/]?\"(.*\.list?)\"/g, code);
+        ret = this.syncFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
       }
 
       return ret;
@@ -172,7 +175,7 @@ angular.module('icestudio')
       var ret = true;
       var match;
       while (match = pattern.exec(code)) {
-        var file = match[2];
+        var file = match[1];
         var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
