@@ -12,8 +12,8 @@
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },
   "apio": {
-    "min": "0.2.3",
-    "max": "0.2.4"
+    "min": "0.2.4",
+    "max": "0.2.5"
   },
   "collection": "0.3.0",
   "devDependencies": {
