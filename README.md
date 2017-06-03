@@ -44,6 +44,8 @@ Supported operating systems:
 
 <img src="./doc/images/main.png" width="700" align="center">
 
+<img src="./doc/images/main-1.png" width="700" align="center">
+
 Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 
 ## Development
