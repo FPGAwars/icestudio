@@ -1057,16 +1057,20 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom
       });
+      // Scale annotations
+      var annotationSize = Math.round(15 * state.zoom) + 'px';
+      this.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+      this.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
+      this.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+      // Scale padding
+      this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+      // Scale gutters
+      $('.ace_gutter-cell').css('padding-left', Math.round(19 * state.zoom) + 'px');
+      $('.ace_gutter-cell').css('padding-right', Math.round(13 * state.zoom) + 'px');
+      // Scale font size
       this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
-
-    // Update gutter
-    //console.log($('.ace_gutter-cell').css('padding-left'), $('.ace_scroller').css('left'));
-    $('.ace_scroller').css('left', Math.round(41 * state.zoom).toString() + 'px');
-    $('.ace_gutter-layer').css('width', Math.round(41 * state.zoom).toString() + 'px');
-    $('.ace_gutter-cell').css('padding-left', Math.round(19 * state.zoom).toString() + 'px');
-    $('.ace_gutter-cell').css('padding-right', Math.round(13 * state.zoom).toString() + 'px');
 
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
@@ -1343,6 +1347,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom
       });
+      // Scale padding
+      this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+      // Scale font size
       this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
