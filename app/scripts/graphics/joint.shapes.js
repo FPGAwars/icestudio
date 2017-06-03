@@ -1030,6 +1030,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       type: codeError.type
     });
     this.editor.session.setAnnotations(annotations);
+
+    var self = this;
+    var state = this.model.get('state');
+    var annotationSize = Math.round(15 * state.zoom) + 'px';
+    setTimeout(function() {
+      self.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+      self.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
+      self.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+    }, 20);
   },
 
   clearAnnotations: function() {
