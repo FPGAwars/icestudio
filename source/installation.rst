@@ -29,6 +29,10 @@ Windows
 
   Python 2.7 will be installed automatically if it is not installed. This installer registers the *.ice* files as *Icestudio project*.
 
+.. warning::
+
+  If the error *Failed building wheel for apio [...]* appears `pip` installer may be blocked. Disable the firewall and try again.
+
 Mac OS X
 --------
 
