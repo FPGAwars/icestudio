@@ -895,6 +895,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     this.updateBox();
     this.updating = false;
+    this.prevZoom = 1;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
@@ -1062,23 +1063,54 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     // Set font size
     if (this.editor) {
-      this.$box.find('.code-editor').css({
-        margin: 8 * state.zoom,
-        'border-radius': 5 * state.zoom
-      });
-      // Scale annotations
-      var annotationSize = Math.round(15 * state.zoom) + 'px';
-      this.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
-      this.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
-      this.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
-      // Scale padding
-      this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
-      // Scale gutters
-      $('.ace_gutter-cell').css('padding-left', Math.round(19 * state.zoom) + 'px');
-      $('.ace_gutter-cell').css('padding-right', Math.round(13 * state.zoom) + 'px');
-      // Scale font size
-      this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+      if (this.prevZoom !== state.zoom) {
+        this.prevZoom = state.zoom;
+        // Scale border
+        this.$box.find('.code-editor').css({
+          margin: 8 * state.zoom,
+          'border-radius': 5 * state.zoom
+        });
+        // Scale annotations
+        var annotationSize = Math.round(15 * state.zoom) + 'px';
+        this.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+        this.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
+        this.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+        // Scale padding
+        this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+        // Scale gutters
+        var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
+        if (rule) {
+          rule.style.paddingLeft = Math.round(19 * state.zoom) + 'px';
+          rule.style.paddingRight = Math.round(13 * state.zoom) + 'px';
+        }
+        // Scale font size
+        this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+      }
       this.editor.resize();
+    }
+
+    function getCSSRule(ruleName) {
+      if (document.styleSheets) {
+        for (var i = 0; i < document.styleSheets.length; i++) {
+          var styleSheet = document.styleSheets[i];
+          var ii = 0;
+          var cssRule = false;
+          do {
+            if (styleSheet.cssRules) {
+              cssRule = styleSheet.cssRules[ii];
+            } else {
+              cssRule = styleSheet.rules[ii];
+            }
+            if (cssRule)  {
+              if (cssRule.selectorText === ruleName) {
+                return cssRule;
+              }
+            }
+            ii++;
+          } while (cssRule);
+        }
+      }
+      return false;
     }
 
     // Set ports width
@@ -1352,6 +1384,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       });
     }
     else if (this.editor) {
+      // Scale border
       this.$box.find('.info-editor').css({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom
