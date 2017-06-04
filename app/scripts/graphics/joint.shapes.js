@@ -43,8 +43,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       '.body': {
         width: 1,
         height: 1,
-        stroke: 'none',
-        'fill-opacity': 0
+        stroke: 'none'
       },
       '.port-body': {
         r: 8,
@@ -471,10 +470,16 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         if (self.enter && !self.down) {
           self.tooltiptext.text(self.tooltip);
           self.tooltiptext.css('visibility', 'visible');
-          if (self.tooltip.length > 30) {
+          if (self.tooltip.length > 13) {
+            self.tooltiptext.addClass('tooltip-medium');
+            self.tooltiptext.removeClass('tooltip-large');
+          }
+          else if (self.tooltip.length > 20) {
             self.tooltiptext.addClass('tooltip-large');
+            self.tooltiptext.removeClass('tooltip-medium');
           }
           else {
+            self.tooltiptext.removeClass('tooltip-medium');
             self.tooltiptext.removeClass('tooltip-large');
           }
         }
@@ -550,10 +555,10 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     for (var i in ports) {
       var port = ports[i];
       if (port.clock) {
-        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 10;
+        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 9;
         this.$box.append('\
-          <div class="clock" style="top: ' + top + 'px; left: -1px;">\
-            <svg width="12" height="12"><path d="M.0.0l12 6-12 6" fill="none" stroke="#555" stroke-width="1.2"/>\
+          <div class="clock" style="top: ' + top + 'px;">\
+            <svg width="12" height="18"><path d="M-1 0 l10 8-10 8" fill="none" stroke="#555" stroke-width="1.2" stroke-linejoin="round"/>\
           </div>');
       }
     }
@@ -720,7 +725,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   clearValues: function() {
     this.updating = true;
     var name = '';
-    var value = 0;
+    var value = '0';
     var data = JSON.parse(JSON.stringify(this.model.get('data')));
     for (var i in data.pins) {
       var index = data.pins[i].index;
@@ -890,14 +895,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     this.updateBox();
     this.updating = false;
+    this.prevZoom = 1;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    var selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('#' + editorLabel);
 
     // Prevent paper from handling pointerdown.
-    selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
 
     this.deltas = [];
     this.counter = 0;
@@ -905,10 +911,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(selector[0]);
+    this.editor = ace.edit(this.selector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
+    this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
         // Check consecutive-change interval
@@ -948,6 +955,17 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (e.text.startsWith('{"icestudio":')) {
         // Prevent paste blocks
         e.text = '';
+      }
+    });
+    this.editor.on('mousewheel', function(event) {
+      // Stop mousewheel event propagation when target is active
+      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
+        // Enable only scroll
+        event.stopPropagation();
+      }
+      else {
+        // Enable only zoom
+        event.preventDefault();
       }
     });
 
@@ -1013,6 +1031,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       type: codeError.type
     });
     this.editor.session.setAnnotations(annotations);
+
+    var self = this;
+    var state = this.model.get('state');
+    var annotationSize = Math.round(15 * state.zoom) + 'px';
+    setTimeout(function() {
+      self.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+      self.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
+      self.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+    }, 20);
   },
 
   clearAnnotations: function() {
@@ -1036,12 +1063,54 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     // Set font size
     if (this.editor) {
-      this.$box.find('.code-editor').css({
-        margin: 8 * state.zoom,
-        'border-radius': 5 * state.zoom
-      });
-      this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+      if (this.prevZoom !== state.zoom) {
+        this.prevZoom = state.zoom;
+        // Scale border
+        this.$box.find('.code-editor').css({
+          margin: 8 * state.zoom,
+          'border-radius': 5 * state.zoom
+        });
+        // Scale annotations
+        var annotationSize = Math.round(15 * state.zoom) + 'px';
+        this.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+        this.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
+        this.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+        // Scale padding
+        this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+        // Scale gutters
+        var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
+        if (rule) {
+          rule.style.paddingLeft = Math.round(19 * state.zoom) + 'px';
+          rule.style.paddingRight = Math.round(13 * state.zoom) + 'px';
+        }
+        // Scale font size
+        this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+      }
       this.editor.resize();
+    }
+
+    function getCSSRule(ruleName) {
+      if (document.styleSheets) {
+        for (var i = 0; i < document.styleSheets.length; i++) {
+          var styleSheet = document.styleSheets[i];
+          var ii = 0;
+          var cssRule = false;
+          do {
+            if (styleSheet.cssRules) {
+              cssRule = styleSheet.cssRules[ii];
+            } else {
+              cssRule = styleSheet.rules[ii];
+            }
+            if (cssRule)  {
+              if (cssRule.selectorText === ruleName) {
+                return cssRule;
+              }
+            }
+            ii++;
+          } while (cssRule);
+        }
+      }
+      return false;
     }
 
     // Set ports width
@@ -1122,6 +1191,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
+          ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
         </script>\
         <div class="resizer"/>\
@@ -1151,6 +1221,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
+    this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function(delta) {
       if (!self.updating) {
         // Check consecutive-change interval
@@ -1190,6 +1261,17 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       if (e.text.startsWith('{"icestudio":')) {
         // Prevent paste blocks
         e.text = '';
+      }
+    });
+    this.editor.on('mousewheel', function(event) {
+      // Stop mousewheel event propagation when target is active
+      if (document.activeElement.parentNode.id === self.editorSelector.attr('id')) {
+        // Enable only scroll
+        event.stopPropagation();
+      }
+      else {
+        // Enable only zoom
+        event.preventDefault();
       }
     });
 
@@ -1302,10 +1384,14 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       });
     }
     else if (this.editor) {
+      // Scale border
       this.$box.find('.info-editor').css({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom
       });
+      // Scale padding
+      this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+      // Scale font size
       this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
       this.editor.resize();
     }
@@ -1345,7 +1431,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   labelMarkup: [
     '<g class="label hidden">',
-    '<rect x="-8" y="-9" width="16" height="16" fill="white" stroke="#777"/>',
+    '<rect x="-8" y="-6" width="16" height="12" rx="2" ry="2" fill="white" stroke="#777"/>',
     '<text fill="#555"/>',
     '</g>'
   ].join(''),
@@ -1358,7 +1444,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="6"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
     '</g>'
   ].join(''),
 
@@ -1393,7 +1479,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
           text: '',
           y: '4px',
           'font-weight': 'bold',
-          'font-size': '13px',
+          'font-size': '11px',
           'text-anchor': 'middle'
         }
       }
@@ -1615,6 +1701,8 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         }
       });
 
+      var points = [];
+
       // Update all the portWires combinations
       if (portWires.length > 0) {
         var markupTemplate = joint.util.template(
@@ -1646,7 +1734,11 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
                 // Eval if intersects any segment of wire vB
                 if (evalIntersection(vA[i], [vB[j], vB[j+1]])) {
                   // Bifurcation found!
-                  markersA.append(V(markupTemplate(vA[i])).node);
+                  var point = vA[i];
+                  if (!contains(point, points)) {
+                    points.push(point);
+                    markersA.append(V(markupTemplate(point)).node);
+                  }
                 }
               }
             }
@@ -1654,11 +1746,25 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         }
       }
 
+      function contains(point, points) {
+        var found = false;
+        _.each(points, function(p) {
+          if (p.x === point.x && p.y === point.y) {
+            found = true;
+            return;
+          }
+        });
+        return found;
+      }
+
       function v(wire) {
         var v = [];
         v.push(wire.sourcePoint);
         v = v.concat(wire.route);
-        v.push(wire.targetPoint);
+        v.push({
+          x: wire.targetPoint.x + 9,
+          y: wire.targetPoint.y
+        });
         return v;
       }
 
@@ -1666,14 +1772,14 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
         if (segment[0].x === segment[1].x) {
           // Vertical
           return ((point.x === segment[0].x) &&
-            (point.y > Math.min(segment[0].y, segment[1].y)) &&
-            (point.y < Math.max(segment[0].y, segment[1].y)));
+                  (point.y > Math.min(segment[0].y, segment[1].y)) &&
+                  (point.y < Math.max(segment[0].y, segment[1].y)));
         }
         else {
           // Horizontal
           return ((point.y === segment[0].y) &&
-          (point.x > Math.min(segment[0].x, segment[1].x)) &&
-          (point.x < Math.max(segment[0].x, segment[1].x)));
+                  (point.x > Math.min(segment[0].x, segment[1].x)) &&
+                  (point.x < Math.max(segment[0].x, segment[1].x)));
         }
       }
     }

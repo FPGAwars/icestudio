@@ -179,11 +179,11 @@ angular.module('icestudio')
     this.toolchainDisabled = false;
 
     this.getApioExecutable = function() {
-      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : common.SYSTEM_APIO;
+      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
       if (nodeFs.existsSync(candidateApio)) {
         if (!this.toolchainDisabled) {
           // Show message only on start
-          alertify.message('Using system wide apio', 5);
+          alertify.message('Using external apio: ' + candidateApio, 5);
         }
         this.toolchainDisabled = true;
         return coverPath(candidateApio);
@@ -341,7 +341,7 @@ angular.module('icestudio')
       return fileTree;
     }
 
-    this.setLocale = function(locale) {
+    this.setLocale = function(locale, callback) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -358,6 +358,11 @@ angular.module('icestudio')
         if (nodeFs.existsSync(filepath)) {
           gettextCatalog.loadRemote(filepath);
         }
+      }
+      if (callback) {
+        setTimeout(function() {
+          callback();
+        }, 50);
       }
       // Return the best language
       return bestLang;
@@ -563,8 +568,11 @@ angular.module('icestudio')
         $('#preview-svg').attr('src', blankImage);
       }
 
+      var prevOnshow = alertify.confirm().get('onshow') || function() {};
+
       alertify.confirm()
       .set('onshow', function() {
+        prevOnshow();
         registerOpen();
         registerSave();
         registerReset();
@@ -648,10 +656,12 @@ angular.module('icestudio')
         if (callback) {
           callback(evt, values);
         }
-        alertify.confirm().set('onshow', function() {});
+        // Restore onshow
+        alertify.confirm().set('onshow', prevOnshow);
       })
       .set('oncancel', function(/*evt*/) {
-        alertify.confirm().set('onshow', function() {});
+        // Restore onshow
+        alertify.confirm().set('onshow', prevOnshow);
       });
     };
 
@@ -676,13 +686,13 @@ angular.module('icestudio')
     this.findIncludedFiles = function(code) {
       var ret = [];
       var patterns = [
-        /(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
-        /(\n|\s)[^\/]?\"(.*\.list?)\"/g
+        /[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
+        /[\n|\s][^\/]?\"(.*\.list?)\"/g
       ];
       for (var p in patterns) {
         var match;
         while (match = patterns[p].exec(code)) {
-          var file = match[2].replace(/ /g, '');
+          var file = match[1].replace(/ /g, '');
           if (ret.indexOf(file) === -1) {
             ret.push(file);
           }
@@ -739,17 +749,24 @@ angular.module('icestudio')
     this.parsePortLabel = function(data) {
       // e.g: name[x:y]
       var match, ret = {};
+      var maxSize = 95;
       var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?/g;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';
         ret.rangestr = match[2];
         if (match[2]) {
-          if (match[3] > match[4]) {
-            ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+          if (match[3] > maxSize || match[4] > maxSize) {
+            alertify.warning(gettextCatalog.getString('Maximum bus size: 96 bits'), 5);
+            return null;
           }
           else {
-            ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+            if (match[3] > match[4]) {
+              ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+            }
+            else {
+              ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+            }
           }
         }
         return ret;
@@ -992,7 +1009,8 @@ angular.module('icestudio')
       return subDependencies;
     };
 
-    this.hasInputRule = function(port) {
+    this.hasInputRule = function(port, apply) {
+      apply = (apply === undefined) ? true : apply;
       var _default;
       var rules = common.selectedBoard.rules;
       if (rules) {
@@ -1001,7 +1019,7 @@ angular.module('icestudio')
           for (var i in allInitPorts) {
             if (port === allInitPorts[i].port){
               _default = allInitPorts[i];
-              _default.apply = true;
+              _default.apply = apply;
               break;
             }
           }
@@ -1034,18 +1052,18 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
-    this.loadLanguage = function(profile) {
+    this.loadLanguage = function(profile, callback) {
       var self = this;
       profile.load(function() {
         var lang = profile.get('language');
         if (lang) {
-          self.setLocale(lang);
+          self.setLocale(lang, callback);
         }
         else {
           // If lang is empty, use the system language
           nodeLangInfo(function(err, sysLang) {
             if (!err) {
-              profile.set('language', self.setLocale(sysLang));
+              profile.set('language', self.setLocale(sysLang, callback));
             }
           });
         }

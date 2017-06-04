@@ -101,15 +101,21 @@ angular.module('icestudio')
       project = _safeLoad(data, name);
       if (project.design.board !== common.selectedBoard.name) {
         var projectBoard = boards.boardLabel(project.design.board);
+        alertify.set('confirm', 'labels', {
+          'ok': gettextCatalog.getString('Load'),
+          'cancel': gettextCatalog.getString('Convert')
+        });
         alertify.confirm(
           gettextCatalog.getString('This project is designed for the {{name}} board.', { name: utils.bold(projectBoard) }) + '<br>' +
-          gettextCatalog.getString('Do you want to convert it?'),
+          gettextCatalog.getString('You can load it as it is or convert it for the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
         function() {
-          project.design.board = common.selectedBoard.name;
-          _load(true);
+          // Load
+          _load();
         },
         function() {
-          _load();
+          // Convert
+          project.design.board = common.selectedBoard.name;
+          _load(true);
         });
       }
       else {
@@ -132,6 +138,12 @@ angular.module('icestudio')
         else {
           alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
         }
+        setTimeout(function() {
+          alertify.set('confirm', 'labels', {
+            'ok': gettextCatalog.getString('OK'),
+            'cancel': gettextCatalog.getString('Cancel')
+          });
+        }, 100);
       }
     };
 
@@ -340,16 +352,17 @@ angular.module('icestudio')
     function sortGraph() {
       var cells = graph.getCells();
 
-      // Sort cells by x-coordinate
+      // Sort Constant cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink()) {
+        if (cell.get('type') === 'ice.Constant') {
           return cell.attributes.position.x;
         }
       });
 
-      // Sort cells by y-coordinate
+      // Sort I/O cells by y-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (!cell.isLink()) {
+        if (cell.get('type') === 'ice.Input' ||
+            cell.get('type') === 'ice.Output') {
           return cell.attributes.position.y;
         }
       });

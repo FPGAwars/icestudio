@@ -136,8 +136,8 @@ angular.module('icestudio')
         },
         validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
           // Prevent output-output links
-          if (magnetS.getAttribute('type') === 'output' &&
-              magnetT.getAttribute('type') === 'output') {
+          if (magnetS && magnetS.getAttribute('type') === 'output' &&
+              magnetT && magnetT.getAttribute('type') === 'output') {
             if (magnetS !== magnetT) {
               // Show warning if source and target blocks are different
               warning(gettextCatalog.getString('Invalid connection'));
@@ -145,15 +145,15 @@ angular.module('icestudio')
             return false;
           }
           // Ensure right -> left connections
-          if (magnetS.getAttribute('pos') === 'right') {
-            if (magnetT.getAttribute('pos') !== 'left') {
+          if (magnetS && magnetS.getAttribute('pos') === 'right') {
+            if (magnetT && magnetT.getAttribute('pos') !== 'left') {
               warning(gettextCatalog.getString('Invalid connection'));
               return false;
             }
           }
           // Ensure bottom -> top connections
-          if (magnetS.getAttribute('pos') === 'bottom') {
-            if (magnetT.getAttribute('pos') !== 'top') {
+          if (magnetS && magnetS.getAttribute('pos') === 'bottom') {
+            if (magnetT && magnetT.getAttribute('pos') !== 'top') {
               warning(gettextCatalog.getString('Invalid connection'));
               return false;
             }
@@ -247,11 +247,10 @@ angular.module('icestudio')
         }
       }
 
-      var targetElement= element[0];
+      var targetElement = element[0];
 
       this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
       {
-        viewportSelector: targetElement.childNodes[0].childNodes[0],
         fit: false,
         center: false,
         zoomEnabled: true,
@@ -260,21 +259,21 @@ angular.module('icestudio')
         dblClickZoomEnabled: false,
         minZoom: ZOOM_MIN,
         maxZoom: ZOOM_MAX,
+        eventsListenerElement: targetElement,
         /*beforeZoom: function(oldzoom, newzoom) {
         },*/
         onZoom: function(scale) {
-          state.zoom = scale; // Already rendered in pan
-
+          state.zoom = scale;
           // Close expanded combo
           if (document.activeElement.className === 'select2-search__field') {
             $('select').select2('close');
           }
+          updateCellBoxes();
         },
         /*beforePan: function(oldpan, newpan) {
         },*/
         onPan: function(newPan) {
           state.pan = newPan;
-          selectionView.options.state = state;
           graph.trigger('state', state);
           updateCellBoxes();
         }
@@ -282,6 +281,7 @@ angular.module('icestudio')
 
       function updateCellBoxes() {
         var cells = graph.getCells();
+        selectionView.options.state = state;
         _.each(cells, function(cell) {
           if (!cell.isLink()) {
             cell.attributes.state = state;
@@ -665,7 +665,7 @@ angular.module('icestudio')
       graph.attributes.cells.models = cells;
     };
 
-    this.selectBoard = function(board) {
+    this.selectBoard = function(board, reset) {
       graph.startBatch('change');
       // Trigger board event
       var data = {
@@ -674,7 +674,9 @@ angular.module('icestudio')
       };
       graph.trigger('board', { data: data });
       var newBoard = boards.selectBoard(board.name);
-      resetBlocks();
+      if (reset) {
+        resetBlocks();
+      }
       graph.stopBatch('change');
       return newBoard;
     };
@@ -693,7 +695,7 @@ angular.module('icestudio')
     };
 
     function resetBlocks() {
-      var data;
+      var data, connectedLinks;
       var cells = graph.getCells();
       _.each(cells, function(cell) {
         if (cell.isLink()) {
@@ -710,32 +712,47 @@ angular.module('icestudio')
         else if (type === 'basic.code') {
           // Reset rules in Code block ports
           data = utils.clone(cell.get('data'));
+          connectedLinks = graph.getConnectedLinks(cell);
           if (data && data.ports && data.ports.in) {
-            for (var j in data.ports.in) {
-              var port = data.ports.in[j];
-              port.default = utils.hasInputRule(port.name);
-            }
+            _.each(data.ports.in, function(port) {
+              var connected = false;
+              _.each(connectedLinks, function(connectedLink) {
+                if (connectedLink.get('target').port === port.name) {
+                  connected = true;
+                  return false;
+                }
+              });
+              port.default = utils.hasInputRule(port.name, !connected);
+              cell.set('data', data);
+              paper.findViewByModel(cell.id).updateBox();
+            });
           }
-          cell.set('data', data);
-          paper.findViewByModel(cell.id).updateBox();
         }
         else if (type.indexOf('basic.') === -1) {
           // Reset rules in Generic block ports
           var block = common.allDependencies[type];
           data = { ports: { in: [] }};
-          for (var i in block.design.graph.blocks) {
-            var item = block.design.graph.blocks[i];
-            if (item.type === 'basic.input') {
-              if (!item.data.range) {
+          connectedLinks = graph.getConnectedLinks(cell);
+          if (block.design.graph.blocks) {
+            _.each(block.design.graph.blocks, function(item) {
+              if (item.type === 'basic.input' && !item.data.range) {
+                console.log(item, connectedLinks);
+                var connected = false;
+                _.each(connectedLinks, function(connectedLink) {
+                  if (connectedLink.get('target').port === item.id) {
+                    connected = true;
+                    return false;
+                  }
+                });
                 data.ports.in.push({
                   name: item.id,
-                  default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
+                  default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name, !connected)
                 });
               }
-            }
+              cell.set('data', data);
+              paper.findViewByModel(cell.id).updateBox();
+            });
           }
-          cell.set('data', data);
-          paper.findViewByModel(cell.id).updateBox();
         }
       });
     }

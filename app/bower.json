@@ -32,7 +32,7 @@
     "ace-builds": "^1.2.5",
     "select2": "^4.0.3",
     "async": "^1.5.2",
-    "svg-pan-zoom": "^3.2.9",
+    "svg-pan-zoom": "~3.4.0",
     "alertify-js": "^1.8.0",
     "jquery-resize": "*",
     "angular-gettext": "https://github.com/Jesus89/angular-gettext.git#master"

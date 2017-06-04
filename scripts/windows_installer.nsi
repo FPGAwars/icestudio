@@ -8,7 +8,9 @@
 !define DIST     "..\dist"
 !define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
-!define PYTHON   "python-2.7.13.amd64.msi"
+!ifndef PYTHON
+  !define PYTHON     "python-2.7.13.amd64.msi"
+!endif
 !define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
 

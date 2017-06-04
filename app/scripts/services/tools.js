@@ -139,7 +139,10 @@ angular.module('icestudio')
         nodeFs.mkdirSync(common.BUILD_DIR);
       }
       project.update();
-      var opt = { boardRules: profile.get('boardRules') };
+      var opt = {
+        datetime: false,
+        boardRules: profile.get('boardRules')
+      };
       if (opt.boardRules) {
         opt.initPorts = compiler.getInitPorts(project.get());
         opt.initPins = compiler.getInitPins(project.get());
@@ -158,11 +161,11 @@ angular.module('icestudio')
       nodeFse.removeSync('!(main.*)');
 
       // Sync included files
-      ret = this.syncFiles(/(\n|\s)\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
+      ret = this.syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
 
       // Sync list files
       if (ret) {
-        ret = this.syncFiles(/(\n|\s)[^\/]?\"(.*\.list?)\"/g, code);
+        ret = this.syncFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
       }
 
       return ret;
@@ -172,7 +175,7 @@ angular.module('icestudio')
       var ret = true;
       var match;
       while (match = pattern.exec(code)) {
-        var file = match[2];
+        var file = match[1];
         var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
@@ -271,15 +274,15 @@ angular.module('icestudio')
               // main.v:#: error: ...
               // main.v:#: warning: ...
               // main.v:#: syntax error
-              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)\n/g;
+              re = /main.v:([0-9]+):\s(error|warning):\s(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
-                  msg: matchError[3],
+                  msg: matchError[3].replace(/\sin\smain\..*$/, ''),
                   type: matchError[2]
                 });
               }
-              re = /main.v:([0-9]+):\ssyntax\serror\n/g;
+              re = /main.v:([0-9]+):\ssyntax\serror[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 codeErrors.push({
                   line: parseInt(matchError[1]),
@@ -289,9 +292,9 @@ angular.module('icestudio')
               }
 
               // - Yosys errors
-              // ERROR: ... main.v:#...\n
-              // Warning: ... main.v:#...\n
-              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)\n/g;
+              // ERROR: ... main.v:#...
+              // Warning: ... main.v:#...
+              re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
                 var msg = '';
                 var line = parseInt(matchError[3]);
@@ -382,7 +385,7 @@ angular.module('icestudio')
           gettext('done_upload');
           var message = 'done_' + label;
           alertify.success(gettextCatalog.getString(message));
-          if ((label === 'build') && stdout) {
+          if ((label === 'build' || label === 'upload') && stdout) {
             // Show used resources in the FPGA
             /*
             PIOs       0 / 96
@@ -454,7 +457,7 @@ angular.module('icestudio')
           newCodeError = {
            type: codeError.type,
            line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
-           msg: (codeError.msg.length > 2) ? codeError.msg[0].toUpperCase() + codeError.msg.substring(1) : codeError.msg
+           msg: codeError.msg
          };
           if (module.name.startsWith('main_')) {
             // Code block
@@ -804,30 +807,17 @@ angular.module('icestudio')
             origName: data[1], blocks: [], examples: [], locale: [], package: ''
           };
         }
-        data = zipEntry.entryName.match(/^([^\/]+)\/blocks\/.*\.ice$/);
-        if (data) {
-          _collections[data[1]].blocks.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.ice$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.v$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.vh$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/examples\/.*\.list$/);
-        if (data) {
-          _collections[data[1]].examples.push(zipEntry.entryName);
-        }
-        data = zipEntry.entryName.match(/^([^\/]+)\/locale\/.*\.po$/);
-        if (data) {
-          _collections[data[1]].locale.push(zipEntry.entryName);
-        }
+
+        addCollectionItem('blocks', 'ice', _collections, zipEntry);
+        addCollectionItem('blocks', 'v', _collections, zipEntry);
+        addCollectionItem('blocks', 'vh', _collections, zipEntry);
+        addCollectionItem('blocks', 'list', _collections, zipEntry);
+        addCollectionItem('examples', 'ice', _collections, zipEntry);
+        addCollectionItem('examples', 'v', _collections, zipEntry);
+        addCollectionItem('examples', 'vh', _collections, zipEntry);
+        addCollectionItem('examples', 'list', _collections, zipEntry);
+        addCollectionItem('locale', 'po', _collections, zipEntry);
+
         data = zipEntry.entryName.match(/^([^\/]+)\/package\.json$/);
         if (data) {
           _collections[data[1]].package = zipEntry.entryName;
@@ -839,6 +829,13 @@ angular.module('icestudio')
       });
 
       return _collections;
+    }
+
+    function addCollectionItem(key, ext, collections, zipEntry) {
+      var data = zipEntry.entryName.match(RegExp('^([^\/]+)\/' + key + '\/.*\.' + ext + '$'));
+      if (data) {
+        collections[data[1]][key].push(zipEntry.entryName);
+      }
     }
 
     function installCollection(collection, zip) {

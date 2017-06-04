@@ -3,6 +3,7 @@
 angular.module('icestudio')
   .service('collections', function(utils,
                                    common,
+                                   gettextCatalog,
                                    nodePath) {
 
     const DEFAULT = '';
@@ -84,5 +85,36 @@ angular.module('icestudio')
       common.selectedCollection = selectedCollection;
       return selectedCollection.name;
     };
+
+    this.sort = function() {
+      for (var i in common.collections) {
+        var collection = common.collections[i];
+        if (collection.content) {
+          _sort(collection.content.blocks);
+          _sort(collection.content.examples);
+        }
+      }
+    };
+
+    function _sort(items) {
+      if (items) {
+        items.sort(byName);
+        for (var i in items) {
+          _sort(items[i].children);
+        }
+      }
+    }
+
+    function byName(a, b) {
+      a = gettextCatalog.getString(a.name);
+      b = gettextCatalog.getString(b.name);
+      if (a > b) {
+        return 1;
+      }
+      if (a < b) {
+        return -1;
+      }
+      return 0;
+    }
 
   });

@@ -34,10 +34,6 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
-    // Initialize
-    updateSelectedBoard();
-    updateSelectedCollection();
-
     // Window events
     var win = gui.Window.get();
     win.on('close', function() {
@@ -353,6 +349,8 @@ angular.module('icestudio')
           graph.loadDesign(project.get('design'), { disabled: false });
           //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
         });
+        // Rearrange the collections content
+        collections.sort();
       }
     };
 
@@ -423,7 +421,7 @@ angular.module('icestudio')
       var readme = collection.content.readme;
       if (readme) {
         gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
-          title: collection.name + ' - Data',
+          title: (collection.name ? collection.name : 'Default') + ' Collection - Data',
           focus: true,
           toolbar: false,
           resizable: true,
@@ -472,15 +470,12 @@ angular.module('icestudio')
         }
       }
       function _boardSelected() {
-        var newBoard = graph.selectBoard(board);
+        var reset = true;
+        var newBoard = graph.selectBoard(board, reset);
         profile.set('board', newBoard.name);
         alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
       }
     };
-
-    function updateSelectedBoard() {
-      profile.set('board', boards.selectBoard(profile.get('board')).name);
-    }
 
 
     //-- Tools

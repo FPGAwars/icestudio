@@ -12,31 +12,6 @@
     "graph": {
       "blocks": [
         {
-          "id": "02460189-14a0-48d0-ad87-74faf9a1177e",
-          "type": "basic.constant",
-          "data": {
-            "name": "N",
-            "value": "20",
-            "local": false
-          },
-          "position": {
-            "x": 376,
-            "y": 56
-          }
-        },
-        {
-          "id": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
-          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
-          "position": {
-            "x": 608,
-            "y": 56
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
-        {
           "id": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
           "type": "basic.output",
           "data": {
@@ -72,46 +47,6 @@
           "position": {
             "x": 760,
             "y": 136
-          }
-        },
-        {
-          "id": "e38831b6-fd92-4e35-9fea-17b439002721",
-          "type": "basic.code",
-          "data": {
-            "code": "// Counter 4 bits\n// @include div.v\n\nwire trig; reg out;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    out <= 0;\n  else if (ena == 1)\n    out <= out + 1;\nend\n",
-            "params": [
-              {
-                "name": "N"
-              }
-            ],
-            "ports": {
-              "in": [
-                {
-                  "name": "clk"
-                },
-                {
-                  "name": "ena"
-                },
-                {
-                  "name": "rst"
-                }
-              ],
-              "out": [
-                {
-                  "name": "out",
-                  "range": "[3:0]",
-                  "size": 4
-                }
-              ]
-            }
-          },
-          "position": {
-            "x": 248,
-            "y": 184
-          },
-          "size": {
-            "width": 352,
-            "height": 288
           }
         },
         {
@@ -186,6 +121,87 @@
             "x": 40,
             "y": 392
           }
+        },
+        {
+          "id": "02460189-14a0-48d0-ad87-74faf9a1177e",
+          "type": "basic.constant",
+          "data": {
+            "name": "N",
+            "value": "20",
+            "local": false
+          },
+          "position": {
+            "x": 376,
+            "y": 56
+          }
+        },
+        {
+          "id": "976c6f41-7ed1-41b5-953b-cd4a5709c701",
+          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
+          "position": {
+            "x": 608,
+            "y": 56
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "e38831b6-fd92-4e35-9fea-17b439002721",
+          "type": "basic.code",
+          "data": {
+            "code": "// Counter 4 bits\n// @include div.v\n\nwire trig; reg out;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    out <= 0;\n  else if (ena == 1)\n    out <= out + 1;\nend\n",
+            "params": [
+              {
+                "name": "N"
+              }
+            ],
+            "ports": {
+              "in": [
+                {
+                  "name": "clk"
+                },
+                {
+                  "name": "ena"
+                },
+                {
+                  "name": "rst"
+                }
+              ],
+              "out": [
+                {
+                  "name": "out",
+                  "range": "[3:0]",
+                  "size": 4
+                }
+              ]
+            }
+          },
+          "position": {
+            "x": 248,
+            "y": 184
+          },
+          "size": {
+            "width": 352,
+            "height": 288
+          }
+        },
+        {
+          "id": "e91d0b4f-0fc5-421d-a032-e59368bc322a",
+          "type": "basic.info",
+          "data": {
+            "info": "Counter 4 bits\n--------------\n\nInput: Enable, Reset\nParameter: N\nOutput: LED bus",
+            "readonly": true
+          },
+          "position": {
+            "x": 40,
+            "y": 56
+          },
+          "size": {
+            "width": 192,
+            "height": 128
+          }
         }
       ],
       "wires": [
@@ -254,8 +270,8 @@
     },
     "state": {
       "pan": {
-        "x": 0,
-        "y": 0
+        "x": 2,
+        "y": -0.5
       },
       "zoom": 1
     }

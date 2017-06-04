@@ -184,11 +184,15 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="collection in common.collections">
+                  <data ng-init="collection = common.collections[0]"/>
+                  <li>
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
                       <span ng-show="common.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
+                  </li>
+                  <li class="divider" ng-show="common.collections.length > 1"></li>
+                  <li ng-repeat="collection in common.collections">
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}&ensp;
                       <span ng-show="common.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>

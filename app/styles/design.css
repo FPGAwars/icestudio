@@ -129,6 +129,11 @@
   border-color: #777 transparent transparent transparent;
 }
 
+.generic-block .tooltip-medium {
+  width: 180px;
+  margin-left: -90px;
+}
+
 .generic-block .tooltip-large {
   width: 240px;
   margin-left: -120px;
@@ -160,6 +165,7 @@
   color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .virtual-port {
@@ -384,9 +390,6 @@
   border-radius: 5px;
   border: 1px solid #BBB;
   pointer-events: auto;
-}
-
-.port-body:hover {
 }
 
 .joint-highlight-stroke.joint-theme-default {

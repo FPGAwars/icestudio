@@ -914,11 +914,13 @@ angular.module('icestudio')
             // Restore previous connections
             for (var w in connectedWires) {
               var wire = connectedWires[w];
+              var size = wire.get('size');
               var source = wire.get('source');
               var target = wire.get('target');
-              if ((source.id === cell.id && containsPort(source.port, cell.get('rightPorts'))) ||
-              (target.id === cell.id && containsPort(target.port, cell.get('leftPorts')) && source.port !== 'constant-out') ||
-              (target.id === cell.id && containsPort(target.port, cell.get('topPorts')) && source.port === 'constant-out')) {
+              if ((source.id === cell.id && containsPort(source.port, size, cell.get('rightPorts'))) ||
+                  (target.id === cell.id && containsPort(target.port, size, cell.get('leftPorts')) && source.port !== 'constant-out') ||
+                  (target.id === cell.id && containsPort(target.port, size, cell.get('topPorts')) && source.port === 'constant-out'))
+              {
                 graph.addCell(wire);
               }
             }
@@ -929,10 +931,10 @@ angular.module('icestudio')
       }, blockInstance);
     }
 
-    function containsPort(port, ports) {
+    function containsPort(port, size, ports) {
       var found = false;
       for (var i in ports) {
-        if (port === ports[i].name) {
+        if (port === ports[i].name && size === ports[i].size) {
           found = true;
           break;
         }

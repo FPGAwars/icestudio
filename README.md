@@ -1,7 +1,7 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0-rc)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.3.0--rc-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.0)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.3.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -43,6 +43,8 @@ Supported operating systems:
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
 <img src="./doc/images/main.png" width="700" align="center">
+
+<img src="./doc/images/main-1.png" width="700" align="center">
 
 Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 
@@ -100,10 +102,10 @@ npm run dist
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Galician   | ![Progress](http://progressed.io/bar/95)   |
-| Basque     | ![Progress](http://progressed.io/bar/95)   |
-| Catalan    | ![Progress](http://progressed.io/bar/95)   |
-| French     | ![Progress](http://progressed.io/bar/95)   |
+| French     | ![Progress](http://progressed.io/bar/100)  |
+| Basque     | ![Progress](http://progressed.io/bar/97)   |
+| Galician   | ![Progress](http://progressed.io/bar/93)   |
+| Catalan    | ![Progress](http://progressed.io/bar/93)   |
 
 **Contribute!**
 
@@ -167,9 +169,11 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
-* [BQ](https://www.bq.com) sponsored this project from 02-2016 to 02-2017. Thanks
 
-![](https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png)
+
+* [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
+
+  <img src="https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png" width="80">
 
 ## License
 

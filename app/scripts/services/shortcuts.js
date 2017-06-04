@@ -18,8 +18,8 @@ angular.module('icestudio')
     this.execute = function(event, opt) {
       // Execute shortcut method
       // Options:
-      // - opt.prompt: allow shortcut when a prompt is shown
-      // - opt.disable: allow shortcut when the graph is disabled
+      // - opt.prompt: enable shortcut when a prompt is shown
+      // - opt.disable: enable shortcut when the graph is disabled
 
       var action = '';
       var method = null;
@@ -29,6 +29,7 @@ angular.module('icestudio')
         var options = shortcuts[action].opt || {};
         var command = shortcuts[action][system];
         if (event.keyCode === command.key &&
+            event.altKey === (command.alt || false) &&
             event.ctrlKey === (command.ctrl || false) &&
             event.metaKey === (command.meta || false) &&
             event.shiftKey === (command.shift || false) &&
@@ -71,11 +72,13 @@ angular.module('icestudio')
       },
       saveProject: {
         linux: { label: 'Ctrl+S', ctrl: true, key: 83 },
-        mac: { label: '⌘+S', meta: true, key: 83 }
+        mac: { label: '⌘+S', meta: true, key: 83 },
+        opt: { prompt: true }
       },
       saveProjectAs: {
         linux: { label: 'Ctrl+Shift+S', ctrl: true, shift: true, key: 83 },
-        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 }
+        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 },
+        opt: { prompt: true }
       },
       quit: {
         linux: { label: 'Ctrl+Q', ctrl: true, key: 81 },
