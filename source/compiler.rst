@@ -19,7 +19,7 @@ Sample
 Counter
 ```````
 
-.. image:: ../resources/images/project/counter.png
+.. image:: ../resources/images/compiler/counter.png
 
 .. container:: toggle
 
