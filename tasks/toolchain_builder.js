@@ -9,8 +9,8 @@ var async = require('async');
 var childProcess = require('child_process');
 var _ = require('lodash');
 var glob = require('glob');
-var admZip = require('adm-zip');
 var archiver = require('archiver');
+var extract = require('extract-zip');
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
 
@@ -65,7 +65,7 @@ ToolchainBuilder.prototype.build = function (callback) {
       .then(this.packageApio.bind(this))
       .then(this.packageApioPackages.bind(this))
       .then(this.createDefaultToolchains.bind(this))
-      .then(function (info) {
+      .then(function(info) {
         var result = info || this;
 
         if(hasCallback) {
@@ -74,7 +74,7 @@ ToolchainBuilder.prototype.build = function (callback) {
           done.resolve(result);
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         if(hasCallback) {
           callback(error);
         } else {
@@ -96,11 +96,17 @@ ToolchainBuilder.prototype.extractVirtualenv = function () {
   var self = this;
   self.emit('log', '> Extract virtualenv zip');
   return new Promise(function(resolve, reject) {
-    try {
-      admZip(self.options.venvZipPath).extractAllTo(self.options.toolchainDir);
-      resolve();
-    }
-    catch(error) { reject(error); }
+      var source = self.options.venvZipPath;
+      var target = path.resolve(self.options.toolchainDir);
+      extract(source, {dir: target}, function(error) {
+        if (error) {
+          reject(error);
+        }
+        else {
+          resolve();
+        }
+      }
+    );
   });
 };
 
@@ -114,7 +120,7 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
       self.options.venvDir
     ];
     childProcess.exec(command.join(' '),
-      function (error/*, stdout, stderr*/) {
+      function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -131,7 +137,7 @@ ToolchainBuilder.prototype.downloadApio = function () {
       'apio">=' + self.options.apioMin + ',<' + self.options.apioMax + '"'
     ];
     childProcess.exec(command.join(' '),
-      function (error/*, stdout, stderr*/) {
+      function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -143,14 +149,14 @@ ToolchainBuilder.prototype.installApio = function () {
   var self = this;
   self.emit('log', '> Install apio');
   return new Promise(function(resolve, reject) {
-    glob(path.join(self.options.apioDir, '*.*'), {}, function (error, files) {
+    glob(path.join(self.options.apioDir, '*.*'), {}, function(error, files) {
       if (error) { reject(error); }
       else {
         var command = [
           self.options.venvPip, 'install', '-U', '--no-deps'
         ].concat(files);
         childProcess.exec(command.join(' '),
-          function (error/*, stdout, stderr*/) {
+          function(error/*, stdout, stderr*/) {
             if (error) { reject(error); }
             else { resolve(); }
           }
@@ -178,7 +184,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
         self.emit('log', '  - ' + p);
         var cmd = command(path.join(self.options.apioPackagesDir, p), p);
         childProcess.execSync(cmd.join(' '),
-          function (error/*, stdout, stderr*/) {
+          function(error/*, stdout, stderr*/) {
             if (error) { reject(error); }
           }
         );
@@ -204,7 +210,7 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
   return new Promise(function(resolve, reject) {
     self.pFound = [];
     async.eachSeries(self.options.platforms, function iteratee(platform, callback) {
-      async.setImmediate(function () {
+      async.setImmediate(function() {
         var p = getRealPlatform(platform);
         if (p && self.pFound.indexOf(p) === -1) {
           self.pFound.push(p);
@@ -310,7 +316,7 @@ function compress(source, target, resolve, reject) {
   var output = fs.createWriteStream(target);
   var archive = archiver.create('zip');
 
-  output.on('close', function () {
+  output.on('close', function() {
     resolve();
   });
 

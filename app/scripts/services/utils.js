@@ -10,7 +10,7 @@ angular.module('icestudio')
                              nodeFse,
                              nodePath,
                              nodeChildProcess,
-                             nodeAdmZip,
+                             nodeExtract,
                              nodeZlib,
                              nodeOnline,
                              nodeGlob,
@@ -56,11 +56,14 @@ angular.module('icestudio')
     }
 
     this.extractZip = function(source, destination, callback) {
-      try {
-        nodeAdmZip(source).extractAllTo(destination);
-        callback();
-      }
-      catch(error) { callback(true); }
+      nodeExtract(source, {dir: destination}, function(error) {
+        if (error) {
+          callback(true);
+        }
+        else {
+          callback();
+        }
+      });
     };
 
     this.extractVirtualEnv = function(callback) {
