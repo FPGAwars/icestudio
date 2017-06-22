@@ -91,7 +91,7 @@ angular.module('icestudio')
           }
         }
         else {
-          alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+          alertify.error(utils.toolchainNotInstalledMessage(), 30);
           taskRunning = false;
         }
       }

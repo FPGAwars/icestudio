@@ -5,6 +5,7 @@ angular.module('icestudio')
                                profile,
                                common,
                                gui,
+                               utils,
                                nodePath,
                                nodeSudo,
                                nodeChildProcess) {
@@ -195,7 +196,7 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+            alertify.error(utils.toolchainNotInstalledMessage(), 30);
           }
           else if (!error) {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
@@ -212,7 +213,7 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+            alertify.error(utils.toolchainNotInstalledMessage(), 30);
           }
         });
       });
