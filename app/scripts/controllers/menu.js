@@ -303,6 +303,12 @@ angular.module('icestudio')
       var values = getProjectInformation();
       if (!_.isEqual(values, newValues)) {
         graph.setInfo(values, newValues, project);
+        alertify.message(gettextCatalog.getString('Project information updated') + '.<br>' + gettextCatalog.getString('Click here to view'), 5)
+        .callback = function(isClicked) {
+          if (isClicked) {
+            $scope.setProjectInformation();
+          }
+        };
       }
     });
 
@@ -311,6 +317,7 @@ angular.module('icestudio')
       utils.projectinfoprompt(values, function(evt, newValues) {
         if (!_.isEqual(values, newValues)) {
           graph.setInfo(values, newValues, project);
+          alertify.success(gettextCatalog.getString('Project information updated'));
         }
       });
     };
