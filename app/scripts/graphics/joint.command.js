@@ -9,7 +9,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   defaults: {
     cmdBeforeAdd: null,
-    cmdNameRegex: /^(?:add|remove|board|lang|change:\w+)$/
+    cmdNameRegex: /^(?:add|remove|board|info|lang|change:\w+)$/
   },
 
   // length of prefix 'change:' in the event name
@@ -141,7 +141,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return push(command);
     }
 
-    if (cmdName === 'board' || cmdName === 'lang') {
+    if (cmdName === 'board' || cmdName === 'info' || cmdName === 'lang') {
 
       command.action = cmdName;
       command.data = cell.data;
@@ -261,6 +261,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
           this.triggerBoard(cmd.data.previous);
           break;
 
+        case 'info':
+          this.triggerInfo(cmd.data.previous);
+          break;
+
         case 'lang':
           this.triggerLanguage(cmd.data.previous);
           break;
@@ -325,6 +329,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         case 'board':
           this.triggerBoard(cmd.data.next);
+          break;
+
+        case 'info':
+          this.triggerInfo(cmd.data.next);
           break;
 
         case 'lang':
@@ -418,6 +426,10 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   triggerBoard: function(board) {
     $(document).trigger('boardChanged', [board]);
+  },
+
+  triggerInfo: function(info) {
+    $(document).trigger('infoChanged', [info]);
   },
 
   triggerLanguage: function(lang) {

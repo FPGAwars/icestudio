@@ -681,6 +681,24 @@ angular.module('icestudio')
       return newBoard;
     };
 
+    this.setInfo = function(values, newValues, project) {
+      graph.startBatch('change');
+      // Trigger info event
+      var data = {
+        previous: values,
+        next: newValues
+      };
+      graph.trigger('info', { data: data });
+      project.set('package', {
+        name: newValues[0],
+        version: newValues[1],
+        description: newValues[2],
+        author: newValues[3],
+        image: newValues[4]
+      });
+      graph.stopBatch('change');
+    };
+
     this.selectLanguage = function(language) {
       graph.startBatch('change');
       // Trigger lang event

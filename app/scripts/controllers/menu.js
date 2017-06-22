@@ -299,25 +299,32 @@ angular.module('icestudio')
       graph.fitContent();
     };
 
+    $(document).on('infoChanged', function(evt, newValues) {
+      var values = getProjectInformation();
+      if (!_.isEqual(values, newValues)) {
+        graph.setInfo(values, newValues, project);
+      }
+    });
+
     $scope.setProjectInformation = function() {
+      var values = getProjectInformation();
+      utils.projectinfoprompt(values, function(evt, newValues) {
+        if (!_.isEqual(values, newValues)) {
+          graph.setInfo(values, newValues, project);
+        }
+      });
+    };
+
+    function getProjectInformation() {
       var p = project.get('package');
-      var values = [
+      return [
         p.name,
         p.version,
         p.description,
         p.author,
         p.image
       ];
-      utils.projectinfoprompt(values, function(evt, values) {
-        project.set('package', {
-          name: values[0],
-          version: values[1],
-          description: values[2],
-          author: values[3],
-          image: values[4]
-        });
-      });
-    };
+    }
 
     $scope.setRemoteHostname = function() {
       var current = profile.get('remoteHostname');
