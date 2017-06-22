@@ -38,17 +38,17 @@ angular.module('icestudio')
 
     this.VENV = 'virtualenv-15.0.1';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
-    this.VENV_TARGZ = nodePath.join('resources', 'virtualenv', this.VENV + '.tar.gz');
+    this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
 
     this.APP_DIR = nodePath.dirname(process.execPath);
     this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
 
     this.DEFAULT_APIO = 'default-apio';
     this.DEFAULT_APIO_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_APIO);
-    this.DEFAULT_APIO_TARGZ = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.tar.gz');
+    this.DEFAULT_APIO_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.zip');
 
     this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
-    this.DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.tar.gz');
+    this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
 
     this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
     this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');

@@ -19,9 +19,6 @@ angular.module('icestudio')
   .factory('nodeChildProcess', function() {
     return require('child_process');
   })
-  .factory('nodeTarball', function() {
-    return require('tarball-extract');
-  })
   .factory('nodeZlib', function() {
     return require('zlib');
   })

@@ -2,13 +2,15 @@
 
 // Toolchain builder
 
+var fs = require('fs');
 var fse = require('fs-extra');
 var path = require('path');
 var async = require('async');
 var childProcess = require('child_process');
 var _ = require('lodash');
 var glob = require('glob');
-var targz = require('tar.gz');
+var admZip = require('adm-zip');
+var archiver = require('archiver');
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
 
@@ -39,7 +41,7 @@ function ToolchainBuilder(options) {
   this.options.apioPackagesDir = path.join(this.options.toolchainDir, 'default-apio-packages');
 
   this.options.venvExtractDir = path.join(this.options.toolchainDir, venvRelease);
-  this.options.venvTarPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.tar.gz');
+  this.options.venvZipPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.zip');
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, (process.platform === 'win32' ? 'Scripts' : 'bin'));
@@ -92,12 +94,13 @@ ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
 
 ToolchainBuilder.prototype.extractVirtualenv = function () {
   var self = this;
-  self.emit('log', '> Extract virtualenv tarball');
+  self.emit('log', '> Extract virtualenv zip');
   return new Promise(function(resolve, reject) {
-    targz().extract(self.options.venvTarPath, self.options.toolchainDir, function (error) {
-      if (error) { reject(error); }
-      else { resolve(); }
-    });
+    try {
+      admZip(self.options.venvZipPath).extractAllTo(self.options.toolchainDir);
+      resolve();
+    }
+    catch(error) { reject(error); }
   });
 };
 
@@ -189,13 +192,9 @@ ToolchainBuilder.prototype.packageApio = function () {
   var self = this;
   self.emit('log', '> Package apio');
   return new Promise(function(resolve, reject) {
-    targz({}, {fromBase: true}).compress(
-      self.options.apioDir,
-      path.join(self.options.toolchainDir, 'default-apio.tar.gz'),
-      function (error) {
-        if (error) { reject(error); }
-        else { resolve(); }
-      });
+    var source = self.options.apioDir;
+    var target = path.join(self.options.toolchainDir, 'default-apio.zip');
+    compress(source, target, resolve, reject);
   });
 };
 
@@ -210,14 +209,9 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
         if (p && self.pFound.indexOf(p) === -1) {
           self.pFound.push(p);
           self.emit('log', '  - ' + p);
-          targz({}, {fromBase: true}).compress(
-            path.join(self.options.apioPackagesDir, p),
-            path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.tar.gz'),
-            function (error) {
-              if (error) { reject(error); }
-              callback();
-            }
-          );
+          var source = path.join(self.options.apioPackagesDir, p);
+          var target = path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.zip');
+          compress(source, target, function() { callback(); }, reject);
         }
         else {
           callback();
@@ -241,16 +235,16 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
       // Copy default-apio
-      var apioFilename = 'default-apio.tar.gz';
+      var apioFilename = 'default-apio.zip';
       fse.copySync(
         path.join(self.options.toolchainDir, apioFilename),
         path.join(destPath, 'toolchain', apioFilename)
       );
       // Copy default-apio-packages
-      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.tar.gz';
+      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.zip';
       fse.copySync(
         path.join(self.options.toolchainDir, apioPackagesFilename),
-        path.join(destPath, 'toolchain', 'default-apio-packages.tar.gz')
+        path.join(destPath, 'toolchain', 'default-apio-packages.zip')
       );
     });
     resolve();
@@ -310,4 +304,25 @@ function getRealPlatform(platform) {
     default:
       return '';
   }
+}
+
+function compress(source, target, resolve, reject) {
+  var output = fs.createWriteStream(target);
+  var archive = archiver.create('zip');
+
+  output.on('close', function () {
+    resolve();
+  });
+
+  output.on('error', function(err){
+    reject(err);
+  });
+
+  archive.on('error', function(err){
+    reject(err);
+  });
+
+  archive.pipe(output);
+  archive.glob('**/*', { cwd: source });
+  archive.finalize();
 }

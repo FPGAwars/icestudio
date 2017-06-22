@@ -10,7 +10,7 @@ angular.module('icestudio')
                              nodeFse,
                              nodePath,
                              nodeChildProcess,
-                             nodeTarball,
+                             nodeAdmZip,
                              nodeZlib,
                              nodeOnline,
                              nodeGlob,
@@ -55,20 +55,16 @@ angular.module('icestudio')
       }
     }
 
-    this.extractTargz = function(source, destination, callback) {
-      nodeTarball.extractTarball(source, destination, function(err) {
-        if(err) {
-          //console.log(err);
-          callback(true);
-        }
-        else {
-          callback();
-        }
-      });
+    this.extractZip = function(source, destination, callback) {
+      try {
+        nodeAdmZip(source).extractAllTo(destination);
+        callback();
+      }
+      catch(error) { callback(true); }
     };
 
     this.extractVirtualEnv = function(callback) {
-      this.extractTargz(common.VENV_TARGZ, common.CACHE_DIR, callback);
+      this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
     function disableClick(e) {
@@ -128,7 +124,7 @@ angular.module('icestudio')
 
     this.checkDefaultToolchain = function() {
       try {
-        // TODO: use tar.gz with sha1
+        // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
       }
       catch (err) {
@@ -137,7 +133,7 @@ angular.module('icestudio')
     };
 
     this.extractDefaultApio = function(callback) {
-      this.extractTargz(common.DEFAULT_APIO_TARGZ, common.DEFAULT_APIO_DIR, callback);
+      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
     };
 
     this.installDefaultApio = function(callback) {
@@ -151,7 +147,7 @@ angular.module('icestudio')
     };
 
     this.extractDefaultApioPackages = function(callback) {
-      this.extractTargz(common.DEFAULT_APIO_PACKAGES_TARGZ, common.APIO_HOME_DIR, callback);
+      this.extractZip(common.DEFAULT_APIO_PACKAGES_ZIP, common.APIO_HOME_DIR, callback);
     };
 
     this.isOnline = function(callback, error) {
