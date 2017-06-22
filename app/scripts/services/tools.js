@@ -18,7 +18,8 @@ angular.module('icestudio')
                              nodeSSHexec,
                              nodeRSync,
                              nodeAdmZip,
-                             _package) {
+                             _package,
+                             $rootScope) {
 
     var currentAlert = null;
     var taskRunning = false;
@@ -91,7 +92,12 @@ angular.module('icestudio')
           }
         }
         else {
-          alertify.error(utils.toolchainNotInstalledMessage(), 30);
+          alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+          .callback = function(isClicked) {
+            if (isClicked) {
+              $rootScope.$broadcast('installToolchain');
+            }
+          };
           taskRunning = false;
         }
       }
@@ -474,6 +480,12 @@ angular.module('icestudio')
       }
       return newCodeError;
     }
+
+    var self = this;
+
+    $rootScope.$on('installToolchain', function(/*event*/) {
+      self.installToolchain();
+    });
 
     this.installToolchain = function() {
       utils.removeToolchain();

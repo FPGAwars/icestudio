@@ -1076,8 +1076,4 @@ angular.module('icestudio')
       return 'v' + id.substring(0, 6);
     };
 
-    this.toolchainNotInstalledMessage = function() {
-      return gettextCatalog.getString('Toolchain not installed') + '.<br>' +  gettextCatalog.getString('Tools') + ' > ' +  gettextCatalog.getString('Toolchain') + ' > ' +  gettextCatalog.getString('Install');
-    };
-
   });

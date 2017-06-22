@@ -8,7 +8,8 @@ angular.module('icestudio')
                                utils,
                                nodePath,
                                nodeSudo,
-                               nodeChildProcess) {
+                               nodeChildProcess,
+                               $rootScope) {
 
     this.enable = function() {
       if (common.WIN32) {
@@ -196,7 +197,12 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(utils.toolchainNotInstalledMessage(), 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+            .callback = function(isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
           }
           else if (!error) {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
@@ -213,7 +219,12 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(utils.toolchainNotInstalledMessage(), 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+            .callback = function(isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
           }
         });
       });
