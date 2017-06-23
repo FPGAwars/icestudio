@@ -95,7 +95,7 @@ angular.module('icestudio')
           alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
           .callback = function(isClicked) {
             if (isClicked) {
-              $rootScope.$broadcast('installToolchain');
+              self.installToolchain();
             }
           };
           taskRunning = false;
@@ -131,6 +131,14 @@ angular.module('icestudio')
               });
             }
             else {
+              // An old version is installed
+              alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+              .callback = function(isClicked) {
+                if (isClicked) {
+                  // Install the new toolchain
+                  self.installToolchain();
+                }
+              };
               if (callback) {
                 callback();
               }
