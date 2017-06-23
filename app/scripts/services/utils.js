@@ -230,83 +230,67 @@ angular.module('icestudio')
       return nodePath.dirname(filepath);
     };
 
-    this.readFile = function(filepath, callback) {
-      nodeFs.readFile(filepath,
-        function(err, data) {
-          if (!err) {
-            decompressJSON(data, callback);
-          }
-          else {
-            if (callback) {
-              callback();
+    this.readFile = function(filepath) {
+      return new Promise(function(resolve, reject) {
+        nodeFs.readFile(filepath,
+          function(err, content) {
+            if (err) {
+              reject(err.toString());
             }
-          }
+            else {
+              var data = isJSON(content);
+              if (data) {
+                // JSON data
+                resolve(data);
+              }
+              else {
+                reject(gettextCatalog.getString('Invalid project format'));
+              }
+            }
+          });
       });
     };
 
-    var saveBin = false;
-
-    this.saveFile = function(filepath, content, callback, compress) {
-      if (compress) {
-        compressJSON(content, function(compressed) {
-          nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
+    this.saveFile = function(filepath, data) {
+      return new Promise(function(resolve, reject) {
+        var content = JSON.stringify(data, null, 2);
+        nodeFs.writeFile(filepath, content,
           function(err) {
-            if (!err && callback) {
-              callback();
+            if (err) {
+              reject(err.toString());
+            }
+            else {
+              resolve();
             }
           });
-        });
-      }
-      else {
-        nodeFs.writeFile(filepath, content, function(err) {
-          if (!err && callback) {
-            callback();
-          }
-        });
-      }
+      });
     };
 
-    function compressJSON(json, callback) {
-      if (!saveBin) {
+    /*function compressJSON(data, callback) {
+      var content = JSON.stringify(data);
+      nodeZlib.gzip(content, function (_, compressed) {
         if (callback) {
-          callback(JSON.stringify(json, null, 2));
+          callback(compressed);
         }
-      }
-      else {
-        var data = JSON.stringify(json);
-        nodeZlib.gzip(data, function (_, result) {
-          if (callback) {
-            callback(result);
-          }
-        });
-      }
-    }
+      });
+    }*/
 
-    function decompressJSON(json, callback) {
-      var data = isJSON(json);
-      if (data) {
+    /*function decompressJSON(content, callback) {
+      nodeZlib.gunzip(content, function(_, uncompressed) {
+        var data = JSON.parse(uncompressed);
         if (callback) {
           callback(data);
         }
-      }
-      else {
-        nodeZlib.gunzip(json, function(_, uncompressed) {
-          var result = JSON.parse(uncompressed);
-          if (callback) {
-            callback(result);
-          }
-        });
-      }
-    }
+      });
+    }*/
 
-    function isJSON(str) {
-      var result = false;
+    function isJSON(content) {
       try {
-        result = JSON.parse(str);
-      } catch (e) {
+        return JSON.parse(content);
+      }
+      catch (e) {
         return false;
       }
-      return result;
     }
 
     this.getFilesRecursive = getFilesRecursive;

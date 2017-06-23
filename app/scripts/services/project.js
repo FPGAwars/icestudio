@@ -85,11 +85,13 @@ angular.module('icestudio')
       var self = this;
       this.path = emptyPath ? '' : filepath;
       this.filepath = filepath;
-      utils.readFile(filepath, function(data) {
-        if (data) {
-          var name = utils.basename(filepath);
-          self.load(name, data);
-        }
+      utils.readFile(filepath)
+      .then(function(data) {
+        var name = utils.basename(filepath);
+        self.load(name, data);
+      })
+      .catch(function(error) {
+        alertify.error(error, 30);
       });
     };
 
@@ -342,9 +344,13 @@ angular.module('icestudio')
       this.filepath = filepath;
 
       function doSaveProject() {
-        utils.saveFile(filepath, pruneProject(project), function() {
+        utils.saveFile(filepath, pruneProject(project))
+        .then(function() {
           alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
-        }, true);
+        })
+        .catch(function(error) {
+          alertify.error(error, 30);
+        });
       }
 
     };
@@ -372,7 +378,8 @@ angular.module('icestudio')
 
     this.addBlockFile = function(filepath, notification) {
       var self = this;
-      utils.readFile(filepath, function(data) {
+      utils.readFile(filepath)
+      .then(function(data) {
         if (data.version !== common.VERSION) {
           alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
         }
@@ -426,6 +433,9 @@ angular.module('icestudio')
             alertify.success(gettextCatalog.getString('Block {{name}} imported', { name: utils.bold(block.package.name) }));
           }
         }
+      })
+      .catch(function(error) {
+        alertify.error(error, 30);
       });
     };
 
@@ -546,9 +556,13 @@ angular.module('icestudio')
       this.update();
       var opt = { boardRules: profile.get('boardRules') };
       var data = compiler.generate(target, project, opt);
-      utils.saveFile(filepath, data, function() {
+      utils.saveFile(filepath, data)
+      .then(function() {
         alertify.success(message);
-      }, false);
+      })
+      .catch(function(error) {
+        alertify.error(error, 30);
+      });
     };
 
     this.addBasicBlock = function(type) {
