@@ -253,7 +253,10 @@ angular.module('icestudio')
 
     this.saveFile = function(filepath, data) {
       return new Promise(function(resolve, reject) {
-        var content = JSON.stringify(data, null, 2);
+        var content = data;
+        if (typeof data !== 'string') {
+          content = JSON.stringify(data, null, 2);
+        }
         nodeFs.writeFile(filepath, content,
           function(err) {
             if (err) {
