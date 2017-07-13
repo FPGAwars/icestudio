@@ -104,12 +104,13 @@
                 <a href ng-click="fitContent()">{{ 'Fit content' | translate }}<span class="shortcut">{{ 'fitContent' | shortcut }}</span></a>
               </li>
               <li class="divider"></li>
+              <li>
+                <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
+              </li>
+              <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Preferences' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li>
-                    <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
-                  </li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>
                       {{ 'Board rules' | translate }}&ensp;
