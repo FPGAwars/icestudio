@@ -527,32 +527,38 @@ angular.module('icestudio')
     //-- Tools
 
     $scope.verifyCode = function() {
+      var startMessage = gettextCatalog.getString('Start verification');
+      var endMessage = gettextCatalog.getString('Verification done');
       checkGraph()
       .then(function() {
         return graph.resetCodeErrors();
       })
       .then(function() {
-        return tools.verifyCode();
+        return tools.verifyCode(startMessage, endMessage);
       });
     };
 
     $scope.buildCode = function() {
+      var startMessage = gettextCatalog.getString('Start build');
+      var endMessage = gettextCatalog.getString('Build done');
       checkGraph()
       .then(function() {
         return graph.resetCodeErrors();
       })
       .then(function() {
-        return tools.buildCode();
+        return tools.buildCode(startMessage, endMessage);
       });
     };
 
     $scope.uploadCode = function() {
+      var startMessage = gettextCatalog.getString('Start upload');
+      var endMessage = gettextCatalog.getString('Upload done');
       checkGraph()
       .then(function() {
         return graph.resetCodeErrors();
       })
       .then(function() {
-        return tools.uploadCode();
+        return tools.uploadCode(startMessage, endMessage);
       });
     };
 
