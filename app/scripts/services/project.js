@@ -552,17 +552,10 @@ angular.module('icestudio')
       utils.updateWindowTitle(title);
     };
 
-    this.export = function(target, filepath, message) {
+    this.compile = function(target) {
       this.update();
       var opt = { boardRules: profile.get('boardRules') };
-      var data = compiler.generate(target, project, opt);
-      utils.saveFile(filepath, data)
-      .then(function() {
-        alertify.success(message);
-      })
-      .catch(function(error) {
-        alertify.error(error, 30);
-      });
+      return compiler.generate(target, project, opt);
     };
 
     this.addBasicBlock = function(type) {

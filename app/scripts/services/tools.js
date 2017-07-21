@@ -34,18 +34,27 @@ angular.module('icestudio')
     nodeFse.removeSync(common.BUILD_DIR);
 
     this.verifyCode = function() {
-      this.apio(['verify']);
+      var self = this;
+      return new Promise(function(resolve, reject) {
+        self.apio(['verify'], resolve);
+      });
     };
 
     this.buildCode = function() {
-      this.apio(['build', '-b', common.selectedBoard.name]);
+      var self = this;
+      return new Promise(function(resolve, reject) {
+        self.apio(['build', '-b', common.selectedBoard.name], resolve);
+      });
     };
 
     this.uploadCode = function() {
-      this.apio(['upload', '-b', common.selectedBoard.name]);
+      var self = this;
+      return new Promise(function(resolve, reject) {
+        self.apio(['upload', '-b', common.selectedBoard.name], resolve);
+      });
     };
 
-    this.apio = function(commands) {
+    this.apio = function(commands, callback) {
       var check = true;
       if (taskRunning) {
         return;
@@ -64,7 +73,10 @@ angular.module('icestudio')
           gettext('start_upload');
           var label = commands[0];
           var message = 'start_' + label;
-          currentAlert = alertify.message(gettextCatalog.getString(message), 100000);
+          if (!callback) {
+            // Show alert if there is no callback
+            currentAlert = alertify.message(gettextCatalog.getString(message), 100000);
+          }
           $('body').addClass('waiting');
           check = this.syncResources(code);
           try {
@@ -76,6 +88,11 @@ angular.module('icestudio')
                     currentAlert.dismiss(true);
                     taskRunning = false;
                   }, 1000);
+                }
+                if (callback) {
+                  callback();
+                  angular.element('#menu').removeClass('disable-menu');
+                  taskRunning = false;
                 }
               });
             }

@@ -13,6 +13,9 @@
     <input id="input-export-pcf" type="file" accept=".pcf" class="hidden" nwsaveas="{{ workingdir + project.name }}.pcf"/>
     <input id="input-export-testbench" type="file" accept=".v" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.v"/>
     <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden" nwsaveas="{{ workingdir + project.name }}_tb.gtkw"/>
+    <input id="input-export-blif" type="file" accept=".blif" class="hidden" nwsaveas="{{ workingdir + project.name }}.blif"/>
+    <input id="input-export-asc" type="file" accept=".asc" class="hidden" nwsaveas="{{ workingdir + project.name }}.asc"/>
+    <input id="input-export-bin" type="file" accept=".bin" class="hidden" nwsaveas="{{ workingdir + project.name }}.bin"/>
 
     <input id="input-add-collection" type="file" accept=".zip" class="hidden" multiple/>
 
@@ -64,6 +67,16 @@
                   </li>
                   <li>
                     <a href ng-click="exportGTKwave()">{{ 'GTKWave' }}</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href ng-click="exportBLIF()">{{ 'BLIF' }}</a>
+                  </li>
+                  <li>
+                    <a href ng-click="exportASC()">{{ 'ASC' }}</a>
+                  </li>
+                  <li>
+                    <a href ng-click="exportBitstream()">{{ 'Bitstream' }}</a>
                   </li>
                 </ul>
               </li>

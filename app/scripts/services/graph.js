@@ -1196,18 +1196,21 @@ angular.module('icestudio')
 
     this.resetCodeErrors = function() {
       var cells = graph.getCells();
-      _.each(cells, function(cell) {
-        var cellView;
-        if (cell.attributes.type === 'ice.Code') {
-          cellView = paper.findViewByModel(cell);
-          cellView.clearAnnotations();
-        }
-        else if (cell.attributes.type === 'ice.Generic') {
-          cellView = paper.findViewByModel(cell);
-        }
-        if (cellView) {
-          cellView.$box.removeClass('highlight-error');
-        }
+      return new Promise(function(resolve) {
+        _.each(cells, function(cell) {
+          var cellView;
+          if (cell.attributes.type === 'ice.Code') {
+            cellView = paper.findViewByModel(cell);
+            cellView.clearAnnotations();
+          }
+          else if (cell.attributes.type === 'ice.Generic') {
+            cellView = paper.findViewByModel(cell);
+          }
+          if (cellView) {
+            cellView.$box.removeClass('highlight-error');
+          }
+        });
+        resolve();
       });
     };
 

@@ -184,40 +184,71 @@ angular.module('icestudio')
     };
 
     $scope.exportVerilog = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-verilog', '.v', function(filepath) {
-          project.export('verilog', filepath, gettextCatalog.getString('Verilog code exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('verilog', 'Verilog', '.v');
     };
 
     $scope.exportPCF = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-pcf', '.pcf', function(filepath) {
-          project.export('pcf', filepath, gettextCatalog.getString('PCF file exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('pcf', 'PCF' ,'.pcf');
     };
 
     $scope.exportTestbench = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-testbench', '.v', function(filepath) {
-          project.export('testbench', filepath, gettextCatalog.getString('Testbench exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('testbench', 'Testbench', '.v');
     };
 
     $scope.exportGTKwave = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-gtkwave', '.gtkw', function(filepath) {
-          project.export('gtkwave', filepath, gettextCatalog.getString('GTKWave exported'));
+      exportFromCompiler('gtkwave', 'GTKWave' ,'.gtkw');
+    };
+
+    $scope.exportBLIF = function() {
+      exportFromBuilder('blif', 'BLIF', '.blif');
+    };
+
+    $scope.exportASC = function() {
+      exportFromBuilder('asc', 'ASC', '.asc');
+
+    };
+    $scope.exportBitstream = function() {
+      exportFromBuilder('bin', 'Bitstream', '.bin');
+    };
+
+    function exportFromCompiler(id, name, ext) {
+      checkGraph()
+      .then(function() {
+        utils.saveDialog('#input-export-' + id, ext, function(filepath) {
+          // Save the compiler result
+          var data = project.compile(id);
+          utils.saveFile(filepath, data)
+          .then(function() {
+            alertify.success(gettextCatalog.getString('{{name}} exported', { name: name }));
+          })
+          .catch(function(error) {
+            alertify.error(error, 30);
+          });
+          // Update the working directory
           updateWorkingdir(filepath);
         });
       });
-    };
+    }
+
+    function exportFromBuilder(id, name, ext) {
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.buildCode();
+      })
+      .then(function() {
+        utils.saveDialog('#input-export-' + id, ext, function(filepath) {
+          // Copy the built file
+          if (utils.copySync(nodePath.join(common.BUILD_DIR, 'hardware' + ext), filepath)) {
+            alertify.success(gettextCatalog.getString('{{name}} exported', { name: name }));
+          }
+          // Update the working directory
+          updateWorkingdir(filepath);
+        });
+      });
+    }
 
     function updateWorkingdir(filepath) {
       $scope.workingdir = utils.dirname(filepath) + utils.sep;
@@ -282,7 +313,8 @@ angular.module('icestudio')
     };
 
     $scope.selectAll = function() {
-      checkGraph(function() {
+      checkGraph()
+      .then(function() {
         graph.selectAll();
       });
     };
@@ -495,35 +527,45 @@ angular.module('icestudio')
     //-- Tools
 
     $scope.verifyCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.verifyCode();
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.verifyCode();
       });
     };
 
     $scope.buildCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.buildCode();
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.buildCode();
       });
     };
 
     $scope.uploadCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.uploadCode();
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.uploadCode();
       });
     };
 
-    function checkGraph(callback) {
-      if (!graph.isEmpty()) {
-        if (callback) {
-          callback();
+    function checkGraph() {
+      return new Promise(function(resolve, reject) {
+        if (!graph.isEmpty()) {
+          resolve();
         }
-      }
-      else {
-        alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
-      }
+        else {
+          alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
+          reject();
+        }
+      });
     }
 
     $scope.addCollections = function() {
