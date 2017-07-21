@@ -48,7 +48,7 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function(resolve) {
         var sourceCode = '';
 
         if (!taskRunning) {
@@ -92,7 +92,6 @@ angular.module('icestudio')
             // Error
             disableTaskMode();
             restoreTask();
-            reject();
           });
         }
       });

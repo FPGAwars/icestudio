@@ -895,7 +895,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     this.updateBox();
     this.updating = false;
-    this.prevZoom = 1;
+    this.prevZoom = 0;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
@@ -1039,7 +1039,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       self.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
       self.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
       self.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
-    }, 20);
+    }, 0);
   },
 
   clearAnnotations: function() {
