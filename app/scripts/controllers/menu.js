@@ -481,7 +481,7 @@ angular.module('icestudio')
       if (common.selectedCollection.name !== collection.name) {
         var name = collections.selectCollection(collection.name);
         profile.set('collection', name);
-        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
+        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name ? name : 'Default') }));
       }
     };
 
