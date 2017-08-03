@@ -13,6 +13,7 @@ joint.ui.SelectionView = Backbone.View.extend({
   events: {
 
     'click .selection-box': 'click',
+    'dblclick': 'dblclick',
     'mousedown .selection-box': 'startTranslatingSelection',
     'mouseover': 'mouseover',
     'mouseout': 'mouseout',
@@ -49,6 +50,18 @@ joint.ui.SelectionView = Backbone.View.extend({
       // Mouse left button
 
       this.trigger('selection-box:pointerclick', evt);
+    }
+  },
+
+  dblclick: function(evt) {
+
+    var id = evt.target.getAttribute('data-model');
+    if (id) {
+      var view = this.options.paper.findViewByModel(id);
+      if (view) {
+        // Trigger dblclick in selection to the Cell View
+        view.notify('cell:pointerdblclick', evt);
+      }
     }
   },
 

@@ -343,8 +343,8 @@ angular.module('icestudio')
           processCellClick(cellView, evt);
         }
         else {
-          // If not, wait 150ms to ensure that it's not a dblclick
-          var ensureTime = 150;
+          // If not, wait 200ms to ensure that it's not a dblclick
+          var ensureTime = 200;
           pointerDown = false;
           setTimeout(function() {
             if (!dblClickCell && !pointerDown) {
@@ -389,29 +389,34 @@ angular.module('icestudio')
         if (!utils.hasShift(evt)) {
           // Allow dblClick if Shift is not pressed
           dblClickCell = true;
-          var type =  cellView.model.get('blockType');
-          if (type.indexOf('basic.') !== -1) {
-            if (paper.options.enabled) {
-              blocks.editBasic(type, cellView, function(cell) {
-                addCell(cell);
-              });
-            }
-          }
-          else if (common.allDependencies[type]) {
-            z.index = 1;
-            var project = common.allDependencies[type];
-            var breadcrumbsLength = self.breadcrumbs.length;
-            $rootScope.$broadcast('navigateProject', {
-              update: breadcrumbsLength === 1,
-              project: project
-            });
-            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-            utils.rootScopeSafeApply();
-          }
+          processDblClick(cellView);
           // Enable click event
           setTimeout(function() { dblClickCell = false; }, 200);
         }
       });
+
+      function processDblClick(cellView) {
+        var type =  cellView.model.get('blockType');
+        if (type.indexOf('basic.') !== -1) {
+          if (paper.options.enabled) {
+            blocks.editBasic(type, cellView, function(cell) {
+              addCell(cell);
+              selectionView.cancelSelection();
+            });
+          }
+        }
+        else if (common.allDependencies[type]) {
+          z.index = 1;
+          var project = common.allDependencies[type];
+          var breadcrumbsLength = self.breadcrumbs.length;
+          $rootScope.$broadcast('navigateProject', {
+            update: breadcrumbsLength === 1,
+            project: project
+          });
+          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+          utils.rootScopeSafeApply();
+        }
+      }
 
       paper.on('blank:pointerdown', function(evt, x, y) {
         // Disable current focus
