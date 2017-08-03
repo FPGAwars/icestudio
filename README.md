@@ -115,7 +115,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 ## Troubleshooting
 
-If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, execute:
+If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, try to update your **[nodejs](https://github.com/nodejs/node)** or execute:
 
 ```bash
 npm update -g
