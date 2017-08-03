@@ -20,6 +20,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     'mousedown': 'mousedown'
   },
 
+  showtooltip: true,
   $selectionArea: null,
 
   initialize: function(options) {
@@ -68,6 +69,11 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   mousedown: function(evt) {
 
+    if (!this.showtooltip && evt.which === 1) {
+      // Mouse left button: block fixed
+      this.showtooltip = true;
+    }
+
     this.mouseManager(evt, 'mousedowncard');
   },
 
@@ -75,11 +81,13 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     evt.preventDefault();
 
-    var id = evt.target.getAttribute('data-model');
-    if (id) {
-      var view = this.options.paper.findViewByModel(id);
-      if (view && view[fnc]) {
-        view[fnc].apply(view, [evt]);
+    if (this.showtooltip) {
+      var id = evt.target.getAttribute('data-model');
+      if (id) {
+        var view = this.options.paper.findViewByModel(id);
+        if (view && view[fnc]) {
+          view[fnc].apply(view, [evt]);
+        }
       }
     }
   },
@@ -316,6 +324,7 @@ joint.ui.SelectionView = Backbone.View.extend({
       if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
         this.$el.append($selectionBox);
       }
+      this.showtooltip = (opt.initooltip !== undefined) ? opt.initooltip : true;
       $selectionBox.css({ opacity: (opt.transparent ? 0 : 1) });
 
       this.updateBox(element);

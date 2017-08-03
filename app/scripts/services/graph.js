@@ -621,7 +621,7 @@ angular.module('icestudio')
       graph.trigger('batch:start');
       addCell(cell);
       disableSelected();
-      var opt = { transparent: true };
+      var opt = { transparent: true, initooltip: false };
       var noBatch = true;
       selection.add(cell);
       selectionView.createSelectionBox(cell, opt);
