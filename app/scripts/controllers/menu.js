@@ -323,10 +323,6 @@ angular.module('icestudio')
       project.removeSelected();
     }
 
-    $scope.resetView = function() {
-      graph.resetView();
-    };
-
     $scope.fitContent = function() {
       graph.fitContent();
     };
@@ -689,7 +685,6 @@ angular.module('icestudio')
     shortcuts.method('copySelected', $scope.copySelected);
     shortcuts.method('pasteSelected', $scope.pasteSelected);
     shortcuts.method('selectAll', $scope.selectAll);
-    shortcuts.method('resetView', $scope.resetView);
     shortcuts.method('fitContent', $scope.fitContent);
 
     // -- Tools

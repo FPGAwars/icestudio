@@ -111,14 +111,7 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="resetView()">{{ 'Reset view' | translate }}<span class="shortcut">{{ 'resetView' | shortcut }}</span></a>
-              </li>
-              <li>
                 <a href ng-click="fitContent()">{{ 'Fit content' | translate }}<span class="shortcut">{{ 'fitContent' | shortcut }}</span></a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li class="dropdown-submenu" uib-dropdown>
@@ -143,7 +136,6 @@
                     </ul>
                   </li>
                   <li class="divider"></li>
-
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
                     <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
@@ -156,6 +148,9 @@
                     </a>
                   </li>
                 </ul>
+              </li>
+              <li>
+                <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
               </li>
             </ul>
           </li>
