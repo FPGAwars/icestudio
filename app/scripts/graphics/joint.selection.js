@@ -13,7 +13,11 @@ joint.ui.SelectionView = Backbone.View.extend({
   events: {
 
     'click .selection-box': 'click',
-    'mousedown .selection-box': 'startTranslatingSelection'
+    'mousedown .selection-box': 'startTranslatingSelection',
+    'mouseover': 'mouseover',
+    'mouseout': 'mouseout',
+    'mouseup': 'mouseup',
+    'mousedown': 'mousedown'
   },
 
   $selectionArea: null,
@@ -44,6 +48,39 @@ joint.ui.SelectionView = Backbone.View.extend({
       // Mouse left button
 
       this.trigger('selection-box:pointerclick', evt);
+    }
+  },
+
+  mouseover: function(evt) {
+
+    this.mouseManager(evt, 'mouseovercard');
+  },
+
+  mouseout: function(evt) {
+
+    this.mouseManager(evt, 'mouseoutcard');
+  },
+
+  mouseup: function(evt) {
+
+    this.mouseManager(evt, 'mouseupcard');
+  },
+
+  mousedown: function(evt) {
+
+    this.mouseManager(evt, 'mousedowncard');
+  },
+
+  mouseManager: function (evt, fnc) {
+
+    evt.preventDefault();
+
+    var id = evt.target.getAttribute('data-model');
+    if (id) {
+      var view = this.options.paper.findViewByModel(id);
+      if (view && view[fnc]) {
+        view[fnc].apply(view, [evt]);
+      }
     }
   },
 
@@ -289,7 +326,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   updateBox: function(element) {
 
-    var margin = 4;
+    var margin = 8;
 
     var bbox = element.getBBox();
     var state = this.options.state;

@@ -459,53 +459,46 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   },
 
   enter: false,
-  down: false,
-  timer: null,
 
-  mouseovercard: function(/*event, x, y*/) {
-    if (this.tooltip) {
-      this.enter = true;
-      var self = this;
-      this.timer = setTimeout(function() {
-        if (self.enter && !self.down) {
-          self.tooltiptext.text(self.tooltip);
-          self.tooltiptext.css('visibility', 'visible');
-          if (self.tooltip.length > 13) {
-            self.tooltiptext.addClass('tooltip-medium');
-            self.tooltiptext.removeClass('tooltip-large');
-          }
-          else if (self.tooltip.length > 20) {
-            self.tooltiptext.addClass('tooltip-large');
-            self.tooltiptext.removeClass('tooltip-medium');
-          }
-          else {
-            self.tooltiptext.removeClass('tooltip-medium');
-            self.tooltiptext.removeClass('tooltip-large');
-          }
-        }
-      }, 1000);
+  mouseovercard: function(event/*, x, y*/) {
+    if (event && event.which === 0) {
+      // Mouse button not pressed
+      this.showTooltip();
     }
   },
 
   mouseoutcard: function(/*event, x, y*/) {
-    if (this.tooltip) {
-      this.enter = false;
-      if (this.timer) {
-        clearTimeout(this.timer);
-        this.timer = null;
-      }
-      this.tooltiptext.css('visibility', 'hidden');
-    }
+    this.hideTooltip();
   },
 
   mouseupcard: function(/*event, x, y*/) {
-    this.down = false;
-    this.mouseovercard();
+    this.showTooltip();
   },
 
   mousedowncard: function(/*event, x, y*/) {
-    this.down = true;
-    this.mouseoutcard();
+    this.hideTooltip();
+  },
+
+  showTooltip: function() {
+    if (this.tooltip) {
+      this.enter = true;
+      setTimeout(function() {
+        if (this.enter) {
+          this.tooltiptext.css('visibility', 'visible');
+        }
+      }.bind(this), 1000);
+    }
+  },
+
+  hideTooltip: function() {
+    if (this.tooltip) {
+      this.enter = false;
+      setTimeout(function() {
+        if (!this.enter) {
+          this.tooltiptext.css('visibility', 'hidden');
+        }
+      }.bind(this), 100);
+    }
   },
 
   initialize: function() {
@@ -513,6 +506,21 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
+
+    this.tooltiptext.text(this.tooltip);
+
+    if (this.tooltip.length > 13) {
+      this.tooltiptext.addClass('tooltip-medium');
+      this.tooltiptext.removeClass('tooltip-large');
+    }
+    else if (this.tooltip.length > 20) {
+      this.tooltiptext.addClass('tooltip-large');
+      this.tooltiptext.removeClass('tooltip-medium');
+    }
+    else {
+      this.tooltiptext.removeClass('tooltip-medium');
+      this.tooltiptext.removeClass('tooltip-large');
+    }
 
     if (this.model.get('config')) {
       this.$box.addClass('config-block');
