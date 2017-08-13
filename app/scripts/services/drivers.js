@@ -53,7 +53,9 @@ angular.module('icestudio')
    };
 
    function enableLinuxDrivers() {
-     var rules = 'ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", OWNER="user", GROUP="dialout", MODE="0777"';
+     var rules = 'ACTION==\\"add\\", SUBSYSTEM==\\"usb\\", ' +
+                 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ' +
+                 'OWNER=\\"user\\", GROUP=\\"dialout\\", MODE=\\"0777\\"';
      linuxDrivers([
        'echo \'' + rules + '\' > /etc/udev/rules.d/80-icestick.rules',
        'service udev restart'
