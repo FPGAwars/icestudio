@@ -24,8 +24,9 @@
 #breadcrumbs {
   margin-bottom: 5px;
   border-radius: 0px;
-  background-color: #f8f8f8;
-  border-top: 1px solid #e7e7e7;
+  background: #f5f6f7;
+  border-top: 1px solid #dadde0;
+  box-shadow: 0 0 2px #e8ecf0;
 }
 
 #breadcrumbs>li {
