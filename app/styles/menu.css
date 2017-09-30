@@ -1,9 +1,9 @@
-.disable-menu {
+.is-disabled {
   pointer-events: none;
   opacity: 0.8;
 }
 
-.disable-paper {
+.looks-disabled {
   opacity: 0.8;
 }
 
@@ -107,9 +107,9 @@
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: #555;
+  color: #333;
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-  color: #555;
+  color: #333;
 }

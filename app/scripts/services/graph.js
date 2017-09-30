@@ -572,13 +572,15 @@ angular.module('icestudio')
     this.appEnable = function(value) {
       paper.options.enabled = value;
       if (value) {
-        angular.element('#menu').removeClass('disable-menu');
-        angular.element('#paper').removeClass('disable-paper');
+        angular.element('#menu').removeClass('is-disabled');
+        angular.element('#paper').removeClass('looks-disabled');
+        angular.element('#board').removeClass('looks-disabled');
         angular.element('#banner').addClass('hidden');
       }
       else {
-        angular.element('#menu').addClass('disable-menu');
-        angular.element('#paper').addClass('disable-paper');
+        angular.element('#menu').addClass('is-disabled');
+        angular.element('#paper').addClass('looks-disabled');
+        angular.element('#board').addClass('looks-disabled');
         angular.element('#banner').removeClass('hidden');
       }
       var cells = graph.getCells();
