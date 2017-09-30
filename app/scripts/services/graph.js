@@ -19,7 +19,6 @@ angular.module('icestudio')
     var selectionView = null;
     var commandManager = null;
     var mousePosition = { x: 0, y: 0 };
-    var menuHeight = 51;
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
 
@@ -619,6 +618,7 @@ angular.module('icestudio')
 
     this.addDraggableCell = function(cell) {
       this.addingDraggableBlock = true;
+      var menuHeight = $('#menu').height();
       cell.attributes.position = {
         x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
         y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
@@ -635,6 +635,7 @@ angular.module('icestudio')
 
     this.addDraggableCells = function(cells) {
       this.addingDraggableBlock = true;
+      var menuHeight = $('#menu').height();
       if (cells.length > 0) {
         var firstCellAttrs = cells[0].attributes;
         var offset = {
@@ -1126,6 +1127,7 @@ angular.module('icestudio')
         // - assign new UUIDs to the cells
         // - add the graph in the mouse position
         var origin = graphOrigin(design.graph);
+        var menuHeight = $('#menu').height();
         var opt = {
           new: true,
           disabled: false,
