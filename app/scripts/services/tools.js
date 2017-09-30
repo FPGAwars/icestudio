@@ -463,12 +463,14 @@ angular.module('icestudio')
       var match, module = {}, modules = [];
       // Find begin/end lines of the modules
       for (var i in codelines) {
+        var bSpace = 0;
         var codeline = codelines[i];
         // Get the module name
         if (!module.name) {
-          match = /module\s+(.*?)[\s|\(|$]/.exec(codeline);
+          match = /(\s*?)module\s+(.*?)[\s|\(|$]/.exec(codeline);
           if (match) {
-            module.name = match[1];
+            bSpace = match[1].length;
+            module.name = match[2];
             continue;
           }
         }
@@ -482,8 +484,8 @@ angular.module('icestudio')
         }
         // Get the end of the module code
         if (!module.end) {
-          match = /endmodule/.exec(codeline);
-          if (match) {
+          match = /(\s*?)endmodule/.exec(codeline);
+          if (match && match[1].length === bSpace) {
             module.end = parseInt(i) + 1;
             modules.push(module);
             module = {};
