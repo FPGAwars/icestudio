@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <div ng-controller="DesignCtrl">
-  <div id="banner" class="hidden">
-    <div id="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
-    <div id="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
-    <a id="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
+  <div id="banner" class="banner hidden">
+    <div class="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
+    <div class="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
+    <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
   </div>
   <div id="paper" class="paper"></div>
-  <div id="footer">
-    <ol id="breadcrumbs" class="breadcrumb">
-      <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
-        <span ng-switch-when="true">{{ item.name }}</span>
-        <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
-      </li>
-    </ol>
-    <div id="board">{{ common.selectedBoard.info.label }}</div>
+  <div class="footer ice-bar">
+    <div class="breadcrumbs-container">
+      <ol class="breadcrumb">
+        <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
+          <span ng-switch-when="true">{{ item.name }}</span>
+          <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
+        </li>
+      </ol>
+    </div>
+    <div class="board-container">
+      {{ common.selectedBoard.info.label }}
+    </div>
   </div>
 </div>

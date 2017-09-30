@@ -17,6 +17,10 @@ body {
   height: 100%;
 }
 
+.ice-bar {
+  background: #f5f6f7;
+}
+
 .waiting * {
   cursor: progress;
 }
