@@ -24,8 +24,12 @@ angular
                 utils,
                 boards,
                 collections,
-                gettextCatalog)
+                gettextCatalog,
+                $timeout)
   {
+    $timeout(function(){
+      $('body').addClass('waiting');
+    }, 0);
     // Load boards
     boards.loadBoards();
     // Load collections
@@ -42,5 +46,6 @@ angular
       profile.set('collection', selectedCollection);
       // Initialize title
       project.updateTitle(gettextCatalog.getString('Untitled'));
+      $('body').removeClass('waiting');
     });
   });

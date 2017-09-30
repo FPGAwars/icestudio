@@ -22,7 +22,7 @@ body {
 }
 
 .waiting * {
-  cursor: progress;
+  cursor: wait !important;
 }
 
 .alertify-notifier.ajs-right {

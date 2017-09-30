@@ -19,6 +19,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
+  min-height: 45px;
   padding: 4px;
   border-top: 1px solid #d5dadd;
   z-index: 1501;
