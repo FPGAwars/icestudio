@@ -25,12 +25,12 @@ body {
   cursor: wait !important;
 }
 
-.alertify-notifier.ajs-right {
-  bottom: 45px;
+.alertify-notifier {
+  right: 0 !important;
 }
 
 .alertify-notifier.ajs-bottom {
-  bottom: 45px;
+  bottom: 69px;
 }
 
 .alertify-notifier .ajs-message {

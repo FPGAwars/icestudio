@@ -361,7 +361,7 @@ angular.module('icestudio')
       // Sort Constant cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
         if (cell.get('type') === 'ice.Constant') {
-          return cell.attributes.position.x;
+          return cell.get('position').x;
         }
       });
 
@@ -369,7 +369,7 @@ angular.module('icestudio')
       cells = _.sortBy(cells, function(cell) {
         if (cell.get('type') === 'ice.Input' ||
             cell.get('type') === 'ice.Output') {
-          return cell.attributes.position.y;
+          return cell.get('position').y;
         }
       });
 

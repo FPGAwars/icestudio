@@ -460,17 +460,29 @@ angular.module('icestudio')
 
     function mapCodeModules(code) {
       var codelines = code.split('\n');
-      var match, module = {}, modules = [];
+      var match, module = { params: [] }, modules = [];
       // Find begin/end lines of the modules
       for (var i in codelines) {
         var bSpace = 0;
         var codeline = codelines[i];
         // Get the module name
         if (!module.name) {
-          match = /(\s*?)module\s+(.*?)[\s|\(|$]/.exec(codeline);
+          match = /(\s*?)module\s(.*?)[\s|\(|$]/.exec(codeline);
           if (match) {
             bSpace = match[1].length;
             module.name = match[2];
+            continue;
+          }
+        }
+        // Get the module parameters
+        if (!module.begin) {
+          match = /(\s*?)parameter\s(.*?)\s/.exec(codeline);
+          if (match && match[1].length === bSpace + 1) {
+            bSpace = match[1].length;
+            module.params.push({
+              name: match[2],
+              line: parseInt(i) + 1
+            });
             continue;
           }
         }
@@ -500,23 +512,39 @@ angular.module('icestudio')
       // Find the module with the error
       for (var i in modules) {
         var module = modules[i];
-        if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
+        if (codeError.line <= module.end) {
           newCodeError = {
-           type: codeError.type,
-           line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
-           msg: codeError.msg
-         };
-          if (module.name.startsWith('main_')) {
-            // Code block
-            newCodeError.blockId = module.name.split('_')[1];
-            newCodeError.blockType = 'code';
+            type: codeError.type,
+            msg: codeError.msg
+          };
+          if (codeError.line > module.begin) {
+            if (module.name.startsWith('main_')) {
+              // Code block
+              newCodeError.blockId = module.name.split('_')[1];
+              newCodeError.blockType = 'code';
+              newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
+            }
+            else {
+              // Generic block
+              newCodeError.blockId = module.name.split('_')[0];
+              newCodeError.blockType = 'generic';
+            }
+            break;
           }
           else {
-            // Generic block
-            newCodeError.blockId = module.name.split('_')[0];
-            newCodeError.blockType = 'generic';
+            for (var j in module.params) {
+              var param = module.params[j];
+              if (codeError.line === param.line) {
+                // Constant block
+                newCodeError.blockId = param.name;
+                newCodeError.blockType = 'constant';
+                break;
+              }
+            }
+            if (newCodeError.blockId) {
+              break;
+            }
           }
-          break;
         }
       }
       return newCodeError;
