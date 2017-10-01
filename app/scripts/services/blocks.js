@@ -953,15 +953,17 @@ angular.module('icestudio')
       ],
         function(evt, values) {
           var readonly = values[0];
-          var data = utils.clone(block.data);
-          data.readonly = readonly;
-          // Translate info content
-          if (data.info && data.readonly) {
-            data.text = gettextCatalog.getString(data.info);
+          if (block.data.readonly !== readonly) {
+            var data = utils.clone(block.data);
+            data.readonly = readonly;
+            // Translate info content
+            if (data.info && data.readonly) {
+              data.text = gettextCatalog.getString(data.info);
+            }
+            cellView.model.set('data', data);
+            cellView.apply();
+            alertify.success(gettextCatalog.getString('Block updated'));
           }
-          cellView.model.set('data', data);
-          cellView.apply();
-          alertify.success(gettextCatalog.getString('Block updated'));
       });
     }
 
