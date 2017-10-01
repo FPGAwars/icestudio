@@ -633,11 +633,7 @@ angular.module('icestudio')
     };
 
     function installDefaultToolchain() {
-      // Disable user events
-      utils.disableKeyEvents();
-      utils.disableClickEvents();
-
-      $('body').addClass('waiting');
+      installationStatus();
 
       var content = [
         '<div>',
@@ -672,11 +668,7 @@ angular.module('icestudio')
     }
 
     function installOnlineToolchain() {
-      // Disable user events
-      utils.disableKeyEvents();
-      utils.disableClickEvents();
-
-      $('body').addClass('waiting');
+      installationStatus();
 
       var content = [
         '<div>',
@@ -717,10 +709,8 @@ angular.module('icestudio')
     function checkInternetConnection(callback) {
       updateProgress(gettextCatalog.getString('Check Internet connection...'), 0);
       utils.isOnline(callback, function() {
-        toolchainAlert.close(true);
-        utils.enableKeyEvents();
-        utils.enableClickEvents();
-        $('body').removeClass('waiting');
+        closeToolchainAlert();
+        restoreStatus();
         alertify.error(gettextCatalog.getString('Internet connection required'), 30);
         callback(true);
       });
@@ -732,10 +722,8 @@ angular.module('icestudio')
         callback();
       }
       else {
-        toolchainAlert.close(true);
-        utils.enableKeyEvents();
-        utils.enableClickEvents();
-        $('body').removeClass('waiting');
+        closeToolchainAlert();
+        restoreStatus();
         alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
         callback(true);
       }
@@ -809,7 +797,7 @@ angular.module('icestudio')
       checkToolchain(function() {
         if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
-          toolchainAlert.close(true);
+          closeToolchainAlert();
           alertify.success(gettextCatalog.getString('Toolchain installed'));
           var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
           if (!infoAlert) {
@@ -825,12 +813,10 @@ angular.module('icestudio')
           }
         }
         else {
-          toolchainAlert.close(true);
+          closeToolchainAlert();
           alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
         }
-        utils.enableKeyEvents();
-        utils.enableClickEvents();
-        $('body').removeClass('waiting');
+        restoreStatus();
         callback();
       });
     }
@@ -855,6 +841,25 @@ angular.module('icestudio')
         .attr('aria-valuenow', 0)
         .css('width', '0%')
         .removeClass('notransition');
+    }
+
+    function closeToolchainAlert() {
+      toolchainAlert.callback();
+      toolchainAlert.close();
+    }
+
+    function installationStatus() {
+      // Disable user events
+      utils.disableKeyEvents();
+      utils.disableClickEvents();
+      $('body').addClass('waiting');
+    }
+
+    function restoreStatus() {
+      // Enable user events
+      utils.enableKeyEvents();
+      utils.enableClickEvents();
+      $('body').removeClass('waiting');
     }
 
     // Collections management
