@@ -1239,7 +1239,9 @@ angular.module('icestudio')
         }
         if (codeError.blockId === blockId) {
           cellView = paper.findViewByModel(cell);
-          cellView.$box.addClass('highlight-error');
+          if (codeError.type === 'error') {
+            cellView.$box.addClass('highlight-error');
+          }
           if (cell.get('type') === 'ice.Code') {
             cellView.setAnnotation(codeError);
           }

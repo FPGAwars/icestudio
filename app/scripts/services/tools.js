@@ -385,17 +385,23 @@ angular.module('icestudio')
 
               // Extract modules map from code
               var modules = mapCodeModules(code);
-
+              var hasErrors = false;
+              var hasWarnings = false;
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
                 if (codeError) {
                   // Launch codeError event
                   $(document).trigger('codeError', [codeError]);
+                  hasErrors = hasErrors || codeError.type === 'error';
+                  hasWarnings = hasWarnings || codeError.type === 'warning';
                 }
               }
 
-              if (codeErrors.length !== 0) {
+              if (hasErrors) {
                 errorAlert = alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
+              }
+              else if (hasWarnings) {
+                errorAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
               }
               else {
                 var stdoutWarning = stdout.split('\n').filter(function (line) {
@@ -815,7 +821,7 @@ angular.module('icestudio')
                   $rootScope.$broadcast('enableDrivers');
                 }
               };
-            }, 500);
+            }, 1000);
           }
         }
         else {
