@@ -264,12 +264,25 @@ angular.module('icestudio')
 
     function exit() {
       if (project.changed) {
+        alertify.set('confirm', 'labels', {
+          'ok': gettextCatalog.getString('Close')
+        });
         alertify.confirm(
           utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
           function() {
+            // Close
             _exit();
-          });
+          },
+          function() {
+            // Cancel
+            setTimeout(function() {
+              alertify.set('confirm', 'labels', {
+                'ok': gettextCatalog.getString('OK')
+              });
+            }, 200);
+          }
+        );
       }
       else {
         _exit();
