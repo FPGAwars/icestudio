@@ -17,6 +17,10 @@ body {
   height: 100%;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .ice-bar {
   background: #f5f6f7;
 }

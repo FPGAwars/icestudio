@@ -70,28 +70,38 @@ angular.module('icestudio')
       this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
-    function disableClick(e) {
-      e.stopPropagation();
-      e.preventDefault();
+    function disableEvent(event) {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
-    function enableClickEvent() {
-      document.removeEventListener('click', disableClick, true);
-    }
+    this.enableClickEvents = function() {
+      document.removeEventListener('click', disableEvent, true);
+    };
 
-    function disableClickEvent() {
-      document.addEventListener('click', disableClick, true);
-    }
+    this.disableClickEvents = function() {
+      document.addEventListener('click', disableEvent, true);
+    };
 
-    this.enableClickEvent = enableClickEvent;
-    this.disableClickEvent = disableClickEvent;
+    this.enableKeyEvents = function() {
+      document.removeEventListener('keyup', disableEvent, true);
+      document.removeEventListener('keydown', disableEvent, true);
+      document.removeEventListener('keypress', disableEvent, true);
+    };
+
+    this.disableKeyEvents = function() {
+      document.addEventListener('keyup', disableEvent, true);
+      document.addEventListener('keydown', disableEvent, true);
+      document.addEventListener('keypress', disableEvent, true);
+    };
 
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
         function (error, stdout, stderr) {
           // console.log(error, stdout, stderr);
           if (error) {
-            enableClickEvent();
+            this.enableKeyEvents();
+            this.enableClickEvents();
             callback(true);
             angular.element('#progress-message')
               .text(stderr);
@@ -105,7 +115,7 @@ angular.module('icestudio')
           else {
             callback();
           }
-        }
+        }.bind(this)
       );
     };
 

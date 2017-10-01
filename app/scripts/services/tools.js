@@ -24,7 +24,9 @@ angular.module('icestudio')
     var taskRunning = false;
 
     var startAlert = null;
+    var infoAlert = null;
     var errorAlert = null;
+    var toolchainAlert = null;
     var toolchain = { apio: '-', installed: false, disabled: false };
 
     this.toolchain = toolchain;
@@ -228,7 +230,7 @@ angular.module('icestudio')
               .callback = function(isClicked) {
                 if (isClicked) {
                   // Install the new toolchain
-                  self.installToolchain();
+                  $rootScope.$broadcast('installToolchain');
                 }
               };
               if (callback) {
@@ -565,10 +567,9 @@ angular.module('icestudio')
 
     // Toolchain methods
 
-    var self = this;
     $rootScope.$on('installToolchain', function(/*event*/) {
-      self.installToolchain();
-    });
+      this.installToolchain();
+    }.bind(this));
 
     this.installToolchain = function() {
       utils.removeToolchain();
@@ -613,6 +614,10 @@ angular.module('icestudio')
       });
     };
 
+    $rootScope.$on('enableDrivers', function(/*event*/) {
+      this.enableDrivers();
+    }.bind(this));
+
     this.enableDrivers = function() {
       drivers.enable();
     };
@@ -622,10 +627,11 @@ angular.module('icestudio')
     };
 
     function installDefaultToolchain() {
-      // Configure alert
-      alertify.defaults.closable = false;
+      // Disable user events
+      utils.disableKeyEvents();
+      utils.disableClickEvents();
 
-      utils.disableClickEvent();
+      $('body').addClass('waiting');
 
       var content = [
         '<div>',
@@ -637,11 +643,15 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-        alertify.alert(content, function() {
-          setTimeout(function() {
-            initProgress();
-          }, 200);
-        });
+      toolchainAlert = alertify.alert(content, function() {
+        setTimeout(function() {
+          initProgress();
+          // Restore OK button
+          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
+        }, 200);
+      });
+      // Hide OK button
+      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
 
       // Reset toolchain
       async.series([
@@ -653,16 +663,14 @@ angular.module('icestudio')
         extractDefaultApioPackages,
         installationCompleted
       ]);
-
-      // Restore alert
-      alertify.defaults.closable = true;
     }
 
     function installOnlineToolchain() {
-      // Configure alert
-      alertify.defaults.closable = false;
+      // Disable user events
+      utils.disableKeyEvents();
+      utils.disableClickEvents();
 
-      utils.disableClickEvent();
+      $('body').addClass('waiting');
 
       var content = [
         '<div>',
@@ -674,11 +682,15 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-        alertify.alert(content, function() {
-          setTimeout(function() {
-            initProgress();
-          }, 200);
-        });
+      toolchainAlert = alertify.alert(content, function() {
+        setTimeout(function() {
+          initProgress();
+          // Restore OK button
+          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
+        }, 200);
+      });
+      // Hide OK button
+      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
 
       // Install toolchain
       async.series([
@@ -694,16 +706,17 @@ angular.module('icestudio')
         apioInstallScons,
         installationCompleted
       ]);
-
-      // Restore alert
-      alertify.defaults.closable = true;
     }
 
     function checkInternetConnection(callback) {
       updateProgress(gettextCatalog.getString('Check Internet connection...'), 0);
       utils.isOnline(callback, function() {
-        errorProgress(gettextCatalog.getString('Internet connection required'));
-        utils.enableClickEvent();
+        toolchainAlert.close(true);
+        utils.enableKeyEvents();
+        utils.enableClickEvents();
+        $('body').removeClass('waiting');
+        alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+        callback(true);
       });
     }
 
@@ -713,8 +726,11 @@ angular.module('icestudio')
         callback();
       }
       else {
-        errorProgress(gettextCatalog.getString('Python 2.7 is required'));
-        utils.enableClickEvent();
+        toolchainAlert.close(true);
+        utils.enableKeyEvents();
+        utils.enableClickEvents();
+        $('body').removeClass('waiting');
+        alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
         callback(true);
       }
     }
@@ -787,12 +803,28 @@ angular.module('icestudio')
       checkToolchain(function() {
         if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
+          toolchainAlert.close(true);
           alertify.success(gettextCatalog.getString('Toolchain installed'));
+          var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+          if (!infoAlert) {
+            setTimeout(function() {
+              infoAlert = alertify.message(message, 30);
+              infoAlert.callback = function(isClicked) {
+                infoAlert = null;
+                if (isClicked) {
+                  $rootScope.$broadcast('enableDrivers');
+                }
+              };
+            }, 500);
+          }
         }
         else {
-          errorProgress(gettextCatalog.getString('Toolchain not installed'));
+          toolchainAlert.close(true);
+          alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
         }
-        utils.enableClickEvent();
+        utils.enableKeyEvents();
+        utils.enableClickEvents();
+        $('body').removeClass('waiting');
         callback();
       });
     }
@@ -817,17 +849,6 @@ angular.module('icestudio')
         .attr('aria-valuenow', 0)
         .css('width', '0%')
         .removeClass('notransition');
-    }
-
-    function errorProgress(message) {
-      angular.element('#progress-message')
-        .text(message);
-      angular.element('#progress-bar')
-        .addClass('notransition progress-bar-danger')
-        .removeClass('progress-bar-info progress-bar-striped active')
-        .text('Error')
-        .attr('aria-valuenow', 100)
-        .css('width', '100%');
     }
 
     // Collections management
