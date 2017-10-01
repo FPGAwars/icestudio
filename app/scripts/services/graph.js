@@ -1215,8 +1215,6 @@ angular.module('icestudio')
               (cell.get('type') === 'ice.Constant'))
           {
             cellView = paper.findViewByModel(cell);
-          }
-          if (cellView) {
             cellView.$box.removeClass('highlight-error');
             if (cell.get('type') === 'ice.Code') {
               cellView.clearAnnotations();
@@ -1232,15 +1230,15 @@ angular.module('icestudio')
       _.each(cells, function(cell) {
         var blockId, cellView;
         if ((codeError.blockType === 'code' && cell.get('type') === 'ice.Code') ||
-            (codeError.blockType === 'generic' && cell.get('type') === 'ice.Generic') ||
             (codeError.blockType === 'constant' && cell.get('type') === 'ice.Constant'))
          {
           blockId = utils.digestId(cell.id);
-          if (codeError.blockId === blockId) {
-            cellView = paper.findViewByModel(cell);
-          }
         }
-        if (cellView) {
+        else if (codeError.blockType === 'generic' && cell.get('type') === 'ice.Generic') {
+          blockId = utils.digestId(cell.attributes.blockType);
+        }
+        if (codeError.blockId === blockId) {
+          cellView = paper.findViewByModel(cell);
           cellView.$box.addClass('highlight-error');
           if (cell.get('type') === 'ice.Code') {
             cellView.setAnnotation(codeError);

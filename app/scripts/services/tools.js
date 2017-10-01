@@ -380,7 +380,6 @@ angular.module('icestudio')
 
               // Extract modules map from code
               var modules = mapCodeModules(code);
-
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
                 if (codeError) {
@@ -497,7 +496,7 @@ angular.module('icestudio')
           if (match) {
             module.end = parseInt(i) + 1;
             modules.push(module);
-            module = {};
+            module = { params: [] };
           }
         }
       }
@@ -529,18 +528,23 @@ angular.module('icestudio')
             break;
           }
           else {
-            for (var j in module.params) {
-              var param = module.params[j];
-              if (codeError.line === param.line) {
-                // Constant block
-                newCodeError.blockId = param.name;
-                newCodeError.blockType = 'constant';
-                break;
+            if (module.name === 'main') {
+              // Constant block
+              for (var j in module.params) {
+                var param = module.params[j];
+                if (codeError.line === param.line) {
+                  newCodeError.blockId = param.name;
+                  newCodeError.blockType = 'constant';
+                  break;
+                }
               }
             }
-            if (newCodeError.blockId) {
-              break;
+            else {
+              // Generic block
+              newCodeError.blockId = module.name;
+              newCodeError.blockType = 'generic';
             }
+            break;
           }
         }
       }
