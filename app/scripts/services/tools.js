@@ -380,6 +380,7 @@ angular.module('icestudio')
 
               // Extract modules map from code
               var modules = mapCodeModules(code);
+
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
                 if (codeError) {
@@ -389,7 +390,7 @@ angular.module('icestudio')
               }
 
               if (codeErrors.length !== 0) {
-                alertify.error(gettextCatalog.getString('Errors detected in the code'), 5);
+                alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
               }
               else {
                 var stdoutWarning = stdout.split('\n').filter(function (line) {
@@ -513,7 +514,13 @@ angular.module('icestudio')
             type: codeError.type,
             msg: codeError.msg
           };
-          if (codeError.line > module.begin) {
+          // Find constant blocks in Yosys error:
+          //  The error comes from the generated code
+          //  but the origin is the constant block value
+          var re = /Failed\sto\sdetect\swidth\sfor\sparameter\s\\(.*?)\sat/g;
+          var matchConstant = re.exec(newCodeError.msg);
+
+          if (codeError.line > module.begin && !matchConstant) {
             if (module.name.startsWith('main_')) {
               // Code block
               newCodeError.blockId = module.name.split('_')[1];
@@ -532,7 +539,9 @@ angular.module('icestudio')
               // Constant block
               for (var j in module.params) {
                 var param = module.params[j];
-                if (codeError.line === param.line) {
+                if ((codeError.line === param.line) ||
+                    (matchConstant && param.name === matchConstant[1]))
+                {
                   newCodeError.blockId = param.name;
                   newCodeError.blockType = 'constant';
                   break;
