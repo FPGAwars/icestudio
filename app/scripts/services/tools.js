@@ -463,24 +463,21 @@ angular.module('icestudio')
       var match, module = { params: [] }, modules = [];
       // Find begin/end lines of the modules
       for (var i in codelines) {
-        var bSpace = 0;
         var codeline = codelines[i];
         // Get the module name
         if (!module.name) {
-          match = /(\s*?)module\s(.*?)[\s|\(|$]/.exec(codeline);
+          match = /^module\s(.*?)[\s|;]/.exec(codeline);
           if (match) {
-            bSpace = match[1].length;
-            module.name = match[2];
+            module.name = match[1];
             continue;
           }
         }
         // Get the module parameters
         if (!module.begin) {
-          match = /(\s*?)parameter\s(.*?)\s/.exec(codeline);
-          if (match && match[1].length === bSpace + 1) {
-            bSpace = match[1].length;
+          match = /^\sparameter\s(.*?)\s/.exec(codeline);
+          if (match) {
             module.params.push({
-              name: match[2],
+              name: match[1],
               line: parseInt(i) + 1
             });
             continue;
@@ -488,7 +485,7 @@ angular.module('icestudio')
         }
         // Get the begin of the module code
         if (!module.begin) {
-          match = /;/.exec(codeline);
+          match = /;$/.exec(codeline);
           if (match) {
             module.begin = parseInt(i) + 1;
             continue;
@@ -496,8 +493,8 @@ angular.module('icestudio')
         }
         // Get the end of the module code
         if (!module.end) {
-          match = /(\s*?)endmodule/.exec(codeline);
-          if (match && match[1].length === bSpace) {
+          match = /^endmodule$/.exec(codeline);
+          if (match) {
             module.end = parseInt(i) + 1;
             modules.push(module);
             module = {};
