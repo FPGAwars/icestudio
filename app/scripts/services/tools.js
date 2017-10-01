@@ -48,6 +48,9 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
+      if (errorAlert) {
+        errorAlert.dismiss(false);
+      }
       return new Promise(function(resolve) {
         var sourceCode = '';
 
@@ -390,7 +393,7 @@ angular.module('icestudio')
               }
 
               if (codeErrors.length !== 0) {
-                alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
+                errorAlert = alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
               }
               else {
                 var stdoutWarning = stdout.split('\n').filter(function (line) {
