@@ -26,6 +26,7 @@ angular.module('icestudio')
     var startAlert = null;
     var infoAlert = null;
     var errorAlert = null;
+    var successAlert = null;
     var toolchainAlert = null;
     var toolchain = { apio: '-', installed: false, disabled: false };
 
@@ -50,14 +51,18 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
-      if (errorAlert) {
-        errorAlert.dismiss(false);
-      }
       return new Promise(function(resolve) {
         var sourceCode = '';
 
         if (!taskRunning) {
           taskRunning = true;
+
+          if (successAlert) {
+            successAlert.dismiss(false);
+          }
+          if (errorAlert) {
+            errorAlert.dismiss(false);
+          }
 
           checkToolchainInstalled()
           .then(function() {
@@ -87,7 +92,7 @@ angular.module('icestudio')
           .then(function() {
             // Success
             if (endMessage) {
-              alertify.success(gettextCatalog.getString(endMessage));
+              successAlert = alertify.success(gettextCatalog.getString(endMessage));
             }
             disableTaskMode();
             restoreTask();
@@ -106,7 +111,7 @@ angular.module('icestudio')
       setTimeout(function() {
         // Wait 1s before run a task again
         if (startAlert) {
-          startAlert.dismiss(true);
+          startAlert.dismiss(false);
         }
         taskRunning = false;
       }, 1000);
@@ -192,7 +197,7 @@ angular.module('icestudio')
         // Copy included file
         var copySuccess = utils.copySync(origPath, destPath);
         if (!copySuccess) {
-          alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
+          errorAlert = alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
           ret = false;
           break;
         }
@@ -313,18 +318,18 @@ angular.module('icestudio')
             // - Apio errors
             if (stdout.indexOf('[upload] Error') !== -1 ||
                 stdout.indexOf('Error: board not detected') !== -1) {
-              alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
             else if (stdout.indexOf('Error: unkown board') !== -1) {
-              alertify.error(gettextCatalog.getString('Unknown board'), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
             }
             // - Arachne-pnr errors
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
                      stdout.indexOf('fatal error: unknown pin') !== -1) {
-              alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
             }
             else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
-              alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
               var re, matchError, codeErrors = [];
@@ -418,10 +423,10 @@ angular.module('icestudio')
                   alertify.warning(stdoutWarning[0]);
                 }
                 if (stdoutError.length > 0) {
-                  alertify.error(stdoutError[0], 30);
+                  errorAlert = alertify.error(stdoutError[0], 30);
                 }
                 else {
-                  alertify.error(stdout, 30);
+                  errorAlert = alertify.error(stdout, 30);
                 }
               }
             }
@@ -430,13 +435,13 @@ angular.module('icestudio')
             // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
                 stderr.indexOf('Connection refused') !== -1) {
-              alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
             }
             else if (stderr.indexOf('No route to host') !== -1) {
-              alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
+              errorAlert = alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
             }
             else {
-              alertify.error(stderr, 30);
+              errorAlert = alertify.error(stderr, 30);
             }
           }
         }
@@ -711,7 +716,7 @@ angular.module('icestudio')
       utils.isOnline(callback, function() {
         closeToolchainAlert();
         restoreStatus();
-        alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+        errorAlert = alertify.error(gettextCatalog.getString('Internet connection required'), 30);
         callback(true);
       });
     }
@@ -724,7 +729,7 @@ angular.module('icestudio')
       else {
         closeToolchainAlert();
         restoreStatus();
-        alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
+        errorAlert = alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
         callback(true);
       }
     }
@@ -814,7 +819,7 @@ angular.module('icestudio')
         }
         else {
           closeToolchainAlert();
-          alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
+          errorAlert = alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
         }
         restoreStatus();
         callback();

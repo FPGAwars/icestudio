@@ -107,9 +107,5 @@
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: #333;
-}
-
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-  color: #333;
+  color: #333 !important;
 }
