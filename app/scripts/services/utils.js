@@ -202,31 +202,33 @@ angular.module('icestudio')
     };
 
     this.removeToolchain = function() {
-      deleteFolderRecursive(common.ENV_DIR);
-      deleteFolderRecursive(common.CACHE_DIR);
-      deleteFolderRecursive(common.APIO_HOME_DIR);
+      this.deleteFolderRecursive(common.ENV_DIR);
+      this.deleteFolderRecursive(common.CACHE_DIR);
+      this.deleteFolderRecursive(common.APIO_HOME_DIR);
     };
 
     this.removeCollections = function() {
-      deleteFolderRecursive(common.COLLECTIONS_DIR);
+      this.deleteFolderRecursive(common.COLLECTIONS_DIR);
     };
 
-    this.deleteFolderRecursive = deleteFolderRecursive;
+    this.removeTempBuildDir = function() {
+      this.deleteFolderRecursive(common.BUILD_DIR);
+    };
 
-    function deleteFolderRecursive(path) {
+    this.deleteFolderRecursive = function(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
           var curPath = nodePath.join(path, file);
           if (nodeFs.lstatSync(curPath).isDirectory()) { // recursive
-            deleteFolderRecursive(curPath);
+            this.deleteFolderRecursive(curPath);
           }
           else { // delete file
             nodeFs.unlinkSync(curPath);
           }
-        });
+        }.bind(this));
         nodeFs.rmdirSync(path);
       }
-    }
+    };
 
     this.sep = nodePath.sep;
 

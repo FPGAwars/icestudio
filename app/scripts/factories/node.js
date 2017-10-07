@@ -55,6 +55,9 @@ angular.module('icestudio')
   .factory('nodeGetOS', function() {
     return require('getos');
   })
+  .factory('nodeTemp', function() {
+    return require('temporary');
+  })
   .factory('SVGO', function() {
     var config = {
       full: true,

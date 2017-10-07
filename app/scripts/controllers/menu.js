@@ -289,7 +289,7 @@ angular.module('icestudio')
       }
       function _exit() {
         //win.hide();
-        //profile.save();
+        utils.removeTempBuildDir();
         win.close(true);
       }
     }

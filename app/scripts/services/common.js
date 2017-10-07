@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('common', function(nodePath) {
+  .service('common', function(nodePath,
+                              nodeTemp) {
 
     // Project version
     this.VERSION = '1.1';
@@ -34,7 +35,7 @@ angular.module('icestudio')
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
-    this.BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
+    this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
     this.VENV = 'virtualenv-15.0.1';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
@@ -55,6 +56,8 @@ angular.module('icestudio')
     this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
+
+    this.BUILD_DIR = new nodeTemp.Dir().path;
 
     function safeDir(_dir, self) {
       if (self.WIN32) {

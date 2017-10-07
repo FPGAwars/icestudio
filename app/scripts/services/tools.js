@@ -34,8 +34,8 @@ angular.module('icestudio')
     // Check if the toolchain is installed
     checkToolchain();
 
-    // Remove build directory on start
-    nodeFse.removeSync(common.BUILD_DIR);
+    // Remove old build directory on start
+    nodeFse.removeSync(common.OLD_BUILD_DIR);
 
     this.verifyCode = function(startMessage, endMessage) {
       return apioRun(['verify'], startMessage, endMessage);
@@ -146,9 +146,6 @@ angular.module('icestudio')
 
     function generateCode() {
       return new Promise(function(resolve) {
-        if (!nodeFs.existsSync(common.BUILD_DIR)) {
-          nodeFs.mkdirSync(common.BUILD_DIR);
-        }
         project.update();
         var opt = {
           datetime: false,
