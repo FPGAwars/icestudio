@@ -171,7 +171,7 @@ angular.module('icestudio')
         // Remove resources
         nodeFse.removeSync('!(main.*)');
         // Sync included files
-        if (!syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code)) {
+        if (!syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh|list))(\n|\s)/g, code)) {
           reject();
         }
         // Sync list files
