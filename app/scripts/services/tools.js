@@ -22,7 +22,7 @@ angular.module('icestudio')
                              $rootScope) {
 
     var taskRunning = false;
-
+    var resources = [];
     var startAlert = null;
     var infoAlert = null;
     var resultAlert = null;
@@ -169,36 +169,55 @@ angular.module('icestudio')
     function syncResources(code) {
       return new Promise(function(resolve, reject) {
         // Remove resources
-        nodeFse.removeSync('!(main.*)');
-        // Sync included files
-        if (!syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh|list))(\n|\s)/g, code)) {
-          reject();
-        }
-        // Sync list files
-        if (!syncFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code)) {
-          reject();
-        }
+        removeFiles(resources);
+        resources = [];
+        // Find included files
+        resources = resources.concat(findIncludedFiles(code, reject));
+        // Find list files
+        resources = resources.concat(findInlineFiles(code, reject));
+        // Sync resources
+        resources = _.uniq(resources);
+        syncFiles(resources, reject);
         resolve();
       });
     }
 
-    function syncFiles(pattern, code) {
-      var ret = true;
+    function removeFiles(files) {
+      _.each(files, function(file) {
+        var filepath = nodePath.join(common.BUILD_DIR, file);
+        nodeFse.removeSync(filepath);
+      });
+    }
+
+    function findIncludedFiles(code) {
+      return findFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh|list))(\n|\s)/g, code);
+    }
+
+    function findInlineFiles(code) {
+      return findFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
+    }
+
+    function findFiles(pattern, code) {
       var match;
+      var files = [];
       while (match = pattern.exec(code)) {
-        var file = match[1];
+        files.push(match[1]);
+      }
+      return files;
+    }
+
+    function syncFiles(files, reject) {
+      _.each(files, function(file) {
         var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
-        // Copy included file
+        // Copy file
         var copySuccess = utils.copySync(origPath, destPath);
         if (!copySuccess) {
           resultAlert = alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
-          ret = false;
-          break;
+          reject();
         }
-      }
-      return ret;
+      });
     }
 
     function checkToolchain(callback) {
