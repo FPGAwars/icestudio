@@ -28,14 +28,12 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
-    var self = this;
-
     $(document.body).on('mouseup touchend', function(evt) {
       if (evt.which === 1) {
         // Mouse left button
-        self.stopSelecting(evt);
+        this.stopSelecting(evt);
       }
-    });
+    }.bind(this));
     $(document.body).on('mousemove touchmove', this.adjustSelection);
 
     this.options = options;

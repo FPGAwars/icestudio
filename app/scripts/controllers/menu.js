@@ -34,6 +34,8 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
+    var resultAlert = null;
+
     // Window events
     var win = gui.Window.get();
     win.on('close', function() {
@@ -70,7 +72,7 @@ angular.module('icestudio')
     $scope.hideMenu = function(menu) {
       timer = $timeout(function() {
         $scope.status[menu] = false;
-      }, 700);
+      }, 1000);
     };
 
     // Load app arguments
@@ -577,7 +579,10 @@ angular.module('icestudio')
           resolve();
         }
         else {
-          alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
+          if (resultAlert) {
+            resultAlert.dismiss(true);
+          }
+          resultAlert = alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
           reject();
         }
       });
