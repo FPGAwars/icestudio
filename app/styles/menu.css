@@ -9,6 +9,7 @@
 
 .navbar {
   border-bottom: 1px solid #d5dadd;
+  margin-bottom: 0;
   z-index: 1502;
 }
 
@@ -27,6 +28,7 @@
 }
 
 .dropdown-submenu > .dropdown-menu {
+  display: block;
   top: 0;
   left: 100%;
   margin-top: -6px;
@@ -34,10 +36,13 @@
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  visibility: hidden;
+  transition-delay: 0.5s;
 }
 
 .dropdown-submenu:hover > .dropdown-menu {
-  display: block;
+  visibility: visible;
+  transition-delay: 0.5s;
 }
 
 .dropdown-submenu > a:after {

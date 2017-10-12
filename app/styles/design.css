@@ -1,5 +1,4 @@
 .paper {
-  top: -20px;
   position: relative;
   display: inline-block;
   background: transparent;
@@ -54,7 +53,7 @@
 
 .info {
   position: absolute;
-  top: -10px;
+  top: 10px;
   left: 15px;
   font-size: 15px;
   color: #656565;
@@ -66,7 +65,7 @@
 
 .read-only {
   position: absolute;
-  top: -10px;
+  top: 10px;
   right: 15px;
   font-size: 14px;
   color: #f05c5c;
@@ -78,7 +77,7 @@
 
 .back-button {
   position: absolute;
-  top: 20px;
+  top: 40px;
   right: 15px;
   font-size: 14px;
   color: #63afcf;
