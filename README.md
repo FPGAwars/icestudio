@@ -39,7 +39,7 @@ Supported operating systems:
 
 * **Mac OS X**
 
-  1. Install [Python 2.7](https://www.python.org)
+  1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
 <img src="./doc/images/main.png" width="700" align="center">
