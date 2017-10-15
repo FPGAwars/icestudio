@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('common', function(nodePath) {
+  .service('common', function(nodePath,
+                              nodeTemp) {
 
     // Project version
     this.VERSION = '1.1';
@@ -34,27 +35,29 @@ angular.module('icestudio')
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
-    this.BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
+    this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
     this.VENV = 'virtualenv-15.0.1';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
-    this.VENV_TARGZ = nodePath.join('resources', 'virtualenv', this.VENV + '.tar.gz');
+    this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
 
     this.APP_DIR = nodePath.dirname(process.execPath);
     this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
 
     this.DEFAULT_APIO = 'default-apio';
     this.DEFAULT_APIO_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_APIO);
-    this.DEFAULT_APIO_TARGZ = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.tar.gz');
+    this.DEFAULT_APIO_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.zip');
 
     this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
-    this.DEFAULT_APIO_PACKAGES_TARGZ = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.tar.gz');
+    this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
 
     this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
     this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
     this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
+
+    this.BUILD_DIR = new nodeTemp.Dir().path;
 
     function safeDir(_dir, self) {
       if (self.WIN32) {

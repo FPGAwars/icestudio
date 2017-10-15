@@ -115,11 +115,6 @@ angular.module('icestudio')
         linux: { label: 'Ctrl+A', ctrl: true, key: 65 },
         mac: { label: '⌘+A', meta: true, key: 65 }
       },
-      resetView: {
-        linux: { label: 'Ctrl+0', ctrl: true, key: 48 },
-        mac: { label: '⌘+0', meta: true, key: 48 },
-        opt: { disabled: true }
-      },
       fitContent: {
         linux: { label: 'Ctrl+1', ctrl: true, key: 49 },
         mac: { label: '⌘+1', meta: true, key: 49 },

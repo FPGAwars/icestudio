@@ -39,7 +39,7 @@ Supported operating systems:
 
 * **Mac OS X**
 
-  1. Install [Python 2.7](https://www.python.org)
+  1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
 <img src="./doc/images/main.png" width="700" align="center">
@@ -102,10 +102,10 @@ npm run dist
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/97)   |
-| Galician   | ![Progress](http://progressed.io/bar/93)   |
-| Catalan    | ![Progress](http://progressed.io/bar/93)   |
+| French     | ![Progress](http://progressed.io/bar/95)   |
+| Basque     | ![Progress](http://progressed.io/bar/93)   |
+| Galician   | ![Progress](http://progressed.io/bar/89)   |
+| Catalan    | ![Progress](http://progressed.io/bar/89)   |
 
 **Contribute!**
 
@@ -115,7 +115,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 ## Troubleshooting
 
-If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, execute:
+If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, try to update your **[nodejs](https://github.com/nodejs/node)** or execute:
 
 ```bash
 npm update -g

@@ -13,23 +13,27 @@ joint.ui.SelectionView = Backbone.View.extend({
   events: {
 
     'click .selection-box': 'click',
-    'mousedown .selection-box': 'startTranslatingSelection'
+    'dblclick': 'dblclick',
+    'mousedown .selection-box': 'startTranslatingSelection',
+    'mouseover': 'mouseover',
+    'mouseout': 'mouseout',
+    'mouseup': 'mouseup',
+    'mousedown': 'mousedown'
   },
 
+  showtooltip: true,
   $selectionArea: null,
 
   initialize: function(options) {
 
     _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
-    var self = this;
-
     $(document.body).on('mouseup touchend', function(evt) {
       if (evt.which === 1) {
         // Mouse left button
-        self.stopSelecting(evt);
+        this.stopSelecting(evt);
       }
-    });
+    }.bind(this));
     $(document.body).on('mousemove touchmove', this.adjustSelection);
 
     this.options = options;
@@ -44,6 +48,58 @@ joint.ui.SelectionView = Backbone.View.extend({
       // Mouse left button
 
       this.trigger('selection-box:pointerclick', evt);
+    }
+  },
+
+  dblclick: function(evt) {
+
+    var id = evt.target.getAttribute('data-model');
+    if (id) {
+      var view = this.options.paper.findViewByModel(id);
+      if (view) {
+        // Trigger dblclick in selection to the Cell View
+        view.notify('cell:pointerdblclick', evt);
+      }
+    }
+  },
+
+  mouseover: function(evt) {
+
+    this.mouseManager(evt, 'mouseovercard');
+  },
+
+  mouseout: function(evt) {
+
+    this.mouseManager(evt, 'mouseoutcard');
+  },
+
+  mouseup: function(evt) {
+
+    this.mouseManager(evt, 'mouseupcard');
+  },
+
+  mousedown: function(evt) {
+
+    if (!this.showtooltip && evt.which === 1) {
+      // Mouse left button: block fixed
+      this.showtooltip = true;
+    }
+
+    this.mouseManager(evt, 'mousedowncard');
+  },
+
+  mouseManager: function (evt, fnc) {
+
+    evt.preventDefault();
+
+    if (this.showtooltip) {
+      var id = evt.target.getAttribute('data-model');
+      if (id) {
+        var view = this.options.paper.findViewByModel(id);
+        if (view && view[fnc]) {
+          view[fnc].apply(view, [evt]);
+        }
+      }
     }
   },
 
@@ -279,6 +335,7 @@ joint.ui.SelectionView = Backbone.View.extend({
       if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
         this.$el.append($selectionBox);
       }
+      this.showtooltip = (opt.initooltip !== undefined) ? opt.initooltip : true;
       $selectionBox.css({ opacity: (opt.transparent ? 0 : 1) });
 
       this.updateBox(element);
@@ -289,7 +346,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   updateBox: function(element) {
 
-    var margin = 4;
+    var margin = 8;
 
     var bbox = element.getBBox();
     var state = this.options.state;

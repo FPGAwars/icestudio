@@ -18,10 +18,15 @@ angular.module('icestudio')
                              nodeSSHexec,
                              nodeRSync,
                              nodeAdmZip,
-                             _package) {
+                             _package,
+                             $rootScope) {
 
-    var currentAlert = null;
     var taskRunning = false;
+    var resources = [];
+    var startAlert = null;
+    var infoAlert = null;
+    var resultAlert = null;
+    var toolchainAlert = null;
     var toolchain = { apio: '-', installed: false, disabled: false };
 
     this.toolchain = toolchain;
@@ -29,76 +34,188 @@ angular.module('icestudio')
     // Check if the toolchain is installed
     checkToolchain();
 
-    // Remove build directory on start
-    nodeFse.removeSync(common.BUILD_DIR);
+    // Remove old build directory on start
+    nodeFse.removeSync(common.OLD_BUILD_DIR);
 
-    this.verifyCode = function() {
-      this.apio(['verify']);
+    this.verifyCode = function(startMessage, endMessage) {
+      return apioRun(['verify'], startMessage, endMessage);
     };
 
-    this.buildCode = function() {
-      this.apio(['build', '-b', common.selectedBoard.name]);
+    this.buildCode = function(startMessage, endMessage) {
+      return apioRun(['build', '-b', common.selectedBoard.name], startMessage, endMessage);
     };
 
-    this.uploadCode = function() {
-      this.apio(['upload', '-b', common.selectedBoard.name]);
+    this.uploadCode = function(startMessage, endMessage) {
+      return apioRun(['upload', '-b', common.selectedBoard.name], startMessage, endMessage);
     };
 
-    this.apio = function(commands) {
-      var check = true;
-      if (taskRunning) {
-        return;
-      }
-      taskRunning = true;
-      var code = this.generateCode();
-      if (code) {
-        if (toolchain.installed || toolchain.disabled) {
-          angular.element('#menu').addClass('disable-menu');
-          // Annotate strings for translation
-          /// Start verification ...
-          gettext('start_verify');
-          /// Start building ...
-          gettext('start_build');
-          /// Start uploading ...
-          gettext('start_upload');
-          var label = commands[0];
-          var message = 'start_' + label;
-          currentAlert = alertify.message(gettextCatalog.getString(message), 100000);
-          $('body').addClass('waiting');
-          check = this.syncResources(code);
-          try {
-            if (check) {
-              execute(commands, label, code, currentAlert, function() {
-                if (currentAlert) {
-                  setTimeout(function() {
-                    angular.element('#menu').removeClass('disable-menu');
-                    currentAlert.dismiss(true);
-                    taskRunning = false;
-                  }, 1000);
-                }
-              });
+    function apioRun(commands, startMessage, endMessage) {
+      return new Promise(function(resolve) {
+        var sourceCode = '';
+
+        if (!taskRunning) {
+          taskRunning = true;
+
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
+
+          checkToolchainInstalled()
+          .then(function() {
+            enableTaskMode();
+            if (startMessage) {
+              startAlert = alertify.message(startMessage, 100000);
+            }
+            return generateCode();
+          })
+          .then(function(code) {
+            sourceCode = code;
+            return syncResources(code);
+          })
+          .then(function() {
+            var hostname = profile.get('remoteHostname');
+            if (hostname) {
+              return executeRemote(commands, hostname);
             }
             else {
-              setTimeout(function() {
-                angular.element('#menu').removeClass('disable-menu');
-                currentAlert.dismiss(true);
-                taskRunning = false;
-                $('body').removeClass('waiting');
-              }, 2000);
+              return executeLocal(commands);
             }
-          }
-          catch(e) {
-          }
+          })
+          .then(function(result) {
+            var show = startMessage || endMessage;
+            return processResult(result, sourceCode, show);
+          })
+          .then(function() {
+            // Success
+            if (endMessage) {
+              resultAlert = alertify.success(gettextCatalog.getString(endMessage));
+            }
+            disableTaskMode();
+            restoreTask();
+            resolve();
+          })
+          .catch(function() {
+            // Error
+            disableTaskMode();
+            restoreTask();
+          });
+        }
+      });
+    }
+
+    function restoreTask() {
+      setTimeout(function() {
+        // Wait 1s before run a task again
+        if (startAlert) {
+          startAlert.dismiss(false);
+        }
+        taskRunning = false;
+      }, 1000);
+    }
+
+    function enableTaskMode() {
+      angular.element('#menu').addClass('disable-menu');
+      $('body').addClass('waiting');
+    }
+
+    function disableTaskMode() {
+      angular.element('#menu').removeClass('disable-menu');
+      $('body').removeClass('waiting');
+    }
+
+    function checkToolchainInstalled() {
+      return new Promise(function(resolve, reject) {
+        if (toolchain.installed || toolchain.disabled) {
+          resolve();
         }
         else {
-          alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
-          taskRunning = false;
+          var message = gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it');
+          if (!resultAlert) {
+            resultAlert = alertify.error(message, 30);
+            resultAlert.callback = function(isClicked) {
+              resultAlert = null;
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
+          }
+          reject();
         }
+      });
+    }
+
+    function generateCode() {
+      return new Promise(function(resolve) {
+        project.update();
+        var opt = {
+          datetime: false,
+          boardRules: profile.get('boardRules')
+        };
+        if (opt.boardRules) {
+          opt.initPorts = compiler.getInitPorts(project.get());
+          opt.initPins = compiler.getInitPins(project.get());
+        }
+        var verilog = compiler.generate('verilog', project.get(), opt);
+        var pcf = compiler.generate('pcf', project.get(), opt);
+        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.v'), verilog, 'utf8');
+        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
+        resolve(verilog);
+      });
+    }
+
+    function syncResources(code) {
+      return new Promise(function(resolve, reject) {
+        // Remove resources
+        removeFiles(resources);
+        resources = [];
+        // Find included files
+        resources = resources.concat(findIncludedFiles(code, reject));
+        // Find list files
+        resources = resources.concat(findInlineFiles(code, reject));
+        // Sync resources
+        resources = _.uniq(resources);
+        syncFiles(resources, reject);
+        resolve();
+      });
+    }
+
+    function removeFiles(files) {
+      _.each(files, function(file) {
+        var filepath = nodePath.join(common.BUILD_DIR, file);
+        nodeFse.removeSync(filepath);
+      });
+    }
+
+    function findIncludedFiles(code) {
+      return findFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh|list))(\n|\s)/g, code);
+    }
+
+    function findInlineFiles(code) {
+      return findFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
+    }
+
+    function findFiles(pattern, code) {
+      var match;
+      var files = [];
+      while (match = pattern.exec(code)) {
+        files.push(match[1]);
       }
-      else {
-        taskRunning = false;
-      }
-    };
+      return files;
+    }
+
+    function syncFiles(files, reject) {
+      _.each(files, function(file) {
+        var destPath = nodePath.join(common.BUILD_DIR, file);
+        var origPath = nodePath.join(utils.dirname(project.filepath), file);
+
+        // Copy file
+        var copySuccess = utils.copySync(origPath, destPath);
+        if (!copySuccess) {
+          resultAlert = alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
+          reject();
+        }
+      });
+    }
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
@@ -125,6 +242,14 @@ angular.module('icestudio')
               });
             }
             else {
+              // An old version is installed
+              alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+              .callback = function(isClicked) {
+                if (isClicked) {
+                  // Install the new toolchain
+                  $rootScope.$broadcast('installToolchain');
+                }
+              };
               if (callback) {
                 callback();
               }
@@ -134,71 +259,12 @@ angular.module('icestudio')
       }
     }
 
-    this.generateCode = function() {
-      if (!nodeFs.existsSync(common.BUILD_DIR)) {
-        nodeFs.mkdirSync(common.BUILD_DIR);
-      }
-      project.update();
-      var opt = {
-        datetime: false,
-        boardRules: profile.get('boardRules')
-      };
-      if (opt.boardRules) {
-        opt.initPorts = compiler.getInitPorts(project.get());
-        opt.initPins = compiler.getInitPins(project.get());
-      }
-      var verilog = compiler.generate('verilog', project.get(), opt);
-      var pcf = compiler.generate('pcf', project.get(), opt);
-      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.v'), verilog, 'utf8');
-      nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
-      return verilog;
-    };
-
-    this.syncResources = function(code) {
-      var ret;
-
-      // Remove resources
-      nodeFse.removeSync('!(main.*)');
-
-      // Sync included files
-      ret = this.syncFiles(/[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g, code);
-
-      // Sync list files
-      if (ret) {
-        ret = this.syncFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
-      }
-
-      return ret;
-    };
-
-    this.syncFiles = function(pattern, code) {
-      var ret = true;
-      var match;
-      while (match = pattern.exec(code)) {
-        var file = match[1];
-        var destPath = nodePath.join(common.BUILD_DIR, file);
-        var origPath = nodePath.join(utils.dirname(project.filepath), file);
-
-        // Copy included file
-        var copySuccess = utils.copySync(origPath, destPath);
-        if (!copySuccess) {
-          alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
-          ret = false;
-          break;
-        }
-      }
-
-      return ret;
-    };
-
-    function execute(commands, label, code, currentAlert, callback) {
-      var remoteHostname = profile.get('remoteHostname');
-
-      if (remoteHostname) {
-        currentAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
+    function executeRemote(commands, hostname) {
+      return new Promise(function(resolve) {
+        startAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
           src: common.BUILD_DIR + '/',
-          dest: remoteHostname + ':.build/',
+          dest: hostname + ':.build/',
           ssh: true,
           recursive: true,
           delete: true,
@@ -206,66 +272,76 @@ angular.module('icestudio')
           exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
-            currentAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: label }));
-            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), remoteHostname,
+            startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
+            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), hostname,
               function (error, stdout, stderr) {
-                processExecute(label, code, callback, error, stdout, stderr);
+                resolve({ error: error, stdout: stdout, stderr: stderr });
               });
           }
           else {
-            processExecute(label, code, callback, error, stdout, stderr);
+            resolve({ error: error, stdout: stdout, stderr: stderr });
           }
         });
-      }
-      else {
+      });
+    }
+
+    function executeLocal(commands) {
+      return new Promise(function(resolve) {
         if (commands[0] === 'upload') {
+          // Upload command requires drivers setup (Mac OS X)
           drivers.preUpload(function() {
-            _execute();
+            _executeLocal();
           });
         }
         else {
-          _execute();
+          // Other !upload commands
+          _executeLocal();
         }
-      }
 
-      function _execute() {
-        var apio = utils.getApioExecutable();
-        toolchain.disabled = utils.toolchainDisabled;
-        nodeChildProcess.exec(([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '), { maxBuffer: 5000 * 1024 },
-          function(error, stdout, stderr) {
-            if (!error && !stderr) {
+        function _executeLocal() {
+          var apio = utils.getApioExecutable();
+          toolchain.disabled = utils.toolchainDisabled;
+          nodeChildProcess.exec(
+            ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '),
+            { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
+            function(error, stdout, stderr) {
               if (commands[0] === 'upload') {
+                // Upload command requires to restore the drivers (Mac OS X)
                 drivers.postUpload();
               }
-            }
-            processExecute(label, code, callback, error, stdout, stderr);
-          });
-      }
+              resolve({ error: error, stdout: stdout, stderr: stderr });
+            });
+        }
+      });
     }
 
-    function processExecute(label, code, callback, error, stdout, stderr) {
-      if (callback) {
-        callback();
-      }
-      //console.log(label, error, stdout, stderr)
-      if (label) {
+    function processResult(result, code, show) {
+      result = result || {};
+      var error = result.error;
+      var stdout = result.stdout;
+      var stderr = result.stderr;
+
+      return new Promise(function(resolve, reject) {
         if (error || stderr) {
+          // -- Process errors
+          reject();
+
           if (stdout) {
             // - Apio errors
             if (stdout.indexOf('[upload] Error') !== -1 ||
                 stdout.indexOf('Error: board not detected') !== -1) {
-              alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
             else if (stdout.indexOf('Error: unkown board') !== -1) {
-              alertify.error(gettextCatalog.getString('Unknown board'), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
             }
             // - Arachne-pnr errors
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
                      stdout.indexOf('fatal error: unknown pin') !== -1) {
-              alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
             }
             else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
-              alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
               var re, matchError, codeErrors = [];
@@ -326,17 +402,23 @@ angular.module('icestudio')
 
               // Extract modules map from code
               var modules = mapCodeModules(code);
-
+              var hasErrors = false;
+              var hasWarnings = false;
               for (var i in codeErrors) {
                 var codeError = normalizeCodeError(codeErrors[i], modules);
                 if (codeError) {
                   // Launch codeError event
                   $(document).trigger('codeError', [codeError]);
+                  hasErrors = hasErrors || codeError.type === 'error';
+                  hasWarnings = hasWarnings || codeError.type === 'warning';
                 }
               }
 
-              if (codeErrors.length !== 0) {
-                alertify.error(gettextCatalog.getString('Errors detected in the code'), 5);
+              if (hasErrors) {
+                resultAlert = alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
+              }
+              else if (hasWarnings) {
+                resultAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
               }
               else {
                 var stdoutWarning = stdout.split('\n').filter(function (line) {
@@ -353,10 +435,10 @@ angular.module('icestudio')
                   alertify.warning(stdoutWarning[0]);
                 }
                 if (stdoutError.length > 0) {
-                  alertify.error(stdoutError[0], 30);
+                  resultAlert = alertify.error(stdoutError[0], 30);
                 }
                 else {
-                  alertify.error(stdout, 30);
+                  resultAlert = alertify.error(stdout, 30);
                 }
               }
             }
@@ -365,71 +447,73 @@ angular.module('icestudio')
             // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
                 stderr.indexOf('Connection refused') !== -1) {
-              alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
             }
             else if (stderr.indexOf('No route to host') !== -1) {
-              alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
+              resultAlert = alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
             }
             else {
-              alertify.error(stderr, 30);
+              resultAlert = alertify.error(stderr, 30);
             }
           }
         }
         else {
-          // Annotate strings for translation
-          /// Verification done
-          gettext('done_verify');
-          /// Build done
-          gettext('done_build');
-          /// Upload done
-          gettext('done_upload');
-          var message = 'done_' + label;
-          alertify.success(gettextCatalog.getString(message));
-          if ((label === 'build' || label === 'upload') && stdout) {
+          //-- Process output
+          resolve();
+
+          if (stdout && show) {
             // Show used resources in the FPGA
             /*
             PIOs       0 / 96
             PLBs       0 / 160
             BRAMs      0 / 16
             */
-            var match,
-                fpgaResources = '',
-                patterns = [
-                  /PIOs.+/g,
-                  /PLBs.+/g,
-                  /BRAMs.+/g
-                ];
+            var match;
+            var fpgaResources = '';
+            var patterns = [ /PIOs.+/g, /PLBs.+/g, /BRAMs.+/g ];
 
             for (var p in patterns) {
               match = patterns[p].exec(stdout);
               fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
             }
             if (fpgaResources) {
-              alertify.message('<pre>' + fpgaResources + '</pre>', 5);
+              setTimeout(function() {
+                alertify.message('<pre>' + fpgaResources + '</pre>', 5);
+              }, 0);
             }
           }
         }
-        $('body').removeClass('waiting');
-      }
+      });
     }
 
     function mapCodeModules(code) {
       var codelines = code.split('\n');
-      var match, module = {}, modules = [];
+      var match, module = { params: [] }, modules = [];
       // Find begin/end lines of the modules
       for (var i in codelines) {
         var codeline = codelines[i];
         // Get the module name
         if (!module.name) {
-          match = /module\s+(.*?)[\s|\(|$]/.exec(codeline);
+          match = /^module\s(.*?)[\s|;]/.exec(codeline);
           if (match) {
             module.name = match[1];
             continue;
           }
         }
+        // Get the module parameters
+        if (!module.begin) {
+          match = /^\sparameter\s(.*?)\s/.exec(codeline);
+          if (match) {
+            module.params.push({
+              name: match[1],
+              line: parseInt(i) + 1
+            });
+            continue;
+          }
+        }
         // Get the begin of the module code
         if (!module.begin) {
-          match = /;/.exec(codeline);
+          match = /;$/.exec(codeline);
           if (match) {
             module.begin = parseInt(i) + 1;
             continue;
@@ -437,11 +521,11 @@ angular.module('icestudio')
         }
         // Get the end of the module code
         if (!module.end) {
-          match = /endmodule/.exec(codeline);
+          match = /^endmodule$/.exec(codeline);
           if (match) {
             module.end = parseInt(i) + 1;
             modules.push(module);
-            module = {};
+            module = { params: [] };
           }
         }
       }
@@ -453,29 +537,67 @@ angular.module('icestudio')
       // Find the module with the error
       for (var i in modules) {
         var module = modules[i];
-        if ((codeError.line > module.begin) && (codeError.line <= module.end)) {
+        if (codeError.line <= module.end) {
           newCodeError = {
-           type: codeError.type,
-           line: codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0),
-           msg: codeError.msg
-         };
-          if (module.name.startsWith('main_')) {
-            // Code block
-            newCodeError.blockId = module.name.split('_')[1];
-            newCodeError.blockType = 'code';
+            type: codeError.type,
+            msg: codeError.msg
+          };
+          // Find constant blocks in Yosys error:
+          //  The error comes from the generated code
+          //  but the origin is the constant block value
+          var re = /Failed\sto\sdetect\swidth\sfor\sparameter\s\\(.*?)\sat/g;
+          var matchConstant = re.exec(newCodeError.msg);
+
+          if (codeError.line > module.begin && !matchConstant) {
+            if (module.name.startsWith('main_')) {
+              // Code block
+              newCodeError.blockId = module.name.split('_')[1];
+              newCodeError.blockType = 'code';
+              newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
+            }
+            else {
+              // Generic block
+              newCodeError.blockId = module.name.split('_')[0];
+              newCodeError.blockType = 'generic';
+            }
+            break;
           }
           else {
-            // Generic block
-            newCodeError.blockId = module.name.split('_')[0];
-            newCodeError.blockType = 'generic';
+            if (module.name === 'main') {
+              // Constant block
+              for (var j in module.params) {
+                var param = module.params[j];
+                if ((codeError.line === param.line) ||
+                    (matchConstant && param.name === matchConstant[1]))
+                {
+                  newCodeError.blockId = param.name;
+                  newCodeError.blockType = 'constant';
+                  break;
+                }
+              }
+            }
+            else {
+              // Generic block
+              newCodeError.blockId = module.name;
+              newCodeError.blockType = 'generic';
+            }
+            break;
           }
-          break;
         }
       }
       return newCodeError;
     }
 
+    // Toolchain methods
+
+    $rootScope.$on('installToolchain', function(/*event*/) {
+      this.installToolchain();
+    }.bind(this));
+
     this.installToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       utils.removeToolchain();
       if (utils.checkDefaultToolchain()) {
         installDefaultToolchain();
@@ -489,6 +611,9 @@ angular.module('icestudio')
     };
 
     this.updateToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       alertify.confirm(gettextCatalog.getString('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?'),
         function() {
           installOnlineToolchain();
@@ -496,6 +621,9 @@ angular.module('icestudio')
     };
 
     this.resetToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       if (utils.checkDefaultToolchain()) {
         alertify.confirm(gettextCatalog.getString('The toolchain will be restored to default. Do you want to continue?'),
           function() {
@@ -509,6 +637,9 @@ angular.module('icestudio')
     };
 
     this.removeToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       alertify.confirm(gettextCatalog.getString('The toolchain will be removed. Do you want to continue?'),
         function() {
           utils.removeToolchain();
@@ -517,6 +648,10 @@ angular.module('icestudio')
           alertify.success(gettextCatalog.getString('Toolchain removed'));
       });
     };
+
+    $rootScope.$on('enableDrivers', function(/*event*/) {
+      this.enableDrivers();
+    }.bind(this));
 
     this.enableDrivers = function() {
       drivers.enable();
@@ -527,10 +662,7 @@ angular.module('icestudio')
     };
 
     function installDefaultToolchain() {
-      // Configure alert
-      alertify.defaults.closable = false;
-
-      utils.disableClickEvent();
+      installationStatus();
 
       var content = [
         '<div>',
@@ -542,11 +674,15 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-        alertify.alert(content, function() {
-          setTimeout(function() {
-            initProgress();
-          }, 200);
-        });
+      toolchainAlert = alertify.alert(content, function() {
+        setTimeout(function() {
+          initProgress();
+          // Restore OK button
+          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
+        }, 200);
+      });
+      // Hide OK button
+      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
 
       // Reset toolchain
       async.series([
@@ -558,16 +694,10 @@ angular.module('icestudio')
         extractDefaultApioPackages,
         installationCompleted
       ]);
-
-      // Restore alert
-      alertify.defaults.closable = true;
     }
 
     function installOnlineToolchain() {
-      // Configure alert
-      alertify.defaults.closable = false;
-
-      utils.disableClickEvent();
+      installationStatus();
 
       var content = [
         '<div>',
@@ -579,11 +709,15 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-        alertify.alert(content, function() {
-          setTimeout(function() {
-            initProgress();
-          }, 200);
-        });
+      toolchainAlert = alertify.alert(content, function() {
+        setTimeout(function() {
+          initProgress();
+          // Restore OK button
+          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
+        }, 200);
+      });
+      // Hide OK button
+      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
 
       // Install toolchain
       async.series([
@@ -599,16 +733,15 @@ angular.module('icestudio')
         apioInstallScons,
         installationCompleted
       ]);
-
-      // Restore alert
-      alertify.defaults.closable = true;
     }
 
     function checkInternetConnection(callback) {
       updateProgress(gettextCatalog.getString('Check Internet connection...'), 0);
       utils.isOnline(callback, function() {
-        errorProgress(gettextCatalog.getString('Internet connection required'));
-        utils.enableClickEvent();
+        closeToolchainAlert();
+        restoreStatus();
+        resultAlert = alertify.error(gettextCatalog.getString('Internet connection required'), 30);
+        callback(true);
       });
     }
 
@@ -618,8 +751,9 @@ angular.module('icestudio')
         callback();
       }
       else {
-        errorProgress(gettextCatalog.getString('Python 2.7 is required'));
-        utils.enableClickEvent();
+        closeToolchainAlert();
+        restoreStatus();
+        resultAlert = alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
         callback(true);
       }
     }
@@ -692,12 +826,26 @@ angular.module('icestudio')
       checkToolchain(function() {
         if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
+          closeToolchainAlert();
           alertify.success(gettextCatalog.getString('Toolchain installed'));
+          var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+          if (!infoAlert) {
+            setTimeout(function() {
+              infoAlert = alertify.message(message, 30);
+              infoAlert.callback = function(isClicked) {
+                infoAlert = null;
+                if (isClicked) {
+                  $rootScope.$broadcast('enableDrivers');
+                }
+              };
+            }, 1000);
+          }
         }
         else {
-          errorProgress(gettextCatalog.getString('Toolchain not installed'));
+          closeToolchainAlert();
+          resultAlert = alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
         }
-        utils.enableClickEvent();
+        restoreStatus();
         callback();
       });
     }
@@ -724,15 +872,23 @@ angular.module('icestudio')
         .removeClass('notransition');
     }
 
-    function errorProgress(message) {
-      angular.element('#progress-message')
-        .text(message);
-      angular.element('#progress-bar')
-        .addClass('notransition progress-bar-danger')
-        .removeClass('progress-bar-info progress-bar-striped active')
-        .text('Error')
-        .attr('aria-valuenow', 100)
-        .css('width', '100%');
+    function closeToolchainAlert() {
+      toolchainAlert.callback();
+      toolchainAlert.close();
+    }
+
+    function installationStatus() {
+      // Disable user events
+      utils.disableKeyEvents();
+      utils.disableClickEvents();
+      $('body').addClass('waiting');
+    }
+
+    function restoreStatus() {
+      // Enable user events
+      utils.enableKeyEvents();
+      utils.enableClickEvents();
+      $('body').removeClass('waiting');
     }
 
     // Collections management

@@ -10,7 +10,7 @@ angular.module('icestudio')
                              nodeFse,
                              nodePath,
                              nodeChildProcess,
-                             nodeTarball,
+                             nodeExtract,
                              nodeZlib,
                              nodeOnline,
                              nodeGlob,
@@ -55,10 +55,9 @@ angular.module('icestudio')
       }
     }
 
-    this.extractTargz = function(source, destination, callback) {
-      nodeTarball.extractTarball(source, destination, function(err) {
-        if(err) {
-          //console.log(err);
+    this.extractZip = function(source, destination, callback) {
+      nodeExtract(source, {dir: destination}, function(error) {
+        if (error) {
           callback(true);
         }
         else {
@@ -68,31 +67,41 @@ angular.module('icestudio')
     };
 
     this.extractVirtualEnv = function(callback) {
-      this.extractTargz(common.VENV_TARGZ, common.CACHE_DIR, callback);
+      this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
-    function disableClick(e) {
-      e.stopPropagation();
-      e.preventDefault();
+    function disableEvent(event) {
+      event.stopPropagation();
+      event.preventDefault();
     }
 
-    function enableClickEvent() {
-      document.removeEventListener('click', disableClick, true);
-    }
+    this.enableClickEvents = function() {
+      document.removeEventListener('click', disableEvent, true);
+    };
 
-    function disableClickEvent() {
-      document.addEventListener('click', disableClick, true);
-    }
+    this.disableClickEvents = function() {
+      document.addEventListener('click', disableEvent, true);
+    };
 
-    this.enableClickEvent = enableClickEvent;
-    this.disableClickEvent = disableClickEvent;
+    this.enableKeyEvents = function() {
+      document.removeEventListener('keyup', disableEvent, true);
+      document.removeEventListener('keydown', disableEvent, true);
+      document.removeEventListener('keypress', disableEvent, true);
+    };
+
+    this.disableKeyEvents = function() {
+      document.addEventListener('keyup', disableEvent, true);
+      document.addEventListener('keydown', disableEvent, true);
+      document.addEventListener('keypress', disableEvent, true);
+    };
 
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
         function (error, stdout, stderr) {
           // console.log(error, stdout, stderr);
           if (error) {
-            enableClickEvent();
+            this.enableKeyEvents();
+            this.enableClickEvents();
             callback(true);
             angular.element('#progress-message')
               .text(stderr);
@@ -106,7 +115,7 @@ angular.module('icestudio')
           else {
             callback();
           }
-        }
+        }.bind(this)
       );
     };
 
@@ -128,7 +137,7 @@ angular.module('icestudio')
 
     this.checkDefaultToolchain = function() {
       try {
-        // TODO: use tar.gz with sha1
+        // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
       }
       catch (err) {
@@ -137,7 +146,7 @@ angular.module('icestudio')
     };
 
     this.extractDefaultApio = function(callback) {
-      this.extractTargz(common.DEFAULT_APIO_TARGZ, common.DEFAULT_APIO_DIR, callback);
+      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
     };
 
     this.installDefaultApio = function(callback) {
@@ -151,7 +160,7 @@ angular.module('icestudio')
     };
 
     this.extractDefaultApioPackages = function(callback) {
-      this.extractTargz(common.DEFAULT_APIO_PACKAGES_TARGZ, common.APIO_HOME_DIR, callback);
+      this.extractZip(common.DEFAULT_APIO_PACKAGES_ZIP, common.APIO_HOME_DIR, callback);
     };
 
     this.isOnline = function(callback, error) {
@@ -193,31 +202,33 @@ angular.module('icestudio')
     };
 
     this.removeToolchain = function() {
-      deleteFolderRecursive(common.ENV_DIR);
-      deleteFolderRecursive(common.CACHE_DIR);
-      deleteFolderRecursive(common.APIO_HOME_DIR);
+      this.deleteFolderRecursive(common.ENV_DIR);
+      this.deleteFolderRecursive(common.CACHE_DIR);
+      this.deleteFolderRecursive(common.APIO_HOME_DIR);
     };
 
     this.removeCollections = function() {
-      deleteFolderRecursive(common.COLLECTIONS_DIR);
+      this.deleteFolderRecursive(common.COLLECTIONS_DIR);
     };
 
-    this.deleteFolderRecursive = deleteFolderRecursive;
+    this.removeTempBuildDir = function() {
+      this.deleteFolderRecursive(common.BUILD_DIR);
+    };
 
-    function deleteFolderRecursive(path) {
+    this.deleteFolderRecursive = function(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
           var curPath = nodePath.join(path, file);
           if (nodeFs.lstatSync(curPath).isDirectory()) { // recursive
-            deleteFolderRecursive(curPath);
+            this.deleteFolderRecursive(curPath);
           }
           else { // delete file
             nodeFs.unlinkSync(curPath);
           }
-        });
+        }.bind(this));
         nodeFs.rmdirSync(path);
       }
-    }
+    };
 
     this.sep = nodePath.sep;
 
@@ -231,83 +242,70 @@ angular.module('icestudio')
       return nodePath.dirname(filepath);
     };
 
-    this.readFile = function(filepath, callback) {
-      nodeFs.readFile(filepath,
-        function(err, data) {
-          if (!err) {
-            decompressJSON(data, callback);
-          }
-          else {
-            if (callback) {
-              callback();
+    this.readFile = function(filepath) {
+      return new Promise(function(resolve, reject) {
+        nodeFs.readFile(filepath,
+          function(err, content) {
+            if (err) {
+              reject(err.toString());
             }
-          }
+            else {
+              var data = isJSON(content);
+              if (data) {
+                // JSON data
+                resolve(data);
+              }
+              else {
+                reject(gettextCatalog.getString('Invalid project format'));
+              }
+            }
+          });
       });
     };
 
-    var saveBin = false;
-
-    this.saveFile = function(filepath, content, callback, compress) {
-      if (compress) {
-        compressJSON(content, function(compressed) {
-          nodeFs.writeFile(filepath, compressed, saveBin ? 'binary' : null,
+    this.saveFile = function(filepath, data) {
+      return new Promise(function(resolve, reject) {
+        var content = data;
+        if (typeof data !== 'string') {
+          content = JSON.stringify(data, null, 2);
+        }
+        nodeFs.writeFile(filepath, content,
           function(err) {
-            if (!err && callback) {
-              callback();
+            if (err) {
+              reject(err.toString());
+            }
+            else {
+              resolve();
             }
           });
-        });
-      }
-      else {
-        nodeFs.writeFile(filepath, content, function(err) {
-          if (!err && callback) {
-            callback();
-          }
-        });
-      }
+      });
     };
 
-    function compressJSON(json, callback) {
-      if (!saveBin) {
+    /*function compressJSON(data, callback) {
+      var content = JSON.stringify(data);
+      nodeZlib.gzip(content, function (_, compressed) {
         if (callback) {
-          callback(JSON.stringify(json, null, 2));
+          callback(compressed);
         }
-      }
-      else {
-        var data = JSON.stringify(json);
-        nodeZlib.gzip(data, function (_, result) {
-          if (callback) {
-            callback(result);
-          }
-        });
-      }
-    }
+      });
+    }*/
 
-    function decompressJSON(json, callback) {
-      var data = isJSON(json);
-      if (data) {
+    /*function decompressJSON(content, callback) {
+      nodeZlib.gunzip(content, function(_, uncompressed) {
+        var data = JSON.parse(uncompressed);
         if (callback) {
           callback(data);
         }
-      }
-      else {
-        nodeZlib.gunzip(json, function(_, uncompressed) {
-          var result = JSON.parse(uncompressed);
-          if (callback) {
-            callback(result);
-          }
-        });
-      }
-    }
+      });
+    }*/
 
-    function isJSON(str) {
-      var result = false;
+    function isJSON(content) {
       try {
-        result = JSON.parse(str);
-      } catch (e) {
+        return JSON.parse(content);
+      }
+      catch (e) {
         return false;
       }
-      return result;
     }
 
     this.getFilesRecursive = getFilesRecursive;

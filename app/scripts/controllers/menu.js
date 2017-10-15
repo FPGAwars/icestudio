@@ -34,6 +34,8 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
 
+    var resultAlert = null;
+
     // Window events
     var win = gui.Window.get();
     win.on('close', function() {
@@ -49,29 +51,6 @@ angular.module('icestudio')
       mb.createMacBuiltin('Icestudio');
       win.menu = mb;
     }
-
-    // Menu timer
-    var timer;
-
-    // mousedown event
-    var mousedown = false;
-    $(document).on('mouseup', function() { mousedown = false; });
-    $(document).on('mousedown', function() { mousedown = true; });
-
-    // mouseover event
-    $scope.showMenu = function(menu) {
-      $timeout.cancel(timer);
-      if (!mousedown && !graph.addingDraggableBlock) {
-        $scope.status[menu] = true;
-      }
-    };
-
-    // mouseleave event
-    $scope.hideMenu = function(menu) {
-      timer = $timeout(function() {
-        $scope.status[menu] = false;
-      }, 700);
-    };
 
     // Load app arguments
     setTimeout(function() {
@@ -184,40 +163,71 @@ angular.module('icestudio')
     };
 
     $scope.exportVerilog = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-verilog', '.v', function(filepath) {
-          project.export('verilog', filepath, gettextCatalog.getString('Verilog code exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('verilog', 'Verilog', '.v');
     };
 
     $scope.exportPCF = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-pcf', '.pcf', function(filepath) {
-          project.export('pcf', filepath, gettextCatalog.getString('PCF file exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('pcf', 'PCF' ,'.pcf');
     };
 
     $scope.exportTestbench = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-testbench', '.v', function(filepath) {
-          project.export('testbench', filepath, gettextCatalog.getString('Testbench exported'));
-          updateWorkingdir(filepath);
-        });
-      });
+      exportFromCompiler('testbench', 'Testbench', '.v');
     };
 
     $scope.exportGTKwave = function() {
-      checkGraph(function() {
-        utils.saveDialog('#input-export-gtkwave', '.gtkw', function(filepath) {
-          project.export('gtkwave', filepath, gettextCatalog.getString('GTKWave exported'));
+      exportFromCompiler('gtkwave', 'GTKWave' ,'.gtkw');
+    };
+
+    $scope.exportBLIF = function() {
+      exportFromBuilder('blif', 'BLIF', '.blif');
+    };
+
+    $scope.exportASC = function() {
+      exportFromBuilder('asc', 'ASC', '.asc');
+
+    };
+    $scope.exportBitstream = function() {
+      exportFromBuilder('bin', 'Bitstream', '.bin');
+    };
+
+    function exportFromCompiler(id, name, ext) {
+      checkGraph()
+      .then(function() {
+        utils.saveDialog('#input-export-' + id, ext, function(filepath) {
+          // Save the compiler result
+          var data = project.compile(id);
+          utils.saveFile(filepath, data)
+          .then(function() {
+            alertify.success(gettextCatalog.getString('{{name}} exported', { name: name }));
+          })
+          .catch(function(error) {
+            alertify.error(error, 30);
+          });
+          // Update the working directory
           updateWorkingdir(filepath);
         });
       });
-    };
+    }
+
+    function exportFromBuilder(id, name, ext) {
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.buildCode();
+      })
+      .then(function() {
+        utils.saveDialog('#input-export-' + id, ext, function(filepath) {
+          // Copy the built file
+          if (utils.copySync(nodePath.join(common.BUILD_DIR, 'hardware' + ext), filepath)) {
+            alertify.success(gettextCatalog.getString('{{name}} exported', { name: name }));
+          }
+          // Update the working directory
+          updateWorkingdir(filepath);
+        });
+      });
+    }
 
     function updateWorkingdir(filepath) {
       $scope.workingdir = utils.dirname(filepath) + utils.sep;
@@ -233,19 +243,32 @@ angular.module('icestudio')
 
     function exit() {
       if (project.changed) {
+        alertify.set('confirm', 'labels', {
+          'ok': gettextCatalog.getString('Close')
+        });
         alertify.confirm(
           utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
           function() {
+            // Close
             _exit();
-          });
+          },
+          function() {
+            // Cancel
+            setTimeout(function() {
+              alertify.set('confirm', 'labels', {
+                'ok': gettextCatalog.getString('OK')
+              });
+            }, 200);
+          }
+        );
       }
       else {
         _exit();
       }
       function _exit() {
         //win.hide();
-        //profile.save();
+        utils.removeTempBuildDir();
         win.close(true);
       }
     }
@@ -282,7 +305,8 @@ angular.module('icestudio')
     };
 
     $scope.selectAll = function() {
-      checkGraph(function() {
+      checkGraph()
+      .then(function() {
         graph.selectAll();
       });
     };
@@ -291,33 +315,43 @@ angular.module('icestudio')
       project.removeSelected();
     }
 
-    $scope.resetView = function() {
-      graph.resetView();
-    };
-
     $scope.fitContent = function() {
       graph.fitContent();
     };
 
+    $(document).on('infoChanged', function(evt, newValues) {
+      var values = getProjectInformation();
+      if (!_.isEqual(values, newValues)) {
+        graph.setInfo(values, newValues, project);
+        alertify.message(gettextCatalog.getString('Project information updated') + '.<br>' + gettextCatalog.getString('Click here to view'), 5)
+        .callback = function(isClicked) {
+          if (isClicked) {
+            $scope.setProjectInformation();
+          }
+        };
+      }
+    });
+
     $scope.setProjectInformation = function() {
+      var values = getProjectInformation();
+      utils.projectinfoprompt(values, function(evt, newValues) {
+        if (!_.isEqual(values, newValues)) {
+          graph.setInfo(values, newValues, project);
+          alertify.success(gettextCatalog.getString('Project information updated'));
+        }
+      });
+    };
+
+    function getProjectInformation() {
       var p = project.get('package');
-      var values = [
+      return [
         p.name,
         p.version,
         p.description,
         p.author,
         p.image
       ];
-      utils.projectinfoprompt(values, function(evt, values) {
-        project.set('package', {
-          name: values[0],
-          version: values[1],
-          description: values[2],
-          author: values[3],
-          image: values[4]
-        });
-      });
-    };
+    }
 
     $scope.setRemoteHostname = function() {
       var current = profile.get('remoteHostname');
@@ -439,7 +473,7 @@ angular.module('icestudio')
       if (common.selectedCollection.name !== collection.name) {
         var name = collections.selectCollection(collection.name);
         profile.set('collection', name);
-        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name) }));
+        alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name ? name : 'Default') }));
       }
     };
 
@@ -481,35 +515,54 @@ angular.module('icestudio')
     //-- Tools
 
     $scope.verifyCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.verifyCode();
+      var startMessage = gettextCatalog.getString('Start verification');
+      var endMessage = gettextCatalog.getString('Verification done');
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.verifyCode(startMessage, endMessage);
       });
     };
 
     $scope.buildCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.buildCode();
+      var startMessage = gettextCatalog.getString('Start build');
+      var endMessage = gettextCatalog.getString('Build done');
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.buildCode(startMessage, endMessage);
       });
     };
 
     $scope.uploadCode = function() {
-      checkGraph(function() {
-        graph.resetCodeErrors();
-        tools.uploadCode();
+      var startMessage = gettextCatalog.getString('Start upload');
+      var endMessage = gettextCatalog.getString('Upload done');
+      checkGraph()
+      .then(function() {
+        return graph.resetCodeErrors();
+      })
+      .then(function() {
+        return tools.uploadCode(startMessage, endMessage);
       });
     };
 
-    function checkGraph(callback) {
-      if (!graph.isEmpty()) {
-        if (callback) {
-          callback();
+    function checkGraph() {
+      return new Promise(function(resolve, reject) {
+        if (!graph.isEmpty()) {
+          resolve();
         }
-      }
-      else {
-        alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
-      }
+        else {
+          if (resultAlert) {
+            resultAlert.dismiss(true);
+          }
+          resultAlert = alertify.warning(gettextCatalog.getString('Add a block to start'), 5);
+          reject();
+        }
+      });
     }
 
     $scope.addCollections = function() {
@@ -627,7 +680,6 @@ angular.module('icestudio')
     shortcuts.method('copySelected', $scope.copySelected);
     shortcuts.method('pasteSelected', $scope.pasteSelected);
     shortcuts.method('selectAll', $scope.selectAll);
-    shortcuts.method('resetView', $scope.resetView);
     shortcuts.method('fitContent', $scope.fitContent);
 
     // -- Tools
@@ -688,5 +740,54 @@ angular.module('icestudio')
         });
       });
     }
+
+    // Show/Hide menu management
+    var menu;
+    var timerOpen;
+    var timerClose;
+
+    // mousedown event
+    var mousedown = false;
+    $(document).on('mouseup', function() {
+      mousedown = false;
+    });
+    $(document).on('mousedown', '#paper', function() {
+      mousedown = true;
+      // Close current menu
+      $scope.status[menu] = false;
+      utils.rootScopeSafeApply();
+    });
+
+    // Show menu with delay
+    $scope.showMenu = function(newMenu) {
+      menu = newMenu;
+      $timeout.cancel(timerClose);
+      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[menu]) {
+        timerOpen = $timeout(function() {
+          $scope.status[menu] = true;
+        }, 300);
+      }
+    };
+
+    // Hide menu with delay
+    $scope.hideMenu = function(menu) {
+      $timeout.cancel(timerOpen);
+      timerClose = $timeout(function() {
+        $scope.status[menu] = false;
+      }, 900);
+    };
+
+    // Fix menu
+    $scope.fixMenu = function(menu) {
+      $scope.status[menu] = true;
+    };
+
+    // Disable click in submenus
+    $(document).click('.dropdown-submenu', function(event) {
+      if ($(event.target).hasClass('dropdown-toggle')) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+      }
+    });
 
   });

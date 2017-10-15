@@ -1,5 +1,4 @@
-#paper {
-  top: -20px;
+.paper {
   position: relative;
   display: inline-block;
   background: transparent;
@@ -7,48 +6,54 @@
   cursor: default;
 }
 
-#paper svg {
+.paper svg {
   background: transparent;
   position: relative;
   z-index: 0;
 }
 
-#footer {
-  position: absolute;
+.footer {
+  display: flex;
   cursor: default;
-  bottom: -5px;
+  position: absolute;
+  bottom: 0;
   width: 100%;
+  min-height: 45px;
+  padding: 4px;
+  border-top: 1px solid #d5dadd;
   z-index: 1501;
 }
 
-#breadcrumbs {
-  margin-bottom: 5px;
-  border-radius: 0px;
-  background-color: #f8f8f8;
-  border-top: 1px solid #e7e7e7;
+.breadcrumbs-container {
+  flex: 1;
 }
 
-#breadcrumbs>li {
+.board-container {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.breadcrumb {
+  margin: 0;
+  background-color: #f5f6f7;
+}
+
+.breadcrumb>.active {
   color: #333;
 }
 
-#breadcrumbs>li>a:hover {
+.breadcrumb>li>a:hover {
   text-decoration: none;
 }
 
-#board {
-  position: absolute;
-  bottom: 12px;
-  right: 15px;
-}
-
-#banner {
+.banner {
   position: relative;
 }
 
-#info {
+.info {
   position: absolute;
-  top: -10px;
+  top: 10px;
   left: 15px;
   font-size: 15px;
   color: #656565;
@@ -58,9 +63,9 @@
   z-index: 1501;
 }
 
-#read-only {
+.read-only {
   position: absolute;
-  top: -10px;
+  top: 10px;
   right: 15px;
   font-size: 14px;
   color: #f05c5c;
@@ -70,17 +75,20 @@
   z-index: 1501;
 }
 
-#back-button {
+.back-button {
   position: absolute;
-  top: 20px;
+  top: 40px;
   right: 15px;
   font-size: 14px;
   color: #63afcf;
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
-  text-decoration: none;
   z-index: 1501;
+}
+
+.back-button:hover {
+  text-decoration: none;
 }
 
 .disable-graph {

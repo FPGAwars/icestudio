@@ -19,19 +19,24 @@ angular.module('icestudio')
 
     this.load = function(callback) {
       var self = this;
-      utils.readFile(common.PROFILE_PATH, function(data) {
-        if (data) {
-          self.data = {
-            'language': data.language || '',
-            'remoteHostname': data.remoteHostname || '',
-            'collection': data.collection || '',
-            'board': data.board || '',
-            'boardRules': data.boardRules !== false
-          };
-          if (common.DARWIN) {
-            self.data['macosDrivers'] = data.macosDrivers || false;
-          }
+      utils.readFile(common.PROFILE_PATH)
+      .then(function(data) {
+        self.data = {
+          'language': data.language || '',
+          'remoteHostname': data.remoteHostname || '',
+          'collection': data.collection || '',
+          'board': data.board || '',
+          'boardRules': data.boardRules !== false
+        };
+        if (common.DARWIN) {
+          self.data['macosDrivers'] = data.macosDrivers || false;
         }
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(function(error) {
+        alertify.error(error, 30);
         if (callback) {
           callback();
         }
@@ -53,9 +58,13 @@ angular.module('icestudio')
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
-      utils.saveFile(common.PROFILE_PATH, this.data, function() {
+      utils.saveFile(common.PROFILE_PATH, this.data)
+      .then(function() {
         // Success
-      }, true);
+      })
+      .catch(function(error) {
+        alertify.error(error, 30);
+      });
     };
 
   });

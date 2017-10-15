@@ -649,14 +649,16 @@ angular.module('icestudio')
 
       // Find selectors
       var sourceSelector, targetSelector;
-      for (var _out = 0; _out < source.attributes.rightPorts.length; _out++) {
-        if (source.attributes.rightPorts[_out] === instance.source.port) {
+      var leftPorts = target.get('leftPorts');
+      var rightPorts = source.get('rightPorts');
+      for (var _out = 0; _out < rightPorts.length; _out++) {
+        if (rightPorts[_out] === instance.source.port) {
           sourceSelector = _out;
           break;
         }
       }
-      for (var _in = 0; _in < source.attributes.leftPorts.length; _in++) {
-        if (target.attributes.leftPorts[_in] === instance.target.port) {
+      for (var _in = 0; _in < leftPorts.length; _in++) {
+        if (leftPorts[_in] === instance.target.port) {
           targetSelector = _in;
           break;
         }
@@ -951,15 +953,17 @@ angular.module('icestudio')
       ],
         function(evt, values) {
           var readonly = values[0];
-          var data = utils.clone(block.data);
-          data.readonly = readonly;
-          // Translate info content
-          if (data.info && data.readonly) {
-            data.text = gettextCatalog.getString(data.info);
+          if (block.data.readonly !== readonly) {
+            var data = utils.clone(block.data);
+            data.readonly = readonly;
+            // Translate info content
+            if (data.info && data.readonly) {
+              data.text = gettextCatalog.getString(data.info);
+            }
+            cellView.model.set('data', data);
+            cellView.apply();
+            alertify.success(gettextCatalog.getString('Block updated'));
           }
-          cellView.model.set('data', data);
-          cellView.apply();
-          alertify.success(gettextCatalog.getString('Block updated'));
       });
     }
 

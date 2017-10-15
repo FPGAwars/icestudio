@@ -2,13 +2,15 @@
 
 // Toolchain builder
 
+var fs = require('fs');
 var fse = require('fs-extra');
 var path = require('path');
 var async = require('async');
 var childProcess = require('child_process');
 var _ = require('lodash');
 var glob = require('glob');
-var targz = require('tar.gz');
+var archiver = require('archiver');
+var extract = require('extract-zip');
 var inherits = require('inherits');
 var EventEmitter = require('events').EventEmitter;
 
@@ -39,7 +41,7 @@ function ToolchainBuilder(options) {
   this.options.apioPackagesDir = path.join(this.options.toolchainDir, 'default-apio-packages');
 
   this.options.venvExtractDir = path.join(this.options.toolchainDir, venvRelease);
-  this.options.venvTarPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.tar.gz');
+  this.options.venvZipPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.zip');
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, (process.platform === 'win32' ? 'Scripts' : 'bin'));
@@ -63,7 +65,7 @@ ToolchainBuilder.prototype.build = function (callback) {
       .then(this.packageApio.bind(this))
       .then(this.packageApioPackages.bind(this))
       .then(this.createDefaultToolchains.bind(this))
-      .then(function (info) {
+      .then(function(info) {
         var result = info || this;
 
         if(hasCallback) {
@@ -72,7 +74,7 @@ ToolchainBuilder.prototype.build = function (callback) {
           done.resolve(result);
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         if(hasCallback) {
           callback(error);
         } else {
@@ -92,12 +94,19 @@ ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
 
 ToolchainBuilder.prototype.extractVirtualenv = function () {
   var self = this;
-  self.emit('log', '> Extract virtualenv tarball');
+  self.emit('log', '> Extract virtualenv zip');
   return new Promise(function(resolve, reject) {
-    targz().extract(self.options.venvTarPath, self.options.toolchainDir, function (error) {
-      if (error) { reject(error); }
-      else { resolve(); }
-    });
+      var source = self.options.venvZipPath;
+      var target = path.resolve(self.options.toolchainDir);
+      extract(source, {dir: target}, function(error) {
+        if (error) {
+          reject(error);
+        }
+        else {
+          resolve();
+        }
+      }
+    );
   });
 };
 
@@ -111,7 +120,7 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
       self.options.venvDir
     ];
     childProcess.exec(command.join(' '),
-      function (error/*, stdout, stderr*/) {
+      function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -128,7 +137,7 @@ ToolchainBuilder.prototype.downloadApio = function () {
       'apio">=' + self.options.apioMin + ',<' + self.options.apioMax + '"'
     ];
     childProcess.exec(command.join(' '),
-      function (error/*, stdout, stderr*/) {
+      function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
@@ -140,14 +149,14 @@ ToolchainBuilder.prototype.installApio = function () {
   var self = this;
   self.emit('log', '> Install apio');
   return new Promise(function(resolve, reject) {
-    glob(path.join(self.options.apioDir, '*.*'), {}, function (error, files) {
+    glob(path.join(self.options.apioDir, '*.*'), {}, function(error, files) {
       if (error) { reject(error); }
       else {
         var command = [
           self.options.venvPip, 'install', '-U', '--no-deps'
         ].concat(files);
         childProcess.exec(command.join(' '),
-          function (error/*, stdout, stderr*/) {
+          function(error/*, stdout, stderr*/) {
             if (error) { reject(error); }
             else { resolve(); }
           }
@@ -175,7 +184,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
         self.emit('log', '  - ' + p);
         var cmd = command(path.join(self.options.apioPackagesDir, p), p);
         childProcess.execSync(cmd.join(' '),
-          function (error/*, stdout, stderr*/) {
+          function(error/*, stdout, stderr*/) {
             if (error) { reject(error); }
           }
         );
@@ -189,13 +198,9 @@ ToolchainBuilder.prototype.packageApio = function () {
   var self = this;
   self.emit('log', '> Package apio');
   return new Promise(function(resolve, reject) {
-    targz({}, {fromBase: true}).compress(
-      self.options.apioDir,
-      path.join(self.options.toolchainDir, 'default-apio.tar.gz'),
-      function (error) {
-        if (error) { reject(error); }
-        else { resolve(); }
-      });
+    var source = self.options.apioDir;
+    var target = path.join(self.options.toolchainDir, 'default-apio.zip');
+    compress(source, target, resolve, reject);
   });
 };
 
@@ -205,19 +210,14 @@ ToolchainBuilder.prototype.packageApioPackages = function () {
   return new Promise(function(resolve, reject) {
     self.pFound = [];
     async.eachSeries(self.options.platforms, function iteratee(platform, callback) {
-      async.setImmediate(function () {
+      async.setImmediate(function() {
         var p = getRealPlatform(platform);
         if (p && self.pFound.indexOf(p) === -1) {
           self.pFound.push(p);
           self.emit('log', '  - ' + p);
-          targz({}, {fromBase: true}).compress(
-            path.join(self.options.apioPackagesDir, p),
-            path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.tar.gz'),
-            function (error) {
-              if (error) { reject(error); }
-              callback();
-            }
-          );
+          var source = path.join(self.options.apioPackagesDir, p);
+          var target = path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.zip');
+          compress(source, target, function() { callback(); }, reject);
         }
         else {
           callback();
@@ -241,16 +241,16 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
       // Copy default-apio
-      var apioFilename = 'default-apio.tar.gz';
+      var apioFilename = 'default-apio.zip';
       fse.copySync(
         path.join(self.options.toolchainDir, apioFilename),
         path.join(destPath, 'toolchain', apioFilename)
       );
       // Copy default-apio-packages
-      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.tar.gz';
+      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.zip';
       fse.copySync(
         path.join(self.options.toolchainDir, apioPackagesFilename),
-        path.join(destPath, 'toolchain', 'default-apio-packages.tar.gz')
+        path.join(destPath, 'toolchain', 'default-apio-packages.zip')
       );
     });
     resolve();
@@ -310,4 +310,25 @@ function getRealPlatform(platform) {
     default:
       return '';
   }
+}
+
+function compress(source, target, resolve, reject) {
+  var output = fs.createWriteStream(target);
+  var archive = archiver.create('zip');
+
+  output.on('close', function() {
+    resolve();
+  });
+
+  output.on('error', function(err){
+    reject(err);
+  });
+
+  archive.on('error', function(err){
+    reject(err);
+  });
+
+  archive.pipe(output);
+  archive.glob('**/*', { cwd: source });
+  archive.finalize();
 }

@@ -19,7 +19,6 @@ angular.module('icestudio')
     var selectionView = null;
     var commandManager = null;
     var mousePosition = { x: 0, y: 0 };
-    var menuHeight = 51;
     var gridsize = 8;
     var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
 
@@ -343,8 +342,8 @@ angular.module('icestudio')
           processCellClick(cellView, evt);
         }
         else {
-          // If not, wait 150ms to ensure that it's not a dblclick
-          var ensureTime = 150;
+          // If not, wait 200ms to ensure that it's not a dblclick
+          var ensureTime = 200;
           pointerDown = false;
           setTimeout(function() {
             if (!dblClickCell && !pointerDown) {
@@ -389,29 +388,34 @@ angular.module('icestudio')
         if (!utils.hasShift(evt)) {
           // Allow dblClick if Shift is not pressed
           dblClickCell = true;
-          var type =  cellView.model.get('blockType');
-          if (type.indexOf('basic.') !== -1) {
-            if (paper.options.enabled) {
-              blocks.editBasic(type, cellView, function(cell) {
-                addCell(cell);
-              });
-            }
-          }
-          else if (common.allDependencies[type]) {
-            z.index = 1;
-            var project = common.allDependencies[type];
-            var breadcrumbsLength = self.breadcrumbs.length;
-            $rootScope.$broadcast('navigateProject', {
-              update: breadcrumbsLength === 1,
-              project: project
-            });
-            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-            utils.rootScopeSafeApply();
-          }
+          processDblClick(cellView);
           // Enable click event
           setTimeout(function() { dblClickCell = false; }, 200);
         }
       });
+
+      function processDblClick(cellView) {
+        var type =  cellView.model.get('blockType');
+        if (type.indexOf('basic.') !== -1) {
+          if (paper.options.enabled) {
+            blocks.editBasic(type, cellView, function(cell) {
+              addCell(cell);
+              selectionView.cancelSelection();
+            });
+          }
+        }
+        else if (common.allDependencies[type]) {
+          z.index = 1;
+          var project = common.allDependencies[type];
+          var breadcrumbsLength = self.breadcrumbs.length;
+          $rootScope.$broadcast('navigateProject', {
+            update: breadcrumbsLength === 1,
+            project: project
+          });
+          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+          utils.rootScopeSafeApply();
+        }
+      }
 
       paper.on('blank:pointerdown', function(evt, x, y) {
         // Disable current focus
@@ -536,13 +540,13 @@ angular.module('icestudio')
       });
     }
 
-    this.setBoardRules = function(value) {
+    this.setBoardRules = function(rules) {
       var cells = graph.getCells();
-      profile.set('boardRules', value);
+      profile.set('boardRules', rules);
 
       _.each(cells, function(cell) {
         if (!cell.isLink()) {
-          cell.attributes.rules = value;
+          cell.attributes.rules = rules;
           var cellView = paper.findViewByModel(cell);
           cellView.updateBox();
         }
@@ -568,13 +572,15 @@ angular.module('icestudio')
     this.appEnable = function(value) {
       paper.options.enabled = value;
       if (value) {
-        angular.element('#menu').removeClass('disable-menu');
-        angular.element('#paper').removeClass('disable-paper');
+        angular.element('#menu').removeClass('is-disabled');
+        angular.element('#paper').removeClass('looks-disabled');
+        angular.element('#board').removeClass('looks-disabled');
         angular.element('#banner').addClass('hidden');
       }
       else {
-        angular.element('#menu').addClass('disable-menu');
-        angular.element('#paper').addClass('disable-paper');
+        angular.element('#menu').addClass('is-disabled');
+        angular.element('#paper').addClass('looks-disabled');
+        angular.element('#board').addClass('looks-disabled');
         angular.element('#banner').removeClass('hidden');
       }
       var cells = graph.getCells();
@@ -614,14 +620,15 @@ angular.module('icestudio')
 
     this.addDraggableCell = function(cell) {
       this.addingDraggableBlock = true;
-      cell.attributes.position = {
-        x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.attributes.size.width/2) / gridsize) * gridsize,
-        y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.attributes.size.height/2) / gridsize) * gridsize,
-      };
+      var menuHeight = $('#menu').height();
+      cell.set('position', {
+        x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.get('size').width/2) / gridsize) * gridsize,
+        y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.get('size').height/2) / gridsize) * gridsize,
+      });
       graph.trigger('batch:start');
       addCell(cell);
       disableSelected();
-      var opt = { transparent: true };
+      var opt = { transparent: true, initooltip: false };
       var noBatch = true;
       selection.add(cell);
       selectionView.createSelectionBox(cell, opt);
@@ -630,15 +637,19 @@ angular.module('icestudio')
 
     this.addDraggableCells = function(cells) {
       this.addingDraggableBlock = true;
+      var menuHeight = $('#menu').height();
       if (cells.length > 0) {
-        var firstCellAttrs = cells[0].attributes;
+        var firstCell = cells[0];
         var offset = {
-          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCellAttrs.size.width/2) / gridsize) * gridsize - firstCellAttrs.position.x,
-          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCellAttrs.size.height/2) / gridsize) * gridsize - firstCellAttrs.position.y,
+          x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCell.get('size').width/2) / gridsize) * gridsize - firstCell.get('position').x,
+          y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCell.get('size').height/2) / gridsize) * gridsize - firstCell.get('position').y,
         };
         _.each(cells, function(cell) {
-          cell.attributes.position.x += offset.x;
-          cell.attributes.position.y += offset.y;
+          var position = cell.get('position');
+          cell.set('position', {
+            x: position.x + offset.x,
+            y: position.y + offset.y
+          });
         });
         graph.trigger('batch:start');
         addCells(cells);
@@ -679,6 +690,24 @@ angular.module('icestudio')
       }
       graph.stopBatch('change');
       return newBoard;
+    };
+
+    this.setInfo = function(values, newValues, project) {
+      graph.startBatch('change');
+      // Trigger info event
+      var data = {
+        previous: values,
+        next: newValues
+      };
+      graph.trigger('info', { data: data });
+      project.set('package', {
+        name: newValues[0],
+        version: newValues[1],
+        description: newValues[2],
+        author: newValues[3],
+        image: newValues[4]
+      });
+      graph.stopBatch('change');
     };
 
     this.selectLanguage = function(language) {
@@ -736,7 +765,6 @@ angular.module('icestudio')
           if (block.design.graph.blocks) {
             _.each(block.design.graph.blocks, function(item) {
               if (item.type === 'basic.input' && !item.data.range) {
-                console.log(item, connectedLinks);
                 var connected = false;
                 _.each(connectedLinks, function(connectedLink) {
                   if (connectedLink.get('target').port === item.id) {
@@ -1103,6 +1131,7 @@ angular.module('icestudio')
         // - assign new UUIDs to the cells
         // - add the graph in the mouse position
         var origin = graphOrigin(design.graph);
+        var menuHeight = $('#menu').height();
         var opt = {
           new: true,
           disabled: false,
@@ -1178,18 +1207,21 @@ angular.module('icestudio')
 
     this.resetCodeErrors = function() {
       var cells = graph.getCells();
-      _.each(cells, function(cell) {
-        var cellView;
-        if (cell.attributes.type === 'ice.Code') {
-          cellView = paper.findViewByModel(cell);
-          cellView.clearAnnotations();
-        }
-        else if (cell.attributes.type === 'ice.Generic') {
-          cellView = paper.findViewByModel(cell);
-        }
-        if (cellView) {
-          cellView.$box.removeClass('highlight-error');
-        }
+      return new Promise(function(resolve) {
+        _.each(cells, function(cell) {
+          var cellView;
+          if ((cell.get('type') === 'ice.Code') ||
+              (cell.get('type') === 'ice.Generic') ||
+              (cell.get('type') === 'ice.Constant'))
+          {
+            cellView = paper.findViewByModel(cell);
+            cellView.$box.removeClass('highlight-error');
+            if (cell.get('type') === 'ice.Code') {
+              cellView.clearAnnotations();
+            }
+          }
+        });
+        resolve();
       });
     };
 
@@ -1197,19 +1229,21 @@ angular.module('icestudio')
       var cells = graph.getCells();
       _.each(cells, function(cell) {
         var blockId, cellView;
-        if (codeError.blockType === 'code' && cell.attributes.type === 'ice.Code') {
+        if ((codeError.blockType === 'code' && cell.get('type') === 'ice.Code') ||
+            (codeError.blockType === 'constant' && cell.get('type') === 'ice.Constant'))
+         {
           blockId = utils.digestId(cell.id);
-          if (codeError.blockId === blockId) {
-            cellView = paper.findViewByModel(cell);
-            cellView.$box.addClass('highlight-error');
-            cellView.setAnnotation(codeError);
-          }
         }
-        else if (codeError.blockType === 'generic' && cell.attributes.type === 'ice.Generic') {
+        else if (codeError.blockType === 'generic' && cell.get('type') === 'ice.Generic') {
           blockId = utils.digestId(cell.attributes.blockType);
-          if (codeError.blockId === blockId) {
-            cellView = paper.findViewByModel(cell);
+        }
+        if (codeError.blockId === blockId) {
+          cellView = paper.findViewByModel(cell);
+          if (codeError.type === 'error') {
             cellView.$box.addClass('highlight-error');
+          }
+          if (cell.get('type') === 'ice.Code') {
+            cellView.setAnnotation(codeError);
           }
         }
       });

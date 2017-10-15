@@ -19,9 +19,6 @@ angular.module('icestudio')
   .factory('nodeChildProcess', function() {
     return require('child_process');
   })
-  .factory('nodeTarball', function() {
-    return require('tarball-extract');
-  })
   .factory('nodeZlib', function() {
     return require('zlib');
   })
@@ -46,6 +43,9 @@ angular.module('icestudio')
   .factory('nodeAdmZip', function() {
     return require('adm-zip');
   })
+  .factory('nodeExtract', function() {
+    return require('extract-zip');
+  })
   .factory('nodeGettext', function() {
     return require('angular-gettext-tools');
   })
@@ -54,6 +54,9 @@ angular.module('icestudio')
   })
   .factory('nodeGetOS', function() {
     return require('getos');
+  })
+  .factory('nodeTemp', function() {
+    return require('temporary');
   })
   .factory('SVGO', function() {
     var config = {

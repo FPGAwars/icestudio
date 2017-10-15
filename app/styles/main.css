@@ -1,11 +1,6 @@
 * {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .notransition {
@@ -22,16 +17,24 @@ body {
   height: 100%;
 }
 
-.waiting * {
-  cursor: progress;
+.hidden {
+  visibility: hidden;
 }
 
-.alertify-notifier.ajs-right {
-  bottom: 45px;
+.ice-bar {
+  background: #f5f6f7;
+}
+
+.waiting * {
+  cursor: wait !important;
+}
+
+.alertify-notifier {
+  right: 0 !important;
 }
 
 .alertify-notifier.ajs-bottom {
-  bottom: 45px;
+  bottom: 69px;
 }
 
 .alertify-notifier .ajs-message {

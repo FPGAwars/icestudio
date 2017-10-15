@@ -5,9 +5,11 @@ angular.module('icestudio')
                                profile,
                                common,
                                gui,
+                               utils,
                                nodePath,
                                nodeSudo,
-                               nodeChildProcess) {
+                               nodeChildProcess,
+                               $rootScope) {
 
     this.enable = function() {
       if (common.WIN32) {
@@ -17,7 +19,7 @@ angular.module('icestudio')
         enableDarwinDrivers();
       }
       else {
-        linuxDrivers(true);
+        enableLinuxDrivers();
       }
     };
 
@@ -29,7 +31,7 @@ angular.module('icestudio')
         disableDarwinDrivers();
       }
       else {
-        linuxDrivers(false);
+        disableLinuxDrivers();
       }
     };
 
@@ -50,32 +52,36 @@ angular.module('icestudio')
       }
    };
 
-    function linuxDrivers(enable) {
-      var commands;
-      if (enable) {
-        commands = [
-          'cp ' + nodePath.resolve('resources/config/80-icestick.rules') + ' /etc/udev/rules.d/80-icestick.rules',
-          'service udev restart'
-        ];
-      }
-      else {
-        commands = [
-          'rm /etc/udev/rules.d/80-icestick.rules',
-          'service udev restart'
-        ];
-      }
-      var command = 'sh -c "' + commands.join('; ') + '"';
+   function enableLinuxDrivers() {
+     var rules = 'ACTION==\\"add\\", SUBSYSTEM==\\"usb\\", ' +
+                 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ' +
+                 'OWNER=\\"user\\", GROUP=\\"dialout\\", MODE=\\"0777\\"';
+     linuxDrivers([
+       'echo \'' + rules + '\' > /etc/udev/rules.d/80-icestick.rules',
+       'service udev restart'
+     ], function() {
+       alertify.success(gettextCatalog.getString('Drivers enabled'));
+     });
+   }
 
+   function disableLinuxDrivers() {
+     linuxDrivers([
+       'rm /etc/udev/rules.d/80-icestick.rules',
+       'service udev restart'
+     ], function() {
+       alertify.warning(gettextCatalog.getString('Drivers disabled'));
+     });
+   }
+
+  function linuxDrivers(commands, callback) {
+      var command = 'sh -c "' + commands.join('; ') + '"';
       beginLazyProcess();
       nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
         // console.log(error, stdout, stderr);
         endLazyProcess();
         if (!error) {
-          if (enable) {
-            alertify.success(gettextCatalog.getString('Drivers enabled'));
-          }
-          else {
-            alertify.warning(gettextCatalog.getString('Drivers disabled'));
+          if (callback) {
+            callback();
           }
           setTimeout(function() {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
@@ -194,7 +200,12 @@ angular.module('icestudio')
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+            .callback = function(isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
           }
           else if (!error) {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
@@ -204,13 +215,19 @@ angular.module('icestudio')
     }
 
     function disableWindowsDrivers() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'), function() {
+      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'),
+      function() {
         beginLazyProcess();
         nodeChildProcess.exec([common.APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
           // console.log(error, stdout, stderr);
           endLazyProcess();
           if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed. Please, install the toolchain'), 30);
+            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+            .callback = function(isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
           }
         });
       });

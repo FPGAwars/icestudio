@@ -87,6 +87,10 @@ angular.module('icestudio')
           code += '\n)';
         }
 
+        if (params.length === 0 && ports.length === 0) {
+          code += '\n';
+        }
+
         code += ';\n';
 
         // Content
