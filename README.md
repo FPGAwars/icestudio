@@ -101,11 +101,11 @@ npm run dist
 |  Language  | Translated strings                         |
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
-| Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/97)   |
-| Galician   | ![Progress](http://progressed.io/bar/93)   |
-| Catalan    | ![Progress](http://progressed.io/bar/93)   |
+| Spanish    | ![Progress](http://progressed.io/bar/92)   |
+| French     | ![Progress](http://progressed.io/bar/92)   |
+| Basque     | ![Progress](http://progressed.io/bar/90)   |
+| Galician   | ![Progress](http://progressed.io/bar/86)   |
+| Catalan    | ![Progress](http://progressed.io/bar/86)   |
 
 **Contribute!**
 
