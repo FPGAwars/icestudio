@@ -37,12 +37,12 @@
   -moz-border-radius: 0;
   border-radius: 0;
   visibility: hidden;
-  transition-delay: 0.5s;
+  transition-delay: 0.3s;
 }
 
 .dropdown-submenu:hover > .dropdown-menu {
   visibility: visible;
-  transition-delay: 0.5s;
+  transition-delay: 0.3s;
 }
 
 .dropdown-submenu > a:after {
@@ -60,7 +60,7 @@
 }
 
 .dropdown-submenu:hover > a:after {
-  border-left-color: #fff;
+  border-left-color: #ccc;
 }
 
 .dropdown-submenu.pull-left {
@@ -80,6 +80,7 @@
 }
 
 .dropdown-submenu-right > .dropdown-menu {
+  display: block;
   top: 0;
   right: 100%;
   margin-top: -6px;
@@ -87,10 +88,13 @@
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  visibility: hidden;
+  transition-delay: 0.3s;
 }
 
 .dropdown-submenu-right:hover > .dropdown-menu {
-  display: block;
+  visibility: visible;
+  transition-delay: 0.3s;
 }
 
 .dropdown-submenu-right > a:after {

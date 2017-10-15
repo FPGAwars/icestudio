@@ -52,29 +52,6 @@ angular.module('icestudio')
       win.menu = mb;
     }
 
-    // Menu timer
-    var timer;
-
-    // mousedown event
-    var mousedown = false;
-    $(document).on('mouseup', function() { mousedown = false; });
-    $(document).on('mousedown', function() { mousedown = true; });
-
-    // mouseover event
-    $scope.showMenu = function(menu) {
-      $timeout.cancel(timer);
-      if (!mousedown && !graph.addingDraggableBlock) {
-        $scope.status[menu] = true;
-      }
-    };
-
-    // mouseleave event
-    $scope.hideMenu = function(menu) {
-      timer = $timeout(function() {
-        $scope.status[menu] = false;
-      }, 1000);
-    };
-
     // Load app arguments
     setTimeout(function() {
       var local = false;
@@ -763,5 +740,47 @@ angular.module('icestudio')
         });
       });
     }
+
+    // Show/Hide menu management
+    var menu;
+    var timerOpen;
+    var timerClose;
+
+    // mousedown event
+    var mousedown = false;
+    $(document).on('mouseup', function() { mousedown = false; });
+    $(document).on('mousedown', function() { mousedown = true; });
+
+    // Show menu with delay
+    $scope.showMenu = function(newMenu) {
+      menu = newMenu;
+      $timeout.cancel(timerClose);
+      if (!mousedown && !graph.addingDraggableBlock) {
+        timerOpen = $timeout(function() {
+          $scope.status[menu] = true;
+        }, 300);
+      }
+    };
+
+    // Hide menu with delay
+    $scope.hideMenu = function(menu) {
+      $timeout.cancel(timerOpen);
+      timerClose = $timeout(function() {
+        $scope.status[menu] = false;
+      }, 900);
+    };
+
+    // Fix menu
+    $scope.fixMenu = function(menu) {
+      $scope.status[menu] = true;
+    };
+
+    // Disable click in submenus
+    $(document).click('.dropdown-submenu', function(event) {
+      if ($(event.target).hasClass('dropdown-toggle')) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+      }
+    });
 
   });
