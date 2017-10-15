@@ -595,6 +595,9 @@ angular.module('icestudio')
     }.bind(this));
 
     this.installToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       utils.removeToolchain();
       if (utils.checkDefaultToolchain()) {
         installDefaultToolchain();
@@ -608,6 +611,9 @@ angular.module('icestudio')
     };
 
     this.updateToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       alertify.confirm(gettextCatalog.getString('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?'),
         function() {
           installOnlineToolchain();
@@ -615,6 +621,9 @@ angular.module('icestudio')
     };
 
     this.resetToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       if (utils.checkDefaultToolchain()) {
         alertify.confirm(gettextCatalog.getString('The toolchain will be restored to default. Do you want to continue?'),
           function() {
@@ -628,6 +637,9 @@ angular.module('icestudio')
     };
 
     this.removeToolchain = function() {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       alertify.confirm(gettextCatalog.getString('The toolchain will be removed. Do you want to continue?'),
         function() {
           utils.removeToolchain();

@@ -136,17 +136,17 @@ msgstr "Comprobando Python..."
 
 #: app/scripts/services/tools.js:819
 msgid "Click here to <b>setup the drivers</b>"
-msgstr "Haga clic aquí para <b>configurar los drivers</b>"
+msgstr "Haz clic aquí para <b>configurar los drivers</b>"
 
 #: app/scripts/services/drivers.js:110 app/scripts/services/drivers.js:203
 #: app/scripts/services/drivers.js:225 app/scripts/services/tools.js:132
 #: app/scripts/services/tools.js:246
 msgid "Click here to install it"
-msgstr "Haga clic aquí para instalarlo"
+msgstr "Haz clic aquí para instalarlo"
 
 #: app/scripts/controllers/menu.js:326
 msgid "Click here to view"
-msgstr "Haz clic aquí para instalarlo"
+msgstr "Haz clic aquí para ver"
 
 #: app/scripts/controllers/menu.js:247
 msgid "Close"
