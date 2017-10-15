@@ -102,10 +102,10 @@ npm run dist
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/92)   |
-| Basque     | ![Progress](http://progressed.io/bar/90)   |
-| Galician   | ![Progress](http://progressed.io/bar/86)   |
-| Catalan    | ![Progress](http://progressed.io/bar/86)   |
+| French     | ![Progress](http://progressed.io/bar/95)   |
+| Basque     | ![Progress](http://progressed.io/bar/93)   |
+| Galician   | ![Progress](http://progressed.io/bar/89)   |
+| Catalan    | ![Progress](http://progressed.io/bar/89)   |
 
 **Contribute!**
 

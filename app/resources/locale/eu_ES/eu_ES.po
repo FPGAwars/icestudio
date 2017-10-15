@@ -117,7 +117,7 @@ msgstr "Sintetizatu"
 
 #: app/scripts/controllers/menu.js:531
 msgid "Build done"
-msgstr ""
+msgstr "Sintetizatua egin da"
 
 #: app/scripts/controllers/main.js:16 app/scripts/services/project.js:146
 msgid "Cancel"
@@ -637,15 +637,15 @@ msgstr "Gaztelera"
 
 #: app/scripts/controllers/menu.js:530
 msgid "Start build"
-msgstr ""
+msgstr "Sintetizatua hasi"
 
 #: app/scripts/controllers/menu.js:542
 msgid "Start upload"
-msgstr ""
+msgstr "Karga hasi"
 
 #: app/scripts/controllers/menu.js:518
 msgid "Start verification"
-msgstr ""
+msgstr "Egiaztapena hasi"
 
 #: app/scripts/services/tools.js:264
 msgid "Synchronize remote files ..."
@@ -747,11 +747,11 @@ msgstr "Kargatu"
 
 #: app/scripts/controllers/menu.js:543
 msgid "Upload done"
-msgstr ""
+msgstr "Karga egin da"
 
 #: app/scripts/controllers/menu.js:519
 msgid "Verification done"
-msgstr ""
+msgstr "Egiaztapena egin da"
 
 #: app/views/menu.html:219
 msgid "Verify"

@@ -117,7 +117,7 @@ msgstr "Construire"
 
 #: app/scripts/controllers/menu.js:531
 msgid "Build done"
-msgstr ""
+msgstr "Construction terminée"
 
 #: app/scripts/controllers/main.js:16 app/scripts/services/project.js:146
 msgid "Cancel"
@@ -636,15 +636,15 @@ msgstr "Espagnol"
 
 #: app/scripts/controllers/menu.js:530
 msgid "Start build"
-msgstr ""
+msgstr "Début de la construction"
 
 #: app/scripts/controllers/menu.js:542
 msgid "Start upload"
-msgstr ""
+msgstr "Début du téléchargement"
 
 #: app/scripts/controllers/menu.js:518
 msgid "Start verification"
-msgstr ""
+msgstr "Début de la vérification"
 
 #: app/scripts/services/tools.js:264
 msgid "Synchronize remote files ..."
@@ -746,11 +746,11 @@ msgstr "Télécharger"
 
 #: app/scripts/controllers/menu.js:543
 msgid "Upload done"
-msgstr ""
+msgstr "Téléchargement terminé"
 
 #: app/scripts/controllers/menu.js:519
 msgid "Verification done"
-msgstr ""
+msgstr "Vérification faite"
 
 #: app/views/menu.html:219
 msgid "Verify"

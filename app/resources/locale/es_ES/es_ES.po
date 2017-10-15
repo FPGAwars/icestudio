@@ -634,15 +634,15 @@ msgstr "Español"
 
 #: app/scripts/controllers/menu.js:530
 msgid "Start build"
-msgstr "Comenzar sintetizado ..."
+msgstr "Comenzar sintetizado"
 
 #: app/scripts/controllers/menu.js:542
 msgid "Start upload"
-msgstr "Comenzar carga ..."
+msgstr "Comenzar carga"
 
 #: app/scripts/controllers/menu.js:518
 msgid "Start verification"
-msgstr "Comenzar verificación ..."
+msgstr "Comenzar verificación"
 
 #: app/scripts/services/tools.js:264
 msgid "Synchronize remote files ..."

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: icestudio 0.3.0-beta3\n"
+"Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Xoan Sampaiño <xoansampainho@gmail.com>\n"
@@ -116,7 +116,7 @@ msgstr "Sintetizar"
 
 #: app/scripts/controllers/menu.js:531
 msgid "Build done"
-msgstr ""
+msgstr "Sintetizado realizado"
 
 #: app/scripts/controllers/main.js:16 app/scripts/services/project.js:146
 msgid "Cancel"
@@ -634,15 +634,15 @@ msgstr "Castelán"
 
 #: app/scripts/controllers/menu.js:530
 msgid "Start build"
-msgstr ""
+msgstr "Iniciando o sintetizado"
 
 #: app/scripts/controllers/menu.js:542
 msgid "Start upload"
-msgstr ""
+msgstr "Iniciando a carga"
 
 #: app/scripts/controllers/menu.js:518
 msgid "Start verification"
-msgstr ""
+msgstr "Iniciando a verificación"
 
 #: app/scripts/services/tools.js:264
 msgid "Synchronize remote files ..."
@@ -746,11 +746,11 @@ msgstr "Cargar"
 
 #: app/scripts/controllers/menu.js:543
 msgid "Upload done"
-msgstr ""
+msgstr "Carga realizada"
 
 #: app/scripts/controllers/menu.js:519
 msgid "Verification done"
-msgstr ""
+msgstr "Verificación realizada"
 
 #: app/views/menu.html:219
 msgid "Verify"
