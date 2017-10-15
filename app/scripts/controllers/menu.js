@@ -748,14 +748,21 @@ angular.module('icestudio')
 
     // mousedown event
     var mousedown = false;
-    $(document).on('mouseup', function() { mousedown = false; });
-    $(document).on('mousedown', function() { mousedown = true; });
+    $(document).on('mouseup', function() {
+      mousedown = false;
+    });
+    $(document).on('mousedown', '#paper', function() {
+      mousedown = true;
+      // Close current menu
+      $scope.status[menu] = false;
+      utils.rootScopeSafeApply();
+    });
 
     // Show menu with delay
     $scope.showMenu = function(newMenu) {
       menu = newMenu;
       $timeout.cancel(timerClose);
-      if (!mousedown && !graph.addingDraggableBlock) {
+      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[menu]) {
         timerOpen = $timeout(function() {
           $scope.status[menu] = true;
         }, 300);
