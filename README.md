@@ -7,7 +7,7 @@
 
 **Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/).
 
-    GUI -> JSON -> Verilog, PCF
+    Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
 Supported boards:
 
