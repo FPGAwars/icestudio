@@ -14,7 +14,7 @@ angular.module('icestudio')
 
     // Intialization
 
-    graph.createPaper($('#paper'));
+    graph.createPaper($('.paper'));
 
     // Breadcrumbs
 

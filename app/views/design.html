@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <div ng-controller="DesignCtrl">
-  <div id="banner" class="banner hidden">
+  <div class="banner hidden">
     <div class="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
     <div class="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
     <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
   </div>
-  <div id="paper" class="paper"></div>
+  <div class="paper"></div>
   <div class="footer ice-bar">
     <div class="breadcrumbs-container">
       <ol class="breadcrumb">
@@ -15,7 +15,12 @@
         </li>
       </ol>
     </div>
-    <div id="board" class="board-container">
+    <div class="board-container">
+      <div class="fpga-resources">
+        <span>PIOs:&nbsp;&nbsp;{{ common.fpgaResources.pios.used }}&nbsp;/&nbsp;{{ common.fpgaResources.pios.total }}</span>
+        <span>PLBs:&nbsp;&nbsp;{{ common.fpgaResources.plbs.used }}&nbsp;/&nbsp;{{ common.fpgaResources.plbs.total }}</span>
+        <span>BRAMs:&nbsp;&nbsp;{{ common.fpgaResources.brams.used }}&nbsp;/&nbsp;{{ common.fpgaResources.brams.total }}</span>
+      </div>
       {{ common.selectedBoard.info.label }}
     </div>
   </div>

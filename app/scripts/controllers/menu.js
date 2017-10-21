@@ -751,7 +751,7 @@ angular.module('icestudio')
     $(document).on('mouseup', function() {
       mousedown = false;
     });
-    $(document).on('mousedown', '#paper', function() {
+    $(document).on('mousedown', '.paper', function() {
       mousedown = true;
       // Close current menu
       $scope.status[menu] = false;

@@ -20,6 +20,22 @@ angular.module('icestudio')
     this.collections = [];
     this.selectedCollection = null;
 
+    // FPGA resources
+    this.fpgaResources = {
+      pios: {
+        used: '-',
+        total: 96
+      },
+      plbs: {
+        used: '-',
+        total: 160
+      },
+      brams: {
+        used: '-',
+        total: 16
+      }
+    };
+
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
     this.WIN32 = Boolean(process.platform.indexOf('win32') > -1);
