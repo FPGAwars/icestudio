@@ -6,6 +6,12 @@
 
 [Icestudio](https://github.com/FPGAwars/icestudio)'s technical documentation.
 
+## Development
+
+```bash
+make html
+```
+
 ## License
 
 <img src="./resources/images/by-sa.png" width="200" align = "center">

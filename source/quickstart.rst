@@ -10,7 +10,7 @@ Go to **Tools > Toolchain > Install**
 
 .. image:: ../resources/images/quickstart/toolchain.png
 
-`Apio <https://github.com/FPGAwars/apio>`_ backend will be installed, and all its needed `packages <https://github.com/FPGAwars/apio#apio-packages>`_. This operation does not require Internet connection.
+`Apio <https://github.com/FPGAwars/apio>`_ backend and all its needed `packages <https://github.com/FPGAwars/apio#apio-packages>`_ will be installed. This operation does not require Internet connection.
 
 Setup the drivers
 -----------------
@@ -26,10 +26,14 @@ Connect your FPGA board and select **Tools > Drivers > Enable**. This operation 
     .. image:: ../resources/images/quickstart/zadig.png
         :align: center
 
+    |
+
+    In MacOS this operation requires Internet connection to allow `Homebrew` to install `libffi` and `libftdi` packages.
+
 Upload a design
 ---------------
 
-Go to **Select > Board**
+Go to **Select > Board > IceZUM Alhambra**
 
 .. image:: ../resources/images/quickstart/board.png
 
