@@ -463,27 +463,18 @@ angular.module('icestudio')
 
           if (stdout && show) {
             // Show used resources in the FPGA
-            /*
-            PIOs       0 / 96
-            PLBs       0 / 160
-            BRAMs      0 / 16
-            */
-            var match;
-            var fpgaResources = '';
-            var patterns = [ /PIOs.+/g, /PLBs.+/g, /BRAMs.+/g ];
-
-            for (var p in patterns) {
-              match = patterns[p].exec(stdout);
-              fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
-            }
-            if (fpgaResources) {
-              setTimeout(function() {
-                alertify.message('<pre>' + fpgaResources + '</pre>', 5);
-              }, 0);
-            }
+            common.FPGAResources.pios = findFPGAResources(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
+            common.FPGAResources.plbs = findFPGAResources(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
+            common.FPGAResources.brams = findFPGAResources(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            utils.rootScopeSafeApply();
           }
         }
       });
+    }
+
+    function findFPGAResources(pattern, output, previousValue) {
+      var match = pattern.exec(output);
+      return (match && match[1]) ? match[1] : previousValue;
     }
 
     function mapCodeModules(code) {
