@@ -22,18 +22,9 @@ angular.module('icestudio')
 
     // FPGA resources
     this.FPGAResources = {
-      pios: {
-        used: '-',
-        total: 96
-      },
-      plbs: {
-        used: '-',
-        total: 160
-      },
-      brams: {
-        used: '-',
-        total: 16
-      }
+      pios: '-',
+      plbs: '-',
+      brams: '-'
     };
 
     // OS
