@@ -17,9 +17,15 @@
     </div>
     <div class="board-container">
       <div class="fpga-resources" ng-show="profile.data.showFPGAResources">
-        <span>PIOs:&nbsp;&nbsp;{{ common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}</span>
-        <span>PLBs:&nbsp;&nbsp;{{ common.FPGAResources.plbs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.plbs }}</span>
-        <span>BRAMs:&nbsp;&nbsp;{{ common.FPGAResources.brams }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.brams }}</span>
+        <span>
+          PIOs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}
+        </span>
+        <span>
+          PLBs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.plbs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.plbs }}
+        </span>
+        <span>
+          BRAMs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.brams }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.brams }}
+        </span>
       </div>
       {{ common.selectedBoard.info.label }}
     </div>

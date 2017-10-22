@@ -7,6 +7,9 @@ angular.module('icestudio')
     // Project version
     this.VERSION = '1.1';
 
+    // Project status
+    this.hasChangesSinceBuild = false;
+
     // All project dependencies
     this.allDependencies = {};
 

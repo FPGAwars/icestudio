@@ -33,8 +33,11 @@ angular.module('icestudio')
     $scope.snapshotdir = '';
 
     var zeroProject = true;  // New project without changes
-
     var resultAlert = null;
+
+    var buildUndoStack = [];
+    var storedUndoStack = [];
+    var currentUndoStack = [];
 
     // Window events
     var win = gui.Window.get();
@@ -206,7 +209,8 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function exportFromBuilder(id, name, ext) {
@@ -226,7 +230,8 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function updateWorkingdir(filepath) {
@@ -308,7 +313,8 @@ angular.module('icestudio')
       checkGraph()
       .then(function() {
         graph.selectAll();
-      });
+      })
+      .catch(function () {});
     };
 
     function removeSelected() {
@@ -527,7 +533,8 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.verifyCode(startMessage, endMessage);
-      });
+      })
+      .catch(function () {});
     };
 
     $scope.buildCode = function() {
@@ -538,8 +545,14 @@ angular.module('icestudio')
         return graph.resetCodeErrors();
       })
       .then(function() {
-        return tools.buildCode(startMessage, endMessage);
-      });
+        return tools.buildCode(startMessage, endMessage)
+        .then(function() {
+          // Success: reset build undo stack
+          buildUndoStack = currentUndoStack;
+          common.hasChangesSinceBuild = false;
+        });
+      })
+      .catch(function () {});
     };
 
     $scope.uploadCode = function() {
@@ -551,7 +564,8 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.uploadCode(startMessage, endMessage);
-      });
+      })
+      .catch(function () {});
     };
 
     function checkGraph() {
@@ -628,14 +642,14 @@ angular.module('icestudio')
 
     // Events
 
-    var storedUndoStack = [];
-    var currentUndoStack = [];
-
     $(document).on('stackChanged', function(evt, undoStack) {
       currentUndoStack = undoStack;
-      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+      var undoStackString = JSON.stringify(undoStack);
+      project.changed = JSON.stringify(storedUndoStack) !== undoStackString;
       project.updateTitle();
       zeroProject = false;
+      common.hasChangesSinceBuild = JSON.stringify(buildUndoStack) !== undoStackString;
+      utils.rootScopeSafeApply();
     });
 
     function resetChanged() {
