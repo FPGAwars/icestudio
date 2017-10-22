@@ -222,6 +222,12 @@ angular.module('icestudio')
         return tools.buildCode();
       })
       .then(function() {
+        // Success: reset build undo stack
+        buildUndoStack = currentUndoStack;
+        common.hasChangesSinceBuild = false;
+        utils.rootScopeSafeApply();
+      })
+      .then(function() {
         utils.saveDialog('#input-export-' + id, ext, function(filepath) {
           // Copy the built file
           if (utils.copySync(nodePath.join(common.BUILD_DIR, 'hardware' + ext), filepath)) {
@@ -545,12 +551,13 @@ angular.module('icestudio')
         return graph.resetCodeErrors();
       })
       .then(function() {
-        return tools.buildCode(startMessage, endMessage)
-        .then(function() {
-          // Success: reset build undo stack
-          buildUndoStack = currentUndoStack;
-          common.hasChangesSinceBuild = false;
-        });
+        return tools.buildCode(startMessage, endMessage);
+      })
+      .then(function() {
+        // Success: reset build undo stack
+        buildUndoStack = currentUndoStack;
+        common.hasChangesSinceBuild = false;
+        utils.rootScopeSafeApply();
       })
       .catch(function () {});
     };
@@ -564,6 +571,12 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.uploadCode(startMessage, endMessage);
+      })
+      .then(function() {
+        // Success: reset build undo stack
+        buildUndoStack = currentUndoStack;
+        common.hasChangesSinceBuild = false;
+        utils.rootScopeSafeApply();
       })
       .catch(function () {});
     };
