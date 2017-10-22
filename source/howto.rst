@@ -47,78 +47,13 @@ Install the drivers
     .. image:: ../resources/images/quickstart/zadig.png
         :align: center
 
+    |
+
+    In MacOS this operation requires Internet connection to allow `Homebrew` to install `libffi` and `libftdi` packages.
+
 .. hint::
 
   To revert the drivers configuration go to **Tools > Drivers > Disable**
-
-
-Create a collection package
----------------------------
-
-1. **Create one or more collections**
-
-You can use the `icm cli tool <https://github.com/FPGAwars/icm>`_ to create and update a collection.
-
-  .. code::
-
-    Collection/
-    ├── blocks
-    │   ├── category1
-    │   │   ├── block1.ice
-    │   │   └── subcategory1
-    │   │       ├── block11.ice
-    │   │       └── block12.ice
-    │   └── category2
-    │       └── block2.ice
-    ├── examples
-    │   ├── example1.ice
-    │   ├── example2.ice
-    │   └── example3.ice
-    ├── locale
-    │   ├── en
-    │   │   └── en.po
-    │   ├── es_ES
-    │   │   └── es_ES.po
-    │   └── translation.js
-    ├── LICENSE
-    ├── package.json
-    └── README.md
-
-
-2. **ZIP all your collections**
-
-  Create a ZIP file with all your created collections at the main level.
-
-  .. code::
-
-    Collections.zip
-    |
-    ├── Collections 1
-    │   └── ...
-    └── Collections 2
-        └── ...
-
-.. note::
-
-    The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/collection-default>`_.
-
-
-Add a collection
-----------------
-
-Go to **Tools > Collections > Add** and select a collection package (ZIP file).
-
-
-Select a collection
--------------------
-
-Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
-
-
-View the selected collection info
----------------------------------
-
-Go to **View > Collection info**. A new window will appear with the README.md file content.
 
 
 Create a project
@@ -227,11 +162,13 @@ There are different types of blocks:
 
 |
 
-3. **Connect the blocks**
+In this example we are going to implement an AND logic gate with its input/output pins connected to the FPGA I/O.
 
 .. image:: ../resources/images/howto/bwire.png
 
 |
+
+3. **Connect the blocks**
 
 .. image:: ../resources/images/howto/wire.png
 
@@ -255,11 +192,21 @@ There are different types of blocks:
 
 6. **Save the project**
 
-   Go to **Edit > Save as** and select the project name.
+   Go to **Edit > Save as** and select the project name, for example *myProject*.
 
    It will be saved as an **.ice** file.
 
    .. image:: ../resources/images/howto/saveas.png
+
+|
+
+
+Show the FPGA resources
+-----------------------
+
+Go to **View > FPGA resources**
+
+.. image:: ../resources/images/howto/fpga-resources.png
 
 |
 
@@ -307,7 +254,7 @@ Create a block
 
 1. **Open a project**
 
-   Go to **Edit > Open project** and select an **.ice** file.
+   Go to **Edit > Open project** and select an **.ice** file. It is recommended to set all the I/O ports non-FPGA ports (green) to create a block.
 
 |
 
@@ -337,6 +284,7 @@ Create a block
 
    |
 
+
 Add a project as block
 ----------------------
 
@@ -364,6 +312,76 @@ Add a project as block
 
    |
 
+
+Add a collection
+----------------
+
+Go to **Tools > Collections > Add** and select a collection package (ZIP file).
+
+
+Select a collection
+-------------------
+
+Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
+
+
+View the selected collection info
+---------------------------------
+
+Go to **View > Collection info**. A new window will appear with the README.md file content.
+
+
+Create a collection package
+---------------------------
+
+1. **Create one or more collections**
+
+You can use the `icm cli tool <https://github.com/FPGAwars/icm>`_ to create and update a collection.
+
+ .. code::
+
+   Collection/
+   ├── blocks
+   │   ├── category1
+   │   │   ├── block1.ice
+   │   │   └── subcategory1
+   │   │       ├── block11.ice
+   │   │       └── block12.ice
+   │   └── category2
+   │       └── block2.ice
+   ├── examples
+   │   ├── example1.ice
+   │   ├── example2.ice
+   │   └── example3.ice
+   ├── locale
+   │   ├── en
+   │   │   └── en.po
+   │   ├── es_ES
+   │   │   └── es_ES.po
+   │   └── translation.js
+   ├── LICENSE
+   ├── package.json
+   └── README.md
+
+
+2. **ZIP all your collections**
+
+ Create a ZIP file with all your created collections at the main level.
+
+ .. code::
+
+   Collections.zip
+   |
+   ├── Collections 1
+   │   └── ...
+   └── Collections 2
+       └── ...
+
+.. note::
+
+   The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/collection-default>`_.
+
+
 Include a list file
 -------------------
 
@@ -378,6 +396,13 @@ If your code block contains a list file(s), for example:
 2. **Copy the list file(s) in the project directory**
 
 3. **Build and upload the project**
+
+Also you can include explicitly a list file in the header of a code block:
+
+.. code-block:: verilog
+
+  // @include rom.list
+
 
 Include a verilog (header) file
 -------------------------------
@@ -396,6 +421,31 @@ If your code block includes a verilog (header) file(s), for example:
 2. **Copy the verilog (header) file(s) in the project's directory**
 
 3. **Build and upload the project**
+
+
+View the board rules
+--------------------
+
+Go to **View > Board rules**
+
+.. image:: ../resources/images/howto/icezum-rules.png
+
+|
+
+
+Disable the board rules
+-----------------------
+
+Go to **Edit > Preferences > Board rules > Disable**
+
+.. image:: ../resources/images/howto/disable-rules.png
+
+|
+
+.. image:: ../resources/images/howto/rules-disabled.png
+
+|
+
 
 Configure a remote host
 ------------------------
@@ -427,24 +477,11 @@ I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio 
 4. **Now, Verify, Build and Upload tools will run in the selected host**
 
 
-View the board rules
---------------------
+Close the application
+---------------------
 
-Go to **View > Board rules**
+Go to **File > Quit** or click the application's close button. If there are unsaved changes an alert will appear to confirm or cancel the action:
 
-.. image:: ../resources/images/howto/icezum-rules.png
-
-|
-
-Disable the board rules
------------------------
-
-Go to **Edit > Preferences > Board rules > Disable**
-
-.. image:: ../resources/images/howto/disable-rules.png
-
-|
-
-.. image:: ../resources/images/howto/rules-disabled.png
+.. image:: ../resources/images/howto/close-alert.png
 
 |

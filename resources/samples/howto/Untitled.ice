@@ -376,6 +376,22 @@
             "width": 96,
             "height": 96
           }
+        },
+        {
+          "id": "4a8dba74-2a57-4963-b37c-135dd3afc7e7",
+          "type": "basic.info",
+          "data": {
+            "info": "<strong>Lorem ipsum</strong> dolor sit amet,\nconsectetur adipiscing elit,\nsed eiusmod tempor incidunt\nut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation\nullamco laboris",
+            "readonly": false
+          },
+          "position": {
+            "x": 3736,
+            "y": 200
+          },
+          "size": {
+            "width": 352,
+            "height": 192
+          }
         }
       ],
       "wires": [
@@ -393,10 +409,10 @@
     },
     "state": {
       "pan": {
-        "x": 39,
-        "y": 30
+        "x": 144.9488,
+        "y": 213.8242
       },
-      "zoom": 1
+      "zoom": 0.3
     }
   },
   "dependencies": {
