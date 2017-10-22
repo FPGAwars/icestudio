@@ -216,9 +216,6 @@ angular.module('icestudio')
     function exportFromBuilder(id, name, ext) {
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
-      })
-      .then(function() {
         return tools.buildCode();
       })
       .then(function() {
@@ -532,9 +529,6 @@ angular.module('icestudio')
       var endMessage = gettextCatalog.getString('Verification done');
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
-      })
-      .then(function() {
         return tools.verifyCode(startMessage, endMessage);
       })
       .catch(function () {});
@@ -544,9 +538,6 @@ angular.module('icestudio')
       var startMessage = gettextCatalog.getString('Start build');
       var endMessage = gettextCatalog.getString('Build done');
       checkGraph()
-      .then(function() {
-        return graph.resetCodeErrors();
-      })
       .then(function() {
         return tools.buildCode(startMessage, endMessage);
       })
@@ -560,9 +551,6 @@ angular.module('icestudio')
       var startMessage = gettextCatalog.getString('Start upload');
       var endMessage = gettextCatalog.getString('Upload done');
       checkGraph()
-      .then(function() {
-        return graph.resetCodeErrors();
-      })
       .then(function() {
         return tools.uploadCode(startMessage, endMessage);
       })

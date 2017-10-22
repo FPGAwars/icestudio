@@ -6,6 +6,7 @@ angular.module('icestudio')
                              profile,
                              collections,
                              drivers,
+                             graph,
                              utils,
                              common,
                              gettextCatalog,
@@ -60,7 +61,10 @@ angular.module('icestudio')
             resultAlert.dismiss(false);
           }
 
-          checkToolchainInstalled()
+          graph.resetCodeErrors()
+          .then(function() {
+            return checkToolchainInstalled();
+          })
           .then(function() {
             enableTaskMode();
             if (startMessage) {
