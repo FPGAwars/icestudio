@@ -36,7 +36,7 @@ angular.module('icestudio')
     var resultAlert = null;
 
     var buildUndoStack = [];
-    var storedUndoStack = [];
+    var changedUndoStack = [];
     var currentUndoStack = [];
 
     // Window events
@@ -133,7 +133,7 @@ angular.module('icestudio')
       var filepath = project.path;
       if (filepath) {
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
       }
       else {
         $scope.saveProjectAs();
@@ -144,7 +144,7 @@ angular.module('icestudio')
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
         if (localCallback) {
           localCallback();
         }
@@ -222,10 +222,7 @@ angular.module('icestudio')
         return tools.buildCode();
       })
       .then(function() {
-        // Success: reset build undo stack
-        buildUndoStack = currentUndoStack;
-        common.hasChangesSinceBuild = false;
-        utils.rootScopeSafeApply();
+        resetBuildStack();
       })
       .then(function() {
         utils.saveDialog('#input-export-' + id, ext, function(filepath) {
@@ -554,10 +551,7 @@ angular.module('icestudio')
         return tools.buildCode(startMessage, endMessage);
       })
       .then(function() {
-        // Success: reset build undo stack
-        buildUndoStack = currentUndoStack;
-        common.hasChangesSinceBuild = false;
-        utils.rootScopeSafeApply();
+        resetBuildStack();
       })
       .catch(function () {});
     };
@@ -573,10 +567,7 @@ angular.module('icestudio')
         return tools.uploadCode(startMessage, endMessage);
       })
       .then(function() {
-        // Success: reset build undo stack
-        buildUndoStack = currentUndoStack;
-        common.hasChangesSinceBuild = false;
-        utils.rootScopeSafeApply();
+        resetBuildStack();
       })
       .catch(function () {});
     };
@@ -658,18 +649,24 @@ angular.module('icestudio')
     $(document).on('stackChanged', function(evt, undoStack) {
       currentUndoStack = undoStack;
       var undoStackString = JSON.stringify(undoStack);
-      project.changed = JSON.stringify(storedUndoStack) !== undoStackString;
+      project.changed = JSON.stringify(changedUndoStack) !== undoStackString;
       project.updateTitle();
       zeroProject = false;
       common.hasChangesSinceBuild = JSON.stringify(buildUndoStack) !== undoStackString;
       utils.rootScopeSafeApply();
     });
 
-    function resetChanged() {
-      storedUndoStack = currentUndoStack;
+    function resetChangedStack() {
+      changedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
       zeroProject = false;
+    }
+
+    function resetBuildStack() {
+      buildUndoStack = currentUndoStack;
+      common.hasChangesSinceBuild = false;
+      utils.rootScopeSafeApply();
     }
 
     // Detect prompt
