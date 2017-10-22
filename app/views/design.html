@@ -16,10 +16,10 @@
       </ol>
     </div>
     <div class="board-container">
-      <div class="fpga-resources" ng-show="common.fpgaResources.show">
-        <span>PIOs:&nbsp;&nbsp;{{ common.fpgaResources.pios.used }}&nbsp;/&nbsp;{{ common.fpgaResources.pios.total }}</span>
-        <span>PLBs:&nbsp;&nbsp;{{ common.fpgaResources.plbs.used }}&nbsp;/&nbsp;{{ common.fpgaResources.plbs.total }}</span>
-        <span>BRAMs:&nbsp;&nbsp;{{ common.fpgaResources.brams.used }}&nbsp;/&nbsp;{{ common.fpgaResources.brams.total }}</span>
+      <div class="fpga-resources" ng-show="profile.data.showFPGAResources">
+        <span>PIOs:&nbsp;&nbsp;{{ common.FPGAResources.pios.used }}&nbsp;/&nbsp;{{ common.FPGAResources.pios.total }}</span>
+        <span>PLBs:&nbsp;&nbsp;{{ common.FPGAResources.plbs.used }}&nbsp;/&nbsp;{{ common.FPGAResources.plbs.total }}</span>
+        <span>BRAMs:&nbsp;&nbsp;{{ common.FPGAResources.brams.used }}&nbsp;/&nbsp;{{ common.FPGAResources.brams.total }}</span>
       </div>
       {{ common.selectedBoard.info.label }}
     </div>

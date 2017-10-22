@@ -21,8 +21,7 @@ angular.module('icestudio')
     this.selectedCollection = null;
 
     // FPGA resources
-    this.fpgaResources = {
-      show: false,
+    this.FPGAResources = {
       pios: {
         used: '-',
         total: 96

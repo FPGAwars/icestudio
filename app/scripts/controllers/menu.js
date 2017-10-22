@@ -451,7 +451,7 @@ angular.module('icestudio')
     };
 
     $scope.toggleFPGAResources = function() {
-      common.fpgaResources.show = !common.fpgaResources.show;
+      profile.set('showFPGAResources', !profile.get('showFPGAResources'));
     };
 
     $scope.showCollectionData = function() {
