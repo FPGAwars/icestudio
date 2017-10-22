@@ -33,8 +33,11 @@ angular.module('icestudio')
     $scope.snapshotdir = '';
 
     var zeroProject = true;  // New project without changes
-
     var resultAlert = null;
+
+    var buildUndoStack = [];
+    var changedUndoStack = [];
+    var currentUndoStack = [];
 
     // Window events
     var win = gui.Window.get();
@@ -130,7 +133,7 @@ angular.module('icestudio')
       var filepath = project.path;
       if (filepath) {
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
       }
       else {
         $scope.saveProjectAs();
@@ -141,7 +144,7 @@ angular.module('icestudio')
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
         if (localCallback) {
           localCallback();
         }
@@ -206,7 +209,8 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function exportFromBuilder(id, name, ext) {
@@ -218,6 +222,9 @@ angular.module('icestudio')
         return tools.buildCode();
       })
       .then(function() {
+        resetBuildStack();
+      })
+      .then(function() {
         utils.saveDialog('#input-export-' + id, ext, function(filepath) {
           // Copy the built file
           if (utils.copySync(nodePath.join(common.BUILD_DIR, 'hardware' + ext), filepath)) {
@@ -226,7 +233,8 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function updateWorkingdir(filepath) {
@@ -308,7 +316,8 @@ angular.module('icestudio')
       checkGraph()
       .then(function() {
         graph.selectAll();
-      });
+      })
+      .catch(function () {});
     };
 
     function removeSelected() {
@@ -450,6 +459,10 @@ angular.module('icestudio')
       }
     };
 
+    $scope.toggleFPGAResources = function() {
+      profile.set('showFPGAResources', !profile.get('showFPGAResources'));
+    };
+
     $scope.showCollectionData = function() {
       var collection = common.selectedCollection;
       var readme = collection.content.readme;
@@ -523,7 +536,8 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.verifyCode(startMessage, endMessage);
-      });
+      })
+      .catch(function () {});
     };
 
     $scope.buildCode = function() {
@@ -535,7 +549,11 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.buildCode(startMessage, endMessage);
-      });
+      })
+      .then(function() {
+        resetBuildStack();
+      })
+      .catch(function () {});
     };
 
     $scope.uploadCode = function() {
@@ -547,7 +565,11 @@ angular.module('icestudio')
       })
       .then(function() {
         return tools.uploadCode(startMessage, endMessage);
-      });
+      })
+      .then(function() {
+        resetBuildStack();
+      })
+      .catch(function () {});
     };
 
     function checkGraph() {
@@ -624,21 +646,27 @@ angular.module('icestudio')
 
     // Events
 
-    var storedUndoStack = [];
-    var currentUndoStack = [];
-
     $(document).on('stackChanged', function(evt, undoStack) {
       currentUndoStack = undoStack;
-      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+      var undoStackString = JSON.stringify(undoStack);
+      project.changed = JSON.stringify(changedUndoStack) !== undoStackString;
       project.updateTitle();
       zeroProject = false;
+      common.hasChangesSinceBuild = JSON.stringify(buildUndoStack) !== undoStackString;
+      utils.rootScopeSafeApply();
     });
 
-    function resetChanged() {
-      storedUndoStack = currentUndoStack;
+    function resetChangedStack() {
+      changedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
       zeroProject = false;
+    }
+
+    function resetBuildStack() {
+      buildUndoStack = currentUndoStack;
+      common.hasChangesSinceBuild = false;
+      utils.rootScopeSafeApply();
     }
 
     // Detect prompt
@@ -751,7 +779,7 @@ angular.module('icestudio')
     $(document).on('mouseup', function() {
       mousedown = false;
     });
-    $(document).on('mousedown', '#paper', function() {
+    $(document).on('mousedown', '.paper', function() {
       mousedown = true;
       // Close current menu
       $scope.status[menu] = false;

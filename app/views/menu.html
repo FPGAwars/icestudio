@@ -173,6 +173,13 @@
               <li>
                 <a href ng-click="showCollectionData()">{{ 'Collection info' | translate }}</a>
               </li>
+              <li class="divider"></li>
+              <li>
+                <a href ng-click="toggleFPGAResources()">
+                  {{ 'FPGA resources' | translate }}&ensp;
+                  <span ng-show="profile.data.showFPGAResources" class="glyphicon glyphicon-ok-circle"></span>
+                </a>
+              </li>
             </ul>
           </li>
 

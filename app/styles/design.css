@@ -34,6 +34,14 @@
   padding: 0 15px;
 }
 
+.fpga-resources {
+  color: #777;
+}
+
+.fpga-resources span {
+  margin-right: 20px;
+}
+
 .breadcrumb {
   margin: 0;
   background-color: #f5f6f7;

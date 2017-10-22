@@ -10,7 +10,8 @@ angular.module('icestudio')
       'remoteHostname': '',
       'collection': '',
       'board': '',
-      'boardRules': true
+      'boardRules': true,
+      'showFPGAResources': false
     };
 
     if (common.DARWIN) {
@@ -26,7 +27,8 @@ angular.module('icestudio')
           'remoteHostname': data.remoteHostname || '',
           'collection': data.collection || '',
           'board': data.board || '',
-          'boardRules': data.boardRules !== false
+          'boardRules': data.boardRules !== false,
+          'showFPGAResources': data.showFPGAResources || false
         };
         if (common.DARWIN) {
           self.data['macosDrivers'] = data.macosDrivers || false;
