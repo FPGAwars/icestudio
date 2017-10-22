@@ -450,6 +450,10 @@ angular.module('icestudio')
       }
     };
 
+    $scope.toggleFPGAResources = function() {
+      common.fpgaResources.show = !common.fpgaResources.show;
+    };
+
     $scope.showCollectionData = function() {
       var collection = common.selectedCollection;
       var readme = collection.content.readme;

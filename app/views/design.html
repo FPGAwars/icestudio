@@ -16,7 +16,7 @@
       </ol>
     </div>
     <div class="board-container">
-      <div class="fpga-resources">
+      <div class="fpga-resources" ng-show="common.fpgaResources.show">
         <span>PIOs:&nbsp;&nbsp;{{ common.fpgaResources.pios.used }}&nbsp;/&nbsp;{{ common.fpgaResources.pios.total }}</span>
         <span>PLBs:&nbsp;&nbsp;{{ common.fpgaResources.plbs.used }}&nbsp;/&nbsp;{{ common.fpgaResources.plbs.total }}</span>
         <span>BRAMs:&nbsp;&nbsp;{{ common.fpgaResources.brams.used }}&nbsp;/&nbsp;{{ common.fpgaResources.brams.total }}</span>
