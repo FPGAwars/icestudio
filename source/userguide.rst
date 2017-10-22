@@ -28,40 +28,63 @@ File
 +-----------------+----------------------------------------------+--------------+-----------+
 |   Save as...    |       Save the current with a new name       | Ctrl+Shift+S | Shift+⌘+S |
 +-----------------+----------------------------------------------+--------------+-----------+
-|    Export...    | Generate Verilog, PCF, Testbench and GTKwave |              |           |
+|    Export...    |         Export multiple output files         |              |           |
 +-----------------+----------------------------------------------+--------------+-----------+
 |      Quit       |            Close the application             |    Ctrl+Q    |    ⌘+Q    |
 +-----------------+----------------------------------------------+--------------+-----------+
 
 .. note::
 
-  When a project is added as a block, all FPGA information is removed before being stored.
+  The exportable files are: Verilog, PCF, Testbench, GTKWave, BLIF, ASC and Bitstream
 
 Edit
 ````
 
-+-------------+---------------------------------+-----------------------+-----------------+
-|   Action    |           Description           |       Shortcut        |     Mac OS      |
-+=============+=================================+=======================+=================+
-|    Redo     |      Revert the last undo       | Ctrl+Y | Ctrl+Shift+Z | ⌘+Y | Shift+⌘+Z |
-+-------------+---------------------------------+-----------------------+-----------------+
-|     Cut     |       Cut selected blocks       |        Ctrl+X         |       ⌘+X       |
-+-------------+---------------------------------+-----------------------+-----------------+
-|    Copy     |      Copy selected blocks       |        Ctrl+C         |       ⌘+C       |
-+-------------+---------------------------------+-----------------------+-----------------+
-|    Paste    |       Paste copied blocks       |        Ctrl+V         |       ⌘+V       |
-+-------------+---------------------------------+-----------------------+-----------------+
-| Select all  |      Select all the blocks      |        Ctrl+A         |       ⌘+A       |
-+-------------+---------------------------------+-----------------------+-----------------+
-| Reset view  |   Reset pan & zoom to default   |        Ctrl+0         |       ⌘+0       |
-+-------------+---------------------------------+-----------------------+-----------------+
-| Fit content | Fit the content into the screen |        Ctrl+1         |       ⌘+1       |
-+-------------+---------------------------------+-----------------------+-----------------+
++---------------------+---------------------------------+-----------------------+-----------------+
+|   Action            |           Description           |       Shortcut        |     Mac OS      |
++=====================+=================================+=======================+=================+
+|    Redo             |      Revert the last undo       | Ctrl+Y | Ctrl+Shift+Z | ⌘+Y | Shift+⌘+Z |
++---------------------+---------------------------------+-----------------------+-----------------+
+|     Cut             |       Cut selected blocks       |        Ctrl+X         |       ⌘+X       |
++---------------------+---------------------------------+-----------------------+-----------------+
+|    Copy             |      Copy selected blocks       |        Ctrl+C         |       ⌘+C       |
++---------------------+---------------------------------+-----------------------+-----------------+
+|    Paste            |       Paste copied blocks       |        Ctrl+V         |       ⌘+V       |
++---------------------+---------------------------------+-----------------------+-----------------+
+| Select all          |      Select all the blocks      |        Ctrl+A         |       ⌘+A       |
++---------------------+---------------------------------+-----------------------+-----------------+
+| Fit content         | Fit the content into the screen |        Ctrl+1         |       ⌘+1       |
++---------------------+---------------------------------+-----------------------+-----------------+
 
 Preferences
 '''''''''''
 
-**Project information**
+**Language**
+
+The supported languages are:
+
+* English
+* Spanish
+* Galician
+* Basque
+* French
+* Catalan
+
+**Board rules**
+
+Enable or disable globally the board rules. These rules allow to automate tasks such as default port connections or default pin values. For example, the IceZUM Alhambra rules are:
+
+* All not connected "clk" ports are connected to the internal CLK signal.
+* All not used LEDs are turned off.
+
+More information in the `Board rules section <./rules.html>`_.
+
+**Remote hostname**
+
+Set the hostame of a remote device with an FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
+
+Project information
+'''''''''''''''''''
 
 Contains all the information about the project:
 
@@ -75,29 +98,6 @@ Contains all the information about the project:
 * Author: creator of the project
 * Image: SVG shown in the block body
 
-**Board rules**
-
-Enable or disable globally the board rules. These rules allow to automate tasks such as default port connections or default pin values. For example, the IceZUM Alhambra rules are:
-
-* All not connected "clk" ports are connected to the internal CLK signal.
-* All not used LEDs are turned off.
-
-More information in the `Board rules section <./rules.html>`_.
-
-**Language**
-
-The supported languages are:
-
-* English
-* Spanish
-* Galician
-* Basque
-* French
-* Catalan
-
-**Remote hostname**
-
-Set the hostame of a remote device with an FPGA board connected. The format is user@host. For example, pi@192.168.0.22. Verify, Build and Upload functions will be executed in this host, that must have apio pre-configured.
 
 View
 ````
@@ -115,7 +115,12 @@ View
 +-----------------+---------------------------------------------+
 | Collection info |   Show the current collection README file   |
 +-----------------+---------------------------------------------+
+| FPGA resources  |     Show / Hide the used FPGA resources     |
++-----------------+---------------------------------------------+
 
+.. image:: ../resources/images/userguide/fpga-resources.png
+
+|
 
 Select
 ``````
@@ -290,7 +295,7 @@ This is the main panel. It contains the blocks and the wires.
 Pan & Zoom
 ``````````
 
-Pan is performed using the **Ctrl + mouse left button** or **mouse right button** over the background. Zoom is performed using **mouse wheel**. Both values can be reset in *Edit > Reset view*.
+Pan is performed using the **Ctrl + mouse left button** or **mouse right button** over the background. Zoom is performed using **mouse wheel**.
 
 .. image:: ../resources/images/userguide/pan-zoom.png
 
@@ -321,7 +326,7 @@ Block examination
 
 Non-basic blocks can be read only examined by **double clicking** the block using the **mouse left button**. This is a recursive action. In order to go back, click on the **< back** link or press the **back key**.
 
-During the examination, pan, zoom and code navigation are enabled. Also the 'Reset view' and 'Fit content' actions.
+During the examination, pan, zoom and code navigation are enabled. Also the 'Fit content' action.
 
 .. image:: ../resources/images/userguide/examination.png
 
@@ -334,19 +339,27 @@ Verilog error detection
 ```````````````````````
 The Verify, Build and Upload errors are captured and showed in the design with a notification.
 
-.. image:: ../resources/images/userguide/code-error-notification.png
+.. image:: ../resources/images/userguide/error-notification.png
+
 |
 
-If the error comes from a Code block an inline annotation is set:
+If the error comes from a Code block it is marked in red an inline annotation is set:
 
-.. image:: ../resources/images/userguide/code-error-annotation.png
+.. image:: ../resources/images/userguide/error-code-block.png
+
+|
+
+If the error comes from a Constant block it is marked in red.
+
+.. image:: ../resources/images/userguide/error-constant-block.png
 
 |
 
 If the error comes from a Generic block it is marked in red.
 
-.. image:: ../resources/images/userguide/code-error-block.png
+.. image:: ../resources/images/userguide/error-generic-block.png
 
+|
 
 Undo/Redo
 ``````````
@@ -362,7 +375,11 @@ Icestudio allows to undo/redo the following actions:
 * Edit an Information block: type and content.
 * Change the board.
 * Change the language.
+* Change the Project information: when undo/redo a Project information change, a clickable notification will appear to access the Project information section.
 
+.. image:: ../resources/images/userguide/undo-project-information.png
+
+|
 
 Take a snapshot
 ---------------
