@@ -16,7 +16,7 @@
       </ol>
     </div>
     <div class="board-container">
-      <div class="fpga-resources" ng-show="profile.data.showFPGAResources">
+      <div class="fpga-resources" ng-show="profile.data.showFPGAResources && topModule">
         <span>
           PIOs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}
         </span>

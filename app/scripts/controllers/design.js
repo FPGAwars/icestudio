@@ -13,6 +13,7 @@ angular.module('icestudio')
     $scope.common = common;
     $scope.profile = profile;
     $scope.information = {};
+    $scope.topModule = true;
 
     // Intialization
 
@@ -42,6 +43,7 @@ angular.module('icestudio')
         var design = project.get('design');
         opt.disabled = false;
         graph.loadDesign(design, opt);
+        $scope.topModule = true;
       }
       else {
         var type = graph.breadcrumbs[n-1].type;
@@ -68,6 +70,7 @@ angular.module('icestudio')
           graph.fitContent();
         });
       }
+      $scope.topModule = false;
       $scope.information = args.project.package;
       utils.rootScopeSafeApply();
     });
