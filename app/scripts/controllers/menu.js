@@ -251,6 +251,7 @@ angular.module('icestudio')
         alertify.set('confirm', 'labels', {
           'ok': gettextCatalog.getString('Close')
         });
+        alertify.set('confirm', 'defaultFocus', 'cancel');
         alertify.confirm(
           utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
@@ -264,6 +265,7 @@ angular.module('icestudio')
               alertify.set('confirm', 'labels', {
                 'ok': gettextCatalog.getString('OK')
               });
+              alertify.set('confirm', 'defaultFocus', 'ok');
             }, 200);
           }
         );
