@@ -27,17 +27,17 @@ set_io --warn-no-port ISP_MOSI  119
 set_io --warn-no-port ISP_MISO  120
 
 # MCP3008 A/D
-set_io --warn-no-port AD_CS   101
-set_io --warn-no-port AD_Din  102
-set_io --warn-no-port AD_Dout 104
-set_io --warn-no-port AD_Clk  105
+set_io --warn-no-port AD_CS   101  # output
+set_io --warn-no-port AD_Din  102  # output
+set_io --warn-no-port AD_Dout 104  # input
+set_io --warn-no-port AD_Clk  105  # output
 
 # USB
-set_io --warn-no-port USB_Vp_o 112
-set_io --warn-no-port USB_Vm_o 113
-set_io --warn-no-port USB_Vm_i 114
-set_io --warn-no-port USB_Vp_i 115
-set_io --warn-no-port USB_nOE  116
+set_io --warn-no-port USB_Vp_o 112  # output
+set_io --warn-no-port USB_Vm_o 113  # output
+set_io --warn-no-port USB_Vm_i 114  # input
+set_io --warn-no-port USB_Vp_i 115  # input
+set_io --warn-no-port USB_nOE  116  # output
 
 set_io --warn-no-port ARDU00 138
 set_io --warn-no-port ARDU01 141
