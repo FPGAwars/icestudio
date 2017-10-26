@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:211 app/scripts/services/drivers.js:87
@@ -137,7 +137,7 @@ msgstr "Python egiaztatu..."
 
 #: app/scripts/services/tools.js:819
 msgid "Click here to <b>setup the drivers</b>"
-msgstr ""
+msgstr "Klik egizu hemen <b>driverrak eguneratzeko</b>"
 
 #: app/scripts/services/drivers.js:110 app/scripts/services/drivers.js:203
 #: app/scripts/services/drivers.js:225 app/scripts/services/tools.js:132
@@ -147,11 +147,11 @@ msgstr "Instalatzeko hemen klik egin"
 
 #: app/scripts/controllers/menu.js:326
 msgid "Click here to view"
-msgstr ""
+msgstr "Klik egizu ikusteko"
 
 #: app/scripts/controllers/menu.js:247
 msgid "Close"
-msgstr ""
+msgstr "Itxi"
 
 #: app/views/menu.html:347
 msgid "Code"
@@ -203,7 +203,7 @@ msgstr "Konstantea"
 
 #: app/scripts/services/project.js:108
 msgid "Convert"
-msgstr ""
+msgstr "Bihurtu"
 
 #: app/views/menu.html:104
 msgid "Copy"
@@ -328,7 +328,7 @@ msgstr "Errorea: {{error}}"
 
 #: app/scripts/services/tools.js:418
 msgid "Errors detected in the design"
-msgstr ""
+msgstr "Akatsak daude diseinuan"
 
 #: app/views/menu.html:42
 msgid "Examples"
@@ -468,7 +468,7 @@ msgstr "Sarrerako konexio anitzak baliogabeak"
 
 #: app/scripts/services/utils.js:259
 msgid "Invalid project format"
-msgstr ""
+msgstr "Proiektuaren formatua baliogabea da"
 
 #: app/scripts/services/drivers.js:196
 msgid "It is recommended to use <b>USB 2.0</b> ports"
@@ -480,7 +480,7 @@ msgstr "Hizkuntza"
 
 #: app/scripts/services/project.js:107
 msgid "Load"
-msgstr ""
+msgstr "Kargatu"
 
 #: app/scripts/services/blocks.js:186 app/scripts/services/blocks.js:866
 msgid "Local parameter"
@@ -492,7 +492,7 @@ msgstr "Env birtuala sortu..."
 
 #: app/scripts/services/utils.js:758
 msgid "Maximum bus size: 96 bits"
-msgstr ""
+msgstr "Busaren tamaina maximoa: 96 bit"
 
 #: app/scripts/services/utils.js:530
 msgid "Name"
@@ -553,7 +553,7 @@ msgstr "Proiektuaren informazioa"
 
 #: app/scripts/controllers/menu.js:326 app/scripts/controllers/menu.js:340
 msgid "Project information updated"
-msgstr ""
+msgstr "Proiektuaren informazioa eguneratu da"
 
 #: app/scripts/services/project.js:133
 msgid "Project {{name}} loaded"
@@ -714,7 +714,7 @@ msgstr "Toolchain-a ezabatu da"
 
 #: app/scripts/services/tools.js:246
 msgid "Toolchain version does not match"
-msgstr ""
+msgstr "Toolchainaren bertsioa ez dator bat"
 
 #: app/views/menu.html:216
 msgid "Tools"
@@ -771,7 +771,7 @@ msgstr "Lizentzia ikusi"
 
 #: app/scripts/services/tools.js:421
 msgid "Warnings detected in the design"
-msgstr ""
+msgstr "Diseinuan abisuak detektatu dira"
 
 #: app/scripts/services/blocks.js:410
 msgid "Wrong block format: {{type}}"
@@ -801,7 +801,7 @@ msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 
 #: app/scripts/services/project.js:112
 msgid "You can load it as it is or convert it for the {{name}} board."
-msgstr ""
+msgstr "Dagoen moduan karga dezakezu edo {{name}} plakarako bihurtu"
 
 #: app/scripts/controllers/menu.js:251
 msgid "Your changes will be lost if you don’t save them"
@@ -829,7 +829,7 @@ msgstr "{{board}} txartelaren arauak ez daude definituta"
 
 #: app/scripts/controllers/menu.js:201 app/scripts/controllers/menu.js:224
 msgid "{{name}} exported"
-msgstr ""
+msgstr "{{name}} esportatu da"
 
 #~ msgid "Errors detected in the code"
 #~ msgstr "Kodean erroreak aurkitu dira"
