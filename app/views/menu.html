@@ -340,21 +340,20 @@
             <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
-                <!-- #ccf8a0 -->
                 <a href ng-click="project.addBasicBlock('basic.input')">
-                  <font color="#f6f688">◾&ensp;</font> {{ 'Input' | translate }}
+                  <div class="marker marker-yellow"></div>{{ 'Input' | translate }}
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.output')">
-                  <font color="#f6f688">◾&ensp;</font> {{ 'Output' | translate }}
+                  <div class="marker marker-yellow"></div>{{ 'Output' | translate }}
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.constant')">
-                  <font color="#f8e5a0">◾&ensp;</font> {{ 'Constant' | translate }}
+                  <div class="marker marker-orange"></div>{{ 'Constant' | translate }}
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.code')">
-                  <font color="#c0dfeb">◾&ensp;</font> {{ 'Code' | translate }}
+                  <div class="marker marker-blue"></div>{{ 'Code' | translate }}
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.info')">
-                  <font color="#ddd">◾&ensp;</font> {{ 'Information' | translate }}
+                  <div class="marker marker-gray"></div>{{ 'Information' | translate }}
                 </a>
               </li>
             </ul>

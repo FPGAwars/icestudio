@@ -110,3 +110,24 @@
 .navbar-default .navbar-nav>li>a {
   color: #333 !important;
 }
+
+.marker {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  margin-right: 12px;
+  border-radius: 1px;
+}
+.marker-yellow {
+  background-color: #f6f688;
+}
+.marker-orange {
+  background-color: #f8e5a0;
+}
+.marker-blue {
+  background-color: #c0dfeb;
+}
+.marker-gray {
+  background-color: #ddd;
+}
