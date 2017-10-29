@@ -57,6 +57,10 @@ angular.module('icestudio')
         if (!taskRunning) {
           taskRunning = true;
 
+          if (infoAlert) {
+            infoAlert.dismiss(false);
+          }
+
           if (resultAlert) {
             resultAlert.dismiss(false);
           }
@@ -291,7 +295,7 @@ angular.module('icestudio')
     function executeLocal(commands) {
       return new Promise(function(resolve) {
         if (commands[0] === 'upload') {
-          // Upload command requires drivers setup (Mac OS X)
+          // Upload command requires drivers setup (Mac OS)
           drivers.preUpload(function() {
             _executeLocal();
           });
@@ -309,7 +313,7 @@ angular.module('icestudio')
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
             function(error, stdout, stderr) {
               if (commands[0] === 'upload') {
-                // Upload command requires to restore the drivers (Mac OS X)
+                // Upload command requires to restore the drivers (Mac OS)
                 drivers.postUpload();
               }
               resolve({ error: error, stdout: stdout, stderr: stderr });
@@ -337,6 +341,12 @@ angular.module('icestudio')
             }
             else if (stdout.indexOf('Error: unkown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
+            }
+            // Yosys error (Mac OS)
+            else if (stdout.indexOf('Library not loaded:') !== -1 &&
+                     stdout.indexOf('libffi') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Configuration not completed'), 30);
+              setupDriversAlert();
             }
             // - Arachne-pnr errors
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
@@ -822,18 +832,7 @@ angular.module('icestudio')
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
           closeToolchainAlert();
           alertify.success(gettextCatalog.getString('Toolchain installed'));
-          var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
-          if (!infoAlert) {
-            setTimeout(function() {
-              infoAlert = alertify.message(message, 30);
-              infoAlert.callback = function(isClicked) {
-                infoAlert = null;
-                if (isClicked) {
-                  $rootScope.$broadcast('enableDrivers');
-                }
-              };
-            }, 1000);
-          }
+          setupDriversAlert();
         }
         else {
           closeToolchainAlert();
@@ -842,6 +841,24 @@ angular.module('icestudio')
         restoreStatus();
         callback();
       });
+    }
+
+    function setupDriversAlert() {
+      var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+      if (!infoAlert) {
+        setTimeout(function() {
+          infoAlert = alertify.message(message, 30);
+          infoAlert.callback = function(isClicked) {
+            infoAlert = null;
+            if (isClicked) {
+              if (resultAlert) {
+                resultAlert.dismiss(false);
+              }
+              $rootScope.$broadcast('enableDrivers');
+            }
+          };
+        }, 1000);
+      }
     }
 
     function updateProgress(message, value) {
