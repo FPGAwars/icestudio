@@ -1093,6 +1093,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }
         // Scale font size
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+        // Scale cursor
+        this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
       }
       this.editor.resize();
     }
@@ -1401,6 +1403,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
       // Scale font size
       this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+      // Scale cursor
+      this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
       this.editor.resize();
     }
 
