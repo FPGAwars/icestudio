@@ -9,20 +9,18 @@
 
     Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
-Supported boards:
+### Supported boards
 
-* [IceZUM Alhambra](https://github.com/FPGAwars/icezum)
-* [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/)
-* [Nandland Go board](https://www.nandland.com/goboard/introduction.html)
-* [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx)
-* [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/)
-* [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)
+| Board name | GNU/Linux | Windows | Mac OS |
+|:-|:-:|:-:|:-:|
+| [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** | - |  - |
 
-Supported operating systems:
-
-* GNU/Linux
-* Windows
-* Mac OS X
+**\*** Use with Raspberry Pi
 
 ## Installation
 
@@ -37,7 +35,7 @@ Supported operating systems:
   1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases)
 
 
-* **Mac OS X**
+* **Mac OS**
 
   1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
@@ -93,7 +91,7 @@ npm run dist
 |:---:|:-------------:|:-----------------:|
 | GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
 | Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
-|  Mac OS X | Mac OS X | (osx32,osx64).zip, osx64.dmg  |
+|  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
 
 
 ## Languages
