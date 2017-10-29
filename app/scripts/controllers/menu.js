@@ -778,26 +778,30 @@ angular.module('icestudio')
 
     // Show menu with delay
     $scope.showMenu = function(newMenu) {
-      menu = newMenu;
+      $timeout.cancel(timerOpen);
       $timeout.cancel(timerClose);
-      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[menu]) {
+      if (menu !== newMenu) {
+        $scope.status[menu] = false;
+        menu = newMenu;
+      }
+      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[newMenu]) {
         timerOpen = $timeout(function() {
-          $scope.status[menu] = true;
+          $scope.status[newMenu] = true;
         }, 300);
       }
     };
 
     // Hide menu with delay
-    $scope.hideMenu = function(menu) {
+    $scope.hideMenu = function(currentMenu) {
       $timeout.cancel(timerOpen);
       timerClose = $timeout(function() {
-        $scope.status[menu] = false;
+        $scope.status[currentMenu] = false;
       }, 900);
     };
 
     // Fix menu
-    $scope.fixMenu = function(menu) {
-      $scope.status[menu] = true;
+    $scope.fixMenu = function(currentMenu) {
+      $scope.status[currentMenu] = true;
     };
 
     // Disable click in submenus
