@@ -87,8 +87,8 @@ npm start
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
+| French     | ![Progress](http://progressed.io/bar/100)  |
 | Basque     | ![Progress](http://progressed.io/bar/98)   |
-| French     | ![Progress](http://progressed.io/bar/94)   |
 | Galician   | ![Progress](http://progressed.io/bar/88)   |
 | Catalan    | ![Progress](http://progressed.io/bar/88)   |
 
