@@ -81,29 +81,16 @@ npm install
 npm start
 ```
 
-### Package
-
-```bash
-npm run dist
-```
-
-| OS | Development OS | Output files |
-|:---:|:-------------:|:-----------------:|
-| GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
-| Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
-|  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
-
-
-## Languages
+### Languages
 
 |  Language  | Translated strings                         |
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| French     | ![Progress](http://progressed.io/bar/95)   |
-| Basque     | ![Progress](http://progressed.io/bar/93)   |
-| Galician   | ![Progress](http://progressed.io/bar/89)   |
-| Catalan    | ![Progress](http://progressed.io/bar/89)   |
+| Basque     | ![Progress](http://progressed.io/bar/98)   |
+| French     | ![Progress](http://progressed.io/bar/94)   |
+| Galician   | ![Progress](http://progressed.io/bar/88)   |
+| Catalan    | ![Progress](http://progressed.io/bar/88)   |
 
 **Contribute!**
 
@@ -111,7 +98,19 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 *Developer note*: use `npm run gettext` to extract the labels from the code.
 
-## Troubleshooting
+### Package
+
+```bash
+npm run dist
+```
+
+| Target OS | Development OS | Output files |
+|:---:|:-------------:|:-----------------:|
+| GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
+| Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
+|  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
+
+### Troubleshooting
 
 If you get this error `npm ERR! peerinvalid The package grunt@1.0.1 does not satisfy its siblings' peerDependencies requirements!`, try to update your **[nodejs](https://github.com/nodejs/node)** or execute:
 
