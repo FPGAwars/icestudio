@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:87
@@ -137,7 +137,7 @@ msgstr "Vérifier Python..."
 
 #: app/scripts/services/tools.js:847
 msgid "Click here to <b>setup the drivers</b>"
-msgstr ""
+msgstr "Cliquer ici pour <b>installer les drivers</b>"
 
 #: app/scripts/services/drivers.js:109 app/scripts/services/drivers.js:202
 #: app/scripts/services/drivers.js:224 app/scripts/services/tools.js:139
@@ -147,11 +147,11 @@ msgstr "Cliquer ici pour l'installer"
 
 #: app/scripts/controllers/menu.js:334
 msgid "Click here to view"
-msgstr ""
+msgstr "Cliquer ici pour ouvrir"
 
 #: app/scripts/controllers/menu.js:252
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: app/views/menu.html:353
 msgid "Code"
@@ -199,7 +199,7 @@ msgstr "Forum communautaire"
 
 #: app/scripts/services/tools.js:348
 msgid "Configuration not completed"
-msgstr ""
+msgstr "Configuration incomplète"
 
 #: app/views/menu.html:350
 msgid "Constant"
@@ -332,7 +332,7 @@ msgstr "Erreur : {{error}}"
 
 #: app/scripts/services/tools.js:431
 msgid "Errors detected in the design"
-msgstr ""
+msgstr "Erreurs détectées dans le design"
 
 #: app/views/menu.html:42
 msgid "Examples"
@@ -369,7 +369,7 @@ msgstr "Pin FPGA"
 
 #: app/views/menu.html:179
 msgid "FPGA resources"
-msgstr ""
+msgstr "Ressources FPGA"
 
 #: app/views/menu.html:29
 msgid "File"
@@ -475,7 +475,7 @@ msgstr "Connexions de multiples entrées invalides"
 
 #: app/scripts/services/utils.js:259
 msgid "Invalid project format"
-msgstr ""
+msgstr "Format de projet invalide"
 
 #: app/scripts/services/drivers.js:195
 msgid "It is recommended to use <b>USB 2.0</b> ports"
@@ -560,7 +560,7 @@ msgstr "Informations du projet"
 
 #: app/scripts/controllers/menu.js:334 app/scripts/controllers/menu.js:348
 msgid "Project information updated"
-msgstr ""
+msgstr "Informations du projet mises à jour"
 
 #: app/scripts/services/project.js:133
 msgid "Project {{name}} loaded"
@@ -721,7 +721,7 @@ msgstr "Toolchain supprimée"
 
 #: app/scripts/services/tools.js:253
 msgid "Toolchain version does not match"
-msgstr ""
+msgstr "La version de la toolchain ne correspond pas"
 
 #: app/views/menu.html:223
 msgid "Tools"
@@ -778,7 +778,7 @@ msgstr "Voir la licence"
 
 #: app/scripts/services/tools.js:434
 msgid "Warnings detected in the design"
-msgstr ""
+msgstr "Avertissements détectés dans le design"
 
 #: app/scripts/services/blocks.js:410
 msgid "Wrong block format: {{type}}"
@@ -837,7 +837,7 @@ msgstr "Règles {{board}} non définies"
 
 #: app/scripts/controllers/menu.js:204 app/scripts/controllers/menu.js:228
 msgid "{{name}} exported"
-msgstr ""
+msgstr "{{name}} exporté"
 
 #~ msgid "Errors detected in the code"
 #~ msgstr "Erreurs détectées dans le code"
