@@ -150,6 +150,9 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
   * [Unai](https://github.com/1138-4EB)
   * [Francisco Sayas](https://github.com/fsayas)
   * [Pascal Cotret](https://github.com/pcotret)
+  * [Juan Jose Luna Espinosa](https://github.com/yomboprime)
+  * [Salvador E. Tropea](https://github.com/set-soft)
+  * [redbeard](https://github.com/brianredbeard)
 * v0.2
   * [Tomás Calvo](https://github.com/tocalvo)
   * [Juan González (Obijuan)](https://github.com/Obijuan)
