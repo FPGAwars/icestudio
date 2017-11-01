@@ -33,8 +33,11 @@ angular.module('icestudio')
     $scope.snapshotdir = '';
 
     var zeroProject = true;  // New project without changes
-
     var resultAlert = null;
+
+    var buildUndoStack = [];
+    var changedUndoStack = [];
+    var currentUndoStack = [];
 
     // Window events
     var win = gui.Window.get();
@@ -130,7 +133,7 @@ angular.module('icestudio')
       var filepath = project.path;
       if (filepath) {
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
       }
       else {
         $scope.saveProjectAs();
@@ -141,7 +144,7 @@ angular.module('icestudio')
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath);
-        resetChanged();
+        resetChangedStack();
         if (localCallback) {
           localCallback();
         }
@@ -206,16 +209,17 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function exportFromBuilder(id, name, ext) {
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
+        return tools.buildCode();
       })
       .then(function() {
-        return tools.buildCode();
+        resetBuildStack();
       })
       .then(function() {
         utils.saveDialog('#input-export-' + id, ext, function(filepath) {
@@ -226,7 +230,8 @@ angular.module('icestudio')
           // Update the working directory
           updateWorkingdir(filepath);
         });
-      });
+      })
+      .catch(function () {});
     }
 
     function updateWorkingdir(filepath) {
@@ -246,6 +251,7 @@ angular.module('icestudio')
         alertify.set('confirm', 'labels', {
           'ok': gettextCatalog.getString('Close')
         });
+        alertify.set('confirm', 'defaultFocus', 'cancel');
         alertify.confirm(
           utils.bold(gettextCatalog.getString('Do you want to close the application?')) + '<br>' +
           gettextCatalog.getString('Your changes will be lost if you don’t save them'),
@@ -259,6 +265,7 @@ angular.module('icestudio')
               alertify.set('confirm', 'labels', {
                 'ok': gettextCatalog.getString('OK')
               });
+              alertify.set('confirm', 'defaultFocus', 'ok');
             }, 200);
           }
         );
@@ -308,7 +315,8 @@ angular.module('icestudio')
       checkGraph()
       .then(function() {
         graph.selectAll();
-      });
+      })
+      .catch(function () {});
     };
 
     function removeSelected() {
@@ -450,6 +458,10 @@ angular.module('icestudio')
       }
     };
 
+    $scope.toggleFPGAResources = function() {
+      profile.set('showFPGAResources', !profile.get('showFPGAResources'));
+    };
+
     $scope.showCollectionData = function() {
       var collection = common.selectedCollection;
       var readme = collection.content.readme;
@@ -519,11 +531,9 @@ angular.module('icestudio')
       var endMessage = gettextCatalog.getString('Verification done');
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
-      })
-      .then(function() {
         return tools.verifyCode(startMessage, endMessage);
-      });
+      })
+      .catch(function () {});
     };
 
     $scope.buildCode = function() {
@@ -531,11 +541,12 @@ angular.module('icestudio')
       var endMessage = gettextCatalog.getString('Build done');
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
+        return tools.buildCode(startMessage, endMessage);
       })
       .then(function() {
-        return tools.buildCode(startMessage, endMessage);
-      });
+        resetBuildStack();
+      })
+      .catch(function () {});
     };
 
     $scope.uploadCode = function() {
@@ -543,11 +554,12 @@ angular.module('icestudio')
       var endMessage = gettextCatalog.getString('Upload done');
       checkGraph()
       .then(function() {
-        return graph.resetCodeErrors();
+        return tools.uploadCode(startMessage, endMessage);
       })
       .then(function() {
-        return tools.uploadCode(startMessage, endMessage);
-      });
+        resetBuildStack();
+      })
+      .catch(function () {});
     };
 
     function checkGraph() {
@@ -624,21 +636,27 @@ angular.module('icestudio')
 
     // Events
 
-    var storedUndoStack = [];
-    var currentUndoStack = [];
-
     $(document).on('stackChanged', function(evt, undoStack) {
       currentUndoStack = undoStack;
-      project.changed = JSON.stringify(storedUndoStack) !== JSON.stringify(undoStack);
+      var undoStackString = JSON.stringify(undoStack);
+      project.changed = JSON.stringify(changedUndoStack) !== undoStackString;
       project.updateTitle();
       zeroProject = false;
+      common.hasChangesSinceBuild = JSON.stringify(buildUndoStack) !== undoStackString;
+      utils.rootScopeSafeApply();
     });
 
-    function resetChanged() {
-      storedUndoStack = currentUndoStack;
+    function resetChangedStack() {
+      changedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
       zeroProject = false;
+    }
+
+    function resetBuildStack() {
+      buildUndoStack = currentUndoStack;
+      common.hasChangesSinceBuild = false;
+      utils.rootScopeSafeApply();
     }
 
     // Detect prompt
@@ -751,7 +769,7 @@ angular.module('icestudio')
     $(document).on('mouseup', function() {
       mousedown = false;
     });
-    $(document).on('mousedown', '#paper', function() {
+    $(document).on('mousedown', '.paper', function() {
       mousedown = true;
       // Close current menu
       $scope.status[menu] = false;
@@ -760,26 +778,30 @@ angular.module('icestudio')
 
     // Show menu with delay
     $scope.showMenu = function(newMenu) {
-      menu = newMenu;
+      $timeout.cancel(timerOpen);
       $timeout.cancel(timerClose);
-      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[menu]) {
+      if (menu !== newMenu) {
+        $scope.status[menu] = false;
+        menu = newMenu;
+      }
+      if (!mousedown && !graph.addingDraggableBlock && !$scope.status[newMenu]) {
         timerOpen = $timeout(function() {
-          $scope.status[menu] = true;
+          $scope.status[newMenu] = true;
         }, 300);
       }
     };
 
     // Hide menu with delay
-    $scope.hideMenu = function(menu) {
+    $scope.hideMenu = function(currentMenu) {
       $timeout.cancel(timerOpen);
       timerClose = $timeout(function() {
-        $scope.status[menu] = false;
+        $scope.status[currentMenu] = false;
       }, 900);
     };
 
     // Fix menu
-    $scope.fixMenu = function(menu) {
-      $scope.status[menu] = true;
+    $scope.fixMenu = function(currentMenu) {
+      $scope.status[currentMenu] = true;
     };
 
     // Disable click in submenus

@@ -26,7 +26,6 @@ set_io --warn-no-port MISO  P12  # input
 set_io --warn-no-port MOSI  P11  # output
 set_io --warn-no-port SCK   R11  # output
 set_io --warn-no-port SS    R12  # output  #J7.1
-set_io --warn-no-port RTS   B13  # input
 
 set_io --warn-no-port RESET N11  # input
 set_io --warn-no-port DONE  M10  # output
@@ -39,6 +38,7 @@ set_io --warn-no-port DCD   B15  # output
 set_io --warn-no-port DSR   B14  # output
 set_io --warn-no-port DTR   A16  # input
 set_io --warn-no-port CTS   A15  # output
+set_io --warn-no-port RTS   B13  # input
 
 
 #                     ************************************

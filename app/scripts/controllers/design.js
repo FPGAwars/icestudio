@@ -4,17 +4,20 @@ angular.module('icestudio')
   .controller('DesignCtrl', function ($rootScope,
                                       $scope,
                                       project,
+                                      profile,
                                       graph,
                                       utils,
                                       common) {
 
-    $scope.common = common;
     $scope.graph = graph;
+    $scope.common = common;
+    $scope.profile = profile;
     $scope.information = {};
+    $scope.topModule = true;
 
     // Intialization
 
-    graph.createPaper($('#paper'));
+    graph.createPaper($('.paper'));
 
     // Breadcrumbs
 
@@ -40,6 +43,7 @@ angular.module('icestudio')
         var design = project.get('design');
         opt.disabled = false;
         graph.loadDesign(design, opt);
+        $scope.topModule = true;
       }
       else {
         var type = graph.breadcrumbs[n-1].type;
@@ -66,6 +70,7 @@ angular.module('icestudio')
           graph.fitContent();
         });
       }
+      $scope.topModule = false;
       $scope.information = args.project.package;
       utils.rootScopeSafeApply();
     });

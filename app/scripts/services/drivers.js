@@ -102,7 +102,6 @@ angular.module('icestudio')
       ];
       beginLazyProcess();
       nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
-        // console.log(error, stdout, stderr);
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
               (stderr.indexOf('brew: No such file or directory') !== -1)) {

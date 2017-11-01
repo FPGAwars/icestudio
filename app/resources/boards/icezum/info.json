@@ -1,4 +1,9 @@
 {
   "label": "IceZUM Alhambra",
-  "datasheet": "https://github.com/FPGAwars/icezum/wiki"
+  "datasheet": "https://github.com/FPGAwars/icezum/wiki",
+  "FPGAResources": {
+    "pios": 96,
+    "plbs": 160,
+    "brams": 16
+  }
 }

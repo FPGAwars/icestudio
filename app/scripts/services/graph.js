@@ -573,15 +573,15 @@ angular.module('icestudio')
       paper.options.enabled = value;
       if (value) {
         angular.element('#menu').removeClass('is-disabled');
-        angular.element('#paper').removeClass('looks-disabled');
-        angular.element('#board').removeClass('looks-disabled');
-        angular.element('#banner').addClass('hidden');
+        angular.element('.paper').removeClass('looks-disabled');
+        angular.element('.board-container').removeClass('looks-disabled');
+        angular.element('.banner').addClass('hidden');
       }
       else {
         angular.element('#menu').addClass('is-disabled');
-        angular.element('#paper').addClass('looks-disabled');
-        angular.element('#board').addClass('looks-disabled');
-        angular.element('#banner').removeClass('hidden');
+        angular.element('.paper').addClass('looks-disabled');
+        angular.element('.board-container').addClass('looks-disabled');
+        angular.element('.banner').removeClass('hidden');
       }
       var cells = graph.getCells();
       _.each(cells, function(cell) {

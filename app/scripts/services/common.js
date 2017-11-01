@@ -7,6 +7,9 @@ angular.module('icestudio')
     // Project version
     this.VERSION = '1.1';
 
+    // Project status
+    this.hasChangesSinceBuild = false;
+
     // All project dependencies
     this.allDependencies = {};
 
@@ -19,6 +22,13 @@ angular.module('icestudio')
     // Selected collection
     this.collections = [];
     this.selectedCollection = null;
+
+    // FPGA resources
+    this.FPGAResources = {
+      pios: '-',
+      plbs: '-',
+      brams: '-'
+    };
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);

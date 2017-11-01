@@ -1,4 +1,9 @@
 {
   "label": "iCEstick Evaluation Kit",
-  "datasheet": "http://www.latticesemi.com/icestick"
+  "datasheet": "http://www.latticesemi.com/icestick",
+  "FPGAResources": {
+    "pios": 96,
+    "plbs": 160,
+    "brams": 16
+  }
 }

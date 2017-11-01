@@ -1,4 +1,9 @@
 {
   "label": "Nandland Go board",
-  "datasheet": "https://www.nandland.com/goboard/introduction.html"
+  "datasheet": "https://www.nandland.com/goboard/introduction.html",
+  "FPGAResources": {
+    "pios": 72,
+    "plbs": 160,
+    "brams": 16
+  }
 }

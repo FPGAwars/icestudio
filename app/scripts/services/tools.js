@@ -6,6 +6,7 @@ angular.module('icestudio')
                              profile,
                              collections,
                              drivers,
+                             graph,
                              utils,
                              common,
                              gettextCatalog,
@@ -56,11 +57,18 @@ angular.module('icestudio')
         if (!taskRunning) {
           taskRunning = true;
 
+          if (infoAlert) {
+            infoAlert.dismiss(false);
+          }
+
           if (resultAlert) {
             resultAlert.dismiss(false);
           }
 
-          checkToolchainInstalled()
+          graph.resetCodeErrors()
+          .then(function() {
+            return checkToolchainInstalled();
+          })
           .then(function() {
             enableTaskMode();
             if (startMessage) {
@@ -82,8 +90,7 @@ angular.module('icestudio')
             }
           })
           .then(function(result) {
-            var show = startMessage || endMessage;
-            return processResult(result, sourceCode, show);
+            return processResult(result, sourceCode);
           })
           .then(function() {
             // Success
@@ -288,7 +295,7 @@ angular.module('icestudio')
     function executeLocal(commands) {
       return new Promise(function(resolve) {
         if (commands[0] === 'upload') {
-          // Upload command requires drivers setup (Mac OS X)
+          // Upload command requires drivers setup (Mac OS)
           drivers.preUpload(function() {
             _executeLocal();
           });
@@ -306,7 +313,7 @@ angular.module('icestudio')
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
             function(error, stdout, stderr) {
               if (commands[0] === 'upload') {
-                // Upload command requires to restore the drivers (Mac OS X)
+                // Upload command requires to restore the drivers (Mac OS)
                 drivers.postUpload();
               }
               resolve({ error: error, stdout: stdout, stderr: stderr });
@@ -315,7 +322,7 @@ angular.module('icestudio')
       });
     }
 
-    function processResult(result, code, show) {
+    function processResult(result, code) {
       result = result || {};
       var error = result.error;
       var stdout = result.stdout;
@@ -334,6 +341,12 @@ angular.module('icestudio')
             }
             else if (stdout.indexOf('Error: unkown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
+            }
+            // Yosys error (Mac OS)
+            else if (stdout.indexOf('Library not loaded:') !== -1 &&
+                     stdout.indexOf('libffi') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Configuration not completed'), 30);
+              setupDriversAlert();
             }
             // - Arachne-pnr errors
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
@@ -461,29 +474,20 @@ angular.module('icestudio')
           //-- Process output
           resolve();
 
-          if (stdout && show) {
+          if (stdout) {
             // Show used resources in the FPGA
-            /*
-            PIOs       0 / 96
-            PLBs       0 / 160
-            BRAMs      0 / 16
-            */
-            var match;
-            var fpgaResources = '';
-            var patterns = [ /PIOs.+/g, /PLBs.+/g, /BRAMs.+/g ];
-
-            for (var p in patterns) {
-              match = patterns[p].exec(stdout);
-              fpgaResources += (match && match.length > 0) ? match[0] + '\n' : '';
-            }
-            if (fpgaResources) {
-              setTimeout(function() {
-                alertify.message('<pre>' + fpgaResources + '</pre>', 5);
-              }, 0);
-            }
+            common.FPGAResources.pios = findFPGAResources(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
+            common.FPGAResources.plbs = findFPGAResources(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
+            common.FPGAResources.brams = findFPGAResources(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            utils.rootScopeSafeApply();
           }
         }
       });
+    }
+
+    function findFPGAResources(pattern, output, previousValue) {
+      var match = pattern.exec(output);
+      return (match && match[1]) ? match[1] : previousValue;
     }
 
     function mapCodeModules(code) {
@@ -828,18 +832,7 @@ angular.module('icestudio')
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
           closeToolchainAlert();
           alertify.success(gettextCatalog.getString('Toolchain installed'));
-          var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
-          if (!infoAlert) {
-            setTimeout(function() {
-              infoAlert = alertify.message(message, 30);
-              infoAlert.callback = function(isClicked) {
-                infoAlert = null;
-                if (isClicked) {
-                  $rootScope.$broadcast('enableDrivers');
-                }
-              };
-            }, 1000);
-          }
+          setupDriversAlert();
         }
         else {
           closeToolchainAlert();
@@ -848,6 +841,24 @@ angular.module('icestudio')
         restoreStatus();
         callback();
       });
+    }
+
+    function setupDriversAlert() {
+      var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+      if (!infoAlert) {
+        setTimeout(function() {
+          infoAlert = alertify.message(message, 30);
+          infoAlert.callback = function(isClicked) {
+            infoAlert = null;
+            if (isClicked) {
+              if (resultAlert) {
+                resultAlert.dismiss(false);
+              }
+              $rootScope.$broadcast('enableDrivers');
+            }
+          };
+        }, 1000);
+      }
     }
 
     function updateProgress(message, value) {
