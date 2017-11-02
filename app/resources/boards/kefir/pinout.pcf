@@ -2,6 +2,9 @@
 #- Kefir I HX4K constraint file (.pcf)
 # -----------------------------------------------------------------------------
 
+# Clock input
+set_io --warn-no-port CLK 49  # input
+
 # Capacitive-sense buttons
 set_io --warn-no-port BTN1 136  # input
 set_io --warn-no-port BTN2 134  # input
@@ -14,75 +17,40 @@ set_io --warn-no-port LED2 135  # output
 set_io --warn-no-port LED3 129  # output
 set_io --warn-no-port LED4 121  # output
 
-# Clock input
-set_io --warn-no-port CLK 49  # input
-
-# SPI Flash enable control
-set_io --warn-no-port SS_B 71
-
-# ISP SPI
-set_io --warn-no-port ISP_RESET 117
-set_io --warn-no-port ISP_SCK   118
-set_io --warn-no-port ISP_MOSI  119
-set_io --warn-no-port ISP_MISO  120
-
-# MCP3008 A/D
-set_io --warn-no-port AD_CS   101  # output
-set_io --warn-no-port AD_Din  102  # output
-set_io --warn-no-port AD_Dout 104  # input
-set_io --warn-no-port AD_Clk  105  # output
-
-# USB
-set_io --warn-no-port USB_Vp_o 112  # output
-set_io --warn-no-port USB_Vm_o 113  # output
-set_io --warn-no-port USB_Vm_i 114  # input
-set_io --warn-no-port USB_Vp_i 115  # input
-set_io --warn-no-port USB_nOE  116  # output
-
-set_io --warn-no-port ARDU00 138
-set_io --warn-no-port ARDU01 141
-set_io --warn-no-port ARDU02 143
-set_io --warn-no-port ARDU03 1
-set_io --warn-no-port ARDU04 4
-set_io --warn-no-port ARDU05 8
-set_io --warn-no-port ARDU06 10
-set_io --warn-no-port ARDU07 12
-set_io --warn-no-port ARDU08 19
-set_io --warn-no-port ARDU09 21
-set_io --warn-no-port ARDU10 23
-set_io --warn-no-port ARDU11 25
-set_io --warn-no-port ARDU12 28
-set_io --warn-no-port ARDU13 31
-set_io --warn-no-port ARDU26 139
-set_io --warn-no-port ARDU27 142
-set_io --warn-no-port ARDU28 144
-set_io --warn-no-port ARDU29 2
-set_io --warn-no-port ARDU30 3
-set_io --warn-no-port ARDU31 7
-set_io --warn-no-port ARDU32 9
-set_io --warn-no-port ARDU33 11
-set_io --warn-no-port ARDU34 20
-set_io --warn-no-port ARDU35 22
-set_io --warn-no-port ARDU36 24
-set_io --warn-no-port ARDU37 26
-set_io --warn-no-port ARDU38 29
-set_io --warn-no-port ARDU39 32
-set_io --warn-no-port ARDU40 33
-set_io --warn-no-port ARDU41 34
-
-# Arduino Power (P2)
-# Active low RESET
-set_io --warn-no-port RESET_P2 73
-
-# Milk channel A
-set_io --warn-no-port Milk_TXD 37
-set_io --warn-no-port Milk_RXD 38
-set_io --warn-no-port Milk_RTS 39
-set_io --warn-no-port Milk_CTS 41
-set_io --warn-no-port Milk_DTR 42
-set_io --warn-no-port Milk_DSR 43
-set_io --warn-no-port Milk_DCD 44
-set_io --warn-no-port Milk_RI  45
+# Arduido connectors
+set_io --warn-no-port IO0 138
+set_io --warn-no-port IO1 141
+set_io --warn-no-port IO2 143
+set_io --warn-no-port IO3 1
+set_io --warn-no-port IO4 4
+set_io --warn-no-port IO5 8
+set_io --warn-no-port IO6 10
+set_io --warn-no-port IO7 12
+set_io --warn-no-port IO8 19
+set_io --warn-no-port IO9 21
+set_io --warn-no-port IO10 23
+set_io --warn-no-port IO11 25
+set_io --warn-no-port IO12 28
+set_io --warn-no-port IO13 31
+set_io --warn-no-port SCL 17
+set_io --warn-no-port SDA 18
+# ChipKit connectors
+set_io --warn-no-port IO26 139
+set_io --warn-no-port IO27 142
+set_io --warn-no-port IO28 144
+set_io --warn-no-port IO29 2
+set_io --warn-no-port IO30 3
+set_io --warn-no-port IO31 7
+set_io --warn-no-port IO32 9
+set_io --warn-no-port IO33 11
+set_io --warn-no-port IO34 20
+set_io --warn-no-port IO35 22
+set_io --warn-no-port IO36 24
+set_io --warn-no-port IO37 26
+set_io --warn-no-port IO38 29
+set_io --warn-no-port IO39 32
+set_io --warn-no-port IO40 33
+set_io --warn-no-port IO41 34
 
 # PMOD A
 set_io --warn-no-port PMA0 74
@@ -103,4 +71,65 @@ set_io --warn-no-port PMB4 96
 set_io --warn-no-port PMB5 97
 set_io --warn-no-port PMB6 98
 set_io --warn-no-port PMB7 99
+
+# Milk channel A
+# As an RS-232 port
+set_io --warn-no-port TXD 37 # input
+set_io --warn-no-port RXD 38 # output
+set_io --warn-no-port RTS 39 # input
+set_io --warn-no-port CTS 41 # output
+set_io --warn-no-port DTR 42 # input
+set_io --warn-no-port DSR 43 # output
+set_io --warn-no-port DCD 44 # output
+set_io --warn-no-port RI  45 # output
+# FTDI generic names
+set_io --warn-no-port AD0 37
+set_io --warn-no-port AD1 38
+set_io --warn-no-port AD2 39
+set_io --warn-no-port AD3 41
+set_io --warn-no-port AD4 42
+set_io --warn-no-port AD5 43
+set_io --warn-no-port AD6 44
+set_io --warn-no-port AD7 45
+set_io --warn-no-port AC0 47
+set_io --warn-no-port AC1 48
+set_io --warn-no-port AC2 56
+set_io --warn-no-port AC3 60
+set_io --warn-no-port AC4 61
+set_io --warn-no-port AC5 62
+set_io --warn-no-port AC6 63
+set_io --warn-no-port AC7 64
+
+# Milk channel B
+set_io --warn-no-port SCK 70
+set_io --warn-no-port SK  70
+set_io --warn-no-port SDO 67
+set_io --warn-no-port DO  67
+set_io --warn-no-port SDI 68
+set_io --warn-no-port DI  68
+set_io --warn-no-port SS  71
+
+# Arduino Power (P2)
+# Active low RESET
+set_io --warn-no-port PRST 73
+
+# ISP SPI
+set_io --warn-no-port IRST 117
+set_io --warn-no-port ISCK 118
+set_io --warn-no-port MOSI 119
+set_io --warn-no-port MISO 120
+
+# MCP3008 A/D
+set_io --warn-no-port AD_CS 101  # output
+set_io --warn-no-port AD_DI 102  # output
+set_io --warn-no-port AD_DO 104  # input
+set_io --warn-no-port AD_CK 105  # output
+
+# USB
+set_io --warn-no-port U_VPO 112  # output
+set_io --warn-no-port U_VMO 113  # output
+set_io --warn-no-port U_VMI 114  # input
+set_io --warn-no-port U_VPI 115  # input
+set_io --warn-no-port U_NOE 116  # output
+
 
