@@ -890,6 +890,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
           ' + editorLabel + '.renderer.setShowGutter(true);\
+          ' + editorLabel + '.setHighlightActiveLine(false);\
+          ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
@@ -948,6 +950,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+      self.editor.setHighlightActiveLine(true);
+      self.editor.setHighlightGutterLine(true);
       // Show cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
@@ -956,6 +960,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (selection) {
         selection.clearSelection();
       }
+      self.editor.setHighlightActiveLine(false);
+      self.editor.setHighlightGutterLine(false);
       // Hide cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 0;
     });
