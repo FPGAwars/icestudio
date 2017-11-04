@@ -87,7 +87,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu('edit')" ng-click="fixMenu('edit')" is-open="status.edit">
+          <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu()" ng-click="fixMenu('edit')" is-open="status.edit">
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu style="min-width: 200px">
               <li>
@@ -154,7 +154,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu('view')" ng-click="fixMenu('view')" is-open="status.view">
+          <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu()" ng-click="fixMenu('view')" is-open="status.view">
             <a href uib-dropdown-toggle>{{ 'View' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
@@ -183,7 +183,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-mouseover="showMenu('select')" ng-mouseleave="hideMenu('select')" ng-click="fixMenu('select')" is-open="status.select">
+          <li uib-dropdown ng-mouseover="showMenu('select')" ng-mouseleave="hideMenu()" ng-click="fixMenu('select')" is-open="status.select">
             <a href uib-dropdown-toggle>{{ 'Select' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li class="dropdown-submenu" uib-dropdown>
@@ -219,7 +219,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu('tools')" ng-click="fixMenu('tools')" is-open="status.tools">
+          <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu()" ng-click="fixMenu('tools')" is-open="status.tools">
             <a href uib-dropdown-toggle>{{ 'Tools' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
@@ -304,7 +304,7 @@
             </ul>
           </li>
 
-          <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu('help')" ng-click="fixMenu('help')" is-open="status.help">
+          <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu()" ng-click="fixMenu('help')" is-open="status.help">
             <a href uib-dropdown-toggle>{{ 'Help' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li disabled>
@@ -336,7 +336,7 @@
         <ul class="nav navbar-nav navbar-right">
 
           <li uib-dropdown
-              ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu('basic')" ng-click="fixMenu('basic')" is-open="status.basic">
+              ng-mouseover="showMenu('basic')" ng-mouseleave="hideMenu()" ng-click="fixMenu('basic')" is-open="status.basic">
             <a href uib-dropdown-toggle>{{ 'Basic' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li>
@@ -361,7 +361,7 @@
 
           <li uib-dropdown
               ng-repeat="block in common.selectedCollection.content.blocks" ng-if="block.children"
-              ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu(block.name)" ng-click="fixMenu(block.name)" is-open="status[block.name]">
+              ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu()" ng-click="fixMenu(block.name)" is-open="status[block.name]">
             <a href uib-dropdown-toggle>{{ block.name | translate }} <span class="caret"></span></a>
             <menutree data="block.children" callback="project.addBlockFile(path)" right="true"></menutree>
           </li>
