@@ -894,6 +894,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
         <div class="resizer"/>\
       </div>\
@@ -1209,6 +1210,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
         <div class="resizer"/>\
       </div>\
