@@ -70,7 +70,7 @@ angular.module('icestudio')
             return checkToolchainInstalled();
           })
           .then(function() {
-            enableTaskMode();
+            utils.beginBlockingTask();
             if (startMessage) {
               startAlert = alertify.message(startMessage, 100000);
             }
@@ -97,13 +97,13 @@ angular.module('icestudio')
             if (endMessage) {
               resultAlert = alertify.success(gettextCatalog.getString(endMessage));
             }
-            disableTaskMode();
+            utils.endBlockingTask();
             restoreTask();
             resolve();
           })
           .catch(function() {
             // Error
-            disableTaskMode();
+            utils.endBlockingTask();
             restoreTask();
           });
         }
@@ -118,16 +118,6 @@ angular.module('icestudio')
         }
         taskRunning = false;
       }, 1000);
-    }
-
-    function enableTaskMode() {
-      angular.element('#menu').addClass('disable-menu');
-      $('body').addClass('waiting');
-    }
-
-    function disableTaskMode() {
-      angular.element('#menu').removeClass('disable-menu');
-      $('body').removeClass('waiting');
     }
 
     function checkToolchainInstalled() {

@@ -1075,4 +1075,14 @@ angular.module('icestudio')
       return 'v' + id.substring(0, 6);
     };
 
+    this.beginBlockingTask = function () {
+      angular.element('#menu').addClass('is-disabled');
+      $('body').addClass('waiting');
+    };
+
+    this.endBlockingTask = function () {
+      angular.element('#menu').removeClass('is-disabled');
+      $('body').removeClass('waiting');
+    };
+
   });
