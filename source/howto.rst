@@ -69,10 +69,7 @@ Create a project
 
 2. **Add blocks**
 
-
-.. raw:: html
-
-  <video src="../_static/webm/add-blocks.webm" width="100%" height="auto" autoplay loop></video>
+.. image:: ../resources/images/howto/demo.gif
 
 |
 
