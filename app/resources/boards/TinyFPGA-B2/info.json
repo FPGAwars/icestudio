@@ -1,0 +1,9 @@
+{
+  "label": "TinyFPGA B2",
+  "datasheet": "https://github.com/tinyfpga/TinyFPGA-B-Series",
+  "FPGAResources": {
+    "pios": 23,
+    "plbs": 960,
+    "brams": 32
+  }
+}
