@@ -1180,12 +1180,14 @@ angular.module('icestudio')
     }
 
     function addCell(cell) {
-      updateCellAttributes(cell);
-      graph.addCell(cell);
-      if (!cell.isLink()) {
-        var cellView = paper.findViewByModel(cell);
-        if (cellView.$box.css('z-index') < z.index) {
-          cellView.$box.css('z-index', ++z.index);
+      if (cell) {
+        updateCellAttributes(cell);
+        graph.addCell(cell);
+        if (!cell.isLink()) {
+          var cellView = paper.findViewByModel(cell);
+          if (cellView.$box.css('z-index') < z.index) {
+            cellView.$box.css('z-index', ++z.index);
+          }
         }
       }
     }
