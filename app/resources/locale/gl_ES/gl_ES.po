@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Xoan Sampaiño <xoansampainho@gmail.com>\n"
+"Last-Translator: Daniel Bravo <bravodarriba@gmail.com>\n"
 "Language-Team: \n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:87
@@ -136,21 +136,21 @@ msgstr "Comprobando Python..."
 
 #: app/scripts/services/tools.js:847
 msgid "Click here to <b>setup the drivers</b>"
-msgstr ""
+msgstr "Clic aquí para <b>configurar os drivers</b>"
 
 #: app/scripts/services/drivers.js:109 app/scripts/services/drivers.js:202
 #: app/scripts/services/drivers.js:224 app/scripts/services/tools.js:139
 #: app/scripts/services/tools.js:253
 msgid "Click here to install it"
-msgstr ""
+msgstr "Fai clic aquí para instalarlo"
 
 #: app/scripts/controllers/menu.js:334
 msgid "Click here to view"
-msgstr ""
+msgstr "Fai clic aquí para ver"
 
 #: app/scripts/controllers/menu.js:252
 msgid "Close"
-msgstr ""
+msgstr "Pechar"
 
 #: app/views/menu.html:353
 msgid "Code"
@@ -162,15 +162,15 @@ msgstr "Colección"
 
 #: app/views/menu.html:174
 msgid "Collection info"
-msgstr ""
+msgstr "Información da colección"
 
 #: app/scripts/controllers/menu.js:480
 msgid "Collection {{collection}} info not defined"
-msgstr ""
+msgstr "Información da colección {{collection}} non definida"
 
 #: app/scripts/services/tools.js:943
 msgid "Collection {{name}} added"
-msgstr "Engadiuse a coleción {{name}}"
+msgstr "Colección {{name}} engadida"
 
 #: app/scripts/services/tools.js:937
 msgid "Collection {{name}} not replaced"
@@ -198,7 +198,7 @@ msgstr "Foro da comunidade"
 
 #: app/scripts/services/tools.js:348
 msgid "Configuration not completed"
-msgstr ""
+msgstr "Configuración non completada"
 
 #: app/views/menu.html:350
 msgid "Constant"
@@ -206,7 +206,7 @@ msgstr "Constante"
 
 #: app/scripts/services/project.js:108
 msgid "Convert"
-msgstr ""
+msgstr "Converter"
 
 #: app/views/menu.html:104
 msgid "Copy"
@@ -282,7 +282,7 @@ msgstr "Editar"
 
 #: app/scripts/services/tools.js:918
 msgid "Edit the collection name"
-msgstr ""
+msgstr "Editar o nome da colección"
 
 #: app/views/menu.html:133 app/views/menu.html:267
 msgid "Enable"
@@ -330,7 +330,7 @@ msgstr "Erro: {{error}}"
 
 #: app/scripts/services/tools.js:431
 msgid "Errors detected in the design"
-msgstr ""
+msgstr "Erros detectados no deseño"
 
 #: app/views/menu.html:42
 msgid "Examples"
@@ -367,7 +367,7 @@ msgstr "Pin da FPGA"
 
 #: app/views/menu.html:179
 msgid "FPGA resources"
-msgstr ""
+msgstr "Recursos da FPGA"
 
 #: app/views/menu.html:29
 msgid "File"
@@ -432,7 +432,7 @@ msgstr "Instalación completada"
 
 #: app/scripts/services/tools.js:673 app/scripts/services/tools.js:708
 msgid "Installing toolchain"
-msgstr "Instalando a cadea de ferramentas..."
+msgstr "Instalando a cadea de ferramentas"
 
 #: app/scripts/services/drivers.js:117 app/scripts/services/tools.js:747
 msgid "Internet connection required"
@@ -473,11 +473,11 @@ msgstr "Conexións de entrada múltiple non válida"
 
 #: app/scripts/services/utils.js:259
 msgid "Invalid project format"
-msgstr ""
+msgstr "Formato do proxecto non válido"
 
 #: app/scripts/services/drivers.js:195
 msgid "It is recommended to use <b>USB 2.0</b> ports"
-msgstr ""
+msgstr "Recomendase empregalos portos <b>USB 2.0</b>"
 
 #: app/views/menu.html:121
 msgid "Language"
@@ -485,7 +485,7 @@ msgstr "Idioma"
 
 #: app/scripts/services/project.js:107
 msgid "Load"
-msgstr ""
+msgstr "Cargar"
 
 #: app/scripts/services/blocks.js:186 app/scripts/services/blocks.js:866
 msgid "Local parameter"
@@ -497,7 +497,7 @@ msgstr "Creando o contorno virtual..."
 
 #: app/scripts/services/utils.js:758
 msgid "Maximum bus size: 96 bits"
-msgstr ""
+msgstr "Tamaño máximo do bus: 96 bits"
 
 #: app/scripts/services/utils.js:530
 msgid "Name"
@@ -546,7 +546,7 @@ msgstr "Pegar"
 
 #: app/scripts/services/utils.js:887
 msgid "Please run: {{cmd}}"
-msgstr ""
+msgstr "Por favor executa: {{cmd}}"
 
 #: app/views/menu.html:118
 msgid "Preferences"
@@ -558,7 +558,7 @@ msgstr "Información do proxecto"
 
 #: app/scripts/controllers/menu.js:334 app/scripts/controllers/menu.js:348
 msgid "Project information updated"
-msgstr ""
+msgstr "Información do proxecto actualizada"
 
 #: app/scripts/services/project.js:133
 msgid "Project {{name}} loaded"
@@ -721,7 +721,7 @@ msgstr "Eliminouse a cadea de ferramentas"
 
 #: app/scripts/services/tools.js:253
 msgid "Toolchain version does not match"
-msgstr ""
+msgstr "A versión da cadea de ferramentas non coincide"
 
 #: app/views/menu.html:223
 msgid "Tools"
@@ -778,7 +778,7 @@ msgstr "Ver licenza"
 
 #: app/scripts/services/tools.js:434
 msgid "Warnings detected in the design"
-msgstr ""
+msgstr "Advertencias detectadas no deseño"
 
 #: app/scripts/services/blocks.js:410
 msgid "Wrong block format: {{type}}"
@@ -808,7 +808,7 @@ msgstr "O nome do equipo remoto {{name}} non é correcto"
 
 #: app/scripts/services/project.js:112
 msgid "You can load it as it is or convert it for the {{name}} board."
-msgstr ""
+msgstr "Podes cargarlo como está ou convertirlo prá  placa {{name}}."
 
 #: app/scripts/controllers/menu.js:257
 msgid "Your changes will be lost if you don’t save them"
@@ -816,11 +816,11 @@ msgstr "Os cambios realizados perderanse se non se gardan"
 
 #: app/views/design.html:6
 msgid "back"
-msgstr "Atrás"
+msgstr "atrás"
 
 #: app/scripts/services/drivers.js:108 app/scripts/services/utils.js:862
 msgid "{{app}} is required."
-msgstr ""
+msgstr "Precisase {{app}}."
 
 #: app/scripts/controllers/menu.js:438
 msgid "{{board}} datasheet not defined"
@@ -836,7 +836,7 @@ msgstr "Non se definiron as regras para a placa {{board}}"
 
 #: app/scripts/controllers/menu.js:204 app/scripts/controllers/menu.js:228
 msgid "{{name}} exported"
-msgstr ""
+msgstr "exportado"
 
 #~ msgid "GTKWave exported"
 #~ msgstr "Exportouse o ficheiro para GTKWave"

@@ -89,7 +89,7 @@ npm start
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
 | French     | ![Progress](http://progressed.io/bar/100)  |
 | Basque     | ![Progress](http://progressed.io/bar/98)   |
-| Galician   | ![Progress](http://progressed.io/bar/88)   |
+| Galician   | ![Progress](http://progressed.io/bar/100)   |
 | Catalan    | ![Progress](http://progressed.io/bar/88)   |
 
 **Contribute!**
