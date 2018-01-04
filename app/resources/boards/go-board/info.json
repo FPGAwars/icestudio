@@ -1,6 +1,7 @@
 {
   "label": "Nandland Go board",
   "datasheet": "https://www.nandland.com/goboard/introduction.html",
+  "interface": "FTDI",
   "FPGAResources": {
     "pios": 72,
     "plbs": 160,

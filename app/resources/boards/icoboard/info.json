@@ -1,6 +1,7 @@
 {
   "label": "icoBOARD 1.0",
   "datasheet": "http://icoboard.org/about-icoboard.html",
+  "interface": "GPIO",
   "FPGAResources": {
     "pios": 206,
     "plbs": 960,

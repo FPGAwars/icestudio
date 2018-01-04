@@ -1,6 +1,7 @@
 {
   "label": "IceZUM Alhambra",
   "datasheet": "https://github.com/FPGAwars/icezum/wiki",
+  "interface": "FTDI",
   "FPGAResources": {
     "pios": 96,
     "plbs": 160,
