@@ -88,4 +88,16 @@ angular.module('icestudio')
       return _dir;
     }
 
+    this.showToolchain = function () {
+      return this.selectedBoard.info.interface !== 'GPIO';
+    };
+
+    this.showFTDIDrivers = function () {
+      return this.selectedBoard && this.selectedBoard.info.interface === 'FTDI';
+    };
+
+    this.showSerialDrivers = function () {
+      return this.selectedBoard && this.selectedBoard.info.interface === 'Serial';
+    };
+
   });

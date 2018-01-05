@@ -231,8 +231,8 @@
               <li>
                 <a href ng-click="uploadCode()">{{ 'Upload' | translate }}<span class="shortcut">{{ 'uploadCode' | shortcut }}</span></a>
               </li>
-              <li class="divider"></li>
-              <li class="dropdown-submenu" uib-dropdown>
+              <li class="divider" ng-if="common.showToolchain()"></li>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showToolchain()">
                 <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
@@ -259,16 +259,31 @@
                   </li>
                 </ul>
               </li>
-              <li class="dropdown-submenu" uib-dropdown>
-                <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showFTDIDrivers()">
+                <a href uib-dropdown-toggle>{{ 'Drivers FTDI' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="tools.enableDrivers()">
+                    <a href ng-click="tools.enableFTDIDrivers()">
                       {{ 'Enable' | translate }}
                     </a>
                   </li>
                   <li>
-                    <a href ng-click="tools.disableDrivers()">
+                    <a href ng-click="tools.disableFTDIDrivers()">
+                      {{ 'Disable' | translate }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showSerialDrivers()">
+                <a href uib-dropdown-toggle>{{ 'Drivers Serial' | translate }}</a>
+                <ul uib-dropdown-menu>
+                  <li>
+                    <a href ng-click="tools.enableSerialDrivers()">
+                      {{ 'Enable' | translate }}
+                    </a>
+                  </li>
+                  <li>
+                    <a href ng-click="tools.disableSerialDrivers()">
                       {{ 'Disable' | translate }}
                     </a>
                   </li>
