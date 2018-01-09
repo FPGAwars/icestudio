@@ -105,22 +105,20 @@ angular.module('icestudio')
     */
 
    function enableLinuxDriversFTDI() {
-     var rules = 'ACTION==\\"add\\", SUBSYSTEM==\\"usb\\", ' +
-                 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ' +
-                 'OWNER=\\"user\\", GROUP=\\"dialout\\", MODE=\\"0777\\"';
+     var rules = 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
+     rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
      linuxDrivers([
-       'echo \'' + rules + '\' > /etc/udev/rules.d/80-icestick.rules',
-       'service udev restart'
-     ], function() {
+       'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
+     ].concat(reloadRules()), function() {
        alertify.success(gettextCatalog.getString('Drivers enabled'));
      });
    }
 
    function disableLinuxDriversFTDI() {
      linuxDrivers([
-       'rm /etc/udev/rules.d/80-icestick.rules',
-       'service udev restart'
-     ], function() {
+       'rm -f /etc/udev/rules.d/80-icestick.rules',
+       'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'
+     ].concat(reloadRules()), function() {
        alertify.warning(gettextCatalog.getString('Drivers disabled'));
      });
    }
@@ -131,6 +129,14 @@ angular.module('icestudio')
 
    function disableLinuxDriversSerial() {
      // TODO
+   }
+
+   function reloadRules() {
+     return [
+       'udevadm control --reload-rules',
+       'udevadm trigger',
+       'service udev restart'
+     ];
    }
 
    function linuxDrivers(commands, callback) {
