@@ -105,9 +105,10 @@ angular.module('icestudio')
     */
 
    function enableLinuxDriversFTDI() {
-     var rules = 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
+     var rules = '';
+     rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
-     linuxDrivers([
+     configureLinuxDrivers([
        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
      ].concat(reloadRules()), function() {
        alertify.success(gettextCatalog.getString('Drivers enabled'));
@@ -115,7 +116,7 @@ angular.module('icestudio')
    }
 
    function disableLinuxDriversFTDI() {
-     linuxDrivers([
+     configureLinuxDrivers([
        'rm -f /etc/udev/rules.d/80-icestick.rules',
        'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'
      ].concat(reloadRules()), function() {
@@ -124,11 +125,24 @@ angular.module('icestudio')
    }
 
    function enableLinuxDriversSerial() {
-     // TODO
+     var rules = '';
+     rules += '# Disable ModemManager for BlackIce\n';
+     rules += 'ATTRS{idVendor}==\\"0483\\", ATTRS{idProduct}==\\"5740\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"\n';
+     rules += '# Disable ModemManager for TinyFPGA B2\n';
+     rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+     configureLinuxDrivers([
+       'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
+     ].concat(reloadRules()), function() {
+       alertify.success(gettextCatalog.getString('Drivers enabled'));
+     });
    }
 
    function disableLinuxDriversSerial() {
-     // TODO
+     configureLinuxDrivers([
+       'rm -f /etc/udev/rules.d/80-fpga-serial.rules'
+     ].concat(reloadRules()), function() {
+       alertify.warning(gettextCatalog.getString('Drivers disabled'));
+     });
    }
 
    function reloadRules() {
@@ -139,7 +153,7 @@ angular.module('icestudio')
      ];
    }
 
-   function linuxDrivers(commands, callback) {
+   function configureLinuxDrivers(commands, callback) {
      var command = 'sh -c "' + commands.join('; ') + '"';
      utils.beginBlockingTask();
      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
