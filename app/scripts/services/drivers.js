@@ -12,37 +12,85 @@ angular.module('icestudio')
                                $rootScope) {
 
     this.enable = function() {
-      if (common.WIN32) {
-        enableWindowsDrivers();
-      }
-      else if (common.DARWIN) {
-        enableDarwinDrivers();
-      }
-      else {
-        enableLinuxDrivers();
+      switch (common.selectedBoard.info.interface) {
+        case 'FTDI':
+          enableDriversFTDI();
+          break;
+        case 'Serial':
+          enableDriversSerial();
+          break;
+        default:
+          console.warn('No valid selected board interface');
       }
     };
 
     this.disable = function() {
-      if (common.WIN32) {
-        disableWindowsDrivers();
-      }
-      else if (common.DARWIN) {
-        disableDarwinDrivers();
-      }
-      else {
-        disableLinuxDrivers();
+      switch (common.selectedBoard.info.interface) {
+        case 'FTDI':
+          disableDriversFTDI();
+          break;
+        case 'Serial':
+          disableDriversSerial();
+          break;
+        default:
+          console.warn('No valid selected board interface');
       }
     };
+
+    function enableDriversFTDI() {
+      if (common.WIN32) {
+        enableWindowsDriversFTDI();
+      }
+      else if (common.DARWIN) {
+        enableDarwinDriversFTDI();
+      }
+      else {
+        enableLinuxDriversFTDI();
+      }
+    }
+
+    function enableDriversSerial() {
+      if (common.WIN32) {
+        enableWindowsDriversSerial();
+      }
+      else if (common.DARWIN) {
+        enableDarwinDriversSerial();
+      }
+      else {
+        enableLinuxDriversSerial();
+      }
+    }
+
+    function disableDriversFTDI() {
+      if (common.WIN32) {
+        disableWindowsDriversFTDI();
+      }
+      else if (common.DARWIN) {
+        disableDarwinDriversFTDI();
+      }
+      else {
+        disableLinuxDriversFTDI();
+      }
+    }
+
+    function disableDriversSerial() {
+      if (common.WIN32) {
+        disableWindowsDriversSerial();
+      }
+      else if (common.DARWIN) {
+        disableDarwinDriversSerial();
+      }
+      else {
+        disableLinuxDriversSerial();
+      }
+    }
 
     this.preUpload = function(callback) {
       if (common.DARWIN) {
         preUploadDarwin(callback);
       }
-      else {
-        if (callback) {
-          callback();
-        }
+      else if (callback) {
+        callback();
       }
     };
 
@@ -52,7 +100,11 @@ angular.module('icestudio')
       }
    };
 
-   function enableLinuxDrivers() {
+   /*
+    * Linux drivers
+    */
+
+   function enableLinuxDriversFTDI() {
      var rules = 'ACTION==\\"add\\", SUBSYSTEM==\\"usb\\", ' +
                  'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ' +
                  'OWNER=\\"user\\", GROUP=\\"dialout\\", MODE=\\"0777\\"';
@@ -64,7 +116,7 @@ angular.module('icestudio')
      });
    }
 
-   function disableLinuxDrivers() {
+   function disableLinuxDriversFTDI() {
      linuxDrivers([
        'rm /etc/udev/rules.d/80-icestick.rules',
        'service udev restart'
@@ -73,24 +125,36 @@ angular.module('icestudio')
      });
    }
 
-  function linuxDrivers(commands, callback) {
-      var command = 'sh -c "' + commands.join('; ') + '"';
-      utils.beginBlockingTask();
-      nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-        // console.log(error, stdout, stderr);
-        utils.endBlockingTask();
-        if (!error) {
-          if (callback) {
-            callback();
-          }
-          setTimeout(function() {
+   function enableLinuxDriversSerial() {
+     // TODO
+   }
+
+   function disableLinuxDriversSerial() {
+     // TODO
+   }
+
+   function linuxDrivers(commands, callback) {
+     var command = 'sh -c "' + commands.join('; ') + '"';
+     utils.beginBlockingTask();
+     nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
+      // console.log(error, stdout, stderr);
+      utils.endBlockingTask();
+      if (!error) {
+        if (callback) {
+          callback();
+        }
+        setTimeout(function() {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }, 1000);
         }
       });
     }
 
-    function enableDarwinDrivers() {
+    /*
+     * Darwin drivers
+     */
+
+    function enableDarwinDriversFTDI() {
       var brewCommands = [
         '/usr/local/bin/brew update',
         '/usr/local/bin/brew install --force libftdi',
@@ -128,9 +192,17 @@ angular.module('icestudio')
       });
     }
 
-    function disableDarwinDrivers() {
+    function disableDarwinDriversFTDI() {
       profile.set('macosDrivers', false);
       alertify.warning(gettextCatalog.getString('Drivers disabled'));
+    }
+
+    function enableDarwinDriversSerial() {
+      // TODO
+    }
+
+    function disableDarwinDriversSerial() {
+      // TODO
     }
 
     var driverC = '';
@@ -183,14 +255,16 @@ angular.module('icestudio')
           }
         });
       }
-      else {
-        if (callback) {
-          callback();
-        }
+      else if (callback) {
+        callback();
       }
     }
 
-    function enableWindowsDrivers() {
+    /*
+     * Windows drivers
+     */
+
+    function enableWindowsDriversFTDI() {
       alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
                        gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports'),
       function() {
@@ -213,7 +287,7 @@ angular.module('icestudio')
       });
     }
 
-    function disableWindowsDrivers() {
+    function disableWindowsDriversFTDI() {
       alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'),
       function() {
         utils.beginBlockingTask();
@@ -230,6 +304,14 @@ angular.module('icestudio')
           }
         });
       });
+    }
+
+    function enableWindowsDriversSerial() {
+      // TODO
+    }
+
+    function disableWindowsDriversSerial() {
+      // TODO
     }
 
   });
