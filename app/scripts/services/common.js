@@ -92,12 +92,8 @@ angular.module('icestudio')
       return this.selectedBoard.info.interface !== 'GPIO';
     };
 
-    this.showFTDIDrivers = function () {
-      return this.selectedBoard && this.selectedBoard.info.interface === 'FTDI';
-    };
-
-    this.showSerialDrivers = function () {
-      return this.selectedBoard && this.selectedBoard.info.interface === 'Serial';
+    this.showDrivers = function () {
+      return this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial');
     };
 
   });

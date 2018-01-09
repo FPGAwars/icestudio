@@ -259,31 +259,16 @@
                   </li>
                 </ul>
               </li>
-              <li class="dropdown-submenu" uib-dropdown ng-if="common.showFTDIDrivers()">
-                <a href uib-dropdown-toggle>{{ 'Drivers FTDI' | translate }}</a>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showDrivers()">
+                <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>
-                    <a href ng-click="tools.enableFTDIDrivers()">
+                    <a href ng-click="tools.enableDrivers()">
                       {{ 'Enable' | translate }}
                     </a>
                   </li>
                   <li>
-                    <a href ng-click="tools.disableFTDIDrivers()">
-                      {{ 'Disable' | translate }}
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu" uib-dropdown ng-if="common.showSerialDrivers()">
-                <a href uib-dropdown-toggle>{{ 'Drivers Serial' | translate }}</a>
-                <ul uib-dropdown-menu>
-                  <li>
-                    <a href ng-click="tools.enableSerialDrivers()">
-                      {{ 'Enable' | translate }}
-                    </a>
-                  </li>
-                  <li>
-                    <a href ng-click="tools.disableSerialDrivers()">
+                    <a href ng-click="tools.disableDrivers()">
                       {{ 'Disable' | translate }}
                     </a>
                   </li>
