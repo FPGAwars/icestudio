@@ -176,14 +176,8 @@ angular.module('icestudio')
 
     function enableDarwinDriversFTDI() {
       var brewCommands = [
-        '/usr/local/bin/brew update',
-        '/usr/local/bin/brew install --force libftdi',
-        '/usr/local/bin/brew unlink libftdi',
-        '/usr/local/bin/brew link --force libftdi',
-        '/usr/local/bin/brew install --force libffi',
-        '/usr/local/bin/brew unlink libffi',
-        '/usr/local/bin/brew link --force libffi'
-      ];
+        '/usr/local/bin/brew update'
+      ].concat(brewInstall('libftdi')).concat(brewInstall('libffi'));
       utils.beginBlockingTask();
       nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
         if (error) {
@@ -205,7 +199,7 @@ angular.module('icestudio')
           }
         }
         else {
-          profile.set('macosDrivers', true);
+          profile.set('macosFTDIDrivers', true);
           alertify.success(gettextCatalog.getString('Drivers enabled'));
         }
         utils.endBlockingTask();
@@ -213,7 +207,7 @@ angular.module('icestudio')
     }
 
     function disableDarwinDriversFTDI() {
-      profile.set('macosDrivers', false);
+      profile.set('macosFTDIDrivers', false);
       alertify.warning(gettextCatalog.getString('Drivers disabled'));
     }
 
@@ -225,10 +219,18 @@ angular.module('icestudio')
       // TODO
     }
 
+    function brewInstall(brewPackage) {
+      return [
+        '/usr/local/bin/brew install --force ' + brewPackage,
+        '/usr/local/bin/brew unlink ' + brewPackage,
+        '/usr/local/bin/brew link --force ' + brewPackage
+      ];
+    }
+
     var driverC = '';
 
     function preUploadDarwin(callback) {
-      if (profile.get('macosDrivers')) {
+      if (profile.get('macosFTDIDrivers')) {
         // Check and unload the Drivers
         var driverA = 'com.FTDI.driver.FTDIUSBSerialDriver';
         var driverB = 'com.apple.driver.AppleUSBFTDI';
@@ -255,7 +257,7 @@ angular.module('icestudio')
     }
 
     function postUploadDarwin() {
-      if (profile.get('macosDrivers')) {
+      if (profile.get('macosFTDIDrivers')) {
         processDriverDarwin(driverC, true);
       }
     }
