@@ -339,10 +339,16 @@ angular.module('icestudio')
               switch (common.selectedBoard.name) {
                 // TinyFPGA-B2 programmer errors
                 case 'TinyFPGA-B2':
-                  // Detect if the bootloader is active
                   var match = stdout.match(/Bootloader\snot\sactive/g);
                   if (match && match.length === 3) {
                     resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
+                  }
+                  else if (stdout.indexOf('Device or resource busy') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                    setupDriversAlert();
+                  }
+                  else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
                   }
                   else {
                     resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
