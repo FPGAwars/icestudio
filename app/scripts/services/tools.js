@@ -325,12 +325,33 @@ angular.module('icestudio')
 
           if (stdout) {
             // - Apio errors
-            if (stdout.indexOf('[upload] Error') !== -1 ||
-                stdout.indexOf('Error: board not detected') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+            if (stdout.indexOf('Error: board not connected') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
-            else if (stdout.indexOf('Error: unkown board') !== -1) {
+            else if (stdout.indexOf('Error: board not available') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+              setupDriversAlert();
+            }
+            else if (stdout.indexOf('Error: unknown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
+            }
+            else if (stdout.indexOf('[upload] Error') !== -1) {
+              switch (common.selectedBoard.name) {
+                // TinyFPGA-B2 programmer errors
+                case 'TinyFPGA-B2':
+                  // Detect if the bootloader is active
+                  var match = stdout.match(/Bootloader\snot\sactive/g);
+                  if (match && match.length === 3) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
+                  }
+                  else {
+                    resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+                  }
+                  break;
+                default:
+                  resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+              }
+              console.warn(stdout);
             }
             // Yosys error (Mac OS)
             else if (stdout.indexOf('Library not loaded:') !== -1 &&

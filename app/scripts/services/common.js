@@ -89,11 +89,11 @@ angular.module('icestudio')
     }
 
     this.showToolchain = function () {
-      return this.selectedBoard.info.interface !== 'GPIO';
+      return (this.selectedBoard && this.selectedBoard.info.interface !== 'GPIO') || true;
     };
 
     this.showDrivers = function () {
-      return this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial');
+      return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || true;
     };
 
   });
