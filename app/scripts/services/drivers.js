@@ -175,9 +175,28 @@ angular.module('icestudio')
      */
 
     function enableDarwinDriversFTDI() {
+      enableDarwinDrivers(['libftdi', 'libffi'], 'macosFTDIDrivers');
+    }
+
+    function disableDarwinDriversFTDI() {
+      disableDarwinDrivers('macosFTDIDrivers');
+    }
+
+    function enableDarwinDriversSerial() {
+      enableDarwinDrivers(['libusb', 'libffi']);
+    }
+
+    function disableDarwinDriversSerial() {
+      disableDarwinDrivers();
+    }
+
+    function enableDarwinDrivers(brewPackages, profileSetting) {
       var brewCommands = [
         '/usr/local/bin/brew update'
-      ].concat(brewInstall('libftdi')).concat(brewInstall('libffi'));
+      ];
+      for (var i in brewPackages) {
+        brewCommands = brewCommands.concat(brewInstall(brewPackages[i]));
+      }
       utils.beginBlockingTask();
       nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
         if (error) {
@@ -199,24 +218,20 @@ angular.module('icestudio')
           }
         }
         else {
-          profile.set('macosFTDIDrivers', true);
+          if (profileSetting) {
+            profile.set(profileSetting, true);
+          }
           alertify.success(gettextCatalog.getString('Drivers enabled'));
         }
         utils.endBlockingTask();
       });
     }
 
-    function disableDarwinDriversFTDI() {
-      profile.set('macosFTDIDrivers', false);
+    function disableDarwinDrivers(profileSetting) {
+      if (profileSetting) {
+        profile.set(profileSetting, false);
+      }
       alertify.warning(gettextCatalog.getString('Drivers disabled'));
-    }
-
-    function enableDarwinDriversSerial() {
-      // TODO
-    }
-
-    function disableDarwinDriversSerial() {
-      // TODO
     }
 
     function brewInstall(brewPackage) {
@@ -249,10 +264,8 @@ angular.module('icestudio')
           }
         }
       }
-      else {
-        if (callback) {
-          callback();
-        }
+      else if (callback) {
+        callback();
       }
     }
 
