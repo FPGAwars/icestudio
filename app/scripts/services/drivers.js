@@ -300,45 +300,14 @@ angular.module('icestudio')
      */
 
     function enableWindowsDriversFTDI() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
-                       gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports'),
-      function() {
-        utils.beginBlockingTask();
-        nodeSudo.exec([common.APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
-          // console.log(error, stdout, stderr);
-          utils.endBlockingTask();
-          if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-            .callback = function(isClicked) {
-              if (isClicked) {
-                $rootScope.$broadcast('installToolchain');
-              }
-            };
-          }
-          else if (!error) {
-            alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
-          }
-        });
-      });
+      var message = gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
+                    gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports');
+      alertify.confirm(message, enableWindowsDrivers);
     }
 
     function disableWindowsDriversFTDI() {
-      alertify.confirm(gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'),
-      function() {
-        utils.beginBlockingTask();
-        nodeChildProcess.exec([common.APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
-          // console.log(error, stdout, stderr);
-          utils.endBlockingTask();
-          if (stderr) {
-            alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-            .callback = function(isClicked) {
-              if (isClicked) {
-                $rootScope.$broadcast('installToolchain');
-              }
-            };
-          }
-        });
-      });
+      var message = gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
+      alertify.confirm(message, disableWindowsDrivers);
     }
 
     function enableWindowsDriversSerial() {
@@ -347,6 +316,41 @@ angular.module('icestudio')
 
     function disableWindowsDriversSerial() {
       // TODO
+    }
+
+    function enableWindowsDrivers() {
+      utils.beginBlockingTask();
+      nodeSudo.exec([common.APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
+        // console.log(error, stdout, stderr);
+        utils.endBlockingTask();
+        if (stderr) {
+          alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+          .callback = function(isClicked) {
+            if (isClicked) {
+              $rootScope.$broadcast('installToolchain');
+            }
+          };
+        }
+        else if (!error) {
+          alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
+        }
+      });
+    }
+
+    function disableWindowsDrivers() {
+      utils.beginBlockingTask();
+      nodeChildProcess.exec([common.APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+        // console.log(error, stdout, stderr);
+        utils.endBlockingTask();
+        if (stderr) {
+          alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
+          .callback = function(isClicked) {
+            if (isClicked) {
+              $rootScope.$broadcast('installToolchain');
+            }
+          };
+        }
+      });
     }
 
   });
