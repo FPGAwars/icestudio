@@ -49,18 +49,6 @@ angular.module('icestudio')
       }
     }
 
-    function enableDriversSerial() {
-      if (common.WIN32) {
-        enableWindowsDriversSerial();
-      }
-      else if (common.DARWIN) {
-        enableDarwinDriversSerial();
-      }
-      else {
-        enableLinuxDriversSerial();
-      }
-    }
-
     function disableDriversFTDI() {
       if (common.WIN32) {
         disableWindowsDriversFTDI();
@@ -70,6 +58,18 @@ angular.module('icestudio')
       }
       else {
         disableLinuxDriversFTDI();
+      }
+    }
+
+    function enableDriversSerial() {
+      if (common.WIN32) {
+        enableWindowsDriversSerial();
+      }
+      else if (common.DARWIN) {
+        enableDarwinDriversSerial();
+      }
+      else {
+        enableLinuxDriversSerial();
       }
     }
 
@@ -311,11 +311,13 @@ angular.module('icestudio')
     }
 
     function enableWindowsDriversSerial() {
-      // TODO
+      var message = gettextCatalog.getString('<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Install the driver</li><li>Unplug and reconnect the board</li></ol>');
+      alertify.confirm(message, enableWindowsDrivers);
     }
 
     function disableWindowsDriversSerial() {
-      // TODO
+      var message = gettextCatalog.getString('<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
+      alertify.confirm(message, disableWindowsDrivers);
     }
 
     function enableWindowsDrivers() {
