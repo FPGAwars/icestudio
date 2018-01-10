@@ -1,6 +1,7 @@
 {
   "label": "TinyFPGA B2",
   "datasheet": "https://github.com/tinyfpga/TinyFPGA-B-Series",
+  "interface": "Serial",
   "FPGAResources": {
     "pios": 23,
     "plbs": 960,

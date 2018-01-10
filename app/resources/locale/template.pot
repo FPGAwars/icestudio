@@ -306,7 +306,7 @@ msgid "Enter the parameters"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:366
-msgid "Enter the remote hostname user@host (experimental)"
+msgid "Enter the remote hostname user@host"
 msgstr ""
 
 #: app/scripts/services/tools.js:639

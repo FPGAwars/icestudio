@@ -231,8 +231,8 @@
               <li>
                 <a href ng-click="uploadCode()">{{ 'Upload' | translate }}<span class="shortcut">{{ 'uploadCode' | shortcut }}</span></a>
               </li>
-              <li class="divider"></li>
-              <li class="dropdown-submenu" uib-dropdown>
+              <li class="divider" ng-if="common.showToolchain()"></li>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showToolchain()">
                 <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
@@ -259,7 +259,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="dropdown-submenu" uib-dropdown>
+              <li class="dropdown-submenu" uib-dropdown ng-if="common.showDrivers()">
                 <a href uib-dropdown-toggle>{{ 'Drivers' | translate }}</a>
                 <ul uib-dropdown-menu>
                   <li>

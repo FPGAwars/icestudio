@@ -363,7 +363,7 @@ angular.module('icestudio')
 
     $scope.setRemoteHostname = function() {
       var current = profile.get('remoteHostname');
-      alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host (experimental)'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host'), (current) ? current : '',
         function(evt, remoteHostname) {
           profile.set('remoteHostname', remoteHostname);
       });

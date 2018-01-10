@@ -1,6 +1,7 @@
 {
   "label": "iCEstick Evaluation Kit",
   "datasheet": "http://www.latticesemi.com/icestick",
+  "interface": "FTDI",
   "FPGAResources": {
     "pios": 96,
     "plbs": 160,

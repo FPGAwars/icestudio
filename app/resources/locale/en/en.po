@@ -316,8 +316,8 @@ msgid "Enter the parameters"
 msgstr "Enter the parameters"
 
 #: app/scripts/controllers/menu.js:366
-msgid "Enter the remote hostname user@host (experimental)"
-msgstr "Enter the remote hostname user@host (experimental)"
+msgid "Enter the remote hostname user@host"
+msgstr "Enter the remote hostname user@host"
 
 #: app/scripts/services/tools.js:639
 msgid "Error: default toolchain not found in '{{dir}}'"

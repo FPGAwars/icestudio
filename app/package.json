@@ -1,6 +1,6 @@
 {
   "name": "icestudio",
-  "version": "0.3.1",
+  "version": "0.3.1-dev",
   "description": "Experimental graphic editor for open FPGAs",
   "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
   "repository": "https://github.com/FPGAwars/icestudio",
@@ -18,8 +18,8 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.2.4",
-    "max": "0.2.5",
+    "min": "0.3.0b3",
+    "max": "0.4.0",
     "external": ""
   },
   "engines": {
