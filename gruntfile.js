@@ -41,7 +41,7 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
 
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('app/package.json'),
 
     // Automatically inject Bower components into the app
     wiredep: {
@@ -139,6 +139,7 @@ module.exports = function(grunt) {
         apioMin: '<%=pkg.apio.min%>',
         apioMax: '<%=pkg.apio.max%>',
         buildDir: 'dist/',
+        extraPackages: '<%=pkg.apio.extras%>',
         platforms: platforms
       }
     },

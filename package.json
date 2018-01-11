@@ -11,11 +11,6 @@
     "gettext": "grunt gettext",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },
-  "apio": {
-    "min": "0.3.0b4",
-    "max": "0.4.0"
-  },
-  "collection": "0.3.0",
   "devDependencies": {
     "bower": "^1.8.0",
     "grunt": "^1.0.1",

@@ -23,6 +23,7 @@ function ToolchainBuilder(options) {
     apioMax: '',
     buildDir: './build',
     cacheDir: './cache',
+    extraPackages: [],
     platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
   };
 
@@ -132,13 +133,10 @@ ToolchainBuilder.prototype.downloadApio = function () {
   var self = this;
   self.emit('log', '> Download apio');
   return new Promise(function(resolve, reject) {
-    var extraPackages = [
-      'tinyfpgab', // Used for the TinyFPGA B2 board
-    ];
     var versionRange = '">=' + self.options.apioMin + ',<' + self.options.apioMax + '"';
     var command = [
       self.options.venvPip, 'download', '--dest', self.options.apioDir,
-      'apio[' + extraPackages.toString() + ']' + versionRange
+      'apio[' + self.options.extraPackages.toString() + ']' + versionRange
     ];
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {

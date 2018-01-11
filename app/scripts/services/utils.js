@@ -171,10 +171,8 @@ angular.module('icestudio')
     };
 
     this.installOnlineApio = function(callback) {
-      var extraPackages = [
-        'tinyfpgab', // Used for the TinyFPGA B2 board
-      ];
       var versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
+      var extraPackages = _package.apio.extras || [];
       this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', 'apio[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
