@@ -18,7 +18,7 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.3.0b4",
+    "min": "0.3.0rc1",
     "max": "0.4.0",
     "extras": [
       "tinyfpgab"
