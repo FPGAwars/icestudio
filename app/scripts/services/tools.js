@@ -808,7 +808,7 @@ angular.module('icestudio')
     // Remote installation
 
     function installOnlineApio(callback) {
-      updateProgress('pip install -U apio', 30);
+      updateProgress('pip install -U apio[tinyfpgab]', 30);
       utils.installOnlineApio(callback);
     }
 
