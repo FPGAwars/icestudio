@@ -751,7 +751,6 @@ angular.module('icestudio')
         apioInstallIcestorm,
         apioInstallIverilog,
         apioInstallDrivers,
-        apioInstallScons,
         installationCompleted
       ]);
     }
@@ -836,11 +835,6 @@ angular.module('icestudio')
       else {
         callback();
       }
-    }
-
-    function apioInstallScons(callback) {
-      updateProgress('apio install scons', 90);
-      utils.apioInstall('scons', callback);
     }
 
     function installationCompleted(callback) {
