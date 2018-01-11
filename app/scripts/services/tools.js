@@ -325,12 +325,39 @@ angular.module('icestudio')
 
           if (stdout) {
             // - Apio errors
-            if (stdout.indexOf('[upload] Error') !== -1 ||
-                stdout.indexOf('Error: board not detected') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+            if (stdout.indexOf('Error: board not connected') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
-            else if (stdout.indexOf('Error: unkown board') !== -1) {
+            else if (stdout.indexOf('Error: board not available') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+              setupDriversAlert();
+            }
+            else if (stdout.indexOf('Error: unknown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
+            }
+            else if (stdout.indexOf('[upload] Error') !== -1) {
+              switch (common.selectedBoard.name) {
+                // TinyFPGA-B2 programmer errors
+                case 'TinyFPGA-B2':
+                  var match = stdout.match(/Bootloader\snot\sactive/g);
+                  if (match && match.length === 3) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
+                  }
+                  else if (stdout.indexOf('Device or resource busy') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                    setupDriversAlert();
+                  }
+                  else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                  }
+                  else {
+                    resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+                  }
+                  break;
+                default:
+                  resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+              }
+              console.warn(stdout);
             }
             // Yosys error (Mac OS)
             else if (stdout.indexOf('Library not loaded:') !== -1 &&
@@ -724,7 +751,6 @@ angular.module('icestudio')
         apioInstallIcestorm,
         apioInstallIverilog,
         apioInstallDrivers,
-        apioInstallScons,
         installationCompleted
       ]);
     }
@@ -782,7 +808,8 @@ angular.module('icestudio')
     // Remote installation
 
     function installOnlineApio(callback) {
-      updateProgress('pip install -U apio', 30);
+      var extraPackages = _package.apio.extras || [];
+      updateProgress('pip install -U apio[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }
 
@@ -803,17 +830,12 @@ angular.module('icestudio')
 
     function apioInstallDrivers(callback) {
       if (common.WIN32) {
-        updateProgress('apio install drivers', 80);
+        updateProgress('apio install drivers', 90);
         utils.apioInstall('drivers', callback);
       }
       else {
         callback();
       }
-    }
-
-    function apioInstallScons(callback) {
-      updateProgress('apio install scons', 90);
-      utils.apioInstall('scons', callback);
     }
 
     function installationCompleted(callback) {
@@ -834,20 +856,22 @@ angular.module('icestudio')
     }
 
     function setupDriversAlert() {
-      var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
-      if (!infoAlert) {
-        setTimeout(function() {
-          infoAlert = alertify.message(message, 30);
-          infoAlert.callback = function(isClicked) {
-            infoAlert = null;
-            if (isClicked) {
-              if (resultAlert) {
-                resultAlert.dismiss(false);
+      if (common.showDrivers()) {
+        var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+        if (!infoAlert) {
+          setTimeout(function() {
+            infoAlert = alertify.message(message, 30);
+            infoAlert.callback = function(isClicked) {
+              infoAlert = null;
+              if (isClicked) {
+                if (resultAlert) {
+                  resultAlert.dismiss(false);
+                }
+                $rootScope.$broadcast('enableDrivers');
               }
-              $rootScope.$broadcast('enableDrivers');
-            }
-          };
-        }, 1000);
+            };
+          }, 1000);
+        }
       }
     }
 

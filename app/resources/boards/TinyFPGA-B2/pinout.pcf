@@ -6,27 +6,27 @@
 # -----------------------------------------------------------------------------
 #
 # TinyFPGA B-series information: https://github.com/tinyfpga/TinyFPGA-B-Series/
- 
-### left side of board
-set_io --warn-no-port PIN_1_USB_DP A3
-set_io --warn-no-port PIN_2_USB_DN A4
-set_io --warn-no-port CLK B4 # input
-set_io --warn-no-port PIN_4 B2
-set_io --warn-no-port PIN_5 A2
-set_io --warn-no-port PIN_6 A1
-set_io --warn-no-port PIN_7 B1
-set_io --warn-no-port PIN_8 C1
-set_io --warn-no-port PIN_9 D1
+
+# -- Left side of board
+set_io --warn-no-port USB_DP A3
+set_io --warn-no-port USB_DM A4
+set_io --warn-no-port CLK    B4  # input
+set_io --warn-no-port PIN_4  B2
+set_io --warn-no-port PIN_5  A2
+set_io --warn-no-port PIN_6  A1
+set_io --warn-no-port PIN_7  B1
+set_io --warn-no-port PIN_8  C1
+set_io --warn-no-port PIN_9  D1
 set_io --warn-no-port PIN_10 E1
 set_io --warn-no-port PIN_11 G1
 set_io --warn-no-port PIN_12 H1
 set_io --warn-no-port PIN_13 J1
 
-### right side of board
-set_io --warn-no-port PIN_14_SDO G6
-set_io --warn-no-port PIN_15_SDI H7
-set_io --warn-no-port PIN_16_SCK G7
-set_io --warn-no-port PIN_17_SS F7
+# -- Right side of board
+set_io --warn-no-port SDO    G6
+set_io --warn-no-port SDI    H7
+set_io --warn-no-port SCK    G7
+set_io --warn-no-port SS     F7
 set_io --warn-no-port PIN_18 D9
 set_io --warn-no-port PIN_19 C9
 set_io --warn-no-port PIN_20 E8

@@ -19,10 +19,11 @@ inherits(ToolchainBuilder, EventEmitter);
 module.exports = ToolchainBuilder;
 function ToolchainBuilder(options) {
   var defaults = {
-    apioMin: '0.1.9',
-    apioMax: '1.0.0',
+    apioMin: '',
+    apioMax: '',
     buildDir: './build',
     cacheDir: './cache',
+    extraPackages: [],
     platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
   };
 
@@ -57,32 +58,32 @@ ToolchainBuilder.prototype.build = function (callback) {
   this.emit('log', this.options.venvPip);
   // Let's create the standalone toolchains
   this.ensurePythonIsAvailable()
-      .then(this.extractVirtualenv.bind(this))
-      .then(this.createVirtualenv.bind(this))
-      .then(this.downloadApio.bind(this))
-      .then(this.installApio.bind(this))
-      .then(this.downloadApioPackages.bind(this))
-      .then(this.packageApio.bind(this))
-      .then(this.packageApioPackages.bind(this))
-      .then(this.createDefaultToolchains.bind(this))
-      .then(function(info) {
-        var result = info || this;
+    .then(this.extractVirtualenv.bind(this))
+    .then(this.createVirtualenv.bind(this))
+    .then(this.downloadApio.bind(this))
+    .then(this.installApio.bind(this))
+    .then(this.downloadApioPackages.bind(this))
+    .then(this.packageApio.bind(this))
+    .then(this.packageApioPackages.bind(this))
+    .then(this.createDefaultToolchains.bind(this))
+    .then(function(info) {
+      var result = info || this;
 
-        if(hasCallback) {
-          callback(false, result);
-        } else {
-          done.resolve(result);
-        }
-      })
-      .catch(function(error) {
-        if(hasCallback) {
-          callback(error);
-        } else {
-          done.reject(error);
-        }
-      });
+      if(hasCallback) {
+        callback(false, result);
+      } else {
+        done.resolve(result);
+      }
+    })
+    .catch(function(error) {
+      if(hasCallback) {
+        callback(error);
+      } else {
+        done.reject(error);
+      }
+    });
 
-    return hasCallback ? true : done.promise;
+  return hasCallback ? true : done.promise;
 };
 
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
@@ -132,9 +133,10 @@ ToolchainBuilder.prototype.downloadApio = function () {
   var self = this;
   self.emit('log', '> Download apio');
   return new Promise(function(resolve, reject) {
+    var versionRange = '">=' + self.options.apioMin + ',<' + self.options.apioMax + '"';
     var command = [
       self.options.venvPip, 'download', '--dest', self.options.apioDir,
-      'apio">=' + self.options.apioMin + ',<' + self.options.apioMax + '"'
+      'apio[' + self.options.extraPackages.toString() + ']' + versionRange
     ];
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {
@@ -171,7 +173,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', 'scons', (platform.startsWith('windows') ? 'drivers' : '')];
+      var packages = ['system', 'icestorm', 'iverilog', (platform.startsWith('windows') ? 'drivers' : '')];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
