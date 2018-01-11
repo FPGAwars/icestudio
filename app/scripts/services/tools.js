@@ -829,7 +829,7 @@ angular.module('icestudio')
 
     function apioInstallDrivers(callback) {
       if (common.WIN32) {
-        updateProgress('apio install drivers', 80);
+        updateProgress('apio install drivers', 90);
         utils.apioInstall('drivers', callback);
       }
       else {
@@ -855,20 +855,22 @@ angular.module('icestudio')
     }
 
     function setupDriversAlert() {
-      var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
-      if (!infoAlert) {
-        setTimeout(function() {
-          infoAlert = alertify.message(message, 30);
-          infoAlert.callback = function(isClicked) {
-            infoAlert = null;
-            if (isClicked) {
-              if (resultAlert) {
-                resultAlert.dismiss(false);
+      if (common.showDrivers()) {
+        var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+        if (!infoAlert) {
+          setTimeout(function() {
+            infoAlert = alertify.message(message, 30);
+            infoAlert.callback = function(isClicked) {
+              infoAlert = null;
+              if (isClicked) {
+                if (resultAlert) {
+                  resultAlert.dismiss(false);
+                }
+                $rootScope.$broadcast('enableDrivers');
               }
-              $rootScope.$broadcast('enableDrivers');
-            }
-          };
-        }, 1000);
+            };
+          }, 1000);
+        }
       }
     }
 
