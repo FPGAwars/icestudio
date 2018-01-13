@@ -27,11 +27,11 @@ set_io --warn-no-port D4 96  # output
 set_io --warn-no-port D5 95  # output
 
 # ------------ IrDA -----------------------------------------------------------
-set_io --warn-no-port IrDA_TX 105  # output
-set_io --warn-no-port IrDA_RX 106  # input
+set_io --warn-no-port IR_TX 105  # output
+set_io --warn-no-port IR_RX 106  # input
 
 #-- IrDA_SD = 0, enable IrDA
-set_io --warn-no-port IrDA_SD 107  # output
+set_io --warn-no-port IR_SD 107  # output
 
 # ------------ PMOD connector -------------------------------------------------
 #
