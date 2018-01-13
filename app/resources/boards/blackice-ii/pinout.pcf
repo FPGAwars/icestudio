@@ -50,8 +50,8 @@ set_io --warn-no-port LED4 70  # output
 #            ______                ______
 #        ___|      |______________|      |___
 #       |   |______|              |______|   |
-#       |            [] []     []           _|__
-#       |            B2 B1   RESET         |    |
+#       |            [] []                  _|__
+#       |            B2 B1                 |    |
 #       |                                  |    |
 #       |                                  |____|
 #       |                                   _|__
@@ -69,7 +69,6 @@ set_io --warn-no-port LED4 70  # output
 
 set_io --warn-no-port B1 63  # input
 set_io --warn-no-port B2 64  # input
-# set_io --warn-no-port RESET 128 ? # input
 
 
 # ------------ Digital connectors ---------------------------------------------
@@ -191,7 +190,7 @@ set_io --warn-no-port P11 91
 set_io --warn-no-port P12 88
 set_io --warn-no-port P13 85
 
-# P11 = CH340 RST = RESET (128)
+# P11 = CH340 RST <=> GRESET
 
 # -------------| P2 |----------------------------------------------------------
 #
@@ -422,6 +421,14 @@ set_io --warn-no-port DAT15 45
 
 set_io --warn-no-port DONE 52
 set_io --warn-no-port DBG1 49
+
+
+# ------------ Internal global reset ------------------------------------------
+#
+
+set_io --warn-no-port GRESET 128
+
+# GRESET <=> P11 = CH340 RST
 
 
 # ------------ FTDI -----------------------------------------------------------

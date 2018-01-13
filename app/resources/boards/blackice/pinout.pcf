@@ -50,8 +50,8 @@ set_io --warn-no-port LED4 70  # output
 #            ______                ______
 #        ___|      |______________|      |___
 #       |   |______|              |______|   |
-#       |            [] []     []           _|__
-#       |            B2 B1   RESET         |    |
+#       |            [] []                  _|__
+#       |            B2 B1                 |    |
 #       |                                  |    |
 #       |                                  |____|
 #       |                                   _|__
@@ -69,7 +69,6 @@ set_io --warn-no-port LED4 70  # output
 
 set_io --warn-no-port B1 63  # input
 set_io --warn-no-port B2 64  # input
-# set_io --warn-no-port RESET 128 ? # input
 
 
 # ------------ Digital connectors ---------------------------------------------
@@ -117,15 +116,6 @@ set_io --warn-no-port B2 64  # input
 #     | - | - | - | - | - | - | - | - | D19 | D18 | D17 | D16 |
 #      -------------------------------------------------------
 
-set_io --warn-no-port D16 41
-set_io --warn-no-port D17 39
-set_io --warn-no-port D18 38
-set_io --warn-no-port D19 37
-
-# D16 = P133
-# D17 = P132
-# D18 = P131
-# D19 = P130
 
 # ------------ Analog connectors ----------------------------------------------
 #            ______                ______
@@ -342,15 +332,10 @@ set_io --warn-no-port P123 25
 #     | 3V3 | GND | P133 | P132 | P131 | P130 |          ^
 #      ---------------------------------------
 
-set_io --warn-no-port P130 37
-set_io --warn-no-port P131 38
-set_io --warn-no-port P132 39
-set_io --warn-no-port P133 41
-
-# P130 = D19
-# P131 = D18
-# P132 = D17
-# P133 = D16
+set_io --warn-no-port P130 29
+set_io --warn-no-port P131 28
+set_io --warn-no-port P132 24
+set_io --warn-no-port P133 23
 
 # -------------| P14 |---------------------------------------------------------
 #
@@ -372,11 +357,9 @@ set_io --warn-no-port P143 70
 # ------------ SRAM -----------------------------------------------------------
 #
 
-set_io --warn-no-port RAMOE 29
+set_io --warn-no-port RAMOE 45
 set_io --warn-no-port RAMWE 120
-set_io --warn-no-port RAMCS 23
-set_io --warn-no-port RAMUB 28
-set_io --warn-no-port RAMLB 24
+set_io --warn-no-port RAMCS 136
 
 # -------------| ADR |---------------------------------------------------------
 set_io --warn-no-port ADR0 137
@@ -397,31 +380,25 @@ set_io --warn-no-port ADR14 117
 set_io --warn-no-port ADR15 118
 set_io --warn-no-port ADR16 119
 set_io --warn-no-port ADR17 78
+set_io --warn-no-port ADR18 62
 
 # -------------| DAT |---------------------------------------------------------
-set_io --warn-no-port DAT0 136
-set_io --warn-no-port DAT1 135
-set_io --warn-no-port DAT2 134
-set_io --warn-no-port DAT3 130
+set_io --warn-no-port DAT0 135
+set_io --warn-no-port DAT1 134
+set_io --warn-no-port DAT2 130
+set_io --warn-no-port DAT3 128
 set_io --warn-no-port DAT4 125
 set_io --warn-no-port DAT5 124
 set_io --warn-no-port DAT6 122
 set_io --warn-no-port DAT7 121
-set_io --warn-no-port DAT8 62
-set_io --warn-no-port DAT9 61
-set_io --warn-no-port DAT10 60
-set_io --warn-no-port DAT11 56
-set_io --warn-no-port DAT12 55
-set_io --warn-no-port DAT13 48
-set_io --warn-no-port DAT14 47
-set_io --warn-no-port DAT15 45
-
-
-# ------------ Debug ----------------------------------------------------------
-#
-
-set_io --warn-no-port DONE 52
-set_io --warn-no-port DBG1 49
+set_io --warn-no-port DAT8 61
+set_io --warn-no-port DAT9 60
+set_io --warn-no-port DAT10 56
+set_io --warn-no-port DAT11 55
+set_io --warn-no-port DAT12 52
+set_io --warn-no-port DAT13 49
+set_io --warn-no-port DAT14 48
+set_io --warn-no-port DAT15 47
 
 
 # ------------ FTDI -----------------------------------------------------------
