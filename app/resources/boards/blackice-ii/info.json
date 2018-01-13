@@ -1,0 +1,10 @@
+{
+  "label": "BlackIce II",
+  "datasheet": "https://mystorm.uk/",
+  "interface": "Serial",
+  "FPGAResources": {
+    "pios": 107,
+    "plbs": 960,
+    "brams": 32
+  }
+}
