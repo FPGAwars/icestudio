@@ -45,6 +45,7 @@ set_io --warn-no-port LED4 70  # output
 # LED3 = MOSI = P142
 # LED4 = SCK = P143
 
+
 # ------------ Buttons map ----------------------------------------------------
 #            ______                ______
 #        ___|      |______________|      |___
@@ -68,9 +69,7 @@ set_io --warn-no-port LED4 70  # output
 
 set_io --warn-no-port B1 63  # input
 set_io --warn-no-port B2 64  # input
-set_io --warn-no-port RESET 128  # input
-
-# RESET = P11 (91) = CH340 RST (91)
+# set_io --warn-no-port RESET 128 ? # input
 
 
 # ------------ Digital connectors ---------------------------------------------
