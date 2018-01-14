@@ -2,6 +2,7 @@
 
 var os = require('os');
 var sha1 = require('sha1');
+var marked = require('marked');
 
 const WIRE_WIDTH = 1.5;
 const DARWIN = Boolean(os.platform().indexOf('darwin') > -1);
@@ -1367,7 +1368,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
   applyText: function() {
     var data = this.model.get('data');
-    this.textSelector.children().html(data.text || '');
+    // Apply Marked to convert from Markdown to HTML
+    this.textSelector.children().html(marked(data.text || ''));
   },
 
   apply: function(opt) {
