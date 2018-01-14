@@ -20,6 +20,7 @@
 | [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** | &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |
 | [BlackIce](https://mystorm.uk/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [BlackIce II](https://mystorm.uk/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [TinyFPGA B2](http://tinyfpga.com/TinyFPGA-B-Series) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 **\*** Use with Raspberry Pi
