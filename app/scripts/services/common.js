@@ -30,6 +30,9 @@ angular.module('icestudio')
       brams: '-'
     };
 
+    //
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git#egg=apio';
+
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
     this.WIN32 = Boolean(process.platform.indexOf('win32') > -1);
