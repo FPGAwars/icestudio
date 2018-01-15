@@ -15,7 +15,7 @@ joint.routers.ice = (function(g, _, joint) {
     excludeEnds: [], // 'source', 'target'
 
     // should be any element with a certain type not to be consider as an obstacle
-    excludeTypes: ['basic.Text'],
+    excludeTypes: ['ice.Info'],
 
     // if number of route finding loops exceed the maximum, stops searching and returns
     // fallback route
