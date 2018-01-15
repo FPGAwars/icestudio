@@ -39,8 +39,5 @@
   },
   "darwinDependencies": {
     "grunt-appdmg": "^0.4.0"
-  },
-  "dependencies": {
-    "marked": "^0.3.12"
   }
 }
