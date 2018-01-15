@@ -1395,14 +1395,19 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
+      // This is required because this.textSelector may be not available
       this.$box.find('.info-text').css({
-        margin: 8 * state.zoom,
-        'border-radius': 5 * state.zoom,
-        fontSize: Math.round(aceFontSize * state.zoom)
+        // TODO: check maths
+        left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
+        top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
+        width: bbox.width - 14,
+        height: bbox.height - 14,
+        transform: 'scale(' + state.zoom + ')'
       });
     }
     else if (this.editor) {
       // Scale border
+      // This is required because this.editorSelector may be not available
       this.$box.find('.info-editor').css({
         margin: 8 * state.zoom,
         'border-radius': 5 * state.zoom
@@ -1417,12 +1422,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
 
     this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom,
       'border-radius': 5 * state.zoom
     });
-    this.$box.css({ width: bbox.width * state.zoom,
-                    height: bbox.height * state.zoom,
-                    left: bbox.x * state.zoom + state.pan.x,
-                    top: bbox.y * state.zoom + state.pan.y });
   },
 
   removeBox: function(/*event*/) {
