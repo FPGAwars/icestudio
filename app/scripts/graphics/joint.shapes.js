@@ -1265,6 +1265,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function() {
       $(document).trigger('disableSelected');
+      self.editor.setHighlightActiveLine(true);
       // Show cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
@@ -1273,6 +1274,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       if (selection) {
         selection.clearSelection();
       }
+      self.editor.setHighlightActiveLine(false);
       // Hide cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 0;
     });
@@ -1333,7 +1335,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.editor.session.setValue(data.info);
     }
     else {
-      // Set data.code
+      // Set data.info
       this.model.attributes.data.info = this.editor.session.getValue();
     }
     setTimeout(function(self) {
@@ -1348,8 +1350,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.textSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.disableResizer();
-      // Hide cursor
-      this.editor.renderer.$cursorLayer.element.style.opacity = 0;
       // Clear selection
       var selection = this.editor.session.selection;
       if (selection) {
@@ -1361,15 +1361,13 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.textSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.enableResizer();
-      // Show cursor
-      this.editor.renderer.$cursorLayer.element.style.opacity = 1;
     }
   },
 
   applyText: function() {
     var data = this.model.get('data');
     // Apply Marked to convert from Markdown to HTML
-    this.textSelector.children().html(marked(data.text || ''));
+    this.textSelector.children().html(marked(data.info || ''));
   },
 
   apply: function(opt) {
