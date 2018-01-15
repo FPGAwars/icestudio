@@ -1201,8 +1201,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="info-block" id="' + blockLabel + '">\
-        <div class="info-text ace_editor ace-chrome ' + (readonly ? '' : ' hidden') + '" " id="' + textLabel + '" style="font-size: ' + aceFontSize + 'px;">\
-          <div class="ace_layer ace_text-layer" style="overflow: visible; padding: 0px 4px;"></div>\
+        <div class="info-text ' + (readonly ? '' : ' hidden') + '" " id="' + textLabel + '">\
+          <div style="overflow: visible;"></div>\
         </div>\
         <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
@@ -1406,7 +1406,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     if (data.readonly) {
       // This is required because this.textSelector may be not available
       this.$box.find('.info-text').css({
-        // TODO: check maths
         left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         width: bbox.width - 14,
