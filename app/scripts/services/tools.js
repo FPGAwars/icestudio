@@ -318,6 +318,10 @@ angular.module('icestudio')
       var stdout = result.stdout;
       var stderr = result.stderr;
 
+      console.log(error);
+      console.log(stdout);
+      console.log(stderr);
+
       return new Promise(function(resolve, reject) {
         if (error || stderr) {
           // -- Process errors
