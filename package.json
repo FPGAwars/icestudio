@@ -37,6 +37,7 @@
     "npm-platform-dependencies": "0.0.12",
     "nw": "^0.12.3"
   },
+  "chromium-args": "--enable-logging",
   "darwinDependencies": {
     "grunt-appdmg": "^0.4.0"
   }
