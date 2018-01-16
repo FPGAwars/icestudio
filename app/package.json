@@ -17,6 +17,7 @@
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
   },
+  "chromium-args": "--enable-logging",
   "apio": {
     "min": "0.3.0rc1",
     "max": "0.4.0",
