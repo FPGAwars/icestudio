@@ -50,7 +50,7 @@ angular.module('icestudio')
     return require('angular-gettext-tools');
   })
   .factory('nodeCP', function() {
-    return require('copy-paste');
+    return require('copy-paste-win32fix');
   })
   .factory('nodeGetOS', function() {
     return require('getos');
