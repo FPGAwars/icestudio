@@ -320,8 +320,10 @@ angular.module('icestudio')
         if (self.addingDraggableBlock) {
           // Set new block position
           self.addingDraggableBlock = false;
+          processReplaceBlock(selection.at(0));
           disableSelected();
           updateWiresOnObstacles();
+          graph.trigger('batch:stop');
         }
         else {
           // Toggle selected cell
@@ -454,6 +456,55 @@ angular.module('icestudio')
         }
       });
 
+      paper.on('cell:pointerup', function(cellView/*, evt*/) {
+        graph.trigger('batch:start');
+        processReplaceBlock(cellView.model);
+        graph.trigger('batch:stop');
+      });
+
+      function processReplaceBlock(upperBlock) {
+        console.log(upperBlock);
+        if (upperBlock.get('type') !== 'ice.Generic' &&
+            upperBlock.get('type') !== 'ice.Code') {
+          return;
+        }
+        var blocks = graph.findModelsUnderElement(upperBlock);
+        if (blocks.length > 0) {
+          // There is at least one model ice.Generic under the upperModel
+          // Get the first model found
+          var lowerBlock = blocks[0];
+          if (lowerBlock.get('type') !== 'ice.Generic' &&
+              lowerBlock.get('type') !== 'ice.Code') {
+            return;
+          }
+          // Check ports interface
+          // Reconnect the wires from the lowerModel to the upperModel
+          var wires = graph.getConnectedLinks(lowerBlock);
+          console.log(wires);
+
+          _.each(wires, function(wire) {
+            // 1.
+            wire.set('source', { id: upperBlock.get('id'), port: upperBlock.get('rightPorts')[0].id });
+          });
+          // Move the upperModel to the lowerModel's position
+          upperBlock.set('position', lowerBlock.get('position'));
+          // Remove the lowerModel
+          lowerBlock.remove();
+        }
+      }
+
+      paper.on('cell:mousemove', function(/*cellView, evt*/) {
+        // console.log('MOVE');
+        // console.log(cellView, evt);
+      });
+
+      graph.on('change:position', function(/*cell*/) {
+        // if (!hasSelection()) {
+        //   console.log('CHANGE POSITION');
+        //   console.log(cell);
+        // }
+      });
+
       /*paper.on('cell:mouseout', function(cellView, evt) {
         if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
@@ -472,10 +523,6 @@ angular.module('icestudio')
       });
 
       graph.on('change:position', function(cell) {
-        if (!selectionView.isTranslating()) {
-          // Update wires on obstacles motion
-          updateWiresOnObstacles();
-        }
       });*/
 
       graph.on('add change:source change:target', function(cell) {
@@ -629,10 +676,9 @@ angular.module('icestudio')
       addCell(cell);
       disableSelected();
       var opt = { transparent: true, initooltip: false };
-      var noBatch = true;
       selection.add(cell);
       selectionView.createSelectionBox(cell, opt);
-      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
+      selectionView.startAddingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
     };
 
     this.addDraggableCells = function(cells) {
@@ -655,12 +701,11 @@ angular.module('icestudio')
         addCells(cells);
         disableSelected();
         var opt = { transparent: true };
-        var noBatch = true;
         _.each(cells, function(cell) {
           selection.add(cell);
           selectionView.createSelectionBox(cell, opt);
         });
-        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
+        selectionView.startAddingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
       }
     };
 
