@@ -104,6 +104,10 @@
   pointer-events: none;
 }
 
+.body {
+  fill: transparent;
+}
+
 .generic-block {
   position: absolute;
   background: #C0DFEB;
