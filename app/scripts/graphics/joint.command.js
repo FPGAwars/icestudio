@@ -249,7 +249,9 @@ joint.dia.CommandManager = Backbone.Model.extend({
       switch (cmd.action) {
 
         case 'add':
-        	cell.remove();
+          if (cell) {
+            cell.remove();
+          }
         	break;
 
         case 'remove':

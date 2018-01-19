@@ -31,6 +31,9 @@ angular.module('icestudio')
     this.breadcrumbs = [{ name: '', type: '' }];
     this.addingDraggableBlock = false;
 
+    this.upperBlock = null;
+    this.lowerBlock = null;
+
     // Functions
 
     this.getState = function() {
@@ -304,7 +307,7 @@ angular.module('icestudio')
 
       selectionView.on('selection-box:pointerdown', function(/*evt*/) {
         // Move selection to top view
-        if (selection) {
+        if (hasSelection()) {
           selection.each(function(cell) {
             var cellView = paper.findViewByModel(cell);
             if (!cellView.model.isLink()) {
@@ -318,9 +321,10 @@ angular.module('icestudio')
 
       selectionView.on('selection-box:pointerclick', function(evt) {
         if (self.addingDraggableBlock) {
-          // Set new block position
+          // Set new block's position
           self.addingDraggableBlock = false;
-          processReplaceBlock(selection.at(0));
+          processReplaceBlock();
+          resetReplaceBlock();
           disableSelected();
           updateWiresOnObstacles();
           graph.trigger('batch:stop');
@@ -332,7 +336,7 @@ angular.module('icestudio')
             selection.reset(selection.without(cell));
             selectionView.destroySelectionBox(cell);
           }
-      }
+        }
       });
 
       var pointerDown = false;
@@ -367,7 +371,6 @@ angular.module('icestudio')
                 // Add cell to selection
                 selection.add(cellView.model);
                 selectionView.createSelectionBox(cellView.model);
-                //unhighlight(cellView);
               }
             }
           }
@@ -448,7 +451,6 @@ angular.module('icestudio')
         // Move selection to top view if !mousedown
         if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
-            //highlight(cellView);
             if (cellView.$box.css('z-index') < z.index) {
               cellView.$box.css('z-index', ++z.index);
             }
@@ -456,74 +458,85 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerup', function(cellView/*, evt*/) {
+      paper.on('cell:pointerup', function(/*cellView, evt*/) {
         graph.trigger('batch:start');
-        processReplaceBlock(cellView.model);
+        processReplaceBlock();
+        resetReplaceBlock();
         graph.trigger('batch:stop');
       });
 
-      function processReplaceBlock(upperBlock) {
-        console.log(upperBlock);
-        if (upperBlock.get('type') !== 'ice.Generic' &&
-            upperBlock.get('type') !== 'ice.Code') {
-          return;
+      var highlightReplaceBlock = _.debounce(function(newUpperBlock) {
+        var newLowerBlock = findLowerBlock(newUpperBlock);
+
+        if (self.lowerBlock) {
+          // Unhighlight previous lower block
+          self.lowerBlock.set('size', {width: 96, height: 64});
         }
-        var blocks = graph.findModelsUnderElement(upperBlock);
-        if (blocks.length > 0) {
-          // There is at least one model ice.Generic under the upperModel
-          // Get the first model found
-          var lowerBlock = blocks[0];
-          if (lowerBlock.get('type') !== 'ice.Generic' &&
-              lowerBlock.get('type') !== 'ice.Code') {
-            return;
-          }
+        if (newLowerBlock) {
+          // Highlight new lower block
+          newLowerBlock.set('size', {width: 116, height: 64});
+        }
+        self.upperBlock = newUpperBlock;
+        self.lowerBlock = newLowerBlock;
+
+      }, 100);
+
+      function resetReplaceBlock() {
+        highlightReplaceBlock.cancel();
+        self.upperBlock = null;
+        self.lowerBlock = null;
+      }
+
+      function processReplaceBlock() {
+        if (self.upperBlock && self.lowerBlock) {
+          console.log(self.upperBlock, self.lowerBlock);
           // Check ports interface
           // Reconnect the wires from the lowerModel to the upperModel
-          var wires = graph.getConnectedLinks(lowerBlock);
+          var wires = graph.getConnectedLinks(self.lowerBlock);
           console.log(wires);
 
           _.each(wires, function(wire) {
             // 1.
-            wire.set('source', { id: upperBlock.get('id'), port: upperBlock.get('rightPorts')[0].id });
+            wire.set('source', { id: self.upperBlock.get('id'), port: self.upperBlock.get('rightPorts')[0].id });
           });
           // Move the upperModel to the lowerModel's position
-          upperBlock.set('position', lowerBlock.get('position'));
+          self.upperBlock.set('position', self.lowerBlock.get('position'));
           // Remove the lowerModel
-          lowerBlock.remove();
+          self.lowerBlock.remove();
         }
       }
 
-      paper.on('cell:mousemove', function(/*cellView, evt*/) {
-        // console.log('MOVE');
-        // console.log(cellView, evt);
+      paper.on('cell:pointermove', function(cellView/*, evt*/) {
+        highlightReplaceBlock(cellView.model);
       });
 
-      graph.on('change:position', function(/*cell*/) {
-        // if (!hasSelection()) {
-        //   console.log('CHANGE POSITION');
-        //   console.log(cell);
-        // }
-      });
-
-      /*paper.on('cell:mouseout', function(cellView, evt) {
-        if (!utils.hasButtonPressed(evt)) {
-          if (!cellView.model.isLink()) {
-            unhighlight(cellView);
-          }
-        }
-      });*/
-
-      /*paper.on('cell:pointerdown', function(cellView) {
-        if (paper.options.enabled) {
-          if (cellView.model.isLink()) {
-            // Unhighlight source block of the wire
-            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
-          }
+      selectionView.on('selection-box:pointermove', function(/*evt*/) {
+        if (self.addingDraggableBlock && hasSelection()) {
+          highlightReplaceBlock(selection.at(0));
         }
       });
 
-      graph.on('change:position', function(cell) {
-      });*/
+      function findLowerBlock(newUpperBlock) {
+        if (newUpperBlock.get('type') !== 'ice.Generic' &&
+            newUpperBlock.get('type') !== 'ice.Code' &&
+            newUpperBlock.get('type') !== 'ice.Input') {
+          return;
+        }
+        var blocks = graph.findModelsUnderElement(newUpperBlock);
+        // There is at least one model ice.Generic under the upperModel
+        if (blocks.length <= 0) {
+          return;
+        }
+        // Get the first model found
+        var newLowerBlock = null;
+        newLowerBlock = blocks[0];
+        if (newLowerBlock.get('type') !== 'ice.Generic' &&
+            newLowerBlock.get('type') !== 'ice.Code' &&
+            newLowerBlock.get('type') !== 'ice.Input') {
+          return;
+        }
+        return newLowerBlock;
+      }
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
@@ -866,76 +879,9 @@ angular.module('icestudio')
         if (!cell.isLink()) {
           selection.add(cell);
           selectionView.createSelectionBox(cell);
-          //unhighlight(cellView);
         }
       });
     };
-
-    /*function highlight(cellView) {
-      if (cellView) {
-        switch(cellView.model.get('type')) {
-          case 'ice.Input':
-          case 'ice.Output':
-            if (cellView.model.get('data').virtual) {
-              cellView.$box.addClass('highlight-green');
-            }
-            else {
-              cellView.$box.addClass('highlight-yellow');
-            }
-            break;
-          case 'ice.Constant':
-            cellView.$box.addClass('highlight-orange');
-            break;
-          case 'ice.Code':
-            cellView.$box.addClass('highlight-blue');
-            break;
-          case 'ice.Generic':
-            if (cellView.model.get('config')) {
-              cellView.$box.addClass('highlight-yellow');
-            }
-            else {
-              cellView.$box.addClass('highlight-blue');
-            }
-            break;
-          case 'ice.Info':
-            cellView.$box.addClass('highlight-gray');
-            break;
-        }
-      }
-    }
-
-    function unhighlight(cellView) {
-      if (cellView) {
-        switch(cellView.model.get('type')) {
-          case 'ice.Input':
-          case 'ice.Output':
-            if (cellView.model.get('data').virtual) {
-              cellView.$box.removeClass('highlight-green');
-            }
-            else {
-              cellView.$box.removeClass('highlight-yellow');
-            }
-            break;
-          case 'ice.Constant':
-            cellView.$box.removeClass('highlight-orange');
-            break;
-          case 'ice.Code':
-            cellView.$box.removeClass('highlight-blue');
-            break;
-          case 'ice.Generic':
-            if (cellView.model.get('config')) {
-              cellView.$box.removeClass('highlight-yellow');
-            }
-            else {
-              cellView.$box.removeClass('highlight-blue');
-            }
-            break;
-          case 'ice.Info':
-            cellView.$box.removeClass('highlight-gray');
-            break;
-        }
-      }
-    }*/
 
     function hasSelection() {
       return selection && selection.length > 0;
@@ -1198,7 +1144,6 @@ angular.module('icestudio')
             }
             selection.add(cell);
             selectionView.createSelectionBox(cell);
-            //unhighlight(cellView);
           }
         });
       }

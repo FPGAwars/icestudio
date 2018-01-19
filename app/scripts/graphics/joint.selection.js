@@ -238,6 +238,8 @@ joint.ui.SelectionView = Backbone.View.extend({
       		this._snappedClientY = snappedClientY;
       	}
 
+        this.trigger('selection-box:pointermove', evt);
+
         break;
     }
   },
