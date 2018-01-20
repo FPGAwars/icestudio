@@ -568,11 +568,11 @@ angular.module('icestudio')
           }
         });
 
-        if (_.isEmpty(portsMap) && upperPorts.length === lowerPorts.length) {
-          // If there is no match and the number of lowerPorts and
-          // upperPorts is the same, replace the connections if the
-          // size matches ignoring the ports's name.
-          for (var i = 0; i < lowerPorts.length; i++) {
+        if (_.isEmpty(portsMap)) {
+          // If there is no match replace the connections if the
+          // port's size matches ignoring the port's name.
+          var n = Math.min(upperPorts.length, lowerPorts.length);
+          for (var i = 0; i < n; i++) {
             if (lowerPorts[i].size === upperPorts[i].size) {
               portsMap[lowerPorts[i].id] = upperPorts[i].id;
             }
