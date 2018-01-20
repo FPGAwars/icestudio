@@ -477,12 +477,32 @@ angular.module('icestudio')
         replaceBlock(upperBlock, lowerBlock);
       }
 
-      var prevLowerBlock = null;
+      function findLowerBlock(upperBlock) {
+        if (upperBlock.get('type') !== 'ice.Generic' &&
+            upperBlock.get('type') !== 'ice.Code' &&
+            upperBlock.get('type') !== 'ice.Input') {
+          return;
+        }
+        var blocks = graph.findModelsUnderElement(upperBlock);
+        // There is at least one model ice.Generic under the upperModel
+        if (blocks.length <= 0) {
+          return;
+        }
+        // Get the first model found
+        var lowerBlock = blocks[0];
+        if (lowerBlock.get('type') !== 'ice.Generic' &&
+            lowerBlock.get('type') !== 'ice.Code' &&
+            lowerBlock.get('type') !== 'ice.Input') {
+          return;
+        }
+        return lowerBlock;
+      }
 
       function replaceBlock(upperBlock, lowerBlock) {
         if (lowerBlock) {
           // 1. Compute portsMap between the upperBlock and the lowerBlock
-          var portsMap = computePortsMap(upperBlock, lowerBlock);
+          var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
+          console.log(portsMap);
           // 2. Reconnect the wires from the lowerBlock to the upperBlock
           var wires = graph.getConnectedLinks(lowerBlock);
           _.each(wires, function(wire) {
@@ -509,54 +529,49 @@ angular.module('icestudio')
         }
       }
 
-      function computePortsMap(upperBlock, lowerBlock) {
+      function computeAllPortsMap(upperBlock, lowerBlock) {
         var portsMap = {};
-        var upperPorts = [];
-        var lowerPorts = [];
 
-        upperPorts = upperPorts.concat(upperBlock.get('leftPorts'));
-        upperPorts = upperPorts.concat(upperBlock.get('rightPorts'));
-        upperPorts = upperPorts.concat(upperBlock.get('topPorts'));
+        // Compute the ports for each side: left, right and top.
+        // If there are ports with the same name they are ordered
+        // by position, from 0 to n.
+        //
+        //                   Top ports 0 ·· n
+        //                   _____|__|__|_____
+        //  Left ports 0  --|                 |--  0 Right ports
+        //             ·  --|      BLOCK      |--  ·
+        //             ·  --|                 |--  ·
+        //             n    |_________________|    n
+        //
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'leftPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'rightPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'topPorts'));
 
-        lowerPorts = lowerPorts.concat(lowerBlock.get('leftPorts'));
-        lowerPorts = lowerPorts.concat(lowerBlock.get('rightPorts'));
-        lowerPorts = lowerPorts.concat(lowerBlock.get('topPorts'));
+        return portsMap;
+      }
+
+      function computePortsMap(upperBlock, lowerBlock, portType) {
+        var portsMap = {};
+        var usedUpperPorts = [];
+        var upperPorts = upperBlock.get(portType);
+        var lowerPorts = lowerBlock.get(portType);
 
         _.each(lowerPorts, function(lowerPort) {
-          if (!_.has(portsMap, lowerPort.id)) {
-            var matchedPorts = _.filter(upperPorts, function(upperPort) {
-              return lowerPort.name === upperPort.name &&
-                     lowerPort.size === upperPort.size;
-            });
-            if (matchedPorts && matchedPorts.length > 0) {
-              portsMap[lowerPort.id] = matchedPorts[0].id;
-            }
+          var matchedPorts = _.filter(upperPorts, function(upperPort) {
+            return lowerPort.name === upperPort.name &&
+                   lowerPort.size === upperPort.size &&
+                   !_.includes(usedUpperPorts, upperPort);
+          });
+          if (matchedPorts && matchedPorts.length > 0) {
+            portsMap[lowerPort.id] = matchedPorts[0].id;
+            usedUpperPorts = usedUpperPorts.concat(matchedPorts[0]);
           }
         });
 
         return portsMap;
       }
 
-      function findLowerBlock(upperBlock) {
-        if (upperBlock.get('type') !== 'ice.Generic' &&
-            upperBlock.get('type') !== 'ice.Code' &&
-            upperBlock.get('type') !== 'ice.Input') {
-          return;
-        }
-        var blocks = graph.findModelsUnderElement(upperBlock);
-        // There is at least one model ice.Generic under the upperModel
-        if (blocks.length <= 0) {
-          return;
-        }
-        // Get the first model found
-        var lowerBlock = blocks[0];
-        if (lowerBlock.get('type') !== 'ice.Generic' &&
-            lowerBlock.get('type') !== 'ice.Code' &&
-            lowerBlock.get('type') !== 'ice.Input') {
-          return;
-        }
-        return lowerBlock;
-      }
+      var prevLowerBlock = null;
 
       function disableReplacedBlock(lowerBlock) {
         if (prevLowerBlock) {
