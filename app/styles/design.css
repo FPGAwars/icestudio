@@ -104,6 +104,10 @@
   pointer-events: none;
 }
 
+.block-disabled {
+  opacity: 0.4;
+}
+
 .generic-block {
   position: absolute;
   background: #C0DFEB;
@@ -113,6 +117,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .generic-block .clock {
@@ -194,6 +199,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .virtual-port p {
@@ -225,6 +231,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .fpga-port p {
@@ -304,6 +311,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .constant-block p {
@@ -353,6 +361,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .code-block .code-editor {
@@ -376,6 +385,7 @@
   -webkit-user-select: none;
   user-select: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .info-block-readonly {

@@ -9,6 +9,7 @@ angular.module('icestudio')
                              utils,
                              common,
                              gettextCatalog,
+                             nodeDebounce,
                              window) {
     // Variables
 
@@ -30,9 +31,6 @@ angular.module('icestudio')
 
     this.breadcrumbs = [{ name: '', type: '' }];
     this.addingDraggableBlock = false;
-
-    this.upperBlock = null;
-    this.lowerBlock = null;
 
     // Functions
 
@@ -323,8 +321,7 @@ angular.module('icestudio')
         if (self.addingDraggableBlock) {
           // Set new block's position
           self.addingDraggableBlock = false;
-          processReplaceBlock();
-          resetReplaceBlock();
+          processReplaceBlock(selection.at(0));
           disableSelected();
           updateWiresOnObstacles();
           graph.trigger('batch:stop');
@@ -458,85 +455,90 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerup', function(/*cellView, evt*/) {
+      paper.on('cell:pointerup', function(cellView/*, evt*/) {
         graph.trigger('batch:start');
-        processReplaceBlock();
-        resetReplaceBlock();
+        processReplaceBlock(cellView.model);
         graph.trigger('batch:stop');
       });
 
-      var highlightReplaceBlock = _.debounce(function(newUpperBlock) {
-        var newLowerBlock = findLowerBlock(newUpperBlock);
-
-        if (self.lowerBlock) {
-          // Unhighlight previous lower block
-          self.lowerBlock.set('size', {width: 96, height: 64});
-        }
-        if (newLowerBlock) {
-          // Highlight new lower block
-          newLowerBlock.set('size', {width: 116, height: 64});
-        }
-        self.upperBlock = newUpperBlock;
-        self.lowerBlock = newLowerBlock;
-
-      }, 100);
-
-      function resetReplaceBlock() {
-        highlightReplaceBlock.cancel();
-        self.upperBlock = null;
-        self.lowerBlock = null;
-      }
-
-      function processReplaceBlock() {
-        if (self.upperBlock && self.lowerBlock) {
-          console.log(self.upperBlock, self.lowerBlock);
-          // Check ports interface
-          // Reconnect the wires from the lowerModel to the upperModel
-          var wires = graph.getConnectedLinks(self.lowerBlock);
-          console.log(wires);
-
-          _.each(wires, function(wire) {
-            // 1.
-            wire.set('source', { id: self.upperBlock.get('id'), port: self.upperBlock.get('rightPorts')[0].id });
-          });
-          // Move the upperModel to the lowerModel's position
-          self.upperBlock.set('position', self.lowerBlock.get('position'));
-          // Remove the lowerModel
-          self.lowerBlock.remove();
-        }
-      }
-
       paper.on('cell:pointermove', function(cellView/*, evt*/) {
-        highlightReplaceBlock(cellView.model);
+        debounceDisableReplacedBlock(cellView.model);
       });
 
       selectionView.on('selection-box:pointermove', function(/*evt*/) {
         if (self.addingDraggableBlock && hasSelection()) {
-          highlightReplaceBlock(selection.at(0));
+          debounceDisableReplacedBlock(selection.at(0));
         }
       });
 
-      function findLowerBlock(newUpperBlock) {
-        if (newUpperBlock.get('type') !== 'ice.Generic' &&
-            newUpperBlock.get('type') !== 'ice.Code' &&
-            newUpperBlock.get('type') !== 'ice.Input') {
+      function processReplaceBlock(upperBlock) {
+        debounceDisableReplacedBlock.flush();
+        var lowerBlock = findLowerBlock(upperBlock);
+        replaceBlock(upperBlock, lowerBlock);
+      }
+
+      var prevLowerBlock = null;
+
+      function replaceBlock(upperBlock, lowerBlock) {
+        if (lowerBlock) {
+          console.log(upperBlock, lowerBlock);
+
+          // Check ports interface
+          // Reconnect the wires from the lowerModel to the upperModel
+          var wires = graph.getConnectedLinks(lowerBlock);
+          console.log(wires);
+
+          _.each(wires, function(wire) {
+            // 1.
+            wire.set('source', { id: upperBlock.get('id'), port: upperBlock.get('rightPorts')[0].id });
+          });
+          // Move the upperModel to the lowerModel's position
+          upperBlock.set('position', lowerBlock.get('position'));
+          // Remove the lowerModel
+          lowerBlock.remove();
+          prevLowerBlock = null;
+        }
+      }
+
+      function findLowerBlock(upperBlock) {
+        if (upperBlock.get('type') !== 'ice.Generic' &&
+            upperBlock.get('type') !== 'ice.Code' &&
+            upperBlock.get('type') !== 'ice.Input') {
           return;
         }
-        var blocks = graph.findModelsUnderElement(newUpperBlock);
+        var blocks = graph.findModelsUnderElement(upperBlock);
         // There is at least one model ice.Generic under the upperModel
         if (blocks.length <= 0) {
           return;
         }
         // Get the first model found
-        var newLowerBlock = null;
-        newLowerBlock = blocks[0];
-        if (newLowerBlock.get('type') !== 'ice.Generic' &&
-            newLowerBlock.get('type') !== 'ice.Code' &&
-            newLowerBlock.get('type') !== 'ice.Input') {
+        var lowerBlock = null;
+        lowerBlock = blocks[0];
+        if (lowerBlock.get('type') !== 'ice.Generic' &&
+            lowerBlock.get('type') !== 'ice.Code' &&
+            lowerBlock.get('type') !== 'ice.Input') {
           return;
         }
-        return newLowerBlock;
+        return lowerBlock;
       }
+
+      function disableReplacedBlock(lowerBlock) {
+        if (prevLowerBlock) {
+          // Unhighlight previous lower block
+          paper.findViewByModel(prevLowerBlock).$box.removeClass('block-disabled');
+        }
+        if (lowerBlock) {
+          // Highlight new lower block
+          paper.findViewByModel(lowerBlock).$box.addClass('block-disabled');
+        }
+        prevLowerBlock = lowerBlock;
+      }
+
+      // Debounce `pointermove` handler to improve the performance
+      var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
+        var lowerBlock = findLowerBlock(upperBlock);
+        disableReplacedBlock(lowerBlock);
+      }, 100);
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
