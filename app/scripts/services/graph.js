@@ -684,11 +684,13 @@ angular.module('icestudio')
     this.undo = function() {
       disableSelected();
       commandManager.undo();
+      updateWiresOnObstacles();
     };
 
     this.redo = function() {
       disableSelected();
       commandManager.redo();
+      updateWiresOnObstacles();
     };
 
     this.clearAll = function() {
