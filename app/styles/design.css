@@ -108,6 +108,10 @@
   opacity: 0.4;
 }
 
+g {
+  transition: opacity 0.2s;
+}
+
 .generic-block {
   position: absolute;
   background: #C0DFEB;

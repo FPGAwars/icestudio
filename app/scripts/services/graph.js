@@ -525,11 +525,15 @@ angular.module('icestudio')
       function disableReplacedBlock(lowerBlock) {
         if (prevLowerBlock) {
           // Unhighlight previous lower block
-          paper.findViewByModel(prevLowerBlock).$box.removeClass('block-disabled');
+          var prevLowerBlockView = paper.findViewByModel(prevLowerBlock);
+          prevLowerBlockView.$box.removeClass('block-disabled');
+          prevLowerBlockView.$el.removeClass('block-disabled');
         }
         if (lowerBlock) {
           // Highlight new lower block
-          paper.findViewByModel(lowerBlock).$box.addClass('block-disabled');
+          var lowerBlockView = paper.findViewByModel(lowerBlock);
+          lowerBlockView.$box.addClass('block-disabled');
+          lowerBlockView.$el.addClass('block-disabled');
         }
         prevLowerBlock = lowerBlock;
       }

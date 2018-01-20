@@ -190,7 +190,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'end';
         attrs[portWireSelector]['y'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 8 0';
         break;
       case 'right':
         attrs[portSelector]['ref-dx'] = 8;
@@ -199,7 +199,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['y'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L -16 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L -8 0';
         break;
       case 'top':
         attrs[portSelector]['ref-y'] = -8;
@@ -208,7 +208,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = 2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 16';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 8';
         break;
       case 'bottom':
         attrs[portSelector]['ref-dy'] = 8;
@@ -217,7 +217,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -16';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -8';
         break;
     }
 
