@@ -481,23 +481,60 @@ angular.module('icestudio')
 
       function replaceBlock(upperBlock, lowerBlock) {
         if (lowerBlock) {
-          console.log(upperBlock, lowerBlock);
-
-          // Check ports interface
-          // Reconnect the wires from the lowerModel to the upperModel
+          // 1. Compute portsMap between the upperBlock and the lowerBlock
+          var portsMap = computePortsMap(upperBlock, lowerBlock);
+          // 2. Reconnect the wires from the lowerBlock to the upperBlock
           var wires = graph.getConnectedLinks(lowerBlock);
-          console.log(wires);
-
           _.each(wires, function(wire) {
-            // 1.
-            wire.set('source', { id: upperBlock.get('id'), port: upperBlock.get('rightPorts')[0].id });
+            // Replace wire's source
+            replaceWireConnection(wire, 'source');
+            // Replace wire's target
+            replaceWireConnection(wire, 'target');
           });
-          // Move the upperModel to the lowerModel's position
+          // 3. Move the upperModel to the lowerModel's position
           upperBlock.set('position', lowerBlock.get('position'));
-          // Remove the lowerModel
+          // 4. Remove the lowerModel
           lowerBlock.remove();
           prevLowerBlock = null;
         }
+
+        function replaceWireConnection(wire, connectorType) {
+          var connector = wire.get(connectorType);
+          if (connector.id === lowerBlock.get('id') && portsMap[connector.port]) {
+            wire.set(connectorType, {
+              id: upperBlock.get('id'),
+              port: portsMap[connector.port]
+            });
+          }
+        }
+      }
+
+      function computePortsMap(upperBlock, lowerBlock) {
+        var portsMap = {};
+        var upperPorts = [];
+        var lowerPorts = [];
+
+        upperPorts = upperPorts.concat(upperBlock.get('leftPorts'));
+        upperPorts = upperPorts.concat(upperBlock.get('rightPorts'));
+        upperPorts = upperPorts.concat(upperBlock.get('topPorts'));
+
+        lowerPorts = lowerPorts.concat(lowerBlock.get('leftPorts'));
+        lowerPorts = lowerPorts.concat(lowerBlock.get('rightPorts'));
+        lowerPorts = lowerPorts.concat(lowerBlock.get('topPorts'));
+
+        _.each(lowerPorts, function(lowerPort) {
+          if (!_.has(portsMap, lowerPort.id)) {
+            var matchedPorts = _.filter(upperPorts, function(upperPort) {
+              return lowerPort.name === upperPort.name &&
+                     lowerPort.size === upperPort.size;
+            });
+            if (matchedPorts && matchedPorts.length > 0) {
+              portsMap[lowerPort.id] = matchedPorts[0].id;
+            }
+          }
+        });
+
+        return portsMap;
       }
 
       function findLowerBlock(upperBlock) {
@@ -512,8 +549,7 @@ angular.module('icestudio')
           return;
         }
         // Get the first model found
-        var lowerBlock = null;
-        lowerBlock = blocks[0];
+        var lowerBlock = blocks[0];
         if (lowerBlock.get('type') !== 'ice.Generic' &&
             lowerBlock.get('type') !== 'ice.Code' &&
             lowerBlock.get('type') !== 'ice.Input') {
