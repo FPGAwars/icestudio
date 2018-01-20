@@ -3,6 +3,8 @@
   "datasheet": "http://www.latticesemi.com/view_document?document_id=50373",
   "interface": "FTDI",
   "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
     "pios": 206,
     "plbs": 960,
     "brams": 32

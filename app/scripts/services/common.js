@@ -25,6 +25,8 @@ angular.module('icestudio')
 
     // FPGA resources
     this.FPGAResources = {
+      ffs: '-',
+      luts: '-',
       pios: '-',
       plbs: '-',
       brams: '-'

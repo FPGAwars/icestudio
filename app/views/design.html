@@ -18,6 +18,12 @@
     <div class="board-container">
       <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
         <span>
+          FFs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.ffs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.ffs }}
+        </span>
+        <span>
+          LUTs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.luts }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.luts }}
+        </span>
+        <span>
           PIOs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}
         </span>
         <span>
