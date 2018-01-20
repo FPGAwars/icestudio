@@ -296,10 +296,14 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       return;
     }
 
+    var type = self.model.get('type');
     var size = self.model.get('size');
     var state = self.model.get('state');
     var gridstep = 8 * 2;
-    var minSize = { width: 64, height: 32 };
+    var minSize = {
+      width: type === 'ice.Code' ? 96 : 64,
+      height: type === 'ice.Code' ? 64 : 32
+    };
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
     var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
