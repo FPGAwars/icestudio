@@ -43,11 +43,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function(startMessage, endMessage) {
-      return apioRun(['build', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['build', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     this.uploadCode = function(startMessage, endMessage) {
-      return apioRun(['upload', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['upload', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     function apioRun(commands, startMessage, endMessage) {
@@ -82,6 +82,9 @@ angular.module('icestudio')
           })
           .then(function() {
             var hostname = profile.get('remoteHostname');
+            if (profile.get('showFPGAResources')) {
+              commands = commands.concat('--verbose-arachne');
+            }
             if (hostname) {
               return executeRemote(commands, hostname);
             }
@@ -270,7 +273,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
-            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), hostname,
+            nodeSSHexec((['apio'].concat(commands).concat(['--project-dir', '.build'])).join(' '), hostname,
               function (error, stdout, stderr) {
                 resolve({ error: error, stdout: stdout, stderr: stderr });
               });
@@ -493,16 +496,18 @@ angular.module('icestudio')
 
           if (stdout) {
             // Show used resources in the FPGA
-            common.FPGAResources.pios = findFPGAResources(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
-            common.FPGAResources.plbs = findFPGAResources(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
-            common.FPGAResources.brams = findFPGAResources(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            common.FPGAResources.ffs = findValue(/DFF\s+([0-9]+)\s/g, stdout, common.FPGAResources.ffs);
+            common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
+            common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
+            common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
+            common.FPGAResources.brams = findValue(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
             utils.rootScopeSafeApply();
           }
         }
       });
     }
 
-    function findFPGAResources(pattern, output, previousValue) {
+    function findValue(pattern, output, previousValue) {
       var match = pattern.exec(output);
       return (match && match[1]) ? match[1] : previousValue;
     }
