@@ -496,16 +496,17 @@ angular.module('icestudio')
 
           if (stdout) {
             // Show used resources in the FPGA
-            common.FPGAResources.pios = findFPGAResources(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
-            common.FPGAResources.plbs = findFPGAResources(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
-            common.FPGAResources.brams = findFPGAResources(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
+            common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
+            common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
+            common.FPGAResources.brams = findValue(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
             utils.rootScopeSafeApply();
           }
         }
       });
     }
 
-    function findFPGAResources(pattern, output, previousValue) {
+    function findValue(pattern, output, previousValue) {
       var match = pattern.exec(output);
       return (match && match[1]) ? match[1] : previousValue;
     }
