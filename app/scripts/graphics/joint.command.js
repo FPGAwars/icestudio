@@ -178,7 +178,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   initBatchCommand: function() {
 
-    //console.log('initBatchCommand', this.batchCommand);
+    // console.log('initBatchCommand', this.batchCommand);
 
     if (!this.batchCommand) {
 
@@ -198,30 +198,30 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   storeBatchCommand: function() {
 
-    //console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
+    // console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
 
     // In order to store batch command it is necesary to run storeBatchCommand as many times as
     // initBatchCommand was executed
     if (this.batchCommand && this.batchLevel <= 0) {
 
-    // checking if there is any valid command in batch
-    // for example: calling `initBatchCommand` immediately followed by `storeBatchCommand`
-    if (this.lastCmdIndex >= 0) {
+      // checking if there is any valid command in batch
+      // for example: calling `initBatchCommand` immediately followed by `storeBatchCommand`
+      if (this.lastCmdIndex >= 0) {
 
-	    this.redoStack = [];
+  	    this.redoStack = [];
 
-      this.undoStack.push(this.batchCommand);
-      if (this.batchCommand && this.batchCommand[0] && this.batchCommand[0].action !== 'lang') {
-        // Do not store lang in changesStack
-        this.changesStack.push(this.batchCommand);
-        this.triggerChange();
+        this.undoStack.push(this.batchCommand);
+        if (this.batchCommand && this.batchCommand[0] && this.batchCommand[0].action !== 'lang') {
+          // Do not store lang in changesStack
+          this.changesStack.push(this.batchCommand);
+          this.triggerChange();
+        }
+        this.trigger('add', this.batchCommand);
       }
-      this.trigger('add', this.batchCommand);
-    }
 
-    delete this.batchCommand;
-    delete this.lastCmdIndex;
-    delete this.batchLevel;
+      delete this.batchCommand;
+      delete this.lastCmdIndex;
+      delete this.batchLevel;
 
     } else if (this.batchCommand && this.batchLevel > 0) {
 
@@ -249,7 +249,9 @@ joint.dia.CommandManager = Backbone.Model.extend({
       switch (cmd.action) {
 
         case 'add':
-        	cell.remove();
+          if (cell) {
+            cell.remove();
+          }
         	break;
 
         case 'remove':

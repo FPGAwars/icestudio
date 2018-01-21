@@ -190,7 +190,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'end';
         attrs[portWireSelector]['y'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 16 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 8 0';
         break;
       case 'right':
         attrs[portSelector]['ref-dx'] = 8;
@@ -199,7 +199,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['y'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L -16 0';
+        attrs[portWireSelector]['d'] = 'M 0 0 L -8 0';
         break;
       case 'top':
         attrs[portSelector]['ref-y'] = -8;
@@ -208,7 +208,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = 2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 16';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 8';
         break;
       case 'bottom':
         attrs[portSelector]['ref-dy'] = 8;
@@ -217,7 +217,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         attrs[portLabelSelector]['y'] = -2;
         attrs[portLabelSelector]['text-anchor'] = 'start';
         attrs[portWireSelector]['x'] = position;
-        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -16';
+        attrs[portWireSelector]['d'] = 'M 0 0 L 0 -8';
         break;
     }
 
@@ -296,10 +296,14 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       return;
     }
 
+    var type = self.model.get('type');
     var size = self.model.get('size');
     var state = self.model.get('state');
     var gridstep = 8 * 2;
-    var minSize = { width: 64, height: 32 };
+    var minSize = {
+      width: type === 'ice.Code' ? 96 : 64,
+      height: type === 'ice.Code' ? 64 : 32
+    };
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
     var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });

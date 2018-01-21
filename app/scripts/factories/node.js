@@ -58,6 +58,9 @@ angular.module('icestudio')
   .factory('nodeTemp', function() {
     return require('temporary');
   })
+  .factory('nodeDebounce', function() {
+    return require('lodash.debounce');
+  })
   .factory('SVGO', function() {
     var config = {
       full: true,

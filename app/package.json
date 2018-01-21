@@ -41,6 +41,7 @@
     "glob": "^7.1.2",
     "is-online": "^5.2.0",
     "jquery": "^3.2.1",
+    "lodash.debounce": "^4.0.8",
     "marked": "^0.3.12",
     "node-emoji": "^1.8.1",
     "node-lang-info": "^0.2.1",

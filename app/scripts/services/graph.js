@@ -9,6 +9,7 @@ angular.module('icestudio')
                              utils,
                              common,
                              gettextCatalog,
+                             nodeDebounce,
                              window) {
     // Variables
 
@@ -304,7 +305,7 @@ angular.module('icestudio')
 
       selectionView.on('selection-box:pointerdown', function(/*evt*/) {
         // Move selection to top view
-        if (selection) {
+        if (hasSelection()) {
           selection.each(function(cell) {
             var cellView = paper.findViewByModel(cell);
             if (!cellView.model.isLink()) {
@@ -318,10 +319,12 @@ angular.module('icestudio')
 
       selectionView.on('selection-box:pointerclick', function(evt) {
         if (self.addingDraggableBlock) {
-          // Set new block position
+          // Set new block's position
           self.addingDraggableBlock = false;
+          processReplaceBlock(selection.at(0));
           disableSelected();
           updateWiresOnObstacles();
+          graph.trigger('batch:stop');
         }
         else {
           // Toggle selected cell
@@ -330,7 +333,7 @@ angular.module('icestudio')
             selection.reset(selection.without(cell));
             selectionView.destroySelectionBox(cell);
           }
-      }
+        }
       });
 
       var pointerDown = false;
@@ -365,7 +368,6 @@ angular.module('icestudio')
                 // Add cell to selection
                 selection.add(cellView.model);
                 selectionView.createSelectionBox(cellView.model);
-                //unhighlight(cellView);
               }
             }
           }
@@ -446,7 +448,6 @@ angular.module('icestudio')
         // Move selection to top view if !mousedown
         if (!utils.hasButtonPressed(evt)) {
           if (!cellView.model.isLink()) {
-            //highlight(cellView);
             if (cellView.$box.css('z-index') < z.index) {
               cellView.$box.css('z-index', ++z.index);
             }
@@ -454,29 +455,155 @@ angular.module('icestudio')
         }
       });
 
-      /*paper.on('cell:mouseout', function(cellView, evt) {
-        if (!utils.hasButtonPressed(evt)) {
-          if (!cellView.model.isLink()) {
-            unhighlight(cellView);
-          }
-        }
-      });*/
+      paper.on('cell:pointerup', function(cellView/*, evt*/) {
+        graph.trigger('batch:start');
+        processReplaceBlock(cellView.model);
+        graph.trigger('batch:stop');
+      });
 
-      /*paper.on('cell:pointerdown', function(cellView) {
-        if (paper.options.enabled) {
-          if (cellView.model.isLink()) {
-            // Unhighlight source block of the wire
-            unhighlight(paper.findViewByModel(cellView.model.get('source').id));
-          }
+      paper.on('cell:pointermove', function(cellView/*, evt*/) {
+        debounceDisableReplacedBlock(cellView.model);
+      });
+
+      selectionView.on('selection-box:pointermove', function(/*evt*/) {
+        if (self.addingDraggableBlock && hasSelection()) {
+          debounceDisableReplacedBlock(selection.at(0));
         }
       });
 
-      graph.on('change:position', function(cell) {
-        if (!selectionView.isTranslating()) {
-          // Update wires on obstacles motion
-          updateWiresOnObstacles();
+      function processReplaceBlock(upperBlock) {
+        debounceDisableReplacedBlock.flush();
+        var lowerBlock = findLowerBlock(upperBlock);
+        replaceBlock(upperBlock, lowerBlock);
+      }
+
+      function findLowerBlock(upperBlock) {
+        if (upperBlock.get('type') !== 'ice.Generic' &&
+            upperBlock.get('type') !== 'ice.Code' &&
+            upperBlock.get('type') !== 'ice.Input') {
+          return;
         }
-      });*/
+        var blocks = graph.findModelsUnderElement(upperBlock);
+        // There is at least one model ice.Generic under the upperModel
+        if (blocks.length <= 0) {
+          return;
+        }
+        // Get the first model found
+        var lowerBlock = blocks[0];
+        if (lowerBlock.get('type') !== 'ice.Generic' &&
+            lowerBlock.get('type') !== 'ice.Code' &&
+            lowerBlock.get('type') !== 'ice.Input') {
+          return;
+        }
+        return lowerBlock;
+      }
+
+      function replaceBlock(upperBlock, lowerBlock) {
+        if (lowerBlock) {
+          // 1. Compute portsMap between the upperBlock and the lowerBlock
+          var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
+          // 2. Reconnect the wires from the lowerBlock to the upperBlock
+          var wires = graph.getConnectedLinks(lowerBlock);
+          _.each(wires, function(wire) {
+            // Replace wire's source
+            replaceWireConnection(wire, 'source');
+            // Replace wire's target
+            replaceWireConnection(wire, 'target');
+          });
+          // 3. Move the upperModel to the lowerModel's position
+          upperBlock.set('position', lowerBlock.get('position'));
+          // 4. Remove the lowerModel
+          lowerBlock.remove();
+          prevLowerBlock = null;
+        }
+
+        function replaceWireConnection(wire, connectorType) {
+          var connector = wire.get(connectorType);
+          if (connector.id === lowerBlock.get('id') && portsMap[connector.port]) {
+            wire.set(connectorType, {
+              id: upperBlock.get('id'),
+              port: portsMap[connector.port]
+            });
+          }
+        }
+      }
+
+      function computeAllPortsMap(upperBlock, lowerBlock) {
+        var portsMap = {};
+
+        // Compute the ports for each side: left, right and top.
+        // If there are ports with the same name they are ordered
+        // by position, from 0 to n.
+        //
+        //                   Top ports 0 ·· n
+        //                   _____|__|__|_____
+        //  Left ports 0  --|                 |--  0 Right ports
+        //             ·  --|      BLOCK      |--  ·
+        //             ·  --|                 |--  ·
+        //             n    |_________________|    n
+        //
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'leftPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'rightPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'topPorts'));
+
+        return portsMap;
+      }
+
+      function computePortsMap(upperBlock, lowerBlock, portType) {
+        var portsMap = {};
+        var usedUpperPorts = [];
+        var upperPorts = upperBlock.get(portType);
+        var lowerPorts = lowerBlock.get(portType);
+
+        _.each(lowerPorts, function(lowerPort) {
+          var matchedPorts = _.filter(upperPorts, function(upperPort) {
+            return lowerPort.name === upperPort.name &&
+                   lowerPort.size === upperPort.size &&
+                   !_.includes(usedUpperPorts, upperPort);
+          });
+          if (matchedPorts && matchedPorts.length > 0) {
+            portsMap[lowerPort.id] = matchedPorts[0].id;
+            usedUpperPorts = usedUpperPorts.concat(matchedPorts[0]);
+          }
+        });
+
+        if (_.isEmpty(portsMap)) {
+          // If there is no match replace the connections if the
+          // port's size matches ignoring the port's name.
+          var n = Math.min(upperPorts.length, lowerPorts.length);
+          for (var i = 0; i < n; i++) {
+            if (lowerPorts[i].size === upperPorts[i].size) {
+              portsMap[lowerPorts[i].id] = upperPorts[i].id;
+            }
+          }
+        }
+
+        return portsMap;
+      }
+
+      var prevLowerBlock = null;
+
+      function disableReplacedBlock(lowerBlock) {
+        if (prevLowerBlock) {
+          // Unhighlight previous lower block
+          var prevLowerBlockView = paper.findViewByModel(prevLowerBlock);
+          prevLowerBlockView.$box.removeClass('block-disabled');
+          prevLowerBlockView.$el.removeClass('block-disabled');
+        }
+        if (lowerBlock) {
+          // Highlight new lower block
+          var lowerBlockView = paper.findViewByModel(lowerBlock);
+          lowerBlockView.$box.addClass('block-disabled');
+          lowerBlockView.$el.addClass('block-disabled');
+        }
+        prevLowerBlock = lowerBlock;
+      }
+
+      // Debounce `pointermove` handler to improve the performance
+      var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
+        var lowerBlock = findLowerBlock(upperBlock);
+        disableReplacedBlock(lowerBlock);
+      }, 100);
 
       graph.on('add change:source change:target', function(cell) {
         if (cell.isLink() && cell.get('source').id) {
@@ -556,11 +683,13 @@ angular.module('icestudio')
     this.undo = function() {
       disableSelected();
       commandManager.undo();
+      updateWiresOnObstacles();
     };
 
     this.redo = function() {
       disableSelected();
       commandManager.redo();
+      updateWiresOnObstacles();
     };
 
     this.clearAll = function() {
@@ -629,10 +758,9 @@ angular.module('icestudio')
       addCell(cell);
       disableSelected();
       var opt = { transparent: true, initooltip: false };
-      var noBatch = true;
       selection.add(cell);
       selectionView.createSelectionBox(cell, opt);
-      selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
+      selectionView.startAddingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
     };
 
     this.addDraggableCells = function(cells) {
@@ -655,12 +783,11 @@ angular.module('icestudio')
         addCells(cells);
         disableSelected();
         var opt = { transparent: true };
-        var noBatch = true;
         _.each(cells, function(cell) {
           selection.add(cell);
           selectionView.createSelectionBox(cell, opt);
         });
-        selectionView.startTranslatingSelection({ clientX: mousePosition.x, clientY: mousePosition.y }, noBatch);
+        selectionView.startAddingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
       }
     };
 
@@ -821,76 +948,9 @@ angular.module('icestudio')
         if (!cell.isLink()) {
           selection.add(cell);
           selectionView.createSelectionBox(cell);
-          //unhighlight(cellView);
         }
       });
     };
-
-    /*function highlight(cellView) {
-      if (cellView) {
-        switch(cellView.model.get('type')) {
-          case 'ice.Input':
-          case 'ice.Output':
-            if (cellView.model.get('data').virtual) {
-              cellView.$box.addClass('highlight-green');
-            }
-            else {
-              cellView.$box.addClass('highlight-yellow');
-            }
-            break;
-          case 'ice.Constant':
-            cellView.$box.addClass('highlight-orange');
-            break;
-          case 'ice.Code':
-            cellView.$box.addClass('highlight-blue');
-            break;
-          case 'ice.Generic':
-            if (cellView.model.get('config')) {
-              cellView.$box.addClass('highlight-yellow');
-            }
-            else {
-              cellView.$box.addClass('highlight-blue');
-            }
-            break;
-          case 'ice.Info':
-            cellView.$box.addClass('highlight-gray');
-            break;
-        }
-      }
-    }
-
-    function unhighlight(cellView) {
-      if (cellView) {
-        switch(cellView.model.get('type')) {
-          case 'ice.Input':
-          case 'ice.Output':
-            if (cellView.model.get('data').virtual) {
-              cellView.$box.removeClass('highlight-green');
-            }
-            else {
-              cellView.$box.removeClass('highlight-yellow');
-            }
-            break;
-          case 'ice.Constant':
-            cellView.$box.removeClass('highlight-orange');
-            break;
-          case 'ice.Code':
-            cellView.$box.removeClass('highlight-blue');
-            break;
-          case 'ice.Generic':
-            if (cellView.model.get('config')) {
-              cellView.$box.removeClass('highlight-yellow');
-            }
-            else {
-              cellView.$box.removeClass('highlight-blue');
-            }
-            break;
-          case 'ice.Info':
-            cellView.$box.removeClass('highlight-gray');
-            break;
-        }
-      }
-    }*/
 
     function hasSelection() {
       return selection && selection.length > 0;
@@ -1153,7 +1213,6 @@ angular.module('icestudio')
             }
             selection.add(cell);
             selectionView.createSelectionBox(cell);
-            //unhighlight(cellView);
           }
         });
       }
