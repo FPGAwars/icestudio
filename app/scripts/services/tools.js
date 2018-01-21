@@ -43,11 +43,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function(startMessage, endMessage) {
-      return apioRun(['build', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['build', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     this.uploadCode = function(startMessage, endMessage) {
-      return apioRun(['upload', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['upload', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     function apioRun(commands, startMessage, endMessage) {
@@ -83,7 +83,7 @@ angular.module('icestudio')
           .then(function() {
             var hostname = profile.get('remoteHostname');
             if (profile.get('showFPGAResources')) {
-              commands = commands.concat('-v');
+              commands = commands.concat('--verbose-arachne');
             }
             if (hostname) {
               return executeRemote(commands, hostname);
@@ -273,7 +273,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
-            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), hostname,
+            nodeSSHexec((['apio'].concat(commands).concat(['--project-dir', '.build'])).join(' '), hostname,
               function (error, stdout, stderr) {
                 resolve({ error: error, stdout: stdout, stderr: stderr });
               });
