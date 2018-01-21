@@ -131,6 +131,7 @@ angular.module('icestudio')
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
+          common.hasChangesSinceBuild = true;
         });
 
         if (ret) {
