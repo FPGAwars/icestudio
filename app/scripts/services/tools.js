@@ -496,6 +496,7 @@ angular.module('icestudio')
 
           if (stdout) {
             // Show used resources in the FPGA
+            common.FPGAResources.ffs = findValue(/DFF\s+([0-9]+)\s/g, stdout, common.FPGAResources.ffs);
             common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
             common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
             common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
