@@ -502,7 +502,6 @@ angular.module('icestudio')
         if (lowerBlock) {
           // 1. Compute portsMap between the upperBlock and the lowerBlock
           var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
-          console.log(portsMap);
           // 2. Reconnect the wires from the lowerBlock to the upperBlock
           var wires = graph.getConnectedLinks(lowerBlock);
           _.each(wires, function(wire) {
