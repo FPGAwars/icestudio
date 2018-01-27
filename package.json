@@ -9,7 +9,7 @@
     "start": "grunt serve",
     "dist": "grunt dist",
     "gettext": "grunt gettext",
-    "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
+    "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection && opencollective postinstall"
   },
   "devDependencies": {
     "bower": "^1.8.0",
@@ -39,5 +39,13 @@
   },
   "darwinDependencies": {
     "grunt-appdmg": "^0.4.0"
+  },
+  "dependencies": {
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/icestudio",
+    "logo": "https://opencollective.com/icestudio/logo.txt"
   }
 }
