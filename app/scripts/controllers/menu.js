@@ -406,6 +406,8 @@ angular.module('icestudio')
         resizable: true,
         width: 700,
         height: 700,
+        'min_width': 300,
+        'min_height': 300,
         icon: 'resources/images/icestudio-logo.png'
       });
     };
@@ -419,6 +421,8 @@ angular.module('icestudio')
           resizable: true,
           width: 500,
           height: 700,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
@@ -446,6 +450,8 @@ angular.module('icestudio')
           resizable: false,
           width: 500,
           height: 500,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
@@ -468,6 +474,8 @@ angular.module('icestudio')
           resizable: true,
           width: 700,
           height: 700,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
