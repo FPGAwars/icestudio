@@ -240,22 +240,27 @@ angular.module('icestudio')
 
     this.readFile = function(filepath) {
       return new Promise(function(resolve, reject) {
-        nodeFs.readFile(filepath,
-          function(err, content) {
-            if (err) {
-              reject(err.toString());
-            }
-            else {
-              var data = isJSON(content);
-              if (data) {
-                // JSON data
-                resolve(data);
+        if (nodeFs.existsSync(common.PROFILE_PATH)) {
+          nodeFs.readFile(filepath,
+            function(err, content) {
+              if (err) {
+                reject(err.toString());
               }
               else {
-                reject(gettextCatalog.getString('Invalid project format'));
+                var data = isJSON(content);
+                if (data) {
+                  // JSON data
+                  resolve(data);
+                }
+                else {
+                  reject(gettextCatalog.getString('Invalid project format'));
+                }
               }
-            }
-          });
+            });
+        }
+        else {
+          resolve({});
+        }
       });
     };
 
