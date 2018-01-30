@@ -30,7 +30,7 @@
     }
     window.onload = function() {
       var options = { gfm: true };
-      var readme = getURLParameter('readme');
+      var readme = 'file:////' + getURLParameter('readme');
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open('GET', readme, false);
       xmlhttp.send();
