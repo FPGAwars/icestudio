@@ -38,7 +38,7 @@ angular.module('icestudio')
         }
       })
       .catch(function(error) {
-        alertify.error(error, 30);
+        console.warn(error);
         if (callback) {
           callback();
         }
