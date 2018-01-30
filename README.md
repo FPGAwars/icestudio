@@ -84,6 +84,8 @@ npm install
 npm start
 ```
 
+NOTE: press F12 to open DevTools.
+
 ### Languages
 
 |  Language  | Translated strings                         |
