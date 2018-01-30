@@ -10,7 +10,6 @@ angular.module('icestudio')
                              utils,
                              common,
                              gettextCatalog,
-                             gettext,
                              nodeGettext,
                              nodeFs,
                              nodeFse,
@@ -1047,7 +1046,7 @@ angular.module('icestudio')
         var json = compiler.convertPo([content]);
         nodeFs.writeFileSync(targetPath, json);
         // Add strings to gettext
-        gettextCatalog.loadRemote(targetPath);
+        gettextCatalog.loadRemote('file:////' + targetPath);
       }
       if (collection.package) {
         dest = collection.package.replace(pattern, collection.name);

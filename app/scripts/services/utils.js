@@ -356,7 +356,7 @@ angular.module('icestudio')
         var collection = common.collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
-          gettextCatalog.loadRemote(filepath);
+          gettextCatalog.loadRemote('file:////' + filepath);
         }
       }
       if (callback) {
