@@ -6,6 +6,7 @@ angular.module('icestudio')
                              common,
                              _package,
                              window,
+                             SVGO,
                              nodeFs,
                              nodeFse,
                              nodePath,
@@ -18,7 +19,7 @@ angular.module('icestudio')
                              nodeCP,
                              nodeGetOS,
                              nodeLangInfo,
-                             SVGO) {
+                             nodeTemp) {
 
     var _pythonExecutableCached = null;
     // Get the system executable
@@ -809,7 +810,11 @@ angular.module('icestudio')
       if (local) {
         command.push('local');
       }
-      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
+      // Use different user-data-dir in order to enable
+      // multiple instances of the application
+      var userDataDir = new nodeTemp.Dir().path;
+      command.push('--user-data-dir=' + coverPath(userDataDir));
+      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout, stderr*/) {
         if (error) {
           throw error;
         }
