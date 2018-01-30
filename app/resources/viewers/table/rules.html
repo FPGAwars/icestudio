@@ -24,25 +24,30 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
       }
       window.onload = function() {
-        var rules = getURLParameter('rules');
-        rules = JSON.parse(rules);
-        var i, text = '';
-        text += '<h3>Input rules</h3>\n';
-        text += '<ul>\n';
-        for (i in rules.input) {
-          var input = rules.input[i];
-          text += '<li>Input <b>' + input.port + '</b> ports &rarr; FPGA pin <b>' + input.pin + '</b></li>\n';
-        }
-        text += '</ul>\n';
-        text += '<h3>Output rules</h3>\n';
-        text += '<ul>\n';
-        for (i in rules.output) {
-          var output = rules.output[i];
-          text += '<li>FPGA pin <b>' + output.pin + '</b> &rarr; value <b>' + output.bit + '</b></li>\n';
-        }
-        text += '</ul>\n';
+        var board = getURLParameter('board');
+        var data = '../../boards/' + board + '/rules.json';
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', data, false);
+        xmlhttp.send();
+        var text = xmlhttp.responseText;
         if (text) {
-          document.getElementById('rules').innerHTML = text;
+          var rules = JSON.parse(text);
+          var content = '';
+          content += '<h3>Input rules</h3>\n';
+          content += '<ul>\n';
+          for (var i in rules.input) {
+            var input = rules.input[i];
+            content += '<li>Input <b>' + input.port + '</b> ports &rarr; FPGA pin <b>' + input.pin + '</b></li>\n';
+          }
+          content += '</ul>\n';
+          content += '<h3>Output rules</h3>\n';
+          content += '<ul>\n';
+          for (var o in rules.output) {
+            var output = rules.output[o];
+            content += '<li>FPGA pin <b>' + output.pin + '</b> &rarr; value <b>' + output.bit + '</b></li>\n';
+          }
+          content += '</ul>\n';
+          document.getElementById('rules').innerHTML = content;
         }
         else {
           document.getElementById('rules').style.visibility = 'hidden';

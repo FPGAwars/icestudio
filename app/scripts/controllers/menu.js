@@ -439,9 +439,8 @@ angular.module('icestudio')
 
     $scope.showBoardRules = function() {
       var board = common.selectedBoard;
-      var rules = JSON.stringify(board.rules);
-      if (rules !== '{}') {
-        gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
+      if (nodeFs.existsSync(nodePath.join('resources', 'boards', board.name, 'rules.json'))) {
+        gui.Window.open('resources/viewers/table/rules.html?board=' + board.name, {
           title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
           resizable: false,
