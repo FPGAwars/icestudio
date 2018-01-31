@@ -121,7 +121,7 @@ module.exports = function(grunt) {
     // Execute nw-build packaging
     nwjs: {
       options: {
-        version: '0.12.3',
+        version: '0.28.0',
         flavor: 'normal',
         zip: false,
         buildDir: 'dist/',
