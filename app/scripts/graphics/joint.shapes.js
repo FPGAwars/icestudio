@@ -1376,11 +1376,19 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     markdown = markdown.replace(/(:.*:)/g, function (match) {
       return emoji.emojify(match, null, function (code, name) {
         var source = 'https://github.global.ssl.fastly.net/images/icons/emoji/' + name + '.png';
-        return ' <object data="' + source + '" type="image/png" width="20" height="20">>' + code + '</object>';
+        return ' <object data="' + source + '" type="image/png" width="20" height="20">' + code + '</object>';
       });
     });
+
     // Apply Marked to convert from Markdown to HTML
     this.textSelector.children().html(marked(markdown));
+
+    this.textSelector.find('a').each(function(index, element) {
+      element.onclick = function (event) {
+        event.preventDefault();
+        nw.Shell.openExternal(element.href); /* global nw */
+      };
+    });
   },
 
   apply: function(opt) {

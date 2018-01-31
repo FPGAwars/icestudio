@@ -19,9 +19,10 @@
       <b>Sorry, README.md file does not exist</b>
     </div>
   </article>
-  <script src="lib/marked.js"></script>
   <script>
     'use strict';
+    var marked = require('marked');
+
     function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
     }
