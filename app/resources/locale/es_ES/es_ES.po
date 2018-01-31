@@ -12,11 +12,11 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:87
+#: app/scripts/services/drivers.js:167 app/scripts/services/drivers.js:337
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>Desconecta</b> y <b>conecta</b> la placa"
 
-#: app/scripts/services/drivers.js:194
+#: app/scripts/services/drivers.js:303
 msgid ""
 "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
 "board</li><li>Replace the <b>(Interface 0)</b> driver of the board by "
@@ -26,7 +26,7 @@ msgstr ""
 "placa FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la "
 "placa por <b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol>"
 
-#: app/scripts/services/drivers.js:217
+#: app/scripts/services/drivers.js:309
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -34,6 +34,25 @@ msgstr ""
 "<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra el "
 "dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala "
 "el driver</li></ol>"
+
+#: app/scripts/services/drivers.js:314
+msgid ""
+"<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
+"board</li><li>Install the driver</li><li>Unplug and reconnect the board</"
+"li></ol>"
+msgstr ""
+"<h4>Instrucciones de instalación del driver Serie</h4><ol><li>Conecta la "
+"placa FPGA</li><li>Instala el driver</li><li>Desconecta y conecta la placa</"
+"li></ol>"
+
+#: app/scripts/services/drivers.js:319
+msgid ""
+"<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>Instrucciones de desinstalación del driver Serie</h4><ol><li>Encuentra "
+"el dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y "
+"desinstala el driver</li></ol>"
 
 #: app/views/menu.html:329
 msgid "About Icestudio"
@@ -43,7 +62,7 @@ msgstr "Sobre Icestudio"
 msgid "Add"
 msgstr "Añadir"
 
-#: app/scripts/controllers/menu.js:574
+#: app/scripts/controllers/menu.js:582
 msgid "Add a block to start"
 msgstr "Añade un bloque para comenzar"
 
@@ -51,15 +70,15 @@ msgstr "Añade un bloque para comenzar"
 msgid "Add as block"
 msgstr "Añadir como bloque"
 
-#: app/scripts/services/tools.js:1059
+#: app/scripts/services/tools.js:1079
 msgid "All collections removed"
 msgstr "Colecciones eliminadas"
 
-#: app/scripts/controllers/menu.js:598
+#: app/scripts/controllers/menu.js:606
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Todas las colecciones almacenadas se perderán. ¿Deseas continuar?"
 
-#: app/scripts/services/utils.js:533
+#: app/scripts/services/utils.js:529
 msgid "Author"
 msgstr "Autor"
 
@@ -74,11 +93,10 @@ msgstr "Euskera"
 #: app/scripts/services/blocks.js:757 app/scripts/services/blocks.js:778
 #: app/scripts/services/blocks.js:833 app/scripts/services/blocks.js:852
 #: app/scripts/services/blocks.js:887 app/scripts/services/blocks.js:930
-#: app/scripts/services/blocks.js:965
 msgid "Block updated"
 msgstr "Bloque actualizado"
 
-#: app/scripts/services/project.js:433
+#: app/scripts/services/project.js:434
 msgid "Block {{name}} imported"
 msgstr "Bloque {{name}} importado"
 
@@ -102,23 +120,35 @@ msgstr "Reglas de la placa deshabilitadas"
 msgid "Board rules enabled"
 msgstr "Reglas de la placa habilitadas"
 
-#: app/scripts/services/tools.js:340
-msgid "Board {{name}} not detected"
-msgstr "Placa {{name}} no detectada"
+#: app/scripts/services/tools.js:354
+msgid "Board {{name}} disconnected"
+msgstr "Placa {{name}} desconectada"
 
-#: app/scripts/controllers/menu.js:522
+#: app/scripts/services/tools.js:335 app/scripts/services/tools.js:350
+msgid "Board {{name}} not available"
+msgstr "Placa {{name}} no disponible"
+
+#: app/scripts/services/tools.js:332
+msgid "Board {{name}} not connected"
+msgstr "Placa {{name}} no conectada"
+
+#: app/scripts/controllers/menu.js:530
 msgid "Board {{name}} selected"
 msgstr "Placa {{name}} seleccionada"
+
+#: app/scripts/services/tools.js:347
+msgid "Bootloader not active"
+msgstr "Bootloader no activo"
 
 #: app/views/menu.html:229
 msgid "Build"
 msgstr "Sintetizar"
 
-#: app/scripts/controllers/menu.js:541
+#: app/scripts/controllers/menu.js:549
 msgid "Build done"
 msgstr "Sintetizado realizado"
 
-#: app/scripts/controllers/main.js:16 app/scripts/services/project.js:146
+#: app/scripts/controllers/main.js:16 app/scripts/services/project.js:147
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -126,21 +156,21 @@ msgstr "Cancelar"
 msgid "Catalan"
 msgstr "Catalán"
 
-#: app/scripts/services/tools.js:743
+#: app/scripts/services/tools.js:764
 msgid "Check Internet connection..."
 msgstr "Comprobando conexión a Internet..."
 
-#: app/scripts/services/tools.js:753
+#: app/scripts/services/tools.js:774
 msgid "Check Python..."
 msgstr "Comprobando Python..."
 
-#: app/scripts/services/tools.js:847
+#: app/scripts/services/tools.js:866
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Haz clic aquí para <b>configurar los drivers</b>"
 
-#: app/scripts/services/drivers.js:109 app/scripts/services/drivers.js:202
-#: app/scripts/services/drivers.js:224 app/scripts/services/tools.js:139
-#: app/scripts/services/tools.js:253
+#: app/scripts/services/drivers.js:206 app/scripts/services/drivers.js:329
+#: app/scripts/services/drivers.js:348 app/scripts/services/tools.js:132
+#: app/scripts/services/tools.js:246
 msgid "Click here to install it"
 msgstr "Haz clic aquí para instalarlo"
 
@@ -164,27 +194,27 @@ msgstr "Colección"
 msgid "Collection info"
 msgstr "Información de la colección"
 
-#: app/scripts/controllers/menu.js:480
+#: app/scripts/controllers/menu.js:488
 msgid "Collection {{collection}} info not defined"
 msgstr "Información de la colección {{collection}} no definida"
 
-#: app/scripts/services/tools.js:943
+#: app/scripts/services/tools.js:963
 msgid "Collection {{name}} added"
 msgstr "Colección {{name}} añadida"
 
-#: app/scripts/services/tools.js:937
+#: app/scripts/services/tools.js:957
 msgid "Collection {{name}} not replaced"
 msgstr "Colección {{name}} no reemplazada"
 
-#: app/scripts/services/tools.js:1053
+#: app/scripts/services/tools.js:1073
 msgid "Collection {{name}} removed"
 msgstr "Colección {{name}} eliminada"
 
-#: app/scripts/services/tools.js:933
+#: app/scripts/services/tools.js:953
 msgid "Collection {{name}} replaced"
 msgstr "Colección {{name}} reemplazada"
 
-#: app/scripts/controllers/menu.js:488
+#: app/scripts/controllers/menu.js:496
 msgid "Collection {{name}} selected"
 msgstr "Colección {{name}} seleccionada"
 
@@ -196,7 +226,7 @@ msgstr "Colecciones"
 msgid "Community forum"
 msgstr "Foro de la comunidad"
 
-#: app/scripts/services/tools.js:348
+#: app/scripts/services/tools.js:368
 msgid "Configuration not completed"
 msgstr "Configuración no completada"
 
@@ -224,7 +254,7 @@ msgstr "Datasheet"
 msgid "Default"
 msgstr "Por defecto"
 
-#: app/scripts/services/tools.js:610
+#: app/scripts/services/tools.js:632
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -232,7 +262,7 @@ msgstr ""
 "No se encuentra la toolchain por defecto, por lo que será descargada. Esta "
 "operación requiere conexión a Internet. ¿Deseas continuar?"
 
-#: app/scripts/services/utils.js:532
+#: app/scripts/services/utils.js:528
 msgid "Description"
 msgstr "Descripción"
 
@@ -244,11 +274,11 @@ msgstr "Deshabilitar"
 msgid "Do you want to close the application?"
 msgstr "¿Deseas cerrar la aplicación?"
 
-#: app/scripts/controllers/menu.js:588
+#: app/scripts/controllers/menu.js:596
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "¿Deseas eliminar la colección {{name}}?"
 
-#: app/scripts/services/tools.js:929
+#: app/scripts/services/tools.js:949
 msgid "Do you want to replace it?"
 msgstr "¿Deseas reemplazarla?"
 
@@ -260,15 +290,17 @@ msgstr "Documentación"
 msgid "Drivers"
 msgstr "Drivers"
 
-#: app/scripts/services/drivers.js:133 app/scripts/services/drivers.js:72
+#: app/scripts/services/drivers.js:123 app/scripts/services/drivers.js:144
+#: app/scripts/services/drivers.js:234
 msgid "Drivers disabled"
 msgstr "Drivers deshabilitados"
 
-#: app/scripts/services/drivers.js:125 app/scripts/services/drivers.js:63
+#: app/scripts/services/drivers.js:114 app/scripts/services/drivers.js:136
+#: app/scripts/services/drivers.js:224
 msgid "Drivers enabled"
 msgstr "Drivers habilitados"
 
-#: app/scripts/services/tools.js:357
+#: app/scripts/services/tools.js:377
 msgid "Duplicated FPGA I/O ports"
 msgstr "Puertos E/S de la FPGA duplicados"
 
@@ -280,7 +312,7 @@ msgstr "Atributos del bloque duplicados"
 msgid "Edit"
 msgstr "Editar"
 
-#: app/scripts/services/tools.js:918
+#: app/scripts/services/tools.js:938
 msgid "Edit the collection name"
 msgstr "Edita el nombre de la colección"
 
@@ -320,15 +352,15 @@ msgstr "Introduce los parámetros"
 msgid "Enter the remote hostname user@host"
 msgstr "Introduce el nombre del host remoto usuario@host"
 
-#: app/scripts/services/tools.js:639
+#: app/scripts/services/tools.js:661
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Error: toolchain por defecto no encontrada en '{{dir}}'"
 
-#: app/scripts/services/utils.js:678
+#: app/scripts/services/utils.js:674
 msgid "Error: {{error}}"
 msgstr "Error: {{error}}"
 
-#: app/scripts/services/tools.js:431
+#: app/scripts/services/tools.js:451
 msgid "Errors detected in the design"
 msgstr "Errores detectados en el diseño"
 
@@ -336,7 +368,7 @@ msgstr "Errores detectados en el diseño"
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: app/scripts/services/tools.js:282
+#: app/scripts/services/tools.js:275
 msgid "Execute remote {{label}} ..."
 msgstr "Ejecutar {{label}} remoto ..."
 
@@ -344,19 +376,19 @@ msgstr "Ejecutar {{label}} remoto ..."
 msgid "Export"
 msgstr "Exportar"
 
-#: app/scripts/services/tools.js:778
+#: app/scripts/services/tools.js:799
 msgid "Extract default apio files..."
 msgstr "Extraer ficheros de apio..."
 
-#: app/scripts/services/tools.js:788
+#: app/scripts/services/tools.js:809
 msgid "Extract default apio packages..."
 msgstr "Extraer paquetes de apio..."
 
-#: app/scripts/services/tools.js:766
+#: app/scripts/services/tools.js:787
 msgid "Extract virtual env files..."
 msgstr "Extraer ficheros del virtual env"
 
-#: app/scripts/services/tools.js:354
+#: app/scripts/services/tools.js:374
 msgid "FPGA I/O ports not defined"
 msgstr "Puertos E/S de la FPGA no definidos"
 
@@ -373,18 +405,18 @@ msgstr "Recursos de la FPGA"
 msgid "File"
 msgstr "Archivo"
 
-#: app/scripts/services/project.js:448
+#: app/scripts/services/project.js:449
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
 "El archivo {{file}} ya existe en el directorio del proyecto. ¿Deseas "
 "reemplazarlo?"
 
-#: app/scripts/services/tools.js:221
+#: app/scripts/services/tools.js:214
 msgid "File {{file}} does not exist"
 msgstr "El archivo {{file}} no existe"
 
-#: app/scripts/services/project.js:482
+#: app/scripts/services/project.js:483
 msgid "File {{file}} imported"
 msgstr "Archivo {{file}} importado"
 
@@ -404,11 +436,11 @@ msgstr "Gallego"
 msgid "Help"
 msgstr "Ayuda"
 
-#: app/scripts/services/utils.js:546
+#: app/scripts/services/utils.js:542
 msgid "Image"
 msgstr "Imagen"
 
-#: app/scripts/controllers/menu.js:753
+#: app/scripts/controllers/menu.js:761
 msgid "Image {{name}} saved"
 msgstr "Imagen {{name}} guardada"
 
@@ -424,58 +456,58 @@ msgstr "Entrada"
 msgid "Install"
 msgstr "Instalar"
 
-#: app/scripts/services/tools.js:783
+#: app/scripts/services/tools.js:804
 msgid "Install default apio..."
 msgstr "Instalar apio..."
 
-#: app/scripts/services/tools.js:832
+#: app/scripts/services/tools.js:850
 msgid "Installation completed"
 msgstr "Instalación completada"
 
-#: app/scripts/services/tools.js:673 app/scripts/services/tools.js:708
+#: app/scripts/services/tools.js:695 app/scripts/services/tools.js:730
 msgid "Installing toolchain"
 msgstr "Instalando la toolchain"
 
-#: app/scripts/services/drivers.js:117 app/scripts/services/tools.js:747
+#: app/scripts/services/drivers.js:214 app/scripts/services/tools.js:768
 msgid "Internet connection required"
 msgstr "Es necesario conexión a Internet"
 
-#: app/scripts/services/graph.js:178
+#: app/scripts/services/graph.js:179
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Conexión de <i>Pull up</i> no válida:<br>hay un bloque conectado"
 
-#: app/scripts/services/graph.js:192
+#: app/scripts/services/graph.js:193
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Conexión de <i>Pull up</i> no válida:<br>sólo se permiten bloques "
 "<i>Entrada</i>"
 
-#: app/scripts/services/graph.js:184
+#: app/scripts/services/graph.js:185
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Conexión de bloque no válida:<br>hay un <i>Pull up</i>  conectado"
 
-#: app/scripts/services/tools.js:949
+#: app/scripts/services/tools.js:969
 msgid "Invalid collection {{name}}"
 msgstr "Colección {{name}} no válida"
 
-#: app/scripts/services/graph.js:142 app/scripts/services/graph.js:149
-#: app/scripts/services/graph.js:156
+#: app/scripts/services/graph.js:143 app/scripts/services/graph.js:150
+#: app/scripts/services/graph.js:157
 msgid "Invalid connection"
 msgstr "Conexión no válida"
 
-#: app/scripts/services/graph.js:211
+#: app/scripts/services/graph.js:212
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Conexión no válida: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:172
+#: app/scripts/services/graph.js:173
 msgid "Invalid multiple input connections"
 msgstr "Conexiones de entrada múltiple no válidas"
 
-#: app/scripts/services/utils.js:259
+#: app/scripts/services/utils.js:255
 msgid "Invalid project format"
 msgstr "Formato de proyecto no válido"
 
-#: app/scripts/services/drivers.js:195
+#: app/scripts/services/drivers.js:304
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "Se recomienda utilizar puertos <b>USB 2.0</b>"
 
@@ -491,15 +523,15 @@ msgstr "Cargar"
 msgid "Local parameter"
 msgstr "Parámetro local"
 
-#: app/scripts/services/tools.js:771
+#: app/scripts/services/tools.js:792
 msgid "Make virtual env..."
 msgstr "Crear virtual env..."
 
-#: app/scripts/services/utils.js:758
+#: app/scripts/services/utils.js:754
 msgid "Maximum bus size: 96 bits"
 msgstr "Tamaño máximo del bus: 96 bits"
 
-#: app/scripts/services/utils.js:530
+#: app/scripts/services/utils.js:526
 msgid "Name"
 msgstr "Nombre"
 
@@ -511,16 +543,16 @@ msgstr "Nuevo"
 msgid "New project {{name}} created"
 msgstr "Nuevo proyecto {{name}} creado"
 
-#: app/scripts/controllers/menu.js:606
+#: app/scripts/controllers/menu.js:614
 msgid "No collections stored"
 msgstr "Ninguna colección almacenada"
 
 #: app/scripts/controllers/main.js:15 app/scripts/controllers/menu.js:266
-#: app/scripts/services/project.js:145
+#: app/scripts/services/project.js:146
 msgid "OK"
 msgstr "OK"
 
-#: app/scripts/services/project.js:101 app/scripts/services/project.js:384
+#: app/scripts/services/project.js:101 app/scripts/services/project.js:385
 msgid "Old project format {{version}}"
 msgstr "Formato de proyecto antiguo {{version}}"
 
@@ -528,11 +560,11 @@ msgstr "Formato de proyecto antiguo {{version}}"
 msgid "Open"
 msgstr "Abrir"
 
-#: app/scripts/services/utils.js:553
+#: app/scripts/services/utils.js:549
 msgid "Open SVG"
 msgstr "Abrir SVG"
 
-#: app/scripts/services/project.js:485
+#: app/scripts/services/project.js:486
 msgid "Original file {{file}} does not exist"
 msgstr "El archivo original {{file}} no existe"
 
@@ -544,7 +576,7 @@ msgstr "Salida"
 msgid "Paste"
 msgstr "Pegar"
 
-#: app/scripts/services/utils.js:887
+#: app/scripts/services/utils.js:883
 msgid "Please run: {{cmd}}"
 msgstr "Por favor ejecuta: {{cmd}}"
 
@@ -564,11 +596,11 @@ msgstr "Información del proyecto actualizada"
 msgid "Project {{name}} loaded"
 msgstr "Proyecto {{name}} cargado"
 
-#: app/scripts/services/project.js:349
+#: app/scripts/services/project.js:350
 msgid "Project {{name}} saved"
 msgstr "Proyecto {{name}} guardado"
 
-#: app/scripts/services/tools.js:760
+#: app/scripts/services/tools.js:781
 msgid "Python 2.7 is required"
 msgstr "Es necesario Python 2.7"
 
@@ -576,7 +608,7 @@ msgstr "Es necesario Python 2.7"
 msgid "Quit"
 msgstr "Salir"
 
-#: app/scripts/services/blocks.js:950 app/views/design.html:5
+#: app/views/design.html:5
 msgid "Read only"
 msgstr "Solo lectura"
 
@@ -584,7 +616,7 @@ msgstr "Solo lectura"
 msgid "Redo"
 msgstr "Rehacer"
 
-#: app/scripts/services/tools.js:466
+#: app/scripts/services/tools.js:486
 msgid "Remote host {{name}} not connected"
 msgstr "Host remoto {{name}} no conectado"
 
@@ -600,7 +632,7 @@ msgstr "Eliminar"
 msgid "Remove all"
 msgstr "Eliminar todo"
 
-#: app/scripts/services/utils.js:555
+#: app/scripts/services/utils.js:551
 msgid "Reset SVG"
 msgstr "Resetear SVG"
 
@@ -612,7 +644,7 @@ msgstr "Reset default"
 msgid "Save"
 msgstr "Guardar"
 
-#: app/scripts/services/utils.js:554
+#: app/scripts/services/utils.js:550
 msgid "Save SVG"
 msgstr "Guardar SVG"
 
@@ -640,19 +672,19 @@ msgstr "Código fuente"
 msgid "Spanish"
 msgstr "Español"
 
-#: app/scripts/controllers/menu.js:540
+#: app/scripts/controllers/menu.js:548
 msgid "Start build"
 msgstr "Comenzar sintetizado"
 
-#: app/scripts/controllers/menu.js:553
+#: app/scripts/controllers/menu.js:561
 msgid "Start upload"
 msgstr "Comenzar carga"
 
-#: app/scripts/controllers/menu.js:530
+#: app/scripts/controllers/menu.js:538
 msgid "Start verification"
 msgstr "Comenzar verificación"
 
-#: app/scripts/services/tools.js:271
+#: app/scripts/services/tools.js:264
 msgid "Synchronize remote files ..."
 msgstr "Sincronizando ficheros remotos ..."
 
@@ -660,11 +692,11 @@ msgstr "Sincronizando ficheros remotos ..."
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/scripts/services/tools.js:928
+#: app/scripts/services/tools.js:948
 msgid "The collection {{name}} already exists."
 msgstr "La colección {{name}} ya existe."
 
-#: app/scripts/controllers/menu.js:509
+#: app/scripts/controllers/menu.js:517
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -672,16 +704,16 @@ msgstr ""
 "La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la "
 "placa {{name}}?"
 
-#: app/scripts/services/tools.js:647
+#: app/scripts/services/tools.js:669
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "La toolchain será eliminada. ¿Deseas continuar?"
 
-#: app/scripts/services/tools.js:632
+#: app/scripts/services/tools.js:654
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 "La toolchain será restaurada a los valores por defecto: ¿Deseas continuar?"
 
-#: app/scripts/services/tools.js:621
+#: app/scripts/services/tools.js:643
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -689,7 +721,7 @@ msgstr ""
 "La toolchain será actualizada. Esta operación requiere conexión a Internet. "
 "¿Deseas continuar?"
 
-#: app/scripts/services/project.js:407
+#: app/scripts/services/project.js:408
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -705,20 +737,20 @@ msgstr "Este proyecto está diseñado para la placa {{name}}."
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:834
+#: app/scripts/services/tools.js:852
 msgid "Toolchain installed"
 msgstr "Toolchain instalada"
 
-#: app/scripts/services/drivers.js:202 app/scripts/services/drivers.js:224
-#: app/scripts/services/tools.js:139 app/scripts/services/tools.js:839
+#: app/scripts/services/drivers.js:329 app/scripts/services/drivers.js:348
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:857
 msgid "Toolchain not installed"
 msgstr "La toolchain no está instalada"
 
-#: app/scripts/services/tools.js:652
+#: app/scripts/services/tools.js:674
 msgid "Toolchain removed"
 msgstr "Toolchain eliminada"
 
-#: app/scripts/services/tools.js:253
+#: app/scripts/services/tools.js:246
 msgid "Toolchain version does not match"
 msgstr "La versión de la toolchain no coincide"
 
@@ -730,7 +762,7 @@ msgstr "Herramientas"
 msgid "Undo"
 msgstr "Deshacer"
 
-#: app/scripts/services/tools.js:343
+#: app/scripts/services/tools.js:339
 msgid "Unknown board"
 msgstr "Placa desconocida"
 
@@ -751,11 +783,11 @@ msgstr "Actualiza el nombre del bloque"
 msgid "Upload"
 msgstr "Cargar"
 
-#: app/scripts/controllers/menu.js:554
+#: app/scripts/controllers/menu.js:562
 msgid "Upload done"
 msgstr "Carga realizada"
 
-#: app/scripts/controllers/menu.js:531
+#: app/scripts/controllers/menu.js:539
 msgid "Verification done"
 msgstr "Verificación realizada"
 
@@ -763,7 +795,7 @@ msgstr "Verificación realizada"
 msgid "Verify"
 msgstr "Verificar"
 
-#: app/scripts/services/utils.js:531 app/views/menu.html:314
+#: app/scripts/services/utils.js:527 app/views/menu.html:314
 msgid "Version"
 msgstr "Versión"
 
@@ -775,7 +807,7 @@ msgstr "Ver"
 msgid "View license"
 msgstr "Ver licencia"
 
-#: app/scripts/services/tools.js:434
+#: app/scripts/services/tools.js:454
 msgid "Warnings detected in the design"
 msgstr "Advertencias detectadas en el diseño"
 
@@ -797,11 +829,11 @@ msgstr "Nombre del parámetro {{name}} incorrecto"
 msgid "Wrong port name {{name}}"
 msgstr "Nombre del puerto {{name}} incorrecto"
 
-#: app/scripts/services/project.js:141
+#: app/scripts/services/project.js:142
 msgid "Wrong project format: {{name}}"
 msgstr "Formato de proyecto incorrecto: {{name}}"
 
-#: app/scripts/services/tools.js:463
+#: app/scripts/services/tools.js:483
 msgid "Wrong remote hostname {{name}}"
 msgstr "Nombre del host remoto incorrecto {{name}}"
 
@@ -817,25 +849,28 @@ msgstr "Tus cambios se perderán si no los guardas"
 msgid "back"
 msgstr "volver"
 
-#: app/scripts/services/drivers.js:108 app/scripts/services/utils.js:862
+#: app/scripts/services/drivers.js:205 app/scripts/services/utils.js:858
 msgid "{{app}} is required."
 msgstr "Es necesario {{app}}."
 
-#: app/scripts/controllers/menu.js:438
+#: app/scripts/controllers/menu.js:442
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} datasheet no definido"
 
-#: app/scripts/controllers/menu.js:428
+#: app/scripts/controllers/menu.js:432
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} pinout no definido"
 
-#: app/scripts/controllers/menu.js:457
+#: app/scripts/controllers/menu.js:463
 msgid "{{board}} rules not defined"
 msgstr "Reglas de {{board}} no definidas"
 
 #: app/scripts/controllers/menu.js:204 app/scripts/controllers/menu.js:228
 msgid "{{name}} exported"
 msgstr "{{name}} exportado"
+
+#~ msgid "Board {{name}} not detected"
+#~ msgstr "Placa {{name}} no detectada"
 
 #~ msgid "Errors detected in the code"
 #~ msgstr "Errores detectados en el código"
