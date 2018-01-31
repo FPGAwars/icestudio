@@ -3,6 +3,7 @@
 var os = require('os');
 var sha1 = require('sha1');
 var marked = require('marked');
+var openurl = require('openurl');
 var emoji = require('node-emoji');
 
 const WIRE_WIDTH = 1.5;
@@ -1384,7 +1385,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.textSelector.find('a').each(function(index, element) {
       element.onclick = function (event) {
         event.preventDefault();
-        nw.Shell.openExternal(element.href); /* global nw */
+        openurl.open(element.href);
       };
     });
   },

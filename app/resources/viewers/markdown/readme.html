@@ -22,6 +22,7 @@
   <script>
     'use strict';
     var marked = require('marked');
+    var openurl = require('openurl');
 
     function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -33,7 +34,7 @@
       if (title) {
         out += ' title="' + title + '"';
       }
-      out += ' onclick="nw.Shell.openExternal(\'' + href + '\')"';
+      out += ' onclick="openurl.open(\'' + href + '\')"';
       out += '>' + text + '</a>';
       return out;
     };
