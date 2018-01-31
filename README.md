@@ -1,7 +1,7 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.1)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.3.1-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Backers on Open Collective](https://opencollective.com/icestudio/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/icestudio/sponsors/badge.svg)](#sponsors) [![Version](https://img.shields.io/badge/version-v0.3.1-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -177,6 +177,36 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 * [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
 
   <img src="https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png" width="80">
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/icestudio/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/icestudio#backer)]
+
+<a href="https://opencollective.com/icestudio#backers" target="_blank"><img src="https://opencollective.com/icestudio/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/icestudio#sponsor)]
+
+<a href="https://opencollective.com/icestudio/sponsor/0/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/1/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/2/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/3/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/4/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/5/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/6/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/7/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/8/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/icestudio/sponsor/9/website" target="_blank"><img src="https://opencollective.com/icestudio/sponsor/9/avatar.svg"></a>
+
+
 
 ## License
 
