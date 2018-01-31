@@ -16,12 +16,12 @@
 | [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** | &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |
-| [BlackIce](https://mystorm.uk/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [BlackIce II](https://mystorm.uk/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [TinyFPGA B2](http://tinyfpga.com/TinyFPGA-B-Series) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [BlackIce](https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [BlackIce II](https://github.com/mystorm-org/BlackIce-II) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [TinyFPGA B2](http://tinyfpga.com/b-series-guide.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 **\*** Use with Raspberry Pi
 
