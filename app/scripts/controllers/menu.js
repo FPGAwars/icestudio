@@ -635,7 +635,7 @@ angular.module('icestudio')
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2017</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2018</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);

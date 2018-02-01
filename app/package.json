@@ -2,7 +2,7 @@
   "name": "icestudio",
   "version": "0.3.1-dev",
   "description": "Experimental graphic editor for open FPGAs",
-  "author": "Jesús Arroyo Torrens <jesus.jkhlg@gmail.com>",
+  "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "main": "index.html",

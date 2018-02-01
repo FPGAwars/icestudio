@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016-2017 FPGAwars
+Copyright (c) 2016-2018 FPGAwars
 Copyright (c) 2013 client IO
 */
 
