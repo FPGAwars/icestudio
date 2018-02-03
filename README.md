@@ -1,7 +1,7 @@
 <img src="./doc/images/icestudio-logo-label.png" align="center">
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.1)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.3.1-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.2-beta)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.3.2--beta-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -16,9 +16,12 @@
 | [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCEstick Evaluation Kit](http://www.pighixxx.com/test/portfolio-items/icestick/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** | &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |
+| [BlackIce](https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [BlackIce II](https://github.com/mystorm-org/BlackIce-II) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [TinyFPGA B2](http://tinyfpga.com/b-series-guide.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 **\*** Use with Raspberry Pi
 
@@ -87,10 +90,10 @@ npm start
 |:----------:|:------------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100)  |
 | Spanish    | ![Progress](http://progressed.io/bar/100)  |
-| Basque     | ![Progress](http://progressed.io/bar/98)   |
-| French     | ![Progress](http://progressed.io/bar/94)   |
-| Galician   | ![Progress](http://progressed.io/bar/88)   |
-| Catalan    | ![Progress](http://progressed.io/bar/88)   |
+| French     | ![Progress](http://progressed.io/bar/97)   |
+| Galician   | ![Progress](http://progressed.io/bar/97)   |
+| Basque     | ![Progress](http://progressed.io/bar/96)   |
+| Catalan    | ![Progress](http://progressed.io/bar/86)   |
 
 **Contribute!**
 
@@ -150,6 +153,9 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
   * [Unai](https://github.com/1138-4EB)
   * [Francisco Sayas](https://github.com/fsayas)
   * [Pascal Cotret](https://github.com/pcotret)
+  * [Juan Jose Luna Espinosa](https://github.com/yomboprime)
+  * [Salvador E. Tropea](https://github.com/set-soft)
+  * [redbeard](https://github.com/brianredbeard)
 * v0.2
   * [Tomás Calvo](https://github.com/tocalvo)
   * [Juan González (Obijuan)](https://github.com/Obijuan)

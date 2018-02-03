@@ -97,20 +97,13 @@ angular.module('icestudio')
 
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
-        function (error, stdout, stderr) {
+        function (error, stdout/*, stderr*/) {
           // console.log(error, stdout, stderr);
           if (error) {
             this.enableKeyEvents();
             this.enableClickEvents();
             callback(true);
-            angular.element('#progress-message')
-              .text(stderr);
-            angular.element('#progress-bar')
-              .addClass('notransition progress-bar-danger')
-              .removeClass('progress-bar-info progress-bar-striped active')
-              .text('Error')
-              .attr('aria-valuenow', 100)
-              .css('width', '100%');
+            alertify.error(stdout, 30);
           }
           else {
             callback();
@@ -178,7 +171,10 @@ angular.module('icestudio')
     };
 
     this.installOnlineApio = function(callback) {
-      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', 'apio">=' + _package.apio.min + ',<' + _package.apio.max + '"'], callback);
+      var versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
+      var extraPackages = _package.apio.extras || [];
+      var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
+      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
     this.apioInstall = function(_package, callback) {
@@ -1073,6 +1069,16 @@ angular.module('icestudio')
         id = nodeSha1(id).toString();
       }
       return 'v' + id.substring(0, 6);
+    };
+
+    this.beginBlockingTask = function () {
+      angular.element('#menu').addClass('is-disabled');
+      $('body').addClass('waiting');
+    };
+
+    this.endBlockingTask = function () {
+      angular.element('#menu').removeClass('is-disabled');
+      $('body').removeClass('waiting');
     };
 
   });

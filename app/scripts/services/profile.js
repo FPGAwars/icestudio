@@ -15,7 +15,7 @@ angular.module('icestudio')
     };
 
     if (common.DARWIN) {
-      this.data['macosDrivers'] = false;
+      this.data['macosFTDIDrivers'] = false;
     }
 
     this.load = function(callback) {
@@ -31,7 +31,7 @@ angular.module('icestudio')
           'showFPGAResources': data.showFPGAResources || false
         };
         if (common.DARWIN) {
-          self.data['macosDrivers'] = data.macosDrivers || false;
+          self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
         }
         if (callback) {
           callback();

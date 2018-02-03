@@ -363,7 +363,7 @@ angular.module('icestudio')
 
     $scope.setRemoteHostname = function() {
       var current = profile.get('remoteHostname');
-      alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host (experimental)'), (current) ? current : '',
+      alertify.prompt(gettextCatalog.getString('Enter the remote hostname user@host'), (current) ? current : '',
         function(evt, remoteHostname) {
           profile.set('remoteHostname', remoteHostname);
       });
@@ -407,6 +407,8 @@ angular.module('icestudio')
         resizable: true,
         width: 700,
         height: 700,
+        'min_width': 300,
+        'min_height': 300,
         icon: 'resources/images/icestudio-logo.png'
       });
     };
@@ -421,6 +423,8 @@ angular.module('icestudio')
           resizable: true,
           width: 500,
           height: 700,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
@@ -450,6 +454,8 @@ angular.module('icestudio')
           resizable: false,
           width: 500,
           height: 500,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
@@ -473,6 +479,8 @@ angular.module('icestudio')
           resizable: true,
           width: 700,
           height: 700,
+          'min_width': 300,
+          'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
         });
       }
@@ -627,7 +635,7 @@ angular.module('icestudio')
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL v2</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2017</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2018</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
@@ -778,31 +786,32 @@ angular.module('icestudio')
 
     // Show menu with delay
     $scope.showMenu = function(newMenu) {
-      $timeout.cancel(timerOpen);
-      $timeout.cancel(timerClose);
-      if (menu !== newMenu) {
-        $scope.status[menu] = false;
-        menu = newMenu;
-      }
+      cancelTimeouts();
       if (!mousedown && !graph.addingDraggableBlock && !$scope.status[newMenu]) {
         timerOpen = $timeout(function() {
-          $scope.status[newMenu] = true;
+          $scope.fixMenu(newMenu);
         }, 300);
       }
     };
 
     // Hide menu with delay
-    $scope.hideMenu = function(currentMenu) {
-      $timeout.cancel(timerOpen);
+    $scope.hideMenu = function() {
+      cancelTimeouts();
       timerClose = $timeout(function() {
-        $scope.status[currentMenu] = false;
+        $scope.status[menu] = false;
       }, 900);
     };
 
     // Fix menu
-    $scope.fixMenu = function(currentMenu) {
-      $scope.status[currentMenu] = true;
+    $scope.fixMenu = function(newMenu) {
+      menu = newMenu;
+      $scope.status[menu] = true;
     };
+
+    function cancelTimeouts () {
+      $timeout.cancel(timerOpen);
+      $timeout.cancel(timerClose);
+    }
 
     // Disable click in submenus
     $(document).click('.dropdown-submenu', function(event) {

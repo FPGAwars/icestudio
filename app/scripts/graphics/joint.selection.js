@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016-2017 FPGAwars
+Copyright (c) 2016-2018 FPGAwars
 Copyright (c) 2013 client IO
 */
 
@@ -103,18 +103,16 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  startTranslatingSelection: function(evt, noBatch) {
+  startTranslatingSelection: function(evt) {
 
-    if (evt.which === 1 || noBatch) {
+    if (this._action !== 'adding' && evt.which === 1) {
       // Mouse left button
 
       if (!evt.shiftKey) {
         this._action = 'translating';
 
-        if (!noBatch) {
-          this.options.graph.trigger('batch:stop');
-          this.options.graph.trigger('batch:start');
-        }
+        this.options.graph.trigger('batch:stop');
+        this.options.graph.trigger('batch:start');
 
         var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
         this._snappedClientX = snappedClientCoords.x;
@@ -125,9 +123,15 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  isTranslating: function() {
+  startAddingSelection: function(evt) {
 
-    return this._action === 'translating';
+    this._action = 'adding';
+
+    var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
+    this._snappedClientX = snappedClientCoords.x;
+    this._snappedClientY = snappedClientCoords.y;
+
+    this.trigger('selection-box:pointerdown', evt);
   },
 
   startSelecting: function(evt/*, x, y*/) {
@@ -179,6 +183,7 @@ joint.ui.SelectionView = Backbone.View.extend({
         });
         break;
 
+      case 'adding':
       case 'translating':
 
         var snappedClientCoords = this.options.paper.snapToGrid(g.point(evt.clientX, evt.clientY));
@@ -233,6 +238,8 @@ joint.ui.SelectionView = Backbone.View.extend({
       		this._snappedClientY = snappedClientY;
       	}
 
+        this.trigger('selection-box:pointermove', evt);
+
         break;
     }
   },
@@ -279,6 +286,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         this.options.graph.trigger('batch:stop');
         // Everything else is done during the translation.
+        break;
+
+      case 'adding':
         break;
 
       case 'cherry-picking':

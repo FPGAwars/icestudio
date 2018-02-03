@@ -43,11 +43,11 @@ angular.module('icestudio')
     };
 
     this.buildCode = function(startMessage, endMessage) {
-      return apioRun(['build', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['build', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     this.uploadCode = function(startMessage, endMessage) {
-      return apioRun(['upload', '-b', common.selectedBoard.name], startMessage, endMessage);
+      return apioRun(['upload', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     function apioRun(commands, startMessage, endMessage) {
@@ -70,7 +70,7 @@ angular.module('icestudio')
             return checkToolchainInstalled();
           })
           .then(function() {
-            enableTaskMode();
+            utils.beginBlockingTask();
             if (startMessage) {
               startAlert = alertify.message(startMessage, 100000);
             }
@@ -82,6 +82,12 @@ angular.module('icestudio')
           })
           .then(function() {
             var hostname = profile.get('remoteHostname');
+            var command = commands[0];
+            if (command === 'build' || command === 'upload') {
+              if (profile.get('showFPGAResources')) {
+                commands = commands.concat('--verbose-arachne');
+              }
+            }
             if (hostname) {
               return executeRemote(commands, hostname);
             }
@@ -97,13 +103,13 @@ angular.module('icestudio')
             if (endMessage) {
               resultAlert = alertify.success(gettextCatalog.getString(endMessage));
             }
-            disableTaskMode();
+            utils.endBlockingTask();
             restoreTask();
             resolve();
           })
           .catch(function() {
             // Error
-            disableTaskMode();
+            utils.endBlockingTask();
             restoreTask();
           });
         }
@@ -118,16 +124,6 @@ angular.module('icestudio')
         }
         taskRunning = false;
       }, 1000);
-    }
-
-    function enableTaskMode() {
-      angular.element('#menu').addClass('disable-menu');
-      $('body').addClass('waiting');
-    }
-
-    function disableTaskMode() {
-      angular.element('#menu').removeClass('disable-menu');
-      $('body').removeClass('waiting');
     }
 
     function checkToolchainInstalled() {
@@ -280,7 +276,7 @@ angular.module('icestudio')
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
-            nodeSSHexec((['apio'].concat(commands).concat(['-p', '.build'])).join(' '), hostname,
+            nodeSSHexec((['apio'].concat(commands).concat(['--project-dir', '.build'])).join(' '), hostname,
               function (error, stdout, stderr) {
                 resolve({ error: error, stdout: stdout, stderr: stderr });
               });
@@ -335,12 +331,39 @@ angular.module('icestudio')
 
           if (stdout) {
             // - Apio errors
-            if (stdout.indexOf('[upload] Error') !== -1 ||
-                stdout.indexOf('Error: board not detected') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not detected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+            if (stdout.indexOf('Error: board not connected') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
             }
-            else if (stdout.indexOf('Error: unkown board') !== -1) {
+            else if (stdout.indexOf('Error: board not available') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+              setupDriversAlert();
+            }
+            else if (stdout.indexOf('Error: unknown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
+            }
+            else if (stdout.indexOf('[upload] Error') !== -1) {
+              switch (common.selectedBoard.name) {
+                // TinyFPGA-B2 programmer errors
+                case 'TinyFPGA-B2':
+                  var match = stdout.match(/Bootloader\snot\sactive/g);
+                  if (match && match.length === 3) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
+                  }
+                  else if (stdout.indexOf('Device or resource busy') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                    setupDriversAlert();
+                  }
+                  else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                  }
+                  else {
+                    resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+                  }
+                  break;
+                default:
+                  resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
+              }
+              console.warn(stdout);
             }
             // Yosys error (Mac OS)
             else if (stdout.indexOf('Library not loaded:') !== -1 &&
@@ -476,16 +499,18 @@ angular.module('icestudio')
 
           if (stdout) {
             // Show used resources in the FPGA
-            common.FPGAResources.pios = findFPGAResources(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
-            common.FPGAResources.plbs = findFPGAResources(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
-            common.FPGAResources.brams = findFPGAResources(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            common.FPGAResources.ffs = findValue(/DFF\s+([0-9]+)\s/g, stdout, common.FPGAResources.ffs);
+            common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
+            common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
+            common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
+            common.FPGAResources.brams = findValue(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
             utils.rootScopeSafeApply();
           }
         }
       });
     }
 
-    function findFPGAResources(pattern, output, previousValue) {
+    function findValue(pattern, output, previousValue) {
       var match = pattern.exec(output);
       return (match && match[1]) ? match[1] : previousValue;
     }
@@ -734,7 +759,6 @@ angular.module('icestudio')
         apioInstallIcestorm,
         apioInstallIverilog,
         apioInstallDrivers,
-        apioInstallScons,
         installationCompleted
       ]);
     }
@@ -792,7 +816,9 @@ angular.module('icestudio')
     // Remote installation
 
     function installOnlineApio(callback) {
-      updateProgress('pip install -U apio', 30);
+      var extraPackages = _package.apio.extras || [];
+      var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
+      updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }
 
@@ -813,17 +839,12 @@ angular.module('icestudio')
 
     function apioInstallDrivers(callback) {
       if (common.WIN32) {
-        updateProgress('apio install drivers', 80);
+        updateProgress('apio install drivers', 90);
         utils.apioInstall('drivers', callback);
       }
       else {
         callback();
       }
-    }
-
-    function apioInstallScons(callback) {
-      updateProgress('apio install scons', 90);
-      utils.apioInstall('scons', callback);
     }
 
     function installationCompleted(callback) {
@@ -844,20 +865,22 @@ angular.module('icestudio')
     }
 
     function setupDriversAlert() {
-      var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
-      if (!infoAlert) {
-        setTimeout(function() {
-          infoAlert = alertify.message(message, 30);
-          infoAlert.callback = function(isClicked) {
-            infoAlert = null;
-            if (isClicked) {
-              if (resultAlert) {
-                resultAlert.dismiss(false);
+      if (common.showDrivers()) {
+        var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
+        if (!infoAlert) {
+          setTimeout(function() {
+            infoAlert = alertify.message(message, 30);
+            infoAlert.callback = function(isClicked) {
+              infoAlert = null;
+              if (isClicked) {
+                if (resultAlert) {
+                  resultAlert.dismiss(false);
+                }
+                $rootScope.$broadcast('enableDrivers');
               }
-              $rootScope.$broadcast('enableDrivers');
-            }
-          };
-        }, 1000);
+            };
+          }, 1000);
+        }
       }
     }
 

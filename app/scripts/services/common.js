@@ -25,10 +25,15 @@ angular.module('icestudio')
 
     // FPGA resources
     this.FPGAResources = {
+      ffs: '-',
+      luts: '-',
       pios: '-',
       plbs: '-',
       brams: '-'
     };
+
+    //
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git#egg=apio';
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
@@ -87,5 +92,13 @@ angular.module('icestudio')
       }
       return _dir;
     }
+
+    this.showToolchain = function () {
+      return (this.selectedBoard && this.selectedBoard.info.interface !== 'GPIO') || false;
+    };
+
+    this.showDrivers = function () {
+      return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || false;
+    };
 
   });

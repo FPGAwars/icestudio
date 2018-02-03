@@ -1,7 +1,7 @@
 {
-  "label": "Kéfir I iCE40-HX4K",
-  "datasheet": "http://fpgalibre.sourceforge.net/Kefir/",
-  "interface": "",
+  "label": "BlackIce",
+  "datasheet": "https://mystorm.uk/",
+  "interface": "Serial",
   "FPGAResources": {
     "ffs": 7680,
     "luts": 7680,

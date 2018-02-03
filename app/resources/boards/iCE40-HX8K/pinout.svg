@@ -16,7 +16,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="pinout_8k.svg">
+   sodipodi:docname="pinout_modificado.svg">
   <defs
      id="defs4">
     <marker
@@ -617,16 +617,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2"
-     inkscape:cx="468.3551"
-     inkscape:cy="340.66145"
+     inkscape:cx="439.29764"
+     inkscape:cy="903.96794"
      inkscape:document-units="px"
-     inkscape:current-layer="g7694-7"
+     inkscape:current-layer="layer8"
      showgrid="false"
-     inkscape:window-width="1259"
-     inkscape:window-height="1017"
+     inkscape:window-width="1920"
+     inkscape:window-height="1023"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:snap-global="false" />
@@ -7225,7 +7225,7 @@
          id="tspan17782"
          x="565.3125"
          y="381.78406"
-         style="stroke-width:0.9375"></tspan></text>
+         style="stroke-width:0.9375" /></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -7664,7 +7664,7 @@
            id="tspan14258"
            x="336.5625"
            y="360.72162"
-           style="stroke-width:0.9375">7   6  5  4  3  2  1  0</tspan></text>
+           style="stroke-width:0.9375">0  1  2  3   4  5  6  7</tspan></text>
       <rect
          style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:#2b0000;stroke-width:0.77774823;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect7793-4"
@@ -10298,7 +10298,7 @@
          id="tspan8588"
          x="439.98285"
          y="243.55518"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">051</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">039</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#decdc3;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 475.14173,239.03407 c -0.42561,5.3e-4 -0.53611,-0.65977 -0.44955,-1.20957 l 2.58915,-9.45111 c 0.1887,-0.71037 0.83552,-1.05114 1.10411,-1.0442 l 25.88062,-0.0579 c 0.33591,-0.0183 1.07583,0.47913 0.90337,1.16438 l -2.62589,9.5737 c -0.16045,0.43558 -0.48269,1.07839 -1.03203,1.093 z"
@@ -10322,7 +10322,7 @@
          x="500.0596"
          y="226.24426"
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000"
-         id="tspan14266">LED7</tspan></text>
+         id="tspan14266">LED0</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 479.26745,236.05162 h 4.64039"
@@ -10387,7 +10387,7 @@
          id="tspan8588-1-8"
          x="500.0596"
          y="240.02673"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED6</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED1</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 479.26745,250.45893 h 4.64039"
@@ -10452,7 +10452,7 @@
          id="tspan8588-1-8-3"
          x="500.0596"
          y="253.77832"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED5</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED2</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 479.26745,264.83393 h 4.64039"
@@ -10517,7 +10517,7 @@
          id="tspan8588-1-8-3-5"
          x="500.0596"
          y="267.39169"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED4</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED3</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#f49231;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 505.64235,282.0469 c -0.4256,5.3e-4 -0.5361,-0.65977 -0.44955,-1.20957 l 2.58912,-9.45111 c 0.18869,-0.71037 0.8355,-1.05114 1.10409,-1.0442 l 12.00519,-0.0579 c 0.33591,-0.0183 1.07581,0.47913 0.90335,1.16438 l -2.62584,9.5737 c -0.16044,0.43558 -0.48268,1.07839 -1.03201,1.093 z"
@@ -10574,7 +10574,7 @@
          id="tspan8588-1-8-3-5-3"
          x="500.0596"
          y="281.08963"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED3</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED4</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#f49231;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 505.64235,296.36581 c -0.4256,5.3e-4 -0.5361,-0.65977 -0.44955,-1.20957 l 2.58912,-9.45111 c 0.18869,-0.71037 0.8355,-1.05114 1.10409,-1.0442 l 12.00519,-0.0579 c 0.33591,-0.0183 1.07581,0.47913 0.90335,1.16438 l -2.62584,9.5737 c -0.16044,0.43558 -0.48268,1.07839 -1.03201,1.093 z"
@@ -10631,7 +10631,7 @@
          id="tspan8588-1-8-3-5-3-2"
          x="500.0596"
          y="294.61844"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED2</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED5</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#f49231;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 505.64235,310.50795 c -0.4256,5.3e-4 -0.5361,-0.65977 -0.44955,-1.20957 l 2.58912,-9.45111 c 0.18869,-0.71037 0.8355,-1.05114 1.10409,-1.0442 l 12.00519,-0.0579 c 0.33591,-0.0183 1.07581,0.47913 0.90335,1.16438 l -2.62584,9.5737 c -0.16044,0.43558 -0.48268,1.07839 -1.03201,1.093 z"
@@ -10688,7 +10688,7 @@
          id="tspan8588-1-8-3-5-3-2-9"
          x="500.0596"
          y="308.37006"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED1</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED6</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#f49231;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 505.64235,324.88295 c -0.4256,5.3e-4 -0.5361,-0.65977 -0.44955,-1.20957 l 2.58912,-9.45111 c 0.18869,-0.71037 0.8355,-1.05114 1.10409,-1.0442 l 12.00519,-0.0579 c 0.33591,-0.0183 1.07581,0.47913 0.90335,1.16438 l -2.62584,9.5737 c -0.16044,0.43558 -0.48268,1.07839 -1.03201,1.093 z"
@@ -10745,7 +10745,7 @@
          id="tspan8588-1-8-3-5-3-2-9-7"
          x="500.0596"
          y="322.24121"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED0</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.55343056px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#000000">LED7</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#f49231;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 505.64235,339.38295 c -0.4256,5.3e-4 -0.5361,-0.65977 -0.44955,-1.20957 l 2.58912,-9.45111 c 0.18869,-0.71037 0.8355,-1.05114 1.10409,-1.0442 l 12.00519,-0.0579 c 0.33591,-0.0183 1.07581,0.47913 0.90335,1.16438 l -2.62584,9.5737 c -0.16044,0.43558 -0.48268,1.07839 -1.03201,1.093 z"
@@ -10883,7 +10883,7 @@
          id="tspan8588-2"
          x="439.98279"
          y="258.12506"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">047</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">041</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 451.87705,262.39428 h -95.87629 v 71.73545"
@@ -10916,7 +10916,7 @@
          id="tspan8588-2-2"
          x="439.98279"
          y="272.93488"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">046</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">042</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 451.52373,276.44854 h -87.39102 v 57.06298"
@@ -10949,7 +10949,7 @@
          id="tspan8588-2-2-2"
          x="439.98279"
          y="287.59583"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">045</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">044</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 450.99366,290.76809 h -78.5522 v 42.39051"
@@ -10982,7 +10982,7 @@
          id="tspan8588-2-2-2-3"
          x="439.98279"
          y="302.34787"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">044</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.96092415px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff">045</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 451.11893,305.01892 h -70.30221 v 28.14051"
@@ -11015,7 +11015,7 @@
          id="tspan8588-2-2-2-3-4"
          x="465.33307"
          y="299.33896"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.58178425px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:1px">042</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.58178425px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:1px">046</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 451.36922,319.39514 H 388.942 v 14.26551"
@@ -11048,7 +11048,7 @@
          id="tspan8588-2-2-2-3-4-1"
          x="457.23605"
          y="318.84879"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.75063515px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:0.91900927px">041</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.75063515px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:0.91900927px">047</tspan></text>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 451.17194,333.89514 H 398.01429"
@@ -11081,7 +11081,7 @@
          id="tspan8588-2-2-2-3-4-1-5"
          x="467.08102"
          y="326.21768"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.54609489px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:0.9387005px">039</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.54609489px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Italic';fill:#ffffff;stroke-width:0.9387005px">051</tspan></text>
     <path
        style="display:inline;opacity:1;fill:#6d6e70;fill-opacity:1;fill-rule:evenodd;stroke:#585958;stroke-width:0.20000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 105.17197,820.89842 c -0.62213,4.8e-4 -0.78366,-0.60063 -0.65715,-1.10114 l 3.78472,-8.60385 c 0.27581,-0.64669 1.22131,-0.95691 1.61393,-0.95059 l 17.54888,-0.0527 c 0.49102,-0.0167 1.57258,0.43618 1.32048,1.06 l -3.83838,8.71545 c -0.23453,0.39653 -0.70557,0.98171 -1.50856,0.99501 z"
@@ -12141,7 +12141,7 @@
          id="tspan9422-7-5-2"
          x="624.52338"
          y="1098.3988"
-         style="font-size:9.20518684px;line-height:1.25">20  OCT 2017</tspan></text>
+         style="font-size:9.20518684px;line-height:1.25"> 6  DEC  2017</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;fill:#7c7d81;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -12156,7 +12156,7 @@
          id="tspan9422-7-5-2-6"
          x="580.8783"
          y="1193.7802"
-         style="font-size:9.89646721px;line-height:1.25">ver  1  rev  1</tspan></text>
+         style="font-size:9.89646721px;line-height:1.25">ver  1  rev  2</tspan></text>
     <g
        inkscape:label="back"
        id="layer1-4"

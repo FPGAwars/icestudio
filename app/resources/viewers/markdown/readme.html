@@ -11,9 +11,6 @@
       margin: 0 auto;
       padding-left: 40px;
     }
-    a {
-      pointer-events: none;
-    }
   </style>
 </head>
 <body>
@@ -22,14 +19,28 @@
       <b>Sorry, README.md file does not exist</b>
     </div>
   </article>
-  <script src="lib/marked.js"></script>
   <script>
     'use strict';
+    var marked = require('marked');
+    var openurl = require('openurl');
+
     function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
     }
+
+    var renderer = new marked.Renderer();
+    renderer.link = function (href, title, text) {
+      var out = '<a href="javascript:void(0);"';
+      if (title) {
+        out += ' title="' + title + '"';
+      }
+      out += ' onclick="openurl.open(\'' + href + '\')"';
+      out += '>' + text + '</a>';
+      return out;
+    };
+
     window.onload = function() {
-      var options = { gfm: true };
+      var options = { gfm: true, renderer: renderer };
       var readme = getURLParameter('readme');
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open('GET', readme, false);
