@@ -479,7 +479,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   },
 
   mouseupcard: function(/*event, x, y*/) {
-    this.showTooltip();
   },
 
   mousedowncard: function(/*event, x, y*/) {
