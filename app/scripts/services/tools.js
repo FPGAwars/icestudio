@@ -82,8 +82,11 @@ angular.module('icestudio')
           })
           .then(function() {
             var hostname = profile.get('remoteHostname');
-            if (profile.get('showFPGAResources')) {
-              commands = commands.concat('--verbose-arachne');
+            var command = commands[0];
+            if (command === 'build' || command === 'upload') {
+              if (profile.get('showFPGAResources')) {
+                commands = commands.concat('--verbose-arachne');
+              }
             }
             if (hostname) {
               return executeRemote(commands, hostname);
