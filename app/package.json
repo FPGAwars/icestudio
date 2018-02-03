@@ -18,14 +18,14 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.3.0rc1",
+    "min": "0.3.0",
     "max": "0.4.0",
     "extras": [
       "blackiceprog",
       "tinyfpgab"
     ],
     "external": "",
-    "develop": true
+    "develop": false
   },
   "collection": "0.3.0",
   "engines": {
