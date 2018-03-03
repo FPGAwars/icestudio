@@ -60,6 +60,8 @@ ToolchainBuilder.prototype.build = function (callback) {
   this.ensurePythonIsAvailable()
     .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
+    .then(this.downloadSetuptools.bind(this))
+    .then(this.downloadWheel.bind(this))
     .then(this.downloadApio.bind(this))
     .then(this.installApio.bind(this))
     .then(this.downloadApioPackages.bind(this))
@@ -119,6 +121,30 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
       getPythonExecutable(),
       path.join(self.options.venvExtractDir, 'virtualenv.py'),
       self.options.venvDir
+    ];
+    childProcess.exec(command.join(' '),
+      function(error/*, stdout, stderr*/) {
+        if (error) { reject(error); }
+        else { resolve(); }
+      }
+    );
+  });
+};
+
+ToolchainBuilder.prototype.downloadSetuptools = function () {
+  return this.downloadPythonPackage('setuptools');
+};
+
+ToolchainBuilder.prototype.downloadWheel = function () {
+  return this.downloadPythonPackage('wheel');
+};
+
+ToolchainBuilder.prototype.downloadPythonPackage = function (pkg) {
+  var self = this;
+  self.emit('log', '> Download ' + pkg);
+  return new Promise(function(resolve, reject) {
+    var command = [
+      self.options.venvPip, 'download', '--dest', self.options.apioDir, pkg
     ];
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {
