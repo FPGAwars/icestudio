@@ -718,6 +718,8 @@ angular.module('icestudio')
         ensurePythonIsAvailable,
         extractVirtualEnv,
         makeVenvDirectory,
+        extractDefaultPythonPackages,
+        installDefaultPythonPackages,
         extractDefaultApio,
         installDefaultApio,
         extractDefaultApioPackages,
@@ -754,6 +756,7 @@ angular.module('icestudio')
         ensurePythonIsAvailable,
         extractVirtualEnv,
         makeVenvDirectory,
+        installOnlinePythonPackages,
         installOnlineApio,
         apioInstallSystem,
         apioInstallIcestorm,
@@ -798,13 +801,23 @@ angular.module('icestudio')
 
     // Local installation
 
+    function extractDefaultPythonPackages(callback) {
+      updateProgress(gettextCatalog.getString('Extract default python packages...'), 20);
+      utils.extractDefaultPythonPackages(callback);
+    }
+
+    function installDefaultPythonPackages(callback) {
+      updateProgress(gettextCatalog.getString('Install default python packages...'), 30);
+      utils.installDefaultPythonPackages(callback);
+    }
+
     function extractDefaultApio(callback) {
-      updateProgress(gettextCatalog.getString('Extract default apio files...'), 20);
+      updateProgress(gettextCatalog.getString('Extract default apio files...'), 40);
       utils.extractDefaultApio(callback);
     }
 
     function installDefaultApio(callback) {
-      updateProgress(gettextCatalog.getString('Install default apio...'), 40);
+      updateProgress(gettextCatalog.getString('Install default apio...'), 50);
       utils.installDefaultApio(callback);
     }
 
@@ -815,25 +828,30 @@ angular.module('icestudio')
 
     // Remote installation
 
+    function installOnlinePythonPackages(callback) {
+      updateProgress('pip install -U setuptools wheel', 20);
+      utils.installOnlinePythonPackages(callback);
+    }
+
     function installOnlineApio(callback) {
       var extraPackages = _package.apio.extras || [];
       var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
-      updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
+      updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 40);
       utils.installOnlineApio(callback);
     }
 
     function apioInstallSystem(callback) {
-      updateProgress('apio install system', 40);
+      updateProgress('apio install system', 50);
       utils.apioInstall('system', callback);
     }
 
     function apioInstallIcestorm(callback) {
-      updateProgress('apio install icestorm', 50);
+      updateProgress('apio install icestorm', 60);
       utils.apioInstall('icestorm', callback);
     }
 
     function apioInstallIverilog(callback) {
-      updateProgress('apio install iverilog', 70);
+      updateProgress('apio install iverilog', 80);
       utils.apioInstall('iverilog', callback);
     }
 

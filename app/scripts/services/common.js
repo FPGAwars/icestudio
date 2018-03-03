@@ -59,6 +59,10 @@ angular.module('icestudio')
     this.APP_DIR = nodePath.dirname(process.execPath);
     this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
 
+    this.DEFAULT_PYTHON_PACKAGES = 'default-python-packages';
+    this.DEFAULT_PYTHON_PACKAGES_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_PYTHON_PACKAGES);
+    this.DEFAULT_PYTHON_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_PYTHON_PACKAGES + '.zip');
+
     this.DEFAULT_APIO = 'default-apio';
     this.DEFAULT_APIO_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_APIO);
     this.DEFAULT_APIO_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.zip');

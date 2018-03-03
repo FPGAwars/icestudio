@@ -138,18 +138,30 @@ angular.module('icestudio')
       }
     };
 
-    this.extractDefaultApio = function(callback) {
-      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
-    };
-
-    this.installDefaultApio = function(callback) {
+    this.installDefaultPythonPackagesDir = function(defaultDir, callback) {
       var self = this;
-      nodeGlob(nodePath.join(common.DEFAULT_APIO_DIR, '*.*'), {}, function (error, files) {
+      nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
         if (!error) {
           files = files.map(function(item) { return coverPath(item); });
           self.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
+    };
+
+    this.extractDefaultPythonPackages = function(callback) {
+      this.extractZip(common.DEFAULT_PYTHON_PACKAGES_ZIP, common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
+    };
+
+    this.installDefaultPythonPackages = function(callback) {
+      this.installDefaultPythonPackagesDir(common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
+    };
+
+    this.extractDefaultApio = function(callback) {
+      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
+    };
+
+    this.installDefaultApio = function(callback) {
+      this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
     };
 
     this.extractDefaultApioPackages = function(callback) {
@@ -168,6 +180,10 @@ angular.module('icestudio')
           callback(true);
         }
       });
+    };
+
+    this.installOnlinePythonPackages = function(callback) {
+      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', 'setuptools', 'wheel'], callback);
     };
 
     this.installOnlineApio = function(callback) {

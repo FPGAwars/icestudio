@@ -38,6 +38,7 @@ function ToolchainBuilder(options) {
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
+  this.options.pythonPackagesDir = path.join(this.options.toolchainDir, 'default-python-packages');
   this.options.apioDir = path.join(this.options.toolchainDir, 'default-apio');
   this.options.apioPackagesDir = path.join(this.options.toolchainDir, 'default-apio-packages');
 
@@ -60,12 +61,12 @@ ToolchainBuilder.prototype.build = function (callback) {
   this.ensurePythonIsAvailable()
     .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
-    .then(this.downloadSetuptools.bind(this))
-    .then(this.downloadWheel.bind(this))
+    .then(this.downloadPythonPackages.bind(this))
+    .then(this.packagePythonPackages.bind(this))
     .then(this.downloadApio.bind(this))
+    .then(this.packageApio.bind(this))
     .then(this.installApio.bind(this))
     .then(this.downloadApioPackages.bind(this))
-    .then(this.packageApio.bind(this))
     .then(this.packageApioPackages.bind(this))
     .then(this.createDefaultToolchains.bind(this))
     .then(function(info) {
@@ -131,27 +132,30 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
   });
 };
 
-ToolchainBuilder.prototype.downloadSetuptools = function () {
-  return this.downloadPythonPackage('setuptools');
-};
-
-ToolchainBuilder.prototype.downloadWheel = function () {
-  return this.downloadPythonPackage('wheel');
-};
-
-ToolchainBuilder.prototype.downloadPythonPackage = function (pkg) {
+ToolchainBuilder.prototype.downloadPythonPackages = function () {
   var self = this;
-  self.emit('log', '> Download ' + pkg);
+  self.emit('log', '> Download python packages');
   return new Promise(function(resolve, reject) {
+    var pythonPackages = ['setuptools', 'wheel'];
     var command = [
-      self.options.venvPip, 'download', '--dest', self.options.apioDir, pkg
-    ];
+      self.options.venvPip, 'download', '--dest', self.options.pythonPackagesDir
+    ].concat(pythonPackages);
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
         else { resolve(); }
       }
     );
+  });
+};
+
+ToolchainBuilder.prototype.packagePythonPackages = function () {
+  var self = this;
+  self.emit('log', '> Package python packages');
+  return new Promise(function(resolve, reject) {
+    var source = self.options.pythonPackagesDir;
+    var target = path.join(self.options.toolchainDir, 'default-python-packages.zip');
+    compress(source, target, resolve, reject);
   });
 };
 
@@ -173,6 +177,16 @@ ToolchainBuilder.prototype.downloadApio = function () {
   });
 };
 
+ToolchainBuilder.prototype.packageApio = function () {
+  var self = this;
+  self.emit('log', '> Package apio');
+  return new Promise(function(resolve, reject) {
+    var source = self.options.apioDir;
+    var target = path.join(self.options.toolchainDir, 'default-apio.zip');
+    compress(source, target, resolve, reject);
+  });
+};
+
 ToolchainBuilder.prototype.installApio = function () {
   var self = this;
   self.emit('log', '> Install apio');
@@ -190,7 +204,7 @@ ToolchainBuilder.prototype.installApio = function () {
           }
         );
       }
-  });
+    });
   });
 };
 
@@ -219,16 +233,6 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
       }
     });
     resolve();
-  });
-};
-
-ToolchainBuilder.prototype.packageApio = function () {
-  var self = this;
-  self.emit('log', '> Package apio');
-  return new Promise(function(resolve, reject) {
-    var source = self.options.apioDir;
-    var target = path.join(self.options.toolchainDir, 'default-apio.zip');
-    compress(source, target, resolve, reject);
   });
 };
 
