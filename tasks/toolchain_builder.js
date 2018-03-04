@@ -267,21 +267,22 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
   return new Promise(function(resolve/*, reject*/) {
     self.options.platforms.forEach(function(platform) {
       self.emit('log', '  - ' + platform);
+      var p = getRealPlatform(platform);
       var destPath = path.join(self.options.buildDir, 'icestudio', platform);
       if (platform === 'osx32' || platform === 'osx64') {
         destPath = path.join(destPath, 'icestudio.app', 'Contents', 'Frameworks',
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
-      // Copy default-apio
-      var apioFilename = 'default-apio.zip';
       fse.copySync(
-        path.join(self.options.toolchainDir, apioFilename),
-        path.join(destPath, 'toolchain', apioFilename)
+        path.join(self.options.toolchainDir, 'default-python-packages.zip'),
+        path.join(destPath, 'toolchain', 'default-python-packages.zip')
       );
-      // Copy default-apio-packages
-      var apioPackagesFilename = 'default-apio-packages-' + getRealPlatform(platform) + '.zip';
       fse.copySync(
-        path.join(self.options.toolchainDir, apioPackagesFilename),
+        path.join(self.options.toolchainDir, 'default-apio.zip'),
+        path.join(destPath, 'toolchain', 'default-apio.zip')
+      );
+      fse.copySync(
+        path.join(self.options.toolchainDir, 'default-apio-packages-' + p + '.zip'),
         path.join(destPath, 'toolchain', 'default-apio-packages.zip')
       );
     });

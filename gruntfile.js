@@ -354,7 +354,11 @@ module.exports = function(grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
-      toolchain: ['cache/toolchain/default-apio', 'cache/toolchain/*.tar.gz'],
+      toolchain: [
+        'cache/toolchain/default-python-packages',
+        'cache/toolchain/default-apio',
+        'cache/toolchain/*.zip'
+      ],
       collection: ['app/resources/collection']
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
