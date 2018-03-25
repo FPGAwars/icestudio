@@ -1,19 +1,19 @@
 # 12 MHz clock
-set_io --warn-no-port CLK        35
+set_io --warn-no-port CLK        35 # input
 
 # RS232
-set_io --warn-no-port RX          6
-set_io --warn-no-port TX          9
+set_io --warn-no-port RX          6 # input
+set_io --warn-no-port TX          9 # output
 
 # LEDs and Button
-set_io --warn-no-port BTN_N      10
-set_io --warn-no-port LEDR_N     11
-set_io --warn-no-port LEDG_N     37
+set_io --warn-no-port BTN_N      10 # input
+set_io --warn-no-port LEDR_N     11 # output
+set_io --warn-no-port LEDG_N     37 # output
 
 # RGB LED Driver
-set_io --warn-no-port LED_RED_N  39
-set_io --warn-no-port LED_GRN_N  40
-set_io --warn-no-port LED_BLU_N  41
+set_io --warn-no-port LED_RED_N  39 # output
+set_io --warn-no-port LED_GRN_N  40 # output
+set_io --warn-no-port LED_BLU_N  41 # output
 
 # SPI Flash
 set_io --warn-no-port FLASH_SCK  15
