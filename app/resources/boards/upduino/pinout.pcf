@@ -33,6 +33,6 @@ set_io --warn-no-port PIN_25    25
 set_io --warn-no-port PIN_23    23
 
 # RGB LED Driver
-set_io --warn-no-port LED_RED_N  39 # output
-set_io --warn-no-port LED_GRN_N  40 # output
-set_io --warn-no-port LED_BLU_N  41 # output
+set_io --warn-no-port LED_GRN_N  39 # output
+set_io --warn-no-port LED_BLU_N  40 # output
+set_io --warn-no-port LED_RED_N  41 # output
