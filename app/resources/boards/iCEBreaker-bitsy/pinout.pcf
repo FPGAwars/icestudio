@@ -1,0 +1,50 @@
+# 12 MHz clock
+set_io --warn-no-port CLK         35 # input
+
+set_io --warn-no-port J7          46
+set_io --warn-no-port J8          47
+set_io --warn-no-port J9          44
+set_io --warn-no-port J10         48
+set_io --warn-no-port J11         45
+set_io --warn-no-port J12         2
+set_io --warn-no-port J13         46
+set_io --warn-no-port J20         3
+set_io --warn-no-port J29         25
+set_io --warn-no-port J30         23
+set_io --warn-no-port J31         27
+set_io --warn-no-port J32         26
+set_io --warn-no-port J33         28
+set_io --warn-no-port J34         31
+set_io --warn-no-port J35         32
+set_io --warn-no-port J36         34
+set_io --warn-no-port J37         36
+set_io --warn-no-port J44         6
+set_io --warn-no-port J45         9
+set_io --warn-no-port J46         20
+set_io --warn-no-port J47         19
+set_io --warn-no-port J48         18
+set_io --warn-no-port J49         21
+
+# USB
+set_io --warn-no-port USB_P       43 # input
+set_io --warn-no-port USB_DET     38 # input
+set_io --warn-no-port USB_N       42 # input
+
+# LEDs and Button
+set_io --warn-no-port BTN_N      10 # input
+set_io --warn-no-port LEDR_N     11 # output
+set_io --warn-no-port LEDG_N     37 # output
+
+# RGB LED Driver
+set_io --warn-no-port LED_RED_N  39 # output
+set_io --warn-no-port LED_GRN_N  40 # output
+set_io --warn-no-port LED_BLU_N  41 # output
+
+# SPI Flash
+set_io --warn-no-port FLASH_SCK  15
+set_io --warn-no-port FLASH_SSB  16
+set_io --warn-no-port FLASH_IO0  14
+set_io --warn-no-port FLASH_IO1  17
+set_io --warn-no-port FLASH_IO2  12
+set_io --warn-no-port FLASH_IO3  13
+
