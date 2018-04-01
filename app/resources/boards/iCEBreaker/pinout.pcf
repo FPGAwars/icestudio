@@ -1,0 +1,64 @@
+# 12 MHz clock
+set_io --warn-no-port CLK        35 # input
+
+# RS232
+set_io --warn-no-port RX          6 # input
+set_io --warn-no-port TX          9 # output
+
+# LEDs and Button
+set_io --warn-no-port BTN_N      10 # input
+set_io --warn-no-port LEDR_N     11 # output
+set_io --warn-no-port LEDG_N     37 # output
+
+# RGB LED Driver
+set_io --warn-no-port LED_RED_N  39 # output
+set_io --warn-no-port LED_GRN_N  40 # output
+set_io --warn-no-port LED_BLU_N  41 # output
+
+# SPI Flash
+set_io --warn-no-port FLASH_SCK  15
+set_io --warn-no-port FLASH_SSB  16
+set_io --warn-no-port FLASH_IO0  14
+set_io --warn-no-port FLASH_IO1  17
+set_io --warn-no-port FLASH_IO2  12
+set_io --warn-no-port FLASH_IO3  13
+
+# PMOD 1A
+set_io --warn-no-port P1A1        4
+set_io --warn-no-port P1A2        2
+set_io --warn-no-port P1A3       47
+set_io --warn-no-port P1A4       45
+set_io --warn-no-port P1A7        3
+set_io --warn-no-port P1A8       48
+set_io --warn-no-port P1A9       46
+set_io --warn-no-port P1A10      44
+
+# PMOD 1B
+set_io --warn-no-port P1B1       43
+set_io --warn-no-port P1B2       38
+set_io --warn-no-port P1B3       34
+set_io --warn-no-port P1B4       31
+set_io --warn-no-port P1B7       42
+set_io --warn-no-port P1B8       36
+set_io --warn-no-port P1B9       32
+set_io --warn-no-port P1B10      28
+
+# PMOD 2
+set_io --warn-no-port P2_1       27
+set_io --warn-no-port P2_2       25
+set_io --warn-no-port P2_3       21
+set_io --warn-no-port P2_4       19
+set_io --warn-no-port P2_7       26
+set_io --warn-no-port P2_8       23
+set_io --warn-no-port P2_9       20
+set_io --warn-no-port P2_10      18
+
+# LEDs and Buttons (PMOD 2)
+set_io --warn-no-port LED1       27
+set_io --warn-no-port LED2       25
+set_io --warn-no-port LED3       21
+set_io --warn-no-port BTN2       19
+set_io --warn-no-port LED5       26
+set_io --warn-no-port LED4       23
+set_io --warn-no-port BTN1       20
+set_io --warn-no-port BTN3       18
