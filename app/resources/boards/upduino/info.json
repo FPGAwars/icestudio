@@ -1,5 +1,5 @@
 {
-  "label": "Gnarly Grey UPDuino Board",
+  "label": "UPDuino v1.0",
   "datasheet": "https://github.com/gtjennings1/UPDuino_v1_0",
   "interface": "FTDI",
   "FPGAResources": {
