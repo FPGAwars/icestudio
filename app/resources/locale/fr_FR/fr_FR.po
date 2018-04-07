@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:167 app/scripts/services/drivers.js:337
@@ -41,12 +41,18 @@ msgid ""
 "board</li><li>Install the driver</li><li>Unplug and reconnect the board</"
 "li></ol>"
 msgstr ""
+"<h4>Instructions pour l'installation du driver série</h4><ol><li>Connecter "
+"la carte FPGA</li><li>Installer le driver</li><li>Débrancher et reconnecter "
+"la carte</li></ol>"
 
 #: app/scripts/services/drivers.js:319
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
+"<h4>Instructions pour la désinstallation du driver série</h4><ol><li>Trouver "
+"le périphérique USB du FPGA</li><li>Sélectionner l'interface de la carte et "
+"désinstaller le driver</li></ol>"
 
 #: app/views/menu.html:329
 msgid "About Icestudio"
@@ -117,15 +123,15 @@ msgstr "Règles de la carte activées"
 
 #: app/scripts/services/tools.js:354
 msgid "Board {{name}} disconnected"
-msgstr ""
+msgstr "Carte {{name}} déconnectée"
 
 #: app/scripts/services/tools.js:335 app/scripts/services/tools.js:350
 msgid "Board {{name}} not available"
-msgstr ""
+msgstr "Carte {{name}} non disponible"
 
 #: app/scripts/services/tools.js:332
 msgid "Board {{name}} not connected"
-msgstr ""
+msgstr "Carte {{name}} non connectée"
 
 #: app/scripts/controllers/menu.js:530
 msgid "Board {{name}} selected"
@@ -133,7 +139,7 @@ msgstr "Carte {{name}} séléctionnée"
 
 #: app/scripts/services/tools.js:347
 msgid "Bootloader not active"
-msgstr ""
+msgstr "Bootloader non activé"
 
 #: app/views/menu.html:229
 msgid "Build"
