@@ -1,31 +1,44 @@
-# 12 MHz clock
-set_io --warn-no-port CLK 35 # input
+# -----------------------------------------------------------------------------
+#- iCEBreaker constraint file (.pcf)
+#- By Miodrag Milanovic
+#- March - 2018
+#- GPL license
+# -----------------------------------------------------------------------------
 
-# RS232
-set_io --warn-no-port RX 6 # input
-set_io --warn-no-port TX 9 # output
 
-# LEDs and Button
-set_io --warn-no-port BTN  10 # input
-set_io --warn-no-port LEDR 11 # output
-set_io --warn-no-port LEDG 37 # output
+# ------------ Buttons and LEDs -----------------------------------------------
+set_io --warn-no-port BTN  10  # input
+set_io --warn-no-port LEDR 11  # output
+set_io --warn-no-port LEDG 37  # output
 
-# LEDs and Buttons (PMOD 2)
-set_io --warn-no-port BTN1 20 # input
-set_io --warn-no-port BTN2 19 # input
-set_io --warn-no-port BTN3 18 # input
-set_io --warn-no-port LED1 27 # output
-set_io --warn-no-port LED2 25 # output
-set_io --warn-no-port LED3 21 # output
-set_io --warn-no-port LED4 23 # output
-set_io --warn-no-port LED5 26 # output
 
-# RGB LED Driver
-set_io --warn-no-port LED_R 39 # output
-set_io --warn-no-port LED_G 40 # output
-set_io --warn-no-port LED_B 41 # output
+# ------------ Buttons and LEDs (PMOD 2) ---------------------------------------
+set_io --warn-no-port BTN1 20  # input
+set_io --warn-no-port BTN2 19  # input
+set_io --warn-no-port BTN3 18  # input
+set_io --warn-no-port LED1 27  # output
+set_io --warn-no-port LED2 25  # output
+set_io --warn-no-port LED3 21  # output
+set_io --warn-no-port LED4 23  # output
+set_io --warn-no-port LED5 26  # output
 
-# SPI Flash
+
+# ------------ RGB LED Driver -------------------------------------------------
+set_io --warn-no-port LED_R 39  # output
+set_io --warn-no-port LED_G 40  # output
+set_io --warn-no-port LED_B 41  # output
+
+
+# ------------ System 12 MHz clock --------------------------------------------
+set_io --warn-no-port CLK 35  # input
+
+
+# ------------ RS232 ---------------------------------------------------------
+set_io --warn-no-port RX 6  # input
+set_io --warn-no-port TX 9  # output
+
+
+# ------------ SPI Flash ------------------------------------------------------
 set_io --warn-no-port F_SCK 15
 set_io --warn-no-port F_SSB 16
 set_io --warn-no-port F_IO0 14
@@ -33,17 +46,19 @@ set_io --warn-no-port F_IO1 17
 set_io --warn-no-port F_IO2 12
 set_io --warn-no-port F_IO3 13
 
-# PMOD 1A
-set_io --warn-no-port P1_A1  4
-set_io --warn-no-port P1_A2  2
+
+# ------------ PMOD 1A --------------------------------------------------------
+set_io --warn-no-port P1_A1   4
+set_io --warn-no-port P1_A2   2
 set_io --warn-no-port P1_A3  47
 set_io --warn-no-port P1_A4  45
-set_io --warn-no-port P1_A7  3
+set_io --warn-no-port P1_A7   3
 set_io --warn-no-port P1_A8  48
 set_io --warn-no-port P1_A9  46
 set_io --warn-no-port P1_A10 44
 
-# PMOD 1B
+
+# ------------ PMOD 1B --------------------------------------------------------
 set_io --warn-no-port P1_B1  43
 set_io --warn-no-port P1_B2  38
 set_io --warn-no-port P1_B3  34
@@ -53,7 +68,8 @@ set_io --warn-no-port P1_B8  36
 set_io --warn-no-port P1_B9  32
 set_io --warn-no-port P1_B10 28
 
-# PMOD 2
+
+# ------------ PMOD 2 ---------------------------------------------------------
 set_io --warn-no-port P2_1  27
 set_io --warn-no-port P2_2  25
 set_io --warn-no-port P2_3  21

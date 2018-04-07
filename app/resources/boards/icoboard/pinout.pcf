@@ -3,8 +3,8 @@
 #- By Jesus Arroyo Torrens
 #- September - 2016
 #- GPL license
+#- Pinout: http://icoboard.org/icoboard-1-0.html
 # -----------------------------------------------------------------------------
-# --  Pinout: http://icoboard.org/icoboard-1-0.html
 
 
 # ------------ System clock ---------------------------------------------------
@@ -82,12 +82,12 @@ set_io --warn-no-port P17 B7
 
 set_io --warn-no-port P20 B11
 set_io --warn-no-port P21 B10
-set_io --warn-no-port P22 B9
-set_io --warn-no-port P23 D8
+set_io --warn-no-port P22  B9
+set_io --warn-no-port P23  D8
 set_io --warn-no-port P24 A11
 set_io --warn-no-port P25 A10
-set_io --warn-no-port P26 A9
-set_io --warn-no-port P27 B8
+set_io --warn-no-port P26  A9
+set_io --warn-no-port P27  B8
 
 # -------------| P3 |----------------------------------------------------------
 #
@@ -121,7 +121,7 @@ set_io --warn-no-port P37 N9
 set_io --warn-no-port P40 T11
 set_io --warn-no-port P41 T14
 set_io --warn-no-port P42 T15
-set_io --warn-no-port P43 T9
+set_io --warn-no-port P43  T9
 set_io --warn-no-port P44 T10
 set_io --warn-no-port P45 T13
 set_io --warn-no-port P46 R14
@@ -185,7 +185,7 @@ set_io --warn-no-port C00 C13
 set_io --warn-no-port C01 A15
 set_io --warn-no-port C02 L12
 set_io --warn-no-port C03 J16
-set_io --warn-no-port C04 E9
+set_io --warn-no-port C04  E9
 set_io --warn-no-port C05 C11
 set_io --warn-no-port C06 P14
 set_io --warn-no-port C07 J15
@@ -195,7 +195,7 @@ set_io --warn-no-port C09 E10
 set_io --warn-no-port C10 T16
 set_io --warn-no-port C11 J14
 set_io --warn-no-port C12 A16
-set_io --warn-no-port C13 F9
+set_io --warn-no-port C13  F9
 set_io --warn-no-port C14 F14
 set_io --warn-no-port C15 K16
 set_io --warn-no-port C16 D15
@@ -237,7 +237,7 @@ set_io --warn-no-port C48 F15
 set_io --warn-no-port C49 G12
 
 set_io --warn-no-port C50 L11
-set_io --warn-no-port C51 M9
+set_io --warn-no-port C51  M9
 set_io --warn-no-port C52 E16
 set_io --warn-no-port C53 B13
 set_io --warn-no-port C54 N12
