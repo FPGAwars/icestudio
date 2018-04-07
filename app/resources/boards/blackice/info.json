@@ -1,6 +1,6 @@
 {
   "label": "BlackIce",
-  "datasheet": "https://mystorm.uk/",
+  "datasheet": "https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board",
   "interface": "Serial",
   "FPGAResources": {
     "ffs": 7680,

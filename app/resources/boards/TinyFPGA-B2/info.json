@@ -1,6 +1,6 @@
 {
   "label": "TinyFPGA B2",
-  "datasheet": "https://github.com/tinyfpga/TinyFPGA-B-Series",
+  "datasheet": "http://tinyfpga.com/b-series-guide.html",
   "interface": "Serial",
   "FPGAResources": {
     "ffs": 7680,

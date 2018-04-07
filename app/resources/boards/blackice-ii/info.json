@@ -1,6 +1,6 @@
 {
   "label": "BlackIce II",
-  "datasheet": "https://mystorm.uk/",
+  "datasheet": "https://github.com/mystorm-org/BlackIce-II",
   "interface": "Serial",
   "FPGAResources": {
     "ffs": 7680,
