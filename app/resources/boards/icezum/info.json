@@ -1,6 +1,6 @@
 {
   "label": "IceZUM Alhambra",
-  "datasheet": "https://github.com/FPGAwars/icezum/wiki",
+  "datasheet": "https://github.com/FPGAwars/icezum",
   "interface": "FTDI",
   "FPGAResources": {
     "ffs": 1280,
