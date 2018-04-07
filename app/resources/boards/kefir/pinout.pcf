@@ -74,14 +74,14 @@ set_io --warn-no-port PMB7 99
 
 # Milk channel A
 # As an RS-232 port
-set_io --warn-no-port TXD 37 # input
-set_io --warn-no-port RXD 38 # output
-set_io --warn-no-port RTS 39 # input
-set_io --warn-no-port CTS 41 # output
-set_io --warn-no-port DTR 42 # input
-set_io --warn-no-port DSR 43 # output
-set_io --warn-no-port DCD 44 # output
-set_io --warn-no-port RI  45 # output
+set_io --warn-no-port TXD 37  # input
+set_io --warn-no-port RXD 38  # output
+set_io --warn-no-port RTS 39  # input
+set_io --warn-no-port CTS 41  # output
+set_io --warn-no-port DTR 42  # input
+set_io --warn-no-port DSR 43  # output
+set_io --warn-no-port DCD 44  # output
+set_io --warn-no-port RI  45  # output
 # FTDI generic names
 set_io --warn-no-port AD0 37
 set_io --warn-no-port AD1 38
@@ -131,5 +131,3 @@ set_io --warn-no-port U_VMO 113  # output
 set_io --warn-no-port U_VMI 114  # input
 set_io --warn-no-port U_VPI 115  # input
 set_io --warn-no-port U_NOE 116  # output
-
-

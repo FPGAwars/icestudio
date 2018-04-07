@@ -3,11 +3,11 @@
 #- By Luke Valenty
 #- October - 2017
 #- GPL license
+#- TinyFPGA B-series information: https://github.com/tinyfpga/TinyFPGA-B-Series/
 # -----------------------------------------------------------------------------
-#
-# TinyFPGA B-series information: https://github.com/tinyfpga/TinyFPGA-B-Series/
 
-# -- Left side of board
+
+# ------------ Left side ------------------------------------------------------
 set_io --warn-no-port USB_DP A3
 set_io --warn-no-port USB_DM A4
 set_io --warn-no-port CLK    B4  # input
@@ -22,7 +22,8 @@ set_io --warn-no-port PIN_11 G1
 set_io --warn-no-port PIN_12 H1
 set_io --warn-no-port PIN_13 J1
 
-# -- Right side of board
+
+# ------------ Right side ------------------------------------------------------
 set_io --warn-no-port SDO    G6
 set_io --warn-no-port SDI    H7
 set_io --warn-no-port SCK    G7

@@ -4,6 +4,7 @@
 #- April - 2018
 #- GPL license
 #- Board info: http://www.latticesemi.com/view_document?document_id=51987
+# -----------------------------------------------------------------------------
 
 
 # ------------ LEDs -----------------------------------------------------------
@@ -12,22 +13,22 @@ set_io --warn-no-port LED_G 40  # output
 set_io --warn-no-port LED_B 39  # output
 
 
-# ------------ SWITCH BUTTONS -------------------------------------------------
+# ------------ Switch buttons -------------------------------------------------
 set_io --warn-no-port SW1 23  # input
 set_io --warn-no-port SW2 25  # input
 set_io --warn-no-port SW3 34  # input
 set_io --warn-no-port SW4 43  # input
 
 
-# ------------ SYSTEM CLOCK ---------------------------------------------------
+# ------------ System 12 MHz clock --------------------------------------------
 set_io --warn-no-port CLK 35  # input
 
 
-# ------------ PROGRAMMING JUMPERS --------------------------------------------
+# ------------ Programming jumpers --------------------------------------------
 #
 #             J6
 #       ---------------
-#      | F_MOSI MISO   | *
+#      | F_MOSI MISO   | <
 #      |   MOSI F_MISO |
 #       ---------------
 #
@@ -35,10 +36,10 @@ set_io --warn-no-port CLK 35  # input
 #    For programming iCE    ||
 
 
-# ------------ PMOD SOCKET ----------------------------------------------------
+# ------------ PMOD socket ----------------------------------------------------
 #
 #       ----------
-#    * |   SS 38B |
+#    > |   SS 38B |
 #      | MOSI 39A |
 #      | MISO 43A |
 #      |  SCK 42B |
@@ -57,10 +58,10 @@ set_io --warn-no-port 43A 32
 set_io --warn-no-port 42B 31
 
 
-# ------------ AARDVARK CONNECTOR ---------------------------------------------
+# ------------ Aardvark connector ---------------------------------------------
 #
 #       ---------------
-#    * |     NC GND    |
+#    > |     NC GND    |
 #      |     NC NC     |
 #      | F_MISO NC     |
 #      |    SCK F_MOSI |
@@ -72,14 +73,14 @@ set_io --warn-no-port 42B 31
 #
 #       -------------------------------
 #      | GND SS    SCK MISO  MOSI  3V3 |
-#      | GND LED_R GND LED_G LED_B 3V3 | *
+#      | GND LED_R GND LED_G LED_B 3V3 | <
 #       -------------------------------
 
 
 # ------------ HEADER B -------------------------------------------------------
 #
 #       ----------
-#    * | 3V3 3V3  |
+#    > | 3V3 3V3  |
 #      | 37A NC   |
 #      | 36B NC   |
 #      | 39A 48B  |
@@ -111,7 +112,7 @@ set_io --warn-no-port ICLK 35  # input
 # ------------ HEADER C -------------------------------------------------------
 #
 #       ---------
-#    * | 3V3 22A |
+#    > | 3V3 22A |
 #      |  8A 23B |
 #      |  9B 24A |
 #      |  4A 25B |
