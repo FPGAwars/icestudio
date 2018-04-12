@@ -61,8 +61,8 @@ ToolchainBuilder.prototype.build = function (callback) {
   this.ensurePythonIsAvailable()
     .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
-    .then(this.downloadPythonPackages.bind(this))
-    .then(this.packagePythonPackages.bind(this))
+    // .then(this.downloadPythonPackages.bind(this))
+    // .then(this.packagePythonPackages.bind(this))
     .then(this.downloadApio.bind(this))
     .then(this.packageApio.bind(this))
     .then(this.installApio.bind(this))
@@ -136,7 +136,7 @@ ToolchainBuilder.prototype.downloadPythonPackages = function () {
   var self = this;
   self.emit('log', '> Download python packages');
   return new Promise(function(resolve, reject) {
-    var pythonPackages = ['setuptools', 'wheel'];
+    var pythonPackages = [];
     var command = [
       self.options.venvPip, 'download', '--dest', self.options.pythonPackagesDir
     ].concat(pythonPackages);

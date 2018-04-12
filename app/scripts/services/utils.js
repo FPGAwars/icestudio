@@ -183,7 +183,8 @@ angular.module('icestudio')
     };
 
     this.installOnlinePythonPackages = function(callback) {
-      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', 'setuptools', 'wheel'], callback);
+      var pythonPackages = [];
+      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages, callback);
     };
 
     this.installOnlineApio = function(callback) {
