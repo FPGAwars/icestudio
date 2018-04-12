@@ -5,7 +5,7 @@
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
-**Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/).
+**Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
 
     Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
@@ -174,6 +174,9 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 * v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
 * v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 
+* [FPGAwars](http://fpgawars.github.io/) community has developed this project in a voluntary and altruistic way since 02/2017.
+
+  <img src="https://avatars3.githubusercontent.com/u/18257418?s=100">
 
 * [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
 
