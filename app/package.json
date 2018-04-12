@@ -25,7 +25,7 @@
       "tinyfpgab"
     ],
     "external": "",
-    "develop": true
+    "develop": false
   },
   "collection": "0.3.0",
   "engines": {

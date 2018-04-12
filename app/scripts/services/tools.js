@@ -246,8 +246,8 @@ angular.module('icestudio')
             }
             else {
               // An old version is installed
-              alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-              .callback = function(isClicked) {
+              resultAlert = alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
+              resultAlert.callback = function(isClicked) {
                 if (isClicked) {
                   // Install the new toolchain
                   $rootScope.$broadcast('installToolchain');
