@@ -52,7 +52,7 @@ angular.module('icestudio')
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
-    this.VENV = 'virtualenv-15.0.1';
+    this.VENV = 'virtualenv-15.2.0';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
     this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
 

@@ -112,7 +112,7 @@ angular.module('icestudio')
       );
     };
 
-    this.makeVenvDirectory = function(callback) {
+    this.createVirtualEnv = function(callback) {
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
