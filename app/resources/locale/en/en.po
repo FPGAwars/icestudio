@@ -383,8 +383,8 @@ msgid "Extract default apio packages..."
 msgstr "Extract default apio packages..."
 
 #: app/scripts/services/tools.js:787
-msgid "Extract virtual env files..."
-msgstr "Extract virtual env files..."
+msgid "Extract virtualenv files..."
+msgstr "Extract virtualenv files..."
 
 #: app/scripts/services/tools.js:374
 msgid "FPGA I/O ports not defined"
@@ -519,8 +519,8 @@ msgid "Local parameter"
 msgstr "Local parameter"
 
 #: app/scripts/services/tools.js:792
-msgid "Make virtual env..."
-msgstr "Make virtual env..."
+msgid "Create virtualenv..."
+msgstr "Create virtualenv..."
 
 #: app/scripts/services/utils.js:754
 msgid "Maximum bus size: 96 bits"

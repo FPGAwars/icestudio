@@ -716,8 +716,8 @@ angular.module('icestudio')
       // Reset toolchain
       async.series([
         ensurePythonIsAvailable,
-        extractVirtualEnv,
-        createVirtualEnv,
+        extractVirtualenv,
+        createVirtualenv,
         extractDefaultApio,
         installDefaultApio,
         extractDefaultApioPackages,
@@ -752,8 +752,8 @@ angular.module('icestudio')
       async.series([
         checkInternetConnection,
         ensurePythonIsAvailable,
-        extractVirtualEnv,
-        createVirtualEnv,
+        extractVirtualenv,
+        createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
         apioInstallIcestorm,
@@ -787,14 +787,14 @@ angular.module('icestudio')
       }
     }
 
-    function extractVirtualEnv(callback) {
-      updateProgress(gettextCatalog.getString('Extract virtual env files...'), 5);
-      utils.extractVirtualEnv(callback);
+    function extractVirtualenv(callback) {
+      updateProgress(gettextCatalog.getString('Extract virtualenv files...'), 5);
+      utils.extractVirtualenv(callback);
     }
 
-    function createVirtualEnv(callback) {
-      updateProgress(gettextCatalog.getString('Create virtual env...'), 10);
-      utils.createVirtualEnv(callback);
+    function createVirtualenv(callback) {
+      updateProgress(gettextCatalog.getString('Create virtualenv...'), 10);
+      utils.createVirtualenv(callback);
     }
 
     // Local installation

@@ -385,8 +385,8 @@ msgid "Extract default apio packages..."
 msgstr "提取默认apio包..."
 
 #: app/scripts/services/tools.js:787
-msgid "Extract virtual env files..."
-msgstr "提取 virtual env 文件..."
+msgid "Extract virtualenv files..."
+msgstr "提取 virtualenv 文件..."
 
 #: app/scripts/services/tools.js:374
 msgid "FPGA I/O ports not defined"
@@ -520,8 +520,8 @@ msgid "Local parameter"
 msgstr "本地参数"
 
 #: app/scripts/services/tools.js:792
-msgid "Make virtual env..."
-msgstr "编译 virtual env..."
+msgid "Create virtualenv..."
+msgstr "编译 virtualenv..."
 
 #: app/scripts/services/utils.js:754
 msgid "Maximum bus size: 96 bits"

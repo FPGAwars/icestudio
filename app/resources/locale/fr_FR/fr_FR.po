@@ -387,7 +387,7 @@ msgid "Extract default apio packages..."
 msgstr "Extraction des paquets apio par défaut..."
 
 #: app/scripts/services/tools.js:787
-msgid "Extract virtual env files..."
+msgid "Extract virtualenv files..."
 msgstr "Extraction des fichiers d'environnement virtuels..."
 
 #: app/scripts/services/tools.js:374
@@ -526,7 +526,7 @@ msgid "Local parameter"
 msgstr "Paramètre local"
 
 #: app/scripts/services/tools.js:792
-msgid "Make virtual env..."
+msgid "Create virtualenv..."
 msgstr "Créer l'environnement virtuel..."
 
 #: app/scripts/services/utils.js:754

@@ -66,7 +66,7 @@ angular.module('icestudio')
       });
     };
 
-    this.extractVirtualEnv = function(callback) {
+    this.extractVirtualenv = function(callback) {
       this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
@@ -112,7 +112,7 @@ angular.module('icestudio')
       );
     };
 
-    this.createVirtualEnv = function(callback) {
+    this.createVirtualenv = function(callback) {
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
