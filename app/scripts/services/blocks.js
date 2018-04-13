@@ -50,7 +50,7 @@ angular.module('icestudio')
         id: null,
         data: {},
         type: 'basic.input',
-        position: { x: 4 * gridsize, y: 4 * gridsize }
+        position: { x: 0, y: 0 }
       };
       utils.inputcheckbox2prompt([
         gettextCatalog.getString('Enter the input blocks'),
@@ -115,7 +115,7 @@ angular.module('icestudio')
         id: null,
         data: {},
         type: 'basic.output',
-        position: { x: 95 * gridsize, y: 4 * gridsize }
+        position: { x: 0, y: 0 }
       };
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Enter the output blocks'),
@@ -189,7 +189,7 @@ angular.module('icestudio')
         id: null,
         data: {},
         type: 'basic.constant',
-        position: { x: 20 * gridsize, y: 4 * gridsize }
+        position: { x: 0, y: 0 }
       };
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Enter the constant blocks'),
@@ -247,7 +247,7 @@ angular.module('icestudio')
         id: null,
         data: { list: '' },
         type: 'basic.memory',
-        position: { x: 40 * gridsize, y: 36 * gridsize },
+        position: { x: 0, y: 0 },
         size: { width: 192, height: 128 }
       };
       if (callback) {
@@ -264,7 +264,7 @@ angular.module('icestudio')
           ports: { in: [], out: [] }
         },
         type: 'basic.code',
-        position: { x: 40 * gridsize, y: 16 * gridsize },
+        position: { x: 0, y: 0 },
         size: { width: 192, height: 128 }
       };
       var defaultValues = [
@@ -412,7 +412,7 @@ angular.module('icestudio')
         id: null,
         data: { info: '', readonly: false },
         type: 'basic.info',
-        position: { x: 40 * gridsize, y: 36 * gridsize },
+        position: { x: 0, y: 0 },
         size: { width: 192, height: 128 }
       };
       if (callback) {
@@ -424,7 +424,7 @@ angular.module('icestudio')
       var blockInstance = {
         id: null,
         type: type,
-        position: { x: 10 * gridsize, y: 16 * gridsize }
+        position: { x: 0, y: 0 }
       };
       if (resultAlert) {
         resultAlert.dismiss(false);
