@@ -121,7 +121,8 @@ angular.module('icestudio')
         this.executeCommand(
           [this.getPythonExecutable(),
            coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-           coverPath(common.ENV_DIR)], callback);
+           coverPath(common.ENV_DIR),
+           '--always-copy'], callback);
       }
       else {
         callback();
