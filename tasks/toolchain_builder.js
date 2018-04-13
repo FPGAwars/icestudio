@@ -34,7 +34,7 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-  var venvRelease = 'virtualenv-15.0.1';
+  var venvRelease = 'virtualenv-15.2.0';
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
@@ -273,10 +273,10 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
         destPath = path.join(destPath, 'icestudio.app', 'Contents', 'Frameworks',
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
-      fse.copySync(
-        path.join(self.options.toolchainDir, 'default-python-packages.zip'),
-        path.join(destPath, 'toolchain', 'default-python-packages.zip')
-      );
+      // fse.copySync(
+      //   path.join(self.options.toolchainDir, 'default-python-packages.zip'),
+      //   path.join(destPath, 'toolchain', 'default-python-packages.zip')
+      // );
       fse.copySync(
         path.join(self.options.toolchainDir, 'default-apio.zip'),
         path.join(destPath, 'toolchain', 'default-apio.zip')
