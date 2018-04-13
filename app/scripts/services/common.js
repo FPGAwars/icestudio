@@ -82,6 +82,12 @@ angular.module('icestudio')
     });
     this.BUILD_DIR = this.BUILD_DIR_OBJ.name;
 
+    this.PATTERN_PORT_LABEL = /^([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_PARAM_LABEL = /^([A-Za-z_]+[A-Za-z_0-9]*)?$/;
+
+    this.PATTERN_GLOBAL_PORT_LABEL = /^([A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_]+[A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_GLOBAL_PARAM_LABEL = /^([A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_]+[A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_0-9]*)?$/;
+
     function safeDir(_dir, self) {
       if (self.WIN32) {
         // Put the env directory to the root of the current local disk when

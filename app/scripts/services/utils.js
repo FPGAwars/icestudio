@@ -759,11 +759,11 @@ angular.module('icestudio')
       }
     };
 
-    this.parsePortLabel = function(data) {
+    this.parsePortLabel = function(data, pattern) {
       // e.g: name[x:y]
       var match, ret = {};
       var maxSize = 95;
-      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?/g;
+      pattern = pattern || common.PATTERN_PORT_LABEL;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';
@@ -787,10 +787,10 @@ angular.module('icestudio')
       return null;
     };
 
-    this.parseParamLabel = function(data) {
+    this.parseParamLabel = function(data, pattern) {
       // e.g: name
       var match, ret = {};
-      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?/g;
+      pattern = pattern || common.PATTERN_PARAM_LABEL;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';
