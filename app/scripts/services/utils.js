@@ -225,10 +225,6 @@ angular.module('icestudio')
       this.deleteFolderRecursive(common.COLLECTIONS_DIR);
     };
 
-    this.removeTempBuildDir = function() {
-      this.deleteFolderRecursive(common.BUILD_DIR);
-    };
-
     this.deleteFolderRecursive = function(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
