@@ -31,6 +31,9 @@ angular.module('icestudio')
         case 'basic.constant':
           newBasicConstant(callback);
           break;
+        case 'basic.memory':
+          newBasicMemory(callback);
+          break;
         case 'basic.code':
           newBasicCode(callback);
           break;
@@ -237,6 +240,19 @@ angular.module('icestudio')
             callback(cells);
           }
       });
+    }
+
+    function newBasicMemory(callback) {
+      var blockInstance = {
+        id: null,
+        data: { list: '' },
+        type: 'basic.memory',
+        position: { x: 40 * gridsize, y: 36 * gridsize },
+        size: { width: 192, height: 128 }
+      };
+      if (callback) {
+        callback([loadBasicMemory(blockInstance)]);
+      }
     }
 
     function newBasicCode(callback, block) {
@@ -499,6 +515,24 @@ angular.module('icestudio')
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
+        disabled: disabled,
+        bottomPorts: bottomPorts
+      });
+      return cell;
+    }
+
+    function loadBasicMemory(instance, disabled) {
+      var bottomPorts = [{
+        id: 'constant-out',
+        name: '',
+        label: ''
+      }];
+      var cell = new joint.shapes.ice.Constant({
+        id: instance.id,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        size: instance.size,
         disabled: disabled,
         bottomPorts: bottomPorts
       });
