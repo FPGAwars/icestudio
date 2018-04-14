@@ -56,9 +56,11 @@ RequestExecutionLevel admin
 # languages
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Chinese"
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Basque"
-!insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Catalan"
 
 
 Function ".onInit"

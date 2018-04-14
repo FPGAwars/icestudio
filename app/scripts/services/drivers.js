@@ -302,27 +302,36 @@ angular.module('icestudio')
     function enableWindowsDriversFTDI() {
       var message = gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
                     gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports');
-      alertify.confirm(message, enableWindowsDrivers);
+      alertify.confirm(message, function () {
+        enableWindowsDrivers('ftdi');
+      });
     }
 
     function disableWindowsDriversFTDI() {
       var message = gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
-      alertify.confirm(message, disableWindowsDrivers);
+      alertify.confirm(message, function () {
+        disableWindowsDrivers('ftdi');
+      });
     }
 
     function enableWindowsDriversSerial() {
       var message = gettextCatalog.getString('<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Install the driver</li><li>Unplug and reconnect the board</li></ol>');
-      alertify.confirm(message, enableWindowsDrivers);
+      alertify.confirm(message, function () {
+        enableWindowsDrivers('serial');
+      });
     }
 
     function disableWindowsDriversSerial() {
       var message = gettextCatalog.getString('<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
-      alertify.confirm(message, disableWindowsDrivers);
+      alertify.confirm(message, function () {
+        disableWindowsDrivers('serial');
+      });
     }
 
-    function enableWindowsDrivers() {
+    function enableWindowsDrivers(type) {
+      var option = '--' + type + '-enable';
       utils.beginBlockingTask();
-      nodeSudo.exec([common.APIO_CMD, 'drivers', '--enable'].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
+      nodeSudo.exec([common.APIO_CMD, 'drivers', option].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
         // console.log(error, stdout, stderr);
         utils.endBlockingTask();
         if (stderr) {
@@ -339,9 +348,10 @@ angular.module('icestudio')
       });
     }
 
-    function disableWindowsDrivers() {
+    function disableWindowsDrivers(type) {
+      var option = '--' + type + '-disable';
       utils.beginBlockingTask();
-      nodeChildProcess.exec([common.APIO_CMD, 'drivers', '--disable'].join(' '), function(error, stdout, stderr) {
+      nodeChildProcess.exec([common.APIO_CMD, 'drivers', option].join(' '), function(error, stdout, stderr) {
         // console.log(error, stdout, stderr);
         utils.endBlockingTask();
         if (stderr) {

@@ -12,6 +12,18 @@
   </a>
 </li>
 <li>
+  <a href ng-click="selectLanguage('fr_FR')">
+    {{ 'French' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('zh_CN')">
+    {{ 'Chinese' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'zh_CN'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
   <a href ng-click="selectLanguage('gl_ES')">
     {{ 'Galician' | translate }}&ensp;
     <span ng-show="profile.data.language == 'gl_ES'" class="glyphicon glyphicon-ok-circle"></span>
@@ -21,12 +33,6 @@
   <a href ng-click="selectLanguage('eu_ES')">
     {{ 'Basque' | translate }}&ensp;
     <span ng-show="profile.data.language == 'eu_ES'" class="glyphicon glyphicon-ok-circle"></span>
-  </a>
-</li>
-<li>
-  <a href ng-click="selectLanguage('fr_FR')">
-    {{ 'French' | translate }}&ensp;
-    <span ng-show="profile.data.language == 'fr_FR'" class="glyphicon glyphicon-ok-circle"></span>
   </a>
 </li>
 <li>

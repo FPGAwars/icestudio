@@ -66,7 +66,7 @@ angular.module('icestudio')
       });
     };
 
-    this.extractVirtualEnv = function(callback) {
+    this.extractVirtualenv = function(callback) {
       this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
@@ -112,7 +112,7 @@ angular.module('icestudio')
       );
     };
 
-    this.makeVenvDirectory = function(callback) {
+    this.createVirtualenv = function(callback) {
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
@@ -121,7 +121,8 @@ angular.module('icestudio')
         this.executeCommand(
           [this.getPythonExecutable(),
            coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-           coverPath(common.ENV_DIR)], callback);
+           coverPath(common.ENV_DIR),
+           '--always-copy'], callback);
       }
       else {
         callback();
@@ -138,18 +139,30 @@ angular.module('icestudio')
       }
     };
 
-    this.extractDefaultApio = function(callback) {
-      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
-    };
-
-    this.installDefaultApio = function(callback) {
+    this.installDefaultPythonPackagesDir = function(defaultDir, callback) {
       var self = this;
-      nodeGlob(nodePath.join(common.DEFAULT_APIO_DIR, '*.*'), {}, function (error, files) {
+      nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
         if (!error) {
           files = files.map(function(item) { return coverPath(item); });
           self.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
+    };
+
+    this.extractDefaultPythonPackages = function(callback) {
+      this.extractZip(common.DEFAULT_PYTHON_PACKAGES_ZIP, common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
+    };
+
+    this.installDefaultPythonPackages = function(callback) {
+      this.installDefaultPythonPackagesDir(common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
+    };
+
+    this.extractDefaultApio = function(callback) {
+      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
+    };
+
+    this.installDefaultApio = function(callback) {
+      this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
     };
 
     this.extractDefaultApioPackages = function(callback) {
@@ -168,6 +181,11 @@ angular.module('icestudio')
           callback(true);
         }
       });
+    };
+
+    this.installOnlinePythonPackages = function(callback) {
+      var pythonPackages = [];
+      this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages, callback);
     };
 
     this.installOnlineApio = function(callback) {
@@ -207,10 +225,6 @@ angular.module('icestudio')
       this.deleteFolderRecursive(common.COLLECTIONS_DIR);
     };
 
-    this.removeTempBuildDir = function() {
-      this.deleteFolderRecursive(common.BUILD_DIR);
-    };
-
     this.deleteFolderRecursive = function(path) {
       if (nodeFs.existsSync(path)) {
         nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
@@ -240,22 +254,27 @@ angular.module('icestudio')
 
     this.readFile = function(filepath) {
       return new Promise(function(resolve, reject) {
-        nodeFs.readFile(filepath,
-          function(err, content) {
-            if (err) {
-              reject(err.toString());
-            }
-            else {
-              var data = isJSON(content);
-              if (data) {
-                // JSON data
-                resolve(data);
+        if (nodeFs.existsSync(common.PROFILE_PATH)) {
+          nodeFs.readFile(filepath,
+            function(err, content) {
+              if (err) {
+                reject(err.toString());
               }
               else {
-                reject(gettextCatalog.getString('Invalid project format'));
+                var data = isJSON(content);
+                if (data) {
+                  // JSON data
+                  resolve(data);
+                }
+                else {
+                  reject(gettextCatalog.getString('Invalid project format'));
+                }
               }
-            }
-          });
+            });
+        }
+        else {
+          resolve({});
+        }
       });
     };
 
@@ -740,11 +759,11 @@ angular.module('icestudio')
       }
     };
 
-    this.parsePortLabel = function(data) {
+    this.parsePortLabel = function(data, pattern) {
       // e.g: name[x:y]
       var match, ret = {};
       var maxSize = 95;
-      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?/g;
+      pattern = pattern || common.PATTERN_PORT_LABEL;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';
@@ -768,10 +787,10 @@ angular.module('icestudio')
       return null;
     };
 
-    this.parseParamLabel = function(data) {
+    this.parseParamLabel = function(data, pattern) {
       // e.g: name
       var match, ret = {};
-      var pattern = /([A-Za-z_]+[A-Za-z_0-9]*)?/g;
+      pattern = pattern || common.PATTERN_PARAM_LABEL;
       match = pattern.exec(data);
       if (match && (match[0] === match.input)) {
         ret.name = match[1] ? match[1] : '';

@@ -55,8 +55,8 @@ angular.module('icestudio')
   .factory('nodeGetOS', function() {
     return require('getos');
   })
-  .factory('nodeTemp', function() {
-    return require('temporary');
+  .factory('nodeTmp', function() {
+    return require('tmp');
   })
   .factory('nodeDebounce', function() {
     return require('lodash.debounce');

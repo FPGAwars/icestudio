@@ -246,8 +246,8 @@ angular.module('icestudio')
             }
             else {
               // An old version is installed
-              alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-              .callback = function(isClicked) {
+              resultAlert = alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
+              resultAlert.callback = function(isClicked) {
                 if (isClicked) {
                   // Install the new toolchain
                   $rootScope.$broadcast('installToolchain');
@@ -716,8 +716,8 @@ angular.module('icestudio')
       // Reset toolchain
       async.series([
         ensurePythonIsAvailable,
-        extractVirtualEnv,
-        makeVenvDirectory,
+        extractVirtualenv,
+        createVirtualenv,
         extractDefaultApio,
         installDefaultApio,
         extractDefaultApioPackages,
@@ -752,13 +752,14 @@ angular.module('icestudio')
       async.series([
         checkInternetConnection,
         ensurePythonIsAvailable,
-        extractVirtualEnv,
-        makeVenvDirectory,
+        extractVirtualenv,
+        createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
         apioInstallIcestorm,
         apioInstallIverilog,
         apioInstallDrivers,
+        apioInstallScons,
         installationCompleted
       ]);
     }
@@ -786,25 +787,25 @@ angular.module('icestudio')
       }
     }
 
-    function extractVirtualEnv(callback) {
-      updateProgress(gettextCatalog.getString('Extract virtual env files...'), 5);
-      utils.extractVirtualEnv(callback);
+    function extractVirtualenv(callback) {
+      updateProgress(gettextCatalog.getString('Extract virtualenv files...'), 5);
+      utils.extractVirtualenv(callback);
     }
 
-    function makeVenvDirectory(callback) {
-      updateProgress(gettextCatalog.getString('Make virtual env...'), 10);
-      utils.makeVenvDirectory(callback);
+    function createVirtualenv(callback) {
+      updateProgress(gettextCatalog.getString('Create virtualenv...'), 10);
+      utils.createVirtualenv(callback);
     }
 
     // Local installation
 
     function extractDefaultApio(callback) {
-      updateProgress(gettextCatalog.getString('Extract default apio files...'), 20);
+      updateProgress(gettextCatalog.getString('Extract default apio files...'), 30);
       utils.extractDefaultApio(callback);
     }
 
     function installDefaultApio(callback) {
-      updateProgress(gettextCatalog.getString('Install default apio...'), 40);
+      updateProgress(gettextCatalog.getString('Install default apio...'), 50);
       utils.installDefaultApio(callback);
     }
 
@@ -839,12 +840,17 @@ angular.module('icestudio')
 
     function apioInstallDrivers(callback) {
       if (common.WIN32) {
-        updateProgress('apio install drivers', 90);
+        updateProgress('apio install drivers', 80);
         utils.apioInstall('drivers', callback);
       }
       else {
         callback();
       }
+    }
+
+    function apioInstallScons(callback) {
+      updateProgress('apio install scons', 90);
+      utils.apioInstall('scons', callback);
     }
 
     function installationCompleted(callback) {

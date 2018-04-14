@@ -6,6 +6,7 @@ angular.module('icestudio')
                               common,
                               gettextCatalog) {
     var gridsize = 8;
+    var resultAlert = null;
 
     this.newBasic = newBasic;
     this.newGeneric = newGeneric;
@@ -61,18 +62,21 @@ angular.module('icestudio')
           var labels = values[0].replace(/ /g, '').split(',');
           var virtual = !values[1];
           var clock = values[2];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
           var portInfo, portInfos = [];
           for (var l in labels) {
             if (labels[l]) {
-              portInfo = utils.parsePortLabel(labels[l]);
+              portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
               if (portInfo) {
                 evt.cancel = false;
                 portInfos.push(portInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -120,18 +124,21 @@ angular.module('icestudio')
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
           var virtual = !values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
           var portInfo, portInfos = [];
           for (var l in labels) {
             if (labels[l]) {
-              portInfo = utils.parsePortLabel(labels[l]);
+              portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
               if (portInfo) {
                 evt.cancel = false;
                 portInfos.push(portInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -191,18 +198,21 @@ angular.module('icestudio')
         function(evt, values) {
           var labels = values[0].replace(/ /g, '').split(',');
           var local = values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
           var paramInfo, paramInfos = [];
           for (var l in labels) {
             if (labels[l]) {
-              paramInfo = utils.parseParamLabel(labels[l]);
+              paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
               if (paramInfo) {
                 evt.cancel = false;
                 paramInfos.push(paramInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
                 return;
               }
             }
@@ -281,18 +291,21 @@ angular.module('icestudio')
           var outPorts = values[1].replace(/ /g, '').split(',');
           var params = values[2].replace(/ /g, '').split(',');
           var allNames = [];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
           var i, inPortInfo, inPortInfos = [];
           for (i in inPorts) {
             if (inPorts[i]) {
-              inPortInfo = utils.parsePortLabel(inPorts[i]);
+              inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
               if (inPortInfo && inPortInfo.name) {
                 evt.cancel = false;
                 inPortInfos.push(inPortInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
                 return;
               }
             }
@@ -300,14 +313,14 @@ angular.module('icestudio')
           var o, outPortInfo, outPortInfos = [];
           for (o in outPorts) {
             if (outPorts[o]) {
-              outPortInfo = utils.parsePortLabel(outPorts[o]);
+              outPortInfo = utils.parsePortLabel(outPorts[o], common.PATTERN_PORT_LABEL);
               if (outPortInfo && outPortInfo.name) {
                 evt.cancel = false;
                 outPortInfos.push(outPortInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
                 return;
               }
             }
@@ -315,14 +328,14 @@ angular.module('icestudio')
           var p, paramInfo, paramInfos = [];
           for (p in params) {
             if (params[p]) {
-              paramInfo = utils.parseParamLabel(params[p]);
+              paramInfo = utils.parseParamLabel(params[p], common.PATTERN_PARAM_LABEL);
               if (paramInfo) {
                 evt.cancel = false;
                 paramInfos.push(paramInfo);
               }
               else {
                 evt.cancel = true;
-                alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
                 return;
               }
             }
@@ -373,7 +386,7 @@ angular.module('icestudio')
           }
           else {
             evt.cancel = true;
-            alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
+            resultAlert = alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
           }
       });
     }
@@ -397,6 +410,9 @@ angular.module('icestudio')
         type: type,
         position: { x: 10 * gridsize, y: 16 * gridsize }
       };
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       if (block &&
           block.design &&
           block.design.graph &&
@@ -407,7 +423,7 @@ angular.module('icestudio')
         }
       }
       else {
-        alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 30);
+        resultAlert = alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 30);
       }
     }
 
@@ -722,8 +738,11 @@ angular.module('icestudio')
           var label = values[0].replace(/ /g, '');
           var virtual = !values[1];
           var clock = values[2];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
-          var portInfo = utils.parsePortLabel(label);
+          var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
           if (portInfo) {
             evt.cancel = false;
             if ((block.data.range || '') !==
@@ -754,7 +773,7 @@ angular.module('icestudio')
                 callback(loadBasic(blockInstance));
                 cellView.model.remove();
                 graph.stopBatch('change');
-                alertify.success(gettextCatalog.getString('Block updated'));
+                resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
               }
             }
             else if (block.data.name !== portInfo.name ||
@@ -775,12 +794,12 @@ angular.module('icestudio')
               cellView.model.translate(0, offset);
               graph.stopBatch('change');
               cellView.apply();
-              alertify.success(gettextCatalog.getString('Block updated'));
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
           else {
             evt.cancel = true;
-            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
           }
       });
     }
@@ -799,8 +818,11 @@ angular.module('icestudio')
           var oldSize, newSize, offset = 0;
           var label = values[0].replace(/ /g, '');
           var virtual = !values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
-          var portInfo = utils.parsePortLabel(label);
+          var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
           if (portInfo) {
             evt.cancel = false;
             if ((block.data.range || '') !==
@@ -830,7 +852,7 @@ angular.module('icestudio')
                 callback(loadBasic(blockInstance));
                 cellView.model.remove();
                 graph.stopBatch('change');
-                alertify.success(gettextCatalog.getString('Block updated'));
+                resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
               }
             }
             else if (block.data.name !== portInfo.name ||
@@ -849,12 +871,12 @@ angular.module('icestudio')
               cellView.model.translate(0, offset);
               graph.stopBatch('change');
               cellView.apply();
-              alertify.success(gettextCatalog.getString('Block updated'));
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
           else {
             evt.cancel = true;
-            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
           }
       });
     }
@@ -871,8 +893,11 @@ angular.module('icestudio')
         function(evt, values) {
           var label = values[0].replace(/ /g, '');
           var local = values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
           // Validate values
-          var paramInfo = utils.parseParamLabel(label);
+          var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
           if (paramInfo) {
             var name = paramInfo.name;
             evt.cancel = false;
@@ -884,12 +909,12 @@ angular.module('icestudio')
               data.local = local;
               cellView.model.set('data', data);
               cellView.apply();
-              alertify.success(gettextCatalog.getString('Block updated'));
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
           else {
             evt.cancel = true;
-            alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
             return;
           }
       });
@@ -905,6 +930,9 @@ angular.module('icestudio')
         position: block.position,
         size: block.size
       };
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
       newBasicCode(function(cells) {
         if (callback) {
           var cell = cells[0];
@@ -927,7 +955,7 @@ angular.module('icestudio')
               }
             }
             graph.stopBatch('change');
-            alertify.success(gettextCatalog.getString('Block updated'));
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
           }
         }
       }, blockInstance);

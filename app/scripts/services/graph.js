@@ -510,8 +510,14 @@ angular.module('icestudio')
             // Replace wire's target
             replaceWireConnection(wire, 'target');
           });
-          // 3. Move the upperModel to the lowerModel's position
-          upperBlock.set('position', lowerBlock.get('position'));
+          // 3. Move the upperModel to be centerd with the lowerModel
+          var lowerBlockSize = lowerBlock.get('size');
+          var upperBlockSize = upperBlock.get('size');
+          var lowerBlockPosition = lowerBlock.get('position');
+          upperBlock.set('position', {
+            x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
+            y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
+          });
           // 4. Remove the lowerModel
           lowerBlock.remove();
           prevLowerBlock = null;
