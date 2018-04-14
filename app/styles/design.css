@@ -361,6 +361,30 @@ g {
   outline: none;
 }
 
+.memory-block {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.memory-block .memory-editor {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #BBB;
+  pointer-events: auto;
+}
+
 .code-block {
   position: absolute;
   background: #C0DFEB;

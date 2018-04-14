@@ -248,7 +248,7 @@ angular.module('icestudio')
         data: { list: '' },
         type: 'basic.memory',
         position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
+        size: { width: 128, height: 144 }
       };
       if (callback) {
         callback([loadBasicMemory(blockInstance)]);
@@ -527,7 +527,7 @@ angular.module('icestudio')
         name: '',
         label: ''
       }];
-      var cell = new joint.shapes.ice.Constant({
+      var cell = new joint.shapes.ice.Memory({
         id: instance.id,
         blockType: instance.type,
         data: instance.data,
