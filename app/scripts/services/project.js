@@ -503,14 +503,15 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
-              break;
-            case 'basic.info':
-              delete block.data.text;
+            case 'basic.memory':
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
               }
+              break;
+            case 'basic.info':
+              delete block.data.text;
               break;
             default:
               // Generic block

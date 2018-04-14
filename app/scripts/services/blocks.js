@@ -454,6 +454,8 @@ angular.module('icestudio')
           return loadBasicOutput(instance, disabled);
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
+        case 'basic.memory':
+          return loadBasicMemory(instance, disabled);
         case 'basic.code':
           return loadBasicCode(instance, disabled);
         case 'basic.info':
