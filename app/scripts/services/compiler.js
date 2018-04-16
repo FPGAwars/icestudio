@@ -29,6 +29,7 @@ angular.module('icestudio')
           break;
         case 'list':
           files = listCompiler(project);
+          break;
         case 'testbench':
           content += header('//', opt);
           content += testbenchCompiler(project);
@@ -647,6 +648,40 @@ angular.module('icestudio')
       }
 
       return code;
+    }
+
+    function listCompiler(project) {
+      var i;
+      var listFiles = [];
+
+      if (project &&
+          project.design &&
+          project.design.graph) {
+
+        var blocks = project.design.graph.blocks;
+        var dependencies = project.dependencies;
+
+        // Find in blocks
+
+        for (i in blocks) {
+          var block = blocks[i];
+          if (block.type === 'basic.memory') {
+            listFiles.push({
+              name: utils.digestId(block.id) + '.list',
+              content: block.data.list
+            });
+          }
+        }
+
+        // Find in dependencies
+
+        for (i in dependencies) {
+          var dependency = dependencies[i];
+          listFiles = listFiles.concat(listCompiler(dependency));
+        }
+      }
+
+      return listFiles;
     }
 
     function testbenchCompiler(project) {
