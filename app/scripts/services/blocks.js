@@ -984,8 +984,8 @@ angular.module('icestudio')
               var source = wire.get('source');
               var target = wire.get('target');
               if ((source.id === cell.id && containsPort(source.port, size, cell.get('rightPorts'))) ||
-                  (target.id === cell.id && containsPort(target.port, size, cell.get('leftPorts')) && source.port !== 'constant-out') ||
-                  (target.id === cell.id && containsPort(target.port, size, cell.get('topPorts')) && source.port === 'constant-out'))
+                  (target.id === cell.id && containsPort(target.port, size, cell.get('leftPorts')) && (source.port !== 'constant-out' && source.port !== 'memory-out')) ||
+                  (target.id === cell.id && containsPort(target.port, size, cell.get('topPorts')) && (source.port === 'constant-out' || source.port === 'memory-out')))
               {
                 graph.addCell(wire);
               }
