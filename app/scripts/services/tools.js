@@ -76,9 +76,9 @@ angular.module('icestudio')
             }
             return generateCode();
           })
-          .then(function(code) {
-            sourceCode = code;
-            return syncResources(code);
+          .then(function(output) {
+            sourceCode = output.code;
+            return syncResources(output.code, output.internalResources);
           })
           .then(function() {
             var hostname = profile.get('remoteHostname');
@@ -173,11 +173,14 @@ angular.module('icestudio')
           var listFile = listFiles[i];
           nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, listFile.name), listFile.content, 'utf8');
         }
-        resolve(verilogFile.content);
+        resolve({
+          code: verilogFile.content,
+          internalResources: listFiles.map(function (res) { return res.name; })
+        });
       });
     }
 
-    function syncResources(code) {
+    function syncResources(code, internalResources) {
       return new Promise(function(resolve, reject) {
         // Remove resources
         removeFiles(resources);
@@ -188,6 +191,8 @@ angular.module('icestudio')
         resources = resources.concat(findInlineFiles(code, reject));
         // Sync resources
         resources = _.uniq(resources);
+        // Remove internal files
+        resources = _.difference(resources, internalResources);
         syncFiles(resources, reject);
         resolve();
       });
