@@ -7,29 +7,48 @@ angular.module('icestudio')
                                 _package) {
 
     this.generate = function(target, project, opt) {
-      var code = '';
+      var content = '';
+      var files = [];
       switch(target) {
         case 'verilog':
-          code += header('//', opt);
-          code += '`default_nettype none\n';
-          code += verilogCompiler('main', project, opt);
+          content += header('//', opt);
+          content += '`default_nettype none\n';
+          content += verilogCompiler('main', project, opt);
+          files.push({
+            name: 'main.v',
+            content: content
+          });
           break;
         case 'pcf':
-          code += header('#', opt);
-          code += pcfCompiler(project, opt);
+          content += header('#', opt);
+          content += pcfCompiler(project, opt);
+          files.push({
+            name: 'main.pcf',
+            content: content
+          });
           break;
+        case 'list':
+          files = listCompiler(project);
         case 'testbench':
-          code += header('//', opt);
-          code += testbenchCompiler(project);
+          content += header('//', opt);
+          content += testbenchCompiler(project);
+          files.push({
+            name: 'main_tb.v',
+            content: content
+          });
           break;
         case 'gtkwave':
-          code += header('[*]', opt);
-          code += gtkwaveCompiler(project);
+          content += header('[*]', opt);
+          content += gtkwaveCompiler(project);
+          files.push({
+            name: 'main_tb.gtkw',
+            content: content
+          });
           break;
         default:
-          code += '';
+          break;
       }
-      return code;
+      return files;
     };
 
     function header(comment, opt) {

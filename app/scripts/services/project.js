@@ -314,7 +314,7 @@ angular.module('icestudio')
         var origPath = utils.dirname(this.filepath);
         var destPath =  utils.dirname(filepath);
         // 1. Parse and find included files
-        var code = compiler.generate('verilog', project);
+        var code = compiler.generate('verilog', project)[0].content;
         var files = utils.findIncludedFiles(code);
         // Are there included files?
         if (files.length > 0) {
@@ -390,7 +390,7 @@ angular.module('icestudio')
           var origPath = utils.dirname(filepath);
           var destPath =  utils.dirname(self.path);
           // 1. Parse and find included files
-          var code = compiler.generate('verilog', block);
+          var code = compiler.generate('verilog', block)[0].content;
           var files = utils.findIncludedFiles(code);
           // Are there included files?
           if (files.length > 0) {
