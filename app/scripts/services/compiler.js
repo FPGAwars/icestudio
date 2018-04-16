@@ -126,6 +126,13 @@ angular.module('icestudio')
             value: block.data.value
           });
         }
+        else if (block.type === 'basic.memory') {
+          var name = utils.digestId(block.id);
+          params.push({
+            name: name,
+            value: '"' + name + '.list"'
+          });
+        }
       }
 
       return params;
@@ -169,7 +176,8 @@ angular.module('icestudio')
 
       for (w in graph.wires) {
         var wire = graph.wires[w];
-        if (wire.source.port === 'constant-out') {
+        if (wire.source.port === 'constant-out' ||
+            wire.source.port === 'memory-out') {
           // Local Parameters
           var constantBlock = findBlock(wire.source.block, graph);
           var paramValue = utils.digestId(constantBlock.id);
@@ -192,7 +200,8 @@ angular.module('icestudio')
           }
           else if (block.type === 'basic.output') {
             if (wire.target.block === block.id) {
-              if (wire.source.port === 'constant-out') {
+              if (wire.source.port === 'constant-out' ||
+                  wire.source.port === 'memory-out') {
                 // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
               }
               else {
@@ -216,7 +225,8 @@ angular.module('icestudio')
           var wj = graph.wires[j];
           if (wi.source.block === wj.source.block &&
               wi.source.port === wj.source.port &&
-              wi.source.port !== 'constant-out') {
+              wi.source.port !== 'constant-out' &&
+              wi.source.port !== 'memory-out') {
             content.push('assign w' + i + ' = w' + j + ';');
           }
         }
@@ -240,6 +250,7 @@ angular.module('icestudio')
         if (block.type !== 'basic.input' &&
             block.type !== 'basic.output' &&
             block.type !== 'basic.constant' &&
+            block.type !== 'basic.memory' &&
             block.type !== 'basic.info') {
 
           // Header
@@ -258,7 +269,8 @@ angular.module('icestudio')
           for (w in graph.wires) {
             wire = graph.wires[w];
             if ((block.id === wire.target.block) &&
-                (wire.source.port === 'constant-out')) {
+                (wire.source.port === 'constant-out' ||
+                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
                 paramName = utils.digestId(paramName);
@@ -288,7 +300,8 @@ angular.module('icestudio')
               connectPort(wire.source.port, portsNames, ports, block);
             }
             if (block.id === wire.target.block) {
-              if (wire.source.port !== 'constant-out') {
+              if (wire.source.port !== 'constant-out' &&
+                  wire.source.port !== 'memory-out') {
                 connectPort(wire.target.port, portsNames, ports, block);
               }
             }
@@ -473,8 +486,6 @@ angular.module('icestudio')
           // Initialize output pins
 
           if (name === 'main' && opt.boardRules) {
-
-            // Initialize output pins
 
             var initPins = opt.initPins || getInitPins(project);
             var n = initPins.length;

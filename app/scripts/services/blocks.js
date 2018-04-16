@@ -525,7 +525,7 @@ angular.module('icestudio')
 
     function loadBasicMemory(instance, disabled) {
       var bottomPorts = [{
-        id: 'constant-out',
+        id: 'memory-out',
         name: '',
         label: ''
       }];
