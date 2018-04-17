@@ -245,14 +245,60 @@ angular.module('icestudio')
     function newBasicMemory(callback) {
       var blockInstance = {
         id: null,
-        data: { list: '' },
+        data: {},
         type: 'basic.memory',
         position: { x: 0, y: 0 },
         size: { width: 128, height: 144 }
       };
-      if (callback) {
-        callback([loadBasicMemory(blockInstance)]);
-      }
+      utils.inputcheckboxprompt([
+        gettextCatalog.getString('Enter the memory blocks'),
+        gettextCatalog.getString('Local parameter')
+      ], [
+        'M',
+        false
+      ],
+        function(evt, values) {
+          var labels = values[0].replace(/ /g, '').split(',');
+          var local = values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
+          // Validate values
+          var paramInfo, paramInfos = [];
+          for (var l in labels) {
+            if (labels[l]) {
+              paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+              if (paramInfo) {
+                evt.cancel = false;
+                paramInfos.push(paramInfo);
+              }
+              else {
+                evt.cancel = true;
+                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+                return;
+              }
+            }
+            else {
+              evt.cancel = true;
+              //return;
+            }
+          }
+          // Create blocks
+          var cells = [];
+          for (var p in paramInfos) {
+            paramInfo = paramInfos[p];
+            blockInstance.data = {
+              name: paramInfo.name,
+              list: '',
+              local: local
+            };
+            cells.push(loadBasicMemory(blockInstance));
+            blockInstance.position.x += 19 * gridsize;
+          }
+          if (callback) {
+            callback(cells);
+          }
+      });
     }
 
     function newBasicCode(callback, block) {
@@ -746,6 +792,9 @@ angular.module('icestudio')
         case 'basic.constant':
           editBasicConstant(cellView, callback);
           break;
+        case 'basic.memory':
+          editBasicMemory(cellView, callback);
+          break;
         case 'basic.code':
           editBasicCode(cellView, callback);
           break;
@@ -918,6 +967,45 @@ angular.module('icestudio')
     }
 
     function editBasicConstant(cellView) {
+      var block = cellView.model.attributes;
+      utils.inputcheckboxprompt([
+        gettextCatalog.getString('Update the block name'),
+        gettextCatalog.getString('Local parameter')
+      ], [
+        block.data.name,
+        block.data.local
+      ],
+        function(evt, values) {
+          var label = values[0].replace(/ /g, '');
+          var local = values[1];
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
+          // Validate values
+          var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
+          if (paramInfo) {
+            var name = paramInfo.name;
+            evt.cancel = false;
+            if (block.data.name !== name ||
+                block.data.local !== local) {
+              // Edit block
+              var data = utils.clone(block.data);
+              data.name = name;
+              data.local = local;
+              cellView.model.set('data', data);
+              cellView.apply();
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+            return;
+          }
+      });
+    }
+
+    function editBasicMemory(cellView) {
       var block = cellView.model.attributes;
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Update the block name'),

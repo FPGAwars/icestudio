@@ -854,8 +854,8 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   apply: function() {
     this.applyName();
-    this.applyValue();
     this.applyLocal();
+    this.applyValue();
   },
 
   update: function() {
@@ -889,6 +889,8 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="memory-block" id="' + blockLabel + '">\
+        <p>●</p>\
+        <label></label>\
         <div class="memory-editor" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -995,6 +997,20 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.apply({ ini: true });
   },
 
+  applyName: function() {
+    var name = this.model.get('data').name;
+    this.$box.find('label').text(name);
+  },
+
+  applyLocal: function() {
+    if (this.model.get('data').local) {
+      this.$box.find('p').removeClass('hidden');
+    }
+    else {
+      this.$box.find('p').addClass('hidden');
+    }
+  },
+
   applyValue: function(opt) {
     this.updating = true;
 
@@ -1020,7 +1036,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         }
         break;
       case 'data':
-
         break;
       default:
         break;
@@ -1038,6 +1053,8 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
   },
 
   apply: function(opt) {
+    this.applyName();
+    this.applyLocal();
     this.applyValue(opt);
   },
 
@@ -1077,6 +1094,14 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
         // Scale cursor
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
+        // Scale label
+        this.$box.find('label').css({
+          transform: 'scale(' + state.zoom + ')'
+        });
+        // Scale local marker
+        this.$box.find('p').css({
+          transform: 'scale(' + state.zoom + ')'
+        });
       }
       this.editor.resize();
     }
@@ -1302,7 +1327,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }
         break;
       case 'data':
-
         break;
       default:
         break;

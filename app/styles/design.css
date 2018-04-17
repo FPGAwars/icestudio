@@ -373,15 +373,36 @@ g {
   transition: opacity 0.2s;
 }
 
+.memory-block p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 12px;
+  color: #555;
+}
+
+.memory-block label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .memory-block .memory-editor {
   position: absolute;
-  top: -2px;
+  top: 22px;
   left: -2px;
   right: -2px;
   bottom: -2px;
   margin: 8px;
   border-radius: 5px;
-  border: 1px solid #D3D3D3;
+  border: 1px solid #aaa;
   pointer-events: auto;
 }
 

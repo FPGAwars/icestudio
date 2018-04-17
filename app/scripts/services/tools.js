@@ -213,6 +213,7 @@ angular.module('icestudio')
       return findFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
     }
 
+    // TODO: duplicated: utils findIncludedFiles
     function findFiles(pattern, code) {
       var match;
       var files = [];
