@@ -478,7 +478,8 @@ angular.module('icestudio')
       }
 
       function findLowerBlock(upperBlock) {
-        if (upperBlock.get('type') === 'ice.Info') {
+        if (upperBlock.get('type') === 'ice.Wire' ||
+            upperBlock.get('type') === 'ice.Info') {
           return;
         }
         var blocks = graph.findModelsUnderElement(upperBlock);
