@@ -690,7 +690,7 @@ angular.module('icestudio')
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
         }
-        else if (item.type === 'basic.constant') {
+        else if (item.type === 'basic.constant' || item.type === 'basic.memory') {
           if (!item.data.local) {
             topPorts.push({
               id: item.id,

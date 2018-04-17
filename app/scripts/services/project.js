@@ -362,9 +362,10 @@ angular.module('icestudio')
     function sortGraph() {
       var cells = graph.getCells();
 
-      // Sort Constant cells by x-coordinate
+      // Sort Constant/Memory cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (cell.get('type') === 'ice.Constant') {
+        if (cell.get('type') === 'ice.Constant' ||
+            cell.get('type') === 'ice.Memory') {
           return cell.get('position').x;
         }
       });
