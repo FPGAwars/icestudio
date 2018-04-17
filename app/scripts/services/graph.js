@@ -478,21 +478,26 @@ angular.module('icestudio')
       }
 
       function findLowerBlock(upperBlock) {
-        if (upperBlock.get('type') !== 'ice.Generic' &&
-            upperBlock.get('type') !== 'ice.Code' &&
-            upperBlock.get('type') !== 'ice.Input') {
+        if (upperBlock.get('type') === 'ice.Info') {
           return;
         }
         var blocks = graph.findModelsUnderElement(upperBlock);
-        // There is at least one model ice.Generic under the upperModel
-        if (blocks.length <= 0) {
+        // There is at least one model under the upper block
+        if (blocks.length === 0) {
           return;
         }
         // Get the first model found
         var lowerBlock = blocks[0];
-        if (lowerBlock.get('type') !== 'ice.Generic' &&
-            lowerBlock.get('type') !== 'ice.Code' &&
-            lowerBlock.get('type') !== 'ice.Input') {
+        var validReplacements = {
+          'ice.Generic': ['ice.Code', 'ice.Input', 'ice.Output'],
+          'ice.Code': ['ice.Generic', 'ice.Input', 'ice.Output'],
+          'ice.Input': ['ice.Generic', 'ice.Code'],
+          'ice.Output': ['ice.Generic', 'ice.Code'],
+          'ice.Constant': ['ice.Memory'],
+          'ice.Memory': ['ice.Constant']
+        }[lowerBlock.get('type')];
+        // Check if the upper block is a valid replacement
+        if (validReplacements.indexOf(upperBlock.get('type')) === -1) {
           return;
         }
         return lowerBlock;
