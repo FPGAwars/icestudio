@@ -489,6 +489,10 @@ angular.module('icestudio')
         }
         // Get the first model found
         var lowerBlock = blocks[0];
+        if (lowerBlock.get('type') === 'ice.Wire' ||
+            lowerBlock.get('type') === 'ice.Info') {
+          return;
+        }
         var validReplacements = {
           'ice.Generic': ['ice.Code', 'ice.Input', 'ice.Output'],
           'ice.Code': ['ice.Generic', 'ice.Input', 'ice.Output'],
@@ -553,10 +557,13 @@ angular.module('icestudio')
         //             ·  --|      BLOCK      |--  ·
         //             ·  --|                 |--  ·
         //             n    |_________________|    n
-        //
+        //                        |  |  |
+        //                   Bottom port 0 -- n
+
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'leftPorts'));
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'rightPorts'));
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'topPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'bottomPorts'));
 
         return portsMap;
       }
