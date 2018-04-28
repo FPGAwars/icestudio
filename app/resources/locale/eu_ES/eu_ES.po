@@ -9,12 +9,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:167 app/scripts/services/drivers.js:346
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
-msgstr "<b>Txartela deskonektatu</b> eta <b>konekta ezazu</b> berriro"
+msgstr "<b>Plaka deskonektatu</b> eta <b>konekta ezazu</b> berriro"
 
 #: app/scripts/services/drivers.js:303
 msgid ""
@@ -22,10 +22,10 @@ msgid ""
 "board</li><li>Replace the <b>(Interface 0)</b> driver of the board by "
 "<b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
 msgstr ""
-"<h4>FTDI driver-a instalatzeko instrukzioak</h4><ol><li>FPGA txartela "
-"konekta ezazu</li><li>Txartelaren  <b>(Interface 0)</b> driver-a aldatu eta "
-"jar ezazu honakoa: <b>libusbK</b></li><li>Txartela deskonektatu eta konekta "
-"ezazu berriro</li></ol>"
+"<h4>FTDI driver-a instalatzeko instrukzioak</h4><ol><li>FPGA plaka konekta "
+"ezazu</li><li>Plakaren  <b>(Interface 0)</b> driver-a aldatu eta jar ezazu "
+"honakoa: <b>libusbK</b></li><li>Plaka deskonektatu eta konekta ezazu "
+"berriro</li></ol>"
 
 #: app/scripts/services/drivers.js:311
 msgid ""
@@ -33,7 +33,7 @@ msgid ""
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
 "<h4>FTDI driver-a desinstalatzeko instrukzioak</h4><ol><li>FPGAren USB "
-"gailua bila ezazu</li><li>Txartelaren interfazea hauta ezazu eta driver-a "
+"gailua bila ezazu</li><li>Plakaren interfazea hauta ezazu eta driver-a "
 "desinstalatu</li></ol>"
 
 #: app/scripts/services/drivers.js:318
@@ -42,12 +42,18 @@ msgid ""
 "board</li><li>Install the driver</li><li>Unplug and reconnect the board</"
 "li></ol>"
 msgstr ""
+"<h4>Serial driverra instalatzeko aginduak</h4><ol><li>FPGA plaka konekta "
+"ezazu</li><li>Driverra instala ezazu</li><li>Plaka deskonektatu eta konekta "
+"ezazu berriro</li></ol>"
 
 #: app/scripts/services/drivers.js:325
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
+"<h4>Serial driverraren instalazioa kentzeko aginduak</h4><ol><li>FPGA USB "
+"gailua aurki ezazu</li><li>Plakaren interfazea hauta ezazu eta driverra "
+"desinstala ezazu</li></ol>"
 
 #: app/views/menu.html:329
 msgid "About Icestudio"
@@ -101,39 +107,39 @@ msgstr "Blokeak"
 
 #: app/views/menu.html:190
 msgid "Board"
-msgstr "Txartela"
+msgstr "Plaka"
 
 #: app/views/menu.html:127 app/views/menu.html:170
 msgid "Board rules"
-msgstr "Txartelaren arauak"
+msgstr "Plakaren arauak"
 
 #: app/scripts/controllers/menu.js:378
 msgid "Board rules disabled"
-msgstr "Txartelaren arauak desgaituta"
+msgstr "Plakaren arauak desgaituta"
 
 #: app/scripts/controllers/menu.js:373
 msgid "Board rules enabled"
-msgstr "Txartelaren arauak gaituta"
+msgstr "Plakaren arauak gaituta"
 
 #: app/scripts/services/tools.js:357
 msgid "Board {{name}} disconnected"
-msgstr ""
+msgstr "{{name}} plaka konektatu gabe dago"
 
 #: app/scripts/services/tools.js:338 app/scripts/services/tools.js:353
 msgid "Board {{name}} not available"
-msgstr ""
+msgstr "{{name}} plaka ez dago erabilgarri"
 
 #: app/scripts/services/tools.js:335
 msgid "Board {{name}} not connected"
-msgstr ""
+msgstr "{{name}} plaka ez dago konektatuta"
 
 #: app/scripts/controllers/menu.js:529
 msgid "Board {{name}} selected"
-msgstr "{{name}} txartela hautatu duzu"
+msgstr "{{name}} plaka hautatu duzu"
 
 #: app/scripts/services/tools.js:350
 msgid "Bootloader not active"
-msgstr ""
+msgstr "Bootloader ez aktiboa"
 
 #: app/views/menu.html:229
 msgid "Build"
@@ -161,7 +167,7 @@ msgstr "Python egiaztatu..."
 
 #: app/views/languages.html:22
 msgid "Chinese"
-msgstr ""
+msgstr "Txinera"
 
 #: app/scripts/services/tools.js:875
 msgid "Click here to <b>setup the drivers</b>"
@@ -227,7 +233,7 @@ msgstr "Komunitatearen foroa"
 
 #: app/scripts/services/tools.js:371
 msgid "Configuration not completed"
-msgstr ""
+msgstr "Konfigurazioa ez da osatu"
 
 #: app/views/menu.html:350
 msgid "Constant"
@@ -402,7 +408,7 @@ msgstr "FPGA pina"
 
 #: app/views/menu.html:179
 msgid "FPGA resources"
-msgstr ""
+msgstr "FPGA baliabideak"
 
 #: app/views/menu.html:29
 msgid "File"
@@ -701,7 +707,7 @@ msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr ""
-"FPGAaren E/S konfigurazioa galduko da. {{name}} txartela aldatu nahi al duzu?"
+"FPGAaren E/S konfigurazioa galduko da. {{name}} plaka aldatu nahi al duzu?"
 
 #: app/scripts/services/tools.js:672
 msgid "The toolchain will be removed. Do you want to continue?"
@@ -730,7 +736,7 @@ msgstr ""
 
 #: app/scripts/services/project.js:111
 msgid "This project is designed for the {{name}} board."
-msgstr "Proiektua {{name}} txartelarentzat diseinatu da."
+msgstr "Proiektua {{name}} plakarentzat diseinatu da."
 
 #: app/views/menu.html:236
 msgid "Toolchain"
@@ -763,7 +769,7 @@ msgstr "Desegin"
 
 #: app/scripts/services/tools.js:342
 msgid "Unknown board"
-msgstr "Txartel ezezaguna"
+msgstr "Plaka ezezaguna"
 
 #: app/scripts/app.js:48
 msgid "Untitled"
@@ -862,7 +868,7 @@ msgstr "{{board}} pinout ez zehaztua"
 
 #: app/scripts/controllers/menu.js:462
 msgid "{{board}} rules not defined"
-msgstr "{{board}} txartelaren arauak ez daude definituta"
+msgstr "{{board}} plakaren arauak ez daude definituta"
 
 #: app/scripts/controllers/menu.js:204 app/scripts/controllers/menu.js:228
 msgid "{{name}} exported"
