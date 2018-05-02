@@ -49,7 +49,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         stroke: 'none'
       },
       '.port-body': {
-        r: 8,
+        r: 16,
         opacity: 0
       },
       '.leftPorts .port-body': {
@@ -1487,14 +1487,14 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="8"/>',
     '</g>'
   ].join(''),
 
   toolMarkup: [
     '<g class="link-tool">',
     '<g class="tool-remove" event="remove">',
-    '<circle r="8.5" />',
+    '<circle r="8" />',
     '<path transform="scale(.6) translate(-16, -16)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z" />',
     '<title>Remove link.</title>',
     '</g>',
@@ -1536,7 +1536,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     },
 
     router: { name: 'ice' },
-    connector: { name: 'ice'},
+    connector: { name: 'ice' }
 
   }, joint.dia.Link.prototype.defaults)
 
@@ -1682,30 +1682,10 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   updateConnection: function(opt) {
     opt = opt || {};
 
-    var model = this.model;
-    var route;
-
-    if (opt.translateBy && model.isRelationshipEmbeddedIn(opt.translateBy)) {
-      // The link is being translated by an ancestor that will
-      // shift source point, target point and all vertices
-      // by an equal distance.
-      var tx = opt.tx || 0;
-      var ty = opt.ty || 0;
-
-      route = this.route =  _.map(this.route, function(point) {
-        // translate point by point by delta translation
-        return g.point(point).offset(tx, ty);
-      });
-
-      // translate source and target connection and marker points.
-      this._translateConnectionPoints(tx, ty);
-
-    } else {
-      // Necessary path finding
-      route = this.route = this.findRoute(model.get('vertices') || [], opt);
-      // finds all the connection points taking new vertices into account
-      this._findConnectionPoints(route);
-    }
+    // Necessary path finding
+    var route = this.route = this.findRoute(this.model.get('vertices') || [], opt);
+    // finds all the connection points taking new vertices into account
+    this._findConnectionPoints(route);
 
     var pathData = this.getPathData(route);
 

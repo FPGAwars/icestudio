@@ -93,8 +93,8 @@ npm start
 | French     | ![Progress](http://progressed.io/bar/100) |
 | Chinese    | ![Progress](http://progressed.io/bar/100) |
 | Catalan    | ![Progress](http://progressed.io/bar/100) |
+| Basque     | ![Progress](http://progressed.io/bar/100) |
 | Galician   | ![Progress](http://progressed.io/bar/97)  |
-| Basque     | ![Progress](http://progressed.io/bar/95)  |
 
 **Contribute!**
 
