@@ -455,9 +455,21 @@ joint.routers.ice = (function(g, _, joint) {
     // enable/disable linkView perpendicular option
     this.options.perpendicular = !!opt.perpendicular;
 
+    // Force source/target BBoxes to be points
+
+    this.sourceBBox.x += this.sourceBBox.width / 2;
+    this.sourceBBox.y += this.sourceBBox.height / 2;
+    this.sourceBBox.width = 0;
+    this.sourceBBox.height = 0;
+
+    this.targetBBox.x += this.targetBBox.width / 2;
+    this.targetBBox.y += this.targetBBox.height / 2;
+    this.targetBBox.width = 0;
+    this.targetBBox.height = 0;
+
     // expand boxes by specific padding
-    var sourceBBox = g.rect(this.sourceBBox).moveAndExpand(opt.paddingBox);
-    var targetBBox = g.rect(this.targetBBox).moveAndExpand(opt.paddingBox);
+    var sourceBBox = g.rect(this.sourceBBox);
+    var targetBBox = g.rect(this.targetBBox);
 
     // pathfinding
     var map = (new ObstacleMap(opt)).build(this.paper.model, this.model);

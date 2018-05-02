@@ -49,7 +49,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         stroke: 'none'
       },
       '.port-body': {
-        r: 8,
+        r: 16,
         opacity: 0
       },
       '.leftPorts .port-body': {
@@ -1487,16 +1487,16 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 
   arrowheadMarkup: [
     '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-    '<circle class="marker-arrowhead" end="<%= end %>" r="7"/>',
+    '<circle class="marker-arrowhead" end="<%= end %>" r="8"/>',
     '</g>'
   ].join(''),
 
   toolMarkup: [
     '<g class="link-tool">',
     '<g class="tool-remove" event="remove">',
-    '<circle r="8.5" />',
+    '<circle r="8" />',
     '<path transform="scale(.6) translate(-16, -16)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z" />',
-    '<title>Remove link.</title>',
+    '<title>Remove link</title>',
     '</g>',
     '</g>'
   ].join(''),
@@ -1506,7 +1506,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     '<circle class="marker-vertex" idx="<%= idx %>" r="8" />',
     '<path class="marker-vertex-remove-area" idx="<%= idx %>" transform="scale(.8) translate(5, -33)" d="M16,5.333c-7.732,0-14,4.701-14,10.5c0,1.982,0.741,3.833,2.016,5.414L2,25.667l5.613-1.441c2.339,1.317,5.237,2.107,8.387,2.107c7.732,0,14-4.701,14-10.5C30,10.034,23.732,5.333,16,5.333z"/>',
     '<path class="marker-vertex-remove" idx="<%= idx %>" transform="scale(.6) translate(11.5, -39)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z">',
-    '<title>Remove vertex.</title>',
+    '<title>Remove vertex</title>',
     '</path>',
     '</g>'
   ].join(''),
@@ -1536,7 +1536,7 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
     },
 
     router: { name: 'ice' },
-    connector: { name: 'ice'},
+    connector: { name: 'ice' }
 
   }, joint.dia.Link.prototype.defaults)
 
@@ -1545,9 +1545,9 @@ joint.shapes.ice.Wire = joint.dia.Link.extend({
 joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
   options: {
-    shortLinkLength: 100,
+    shortLinkLength: 64,
     longLinkLength: 160,
-    linkToolsOffset: 40,
+    linkToolsOffset: 40
   },
 
   initialize: function() {
@@ -1682,30 +1682,10 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   updateConnection: function(opt) {
     opt = opt || {};
 
-    var model = this.model;
-    var route;
-
-    if (opt.translateBy && model.isRelationshipEmbeddedIn(opt.translateBy)) {
-      // The link is being translated by an ancestor that will
-      // shift source point, target point and all vertices
-      // by an equal distance.
-      var tx = opt.tx || 0;
-      var ty = opt.ty || 0;
-
-      route = this.route =  _.map(this.route, function(point) {
-        // translate point by point by delta translation
-        return g.point(point).offset(tx, ty);
-      });
-
-      // translate source and target connection and marker points.
-      this._translateConnectionPoints(tx, ty);
-
-    } else {
-      // Necessary path finding
-      route = this.route = this.findRoute(model.get('vertices') || [], opt);
-      // finds all the connection points taking new vertices into account
-      this._findConnectionPoints(route);
-    }
+    // Necessary path finding
+    var route = this.route = this.findRoute(this.model.get('vertices') || [], opt);
+    // finds all the connection points taking new vertices into account
+    this._findConnectionPoints(route);
 
     var pathData = this.getPathData(route);
 
