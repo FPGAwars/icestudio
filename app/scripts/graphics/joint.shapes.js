@@ -205,18 +205,20 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       case 'top':
         attrs[portSelector]['ref-y'] = -8;
         attrs[portSelector]['ref-x'] = position;
-        attrs[portLabelSelector]['dx'] = 5+offset;
-        attrs[portLabelSelector]['y'] = 2;
+        attrs[portLabelSelector]['dx'] = -4;
+        attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portLabelSelector]['transform'] = 'rotate(-90)';
         attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 8';
         break;
       case 'bottom':
         attrs[portSelector]['ref-dy'] = 8;
         attrs[portSelector]['ref-x'] = position;
-        attrs[portLabelSelector]['dx'] = 5+offset;
-        attrs[portLabelSelector]['y'] = -2;
-        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portLabelSelector]['dx'] = 4;
+        attrs[portLabelSelector]['y'] = -5-offset;
+        attrs[portLabelSelector]['text-anchor'] = 'end';
+        attrs[portLabelSelector]['transform'] = 'rotate(-90)';
         attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 -8';
         break;
