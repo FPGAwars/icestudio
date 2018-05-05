@@ -125,6 +125,7 @@ angular.module('icestudio')
         linkPinning: false,
         embeddingMode: false,
         //markAvailable: true,
+        getState: this.getState,
         defaultLink: new joint.shapes.ice.Wire(),
         /*guard: function(evt, view) {
           // FALSE means the event isn't guarded.

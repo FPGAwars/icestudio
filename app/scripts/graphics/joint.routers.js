@@ -41,7 +41,7 @@ joint.routers.ice = (function(g, _, joint) {
     // padding applied on the element bounding boxes
     paddingBox: function() {
 
-      var step = 1;
+      var step = 2;
 
       return {
         x: -step,
@@ -95,10 +95,11 @@ joint.routers.ice = (function(g, _, joint) {
 
   // Map of obstacles
   // Helper structure to identify whether a point lies in an obstacle.
-  function ObstacleMap(opt) {
+  function ObstacleMap(opt, paper) {
 
     this.map = {};
     this.options = opt;
+    this.paper = paper;
     // tells how to divide the paper when creating the elements map
     this.mapGridSize = 100;
   }
@@ -133,7 +134,8 @@ joint.routers.ice = (function(g, _, joint) {
     // to go through all obstacles, we check only those in a particular cell.
     var mapGridSize = this.mapGridSize;
 
-    _.chain(graph.getElements())
+    // Compute rectangles from all the blocks
+    var blockRectangles =_.chain(graph.getElements())
     // remove source and target element if required
     .difference(excludedEnds)
     // remove all elements whose type is listed in excludedTypes array
@@ -142,7 +144,22 @@ joint.routers.ice = (function(g, _, joint) {
       return _.contains(opt.excludeTypes, element.get('type')) || _.contains(excludedAncestors, element.id);
     })
     // change elements (models) to their bounding boxes
-    .invoke('getBBox')
+    .invoke('getBBox').value();
+
+    // Compute rectangles from all the port labels
+    var state = this.paper.options.getState();
+    var labelRectangles = $('.port-label').map(function(index, node) {
+      var rect = V(node).bbox();
+      return g.rect({
+        x: (rect.x - state.pan.x) / state.zoom,
+        y: (rect.y - state.pan.y) / state.zoom,
+        width: rect.width / state.zoom,
+        height: rect.height / state.zoom
+      });
+    }).toArray();
+
+    // Add all rectangles to the map's grid
+    _.chain(blockRectangles.concat(labelRectangles))
     // expand their boxes by specific padding
     .invoke('moveAndExpand', opt.paddingBox)
     // build the map
@@ -460,7 +477,7 @@ joint.routers.ice = (function(g, _, joint) {
     var targetBBox = g.rect(this.targetBBox).moveAndExpand(opt.paddingBox);
 
     // pathfinding
-    var map = (new ObstacleMap(opt)).build(this.paper.model, this.model);
+    var map = (new ObstacleMap(opt, this.paper)).build(this.paper.model, this.model);
     var oldVertices = _.map(vertices, g.point);
     var newVertices = [];
     var tailPoint = sourceBBox.center().snapToGrid(opt.step);
