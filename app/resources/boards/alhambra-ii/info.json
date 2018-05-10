@@ -1,0 +1,12 @@
+{
+  "label": "Alhambra II",
+  "datasheet": "https://github.com/FPGAwars/Alhambra-II-FPGA",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 107,
+    "plbs": 960,
+    "brams": 32
+  }
+}
