@@ -1090,8 +1090,6 @@ angular.module('icestudio')
 
         setTimeout(function() {
 
-          self.setState(design.state);
-
           commandManager.stopListening();
 
           self.clearAll();
@@ -1099,6 +1097,8 @@ angular.module('icestudio')
           var cells = graphToCells(design.graph, opt);
 
           graph.addCells(cells);
+
+          self.setState(design.state);
 
           self.appEnable(!opt.disabled);
 
