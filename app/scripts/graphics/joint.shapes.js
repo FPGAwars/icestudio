@@ -21,12 +21,22 @@ else {
 joint.shapes.ice = {};
 joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
-  portMarkup: '<g class="port port<%= id %>"> \
-                 <g id="port-default-<%= port.id %>" class="port-default"><path id="port-default-wire-<%= port.id %>"/><rect id="port-default-rect-<%= port.id %>"/></g> \
-                 <path id="port-wire-<%= port.id %>" class="port-wire"/> \
-                 <circle class="port-body"/> \
-                 <text class="port-label"/> \
+  markup: '<g class="rotatable">\
+             <g class="scalable">\
+               <rect class="body"/>\
+             </g>\
+             <g class="leftPorts"/>\
+             <g class="rightPorts"/>\
+             <g class="topPorts"/>\
+             <g class="bottomPorts"/>\
+           </g>',
+  portMarkup: '<g class="port port<%= index %>">\
+                 <g class="port-default" id="port-default-<%= id %>-<%= port.id %>">\
+                    <path/><rect/>\
+                 </g>\
+                 <path class="port-wire" id="port-wire-<%= id %>-<%= port.id %>"/>\
+                 <text class="port-label"/>\
+                 <circle class="port-body"/>\
                </g>',
 
   defaults: joint.util.deepSupplement({
@@ -360,18 +370,19 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var $topPorts = this.$('.topPorts').empty();
     var $bottomPorts = this.$('.bottomPorts').empty();
     var portTemplate = _.template(this.model.portMarkup);
+    var modelId = this.model.id;
 
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'left'; }), function(port, index) {
-      $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $leftPorts.append(V(portTemplate({ id: modelId, index: index, port: port})).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'right'; }), function(port, index) {
-      $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $rightPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'top'; }), function(port, index) {
-      $topPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $topPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'bottom'; }), function(port, index) {
-      $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $bottomPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
   },
 
@@ -388,6 +399,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
 
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
@@ -396,26 +408,27 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
-          this.$('#port-default-' + port.name).css('display', 'inline');
-          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
-          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
         }
         else {
-          this.$('#port-default-' + port.name).css('display', 'none');
+          portDefault.css('display', 'none');
         }
       }
     }
@@ -1074,6 +1087,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
 
     // Set font size
     if (this.editor) {
@@ -1139,26 +1153,27 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
-          this.$('#port-default-' + port.name).css('display', 'inline');
-          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
-          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
         }
         else {
-          this.$('#port-default-' + port.name).css('display', 'none');
+          portDefault.css('display', 'none');
         }
       }
     }
@@ -1388,6 +1403,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
 
     // Set font size
     if (this.editor) {
@@ -1450,26 +1466,27 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
-          this.$('#port-default-' + port.name).css('display', 'inline');
-          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
-          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
         }
         else {
-          this.$('#port-default-' + port.name).css('display', 'none');
+          portDefault.css('display', 'none');
         }
       }
     }
