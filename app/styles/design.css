@@ -537,50 +537,43 @@ g {
 
 /* Wires makers */
 
-.joint-link.joint-theme-default .connection-wrap {
-  stroke: #000000;
-  stroke-width: 15;
-  stroke-linecap: butt;
-  stroke-linejoin: butt;
-  opacity: 0;
+.link.joint-theme-default .connection-wrap {
+  stroke: #777;
+  stroke-width: 14;
   cursor: pointer;
-}
-.joint-link.joint-theme-default .connection-wrap:hover {
-  opacity: .4;
-  stroke-opacity: .4;
-}
-.joint-link.joint-theme-default .connection {
-  stroke-linejoin: butt;
-}
-.joint-link.joint-theme-default .link-tools .tool-remove circle {
-  fill: #EB2222;
-}
-.joint-link.joint-theme-default .link-tools .tool-remove path {
-  fill: #FFFFFF;
+  opacity: 0;
 }
 
-/* <circle> element inside .marker-vertex-group <g> element */
-.joint-link.joint-theme-default .marker-vertex {
-  fill: #64b0ce;
+.link.joint-theme-default .link-tools .tool-remove circle {
+  fill: #ff333a;
 }
-.joint-link.joint-theme-default .marker-vertex:hover {
-  fill: #317d9b;
-  stroke: none;
+.link.joint-theme-default .link-tools .tool-remove path {
+  fill: #FFF;
 }
 
-.joint-link.joint-theme-default .marker-arrowhead {
-  fill: #64b0ce;
+.link.joint-theme-default .marker-arrowhead {
+  fill: #AAA;
 }
-.joint-link.joint-theme-default .marker-arrowhead:hover {
-  fill: #317d9b;
-  stroke: none;
+.link.joint-theme-default .marker-arrowhead:hover {
+  fill: #888;
 }
 
-/* <circle> element used to remove a vertex */
-.joint-link.joint-theme-default .marker-vertex-remove {
-  fill: #FFFFFF;
-
+.link.joint-theme-default .marker-vertex {
+  fill: #AAA;
 }
+.link.joint-theme-default .marker-vertex:hover {
+  fill: #888;
+}
+
+.link.joint-theme-default .marker-vertex-remove {
+  fill: #FFF;
+  transition: opacity 0.4s;
+}
+.link.joint-theme-default .marker-vertex-remove-area {
+  fill: #333;
+  transition: opacity 0.4s;
+}
+
 /* Resizer */
 
 .resizer {

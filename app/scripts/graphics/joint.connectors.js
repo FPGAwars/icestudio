@@ -27,13 +27,13 @@ joint.connectors.ice = function(sourcePoint, targetPoint, vertices) {
   var dVertices = [];
   _.each(vertices, function(vertex) { dVertices.push(vertex.x, vertex.y); });
 
-  full.push(sourcePoint.x + sx, sourcePoint.y + sy);
+  full.push(sourcePoint.x, sourcePoint.y);
   wrap.push(sourcePoint.x - sx, sourcePoint.y - sy);
 
   full = full.concat(dVertices);
   wrap = wrap.concat(dVertices);
 
-  full.push(targetPoint.x + tx, targetPoint.y + ty);
+  full.push(targetPoint.x, targetPoint.y);
   wrap.push(targetPoint.x - tx, targetPoint.y - ty);
 
   return {
