@@ -886,8 +886,8 @@ joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
     type: 'ice.Memory',
     size: {
-      width: 384,
-      height: 256
+      width: 96,
+      height: 112
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
