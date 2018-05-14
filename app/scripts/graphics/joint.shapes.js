@@ -13,7 +13,7 @@ if (DARWIN) {
   var aceFontSize = '12';
 }
 else {
-  var aceFontSize = '15';
+  var aceFontSize = '14';
 }
 
 // Model element
