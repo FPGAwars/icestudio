@@ -808,7 +808,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   template: '\
   <div class="constant-block">\
-    <p>●</p>\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
     <label></label>\
     <input class="constant-input"></input>\
   </div>\
@@ -860,10 +860,10 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   applyLocal: function() {
     if (this.model.get('data').local) {
-      this.$box.find('p').removeClass('hidden');
+      this.$box.find('svg').removeClass('hidden');
     }
     else {
-      this.$box.find('p').addClass('hidden');
+      this.$box.find('svg').addClass('hidden');
     }
   },
 
@@ -904,7 +904,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="memory-block" id="' + blockLabel + '">\
-        <p>●</p>\
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
         <label></label>\
         <div class="memory-editor" id="' + editorLabel + '"></div>\
         <script>\
@@ -1019,10 +1019,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
   applyLocal: function() {
     if (this.model.get('data').local) {
-      this.$box.find('p').removeClass('hidden');
+      this.$box.find('svg').removeClass('hidden');
     }
     else {
-      this.$box.find('p').addClass('hidden');
+      this.$box.find('svg').addClass('hidden');
     }
   },
 
@@ -1115,7 +1115,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           transform: 'scale(' + state.zoom + ')'
         });
         // Scale local marker
-        this.$box.find('p').css({
+        this.$box.find('svg').css({
           transform: 'scale(' + state.zoom + ')'
         });
       }
