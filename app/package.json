@@ -22,7 +22,8 @@
     "max": "0.4.0",
     "extras": [
       "blackiceprog",
-      "tinyfpgab"
+      "tinyfpgab",
+      "tinyprog"
     ],
     "external": "",
     "develop": false

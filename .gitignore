@@ -8,6 +8,9 @@
 *.log
 *.mo
 
+*.swp
+*~
+
 .tmp
 dist
 cache

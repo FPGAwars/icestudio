@@ -345,6 +345,7 @@ angular.module('icestudio')
               switch (common.selectedBoard.name) {
                 // TinyFPGA-B2 programmer errors
                 case 'TinyFPGA-B2':
+                case 'TinyFPGA-BX':      
                   var match = stdout.match(/Bootloader\snot\sactive/g);
                   if (match && match.length === 3) {
                     resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
