@@ -31,6 +31,7 @@ Supported boards:
     :caption: Development
     :maxdepth: 2
 
+    source/setup
     source/project
     source/blocks
     source/rules
