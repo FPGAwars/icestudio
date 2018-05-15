@@ -52,19 +52,11 @@ Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more in
 
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
+Install [Python 2.7](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/).
 
 [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
 If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
-
-
-##### Ubuntu
-
-```bash
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
 
 ### Download
 
@@ -114,6 +106,18 @@ npm run dist
 | GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
 | Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
 |  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
+
+### Apio configuration
+
+Apio backend is configured in the `app/package.json` file:
+
+- `apio.min`: minimum version (>=)
+- `apio.max`: maximum version (<)
+- `apio.extras`: list of external Python programmers (*blackiceprog*, *tinyfpgab*)
+- `apio.external`: load an external Apio package instead of the default one (e.g. */path/to/my/apio*)
+- `apio.develop`: install Apio from the repository instead of PyPI.
+
+An external Apio package can be also set on runtime using the `ICESTUDIO_APIO` environment variable.
 
 ### Troubleshooting
 
