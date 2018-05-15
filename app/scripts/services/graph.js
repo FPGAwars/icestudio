@@ -125,6 +125,7 @@ angular.module('icestudio')
         linkPinning: false,
         embeddingMode: false,
         //markAvailable: true,
+        getState: this.getState,
         defaultLink: new joint.shapes.ice.Wire(),
         /*guard: function(evt, view) {
           // FALSE means the event isn't guarded.
@@ -478,21 +479,31 @@ angular.module('icestudio')
       }
 
       function findLowerBlock(upperBlock) {
-        if (upperBlock.get('type') !== 'ice.Generic' &&
-            upperBlock.get('type') !== 'ice.Code' &&
-            upperBlock.get('type') !== 'ice.Input') {
+        if (upperBlock.get('type') === 'ice.Wire' ||
+            upperBlock.get('type') === 'ice.Info') {
           return;
         }
         var blocks = graph.findModelsUnderElement(upperBlock);
-        // There is at least one model ice.Generic under the upperModel
-        if (blocks.length <= 0) {
+        // There is at least one model under the upper block
+        if (blocks.length === 0) {
           return;
         }
         // Get the first model found
         var lowerBlock = blocks[0];
-        if (lowerBlock.get('type') !== 'ice.Generic' &&
-            lowerBlock.get('type') !== 'ice.Code' &&
-            lowerBlock.get('type') !== 'ice.Input') {
+        if (lowerBlock.get('type') === 'ice.Wire' ||
+            lowerBlock.get('type') === 'ice.Info') {
+          return;
+        }
+        var validReplacements = {
+          'ice.Generic': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
+          'ice.Code': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
+          'ice.Input': ['ice.Generic', 'ice.Code', 'ice.Input'],
+          'ice.Output': ['ice.Generic', 'ice.Code', 'ice.Output'],
+          'ice.Constant': ['ice.Constant', 'ice.Memory'],
+          'ice.Memory': ['ice.Constant', 'ice.Memory']
+        }[lowerBlock.get('type')];
+        // Check if the upper block is a valid replacement
+        if (validReplacements.indexOf(upperBlock.get('type')) === -1) {
           return;
         }
         return lowerBlock;
@@ -547,10 +558,13 @@ angular.module('icestudio')
         //             ·  --|      BLOCK      |--  ·
         //             ·  --|                 |--  ·
         //             n    |_________________|    n
-        //
+        //                        |  |  |
+        //                   Bottom port 0 -- n
+
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'leftPorts'));
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'rightPorts'));
         _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'topPorts'));
+        _.merge(portsMap, computePortsMap(upperBlock, lowerBlock, 'bottomPorts'));
 
         return portsMap;
       }
@@ -1076,8 +1090,6 @@ angular.module('icestudio')
 
         setTimeout(function() {
 
-          self.setState(design.state);
-
           commandManager.stopListening();
 
           self.clearAll();
@@ -1085,6 +1097,8 @@ angular.module('icestudio')
           var cells = graphToCells(design.graph, opt);
 
           graph.addCells(cells);
+
+          self.setState(design.state);
 
           self.appEnable(!opt.disabled);
 

@@ -76,9 +76,9 @@ angular.module('icestudio')
             }
             return generateCode();
           })
-          .then(function(code) {
-            sourceCode = code;
-            return syncResources(code);
+          .then(function(output) {
+            sourceCode = output.code;
+            return syncResources(output.code, output.internalResources);
           })
           .then(function() {
             var hostname = profile.get('remoteHostname');
@@ -158,15 +158,29 @@ angular.module('icestudio')
           opt.initPorts = compiler.getInitPorts(project.get());
           opt.initPins = compiler.getInitPins(project.get());
         }
-        var verilog = compiler.generate('verilog', project.get(), opt);
-        var pcf = compiler.generate('pcf', project.get(), opt);
-        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.v'), verilog, 'utf8');
-        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, 'main.pcf'), pcf, 'utf8');
-        resolve(verilog);
+
+        // Verilog file
+        var verilogFile = compiler.generate('verilog', project.get(), opt)[0];
+        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, verilogFile.name), verilogFile.content, 'utf8');
+
+        // PCF file
+        var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
+        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+
+        // List files
+        var listFiles = compiler.generate('list', project.get());
+        for (var i in listFiles) {
+          var listFile = listFiles[i];
+          nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, listFile.name), listFile.content, 'utf8');
+        }
+        resolve({
+          code: verilogFile.content,
+          internalResources: listFiles.map(function (res) { return res.name; })
+        });
       });
     }
 
-    function syncResources(code) {
+    function syncResources(code, internalResources) {
       return new Promise(function(resolve, reject) {
         // Remove resources
         removeFiles(resources);
@@ -177,6 +191,8 @@ angular.module('icestudio')
         resources = resources.concat(findInlineFiles(code, reject));
         // Sync resources
         resources = _.uniq(resources);
+        // Remove internal files
+        resources = _.difference(resources, internalResources);
         syncFiles(resources, reject);
         resolve();
       });
@@ -197,6 +213,7 @@ angular.module('icestudio')
       return findFiles(/[\n|\s][^\/]?\"(.*\.list?)\"/g, code);
     }
 
+    // TODO: duplicated: utils findIncludedFiles
     function findFiles(pattern, code) {
       var match;
       var files = [];

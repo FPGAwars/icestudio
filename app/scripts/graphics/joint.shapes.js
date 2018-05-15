@@ -13,7 +13,7 @@ if (DARWIN) {
   var aceFontSize = '12';
 }
 else {
-  var aceFontSize = '15';
+  var aceFontSize = '14';
 }
 
 // Model element
@@ -21,12 +21,22 @@ else {
 joint.shapes.ice = {};
 joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
-  markup: '<g class="rotatable"><g class="scalable"><rect class="body"/></g><g class="leftPorts"/><g class="rightPorts"/><g class="topPorts"/><g class="bottomPorts"/></g>',
-  portMarkup: '<g class="port port<%= id %>"> \
-                 <g id="port-default-<%= port.id %>" class="port-default"><path id="port-default-wire-<%= port.id %>"/><rect id="port-default-rect-<%= port.id %>"/></g> \
-                 <path id="port-wire-<%= port.id %>" class="port-wire"/> \
-                 <circle class="port-body"/> \
-                 <text class="port-label"/> \
+  markup: '<g class="rotatable">\
+             <g class="scalable">\
+               <rect class="body"/>\
+             </g>\
+             <g class="leftPorts"/>\
+             <g class="rightPorts"/>\
+             <g class="topPorts"/>\
+             <g class="bottomPorts"/>\
+           </g>',
+  portMarkup: '<g class="port port<%= index %>">\
+                 <g class="port-default" id="port-default-<%= id %>-<%= port.id %>">\
+                    <path/><rect/>\
+                 </g>\
+                 <path class="port-wire" id="port-wire-<%= id %>-<%= port.id %>"/>\
+                 <text class="port-label"/>\
+                 <circle class="port-body"/>\
                </g>',
 
   defaults: joint.util.deepSupplement({
@@ -205,18 +215,20 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       case 'top':
         attrs[portSelector]['ref-y'] = -8;
         attrs[portSelector]['ref-x'] = position;
-        attrs[portLabelSelector]['dx'] = 5+offset;
-        attrs[portLabelSelector]['y'] = 2;
+        attrs[portLabelSelector]['dx'] = -4;
+        attrs[portLabelSelector]['y'] = -5-offset;
         attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portLabelSelector]['transform'] = 'rotate(-90)';
         attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 8';
         break;
       case 'bottom':
         attrs[portSelector]['ref-dy'] = 8;
         attrs[portSelector]['ref-x'] = position;
-        attrs[portLabelSelector]['dx'] = 5+offset;
-        attrs[portLabelSelector]['y'] = -2;
-        attrs[portLabelSelector]['text-anchor'] = 'start';
+        attrs[portLabelSelector]['dx'] = 4;
+        attrs[portLabelSelector]['y'] = -5-offset;
+        attrs[portLabelSelector]['text-anchor'] = 'end';
+        attrs[portLabelSelector]['transform'] = 'rotate(-90)';
         attrs[portWireSelector]['x'] = position;
         attrs[portWireSelector]['d'] = 'M 0 0 L 0 -8';
         break;
@@ -358,18 +370,19 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var $topPorts = this.$('.topPorts').empty();
     var $bottomPorts = this.$('.bottomPorts').empty();
     var portTemplate = _.template(this.model.portMarkup);
+    var modelId = this.model.id;
 
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'left'; }), function(port, index) {
-      $leftPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $leftPorts.append(V(portTemplate({ id: modelId, index: index, port: port})).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'right'; }), function(port, index) {
-      $rightPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $rightPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'top'; }), function(port, index) {
-      $topPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $topPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'bottom'; }), function(port, index) {
-      $bottomPorts.append(V(portTemplate({ id: index, port: port })).node);
+      $bottomPorts.append(V(portTemplate({ id: modelId, index: index, port: port })).node);
     });
   },
 
@@ -386,6 +399,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
 
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
@@ -394,26 +408,27 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
-          this.$('#port-default-' + port.name).css('display', 'inline');
-          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
-          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
         }
         else {
-          this.$('#port-default-' + port.name).css('display', 'none');
+          portDefault.css('display', 'none');
         }
       }
     }
@@ -793,7 +808,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   template: '\
   <div class="constant-block">\
-    <p>●</p>\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
     <label></label>\
     <input class="constant-input"></input>\
   </div>\
@@ -845,22 +860,314 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   applyLocal: function() {
     if (this.model.get('data').local) {
-      this.$box.find('p').removeClass('hidden');
+      this.$box.find('svg').removeClass('hidden');
     }
     else {
-      this.$box.find('p').addClass('hidden');
+      this.$box.find('svg').addClass('hidden');
     }
   },
 
   apply: function() {
     this.applyName();
-    this.applyValue();
     this.applyLocal();
+    this.applyValue();
   },
 
   update: function() {
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
+  }
+});
+
+
+// Memory block
+
+joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Memory',
+    size: {
+      width: 96,
+      height: 112
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
+
+  initialize: function() {
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    var id = sha1(this.model.get('id')).toString().substring(0, 6);
+    var editorLabel = 'editor' + id;
+    this.$box = $(joint.util.template(
+      '\
+      <div class="memory-block">\
+        <div class="memory-content">\
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
+          <label></label>\
+        </div>\
+        <div class="memory-editor" id="' + editorLabel + '"></div>\
+        <script>\
+          var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
+          ' + editorLabel + '.setTheme("ace/theme/chrome");\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
+          ' + editorLabel + '.setHighlightActiveLine(false);\
+          ' + editorLabel + '.setHighlightGutterLine(false);\
+          ' + editorLabel + '.setOption("firstLineNumber", 0);\
+          ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
+          ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
+        </script>\
+        <div class="resizer"/>\
+      </div>\
+      '
+    )());
+
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
+
+    this.updateBox();
+    this.updating = false;
+    this.prevZoom = 0;
+
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    this.selector = this.$box.find('.memory-editor');
+
+    // Prevent paper from handling pointerdown.
+    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+
+    this.deltas = [];
+    this.counter = 0;
+    this.timer = null;
+    var undoGroupingInterval = 200;
+
+    var self = this;
+    this.editor = ace.edit(this.selector[0]);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.commands.removeCommand('undo');
+    this.editor.commands.removeCommand('redo');
+    this.editor.commands.removeCommand('touppercase');
+    this.editor.session.on('change', function(delta) {
+      if (!self.updating) {
+        // Check consecutive-change interval
+        if (Date.now() - self.counter < undoGroupingInterval) {
+          clearTimeout(self.timer);
+        }
+        // Update deltas
+        self.deltas = self.deltas.concat([delta]);
+        // Launch timer
+        self.timer = setTimeout(function() {
+          var deltas = JSON.parse(JSON.stringify(self.deltas));
+          // Set deltas
+          self.model.set('deltas', deltas);
+          // Reset deltas
+          self.deltas = [];
+          // Set data.list
+          self.model.attributes.data.list = self.editor.session.getValue();
+        }, undoGroupingInterval);
+        // Reset counter
+        self.counter = Date.now();
+      }
+    });
+    this.editor.on('focus', function() {
+      $(document).trigger('disableSelected');
+      self.editor.setHighlightActiveLine(true);
+      self.editor.setHighlightGutterLine(true);
+      // Show cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 1;
+    });
+    this.editor.on('blur', function() {
+      var selection = self.editor.session.selection;
+      if (selection) {
+        selection.clearSelection();
+      }
+      self.editor.setHighlightActiveLine(false);
+      self.editor.setHighlightGutterLine(false);
+      // Hide cursor
+      self.editor.renderer.$cursorLayer.element.style.opacity = 0;
+    });
+    this.editor.on('paste', function(e) {
+      if (e.text.startsWith('{"icestudio":')) {
+        // Prevent paste blocks
+        e.text = '';
+      }
+    });
+    this.editor.on('mousewheel', function(event) {
+      // Stop mousewheel event propagation when target is active
+      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
+        // Enable only scroll
+        event.stopPropagation();
+      }
+      else {
+        // Enable only zoom
+        event.preventDefault();
+      }
+    });
+
+    this.setupResizer();
+
+    // Apply data
+    this.apply({ ini: true });
+  },
+
+  applyName: function() {
+    var name = this.model.get('data').name;
+    this.$box.find('label').text(name);
+  },
+
+  applyLocal: function() {
+    if (this.model.get('data').local) {
+      this.$box.find('svg').removeClass('hidden');
+    }
+    else {
+      this.$box.find('svg').addClass('hidden');
+    }
+  },
+
+  applyValue: function(opt) {
+    this.updating = true;
+
+    var dontselect = false;
+    var data = this.model.get('data');
+    var deltas = this.model.get('deltas');
+
+    opt = opt || {};
+
+    switch (opt.attribute) {
+      case 'deltas':
+        if (deltas) {
+          var changes = [{
+            group: 'doc',
+            deltas: deltas
+          }];
+          if (opt.undo) {
+            this.editor.session.undoChanges(changes, dontselect);
+          }
+          else {
+            this.editor.session.redoChanges(changes, dontselect);
+          }
+        }
+        break;
+      case 'data':
+        break;
+      default:
+        break;
+    }
+    if (opt.ini) {
+      this.editor.session.setValue(data.list);
+    }
+    else {
+      // Set data.list
+      this.model.attributes.data.list = this.editor.session.getValue();
+    }
+    setTimeout(function(self) {
+      self.updating = false;
+    }, 10, this);
+  },
+
+  apply: function(opt) {
+    this.applyName();
+    this.applyLocal();
+    this.applyValue(opt);
+  },
+
+  update: function() {
+    this.renderPorts();
+    this.editor.setReadOnly(this.model.get('disabled'));
+    joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    var i, port;
+    var bbox = this.model.getBBox();
+    var data = this.model.get('data');
+    var state = this.model.get('state');
+    var rules = this.model.get('rules');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
+
+    // Set font size
+    if (this.editor) {
+      if (this.prevZoom !== state.zoom) {
+        this.prevZoom = state.zoom;
+        // Scale editor
+        this.$box.find('.memory-editor').css({
+          top: 22 * state.zoom,
+          left: -2 * state.zoom,
+          right: -2 * state.zoom,
+          bottom: -2 * state.zoom,
+          margin: 8 * state.zoom,
+          'border-radius': 5 * state.zoom,
+          'border-width': state.zoom + 0.5
+        });
+        // Scale padding
+        this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
+        // Scale gutters
+        var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
+        if (rule) {
+          rule.style.paddingLeft = Math.round(19 * state.zoom) + 'px';
+          rule.style.paddingRight = Math.round(13 * state.zoom) + 'px';
+        }
+        // Scale font size
+        this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
+        // Scale cursor
+        this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
+      }
+      this.editor.resize();
+    }
+
+    // Set ports width
+    var width = WIRE_WIDTH * state.zoom;
+    this.$('.port-wire').css('stroke-width', width);
+    // Set buses
+    for (i in leftPorts) {
+      port = leftPorts[i];
+      if (port.size > 1) {
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+      }
+    }
+    for (i in rightPorts) {
+      port = rightPorts[i];
+      if (port.size > 1) {
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+      }
+    }
+    // Render rules
+    if (data && data.ports && data.ports.in) {
+      for (i in data.ports.in) {
+        port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
+        if (rules && port.default && port.default.apply) {
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
+        }
+        else {
+          portDefault.css('display', 'none');
+        }
+      }
+    }
+
+    // Render content
+    this.$box.find('.memory-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
   }
 });
 
@@ -884,11 +1191,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var blockLabel = 'block' + id;
     var editorLabel = 'editor' + id;
     this.$box = $(joint.util.template(
       '\
-      <div class="code-block" id="' + blockLabel + '">\
+      <div class="code-block">\
+        <div class="code-content"></div>\
         <div class="code-editor" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -915,7 +1222,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('.code-editor');
 
     // Prevent paper from handling pointerdown.
     this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
@@ -1019,7 +1326,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         }
         break;
       case 'data':
-
         break;
       default:
         break;
@@ -1079,15 +1385,21 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
 
     // Set font size
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
-        // Scale border
+        // Scale editor
         this.$box.find('.code-editor').css({
+          top: -2 * state.zoom,
+          left: -2 * state.zoom,
+          right: -2 * state.zoom,
+          bottom: -2 * state.zoom,
           margin: 8 * state.zoom,
-          'border-radius': 5 * state.zoom
+          'border-radius': 5 * state.zoom,
+          'border-width': state.zoom + 0.5
         });
         // Scale annotations
         var annotationSize = Math.round(15 * state.zoom) + 'px';
@@ -1110,30 +1422,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
-    function getCSSRule(ruleName) {
-      if (document.styleSheets) {
-        for (var i = 0; i < document.styleSheets.length; i++) {
-          var styleSheet = document.styleSheets[i];
-          var ii = 0;
-          var cssRule = false;
-          do {
-            if (styleSheet.cssRules) {
-              cssRule = styleSheet.cssRules[ii];
-            } else {
-              cssRule = styleSheet.rules[ii];
-            }
-            if (cssRule)  {
-              if (cssRule.selectorText === ruleName) {
-                return cssRule;
-              }
-            }
-            ii++;
-          } while (cssRule);
-        }
-      }
-      return false;
-    }
-
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
@@ -1141,38 +1429,47 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + port.id).css('stroke-width', width * 3);
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
-          this.$('#port-default-' + port.name).css('display', 'inline');
-          this.$('#port-default-wire-' + port.name).css('stroke-width', width);
-          this.$('#port-default-rect-' + port.name).css('stroke-width', state.zoom);
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
         }
         else {
-          this.$('#port-default-' + port.name).css('display', 'none');
+          portDefault.css('display', 'none');
         }
       }
     }
 
-    this.$box.css({
-      'border-radius': 5 * state.zoom
+    // Render content
+    this.$box.find('.code-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
     });
-    this.$box.css({ width: bbox.width * state.zoom,
-                    height: bbox.height * state.zoom,
-                    left: bbox.x * state.zoom + state.pan.x,
-                    top: bbox.y * state.zoom + state.pan.y });
-                    // 'border-width': 2 * state.zoom: problem int instead of float
+
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
   }
 });
 
@@ -1196,16 +1493,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var blockLabel = 'block' + id;
-    var textLabel = 'text' + id;
     var editorLabel = 'editor' + id;
     var readonly = this.model.get('data').readonly;
     this.$box = $(joint.util.template(
       '\
-      <div class="info-block" id="' + blockLabel + '">\
-        <div class="info-text ' + (readonly ? '' : ' hidden') + '" " id="' + textLabel + '">\
-          <div style="overflow: visible;"></div>\
-        </div>\
+      <div class="info-block">\
+        <div class="info-content ' + (readonly ? ' hidden' : '') + '"></div>\
         <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -1216,6 +1509,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
+        <div class="info-text ' + (readonly ? '' : ' hidden') + '">\
+          <div style="overflow: visible;"></div>\
+        </div>\
         <div class="resizer"/>\
       </div>\
       '
@@ -1227,8 +1523,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updateBox();
     this.updating = false;
 
-    this.textSelector = this.$box.find('#' + textLabel);
-    this.editorSelector = this.$box.find('#' + editorLabel);
+    this.textSelector = this.$box.find('.info-text');
+    this.editorSelector = this.$box.find('.info-editor');
+    this.contentSelector = this.$box.find('.info-content');
 
     // Prevent paper from handling pointerdown.
     this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
@@ -1352,6 +1649,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('info-block-readonly');
       this.textSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
+      this.contentSelector.addClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
@@ -1363,6 +1661,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.$box.removeClass('info-block-readonly');
       this.textSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
+      this.contentSelector.removeClass('hidden');
       this.enableResizer();
     }
   },
@@ -1424,11 +1723,15 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       });
     }
     else if (this.editor) {
-      // Scale border
-      // This is required because this.editorSelector may be not available
+      // Scale editor
       this.$box.find('.info-editor').css({
+        top: -2 * state.zoom,
+        left: -2 * state.zoom,
+        right: -2 * state.zoom,
+        bottom: -2 * state.zoom,
         margin: 8 * state.zoom,
-        'border-radius': 5 * state.zoom
+        'border-radius': 5 * state.zoom,
+        'border-width': state.zoom + 0.5
       });
       // Scale padding
       this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
@@ -1439,12 +1742,21 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
+    // Render content
+    this.$box.find('.info-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    // Render block
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
       width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom,
-      'border-radius': 5 * state.zoom
+      height: bbox.height * state.zoom
     });
   },
 
@@ -1813,3 +2125,27 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   }
 
 });
+
+function getCSSRule(ruleName) {
+  if (document.styleSheets) {
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var styleSheet = document.styleSheets[i];
+      var ii = 0;
+      var cssRule = false;
+      do {
+        if (styleSheet.cssRules) {
+          cssRule = styleSheet.cssRules[ii];
+        } else {
+          cssRule = styleSheet.rules[ii];
+        }
+        if (cssRule)  {
+          if (cssRule.selectorText === ruleName) {
+            return cssRule;
+          }
+        }
+        ii++;
+      } while (cssRule);
+    }
+  }
+  return false;
+}

@@ -968,7 +968,8 @@ angular.module('icestudio')
             cell.type === 'ice.Output' ||
             cell.type === 'ice.Code' ||
             cell.type === 'ice.Info' ||
-            cell.type === 'ice.Constant') {
+            cell.type === 'ice.Constant' ||
+            cell.type === 'ice.Memory') {
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
@@ -976,7 +977,8 @@ angular.module('icestudio')
           block.position = cell.position;
           if (cell.type === 'ice.Generic' ||
               cell.type === 'ice.Code' ||
-              cell.type === 'ice.Info') {
+              cell.type === 'ice.Info' ||
+              cell.type === 'ice.Memory') {
             block.size = cell.size;
           }
           blocks.push(block);

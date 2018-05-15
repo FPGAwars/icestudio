@@ -196,9 +196,10 @@ angular.module('icestudio')
     function exportFromCompiler(id, name, ext) {
       checkGraph()
       .then(function() {
+        // TODO: export list files
         utils.saveDialog('#input-export-' + id, ext, function(filepath) {
           // Save the compiler result
-          var data = project.compile(id);
+          var data = project.compile(id)[0].content;
           utils.saveFile(filepath, data)
           .then(function() {
             alertify.success(gettextCatalog.getString('{{name}} exported', { name: name }));

@@ -314,8 +314,11 @@ angular.module('icestudio')
         var origPath = utils.dirname(this.filepath);
         var destPath =  utils.dirname(filepath);
         // 1. Parse and find included files
-        var code = compiler.generate('verilog', project);
+        var code = compiler.generate('verilog', project)[0].content;
+        var listFiles = compiler.generate('list', project);
+        var internalFiles = listFiles.map(function (res) { return res.name; });
         var files = utils.findIncludedFiles(code);
+         files = _.difference(files, internalFiles);
         // Are there included files?
         if (files.length > 0) {
           // 2. Check project's directory
@@ -359,9 +362,10 @@ angular.module('icestudio')
     function sortGraph() {
       var cells = graph.getCells();
 
-      // Sort Constant cells by x-coordinate
+      // Sort Constant/Memory cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (cell.get('type') === 'ice.Constant') {
+        if (cell.get('type') === 'ice.Constant' ||
+            cell.get('type') === 'ice.Memory') {
           return cell.get('position').x;
         }
       });
@@ -390,8 +394,11 @@ angular.module('icestudio')
           var origPath = utils.dirname(filepath);
           var destPath =  utils.dirname(self.path);
           // 1. Parse and find included files
-          var code = compiler.generate('verilog', block);
+          var code = compiler.generate('verilog', block)[0].content;
+          var listFiles = compiler.generate('list', block);
+          var internalFiles = listFiles.map(function (res) { return res.name; });
           var files = utils.findIncludedFiles(code);
+           files = _.difference(files, internalFiles);
           // Are there included files?
           if (files.length > 0) {
             // 2. Check project's directory
@@ -503,14 +510,15 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
-              break;
-            case 'basic.info':
-              delete block.data.text;
+            case 'basic.memory':
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
               }
+              break;
+            case 'basic.info':
+              delete block.data.text;
               break;
             default:
               // Generic block
