@@ -1120,30 +1120,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
-    function getCSSRule(ruleName) {
-      if (document.styleSheets) {
-        for (var i = 0; i < document.styleSheets.length; i++) {
-          var styleSheet = document.styleSheets[i];
-          var ii = 0;
-          var cssRule = false;
-          do {
-            if (styleSheet.cssRules) {
-              cssRule = styleSheet.cssRules[ii];
-            } else {
-              cssRule = styleSheet.rules[ii];
-            }
-            if (cssRule)  {
-              if (cssRule.selectorText === ruleName) {
-                return cssRule;
-              }
-            }
-            ii++;
-          } while (cssRule);
-        }
-      }
-      return false;
-    }
-
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
@@ -1444,30 +1420,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
       }
       this.editor.resize();
-    }
-
-    function getCSSRule(ruleName) {
-      if (document.styleSheets) {
-        for (var i = 0; i < document.styleSheets.length; i++) {
-          var styleSheet = document.styleSheets[i];
-          var ii = 0;
-          var cssRule = false;
-          do {
-            if (styleSheet.cssRules) {
-              cssRule = styleSheet.cssRules[ii];
-            } else {
-              cssRule = styleSheet.rules[ii];
-            }
-            if (cssRule)  {
-              if (cssRule.selectorText === ruleName) {
-                return cssRule;
-              }
-            }
-            ii++;
-          } while (cssRule);
-        }
-      }
-      return false;
     }
 
     // Set ports width
@@ -2173,3 +2125,27 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   }
 
 });
+
+function getCSSRule(ruleName) {
+  if (document.styleSheets) {
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var styleSheet = document.styleSheets[i];
+      var ii = 0;
+      var cssRule = false;
+      do {
+        if (styleSheet.cssRules) {
+          cssRule = styleSheet.cssRules[ii];
+        } else {
+          cssRule = styleSheet.rules[ii];
+        }
+        if (cssRule)  {
+          if (cssRule.selectorText === ruleName) {
+            return cssRule;
+          }
+        }
+        ii++;
+      } while (cssRule);
+    }
+  }
+  return false;
+}
