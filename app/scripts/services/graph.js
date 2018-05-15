@@ -1291,15 +1291,18 @@ angular.module('icestudio')
       return new Promise(function(resolve) {
         _.each(cells, function(cell) {
           var cellView;
-          if ((cell.get('type') === 'ice.Code') ||
-              (cell.get('type') === 'ice.Generic') ||
-              (cell.get('type') === 'ice.Constant'))
-          {
+          if (cell.get('type') === 'ice.Code') {
+            cellView = paper.findViewByModel(cell);
+            cellView.$box.find('.code-content').removeClass('highlight-error');
+            cellView.clearAnnotations();
+          }
+          else if (cell.get('type') === 'ice.Generic') {
             cellView = paper.findViewByModel(cell);
             cellView.$box.removeClass('highlight-error');
-            if (cell.get('type') === 'ice.Code') {
-              cellView.clearAnnotations();
-            }
+          }
+          else if (cell.get('type') === 'ice.Constant') {
+            cellView = paper.findViewByModel(cell);
+            cellView.$box.removeClass('highlight-error');
           }
         });
         resolve();
@@ -1311,8 +1314,7 @@ angular.module('icestudio')
       _.each(cells, function(cell) {
         var blockId, cellView;
         if ((codeError.blockType === 'code' && cell.get('type') === 'ice.Code') ||
-            (codeError.blockType === 'constant' && cell.get('type') === 'ice.Constant'))
-         {
+            (codeError.blockType === 'constant' && cell.get('type') === 'ice.Constant')) {
           blockId = utils.digestId(cell.id);
         }
         else if (codeError.blockType === 'generic' && cell.get('type') === 'ice.Generic') {
@@ -1321,7 +1323,12 @@ angular.module('icestudio')
         if (codeError.blockId === blockId) {
           cellView = paper.findViewByModel(cell);
           if (codeError.type === 'error') {
-            cellView.$box.addClass('highlight-error');
+            if (cell.get('type') === 'ice.Code') {
+              cellView.$box.find('.code-content').addClass('highlight-error');
+            }
+            else {
+              cellView.$box.addClass('highlight-error');
+            }
           }
           if (cell.get('type') === 'ice.Code') {
             cellView.setAnnotation(codeError);

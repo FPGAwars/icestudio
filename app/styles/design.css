@@ -484,7 +484,7 @@ g {
 }
 
 .highlight-error {
-  background: #ff8084;
+  background: #ff8084 !important;
 }
 
 .highlight-yellow {
