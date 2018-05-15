@@ -495,12 +495,12 @@ angular.module('icestudio')
           return;
         }
         var validReplacements = {
-          'ice.Generic': ['ice.Code', 'ice.Input', 'ice.Output'],
-          'ice.Code': ['ice.Generic', 'ice.Input', 'ice.Output'],
-          'ice.Input': ['ice.Generic', 'ice.Code'],
-          'ice.Output': ['ice.Generic', 'ice.Code'],
-          'ice.Constant': ['ice.Memory'],
-          'ice.Memory': ['ice.Constant']
+          'ice.Generic': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
+          'ice.Code': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
+          'ice.Input': ['ice.Generic', 'ice.Code', 'ice.Input'],
+          'ice.Output': ['ice.Generic', 'ice.Code', 'ice.Output'],
+          'ice.Constant': ['ice.Constant', 'ice.Memory'],
+          'ice.Memory': ['ice.Constant', 'ice.Memory']
         }[lowerBlock.get('type')];
         // Check if the upper block is a valid replacement
         if (validReplacements.indexOf(upperBlock.get('type')) === -1) {
