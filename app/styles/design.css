@@ -436,14 +436,28 @@ g {
 
 .info-block {
   position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.info-block .info-content {
+  position: absolute;
   background: #DDD;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
+}
+
+.info-block .info-editor {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
 }
 
 .info-block-readonly {
@@ -463,18 +477,6 @@ g {
   border-radius: 5px;
   border: 1px solid transparent;
   pointer-events: none;
-}
-
-.info-block .info-editor {
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
-  border-radius: 5px;
-  border: 1px solid #BBB;
-  pointer-events: auto;
 }
 
 .joint-highlight-stroke.joint-theme-default {

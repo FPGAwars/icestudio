@@ -934,7 +934,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('.memory-editor');
 
     // Prevent paper from handling pointerdown.
     this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
@@ -1246,7 +1246,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('#' + editorLabel);
+    this.selector = this.$box.find('.code-editor');
 
     // Prevent paper from handling pointerdown.
     this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
@@ -1541,16 +1541,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var blockLabel = 'block' + id;
-    var textLabel = 'text' + id;
     var editorLabel = 'editor' + id;
     var readonly = this.model.get('data').readonly;
     this.$box = $(joint.util.template(
       '\
-      <div class="info-block" id="' + blockLabel + '">\
-        <div class="info-text ' + (readonly ? '' : ' hidden') + '" " id="' + textLabel + '">\
-          <div style="overflow: visible;"></div>\
-        </div>\
+      <div class="info-block">\
+        <div class="info-content ' + (readonly ? ' hidden' : '') + '"></div>\
         <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -1561,6 +1557,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
+        <div class="info-text ' + (readonly ? '' : ' hidden') + '">\
+          <div style="overflow: visible;"></div>\
+        </div>\
         <div class="resizer"/>\
       </div>\
       '
@@ -1572,8 +1571,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updateBox();
     this.updating = false;
 
-    this.textSelector = this.$box.find('#' + textLabel);
-    this.editorSelector = this.$box.find('#' + editorLabel);
+    this.textSelector = this.$box.find('.info-text');
+    this.editorSelector = this.$box.find('.info-editor');
+    this.contentSelector = this.$box.find('.info-content');
 
     // Prevent paper from handling pointerdown.
     this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
@@ -1697,6 +1697,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.$box.addClass('info-block-readonly');
       this.textSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
+      this.contentSelector.addClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
@@ -1708,6 +1709,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.$box.removeClass('info-block-readonly');
       this.textSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
+      this.contentSelector.removeClass('hidden');
       this.enableResizer();
     }
   },
@@ -1769,11 +1771,15 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       });
     }
     else if (this.editor) {
-      // Scale border
-      // This is required because this.editorSelector may be not available
+      // Scale editor
       this.$box.find('.info-editor').css({
+        top: -2 * state.zoom,
+        left: -2 * state.zoom,
+        right: -2 * state.zoom,
+        bottom: -2 * state.zoom,
         margin: 8 * state.zoom,
-        'border-radius': 5 * state.zoom
+        'border-radius': 5 * state.zoom,
+        'border-width': state.zoom + 0.5
       });
       // Scale padding
       this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
@@ -1784,12 +1790,21 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
+    // Render content
+    this.$box.find('.info-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    // Render block
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
       width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom,
-      'border-radius': 5 * state.zoom
+      height: bbox.height * state.zoom
     });
   },
 
