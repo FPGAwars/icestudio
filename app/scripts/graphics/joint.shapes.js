@@ -1094,7 +1094,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
-        // Scale border
+        // Scale editor
         this.$box.find('.memory-editor').css({
           top: 22 * state.zoom,
           left: -2 * state.zoom,
@@ -1177,15 +1177,15 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-   this.$box.find('.memory-content').css({
-     left: bbox.width / 2.0 * (state.zoom - 1),
-     top: bbox.height / 2.0 * (state.zoom - 1),
-     width: bbox.width,
-     height: bbox.height,
-     transform: 'scale(' + state.zoom + ')'
-   });
+    this.$box.find('.memory-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
+    });
 
-   // Render block
+    // Render block
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
@@ -1215,11 +1215,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var blockLabel = 'block' + id;
     var editorLabel = 'editor' + id;
     this.$box = $(joint.util.template(
       '\
-      <div class="code-block" id="' + blockLabel + '">\
+      <div class="code-block">\
+        <div class="code-content"></div>\
         <div class="code-editor" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -1415,10 +1415,15 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
-        // Scale border
+        // Scale editor
         this.$box.find('.code-editor').css({
+          top: -2 * state.zoom,
+          left: -2 * state.zoom,
+          right: -2 * state.zoom,
+          bottom: -2 * state.zoom,
           margin: 8 * state.zoom,
-          'border-radius': 5 * state.zoom
+          'border-radius': 5 * state.zoom,
+          'border-width': state.zoom + 0.5
         });
         // Scale annotations
         var annotationSize = Math.round(15 * state.zoom) + 'px';
@@ -1497,14 +1502,22 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       }
     }
 
-    this.$box.css({
-      'border-radius': 5 * state.zoom
+    // Render content
+    this.$box.find('.code-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
+      width: bbox.width,
+      height: bbox.height,
+      transform: 'scale(' + state.zoom + ')'
     });
-    this.$box.css({ width: bbox.width * state.zoom,
-                    height: bbox.height * state.zoom,
-                    left: bbox.x * state.zoom + state.pan.x,
-                    top: bbox.y * state.zoom + state.pan.y });
-                    // 'border-width': 2 * state.zoom: problem int instead of float
+
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
   }
 });
 

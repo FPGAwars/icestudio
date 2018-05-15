@@ -294,7 +294,7 @@ g {
 
 .select2-container--default .select2-selection--single {
   outline: none;
-  border: 1px solid #aaa;
+  border: 1px solid #AAA;
 }
 
 .select2-dropdown {
@@ -353,7 +353,7 @@ g {
   font-size: 14px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   border-radius: 4px;
-  border: 1px solid #aaa;
+  border: 1px solid #AAA;
   pointer-events: auto;
 }
 
@@ -404,20 +404,22 @@ g {
   bottom: -2px;
   margin: 8px;
   border-radius: 5px;
-  border: 1px solid #aaa;
+  border: 1px solid #AAA;
   pointer-events: auto;
 }
 
 .code-block {
   position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.code-block .code-content {
+  position: absolute;
   background: #C0DFEB;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
 .code-block .code-editor {
@@ -428,7 +430,7 @@ g {
   bottom: -2px;
   margin: 8px;
   border-radius: 5px;
-  border: 1px solid #BBB;
+  border: 1px solid #AAA;
   pointer-events: auto;
 }
 
