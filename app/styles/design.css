@@ -363,17 +363,19 @@ g {
 
 .memory-block {
   position: absolute;
-  background: #FBF0C9;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.memory-block svg {
+.memory-block .memory-content {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.memory-block .memory-content svg {
   position: absolute;
   right: 0;
   margin: 4px;
@@ -381,7 +383,7 @@ g {
   fill: #444;
 }
 
-.memory-block label {
+.memory-block .memory-content label {
   display: block;
   margin-top: 5px;
   margin-bottom: 7px;

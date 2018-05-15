@@ -899,13 +899,14 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var blockLabel = 'block' + id;
     var editorLabel = 'editor' + id;
     this.$box = $(joint.util.template(
       '\
-      <div class="memory-block" id="' + blockLabel + '">\
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
-        <label></label>\
+      <div class="memory-block">\
+        <div class="memory-content">\
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
+          <label></label>\
+        </div>\
         <div class="memory-editor" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
@@ -1095,8 +1096,13 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale border
         this.$box.find('.memory-editor').css({
+          top: 22 * state.zoom,
+          left: -2 * state.zoom,
+          right: -2 * state.zoom,
+          bottom: -2 * state.zoom,
           margin: 8 * state.zoom,
-          'border-radius': 5 * state.zoom
+          'border-radius': 5 * state.zoom,
+          'border-width': state.zoom + 0.5
         });
         // Scale padding
         this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
@@ -1110,14 +1116,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
         // Scale cursor
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
-        // Scale label
-        this.$box.find('label').css({
-          transform: 'scale(' + state.zoom + ')'
-        });
-        // Scale local marker
-        this.$box.find('svg').css({
-          transform: 'scale(' + state.zoom + ')'
-        });
       }
       this.editor.resize();
     }
@@ -1178,14 +1176,22 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       }
     }
 
+    // Render content
+   this.$box.find('.memory-content').css({
+     left: bbox.width / 2.0 * (state.zoom - 1),
+     top: bbox.height / 2.0 * (state.zoom - 1),
+     width: bbox.width,
+     height: bbox.height,
+     transform: 'scale(' + state.zoom + ')'
+   });
+
+   // Render block
     this.$box.css({
-      'border-radius': 5 * state.zoom
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
     });
-    this.$box.css({ width: bbox.width * state.zoom,
-                    height: bbox.height * state.zoom,
-                    left: bbox.x * state.zoom + state.pan.x,
-                    top: bbox.y * state.zoom + state.pan.y });
-                    // 'border-width': 2 * state.zoom: problem int instead of float
   }
 });
 
