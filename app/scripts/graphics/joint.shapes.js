@@ -1095,7 +1095,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.$box.find('.memory-editor').css({
+        this.selector.css({
           top: 22 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1392,7 +1392,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.$box.find('.code-editor').css({
+        this.selector.css({
           top: -2 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1498,8 +1498,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="info-block">\
-        <div class="info-content ' + (readonly ? ' hidden' : '') + '"></div>\
-        <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
+        <div class="info-content' + (readonly ? ' hidden' : '') + '"></div>\
+        <div class="info-editor' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
@@ -1510,7 +1510,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.session.setMode("ace/mode/markdown");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
-        <div class="info-text ' + (readonly ? '' : ' hidden') + '">\
+        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '">\
           <div style="overflow: visible;"></div>\
         </div>\
         <div class="resizer"/>\
@@ -1524,7 +1524,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.updateBox();
     this.updating = false;
 
-    this.textSelector = this.$box.find('.info-text');
+    this.renderSelector = this.$box.find('.info-render');
     this.editorSelector = this.$box.find('.info-editor');
     this.contentSelector = this.$box.find('.info-content');
 
@@ -1648,7 +1648,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
-      this.textSelector.removeClass('hidden');
+      this.renderSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.contentSelector.addClass('hidden');
       this.disableResizer();
@@ -1660,7 +1660,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else {
       this.$box.removeClass('info-block-readonly');
-      this.textSelector.addClass('hidden');
+      this.renderSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.contentSelector.removeClass('hidden');
       this.enableResizer();
@@ -1679,9 +1679,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
 
     // Apply Marked to convert from Markdown to HTML
-    this.textSelector.children().html(marked(markdown));
+    this.renderSelector.children().html(marked(markdown));
 
-    this.textSelector.find('a').each(function(index, element) {
+    this.renderSelector.find('a').each(function(index, element) {
       element.onclick = function (event) {
         event.preventDefault();
         openurl.open(element.href);
@@ -1714,8 +1714,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
-      // This is required because this.textSelector may be not available
-      this.$box.find('.info-text').css({
+      // This is required because this.renderSelector may be not available
+      this.renderSelector.css({
         left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         width: bbox.width - 14,
@@ -1725,7 +1725,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else if (this.editor) {
       // Scale editor
-      this.$box.find('.info-editor').css({
+      this.editorSelector.css({
         top: -2 * state.zoom,
         left: -2 * state.zoom,
         right: -2 * state.zoom,
