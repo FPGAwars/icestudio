@@ -1684,6 +1684,13 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     // Apply Marked to convert from Markdown to HTML
     this.renderSelector.children().html(marked(markdown));
 
+    // Render task list
+    var checkboxTemplate = '<input type="checkbox" style="position:absolute;margin:0.4em 0 0 -1.3em"';
+    this.renderSelector.find('li').each(function(index, element) {
+      element.innerHTML = element.innerHTML.replace(/^\[\s\]/, checkboxTemplate + '>');
+      element.innerHTML = element.innerHTML.replace(/^\[x\]/, checkboxTemplate + ' checked>');
+    });
+
     this.renderSelector.find('a').each(function(index, element) {
       element.onclick = function (event) {
         event.preventDefault();
