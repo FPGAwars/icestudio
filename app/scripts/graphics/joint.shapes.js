@@ -1685,11 +1685,17 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.renderSelector.children().html(marked(markdown));
 
     // Render task list
-    var checkboxTemplate = '<input type="checkbox" style="position:absolute;margin:0.4em 0 0 -1.3em"';
     this.renderSelector.find('li').each(function(index, element) {
+      replaceCheckboxItem(element);
+    });
+
+    function replaceCheckboxItem(element) {
+      var checkboxTemplate = '<input type="checkbox" style="position:absolute;margin:0.4em 0 0 -1.3em"';
       element.innerHTML = element.innerHTML.replace(/^\[\s\]/, checkboxTemplate + '>');
       element.innerHTML = element.innerHTML.replace(/^\[x\]/, checkboxTemplate + ' checked>');
-    });
+      element.innerHTML = element.innerHTML.replace(/^<p>\[\s\]/, '<p>' + checkboxTemplate + '>');
+      element.innerHTML = element.innerHTML.replace(/^<p>\[x\]/, '<p>' + checkboxTemplate + ' checked>');
+    }
 
     this.renderSelector.find('a').each(function(index, element) {
       element.onclick = function (event) {
