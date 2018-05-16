@@ -924,28 +924,29 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       '
     )());
 
+    this.editorSelector = this.$box.find('.memory-editor');
+    this.contentSelector = this.$box.find('.memory-content');
+
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-    this.prevZoom = 0;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('.memory-editor');
-
     // Prevent paper from handling pointerdown.
-    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
+    this.prevZoom = 0;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(this.selector[0]);
+    this.editor = ace.edit(this.editorSelector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1095,7 +1096,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.selector.css({
+        this.editorSelector.css({
           top: 22 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1153,7 +1154,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.memory-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
@@ -1212,28 +1213,29 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       '
     )());
 
+    this.editorSelector = this.$box.find('.code-editor');
+    this.contentSelector = this.$box.find('.code-content');
+
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-    this.prevZoom = 0;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('.code-editor');
-
     // Prevent paper from handling pointerdown.
-    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
+    this.prevZoom = 0;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(this.selector[0]);
+    this.editor = ace.edit(this.editorSelector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1285,7 +1287,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('mousewheel', function(event) {
       // Stop mousewheel event propagation when target is active
-      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
+      if (document.activeElement.parentNode.id === self.editorSelector.attr('id')) {
         // Enable only scroll
         event.stopPropagation();
       }
@@ -1392,7 +1394,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.selector.css({
+        this.editorSelector.css({
           top: -2 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1455,7 +1457,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.code-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
@@ -1518,19 +1520,19 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       '
     )());
 
-    this.model.on('change', this.updateBox, this);
-    this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-
-    this.renderSelector = this.$box.find('.info-render');
     this.editorSelector = this.$box.find('.info-editor');
     this.contentSelector = this.$box.find('.info-content');
+    this.renderSelector = this.$box.find('.info-render');
+
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
 
     // Prevent paper from handling pointerdown.
     this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
@@ -1657,6 +1659,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       if (selection) {
         selection.clearSelection();
       }
+      this.applyText();
     }
     else {
       this.$box.removeClass('info-block-readonly');
@@ -1692,7 +1695,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   apply: function(opt) {
     this.applyValue(opt);
     this.applyReadonly();
-    this.applyText();
     this.updateBox();
   },
 
@@ -1744,7 +1746,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.info-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
