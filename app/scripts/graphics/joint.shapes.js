@@ -1735,7 +1735,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         width: bbox.width - 14,
         height: bbox.height - 14,
-        transform: 'scale(' + state.zoom + ')'
+        transform: 'scale(' + state.zoom + ')',
+        'font-size': Math.round(aceFontSize * state.zoom) + 'px'
       });
     }
     else if (this.editor) {
