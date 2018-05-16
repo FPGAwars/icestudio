@@ -1507,6 +1507,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
         <div class="info-text ' + (readonly ? '' : ' hidden') + '">\
