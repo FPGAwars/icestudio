@@ -31,8 +31,7 @@ angular.module('icestudio')
         },
         design: {
           board: '',
-          graph: { blocks: [], wires: [] },
-          state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
+          graph: { blocks: [], wires: [] }
         },
         dependencies: {}
       };
@@ -49,7 +48,6 @@ angular.module('icestudio')
       },
       design: {
         graph: { blocks: [], wires: [] }
-        state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
       },
     }
     */
@@ -67,18 +65,6 @@ angular.module('icestudio')
       if (key in project) {
         project[key] = obj;
       }
-    };
-
-    this.new = function(name) {
-      this.path = '';
-      project = _default();
-      this.updateTitle(name);
-
-      graph.clearAll();
-      graph.resetCommandStack();
-      graph.setState(project.design.state);
-
-      alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
     };
 
     this.open = function(filepath, emptyPath) {
@@ -172,7 +158,6 @@ angular.module('icestudio')
       var project = _default();
       project.package = data.package;
       project.design.board = data.design.board;
-      project.design.state = data.design.state;
       project.design.graph = data.design.graph;
 
       var depsInfo = findSubDependencies10(data.design.deps);
@@ -234,8 +219,7 @@ angular.module('icestudio')
         design: {
           board: '',
           graph: {},
-          deps: {},
-          state: {}
+          deps: {}
         },
       };
       for (var b in data.graph.blocks) {
@@ -293,7 +277,6 @@ angular.module('icestudio')
       }
       project.design.board = data.board;
       project.design.graph = data.graph;
-      project.design.state = data.state;
       // Safe load all dependencies recursively
       for (var key in data.deps) {
         project.design.deps[key] = convertTo10(data.deps[key], key);
@@ -504,6 +487,7 @@ angular.module('icestudio')
       }
 
       function _prune(_project) {
+        delete _project.design.state;
         for (var i in _project.design.graph.blocks) {
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
