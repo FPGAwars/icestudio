@@ -62,7 +62,7 @@ angular.module('icestudio')
         false
       ],
         function(evt, values) {
-          var labels = values[0].replace(/ /g, '').split(',');
+          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
           var virtual = !values[1];
           var clock = values[2];
           if (resultAlert) {
@@ -125,7 +125,7 @@ angular.module('icestudio')
         true
       ],
         function(evt, values) {
-          var labels = values[0].replace(/ /g, '').split(',');
+          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
           var virtual = !values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -199,7 +199,7 @@ angular.module('icestudio')
         false
       ],
         function(evt, values) {
-          var labels = values[0].replace(/ /g, '').split(',');
+          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
           var local = values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -258,7 +258,7 @@ angular.module('icestudio')
         false
       ],
         function(evt, values) {
-          var labels = values[0].replace(/ /g, '').split(',');
+          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
           var local = values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -349,9 +349,9 @@ angular.module('icestudio')
           gettextCatalog.getString('Enter the parameters') ],
         defaultValues,
         function(evt, values) {
-          var inPorts = values[0].replace(/ /g, '').split(',');
-          var outPorts = values[1].replace(/ /g, '').split(',');
-          var params = values[2].replace(/ /g, '').split(',');
+          var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
+          var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
+          var params = values[2].replace(/\s*,\s*/g, ',').split(',');
           var allNames = [];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -820,7 +820,7 @@ angular.module('icestudio')
       ],
         function(evt, values) {
           var oldSize, newSize, offset = 0;
-          var label = values[0].replace(/ /g, '');
+          var label = values[0];
           var virtual = !values[1];
           var clock = values[2];
           if (resultAlert) {
@@ -901,7 +901,7 @@ angular.module('icestudio')
       ],
         function(evt, values) {
           var oldSize, newSize, offset = 0;
-          var label = values[0].replace(/ /g, '');
+          var label = values[0];
           var virtual = !values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -976,7 +976,7 @@ angular.module('icestudio')
         block.data.local
       ],
         function(evt, values) {
-          var label = values[0].replace(/ /g, '');
+          var label = values[0];
           var local = values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -1015,7 +1015,7 @@ angular.module('icestudio')
         block.data.local
       ],
         function(evt, values) {
-          var label = values[0].replace(/ /g, '');
+          var label = values[0];
           var local = values[1];
           if (resultAlert) {
             resultAlert.dismiss(false);
