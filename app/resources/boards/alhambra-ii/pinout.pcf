@@ -60,10 +60,13 @@ set_io --warn-no-port D1   1
 set_io --warn-no-port D0   2
 
 # -- In Bottom female header
-set_io --warn-no-port A0   114
-set_io --warn-no-port A1   115
-set_io --warn-no-port A2   116
-set_io --warn-no-port A3   117
+set_io --warn-no-port DD0  114
+set_io --warn-no-port DD1  115
+set_io --warn-no-port DD2  116
+set_io --warn-no-port DD3  117
+set_io --warn-no-port DD4  118
+set_io --warn-no-port DD5  119
+
 set_io --warn-no-port SDA  118
 set_io --warn-no-port SCL  119
 
@@ -90,5 +93,5 @@ set_io --warn-no-port DSR  48  # output
 set_io --warn-no-port DTR  52  # input
 set_io --warn-no-port CTS  56  # output
 set_io --warn-no-port RTS  60  # input
-set_io --warn-no-port TX   62  # output
-set_io --warn-no-port RX   61  # input
+set_io --warn-no-port TX   61  # output
+set_io --warn-no-port RX   62  # input
