@@ -919,7 +919,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
         </script>\
-        <div class="resizer"/>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
@@ -1208,7 +1208,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
-        <div class="resizer"/>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
@@ -1512,10 +1512,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.session.setMode("ace/mode/markdown");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
-        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '">\
-          <div style="overflow: visible;"></div>\
-        </div>\
-        <div class="resizer"/>\
+        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
@@ -1650,9 +1648,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
-      this.renderSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.contentSelector.addClass('hidden');
+      this.renderSelector.removeClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
@@ -1663,9 +1661,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else {
       this.$box.removeClass('info-block-readonly');
-      this.renderSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.contentSelector.removeClass('hidden');
+      this.renderSelector.addClass('hidden');
       this.enableResizer();
     }
   },
@@ -1673,6 +1671,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   applyText: function() {
     var data = this.model.get('data');
     var markdown = data.info || '';
+
     // Replace emojis
     markdown = markdown.replace(/(:.*:)/g, function (match) {
       return emoji.emojify(match, null, function (code, name) {
@@ -1682,7 +1681,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
 
     // Apply Marked to convert from Markdown to HTML
-    this.renderSelector.children().html(marked(markdown));
+    this.renderSelector.html(marked(markdown));
 
     // Render task list
     this.renderSelector.find('li').each(function(index, element) {
@@ -1690,11 +1689,29 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
 
     function replaceCheckboxItem(element) {
-      var checkboxTemplate = '<input type="checkbox" style="position:absolute;margin:0.4em 0 0 -1.3em"';
-      element.innerHTML = element.innerHTML.replace(/^\[\s\]/, checkboxTemplate + '>');
-      element.innerHTML = element.innerHTML.replace(/^\[x\]/, checkboxTemplate + ' checked>');
-      element.innerHTML = element.innerHTML.replace(/^<p>\[\s\]/, '<p>' + checkboxTemplate + '>');
-      element.innerHTML = element.innerHTML.replace(/^<p>\[x\]/, '<p>' + checkboxTemplate + ' checked>');
+      listIterator(element);
+      var child = $(element).children().first()[0];
+      if (child && child.localName === 'p') {
+        listIterator(child);
+      }
+    }
+
+    function listIterator(element) {
+      var $el = $(element);
+      var label = $el.clone().children().remove('il, ul').end().html();
+      var detached = $el.children('il, ul');
+
+      if (/^\[\s\]/.test(label)) {
+        $el.html(renderItemCheckbox(label, '')).append(detached);
+      }
+      else if (/^\[x\]/.test(label)) {
+        $el.html(renderItemCheckbox(label, 'checked')).append(detached);
+      }
+    }
+
+    function renderItemCheckbox(label, checked) {
+      label = label.substring(3);
+      return '<input type="checkbox" ' + checked + '/>' + label;
     }
 
     this.renderSelector.find('a').each(function(index, element) {
