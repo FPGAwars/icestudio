@@ -40,7 +40,7 @@
     };
 
     window.onload = function() {
-      var options = { gfm: true, renderer: renderer };
+      var options = { renderer: renderer };
       var readme = getURLParameter('readme');
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open('GET', readme, false);

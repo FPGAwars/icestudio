@@ -72,10 +72,6 @@
   z-index: 1501;
 }
 
-.info-text a {
-  pointer-events: all;
-}
-
 .read-only {
   position: absolute;
   top: 10px;
@@ -465,7 +461,7 @@ g {
   border: 1px solid transparent;
 }
 
-.info-block .info-text {
+.info-block .info-render {
   position: absolute;
   overflow: visible;
   background: transparent;
@@ -477,6 +473,16 @@ g {
   border-radius: 5px;
   border: 1px solid transparent;
   pointer-events: none;
+  overflow: visible;
+}
+
+.info-block .info-render a {
+  pointer-events: all;
+}
+
+.info-block .info-render input[type=checkbox] {
+  position: absolute;
+  margin: 0.4em 0 0 -1.3em;
 }
 
 .joint-highlight-stroke.joint-theme-default {

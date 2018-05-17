@@ -919,33 +919,34 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
         </script>\
-        <div class="resizer"/>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
 
+    this.editorSelector = this.$box.find('.memory-editor');
+    this.contentSelector = this.$box.find('.memory-content');
+
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-    this.prevZoom = 0;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('.memory-editor');
-
     // Prevent paper from handling pointerdown.
-    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
+    this.prevZoom = 0;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(this.selector[0]);
+    this.editor = ace.edit(this.editorSelector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1095,7 +1096,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.$box.find('.memory-editor').css({
+        this.editorSelector.css({
           top: 22 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1153,7 +1154,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.memory-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
@@ -1207,33 +1208,34 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
-        <div class="resizer"/>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
 
+    this.editorSelector = this.$box.find('.code-editor');
+    this.contentSelector = this.$box.find('.code-content');
+
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-    this.prevZoom = 0;
 
     this.listenTo(this.model, 'process:ports', this.update);
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    this.selector = this.$box.find('.code-editor');
-
     // Prevent paper from handling pointerdown.
-    this.selector.on('mousedown click', function(event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
+    this.prevZoom = 0;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
     var undoGroupingInterval = 200;
 
     var self = this;
-    this.editor = ace.edit(this.selector[0]);
+    this.editor = ace.edit(this.editorSelector[0]);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1285,7 +1287,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('mousewheel', function(event) {
       // Stop mousewheel event propagation when target is active
-      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
+      if (document.activeElement.parentNode.id === self.editorSelector.attr('id')) {
         // Enable only scroll
         event.stopPropagation();
       }
@@ -1392,7 +1394,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
         // Scale editor
-        this.$box.find('.code-editor').css({
+        this.editorSelector.css({
           top: -2 * state.zoom,
           left: -2 * state.zoom,
           right: -2 * state.zoom,
@@ -1455,7 +1457,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.code-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
@@ -1498,8 +1500,8 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="info-block">\
-        <div class="info-content ' + (readonly ? ' hidden' : '') + '"></div>\
-        <div class="info-editor ' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
+        <div class="info-content' + (readonly ? ' hidden' : '') + '"></div>\
+        <div class="info-editor' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
@@ -1507,29 +1509,28 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
         </script>\
-        <div class="info-text ' + (readonly ? '' : ' hidden') + '">\
-          <div style="overflow: visible;"></div>\
-        </div>\
-        <div class="resizer"/>\
+        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
+        <div class="resizer"/></div>\
       </div>\
       '
     )());
 
-    this.model.on('change', this.updateBox, this);
-    this.model.on('remove', this.removeBox, this);
-
-    this.updateBox();
-    this.updating = false;
-
-    this.textSelector = this.$box.find('.info-text');
     this.editorSelector = this.$box.find('.info-editor');
     this.contentSelector = this.$box.find('.info-content');
+    this.renderSelector = this.$box.find('.info-render');
+
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
 
     // Prevent paper from handling pointerdown.
     this.editorSelector.on('mousedown click', function(event) { event.stopPropagation(); });
 
+    this.updateBox();
+
+    this.updating = false;
     this.deltas = [];
     this.counter = 0;
     this.timer = null;
@@ -1647,21 +1648,22 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
-      this.textSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.contentSelector.addClass('hidden');
+      this.renderSelector.removeClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
       if (selection) {
         selection.clearSelection();
       }
+      this.applyText();
     }
     else {
       this.$box.removeClass('info-block-readonly');
-      this.textSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.contentSelector.removeClass('hidden');
+      this.renderSelector.addClass('hidden');
       this.enableResizer();
     }
   },
@@ -1669,6 +1671,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   applyText: function() {
     var data = this.model.get('data');
     var markdown = data.info || '';
+
     // Replace emojis
     markdown = markdown.replace(/(:.*:)/g, function (match) {
       return emoji.emojify(match, null, function (code, name) {
@@ -1678,9 +1681,40 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
 
     // Apply Marked to convert from Markdown to HTML
-    this.textSelector.children().html(marked(markdown));
+    this.renderSelector.html(marked(markdown));
 
-    this.textSelector.find('a').each(function(index, element) {
+    // Render task list
+    this.renderSelector.find('li').each(function(index, element) {
+      replaceCheckboxItem(element);
+    });
+
+    function replaceCheckboxItem(element) {
+      listIterator(element);
+      var child = $(element).children().first()[0];
+      if (child && child.localName === 'p') {
+        listIterator(child);
+      }
+    }
+
+    function listIterator(element) {
+      var $el = $(element);
+      var label = $el.clone().children().remove('il, ul').end().html();
+      var detached = $el.children('il, ul');
+
+      if (/^\[\s\]/.test(label)) {
+        $el.html(renderItemCheckbox(label, '')).append(detached);
+      }
+      else if (/^\[x\]/.test(label)) {
+        $el.html(renderItemCheckbox(label, 'checked')).append(detached);
+      }
+    }
+
+    function renderItemCheckbox(label, checked) {
+      label = label.substring(3);
+      return '<input type="checkbox" ' + checked + '/>' + label;
+    }
+
+    this.renderSelector.find('a').each(function(index, element) {
       element.onclick = function (event) {
         event.preventDefault();
         openurl.open(element.href);
@@ -1691,7 +1725,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   apply: function(opt) {
     this.applyValue(opt);
     this.applyReadonly();
-    this.applyText();
     this.updateBox();
   },
 
@@ -1713,18 +1746,19 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
-      // This is required because this.textSelector may be not available
-      this.$box.find('.info-text').css({
+      // This is required because this.renderSelector may be not available
+      this.renderSelector.css({
         left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
         width: bbox.width - 14,
         height: bbox.height - 14,
-        transform: 'scale(' + state.zoom + ')'
+        transform: 'scale(' + state.zoom + ')',
+        'font-size': Math.round(aceFontSize * state.zoom) + 'px'
       });
     }
     else if (this.editor) {
       // Scale editor
-      this.$box.find('.info-editor').css({
+      this.editorSelector.css({
         top: -2 * state.zoom,
         left: -2 * state.zoom,
         right: -2 * state.zoom,
@@ -1743,7 +1777,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    this.$box.find('.info-content').css({
+    this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,

@@ -1,4 +1,4 @@
-<img src="./doc/images/icestudio-logo-label.png" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/doc/images/icestudio-logo-label.png" align="center">
 
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.2)](https://travis-ci.org/FPGAwars/icestudio)
 [![Version](https://img.shields.io/badge/version-v0.3.2-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
