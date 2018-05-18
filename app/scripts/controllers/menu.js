@@ -592,6 +592,11 @@ angular.module('icestudio')
       });
     };
 
+    $scope.reloadCollections = function() {
+      collections.loadCollections();
+      collections.selectCollection(common.selectedCollection.name);
+    };
+
     $scope.removeCollection = function(collection) {
       alertify.confirm(gettextCatalog.getString('Do you want to remove the {{name}} collection?', { name: utils.bold(collection.name) }),
       function() {
