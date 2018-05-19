@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/doc/images/icestudio-logo-label.png" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
 
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.2)](https://travis-ci.org/FPGAwars/icestudio)
 [![Version](https://img.shields.io/badge/version-v0.3.2-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
@@ -44,9 +44,9 @@
   1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
-<img src="./doc/images/main.png" width="700" align="center">
+<img src="./docs/resources/images/demo/main.png" width="700" align="center">
 
-<img src="./doc/images/main-1.png" width="700" align="center">
+<img src="./docs/resources/images/demo/main-1.png" width="700" align="center">
 
 Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 

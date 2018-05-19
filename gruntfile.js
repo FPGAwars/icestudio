@@ -125,8 +125,8 @@ module.exports = function(grunt) {
         flavor: 'normal',
         zip: false,
         buildDir: 'dist/',
-        winIco: 'doc/images/icestudio-logo.ico',
-        macIcns: 'doc/images/icestudio-logo.icns',
+        winIco: 'docs/resources/images/logo/icestudio-logo.ico',
+        macIcns: 'docs/resources/images/logo/icestudio-logo.icns',
         macPlist: { 'CFBundleIconFile': 'nw.icns' },
         platforms: platforms
       },
@@ -149,8 +149,8 @@ module.exports = function(grunt) {
       options: {
         basepath: '.',
         title: 'Icestudio Installer',
-        icon: 'doc/images/icestudio-logo.icns',
-        background: 'doc/images/installer-background.png',
+        icon: 'docs/resources/images/logo/icestudio-logo.icns',
+        background: 'docs/resources/images/logo/installer-background.png',
         window: {
           size: {
             width: 512,
@@ -184,7 +184,7 @@ module.exports = function(grunt) {
           name: 'Icestudio',
           exec: 'icestudio',
           arch: '32bit',
-          icons: 'doc/icons',
+          icons: 'docs/resources/icons',
           comment: 'Experimental graphic editor for open FPGAs',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
         },
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
           name: 'Icestudio',
           exec: 'icestudio',
           arch: '64bit',
-          icons: 'doc/icons',
+          icons: 'docs/resources/icons',
           comment: 'Experimental graphic editor for open FPGAs',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
         },
