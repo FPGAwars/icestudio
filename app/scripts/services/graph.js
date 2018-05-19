@@ -338,34 +338,15 @@ angular.module('icestudio')
       });
 
       var pointerDown = false;
-      var dblClickCell = false;
 
       paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
         if (utils.hasShift(evt)) {
           // If Shift is pressed process the click (no Shift+dblClick allowed)
-          processCellClick(cellView, evt);
-        }
-        else {
-          // If not, wait 200ms to ensure that it's not a dblclick
-          var ensureTime = 200;
-          pointerDown = false;
-          setTimeout(function() {
-            if (!dblClickCell && !pointerDown) {
-              processCellClick(cellView, evt);
-            }
-          }, ensureTime);
-        }
-
-        function processCellClick(cellView, evt) {
           if (paper.options.enabled) {
             if (!cellView.model.isLink()) {
               // Disable current focus
               document.activeElement.blur();
               if (utils.hasLeftButton(evt)) {
-                if (!utils.hasShift(evt)) {
-                  // Cancel previous selection
-                  disableSelected();
-                }
                 // Add cell to selection
                 selection.add(cellView.model);
                 selectionView.createSelectionBox(cellView.model);
@@ -390,35 +371,30 @@ angular.module('icestudio')
       paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
         if (!utils.hasShift(evt)) {
           // Allow dblClick if Shift is not pressed
-          dblClickCell = true;
-          processDblClick(cellView);
-          // Enable click event
-          setTimeout(function() { dblClickCell = false; }, 200);
-        }
-      });
-
-      function processDblClick(cellView) {
-        var type =  cellView.model.get('blockType');
-        if (type.indexOf('basic.') !== -1) {
-          if (paper.options.enabled) {
-            blocks.editBasic(type, cellView, function(cell) {
-              addCell(cell);
-              selectionView.cancelSelection();
+          var type =  cellView.model.get('blockType');
+          if (type.indexOf('basic.') !== -1) {
+            // Edit basic blocks
+            if (paper.options.enabled) {
+              blocks.editBasic(type, cellView, function(cell) {
+                addCell(cell);
+                selectionView.cancelSelection();
+              });
+            }
+          }
+          else if (common.allDependencies[type]) {
+            // Navigate inside generic blocks
+            z.index = 1;
+            var project = common.allDependencies[type];
+            var breadcrumbsLength = self.breadcrumbs.length;
+            $rootScope.$broadcast('navigateProject', {
+              update: breadcrumbsLength === 1,
+              project: project
             });
+            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+            utils.rootScopeSafeApply();
           }
         }
-        else if (common.allDependencies[type]) {
-          z.index = 1;
-          var project = common.allDependencies[type];
-          var breadcrumbsLength = self.breadcrumbs.length;
-          $rootScope.$broadcast('navigateProject', {
-            update: breadcrumbsLength === 1,
-            project: project
-          });
-          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-          utils.rootScopeSafeApply();
-        }
-      }
+      });
 
       paper.on('blank:pointerdown', function(evt, x, y) {
         // Disable current focus
