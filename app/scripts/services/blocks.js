@@ -302,8 +302,8 @@ angular.module('icestudio')
         size: { width: 192, height: 128 }
       };
       var defaultValues = [
-        'a , b',
-        'c , d',
+        '',
+        '',
         ''
       ];
       if (block) {
