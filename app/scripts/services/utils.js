@@ -117,11 +117,13 @@ angular.module('icestudio')
       }
       if (!nodeFs.existsSync(common.ENV_DIR)) {
         nodeFs.mkdirSync(common.ENV_DIR);
-        this.executeCommand(
-          [this.getPythonExecutable(),
-           coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-           coverPath(common.ENV_DIR),
-           '--always-copy'], callback);
+        var command = [this.getPythonExecutable(),
+         coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
+         coverPath(common.ENV_DIR)];
+        if (!common.DARWIN) {
+          command.push('--always-copy');
+        }
+        this.executeCommand(command, callback);
       }
       else {
         callback();
