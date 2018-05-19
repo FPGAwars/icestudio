@@ -1162,12 +1162,12 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-    var nameOffset = data.name ? 0 : 24;
+    var topOffset = data.name ? 0 : (data.local ? 9 : 23);
     this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
-      top: (bbox.height + nameOffset ) / 2.0 * (state.zoom - 1) + nameOffset,
+      top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
       width: bbox.width,
-      height: bbox.height - nameOffset,
+      height: bbox.height - topOffset,
       transform: 'scale(' + state.zoom + ')'
     });
 

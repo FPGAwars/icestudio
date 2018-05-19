@@ -287,7 +287,7 @@ angular.module('icestudio')
               local: local
             };
             cells.push(loadBasicMemory(blockInstance));
-            blockInstance.position.x += 19 * gridsize;
+            blockInstance.position.x += 15 * gridsize;
           }
           if (callback) {
             callback(cells);
