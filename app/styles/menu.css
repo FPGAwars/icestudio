@@ -1,0 +1,137 @@
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.looks-disabled {
+  opacity: 0.8;
+}
+
+.navbar {
+  border-bottom: 1px solid #d5dadd;
+  margin-bottom: 0;
+  z-index: 1502;
+}
+
+.navbar-right {
+  margin-right: 0;
+}
+
+.shortcut {
+  display: inline;
+  float: right;
+  color: #999;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  display: block;
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  visibility: hidden;
+  transition-delay: 0.3s;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
+.dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+
+.dropdown-submenu-right {
+  position: relative;
+}
+
+.dropdown-submenu-right > .dropdown-menu {
+  display: block;
+  top: 0;
+  right: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  visibility: hidden;
+  transition-delay: 0.3s;
+}
+
+.dropdown-submenu-right:hover > .dropdown-menu {
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
+.dropdown-submenu-right > a:after {
+  display: block;
+  content: " ";
+  float: left;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #ccc;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #333 !important;
+}
+
+.marker {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  margin-right: 12px;
+  border-radius: 1px;
+}
+.marker-yellow {
+  background-color: #f6f688;
+}
+.marker-orange {
+  background-color: #f8e5a0;
+}
+.marker-blue {
+  background-color: #c0dfeb;
+}
+.marker-gray {
+  background-color: #ddd;
+}
+
+.disabled > a {
+  cursor: default !important;
+}

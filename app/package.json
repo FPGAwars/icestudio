@@ -1,0 +1,64 @@
+{
+  "name": "icestudio",
+  "version": "0.3.3-dev",
+  "description": "Experimental graphic editor for open FPGAs",
+  "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
+  "repository": "https://github.com/FPGAwars/icestudio",
+  "license": "GPL-2.0",
+  "main": "index.html",
+  "single-instance": false,
+  "window": {
+    "width": 900,
+    "height": 620,
+    "min_width": 800,
+    "min_height": 200,
+    "toolbar": false,
+    "resizable": true,
+    "position": "center",
+    "icon": "resources/images/icestudio-logo.png"
+  },
+  "apio": {
+    "min": "0.3.3",
+    "max": "0.4.0",
+    "extras": [
+      "blackiceprog",
+      "tinyfpgab"
+    ],
+    "external": "",
+    "develop": false
+  },
+  "collection": "0.3.0",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "angular-gettext-tools": "2.3.5",
+    "copy-paste": "^1.3.0",
+    "extract-zip": "^1.6.5",
+    "fs-extra": "^1.0.0",
+    "getos": "^3.0.1",
+    "glob": "^7.1.2",
+    "is-online": "^5.2.0",
+    "jquery": "^3.2.1",
+    "lodash.debounce": "^4.0.8",
+    "marked": "^0.3.19",
+    "node-emoji": "^1.8.1",
+    "node-lang-info": "^0.2.1",
+    "openurl": "^1.1.1",
+    "rmdir": "^1.2.0",
+    "rsyncwrapper": "^2.0.1",
+    "sha1": "^1.1.1",
+    "ssh-exec": "^2.0.0",
+    "sudo-prompt": "^7.1.0",
+    "svgo": "~0.7.2",
+    "tmp": "0.0.33"
+  },
+  "readme": "../README.md",
+  "keywords": [
+    "FPGA",
+    "open",
+    "editor",
+    "hardware"
+  ]
+}

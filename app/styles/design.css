@@ -1,0 +1,598 @@
+.paper {
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  overflow: hidden;
+  cursor: default;
+}
+
+.paper svg {
+  background: transparent;
+  position: relative;
+  z-index: 0;
+}
+
+.footer {
+  display: flex;
+  cursor: default;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  min-height: 47px;
+  border-top: 1px solid #d5dadd;
+  z-index: 1501;
+}
+
+.breadcrumbs-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.board-container {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.fpga-resources {
+  color: #777;
+}
+
+.fpga-resources span {
+  margin-right: 20px;
+}
+
+.breadcrumb {
+  margin: 0;
+  background-color: #f5f6f7;
+}
+
+.breadcrumb>.active {
+  color: #333;
+}
+
+.breadcrumb>li>a:hover {
+  text-decoration: none;
+}
+
+.banner {
+  position: relative;
+}
+
+.info {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 15px;
+  color: #656565;
+  background-color: white;
+  border-radius: 5px;
+  cursor: default;
+  z-index: 1501;
+}
+
+.read-only {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 14px;
+  color: #f05c5c;
+  background-color: white;
+  border-radius: 5px;
+  cursor: default;
+  z-index: 1501;
+}
+
+.back-button {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  font-size: 14px;
+  color: #63afcf;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1501;
+}
+
+.back-button:hover {
+  text-decoration: none;
+}
+
+.disable-graph {
+  pointer-events: none;
+}
+
+.block-disabled {
+  opacity: 0.4;
+}
+
+g {
+  fill: transparent;
+  transition: opacity 0.2s;
+}
+
+.generic-block {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 1px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.generic-block .clock {
+  position: absolute;
+}
+
+.generic-block .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  color: #333;
+  background-color: white;
+  border: 1px solid #777;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 20px;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.generic-block .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #777 transparent transparent transparent;
+}
+
+.generic-block .tooltip-medium {
+  width: 180px;
+  margin-left: -90px;
+}
+
+.generic-block .tooltip-large {
+  width: 240px;
+  margin-left: -120px;
+}
+
+.config-block {
+  background: #fafacd;
+}
+
+.generic-block .img-container {
+  position: absolute;
+  margin: auto;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+}
+
+.generic-block img {
+  width: 100%;
+  height: 100%;
+}
+
+.generic-block label {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.virtual-port {
+  position: absolute;
+  background: #E2FBC9;
+  border-radius: 5px;
+  border: 1px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.virtual-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
+.virtual-port label {
+  display: block;
+  margin-top: 22px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.fpga-port {
+  position: absolute;
+  background: #FBFBC9;
+  border-radius: 5px;
+  border: 1px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.fpga-port p {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 13px;
+  color: #555;
+}
+
+.fpga-port label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.fpga-port div p {
+  position: relative;
+  top: 0px;
+  left: -20px;
+  float: left;
+}
+
+.fpga-port div .select2 {
+  position: relative;
+  width: 84px;
+  left: 5px;
+  margin-bottom: 6px;
+  pointer-events: auto;
+}
+
+.select2-selection {
+  font-size: 13px;
+  height: 26px !important;
+}
+
+.select2-selection__rendered {
+  line-height: 24px !important;
+}
+
+.select2-selection__clear {
+  color: #777;
+}
+
+.select2-container--default .select2-selection--single {
+  outline: none;
+  border: 1px solid #AAA;
+}
+
+.select2-dropdown {
+}
+
+.select2-dropdown .select2-search__field {
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #777;
+}
+
+.bigdrop {
+  font-size: 13px;
+  width: 92px !important;
+}
+
+.constant-block {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.constant-block svg {
+  position: absolute;
+  right: 0;
+  margin: 4px;
+  width: 8px;
+  fill: #444;
+}
+
+.constant-block label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.constant-block input {
+  position: absolute;
+  text-align: center;
+  left: 5px;
+  width: 84px;
+  height: 26px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  border-radius: 4px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
+}
+
+.constant-block input:focus {
+  outline: none;
+}
+
+.memory-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.memory-block .memory-content {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.memory-block .memory-content svg {
+  position: absolute;
+  right: 0;
+  margin: 4px;
+  width: 8px;
+  fill: #444;
+}
+
+.memory-block .memory-content label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.memory-block .memory-editor {
+  position: absolute;
+  top: 22px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
+}
+
+.code-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.code-block .code-content {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.code-block .code-editor {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
+}
+
+.info-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.info-block .info-content {
+  position: absolute;
+  background: #DDD;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.info-block .info-editor {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
+}
+
+.info-block-readonly {
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.info-block .info-render {
+  position: absolute;
+  overflow: visible;
+  background: transparent;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.info-block .info-render a {
+  pointer-events: all;
+}
+
+.info-block .info-render input[type=checkbox] {
+  position: absolute;
+  margin: 0.4em 0 0 -1.3em;
+}
+
+.joint-highlight-stroke.joint-theme-default {
+  display: none;
+}
+
+.highlight-error {
+  background: #ff8084 !important;
+}
+
+.highlight-yellow {
+  box-shadow: 0 0 8px 8px rgba(248, 248, 160, 0.5);
+}
+
+.highlight-green {
+  box-shadow: 0 0 8px 8px rgba(217, 250, 184, 0.5);
+}
+
+.highlight-orange {
+  box-shadow: 0 0 8px 8px rgba(250, 235, 184, 0.5);
+}
+
+.highlight-blue {
+  box-shadow: 0 0 8px 8px rgba(216, 235, 243, 0.5);
+}
+
+.highlight-gray {
+  box-shadow: 0 0 8px 8px rgba(221, 221, 221, 0.5);
+}
+
+.selection.selected {
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+  cursor: move;
+  /* Position the selection rectangle static so that the selection-boxes are contained within
+   the paper container (which is supposed to be positioned relative). The height 0 !important
+   makes sure the selection rectangle is not-visible, only the selection-boxes inside it (thanks to overflow: visible). */
+  position: static;
+  height: 0 !important;
+}
+
+.selection-area {
+  position: absolute;
+  border: 1px solid rgba(42, 118, 198, 1);
+  background-color: rgba(42, 118, 198, 0.2);
+  overflow: visible;
+  z-index: 1500;
+}
+
+.selection-box {
+  position: absolute;
+  border: 1px dotted rgba(42, 118, 198, 1);
+  background-color: rgba(42, 118, 198, 0.2);
+  border-radius: 5px;
+  z-index: 1500;
+}
+
+.selection-box-transparent {
+  position: absolute;
+  border-radius: 5px;
+  z-index: 1500;
+}
+
+/* Wires makers */
+
+.link.joint-theme-default .connection-wrap {
+  stroke: #777;
+  stroke-width: 14;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.link.joint-theme-default .link-tools .tool-remove circle {
+  fill: #ff333a;
+}
+.link.joint-theme-default .link-tools .tool-remove path {
+  fill: #FFF;
+}
+
+.link.joint-theme-default .marker-arrowhead {
+  fill: #AAA;
+}
+.link.joint-theme-default .marker-arrowhead:hover {
+  fill: #888;
+}
+
+.link.joint-theme-default .marker-vertex {
+  fill: #AAA;
+}
+.link.joint-theme-default .marker-vertex:hover {
+  fill: #888;
+}
+
+.link.joint-theme-default .marker-vertex-remove {
+  fill: #FFF;
+  transition: opacity 0.4s;
+}
+.link.joint-theme-default .marker-vertex-remove-area {
+  fill: #333;
+  transition: opacity 0.4s;
+}
+
+/* Resizer */
+
+.resizer {
+  position: absolute;
+  pointer-events: auto;
+  bottom: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+}

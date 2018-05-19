@@ -1,0 +1,12 @@
+{
+  "label": "Kéfir I iCE40-HX4K",
+  "datasheet": "http://fpgalibre.sourceforge.net/Kefir/",
+  "interface": "",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 107,
+    "plbs": 960,
+    "brams": 32
+  }
+}

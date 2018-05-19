@@ -1,0 +1,12 @@
+{
+  "label": "iCEstick Evaluation Kit",
+  "datasheet": "http://www.latticesemi.com/icestick",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 1280,
+    "luts": 1280,
+    "pios": 96,
+    "plbs": 160,
+    "brams": 16
+  }
+}

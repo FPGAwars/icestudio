@@ -1,0 +1,10 @@
+{
+  "label": "iCE40HX8K-EVB",
+  "datasheet": "https://github.com/OLIMEX/iCE40HX8K-EVB/raw/master/HARDWARE/REV-B/iCE40HX8K-EVB_Rev_B.pdf",
+  "interface": "",
+  "FPGAResources": {
+    "pios": 206,
+    "plbs": 960,
+    "brams": 32
+  }
+}

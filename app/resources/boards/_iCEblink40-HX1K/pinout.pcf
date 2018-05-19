@@ -1,0 +1,118 @@
+# -----------------------------------------------------------------------------
+#- iCEblink40-HX1K constraint file (.pcf)
+#- By Democrito
+#- November - 2016
+#- GPL license
+#- Data obtained from the Lattice official:
+#-   http://www.latticesemi.com/
+#-
+# -----------------------------------------------------------------------------
+# --  Board info: http://www.latticesemi.com/iceblink40-hx1k
+# --  Pinout: http://www.latticesemi.com/view_document?document_id=45922
+
+
+# -------------------------- System Clock -------------------------------------
+set_io --warn-no-port CLK  13   # input JP3.1 [Config: JP2.1 JP2.2 JP2.3 -> NCC=333kHz, NNN=3.33MHz, CCN=33.3MHz]
+
+# ------------ User Leds ------------------------------------------------------
+set_io --warn-no-port LED1 59   # output J12.1
+set_io --warn-no-port LED2 56   # output J12.2
+set_io --warn-no-port LED3 53   # output J12.3
+set_io --warn-no-port LED4 51   # output J12.4
+
+# ------------ Capacitive buttons ---------------------------------------------
+set_io --warn-no-port BTN1 60   # input Capacitive button 1
+set_io --warn-no-port BTN2 57   # input Capacitive button 2
+set_io --warn-no-port BTN3 54   # input Capacitive button 3
+set_io --warn-no-port BTN4 52   # input Capacitive button 4
+
+# ----------------- Pins I/O --------------------------------------------------
+set_io --warn-no-port J2U1 66   # J2.1
+set_io --warn-no-port J2U2 69   # J2.3
+set_io --warn-no-port J2U3 72   # J2.5
+set_io --warn-no-port J2U4 74   # J2.7
+set_io --warn-no-port J2U5 79   # J2.9
+set_io --warn-no-port J2U6 81   # J2.11
+set_io --warn-no-port J2U7 83   # J2.13
+set_io --warn-no-port J2U8 86   # J2.15
+
+set_io --warn-no-port J2D1 68   # J2.2
+set_io --warn-no-port J2D2 71   # J2.4
+set_io --warn-no-port J2D3 73   # J2.6
+set_io --warn-no-port J2D4 78   # J2.8
+set_io --warn-no-port J2D5 80   # J2.10
+set_io --warn-no-port J2D6 82   # J2.12
+set_io --warn-no-port J2D7 85   # J2.14
+set_io --warn-no-port J2D8 87   # J2.16
+
+set_io --warn-no-port J4U1 89   # J4.1
+set_io --warn-no-port J4U2 91   # J4.3
+set_io --warn-no-port J4U3 94   # J4.5
+set_io --warn-no-port J4U4 96   # J4.7
+set_io --warn-no-port J4U5 99   # J4.9
+set_io --warn-no-port J4U6 12   # J4.11
+                                # J4.13  (GND)
+set_io --warn-no-port J4U8 18   # J4.15
+
+set_io --warn-no-port J4D1 90   # J4.2
+set_io --warn-no-port J4D2 93   # J4.4
+set_io --warn-no-port J4D3 95   # J4.6
+set_io --warn-no-port J4D4 97   # J4.8
+set_io --warn-no-port J4D5 100  # J4.10
+set_io --warn-no-port J4D6 15   # J4.12
+set_io --warn-no-port J4D7 16   # J4.14
+set_io --warn-no-port J4D8 19   # J4.16
+
+                                # J5.1  (3V3)
+                                # J5.3  (GND)
+set_io --warn-no-port D11  64   # J5.5
+set_io --warn-no-port D10  62   # J5.7
+set_io --warn-no-port D9   42   # J5.9
+set_io --warn-no-port D8   40   # J5.11
+set_io --warn-no-port D7   36   # J5.13
+set_io --warn-no-port D6   30   # J5.15
+
+                                # J5.2  (3V3)
+                                # J5.4  (GND)
+set_io --warn-no-port D5   65   # J5.6
+set_io --warn-no-port D4   63   # J5.8
+set_io --warn-no-port D3   41   # J5.10
+set_io --warn-no-port D2   37   # J5.12
+set_io --warn-no-port D1   34   # J5.14
+set_io --warn-no-port D0   29   # J5.16
+
+set_io --warn-no-port J6R1 25   # J6.1
+set_io --warn-no-port J6R2 24   # J6.3
+set_io --warn-no-port J6R3 21   # J6.5
+set_io --warn-no-port J6R4 20   # J6.7
+                                # J6.9  (GND)
+                                # J6.11 (3V3)
+
+set_io --warn-no-port J6L1 26   # J6.2
+set_io --warn-no-port J6L2 27   # J6.4
+set_io --warn-no-port J6L3 28   # J6.6
+set_io --warn-no-port J6L4 33   # J6.8
+                                # J6.10 (GND)
+                                # J6.12 (3V3)
+
+set_io --warn-no-port J1R1 10   # J1.1
+set_io --warn-no-port J1R2  9   # J1.3
+set_io --warn-no-port J1R3  8   # J1.5
+set_io --warn-no-port J1R4  7   # J1.7
+                                # J1.9  (GND)
+                                # J1.11 (3V3)
+
+set_io --warn-no-port J1L1  4   # J1.2
+set_io --warn-no-port J1L2  3   # J1.4
+set_io --warn-no-port J1L3  2   # J1.6
+set_io --warn-no-port J1L4  1   # J1.8
+                                # J1.10 (GND)
+                                # J1.12 (3V3)
+
+# -------------------------- SPI Memory ---------------------------------------
+set_io --warn-no-port SS    49  # J11.1
+set_io --warn-no-port SO    45  # J11.2
+set_io --warn-no-port SI    46  # J11.3
+set_io --warn-no-port SCK   48  # J11.4
+                                # J11.5 (GND)
+                                # J11.6 (3V3)

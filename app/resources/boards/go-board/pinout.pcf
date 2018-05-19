@@ -1,0 +1,93 @@
+# -----------------------------------------------------------------------------
+#- Go board constraint file (.pcf)
+#- By Juan Gonzalez (Obijuan)
+#- April - 2016
+#- GPL license
+#- Data obtained from the go-board official constraint file:
+#-   https://www.nandland.com/goboard/Go_Board_Constraints.pcf
+#-
+# -----------------------------------------------------------------------------
+# --  Board info: https://www.nandland.com/goboard/introduction.html
+# --  Pinout: https://www.nandland.com/goboard/images/Go_Board_V1.pdf
+
+# ------------ User Leds ------------------------------------------------------
+set_io --warn-no-port LED1  56  # output
+set_io --warn-no-port LED2  57  # output
+set_io --warn-no-port LED3  59  # output
+set_io --warn-no-port LED4  60  # output
+
+# ------------ User push-buttons ----------------------------------------------
+set_io --warn-no-port SW1  53  # input
+set_io --warn-no-port SW2  51  # input
+set_io --warn-no-port SW3  54  # input
+set_io --warn-no-port SW4  52  # input
+
+# ------------ 7 segments -----------------------------------------------------
+set_io --warn-no-port S1_A  3   # output
+set_io --warn-no-port S1_B  4   # output
+set_io --warn-no-port S1_C  93  # output
+set_io --warn-no-port S1_D  91  # output
+set_io --warn-no-port S1_E  90  # output
+set_io --warn-no-port S1_F  1   # output
+set_io --warn-no-port S1_G  2   # output
+
+set_io --warn-no-port S2_A  100  # output
+set_io --warn-no-port S2_B  99   # output
+set_io --warn-no-port S2_C  97   # output
+set_io --warn-no-port S2_D  95   # output
+set_io --warn-no-port S2_E  94   # output
+set_io --warn-no-port S2_F  8    # output
+set_io --warn-no-port S2_G  96   # output
+
+# -------------------------- SYSTEM CLOCK -------------------------------------
+set_io --warn-no-port CLK 15  # input
+
+# -------------------------- UART ---------------------------------------------
+set_io --warn-no-port RX  73  # input
+set_io --warn-no-port TX  74  # output
+
+# -------------------------- VGA ----------------------------------------------
+set_io --warn-no-port VGA_HS  26  # output
+set_io --warn-no-port VGA_VS  27  # output
+set_io --warn-no-port VGA_R0  36  # output
+set_io --warn-no-port VGA_R1  37  # output
+set_io --warn-no-port VGA_R2  40  # output
+set_io --warn-no-port VGA_G0  29  # output
+set_io --warn-no-port VGA_G1  30  # output
+set_io --warn-no-port VGA_G2  33  # output
+set_io --warn-no-port VGA_B0  28  # output
+set_io --warn-no-port VGA_B1  41  # output
+set_io --warn-no-port VGA_B2  42  # output
+
+# ------------ PMOD connector -------------------------------------------------
+#
+#   Pmod standar numeration
+#
+#      --------
+#    >| 1   7 |
+#     | 2   8 |
+#     | 3   9 |
+#     | 4  10 |
+#     | 5  11 |
+#     | 6  12 |
+#      --------
+#
+#   FPGA pins:
+#
+#     ----------
+#   >| 65    78 |
+#    | 64    79 |
+#    | 63    80 |
+#    | 62    81 |
+#    | GND  GND |
+#    | 3v3  3v3 |
+#     ----------
+#
+set_io --warn-no-port PMOD1   65
+set_io --warn-no-port PMOD2   64
+set_io --warn-no-port PMOD3   63
+set_io --warn-no-port PMOD4   62
+set_io --warn-no-port PMOD7   78
+set_io --warn-no-port PMOD8   79
+set_io --warn-no-port PMOD9   80
+set_io --warn-no-port PMOD10  81

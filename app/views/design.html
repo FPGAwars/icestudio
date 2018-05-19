@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<div ng-controller="DesignCtrl">
+  <div class="banner hidden">
+    <div class="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
+    <div class="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
+    <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
+  </div>
+  <div class="paper"></div>
+  <div class="footer ice-bar">
+    <div class="breadcrumbs-container">
+      <ol class="breadcrumb">
+        <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
+          <span ng-switch-when="true">{{ item.name }}</span>
+          <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
+        </li>
+      </ol>
+    </div>
+    <div class="board-container">
+      <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
+        <span>
+          FFs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.ffs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.ffs }}
+        </span>
+        <span>
+          LUTs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.luts }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.luts }}
+        </span>
+        <span>
+          PIOs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}
+        </span>
+        <span>
+          PLBs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.plbs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.plbs }}
+        </span>
+        <span>
+          BRAMs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.brams }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.brams }}
+        </span>
+      </div>
+      {{ common.selectedBoard.info.label }}
+    </div>
+  </div>
+</div>

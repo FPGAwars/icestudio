@@ -1,0 +1,300 @@
+﻿# -----------------------------------------------------------------------------
+#- iCE40-HX8K constraint file (.pcf)
+#- By Juan López (Micuss), Carlos Días, Gorka Guardiola and Democrito.
+#- November - 2016
+#- GPL license
+#- Board info: http://www.latticesemi.com/view_document?document_id=50373
+
+#---------------------------- LEDS --------------------------------------------
+
+set_io --warn-no-port LED0  B5  # output
+set_io --warn-no-port LED1  B4  # output
+set_io --warn-no-port LED2  A2  # output
+set_io --warn-no-port LED3  A1  # output
+set_io --warn-no-port LED4  C5  # output
+set_io --warn-no-port LED5  C4  # output
+set_io --warn-no-port LED6  B3  # output
+set_io --warn-no-port LED7  C3  # output
+
+# -------------------------- SYSTEM CLOCK -------------------------------------
+
+set_io --warn-no-port CLK   J3  # input
+
+# ------------------------------ FTDI 0 ---------------------------------------
+# SPI
+set_io --warn-no-port MISO  P12  # input
+set_io --warn-no-port MOSI  P11  # output
+set_io --warn-no-port SCK   R11  # output
+set_io --warn-no-port SS    R12  # output  #J7.1
+
+set_io --warn-no-port RESET N11  # input
+set_io --warn-no-port DONE  M10  # output
+
+# ------------------------------ FTDI 1 ---------------------------------------
+# UART
+set_io --warn-no-port TX    B12  # output
+set_io --warn-no-port RX    B10  # input
+set_io --warn-no-port DCD   B15  # output
+set_io --warn-no-port DSR   B14  # output
+set_io --warn-no-port DTR   A16  # input
+set_io --warn-no-port CTS   A15  # output
+set_io --warn-no-port RTS   B13  # input
+
+
+#                     ************************************
+#                     *                                  *
+# --------------------*         Serigraphy of PCB        *---------------------
+#                     *                                  *
+#                     ************************************
+
+# ----------------------------- BANK-0 ----------------------------------------
+
+# ------------------------ PMOD0 connector (J1) -------------------------------
+#
+#
+#
+#              J1
+#            --------
+#      1---| A16 VCC |---2  VCCIO0_01
+#      3---| A15 B15 |---4
+#      5---| B13 B14 |---6
+#      7---| GND GND |---8
+#      9---| B12 B11 |---10
+#          --------
+#     11---| A11 B10 |---12
+#     13---| A10 C9  |---14
+#     15---| GND GND |---16
+#     17---| A9  B9  |---18
+#     19---| B8  A7  |---20
+#           --------
+#     21---| B7  C7  |---22
+#     23---| GND GND |---24
+#     25---| A6  C6  |---26
+#     27---| B6  C5  |---28
+#     29---| A5  C4  |---30
+#           --------
+#     31---| GND GND |---32
+#     33---| B5  C3  |---34
+#     35---| B4  B3  |---36
+#     37---| A2  A1  |---38
+#     39---| GND GND |---40
+#           ---------
+
+set_io --warn-no-port A16 A16
+set_io --warn-no-port A15 A15
+set_io --warn-no-port B15 B15
+set_io --warn-no-port B13 B13
+set_io --warn-no-port B14 B14
+set_io --warn-no-port B12 B12
+set_io --warn-no-port B11 B11
+set_io --warn-no-port A11 A11
+set_io --warn-no-port B10 B10
+set_io --warn-no-port A10 A10
+set_io --warn-no-port C9  C9
+set_io --warn-no-port A9  A9
+set_io --warn-no-port B9  B9
+set_io --warn-no-port B8  B8
+set_io --warn-no-port A7  A7
+set_io --warn-no-port B7  B7
+set_io --warn-no-port C7  C7
+set_io --warn-no-port A6  A6
+set_io --warn-no-port C6  C6
+set_io --warn-no-port B6  B6
+set_io --warn-no-port C5  C5
+set_io --warn-no-port A5  A5
+set_io --warn-no-port C4  C4
+set_io --warn-no-port B5  B5
+set_io --warn-no-port C3  C3
+set_io --warn-no-port B4  B4
+set_io --warn-no-port B3  B3
+set_io --warn-no-port A2  A2
+set_io --warn-no-port A1  A1
+
+
+# ----------------------------- BANK-1 ----------------------------------------
+
+# ------------------------ PMOD1 connector (J2) -------------------------------
+#
+#
+#
+#               J2
+#             --------
+#       1---| 1V2 VCC |---2  VCCIO1_01
+#       3---| 1V2 R15 |---4
+#       5---| P16 P15 |---6
+#       7---| GND GND |---8
+#       9---| N16 M15 |---10
+#            --------
+#      11---| M16 L16 |---12
+#      13---| K15 K16 |---14
+#      15---| GND GND |---16
+#      17---| K14 J14 |---18
+#      19---| G14 F14 |---20
+#            --------
+#      21---| J15 H14 |---22
+#      23---| GND GND |---24
+#GBIN2 25---| H16 G15 |---26
+#      27---| G16 F15 |---28
+#      29---| F16 E14 |---30
+#            --------
+#      31---| GND GND |---32
+#      33---| E16 D15 |---34
+#      35---| D16 D14 |---36
+#      37---| C16 B16 |---38
+#      39---| GND GND |---40
+#            ---------
+
+set_io --warn-no-port R15 R15
+set_io --warn-no-port P16 P16
+set_io --warn-no-port P15 P15
+set_io --warn-no-port N16 N16
+set_io --warn-no-port M15 M15
+set_io --warn-no-port M16 M16
+set_io --warn-no-port L16 L16
+set_io --warn-no-port K15 K15
+set_io --warn-no-port K16 K16
+set_io --warn-no-port K14 K14
+set_io --warn-no-port J14 J14
+set_io --warn-no-port G14 G14
+set_io --warn-no-port F14 F14
+set_io --warn-no-port J15 J15
+set_io --warn-no-port H14 H14
+set_io --warn-no-port H16 H16
+set_io --warn-no-port G15 G15
+set_io --warn-no-port G16 G16
+set_io --warn-no-port F15 F15
+set_io --warn-no-port F16 F16
+set_io --warn-no-port E14 E14
+set_io --warn-no-port E16 E16
+set_io --warn-no-port D15 D15
+set_io --warn-no-port D16 D16
+set_io --warn-no-port D14 D14
+set_io --warn-no-port C16 C16
+set_io --warn-no-port B16 B16
+
+
+
+# ----------------------------- BANK-2 ----------------------------------------
+
+# ------------------------ PMOD2 connector (J3) -------------------------------
+#
+#
+#
+#              J3
+#            --------
+#      1---| R16 VCC |---2  VCCIO2
+#      3---| T15 T16 |---4
+#      5---| T13 T14 |---6
+#      7---| GND GND |---8
+#      9---| N12 P13 |---10
+#           --------
+#     11---| N10 M11 |---12
+#     13---| T11 P10 |---14
+#     15---| GND GND |---16
+#     17---| T10 R10 |---18
+#     19---| P8  P9  |---20
+#           --------
+#     21---| T9  R9  |---22
+#     23---| GND GND |---24
+#     25---| T7  T8  |---26
+#     27---| T6  R6  |---28
+#     29---| T5  R5  |---30
+#           --------
+#     31---| GND GND |---32
+#     33---| R3  R4  |---34
+#     35---| R2  T3  |---36
+#     37---| T1  T2  |---38
+#     39---| GND GND |---40
+#           ---------
+
+set_io --warn-no-port R16 R16
+set_io --warn-no-port T15 T15
+set_io --warn-no-port T16 T16
+set_io --warn-no-port T13 T13
+set_io --warn-no-port T14 T14
+set_io --warn-no-port N12 N12
+set_io --warn-no-port P13 P13
+set_io --warn-no-port N10 N10
+set_io --warn-no-port M11 M11
+set_io --warn-no-port T11 T11
+set_io --warn-no-port P10 P10
+set_io --warn-no-port T10 T10
+set_io --warn-no-port R10 R10
+set_io --warn-no-port P8  P8
+set_io --warn-no-port P9  P9
+set_io --warn-no-port T9  T9
+set_io --warn-no-port R9  R9
+set_io --warn-no-port T7  T7
+set_io --warn-no-port T8  T8
+set_io --warn-no-port T6  T6
+set_io --warn-no-port R6  R6
+set_io --warn-no-port T5  T5
+set_io --warn-no-port R5  R5
+set_io --warn-no-port R3  R3
+set_io --warn-no-port R4  R4
+set_io --warn-no-port R2  R2
+set_io --warn-no-port T3  T3
+set_io --warn-no-port T1  T1
+set_io --warn-no-port T2  T2
+
+
+# ----------------------------- BANK-3 ----------------------------------------
+
+# ------------------------ PMOD3 connector (J4) -------------------------------
+#
+#
+#
+#              J4
+#            --------
+#      1---| 3V3 VCC |---2  VCCIO3_01
+#      3---| 3V3 R1  |---4
+#      5---| P1  P2  |---6
+#      7---| GND GND |---8
+#      9---| N3  N2  |---10
+#           --------
+#     11---| M2  M1  |---12
+#     13---| L3  L1  |---14
+#     15---| GND GND |---16
+#     17---| K3  K1  |---18
+#     19---| J2  J1  |---20
+#           --------
+#     21---| H2  J3  |---22
+#     23---| GND GND |---24
+#     25---| G2  H1  |---26
+#     27---| F2  G1  |---28
+#     29---| E2  F1  |---30
+#           --------
+#     31---| GND GND |---32
+#     33---| D1  D2  |---34
+#     35---| C1  C2  |---36
+#     37---| B1  B2  |---38
+#     39---| GND GND |---40
+#           ---------
+
+set_io --warn-no-port R1  R1
+set_io --warn-no-port P1  P1
+set_io --warn-no-port P2  P2
+set_io --warn-no-port N3  N3
+set_io --warn-no-port N2  N2
+set_io --warn-no-port M2  M2
+set_io --warn-no-port M1  M1
+set_io --warn-no-port L3  L3
+set_io --warn-no-port L1  L1
+set_io --warn-no-port K3  K3
+set_io --warn-no-port K1  K1
+set_io --warn-no-port J2  J2
+set_io --warn-no-port J1  J1
+set_io --warn-no-port H2  H2
+set_io --warn-no-port J3  J3
+set_io --warn-no-port G2  G2
+set_io --warn-no-port H1  H1
+set_io --warn-no-port F2  F2
+set_io --warn-no-port G1  G1
+set_io --warn-no-port E2  E2
+set_io --warn-no-port F1  F1
+set_io --warn-no-port D1  D1
+set_io --warn-no-port D2  D2
+set_io --warn-no-port C1  C1
+set_io --warn-no-port C2  C2
+set_io --warn-no-port B1  B1
+set_io --warn-no-port B2  B2

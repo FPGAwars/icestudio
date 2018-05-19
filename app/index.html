@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Icestudio</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- build:css styles/vendors.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/joint/dist/joint.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="bower_components/alertify-js/build/css/alertify.min.css">
+  <link rel="stylesheet" href="bower_components/alertify-js/build/css/themes/default.min.css">
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/design.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/menu.css">
+  <link rel="stylesheet" href="resources/viewers/markdown/css/github-markdown.css">
+  <!-- endbuild -->
+</head>
+
+<body ng-app="icestudio">
+  <div ng-view></div>
+  <script>
+    window.$ = window.JQuery = window.jQuery = require('jquery');
+  </script>
+  <!-- build:js scripts/vendors.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/jquery-resize/jquery.ba-resize.min.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/backbone/backbone.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/joint/dist/joint.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/select2/dist/js/select2.full.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/theme-chrome.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/mode-verilog.js"></script>
+  <script src="bower_components/async/dist/async.min.js"></script>
+  <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
+  <script src="bower_components/angular-gettext/dist/angular-gettext.min.js"></script>
+  <script src="bower_components/alertify-js/build/alertify.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js scripts/main.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/design.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/menu.js"></script>
+  <script src="scripts/directives/menutree.js"></script>
+  <script src="scripts/factories/joint.js"></script>
+  <script src="scripts/factories/node.js"></script>
+  <script src="scripts/factories/window.js"></script>
+  <script src="scripts/graphics/joint.command.js"></script>
+  <script src="scripts/graphics/joint.connectors.js"></script>
+  <script src="scripts/graphics/joint.routers.js"></script>
+  <script src="scripts/graphics/joint.selection.js"></script>
+  <script src="scripts/graphics/joint.shapes.js"></script>
+  <script src="scripts/services/blocks.js"></script>
+  <script src="scripts/services/boards.js"></script>
+  <script src="scripts/services/common.js"></script>
+  <script src="scripts/services/compiler.js"></script>
+  <script src="scripts/services/drivers.js"></script>
+  <script src="scripts/services/graph.js"></script>
+  <script src="scripts/services/profile.js"></script>
+  <script src="scripts/services/project.js"></script>
+  <script src="scripts/services/collections.js"></script>
+  <script src="scripts/services/shortcuts.js"></script>
+  <script src="scripts/services/tools.js"></script>
+  <script src="scripts/services/utils.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>

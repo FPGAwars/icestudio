@@ -1,0 +1,350 @@
+﻿# -----------------------------------------------------------------------------
+#- iCE40HX8K-EVB constraint file (.pcf)
+#- By Brian 'redbeard' Harrington
+#- October 2017
+#- GPL license
+#- Board info: 
+#    - https://www.olimex.com/Products/FPGA/iCE40/iCE40HX8K-EVB/open-source-hardware
+#    - https://github.com/OLIMEX/iCE40HX8K-EVB
+
+#------------------------------ LEDS ------------------------------------------
+
+set_io --warn-no-port LED1   M12  # output
+set_io --warn-no-port LED2   R16  # output
+
+#----------------------------- BUTTONS ----------------------------------------
+
+set_io --warn-no-port BUT1   K11  # output
+set_io --warn-no-port BUT2   P13  # output
+
+#--------------------------- SERIAL COMMS -------------------------------------
+
+set_io --warn-no-port TX    J3  # output
+set_io --warn-no-port RX    J3  # input
+
+
+# -------------------------- SYSTEM CLOCK -------------------------------------
+
+set_io --warn-no-port CLK    J3  # input
+set_io --warn-no-port SYSCLK J3  # input
+
+
+#                     ************************************
+#                     *                                  *
+# --------------------*         Serigraphy of PCB        *---------------------
+#                     *                                  *
+#                     ************************************
+
+# ------------------------- Programming connector------------------------------
+#               PGM1
+#            -----------
+# OPEN 1---| 3V3    GND |---2
+# OPEN 3---| RX      TX |---4 OPEN
+#      5---| DONE   RES |---6 
+#      7---| MISO  MOSI |---8
+#      9---| SCK   SS_B |---10
+#           ------------
+
+set_io --warn-no-port RES    N11 # input
+set_io --warn-no-port CRESET N11 # input
+
+set_io --warn-no-port DONE   M10 # output
+set_io --warn-no-port CDONE  M10 # output
+
+set_io --warn-no-port SS     R12 # output
+set_io --warn-no-port SS_Bi  R12 # output
+
+set_io --warn-no-port MISO   P12 # input
+set_io --warn-no-port SDI    P12 # input
+
+set_io --warn-no-port MOSI   P11 # output
+set_io --warn-no-port SDO    P11 # output
+
+set_io --warn-no-port SCK  R11 # output
+
+# ------------------------- GPIO1 connector -----------------------------------
+#             GPIO1
+#            --------
+#      1---| VCC GND |---2
+#      3---| 3V3 GND |---4
+#      5---| E4  EXT |---6  EXTCLK
+#      7---| B2  GND |---8
+#      9---| F5  J2  |---10
+#           ---------
+#     11---| B1  H1  |---12
+#     13---| C1  G1  |---14
+#     15---| C2  J5  |---16
+#     17---| F4  H2  |---18
+#     19---| D2  J4  |---20
+#           ---------
+#     21---| G5  G2  |---22
+#     23---| D1  H4  |---24
+#     25---| G4  F1  |---26
+#     27---| E3  H6  |---28
+#     29---| H5  F2  |---30
+#           ---------
+#     31---| E2  H3  |---32
+#     33---| G3  F3  |---34
+#           ---------
+
+# ------------------------- EXT1 connector ------------------------------------
+#
+#
+#
+#              J1
+#            --------
+#      1---| VCC GND |---2
+#      3---| 3V3 GND |---4
+#      5---| 3V3 EXT |---6  EXTCLK
+#      7---| C14 GND |---8
+#      9---| B15 B7  |---10
+#           ---------
+#     11---| D13 C7  |---12
+#     13---| B14 A7  |---14
+#     15---| C12 B8  |---16
+#     17---| E11 D8  |---18
+#     19---| C13 B9  |---20
+#           ---------
+#     21---| A16 F7  |---22
+#     23---| A15 C8  |---24
+#     25---| B13 F9  |---26
+#     27---| E10 A9  |---28
+#     29---| C11 D9  |---30
+#           ---------
+#     31---| D11 E9  |---32
+#     33---| B12 C9  |---34
+#     35---| B10 D10 |---36
+#     37---| B11 A11 |---38
+#     39---| C10 A10 |---40
+#           ---------
+
+set_io --warn-no-port C14 C14
+set_io --warn-no-port B15 B15
+set_io --warn-no-port D13 D13
+set_io --warn-no-port B14 B14
+set_io --warn-no-port C12 C12
+set_io --warn-no-port E11 E11
+set_io --warn-no-port C13 C13
+set_io --warn-no-port A16 A16
+set_io --warn-no-port A15 A15
+set_io --warn-no-port B13 B13
+set_io --warn-no-port E10 E10
+set_io --warn-no-port C11 C11
+set_io --warn-no-port D11 D11
+set_io --warn-no-port B12 B12
+set_io --warn-no-port B10 B10
+set_io --warn-no-port B11 B11
+set_io --warn-no-port C10 C10
+set_io --warn-no-port A10 A10
+set_io --warn-no-port A11 A11
+set_io --warn-no-port D10 D10
+set_io --warn-no-port C9 C9
+set_io --warn-no-port E9 E9
+set_io --warn-no-port D9 D9
+set_io --warn-no-port A9 A9
+set_io --warn-no-port F9 F9
+set_io --warn-no-port C8 C8
+set_io --warn-no-port F7 F7
+set_io --warn-no-port B9 B9
+set_io --warn-no-port D8 D8
+set_io --warn-no-port B8 B8
+set_io --warn-no-port A7 A7
+set_io --warn-no-port C7 C7
+
+
+# ------------------------- EXT2 connector ------------------------------------
+#
+#
+#
+#               EXT2
+#             --------
+#       1---| VCC GND |---2
+#       3---| 3V3 GND |---4
+#       5---| 3V3 EXT |---6  EXTCLK
+#       7---| B6  GND |---8
+#       9---| C6  J10 |---10
+#            ---------
+#      11---| D7  M16 |---12
+#      13---| A6  K12 |---14
+#      15---| D6  L14 |---16
+#      17---| A5  L13 |---18
+#      19---| B5  N16 |---20
+#            ---------
+#      21---| E6  L12 |---22
+#      23---| B4  M14 |---24
+#      25---| A2  M13 |---26
+#      27---| D5  P16 |---28
+#      29---| A1  P15 |---30
+#            ---------
+#      31---| C5  P14 |---32
+#      33---| C4  R15 |---34
+#      35---| B3  R14 |---36
+#      37---| D4  C3  |---38
+#      39---| E5  D3  |---40
+#            ---------
+
+set_io --warn-no-port B6 B6
+set_io --warn-no-port C6 C6
+set_io --warn-no-port D7 D7
+set_io --warn-no-port A6 A6
+set_io --warn-no-port D6 D6
+set_io --warn-no-port A5 A5
+set_io --warn-no-port B5 B5
+set_io --warn-no-port E6 E6
+set_io --warn-no-port B4 B4
+set_io --warn-no-port A2 A2
+set_io --warn-no-port D5 D5
+set_io --warn-no-port A1 A1
+set_io --warn-no-port C5 C5
+set_io --warn-no-port C4 C4
+set_io --warn-no-port B3 B3
+set_io --warn-no-port D4 D4
+set_io --warn-no-port E5 E5
+set_io --warn-no-port D3 D3
+set_io --warn-no-port C3 C3
+set_io --warn-no-port R14 R14
+set_io --warn-no-port R15 R15
+set_io --warn-no-port P14 P14
+set_io --warn-no-port P15 P15
+set_io --warn-no-port P16 P16
+set_io --warn-no-port M13 M13
+set_io --warn-no-port M14 M14
+set_io --warn-no-port L12 L12
+set_io --warn-no-port N16 N16
+set_io --warn-no-port L13 L13
+set_io --warn-no-port L14 L14
+set_io --warn-no-port K12 K12
+set_io --warn-no-port M16 M16
+set_io --warn-no-port J10 J10
+
+
+# ------------------------- EXT3 connector ------------------------------------
+#
+#
+#
+#              EXT3
+#            --------
+#      1---| VCC GND |---2
+#      3---| 3V3 GND |---4
+#      5---| 3V3 EXT |---6  EXTCLK
+#      7---| M15 GND |---8
+#      9---| J11 E14 |---10
+#           ---------
+#     11---| L16 F11 |---12
+#     13---| K13 D15 |---14
+#     15---| K14 F12 |---16
+#     17---| J15 F14 |---18
+#     19---| K15 G12 |---20
+#           ---------
+#     21---| K16 D16 |---22
+#     23---| J14 G13 |---24
+#     25---| J12 E16 |---26
+#     27---| J13 G14 |---28
+#     29---| J16 F15 |---30
+#           ---------
+#     31---| H13 G11 |---32
+#     33---| H11 F16 |---34
+#     35---| H16 G10 |---36
+#     37---| H14 G15 |---38
+#     39---| G16 H12 |---40
+#           ---------
+
+set_io --warn-no-port M15 M15
+set_io --warn-no-port J11 J11
+set_io --warn-no-port L16 L16
+set_io --warn-no-port K13 K13
+set_io --warn-no-port K14 K14
+set_io --warn-no-port J15 J15
+set_io --warn-no-port K15 K15
+set_io --warn-no-port K16 K16
+set_io --warn-no-port J14 J14
+set_io --warn-no-port J12 J12
+set_io --warn-no-port J13 J13
+set_io --warn-no-port J16 J16
+set_io --warn-no-port H13 H13
+set_io --warn-no-port H11 H11
+set_io --warn-no-port H16 H16
+set_io --warn-no-port H14 H14
+set_io --warn-no-port G16 G16
+set_io --warn-no-port H12 H12
+set_io --warn-no-port G15 G15
+set_io --warn-no-port G10 G10
+set_io --warn-no-port F16 F16
+set_io --warn-no-port G11 G11
+set_io --warn-no-port F15 F15
+set_io --warn-no-port G14 G14
+set_io --warn-no-port E16 E16
+set_io --warn-no-port G13 G13
+set_io --warn-no-port D16 D16
+set_io --warn-no-port G12 G12
+set_io --warn-no-port F14 F14
+set_io --warn-no-port F12 F12
+set_io --warn-no-port D15 D15
+set_io --warn-no-port F11 F11
+set_io --warn-no-port E14 E14
+
+
+# ------------------------- EXT4 connector ------------------------------------
+#
+#
+#
+#              EXT4
+#            --------
+#      1---| VCC GND |---2
+#      3---| 3V3 GND |---4
+#      5---| 3V3 EXT |---6  EXTCLK
+#      7---| C16 GND |---8
+#      9---| F13 N4  |---10
+#           ---------
+#     11---| B16 R1  |---12
+#     13---| E13 M5  |---14
+#     15---| D14 P2  |---16
+#     17---| M11 M4  |---18
+#     19---| T13 P1  |---20
+#           ---------
+#     21---| N12 N3  |---22
+#LED1 23---| M12 L5  |---24
+#LED2 25---| R16 M3  |---26
+#     27---| J1  M6  |---28
+#     29---| K1  N2  |---30
+#           ---------
+#     31---| K3  L7  |---32
+#     33---| L4  M2  |---34
+#     35---| L1  K5  |---36
+#     37---| K4  L3  |---38
+#     39---| M1  L6  |---40
+#           ---------
+
+set_io --warn-no-port C16 C16
+set_io --warn-no-port F13 F13
+set_io --warn-no-port B16 B16
+set_io --warn-no-port E13 E13
+set_io --warn-no-port D14 D14
+set_io --warn-no-port M11 M11
+set_io --warn-no-port T13 T13
+set_io --warn-no-port N12 N12
+set_io --warn-no-port M12 M12  #output
+set_io --warn-no-port R16 R16  #output
+set_io --warn-no-port J1 J1
+set_io --warn-no-port K1 K1
+set_io --warn-no-port K3 K3
+set_io --warn-no-port L4 L4
+set_io --warn-no-port L1 L1
+set_io --warn-no-port K4 K4
+set_io --warn-no-port M1 M1
+set_io --warn-no-port L6 L6
+set_io --warn-no-port L3 L3
+set_io --warn-no-port K5 K5
+set_io --warn-no-port M2 M2
+set_io --warn-no-port L7 L7
+set_io --warn-no-port N2 N2
+set_io --warn-no-port M6 M6
+set_io --warn-no-port M3 M3
+set_io --warn-no-port L5 L5
+set_io --warn-no-port N3 N3
+set_io --warn-no-port P1 P1
+set_io --warn-no-port M4 M4
+set_io --warn-no-port P2 P2
+set_io --warn-no-port M5 M5
+set_io --warn-no-port R1 R1
+set_io --warn-no-port N4 N4

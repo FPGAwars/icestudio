@@ -1,0 +1,12 @@
+{
+  "label": "icoBOARD 1.0",
+  "datasheet": "http://icoboard.org/about-icoboard.html",
+  "interface": "GPIO",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 206,
+    "plbs": 960,
+    "brams": 32
+  }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="lib/svg-pan-zoom.js"></script>
+    <style type="text/css">
+      body { overflow:hidden; }
+    </style>
+  </head>
+  <body>
+    <script>
+      'use strict';
+      function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+      }
+      function loadEmbedSVG() {
+        var board = getURLParameter('board');
+        var data = '../../boards/' + board + '/pinout.svg';
+        var embed = document.createElement('embed');
+        embed.setAttribute('id', 'pinout');
+        embed.setAttribute('width', '100%');
+        embed.setAttribute('height', '100%');
+        embed.setAttribute('type', 'image/svg+xml');
+        embed.setAttribute('src', data);
+        document.body.appendChild(embed);
+        setTimeout(function() {
+          svgPanZoom('#pinout', {
+            controlIconsEnabled: true,
+            minZoom: 1,
+            maxZoom: 5
+          });
+        }, 300);
+      }
+      window.onload = function() {
+        loadEmbedSVG();
+      };
+    </script>
+  </body>
+</html>

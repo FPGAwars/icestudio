@@ -1,0 +1,99 @@
+* {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.notransition {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  height: 100%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.ice-bar {
+  background: #f5f6f7;
+}
+
+.waiting * {
+  cursor: wait !important;
+}
+
+.alertify-notifier {
+  right: 0 !important;
+}
+
+.alertify-notifier.ajs-bottom {
+  bottom: 69px;
+}
+
+.alertify-notifier .ajs-message {
+  cursor: pointer;
+}
+
+.alertify-notifier .ajs-message.ajs-success {
+  color: #111;
+  background: #d4ffad;
+  border-color: #a9cc8a;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+  color: #111;
+  background: #ffb3b6;
+  border-color: #ff8084;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.alertify-notifier .ajs-message.ajs-warning {
+  color: #111;
+  background: #fbf7d0;
+  border-color: #f5ea8a;
+  border-radius: 5px;
+  text-shadow: none;
+}
+
+.alertify.ajs-in:not(.ajs-hidden) .ajs-dialog {
+  -webkit-animation-duration: 10ms;
+          animation-duration: 10ms;
+}
+
+.ajs-header {
+  display: none;
+}
+
+.ajs-footer {
+  background: white !important;
+  border-top: none !important;
+}
+
+
+input:focus {
+  outline: #ccc solid 1px;
+}
+
+button:focus {
+  outline: #ccc solid 2px;
+}
+
+::selection {
+  color: #fff;
+  background: #3593d2;
+}
+
+.copyleft {
+  display:inline-block;
+  transform: rotate(180deg);
+}
