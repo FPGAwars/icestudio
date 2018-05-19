@@ -927,6 +927,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setOption("firstLineNumber", 0);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
         </script>\
