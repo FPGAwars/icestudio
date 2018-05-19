@@ -508,14 +508,23 @@ angular.module('icestudio')
             // Replace wire's target
             replaceWireConnection(wire, 'target');
           });
-          // 3. Move the upperModel to be centerd with the lowerModel
+          // 3. Move the upperModel to be centered with the lowerModel
+          var upperBlockType = upperBlock.get('type');
           var lowerBlockSize = lowerBlock.get('size');
           var upperBlockSize = upperBlock.get('size');
           var lowerBlockPosition = lowerBlock.get('position');
-          upperBlock.set('position', {
-            x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
-            y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
-          });
+          if (upperBlockType === 'ice.Constant' || upperBlockType === 'ice.Memory') {
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
+              y: lowerBlockPosition.y + lowerBlockSize.height - upperBlockSize.height
+            });
+          }
+          else {
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
+              y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
+            });
+          }
           // 4. Remove the lowerModel
           lowerBlock.remove();
           prevLowerBlock = null;

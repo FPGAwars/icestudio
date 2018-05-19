@@ -942,7 +942,7 @@ joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
     type: 'ice.Memory',
     size: {
       width: 96,
-      height: 112
+      height: 96
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
