@@ -308,27 +308,30 @@ g {
 
 .constant-block {
   position: absolute;
-  background: #FBF0C9;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.constant-block svg {
+.constant-block .constant-content {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.constant-block .constant-content svg {
   position: absolute;
   right: 0;
   margin: 4px;
   width: 8px;
-  fill: #444;
+  fill: #555;
 }
 
-.constant-block label {
+.constant-block .constant-content label {
   display: block;
-  margin-top: 5px;
+  margin-top: 4px;
+  padding: 0 6px;
   margin-bottom: 7px;
   text-align: center;
   font-size: 14px;
@@ -339,10 +342,11 @@ g {
   overflow: hidden;
 }
 
-.constant-block input {
+.constant-block .constant-content input {
   position: absolute;
   text-align: center;
   left: 5px;
+  bottom: 6px;
   width: 84px;
   height: 26px;
   font-size: 14px;
@@ -352,7 +356,7 @@ g {
   pointer-events: auto;
 }
 
-.constant-block input:focus {
+.constant-block .constant-content input:focus {
   outline: none;
 }
 
@@ -392,7 +396,7 @@ g {
 
 .memory-block .memory-editor {
   position: absolute;
-  top: 24px;
+  top: 23px;
   left: 0;
   right: 0;
   bottom: 0;
