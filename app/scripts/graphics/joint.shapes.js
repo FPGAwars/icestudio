@@ -313,10 +313,13 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var size = self.model.get('size');
     var state = self.model.get('state');
     var gridstep = 8 * 2;
-    var minSize = {
-      width: type === 'ice.Code' ? 96 : 64,
-      height: type === 'ice.Code' ? 64 : 32
-    };
+    var minSize = { width: 64, height: 32 };
+    if (type === 'ice.Code') {
+       minSize = { width: 96, height: 64 };
+    }
+    if (type === 'ice.Memory') {
+       minSize = { width: 96, height: 64 };
+    }
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
     var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
@@ -1159,11 +1162,12 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
+    var nameOffset = data.name ? 0 : 24;
     this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.height / 2.0 * (state.zoom - 1),
+      top: (bbox.height + nameOffset ) / 2.0 * (state.zoom - 1) + nameOffset,
       width: bbox.width,
-      height: bbox.height,
+      height: bbox.height - nameOffset,
       transform: 'scale(' + state.zoom + ')'
     });
 
