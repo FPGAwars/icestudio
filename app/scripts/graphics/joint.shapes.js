@@ -704,17 +704,25 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     if (virtual) {
       // Virtual port (green)
+      if ($(virtualPortId).hasClass('hidden')) {
+        // If comes from fpgaPort update the position
+        this.model.attributes.position.y += 12;
+      }
+      this.model.attributes.size.height = 40;
       $(fpgaPortId).addClass('hidden');
       $(virtualPortId).removeClass('hidden');
-      this.model.attributes.size.height = 64;
     }
     else {
       // FPGA I/O port (yellow)
-      $(virtualPortId).addClass('hidden');
-      $(fpgaPortId).removeClass('hidden');
       if (data.pins) {
+        if ($(fpgaPortId).hasClass('hidden')) {
+          // If comes from virtualPort update the position
+          this.model.attributes.position.y -= 12;
+        }
         this.model.attributes.size.height = 32 + 32 * data.pins.length;
       }
+      $(virtualPortId).addClass('hidden');
+      $(fpgaPortId).removeClass('hidden');
     }
   },
 
@@ -1097,11 +1105,8 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale editor
         this.editorSelector.css({
-          top: 22 * state.zoom,
-          left: -2 * state.zoom,
-          right: -2 * state.zoom,
-          bottom: -2 * state.zoom,
-          margin: 8 * state.zoom,
+          top: 24 * state.zoom,
+          margin: 6 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1395,11 +1400,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale editor
         this.editorSelector.css({
-          top: -2 * state.zoom,
-          left: -2 * state.zoom,
-          right: -2 * state.zoom,
-          bottom: -2 * state.zoom,
-          margin: 8 * state.zoom,
+          margin: 6 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1759,11 +1760,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     else if (this.editor) {
       // Scale editor
       this.editorSelector.css({
-        top: -2 * state.zoom,
-        left: -2 * state.zoom,
-        right: -2 * state.zoom,
-        bottom: -2 * state.zoom,
-        margin: 8 * state.zoom,
+        margin: 6 * state.zoom,
         'border-radius': 5 * state.zoom,
         'border-width': state.zoom + 0.5
       });
