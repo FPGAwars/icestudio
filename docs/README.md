@@ -2,10 +2,6 @@
 
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=stable)](http://icestudio.readthedocs.io/en/stable/)
 
-<img src="./doc/images/icestudio-logo-label.png" align="center">
-
-[Icestudio](https://github.com/FPGAwars/icestudio)'s technical documentation.
-
 ## Development
 
 ```bash
