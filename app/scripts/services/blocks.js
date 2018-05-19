@@ -195,7 +195,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Enter the constant blocks'),
         gettextCatalog.getString('Local parameter')
       ], [
-        'C',
+        '',
         false
       ],
         function(evt, values) {
@@ -207,21 +207,15 @@ angular.module('icestudio')
           // Validate values
           var paramInfo, paramInfos = [];
           for (var l in labels) {
-            if (labels[l]) {
-              paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-              if (paramInfo) {
-                evt.cancel = false;
-                paramInfos.push(paramInfo);
-              }
-              else {
-                evt.cancel = true;
-                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-                return;
-              }
+            paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+            if (paramInfo) {
+              evt.cancel = false;
+              paramInfos.push(paramInfo);
             }
             else {
               evt.cancel = true;
-              //return;
+              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+              return;
             }
           }
           // Create blocks
