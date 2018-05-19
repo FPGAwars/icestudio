@@ -521,7 +521,7 @@ angular.module('icestudio')
           }
           else {
             upperBlock.set('position', {
-              x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
+              x: lowerBlockPosition.x + lowerBlockSize.width - upperBlockSize.width,
               y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
             });
           }
