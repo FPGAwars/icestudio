@@ -11,7 +11,7 @@ GNU/Linux
 
 .. code::
 
-  $ chmod a+x icestudio-0.3.1*.AppImage
+  $ chmod a+x icestudio-0.3.2*.AppImage
 
 .. hint::
 

@@ -12,9 +12,9 @@
 .tmp
 dist
 cache
+docs/_build
 node_modules
 bower_components
-docs/_build/*
 
 app/resources/collection
 app/resources/locale/**/*.json

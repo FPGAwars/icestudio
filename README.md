@@ -44,9 +44,9 @@
   1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
-<img src="./docs/resources/images/demo/main.png" width="700" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
 
-<img src="./docs/resources/images/demo/main-1.png" width="700" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main-1.png" width="700" align="center">
 
 Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 
@@ -94,6 +94,14 @@ npm start
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
 
 *Developer note*: use `npm run gettext` to extract the labels from the code.
+
+### Documentation
+
+```bash
+cd docs
+make html
+firefox _build/html/index.html
+```
 
 ### Package
 
