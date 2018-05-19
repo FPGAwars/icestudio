@@ -297,6 +297,25 @@ angular.module('icestudio')
 
       // Events
 
+      var shiftPressed = false;
+
+      $(document).on('keydown', function(evt) {
+        if (utils.hasShift(evt)) {
+          shiftPressed = true;
+        }
+      });
+      $(document).on('keyup', function(evt) {
+        if (!utils.hasShift(evt)) {
+          shiftPressed = false;
+        }
+      });
+
+      $(document).on('disableSelected', function() {
+        if (!shiftPressed) {
+          disableSelected();
+        }
+      });
+
       $('body').mousemove(function(event) {
         mousePosition = {
           x: event.pageX,
@@ -329,7 +348,7 @@ angular.module('icestudio')
         }
         else {
           // Toggle selected cell
-          if (utils.hasShift(evt)) {
+          if (shiftPressed) {
             var cell = selection.get($(evt.target).data('model'));
             selection.reset(selection.without(cell));
             selectionView.destroySelectionBox(cell);
@@ -337,10 +356,8 @@ angular.module('icestudio')
         }
       });
 
-      var pointerDown = false;
-
       paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
-        if (utils.hasShift(evt)) {
+        if (shiftPressed) {
           // If Shift is pressed process the click (no Shift+dblClick allowed)
           if (paper.options.enabled) {
             if (!cellView.model.isLink()) {
@@ -356,20 +373,14 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerdown', function(/*cellView, evt, x, y*/) {
-        if (paper.options.enabled) {
-          pointerDown = true;
-        }
-      });
-
       paper.on('cell:pointerup', function(/*cellView, evt, x, y*/) {
         if (paper.options.enabled) {
           updateWiresOnObstacles();
         }
       });
 
-      paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
-        if (!utils.hasShift(evt)) {
+      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
+        if (!shiftPressed) {
           // Allow dblClick if Shift is not pressed
           var type =  cellView.model.get('blockType');
           if (type.indexOf('basic.') !== -1) {
@@ -959,10 +970,6 @@ angular.module('icestudio')
         updateWiresOnObstacles();
       }
     };
-
-    $(document).on('disableSelected', function() {
-      disableSelected();
-    });
 
     function disableSelected() {
       if (hasSelection()) {
