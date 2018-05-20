@@ -654,8 +654,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
-        <p>&gt;</p>\
-        <label>' + name + '</label>\
+        <div class="virtual-content">\
+          <p>&gt;</p>\
+          <label>' + name + '</label>\
+        </div>\
       </div>\
       <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
         <p>&gt;</p>\
@@ -696,39 +698,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.applyClock();
   },
 
-  applyShape: function() {
-    var virtualPortId = '#virtualPort' + this.id;
-    var fpgaPortId = '#fpgaPort' + this.id;
-    var data = this.model.get('data');
-    var name = data.name + (data.range || '');
-    var virtual = data.virtual || this.model.get('disabled');
-
-    this.$box.find('label').text(name || '');
-
-    if (virtual) {
-      // Virtual port (green)
-      if ($(virtualPortId).hasClass('hidden')) {
-        // If comes from fpgaPort update the position
-        this.model.attributes.position.y += 12;
-      }
-      this.model.attributes.size.height = 40;
-      $(fpgaPortId).addClass('hidden');
-      $(virtualPortId).removeClass('hidden');
-    }
-    else {
-      // FPGA I/O port (yellow)
-      if (data.pins) {
-        if ($(fpgaPortId).hasClass('hidden')) {
-          // If comes from virtualPort update the position
-          this.model.attributes.position.y -= 12;
-        }
-        this.model.attributes.size.height = 32 + 32 * data.pins.length;
-      }
-      $(virtualPortId).addClass('hidden');
-      $(fpgaPortId).removeClass('hidden');
-    }
-  },
-
   applyChoices: function() {
     var data = this.model.get('data');
     if (data.pins) {
@@ -749,6 +718,31 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       comboSelector.val(value).change();
     }
     this.updating = false;
+  },
+
+  applyShape: function() {
+    var virtualPortId = '#virtualPort' + this.id;
+    var fpgaPortId = '#fpgaPort' + this.id;
+    var data = this.model.get('data');
+    var name = data.name + (data.range || '');
+    var virtual = data.virtual || this.model.get('disabled');
+
+    this.$box.find('label').text(name || '');
+
+    if (virtual) {
+      // Virtual port (green)
+      $(fpgaPortId).addClass('hidden');
+      $(virtualPortId).removeClass('hidden');
+      this.model.attributes.size.height = 64;
+    }
+    else {
+      // FPGA I/O port (yellow)
+      $(virtualPortId).addClass('hidden');
+      $(fpgaPortId).removeClass('hidden');
+      if (data.pins) {
+        this.model.attributes.size.height = 32 + 32 * data.pins.length;
+      }
+    }
   },
 
   applyClock: function() {
@@ -780,8 +774,8 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   apply: function() {
     this.applyChoices();
     this.applyValues();
-    this.applyClock();
     this.applyShape();
+    this.applyClock();
     this.render();
   },
 
