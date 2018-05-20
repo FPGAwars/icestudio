@@ -238,9 +238,10 @@ g {
 }
 
 .io-block .io-fpga-content p {
-  position: absolute;
+  position: relative;
   top: 0;
-  right: 5px;
+  left: 82px;
+  margin-bottom: -4px;
   font-size: 13px;
   color: #444;
 }
@@ -321,26 +322,29 @@ g {
   border: 1px solid #777;
 }
 
-.constant-block .constant-content svg {
-  position: absolute;
-  right: 0;
-  margin: 4px;
-  width: 8px;
-  fill: #555;
+.constant-block .constant-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 5px;
+  margin-bottom: 7px;
+  height: 18px;
 }
 
-.constant-block .constant-content label {
-  display: block;
-  margin-top: 5px;
-  padding: 0 6px;
-  margin-bottom: 7px;
+.constant-block .constant-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.constant-block .constant-content .header svg {
+  padding-left: 2px;
+  width: 8px;
+  fill: #444;
 }
 
 .constant-block .constant-content input {
