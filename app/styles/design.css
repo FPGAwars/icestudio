@@ -195,24 +195,21 @@ g {
   white-space: nowrap;
 }
 
-.virtual-port {
+.io-block {
   position: absolute;
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.virtual-port .virtual-content {
+.io-block .io-virtual-content {
   position: absolute;
-  top: 12px;
-  width: 100%;
-  height: 40px;
   background: #E2FBC9;
   border-radius: 5px;
   border: 1px solid #777;
 }
 
-.virtual-port .virtual-content p {
+.io-block .io-virtual-content p {
   position: absolute;
   top: 0;
   right: 5px;
@@ -220,7 +217,7 @@ g {
   color: #444;
 }
 
-.virtual-port .virtual-content label {
+.io-block .io-virtual-content label {
   display: block;
   margin-top: 8px;
   padding: 0 6px;
@@ -232,19 +229,15 @@ g {
   overflow: hidden;
 }
 
-.fpga-port {
+.io-block .io-fpga-content {
   position: absolute;
+  width: 100%;
   background: #FBFBC9;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
-.fpga-port p {
+.io-block .io-fpga-content p {
   position: absolute;
   top: 0;
   right: 5px;
@@ -252,10 +245,11 @@ g {
   color: #444;
 }
 
-.fpga-port label {
+.io-block .io-fpga-content label {
   display: block;
   margin-top: 5px;
-  margin-bottom: 7px;
+  margin-bottom: 1px;
+  padding: 0 6px;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
@@ -265,16 +259,17 @@ g {
   overflow: hidden;
 }
 
-.fpga-port div p {
+.io-block .io-fpga-content div p {
   position: relative;
   top: 0px;
   left: -20px;
   float: left;
 }
 
-.fpga-port div .select2 {
+.io-block .io-fpga-content div .select2 {
   position: relative;
   width: 84px;
+  top: 6px;
   left: 5px;
   margin-bottom: 6px;
   pointer-events: auto;
@@ -336,7 +331,7 @@ g {
 
 .constant-block .constant-content label {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
   padding: 0 6px;
   margin-bottom: 7px;
   text-align: center;
@@ -390,7 +385,7 @@ g {
 
 .memory-block .memory-content label {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
   padding: 0 6px;
   text-align: center;
   font-size: 14px;
