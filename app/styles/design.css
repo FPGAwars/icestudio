@@ -113,6 +113,14 @@ g {
   transition: opacity 0.2s;
 }
 
+.port-default {
+  pointer-events: none;
+}
+
+.port-label {
+  pointer-events: none;
+}
+
 .generic-block {
   position: absolute;
   background: #C0DFEB;
