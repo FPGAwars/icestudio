@@ -314,10 +314,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var state = self.model.get('state');
     var gridstep = 8;
     var minSize = { width: 64, height: 32 };
-    if (type === 'ice.Code') {
-       minSize = { width: 96, height: 64 };
-    }
-    if (type === 'ice.Memory') {
+    if (type === 'ice.Code' || type === 'ice.Memory') {
        minSize = { width: 96, height: 64 };
     }
 
@@ -1148,7 +1145,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('mousewheel', function(event) {
       // Stop mousewheel event propagation when target is active
-      if (document.activeElement.parentNode.id === self.selector.attr('id')) {
+      if (document.activeElement.parentNode.id === self.editorSelector.attr('id')) {
         // Enable only scroll
         event.stopPropagation();
       }
