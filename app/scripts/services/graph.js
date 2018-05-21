@@ -127,10 +127,10 @@ angular.module('icestudio')
         //markAvailable: true,
         getState: this.getState,
         defaultLink: new joint.shapes.ice.Wire(),
-        /*guard: function(evt, view) {
-          // FALSE means the event isn't guarded.
-          return false;
-        },*/
+        // guard: function(evt, view) {
+        //   // FALSE means the event isn't guarded.
+        //   return false;
+        // },
         validateMagnet: function(cellView, magnet) {
           // Prevent to start wires from an input port
           return (magnet.getAttribute('type') === 'output');
@@ -356,7 +356,11 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
+      paper.on('cell:pointerclick', function(cellView, evt, x, y) {
+        if (!checkInsideViewBox(cellView, x, y)) {
+          // Out of the view box
+          return;
+        }
         if (shiftPressed) {
           // If Shift is pressed process the click (no Shift+dblClick allowed)
           if (paper.options.enabled) {
@@ -373,13 +377,12 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerup', function(/*cellView, evt, x, y*/) {
-        if (paper.options.enabled) {
-          updateWiresOnObstacles();
+      paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+        if (!checkInsideViewBox(cellView, x, y)) {
+          // Out of the view box
+          return;
         }
-      });
-
-      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
+        selectionView.cancelSelection();
         if (!shiftPressed) {
           // Allow dblClick if Shift is not pressed
           var type =  cellView.model.get('blockType');
@@ -388,7 +391,6 @@ angular.module('icestudio')
             if (paper.options.enabled) {
               blocks.editBasic(type, cellView, function(cell) {
                 addCell(cell);
-                selectionView.cancelSelection();
               });
             }
           }
@@ -406,6 +408,16 @@ angular.module('icestudio')
           }
         }
       });
+
+      function checkInsideViewBox(view, x, y) {
+        var $box = $(view.$box[0]);
+        var position = $box.position();
+        var rbox = g.rect(position.left, position.top, $box.width(), $box.height());
+        return rbox.containsPoint({
+          x: x * state.zoom + state.pan.x,
+          y: y * state.zoom + state.pan.y
+        });
+      }
 
       paper.on('blank:pointerdown', function(evt, x, y) {
         // Disable current focus
@@ -447,6 +459,9 @@ angular.module('icestudio')
         graph.trigger('batch:start');
         processReplaceBlock(cellView.model);
         graph.trigger('batch:stop');
+        if (paper.options.enabled) {
+          updateWiresOnObstacles();
+        }
       });
 
       paper.on('cell:pointermove', function(cellView/*, evt*/) {

@@ -113,6 +113,10 @@ g {
   transition: opacity 0.2s;
 }
 
+.disable-port {
+  pointer-events: none;
+}
+
 .port-default {
   pointer-events: none;
 }

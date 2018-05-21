@@ -268,7 +268,7 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         var elementViews = this.findBlocksInArea(
           g.rect(localPoint.x, localPoint.y, width, height),
-          { strict: true});
+          { strict: false });
 
         this.model.add(_.pluck(elementViews, 'model'));
 

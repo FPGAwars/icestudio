@@ -25,9 +25,9 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
              <g class="scalable">\
                <rect class="body"/>\
              </g>\
-             <g class="leftPorts"/>\
+             <g class="leftPorts disable-port"/>\
              <g class="rightPorts"/>\
-             <g class="topPorts"/>\
+             <g class="topPorts disable-port"/>\
              <g class="bottomPorts"/>\
            </g>',
   portMarkup: '<g class="port port<%= index %>">\
