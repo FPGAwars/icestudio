@@ -312,7 +312,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var type = self.model.get('type');
     var size = self.model.get('size');
     var state = self.model.get('state');
-    var gridstep = 8 * 2;
+    var gridstep = 8;
     var minSize = { width: 64, height: 32 };
     if (type === 'ice.Code') {
        minSize = { width: 96, height: 64 };
@@ -916,6 +916,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
     this.inputSelector = this.$box.find('.constant-input');
     this.contentSelector = this.$box.find('.constant-content');
+    this.headerSelector = this.$box.find('.header');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -1005,9 +1006,9 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     });
 
     if (data.name || data.local) {
-      this.$box.find('.header').removeClass('hidden');
+      this.headerSelector.removeClass('hidden');
     } else {
-      this.$box.find('.header').addClass('hidden');
+      this.headerSelector.addClass('hidden');
     }
 
     // Render block
@@ -1028,7 +1029,7 @@ joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
     type: 'ice.Memory',
     size: {
       width: 96,
-      height: 96
+      height: 104
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -1045,8 +1046,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       '\
       <div class="memory-block">\
         <div class="memory-content">\
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
-          <label></label>\
+          <div class="header">\
+            <label></label>\
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
+          </div>\
         </div>\
         <div class="memory-editor" id="' + editorLabel + '"></div>\
         <script>\
@@ -1068,6 +1071,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     this.editorSelector = this.$box.find('.memory-editor');
     this.contentSelector = this.$box.find('.memory-content');
+    this.headerSelector = this.$box.find('.header');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -1170,8 +1174,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
   applyLocal: function() {
     if (this.model.get('data').local) {
       this.$box.find('svg').removeClass('hidden');
-    }
-    else {
+    } else {
       this.$box.find('svg').addClass('hidden');
     }
   },
@@ -1235,7 +1238,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         // Scale editor
         this.editorSelector.css({
           top: 24 * state.zoom,
-          margin: 6 * state.zoom,
+          margin: 7 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1260,7 +1263,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.$('.port-wire').css('stroke-width', width);
 
     // Render content
-    var topOffset = data.name ? 0 : (data.local ? 10 : 24);
+    var topOffset = (data.name || data.local) ? 0 : 24;
     this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
@@ -1268,6 +1271,12 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       height: bbox.height - topOffset,
       transform: 'scale(' + state.zoom + ')'
     });
+
+    if (data.name || data.local) {
+      this.headerSelector.removeClass('hidden');
+    } else {
+      this.headerSelector.addClass('hidden');
+    }
 
     // Render block
     this.$box.css({
@@ -1502,7 +1511,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale editor
         this.editorSelector.css({
-          margin: 6 * state.zoom,
+          margin: 7 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1862,7 +1871,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     else if (this.editor) {
       // Scale editor
       this.editorSelector.css({
-        margin: 6 * state.zoom,
+        margin: 7 * state.zoom,
         'border-radius': 5 * state.zoom,
         'border-width': state.zoom + 0.5
       });

@@ -242,7 +242,7 @@ angular.module('icestudio')
         data: {},
         type: 'basic.memory',
         position: { x: 0, y: 0 },
-        size: { width: 96, height: 96 }
+        size: { width: 96, height: 104 }
       };
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Enter the memory blocks'),
