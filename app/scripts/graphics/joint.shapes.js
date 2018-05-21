@@ -285,9 +285,6 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   apply: function() {
   },
 
-  updateContent: function() {
-  },
-
   startResizing: function(event) {
     var self = event.data.self;
 
@@ -336,7 +333,6 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     }
 
     self.model.resize(width, height);
-    self.updateContent();
 
     function snapToGrid(coords) {
       return {
