@@ -8,6 +8,7 @@ angular.module('icestudio')
                                profile,
                                utils,
                                common,
+                               gui,
                                gettextCatalog,
                                nodeFs,
                                nodePath) {
@@ -83,8 +84,16 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       var self = this;
-      if (data.version !== common.VERSION) {
-        alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
+      if (data.version > common.VERSION) {
+        var errorAlert = alertify.error(gettextCatalog.getString('Unsupported project format {{version}}', { version: data.version }), 30);
+        alertify.message(gettextCatalog.getString('Click here to <b>download a newer version</b> of Icestudio'), 30)
+        .callback = function(isClicked) {
+          if (isClicked) {
+            errorAlert.dismiss(false);
+            gui.Shell.openExternal('https://github.com/FPGAwars/icestudio/releases');
+          }
+        };
+        return;
       }
       project = _safeLoad(data, name);
       if (project.design.board !== common.selectedBoard.name) {
@@ -141,20 +150,21 @@ angular.module('icestudio')
       var project = {};
       switch(data.version) {
         case common.VERSION:
+        case '1.1':
           project = data;
           break;
         case '1.0':
-          project = convert10To11(data);
+          project = convert10To12(data);
           break;
         default:
           project = convertTo10(data, name);
-          project = convert10To11(project);
+          project = convert10To12(project);
           break;
       }
       return project;
     }
 
-    function convert10To11(data) {
+    function convert10To12(data) {
       var project = _default();
       project.package = data.package;
       project.design.board = data.design.board;

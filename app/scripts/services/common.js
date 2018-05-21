@@ -5,7 +5,7 @@ angular.module('icestudio')
                               nodeTmp) {
 
     // Project version
-    this.VERSION = '1.1';
+    this.VERSION = '1.2';
 
     // Project status
     this.hasChangesSinceBuild = false;
