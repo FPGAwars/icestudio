@@ -654,12 +654,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       '\
       <div class="io-block">\
         <div class="io-virtual-content' + (virtual ? '' : ' hidden') + '">\
-          <p>&gt;</p>\
-          <label>' + name + '</label>\
+          <div class="header">\
+            <label>' + name + '</label>\
+            <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
+          </div>\
         </div>\
         <div class="io-fpga-content' + (virtual ? ' hidden' : '') + '">\
-          <p>&gt;</p>\
-          <label>' + name + '</label>\
+          <div class="header">\
+            <label>' + name + '</label>\
+            <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
+          </div>\
           <div>' + selectCode + '</div>\
           <script>' + selectScript + '</script>\
         </div>\
@@ -669,6 +673,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     this.virtualContentSelector = this.$box.find('.io-virtual-content');
     this.fpgaContentSelector = this.$box.find('.io-fpga-content');
+    this.headerSelector = this.$box.find('.header');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -737,12 +742,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     var $label = this.$box.find('label');
     $label.text(name || '');
-    if (name) {
-      $label.removeClass('hidden');
-    }
-    else {
-      $label.addClass('hidden');
-    }
 
     if (virtual) {
       // Virtual port (green)
@@ -762,10 +761,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   applyClock: function() {
     if (this.model.get('data').clock) {
-      this.$box.find('p').removeClass('hidden');
-    }
-    else {
-      this.$box.find('p').addClass('hidden');
+      this.$box.find('svg').removeClass('hidden');
+    } else {
+      this.$box.find('svg').addClass('hidden');
     }
   },
 
@@ -852,7 +850,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     });
 
     // Render io FPGA content
-    var fpgaTopOffset = data.name ? 0 : (data.clock ? 10 : 24);
+    var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
     this.fpgaContentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
       top: (bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom,
@@ -860,6 +858,12 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       height: bbox.height - fpgaTopOffset,
       transform: 'scale(' + state.zoom + ')'
     });
+
+    if (data.name || data.range || data.clock) {
+      this.headerSelector.removeClass('hidden');
+    } else {
+      this.headerSelector.addClass('hidden');
+    }
 
     // Render block
     this.$box.css({

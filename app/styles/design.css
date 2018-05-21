@@ -209,24 +209,29 @@ g {
   border: 1px solid #777;
 }
 
-.io-block .io-virtual-content p {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 13px;
-  color: #444;
+.io-block .io-virtual-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 10px;
+  height: 18px;
 }
 
-.io-block .io-virtual-content label {
-  display: block;
-  margin-top: 8px;
-  padding: 0 6px;
+.io-block .io-virtual-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.io-block .io-virtual-content .header svg {
+  padding-left: 2px;
+  width: 10px;
+  stroke: #444;
 }
 
 .io-block .io-fpga-content {
@@ -237,34 +242,29 @@ g {
   border: 1px solid #777;
 }
 
-.io-block .io-fpga-content p {
-  position: relative;
-  top: 0;
-  left: 82px;
-  margin-bottom: -4px;
-  font-size: 13px;
-  color: #444;
+.io-block .io-fpga-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
 }
 
-.io-block .io-fpga-content label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 1px;
-  padding: 0 6px;
+.io-block .io-fpga-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.io-block .io-fpga-content div p {
-  position: relative;
-  top: 0px;
-  left: -20px;
-  float: left;
+.io-block .io-fpga-content .header svg {
+  padding-left: 2px;
+  width: 10px;
+  stroke: #444;
 }
 
 .io-block .io-fpga-content div .select2 {
@@ -335,7 +335,7 @@ g {
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  line-height: 16px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -394,7 +394,7 @@ g {
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  line-height: 16px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
