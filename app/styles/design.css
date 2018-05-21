@@ -230,6 +230,7 @@ g {
 
 .io-block .io-virtual-content .header svg {
   padding-left: 2px;
+  padding-right: 2px;
   width: 10px;
   stroke: #444;
 }
@@ -263,6 +264,7 @@ g {
 
 .io-block .io-fpga-content .header svg {
   padding-left: 2px;
+  padding-right: 2px;
   width: 10px;
   stroke: #444;
 }
