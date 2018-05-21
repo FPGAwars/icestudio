@@ -195,82 +195,85 @@ g {
   white-space: nowrap;
 }
 
-.virtual-port {
+.io-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.io-block .io-virtual-content {
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
-.virtual-port p {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 13px;
-  color: #555;
+.io-block .io-virtual-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 10px;
+  height: 18px;
 }
 
-.virtual-port label {
-  display: block;
-  margin-top: 22px;
+.io-block .io-virtual-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.fpga-port {
+.io-block .io-virtual-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  stroke: #444;
+}
+
+.io-block .io-fpga-content {
   position: absolute;
+  width: 100%;
   background: #FBFBC9;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
-.fpga-port p {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 13px;
-  color: #555;
+.io-block .io-fpga-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
 }
 
-.fpga-port label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 7px;
+.io-block .io-fpga-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.fpga-port div p {
-  position: relative;
-  top: 0px;
-  left: -20px;
-  float: left;
+.io-block .io-fpga-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  stroke: #444;
 }
 
-.fpga-port div .select2 {
+.io-block .io-fpga-content div .select2 {
   position: relative;
-  width: 84px;
-  left: 5px;
+  width: 82px;
+  top: 6px;
+  left: 6px;
   margin-bottom: 6px;
   pointer-events: auto;
 }
@@ -309,51 +312,60 @@ g {
 
 .constant-block {
   position: absolute;
-  background: #FBF0C9;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.constant-block svg {
+.constant-block .constant-content {
   position: absolute;
-  right: 0;
-  margin: 4px;
-  width: 8px;
-  fill: #444;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
 }
 
-.constant-block label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 7px;
+.constant-block .constant-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
+}
+
+.constant-block .constant-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.constant-block input {
+.constant-block .constant-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  fill: #444;
+}
+
+.constant-block .constant-content input {
   position: absolute;
   text-align: center;
-  left: 5px;
-  width: 84px;
+  left: 6px;
+  bottom: 6px;
+  width: 82px;
   height: 26px;
   font-size: 14px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  line-height: 15px;
   border-radius: 4px;
   border: 1px solid #AAA;
   pointer-events: auto;
 }
 
-.constant-block input:focus {
+.constant-block .constant-content input:focus {
   outline: none;
 }
 
@@ -371,34 +383,39 @@ g {
   border: 1px solid #777;
 }
 
-.memory-block .memory-content svg {
-  position: absolute;
-  right: 0;
-  margin: 4px;
-  width: 8px;
-  fill: #444;
+.memory-block .memory-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
 }
 
-.memory-block .memory-content label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 7px;
+.memory-block .memory-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
+.memory-block .memory-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  fill: #444;
+}
+
 .memory-block .memory-editor {
   position: absolute;
-  top: 22px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
   border-radius: 5px;
   border: 1px solid #AAA;
   pointer-events: auto;
@@ -420,11 +437,11 @@ g {
 
 .code-block .code-editor {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
   border-radius: 5px;
   border: 1px solid #AAA;
   pointer-events: auto;
@@ -446,11 +463,11 @@ g {
 
 .info-block .info-editor {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 6px;
   border-radius: 5px;
   border: 1px solid #AAA;
   pointer-events: auto;
@@ -465,11 +482,11 @@ g {
   position: absolute;
   overflow: visible;
   background: transparent;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
   border-radius: 5px;
   border: 1px solid transparent;
   pointer-events: none;

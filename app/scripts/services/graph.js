@@ -297,6 +297,25 @@ angular.module('icestudio')
 
       // Events
 
+      var shiftPressed = false;
+
+      $(document).on('keydown', function(evt) {
+        if (utils.hasShift(evt)) {
+          shiftPressed = true;
+        }
+      });
+      $(document).on('keyup', function(evt) {
+        if (!utils.hasShift(evt)) {
+          shiftPressed = false;
+        }
+      });
+
+      $(document).on('disableSelected', function() {
+        if (!shiftPressed) {
+          disableSelected();
+        }
+      });
+
       $('body').mousemove(function(event) {
         mousePosition = {
           x: event.pageX,
@@ -329,7 +348,7 @@ angular.module('icestudio')
         }
         else {
           // Toggle selected cell
-          if (utils.hasShift(evt)) {
+          if (shiftPressed) {
             var cell = selection.get($(evt.target).data('model'));
             selection.reset(selection.without(cell));
             selectionView.destroySelectionBox(cell);
@@ -337,35 +356,14 @@ angular.module('icestudio')
         }
       });
 
-      var pointerDown = false;
-      var dblClickCell = false;
-
       paper.on('cell:pointerclick', function(cellView, evt/*, x, y*/) {
-        if (utils.hasShift(evt)) {
+        if (shiftPressed) {
           // If Shift is pressed process the click (no Shift+dblClick allowed)
-          processCellClick(cellView, evt);
-        }
-        else {
-          // If not, wait 200ms to ensure that it's not a dblclick
-          var ensureTime = 200;
-          pointerDown = false;
-          setTimeout(function() {
-            if (!dblClickCell && !pointerDown) {
-              processCellClick(cellView, evt);
-            }
-          }, ensureTime);
-        }
-
-        function processCellClick(cellView, evt) {
           if (paper.options.enabled) {
             if (!cellView.model.isLink()) {
               // Disable current focus
               document.activeElement.blur();
               if (utils.hasLeftButton(evt)) {
-                if (!utils.hasShift(evt)) {
-                  // Cancel previous selection
-                  disableSelected();
-                }
                 // Add cell to selection
                 selection.add(cellView.model);
                 selectionView.createSelectionBox(cellView.model);
@@ -375,50 +373,39 @@ angular.module('icestudio')
         }
       });
 
-      paper.on('cell:pointerdown', function(/*cellView, evt, x, y*/) {
-        if (paper.options.enabled) {
-          pointerDown = true;
-        }
-      });
-
       paper.on('cell:pointerup', function(/*cellView, evt, x, y*/) {
         if (paper.options.enabled) {
           updateWiresOnObstacles();
         }
       });
 
-      paper.on('cell:pointerdblclick', function(cellView, evt/*, x, y*/) {
-        if (!utils.hasShift(evt)) {
+      paper.on('cell:pointerdblclick', function(cellView/*, evt, x, y*/) {
+        if (!shiftPressed) {
           // Allow dblClick if Shift is not pressed
-          dblClickCell = true;
-          processDblClick(cellView);
-          // Enable click event
-          setTimeout(function() { dblClickCell = false; }, 200);
-        }
-      });
-
-      function processDblClick(cellView) {
-        var type =  cellView.model.get('blockType');
-        if (type.indexOf('basic.') !== -1) {
-          if (paper.options.enabled) {
-            blocks.editBasic(type, cellView, function(cell) {
-              addCell(cell);
-              selectionView.cancelSelection();
+          var type =  cellView.model.get('blockType');
+          if (type.indexOf('basic.') !== -1) {
+            // Edit basic blocks
+            if (paper.options.enabled) {
+              blocks.editBasic(type, cellView, function(cell) {
+                addCell(cell);
+                selectionView.cancelSelection();
+              });
+            }
+          }
+          else if (common.allDependencies[type]) {
+            // Navigate inside generic blocks
+            z.index = 1;
+            var project = common.allDependencies[type];
+            var breadcrumbsLength = self.breadcrumbs.length;
+            $rootScope.$broadcast('navigateProject', {
+              update: breadcrumbsLength === 1,
+              project: project
             });
+            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+            utils.rootScopeSafeApply();
           }
         }
-        else if (common.allDependencies[type]) {
-          z.index = 1;
-          var project = common.allDependencies[type];
-          var breadcrumbsLength = self.breadcrumbs.length;
-          $rootScope.$broadcast('navigateProject', {
-            update: breadcrumbsLength === 1,
-            project: project
-          });
-          self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-          utils.rootScopeSafeApply();
-        }
-      }
+      });
 
       paper.on('blank:pointerdown', function(evt, x, y) {
         // Disable current focus
@@ -521,14 +508,23 @@ angular.module('icestudio')
             // Replace wire's target
             replaceWireConnection(wire, 'target');
           });
-          // 3. Move the upperModel to be centerd with the lowerModel
+          // 3. Move the upperModel to be centered with the lowerModel
+          var upperBlockType = upperBlock.get('type');
           var lowerBlockSize = lowerBlock.get('size');
           var upperBlockSize = upperBlock.get('size');
           var lowerBlockPosition = lowerBlock.get('position');
-          upperBlock.set('position', {
-            x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
-            y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
-          });
+          if (upperBlockType === 'ice.Constant' || upperBlockType === 'ice.Memory') {
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
+              y: lowerBlockPosition.y + lowerBlockSize.height - upperBlockSize.height
+            });
+          }
+          else {
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x + lowerBlockSize.width - upperBlockSize.width,
+              y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
+            });
+          }
           // 4. Remove the lowerModel
           lowerBlock.remove();
           prevLowerBlock = null;
@@ -983,10 +979,6 @@ angular.module('icestudio')
         updateWiresOnObstacles();
       }
     };
-
-    $(document).on('disableSelected', function() {
-      disableSelected();
-    });
 
     function disableSelected() {
       if (hasSelection()) {

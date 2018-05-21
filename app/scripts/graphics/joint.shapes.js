@@ -312,11 +312,14 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var type = self.model.get('type');
     var size = self.model.get('size');
     var state = self.model.get('state');
-    var gridstep = 8 * 2;
-    var minSize = {
-      width: type === 'ice.Code' ? 96 : 64,
-      height: type === 'ice.Code' ? 64 : 32
-    };
+    var gridstep = 8;
+    var minSize = { width: 64, height: 32 };
+    if (type === 'ice.Code') {
+       minSize = { width: 96, height: 64 };
+    }
+    if (type === 'ice.Memory') {
+       minSize = { width: 96, height: 64 };
+    }
 
     var clientCoords = snapToGrid({ x: event.clientX, y: event.clientY });
     var oldClientCoords = snapToGrid({ x: self._clientX, y: self._clientY });
@@ -618,11 +621,10 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   initialize: function() {
-    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     this.id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var virtualPortId = 'virtualPort' + this.id;
-    var fpgaPortId = 'fpgaPort' + this.id;
     var comboId = 'combo' + this.id;
     var virtual = this.model.get('data').virtual || this.model.get('disabled');
 
@@ -650,20 +652,34 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     this.$box = $(joint.util.template(
       '\
-      <div class="virtual-port' + (virtual ? '' : ' hidden') + '" id="' + virtualPortId + '">\
-        <p>&gt;</p>\
-        <label>' + name + '</label>\
-      </div>\
-      <div class="fpga-port' + (virtual ? ' hidden' : '') + '" id="' + fpgaPortId + '">\
-        <p>&gt;</p>\
-        <label>' + name + '</label>\
-        <div>' + selectCode + '</div>\
-        <script>' + selectScript + '</script>\
+      <div class="io-block">\
+        <div class="io-virtual-content' + (virtual ? '' : ' hidden') + '">\
+          <div class="header">\
+            <label>' + name + '</label>\
+            <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
+          </div>\
+        </div>\
+        <div class="io-fpga-content' + (virtual ? ' hidden' : '') + '">\
+          <div class="header">\
+            <label>' + name + '</label>\
+            <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
+          </div>\
+          <div>' + selectCode + '</div>\
+          <script>' + selectScript + '</script>\
+        </div>\
       </div>\
       '
     )());
 
-    this.updating = false;
+    this.virtualContentSelector = this.$box.find('.io-virtual-content');
+    this.fpgaContentSelector = this.$box.find('.io-fpga-content');
+    this.headerSelector = this.$box.find('.header');
+
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
+
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     // Prevent paper from handling pointerdown.
     var self = this;
@@ -684,6 +700,10 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       }
     });
 
+    this.updateBox();
+
+    this.updating = false;
+
     // Apply data
     if (!this.model.get('disabled')) {
       this.applyChoices();
@@ -691,31 +711,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       this.applyShape();
     }
     this.applyClock();
-  },
-
-  applyShape: function() {
-    var virtualPortId = '#virtualPort' + this.id;
-    var fpgaPortId = '#fpgaPort' + this.id;
-    var data = this.model.get('data');
-    var name = data.name + (data.range || '');
-    var virtual = data.virtual || this.model.get('disabled');
-
-    this.$box.find('label').text(name || '');
-
-    if (virtual) {
-      // Virtual port (green)
-      $(fpgaPortId).addClass('hidden');
-      $(virtualPortId).removeClass('hidden');
-      this.model.attributes.size.height = 64;
-    }
-    else {
-      // FPGA I/O port (yellow)
-      $(virtualPortId).addClass('hidden');
-      $(fpgaPortId).removeClass('hidden');
-      if (data.pins) {
-        this.model.attributes.size.height = 32 + 32 * data.pins.length;
-      }
-    }
   },
 
   applyChoices: function() {
@@ -740,12 +735,35 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.updating = false;
   },
 
-  applyClock: function() {
-    if (this.model.get('data').clock) {
-      this.$box.find('p').removeClass('hidden');
+  applyShape: function() {
+    var data = this.model.get('data');
+    var name = data.name + (data.range || '');
+    var virtual = data.virtual || this.model.get('disabled');
+
+    var $label = this.$box.find('label');
+    $label.text(name || '');
+
+    if (virtual) {
+      // Virtual port (green)
+      this.fpgaContentSelector.addClass('hidden');
+      this.virtualContentSelector.removeClass('hidden');
+      this.model.attributes.size.height = 64;
     }
     else {
-      this.$box.find('p').addClass('hidden');
+      // FPGA I/O port (yellow)
+      this.virtualContentSelector.addClass('hidden');
+      this.fpgaContentSelector.removeClass('hidden');
+      if (data.pins) {
+        this.model.attributes.size.height = 32 + 32 * data.pins.length;
+      }
+    }
+  },
+
+  applyClock: function() {
+    if (this.model.get('data').clock) {
+      this.$box.find('svg').removeClass('hidden');
+    } else {
+      this.$box.find('svg').addClass('hidden');
     }
   },
 
@@ -769,8 +787,8 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   apply: function() {
     this.applyChoices();
     this.applyValues();
-    this.applyClock();
     this.applyShape();
+    this.applyClock();
     this.render();
   },
 
@@ -779,19 +797,95 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
+  updateBox: function() {
+    var i, port;
+    var bbox = this.model.getBBox();
+    var data = this.model.get('data');
+    var state = this.model.get('state');
+    var rules = this.model.get('rules');
+    var leftPorts = this.model.get('leftPorts');
+    var rightPorts = this.model.get('rightPorts');
+    var modelId = this.model.id;
+
+    // Render ports width
+    var width = WIRE_WIDTH * state.zoom;
+    this.$('.port-wire').css('stroke-width', width);
+    // Set buses
+    for (i in leftPorts) {
+      port = leftPorts[i];
+      if (port.size > 1) {
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+      }
+    }
+    for (i in rightPorts) {
+      port = rightPorts[i];
+      if (port.size > 1) {
+        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+      }
+    }
+    // Render rules
+    if (data && data.ports && data.ports.in) {
+      for (i in data.ports.in) {
+        port = data.ports.in[i];
+        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
+        if (rules && port.default && port.default.apply) {
+          portDefault.css('display', 'inline');
+          portDefault.find('path').css('stroke-width', width);
+          portDefault.find('rect').css('stroke-width', state.zoom);
+        }
+        else {
+          portDefault.css('display', 'none');
+        }
+      }
+    }
+
+    // Render io virtual content
+    var virtualtopOffset = 24;
+    this.virtualContentSelector.css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: (bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom,
+      width: bbox.width,
+      height: bbox.height - virtualtopOffset,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    // Render io FPGA content
+    var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
+    this.fpgaContentSelector.css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: (bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom,
+      width: bbox.width,
+      height: bbox.height - fpgaTopOffset,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    if (data.name || data.range || data.clock) {
+      this.headerSelector.removeClass('hidden');
+    } else {
+      this.headerSelector.addClass('hidden');
+    }
+
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
+  },
+
   removeBox: function() {
     // Close select options on remove
     this.$box.find('select').select2('close');
     this.$box.remove();
   }
-
 });
 
 joint.shapes.ice.InputView = joint.shapes.ice.IOView;
 joint.shapes.ice.OutputView = joint.shapes.ice.IOView;
 
 
-// Constant blocks
+// Constant block
 
 joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement({
@@ -806,24 +900,43 @@ joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
-  template: '\
-  <div class="constant-block">\
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
-    <label></label>\
-    <input class="constant-input"></input>\
-  </div>\
-  ',
-
   initialize: function() {
-    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+    _.bindAll(this, 'updateBox');
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    this.$box = $(joint.util.template(
+      '\
+      <div class="constant-block">\
+        <div class="constant-content">\
+          <div class="header">\
+            <label></label>\
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
+          </div>\
+          <input class="constant-input"></input>\
+        </div>\
+      </div>\
+      '
+    )());
+
+    this.inputSelector = this.$box.find('.constant-input');
+    this.contentSelector = this.$box.find('.constant-content');
+    this.headerSelector = this.$box.find('.header');
+
+    this.model.on('change', this.updateBox, this);
+    this.model.on('remove', this.removeBox, this);
+
+    this.listenTo(this.model, 'process:ports', this.update);
+    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+
+    // Prevent paper from handling pointerdown.
+    this.inputSelector.on('mousedown click', function(event) { event.stopPropagation(); });
+
+    this.updateBox();
 
     this.updating = false;
 
-    // Prevent paper from handling pointerdown.
     var self = this;
-    var selector = this.$box.find('.constant-input');
-    selector.on('mousedown click', function(event) { event.stopPropagation(); });
-    selector.on('input', function(event) {
+    this.inputSelector.on('input', function(event) {
       if (!self.updating) {
         var target = $(event.target);
         var data = JSON.parse(JSON.stringify(self.model.get('data')));
@@ -831,7 +944,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
         self.model.set('data', data);
       }
     });
-    selector.on('paste', function(event) {
+    this.inputSelector.on('paste', function(event) {
       var data = event.originalEvent.clipboardData.getData('text');
       if (data.startsWith('{"icestudio":')) {
         // Prevent paste blocks
@@ -843,39 +956,72 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     this.apply();
   },
 
-  applyName: function() {
-    var name = this.model.get('data').name;
-    this.$box.find('label').text(name);
-  },
-
-  applyValue: function() {
-    this.updating = true;
-    if (this.model.get('disabled')) {
-      this.$box.find('.constant-input').css({'pointer-events': 'none'});
-    }
-    var value = this.model.get('data').value;
-    this.$box.find('.constant-input').val(value);
-    this.updating = false;
-  },
-
-  applyLocal: function() {
-    if (this.model.get('data').local) {
-      this.$box.find('svg').removeClass('hidden');
-    }
-    else {
-      this.$box.find('svg').addClass('hidden');
-    }
-  },
-
   apply: function() {
     this.applyName();
     this.applyLocal();
     this.applyValue();
   },
 
+  applyName: function() {
+    var name = this.model.get('data').name;
+    this.$box.find('label').text(name);
+  },
+
+  applyLocal: function() {
+    if (this.model.get('data').local) {
+      this.$box.find('svg').removeClass('hidden');
+    } else {
+      this.$box.find('svg').addClass('hidden');
+    }
+  },
+
+  applyValue: function() {
+    this.updating = true;
+    if (this.model.get('disabled')) {
+      this.inputSelector.css({'pointer-events': 'none'});
+    }
+    var value = this.model.get('data').value;
+    this.inputSelector.val(value);
+    this.updating = false;
+  },
+
   update: function() {
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
+  },
+
+  updateBox: function() {
+    var bbox = this.model.getBBox();
+    var data = this.model.get('data');
+    var state = this.model.get('state');
+
+    // Set wire width
+    var width = WIRE_WIDTH * state.zoom;
+    this.$('.port-wire').css('stroke-width', width);
+
+    // Render content
+    var topOffset = (data.name || data.local) ? 0 : 24;
+    this.contentSelector.css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
+      width: bbox.width,
+      height: bbox.height - topOffset,
+      transform: 'scale(' + state.zoom + ')'
+    });
+
+    if (data.name || data.local) {
+      this.headerSelector.removeClass('hidden');
+    } else {
+      this.headerSelector.addClass('hidden');
+    }
+
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
   }
 });
 
@@ -887,7 +1033,7 @@ joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
     type: 'ice.Memory',
     size: {
       width: 96,
-      height: 112
+      height: 104
     }
   }, joint.shapes.ice.Model.prototype.defaults)
 });
@@ -904,8 +1050,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       '\
       <div class="memory-block">\
         <div class="memory-content">\
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
-          <label></label>\
+          <div class="header">\
+            <label></label>\
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 9.78"><path d="M2.22 4.44h3.56V3.11q0-.73-.52-1.26-.52-.52-1.26-.52t-1.26.52q-.52.52-.52 1.26v1.33zM8 5.11v4q0 .28-.2.47-.19.2-.47.2H.67q-.28 0-.48-.2Q0 9.38 0 9.11v-4q0-.28.2-.47.19-.2.47-.2h.22V3.11q0-1.28.92-2.2Q2.72 0 4 0q1.28 0 2.2.92.91.91.91 2.2v1.32h.22q.28 0 .48.2.19.2.19.47z"/></svg>\
+          </div>\
         </div>\
         <div class="memory-editor" id="' + editorLabel + '"></div>\
         <script>\
@@ -916,6 +1064,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setOption("firstLineNumber", 0);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
         </script>\
@@ -926,6 +1075,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     this.editorSelector = this.$box.find('.memory-editor');
     this.contentSelector = this.$box.find('.memory-content');
+    this.headerSelector = this.$box.find('.header');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -1014,6 +1164,12 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.apply({ ini: true });
   },
 
+  apply: function(opt) {
+    this.applyName();
+    this.applyLocal();
+    this.applyValue(opt);
+  },
+
   applyName: function() {
     var name = this.model.get('data').name;
     this.$box.find('label').text(name);
@@ -1022,8 +1178,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
   applyLocal: function() {
     if (this.model.get('data').local) {
       this.$box.find('svg').removeClass('hidden');
-    }
-    else {
+    } else {
       this.$box.find('svg').addClass('hidden');
     }
   },
@@ -1069,12 +1224,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }, 10, this);
   },
 
-  apply: function(opt) {
-    this.applyName();
-    this.applyLocal();
-    this.applyValue(opt);
-  },
-
   update: function() {
     this.renderPorts();
     this.editor.setReadOnly(this.model.get('disabled'));
@@ -1082,14 +1231,9 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
   },
 
   updateBox: function() {
-    var i, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
-    var rules = this.model.get('rules');
-    var leftPorts = this.model.get('leftPorts');
-    var rightPorts = this.model.get('rightPorts');
-    var modelId = this.model.id;
 
     // Set font size
     if (this.editor) {
@@ -1097,11 +1241,8 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale editor
         this.editorSelector.css({
-          top: 22 * state.zoom,
-          left: -2 * state.zoom,
-          right: -2 * state.zoom,
-          bottom: -2 * state.zoom,
-          margin: 8 * state.zoom,
+          top: 24 * state.zoom,
+          margin: 7 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1121,46 +1262,25 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
-    // Set ports width
+    // Set wire width
     var width = WIRE_WIDTH * state.zoom;
     this.$('.port-wire').css('stroke-width', width);
-    // Set buses
-    for (i in leftPorts) {
-      port = leftPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
-    }
-    for (i in rightPorts) {
-      port = rightPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
-    }
-    // Render rules
-    if (data && data.ports && data.ports.in) {
-      for (i in data.ports.in) {
-        port = data.ports.in[i];
-        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        if (rules && port.default && port.default.apply) {
-          portDefault.css('display', 'inline');
-          portDefault.find('path').css('stroke-width', width);
-          portDefault.find('rect').css('stroke-width', state.zoom);
-        }
-        else {
-          portDefault.css('display', 'none');
-        }
-      }
-    }
 
     // Render content
+    var topOffset = (data.name || data.local) ? 0 : 24;
     this.contentSelector.css({
       left: bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.height / 2.0 * (state.zoom - 1),
+      top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
       width: bbox.width,
-      height: bbox.height,
+      height: bbox.height - topOffset,
       transform: 'scale(' + state.zoom + ')'
     });
+
+    if (data.name || data.local) {
+      this.headerSelector.removeClass('hidden');
+    } else {
+      this.headerSelector.addClass('hidden');
+    }
 
     // Render block
     this.$box.css({
@@ -1395,11 +1515,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         this.prevZoom = state.zoom;
         // Scale editor
         this.editorSelector.css({
-          top: -2 * state.zoom,
-          left: -2 * state.zoom,
-          right: -2 * state.zoom,
-          bottom: -2 * state.zoom,
-          margin: 8 * state.zoom,
+          margin: 7 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5
         });
@@ -1753,17 +1869,13 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         width: bbox.width - 14,
         height: bbox.height - 14,
         transform: 'scale(' + state.zoom + ')',
-        'font-size': Math.round(aceFontSize * state.zoom) + 'px'
+        'font-size': aceFontSize + 'px'
       });
     }
     else if (this.editor) {
       // Scale editor
       this.editorSelector.css({
-        top: -2 * state.zoom,
-        left: -2 * state.zoom,
-        right: -2 * state.zoom,
-        bottom: -2 * state.zoom,
-        margin: 8 * state.zoom,
+        margin: 7 * state.zoom,
         'border-radius': 5 * state.zoom,
         'border-width': state.zoom + 0.5
       });

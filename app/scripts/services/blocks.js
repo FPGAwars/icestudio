@@ -57,7 +57,7 @@ angular.module('icestudio')
         gettextCatalog.getString('FPGA pin'),
         gettextCatalog.getString('Show clock')
       ], [
-        'in',
+        '',
         true,
         false
       ],
@@ -71,27 +71,26 @@ angular.module('icestudio')
           // Validate values
           var portInfo, portInfos = [];
           for (var l in labels) {
-            if (labels[l]) {
-              portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-              if (portInfo) {
-                evt.cancel = false;
-                portInfos.push(portInfo);
-              }
-              else {
-                evt.cancel = true;
-                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-                return;
-              }
+            portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+            if (portInfo) {
+              evt.cancel = false;
+              portInfos.push(portInfo);
             }
             else {
               evt.cancel = true;
-              //return;
+              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+              return;
             }
           }
           // Create blocks
           var cells = [];
           for (var p in portInfos) {
             portInfo = portInfos[p];
+            if (portInfo.rangestr && clock) {
+              evt.cancel = true;
+              resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+              return;
+            }
             var pins = getPins(portInfo);
             blockInstance.data = {
               name: portInfo.name,
@@ -121,7 +120,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Enter the output blocks'),
         gettextCatalog.getString('FPGA pin')
       ], [
-        'out',
+        '',
         true
       ],
         function(evt, values) {
@@ -133,21 +132,15 @@ angular.module('icestudio')
           // Validate values
           var portInfo, portInfos = [];
           for (var l in labels) {
-            if (labels[l]) {
-              portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-              if (portInfo) {
-                evt.cancel = false;
-                portInfos.push(portInfo);
-              }
-              else {
-                evt.cancel = true;
-                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-                return;
-              }
+            portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+            if (portInfo) {
+              evt.cancel = false;
+              portInfos.push(portInfo);
             }
             else {
               evt.cancel = true;
-              //return;
+              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+              return;
             }
           }
           // Create blocks
@@ -195,7 +188,7 @@ angular.module('icestudio')
         gettextCatalog.getString('Enter the constant blocks'),
         gettextCatalog.getString('Local parameter')
       ], [
-        'C',
+        '',
         false
       ],
         function(evt, values) {
@@ -207,21 +200,15 @@ angular.module('icestudio')
           // Validate values
           var paramInfo, paramInfos = [];
           for (var l in labels) {
-            if (labels[l]) {
-              paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-              if (paramInfo) {
-                evt.cancel = false;
-                paramInfos.push(paramInfo);
-              }
-              else {
-                evt.cancel = true;
-                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-                return;
-              }
+            paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+            if (paramInfo) {
+              evt.cancel = false;
+              paramInfos.push(paramInfo);
             }
             else {
               evt.cancel = true;
-              //return;
+              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+              return;
             }
           }
           // Create blocks
@@ -248,13 +235,13 @@ angular.module('icestudio')
         data: {},
         type: 'basic.memory',
         position: { x: 0, y: 0 },
-        size: { width: 96, height: 112 }
+        size: { width: 96, height: 104 }
       };
       utils.inputcheckboxprompt([
         gettextCatalog.getString('Enter the memory blocks'),
         gettextCatalog.getString('Local parameter')
       ], [
-        'M',
+        '',
         false
       ],
         function(evt, values) {
@@ -266,21 +253,15 @@ angular.module('icestudio')
           // Validate values
           var paramInfo, paramInfos = [];
           for (var l in labels) {
-            if (labels[l]) {
-              paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-              if (paramInfo) {
-                evt.cancel = false;
-                paramInfos.push(paramInfo);
-              }
-              else {
-                evt.cancel = true;
-                resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-                return;
-              }
+            paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+            if (paramInfo) {
+              evt.cancel = false;
+              paramInfos.push(paramInfo);
             }
             else {
               evt.cancel = true;
-              //return;
+              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+              return;
             }
           }
           // Create blocks
@@ -293,7 +274,7 @@ angular.module('icestudio')
               local: local
             };
             cells.push(loadBasicMemory(blockInstance));
-            blockInstance.position.x += 19 * gridsize;
+            blockInstance.position.x += 15 * gridsize;
           }
           if (callback) {
             callback(cells);
@@ -314,8 +295,8 @@ angular.module('icestudio')
         size: { width: 192, height: 128 }
       };
       var defaultValues = [
-        'a , b',
-        'c , d',
+        '',
+        '',
         ''
       ];
       if (block) {
@@ -830,6 +811,11 @@ angular.module('icestudio')
           var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
           if (portInfo) {
             evt.cancel = false;
+            if (portInfo.rangestr && clock) {
+              evt.cancel = true;
+              resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+              return;
+            }
             if ((block.data.range || '') !==
                 (portInfo.rangestr || '')) {
               var pins = getPins(portInfo);
