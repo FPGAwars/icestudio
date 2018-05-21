@@ -509,19 +509,35 @@ angular.module('icestudio')
             replaceWireConnection(wire, 'target');
           });
           // 3. Move the upperModel to be centered with the lowerModel
-          var upperBlockType = upperBlock.get('type');
           var lowerBlockSize = lowerBlock.get('size');
           var upperBlockSize = upperBlock.get('size');
+          var lowerBlockType = lowerBlock.get('type');
           var lowerBlockPosition = lowerBlock.get('position');
-          if (upperBlockType === 'ice.Constant' || upperBlockType === 'ice.Memory') {
+          if (lowerBlockType === 'ice.Constant' || lowerBlockType === 'ice.Memory') {
+            // Center x, Bottom y
             upperBlock.set('position', {
               x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
               y: lowerBlockPosition.y + lowerBlockSize.height - upperBlockSize.height
             });
           }
-          else {
+          else if (lowerBlockType === 'ice.Input') {
+            // Right x, Center y
             upperBlock.set('position', {
               x: lowerBlockPosition.x + lowerBlockSize.width - upperBlockSize.width,
+              y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
+            });
+          }
+          else if (lowerBlockType === 'ice.Output') {
+            // Left x, Center y
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x,
+              y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
+            });
+          }
+          else {
+            // Center x, Center y
+            upperBlock.set('position', {
+              x: lowerBlockPosition.x + (lowerBlockSize.width - upperBlockSize.width) / 2,
               y: lowerBlockPosition.y + (lowerBlockSize.height - upperBlockSize.height) / 2
             });
           }
