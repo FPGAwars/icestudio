@@ -5,7 +5,7 @@
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
-**Experimental** graphic editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
+Visual editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
 
     Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
@@ -141,17 +141,7 @@ npm update -g
 
 There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-proposed-features) in the wiki with the features proposed by the Community. If you want to contribute with new features and ideas write in the [Google Group](https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre).
 
- We use the GitHub issues to schedule our new features and improvements.
-
-## Videos
-
-### Version 0.2
-
-[![Icestudio: icoBOARD in a remote RPi2 ](http://img.youtube.com/vi/DAStv80OtXQ/0.jpg)](https://www.youtube.com/watch?v=DAStv80OtXQ "Icestudio: icoBOARD in a remote RPi2")
-
-[![Icestudio: new gui & multiboard](http://img.youtube.com/vi/OWnVCjo7N9Y/0.jpg)](https://www.youtube.com/watch?v=OWnVCjo7N9Y "Icestudio: new gui & multiboard")
-
-[![Icestudio: block factory](http://img.youtube.com/vi/mAIKb47z2Do/0.jpg)](http://www.youtube.com/watch?v=mAIKb47z2Do "Icestudio: block factory")
+ We use the GitHub [issues](https://github.com/FPGAwars/icestudio/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) to track the work and schedule our new features and improvements.
 
 ## Authors
 
@@ -159,41 +149,19 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 ## Contributors
 
-* v0.3
-  * [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku)
-  * [Carlos Díaz](https://github.com/C47D)
-  * [Martoni](https://github.com/Martoni)
-  * [Xoan Sampaiño](https://github.com/xoan)
-  * [Unai](https://github.com/1138-4EB)
-  * [Francisco Sayas](https://github.com/fsayas)
-  * [Pascal Cotret](https://github.com/pcotret)
-  * [Juan Jose Luna Espinosa](https://github.com/yomboprime)
-  * [Salvador E. Tropea](https://github.com/set-soft)
-  * [redbeard](https://github.com/brianredbeard)
-* v0.2
-  * [Tomás Calvo](https://github.com/tocalvo)
-  * [Juan González (Obijuan)](https://github.com/Obijuan)
-  * [Carlos Díaz](https://github.com/C47D)
-  * [Xoan Sampaiño](https://github.com/xoan)
-  * [Salvador E. Tropea](https://github.com/set-soft)
-  * [Democrito](https://github.com/Democrito)
-  * [Martoni](https://github.com/Martoni)
-  * [Pascal Cotret](https://github.com/pcotret)
-* v0.1
-  * [Miguel Sánchez de León Peque](https://github.com/Peque)
+|Version | Constributors |
+|:-:|:-:|
+| 0.3 | [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard) |
+| 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
+| 0.1 | [Miguel Sánchez de León Peque](https://github.com/Peque) |
 
 ## Credits
-
-* v0.3, v0.2: using [JointJS](https://github.com/clientIO/joint) and [AlertifyJS](https://github.com/MohammadYounes/AlertifyJS)
-* v0.1: using [AngularJS-Flowchart](https://github.com/codecapers/AngularJS-FlowChart)
 
 * [FPGAwars](http://fpgawars.github.io/) community has developed this project in a voluntary and altruistic way since 02/2017.
 
   <img src="https://avatars3.githubusercontent.com/u/18257418?s=100">
 
 * [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
-
-  <img src="https://github.com/FPGAwars/icezum/raw/master/wiki/bq-logo.png" width="80">
 
 ## License
 
