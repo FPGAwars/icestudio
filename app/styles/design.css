@@ -127,21 +127,23 @@ g {
 
 .generic-block {
   position: absolute;
-  background: #C0DFEB;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.generic-block .clock {
+.generic-block .generic-content {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.generic-block .generic-content .clock {
   position: absolute;
 }
 
-.generic-block .tooltiptext {
+.generic-block .generic-content .tooltiptext {
   visibility: hidden;
   width: 120px;
   color: #333;
@@ -157,7 +159,7 @@ g {
   margin-left: -60px;
 }
 
-.generic-block .tooltiptext::after {
+.generic-block .generic-content .tooltiptext::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -168,21 +170,21 @@ g {
   border-color: #777 transparent transparent transparent;
 }
 
-.generic-block .tooltip-medium {
+.generic-block .generic-content .tooltip-medium {
   width: 180px;
   margin-left: -90px;
 }
 
-.generic-block .tooltip-large {
+.generic-block .generic-content .tooltip-large {
   width: 240px;
   margin-left: -120px;
 }
 
 .config-block {
-  background: #fafacd;
+  background: #fafacd !important;
 }
 
-.generic-block .img-container {
+.generic-block .generic-content .img-container {
   position: absolute;
   margin: auto;
   top: 8px;
@@ -191,12 +193,12 @@ g {
   bottom: 8px;
 }
 
-.generic-block img {
+.generic-block .generic-content img {
   width: 100%;
   height: 100%;
 }
 
-.generic-block label {
+.generic-block .generic-content label {
   display: block;
   margin-top: 20px;
   text-align: center;

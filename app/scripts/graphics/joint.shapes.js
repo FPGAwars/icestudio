@@ -388,6 +388,161 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
   updateBox: function() {
+  },
+
+  removeBox: function(/*event*/) {
+    this.$box.remove();
+  }
+});
+
+
+// Generic block
+
+joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
+  defaults: joint.util.deepSupplement({
+    type: 'ice.Generic'
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
+
+  // Image comments:
+  // - img: fast load, no interactive
+  // - object: slow load, interactive
+  // - inline SVG: fast load, interactive, but...
+  //               old SVG files have no viewBox, therefore no properly resize
+  //               Inkscape adds this field saving as "Optimize SVG" ("Enable viewboxing")
+
+  template: '\
+  <div class="generic-block">\
+    <div class="generic-content">\
+      <div class="img-container"><img></div>\
+      <label></label>\
+      <span class="tooltiptext"></span>\
+    </div>\
+  </div>\
+  ',
+
+  events: {
+    'mouseover': 'mouseovercard',
+    'mouseout': 'mouseoutcard',
+    'mouseup': 'mouseupcard',
+    'mousedown': 'mousedowncard'
+  },
+
+  enter: false,
+
+  mouseovercard: function(event/*, x, y*/) {
+    if (event && event.which === 0) {
+      // Mouse button not pressed
+      this.showTooltip();
+    }
+  },
+
+  mouseoutcard: function(/*event, x, y*/) {
+    this.hideTooltip();
+  },
+
+  mouseupcard: function(/*event, x, y*/) {
+  },
+
+  mousedowncard: function(/*event, x, y*/) {
+    this.hideTooltip();
+  },
+
+  showTooltip: function() {
+    if (this.tooltip) {
+      if (!this.openTimeout) {
+        this.openTimeout = setTimeout(function() {
+          this.tooltiptext.css('visibility', 'visible');
+        }.bind(this), 2000);
+      }
+    }
+  },
+
+  hideTooltip: function() {
+    if (this.tooltip) {
+      if (this.openTimeout) {
+        clearTimeout(this.openTimeout);
+        this.openTimeout = null;
+      }
+      this.tooltiptext.css('visibility', 'hidden');
+    }
+  },
+
+  initialize: function() {
+    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
+
+    this.tooltip = this.model.get('tooltip');
+    this.tooltiptext = this.$box.find('.tooltiptext');
+
+    this.tooltiptext.text(this.tooltip);
+
+    if (this.tooltip.length > 13) {
+      this.tooltiptext.addClass('tooltip-medium');
+      this.tooltiptext.removeClass('tooltip-large');
+    }
+    else if (this.tooltip.length > 20) {
+      this.tooltiptext.addClass('tooltip-large');
+      this.tooltiptext.removeClass('tooltip-medium');
+    }
+    else {
+      this.tooltiptext.removeClass('tooltip-medium');
+      this.tooltiptext.removeClass('tooltip-large');
+    }
+
+    if (this.model.get('config')) {
+      this.$box.find('.generic-content').addClass('config-block');
+    }
+
+    // Initialize content
+    this.initializeContent();
+  },
+
+  initializeContent: function() {
+    var image = this.model.get('image');
+    var label = this.model.get('label');
+    var ports = this.model.get('leftPorts');
+
+    var imageSelector = this.$box.find('img');
+    var labelSelector = this.$box.find('label');
+
+    if (image) {
+      // Render img
+      imageSelector.attr('src', 'data:image/svg+xml,' + image);
+
+      // Render SVG
+      //imageSelector.append(decodeURI(image));
+
+      imageSelector.removeClass('hidden');
+      labelSelector.addClass('hidden');
+    }
+    else {
+      // Render label
+      labelSelector.html(label);
+      labelSelector.removeClass('hidden');
+      imageSelector.addClass('hidden');
+    }
+
+    // Render clocks
+    this.$box.find('.clock').remove();
+    var n = ports.length;
+    var gridsize = 8;
+    var height = this.model.get('size').height;
+    var contentSelector = this.$box.find('.generic-content');
+    for (var i in ports) {
+      var port = ports[i];
+      if (port.clock) {
+        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 9;
+        contentSelector.append('\
+          <div class="clock" style="top: ' + top + 'px;">\
+            <svg width="12" height="18"><path d="M-1 0 l10 8-10 8" fill="none" stroke="#555" stroke-width="1.2" stroke-linejoin="round"/>\
+          </div>');
+      }
+    }
+  },
+
+  updateBox: function() {
     var i, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
@@ -429,162 +584,22 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
       }
     }
 
-    this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x + bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.y * state.zoom + state.pan.y + bbox.height / 2.0 * (state.zoom - 1),
+    // Render content
+    this.$box.find('.generic-content').css({
+      left: bbox.width / 2.0 * (state.zoom - 1),
+      top: bbox.height / 2.0 * (state.zoom - 1),
       width: bbox.width,
       height: bbox.height,
       transform: 'scale(' + state.zoom + ')'
     });
-  },
 
-  removeBox: function(/*event*/) {
-    this.$box.remove();
-  }
-});
-
-
-// Generic block
-
-joint.shapes.ice.Generic = joint.shapes.ice.Model.extend({
-  defaults: joint.util.deepSupplement({
-    type: 'ice.Generic'
-  }, joint.shapes.ice.Model.prototype.defaults)
-});
-
-joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
-
-  // Image comments:
-  // - img: fast load, no interactive
-  // - object: slow load, interactive
-  // - inline SVG: fast load, interactive, but...
-  //               old SVG files have no viewBox, therefore no properly resize
-  //               Inkscape adds this field saving as "Optimize SVG" ("Enable viewboxing")
-
-  template: '\
-  <div class="generic-block">\
-    <div class="img-container"><img></div>\
-    <label></label>\
-    <span class="tooltiptext"></span>\
-  </div>\
-  ',
-
-  events: {
-    'mouseover': 'mouseovercard',
-    'mouseout': 'mouseoutcard',
-    'mouseup': 'mouseupcard',
-    'mousedown': 'mousedowncard'
-  },
-
-  enter: false,
-
-  mouseovercard: function(event/*, x, y*/) {
-    if (event && event.which === 0) {
-      // Mouse button not pressed
-      this.showTooltip();
-    }
-  },
-
-  mouseoutcard: function(/*event, x, y*/) {
-    this.hideTooltip();
-  },
-
-  mouseupcard: function(/*event, x, y*/) {
-  },
-
-  mousedowncard: function(/*event, x, y*/) {
-    this.hideTooltip();
-  },
-
-  showTooltip: function() {
-    if (this.tooltip) {
-      if (!this.openTimeout) {
-        this.openTimeout = setTimeout(function() {
-          this.tooltiptext.css('visibility', 'visible');
-        }.bind(this), 1400);
-      }
-    }
-  },
-
-  hideTooltip: function() {
-    if (this.tooltip) {
-      if (this.openTimeout) {
-        clearTimeout(this.openTimeout);
-        this.openTimeout = null;
-      }
-      this.tooltiptext.css('visibility', 'hidden');
-    }
-  },
-
-  initialize: function() {
-    joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
-
-    this.tooltip = this.model.get('tooltip');
-    this.tooltiptext = this.$box.find('.tooltiptext');
-
-    this.tooltiptext.text(this.tooltip);
-
-    if (this.tooltip.length > 13) {
-      this.tooltiptext.addClass('tooltip-medium');
-      this.tooltiptext.removeClass('tooltip-large');
-    }
-    else if (this.tooltip.length > 20) {
-      this.tooltiptext.addClass('tooltip-large');
-      this.tooltiptext.removeClass('tooltip-medium');
-    }
-    else {
-      this.tooltiptext.removeClass('tooltip-medium');
-      this.tooltiptext.removeClass('tooltip-large');
-    }
-
-    if (this.model.get('config')) {
-      this.$box.addClass('config-block');
-    }
-
-    // Initialize content
-    this.initializeContent();
-  },
-
-  initializeContent: function() {
-    var image = this.model.get('image');
-    var label = this.model.get('label');
-    var ports = this.model.get('leftPorts');
-
-    var imageSelector = this.$box.find('img');
-    var labelSelector = this.$box.find('label');
-
-    if (image) {
-      // Render img
-      imageSelector.attr('src', 'data:image/svg+xml,' + image);
-
-      // Render SVG
-      //imageSelector.append(decodeURI(image));
-
-      imageSelector.removeClass('hidden');
-      labelSelector.addClass('hidden');
-    }
-    else {
-      // Render label
-      labelSelector.html(label);
-      labelSelector.removeClass('hidden');
-      imageSelector.addClass('hidden');
-    }
-
-    // Render clocks
-    this.$box.find('.clock').remove();
-    var n = ports.length;
-    var gridsize = 8;
-    var height = this.model.get('size').height;
-    for (var i in ports) {
-      var port = ports[i];
-      if (port.clock) {
-        var top = Math.round((parseInt(i) + 0.5) * height / n / gridsize) * gridsize - 9;
-        this.$box.append('\
-          <div class="clock" style="top: ' + top + 'px;">\
-            <svg width="12" height="18"><path d="M-1 0 l10 8-10 8" fill="none" stroke="#555" stroke-width="1.2" stroke-linejoin="round"/>\
-          </div>');
-      }
-    }
+    // Render block
+    this.$box.css({
+      left: bbox.x * state.zoom + state.pan.x,
+      top: bbox.y * state.zoom + state.pan.y,
+      width: bbox.width * state.zoom,
+      height: bbox.height * state.zoom
+    });
   }
 });
 
