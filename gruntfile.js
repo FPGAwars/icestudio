@@ -150,7 +150,7 @@ module.exports = function(grunt) {
         basepath: '.',
         title: 'Icestudio Installer',
         icon: 'docs/resources/images/logo/icestudio-logo.icns',
-        background: 'docs/resources/images/logo/installer-background.png',
+        background: 'docs/resources/images/installation/installer-background.png',
         window: {
           size: {
             width: 512,
