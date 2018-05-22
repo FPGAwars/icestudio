@@ -15,7 +15,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y wine nsis; fi
 
 install:
-  - npm install
+  - travis_wait 60 npm install
   - npm run dist
 
 deploy:
