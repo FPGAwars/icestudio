@@ -51,14 +51,10 @@ function ToolchainBuilder(options) {
   this.options.venvApio = path.join(this.options.venvBinDir, 'apio');
 }
 
-
-ToolchainBuilder.prototype.build = function (callback) {
-  var hasCallback = (typeof callback === 'function'),
-      done = Promise.defer();
-
+ToolchainBuilder.prototype.build = function () {
   this.emit('log', this.options.venvPip);
   // Let's create the standalone toolchains
-  this.ensurePythonIsAvailable()
+  return this.ensurePythonIsAvailable()
     .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
     // .then(this.downloadPythonPackages.bind(this))
@@ -68,25 +64,7 @@ ToolchainBuilder.prototype.build = function (callback) {
     .then(this.installApio.bind(this))
     .then(this.downloadApioPackages.bind(this))
     .then(this.packageApioPackages.bind(this))
-    .then(this.createDefaultToolchains.bind(this))
-    .then(function(info) {
-      var result = info || this;
-
-      if(hasCallback) {
-        callback(false, result);
-      } else {
-        done.resolve(result);
-      }
-    })
-    .catch(function(error) {
-      if(hasCallback) {
-        callback(error);
-      } else {
-        done.reject(error);
-      }
-    });
-
-  return hasCallback ? true : done.promise;
+    .then(this.createDefaultToolchains.bind(this));
 };
 
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {

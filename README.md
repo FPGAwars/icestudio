@@ -1,7 +1,7 @@
-<img src="./doc/images/icestudio-logo-label.png" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.2)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.3.2-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=0.3.3-beta)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.3.3--beta-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -13,6 +13,7 @@
 
 | Board name | GNU/Linux | Windows | Mac OS |
 |:-|:-:|:-:|:-:|
+| [Alhambra II](https://github.com/FPGAwars/Alhambra-II-FPGA) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -43,27 +44,19 @@
   1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
   2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
 
-<img src="./doc/images/main.png" width="700" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
 
-<img src="./doc/images/main-1.png" width="700" align="center">
+<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main-1.png" width="700" align="center">
 
 Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more information.
 
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/release/python-2711/) and [nodejs](https://github.com/nodejs/node).
+Install [Python 2.7](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/).
 
 [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
 If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
-
-
-##### Ubuntu
-
-```bash
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
 
 ### Download
 
@@ -93,14 +86,22 @@ npm start
 | French     | ![Progress](http://progressed.io/bar/100) |
 | Chinese    | ![Progress](http://progressed.io/bar/100) |
 | Catalan    | ![Progress](http://progressed.io/bar/100) |
+| Basque     | ![Progress](http://progressed.io/bar/100) |
 | Galician   | ![Progress](http://progressed.io/bar/97)  |
-| Basque     | ![Progress](http://progressed.io/bar/95)  |
 
 **Contribute!**
 
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
 
 *Developer note*: use `npm run gettext` to extract the labels from the code.
+
+### Documentation
+
+```bash
+cd docs
+make html
+firefox _build/html/index.html
+```
 
 ### Package
 
@@ -113,6 +114,18 @@ npm run dist
 | GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
 | Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
 |  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
+
+### Apio configuration
+
+Apio backend is configured in the `app/package.json` file:
+
+- `apio.min`: minimum version (>=)
+- `apio.max`: maximum version (<)
+- `apio.extras`: list of external Python programmers (*blackiceprog*, *tinyfpgab*)
+- `apio.external`: load an external Apio package instead of the default one (e.g. */path/to/my/apio*)
+- `apio.develop`: install Apio from the repository instead of PyPI.
+
+An external Apio package can be also set on runtime using the `ICESTUDIO_APIO` environment variable.
 
 ### Troubleshooting
 

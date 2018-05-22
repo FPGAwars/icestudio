@@ -266,13 +266,9 @@ joint.ui.SelectionView = Backbone.View.extend({
         localPoint.x -= window.pageXOffset;
         localPoint.y -= window.pageYOffset;
 
-        var elementViews = this.options.paper.findViewsInArea(
-          g.rect(
-            (localPoint.x - this.options.state.pan.x) / this.options.state.zoom,
-            (localPoint.y - this.options.state.pan.y) / this.options.state.zoom,
-            width / this.options.state.zoom,
-            height / this.options.state.zoom
-        ));
+        var elementViews = this.findBlocksInArea(
+          g.rect(localPoint.x, localPoint.y, width, height),
+          { strict: false });
 
         this.model.add(_.pluck(elementViews, 'model'));
 
@@ -302,6 +298,23 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
 
     delete this._action;
+  },
+
+  findBlocksInArea: function(rect, opt) {
+
+      opt = _.defaults(opt || {}, { strict: false });
+      rect = g.rect(rect);
+
+      var paper = this.options.paper;
+      var views = _.map(paper.model.getElements(), paper.findViewByModel, paper);
+      var method = opt.strict ? 'containsRect' : 'intersect';
+
+      return _.filter(views, function(view) {
+          var $box = $(view.$box[0]);
+          var position = $box.position();
+          var rbox = g.rect(position.left, position.top, $box.width(), $box.height());
+          return view && rect[method](rbox);
+      }, this);
   },
 
   cancelSelection: function() {

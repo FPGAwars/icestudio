@@ -97,13 +97,12 @@ angular.module('icestudio')
 
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
-        function (error, stdout/*, stderr*/) {
-          // console.log(error, stdout, stderr);
+        function (error, stdout, stderr) {
           if (error) {
             this.enableKeyEvents();
             this.enableClickEvents();
             callback(true);
-            alertify.error(stdout, 30);
+            alertify.error(stdout + '\n' + stderr, 30);
           }
           else {
             callback();
@@ -118,11 +117,13 @@ angular.module('icestudio')
       }
       if (!nodeFs.existsSync(common.ENV_DIR)) {
         nodeFs.mkdirSync(common.ENV_DIR);
-        this.executeCommand(
-          [this.getPythonExecutable(),
-           coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-           coverPath(common.ENV_DIR),
-           '--always-copy'], callback);
+        var command = [this.getPythonExecutable(),
+         coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
+         coverPath(common.ENV_DIR)];
+        if (!common.DARWIN) {
+          command.push('--always-copy');
+        }
+        this.executeCommand(command, callback);
       }
       else {
         callback();
@@ -968,7 +969,8 @@ angular.module('icestudio')
             cell.type === 'ice.Output' ||
             cell.type === 'ice.Code' ||
             cell.type === 'ice.Info' ||
-            cell.type === 'ice.Constant') {
+            cell.type === 'ice.Constant' ||
+            cell.type === 'ice.Memory') {
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
@@ -976,7 +978,8 @@ angular.module('icestudio')
           block.position = cell.position;
           if (cell.type === 'ice.Generic' ||
               cell.type === 'ice.Code' ||
-              cell.type === 'ice.Info') {
+              cell.type === 'ice.Info' ||
+              cell.type === 'ice.Memory') {
             block.size = cell.size;
           }
           blocks.push(block);

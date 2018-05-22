@@ -6,11 +6,13 @@
 *.bin
 *.blif
 *.log
+*.vcd
 *.mo
 
 .tmp
 dist
 cache
+docs/_build
 node_modules
 bower_components
 

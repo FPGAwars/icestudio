@@ -5,7 +5,7 @@ angular.module('icestudio')
                               nodeTmp) {
 
     // Project version
-    this.VERSION = '1.1';
+    this.VERSION = '1.2';
 
     // Project status
     this.hasChangesSinceBuild = false;
@@ -82,11 +82,11 @@ angular.module('icestudio')
     });
     this.BUILD_DIR = this.BUILD_DIR_OBJ.name;
 
-    this.PATTERN_PORT_LABEL = /^([A-Za-z_]+[A-Za-z_0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
-    this.PATTERN_PARAM_LABEL = /^([A-Za-z_]+[A-Za-z_0-9]*)?$/;
+    this.PATTERN_PORT_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
 
-    this.PATTERN_GLOBAL_PORT_LABEL = /^([A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_]+[A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
-    this.PATTERN_GLOBAL_PARAM_LABEL = /^([A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_]+[A-Za-z\u4E00-\u9FA5\uF900-\uFA2D_0-9]*)?$/;
+    this.PATTERN_GLOBAL_PORT_LABEL = /^([^\[\]]+)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_GLOBAL_PARAM_LABEL = /^([^\[\]]+)?$/;
 
     function safeDir(_dir, self) {
       if (self.WIN32) {

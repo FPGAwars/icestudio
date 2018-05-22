@@ -72,10 +72,6 @@
   z-index: 1501;
 }
 
-.info-text a {
-  pointer-events: all;
-}
-
 .read-only {
   position: absolute;
   top: 10px;
@@ -117,23 +113,37 @@ g {
   transition: opacity 0.2s;
 }
 
+.disable-port {
+  pointer-events: none;
+}
+
+.port-default {
+  pointer-events: none;
+}
+
+.port-label {
+  pointer-events: none;
+}
+
 .generic-block {
   position: absolute;
-  background: #C0DFEB;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.generic-block .clock {
+.generic-block .generic-content {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.generic-block .generic-content .clock {
   position: absolute;
 }
 
-.generic-block .tooltiptext {
+.generic-block .generic-content .tooltiptext {
   visibility: hidden;
   width: 120px;
   color: #333;
@@ -149,7 +159,7 @@ g {
   margin-left: -60px;
 }
 
-.generic-block .tooltiptext::after {
+.generic-block .generic-content .tooltiptext::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -160,21 +170,21 @@ g {
   border-color: #777 transparent transparent transparent;
 }
 
-.generic-block .tooltip-medium {
+.generic-block .generic-content .tooltip-medium {
   width: 180px;
   margin-left: -90px;
 }
 
-.generic-block .tooltip-large {
+.generic-block .generic-content .tooltip-large {
   width: 240px;
   margin-left: -120px;
 }
 
 .config-block {
-  background: #fafacd;
+  background: #fafacd !important;
 }
 
-.generic-block .img-container {
+.generic-block .generic-content .img-container {
   position: absolute;
   margin: auto;
   top: 8px;
@@ -183,12 +193,12 @@ g {
   bottom: 8px;
 }
 
-.generic-block img {
+.generic-block .generic-content img {
   width: 100%;
   height: 100%;
 }
 
-.generic-block label {
+.generic-block .generic-content label {
   display: block;
   margin-top: 20px;
   text-align: center;
@@ -199,82 +209,85 @@ g {
   white-space: nowrap;
 }
 
-.virtual-port {
+.io-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.io-block .io-virtual-content {
   position: absolute;
   background: #E2FBC9;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
-.virtual-port p {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 13px;
-  color: #555;
+.io-block .io-virtual-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 10px;
+  height: 18px;
 }
 
-.virtual-port label {
-  display: block;
-  margin-top: 22px;
+.io-block .io-virtual-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.fpga-port {
+.io-block .io-virtual-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  stroke: #444;
+}
+
+.io-block .io-fpga-content {
   position: absolute;
+  width: 100%;
   background: #FBFBC9;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
 }
 
-.fpga-port p {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 13px;
-  color: #555;
+.io-block .io-fpga-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
 }
 
-.fpga-port label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 7px;
+.io-block .io-fpga-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.fpga-port div p {
-  position: relative;
-  top: 0px;
-  left: -20px;
-  float: left;
+.io-block .io-fpga-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  stroke: #444;
 }
 
-.fpga-port div .select2 {
+.io-block .io-fpga-content div .select2 {
   position: relative;
-  width: 84px;
-  left: 5px;
+  width: 82px;
+  top: 6px;
+  left: 6px;
   margin-bottom: 6px;
   pointer-events: auto;
 }
@@ -294,7 +307,7 @@ g {
 
 .select2-container--default .select2-selection--single {
   outline: none;
-  border: 1px solid #aaa;
+  border: 1px solid #AAA;
 }
 
 .select2-dropdown {
@@ -313,88 +326,165 @@ g {
 
 .constant-block {
   position: absolute;
-  background: #FBF0C9;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
-.constant-block p {
+.constant-block .constant-content {
   position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 12px;
-  color: #555;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
 }
 
-.constant-block label {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 7px;
+.constant-block .constant-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
+}
+
+.constant-block .constant-content .header label {
+  flex-grow: 1;
+  height: 100%;
   text-align: center;
   font-size: 14px;
   font-weight: normal;
-  height: 18px;
+  line-height: 18px;
   color: #222;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.constant-block input {
+.constant-block .constant-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  fill: #444;
+}
+
+.constant-block .constant-content input {
   position: absolute;
   text-align: center;
-  left: 5px;
-  margin-bottom: 6px;
-  width: 84px;
+  left: 6px;
+  bottom: 6px;
+  width: 82px;
   height: 26px;
-  font-size: 13px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  line-height: 15px;
   border-radius: 4px;
-  border: 1px solid #aaa;
+  border: 1px solid #AAA;
   pointer-events: auto;
 }
 
-.constant-block input:focus {
+.constant-block .constant-content input:focus {
   outline: none;
 }
 
-.code-block {
+.memory-block {
   position: absolute;
-  background: #C0DFEB;
-  border-radius: 5px;
-  border: 1px solid #777;
   pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   z-index: 0;
   transition: opacity 0.2s;
 }
 
+.memory-block .memory-content {
+  position: absolute;
+  background: #FBF0C9;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.memory-block .memory-content .header {
+  display: flex;
+  padding: 0 6px;
+  margin-top: 6px;
+  height: 18px;
+}
+
+.memory-block .memory-content .header label {
+  flex-grow: 1;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  color: #222;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.memory-block .memory-content .header svg {
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 10px;
+  fill: #444;
+}
+
+.memory-block .memory-editor {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
+}
+
+.code-block {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.code-block .code-content {
+  position: absolute;
+  background: #C0DFEB;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
 .code-block .code-editor {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
   border-radius: 5px;
-  border: 1px solid #BBB;
+  border: 1px solid #AAA;
   pointer-events: auto;
 }
 
 .info-block {
   position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.2s;
+}
+
+.info-block .info-content {
+  position: absolute;
   background: #DDD;
   border-radius: 5px;
   border: 1px solid #777;
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
-  z-index: 0;
-  transition: opacity 0.2s;
+}
+
+.info-block .info-editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 6px;
+  border-radius: 5px;
+  border: 1px solid #AAA;
+  pointer-events: auto;
 }
 
 .info-block-readonly {
@@ -402,30 +492,28 @@ g {
   border: 1px solid transparent;
 }
 
-.info-block .info-text {
+.info-block .info-render {
   position: absolute;
   overflow: visible;
   background: transparent;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 7px;
   border-radius: 5px;
   border: 1px solid transparent;
   pointer-events: none;
+  overflow: visible;
 }
 
-.info-block .info-editor {
+.info-block .info-render a {
+  pointer-events: all;
+}
+
+.info-block .info-render input[type=checkbox] {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  margin: 8px;
-  border-radius: 5px;
-  border: 1px solid #BBB;
-  pointer-events: auto;
+  margin: 0.4em 0 0 -1.3em;
 }
 
 .joint-highlight-stroke.joint-theme-default {
@@ -433,7 +521,7 @@ g {
 }
 
 .highlight-error {
-  background: #ff8084;
+  background: #ff8084 !important;
 }
 
 .highlight-yellow {
@@ -492,50 +580,43 @@ g {
 
 /* Wires makers */
 
-.joint-link.joint-theme-default .connection-wrap {
-  stroke: #000000;
-  stroke-width: 15;
-  stroke-linecap: butt;
-  stroke-linejoin: butt;
-  opacity: 0;
+.link.joint-theme-default .connection-wrap {
+  stroke: #777;
+  stroke-width: 14;
   cursor: pointer;
-}
-.joint-link.joint-theme-default .connection-wrap:hover {
-  opacity: .4;
-  stroke-opacity: .4;
-}
-.joint-link.joint-theme-default .connection {
-  stroke-linejoin: butt;
-}
-.joint-link.joint-theme-default .link-tools .tool-remove circle {
-  fill: #EB2222;
-}
-.joint-link.joint-theme-default .link-tools .tool-remove path {
-  fill: #FFFFFF;
+  opacity: 0;
 }
 
-/* <circle> element inside .marker-vertex-group <g> element */
-.joint-link.joint-theme-default .marker-vertex {
-  fill: #64b0ce;
+.link.joint-theme-default .link-tools .tool-remove circle {
+  fill: #ff333a;
 }
-.joint-link.joint-theme-default .marker-vertex:hover {
-  fill: #317d9b;
-  stroke: none;
+.link.joint-theme-default .link-tools .tool-remove path {
+  fill: #FFF;
 }
 
-.joint-link.joint-theme-default .marker-arrowhead {
-  fill: #64b0ce;
+.link.joint-theme-default .marker-arrowhead {
+  fill: #AAA;
 }
-.joint-link.joint-theme-default .marker-arrowhead:hover {
-  fill: #317d9b;
-  stroke: none;
+.link.joint-theme-default .marker-arrowhead:hover {
+  fill: #888;
 }
 
-/* <circle> element used to remove a vertex */
-.joint-link.joint-theme-default .marker-vertex-remove {
-  fill: #FFFFFF;
-
+.link.joint-theme-default .marker-vertex {
+  fill: #AAA;
 }
+.link.joint-theme-default .marker-vertex:hover {
+  fill: #888;
+}
+
+.link.joint-theme-default .marker-vertex-remove {
+  fill: #FFF;
+  transition: opacity 0.4s;
+}
+.link.joint-theme-default .marker-vertex-remove-area {
+  fill: #333;
+  transition: opacity 0.4s;
+}
+
 /* Resizer */
 
 .resizer {

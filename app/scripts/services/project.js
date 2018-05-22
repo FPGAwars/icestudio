@@ -8,6 +8,7 @@ angular.module('icestudio')
                                profile,
                                utils,
                                common,
+                               gui,
                                gettextCatalog,
                                nodeFs,
                                nodePath) {
@@ -31,8 +32,7 @@ angular.module('icestudio')
         },
         design: {
           board: '',
-          graph: { blocks: [], wires: [] },
-          state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
+          graph: { blocks: [], wires: [] }
         },
         dependencies: {}
       };
@@ -49,7 +49,6 @@ angular.module('icestudio')
       },
       design: {
         graph: { blocks: [], wires: [] }
-        state: { pan: { x: 0, y: 0 }, zoom: 1.0 }
       },
     }
     */
@@ -69,18 +68,6 @@ angular.module('icestudio')
       }
     };
 
-    this.new = function(name) {
-      this.path = '';
-      project = _default();
-      this.updateTitle(name);
-
-      graph.clearAll();
-      graph.resetCommandStack();
-      graph.setState(project.design.state);
-
-      alertify.success(gettextCatalog.getString('New project {{name}} created', { name: utils.bold(name) }));
-    };
-
     this.open = function(filepath, emptyPath) {
       var self = this;
       this.path = emptyPath ? '' : filepath;
@@ -97,8 +84,8 @@ angular.module('icestudio')
 
     this.load = function(name, data) {
       var self = this;
-      if (data.version !== common.VERSION) {
-        alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
+      if (!checkVersion(data.version)) {
+        return;
       }
       project = _safeLoad(data, name);
       if (project.design.board !== common.selectedBoard.name) {
@@ -150,29 +137,44 @@ angular.module('icestudio')
       }
     };
 
+    function checkVersion(version) {
+      if (version > common.VERSION) {
+        var errorAlert = alertify.error(gettextCatalog.getString('Unsupported project format {{version}}', { version: version }), 30);
+        alertify.message(gettextCatalog.getString('Click here to <b>download a newer version</b> of Icestudio'), 30)
+        .callback = function(isClicked) {
+          if (isClicked) {
+            errorAlert.dismiss(false);
+            gui.Shell.openExternal('https://github.com/FPGAwars/icestudio/releases');
+          }
+        };
+        return false;
+      }
+      return true;
+    }
+
     function _safeLoad(data, name) {
       // Backwards compatibility
       var project = {};
       switch(data.version) {
         case common.VERSION:
+        case '1.1':
           project = data;
           break;
         case '1.0':
-          project = convert10To11(data);
+          project = convert10To12(data);
           break;
         default:
           project = convertTo10(data, name);
-          project = convert10To11(project);
+          project = convert10To12(project);
           break;
       }
       return project;
     }
 
-    function convert10To11(data) {
+    function convert10To12(data) {
       var project = _default();
       project.package = data.package;
       project.design.board = data.design.board;
-      project.design.state = data.design.state;
       project.design.graph = data.design.graph;
 
       var depsInfo = findSubDependencies10(data.design.deps);
@@ -234,8 +236,7 @@ angular.module('icestudio')
         design: {
           board: '',
           graph: {},
-          deps: {},
-          state: {}
+          deps: {}
         },
       };
       for (var b in data.graph.blocks) {
@@ -293,7 +294,6 @@ angular.module('icestudio')
       }
       project.design.board = data.board;
       project.design.graph = data.graph;
-      project.design.state = data.state;
       // Safe load all dependencies recursively
       for (var key in data.deps) {
         project.design.deps[key] = convertTo10(data.deps[key], key);
@@ -314,8 +314,11 @@ angular.module('icestudio')
         var origPath = utils.dirname(this.filepath);
         var destPath =  utils.dirname(filepath);
         // 1. Parse and find included files
-        var code = compiler.generate('verilog', project);
+        var code = compiler.generate('verilog', project)[0].content;
+        var listFiles = compiler.generate('list', project);
+        var internalFiles = listFiles.map(function (res) { return res.name; });
         var files = utils.findIncludedFiles(code);
+         files = _.difference(files, internalFiles);
         // Are there included files?
         if (files.length > 0) {
           // 2. Check project's directory
@@ -359,9 +362,10 @@ angular.module('icestudio')
     function sortGraph() {
       var cells = graph.getCells();
 
-      // Sort Constant cells by x-coordinate
+      // Sort Constant/Memory cells by x-coordinate
       cells = _.sortBy(cells, function(cell) {
-        if (cell.get('type') === 'ice.Constant') {
+        if (cell.get('type') === 'ice.Constant' ||
+            cell.get('type') === 'ice.Memory') {
           return cell.get('position').x;
         }
       });
@@ -381,8 +385,8 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(filepath)
       .then(function(data) {
-        if (data.version !== common.VERSION) {
-          alertify.warning(gettextCatalog.getString('Old project format {{version}}', { version: data.version }), 5);
+        if (!checkVersion(data.version)) {
+          return;
         }
         var name = utils.basename(filepath);
         var block = _safeLoad(data, name);
@@ -390,8 +394,11 @@ angular.module('icestudio')
           var origPath = utils.dirname(filepath);
           var destPath =  utils.dirname(self.path);
           // 1. Parse and find included files
-          var code = compiler.generate('verilog', block);
+          var code = compiler.generate('verilog', block)[0].content;
+          var listFiles = compiler.generate('list', block);
+          var internalFiles = listFiles.map(function (res) { return res.name; });
           var files = utils.findIncludedFiles(code);
+           files = _.difference(files, internalFiles);
           // Are there included files?
           if (files.length > 0) {
             // 2. Check project's directory
@@ -497,20 +504,22 @@ angular.module('icestudio')
       }
 
       function _prune(_project) {
+        delete _project.design.state;
         for (var i in _project.design.graph.blocks) {
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
             case 'basic.input':
             case 'basic.output':
             case 'basic.constant':
-              break;
-            case 'basic.info':
-              delete block.data.text;
+            case 'basic.memory':
               break;
             case 'basic.code':
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
               }
+              break;
+            case 'basic.info':
+              delete block.data.text;
               break;
             default:
               // Generic block
