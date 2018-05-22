@@ -27,7 +27,7 @@
     "external": "",
     "develop": false
   },
-  "collection": "0.3.0",
+  "collection": "0.3.3-beta",
   "engines": {
     "node": ">= 0.10.0"
   },
