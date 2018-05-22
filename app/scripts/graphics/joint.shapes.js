@@ -586,10 +586,10 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     // Render content
     this.$box.find('.generic-content').css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.height / 2.0 * (state.zoom - 1),
-      width: bbox.width,
-      height: bbox.height,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height),
       transform: 'scale(' + state.zoom + ')'
     });
 
@@ -850,20 +850,20 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     // Render io virtual content
     var virtualtopOffset = 24;
     this.virtualContentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: (bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom,
-      width: bbox.width,
-      height: bbox.height - virtualtopOffset,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height - virtualtopOffset),
       transform: 'scale(' + state.zoom + ')'
     });
 
     // Render io FPGA content
     var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
     this.fpgaContentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: (bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom,
-      width: bbox.width,
-      height: bbox.height - fpgaTopOffset,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height - fpgaTopOffset),
       transform: 'scale(' + state.zoom + ')'
     });
 
@@ -1010,10 +1010,10 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     // Render content
     var topOffset = (data.name || data.local) ? 0 : 24;
     this.contentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
-      width: bbox.width,
-      height: bbox.height - topOffset,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round((bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height - topOffset),
       transform: 'scale(' + state.zoom + ')'
     });
 
@@ -1277,10 +1277,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     // Render content
     var topOffset = (data.name || data.local) ? 0 : 24;
     this.contentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: (bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset,
-      width: bbox.width,
-      height: bbox.height - topOffset,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round((bbox.height + topOffset ) / 2.0 * (state.zoom - 1) + topOffset),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height - topOffset),
       transform: 'scale(' + state.zoom + ')'
     });
 
@@ -1582,10 +1582,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     // Render content
     this.contentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.height / 2.0 * (state.zoom - 1),
-      width: bbox.width,
-      height: bbox.height,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height),
       transform: 'scale(' + state.zoom + ')'
     });
 
@@ -1898,10 +1898,10 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
     // Render content
     this.contentSelector.css({
-      left: bbox.width / 2.0 * (state.zoom - 1),
-      top: bbox.height / 2.0 * (state.zoom - 1),
-      width: bbox.width,
-      height: bbox.height,
+      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+      top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
+      width: Math.round(bbox.width),
+      height: Math.round(bbox.height),
       transform: 'scale(' + state.zoom + ')'
     });
 
