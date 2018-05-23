@@ -128,22 +128,14 @@ angular.module('icestudio')
 
     function checkToolchainInstalled() {
       return new Promise(function(resolve, reject) {
-        if (toolchain.installed || toolchain.disabled) {
-          resolve();
-        }
-        else {
-          var message = gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it');
-          if (!resultAlert) {
-            resultAlert = alertify.error(message, 30);
-            resultAlert.callback = function(isClicked) {
-              resultAlert = null;
-              if (isClicked) {
-                $rootScope.$broadcast('installToolchain');
-              }
-            };
+        checkToolchain(function() {
+          if (toolchain.installed || toolchain.disabled) {
+            resolve();
           }
-          reject();
-        }
+          else {
+            reject();
+          }
+        });
       });
     }
 
@@ -245,6 +237,8 @@ angular.module('icestudio')
           if (error) {
             toolchain.apio = '';
             toolchain.installed = false;
+            // Apio not installed
+            toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
             if (callback) {
               callback();
             }
@@ -256,6 +250,11 @@ angular.module('icestudio')
             if (toolchain.installed) {
               nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
                 toolchain.installed = !error;
+                if (error) {
+                  toolchain.apio = '';
+                  // Toolchain not properly installed
+                  toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
+                }
                 if (callback) {
                   callback();
                 }
@@ -263,19 +262,26 @@ angular.module('icestudio')
             }
             else {
               // An old version is installed
-              resultAlert = alertify.warning(gettextCatalog.getString('Toolchain version does not match') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
-              resultAlert.callback = function(isClicked) {
-                if (isClicked) {
-                  // Install the new toolchain
-                  $rootScope.$broadcast('installToolchain');
-                }
-              };
+              toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain version does not match'));
               if (callback) {
                 callback();
               }
             }
           }
         });
+      }
+
+      function toolchainNotInstalledAlert(message) {
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
+        resultAlert.callback = function(isClicked) {
+          if (isClicked) {
+            // Install the new toolchain
+            $rootScope.$broadcast('installToolchain');
+          }
+        };
       }
     }
 
@@ -644,13 +650,14 @@ angular.module('icestudio')
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      utils.removeToolchain();
       if (utils.checkDefaultToolchain()) {
+        utils.removeToolchain();
         installDefaultToolchain();
       }
       else {
         alertify.confirm(gettextCatalog.getString('Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'),
           function() {
+            utils.removeToolchain();
             installOnlineToolchain();
         });
       }
@@ -700,11 +707,19 @@ angular.module('icestudio')
     }.bind(this));
 
     this.enableDrivers = function() {
-      drivers.enable();
+      checkToolchain(function() {
+        if (toolchain.installed) {
+          drivers.enable();
+        }
+      });
     };
 
     this.disableDrivers = function() {
-      drivers.disable();
+      checkToolchain(function() {
+        if (toolchain.installed) {
+          drivers.disable();
+        }
+      });
     };
 
     function installDefaultToolchain() {
@@ -872,15 +887,11 @@ angular.module('icestudio')
 
     function installationCompleted(callback) {
       checkToolchain(function() {
+        closeToolchainAlert();
         if (toolchain.installed) {
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
-          closeToolchainAlert();
           alertify.success(gettextCatalog.getString('Toolchain installed'));
           setupDriversAlert();
-        }
-        else {
-          closeToolchainAlert();
-          resultAlert = alertify.error(gettextCatalog.getString('Toolchain not installed'), 30);
         }
         restoreStatus();
         callback();
