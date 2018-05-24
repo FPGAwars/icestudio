@@ -845,12 +845,11 @@ angular.module('icestudio')
       if (type in common.allDependencies) {
         return; // If the block is already in dependencies
       }
-      // Merge the block dependencies
+      // Merge the block's dependencies
       var deps = block.dependencies;
-      for (var i in deps) {
-        var depType = this.dependencyID(deps[i]);
+      for (var depType in deps) {
         if (!(depType in common.allDependencies)) {
-          common.allDependencies[depType] = deps[i];
+          common.allDependencies[depType] = deps[depType];
         }
       }
       // Add the block as a dependency
