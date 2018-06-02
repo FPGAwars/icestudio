@@ -1075,6 +1075,19 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.session.setMode("ace/mode/verilog");\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
+          ' + editorLabel + '.session.gutterRenderer = {\
+            getWidth: function(session, lastLineNumber, config) {\
+                return lastLineNumber.toString().length * config.characterWidth;\
+            },\
+            getText: function(session, row) {\
+                var radix = 16;\
+                var text = row.toString(radix);\
+                var config = ' + editorLabel + '.renderer.layerConfig;\
+                var size = config.lastRow.toString(radix).length;\
+                while (text.length < size) {text = "0" + text;}\
+                return (radix === 16 ? "0x" : "") + text;\
+            }\
+          };\
         </script>\
         <div class="resizer"/></div>\
       </div>\
