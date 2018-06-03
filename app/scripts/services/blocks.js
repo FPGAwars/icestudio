@@ -52,60 +52,68 @@ angular.module('icestudio')
         type: 'basic.input',
         position: { x: 0, y: 0 }
       };
-      utils.inputcheckbox2prompt([
-        gettextCatalog.getString('Enter the input blocks'),
-        gettextCatalog.getString('FPGA pin'),
-        gettextCatalog.getString('Show clock')
-      ], [
-        '',
-        true,
-        false
-      ],
-        function(evt, values) {
-          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-          var virtual = !values[1];
-          var clock = values[2];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the input blocks'),
+          value: ''
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('FPGA pin'),
+          value: true
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Show clock'),
+          value: false
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var virtual = !values[1];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
           }
-          // Validate values
-          var portInfo, portInfos = [];
-          for (var l in labels) {
-            portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-            if (portInfo) {
-              evt.cancel = false;
-              portInfos.push(portInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-              return;
-            }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
           }
-          // Create blocks
-          var cells = [];
-          for (var p in portInfos) {
-            portInfo = portInfos[p];
-            if (portInfo.rangestr && clock) {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-              return;
-            }
-            var pins = getPins(portInfo);
-            blockInstance.data = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              pins: pins,
-              virtual: virtual,
-              clock: clock
-            };
-            cells.push(loadBasic(blockInstance));
-            // Next block position
-            blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
           }
-          if (callback) {
-            callback(cells);
-          }
+          var pins = getPins(portInfo);
+          blockInstance.data = {
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual,
+            clock: clock
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
       });
     }
 
@@ -116,51 +124,56 @@ angular.module('icestudio')
         type: 'basic.output',
         position: { x: 0, y: 0 }
       };
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Enter the output blocks'),
-        gettextCatalog.getString('FPGA pin')
-      ], [
-        '',
-        true
-      ],
-        function(evt, values) {
-          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-          var virtual = !values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the output blocks'),
+          value: ''
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('FPGA pin'),
+          value: true
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var virtual = !values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
           }
-          // Validate values
-          var portInfo, portInfos = [];
-          for (var l in labels) {
-            portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-            if (portInfo) {
-              evt.cancel = false;
-              portInfos.push(portInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-              return;
-            }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
           }
-          // Create blocks
-          var cells = [];
-          for (var p in portInfos) {
-            portInfo = portInfos[p];
-            var pins = getPins(portInfo);
-            blockInstance.data = {
-              name: portInfo.name,
-              range: portInfo.rangestr,
-              pins: pins,
-              virtual: virtual
-            };
-            cells.push(loadBasic(blockInstance));
-            // Next block position
-            blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-          }
-          if (callback) {
-            callback(cells);
-          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          var pins = getPins(portInfo);
+          blockInstance.data = {
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
       });
     }
 
@@ -184,48 +197,53 @@ angular.module('icestudio')
         type: 'basic.constant',
         position: { x: 0, y: 0 }
       };
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Enter the constant blocks'),
-        gettextCatalog.getString('Local parameter')
-      ], [
-        '',
-        false
-      ],
-        function(evt, values) {
-          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-          var local = values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the constant blocks'),
+          value: ''
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: false
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var local = values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var paramInfo, paramInfos = [];
+        for (var l in labels) {
+          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+          if (paramInfo) {
+            evt.cancel = false;
+            paramInfos.push(paramInfo);
           }
-          // Validate values
-          var paramInfo, paramInfos = [];
-          for (var l in labels) {
-            paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-            if (paramInfo) {
-              evt.cancel = false;
-              paramInfos.push(paramInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-              return;
-            }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
           }
-          // Create blocks
-          var cells = [];
-          for (var p in paramInfos) {
-            paramInfo = paramInfos[p];
-            blockInstance.data = {
-              name: paramInfo.name,
-              value: '',
-              local: local
-            };
-            cells.push(loadBasicConstant(blockInstance));
-            blockInstance.position.x += 15 * gridsize;
-          }
-          if (callback) {
-            callback(cells);
-          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in paramInfos) {
+          paramInfo = paramInfos[p];
+          blockInstance.data = {
+            name: paramInfo.name,
+            value: '',
+            local: local
+          };
+          cells.push(loadBasicConstant(blockInstance));
+          blockInstance.position.x += 15 * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
       });
     }
 
@@ -237,48 +255,53 @@ angular.module('icestudio')
         position: { x: 0, y: 0 },
         size: { width: 96, height: 104 }
       };
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Enter the memory blocks'),
-        gettextCatalog.getString('Local parameter')
-      ], [
-        '',
-        false
-      ],
-        function(evt, values) {
-          var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-          var local = values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the memory blocks'),
+          value: ''
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: false
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var local = values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var paramInfo, paramInfos = [];
+        for (var l in labels) {
+          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
+          if (paramInfo) {
+            evt.cancel = false;
+            paramInfos.push(paramInfo);
           }
-          // Validate values
-          var paramInfo, paramInfos = [];
-          for (var l in labels) {
-            paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-            if (paramInfo) {
-              evt.cancel = false;
-              paramInfos.push(paramInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-              return;
-            }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
           }
-          // Create blocks
-          var cells = [];
-          for (var p in paramInfos) {
-            paramInfo = paramInfos[p];
-            blockInstance.data = {
-              name: paramInfo.name,
-              list: '',
-              local: local
-            };
-            cells.push(loadBasicMemory(blockInstance));
-            blockInstance.position.x += 15 * gridsize;
-          }
-          if (callback) {
-            callback(cells);
-          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in paramInfos) {
+          paramInfo = paramInfos[p];
+          blockInstance.data = {
+            name: paramInfo.name,
+            list: '',
+            local: local
+          };
+          cells.push(loadBasicMemory(blockInstance));
+          blockInstance.position.x += 15 * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
       });
     }
 
@@ -790,243 +813,266 @@ angular.module('icestudio')
     function editBasicInput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
-      utils.inputcheckbox2prompt([
-        gettextCatalog.getString('Update the block name'),
-        gettextCatalog.getString('FPGA pin'),
-        gettextCatalog.getString('Show clock'),
-      ], [
-        block.data.name + (block.data.range || ''),
-        !block.data.virtual,
-        block.data.clock
-      ],
-        function(evt, values) {
-          var oldSize, newSize, offset = 0;
-          var label = values[0];
-          var virtual = !values[1];
-          var clock = values[2];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name + (block.data.range || '')
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('FPGA pin'),
+          value: !block.data.virtual
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Show clock'),
+          value: block.data.clock
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var oldSize, newSize, offset = 0;
+        var label = values[0];
+        var virtual = !values[1];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
           }
-          // Validate values
-          var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            if (portInfo.rangestr && clock) {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-              return;
-            }
-            if ((block.data.range || '') !==
-                (portInfo.rangestr || '')) {
-              var pins = getPins(portInfo);
-              oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-              newSize = virtual ? 1 : (pins ? pins.length : 1);
-              // Update block position when size changes
-              offset = 16 * (oldSize - newSize);
-              // Create new block
-              var blockInstance = {
-                id: null,
-                data: {
-                  name: portInfo.name,
-                  range: portInfo.rangestr,
-                  pins: pins,
-                  virtual: virtual,
-                  clock: clock
-                },
-                type: block.blockType,
-                position: {
-                  x: block.position.x,
-                  y: block.position.y + offset
-                }
-              };
-              if (callback) {
-                graph.startBatch('change');
-                callback(loadBasic(blockInstance));
-                cellView.model.remove();
-                graph.stopBatch('change');
-                resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+          if ((block.data.range || '') !==
+              (portInfo.rangestr || '')) {
+            var pins = getPins(portInfo);
+            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Create new block
+            var blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual,
+                clock: clock
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
               }
-            }
-            else if (block.data.name !== portInfo.name ||
-                     block.data.virtual !== virtual ||
-                     block.data.clock !== clock) {
-              var size = block.data.pins ? block.data.pins.length : 1;
-              oldSize = block.data.virtual ? 1 : size;
-              newSize = virtual ? 1 : size;
-              // Update block position when size changes
-              offset = 16 * (oldSize - newSize);
-              // Edit block
+            };
+            if (callback) {
               graph.startBatch('change');
-              var data = utils.clone(block.data);
-              data.name = portInfo.name;
-              data.virtual = virtual;
-              data.clock = clock;
-              cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-              cellView.model.translate(0, offset);
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
               graph.stopBatch('change');
-              cellView.apply();
               resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+          else if (block.data.name !== portInfo.name ||
+                   block.data.virtual !== virtual ||
+                   block.data.clock !== clock) {
+            var size = block.data.pins ? block.data.pins.length : 1;
+            oldSize = block.data.virtual ? 1 : size;
+            newSize = virtual ? 1 : size;
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Edit block
+            graph.startBatch('change');
+            var data = utils.clone(block.data);
+            data.name = portInfo.name;
+            data.virtual = virtual;
+            data.clock = clock;
+            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+            cellView.model.translate(0, offset);
+            graph.stopBatch('change');
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
           }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+        }
       });
     }
 
     function editBasicOutput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Update the block name'),
-        gettextCatalog.getString('FPGA pin')
-      ], [
-        block.data.name + (block.data.range || ''),
-        !block.data.virtual
-      ],
-        function(evt, values) {
-          var oldSize, newSize, offset = 0;
-          var label = values[0];
-          var virtual = !values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          // Validate values
-          var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            if ((block.data.range || '') !==
-                (portInfo.rangestr || '')) {
-              var pins = getPins(portInfo);
-              oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-              newSize = virtual ? 1 : (pins ? pins.length : 1);
-              // Update block position when size changes
-              offset = 16 * (oldSize - newSize);
-              // Create new block
-              var blockInstance = {
-                id: null,
-                data: {
-                  name: portInfo.name,
-                  range: portInfo.rangestr,
-                  pins: pins,
-                  virtual: virtual
-                },
-                type: block.blockType,
-                position: {
-                  x: block.position.x,
-                  y: block.position.y + offset
-                }
-              };
-              if (callback) {
-                graph.startBatch('change');
-                callback(loadBasic(blockInstance));
-                cellView.model.remove();
-                graph.stopBatch('change');
-                resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name + (block.data.range || '')
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('FPGA pin'),
+          value: !block.data.virtual
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var oldSize, newSize, offset = 0;
+        var label = values[0];
+        var virtual = !values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          if ((block.data.range || '') !==
+              (portInfo.rangestr || '')) {
+            var pins = getPins(portInfo);
+            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Create new block
+            var blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
               }
-            }
-            else if (block.data.name !== portInfo.name ||
-                     block.data.virtual !== virtual) {
-              var size = block.data.pins ? block.data.pins.length : 1;
-              oldSize = block.data.virtual ? 1 : size;
-              newSize = virtual ? 1 : size;
-              // Update block position when size changes
-              offset = 16 * (oldSize - newSize);
-              // Edit block
+            };
+            if (callback) {
               graph.startBatch('change');
-              var data = utils.clone(block.data);
-              data.name = portInfo.name;
-              data.virtual = virtual;
-              cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-              cellView.model.translate(0, offset);
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
               graph.stopBatch('change');
-              cellView.apply();
               resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
             }
           }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+          else if (block.data.name !== portInfo.name ||
+                   block.data.virtual !== virtual) {
+            var size = block.data.pins ? block.data.pins.length : 1;
+            oldSize = block.data.virtual ? 1 : size;
+            newSize = virtual ? 1 : size;
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Edit block
+            graph.startBatch('change');
+            var data = utils.clone(block.data);
+            data.name = portInfo.name;
+            data.virtual = virtual;
+            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+            cellView.model.translate(0, offset);
+            graph.stopBatch('change');
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
           }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+        }
       });
     }
 
     function editBasicConstant(cellView) {
       var block = cellView.model.attributes;
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Update the block name'),
-        gettextCatalog.getString('Local parameter')
-      ], [
-        block.data.name,
-        block.data.local
-      ],
-        function(evt, values) {
-          var label = values[0];
-          var local = values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: block.data.local
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var label = values[0];
+        var local = values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
+        if (paramInfo) {
+          var name = paramInfo.name;
+          evt.cancel = false;
+          if (block.data.name !== name ||
+              block.data.local !== local) {
+            // Edit block
+            var data = utils.clone(block.data);
+            data.name = name;
+            data.local = local;
+            cellView.model.set('data', data);
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
           }
-          // Validate values
-          var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            var name = paramInfo.name;
-            evt.cancel = false;
-            if (block.data.name !== name ||
-                block.data.local !== local) {
-              // Edit block
-              var data = utils.clone(block.data);
-              data.name = name;
-              data.local = local;
-              cellView.model.set('data', data);
-              cellView.apply();
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-            return;
-          }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+          return;
+        }
       });
     }
 
     function editBasicMemory(cellView) {
       var block = cellView.model.attributes;
-      utils.inputcheckboxprompt([
-        gettextCatalog.getString('Update the block name'),
-        gettextCatalog.getString('Local parameter')
-      ], [
-        block.data.name,
-        block.data.local
-      ],
-        function(evt, values) {
-          var label = values[0];
-          var local = values[1];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: block.data.local
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var label = values[0];
+        var local = values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
+        if (paramInfo) {
+          var name = paramInfo.name;
+          evt.cancel = false;
+          if (block.data.name !== name ||
+              block.data.local !== local) {
+            // Edit block
+            var data = utils.clone(block.data);
+            data.name = name;
+            data.local = local;
+            cellView.model.set('data', data);
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
           }
-          // Validate values
-          var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            var name = paramInfo.name;
-            evt.cancel = false;
-            if (block.data.name !== name ||
-                block.data.local !== local) {
-              // Edit block
-              var data = utils.clone(block.data);
-              data.name = name;
-              data.local = local;
-              cellView.model.set('data', data);
-              cellView.apply();
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-            return;
-          }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+          return;
+        }
       });
     }
 
