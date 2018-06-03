@@ -426,6 +426,47 @@ angular.module('icestudio')
       return 'en';
     }
 
+    this.renderForm = function(specs, callback) {
+      var content = [];
+      content.push('<div>');
+      for (var i in specs) {
+        var spec = specs[i];
+        switch(spec.type) {
+          case 'text':
+            content.push('<p>' + spec.title + '</p>');
+            content.push('<input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>');
+            if (i > 0) {
+              content.push('<br>');
+            }
+            break;
+          case 'checkbox':
+            content.push('<div class="checkbox"><label><input type="checkbox" value="" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label></div>');
+            break;
+        }
+      }
+      content.push('</div>');
+      alertify.confirm(content.join('\n'))
+      .set('onok', function(evt) {
+        var values = [];
+        if (callback) {
+          for (var i in specs) {
+            var spec = specs[i];
+            switch(spec.type) {
+              case 'text':
+                values.push($('#form' + i.toString()).val());
+                break;
+              case 'checkbox':
+                values.push($('#form' + i.toString()).prop('checked'));
+                break;
+            }
+          }
+          callback(evt, values);
+        }
+      })
+      .set('oncancel', function(/*evt*/) {
+      });
+    };
+
     this.multiprompt = function(messages, values, callback) {
       var i;
       var content = [];
