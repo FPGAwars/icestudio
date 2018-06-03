@@ -1244,7 +1244,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           return lastLineNumber.toString().length * config.characterWidth;
       },
       getText: function(session, row) {
-          var text = row.toString(radix);
+          var text = row.toString(radix).toUpperCase();
           var config = self.editor.renderer.layerConfig;
           var size = config.lastRow.toString(radix).length;
           while (text.length < size) {text = '0' + text;}
