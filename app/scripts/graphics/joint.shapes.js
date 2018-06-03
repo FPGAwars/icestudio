@@ -1067,27 +1067,14 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setOption("firstLineNumber", 0);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
-          ' + editorLabel + '.session.gutterRenderer = {\
-            getWidth: function(session, lastLineNumber, config) {\
-                return lastLineNumber.toString().length * config.characterWidth;\
-            },\
-            getText: function(session, row) {\
-                var radix = 16;\
-                var text = row.toString(radix);\
-                var config = ' + editorLabel + '.renderer.layerConfig;\
-                var size = config.lastRow.toString(radix).length;\
-                while (text.length < size) {text = "0" + text;}\
-                return (radix === 16 ? "0x" : "") + text;\
-            }\
-          };\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -1189,6 +1176,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.applyName();
     this.applyLocal();
     this.applyValue(opt);
+    this.applyGutterFormat();
   },
 
   applyName: function() {
@@ -1243,6 +1231,23 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     setTimeout(function(self) {
       self.updating = false;
     }, 10, this);
+  },
+
+  applyGutterFormat: function() {
+    var radix = 2;
+    var self = this;
+    this.editor.session.gutterRenderer = {
+      getWidth: function(session, lastLineNumber, config) {
+          return lastLineNumber.toString().length * config.characterWidth;
+      },
+      getText: function(session, row) {
+          var text = row.toString(radix);
+          var config = self.editor.renderer.layerConfig;
+          var size = config.lastRow.toString(radix).length;
+          while (text.length < size) {text = '0' + text;}
+          return (radix === 16 ? '0x' : '') + text;
+      }
+    };
   },
 
   update: function() {
@@ -1342,12 +1347,12 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -1642,12 +1647,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
+          ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
+          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
         </script>\
         <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
         <div class="resizer"/></div>\
