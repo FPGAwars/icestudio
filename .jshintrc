@@ -20,6 +20,7 @@
   "multistr": true,
   "-W064": true,
   "-W069": true,
+  "-W083": true,
   "-W084": true,
   "globals": {
     "$": false,

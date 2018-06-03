@@ -436,11 +436,31 @@ angular.module('icestudio')
             if (i > 0) {
               content.push('<br>');
             }
-            content.push('<p>' + spec.title + '</p>');
-            content.push('<input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>');
+            content.push('\
+              <p>' + spec.title + '</p>\
+              <input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>\
+            ');
             break;
           case 'checkbox':
-            content.push('<div class="checkbox"><label><input type="checkbox" value="" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label></div>');
+            content.push('\
+              <div class="checkbox">\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label>\
+              </div>\
+            ');
+            break;
+          case 'combobox':
+            var options = spec.options.map(function(option) {
+              var selected = spec.value === option.value ? ' selected' : '';
+              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
+            }).join('');
+            content.push('\
+              <div class="form-group">\
+                <label style="font-weight:normal">' + spec.label + '</label>\
+                <select class="form-control" id="form' + i.toString() + '">\
+                  ' + options + '\
+                </select>\
+              </div>\
+            ');
             break;
         }
       }
@@ -453,6 +473,7 @@ angular.module('icestudio')
             var spec = specs[i];
             switch(spec.type) {
               case 'text':
+              case 'combobox':
                 values.push($('#form' + i.toString()).val());
                 break;
               case 'checkbox':
