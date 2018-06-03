@@ -1176,7 +1176,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.applyName();
     this.applyLocal();
     this.applyValue(opt);
-    this.applyGutterFormat();
+    this.applyFormat();
   },
 
   applyName: function() {
@@ -1233,9 +1233,12 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     }, 10, this);
   },
 
-  applyGutterFormat: function() {
-    var radix = 2;
+  applyFormat: function() {
+    this.updating = true;
+
     var self = this;
+    var data = this.model.get('data');
+    var radix = data.format;
     this.editor.session.gutterRenderer = {
       getWidth: function(session, lastLineNumber, config) {
           return lastLineNumber.toString().length * config.characterWidth;
@@ -1248,6 +1251,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           return (radix === 16 ? '0x' : '') + text;
       }
     };
+    this.editor.renderer.setShowGutter(false);
+    this.editor.renderer.setShowGutter(true);
+
+    this.updating = false;
   },
 
   update: function() {

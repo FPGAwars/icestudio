@@ -265,11 +265,22 @@ angular.module('icestudio')
           type: 'checkbox',
           label: gettextCatalog.getString('Local parameter'),
           value: false
+        },
+        {
+          type: 'combobox',
+          label: gettextCatalog.getString('Address format'),
+          value: 10,
+          options: [
+            { value: 2, label: gettextCatalog.getString('Binary') },
+            { value: 10, label: gettextCatalog.getString('Decimal') },
+            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
+          ]
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
         var local = values[1];
+        var format = parseInt(values[2]);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -294,7 +305,8 @@ angular.module('icestudio')
           blockInstance.data = {
             name: paramInfo.name,
             list: '',
-            local: local
+            local: local,
+            format: format
           };
           cells.push(loadBasicMemory(blockInstance));
           blockInstance.position.x += 15 * gridsize;
@@ -1056,11 +1068,22 @@ angular.module('icestudio')
           type: 'checkbox',
           label: gettextCatalog.getString('Local parameter'),
           value: block.data.local
+        },
+        {
+          type: 'combobox',
+          label: gettextCatalog.getString('Address format'),
+          value: block.data.format,
+          options: [
+            { value: 2, label: gettextCatalog.getString('Binary') },
+            { value: 10, label: gettextCatalog.getString('Decimal') },
+            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
+          ]
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var label = values[0];
         var local = values[1];
+        var format = parseInt(values[2]);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1070,11 +1093,13 @@ angular.module('icestudio')
           var name = paramInfo.name;
           evt.cancel = false;
           if (block.data.name !== name ||
-              block.data.local !== local) {
+              block.data.local !== local ||
+              block.data.format !== format) {
             // Edit block
             var data = utils.clone(block.data);
             data.name = name;
             data.local = local;
+            data.format = format;
             cellView.model.set('data', data);
             cellView.apply();
             resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
