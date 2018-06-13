@@ -232,44 +232,42 @@ angular.module('icestudio')
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
       toolchain.disabled = utils.toolchainDisabled;
-      if (!toolchain.disabled) {
-        nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
-          if (error) {
-            toolchain.apio = '';
-            toolchain.installed = false;
-            // Apio not installed
-            toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
+      nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
+        if (error) {
+          toolchain.apio = '';
+          toolchain.installed = false;
+          // Apio not installed
+          toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
+          if (callback) {
+            callback();
+          }
+        }
+        else {
+          toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+          toolchain.installed = toolchain.apio >= _package.apio.min &&
+                                toolchain.apio < _package.apio.max;
+          if (toolchain.installed) {
+            nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+              toolchain.installed = !error;
+              if (error) {
+                toolchain.apio = '';
+                // Toolchain not properly installed
+                toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
+              }
+              if (callback) {
+                callback();
+              }
+            });
+          }
+          else {
+            // An old version is installed
+            toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain version does not match'));
             if (callback) {
               callback();
             }
           }
-          else {
-            toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-            toolchain.installed = toolchain.apio >= _package.apio.min &&
-                                  toolchain.apio < _package.apio.max;
-            if (toolchain.installed) {
-              nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
-                toolchain.installed = !error;
-                if (error) {
-                  toolchain.apio = '';
-                  // Toolchain not properly installed
-                  toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
-                }
-                if (callback) {
-                  callback();
-                }
-              });
-            }
-            else {
-              // An old version is installed
-              toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain version does not match'));
-              if (callback) {
-                callback();
-              }
-            }
-          }
-        });
-      }
+        }
+      });
 
       function toolchainNotInstalledAlert(message) {
         if (resultAlert) {
