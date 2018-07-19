@@ -20,7 +20,9 @@ angular.module('icestudio')
     this.pinoutOutputHTML = '';
 
     // Selected collection
-    this.collections = [];
+    this.defaultCollection = null;
+    this.internalCollections = [];
+    this.externalCollections = [];
     this.selectedCollection = null;
 
     // FPGA resources

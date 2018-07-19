@@ -164,7 +164,7 @@ angular.module('icestudio')
       if (selected &&
           filepath.startsWith(nodePath.join(common.COLLECTIONS_DIR, selected)) ||
           filepath.startsWith(nodePath.join(profile.get('externalCollections'), selected))) {
-        collections.selectCollection(selected);
+        collections.selectCollection(common.selectedCollection.path);
       }
     }
 
@@ -354,18 +354,20 @@ angular.module('icestudio')
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
-        var externalCollections = values[0];
+        var newExternalCollections = values[0];
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        if (externalCollections === '' || nodeFs.existsSync(externalCollections)) {
-          profile.set('externalCollections', externalCollections);
-          $scope.reloadCollections();
-          alertify.success(gettextCatalog.getString('External collections updated'));
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: externalCollections }, 5));
+        if (newExternalCollections !== externalCollections) {
+          if (newExternalCollections === '' || nodeFs.existsSync(newExternalCollections)) {
+            profile.set('externalCollections', newExternalCollections);
+            $scope.reloadCollections();
+            alertify.success(gettextCatalog.getString('External collections updated'));
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: newExternalCollections }, 5));
+          }
         }
       });
     };
@@ -533,9 +535,9 @@ angular.module('icestudio')
     };
 
     $scope.selectCollection = function(collection) {
-      if (common.selectedCollection.name !== collection.name) {
-        var name = collections.selectCollection(collection.name);
-        profile.set('collection', name);
+      if (common.selectedCollection.path !== collection.path) {
+        var name = collection.name;
+        profile.set('collection', collections.selectCollection(collection.path));
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name ? name : 'Default') }));
       }
     };
@@ -637,7 +639,7 @@ angular.module('icestudio')
 
     $scope.reloadCollections = function() {
       collections.loadCollections();
-      collections.selectCollection(common.selectedCollection.name);
+      collections.selectCollection(common.selectedCollection.path);
     };
 
     $scope.removeCollection = function(collection) {
@@ -650,7 +652,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (common.collections.length > 1) {
+      if (common.internalCollections.length > 1) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();
