@@ -132,7 +132,9 @@ angular.module('icestudio')
     $scope.saveProject = function() {
       var filepath = project.path;
       if (filepath) {
-        project.save(filepath);
+        project.save(filepath, function () {
+          reloadCollectionsIfRequired(filepath);
+        });
         resetChangedStack();
       }
       else {
@@ -143,13 +145,28 @@ angular.module('icestudio')
     $scope.saveProjectAs = function(localCallback) {
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
-        project.save(filepath);
+        project.save(filepath, function () {
+          reloadCollectionsIfRequired(filepath);
+        });
         resetChangedStack();
         if (localCallback) {
           localCallback();
         }
       });
     };
+
+    function reloadCollectionsIfRequired(filepath) {
+      var selected = common.selectedCollection.name;
+      if (filepath.startsWith(common.COLLECTIONS_DIR) ||
+          filepath.startsWith(profile.get('externalCollections'))) {
+        collections.loadCollections();
+      }
+      if (selected &&
+          filepath.startsWith(nodePath.join(common.COLLECTIONS_DIR, selected)) ||
+          filepath.startsWith(nodePath.join(profile.get('externalCollections'), selected))) {
+        collections.selectCollection(selected);
+      }
+    }
 
     $rootScope.$on('saveProjectAs', function(event, callback) {
       $scope.saveProjectAs(callback);
