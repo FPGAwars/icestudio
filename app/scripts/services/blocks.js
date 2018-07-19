@@ -262,11 +262,6 @@ angular.module('icestudio')
           value: ''
         },
         {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        },
-        {
           type: 'combobox',
           label: gettextCatalog.getString('Address format'),
           value: 10,
@@ -275,12 +270,17 @@ angular.module('icestudio')
             { value: 10, label: gettextCatalog.getString('Decimal') },
             { value: 16, label: gettextCatalog.getString('Hexadecimal') }
           ]
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: false
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[1];
-        var format = parseInt(values[2]);
+        var local = values[2];
+        var format = parseInt(values[1]);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1065,11 +1065,6 @@ angular.module('icestudio')
           value: block.data.name
         },
         {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        },
-        {
           type: 'combobox',
           label: gettextCatalog.getString('Address format'),
           value: block.data.format,
@@ -1078,12 +1073,17 @@ angular.module('icestudio')
             { value: 10, label: gettextCatalog.getString('Decimal') },
             { value: 16, label: gettextCatalog.getString('Hexadecimal') }
           ]
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Local parameter'),
+          value: block.data.local
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var label = values[0];
-        var local = values[1];
-        var format = parseInt(values[2]);
+        var local = values[2];
+        var format = parseInt(values[1]);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }

@@ -433,9 +433,6 @@ angular.module('icestudio')
         var spec = specs[i];
         switch(spec.type) {
           case 'text':
-            if (i > 0) {
-              content.push('<br>');
-            }
             content.push('\
               <p>' + spec.title + '</p>\
               <input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>\
