@@ -327,27 +327,28 @@ angular.module('icestudio')
       graph.fitContent();
     };
 
-    $scope.setExternalCollection = function() {
-      var externalCollection = profile.get('externalCollection');
+    $scope.setExternalCollections = function() {
+      var externalCollections = profile.get('externalCollections');
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the external collection path'),
-          value: externalCollection || ''
+          title: gettextCatalog.getString('Enter the external collections path'),
+          value: externalCollections || ''
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
-        var externalCollection = values[0];
+        var externalCollections = values[0];
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        if (externalCollection === '' || nodeFs.existsSync(externalCollection)) {
-          profile.set('externalCollection', externalCollection);
-          alertify.success(gettextCatalog.getString('External collection updated'));
+        if (externalCollections === '' || nodeFs.existsSync(externalCollections)) {
+          profile.set('externalCollections', externalCollections);
+          $scope.reloadCollections();
+          alertify.success(gettextCatalog.getString('External collections updated'));
         }
         else {
           evt.cancel = true;
-          resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: externalCollection }, 5));
+          resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: externalCollections }, 5));
         }
       });
     };

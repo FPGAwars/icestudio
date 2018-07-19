@@ -9,7 +9,7 @@ angular.module('icestudio')
       'board': '',
       'boardRules': true,
       'collection': '',
-      'externalCollection': '',
+      'externalCollections': '',
       'language': '',
       'remoteHostname': '',
       'showFPGAResources': false
@@ -28,7 +28,7 @@ angular.module('icestudio')
           'boardRules': data.boardRules !== false,
           'collection': data.collection || '',
           'language': data.language || '',
-          'externalCollection': data.externalCollection || '',
+          'externalCollections': data.externalCollections || '',
           'remoteHostname': data.remoteHostname || '',
           'showFPGAResources': data.showFPGAResources || false
         };

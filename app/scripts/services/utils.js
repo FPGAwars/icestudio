@@ -326,13 +326,20 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    function getFilesRecursive(folder) {
+    function getFilesRecursive(folder, level) {
       var fileTree = [];
       var validator = /.*\.(ice|json|md)$/;
 
       if (nodeFs.existsSync(folder)) {
-        var fileContents = nodeFs.readdirSync(folder);
         var stats;
+        var fileContents = [];
+
+        try {
+          fileContents = nodeFs.readdirSync(folder);
+        }
+        catch (e) { }
+
+        level--;
 
         fileContents.forEach(function (name) {
           var path = nodePath.join(folder, name);
@@ -342,7 +349,7 @@ angular.module('icestudio')
             fileTree.push({
               name: name,
               path: path,
-              children: getFilesRecursive(path, validator)
+              children: (level >= 0) ? getFilesRecursive(path, level) : []
             });
           } else if (validator.test(name)) {
             fileTree.push({
@@ -1025,22 +1032,27 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
-    this.loadLanguage = function(profile, callback) {
-      var self = this;
+    this.loadProfile = function(profile, callback) {
       profile.load(function() {
-        var lang = profile.get('language');
-        if (lang) {
-          self.setLocale(lang, callback);
-        }
-        else {
-          // If lang is empty, use the system language
-          nodeLangInfo(function(err, sysLang) {
-            if (!err) {
-              profile.set('language', self.setLocale(sysLang, callback));
-            }
-          });
+        if (callback) {
+          callback();
         }
       });
+    };
+
+    this.loadLanguage = function(profile, callback) {
+      var lang = profile.get('language');
+      if (lang) {
+        this.setLocale(lang, callback);
+      }
+      else {
+        // If lang is empty, use the system language
+        nodeLangInfo(function(err, sysLang) {
+          if (!err) {
+            profile.set('language', this.setLocale(sysLang, callback));
+          }
+        }.bind(this));
+      }
     };
 
     this.digestId = function(id) {

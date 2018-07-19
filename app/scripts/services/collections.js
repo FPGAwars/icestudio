@@ -3,31 +3,45 @@
 angular.module('icestudio')
   .service('collections', function(utils,
                                    common,
+                                   profile,
                                    gettextCatalog,
                                    nodePath) {
 
     const DEFAULT = '';
+    const MAX_LEVEL_SEARCH = 5;
+
+    var addedCollections = [];
 
     this.loadCollections = function() {
+      addedCollections = [];
       common.collections = [];
       // Add Default collection
       var defaultPath = nodePath.join('resources', 'collection');
       var defaultData = {
         'name': DEFAULT,
         'path': nodePath.resolve(defaultPath),
-        'children': utils.getFilesRecursive(nodePath.resolve(defaultPath))
+        'children': utils.getFilesRecursive(nodePath.resolve(defaultPath), MAX_LEVEL_SEARCH)
       };
       var defaultCollection = getCollection(defaultData);
       common.collections.push(defaultCollection);
       // Add installed collections
-      var data = utils.getFilesRecursive(common.COLLECTIONS_DIR);
+      loadCollectionsPath(common.COLLECTIONS_DIR);
+      // Add external collection
+      loadCollectionsPath(profile.get('externalCollections'));
+    };
+
+    function loadCollectionsPath(path) {
+      var data = utils.getFilesRecursive(path, MAX_LEVEL_SEARCH);
       for (var i in data) {
-        var collection = getCollection(data[i]);
-        if (collection) {
-          common.collections.push(collection);
+        if (addedCollections.indexOf(data.path) === -1) {
+          var collection = getCollection(data[i]);
+          if (isCollection(collection)) {
+            addedCollections.push(collection.path);
+            common.collections.push(collection);
+          }
         }
       }
-    };
+    }
 
     function getCollection(data) {
       var collection = {
@@ -43,23 +57,25 @@ angular.module('icestudio')
       for (var i in data.children) {
         var child = data.children[i];
         switch (child.name) {
-          case ('blocks'):
+          case 'blocks':
             if (child.children) {
               collection.content.blocks = child.children;
             }
             break;
-          case ('examples'):
+          case 'examples':
             if (child.children) {
               collection.content.examples = child.children;
             }
             break;
-          case ('package'):
+          case 'package':
             if (!child.children) {
-              // TODO: use package data
-              //collection.content.package = require(child.path);
+              try {
+                collection.content.package = require(child.path);
+              }
+              catch (e) {}
             }
             break;
-          case ('README'):
+          case 'README':
             if (!child.children) {
               collection.content.readme = child.path;
             }
@@ -67,6 +83,14 @@ angular.module('icestudio')
         }
       }
       return collection;
+    }
+
+    function isCollection(collection) {
+      return collection &&
+             collection.content &&
+             collection.content.readme &&
+             collection.content.package &&
+             (collection.content.blocks.length || collection.content.examples.length);
     }
 
     this.selectCollection = function(name) {
