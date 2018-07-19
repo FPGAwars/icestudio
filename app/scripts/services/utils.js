@@ -435,13 +435,13 @@ angular.module('icestudio')
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>\
+              <input class="ajs-input" type="text" id="form' + i + '"/>\
             ');
             break;
           case 'checkbox':
             content.push('\
               <div class="checkbox">\
-                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label>\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
               </div>\
             ');
             break;
@@ -453,7 +453,7 @@ angular.module('icestudio')
             content.push('\
               <div class="form-group">\
                 <label style="font-weight:normal">' + spec.label + '</label>\
-                <select class="form-control" id="form' + i.toString() + '">\
+                <select class="form-control" id="form' + i + '">\
                   ' + options + '\
                 </select>\
               </div>\
@@ -471,10 +471,10 @@ angular.module('icestudio')
             switch(spec.type) {
               case 'text':
               case 'combobox':
-                values.push($('#form' + i.toString()).val());
+                values.push($('#form' + i).val());
                 break;
               case 'checkbox':
-                values.push($('#form' + i.toString()).prop('checked'));
+                values.push($('#form' + i).prop('checked'));
                 break;
             }
           }
@@ -486,6 +486,14 @@ angular.module('icestudio')
       // Focus first element
       setTimeout(function(){
         $('#form0').select();
+        for (var i in specs) {
+          var spec = specs[i];
+          switch(spec.type) {
+            case 'text':
+              $('#form' + i).val(spec.value);
+              break;
+          }
+        }
       }, 50);
     };
 
@@ -507,7 +515,7 @@ angular.module('icestudio')
           //content.push('<br>');
         }
         content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '">');
+        content.push('  <input class="ajs-input" id="input' + i + '" type="text" value="' + values[i] + '">');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
@@ -523,7 +531,7 @@ angular.module('icestudio')
       content.push('</div>');
       // Restore values
       for (i = 0; i < n; i++) {
-        $('#input' + i.toString()).val(values[i]);
+        $('#input' + i).val(values[i]);
       }
       if (image) {
         $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
@@ -614,7 +622,7 @@ angular.module('icestudio')
       .set('onok', function(evt) {
         var values = [];
         for (var i = 0; i < n; i++) {
-          values.push($('#input' + i.toString()).val());
+          values.push($('#input' + i).val());
         }
         values.push(image);
         if (callback) {

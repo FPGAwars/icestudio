@@ -327,6 +327,31 @@ angular.module('icestudio')
       graph.fitContent();
     };
 
+    $scope.setExternalCollection = function() {
+      var externalCollection = profile.get('externalCollection');
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the external collection path'),
+          value: externalCollection || ''
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var externalCollection = values[0];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        if (externalCollection === '' || nodeFs.existsSync(externalCollection)) {
+          profile.set('externalCollection', externalCollection);
+          alertify.success(gettextCatalog.getString('External collection updated'));
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: externalCollection }, 5));
+        }
+      });
+    };
+
     $(document).on('infoChanged', function(evt, newValues) {
       var values = getProjectInformation();
       if (!_.isEqual(values, newValues)) {

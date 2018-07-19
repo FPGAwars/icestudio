@@ -141,6 +141,9 @@
                     </ul>
                   </li>
                   <li>
+                    <a href ng-click="setExternalCollection()">{{ 'External collection' | translate }}</a>
+                  </li>
+                  <li>
                     <a href ng-click="setRemoteHostname()">
                       {{ 'Remote hostname' | translate }}
                       <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
