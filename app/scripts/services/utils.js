@@ -426,116 +426,66 @@ angular.module('icestudio')
       return 'en';
     }
 
-    this.multiprompt = function(messages, values, callback) {
-      var i;
+    this.renderForm = function(specs, callback) {
       var content = [];
-      var n = messages.length;
       content.push('<div>');
-      for (i in messages) {
-        if (i > 0) {
-          content.push('<br>');
+      for (var i in specs) {
+        var spec = specs[i];
+        switch(spec.type) {
+          case 'text':
+            content.push('\
+              <p>' + spec.title + '</p>\
+              <input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>\
+            ');
+            break;
+          case 'checkbox':
+            content.push('\
+              <div class="checkbox">\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label>\
+              </div>\
+            ');
+            break;
+          case 'combobox':
+            var options = spec.options.map(function(option) {
+              var selected = spec.value === option.value ? ' selected' : '';
+              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
+            }).join('');
+            content.push('\
+              <div class="form-group">\
+                <label style="font-weight:normal">' + spec.label + '</label>\
+                <select class="form-control" id="form' + i.toString() + '">\
+                  ' + options + '\
+                </select>\
+              </div>\
+            ');
+            break;
         }
-        content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
       }
       content.push('</div>');
-      // Restore values
-      for (i = 0; i < n; i++) {
-        $('#input' + i.toString()).val(values[i]);
-      }
-
       alertify.confirm(content.join('\n'))
       .set('onok', function(evt) {
         var values = [];
-        for (var i = 0; i < n; i++) {
-          values.push($('#input' + i.toString()).val());
-        }
         if (callback) {
+          for (var i in specs) {
+            var spec = specs[i];
+            switch(spec.type) {
+              case 'text':
+              case 'combobox':
+                values.push($('#form' + i.toString()).val());
+                break;
+              case 'checkbox':
+                values.push($('#form' + i.toString()).prop('checked'));
+                break;
+            }
+          }
           callback(evt, values);
         }
       })
       .set('oncancel', function(/*evt*/) {
       });
-    };
-
-    this.checkboxprompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[0] ? 'checked' : '') + '>' + messages[0] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#check').prop('checked', values[0]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#check').prop('checked'));
-        if (callback) {
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-    };
-
-    this.inputcheckboxprompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
-      content.push('  <br>');
-      content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#label').val(values[0]);
-      $('#check').prop('checked', values[1]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#label').val());
-        values.push($('#check').prop('checked'));
-        if (callback) {
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-
+      // Focus first element
       setTimeout(function(){
-        $('#label').select();
-      }, 50);
-    };
-
-    this.inputcheckbox2prompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
-      content.push('  <br>');
-      content.push('  <div class="checkbox"><label><input id="check1" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
-      content.push('  <div class="checkbox"><label><input id="check2" type="checkbox" value="" ' + (values[2] ? 'checked' : '') + '>' + messages[2] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#label').val(values[0]);
-      $('#check1').prop('checked', values[1]);
-      $('#check2').prop('checked', values[2]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#label').val());
-        values.push($('#check1').prop('checked'));
-        values.push($('#check2').prop('checked'));
-        if (callback) {
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-
-      setTimeout(function(){
-        $('#label').select();
+        $('#form0').select();
       }, 50);
     };
 
