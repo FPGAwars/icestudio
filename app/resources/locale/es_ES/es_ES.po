@@ -25,6 +25,12 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>Instrucciones de instalación del controlador FTDI</h4><ol><li>Conecta la "
+"placa FPGA al USB y espera hasta que Windows finalice la instalación "
+"predeterminada del controlador</li><li>Al hacer clic en el botón Aceptar, el "
+"instalador del controlador FTDI se iniciará en una nueva ventana</li><li>En "
+"el instalador, reemplaza el controlador <b>(Interfaz 0)</b> de la placa por "
+"<b>libusbK</b></li><li>Desconecta y vuelve a conectar la placa</li></ol>"
 
 #: app/scripts/services/drivers.js:312
 msgid ""
@@ -44,6 +50,12 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Instrucciones de instalación del controlador Serie</h4><ol><li>Conecta "
+"la placa FPGA al USB y espera hasta que Windows finalice la instalación "
+"predeterminada del controlador</li><li>Al hacer clic en el botón Aceptar, el "
+"instalador del controlador Serie se iniciará en una nueva ventana<li><li>En "
+"el instalador, sigue los pasos para instalar el controlador</"
+"li><li>Desconecta y vuelve a conectar la placa</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
@@ -72,7 +84,7 @@ msgstr "Añadir como bloque"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr ""
+msgstr "Formato de dirección"
 
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
@@ -96,7 +108,7 @@ msgstr "Euskera"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Binario"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -180,6 +192,7 @@ msgstr "Chino"
 #: app/scripts/services/project.js:143
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
+"Haz clic aquí para <b>descargar una versión más nueva</ b> de Icestudio"
 
 #: app/scripts/services/tools.js:902
 msgid "Click here to <b>setup the drivers</b>"
@@ -196,7 +209,7 @@ msgstr "Haz clic aquí para ver"
 
 #: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
 msgid "Clock not allowed for data buses"
-msgstr ""
+msgstr "Reloj no permitido para buses de datos"
 
 #: app/scripts/controllers/menu.js:275
 msgid "Close"
@@ -276,7 +289,7 @@ msgstr "Datasheet"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Decimal"
 
 #: app/views/menu.html:209
 msgid "Default"
@@ -358,7 +371,7 @@ msgstr "Introduce los bloques constante"
 
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Introduce la ruta de las colecciones externas"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
@@ -370,7 +383,7 @@ msgstr "Introduce los puertos de entrada"
 
 #: app/scripts/services/blocks.js:261
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "Introduce los bloques memoria"
 
 #: app/scripts/services/blocks.js:130
 msgid "Enter the output blocks"
@@ -414,11 +427,11 @@ msgstr "Exportar"
 
 #: app/views/menu.html:144
 msgid "External collections"
-msgstr ""
+msgstr "Colecciones externas"
 
 #: app/scripts/controllers/menu.js:370
 msgid "External collections updated"
-msgstr ""
+msgstr "Colecciones externas actualizadas"
 
 #: app/scripts/services/tools.js:834
 msgid "Extract default apio files..."
@@ -482,7 +495,7 @@ msgstr "Ayuda"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Hexadecimal"
 
 #: app/scripts/services/utils.js:528
 msgid "Image"
@@ -578,7 +591,7 @@ msgstr "Tamaño máximo del bus: 96 bits"
 
 #: app/views/menu.html:368
 msgid "Memory"
-msgstr ""
+msgstr "Memoria"
 
 #: app/scripts/services/utils.js:512
 msgid "Name"
@@ -619,7 +632,7 @@ msgstr "Pegar"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "La ruta {{path}} no existe"
 
 #: app/scripts/services/utils.js:868
 msgid "Please run: {{cmd}}"
@@ -663,7 +676,7 @@ msgstr "Rehacer"
 
 #: app/views/menu.html:298
 msgid "Reload"
-msgstr ""
+msgstr "Recargar"
 
 #: app/scripts/services/tools.js:511
 msgid "Remote host {{name}} not connected"
@@ -817,7 +830,7 @@ msgstr "Placa desconocida"
 
 #: app/scripts/services/project.js:142
 msgid "Unsupported project format {{version}}"
-msgstr ""
+msgstr "Formato de proyecto no admitido {{version}}"
 
 #: app/scripts/app.js:48
 msgid "Untitled"
