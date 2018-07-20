@@ -93,10 +93,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         display: 'none'
       },
       '.port-default rect': {
-        x: '-40',
-        y: '-10',
-        width: '20',
-        height: '20',
+        x: '-32',
+        y: '-8',
+        width: '16',
+        height: '16',
         rx: '3',
         ry: '3',
         stroke: '#777',
