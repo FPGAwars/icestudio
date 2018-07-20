@@ -63,11 +63,13 @@ angular.module('icestudio')
         processArg(arg);
         local = arg === 'local' || local;
       }
-      if (local) {
-        project.path = '';
+      var editable = !project.path.startsWith(common.COLLECTIONS_DIR) &&
+                     project.path.startsWith(common.selectedCollection.path);
+      if (editable || !local) {
+        updateWorkingdir(project.path);
       }
       else {
-        updateWorkingdir(project.path);
+        project.path = '';
       }
     }, 0);
 
@@ -117,7 +119,10 @@ angular.module('icestudio')
     $scope.openProject = function(filepath) {
       if (zeroProject) {
         // If this is the first action, open
-        // the projec in the same window
+        // the project in the same window
+        var editable = !filepath.startsWith(common.COLLECTIONS_DIR) &&
+                       filepath.startsWith(common.selectedCollection.path);
+        updateWorkingdir(editable ? filepath : '');
         project.open(filepath, true);
         //zeroProject = false;
       }
