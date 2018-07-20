@@ -302,7 +302,7 @@ angular.module('icestudio')
       return project;
     }
 
-    this.save = function(filepath) {
+    this.save = function(filepath, callback) {
       var name = utils.basename(filepath);
       this.updateTitle(name);
       sortGraph();
@@ -350,6 +350,9 @@ angular.module('icestudio')
       function doSaveProject() {
         utils.saveFile(filepath, pruneProject(project))
         .then(function() {
+          if (callback) {
+            callback();
+          }
           alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
         })
         .catch(function(error) {

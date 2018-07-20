@@ -141,6 +141,9 @@
                     </ul>
                   </li>
                   <li>
+                    <a href ng-click="setExternalCollections()">{{ 'External collections' | translate }}</a>
+                  </li>
+                  <li>
                     <a href ng-click="setRemoteHostname()">
                       {{ 'Remote hostname' | translate }}
                       <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
@@ -200,18 +203,25 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <data ng-init="collection = common.collections[0]"/>
+                  <data ng-init="collection = common.defaultCollection"/>
                   <li>
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
                       <span ng-show="common.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
-                  <li class="divider" ng-show="common.collections.length > 1"></li>
-                  <li ng-repeat="collection in common.collections">
+                  <li class="divider" ng-show="common.internalCollections.length > 1"></li>
+                  <li ng-repeat="collection in common.internalCollections">
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}&ensp;
-                      <span ng-show="common.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
+                      <span ng-show="common.selectedCollection.path == collection.path" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                  <li class="divider" ng-show="common.externalCollections.length > 1"></li>
+                  <li ng-repeat="collection in common.externalCollections">
+                    <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
+                      {{ collection.name }}&ensp;
+                      <span ng-show="common.selectedCollection.path == collection.path" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
                 </ul>
@@ -291,8 +301,8 @@
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="common.collections.length > 1">
-                      <li ng-repeat="collection in common.collections">
+                        ng-show="common.internalCollections.length > 1">
+                      <li ng-repeat="collection in common.internalCollections">
                         <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>

@@ -32,20 +32,21 @@ angular
     }, 0);
     // Load boards
     boards.loadBoards();
-    // Load collections
-    collections.loadCollections();
-    // Load language
-    utils.loadLanguage(profile, function() {
-      // Rearrange collections
-      collections.sort();
-      // Initialize selected board
-      var selectedBoard = boards.selectBoard(profile.get('board')).name;
-      profile.set('board', selectedBoard);
-      // Initialize selected collection
-      var selectedCollection = collections.selectCollection(profile.get('collection'));
-      profile.set('collection', selectedCollection);
-      // Initialize title
-      project.updateTitle(gettextCatalog.getString('Untitled'));
-      $('body').removeClass('waiting');
+    // Load profile
+    utils.loadProfile(profile, function() {
+      // Load collections
+      collections.loadCollections();
+      // Load language
+      utils.loadLanguage(profile, function() {
+        // Rearrange collections
+        collections.sort();
+        // Initialize selected board
+        profile.set('board', boards.selectBoard(profile.get('board')).name);
+        // Initialize selected collection
+        profile.set('collection', collections.selectCollection(profile.get('collection')));
+        // Initialize title
+        project.updateTitle(gettextCatalog.getString('Untitled'));
+        $('body').removeClass('waiting');
+      });
     });
   });

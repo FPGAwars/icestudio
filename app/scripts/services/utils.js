@@ -326,13 +326,20 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    function getFilesRecursive(folder) {
+    function getFilesRecursive(folder, level) {
       var fileTree = [];
       var validator = /.*\.(ice|json|md)$/;
 
       if (nodeFs.existsSync(folder)) {
-        var fileContents = nodeFs.readdirSync(folder);
         var stats;
+        var fileContents = [];
+
+        try {
+          fileContents = nodeFs.readdirSync(folder);
+        }
+        catch (e) { }
+
+        level--;
 
         fileContents.forEach(function (name) {
           var path = nodePath.join(folder, name);
@@ -342,7 +349,7 @@ angular.module('icestudio')
             fileTree.push({
               name: name,
               path: path,
-              children: getFilesRecursive(path, validator)
+              children: (level >= 0) ? getFilesRecursive(path, level) : []
             });
           } else if (validator.test(name)) {
             fileTree.push({
@@ -366,8 +373,9 @@ angular.module('icestudio')
       // Application strings
       gettextCatalog.loadRemote(nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json'));
       // Collections strings
-      for (var c in common.collections) {
-        var collection = common.collections[c];
+      var collections = common.internalCollections.concat(common.externalCollections);
+      for (var c in collections) {
+        var collection = collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
           gettextCatalog.loadRemote(filepath);
@@ -435,13 +443,13 @@ angular.module('icestudio')
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" value="' + spec.value + '" id="form' + i.toString() + '"/>\
+              <input class="ajs-input" type="text" id="form' + i + '"/>\
             ');
             break;
           case 'checkbox':
             content.push('\
               <div class="checkbox">\
-                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i.toString() + '"/>' + spec.label + '</label>\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
               </div>\
             ');
             break;
@@ -453,7 +461,7 @@ angular.module('icestudio')
             content.push('\
               <div class="form-group">\
                 <label style="font-weight:normal">' + spec.label + '</label>\
-                <select class="form-control" id="form' + i.toString() + '">\
+                <select class="form-control" id="form' + i + '">\
                   ' + options + '\
                 </select>\
               </div>\
@@ -471,10 +479,10 @@ angular.module('icestudio')
             switch(spec.type) {
               case 'text':
               case 'combobox':
-                values.push($('#form' + i.toString()).val());
+                values.push($('#form' + i).val());
                 break;
               case 'checkbox':
-                values.push($('#form' + i.toString()).prop('checked'));
+                values.push($('#form' + i).prop('checked'));
                 break;
             }
           }
@@ -486,6 +494,14 @@ angular.module('icestudio')
       // Focus first element
       setTimeout(function(){
         $('#form0').select();
+        for (var i in specs) {
+          var spec = specs[i];
+          switch(spec.type) {
+            case 'text':
+              $('#form' + i).val(spec.value);
+              break;
+          }
+        }
       }, 50);
     };
 
@@ -507,7 +523,7 @@ angular.module('icestudio')
           //content.push('<br>');
         }
         content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '">');
+        content.push('  <input class="ajs-input" id="input' + i + '" type="text" value="' + values[i] + '">');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
@@ -523,7 +539,7 @@ angular.module('icestudio')
       content.push('</div>');
       // Restore values
       for (i = 0; i < n; i++) {
-        $('#input' + i.toString()).val(values[i]);
+        $('#input' + i).val(values[i]);
       }
       if (image) {
         $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
@@ -614,7 +630,7 @@ angular.module('icestudio')
       .set('onok', function(evt) {
         var values = [];
         for (var i = 0; i < n; i++) {
-          values.push($('#input' + i.toString()).val());
+          values.push($('#input' + i).val());
         }
         values.push(image);
         if (callback) {
@@ -1017,22 +1033,27 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
-    this.loadLanguage = function(profile, callback) {
-      var self = this;
+    this.loadProfile = function(profile, callback) {
       profile.load(function() {
-        var lang = profile.get('language');
-        if (lang) {
-          self.setLocale(lang, callback);
-        }
-        else {
-          // If lang is empty, use the system language
-          nodeLangInfo(function(err, sysLang) {
-            if (!err) {
-              profile.set('language', self.setLocale(sysLang, callback));
-            }
-          });
+        if (callback) {
+          callback();
         }
       });
+    };
+
+    this.loadLanguage = function(profile, callback) {
+      var lang = profile.get('language');
+      if (lang) {
+        this.setLocale(lang, callback);
+      }
+      else {
+        // If lang is empty, use the system language
+        nodeLangInfo(function(err, sysLang) {
+          if (!err) {
+            profile.set('language', this.setLocale(sysLang, callback));
+          }
+        }.bind(this));
+      }
     };
 
     this.digestId = function(id) {
