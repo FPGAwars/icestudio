@@ -87,7 +87,7 @@ angular.module('icestudio')
              collection.content &&
              collection.content.readme &&
              collection.content.package &&
-             (collection.content.blocks.length || collection.content.examples.length);
+             (collection.content.blocks || collection.content.examples);
     }
 
     this.selectCollection = function(path) {
