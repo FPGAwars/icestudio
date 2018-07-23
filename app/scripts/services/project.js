@@ -168,6 +168,7 @@ angular.module('icestudio')
           project = convert10To12(project);
           break;
       }
+      project.version = common.VERSION;
       return project;
     }
 
