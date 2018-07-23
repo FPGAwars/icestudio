@@ -499,8 +499,8 @@ angular.module('icestudio')
         var validReplacements = {
           'ice.Generic': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
           'ice.Code': ['ice.Generic', 'ice.Code', 'ice.Input', 'ice.Output'],
-          'ice.Input': ['ice.Generic', 'ice.Code', 'ice.Input'],
-          'ice.Output': ['ice.Generic', 'ice.Code', 'ice.Output'],
+          'ice.Input': ['ice.Generic', 'ice.Code'],
+          'ice.Output': ['ice.Generic', 'ice.Code'],
           'ice.Constant': ['ice.Constant', 'ice.Memory'],
           'ice.Memory': ['ice.Constant', 'ice.Memory']
         }[lowerBlock.get('type')];
