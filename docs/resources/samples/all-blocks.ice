@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "",
     "version": "",
@@ -86,19 +86,6 @@
           },
           "position": {
             "x": 488,
-            "y": 32
-          }
-        },
-        {
-          "id": "4d3293ce-c03c-48d5-8a8a-2bb5ccc58e53",
-          "type": "basic.constant",
-          "data": {
-            "name": "V",
-            "value": "4'b1001",
-            "local": true
-          },
-          "position": {
-            "x": 640,
             "y": 32
           }
         },
@@ -205,6 +192,37 @@
           }
         },
         {
+          "id": "4d3293ce-c03c-48d5-8a8a-2bb5ccc58e53",
+          "type": "basic.constant",
+          "data": {
+            "name": "V",
+            "value": "4'b1001",
+            "local": true
+          },
+          "position": {
+            "x": 640,
+            "y": 32
+          }
+        },
+        {
+          "id": "8a1e5fbd-e6c5-4e53-bb75-60255084bb37",
+          "type": "basic.memory",
+          "data": {
+            "name": "Mem",
+            "list": "A\nB\nC\nD",
+            "local": false,
+            "format": 2
+          },
+          "position": {
+            "x": 640,
+            "y": 136
+          },
+          "size": {
+            "width": 96,
+            "height": 104
+          }
+        },
+        {
           "id": "cfd3d272-f4f1-4ca9-a19b-e811a6dfdd0d",
           "type": "basic.code",
           "data": {
@@ -270,13 +288,6 @@
         }
       ],
       "wires": []
-    },
-    "state": {
-      "pan": {
-        "x": 0,
-        "y": 0
-      },
-      "zoom": 1
     }
   },
   "dependencies": {
@@ -450,13 +461,6 @@
               }
             }
           ]
-        },
-        "state": {
-          "pan": {
-            "x": -1.6949,
-            "y": 61.9746
-          },
-          "zoom": 0.8686
         }
       }
     }

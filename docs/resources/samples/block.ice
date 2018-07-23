@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Block",
     "version": "1.0",
@@ -11,32 +11,6 @@
     "board": "icezum",
     "graph": {
       "blocks": [
-        {
-          "id": "deddfc29-7bf1-4ac4-a24e-e91b4cc14335",
-          "type": "basic.constant",
-          "data": {
-            "name": "C",
-            "value": "4'b1111",
-            "local": false
-          },
-          "position": {
-            "x": 296,
-            "y": 32
-          }
-        },
-        {
-          "id": "a9f85080-6523-428b-966c-359be16be956",
-          "type": "basic.constant",
-          "data": {
-            "name": "D",
-            "value": "4'b0000",
-            "local": true
-          },
-          "position": {
-            "x": 488,
-            "y": 32
-          }
-        },
         {
           "id": "4aa2ce96-a449-42f1-b612-2c852dc50da8",
           "type": "basic.input",
@@ -73,39 +47,6 @@
           "position": {
             "x": 896,
             "y": 64
-          }
-        },
-        {
-          "id": "fecaab8e-c7d4-4823-81fb-2b0d42f38026",
-          "type": "basic.code",
-          "data": {
-            "code": "reg [3:0] b_aux;\n\nalways @(a)\nbegin\n  if (a == 1)\n    b_aux = C;\n  else\n    b_aux = D;\nend\n\nassign b = b_aux;\n",
-            "params": [
-              {
-                "name": "C"
-              },
-              {
-                "name": "D"
-              }
-            ],
-            "ports": {
-              "in": [
-                {
-                  "name": "a"
-                }
-              ],
-              "out": [
-                {
-                  "name": "b",
-                  "range": "[3:0]",
-                  "size": 4
-                }
-              ]
-            }
-          },
-          "position": {
-            "x": 248,
-            "y": 176
           }
         },
         {
@@ -160,6 +101,69 @@
           "position": {
             "x": 760,
             "y": 272
+          }
+        },
+        {
+          "id": "deddfc29-7bf1-4ac4-a24e-e91b4cc14335",
+          "type": "basic.constant",
+          "data": {
+            "name": "C",
+            "value": "4'b1111",
+            "local": false
+          },
+          "position": {
+            "x": 296,
+            "y": 32
+          }
+        },
+        {
+          "id": "a9f85080-6523-428b-966c-359be16be956",
+          "type": "basic.constant",
+          "data": {
+            "name": "D",
+            "value": "4'b0000",
+            "local": true
+          },
+          "position": {
+            "x": 488,
+            "y": 32
+          }
+        },
+        {
+          "id": "fecaab8e-c7d4-4823-81fb-2b0d42f38026",
+          "type": "basic.code",
+          "data": {
+            "code": "reg [3:0] b_aux;\n\nalways @(a)\nbegin\n  if (a == 1)\n    b_aux = C;\n  else\n    b_aux = D;\nend\n\nassign b = b_aux;\n",
+            "params": [
+              {
+                "name": "C"
+              },
+              {
+                "name": "D"
+              }
+            ],
+            "ports": {
+              "in": [
+                {
+                  "name": "a"
+                }
+              ],
+              "out": [
+                {
+                  "name": "b",
+                  "range": "[3:0]",
+                  "size": 4
+                }
+              ]
+            }
+          },
+          "position": {
+            "x": 248,
+            "y": 176
+          },
+          "size": {
+            "width": 384,
+            "height": 256
           }
         }
       ],
@@ -216,13 +220,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": -1.6949,
-        "y": 61.9746
-      },
-      "zoom": 0.8686
     }
   },
   "dependencies": {}

@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Block",
     "version": "",
@@ -11,18 +11,6 @@
     "board": "icezum",
     "graph": {
       "blocks": [
-        {
-          "id": "af56c7ea-910d-40dc-a979-b26c4bd035b0",
-          "type": "082acf8e94f612fbdb8110d33d4def9d9d5134ca",
-          "position": {
-            "x": 192,
-            "y": 136
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
         {
           "id": "f0a23129-4164-4712-938f-741e10d141e7",
           "type": "basic.input",
@@ -44,18 +32,6 @@
           }
         },
         {
-          "id": "02959c00-b43d-4f58-960c-194bc4956e13",
-          "type": "082acf8e94f612fbdb8110d33d4def9d9d5134ca",
-          "position": {
-            "x": 560,
-            "y": 136
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
-        {
           "id": "16b6a8fe-bdf0-4813-bf61-1c599ea7ff3b",
           "type": "basic.input",
           "data": {
@@ -73,6 +49,30 @@
           "position": {
             "x": 768,
             "y": 136
+          }
+        },
+        {
+          "id": "af56c7ea-910d-40dc-a979-b26c4bd035b0",
+          "type": "082acf8e94f612fbdb8110d33d4def9d9d5134ca",
+          "position": {
+            "x": 192,
+            "y": 136
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "02959c00-b43d-4f58-960c-194bc4956e13",
+          "type": "082acf8e94f612fbdb8110d33d4def9d9d5134ca",
+          "position": {
+            "x": 560,
+            "y": 136
+          },
+          "size": {
+            "width": 96,
+            "height": 64
           }
         },
         {
@@ -221,13 +221,6 @@
           ]
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": -62,
-        "y": -21
-      },
-      "zoom": 1
     }
   },
   "dependencies": {
@@ -256,13 +249,6 @@
             }
           ],
           "wires": []
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       }
     }

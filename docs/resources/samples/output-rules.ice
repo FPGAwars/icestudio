@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Block",
     "version": "",
@@ -11,18 +11,6 @@
     "board": "icezum",
     "graph": {
       "blocks": [
-        {
-          "id": "178cd2ee-2569-4f27-8272-a657b2e247bb",
-          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
-          "position": {
-            "x": 152,
-            "y": 72
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
         {
           "id": "5e9645f0-404f-41c6-bcaa-58246a20ff9e",
           "type": "basic.output",
@@ -40,18 +28,6 @@
           "position": {
             "x": 336,
             "y": 72
-          }
-        },
-        {
-          "id": "61baebce-eb4c-4be2-bcd7-7a0581f34b67",
-          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
-          "position": {
-            "x": 584,
-            "y": 80
-          },
-          "size": {
-            "width": 96,
-            "height": 64
           }
         },
         {
@@ -74,18 +50,6 @@
           }
         },
         {
-          "id": "0e38d2d4-2227-40f3-b8c7-a5004e416c06",
-          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
-          "position": {
-            "x": 584,
-            "y": 168
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
-        {
           "id": "094bca42-4a47-489a-89e9-76250151523c",
           "type": "basic.output",
           "data": {
@@ -102,18 +66,6 @@
           "position": {
             "x": 768,
             "y": 168
-          }
-        },
-        {
-          "id": "c22437c1-07f1-440e-82b8-db8d5ab3521f",
-          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
-          "position": {
-            "x": 584,
-            "y": 256
-          },
-          "size": {
-            "width": 96,
-            "height": 64
           }
         },
         {
@@ -136,18 +88,6 @@
           }
         },
         {
-          "id": "57aaa7df-eb4f-41f1-8c2d-59b1cfd85b95",
-          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
-          "position": {
-            "x": 584,
-            "y": 344
-          },
-          "size": {
-            "width": 96,
-            "height": 64
-          }
-        },
-        {
           "id": "28610f02-7b3b-4ed6-9607-f9ac35d6b9eb",
           "type": "basic.output",
           "data": {
@@ -164,6 +104,66 @@
           "position": {
             "x": 768,
             "y": 344
+          }
+        },
+        {
+          "id": "178cd2ee-2569-4f27-8272-a657b2e247bb",
+          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
+          "position": {
+            "x": 152,
+            "y": 72
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "61baebce-eb4c-4be2-bcd7-7a0581f34b67",
+          "type": "3e6c249e205080168c1bf4ee8dbc33b50653d5f4",
+          "position": {
+            "x": 584,
+            "y": 80
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "0e38d2d4-2227-40f3-b8c7-a5004e416c06",
+          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
+          "position": {
+            "x": 584,
+            "y": 168
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "c22437c1-07f1-440e-82b8-db8d5ab3521f",
+          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
+          "position": {
+            "x": 584,
+            "y": 256
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
+        },
+        {
+          "id": "57aaa7df-eb4f-41f1-8c2d-59b1cfd85b95",
+          "type": "862d2a36c72ddee13ea44bf906fe1b60efa90941",
+          "position": {
+            "x": 584,
+            "y": 344
+          },
+          "size": {
+            "width": 96,
+            "height": 64
           }
         }
       ],
@@ -222,13 +222,6 @@
           "vertices": []
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": -69,
-        "y": -26
-      },
-      "zoom": 1
     }
   },
   "dependencies": {
@@ -287,13 +280,6 @@
               }
             }
           ]
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       }
     },
@@ -352,13 +338,6 @@
               }
             }
           ]
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       }
     }
