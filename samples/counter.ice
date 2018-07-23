@@ -15,7 +15,7 @@
           "id": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
           "type": "basic.output",
           "data": {
-            "name": "LED5",
+            "name": "",
             "pins": [
               {
                 "index": "0",
@@ -34,7 +34,7 @@
           "id": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
           "type": "basic.output",
           "data": {
-            "name": "LED4",
+            "name": "",
             "pins": [
               {
                 "index": "0",
@@ -46,7 +46,7 @@
           },
           "position": {
             "x": 760,
-            "y": 136
+            "y": 120
           }
         },
         {
@@ -126,7 +126,7 @@
           "id": "02460189-14a0-48d0-ad87-74faf9a1177e",
           "type": "basic.constant",
           "data": {
-            "name": "N",
+            "name": "Divider",
             "value": "20",
             "local": false
           },
@@ -191,16 +191,16 @@
           "id": "e91d0b4f-0fc5-421d-a032-e59368bc322a",
           "type": "basic.info",
           "data": {
-            "info": "Counter 4 bits\n--------------\n\nInput: Enable, Reset\nParameter: N\nOutput: LED bus",
+            "info": "Counter 4 bits\n--------------\n\n- **Input**: Enable, Reset\n- **Parameter**: Divider\n- **Output**: LED bus",
             "readonly": true
           },
           "position": {
             "x": 40,
-            "y": 56
+            "y": 40
           },
           "size": {
-            "width": 192,
-            "height": 128
+            "width": 208,
+            "height": 120
           }
         }
       ],
@@ -267,13 +267,6 @@
           "size": 4
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 2,
-        "y": -0.5
-      },
-      "zoom": 1
     }
   },
   "dependencies": {
@@ -332,13 +325,6 @@
               }
             }
           ]
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       }
     }

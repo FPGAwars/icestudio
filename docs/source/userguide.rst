@@ -18,9 +18,9 @@ File
 +-----------------+----------------------------------------------+--------------+-----------+
 |     Open...     |                Open a project                |    Ctrl+O    |    ⌘+O    |
 +-----------------+----------------------------------------------+--------------+-----------+
-|     Blocks      |           Show the selected blocks           |              |           |
+|     Blocks      | Open the blocks from the selected collection |              |           |
 +-----------------+----------------------------------------------+--------------+-----------+
-|    Examples     |          Show the selected examples          |              |           |
+|    Examples     |Open the examples from the selected collection|              |           |
 +-----------------+----------------------------------------------+--------------+-----------+
 | Add as block... |           Add a project as a block           |              |           |
 +-----------------+----------------------------------------------+--------------+-----------+
@@ -43,6 +43,8 @@ Edit
 +---------------------+---------------------------------+-----------------------+-----------------+
 |   Action            |           Description           |       Shortcut        |     Mac OS      |
 +=====================+=================================+=======================+=================+
+|    Undo             |      Undo the last change       |        Ctrl+Z         |       ⌘+Z       |
++---------------------+---------------------------------+-----------------------+-----------------+
 |    Redo             |      Revert the last undo       | Ctrl+Y | Ctrl+Shift+Z | ⌘+Y | Shift+⌘+Z |
 +---------------------+---------------------------------+-----------------------+-----------------+
 |     Cut             |       Cut selected blocks       |        Ctrl+X         |       ⌘+X       |
@@ -65,9 +67,10 @@ The supported languages are:
 
 * English
 * Spanish
+* French
+* Chinese
 * Galician
 * Basque
-* French
 * Catalan
 
 **Board rules**
@@ -78,6 +81,10 @@ Enable or disable globally the board rules. These rules allow to automate tasks 
 * All not used LEDs are turned off.
 
 More information in the `Board rules section <./rules.html>`_.
+
+**External collections**
+
+Set the external collections path in your system. This absolute route should contain Icestudio collections that will be loaded as external collections.
 
 **Remote hostname**
 
@@ -118,9 +125,6 @@ View
 | FPGA resources  |     Show / Hide the used FPGA resources     |
 +-----------------+---------------------------------------------+
 
-.. image:: ../resources/images/userguide/fpga-resources.png
-
-|
 
 Select
 ``````
@@ -130,11 +134,15 @@ Select
 Select the FPGA board. The supported boards are:
 
 * `IceZUM Alhambra <https://github.com/FPGAwars/icezum>`_
+* `Alhambra II <https://github.com/FPGAwars/Alhambra-II-FPGA>`_
 * `Kéfir I iCE40-HX4K <http://fpgalibre.sourceforge.net/Kefir/>`_
 * `Nandland Go board <https://www.nandland.com/goboard/introduction.html>`_
 * `iCE40-HX8K Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx>`_
 * `iCEstick Evaluation Kit <http://www.pighixxx.com/test/portfolio-items/icestick/>`_
 * `icoBOARD 1.0 <http://icoboard.org/about-icoboard.html>`_
+* `BlackIce <https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board>`_
+* `BlackIce II <https://github.com/mystorm-org/BlackIce-II>`_
+* `TinyFPGA B2 <http://tinyfpga.com/b-series-guide.html>`_
 
 When a board is selected all I/O block combos are updated and its current values reset.
 
@@ -144,7 +152,13 @@ When a board is selected all I/O block combos are updated and its current values
 
 **Collection**
 
-Select the Collection from the installed collections (**Tools > Collections**). A collection is composed by **blocks** and **examples**. When a collections is selected, the following sections are updated with the collection content:
+Select the Collection from the internal collections installed (from **Tools > Collections**) or the external collections (from **Edit > Preferences > External collections**).
+
+.. image:: ../resources/images/userguide/collections.png
+
+|
+
+A collection is composed by **blocks** and **examples**. When a collections is selected, the following sections are updated with the collection content:
 
 * File > Blocks
 * File > Examples
@@ -201,6 +215,8 @@ Collections
 +============+=============================================+
 |    Add     | Add a ZIP file with one or more collections |
 +------------+---------------------------------------------+
+|   Reload   | Reload all the collections from the files   |
++------------+---------------------------------------------+
 |   Remove   |       Remove the selected collection        |
 +------------+---------------------------------------------+
 | Remove all |         Remove all the collections          |
@@ -227,7 +243,7 @@ Collections
 
 .. hint::
 
-    When a ZIP file is added to Icestudio, it is installed in `~/.icestudio/collections`.
+    When a ZIP file of collections is added to Icestudio, it is installed in `~/.icestudio/collections`.
 
 
 Help
@@ -262,6 +278,7 @@ It contains the basic blocks:
 * **Input**: show a dialog to insert the name and type of the input block.
 * **Output**: show a dialog to insert the name and type of the output block.
 * **Constant**: show a dialog to insert the name and type of the constant block.
+* **Memory**: show a dialog to insert the name and type of the memory block.
 * **Code**: show a dialog to insert the ports and parameters of the code block.
 * **Information**: create an empty text box block.
 
@@ -272,17 +289,17 @@ It contains the basic blocks:
 
 .. note::
 
-  **Constant** blocks can be set to **local**. Local parameters are not exposed when the project is added as a block.
+  **Constant** and **memory** blocks can be set to **local**. Local parameters are not exposed when the project is added as a block.
 
 .. hint::
 
-  Multiple **input**, **output** and **constant** blocks can be created using the `comma` separator. For example: ``x, y, z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
-  Double click over **input**, **output** or **constant** block allows to modify the block name and type.
+  Multiple **input**, **output**, **constant** and **memory** blocks can be created using the `comma` separator. For example: ``x, y, z`` will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box. These values can be set by searching and also unset by doing click on the cross.
+  Double click over **input**, **output**, **constant** or **memory** block allows to modify the block name and type.
   In **code** block ports definition, multiple *input* and *output* ports, and *parameters*, can be created also using the `comma` separator.
 
 
-Stored blocks and collections
-`````````````````````````````
+Blocks
+``````
 
 It contains all stored blocks sorted by categories. This menu is generated when the application starts. It can show the Default collection or any installed collection.
 
@@ -303,7 +320,7 @@ Pan is performed using the **Ctrl + mouse left button** or **mouse right button*
 Select
 ``````
 
-Block selection is performed using the **mouse left button**. Blocks can be **selected/unselected** individually using **left-click/Shift+left-click**, respectively. In addition, several blocks can be selected by a **selection box**. When using the **Shift key**, the new selection is added to the previous one. A selection is canceled when the background is **left-clicked**.
+Block selection is performed with the **mouse left button**. Blocks can be **selected/unselected** individually using **Shift+left-click**. In addition, several blocks can be selected by a **selection box**. A selection is canceled when the background is **left-clicked**.
 
 .. image:: ../resources/images/userguide/select.png
 
@@ -317,7 +334,7 @@ Any block or blocks selection can be moved in the design using the **mouse left 
 Resize text blocks
 ``````````````````
 
-**Code** and **Information** blocks can be resized with the resize tool in the **bottom-right corner** of the block.
+**Memory**, **Code**, and **Information** blocks can be resized with the resize tool in the **bottom-right corner** of the block.
 
 .. image:: ../resources/images/userguide/resize.png
 
@@ -371,6 +388,7 @@ Icestudio allows to undo/redo the following actions:
 * Move a block or a blocks selection.
 * Edit an I/O block: name, type and value.
 * Edit a Constant block: name, type and value.
+* Edit a Memory block: name, type, format and value.
 * Edit a Code block: ports, parameters and content.
 * Edit an Information block: type and content.
 * Change the board.
