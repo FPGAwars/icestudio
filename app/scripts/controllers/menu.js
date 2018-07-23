@@ -78,7 +78,6 @@ angular.module('icestudio')
         // Open filepath
         var filepath = arg;
         project.open(filepath);
-        //zeroProject = false;
       }
       else {
         // Move window
@@ -105,7 +104,6 @@ angular.module('icestudio')
           // the projec in the same window
           updateWorkingdir(filepath);
           project.open(filepath);
-          //zeroProject = false;
         }
         else if (project.changed || !equalWorkingFilepath(filepath)) {
           // If this is not the first action, and
@@ -124,7 +122,6 @@ angular.module('icestudio')
                        filepath.startsWith(common.selectedCollection.path);
         updateWorkingdir(editable ? filepath : '');
         project.open(filepath, true);
-        //zeroProject = false;
       }
       else {
         // If this is not the first action, and
@@ -713,7 +710,6 @@ angular.module('icestudio')
       changedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
-      zeroProject = false;
     }
 
     function resetBuildStack() {
