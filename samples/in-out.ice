@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "in-out",
     "version": "1.0",
@@ -53,7 +53,7 @@
           "id": "f8ffb071-9a46-4b46-86d2-cd5b83bae395",
           "type": "basic.output",
           "data": {
-            "name": "out",
+            "name": "",
             "pins": [
               {
                 "index": "0",
@@ -91,13 +91,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 0,
-        "y": 0
-      },
-      "zoom": 1
     }
   },
   "dependencies": {}

@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Split 4:1",
     "version": "1.0",
@@ -27,7 +27,100 @@
           },
           "position": {
             "x": 720,
-            "y": 88
+            "y": 136
+          }
+        },
+        {
+          "id": "acbe271d-4e5b-43cd-9024-281a706267a1",
+          "type": "basic.output",
+          "data": {
+            "name": "out2",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
+          },
+          "position": {
+            "x": 720,
+            "y": 192
+          }
+        },
+        {
+          "id": "83fd883e-245b-42ad-9069-6808f6c14ad4",
+          "type": "basic.input",
+          "data": {
+            "name": "in",
+            "range": "[3:0]",
+            "pins": [
+              {
+                "index": "3",
+                "name": "",
+                "value": "0"
+              },
+              {
+                "index": "2",
+                "name": "",
+                "value": "0"
+              },
+              {
+                "index": "1",
+                "name": "",
+                "value": "0"
+              },
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true,
+            "clock": false
+          },
+          "position": {
+            "x": 64,
+            "y": 216
+          }
+        },
+        {
+          "id": "e04dce66-66d6-4e44-98b5-95b6c758c923",
+          "type": "basic.output",
+          "data": {
+            "name": "out1",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
+          },
+          "position": {
+            "x": 720,
+            "y": 248
+          }
+        },
+        {
+          "id": "2b80bddc-b868-4b65-9117-fad207f5da37",
+          "type": "basic.output",
+          "data": {
+            "name": "out0",
+            "pins": [
+              {
+                "index": "0",
+                "name": "",
+                "value": "0"
+              }
+            ],
+            "virtual": true
+          },
+          "position": {
+            "x": 720,
+            "y": 304
           }
         },
         {
@@ -67,99 +160,6 @@
           "size": {
             "width": 368,
             "height": 160
-          }
-        },
-        {
-          "id": "acbe271d-4e5b-43cd-9024-281a706267a1",
-          "type": "basic.output",
-          "data": {
-            "name": "out2",
-            "pins": [
-              {
-                "index": "0",
-                "name": "",
-                "value": "0"
-              }
-            ],
-            "virtual": true
-          },
-          "position": {
-            "x": 720,
-            "y": 176
-          }
-        },
-        {
-          "id": "83fd883e-245b-42ad-9069-6808f6c14ad4",
-          "type": "basic.input",
-          "data": {
-            "name": "in",
-            "range": "[3:0]",
-            "pins": [
-              {
-                "index": "3",
-                "name": "",
-                "value": "0"
-              },
-              {
-                "index": "2",
-                "name": "",
-                "value": "0"
-              },
-              {
-                "index": "1",
-                "name": "",
-                "value": "0"
-              },
-              {
-                "index": "0",
-                "name": "",
-                "value": "0"
-              }
-            ],
-            "virtual": true,
-            "clock": false
-          },
-          "position": {
-            "x": 24,
-            "y": 216
-          }
-        },
-        {
-          "id": "e04dce66-66d6-4e44-98b5-95b6c758c923",
-          "type": "basic.output",
-          "data": {
-            "name": "out1",
-            "pins": [
-              {
-                "index": "0",
-                "name": "",
-                "value": "0"
-              }
-            ],
-            "virtual": true
-          },
-          "position": {
-            "x": 720,
-            "y": 264
-          }
-        },
-        {
-          "id": "2b80bddc-b868-4b65-9117-fad207f5da37",
-          "type": "basic.output",
-          "data": {
-            "name": "out0",
-            "pins": [
-              {
-                "index": "0",
-                "name": "",
-                "value": "0"
-              }
-            ],
-            "virtual": true
-          },
-          "position": {
-            "x": 720,
-            "y": 352
           }
         }
       ],
@@ -217,13 +217,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 61.4389,
-        "y": 10.8857
-      },
-      "zoom": 0.8568
     }
   },
   "dependencies": {}

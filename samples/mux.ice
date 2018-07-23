@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Mux4:1",
     "version": "1.1",
@@ -43,42 +43,7 @@
           },
           "position": {
             "x": 64,
-            "y": 120
-          }
-        },
-        {
-          "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
-          "type": "basic.code",
-          "data": {
-            "code": "// Multiplexer 4 to 1\n\nassign out = data[sel];",
-            "params": [],
-            "ports": {
-              "in": [
-                {
-                  "name": "data",
-                  "range": "[3:0]",
-                  "size": 4
-                },
-                {
-                  "name": "sel",
-                  "range": "[1:0]",
-                  "size": 2
-                }
-              ],
-              "out": [
-                {
-                  "name": "out"
-                }
-              ]
-            }
-          },
-          "position": {
-            "x": 312,
-            "y": 152
-          },
-          "size": {
-            "width": 272,
-            "height": 144
+            "y": 160
           }
         },
         {
@@ -124,6 +89,41 @@
             "x": 64,
             "y": 232
           }
+        },
+        {
+          "id": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
+          "type": "basic.code",
+          "data": {
+            "code": "// Multiplexer 4 to 1\n\nassign out = data[sel];",
+            "params": [],
+            "ports": {
+              "in": [
+                {
+                  "name": "data",
+                  "range": "[3:0]",
+                  "size": 4
+                },
+                {
+                  "name": "sel",
+                  "range": "[1:0]",
+                  "size": 2
+                }
+              ],
+              "out": [
+                {
+                  "name": "out"
+                }
+              ]
+            }
+          },
+          "position": {
+            "x": 312,
+            "y": 152
+          },
+          "size": {
+            "width": 272,
+            "height": 144
+          }
         }
       ],
       "wires": [
@@ -136,12 +136,7 @@
             "block": "5e1563d7-86de-4618-a9b0-2a08075af9ec",
             "port": "data"
           },
-          "vertices": [
-            {
-              "x": 232,
-              "y": 176
-            }
-          ],
+          "vertices": [],
           "size": 4
         },
         {
@@ -166,13 +161,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 0,
-        "y": 0
-      },
-      "zoom": 1
     }
   },
   "dependencies": {}
