@@ -15,7 +15,7 @@
           "id": "1a49c635-92d6-4641-bd3b-dbd7604a76bf",
           "type": "basic.output",
           "data": {
-            "name": "LED5",
+            "name": "",
             "pins": [
               {
                 "index": "0",
@@ -34,7 +34,7 @@
           "id": "1f3764d6-7db2-4e5a-912d-a25aad6459e2",
           "type": "basic.output",
           "data": {
-            "name": "LED4",
+            "name": "",
             "pins": [
               {
                 "index": "0",
