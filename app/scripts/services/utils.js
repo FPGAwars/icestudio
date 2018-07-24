@@ -491,14 +491,18 @@ angular.module('icestudio')
       })
       .set('oncancel', function(/*evt*/) {
       });
-      // Focus first element
+      // Restore input values
       setTimeout(function(){
         $('#form0').select();
         for (var i in specs) {
           var spec = specs[i];
           switch(spec.type) {
             case 'text':
+            case 'combobox':
               $('#form' + i).val(spec.value);
+              break;
+            case 'checkbox':
+              $('#form' + i).prop('checked', spec.value);
               break;
           }
         }
