@@ -128,14 +128,13 @@ angular.module('icestudio')
 
     function checkToolchainInstalled() {
       return new Promise(function(resolve, reject) {
-        checkToolchain(function() {
-          if (toolchain.installed || toolchain.disabled) {
-            resolve();
-          }
-          else {
-            reject();
-          }
-        });
+        if (toolchain.installed) {
+          resolve();
+        }
+        else {
+          toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
+          reject();
+        }
       });
     }
 
@@ -231,7 +230,6 @@ angular.module('icestudio')
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
-      toolchain.disabled = utils.toolchainDisabled;
       nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
         if (error) {
           toolchain.apio = '';
@@ -268,19 +266,19 @@ angular.module('icestudio')
           }
         }
       });
+    }
 
-      function toolchainNotInstalledAlert(message) {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
-        resultAlert.callback = function(isClicked) {
-          if (isClicked) {
-            // Install the new toolchain
-            $rootScope.$broadcast('installToolchain');
-          }
-        };
+    function toolchainNotInstalledAlert(message) {
+      if (resultAlert) {
+        resultAlert.dismiss(false);
       }
+      resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
+      resultAlert.callback = function(isClicked) {
+        if (isClicked) {
+          // Install the new toolchain
+          $rootScope.$broadcast('installToolchain');
+        }
+      };
     }
 
     function executeRemote(commands, hostname) {
@@ -324,7 +322,6 @@ angular.module('icestudio')
 
         function _executeLocal() {
           var apio = utils.getApioExecutable();
-          toolchain.disabled = utils.toolchainDisabled;
           nodeChildProcess.exec(
             ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '),
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
@@ -366,7 +363,7 @@ angular.module('icestudio')
               switch (common.selectedBoard.name) {
                 // TinyFPGA-B2 programmer errors
                 case 'TinyFPGA-B2':
-                case 'TinyFPGA-BX':      
+                case 'TinyFPGA-BX':
                   var match = stdout.match(/Bootloader\snot\sactive/g);
                   if (match && match.length === 3) {
                     resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
@@ -744,6 +741,8 @@ angular.module('icestudio')
       // Hide OK button
       $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
 
+      toolchain.installed = false;
+
       // Reset toolchain
       async.series([
         ensurePythonIsAvailable,
@@ -778,6 +777,8 @@ angular.module('icestudio')
       });
       // Hide OK button
       $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
+
+      toolchain.installed = false;
 
       // Install toolchain
       async.series([
@@ -886,8 +887,8 @@ angular.module('icestudio')
 
     function installationCompleted(callback) {
       checkToolchain(function() {
-        closeToolchainAlert();
         if (toolchain.installed) {
+          closeToolchainAlert();
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
           alertify.success(gettextCatalog.getString('Toolchain installed'));
           setupDriversAlert();
