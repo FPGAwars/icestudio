@@ -1177,6 +1177,9 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.applyLocal();
     this.applyValue(opt);
     this.applyFormat();
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   applyName: function() {
@@ -1499,6 +1502,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
   apply: function(opt) {
     this.applyValue(opt);
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   setAnnotation: function(codeError) {
@@ -1875,6 +1881,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.applyValue(opt);
     this.applyReadonly();
     this.updateBox();
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   render: function() {
