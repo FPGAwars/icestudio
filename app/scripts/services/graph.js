@@ -728,15 +728,19 @@ angular.module('icestudio')
     };
 
     this.undo = function() {
-      disableSelected();
-      commandManager.undo();
-      updateWiresOnObstacles();
+      if (!this.addingDraggableBlock) {
+        disableSelected();
+        commandManager.undo();
+        updateWiresOnObstacles();
+      }
     };
 
     this.redo = function() {
-      disableSelected();
-      commandManager.redo();
-      updateWiresOnObstacles();
+      if (!this.addingDraggableBlock) {
+        disableSelected();
+        commandManager.redo();
+        updateWiresOnObstacles();
+      }
     };
 
     this.clearAll = function() {
