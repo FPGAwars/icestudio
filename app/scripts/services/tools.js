@@ -472,10 +472,11 @@ angular.module('icestudio')
               if (hasErrors) {
                 resultAlert = alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
               }
-              else if (hasWarnings) {
-                resultAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
-              }
               else {
+                if (hasWarnings) {
+                  resultAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
+                }
+
                 var stdoutWarning = stdout.split('\n').filter(function (line) {
                   line = line.toLowerCase();
                   return (line.indexOf('warning: ') !== -1);
@@ -486,11 +487,18 @@ angular.module('icestudio')
                           line.indexOf('not installed') !== -1 ||
                           line.indexOf('already declared') !== -1);
                 });
-                if (stdoutWarning.length > 0) {
-                  alertify.warning(stdoutWarning[0]);
-                }
+                stdoutWarning.forEach(function (warning) {
+                  // alertify.warning(warning, 20);
+                });
                 if (stdoutError.length > 0) {
-                  resultAlert = alertify.error(stdoutError[0], 30);
+                  // Show first error
+                  var error = '';
+                  // hardware.blif:#: fatal error: ...
+                  re = /hardware\.blif:([0-9]+):\sfatal\serror:\s(.*)/g;
+                  if (matchError = re.exec(stdoutError[0])) {
+                    error = matchError[2];
+                  }
+                  resultAlert = alertify.error(error, 30);
                 }
                 else {
                   resultAlert = alertify.error(stdout, 30);
