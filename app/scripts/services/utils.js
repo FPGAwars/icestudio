@@ -223,7 +223,7 @@ angular.module('icestudio')
     };
 
     this.removeCollections = function() {
-      this.deleteFolderRecursive(common.COLLECTIONS_DIR);
+      this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
     };
 
     this.deleteFolderRecursive = function(path) {
@@ -324,34 +324,64 @@ angular.module('icestudio')
       }
     }
 
-    this.getFilesRecursive = getFilesRecursive;
+    this.findCollections = function(folder) {
+      var collectionsPaths = [];
+      try {
+        collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
+          return nodePath.join(folder, name);
+        }).filter(function(path) {
+          return isDirectory(path) && isCollectionPath(path);
+        });
+      }
+      catch (e) {
+        console.warn(e);
+      }
+      return collectionsPaths;
+    };
+
+    function isCollectionPath(path) {
+      var content = nodeFs.readdirSync(path);
+      return content &&
+        contains(content, 'README.md') && isFile(nodePath.join(path, 'README.md')) &&
+        contains(content, 'package.json') && isFile(nodePath.join(path, 'package.json')) &&
+        (
+          (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
+          (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
+        );
+    }
+
+    function isFile(path) {
+      return !isDirectory(path);
+    }
+
+    function isDirectory(path) {
+      return nodeFs.lstatSync(path).isDirectory();
+    }
+
+    function contains(array, item) {
+      return array.indexOf(item) !== -1;
+    }
 
     function getFilesRecursive(folder, level) {
       var fileTree = [];
       var validator = /.*\.(ice|json|md)$/;
 
-      if (nodeFs.existsSync(folder)) {
-        var stats;
-        var fileContents = [];
-
-        try {
-          fileContents = nodeFs.readdirSync(folder);
-        }
-        catch (e) { }
+      try {
+        var content = nodeFs.readdirSync(folder);
 
         level--;
 
-        fileContents.forEach(function (name) {
+        content.forEach(function(name) {
           var path = nodePath.join(folder, name);
-          stats = nodeFs.lstatSync(path);
 
-          if (stats.isDirectory()) {
+          if (isDirectory(path)) {
             fileTree.push({
               name: name,
               path: path,
               children: (level >= 0) ? getFilesRecursive(path, level) : []
             });
-          } else if (validator.test(name)) {
+          }
+          else if (validator.test(name)) {
             fileTree.push({
               name: basename(name),
               path: path
@@ -359,8 +389,14 @@ angular.module('icestudio')
           }
         });
       }
+      catch (e) {
+        console.warn(e);
+      }
+
       return fileTree;
     }
+
+    this.getFilesRecursive = getFilesRecursive;
 
     this.setLocale = function(locale, callback) {
       // Update current locale format

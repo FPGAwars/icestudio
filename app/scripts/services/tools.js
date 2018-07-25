@@ -979,7 +979,7 @@ angular.module('icestudio')
                   }
                   collection.name = name;
 
-                  var destPath = nodePath.join(common.COLLECTIONS_DIR, name);
+                  var destPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, name);
                   if (nodeFs.existsSync(destPath)) {
                     alertify.confirm(
                       gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(name) }) + '<br>' +
@@ -1007,7 +1007,7 @@ angular.module('icestudio')
               }
             }, 0);
           }, function(name) {
-            collections.loadCollections();
+            collections.loadInternalCollections();
             // If the selected collection is replaced, load it again
             if (common.selectedCollection.name === name) {
               collections.selectCollection(name);
@@ -1078,8 +1078,8 @@ angular.module('icestudio')
         safeExtract(collection.locale[i], dest, zip);
         // Generate locale JSON files
         var compiler = new nodeGettext.Compiler({ format: 'json' });
-        var sourcePath = nodePath.join(common.COLLECTIONS_DIR, dest);
-        var targetPath = nodePath.join(common.COLLECTIONS_DIR, dest.replace(/\.po$/, '.json'));
+        var sourcePath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
+        var targetPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest.replace(/\.po$/, '.json'));
         var content = nodeFs.readFileSync(sourcePath).toString();
         var json = compiler.convertPo([content]);
         nodeFs.writeFileSync(targetPath, json);
@@ -1098,7 +1098,7 @@ angular.module('icestudio')
 
     function safeExtract(entry, dest, zip) {
       try {
-        var newPath = nodePath.join(common.COLLECTIONS_DIR, dest);
+        var newPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
         zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/false);
       }
       catch(e) {}
@@ -1106,13 +1106,13 @@ angular.module('icestudio')
 
     this.removeCollection = function(collection) {
       utils.deleteFolderRecursive(collection.path);
-      collections.loadCollections();
+      collections.loadInternalCollections();
       alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
     };
 
     this.removeAllCollections = function() {
       utils.removeCollections();
-      collections.loadCollections();
+      collections.loadInternalCollections();
       alertify.success(gettextCatalog.getString('All collections removed'));
     };
 

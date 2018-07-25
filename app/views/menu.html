@@ -210,14 +210,14 @@
                       <span ng-show="common.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
-                  <li class="divider" ng-show="common.internalCollections.length > 1"></li>
+                  <li class="divider" ng-show="common.internalCollections.length > 0"></li>
                   <li ng-repeat="collection in common.internalCollections">
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}&ensp;
                       <span ng-show="common.selectedCollection.path == collection.path" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
-                  <li class="divider" ng-show="common.externalCollections.length > 1"></li>
+                  <li class="divider" ng-show="common.externalCollections.length > 0"></li>
                   <li ng-repeat="collection in common.externalCollections">
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}&ensp;
@@ -301,7 +301,7 @@
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="common.internalCollections.length > 1">
+                        ng-show="common.internalCollections.length > 0">
                       <li ng-repeat="collection in common.internalCollections">
                         <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}

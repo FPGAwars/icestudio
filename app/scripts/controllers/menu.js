@@ -63,7 +63,8 @@ angular.module('icestudio')
         processArg(arg);
         local = arg === 'local' || local;
       }
-      var editable = !project.path.startsWith(common.COLLECTIONS_DIR) &&
+      var editable = !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
+                     !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
                      project.path.startsWith(common.selectedCollection.path);
       if (editable || !local) {
         updateWorkingdir(project.path);
@@ -118,7 +119,8 @@ angular.module('icestudio')
       if (zeroProject) {
         // If this is the first action, open
         // the project in the same window
-        var editable = !filepath.startsWith(common.COLLECTIONS_DIR) &&
+        var editable = !filepath.startsWith(common.DEFAULT_COLLECTION_DIR) &&
+                       !filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
                        filepath.startsWith(common.selectedCollection.path);
         updateWorkingdir(editable ? filepath : '');
         project.open(filepath, true);
@@ -159,12 +161,14 @@ angular.module('icestudio')
 
     function reloadCollectionsIfRequired(filepath) {
       var selected = common.selectedCollection.name;
-      if (filepath.startsWith(common.COLLECTIONS_DIR) ||
-          filepath.startsWith(profile.get('externalCollections'))) {
-        collections.loadCollections();
+      if (filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR)) {
+        collections.loadInternalCollections();
+      }
+      if (filepath.startsWith(profile.get('externalCollections'))) {
+        collections.loadExternalCollections();
       }
       if (selected &&
-          filepath.startsWith(nodePath.join(common.COLLECTIONS_DIR, selected)) ||
+          filepath.startsWith(nodePath.join(common.INTERNAL_COLLECTIONS_DIR, selected)) ||
           filepath.startsWith(nodePath.join(profile.get('externalCollections'), selected))) {
         collections.selectCollection(common.selectedCollection.path);
       }
@@ -363,7 +367,11 @@ angular.module('icestudio')
         if (newExternalCollections !== externalCollections) {
           if (newExternalCollections === '' || nodeFs.existsSync(newExternalCollections)) {
             profile.set('externalCollections', newExternalCollections);
-            $scope.reloadCollections();
+            collections.loadExternalCollections();
+            collections.selectCollection(); // default
+            utils.rootScopeSafeApply();
+            if (common.selectedCollection.path.startsWith(newExternalCollections)) {
+            }
             alertify.success(gettextCatalog.getString('External collections updated'));
           }
           else {
@@ -640,7 +648,7 @@ angular.module('icestudio')
     };
 
     $scope.reloadCollections = function() {
-      collections.loadCollections();
+      collections.loadAllCollections();
       collections.selectCollection(common.selectedCollection.path);
     };
 

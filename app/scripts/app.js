@@ -35,7 +35,7 @@ angular
     // Load profile
     utils.loadProfile(profile, function() {
       // Load collections
-      collections.loadCollections();
+      collections.loadAllCollections();
       // Load language
       utils.loadLanguage(profile, function() {
         // Rearrange collections
