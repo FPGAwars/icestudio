@@ -322,15 +322,15 @@ angular.module('icestudio')
 
         function _executeLocal() {
           var apio = utils.getApioExecutable();
-          nodeChildProcess.exec(
-            ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' '),
+          var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
+          nodeChildProcess.exec(command,
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
             function(error, stdout, stderr) {
               if (commands[0] === 'upload') {
                 // Upload command requires to restore the drivers (Mac OS)
                 drivers.postUpload();
               }
-              common.apioOutput = stdout + stderr;
+              common.apioOutput = command + '\n\n' + stdout + stderr;
               resolve({ error: error, stdout: stdout, stderr: stderr });
             });
         }
