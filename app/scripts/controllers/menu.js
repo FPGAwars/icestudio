@@ -544,6 +544,20 @@ angular.module('icestudio')
       }
     };
 
+    $scope.showToolchainOutput = function() {
+      gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.apioOutput), {
+        title: 'Toolchain output',
+        focus: true,
+        toolbar: false,
+        resizable: true,
+        width: 700,
+        height: 400,
+        'min_width': 300,
+        'min_height': 300,
+        icon: 'resources/images/icestudio-logo.png'
+      });
+    };
+
     $scope.selectCollection = function(collection) {
       if (common.selectedCollection.path !== collection.path) {
         var name = collection.name;
