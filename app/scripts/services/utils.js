@@ -330,7 +330,7 @@ angular.module('icestudio')
         collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
           return nodePath.join(folder, name);
         }).filter(function(path) {
-          return isDirectory(path) && isCollectionPath(path);
+          return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
         });
       }
       catch (e) {
@@ -340,22 +340,33 @@ angular.module('icestudio')
     };
 
     function isCollectionPath(path) {
-      var content = nodeFs.readdirSync(path);
-      return content &&
-        contains(content, 'README.md') && isFile(nodePath.join(path, 'README.md')) &&
-        contains(content, 'package.json') && isFile(nodePath.join(path, 'package.json')) &&
-        (
-          (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
-          (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
-        );
+      var result = false;
+      try {
+        var content = nodeFs.readdirSync(path);
+        result = content &&
+          contains(content, 'README.md') && isFile(nodePath.join(path, 'README.md')) &&
+          contains(content, 'package.json') && isFile(nodePath.join(path, 'package.json')) &&
+          (
+            (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
+            (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
+          );
+      }
+      catch (e) {
+        console.warn(e);
+      }
+      return result;
     }
 
     function isFile(path) {
-      return !isDirectory(path);
+      return nodeFs.lstatSync(path).isFile();
     }
 
     function isDirectory(path) {
       return nodeFs.lstatSync(path).isDirectory();
+    }
+
+    function isSymbolicLink(path) {
+      return nodeFs.lstatSync(path).isSymbolicLink();
     }
 
     function contains(array, item) {
