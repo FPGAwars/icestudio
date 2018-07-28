@@ -454,7 +454,7 @@ Go to **View > Board rules**
 Disable the board rules
 -----------------------
 
-Go to **Edit > Preferences > Board rules > Disable**
+Go to **Edit > Preferences > Board rules**
 
 .. image:: ../resources/images/howto/disable-rules.png
 
