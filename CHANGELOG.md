@@ -8,18 +8,28 @@ All notable changes to this project will be documented in this file.
 - Improve forms style
 
 ### External collections (#251)
-- Add `Edit` > `Preferences` > `External collections` form
-- `Select` > `Collections`
+- Add `Edit > Preferences > External collections` form
+- Refactor `Select > Collections`:
     - Default collection
     - Internal collections
     - External collections
 - Reload collection when a block/example is saved
+- Improve collections load speed
+- Allow symbolic linked dirs as collections
 
 ### General
 - Update fr_FR translation (#240 by @pcotret)
 - Update gl_ES translation (#245 by @xoan)
-- Fix check toolchain (#246 by @set-soft)
 - Update es_ES translation
+- Fix check toolchain (#246 by @set-soft)
+- Fix project.version on save
+- Fix restore input form values
+- Improve Memory block BLIF errors
+- Improve select box size
+- Disable undo/redo while adding blocks
+- Add `View > Toolchain output`
+- Show scroll only on focus
+- Refactor `Edit > Preferences > Board rules` menu
 
 
 ## [0.3.3-beta] - 2018-05-24
