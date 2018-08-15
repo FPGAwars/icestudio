@@ -332,11 +332,13 @@ angular.module('icestudio')
     this.findCollections = function(folder) {
       var collectionsPaths = [];
       try {
-        collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
-          return nodePath.join(folder, name);
-        }).filter(function(path) {
-          return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
-        });
+        if (folder) {
+          collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
+            return nodePath.join(folder, name);
+          }).filter(function(path) {
+            return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
+          });
+        }
       }
       catch (e) {
         console.warn(e);
