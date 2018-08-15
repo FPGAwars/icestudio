@@ -28,7 +28,7 @@
     "external": "",
     "branch": "stable"
   },
-  "collection": "0.3.3-beta",
+  "collection": "0.3.3-rc",
   "engines": {
     "node": ">= 0.10.0"
   },
