@@ -424,14 +424,14 @@ angular.module('icestudio')
       });
     };
 
-    $scope.enableBoardRules = function() {
-      graph.setBoardRules(true);
-      alertify.success(gettextCatalog.getString('Board rules enabled'));
-    };
-
-    $scope.disableBoardRules = function() {
-      graph.setBoardRules(false);
-      alertify.success(gettextCatalog.getString('Board rules disabled'));
+    $scope.toggleBoardRules = function() {
+      graph.setBoardRules(!profile.get('boardRules'));
+      if (profile.get('boardRules')) {
+        alertify.success(gettextCatalog.getString('Board rules enabled'));
+      }
+      else {
+        alertify.success(gettextCatalog.getString('Board rules disabled'));
+      }
     };
 
     $(document).on('langChanged', function(evt, lang) {

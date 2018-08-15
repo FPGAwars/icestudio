@@ -122,23 +122,11 @@
                     <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
                   </li>
                   <li class="divider"></li>
-                  <li class="dropdown-submenu" uib-dropdown>
-                    <a href uib-dropdown-toggle>
+                  <li>
+                    <a href ng-click="toggleBoardRules()">
                       {{ 'Board rules' | translate }}&ensp;
                       <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
-                    <ul uib-dropdown-menu>
-                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
-                          {{ 'Enable' | translate }}
-                        </a>
-                      </li>
-                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
-                          {{ 'Disable' | translate }}
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                   <li>
                     <a href ng-click="setExternalCollections()">{{ 'External collections' | translate }}</a>

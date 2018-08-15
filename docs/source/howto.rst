@@ -253,6 +253,14 @@ Upload a bitstream
 
    |
 
+Show the commands output
+------------------------
+
+After executing *Tools > Verify*, *Tools > Build* or *Tools > Upload* you can see the executed command and the output in a new windows opened from **View > Toolchain output**.
+
+.. image:: ../resources/images/howto/toolchain-output.png
+
+|
 
 Create a block
 --------------
@@ -446,7 +454,7 @@ Go to **View > Board rules**
 Disable the board rules
 -----------------------
 
-Go to **Edit > Preferences > Board rules > Disable**
+Go to **Edit > Preferences > Board rules**
 
 .. image:: ../resources/images/howto/disable-rules.png
 

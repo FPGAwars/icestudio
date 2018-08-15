@@ -84,7 +84,7 @@ More information in the `Board rules section <./rules.html>`_.
 
 **External collections**
 
-Set the external collections path in your system. This absolute route should contain Icestudio collections that will be loaded as external collections.
+Set the external collections path in your system. This absolute route should contain Icestudio collections (directories or symbolic links to directories) that will be loaded as external collections.
 
 **Remote hostname**
 
@@ -109,21 +109,23 @@ Contains all the information about the project:
 View
 ````
 
-+-----------------+---------------------------------------------+
-|   Action        |             Description                     |
-+=================+=============================================+
-|     PCF         |       Show the board PCF file               |
-+-----------------+---------------------------------------------+
-|    Pinout       |      Show the board SVG pinout              |
-+-----------------+---------------------------------------------+
-|  Datasheet      | Open a web browser with the board datasheet |
-+-----------------+---------------------------------------------+
-| Board rules     |         Show the current board rules        |
-+-----------------+---------------------------------------------+
-| Collection info |   Show the current collection README file   |
-+-----------------+---------------------------------------------+
-| FPGA resources  |     Show / Hide the used FPGA resources     |
-+-----------------+---------------------------------------------+
++-----------------+----------------------------------------------+
+|   Action        |             Description                      |
++=================+==============================================+
+|     PCF         |       Show the board PCF file                |
++-----------------+----------------------------------------------+
+|    Pinout       |      Show the board SVG pinout               |
++-----------------+----------------------------------------------+
+|  Datasheet      | Open a web browser with the board datasheet  |
++-----------------+----------------------------------------------+
+| Board rules     |         Show the current board rules         |
++-----------------+----------------------------------------------+
+| Collection info |   Show the current collection README file    |
++-----------------+----------------------------------------------+
+|Toolchain output |Show the output of the latest executed command|
++-----------------+----------------------------------------------+
+| FPGA resources  |     Show / Hide the used FPGA resources      |
++-----------------+----------------------------------------------+
 
 
 Select
