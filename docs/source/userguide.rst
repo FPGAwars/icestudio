@@ -135,16 +135,25 @@ Select
 
 Select the FPGA board. The supported boards are:
 
+HX1K
+
 * `IceZUM Alhambra <https://github.com/FPGAwars/icezum>`_
-* `Alhambra II <https://github.com/FPGAwars/Alhambra-II-FPGA>`_
-* `Kéfir I iCE40-HX4K <http://fpgalibre.sourceforge.net/Kefir/>`_
 * `Nandland Go board <https://www.nandland.com/goboard/introduction.html>`_
-* `iCE40-HX8K Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard.aspx>`_
-* `iCEstick Evaluation Kit <http://www.pighixxx.com/test/portfolio-items/icestick/>`_
-* `icoBOARD 1.0 <http://icoboard.org/about-icoboard.html>`_
+* `iCEstick Evaluation Kit <http://www.latticesemi.com/icestick>`_
+
+HX8K
+
+* `Alhambra II <https://github.com/FPGAwars/Alhambra-II-FPGA>`_
+* `icoBOARD 1.0 <http://icoboard.org/icoboard-1-0.html>`_
 * `BlackIce <https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board>`_
 * `BlackIce II <https://github.com/mystorm-org/BlackIce-II>`_
-* `TinyFPGA B2 <http://tinyfpga.com/b-series-guide.html>`_
+* `Kéfir I <http://fpgalibre.sourceforge.net/Kefir/>`_
+* `iCE40-HX8K Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard>`_
+
+LP8K
+
+* `TinyFPGA B2 <https://tinyfpga.com/b-series-guide.html>`_
+* `TinyFPGA BX <https://tinyfpga.com/bx/guide.html>`_
 
 When a board is selected all I/O block combos are updated and its current values reset.
 

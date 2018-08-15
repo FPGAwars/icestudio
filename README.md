@@ -34,8 +34,8 @@ Visual editor for open FPGA boards. Built on top of the [Icestorm project](http:
 
 | Board name | Interface |
 |:-|:-:|
-| [TinyFPGA B2](http://tinyfpga.com/b-series-guide.html) | Serial |
-| [TinyFPGA BX](http://tinyfpga.com/b-series-guide.html) | Serial |
+| [TinyFPGA B2](https://tinyfpga.com/b-series-guide.html) | Serial |
+| [TinyFPGA BX](https://tinyfpga.com/bx/guide.html) | Serial |
 
 ## Installation
 
