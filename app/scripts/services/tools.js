@@ -339,22 +339,24 @@ angular.module('icestudio')
 
     function processResult(result, code) {
       result = result || {};
-      var error = result.error;
+      var _error = result.error;
       var stdout = result.stdout;
       var stderr = result.stderr;
 
       return new Promise(function(resolve, reject) {
-        if (error || stderr) {
+        if (_error || stderr) {
           // -- Process errors
           reject();
 
           if (stdout) {
+            var boardName = common.selectedBoard.name;
+            var boardLabel = common.selectedBoard.info.label;
             // - Apio errors
-            if (stdout.indexOf('Error: board not connected') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+            if (stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) }), 30);
             }
-            else if (stdout.indexOf('Error: board not available') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+            else if (stdout.indexOf('Error: board ' + boardName + '  not available') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);
               setupDriversAlert();
             }
             else if (stdout.indexOf('Error: unknown board') !== -1) {
@@ -370,11 +372,11 @@ angular.module('icestudio')
                     resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
                   }
                   else if (stdout.indexOf('Device or resource busy') !== -1) {
-                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);
                     setupDriversAlert();
                   }
                   else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
-                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(common.selectedBoard.info.label) }), 30);
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(boardLabel) }), 30);
                   }
                   else {
                     resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
@@ -478,19 +480,19 @@ angular.module('icestudio')
                   resultAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
                 }
 
-                var stdoutWarning = stdout.split('\n').filter(function (line) {
-                  line = line.toLowerCase();
-                  return (line.indexOf('warning: ') !== -1);
-                });
+                // var stdoutWarning = stdout.split('\n').filter(function (line) {
+                //   line = line.toLowerCase();
+                //   return (line.indexOf('warning: ') !== -1);
+                // });
                 var stdoutError = stdout.split('\n').filter(function (line) {
                   line = line.toLowerCase();
                   return (line.indexOf('error: ') !== -1 ||
                           line.indexOf('not installed') !== -1 ||
                           line.indexOf('already declared') !== -1);
                 });
-                stdoutWarning.forEach(function (warning) {
-                  // alertify.warning(warning, 20);
-                });
+                // stdoutWarning.forEach(function (warning) {
+                //   alertify.warning(warning, 20);
+                // });
                 if (stdoutError.length > 0) {
                   // Show first error
                   var error = '';
