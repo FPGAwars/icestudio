@@ -65,6 +65,6 @@ Apio backend is configured in the ``app/package.json`` file:
 - ``apio.max``: maximum version (<)
 - ``apio.extras``: list of external Python programmers (*blackiceprog*, *tinyfpgab*)
 - ``apio.external``: load an external Apio package instead of the default one (e.g. */path/to/my/apio*)
-- ``apio.develop``: install Apio from the repository instead of PyPI.
+- ``apio.branch``: install Apio from the repository branch instead of PyPI.
 
 An external Apio package can be also set on runtime using the ``ICESTUDIO_APIO`` environment variable.

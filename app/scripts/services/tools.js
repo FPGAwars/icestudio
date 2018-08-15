@@ -859,7 +859,7 @@ angular.module('icestudio')
 
     function installOnlineApio(callback) {
       var extraPackages = _package.apio.extras || [];
-      var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
+      var apio = utils.getApioInstallable();
       updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }

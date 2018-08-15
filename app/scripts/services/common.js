@@ -38,7 +38,7 @@ angular.module('icestudio')
     this.apioOutput = '';
 
     // Apio URL
-    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git#egg=apio';
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);

@@ -192,12 +192,17 @@ angular.module('icestudio')
     this.installOnlineApio = function(callback) {
       var versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
       var extraPackages = _package.apio.extras || [];
-      var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
+      var apio = this.getApioInstallable();
       this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
-    this.apioInstall = function(_package, callback) {
-      this.executeCommand([common.APIO_CMD, 'install', _package], callback);
+    this.getApioInstallable = function() {
+      return _package.apio.branch ?
+        common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch) : 'apio';
+    };
+
+    this.apioInstall = function(pkg, callback) {
+      this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
     };
 
     this.toolchainDisabled = false;

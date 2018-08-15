@@ -5,26 +5,37 @@
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
-Visual editor for open FPGAs. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
+Visual editor for open FPGA boards. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
 
     Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
 ### Supported boards
 
-| Board name | GNU/Linux | Windows | Mac OS |
-|:-|:-:|:-:|:-:|
-| [Alhambra II](https://github.com/FPGAwars/Alhambra-II-FPGA) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** | &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |  &nbsp;&nbsp;:white_check_mark:&nbsp;**\*** |
-| [BlackIce](https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [BlackIce II](https://github.com/mystorm-org/BlackIce-II) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [TinyFPGA B2](http://tinyfpga.com/b-series-guide.html) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+#### HX1K
 
-**\*** Use with Raspberry Pi
+| Board name | Interface |
+|:-|:-:|
+| [IceZUM Alhambra](https://github.com/FPGAwars/icezum) | FTDI |
+| [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | FTDI |
+| [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | FTDI |
+
+#### HX8K
+
+| Board name | Interface |
+|:-|:-:|
+| [Alhambra II](https://github.com/FPGAwars/Alhambra-II-FPGA) | FTDI |
+| [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) | GPIO RPi |
+| [BlackIce](https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board) | Serial |
+| [BlackIce II](https://github.com/mystorm-org/BlackIce-II) | Serial |
+| [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | FTDI |
+| [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | FTDI |
+
+#### LP8K
+
+| Board name | Interface |
+|:-|:-:|
+| [TinyFPGA B2](http://tinyfpga.com/b-series-guide.html) | Serial |
+| [TinyFPGA BX](http://tinyfpga.com/b-series-guide.html) | Serial |
 
 ## Installation
 
@@ -123,7 +134,7 @@ Apio backend is configured in the `app/package.json` file:
 - `apio.max`: maximum version (<)
 - `apio.extras`: list of external Python programmers (*blackiceprog*, *tinyfpgab*)
 - `apio.external`: load an external Apio package instead of the default one (e.g. */path/to/my/apio*)
-- `apio.develop`: install Apio from the repository instead of PyPI.
+- `apio.branch`: install Apio from the repository branch instead of PyPI.
 
 An external Apio package can be also set on runtime using the `ICESTUDIO_APIO` environment variable.
 
