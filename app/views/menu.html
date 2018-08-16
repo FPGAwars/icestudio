@@ -183,13 +183,19 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Board' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="board in common.boards">
-                    <a href ng-click="selectBoard(board)">
-                      {{ board.info.label }}&ensp;
-                      <span ng-show="common.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                  </li>
-                </ul>
+                   <li><a><b>HX1K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'HX1K'" board="board"></menuboard>
+                   </li>
+                   <li><a><b>HX8K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'HX8K'" board="board"></menuboard>
+                   </li>
+                   <li><a><b>LP8K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'LP8K'" board="board"></menuboard>
+                   </li>
+                 </ul>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
