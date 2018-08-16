@@ -181,7 +181,7 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
 4. **Select your board**
 
-   Go to **Select > Board** and select **IceZUM Alhambra**, **Kéfir I iCE40-HX4K**, **Nandland Go board**, **iCE40-HX8K Breakout Board**, **iCEstick Evaluation Kit** or **icoBOARD 1.0**.
+   Go to **Select > Board** and select the board from the list.
 
    .. image:: ../resources/images/howto/board.png
 
