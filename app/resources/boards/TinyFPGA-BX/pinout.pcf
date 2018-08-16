@@ -53,7 +53,7 @@ set_io --warn-no-port PIN_30 E8
 set_io --warn-no-port PIN_31 J2
 
 # -- LED pin on bottom of board
-set_io --warn-no-port LED B3
+set_io --warn-no-port LED B3 # output
 
 # -- USB pins on bottom of board
 set_io --warn-no-port USBP B4

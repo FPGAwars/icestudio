@@ -144,10 +144,10 @@ HX1K
 HX8K
 
 * `Alhambra II <https://github.com/FPGAwars/Alhambra-II-FPGA>`_
-* `icoBOARD 1.0 <http://icoboard.org/icoboard-1-0.html>`_
 * `BlackIce <https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board>`_
 * `BlackIce II <https://github.com/mystorm-org/BlackIce-II>`_
-* `Kéfir I <http://fpgalibre.sourceforge.net/Kefir/>`_
+* `icoBOARD 1.0 <http://icoboard.org/icoboard-1-0.html>`_
+* `Kéfir I iCE40-HX4K <http://fpgalibre.sourceforge.net/Kefir/>`_
 * `iCE40-HX8K Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard>`_
 
 LP8K
