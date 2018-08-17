@@ -19,64 +19,113 @@ Input block
 * Type: ``basic.input``
 * States:
 
+  * FPGA pin: *yellow*
   * Virtual: *green*
-  * FPGA I/O: *yellow*
 
 * Show clock
 
 Wire
 ~~~~
 
-E.g.: basic input block with value *in*.
+E.g.: basic FPGA input block with name *Button*.
 
-.. image:: ../resources/images/blocks/basic-input.png
+.. image:: ../resources/images/blocks/basic-fpga-input.png
 
 .. code-block:: json
 
-   {
-     "data": {
-       "name": "in",
-       "pins": [
-         {
-           "index": "0",
-           "name": "SW1",
-           "value": "10"
-         }
-       ],
-       "virtual": false,
-       "clock": false
-     }
+  {
+   "data": {
+     "name": "Button",
+     "pins": [
+       {
+         "index": "0",
+         "name": "SW1",
+         "value": "10"
+       }
+     ],
+     "virtual": false,
+     "clock": false
    }
+  }
+
+
+E.g.: basic Virtual input block with no name and clock symbol.
+
+.. image:: ../resources/images/blocks/basic-virtual-input.png
+
+.. code-block:: json
+
+  {
+   "data": {
+     "name": "",
+     "pins": [
+       {
+         "index": "0",
+         "name": "",
+         "value": ""
+       }
+     ],
+     "virtual": true,
+     "clock": true
+   }
+  }
 
 Bus
 ~~~
 
-E.g.: basic input block with value *in[1:0]*.
+E.g.: basic FPGA input block with value *in[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-input-bus.png
+.. image:: ../resources/images/blocks/basic-fpga-input-bus.png
 
 .. code-block:: json
 
-    {
-      "data": {
-        "name": "in",
-        "range": "[1:0]",
-        "pins": [
-          {
-            "index": "1",
-            "name": "SW1",
-            "value": "10"
-          },
-          {
-            "index": "0",
-            "name": "SW2",
-            "value": "11"
-          }
-        ],
-        "virtual": false,
-        "clock": false
-      }
+  {
+    "data": {
+      "name": "in",
+      "range": "[1:0]",
+      "pins": [
+        {
+          "index": "1",
+          "name": "SW1",
+          "value": "10"
+        },
+        {
+          "index": "0",
+          "name": "SW2",
+          "value": "11"
+        }
+      ],
+      "virtual": false,
+      "clock": false
     }
+  }
+
+E.g.: basic Virtual input block with value *in[1:0]*.
+
+.. image:: ../resources/images/blocks/basic-virtual-input-bus.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "name": "in",
+      "range": "[1:0]",
+      "pins": [
+        {
+          "index": "1",
+          "name": "",
+          "value": ""
+        },
+        {
+          "index": "0",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "virtual": true,
+      "clock": false
+    }
+  }
 
 Output block
 ````````````
@@ -84,23 +133,21 @@ Output block
 * Type: ``basic.output``
 * States:
 
+  * FPGA pin: *yellow*
   * Virtual: *green*
-  * FPGA I/O: *yellow*
-
-* Show clock
 
 Wire
 ~~~~
 
-E.g.: basic output block with value *out*.
+E.g.: basic FPGA output block with no name.
 
-.. image:: ../resources/images/blocks/basic-output.png
+.. image:: ../resources/images/blocks/basic-fpga-output.png
 
 .. code-block:: json
 
    {
      "data": {
-       "name": "out",
+       "name": "",
        "pins": [
          {
            "index": "0",
@@ -108,40 +155,84 @@ E.g.: basic output block with value *out*.
            "value": "95"
          }
        ],
-       "virtual": false,
-       "clock": false
+       "virtual": false
      }
    }
+
+E.g.: basic Virtual output block with name "out".
+
+.. image:: ../resources/images/blocks/basic-virtual-output.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "name": "out",
+      "pins": [
+        {
+          "index": "0",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "virtual": true
+    }
+  }
 
 Bus
 ~~~
 
-E.g.: basic output block with value *out[1:0]*.
+E.g.: basic FPGA output block with value *out[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-output-bus.png
+.. image:: ../resources/images/blocks/basic-fpga-output-bus.png
 
 .. code-block:: json
 
-    {
-      "data": {
-        "name": "out",
-        "range": "[1:0]",
-        "pins": [
-          {
-            "index": "1",
-            "name": "LED0",
-            "value": "95"
-          },
-          {
-            "index": "0",
-            "name": "LED1",
-            "value": "96"
-          }
-        ],
-        "virtual": false,
-        "clock": false
-      }
+  {
+    "data": {
+      "name": "out",
+      "range": "[1:0]",
+      "pins": [
+        {
+          "index": "1",
+          "name": "LED0",
+          "value": "95"
+        },
+        {
+          "index": "0",
+          "name": "LED1",
+          "value": "96"
+        }
+      ],
+      "virtual": false
     }
+  }
+
+E.g.: basic Virtual output block with value *[1:0]*.
+
+.. image:: ../resources/images/blocks/basic-virtual-output-bus.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "name": "",
+      "range": "[1:0]",
+      "pins": [
+        {
+          "index": "1",
+          "name": "",
+          "value": ""
+        },
+        {
+          "index": "0",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "virtual": true
+    }
+  }
 
 Constant block
 ``````````````
@@ -149,7 +240,7 @@ Constant block
 * Type: ``basic.constant``
 * States:
 
-  * Local parameter: ●
+  * Local parameter (lock)
 
 E.g.: basic constant block with value *V*.
 
