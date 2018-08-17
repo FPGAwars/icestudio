@@ -22,12 +22,12 @@ angular.module('icestudio')
         common.DEFAULT_COLLECTION_DIR,
         utils.getFilesRecursive(common.DEFAULT_COLLECTION_DIR, MAX_LEVEL_SEARCH)
       );
-    }
+    };
 
     this.loadInternalCollections = function () {
       var internalCollections = utils.findCollections(common.INTERNAL_COLLECTIONS_DIR);
       common.internalCollections = loadCollections(internalCollections);
-    }
+    };
 
     this.loadExternalCollections = function () {
       var externalCollectionsPath = profile.get('externalCollections');
@@ -35,7 +35,7 @@ angular.module('icestudio')
         var externalCollections = utils.findCollections(externalCollectionsPath);
         common.externalCollections = loadCollections(externalCollections);
       }
-    }
+    };
 
     function loadCollections(paths) {
       var collections = [];
