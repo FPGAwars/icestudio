@@ -17,6 +17,10 @@ All notable changes to this project will be documented in this file.
 - Improve collections load speed
 - Allow symbolic linked dirs as collections
 
+### Support for TinyFPGA BX
+- Add TinyFPGA BX information (#232 by @tinyfpga)
+- Auto install `tinyprog` programmer
+
 ### General
 - Update fr_FR translation (#240 by @pcotret)
 - Update gl_ES translation (#245 by @xoan)
@@ -30,7 +34,8 @@ All notable changes to this project will be documented in this file.
 - Add `View > Toolchain output`
 - Show scroll only on focus
 - Refactor `Edit > Preferences > Board rules` menu
-
+- Refactor `Select > Boards` menu
+- Update documentation
 
 ## [0.3.3-beta] - 2018-05-24
 ### Support Alhambra II (#227)
