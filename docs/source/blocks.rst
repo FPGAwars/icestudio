@@ -49,7 +49,7 @@ E.g.: basic FPGA input block with name *Button*.
   }
 
 
-E.g.: basic Virtual input block with no name and clock symbol.
+E.g.: basic Virtual input block with no name and the clock symbol.
 
 .. image:: ../resources/images/blocks/basic-virtual-input.png
 
@@ -73,7 +73,7 @@ E.g.: basic Virtual input block with no name and clock symbol.
 Bus
 ~~~
 
-E.g.: basic FPGA input block with value *in[1:0]*.
+E.g.: basic FPGA input block with name *in[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-fpga-input-bus.png
 
@@ -100,7 +100,7 @@ E.g.: basic FPGA input block with value *in[1:0]*.
     }
   }
 
-E.g.: basic Virtual input block with value *in[1:0]*.
+E.g.: basic Virtual input block with name *in[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-virtual-input-bus.png
 
@@ -182,7 +182,7 @@ E.g.: basic Virtual output block with name "out".
 Bus
 ~~~
 
-E.g.: basic FPGA output block with value *out[1:0]*.
+E.g.: basic FPGA output block with name *out[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-fpga-output-bus.png
 
@@ -208,7 +208,7 @@ E.g.: basic FPGA output block with value *out[1:0]*.
     }
   }
 
-E.g.: basic Virtual output block with value *[1:0]*.
+E.g.: basic Virtual output block with name *[1:0]*.
 
 .. image:: ../resources/images/blocks/basic-virtual-output-bus.png
 
@@ -242,19 +242,31 @@ Constant block
 
   * Local parameter (lock)
 
-E.g.: basic constant block with value *V*.
+E.g.: basic constant block with name *value*.
 
-.. image:: ../resources/images/blocks/basic-constant.png
+.. image:: ../resources/images/blocks/basic-constant-local.png
 
 .. code-block:: json
 
    {
      "data": {
-       "name": "V",
+       "name": "value",
        "value": "4'b1001",
        "local": true
      }
    }
+
+.. image:: ../resources/images/blocks/basic-constant.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "name": "",
+      "value": "42",
+      "local": false
+    }
+  }
 
 Code block
 ``````````
