@@ -29,7 +29,7 @@ Counter
 
     |
 
-    .. literalinclude:: ../resources/samples/counter.ice
+    .. literalinclude:: ../resources/samples/compiler/counter.ice
        :language: json
 
 |
@@ -42,7 +42,7 @@ Counter
 
     |
 
-    .. literalinclude:: ../resources/samples/div.v
+    .. literalinclude:: ../resources/samples/compiler/div.v
 
 |
 
@@ -57,7 +57,7 @@ Generates
 
     |
 
-    .. literalinclude:: ../resources/samples/counter.v
+    .. literalinclude:: ../resources/samples/compiler/counter.v
        :language: verilog
 
 |
@@ -70,7 +70,7 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/counter.pcf
+   .. literalinclude:: ../resources/samples/compiler/counter.pcf
 
 |
 
@@ -82,7 +82,7 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/counter_tb.v
+   .. literalinclude:: ../resources/samples/compiler/counter_tb.v
 
 |
 
@@ -94,6 +94,6 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/counter_tb.gtkw
+   .. literalinclude:: ../resources/samples/compiler/counter_tb.gtkw
 
 |
