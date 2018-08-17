@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.3.3-rc] - 2018-08-17
 ### Memory address (#250)
 - Add `Address format` combo (bin, dec, hex)
 - Refactor forms
