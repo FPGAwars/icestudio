@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
@@ -84,7 +84,7 @@ msgstr "Ajouter un bloc"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr ""
+msgstr "Format de l'adresse"
 
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
@@ -92,8 +92,7 @@ msgstr "Toutes les collections ont été supprimées"
 
 #: app/scripts/controllers/menu.js:661
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr ""
-"Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
+msgstr "Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
 
 #: app/scripts/services/utils.js:515
 msgid "Author"
@@ -109,7 +108,7 @@ msgstr "Basque"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Binaire"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -289,7 +288,7 @@ msgstr "Documentation"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Décimal"
 
 #: app/views/menu.html:209
 msgid "Default"
@@ -372,7 +371,7 @@ msgstr "Entrer les constantes du bloc"
 
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Entrer le chemin pour les collections externes"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
@@ -428,11 +427,11 @@ msgstr "Exporter"
 
 #: app/views/menu.html:144
 msgid "External collections"
-msgstr ""
+msgstr "Collections externes"
 
 #: app/scripts/controllers/menu.js:370
 msgid "External collections updated"
-msgstr ""
+msgstr "Collections externes mises à jour"
 
 #: app/scripts/services/tools.js:834
 msgid "Extract default apio files..."
@@ -496,7 +495,7 @@ msgstr "Aide"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Hexadécimal"
 
 #: app/scripts/services/utils.js:528
 msgid "Image"
@@ -633,7 +632,7 @@ msgstr "Coller"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "Le chemin {{path}} n'existe pas"
 
 #: app/scripts/services/utils.js:868
 msgid "Please run: {{cmd}}"
