@@ -242,7 +242,7 @@ Constant block
 
   * Local parameter (lock)
 
-E.g.: basic constant block with name *value*.
+E.g.: basic constant block with name *value* and the local flag.
 
 .. image:: ../resources/images/blocks/basic-constant-local.png
 
@@ -256,6 +256,8 @@ E.g.: basic constant block with name *value*.
      }
    }
 
+E.g.: basic constant block with no name and no local flag.
+
 .. image:: ../resources/images/blocks/basic-constant.png
 
 .. code-block:: json
@@ -265,6 +267,50 @@ E.g.: basic constant block with name *value*.
       "name": "",
       "value": "42",
       "local": false
+    }
+  }
+
+Memory block
+````````````
+
+* Type: ``basic.memory``
+* Address format:
+
+  * Binary
+  * Decimal
+  * Hexadecimal
+
+* States:
+
+  * Local parameter (lock)
+
+E.g.: basic memory block with name *code*, binary address format and the local flag.
+
+.. image:: ../resources/images/blocks/basic-memory-local.png
+
+.. code-block:: json
+
+   {
+     "data": {
+       "name": "code",
+       "list": "A \nB\nC\nD\nE\nF\n0 // off\n0 // off",
+       "local": true,
+       "format": 2
+     }
+   }
+
+E.g.: basic memory block with no name, decimal address format and no local flag.
+
+.. image:: ../resources/images/blocks/basic-memory.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "name": "",
+      "list": "00\n01\n10\n11",
+      "local": false,
+      "format": 10
     }
   }
 
