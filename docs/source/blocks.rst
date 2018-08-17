@@ -358,20 +358,34 @@ Information block
 
 * Type: ``basic.info``
 * States:
+
   * Readonly
 
-E.g.: basic infomation block.
+E.g.: basic information block in editor mode.
 
-.. image:: ../resources/images/blocks/basic-information.png
+.. image:: ../resources/images/blocks/basic-info-editor.png
 
 .. code-block:: json
 
    {
      "data": {
-       "info": "Lorem ipsum\n...\n",
+       "info": "## Title :smile:\nLorem ipsum...\n",
        "readonly": false
      }
    }
+
+E.g.: basic information block in render mode.
+
+.. image:: ../resources/images/blocks/basic-info-render.png
+
+.. code-block:: json
+
+  {
+    "data": {
+      "info": "## Title :smile:\nLorem ipsum...\n",
+      "readonly": true
+    }
+  }
 
 Generic blocks
 --------------
