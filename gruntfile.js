@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     all('styles'),
     all('views')
   ];
+  var pkg = grunt.file.readJSON('app/package.json');
 
   require('load-grunt-tasks')(grunt, options);
 
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
 
-    pkg: grunt.file.readJSON('app/package.json'),
+    pkg: pkg,
 
     // Automatically inject Bower components into the app
     wiredep: {
@@ -440,4 +441,8 @@ module.exports = function(grunt) {
   .concat([
     'clean:tmp'
   ]));
+
+  if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+    grunt.fail.fatal('Apio settins are in debug mode');
+  }
 };
