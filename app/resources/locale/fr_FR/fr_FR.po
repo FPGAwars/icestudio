@@ -84,7 +84,7 @@ msgstr "Ajouter un bloc"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr ""
+msgstr "Format d'adresse"
 
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
@@ -109,7 +109,7 @@ msgstr "Basque"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Binaire"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -289,7 +289,7 @@ msgstr "Documentation"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Décimal"
 
 #: app/views/menu.html:209
 msgid "Default"
@@ -428,11 +428,11 @@ msgstr "Exporter"
 
 #: app/views/menu.html:144
 msgid "External collections"
-msgstr ""
+msgstr "Collections externes"
 
 #: app/scripts/controllers/menu.js:370
 msgid "External collections updated"
-msgstr ""
+msgstr "Collections externes mises à jour"
 
 #: app/scripts/services/tools.js:834
 msgid "Extract default apio files..."
@@ -496,7 +496,7 @@ msgstr "Aide"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Héxadécimal"
 
 #: app/scripts/services/utils.js:528
 msgid "Image"
@@ -633,7 +633,7 @@ msgstr "Coller"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "Le répertoire {{path}} n'existe pas"
 
 #: app/scripts/services/utils.js:868
 msgid "Please run: {{cmd}}"
