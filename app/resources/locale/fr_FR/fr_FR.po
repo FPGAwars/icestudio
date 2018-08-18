@@ -372,7 +372,7 @@ msgstr "Entrer les constantes du bloc"
 
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Entrer le répertoire des collections externes"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
