@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
@@ -84,7 +84,8 @@ msgstr "Ajouter un bloc"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr "Format d'adresse"
+msgstr "Format de l'adresse"
+
 
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
@@ -92,8 +93,7 @@ msgstr "Toutes les collections ont été supprimées"
 
 #: app/scripts/controllers/menu.js:661
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr ""
-"Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
+msgstr "Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
 
 #: app/scripts/services/utils.js:515
 msgid "Author"
@@ -372,7 +372,8 @@ msgstr "Entrer les constantes du bloc"
 
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
-msgstr "Entrer le répertoire des collections externes"
+msgstr "Entrer le chemin pour les collections externes"
+
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
@@ -496,7 +497,7 @@ msgstr "Aide"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr "Héxadécimal"
+msgstr "Hexadécimal"
 
 #: app/scripts/services/utils.js:528
 msgid "Image"
@@ -633,7 +634,7 @@ msgstr "Coller"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Path {{path}} does not exist"
-msgstr "Le répertoire {{path}} n'existe pas"
+msgstr "Le chemin {{path}} n'existe pas"
 
 #: app/scripts/services/utils.js:868
 msgid "Please run: {{cmd}}"
