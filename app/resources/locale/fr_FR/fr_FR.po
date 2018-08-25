@@ -86,6 +86,7 @@ msgstr "Ajouter un bloc"
 msgid "Address format"
 msgstr "Format de l'adresse"
 
+
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
 msgstr "Toutes les collections ont été supprimées"
@@ -372,6 +373,7 @@ msgstr "Entrer les constantes du bloc"
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
 msgstr "Entrer le chemin pour les collections externes"
+
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
