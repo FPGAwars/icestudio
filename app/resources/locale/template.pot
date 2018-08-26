@@ -458,7 +458,11 @@ msgstr ""
 msgid "Galician"
 msgstr ""
 
-#: app/views/menu.html:323
+#: app/views/languages.html:46
+msgid "German"
+msgstr ""
+
+#: app/views/menu.html:320
 msgid "Help"
 msgstr ""
 
