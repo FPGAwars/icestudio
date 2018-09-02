@@ -9,12 +9,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
-msgstr "<b>Plaka deskonektatu</b> eta <b>konekta ezazu</b> berriro"
+msgstr "<b>Deskonektatu</b> eta <b>berriro konektatu</b> plaka"
 
 #: app/scripts/services/drivers.js:305
 msgid ""
@@ -25,6 +25,12 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>FTDI driverra instalatzeko instrukzioak</h4><ol><li>plaka USBra konekta "
+"ezazu eta itxaron ezazu Windowsek driverraren jatorrizko instalazioa "
+"amaitzeko </li><li>Windowsek FTDI driverra instalatzeko leiho berria "
+"zabalduko du, Ados botoia klikatzen duzunean </li><li> Plakaren driverraren "
+"<b>(Interface 0)</b> ordez jar ezazu <b>libusbK</b></li><li>Deskonektatu eta "
+"konekta ezazu berriro plaka</li></ol>"
 
 #: app/scripts/services/drivers.js:312
 msgid ""
@@ -44,6 +50,11 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Serial driverra instalatzeko instrukzioak</h4><ol><li>FPGA plaka USBra "
+"konekta ezazu eta Windowek driverraren instalazio lehenetsia amaitu arte "
+"itxaron ezazu</li><li>Ados botoia sakatzean,  serie driverra instalatzeko "
+"leiho berria zabalduko da</li><li>Driverra instalatzeko urratsak jarrai "
+"itzazu</li><li>Deskonektatu eta konekta ezazu berriro plaka</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
@@ -56,7 +67,7 @@ msgstr ""
 
 #: app/views/menu.html:344
 msgid "About Icestudio"
-msgstr "Icestudio-ri buruz..."
+msgstr "Icestudio informazioa"
 
 #: app/views/menu.html:293
 msgid "Add"
@@ -72,7 +83,7 @@ msgstr "Blokea sortu"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr ""
+msgstr "Helbidearen formatua"
 
 #: app/scripts/services/tools.js:1115
 msgid "All collections removed"
@@ -96,7 +107,7 @@ msgstr "Euskara"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Bitarra"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -180,6 +191,7 @@ msgstr "Txinera"
 #: app/scripts/services/project.js:143
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
+"Klik egizu hemen <b>Icestudio aplikazioaren bertsio berria</b> deskargatzeko"
 
 #: app/scripts/services/tools.js:902
 msgid "Click here to <b>setup the drivers</b>"
@@ -196,7 +208,7 @@ msgstr "Klik egizu ikusteko"
 
 #: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
 msgid "Clock not allowed for data buses"
-msgstr ""
+msgstr "Datu busentzat ordularia ez dago onetsia"
 
 #: app/scripts/controllers/menu.js:275
 msgid "Close"
@@ -276,7 +288,7 @@ msgstr "Datu-fitxa"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Hamartarra"
 
 #: app/views/menu.html:209
 msgid "Default"
@@ -358,7 +370,7 @@ msgstr "Konstante-blokeak sar itzazu"
 
 #: app/scripts/controllers/menu.js:357
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Kanpoko bildumen bidea sar ezazu"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
@@ -370,11 +382,11 @@ msgstr "Sarrerako portuak sar itzazu"
 
 #: app/scripts/services/blocks.js:261
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "Memoria-blokeak sar itzazu"
 
 #: app/scripts/services/blocks.js:130
 msgid "Enter the output blocks"
-msgstr "Irteerako blokeak sar itzazu"
+msgstr "Irteera-blokeak sar itzazu"
 
 #: app/scripts/services/blocks.js:370
 msgid "Enter the output ports"
@@ -414,11 +426,11 @@ msgstr "Esportatu"
 
 #: app/views/menu.html:144
 msgid "External collections"
-msgstr ""
+msgstr "Kanpoko bildumak"
 
 #: app/scripts/controllers/menu.js:370
 msgid "External collections updated"
-msgstr ""
+msgstr "Kanpoko bildumak eguneratu dira"
 
 #: app/scripts/services/tools.js:834
 msgid "Extract default apio files..."
@@ -482,7 +494,7 @@ msgstr "Laguntza"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Hamaseitarra"
 
 #: app/scripts/services/utils.js:528
 msgid "Image"
@@ -579,7 +591,7 @@ msgstr "Busaren tamaina maximoa: 96 bit"
 
 #: app/views/menu.html:368
 msgid "Memory"
-msgstr ""
+msgstr "Memoria"
 
 #: app/scripts/services/utils.js:512
 msgid "Name"
@@ -596,7 +608,7 @@ msgstr "Ez dago gordeta bildumarik"
 #: app/scripts/controllers/main.js:15 app/scripts/controllers/menu.js:289
 #: app/scripts/services/project.js:133
 msgid "OK"
-msgstr "Ok"
+msgstr "Ados"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -620,7 +632,7 @@ msgstr "Itsatsi"
 
 #: app/scripts/controllers/menu.js:374
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "Ez da {{path}} izeneko biderik"
 
 #: app/scripts/services/utils.js:868
 msgid "Please run: {{cmd}}"
@@ -664,7 +676,7 @@ msgstr "Berregin"
 
 #: app/views/menu.html:298
 msgid "Reload"
-msgstr ""
+msgstr "Berriro kargatu"
 
 #: app/scripts/services/tools.js:511
 msgid "Remote host {{name}} not connected"
@@ -760,7 +772,7 @@ msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
 #: app/scripts/services/tools.js:680
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
-"Toolchain-aren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
+"Toolchainaren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
 
 #: app/scripts/services/tools.js:669
 msgid ""
@@ -817,7 +829,7 @@ msgstr "Plaka ezezaguna"
 
 #: app/scripts/services/project.js:142
 msgid "Unsupported project format {{version}}"
-msgstr ""
+msgstr "{{version}} formatua duen proiektua ez da onartzen"
 
 #: app/scripts/app.js:48
 msgid "Untitled"
@@ -909,11 +921,11 @@ msgstr "{{app}} behar da"
 
 #: app/scripts/controllers/menu.js:492
 msgid "{{board}} datasheet not defined"
-msgstr "{{board}} ez zehaztua"
+msgstr "{{board}} plakaren datasheet-a ez zehaztua"
 
 #: app/scripts/controllers/menu.js:482
 msgid "{{board}} pinout not defined"
-msgstr "{{board}} pinout ez zehaztua"
+msgstr "{{board}} plakaren pinout-a ez zehaztua"
 
 #: app/scripts/controllers/menu.js:513
 msgid "{{board}} rules not defined"
