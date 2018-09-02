@@ -122,7 +122,7 @@ View
 +-----------------+----------------------------------------------+
 | Collection info |   Show the current collection README file    |
 +-----------------+----------------------------------------------+
-|Toolchain output |Show the output of the latest executed command|
+| Command output  |Show the output of the latest executed command|
 +-----------------+----------------------------------------------+
 | FPGA resources  |     Show / Hide the used FPGA resources      |
 +-----------------+----------------------------------------------+

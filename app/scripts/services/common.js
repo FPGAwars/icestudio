@@ -34,8 +34,8 @@ angular.module('icestudio')
       brams: '-'
     };
 
-    // Apio output
-    this.apioOutput = '';
+    // Command output
+    this.commandOutput = '';
 
     // Apio URL
     this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';

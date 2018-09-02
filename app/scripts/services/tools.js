@@ -330,7 +330,8 @@ angular.module('icestudio')
                 // Upload command requires to restore the drivers (Mac OS)
                 drivers.postUpload();
               }
-              common.apioOutput = command + '\n\n' + stdout + stderr;
+              common.commandOutput = command + '\n\n' + stdout + stderr;
+              $(document).trigger('commandOutputChanged', [common.commandOutput]);
               resolve({ error: error, stdout: stdout, stderr: stderr });
             });
         }

@@ -34,6 +34,7 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
     var resultAlert = null;
+    var winCommandOutput = null;
 
     var buildUndoStack = [];
     var changedUndoStack = [];
@@ -544,9 +545,9 @@ angular.module('icestudio')
       }
     };
 
-    $scope.showToolchainOutput = function() {
-      gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.apioOutput), {
-        title: 'Toolchain output',
+    $scope.showCommandOutput = function() {
+      winCommandOutput = gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.commandOutput), {
+        title: 'Command output',
         focus: true,
         toolbar: false,
         resizable: true,
@@ -557,6 +558,17 @@ angular.module('icestudio')
         icon: 'resources/images/icestudio-logo.png'
       });
     };
+
+    $(document).on('commandOutputChanged', function(evt, commandOutput) {
+      if (winCommandOutput) {
+        try {
+          winCommandOutput.window.location.href = 'resources/viewers/plain/output.html?content=' + encodeURIComponent(commandOutput);
+        }
+        catch (e) {
+          winCommandOutput = null;
+        }
+      }
+    });
 
     $scope.selectCollection = function(collection) {
       if (common.selectedCollection.path !== collection.path) {
