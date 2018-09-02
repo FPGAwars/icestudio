@@ -99,6 +99,7 @@ npm start
 | Chinese    | ![Progress](http://progressed.io/bar/92)  |
 | Catalan    | ![Progress](http://progressed.io/bar/92)  |
 | Basque     | ![Progress](http://progressed.io/bar/92)  |
+| German     | ![Progress](http://progressed.io/bar/96)  |
 
 **Contribute!**
 

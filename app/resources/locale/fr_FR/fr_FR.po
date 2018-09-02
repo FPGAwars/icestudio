@@ -489,6 +489,10 @@ msgstr "Français"
 msgid "Galician"
 msgstr "Galicien"
 
+#: app/views/languages.html:10
+msgid "German"
+msgstr "Allemand"
+
 #: app/views/menu.html:323
 msgid "Help"
 msgstr "Aide"

@@ -488,6 +488,10 @@ msgstr "Frantsesa"
 msgid "Galician"
 msgstr "Galegoa"
 
+#: app/views/languages.html:10
+msgid "German"
+msgstr "Alemaniako"
+
 #: app/views/menu.html:323
 msgid "Help"
 msgstr "Laguntza"
