@@ -353,7 +353,12 @@ angular.module('icestudio')
             var boardLabel = common.selectedBoard.info.label;
             // - Apio errors
             if (stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) }), 30);
+              var errorMessage = gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) });
+              if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
+                // TinyFPGA bootloader notification
+                errorMessage += '</br>(' + gettextCatalog.getString('Bootloader not active') + ')';
+              }
+              resultAlert = alertify.error(errorMessage, 30);
             }
             else if (stdout.indexOf('Error: board ' + boardName + '  not available') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);

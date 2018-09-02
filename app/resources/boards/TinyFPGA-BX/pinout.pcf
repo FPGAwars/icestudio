@@ -7,6 +7,12 @@
 #
 # TinyFPGA BX information: https://github.com/tinyfpga/TinyFPGA-BX/
 
+# -- LED pin on bottom of board
+set_io --warn-no-port LED B3 # output
+
+# -- 16MHz clock pin on bottom of board
+set_io --warn-no-port CLK B2 # input
+
 # -- Left side of board
 set_io --warn-no-port PIN_1 A2
 set_io --warn-no-port PIN_2 A1
@@ -52,13 +58,7 @@ set_io --warn-no-port PIN_29 J9
 set_io --warn-no-port PIN_30 E8
 set_io --warn-no-port PIN_31 J2
 
-# -- LED pin on bottom of board
-set_io --warn-no-port LED B3 # output
-
 # -- USB pins on bottom of board
 set_io --warn-no-port USBP B4
 set_io --warn-no-port USBN A4
 set_io --warn-no-port USBPU A3
-
-# -- 16MHz clock pin on bottom of board
-set_io --warn-no-port CLK B2 # input
