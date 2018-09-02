@@ -38,10 +38,21 @@ angular
       collections.loadAllCollections();
       // Load language
       utils.loadLanguage(profile, function() {
+        if (profile.get('board') === '') {
+          // Select board for the first time
+          utils.selectBoardPrompt(function (selectedBoard) {
+            // Initialize selected board
+            var newBoard = boards.selectBoard(selectedBoard);
+            profile.set('board', newBoard.name);
+            alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
+          });
+        }
+        else {
+          // Initialize selected board
+          profile.set('board', boards.selectBoard(profile.get('board')).name);
+        }
         // Rearrange collections
         collections.sort();
-        // Initialize selected board
-        profile.set('board', boards.selectBoard(profile.get('board')).name);
         // Initialize selected collection
         profile.set('collection', collections.selectCollection(profile.get('collection')));
         // Initialize title
