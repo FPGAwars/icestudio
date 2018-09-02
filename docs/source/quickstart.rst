@@ -3,6 +3,17 @@
 Quick Start
 ===========
 
+Select your board
+-----------------
+
+The first time you open the application, you have to select your FPGA board.
+
+.. image:: ../resources/images/quickstart/board-prompt.png
+
+If you want to change the board, go to **Select > Board**
+
+.. image:: ../resources/images/quickstart/board.png
+
 Setup the toolchain
 -------------------
 
@@ -32,10 +43,6 @@ Connect your FPGA board and select **Tools > Drivers > Enable**. This operation 
 
 Upload a design
 ---------------
-
-Go to **Select > Board > IceZUM Alhambra**
-
-.. image:: ../resources/images/quickstart/board.png
 
 Go to **File > Examples > 1. Basic > 01. One LED**
 
