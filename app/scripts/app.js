@@ -21,6 +21,7 @@ angular
   .run(function(profile,
                 project,
                 common,
+                tools,
                 utils,
                 boards,
                 collections,
@@ -45,11 +46,15 @@ angular
             var newBoard = boards.selectBoard(selectedBoard);
             profile.set('board', newBoard.name);
             alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
+            // Check if the toolchain is installed
+            tools.checkToolchain();
           });
         }
         else {
           // Initialize selected board
           profile.set('board', boards.selectBoard(profile.get('board')).name);
+          // Check if the toolchain is installed
+          tools.checkToolchain();
         }
         // Rearrange collections
         collections.sort();

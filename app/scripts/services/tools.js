@@ -32,9 +32,6 @@ angular.module('icestudio')
 
     this.toolchain = toolchain;
 
-    // Check if the toolchain is installed
-    checkToolchain();
-
     // Remove old build directory on start
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
@@ -227,6 +224,8 @@ angular.module('icestudio')
         }
       });
     }
+
+    this.checkToolchain = checkToolchain;
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
