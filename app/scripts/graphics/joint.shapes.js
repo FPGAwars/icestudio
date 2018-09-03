@@ -1847,7 +1847,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
   applyText: function() {
     var data = this.model.get('data');
-    var markdown = data.info || '';
+    var markdown = data.text || data.info || '';
 
     // Replace emojis
     markdown = markdown.replace(/(:.*:)/g, function (match) {
