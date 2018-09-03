@@ -94,12 +94,12 @@ npm start
 |:----------:|:-----------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100) |
 | Spanish    | ![Progress](http://progressed.io/bar/100) |
-| French     | ![Progress](http://progressed.io/bar/96)  |
-| German     | ![Progress](http://progressed.io/bar/96)  |
-| Chinese    | ![Progress](http://progressed.io/bar/92)  |
-| Galician   | ![Progress](http://progressed.io/bar/96)  |
-| Catalan    | ![Progress](http://progressed.io/bar/92)  |
-| Basque     | ![Progress](http://progressed.io/bar/92)  |
+| French     | ![Progress](http://progressed.io/bar/99)  |
+| German     | ![Progress](http://progressed.io/bar/99)  |
+| Chinese    | ![Progress](http://progressed.io/bar/91)  |
+| Galician   | ![Progress](http://progressed.io/bar/95)  |
+| Basque     | ![Progress](http://progressed.io/bar/99)  |
+| Catalan    | ![Progress](http://progressed.io/bar/91)  |
 
 **Contribute!**
 
@@ -163,7 +163,7 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 |Version | Constributors |
 |:-:|:-:|
-| 0.3 | [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](PhilippvK) |
+| 0.3 | [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
 | 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
 | 0.1 | [Miguel Sánchez de León Peque](https://github.com/Peque) |
 

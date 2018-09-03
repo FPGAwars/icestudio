@@ -33,7 +33,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:651
+#: app/scripts/controllers/menu.js:663
 msgid "Add a block to start"
 msgstr ""
 
@@ -46,11 +46,11 @@ msgstr ""
 msgid "Address format"
 msgstr ""
 
-#: app/scripts/services/tools.js:1127
+#: app/scripts/services/tools.js:1133
 msgid "All collections removed"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:680
+#: app/scripts/controllers/menu.js:692
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Basic"
 msgstr ""
 
-#: app/views/languages.html:34
+#: app/views/languages.html:40
 msgid "Basque"
 msgstr ""
 
@@ -98,32 +98,34 @@ msgstr ""
 msgid "Board rules"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:433
+#: app/scripts/controllers/menu.js:434
 msgid "Board rules disabled"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:430
+#: app/scripts/controllers/menu.js:431
 msgid "Board rules enabled"
 msgstr ""
 
-#: app/scripts/services/tools.js:379
+#: app/scripts/services/tools.js:385
 msgid "Board {{name}} disconnected"
 msgstr ""
 
-#: app/scripts/services/tools.js:359
-#: app/scripts/services/tools.js:375
+#: app/scripts/services/tools.js:365
+#: app/scripts/services/tools.js:381
 msgid "Board {{name}} not available"
 msgstr ""
 
-#: app/scripts/services/tools.js:356
+#: app/scripts/services/tools.js:357
 msgid "Board {{name}} not connected"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:599
+#: app/scripts/app.js:47
+#: app/scripts/controllers/menu.js:611
 msgid "Board {{name}} selected"
 msgstr ""
 
-#: app/scripts/services/tools.js:372
+#: app/scripts/services/tools.js:360
+#: app/scripts/services/tools.js:378
 msgid "Bootloader not active"
 msgstr ""
 
@@ -131,28 +133,28 @@ msgstr ""
 msgid "Build"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:618
+#: app/scripts/controllers/menu.js:630
 msgid "Build done"
 msgstr ""
 
-#: app/scripts/controllers/main.js:16
+#: app/scripts/controllers/main.js:15
 #: app/scripts/services/project.js:134
 msgid "Cancel"
 msgstr ""
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Catalan"
 msgstr ""
 
-#: app/scripts/services/tools.js:811
+#: app/scripts/services/tools.js:817
 msgid "Check Internet connection..."
 msgstr ""
 
-#: app/scripts/services/tools.js:821
+#: app/scripts/services/tools.js:827
 msgid "Check Python..."
 msgstr ""
 
-#: app/views/languages.html:22
+#: app/views/languages.html:28
 msgid "Chinese"
 msgstr ""
 
@@ -160,7 +162,7 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 
-#: app/scripts/services/tools.js:914
+#: app/scripts/services/tools.js:920
 msgid "Click here to <b>setup the drivers</b>"
 msgstr ""
 
@@ -171,7 +173,7 @@ msgstr ""
 msgid "Click here to install it"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:389
+#: app/scripts/controllers/menu.js:390
 msgid "Click here to view"
 msgstr ""
 
@@ -180,7 +182,7 @@ msgstr ""
 msgid "Clock not allowed for data buses"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:276
+#: app/scripts/controllers/menu.js:277
 msgid "Close"
 msgstr ""
 
@@ -196,27 +198,27 @@ msgstr ""
 msgid "Collection info"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:543
+#: app/scripts/controllers/menu.js:544
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
-#: app/scripts/services/tools.js:1011
+#: app/scripts/services/tools.js:1017
 msgid "Collection {{name}} added"
 msgstr ""
 
-#: app/scripts/services/tools.js:1005
+#: app/scripts/services/tools.js:1011
 msgid "Collection {{name}} not replaced"
 msgstr ""
 
-#: app/scripts/services/tools.js:1121
+#: app/scripts/services/tools.js:1127
 msgid "Collection {{name}} removed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1001
+#: app/scripts/services/tools.js:1007
 msgid "Collection {{name}} replaced"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:565
+#: app/scripts/controllers/menu.js:577
 msgid "Collection {{name}} selected"
 msgstr ""
 
@@ -224,11 +226,15 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
+#: app/views/menu.html:168
+msgid "Command output"
+msgstr ""
+
 #: app/views/menu.html:337
 msgid "Community forum"
 msgstr ""
 
-#: app/scripts/services/tools.js:393
+#: app/scripts/services/tools.js:399
 msgid "Configuration not completed"
 msgstr ""
 
@@ -244,7 +250,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: app/scripts/services/tools.js:839
+#: app/scripts/services/tools.js:845
 msgid "Create virtualenv..."
 msgstr ""
 
@@ -265,7 +271,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: app/scripts/services/tools.js:665
+#: app/scripts/services/tools.js:671
 msgid "Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
@@ -277,15 +283,15 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:280
+#: app/scripts/controllers/menu.js:281
 msgid "Do you want to close the application?"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:670
+#: app/scripts/controllers/menu.js:682
 msgid "Do you want to remove the {{name}} collection?"
 msgstr ""
 
-#: app/scripts/services/tools.js:997
+#: app/scripts/services/tools.js:1003
 msgid "Do you want to replace it?"
 msgstr ""
 
@@ -309,7 +315,7 @@ msgstr ""
 msgid "Drivers enabled"
 msgstr ""
 
-#: app/scripts/services/tools.js:402
+#: app/scripts/services/tools.js:408
 msgid "Duplicated FPGA I/O ports"
 msgstr ""
 
@@ -321,7 +327,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/scripts/services/tools.js:986
+#: app/scripts/services/tools.js:992
 msgid "Edit the collection name"
 msgstr ""
 
@@ -337,7 +343,7 @@ msgstr ""
 msgid "Enter the constant blocks"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:358
+#: app/scripts/controllers/menu.js:359
 msgid "Enter the external collections path"
 msgstr ""
 
@@ -365,19 +371,19 @@ msgstr ""
 msgid "Enter the parameters"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:421
+#: app/scripts/controllers/menu.js:422
 msgid "Enter the remote hostname user@host"
 msgstr ""
 
-#: app/scripts/services/tools.js:695
+#: app/scripts/services/tools.js:701
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr ""
 
-#: app/scripts/services/utils.js:718
+#: app/scripts/services/utils.js:756
 msgid "Error: {{error}}"
 msgstr ""
 
-#: app/scripts/services/tools.js:476
+#: app/scripts/services/tools.js:482
 msgid "Errors detected in the design"
 msgstr ""
 
@@ -397,23 +403,23 @@ msgstr ""
 msgid "External collections"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:375
+#: app/scripts/controllers/menu.js:376
 msgid "External collections updated"
 msgstr ""
 
-#: app/scripts/services/tools.js:846
+#: app/scripts/services/tools.js:852
 msgid "Extract default apio files..."
 msgstr ""
 
-#: app/scripts/services/tools.js:856
+#: app/scripts/services/tools.js:862
 msgid "Extract default apio packages..."
 msgstr ""
 
-#: app/scripts/services/tools.js:834
+#: app/scripts/services/tools.js:840
 msgid "Extract virtualenv files..."
 msgstr ""
 
-#: app/scripts/services/tools.js:399
+#: app/scripts/services/tools.js:405
 msgid "FPGA I/O ports not defined"
 msgstr ""
 
@@ -452,11 +458,11 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: app/views/languages.html:28
+#: app/views/languages.html:34
 msgid "Galician"
 msgstr ""
 
-#: app/views/languages.html:46
+#: app/views/languages.html:22
 msgid "German"
 msgstr ""
 
@@ -473,7 +479,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:834
+#: app/scripts/controllers/menu.js:846
 msgid "Image {{name}} saved"
 msgstr ""
 
@@ -489,21 +495,21 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-#: app/scripts/services/tools.js:851
+#: app/scripts/services/tools.js:857
 msgid "Install default apio..."
 msgstr ""
 
-#: app/scripts/services/tools.js:903
+#: app/scripts/services/tools.js:909
 msgid "Installation completed"
 msgstr ""
 
-#: app/scripts/services/tools.js:737
-#: app/scripts/services/tools.js:774
+#: app/scripts/services/tools.js:743
+#: app/scripts/services/tools.js:780
 msgid "Installing toolchain"
 msgstr ""
 
 #: app/scripts/services/drivers.js:216
-#: app/scripts/services/tools.js:815
+#: app/scripts/services/tools.js:821
 msgid "Internet connection required"
 msgstr ""
 
@@ -519,7 +525,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 
-#: app/scripts/services/tools.js:1017
+#: app/scripts/services/tools.js:1023
 msgid "Invalid collection {{name}}"
 msgstr ""
 
@@ -560,7 +566,7 @@ msgstr ""
 msgid "Local parameter"
 msgstr ""
 
-#: app/scripts/services/utils.js:798
+#: app/scripts/services/utils.js:836
 msgid "Maximum bus size: 96 bits"
 msgstr ""
 
@@ -576,12 +582,12 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:688
+#: app/scripts/controllers/menu.js:700
 msgid "No collections stored"
 msgstr ""
 
-#: app/scripts/controllers/main.js:15
-#: app/scripts/controllers/menu.js:290
+#: app/scripts/controllers/main.js:14
+#: app/scripts/controllers/menu.js:291
 #: app/scripts/services/project.js:133
 msgid "OK"
 msgstr ""
@@ -606,11 +612,11 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:379
+#: app/scripts/controllers/menu.js:380
 msgid "Path {{path}} does not exist"
 msgstr ""
 
-#: app/scripts/services/utils.js:926
+#: app/scripts/services/utils.js:964
 msgid "Please run: {{cmd}}"
 msgstr ""
 
@@ -622,8 +628,8 @@ msgstr ""
 msgid "Project information"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:389
-#: app/scripts/controllers/menu.js:403
+#: app/scripts/controllers/menu.js:390
+#: app/scripts/controllers/menu.js:404
 msgid "Project information updated"
 msgstr ""
 
@@ -635,7 +641,7 @@ msgstr ""
 msgid "Project {{name}} saved"
 msgstr ""
 
-#: app/scripts/services/tools.js:828
+#: app/scripts/services/tools.js:834
 msgid "Python 2.7 is required"
 msgstr ""
 
@@ -655,7 +661,7 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: app/scripts/services/tools.js:519
+#: app/scripts/services/tools.js:525
 msgid "Remote host {{name}} not connected"
 msgstr ""
 
@@ -700,6 +706,10 @@ msgstr ""
 msgid "Select all"
 msgstr ""
 
+#: app/scripts/services/utils.js:714
+msgid "Select your board"
+msgstr ""
+
 #: app/scripts/services/blocks.js:68
 #: app/scripts/services/blocks.js:853
 msgid "Show clock"
@@ -713,15 +723,15 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:617
+#: app/scripts/controllers/menu.js:629
 msgid "Start build"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:630
+#: app/scripts/controllers/menu.js:642
 msgid "Start upload"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:607
+#: app/scripts/controllers/menu.js:619
 msgid "Start verification"
 msgstr ""
 
@@ -733,23 +743,23 @@ msgstr ""
 msgid "Testbench"
 msgstr ""
 
-#: app/scripts/services/tools.js:996
+#: app/scripts/services/tools.js:1002
 msgid "The collection {{name}} already exists."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:598
 msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
 msgstr ""
 
-#: app/scripts/services/tools.js:703
+#: app/scripts/services/tools.js:709
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:688
+#: app/scripts/services/tools.js:694
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:677
+#: app/scripts/services/tools.js:683
 msgid "The toolchain will be updated. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
@@ -765,7 +775,7 @@ msgstr ""
 msgid "Toolchain"
 msgstr ""
 
-#: app/scripts/services/tools.js:904
+#: app/scripts/services/tools.js:910
 msgid "Toolchain installed"
 msgstr ""
 
@@ -777,11 +787,7 @@ msgstr ""
 msgid "Toolchain not installed"
 msgstr ""
 
-#: app/views/menu.html:168
-msgid "Toolchain output"
-msgstr ""
-
-#: app/scripts/services/tools.js:708
+#: app/scripts/services/tools.js:714
 msgid "Toolchain removed"
 msgstr ""
 
@@ -797,7 +803,7 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: app/scripts/services/tools.js:363
+#: app/scripts/services/tools.js:369
 msgid "Unknown board"
 msgstr ""
 
@@ -805,7 +811,7 @@ msgstr ""
 msgid "Unsupported project format {{version}}"
 msgstr ""
 
-#: app/scripts/app.js:48
+#: app/scripts/app.js:59
 msgid "Untitled"
 msgstr ""
 
@@ -824,11 +830,11 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:631
+#: app/scripts/controllers/menu.js:643
 msgid "Upload done"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:608
+#: app/scripts/controllers/menu.js:620
 msgid "Verification done"
 msgstr ""
 
@@ -849,7 +855,7 @@ msgstr ""
 msgid "View license"
 msgstr ""
 
-#: app/scripts/services/tools.js:480
+#: app/scripts/services/tools.js:486
 msgid "Warnings detected in the design"
 msgstr ""
 
@@ -881,7 +887,7 @@ msgstr ""
 msgid "Wrong project format: {{name}}"
 msgstr ""
 
-#: app/scripts/services/tools.js:516
+#: app/scripts/services/tools.js:522
 msgid "Wrong remote hostname {{name}}"
 msgstr ""
 
@@ -889,7 +895,7 @@ msgstr ""
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:281
+#: app/scripts/controllers/menu.js:282
 msgid "Your changes will be lost if you don’t save them"
 msgstr ""
 
@@ -898,23 +904,23 @@ msgid "back"
 msgstr ""
 
 #: app/scripts/services/drivers.js:207
-#: app/scripts/services/utils.js:901
+#: app/scripts/services/utils.js:939
 msgid "{{app}} is required."
 msgstr ""
 
-#: app/scripts/controllers/menu.js:497
+#: app/scripts/controllers/menu.js:498
 msgid "{{board}} datasheet not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:487
+#: app/scripts/controllers/menu.js:488
 msgid "{{board}} pinout not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:518
+#: app/scripts/controllers/menu.js:519
 msgid "{{board}} rules not defined"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:228
-#: app/scripts/controllers/menu.js:252
+#: app/scripts/controllers/menu.js:229
+#: app/scripts/controllers/menu.js:253
 msgid "{{name}} exported"
 msgstr ""

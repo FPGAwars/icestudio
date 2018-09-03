@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
@@ -65,15 +65,15 @@ msgstr ""
 "gailua aurki ezazu</li><li>Plakaren interfazea hauta ezazu eta driverra "
 "desinstala ezazu</li></ol>"
 
-#: app/views/menu.html:344
+#: app/views/menu.html:341
 msgid "About Icestudio"
 msgstr "Icestudio informazioa"
 
-#: app/views/menu.html:293
+#: app/views/menu.html:290
 msgid "Add"
 msgstr "Gehitu"
 
-#: app/scripts/controllers/menu.js:632
+#: app/scripts/controllers/menu.js:663
 msgid "Add a block to start"
 msgstr "Gehi ezazu bloke bat hasteko"
 
@@ -85,23 +85,23 @@ msgstr "Blokea sortu"
 msgid "Address format"
 msgstr "Helbidearen formatua"
 
-#: app/scripts/services/tools.js:1115
+#: app/scripts/services/tools.js:1133
 msgid "All collections removed"
 msgstr "Bildumak ezabatu dira"
 
-#: app/scripts/controllers/menu.js:661
+#: app/scripts/controllers/menu.js:692
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Gordetako bildumak galduko dira. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/utils.js:515
+#: app/scripts/services/utils.js:573
 msgid "Author"
 msgstr "Egilea"
 
-#: app/views/menu.html:355
+#: app/views/menu.html:352
 msgid "Basic"
 msgstr "Oinarrizkoa"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:40
 msgid "Basque"
 msgstr "Euskara"
 
@@ -116,7 +116,7 @@ msgstr "Bitarra"
 msgid "Block updated"
 msgstr "Etiketa freskatua dago"
 
-#: app/scripts/services/project.js:444
+#: app/scripts/services/project.js:445
 msgid "Block {{name}} imported"
 msgstr "{{name}} blokea inportatu duzu"
 
@@ -124,67 +124,67 @@ msgstr "{{name}} blokea inportatu duzu"
 msgid "Blocks"
 msgstr "Blokeak"
 
-#: app/views/menu.html:193
+#: app/views/menu.html:184
 msgid "Board"
 msgstr "Plaka"
 
-#: app/views/menu.html:127 app/views/menu.html:173
+#: app/views/menu.html:127 app/views/menu.html:161
 msgid "Board rules"
 msgstr "Plakaren arauak"
 
-#: app/scripts/controllers/menu.js:429
+#: app/scripts/controllers/menu.js:434
 msgid "Board rules disabled"
 msgstr "Plakaren arauak desgaituta"
 
-#: app/scripts/controllers/menu.js:424
+#: app/scripts/controllers/menu.js:431
 msgid "Board rules enabled"
 msgstr "Plakaren arauak gaituta"
 
-#: app/scripts/services/tools.js:379
+#: app/scripts/services/tools.js:385
 msgid "Board {{name}} disconnected"
 msgstr "{{name}} plaka konektatu gabe dago"
 
-#: app/scripts/services/tools.js:359 app/scripts/services/tools.js:375
+#: app/scripts/services/tools.js:365 app/scripts/services/tools.js:381
 msgid "Board {{name}} not available"
 msgstr "{{name}} plaka ez dago erabilgarri"
 
-#: app/scripts/services/tools.js:356
+#: app/scripts/services/tools.js:357
 msgid "Board {{name}} not connected"
 msgstr "{{name}} plaka ez dago konektatuta"
 
-#: app/scripts/controllers/menu.js:580
+#: app/scripts/app.js:47 app/scripts/controllers/menu.js:611
 msgid "Board {{name}} selected"
 msgstr "{{name}} plaka hautatu duzu"
 
-#: app/scripts/services/tools.js:372
+#: app/scripts/services/tools.js:360 app/scripts/services/tools.js:378
 msgid "Bootloader not active"
 msgstr "Bootloader ez aktiboa"
 
-#: app/views/menu.html:239
+#: app/views/menu.html:236
 msgid "Build"
 msgstr "Sintetizatu"
 
-#: app/scripts/controllers/menu.js:599
+#: app/scripts/controllers/menu.js:630
 msgid "Build done"
 msgstr "Sintetizatua egin da"
 
-#: app/scripts/controllers/main.js:16 app/scripts/services/project.js:134
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
 msgid "Cancel"
 msgstr "Utzi"
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Catalan"
 msgstr "Katalan"
 
-#: app/scripts/services/tools.js:799
+#: app/scripts/services/tools.js:817
 msgid "Check Internet connection..."
 msgstr "Interneteko sarbidea egiaztatu..."
 
-#: app/scripts/services/tools.js:809
+#: app/scripts/services/tools.js:827
 msgid "Check Python..."
 msgstr "Python egiaztatu..."
 
-#: app/views/languages.html:22
+#: app/views/languages.html:28
 msgid "Chinese"
 msgstr "Txinera"
 
@@ -193,16 +193,16 @@ msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 "Klik egizu hemen <b>Icestudio aplikazioaren bertsio berria</b> deskargatzeko"
 
-#: app/scripts/services/tools.js:902
+#: app/scripts/services/tools.js:920
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Klik egizu hemen <b>driverrak eguneratzeko</b>"
 
 #: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
-#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:276
+#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:275
 msgid "Click here to install it"
 msgstr "Instalatzeko hemen klik egin"
 
-#: app/scripts/controllers/menu.js:384
+#: app/scripts/controllers/menu.js:390
 msgid "Click here to view"
 msgstr "Klik egizu ikusteko"
 
@@ -210,59 +210,63 @@ msgstr "Klik egizu ikusteko"
 msgid "Clock not allowed for data buses"
 msgstr "Datu busentzat ordularia ez dago onetsia"
 
-#: app/scripts/controllers/menu.js:275
+#: app/scripts/controllers/menu.js:277
 msgid "Close"
 msgstr "Itxi"
 
-#: app/views/menu.html:371
+#: app/views/menu.html:368
 msgid "Code"
 msgstr "Kodea"
 
-#: app/views/menu.html:204
+#: app/views/menu.html:201
 msgid "Collection"
 msgstr "Bilduma"
 
-#: app/views/menu.html:177
+#: app/views/menu.html:165
 msgid "Collection info"
 msgstr "Bildumaren informazioa"
 
-#: app/scripts/controllers/menu.js:538
+#: app/scripts/controllers/menu.js:544
 msgid "Collection {{collection}} info not defined"
 msgstr "{{collection}} bildumaren informazioa zehaztuta gabe dago"
 
-#: app/scripts/services/tools.js:999
+#: app/scripts/services/tools.js:1017
 msgid "Collection {{name}} added"
 msgstr "{{name}} bilduma gehitu da"
 
-#: app/scripts/services/tools.js:993
+#: app/scripts/services/tools.js:1011
 msgid "Collection {{name}} not replaced"
 msgstr "{{name}} bilduma ez da ordeztu"
 
-#: app/scripts/services/tools.js:1109
+#: app/scripts/services/tools.js:1127
 msgid "Collection {{name}} removed"
 msgstr "{{name}} bilduma ezabatu da"
 
-#: app/scripts/services/tools.js:989
+#: app/scripts/services/tools.js:1007
 msgid "Collection {{name}} replaced"
 msgstr "{{name}} bilduma ordeztu da"
 
-#: app/scripts/controllers/menu.js:546
+#: app/scripts/controllers/menu.js:577
 msgid "Collection {{name}} selected"
 msgstr "{{name}} bilduma hautatu da"
 
-#: app/views/menu.html:289
+#: app/views/menu.html:286
 msgid "Collections"
 msgstr "Bildumak"
 
-#: app/views/menu.html:340
+#: app/views/menu.html:168
+msgid "Command output"
+msgstr ""
+
+#: app/views/menu.html:337
 msgid "Community forum"
 msgstr "Komunitatearen foroa"
 
-#: app/scripts/services/tools.js:393
+#: app/scripts/services/tools.js:399
 msgid "Configuration not completed"
 msgstr "Konfigurazioa ez da osatu"
 
-#: app/views/menu.html:365
+#: app/views/menu.html:362
 msgid "Constant"
 msgstr "Konstantea"
 
@@ -274,7 +278,7 @@ msgstr "Bihurtu"
 msgid "Copy"
 msgstr "Kopiatu"
 
-#: app/scripts/services/tools.js:827
+#: app/scripts/services/tools.js:845
 msgid "Create virtualenv..."
 msgstr "Env birtuala sortu..."
 
@@ -282,7 +286,7 @@ msgstr "Env birtuala sortu..."
 msgid "Cut"
 msgstr "Ebaki"
 
-#: app/views/menu.html:170
+#: app/views/menu.html:158
 msgid "Datasheet"
 msgstr "Datu-fitxa"
 
@@ -290,11 +294,11 @@ msgstr "Datu-fitxa"
 msgid "Decimal"
 msgstr "Hamartarra"
 
-#: app/views/menu.html:209
+#: app/views/menu.html:206
 msgid "Default"
 msgstr "Lehenetsia"
 
-#: app/scripts/services/tools.js:657
+#: app/scripts/services/tools.js:671
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -302,31 +306,31 @@ msgstr ""
 "Toolchain lehenetsia ez da aurkitu. Hortaz, deskargatu egingo da. Eragiketak "
 "Interneteko sarbidea behar du, jarraitu nahi al duzu?"
 
-#: app/scripts/services/utils.js:514
+#: app/scripts/services/utils.js:572
 msgid "Description"
 msgstr "Azalpena"
 
-#: app/views/menu.html:138 app/views/menu.html:282
+#: app/views/menu.html:279
 msgid "Disable"
 msgstr "Desgaitu"
 
-#: app/scripts/controllers/menu.js:279
+#: app/scripts/controllers/menu.js:281
 msgid "Do you want to close the application?"
 msgstr "Aplikazioa itxi nahi al duzu?"
 
-#: app/scripts/controllers/menu.js:651
+#: app/scripts/controllers/menu.js:682
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
-#: app/scripts/services/tools.js:985
+#: app/scripts/services/tools.js:1003
 msgid "Do you want to replace it?"
 msgstr "Ordeztu nahi al duzu?"
 
-#: app/views/menu.html:333
+#: app/views/menu.html:330
 msgid "Documentation"
 msgstr "Dokumentazioa"
 
-#: app/views/menu.html:273
+#: app/views/menu.html:270
 msgid "Drivers"
 msgstr "Driverrak"
 
@@ -340,7 +344,7 @@ msgstr "Driverrak desgaitu dira"
 msgid "Drivers enabled"
 msgstr "Driverrak gaitu dira"
 
-#: app/scripts/services/tools.js:402
+#: app/scripts/services/tools.js:408
 msgid "Duplicated FPGA I/O ports"
 msgstr "FPGAren E/S portuak bikoiztu dira"
 
@@ -352,11 +356,11 @@ msgstr "Blokearen ezaugarriak bikoiztu dira"
 msgid "Edit"
 msgstr "Aldatu"
 
-#: app/scripts/services/tools.js:974
+#: app/scripts/services/tools.js:992
 msgid "Edit the collection name"
 msgstr "Bildumaren izena aldatu"
 
-#: app/views/menu.html:133 app/views/menu.html:277
+#: app/views/menu.html:274
 msgid "Enable"
 msgstr "Onartu"
 
@@ -368,7 +372,7 @@ msgstr "Ingelesa"
 msgid "Enter the constant blocks"
 msgstr "Konstante-blokeak sar itzazu"
 
-#: app/scripts/controllers/menu.js:357
+#: app/scripts/controllers/menu.js:359
 msgid "Enter the external collections path"
 msgstr "Kanpoko bildumen bidea sar ezazu"
 
@@ -396,19 +400,19 @@ msgstr "Irteerako portuak sar itzazu"
 msgid "Enter the parameters"
 msgstr "Parametroak sar itzazu"
 
-#: app/scripts/controllers/menu.js:416
+#: app/scripts/controllers/menu.js:422
 msgid "Enter the remote hostname user@host"
 msgstr "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host"
 
-#: app/scripts/services/tools.js:687
+#: app/scripts/services/tools.js:701
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Errorea: Toolchain lehenetsia ez da '{{dir}}'-en aurkitu"
 
-#: app/scripts/services/utils.js:660
+#: app/scripts/services/utils.js:756
 msgid "Error: {{error}}"
 msgstr "Errorea: {{error}}"
 
-#: app/scripts/services/tools.js:476
+#: app/scripts/services/tools.js:482
 msgid "Errors detected in the design"
 msgstr "Akatsak daude diseinuan"
 
@@ -416,7 +420,7 @@ msgstr "Akatsak daude diseinuan"
 msgid "Examples"
 msgstr "Adibideak"
 
-#: app/scripts/services/tools.js:299
+#: app/scripts/services/tools.js:297
 msgid "Execute remote {{label}} ..."
 msgstr "Exekutatu urrutiko {{label}} ..."
 
@@ -424,27 +428,27 @@ msgstr "Exekutatu urrutiko {{label}} ..."
 msgid "Export"
 msgstr "Esportatu"
 
-#: app/views/menu.html:144
+#: app/views/menu.html:132
 msgid "External collections"
 msgstr "Kanpoko bildumak"
 
-#: app/scripts/controllers/menu.js:370
+#: app/scripts/controllers/menu.js:376
 msgid "External collections updated"
 msgstr "Kanpoko bildumak eguneratu dira"
 
-#: app/scripts/services/tools.js:834
+#: app/scripts/services/tools.js:852
 msgid "Extract default apio files..."
 msgstr "Apio fitxategiak atera..."
 
-#: app/scripts/services/tools.js:844
+#: app/scripts/services/tools.js:862
 msgid "Extract default apio packages..."
 msgstr "Apio pakete lehenetsiak atera..."
 
-#: app/scripts/services/tools.js:822
+#: app/scripts/services/tools.js:840
 msgid "Extract virtualenv files..."
 msgstr "Env birtualaren fitxategiak atera..."
 
-#: app/scripts/services/tools.js:399
+#: app/scripts/services/tools.js:405
 msgid "FPGA I/O ports not defined"
 msgstr "FPGAren E/S portuak definitu gabe daude"
 
@@ -453,7 +457,7 @@ msgstr "FPGAren E/S portuak definitu gabe daude"
 msgid "FPGA pin"
 msgstr "FPGA pina"
 
-#: app/views/menu.html:182
+#: app/views/menu.html:173
 msgid "FPGA resources"
 msgstr "FPGA baliabideak"
 
@@ -461,18 +465,18 @@ msgstr "FPGA baliabideak"
 msgid "File"
 msgstr "Fitxategia"
 
-#: app/scripts/services/project.js:459
+#: app/scripts/services/project.js:460
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
 "Proiektuaren direktorioan {{file}} fitxategia dagoeneko bada. Fitxategia "
 "ordeztu nahi al duzu?"
 
-#: app/scripts/services/tools.js:226
+#: app/scripts/services/tools.js:225
 msgid "File {{file}} does not exist"
 msgstr "Ez dago {{file}} izeneko fitxategirik"
 
-#: app/scripts/services/project.js:493
+#: app/scripts/services/project.js:494
 msgid "File {{file}} imported"
 msgstr "{{file}} fitxategia inportatu da"
 
@@ -484,15 +488,15 @@ msgstr "Edukia doitu"
 msgid "French"
 msgstr "Frantsesa"
 
-#: app/views/languages.html:28
+#: app/views/languages.html:34
 msgid "Galician"
 msgstr "Galegoa"
 
-#: app/views/languages.html:10
+#: app/views/languages.html:22
 msgid "German"
 msgstr "Alemaniako"
 
-#: app/views/menu.html:323
+#: app/views/menu.html:320
 msgid "Help"
 msgstr "Laguntza"
 
@@ -500,39 +504,39 @@ msgstr "Laguntza"
 msgid "Hexadecimal"
 msgstr "Hamaseitarra"
 
-#: app/scripts/services/utils.js:528
+#: app/scripts/services/utils.js:586
 msgid "Image"
 msgstr "Irudia"
 
-#: app/scripts/controllers/menu.js:816
+#: app/scripts/controllers/menu.js:846
 msgid "Image {{name}} saved"
 msgstr "{{name}} izeneko irudia gorde da"
 
-#: app/views/menu.html:374
+#: app/views/menu.html:371
 msgid "Information"
 msgstr "Informazioa"
 
-#: app/views/menu.html:359
+#: app/views/menu.html:356
 msgid "Input"
 msgstr "Sarrera"
 
-#: app/views/menu.html:250
+#: app/views/menu.html:247
 msgid "Install"
 msgstr "Instalatu"
 
-#: app/scripts/services/tools.js:839
+#: app/scripts/services/tools.js:857
 msgid "Install default apio..."
 msgstr "Apio lehenetsia instalatu..."
 
-#: app/scripts/services/tools.js:891
+#: app/scripts/services/tools.js:909
 msgid "Installation completed"
 msgstr "Instalazioa amaitu da"
 
-#: app/scripts/services/tools.js:729 app/scripts/services/tools.js:764
+#: app/scripts/services/tools.js:743 app/scripts/services/tools.js:780
 msgid "Installing toolchain"
 msgstr "Toolchain-a instalatzen ari da"
 
-#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:803
+#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:821
 msgid "Internet connection required"
 msgstr "Interneteko sarbidea behar da"
 
@@ -551,7 +555,7 @@ msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 "Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
 
-#: app/scripts/services/tools.js:1005
+#: app/scripts/services/tools.js:1023
 msgid "Invalid collection {{name}}"
 msgstr "{{name}} bilduma baliogabea"
 
@@ -568,7 +572,7 @@ msgstr "Konexio baliogabea: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Sarrerako konexio anitzak baliogabeak"
 
-#: app/scripts/services/utils.js:271
+#: app/scripts/services/utils.js:276
 msgid "Invalid project format"
 msgstr "Proiektuaren formatua baliogabea da"
 
@@ -589,15 +593,15 @@ msgstr "Kargatu"
 msgid "Local parameter"
 msgstr "Parametro lokala"
 
-#: app/scripts/services/utils.js:740
+#: app/scripts/services/utils.js:836
 msgid "Maximum bus size: 96 bits"
 msgstr "Busaren tamaina maximoa: 96 bit"
 
-#: app/views/menu.html:368
+#: app/views/menu.html:365
 msgid "Memory"
 msgstr "Memoria"
 
-#: app/scripts/services/utils.js:512
+#: app/scripts/services/utils.js:570
 msgid "Name"
 msgstr "Izena"
 
@@ -605,11 +609,11 @@ msgstr "Izena"
 msgid "New"
 msgstr "Berria"
 
-#: app/scripts/controllers/menu.js:669
+#: app/scripts/controllers/menu.js:700
 msgid "No collections stored"
 msgstr "Ez dago gordeta bildumarik"
 
-#: app/scripts/controllers/main.js:15 app/scripts/controllers/menu.js:289
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:291
 #: app/scripts/services/project.js:133
 msgid "OK"
 msgstr "Ados"
@@ -618,15 +622,15 @@ msgstr "Ados"
 msgid "Open"
 msgstr "Ireki"
 
-#: app/scripts/services/utils.js:535
+#: app/scripts/services/utils.js:593
 msgid "Open SVG"
 msgstr "SVGa ireki"
 
-#: app/scripts/services/project.js:496
+#: app/scripts/services/project.js:497
 msgid "Original file {{file}} does not exist"
 msgstr "Jatorrizko {{file}} fitxategia ez dago"
 
-#: app/views/menu.html:362
+#: app/views/menu.html:359
 msgid "Output"
 msgstr "Irteera"
 
@@ -634,11 +638,11 @@ msgstr "Irteera"
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: app/scripts/controllers/menu.js:374
+#: app/scripts/controllers/menu.js:380
 msgid "Path {{path}} does not exist"
 msgstr "Ez da {{path}} izeneko biderik"
 
-#: app/scripts/services/utils.js:868
+#: app/scripts/services/utils.js:964
 msgid "Please run: {{cmd}}"
 msgstr "Mesedez {{cmd}} exekutatu"
 
@@ -646,11 +650,11 @@ msgstr "Mesedez {{cmd}} exekutatu"
 msgid "Preferences"
 msgstr "Lehentasunak"
 
-#: app/views/menu.html:155
+#: app/views/menu.html:143
 msgid "Project information"
 msgstr "Proiektuaren informazioa"
 
-#: app/scripts/controllers/menu.js:384 app/scripts/controllers/menu.js:398
+#: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
 msgid "Project information updated"
 msgstr "Proiektuaren informazioa eguneratu da"
 
@@ -658,11 +662,11 @@ msgstr "Proiektuaren informazioa eguneratu da"
 msgid "Project {{name}} loaded"
 msgstr "{{name}} proiektua kargatu da"
 
-#: app/scripts/services/project.js:356
+#: app/scripts/services/project.js:357
 msgid "Project {{name}} saved"
 msgstr "{{name}} proiektua gorde da"
 
-#: app/scripts/services/tools.js:816
+#: app/scripts/services/tools.js:834
 msgid "Python 2.7 is required"
 msgstr "Python 2.7 behar da"
 
@@ -678,31 +682,31 @@ msgstr "Irakurtzeko soilik"
 msgid "Redo"
 msgstr "Berregin"
 
-#: app/views/menu.html:298
+#: app/views/menu.html:295
 msgid "Reload"
 msgstr "Berriro kargatu"
 
-#: app/scripts/services/tools.js:511
+#: app/scripts/services/tools.js:525
 msgid "Remote host {{name}} not connected"
 msgstr "{{name}} urrutiko ostalaria ez dago konektatua"
 
-#: app/views/menu.html:148
+#: app/views/menu.html:136
 msgid "Remote hostname"
 msgstr "Urrutiko ostalariaren izena"
 
-#: app/views/menu.html:258 app/views/menu.html:302
+#: app/views/menu.html:255 app/views/menu.html:299
 msgid "Remove"
 msgstr "Ezabatu"
 
-#: app/views/menu.html:314
+#: app/views/menu.html:311
 msgid "Remove all"
 msgstr "Dena ezabatu"
 
-#: app/scripts/services/utils.js:537
+#: app/scripts/services/utils.js:595
 msgid "Reset SVG"
 msgstr "SVGa berrezarri"
 
-#: app/views/menu.html:263
+#: app/views/menu.html:260
 msgid "Reset default"
 msgstr "Jatorrizkoa berrezarri"
 
@@ -710,7 +714,7 @@ msgstr "Jatorrizkoa berrezarri"
 msgid "Save"
 msgstr "Gorde"
 
-#: app/scripts/services/utils.js:536
+#: app/scripts/services/utils.js:594
 msgid "Save SVG"
 msgstr "SVGa gorde"
 
@@ -718,7 +722,7 @@ msgstr "SVGa gorde"
 msgid "Save as"
 msgstr "Gorde honela"
 
-#: app/views/menu.html:190
+#: app/views/menu.html:181
 msgid "Select"
 msgstr "Hautatu"
 
@@ -726,11 +730,15 @@ msgstr "Hautatu"
 msgid "Select all"
 msgstr "Dena hautatu"
 
+#: app/scripts/services/utils.js:714
+msgid "Select your board"
+msgstr ""
+
 #: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
 msgid "Show clock"
 msgstr "Ordularia erakutsi"
 
-#: app/views/menu.html:336
+#: app/views/menu.html:333
 msgid "Source code"
 msgstr "Iturburu kodea"
 
@@ -738,19 +746,19 @@ msgstr "Iturburu kodea"
 msgid "Spanish"
 msgstr "Gaztelera"
 
-#: app/scripts/controllers/menu.js:598
+#: app/scripts/controllers/menu.js:629
 msgid "Start build"
 msgstr "Sintetizatua hasi"
 
-#: app/scripts/controllers/menu.js:611
+#: app/scripts/controllers/menu.js:642
 msgid "Start upload"
 msgstr "Karga hasi"
 
-#: app/scripts/controllers/menu.js:588
+#: app/scripts/controllers/menu.js:619
 msgid "Start verification"
 msgstr "Egiaztapena hasi"
 
-#: app/scripts/services/tools.js:288
+#: app/scripts/services/tools.js:286
 msgid "Synchronize remote files ..."
 msgstr "Urrutiko fitxategiak sinkronizatu..."
 
@@ -758,27 +766,27 @@ msgstr "Urrutiko fitxategiak sinkronizatu..."
 msgid "Testbench"
 msgstr "Testbench "
 
-#: app/scripts/services/tools.js:984
+#: app/scripts/services/tools.js:1002
 msgid "The collection {{name}} already exists."
 msgstr "{{name}} bilduma badago"
 
-#: app/scripts/controllers/menu.js:567
+#: app/scripts/controllers/menu.js:598
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr ""
 "FPGAaren E/S konfigurazioa galduko da. {{name}} plaka aldatu nahi al duzu?"
 
-#: app/scripts/services/tools.js:695
+#: app/scripts/services/tools.js:709
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Toolchain-a ezabatuko da. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:680
+#: app/scripts/services/tools.js:694
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 "Toolchainaren jatorrizko balioak berrezarriko dira. Jarraitu nahi al duzu?"
 
-#: app/scripts/services/tools.js:669
+#: app/scripts/services/tools.js:683
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -786,7 +794,7 @@ msgstr ""
 "Toolchain-a eguneratuko da. Operazio horrek Interneteko sarbidea behar du. "
 "Jarraitu nahi al duzu?"
 
-#: app/scripts/services/project.js:418
+#: app/scripts/services/project.js:419
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -798,28 +806,29 @@ msgstr ""
 msgid "This project is designed for the {{name}} board."
 msgstr "Proiektua {{name}} plakarentzat diseinatu da."
 
-#: app/views/menu.html:246
+#: app/views/menu.html:243
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:892
+#: app/scripts/services/tools.js:910
 msgid "Toolchain installed"
 msgstr "Toolchain-a instalatu da"
 
 #: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
-#: app/scripts/services/tools.js:240 app/scripts/services/tools.js:255
+#: app/scripts/services/tools.js:135 app/scripts/services/tools.js:238
+#: app/scripts/services/tools.js:253
 msgid "Toolchain not installed"
 msgstr "Toolchain-a ez da instalatu"
 
-#: app/scripts/services/tools.js:700
+#: app/scripts/services/tools.js:714
 msgid "Toolchain removed"
 msgstr "Toolchain-a ezabatu da"
 
-#: app/scripts/services/tools.js:264
+#: app/scripts/services/tools.js:262
 msgid "Toolchain version does not match"
 msgstr "Toolchainaren bertsioa ez dator bat"
 
-#: app/views/menu.html:233
+#: app/views/menu.html:230
 msgid "Tools"
 msgstr "Tresnak"
 
@@ -827,7 +836,7 @@ msgstr "Tresnak"
 msgid "Undo"
 msgstr "Desegin"
 
-#: app/scripts/services/tools.js:363
+#: app/scripts/services/tools.js:369
 msgid "Unknown board"
 msgstr "Plaka ezezaguna"
 
@@ -835,11 +844,11 @@ msgstr "Plaka ezezaguna"
 msgid "Unsupported project format {{version}}"
 msgstr "{{version}} formatua duen proiektua ez da onartzen"
 
-#: app/scripts/app.js:48
+#: app/scripts/app.js:59
 msgid "Untitled"
 msgstr "Izenik gabe"
 
-#: app/views/menu.html:253
+#: app/views/menu.html:250
 msgid "Update"
 msgstr "Eguneratu"
 
@@ -848,35 +857,35 @@ msgstr "Eguneratu"
 msgid "Update the block name"
 msgstr "Blokearen izena egunera ezazu"
 
-#: app/views/menu.html:242
+#: app/views/menu.html:239
 msgid "Upload"
 msgstr "Kargatu"
 
-#: app/scripts/controllers/menu.js:612
+#: app/scripts/controllers/menu.js:643
 msgid "Upload done"
 msgstr "Karga egin da"
 
-#: app/scripts/controllers/menu.js:589
+#: app/scripts/controllers/menu.js:620
 msgid "Verification done"
 msgstr "Egiaztapena egin da"
 
-#: app/views/menu.html:236
+#: app/views/menu.html:233
 msgid "Verify"
 msgstr "Egiaztatu"
 
-#: app/scripts/services/utils.js:513 app/views/menu.html:329
+#: app/scripts/services/utils.js:571 app/views/menu.html:326
 msgid "Version"
 msgstr "Bertsioa"
 
-#: app/views/menu.html:161
+#: app/views/menu.html:149
 msgid "View"
 msgstr "Ikusi"
 
-#: app/views/menu.html:326
+#: app/views/menu.html:323
 msgid "View license"
 msgstr "Lizentzia ikusi"
 
-#: app/scripts/services/tools.js:479
+#: app/scripts/services/tools.js:486
 msgid "Warnings detected in the design"
 msgstr "Diseinuan abisuak detektatu dira"
 
@@ -903,7 +912,7 @@ msgstr "Portuaren izena okerra da: {{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Proiektuaren formatua okerra da: {{name}}"
 
-#: app/scripts/services/tools.js:508
+#: app/scripts/services/tools.js:522
 msgid "Wrong remote hostname {{name}}"
 msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 
@@ -911,7 +920,7 @@ msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "Dagoen moduan karga dezakezu edo {{name}} plakarako bihurtu"
 
-#: app/scripts/controllers/menu.js:280
+#: app/scripts/controllers/menu.js:282
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
 
@@ -919,23 +928,23 @@ msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
 msgid "back"
 msgstr "atzera"
 
-#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:843
+#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:939
 msgid "{{app}} is required."
 msgstr "{{app}} behar da"
 
-#: app/scripts/controllers/menu.js:492
+#: app/scripts/controllers/menu.js:498
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} plakaren datasheet-a ez zehaztua"
 
-#: app/scripts/controllers/menu.js:482
+#: app/scripts/controllers/menu.js:488
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} plakaren pinout-a ez zehaztua"
 
-#: app/scripts/controllers/menu.js:513
+#: app/scripts/controllers/menu.js:519
 msgid "{{board}} rules not defined"
 msgstr "{{board}} plakaren arauak ez daude definituta"
 
-#: app/scripts/controllers/menu.js:227 app/scripts/controllers/menu.js:251
+#: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
 msgid "{{name}} exported"
 msgstr "{{name}} esportatu da"
 
