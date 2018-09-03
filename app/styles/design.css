@@ -500,9 +500,7 @@ g {
   left: 0;
   right: 0;
   bottom: 0;
-  margin: 7px;
-  border-radius: 5px;
-  border: 1px solid transparent;
+  margin: 0;
   pointer-events: none;
   overflow: visible;
 }

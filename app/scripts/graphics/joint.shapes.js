@@ -1674,6 +1674,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="info-block">\
+        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
         <div class="info-content' + (readonly ? ' hidden' : '') + '"></div>\
         <div class="info-editor' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
@@ -1686,15 +1687,14 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.session.setMode("ace/mode/markdown");\
         </script>\
-        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
         <div class="resizer"/></div>\
       </div>\
       '
     )());
 
+    this.renderSelector = this.$box.find('.info-render');
     this.editorSelector = this.$box.find('.info-editor');
     this.contentSelector = this.$box.find('.info-content');
-    this.renderSelector = this.$box.find('.info-render');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -1825,9 +1825,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
+      this.renderSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.contentSelector.addClass('hidden');
-      this.renderSelector.removeClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
@@ -1838,9 +1838,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else {
       this.$box.removeClass('info-block-readonly');
+      this.renderSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.contentSelector.removeClass('hidden');
-      this.renderSelector.addClass('hidden');
       this.enableResizer();
     }
   },
@@ -1926,12 +1926,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
-      // This is required because this.renderSelector may be not available
+      // Scale render
       this.renderSelector.css({
-        left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
-        top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
-        width: bbox.width - 14,
-        height: bbox.height - 14,
+        left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+        top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
+        width: Math.round(bbox.width),
+        height: Math.round(bbox.height),
         transform: 'scale(' + state.zoom + ')',
         'font-size': aceFontSize + 'px'
       });
