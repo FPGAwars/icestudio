@@ -423,6 +423,7 @@ module.exports = function(grunt) {
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
+    'checksettings',
     'jshint',
     'clean:dist',
     'clean:toolchain',
@@ -441,8 +442,9 @@ module.exports = function(grunt) {
   .concat([
     'clean:tmp'
   ]));
-
-  if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
-    grunt.fail.fatal('Apio settins are in debug mode');
-  }
+  grunt.registerTask('checksettings', function() {
+    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+      grunt.fail.fatal('Apio settings are in debug mode');
+    }
+  });
 };

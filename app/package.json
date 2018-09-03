@@ -26,7 +26,7 @@
       "tinyprog"
     ],
     "external": "",
-    "branch": ""
+    "branch": "stable"
   },
   "collection": "0.3.3-rc",
   "engines": {
