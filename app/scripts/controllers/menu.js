@@ -688,7 +688,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (common.internalCollections.length > 1) {
+      if (common.internalCollections.length > 0) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();
