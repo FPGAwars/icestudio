@@ -427,7 +427,7 @@ angular.module('icestudio')
       // Application strings
       gettextCatalog.loadRemote(nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json'));
       // Collections strings
-      var collections = common.internalCollections.concat(common.externalCollections);
+      var collections = [common.defaultCollection].concat(common.internalCollections).concat(common.externalCollections);
       for (var c in collections) {
         var collection = collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
