@@ -361,7 +361,7 @@ angular.module('icestudio')
               }
               resultAlert = alertify.error(errorMessage, 30);
             }
-            else if (stdout.indexOf('Error: board ' + boardName + '  not available') !== -1) {
+            else if (stdout.indexOf('Error: board ' + boardName + ' not available') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);
               setupDriversAlert();
             }
