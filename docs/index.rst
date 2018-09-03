@@ -2,7 +2,7 @@
 Welcome to icestudio's documentation!
 =====================================
 
-.. image:: resources/images/logo/icestudio-logo-label.svg
+.. image:: resources/images/logo/icestudio-logo-label.png
    :width: 400 px
 
 Icestudio is a visual editor for open FPGA boards. It is built on top of the `Icestorm project <http://www.clifford.at/icestorm/>`_. This IDE is available for GNU/Linux, Windows and Mac OS X.
