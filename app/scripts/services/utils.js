@@ -273,7 +273,7 @@ angular.module('icestudio')
                   resolve(data);
                 }
                 else {
-                  reject(gettextCatalog.getString('Invalid project format'));
+                  reject();
                 }
               }
             });

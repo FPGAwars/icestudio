@@ -77,8 +77,8 @@ angular.module('icestudio')
         var name = utils.basename(filepath);
         self.load(name, data);
       })
-      .catch(function(error) {
-        alertify.error(error, 30);
+      .catch(function() {
+        alertify.error(gettextCatalog.getString('Invalid project format'), 30);
       });
     };
 
@@ -446,8 +446,8 @@ angular.module('icestudio')
           }
         }
       })
-      .catch(function(error) {
-        alertify.error(error, 30);
+      .catch(function() {
+        alertify.error(gettextCatalog.getString('Invalid project format'), 30);
       });
     };
 
