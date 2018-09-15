@@ -509,6 +509,10 @@ g {
   pointer-events: all;
 }
 
+.info-block .info-render details {
+  pointer-events: all;
+}
+
 .info-block .info-render input[type=checkbox] {
   position: absolute;
   margin: 0.4em 0 0 -1.3em;
