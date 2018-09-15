@@ -11,7 +11,6 @@ angular.module('icestudio')
                              gettextCatalog,
                              nodeDebounce,
                              window) {
-    // Variables
 
     var z = { index: 100 };
     var graph = null;
@@ -31,8 +30,6 @@ angular.module('icestudio')
 
     this.breadcrumbs = [{ name: '', type: '' }];
     this.addingDraggableBlock = false;
-
-    // Functions
 
     this.getState = function() {
       // Clone state
@@ -378,7 +375,7 @@ angular.module('icestudio')
       });
 
       paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
-        if (!checkInsideViewBox(cellView, x, y)) {
+        if (x && y && !checkInsideViewBox(cellView, x, y)) {
           // Out of the view box
           return;
         }
