@@ -351,7 +351,6 @@ angular.module('icestudio')
       try {
         var content = nodeFs.readdirSync(path);
         result = content &&
-          contains(content, 'README.md') && isFile(nodePath.join(path, 'README.md')) &&
           contains(content, 'package.json') && isFile(nodePath.join(path, 'package.json')) &&
           (
             (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
