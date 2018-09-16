@@ -352,7 +352,9 @@ angular.module('icestudio')
             var boardName = common.selectedBoard.name;
             var boardLabel = common.selectedBoard.info.label;
             // - Apio errors
-            if (stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) {
+            if ((stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) ||
+                (stdout.indexOf('USBError') !== -1) ||
+                (stdout.indexOf('Activate bootloader') !== -1)) {
               var errorMessage = gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) });
               if (stdout.indexOf('Activate bootloader') !== -1) {
                 if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
