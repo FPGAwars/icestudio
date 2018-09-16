@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Use collection-default 0.3.3
 - Fix selection-box render for info blocks
 - Load translations of the default collection
+- Enable pointer events for `details` tag in Info block
+- Propagate double click for selected blocks
 
 ## [0.3.3-rc] - 2018-08-17
 ### Memory address (#250)
