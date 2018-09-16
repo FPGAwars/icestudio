@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### General
+- Check apio debug settings for dist
+- Update fr_FR translation (#254 by @pcotret)
+- Add Alhambra II pinout SVG (#257 by @EladioDM)
+- Update eu_ES translation (#262 by @Lorea-Aldabaldetreku)
+- Add de_DE translation (#263 by @PhilippvK)
+- Add `Bootloader not active` for TinyFPGA boards
+- Add prompt for selecting the board at the beginning
+- Add Live command output: `View > Command output`
+- Fix `removeAllCollections` for one item
+- Fix translations for info blocks
+- Use collection-default 0.3.3
+- Fix selection-box render for info blocks
+- Load translations of the default collection
+
 ## [0.3.3-rc] - 2018-08-17
 ### Memory address (#250)
 - Add `Address format` combo (bin, dec, hex)
