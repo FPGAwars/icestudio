@@ -392,6 +392,15 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   removeBox: function(/*event*/) {
     this.$box.remove();
+  },
+
+  updateScrollStatus: function(status) {
+    if (this.editor) {
+      this.editor.renderer.scrollBarV.element.style.visibility = status ? '' : 'hidden';
+      this.editor.renderer.scrollBarH.element.style.visibility = status ? '' : 'hidden';
+      this.editor.renderer.scroller.style.right = 0;
+      this.editor.renderer.scroller.style.bottom = 0;
+    }
   }
 });
 
@@ -1328,12 +1337,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
     });
-  },
-
-  updateScrollStatus: function(status) {
-    this.editor.renderer.scrollBarV.element.style.visibility = status ? '' : 'hidden';
-    this.editor.renderer.scrollBarH.element.style.visibility = status ? '' : 'hidden';
-    this.editor.resize();
   }
 });
 
@@ -1640,12 +1643,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
     });
-  },
-
-  updateScrollStatus: function(status) {
-    this.editor.renderer.scrollBarV.element.style.visibility = status ? '' : 'hidden';
-    this.editor.renderer.scrollBarH.element.style.visibility = status ? '' : 'hidden';
-    this.editor.resize();
   }
 });
 
@@ -1968,12 +1965,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
     });
-  },
-
-  updateScrollStatus: function(status) {
-    this.editor.renderer.scrollBarV.element.style.visibility = status ? '' : 'hidden';
-    this.editor.renderer.scrollBarH.element.style.visibility = status ? '' : 'hidden';
-    this.editor.resize();
   },
 
   removeBox: function(/*event*/) {
