@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### General
 - Check apio debug settings for dist
-- Update fr_FR translation (#254 by @pcotret)
+- Update fr_FR translation (#254, #272 by @pcotret)
 - Add Alhambra II pinout SVG (#257 by @EladioDM)
 - Update eu_ES translation (#262 by @Lorea-Aldabaldetreku)
 - Add de_DE translation (#263 by @PhilippvK)
@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Load translations of the default collection
 - Enable pointer events for `details` tag in Info block
 - Propagate double click for selected blocks
+- Update apio to 0.3.6
 
 ## [0.3.3-rc] - 2018-08-17
 ### Memory address (#250)

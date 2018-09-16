@@ -18,7 +18,7 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.3.4",
+    "min": "0.3.6",
     "max": "0.4.0",
     "extras": [
       "blackiceprog",
@@ -26,7 +26,7 @@
       "tinyprog"
     ],
     "external": "",
-    "branch": "stable"
+    "branch": ""
   },
   "collection": "0.3.3",
   "engines": {
