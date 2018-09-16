@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.3.3] - 2018-09-16
 ### General
 - Check apio debug settings for dist
 - Update fr_FR translation (#254, #272 by @pcotret)
@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 - Enable pointer events for `details` tag in Info block
 - Propagate double click for selected blocks
 - Update apio to 0.3.6
+- Update gl_ES translation (#273 by @xoan)
 
 ## [0.3.3-rc] - 2018-08-17
 ### Memory address (#250)
