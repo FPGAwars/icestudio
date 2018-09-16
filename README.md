@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.3.3-rc)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.3.3--rc-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.3.3)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.3.3-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -97,8 +97,8 @@ npm start
 | French     | ![Progress](http://progressed.io/bar/100) |
 | Galician   | ![Progress](http://progressed.io/bar/100) |
 | German     | ![Progress](http://progressed.io/bar/99)  |
-| Chinese    | ![Progress](http://progressed.io/bar/91)  |
 | Basque     | ![Progress](http://progressed.io/bar/99)  |
+| Chinese    | ![Progress](http://progressed.io/bar/91)  |
 | Catalan    | ![Progress](http://progressed.io/bar/91)  |
 
 **Contribute!**
