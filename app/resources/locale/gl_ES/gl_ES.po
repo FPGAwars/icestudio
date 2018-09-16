@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
@@ -84,7 +84,7 @@ msgstr "Engadir como bloque"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
 msgid "Address format"
-msgstr ""
+msgstr "Formato do enderezo de memoria"
 
 #: app/scripts/services/tools.js:1133
 msgid "All collections removed"
@@ -108,7 +108,7 @@ msgstr "Euskera"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Binario"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -256,7 +256,7 @@ msgstr "Coleccións"
 
 #: app/views/menu.html:168
 msgid "Command output"
-msgstr ""
+msgstr "Saída de comandos"
 
 #: app/views/menu.html:337
 msgid "Community forum"
@@ -292,7 +292,7 @@ msgstr "Folla de datos"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Decimal"
 
 #: app/views/menu.html:206
 msgid "Default"
@@ -374,7 +374,7 @@ msgstr "Introduza os bloques constante"
 
 #: app/scripts/controllers/menu.js:359
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Introduza a ruta ás coleccións externas"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
@@ -430,11 +430,11 @@ msgstr "Exportar"
 
 #: app/views/menu.html:132
 msgid "External collections"
-msgstr ""
+msgstr "Coleccións externas"
 
 #: app/scripts/controllers/menu.js:376
 msgid "External collections updated"
-msgstr ""
+msgstr "Colecións externas actualizadas"
 
 #: app/scripts/services/tools.js:852
 msgid "Extract default apio files..."
@@ -500,7 +500,7 @@ msgstr "Axuda"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Hexadecimal"
 
 #: app/scripts/services/utils.js:586
 msgid "Image"
@@ -639,7 +639,7 @@ msgstr "Pegar"
 
 #: app/scripts/controllers/menu.js:380
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "Non existe a ruta {{path}}"
 
 #: app/scripts/services/utils.js:964
 msgid "Please run: {{cmd}}"
@@ -731,7 +731,7 @@ msgstr "Seleccionar todo"
 
 #: app/scripts/services/utils.js:714
 msgid "Select your board"
-msgstr ""
+msgstr "Seleccionar a placa"
 
 #: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
 msgid "Show clock"
