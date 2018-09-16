@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
@@ -257,7 +257,7 @@ msgstr "Collections"
 
 #: app/views/menu.html:168
 msgid "Command output"
-msgstr ""
+msgstr "Commande de sortie"
 
 #: app/views/menu.html:337
 msgid "Community forum"
@@ -733,7 +733,7 @@ msgstr "Sélectionner tout"
 
 #: app/scripts/services/utils.js:714
 msgid "Select your board"
-msgstr ""
+msgstr "Sélectionner votre carte"
 
 #: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
 msgid "Show clock"
