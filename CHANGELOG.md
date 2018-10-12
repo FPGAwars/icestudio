@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### General
+- Add cs_CZ translation (by nerakino)
+- Add nl_NL translation (by @elektor-labs)
+- Use venv --always-copy flag only for Windows (#244)
+
 ## [0.3.3] - 2018-09-16
 ### General
 - Check apio debug settings for dist
