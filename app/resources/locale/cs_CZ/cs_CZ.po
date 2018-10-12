@@ -83,7 +83,7 @@ msgstr "Přidat jako blok"
 msgid "Address format"
 msgstr "Formát adresy"
 
-#: app/scripts/services/tools.js:1133
+#: app/scripts/services/tools.js:1136
 msgid "All collections removed"
 msgstr "Všechny kolekce odstraněny"
 
@@ -91,7 +91,7 @@ msgstr "Všechny kolekce odstraněny"
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Všechny uložené kolekce budou zahozeny. Přejete si pokračovat?"
 
-#: app/scripts/services/utils.js:573
+#: app/scripts/services/utils.js:574
 msgid "Author"
 msgstr "Autor"
 
@@ -99,7 +99,7 @@ msgstr "Autor"
 msgid "Basic"
 msgstr "Základní prvky"
 
-#: app/views/languages.html:40
+#: app/views/languages.html:52
 msgid "Basque"
 msgstr "baskičtina"
 
@@ -138,23 +138,23 @@ msgstr "Pravidla desky zakázána"
 msgid "Board rules enabled"
 msgstr "Pravidla desky povolena"
 
-#: app/scripts/services/tools.js:385
+#: app/scripts/services/tools.js:388
 msgid "Board {{name}} disconnected"
 msgstr "Deska {{name}} odpojena"
 
-#: app/scripts/services/tools.js:365 app/scripts/services/tools.js:381
+#: app/scripts/services/tools.js:368 app/scripts/services/tools.js:384
 msgid "Board {{name}} not available"
 msgstr "Deska {{name}} není dostupná"
 
-#: app/scripts/services/tools.js:357
+#: app/scripts/services/tools.js:358
 msgid "Board {{name}} not connected"
 msgstr "Deska {{name}} není připojena"
 
-#: app/scripts/app.js:47 app/scripts/controllers/menu.js:611
+#: app/scripts/app.js:48 app/scripts/controllers/menu.js:611
 msgid "Board {{name}} selected"
 msgstr "Deska {{name}} vybrána"
 
-#: app/scripts/services/tools.js:360 app/scripts/services/tools.js:378
+#: app/scripts/services/tools.js:362 app/scripts/services/tools.js:381
 msgid "Bootloader not active"
 msgstr "Zavaděč není aktivní"
 
@@ -170,19 +170,19 @@ msgstr "Sestavení hotovo"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: app/views/languages.html:46
+#: app/views/languages.html:58
 msgid "Catalan"
 msgstr "katalánština"
 
-#: app/scripts/services/tools.js:817
+#: app/scripts/services/tools.js:820
 msgid "Check Internet connection..."
 msgstr "Kontrola připojení na internet..."
 
-#: app/scripts/services/tools.js:827
+#: app/scripts/services/tools.js:830
 msgid "Check Python..."
 msgstr "Kontrola Pythonu..."
 
-#: app/views/languages.html:28
+#: app/views/languages.html:40
 msgid "Chinese"
 msgstr "čínština"
 
@@ -190,12 +190,12 @@ msgstr "čínština"
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Klikněte zde <b>ke stažení novější verze</b> Icestudia"
 
-#: app/scripts/services/tools.js:920
+#: app/scripts/services/tools.js:923
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Klikněte zde <b>pro instalování ovladačů</b>"
 
 #: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
-#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:275
+#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:274
 msgid "Click here to install it"
 msgstr "Pro instalaci klikněte zde"
 
@@ -227,19 +227,19 @@ msgstr "Informace o kolekci"
 msgid "Collection {{collection}} info not defined"
 msgstr "Informace o kolekci {{collection}} nejsou definovány"
 
-#: app/scripts/services/tools.js:1017
+#: app/scripts/services/tools.js:1020
 msgid "Collection {{name}} added"
 msgstr "Kolekce {{name}} přidána"
 
-#: app/scripts/services/tools.js:1011
+#: app/scripts/services/tools.js:1014
 msgid "Collection {{name}} not replaced"
 msgstr "Kolekce {{name}} nenahrazena"
 
-#: app/scripts/services/tools.js:1127
+#: app/scripts/services/tools.js:1130
 msgid "Collection {{name}} removed"
 msgstr "Kolekce {{name}} odstraněna"
 
-#: app/scripts/services/tools.js:1007
+#: app/scripts/services/tools.js:1010
 msgid "Collection {{name}} replaced"
 msgstr "Kolekce {{name}} nahrazena"
 
@@ -251,7 +251,7 @@ msgstr "Kolekce {{name}} vybrána"
 msgid "Collections"
 msgstr "Kolekce"
 
-#: app/views/menu.html:168
+#: app/scripts/controllers/menu.js:550 app/views/menu.html:168
 msgid "Command output"
 msgstr "Výstup"
 
@@ -259,7 +259,7 @@ msgstr "Výstup"
 msgid "Community forum"
 msgstr "Komunitní fórum"
 
-#: app/scripts/services/tools.js:399
+#: app/scripts/services/tools.js:402
 msgid "Configuration not completed"
 msgstr "Konfigurace není kompletní"
 
@@ -275,13 +275,17 @@ msgstr "Převést"
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: app/scripts/services/tools.js:845
+#: app/scripts/services/tools.js:848
 msgid "Create virtualenv..."
 msgstr "Vytvoření virtuálního prostředí..."
 
 #: app/views/menu.html:101
 msgid "Cut"
 msgstr "Vyjmout"
+
+#: app/views/languages.html:34
+msgid "Czech"
+msgstr "čeština"
 
 #: app/views/menu.html:158
 msgid "Datasheet"
@@ -295,7 +299,7 @@ msgstr "Desítkové"
 msgid "Default"
 msgstr "Výchozí"
 
-#: app/scripts/services/tools.js:671
+#: app/scripts/services/tools.js:674
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -303,7 +307,7 @@ msgstr ""
 "Výchozí sada nástrojů nebyla nalezena. Nástroje budou staženy. Tato operace "
 "vyžaduje připojení na internet. Přejete si pokračovat?"
 
-#: app/scripts/services/utils.js:572
+#: app/scripts/services/utils.js:573
 msgid "Description"
 msgstr "Popis"
 
@@ -319,7 +323,7 @@ msgstr "Chcete zavřít aplikaci?"
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Chcete odstranit kolekci {{name}}?"
 
-#: app/scripts/services/tools.js:1003
+#: app/scripts/services/tools.js:1006
 msgid "Do you want to replace it?"
 msgstr "Přejete si to nahradit?"
 
@@ -341,7 +345,7 @@ msgstr "Ovladače zakázány"
 msgid "Drivers enabled"
 msgstr "Ovladače povoleny"
 
-#: app/scripts/services/tools.js:408
+#: app/scripts/services/tools.js:411
 msgid "Duplicated FPGA I/O ports"
 msgstr "Duplikované FPGA vstupně výstupní porty"
 
@@ -349,11 +353,15 @@ msgstr "Duplikované FPGA vstupně výstupní porty"
 msgid "Duplicated block attributes"
 msgstr "Duplikované blokové atributy"
 
+#: app/views/languages.html:28
+msgid "Dutch"
+msgstr "holandský"
+
 #: app/views/menu.html:91
 msgid "Edit"
 msgstr "Upravit"
 
-#: app/scripts/services/tools.js:992
+#: app/scripts/services/tools.js:995
 msgid "Edit the collection name"
 msgstr "Upravit název kolekce"
 
@@ -401,15 +409,15 @@ msgstr "Zadejte parametry"
 msgid "Enter the remote hostname user@host"
 msgstr "Zadejte vzdáleného hostitele uživatel@hostitel"
 
-#: app/scripts/services/tools.js:701
+#: app/scripts/services/tools.js:704
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Chyba: výchozí sada nástrojů nebyla nalezena v '{{dir}}'"
 
-#: app/scripts/services/utils.js:756
+#: app/scripts/services/utils.js:757
 msgid "Error: {{error}}"
 msgstr "Chyba: {{error}}"
 
-#: app/scripts/services/tools.js:482
+#: app/scripts/services/tools.js:485
 msgid "Errors detected in the design"
 msgstr "V návrhu byly zjištěny chyby"
 
@@ -417,7 +425,7 @@ msgstr "V návrhu byly zjištěny chyby"
 msgid "Examples"
 msgstr "Příklady"
 
-#: app/scripts/services/tools.js:297
+#: app/scripts/services/tools.js:296
 msgid "Execute remote {{label}} ..."
 msgstr "Spouštění vzdáleně {{label}} ..."
 
@@ -433,19 +441,19 @@ msgstr "Externí kolekce"
 msgid "External collections updated"
 msgstr "Externí kolekce aktualizována"
 
-#: app/scripts/services/tools.js:852
+#: app/scripts/services/tools.js:855
 msgid "Extract default apio files..."
 msgstr "Rozbalení výchozích apio souborů..."
 
-#: app/scripts/services/tools.js:862
+#: app/scripts/services/tools.js:865
 msgid "Extract default apio packages..."
 msgstr "Rozbalení výchozích apio balíků..."
 
-#: app/scripts/services/tools.js:840
+#: app/scripts/services/tools.js:843
 msgid "Extract virtualenv files..."
 msgstr "Rozbalení souborů virtuálního prostředí..."
 
-#: app/scripts/services/tools.js:405
+#: app/scripts/services/tools.js:408
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA vstupně/výstupní porty nejsou definovány"
 
@@ -467,7 +475,7 @@ msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
 
-#: app/scripts/services/tools.js:225
+#: app/scripts/services/tools.js:222
 msgid "File {{file}} does not exist"
 msgstr "Soubor {{file}} neexistuje"
 
@@ -483,7 +491,7 @@ msgstr "Přizpůsbit obsah"
 msgid "French"
 msgstr "francouzština"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:46
 msgid "Galician"
 msgstr "galicijština"
 
@@ -499,7 +507,7 @@ msgstr "Nápověda"
 msgid "Hexadecimal"
 msgstr "Šestnáctkové"
 
-#: app/scripts/services/utils.js:586
+#: app/scripts/services/utils.js:587
 msgid "Image"
 msgstr "Obraz"
 
@@ -519,54 +527,54 @@ msgstr "Vstup"
 msgid "Install"
 msgstr "Instalovat"
 
-#: app/scripts/services/tools.js:857
+#: app/scripts/services/tools.js:860
 msgid "Install default apio..."
 msgstr "Instalace výchozího apio..."
 
-#: app/scripts/services/tools.js:909
+#: app/scripts/services/tools.js:912
 msgid "Installation completed"
 msgstr "Instalace dokončena"
 
-#: app/scripts/services/tools.js:743 app/scripts/services/tools.js:780
+#: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
 msgid "Installing toolchain"
 msgstr "Instalace nástrojů"
 
-#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:821
+#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:824
 msgid "Internet connection required"
 msgstr "Potřeba připojení na internet"
 
-#: app/scripts/services/graph.js:180
+#: app/scripts/services/graph.js:177
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Neplatné připojení <i>Pull-upu</i>:<br>blok je již připojen"
 
-#: app/scripts/services/graph.js:194
+#: app/scripts/services/graph.js:191
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Neplatné připojení <i>Pull-upu</i>:<br>to je povoleno pouze pro <i>Vstupní</"
 "i> bloky"
 
-#: app/scripts/services/graph.js:186
+#: app/scripts/services/graph.js:183
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Neplatné zapojení bloku:<br><i>Pull-up</i>je již připojen"
 
-#: app/scripts/services/tools.js:1023
+#: app/scripts/services/tools.js:1026
 msgid "Invalid collection {{name}}"
 msgstr "Neplatná kolekce {{name}}"
 
-#: app/scripts/services/graph.js:144 app/scripts/services/graph.js:151
-#: app/scripts/services/graph.js:158
+#: app/scripts/services/graph.js:141 app/scripts/services/graph.js:148
+#: app/scripts/services/graph.js:155
 msgid "Invalid connection"
 msgstr "Neplatné spojení"
 
-#: app/scripts/services/graph.js:213
+#: app/scripts/services/graph.js:210
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Neplatné spojení: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:174
+#: app/scripts/services/graph.js:171
 msgid "Invalid multiple input connections"
 msgstr "Neplatné vícenásobná vstupní připojení"
 
-#: app/scripts/services/utils.js:276
+#: app/scripts/services/project.js:450 app/scripts/services/project.js:81
 msgid "Invalid project format"
 msgstr "Neplatný formát projektu"
 
@@ -587,7 +595,7 @@ msgstr "Nahrát"
 msgid "Local parameter"
 msgstr "Lokální parametr"
 
-#: app/scripts/services/utils.js:836
+#: app/scripts/services/utils.js:837
 msgid "Maximum bus size: 96 bits"
 msgstr "Maximální šířka sběrnice: 96 bitů"
 
@@ -595,7 +603,7 @@ msgstr "Maximální šířka sběrnice: 96 bitů"
 msgid "Memory"
 msgstr "Paměť"
 
-#: app/scripts/services/utils.js:570
+#: app/scripts/services/utils.js:571
 msgid "Name"
 msgstr "Jméno"
 
@@ -616,7 +624,7 @@ msgstr "Budiž"
 msgid "Open"
 msgstr "Otevřít"
 
-#: app/scripts/services/utils.js:593
+#: app/scripts/services/utils.js:594
 msgid "Open SVG"
 msgstr "Otevřít SVG"
 
@@ -636,7 +644,7 @@ msgstr "Vložit"
 msgid "Path {{path}} does not exist"
 msgstr "Cesta {{path}} neexistuje"
 
-#: app/scripts/services/utils.js:964
+#: app/scripts/services/utils.js:965
 msgid "Please run: {{cmd}}"
 msgstr "Prosím spusťte: {{cmd}}"
 
@@ -660,7 +668,7 @@ msgstr "Projekt {{name}} nahrán"
 msgid "Project {{name}} saved"
 msgstr "Projekt {{name}} uložen"
 
-#: app/scripts/services/tools.js:834
+#: app/scripts/services/tools.js:837
 msgid "Python 2.7 is required"
 msgstr "Je potřeba Python verze 2.7"
 
@@ -680,7 +688,7 @@ msgstr "Znovu"
 msgid "Reload"
 msgstr "Znovu nahrát"
 
-#: app/scripts/services/tools.js:525
+#: app/scripts/services/tools.js:528
 msgid "Remote host {{name}} not connected"
 msgstr "Vzdálený hostitel {{name}} není připojen"
 
@@ -696,7 +704,7 @@ msgstr "Odebrat"
 msgid "Remove all"
 msgstr "Odebrat vše"
 
-#: app/scripts/services/utils.js:595
+#: app/scripts/services/utils.js:596
 msgid "Reset SVG"
 msgstr "Obnovit SVG"
 
@@ -708,7 +716,7 @@ msgstr "Obnovit výchozí"
 msgid "Save"
 msgstr "Uložit"
 
-#: app/scripts/services/utils.js:594
+#: app/scripts/services/utils.js:595
 msgid "Save SVG"
 msgstr "Uložit SVG"
 
@@ -724,7 +732,7 @@ msgstr "Vybrat"
 msgid "Select all"
 msgstr "Vybrat vše"
 
-#: app/scripts/services/utils.js:714
+#: app/scripts/services/utils.js:715
 msgid "Select your board"
 msgstr "Vyberte vaši desku"
 
@@ -752,7 +760,7 @@ msgstr "Začínám nahrávat"
 msgid "Start verification"
 msgstr "Začínám kontrolovat"
 
-#: app/scripts/services/tools.js:286
+#: app/scripts/services/tools.js:285
 msgid "Synchronize remote files ..."
 msgstr "Synchronizace vzdálených souborů..."
 
@@ -760,7 +768,7 @@ msgstr "Synchronizace vzdálených souborů..."
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/scripts/services/tools.js:1002
+#: app/scripts/services/tools.js:1005
 msgid "The collection {{name}} already exists."
 msgstr "Kolekce {{name}} již existuje."
 
@@ -772,15 +780,15 @@ msgstr ""
 "Současná konfigurace FPGA vstupu/výstupu bude ztracena. Přejete si změnit na "
 "desku {{name}}?"
 
-#: app/scripts/services/tools.js:709
+#: app/scripts/services/tools.js:712
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Nástroj bude odstraněn. Přejete si pokračovat?"
 
-#: app/scripts/services/tools.js:694
+#: app/scripts/services/tools.js:697
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr "Nástroj bude obnoven do výchozího stavu. Přejete si pokračovat?"
 
-#: app/scripts/services/tools.js:683
+#: app/scripts/services/tools.js:686
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -804,21 +812,21 @@ msgstr "Tento projekt je navržen pro desku {{name}}."
 msgid "Toolchain"
 msgstr "Nástroj"
 
-#: app/scripts/services/tools.js:910
+#: app/scripts/services/tools.js:913
 msgid "Toolchain installed"
 msgstr "Nástroj nainstalován"
 
 #: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
-#: app/scripts/services/tools.js:135 app/scripts/services/tools.js:238
-#: app/scripts/services/tools.js:253
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
+#: app/scripts/services/tools.js:252
 msgid "Toolchain not installed"
 msgstr "Nástroj nenainstalován"
 
-#: app/scripts/services/tools.js:714
+#: app/scripts/services/tools.js:717
 msgid "Toolchain removed"
 msgstr "Nástroj odstraněn"
 
-#: app/scripts/services/tools.js:262
+#: app/scripts/services/tools.js:261
 msgid "Toolchain version does not match"
 msgstr "Verze nástroje nesouhlasí"
 
@@ -830,7 +838,7 @@ msgstr "Nástroje"
 msgid "Undo"
 msgstr "Zpět"
 
-#: app/scripts/services/tools.js:369
+#: app/scripts/services/tools.js:372
 msgid "Unknown board"
 msgstr "Neznámá deska"
 
@@ -838,7 +846,7 @@ msgstr "Neznámá deska"
 msgid "Unsupported project format {{version}}"
 msgstr "Nepodporovaný formát projektu {{version}}"
 
-#: app/scripts/app.js:59
+#: app/scripts/app.js:64
 msgid "Untitled"
 msgstr "Nepojmenovaný"
 
@@ -867,7 +875,7 @@ msgstr "Kontrola hotová"
 msgid "Verify"
 msgstr "Zkontrolovat"
 
-#: app/scripts/services/utils.js:571 app/views/menu.html:326
+#: app/scripts/services/utils.js:572 app/views/menu.html:326
 msgid "Version"
 msgstr "Verze"
 
@@ -879,7 +887,7 @@ msgstr "Zaobrazit"
 msgid "View license"
 msgstr "Zobrazit licenci"
 
-#: app/scripts/services/tools.js:486
+#: app/scripts/services/tools.js:489
 msgid "Warnings detected in the design"
 msgstr "V návrhu byla zjištěna varování"
 
@@ -906,7 +914,7 @@ msgstr "Špatné jméno portu {{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Špatný formát projektu: {{name}}"
 
-#: app/scripts/services/tools.js:522
+#: app/scripts/services/tools.js:525
 msgid "Wrong remote hostname {{name}}"
 msgstr "Špatný název vzdáleného hostitele {{name}}"
 
@@ -922,7 +930,7 @@ msgstr "Vaše změny budou ztraceny pokud je neuložíte"
 msgid "back"
 msgstr "zpět"
 
-#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:939
+#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:940
 msgid "{{app}} is required."
 msgstr "{{app}} je vyžadováno."
 
