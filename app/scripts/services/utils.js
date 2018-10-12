@@ -122,7 +122,7 @@ angular.module('icestudio')
         var command = [this.getPythonExecutable(),
          coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
          coverPath(common.ENV_DIR)];
-        if (!common.DARWIN) {
+        if (common.WIN32) {
           command.push('--always-copy');
         }
         this.executeCommand(command, callback);
