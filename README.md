@@ -95,6 +95,8 @@ npm start
 | English    | ![Progress](http://progressed.io/bar/100) |
 | Spanish    | ![Progress](http://progressed.io/bar/100) |
 | French     | ![Progress](http://progressed.io/bar/100) |
+| Dutch      | ![Progress](http://progressed.io/bar/100) |
+| Czech      | ![Progress](http://progressed.io/bar/100) |
 | Galician   | ![Progress](http://progressed.io/bar/100) |
 | German     | ![Progress](http://progressed.io/bar/99)  |
 | Basque     | ![Progress](http://progressed.io/bar/99)  |
