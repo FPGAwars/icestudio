@@ -98,11 +98,13 @@ angular.module('icestudio')
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
         function (error, stdout, stderr) {
+          common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
+          $(document).trigger('commandOutputChanged', [common.commandOutput]);
           if (error) {
             this.enableKeyEvents();
             this.enableClickEvents();
             callback(true);
-            alertify.error(stdout + '\n' + stderr, 30);
+            alertify.error(error.message, 30);
           }
           else {
             callback();

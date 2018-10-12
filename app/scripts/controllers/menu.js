@@ -547,7 +547,7 @@ angular.module('icestudio')
 
     $scope.showCommandOutput = function() {
       winCommandOutput = gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.commandOutput), {
-        title: 'Command output',
+        title: gettextCatalog.getString('Command output'),
         focus: true,
         toolbar: false,
         resizable: true,
