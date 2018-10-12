@@ -186,7 +186,7 @@ module.exports = function(grunt) {
           exec: 'icestudio',
           arch: '32bit',
           icons: 'docs/resources/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
         },
         files: [{
@@ -201,7 +201,7 @@ module.exports = function(grunt) {
           exec: 'icestudio',
           arch: '64bit',
           icons: 'docs/resources/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
         },
         files: [{
