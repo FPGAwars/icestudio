@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/badge/version-v0.3.3-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
+[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/FPGAwars/icestudio.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/FPGAwars/icestudio/context:javascript)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/FPGAwars/icestudio.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/FPGAwars/icestudio/alerts)
 
 Visual editor for open FPGA boards. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
 
