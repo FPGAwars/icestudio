@@ -1,0 +1,954 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
+msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+msgstr "<b>Unplug</b> en <b>sluit</b> het bord <b>opnieuw aan</b>"
+
+#: app/scripts/services/drivers.js:305
+msgid ""
+"<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
+"to the USB and wait until Windows finishes the default installation of the "
+"driver</li><li>When the OK button is clicked, the FTDI driver installer will "
+"be launched in a new window</li><li>In the installer, replace the "
+"<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
+"and reconnect the board</li></ol>"
+msgstr ""
+"<h4>FTDI-driver installatie-instructies</h4><ol><li>Verbind het FPGA-bord "
+"met de USB poort en wacht tot Windows de standaard installatie van de driver "
+"heeft voltooid</li><li>Als u op OK klikt zal de FTDI-driverinstallatie "
+"worden gestart in een nieuw venster</li><li>In het installatieprogramma "
+"wordt de <b>(Interface 0)</b> driver van het bord vervangen door <b>libusbK</"
+"b></li><li>Unplug de kaart en sluit deze opnieuw aan</li></ol>"
+
+#: app/scripts/services/drivers.js:312
+msgid ""
+"<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>FTDI-driver verwijderinstructies</h4><ol><li>Vindt het FPGA USB-"
+"apparaat</li><li>Selecteer het bord en verwijder de driver</li></ol>"
+
+#: app/scripts/services/drivers.js:319
+msgid ""
+"<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
+"board to the USB and wait until Windows finishes the default installation of "
+"the driver</li><li>When the OK button is clicked, the Serial driver "
+"installer will be launched in a new window</li><li>In the installer, follow "
+"the steps to install the driver</li><li>Unplug and reconnect the board</li></"
+"ol>"
+msgstr ""
+"<h4>Installatie-instructies voor seriële driver</h4><ol><li>Verbind het FPGA-"
+"bord met een USB poort en wacht tot Windows de standaardinstallatie van de "
+"driver heeft voltooid</li><li>Als op OK wordt geklikt, wordt het "
+"installatieprogramma voor de seriële driver gestart in een nieuw venster</"
+"li><li>Volg de instructies in het installatieprogramma om de driver te "
+"installeren</li><li>Unplug het bord en sluit het opnieuw aan</li></ol>"
+
+#: app/scripts/services/drivers.js:326
+msgid ""
+"<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>Verwijderinstructies voor seriële driver</h4><li>Vindt het FPGA USB-"
+"apparaat</li><li>Selecteer het bord en verwijder de driver</li></ol>"
+
+#: app/views/menu.html:341
+msgid "About Icestudio"
+msgstr "Over Icestudio"
+
+#: app/views/menu.html:290
+msgid "Add"
+msgstr "Plaatsen"
+
+#: app/scripts/controllers/menu.js:663
+msgid "Add a block to start"
+msgstr "Plaats een blok om te beginnen"
+
+#: app/views/menu.html:46
+msgid "Add as block"
+msgstr "Plaatsen als blok"
+
+#: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
+msgid "Address format"
+msgstr "Adresformaat"
+
+#: app/scripts/services/tools.js:1136
+msgid "All collections removed"
+msgstr "Alle collecties zijn verwijderd"
+
+#: app/scripts/controllers/menu.js:692
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "Alle opgeslagen collecties worden verwijderd. Doorgaan?"
+
+#: app/scripts/services/utils.js:574
+msgid "Author"
+msgstr "Auteur"
+
+#: app/views/menu.html:352
+msgid "Basic"
+msgstr "Standaard"
+
+#: app/views/languages.html:52
+msgid "Basque"
+msgstr "Baskisch"
+
+#: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
+msgid "Binary"
+msgstr "Binaire"
+
+#: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
+#: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
+#: app/scripts/services/blocks.js:902 app/scripts/services/blocks.js:923
+#: app/scripts/services/blocks.js:986
+msgid "Block updated"
+msgstr "Blok bijgewerkt"
+
+#: app/scripts/services/project.js:445
+msgid "Block {{name}} imported"
+msgstr "Blok {{name}} geïmporteerd"
+
+#: app/views/menu.html:38
+msgid "Blocks"
+msgstr "Blokken"
+
+#: app/views/menu.html:184
+msgid "Board"
+msgstr "Bord"
+
+#: app/views/menu.html:127 app/views/menu.html:161
+msgid "Board rules"
+msgstr "Bord regels"
+
+#: app/scripts/controllers/menu.js:434
+msgid "Board rules disabled"
+msgstr "Bord regels gedesactiveerd"
+
+#: app/scripts/controllers/menu.js:431
+msgid "Board rules enabled"
+msgstr "Bord regels geactiveerd"
+
+#: app/scripts/services/tools.js:388
+msgid "Board {{name}} disconnected"
+msgstr "Bord {{name}} verbinding verbroken"
+
+#: app/scripts/services/tools.js:368 app/scripts/services/tools.js:384
+msgid "Board {{name}} not available"
+msgstr "Bord {{naam}} niet beschikbaar"
+
+#: app/scripts/services/tools.js:358
+msgid "Board {{name}} not connected"
+msgstr "Bord {{naam}} niet aangesloten"
+
+#: app/scripts/app.js:48 app/scripts/controllers/menu.js:611
+msgid "Board {{name}} selected"
+msgstr "Bord {{name}} geselecteerd"
+
+#: app/scripts/services/tools.js:362 app/scripts/services/tools.js:381
+msgid "Bootloader not active"
+msgstr "Bootloader niet actief"
+
+#: app/views/menu.html:236
+msgid "Build"
+msgstr "Maken"
+
+#: app/scripts/controllers/menu.js:630
+msgid "Build done"
+msgstr "Maken voltooid"
+
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: app/views/languages.html:58
+msgid "Catalan"
+msgstr "Catalaans"
+
+#: app/scripts/services/tools.js:820
+msgid "Check Internet connection..."
+msgstr "Controleer de Internet verbinding..."
+
+#: app/scripts/services/tools.js:830
+msgid "Check Python..."
+msgstr "Controleer python..."
+
+#: app/views/languages.html:40
+msgid "Chinese"
+msgstr "Chinees"
+
+#: app/scripts/services/project.js:143
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "Klik hier om <b>een nieuwe versie van IceStudio te downloaden</b>"
+
+#: app/scripts/services/tools.js:923
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "Klik hier om <b>nieuwe drivers te installeren</b>"
+
+#: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
+#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:274
+msgid "Click here to install it"
+msgstr "Klik hier om te installeren"
+
+#: app/scripts/controllers/menu.js:390
+msgid "Click here to view"
+msgstr "Klik hier om te bekijken"
+
+#: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
+msgid "Clock not allowed for data buses"
+msgstr "Klok is niet toegestaan op databussen"
+
+#: app/scripts/controllers/menu.js:277
+msgid "Close"
+msgstr "Sluiten"
+
+#: app/views/menu.html:368
+msgid "Code"
+msgstr "Code"
+
+#: app/views/menu.html:201
+msgid "Collection"
+msgstr "Collectie"
+
+#: app/views/menu.html:165
+msgid "Collection info"
+msgstr "Collectie-informatie"
+
+#: app/scripts/controllers/menu.js:544
+msgid "Collection {{collection}} info not defined"
+msgstr "Collectie {{collection}} informatie niet gedefinieerd"
+
+#: app/scripts/services/tools.js:1020
+msgid "Collection {{name}} added"
+msgstr "Collectie {{name}} toegevoegd"
+
+#: app/scripts/services/tools.js:1014
+msgid "Collection {{name}} not replaced"
+msgstr "Collectie {{name}} niet vervangen"
+
+#: app/scripts/services/tools.js:1130
+msgid "Collection {{name}} removed"
+msgstr "Collectie {{name}} verwijderd"
+
+#: app/scripts/services/tools.js:1010
+msgid "Collection {{name}} replaced"
+msgstr "Collectie {{name}} vervangen"
+
+#: app/scripts/controllers/menu.js:577
+msgid "Collection {{name}} selected"
+msgstr "Collectie {{name}} geselecteerd"
+
+#: app/views/menu.html:286
+msgid "Collections"
+msgstr "Collecties"
+
+#: app/scripts/controllers/menu.js:550 app/views/menu.html:168
+msgid "Command output"
+msgstr "Commando resultaat"
+
+#: app/views/menu.html:337
+msgid "Community forum"
+msgstr "Gemeenschapsforum"
+
+#: app/scripts/services/tools.js:402
+msgid "Configuration not completed"
+msgstr "Configuratie niet voltooid"
+
+#: app/views/menu.html:362
+msgid "Constant"
+msgstr "Constant"
+
+#: app/scripts/services/project.js:95
+msgid "Convert"
+msgstr "Converteren"
+
+#: app/views/menu.html:104
+msgid "Copy"
+msgstr "Kopiëren"
+
+#: app/scripts/services/tools.js:848
+msgid "Create virtualenv..."
+msgstr "Creëer virtualenv..."
+
+#: app/views/menu.html:101
+msgid "Cut"
+msgstr "Knippen"
+
+#: app/views/languages.html:34
+msgid "Czech"
+msgstr "Tsjechisch"
+
+#: app/views/menu.html:158
+msgid "Datasheet"
+msgstr "Datasheet"
+
+#: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
+msgid "Decimal"
+msgstr "Decimaal"
+
+#: app/views/menu.html:206
+msgid "Default"
+msgstr "Standaard"
+
+#: app/scripts/services/tools.js:674
+msgid ""
+"Default toolchain not found. Toolchain will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"Standaard toolchain niet gevonden. Om de toolchain te downloaden is een "
+"internetverbinding nodig. Doorgaan?"
+
+#: app/scripts/services/utils.js:573
+msgid "Description"
+msgstr "Beschrijving"
+
+#: app/views/menu.html:279
+msgid "Disable"
+msgstr "Desactiveren"
+
+#: app/scripts/controllers/menu.js:281
+msgid "Do you want to close the application?"
+msgstr "Programma sluiten?"
+
+#: app/scripts/controllers/menu.js:682
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "Collectie {{name}} verwijderen?"
+
+#: app/scripts/services/tools.js:1006
+msgid "Do you want to replace it?"
+msgstr "Vervangen?"
+
+#: app/views/menu.html:330
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: app/views/menu.html:270
+msgid "Drivers"
+msgstr "Drivers"
+
+#: app/scripts/services/drivers.js:123 app/scripts/services/drivers.js:146
+#: app/scripts/services/drivers.js:236
+msgid "Drivers disabled"
+msgstr "Drivers gedesactiveerd"
+
+#: app/scripts/services/drivers.js:114 app/scripts/services/drivers.js:138
+#: app/scripts/services/drivers.js:226
+msgid "Drivers enabled"
+msgstr "Drivers geactiveerd"
+
+#: app/scripts/services/tools.js:411
+msgid "Duplicated FPGA I/O ports"
+msgstr "Dubbele FPGA I/O poorten"
+
+#: app/scripts/services/blocks.js:479
+msgid "Duplicated block attributes"
+msgstr "Dubbele blokattributen"
+
+#: app/views/languages.html:28
+msgid "Dutch"
+msgstr "Nederlands"
+
+#: app/views/menu.html:91
+msgid "Edit"
+msgstr "Bewerken"
+
+#: app/scripts/services/tools.js:995
+msgid "Edit the collection name"
+msgstr "Bewerk de naam van de collectie"
+
+#: app/views/menu.html:274
+msgid "Enable"
+msgstr "Activeren"
+
+#: app/views/languages.html:4
+msgid "English"
+msgstr "Engels"
+
+#: app/scripts/services/blocks.js:203
+msgid "Enter the constant blocks"
+msgstr "Voer de constante blokken in"
+
+#: app/scripts/controllers/menu.js:359
+msgid "Enter the external collections path"
+msgstr "Voer het pad naar de externe collectie in"
+
+#: app/scripts/services/blocks.js:58
+msgid "Enter the input blocks"
+msgstr "Voer de ingangsblokken in"
+
+#: app/scripts/services/blocks.js:365
+msgid "Enter the input ports"
+msgstr "Voer de ingangspoorten in"
+
+#: app/scripts/services/blocks.js:261
+msgid "Enter the memory blocks"
+msgstr "Voer de geheugenblokken in"
+
+#: app/scripts/services/blocks.js:130
+msgid "Enter the output blocks"
+msgstr "Voer de uitgangsblokken in"
+
+#: app/scripts/services/blocks.js:370
+msgid "Enter the output ports"
+msgstr "Voer de uitgangspoorten in"
+
+#: app/scripts/services/blocks.js:375
+msgid "Enter the parameters"
+msgstr "Voer de parameters in"
+
+#: app/scripts/controllers/menu.js:422
+msgid "Enter the remote hostname user@host"
+msgstr "Voer de externe hostnaam user@host in"
+
+#: app/scripts/services/tools.js:704
+msgid "Error: default toolchain not found in '{{dir}}'"
+msgstr "Fout: standaard toolchain niet gevonden in '{{dir}}'"
+
+#: app/scripts/services/utils.js:757
+msgid "Error: {{error}}"
+msgstr "Fout: {{error}}"
+
+#: app/scripts/services/tools.js:485
+msgid "Errors detected in the design"
+msgstr "Het ontwerp bevat fouten"
+
+#: app/views/menu.html:42
+msgid "Examples"
+msgstr "Voorbeelden"
+
+#: app/scripts/services/tools.js:296
+msgid "Execute remote {{label}} ..."
+msgstr "Executeer externe {{label}} ..."
+
+#: app/views/menu.html:57
+msgid "Export"
+msgstr "Exporteren"
+
+#: app/views/menu.html:132
+msgid "External collections"
+msgstr "Externe collecties"
+
+#: app/scripts/controllers/menu.js:376
+msgid "External collections updated"
+msgstr "Externe collecties bijgewerkt"
+
+#: app/scripts/services/tools.js:855
+msgid "Extract default apio files..."
+msgstr "Pak standaard apio bestanden uit..."
+
+#: app/scripts/services/tools.js:865
+msgid "Extract default apio packages..."
+msgstr "Pak standaard apio pakketten uit..."
+
+#: app/scripts/services/tools.js:843
+msgid "Extract virtualenv files..."
+msgstr "Pak virtualenv bestanden uit..."
+
+#: app/scripts/services/tools.js:408
+msgid "FPGA I/O ports not defined"
+msgstr "FPGA I/O poorten zijn niet gedefinieerd"
+
+#: app/scripts/services/blocks.js:135 app/scripts/services/blocks.js:63
+#: app/scripts/services/blocks.js:848 app/scripts/services/blocks.js:944
+msgid "FPGA pin"
+msgstr "FPGA pin"
+
+#: app/views/menu.html:173
+msgid "FPGA resources"
+msgstr "FPGA resources"
+
+#: app/views/menu.html:29
+msgid "File"
+msgstr "Bestand"
+
+#: app/scripts/services/project.js:460
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr "Bestand {{file}} is al aanwezig in het projectpad. Vervangen?"
+
+#: app/scripts/services/tools.js:222
+msgid "File {{file}} does not exist"
+msgstr "Bestand {{file}} bestaat niet"
+
+#: app/scripts/services/project.js:494
+msgid "File {{file}} imported"
+msgstr "Bestand {{file}} geïmporteerd"
+
+#: app/views/menu.html:114
+msgid "Fit content"
+msgstr "Maak passend"
+
+#: app/views/languages.html:16
+msgid "French"
+msgstr "Frans"
+
+#: app/views/languages.html:46
+msgid "Galician"
+msgstr "Galicisch"
+
+#: app/views/languages.html:22
+msgid "German"
+msgstr "Duits"
+
+#: app/views/menu.html:320
+msgid "Help"
+msgstr "Help"
+
+#: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
+msgid "Hexadecimal"
+msgstr "Hexadecimaal"
+
+#: app/scripts/services/utils.js:587
+msgid "Image"
+msgstr "Afbeelding"
+
+#: app/scripts/controllers/menu.js:846
+msgid "Image {{name}} saved"
+msgstr "Afbeelding {{name}} opgeslagen"
+
+#: app/views/menu.html:371
+msgid "Information"
+msgstr "Informatie"
+
+#: app/views/menu.html:356
+msgid "Input"
+msgstr "Ingang"
+
+#: app/views/menu.html:247
+msgid "Install"
+msgstr "Installeren"
+
+#: app/scripts/services/tools.js:860
+msgid "Install default apio..."
+msgstr "Installeer standaard apio..."
+
+#: app/scripts/services/tools.js:912
+msgid "Installation completed"
+msgstr "Installatie voltooid"
+
+#: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
+msgid "Installing toolchain"
+msgstr "Bezig met installeren toolchain"
+
+#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:824
+msgid "Internet connection required"
+msgstr "Internet verbinding vereist"
+
+#: app/scripts/services/graph.js:177
+msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+msgstr "Ongeldige <i>pull up</i> aansluiting:<br>blok is al aangesloten"
+
+#: app/scripts/services/graph.js:191
+msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgstr ""
+"Ongeldige <i>pull up</i> aansluiting:<br>alleen <i>ingangsblokken</i> zijn "
+"toegestaan"
+
+#: app/scripts/services/graph.js:183
+msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+msgstr "Ongeldige blokaansluiting:<br><i>pull up</i> is al aangesloten"
+
+#: app/scripts/services/tools.js:1026
+msgid "Invalid collection {{name}}"
+msgstr "Ongeldige collectie {{name}}"
+
+#: app/scripts/services/graph.js:141 app/scripts/services/graph.js:148
+#: app/scripts/services/graph.js:155
+msgid "Invalid connection"
+msgstr "Ongeldige aansluiting"
+
+#: app/scripts/services/graph.js:210
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Ongeldige aansluiting: {{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:171
+msgid "Invalid multiple input connections"
+msgstr "Ongeldige meervoudige ingangsaansluitingen"
+
+#: app/scripts/services/project.js:450 app/scripts/services/project.js:81
+msgid "Invalid project format"
+msgstr "Ongeldig projectformaat"
+
+#: app/scripts/services/drivers.js:305
+msgid "It is recommended to use <b>USB 2.0</b> ports"
+msgstr "Het is beter om <b>USB 2.0</b> poorten te gebruiken"
+
+#: app/views/menu.html:121
+msgid "Language"
+msgstr "Taal"
+
+#: app/scripts/services/project.js:94
+msgid "Load"
+msgstr "Laden"
+
+#: app/scripts/services/blocks.js:1025 app/scripts/services/blocks.js:1079
+#: app/scripts/services/blocks.js:208 app/scripts/services/blocks.js:276
+msgid "Local parameter"
+msgstr "Lokale parameter"
+
+#: app/scripts/services/utils.js:837
+msgid "Maximum bus size: 96 bits"
+msgstr "Maximale busbreedte: 96 bits"
+
+#: app/views/menu.html:365
+msgid "Memory"
+msgstr "Geheugen"
+
+#: app/scripts/services/utils.js:571
+msgid "Name"
+msgstr "Naam"
+
+#: app/views/menu.html:32
+msgid "New"
+msgstr "Nieuw"
+
+#: app/scripts/controllers/menu.js:700
+msgid "No collections stored"
+msgstr "Geen collecties"
+
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:291
+#: app/scripts/services/project.js:133
+msgid "OK"
+msgstr "OK"
+
+#: app/views/menu.html:35
+msgid "Open"
+msgstr "Openen"
+
+#: app/scripts/services/utils.js:594
+msgid "Open SVG"
+msgstr "Open SVG"
+
+#: app/scripts/services/project.js:497
+msgid "Original file {{file}} does not exist"
+msgstr "Originele bestand {{file}} bestaat niet"
+
+#: app/views/menu.html:359
+msgid "Output"
+msgstr "Uitgang"
+
+#: app/views/menu.html:107
+msgid "Paste"
+msgstr "Plakken"
+
+#: app/scripts/controllers/menu.js:380
+msgid "Path {{path}} does not exist"
+msgstr "Pad {{file}} bestaat niet"
+
+#: app/scripts/services/utils.js:965
+msgid "Please run: {{cmd}}"
+msgstr "Voer uit: {{cmd}}"
+
+#: app/views/menu.html:118
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: app/views/menu.html:143
+msgid "Project information"
+msgstr "Projectinformatie"
+
+#: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
+msgid "Project information updated"
+msgstr "Projectinformatie bijgewerkt"
+
+#: app/scripts/services/project.js:120
+msgid "Project {{name}} loaded"
+msgstr "Project {{name}} geladen"
+
+#: app/scripts/services/project.js:357
+msgid "Project {{name}} saved"
+msgstr "Project {{name}} opgeslagen"
+
+#: app/scripts/services/tools.js:837
+msgid "Python 2.7 is required"
+msgstr "Python 2.7 is vereist"
+
+#: app/views/menu.html:85
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: app/views/design.html:5
+msgid "Read only"
+msgstr "Alleen lezen"
+
+#: app/views/menu.html:97
+msgid "Redo"
+msgstr "Opnieuw"
+
+#: app/views/menu.html:295
+msgid "Reload"
+msgstr "Herladen"
+
+#: app/scripts/services/tools.js:528
+msgid "Remote host {{name}} not connected"
+msgstr "Externe host {{name}} niet verbonden"
+
+#: app/views/menu.html:136
+msgid "Remote hostname"
+msgstr "Externe hostnaam"
+
+#: app/views/menu.html:255 app/views/menu.html:299
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: app/views/menu.html:311
+msgid "Remove all"
+msgstr "Alles verwijderen"
+
+#: app/scripts/services/utils.js:596
+msgid "Reset SVG"
+msgstr "Reset SVG"
+
+#: app/views/menu.html:260
+msgid "Reset default"
+msgstr "Reset standaard"
+
+#: app/views/menu.html:50
+msgid "Save"
+msgstr "Opslaan"
+
+#: app/scripts/services/utils.js:595
+msgid "Save SVG"
+msgstr "SVG opslaan"
+
+#: app/views/menu.html:53
+msgid "Save as"
+msgstr "Opslaan als"
+
+#: app/views/menu.html:181
+msgid "Select"
+msgstr "Selecteren"
+
+#: app/views/menu.html:110
+msgid "Select all"
+msgstr "Alles selecteren"
+
+#: app/scripts/services/utils.js:715
+msgid "Select your board"
+msgstr "Kies uw bord"
+
+#: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
+msgid "Show clock"
+msgstr ""
+"Laat de \n"
+"klok zien"
+
+#: app/views/menu.html:333
+msgid "Source code"
+msgstr "Broncode"
+
+#: app/views/languages.html:10
+msgid "Spanish"
+msgstr "Spaans"
+
+#: app/scripts/controllers/menu.js:629
+msgid "Start build"
+msgstr "Maken starten"
+
+#: app/scripts/controllers/menu.js:642
+msgid "Start upload"
+msgstr "Upload starten"
+
+#: app/scripts/controllers/menu.js:619
+msgid "Start verification"
+msgstr "Verificatie starten"
+
+#: app/scripts/services/tools.js:285
+msgid "Synchronize remote files ..."
+msgstr "Synchroniseer externe bestanden..."
+
+#: app/views/menu.html:66
+msgid "Testbench"
+msgstr "Testbank"
+
+#: app/scripts/services/tools.js:1005
+msgid "The collection {{name}} already exists."
+msgstr "Collectie {{name}} bestaat al."
+
+#: app/scripts/controllers/menu.js:598
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"{{name}} board?"
+msgstr ""
+"De huidige FPGA I/O configuratie zal verloren gaan. Doorgaan met bord "
+"{{name}}?"
+
+#: app/scripts/services/tools.js:712
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "De toolchain wordt verwijderd. Doorgaan?"
+
+#: app/scripts/services/tools.js:697
+msgid "The toolchain will be restored to default. Do you want to continue?"
+msgstr "De toolchain wordt teruggezet naar de standaardinstelling. Doorgaan?"
+
+#: app/scripts/services/tools.js:686
+msgid ""
+"The toolchain will be updated. This operation requires Internet connection. "
+"Do you want to continue?"
+msgstr ""
+"De toolchain wordt bijgewerkt. Hiervoor is een internetverbinding vereist. "
+"Doorgaan?"
+
+#: app/scripts/services/project.js:419
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"Voor deze importoperatie is een projectpad nodig. U moet het huidige project "
+"opslaan. Doorgaan?"
+
+#: app/scripts/services/project.js:98
+msgid "This project is designed for the {{name}} board."
+msgstr "Dit project is bedoeld voor het bord {{name}}"
+
+#: app/views/menu.html:243
+msgid "Toolchain"
+msgstr "Toolchain"
+
+#: app/scripts/services/tools.js:913
+msgid "Toolchain installed"
+msgstr "Toolchain geïnstalleerd"
+
+#: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
+#: app/scripts/services/tools.js:252
+msgid "Toolchain not installed"
+msgstr "Toolchain niet geïnstalleerd"
+
+#: app/scripts/services/tools.js:717
+msgid "Toolchain removed"
+msgstr "Toolchain verwijderd"
+
+#: app/scripts/services/tools.js:261
+msgid "Toolchain version does not match"
+msgstr "Toolchain versie komt niet overeen"
+
+#: app/views/menu.html:230
+msgid "Tools"
+msgstr "Gereedschappen"
+
+#: app/views/menu.html:94
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+#: app/scripts/services/tools.js:372
+msgid "Unknown board"
+msgstr "Onbekend bord"
+
+#: app/scripts/services/project.js:142
+msgid "Unsupported project format {{version}}"
+msgstr "Niet-ondersteund projectformaat {{version}}"
+
+#: app/scripts/app.js:64
+msgid "Untitled"
+msgstr "Naamloos"
+
+#: app/views/menu.html:250
+msgid "Update"
+msgstr "Bijwerken"
+
+#: app/scripts/services/blocks.js:1020 app/scripts/services/blocks.js:1064
+#: app/scripts/services/blocks.js:843 app/scripts/services/blocks.js:939
+msgid "Update the block name"
+msgstr "Werk de bloknaam bij"
+
+#: app/views/menu.html:239
+msgid "Upload"
+msgstr "Uploaden"
+
+#: app/scripts/controllers/menu.js:643
+msgid "Upload done"
+msgstr "Uploaden voltooid"
+
+#: app/scripts/controllers/menu.js:620
+msgid "Verification done"
+msgstr "Verificatie voltooid"
+
+#: app/views/menu.html:233
+msgid "Verify"
+msgstr "Verifiëren"
+
+#: app/scripts/services/utils.js:572 app/views/menu.html:326
+msgid "Version"
+msgstr "Versie"
+
+#: app/views/menu.html:149
+msgid "View"
+msgstr "Bekijken"
+
+#: app/views/menu.html:323
+msgid "View license"
+msgstr "Bekijk licentie"
+
+#: app/scripts/services/tools.js:489
+msgid "Warnings detected in the design"
+msgstr "Het ontwerp bevat waarschuwingen"
+
+#: app/scripts/services/blocks.js:516
+msgid "Wrong block format: {{type}}"
+msgstr "Verkeerd blokformaat: {{type}}"
+
+#: app/scripts/services/blocks.js:1010 app/scripts/services/blocks.js:1053
+#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:155
+#: app/scripts/services/blocks.js:228 app/scripts/services/blocks.js:297
+#: app/scripts/services/blocks.js:89 app/scripts/services/blocks.js:928
+msgid "Wrong block name {{name}}"
+msgstr "Verkeerde bloknaam {{name}}"
+
+#: app/scripts/services/blocks.js:428
+msgid "Wrong parameter name {{name}}"
+msgstr "Verkeerde parameternaam {{name}}"
+
+#: app/scripts/services/blocks.js:398 app/scripts/services/blocks.js:413
+msgid "Wrong port name {{name}}"
+msgstr "Verkeerde poortnaam {{name}}"
+
+#: app/scripts/services/project.js:129
+msgid "Wrong project format: {{name}}"
+msgstr "Verkeerd projectformaat: {{name}}"
+
+#: app/scripts/services/tools.js:525
+msgid "Wrong remote hostname {{name}}"
+msgstr "Verkeerde externe hostnaam {{name}}"
+
+#: app/scripts/services/project.js:99
+msgid "You can load it as it is or convert it for the {{name}} board."
+msgstr "U kunt het laden zoals het is of converteren voor het {{name}} bord."
+
+#: app/scripts/controllers/menu.js:282
+msgid "Your changes will be lost if you don’t save them"
+msgstr "Uw wijzigingen gaan verloren als u ze niet opslaat"
+
+#: app/views/design.html:6
+msgid "back"
+msgstr "terug"
+
+#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:940
+msgid "{{app}} is required."
+msgstr "{{app}} is vereist."
+
+#: app/scripts/controllers/menu.js:498
+msgid "{{board}} datasheet not defined"
+msgstr "{{board}} datasheet niet gedefinieerd"
+
+#: app/scripts/controllers/menu.js:488
+msgid "{{board}} pinout not defined"
+msgstr "{{board}} pinning niet gedefinieerd"
+
+#: app/scripts/controllers/menu.js:519
+msgid "{{board}} rules not defined"
+msgstr "{{board}} regels niet gedefinieerd"
+
+#: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
+msgid "{{name}} exported"
+msgstr "{{name}} geëxporteerd"

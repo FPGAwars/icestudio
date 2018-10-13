@@ -18,7 +18,7 @@ body {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .ice-bar {
@@ -70,15 +70,52 @@ body {
           animation-duration: 10ms;
 }
 
+.alertify .ajs-body .ajs-content p {
+  margin-top: 7px;
+}
+
+.alertify .ajs-body .ajs-content .ajs-input {
+  border-radius: 4px;
+}
+
 .ajs-header {
   display: none;
 }
 
 .ajs-footer {
+  padding: 8px !important;
   background: white !important;
   border-top: none !important;
 }
 
+.checkbox {
+  margin-top: 14px;
+}
+
+.checkbox+.checkbox {
+  margin-top: 0px;
+}
+
+.form-group {
+  margin: 12px 0 15px;
+}
+
+.form-group label {
+  margin-bottom: 0px;
+}
+
+.form-group select {
+  height: 38px;
+  margin: 4px;
+  border-radius: 4px;
+  color: inherit;
+  box-shadow: none !important;
+  border: 1px solid #ccc !important;
+}
+
+.form-group select:focus {
+  outline: #ccc solid 1px !important;
+}
 
 input:focus {
   outline: #ccc solid 1px;

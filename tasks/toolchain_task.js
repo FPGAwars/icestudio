@@ -17,14 +17,15 @@ module.exports = function(grunt) {
       grunt.log.writeln(log);
     });
 
-    tb.build(function(err) {
-      if(err) {
-        grunt.fail.fatal(err);
-      } else {
+    tb.build()
+      .then(function() {
         grunt.log.ok('Standalone toolchain created!');
-      }
-      done();
-    });
+        done();
+      })
+      .catch(function(error) {
+        grunt.fail.fatal(error);
+        done();
+      });
 
   });
 

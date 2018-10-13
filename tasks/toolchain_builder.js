@@ -34,7 +34,7 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-  var venvRelease = 'virtualenv-15.0.1';
+  var venvRelease = 'virtualenv-15.2.0';
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
@@ -51,42 +51,20 @@ function ToolchainBuilder(options) {
   this.options.venvApio = path.join(this.options.venvBinDir, 'apio');
 }
 
-
-ToolchainBuilder.prototype.build = function (callback) {
-  var hasCallback = (typeof callback === 'function'),
-      done = Promise.defer();
-
+ToolchainBuilder.prototype.build = function () {
   this.emit('log', this.options.venvPip);
   // Let's create the standalone toolchains
-  this.ensurePythonIsAvailable()
+  return this.ensurePythonIsAvailable()
     .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
-    .then(this.downloadPythonPackages.bind(this))
-    .then(this.packagePythonPackages.bind(this))
+    // .then(this.downloadPythonPackages.bind(this))
+    // .then(this.packagePythonPackages.bind(this))
     .then(this.downloadApio.bind(this))
     .then(this.packageApio.bind(this))
     .then(this.installApio.bind(this))
     .then(this.downloadApioPackages.bind(this))
     .then(this.packageApioPackages.bind(this))
-    .then(this.createDefaultToolchains.bind(this))
-    .then(function(info) {
-      var result = info || this;
-
-      if(hasCallback) {
-        callback(false, result);
-      } else {
-        done.resolve(result);
-      }
-    })
-    .catch(function(error) {
-      if(hasCallback) {
-        callback(error);
-      } else {
-        done.reject(error);
-      }
-    });
-
-  return hasCallback ? true : done.promise;
+    .then(this.createDefaultToolchains.bind(this));
 };
 
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
@@ -136,7 +114,7 @@ ToolchainBuilder.prototype.downloadPythonPackages = function () {
   var self = this;
   self.emit('log', '> Download python packages');
   return new Promise(function(resolve, reject) {
-    var pythonPackages = ['setuptools', 'wheel'];
+    var pythonPackages = [];
     var command = [
       self.options.venvPip, 'download', '--dest', self.options.pythonPackagesDir
     ].concat(pythonPackages);
@@ -213,7 +191,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', (platform.startsWith('windows') ? 'drivers' : '')];
+      var packages = ['system', 'icestorm', 'iverilog', (platform.startsWith('windows') ? 'drivers' : ''), 'scons'];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
@@ -273,10 +251,10 @@ ToolchainBuilder.prototype.createDefaultToolchains = function () {
         destPath = path.join(destPath, 'icestudio.app', 'Contents', 'Frameworks',
         'nwjs\ Helper.app', 'Contents', 'MacOS');
       }
-      fse.copySync(
-        path.join(self.options.toolchainDir, 'default-python-packages.zip'),
-        path.join(destPath, 'toolchain', 'default-python-packages.zip')
-      );
+      // fse.copySync(
+      //   path.join(self.options.toolchainDir, 'default-python-packages.zip'),
+      //   path.join(destPath, 'toolchain', 'default-python-packages.zip')
+      // );
       fse.copySync(
         path.join(self.options.toolchainDir, 'default-apio.zip'),
         path.join(destPath, 'toolchain', 'default-apio.zip')

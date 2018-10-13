@@ -3,36 +3,56 @@
 angular.module('icestudio')
   .service('collections', function(utils,
                                    common,
+                                   profile,
                                    gettextCatalog,
                                    nodePath) {
 
     const DEFAULT = '';
+    const MAX_LEVEL_SEARCH = 20;
 
-    this.loadCollections = function() {
-      common.collections = [];
-      // Add Default collection
-      var defaultPath = nodePath.join('resources', 'collection');
-      var defaultData = {
-        'name': DEFAULT,
-        'path': nodePath.resolve(defaultPath),
-        'children': utils.getFilesRecursive(nodePath.resolve(defaultPath))
-      };
-      var defaultCollection = getCollection(defaultData);
-      common.collections.push(defaultCollection);
-      // Add installed collections
-      var data = utils.getFilesRecursive(common.COLLECTIONS_DIR);
-      for (var i in data) {
-        var collection = getCollection(data[i]);
-        if (collection) {
-          common.collections.push(collection);
-        }
+    this.loadAllCollections = function() {
+      this.loadDefaultCollection();
+      this.loadInternalCollections();
+      this.loadExternalCollections();
+    };
+
+    this.loadDefaultCollection = function() {
+      common.defaultCollection = getCollection(
+        DEFAULT,
+        common.DEFAULT_COLLECTION_DIR,
+        utils.getFilesRecursive(common.DEFAULT_COLLECTION_DIR, MAX_LEVEL_SEARCH)
+      );
+    };
+
+    this.loadInternalCollections = function () {
+      var internalCollections = utils.findCollections(common.INTERNAL_COLLECTIONS_DIR);
+      common.internalCollections = loadCollections(internalCollections);
+    };
+
+    this.loadExternalCollections = function () {
+      var externalCollectionsPath = profile.get('externalCollections');
+      if (externalCollectionsPath !== common.INTERNAL_COLLECTIONS_DIR) {
+        var externalCollections = utils.findCollections(externalCollectionsPath);
+        common.externalCollections = loadCollections(externalCollections);
       }
     };
 
-    function getCollection(data) {
+    function loadCollections(paths) {
+      var collections = [];
+      paths.forEach(function(path) {
+        collections.push(getCollection(
+          nodePath.basename(path),
+          path,
+          utils.getFilesRecursive(path, MAX_LEVEL_SEARCH)
+        ));
+      });
+      return collections;
+    }
+
+    function getCollection(name, path, children) {
       var collection = {
-        name: data.name,
-        path: data.path,
+        name: name,
+        path: path,
         content: {
           blocks: [],
           examples: [],
@@ -40,26 +60,28 @@ angular.module('icestudio')
           readme: ''
         }
       };
-      for (var i in data.children) {
-        var child = data.children[i];
+      for (var i in children) {
+        var child = children[i];
         switch (child.name) {
-          case ('blocks'):
+          case 'blocks':
             if (child.children) {
               collection.content.blocks = child.children;
             }
             break;
-          case ('examples'):
+          case 'examples':
             if (child.children) {
               collection.content.examples = child.children;
             }
             break;
-          case ('package'):
+          case 'package':
             if (!child.children) {
-              // TODO: use package data
-              //collection.content.package = require(child.path);
+              try {
+                collection.content.package = require(child.path);
+              }
+              catch (e) {}
             }
             break;
-          case ('README'):
+          case 'README':
             if (!child.children) {
               collection.content.readme = child.path;
             }
@@ -69,38 +91,44 @@ angular.module('icestudio')
       return collection;
     }
 
-    this.selectCollection = function(name) {
-      name = name || DEFAULT;
+    this.selectCollection = function(path) {
       var selectedCollection = null;
-      for (var i in common.collections) {
-        if (common.collections[i].name === name) {
-          selectedCollection = common.collections[i];
+      var collections = common.internalCollections.concat(common.externalCollections);
+      for (var i in collections) {
+        if (collections[i].path === path) {
+          selectedCollection = collections[i];
           break;
         }
       }
       if (selectedCollection === null) {
         // Collection not found: select default collection
-        selectedCollection = common.collections[0];
+        selectedCollection = common.defaultCollection;
       }
       common.selectedCollection = selectedCollection;
-      return selectedCollection.name;
+      return selectedCollection.path;
     };
 
     this.sort = function() {
-      for (var i in common.collections) {
-        var collection = common.collections[i];
-        if (collection.content) {
-          _sort(collection.content.blocks);
-          _sort(collection.content.examples);
-        }
-      }
+      sortCollections([common.defaultCollection]);
+      sortCollections(common.internalCollections);
+      sortCollections(common.externalCollection);
     };
 
-    function _sort(items) {
+    function sortCollections(collections) {
+      for (var i in collections) {
+        var collection = collections[i];
+        if (collection.content) {
+          sortContent(collection.content.blocks);
+          sortContent(collection.content.examples);
+        }
+      }
+    }
+
+    function sortContent(items) {
       if (items) {
         items.sort(byName);
         for (var i in items) {
-          _sort(items[i].children);
+          sortContent(items[i].children);
         }
       }
     }

@@ -7,29 +7,49 @@ angular.module('icestudio')
                                 _package) {
 
     this.generate = function(target, project, opt) {
-      var code = '';
+      var content = '';
+      var files = [];
       switch(target) {
         case 'verilog':
-          code += header('//', opt);
-          code += '`default_nettype none\n';
-          code += verilogCompiler('main', project, opt);
+          content += header('//', opt);
+          content += '`default_nettype none\n';
+          content += verilogCompiler('main', project, opt);
+          files.push({
+            name: 'main.v',
+            content: content
+          });
           break;
         case 'pcf':
-          code += header('#', opt);
-          code += pcfCompiler(project, opt);
+          content += header('#', opt);
+          content += pcfCompiler(project, opt);
+          files.push({
+            name: 'main.pcf',
+            content: content
+          });
+          break;
+        case 'list':
+          files = listCompiler(project);
           break;
         case 'testbench':
-          code += header('//', opt);
-          code += testbenchCompiler(project);
+          content += header('//', opt);
+          content += testbenchCompiler(project);
+          files.push({
+            name: 'main_tb.v',
+            content: content
+          });
           break;
         case 'gtkwave':
-          code += header('[*]', opt);
-          code += gtkwaveCompiler(project);
+          content += header('[*]', opt);
+          content += gtkwaveCompiler(project);
+          files.push({
+            name: 'main_tb.gtkw',
+            content: content
+          });
           break;
         default:
-          code += '';
+          break;
       }
-      return code;
+      return files;
     };
 
     function header(comment, opt) {
@@ -126,6 +146,13 @@ angular.module('icestudio')
             value: block.data.value
           });
         }
+        else if (block.type === 'basic.memory') {
+          var name = utils.digestId(block.id);
+          params.push({
+            name: name,
+            value: '"' + name + '.list"'
+          });
+        }
       }
 
       return params;
@@ -169,7 +196,8 @@ angular.module('icestudio')
 
       for (w in graph.wires) {
         var wire = graph.wires[w];
-        if (wire.source.port === 'constant-out') {
+        if (wire.source.port === 'constant-out' ||
+            wire.source.port === 'memory-out') {
           // Local Parameters
           var constantBlock = findBlock(wire.source.block, graph);
           var paramValue = utils.digestId(constantBlock.id);
@@ -192,7 +220,8 @@ angular.module('icestudio')
           }
           else if (block.type === 'basic.output') {
             if (wire.target.block === block.id) {
-              if (wire.source.port === 'constant-out') {
+              if (wire.source.port === 'constant-out' ||
+                  wire.source.port === 'memory-out') {
                 // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
               }
               else {
@@ -216,7 +245,8 @@ angular.module('icestudio')
           var wj = graph.wires[j];
           if (wi.source.block === wj.source.block &&
               wi.source.port === wj.source.port &&
-              wi.source.port !== 'constant-out') {
+              wi.source.port !== 'constant-out' &&
+              wi.source.port !== 'memory-out') {
             content.push('assign w' + i + ' = w' + j + ';');
           }
         }
@@ -240,6 +270,7 @@ angular.module('icestudio')
         if (block.type !== 'basic.input' &&
             block.type !== 'basic.output' &&
             block.type !== 'basic.constant' &&
+            block.type !== 'basic.memory' &&
             block.type !== 'basic.info') {
 
           // Header
@@ -258,7 +289,8 @@ angular.module('icestudio')
           for (w in graph.wires) {
             wire = graph.wires[w];
             if ((block.id === wire.target.block) &&
-                (wire.source.port === 'constant-out')) {
+                (wire.source.port === 'constant-out' ||
+                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
                 paramName = utils.digestId(paramName);
@@ -288,7 +320,8 @@ angular.module('icestudio')
               connectPort(wire.source.port, portsNames, ports, block);
             }
             if (block.id === wire.target.block) {
-              if (wire.source.port !== 'constant-out') {
+              if (wire.source.port !== 'constant-out' &&
+                  wire.source.port !== 'memory-out') {
                 connectPort(wire.target.port, portsNames, ports, block);
               }
             }
@@ -474,8 +507,6 @@ angular.module('icestudio')
 
           if (name === 'main' && opt.boardRules) {
 
-            // Initialize output pins
-
             var initPins = opt.initPins || getInitPins(project);
             var n = initPins.length;
 
@@ -617,6 +648,40 @@ angular.module('icestudio')
       }
 
       return code;
+    }
+
+    function listCompiler(project) {
+      var i;
+      var listFiles = [];
+
+      if (project &&
+          project.design &&
+          project.design.graph) {
+
+        var blocks = project.design.graph.blocks;
+        var dependencies = project.dependencies;
+
+        // Find in blocks
+
+        for (i in blocks) {
+          var block = blocks[i];
+          if (block.type === 'basic.memory') {
+            listFiles.push({
+              name: utils.digestId(block.id) + '.list',
+              content: block.data.list
+            });
+          }
+        }
+
+        // Find in dependencies
+
+        for (i in dependencies) {
+          var dependency = dependencies[i];
+          listFiles = listFiles.concat(listCompiler(dependency));
+        }
+      }
+
+      return listFiles;
     }
 
     function testbenchCompiler(project) {

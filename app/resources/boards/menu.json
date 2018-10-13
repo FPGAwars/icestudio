@@ -1,0 +1,28 @@
+[
+  {
+    "type": "HX1K",
+    "boards": [
+      "icezum",
+      "go-board",
+      "icestick"
+    ]
+  },
+  {
+    "type": "HX8K",
+    "boards": [
+      "alhambra-ii",
+      "blackice",
+      "blackice-ii",
+      "icoboard",
+      "kefir",
+      "iCE40-HX8K"
+    ]
+  },
+  {
+    "type": "LP8K",
+    "boards": [
+      "TinyFPGA-B2",
+      "TinyFPGA-BX"
+    ]
+  }
+]

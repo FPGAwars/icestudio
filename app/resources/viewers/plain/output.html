@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style type="text/css">
+      body {
+        overflow: hidden;
+      }
+      textarea {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        resize: none;
+        color: #FFF;
+        background-color: #222;
+        font-size: 14px;
+      	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="content" readonly="true"></textarea>
+    <script>
+      'use strict';
+      function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+      }
+      window.onload = function() {
+        var content = getURLParameter('content');
+        document.getElementById('content').value = content;
+      };
+    </script>
+  </body>
+</html>

@@ -2,10 +2,10 @@
 
 angular.module('icestudio')
   .service('common', function(nodePath,
-                              nodeTemp) {
+                              nodeTmp) {
 
     // Project version
-    this.VERSION = '1.1';
+    this.VERSION = '1.2';
 
     // Project status
     this.hasChangesSinceBuild = false;
@@ -20,7 +20,9 @@ angular.module('icestudio')
     this.pinoutOutputHTML = '';
 
     // Selected collection
-    this.collections = [];
+    this.defaultCollection = null;
+    this.internalCollections = [];
+    this.externalCollections = [];
     this.selectedCollection = null;
 
     // FPGA resources
@@ -32,8 +34,11 @@ angular.module('icestudio')
       brams: '-'
     };
 
-    //
-    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git#egg=apio';
+    // Command output
+    this.commandOutput = '';
+
+    // Apio URL
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
@@ -43,16 +48,17 @@ angular.module('icestudio')
     // Paths
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
+    this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
-    this.COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
+    this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
-    this.VENV = 'virtualenv-15.0.1';
+    this.VENV = 'virtualenv-15.2.0';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
     this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
 
@@ -76,7 +82,17 @@ angular.module('icestudio')
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
 
-    this.BUILD_DIR = new nodeTemp.Dir().path;
+    this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
+      prefix: 'icestudio-',
+      unsafeCleanup: true
+    });
+    this.BUILD_DIR = this.BUILD_DIR_OBJ.name;
+
+    this.PATTERN_PORT_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
+
+    this.PATTERN_GLOBAL_PORT_LABEL = /^([^\[\]]+)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_GLOBAL_PARAM_LABEL = /^([^\[\]]+)?$/;
 
     function safeDir(_dir, self) {
       if (self.WIN32) {

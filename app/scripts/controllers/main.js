@@ -8,7 +8,6 @@ angular.module('icestudio')
     alertify.defaults.closable = false;
     alertify.defaults.transition = 'fade';
     alertify.defaults.notifier.delay = 3;
-    alertify.defaults.glossary.title = 'Icestudio';
 
     setTimeout(function() {
       var labels = {

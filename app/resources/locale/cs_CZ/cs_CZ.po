@@ -1,0 +1,951 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
+msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+msgstr "<b>Odpojit</b> a <b>znovu připojit</b> desku"
+
+#: app/scripts/services/drivers.js:305
+msgid ""
+"<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
+"to the USB and wait until Windows finishes the default installation of the "
+"driver</li><li>When the OK button is clicked, the FTDI driver installer will "
+"be launched in a new window</li><li>In the installer, replace the "
+"<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
+"and reconnect the board</li></ol>"
+msgstr ""
+"<h4>instrukce k instalaci FTDI ovladače</h4><ol><li>Připojte FPGA desku do "
+"USB a počkejte dokud Windows nedokončí instalaci výchozího ovladače</"
+"li><li>Po kliknutí na tlačítko OK se spustí instalace ovladače FTDI v novém "
+"okně</li><li>Při instalaci nahraďte ovladač <b>(Interface 0)</b> ovladačem "
+"<b>libusbK</b></li><li>Odpojte a znovu připojte desku</li></ol>"
+
+#: app/scripts/services/drivers.js:312
+msgid ""
+"<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>instrukce o odinstalování ovladače FTDI</h4><ol><li>Najděte zařízení "
+"FPGA USB</li><li>Vyberte rozhraní desky a odinstalujte ovladač</li></ol>"
+
+#: app/scripts/services/drivers.js:319
+msgid ""
+"<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
+"board to the USB and wait until Windows finishes the default installation of "
+"the driver</li><li>When the OK button is clicked, the Serial driver "
+"installer will be launched in a new window</li><li>In the installer, follow "
+"the steps to install the driver</li><li>Unplug and reconnect the board</li></"
+"ol>"
+msgstr ""
+"<h4>Instrukce pro instalaci sériového ovladače</h4><ol><li>Připojte FPGA "
+"desku do USB  a počkejte dokud Windows nedokončí instalaci výchozího "
+"ovladače</li><li>Po kliknutí na tlačítko OK se spustí instalace sériového "
+"ovladače v novém okně</li><li>Při instalaci následujte kroky k nainstalování "
+"ovladače</li><li>Odpojte a znovu připojte desku</li></ol>"
+
+#: app/scripts/services/drivers.js:326
+msgid ""
+"<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>instrukce o odinstalování sériového ovladače</h4><ol><li>Najděte "
+"zařízení FPGA USB</li><li>Vyberte rozhraní desky a odinstalujte ovladač</"
+"li></ol>"
+
+#: app/views/menu.html:341
+msgid "About Icestudio"
+msgstr "O Icestudiu"
+
+#: app/views/menu.html:290
+msgid "Add"
+msgstr "Přidat"
+
+#: app/scripts/controllers/menu.js:663
+msgid "Add a block to start"
+msgstr "Přidat blok na začátek"
+
+#: app/views/menu.html:46
+msgid "Add as block"
+msgstr "Přidat jako blok"
+
+#: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
+msgid "Address format"
+msgstr "Formát adresy"
+
+#: app/scripts/services/tools.js:1136
+msgid "All collections removed"
+msgstr "Všechny kolekce odstraněny"
+
+#: app/scripts/controllers/menu.js:692
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "Všechny uložené kolekce budou zahozeny. Přejete si pokračovat?"
+
+#: app/scripts/services/utils.js:574
+msgid "Author"
+msgstr "Autor"
+
+#: app/views/menu.html:352
+msgid "Basic"
+msgstr "Základní prvky"
+
+#: app/views/languages.html:52
+msgid "Basque"
+msgstr "baskičtina"
+
+#: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
+msgid "Binary"
+msgstr "Binární"
+
+#: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
+#: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
+#: app/scripts/services/blocks.js:902 app/scripts/services/blocks.js:923
+#: app/scripts/services/blocks.js:986
+msgid "Block updated"
+msgstr "Blok aktualizován"
+
+#: app/scripts/services/project.js:445
+msgid "Block {{name}} imported"
+msgstr "Blok {{name}} importován"
+
+#: app/views/menu.html:38
+msgid "Blocks"
+msgstr "Bloky"
+
+#: app/views/menu.html:184
+msgid "Board"
+msgstr "Deska"
+
+#: app/views/menu.html:127 app/views/menu.html:161
+msgid "Board rules"
+msgstr "Pravidla desky"
+
+#: app/scripts/controllers/menu.js:434
+msgid "Board rules disabled"
+msgstr "Pravidla desky zakázána"
+
+#: app/scripts/controllers/menu.js:431
+msgid "Board rules enabled"
+msgstr "Pravidla desky povolena"
+
+#: app/scripts/services/tools.js:388
+msgid "Board {{name}} disconnected"
+msgstr "Deska {{name}} odpojena"
+
+#: app/scripts/services/tools.js:368 app/scripts/services/tools.js:384
+msgid "Board {{name}} not available"
+msgstr "Deska {{name}} není dostupná"
+
+#: app/scripts/services/tools.js:358
+msgid "Board {{name}} not connected"
+msgstr "Deska {{name}} není připojena"
+
+#: app/scripts/app.js:48 app/scripts/controllers/menu.js:611
+msgid "Board {{name}} selected"
+msgstr "Deska {{name}} vybrána"
+
+#: app/scripts/services/tools.js:362 app/scripts/services/tools.js:381
+msgid "Bootloader not active"
+msgstr "Zavaděč není aktivní"
+
+#: app/views/menu.html:236
+msgid "Build"
+msgstr "Sestavení"
+
+#: app/scripts/controllers/menu.js:630
+msgid "Build done"
+msgstr "Sestavení hotovo"
+
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: app/views/languages.html:58
+msgid "Catalan"
+msgstr "katalánština"
+
+#: app/scripts/services/tools.js:820
+msgid "Check Internet connection..."
+msgstr "Kontrola připojení na internet..."
+
+#: app/scripts/services/tools.js:830
+msgid "Check Python..."
+msgstr "Kontrola Pythonu..."
+
+#: app/views/languages.html:40
+msgid "Chinese"
+msgstr "čínština"
+
+#: app/scripts/services/project.js:143
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "Klikněte zde <b>ke stažení novější verze</b> Icestudia"
+
+#: app/scripts/services/tools.js:923
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "Klikněte zde <b>pro instalování ovladačů</b>"
+
+#: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
+#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:274
+msgid "Click here to install it"
+msgstr "Pro instalaci klikněte zde"
+
+#: app/scripts/controllers/menu.js:390
+msgid "Click here to view"
+msgstr "Pro zobrazení klikněte zde"
+
+#: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
+msgid "Clock not allowed for data buses"
+msgstr "Hodiny nejsou povoleny pro datové sběrnice"
+
+#: app/scripts/controllers/menu.js:277
+msgid "Close"
+msgstr "Zavřít"
+
+#: app/views/menu.html:368
+msgid "Code"
+msgstr "Kód"
+
+#: app/views/menu.html:201
+msgid "Collection"
+msgstr "Kolekce"
+
+#: app/views/menu.html:165
+msgid "Collection info"
+msgstr "Informace o kolekci"
+
+#: app/scripts/controllers/menu.js:544
+msgid "Collection {{collection}} info not defined"
+msgstr "Informace o kolekci {{collection}} nejsou definovány"
+
+#: app/scripts/services/tools.js:1020
+msgid "Collection {{name}} added"
+msgstr "Kolekce {{name}} přidána"
+
+#: app/scripts/services/tools.js:1014
+msgid "Collection {{name}} not replaced"
+msgstr "Kolekce {{name}} nenahrazena"
+
+#: app/scripts/services/tools.js:1130
+msgid "Collection {{name}} removed"
+msgstr "Kolekce {{name}} odstraněna"
+
+#: app/scripts/services/tools.js:1010
+msgid "Collection {{name}} replaced"
+msgstr "Kolekce {{name}} nahrazena"
+
+#: app/scripts/controllers/menu.js:577
+msgid "Collection {{name}} selected"
+msgstr "Kolekce {{name}} vybrána"
+
+#: app/views/menu.html:286
+msgid "Collections"
+msgstr "Kolekce"
+
+#: app/scripts/controllers/menu.js:550 app/views/menu.html:168
+msgid "Command output"
+msgstr "Výstup"
+
+#: app/views/menu.html:337
+msgid "Community forum"
+msgstr "Komunitní fórum"
+
+#: app/scripts/services/tools.js:402
+msgid "Configuration not completed"
+msgstr "Konfigurace není kompletní"
+
+#: app/views/menu.html:362
+msgid "Constant"
+msgstr "Konstanta"
+
+#: app/scripts/services/project.js:95
+msgid "Convert"
+msgstr "Převést"
+
+#: app/views/menu.html:104
+msgid "Copy"
+msgstr "Kopírovat"
+
+#: app/scripts/services/tools.js:848
+msgid "Create virtualenv..."
+msgstr "Vytvoření virtuálního prostředí..."
+
+#: app/views/menu.html:101
+msgid "Cut"
+msgstr "Vyjmout"
+
+#: app/views/languages.html:34
+msgid "Czech"
+msgstr "čeština"
+
+#: app/views/menu.html:158
+msgid "Datasheet"
+msgstr "Datový list"
+
+#: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
+msgid "Decimal"
+msgstr "Desítkové"
+
+#: app/views/menu.html:206
+msgid "Default"
+msgstr "Výchozí"
+
+#: app/scripts/services/tools.js:674
+msgid ""
+"Default toolchain not found. Toolchain will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"Výchozí sada nástrojů nebyla nalezena. Nástroje budou staženy. Tato operace "
+"vyžaduje připojení na internet. Přejete si pokračovat?"
+
+#: app/scripts/services/utils.js:573
+msgid "Description"
+msgstr "Popis"
+
+#: app/views/menu.html:279
+msgid "Disable"
+msgstr "Zakázat"
+
+#: app/scripts/controllers/menu.js:281
+msgid "Do you want to close the application?"
+msgstr "Chcete zavřít aplikaci?"
+
+#: app/scripts/controllers/menu.js:682
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "Chcete odstranit kolekci {{name}}?"
+
+#: app/scripts/services/tools.js:1006
+msgid "Do you want to replace it?"
+msgstr "Přejete si to nahradit?"
+
+#: app/views/menu.html:330
+msgid "Documentation"
+msgstr "Dokumentace"
+
+#: app/views/menu.html:270
+msgid "Drivers"
+msgstr "Ovladače"
+
+#: app/scripts/services/drivers.js:123 app/scripts/services/drivers.js:146
+#: app/scripts/services/drivers.js:236
+msgid "Drivers disabled"
+msgstr "Ovladače zakázány"
+
+#: app/scripts/services/drivers.js:114 app/scripts/services/drivers.js:138
+#: app/scripts/services/drivers.js:226
+msgid "Drivers enabled"
+msgstr "Ovladače povoleny"
+
+#: app/scripts/services/tools.js:411
+msgid "Duplicated FPGA I/O ports"
+msgstr "Duplikované FPGA vstupně výstupní porty"
+
+#: app/scripts/services/blocks.js:479
+msgid "Duplicated block attributes"
+msgstr "Duplikované blokové atributy"
+
+#: app/views/languages.html:28
+msgid "Dutch"
+msgstr "holandský"
+
+#: app/views/menu.html:91
+msgid "Edit"
+msgstr "Upravit"
+
+#: app/scripts/services/tools.js:995
+msgid "Edit the collection name"
+msgstr "Upravit název kolekce"
+
+#: app/views/menu.html:274
+msgid "Enable"
+msgstr "Povolit"
+
+#: app/views/languages.html:4
+msgid "English"
+msgstr "angličtina"
+
+#: app/scripts/services/blocks.js:203
+msgid "Enter the constant blocks"
+msgstr "Zadejte konstantní blok"
+
+#: app/scripts/controllers/menu.js:359
+msgid "Enter the external collections path"
+msgstr "Zadejte cestu k externím kolekcím"
+
+#: app/scripts/services/blocks.js:58
+msgid "Enter the input blocks"
+msgstr "Zadejte vstupní bloky"
+
+#: app/scripts/services/blocks.js:365
+msgid "Enter the input ports"
+msgstr "Zadejte vstupní porty"
+
+#: app/scripts/services/blocks.js:261
+msgid "Enter the memory blocks"
+msgstr "Zadejte paměťové bloky"
+
+#: app/scripts/services/blocks.js:130
+msgid "Enter the output blocks"
+msgstr "Zadejte výstupní bloky"
+
+#: app/scripts/services/blocks.js:370
+msgid "Enter the output ports"
+msgstr "Zadejte výstupní porty"
+
+#: app/scripts/services/blocks.js:375
+msgid "Enter the parameters"
+msgstr "Zadejte parametry"
+
+#: app/scripts/controllers/menu.js:422
+msgid "Enter the remote hostname user@host"
+msgstr "Zadejte vzdáleného hostitele uživatel@hostitel"
+
+#: app/scripts/services/tools.js:704
+msgid "Error: default toolchain not found in '{{dir}}'"
+msgstr "Chyba: výchozí sada nástrojů nebyla nalezena v '{{dir}}'"
+
+#: app/scripts/services/utils.js:757
+msgid "Error: {{error}}"
+msgstr "Chyba: {{error}}"
+
+#: app/scripts/services/tools.js:485
+msgid "Errors detected in the design"
+msgstr "V návrhu byly zjištěny chyby"
+
+#: app/views/menu.html:42
+msgid "Examples"
+msgstr "Příklady"
+
+#: app/scripts/services/tools.js:296
+msgid "Execute remote {{label}} ..."
+msgstr "Spouštění vzdáleně {{label}} ..."
+
+#: app/views/menu.html:57
+msgid "Export"
+msgstr "Exportovat"
+
+#: app/views/menu.html:132
+msgid "External collections"
+msgstr "Externí kolekce"
+
+#: app/scripts/controllers/menu.js:376
+msgid "External collections updated"
+msgstr "Externí kolekce aktualizována"
+
+#: app/scripts/services/tools.js:855
+msgid "Extract default apio files..."
+msgstr "Rozbalení výchozích apio souborů..."
+
+#: app/scripts/services/tools.js:865
+msgid "Extract default apio packages..."
+msgstr "Rozbalení výchozích apio balíků..."
+
+#: app/scripts/services/tools.js:843
+msgid "Extract virtualenv files..."
+msgstr "Rozbalení souborů virtuálního prostředí..."
+
+#: app/scripts/services/tools.js:408
+msgid "FPGA I/O ports not defined"
+msgstr "FPGA vstupně/výstupní porty nejsou definovány"
+
+#: app/scripts/services/blocks.js:135 app/scripts/services/blocks.js:63
+#: app/scripts/services/blocks.js:848 app/scripts/services/blocks.js:944
+msgid "FPGA pin"
+msgstr "FPGA vývod"
+
+#: app/views/menu.html:173
+msgid "FPGA resources"
+msgstr "FPGA prostředky"
+
+#: app/views/menu.html:29
+msgid "File"
+msgstr "Soubor"
+
+#: app/scripts/services/project.js:460
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
+
+#: app/scripts/services/tools.js:222
+msgid "File {{file}} does not exist"
+msgstr "Soubor {{file}} neexistuje"
+
+#: app/scripts/services/project.js:494
+msgid "File {{file}} imported"
+msgstr "Soubor {{file}} importován"
+
+#: app/views/menu.html:114
+msgid "Fit content"
+msgstr "Přizpůsbit obsah"
+
+#: app/views/languages.html:16
+msgid "French"
+msgstr "francouzština"
+
+#: app/views/languages.html:46
+msgid "Galician"
+msgstr "galicijština"
+
+#: app/views/languages.html:22
+msgid "German"
+msgstr "němčina"
+
+#: app/views/menu.html:320
+msgid "Help"
+msgstr "Nápověda"
+
+#: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
+msgid "Hexadecimal"
+msgstr "Šestnáctkové"
+
+#: app/scripts/services/utils.js:587
+msgid "Image"
+msgstr "Obraz"
+
+#: app/scripts/controllers/menu.js:846
+msgid "Image {{name}} saved"
+msgstr "Obraz {{name}} uložen"
+
+#: app/views/menu.html:371
+msgid "Information"
+msgstr "Informace"
+
+#: app/views/menu.html:356
+msgid "Input"
+msgstr "Vstup"
+
+#: app/views/menu.html:247
+msgid "Install"
+msgstr "Instalovat"
+
+#: app/scripts/services/tools.js:860
+msgid "Install default apio..."
+msgstr "Instalace výchozího apio..."
+
+#: app/scripts/services/tools.js:912
+msgid "Installation completed"
+msgstr "Instalace dokončena"
+
+#: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
+msgid "Installing toolchain"
+msgstr "Instalace nástrojů"
+
+#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:824
+msgid "Internet connection required"
+msgstr "Potřeba připojení na internet"
+
+#: app/scripts/services/graph.js:177
+msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+msgstr "Neplatné připojení <i>Pull-upu</i>:<br>blok je již připojen"
+
+#: app/scripts/services/graph.js:191
+msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgstr ""
+"Neplatné připojení <i>Pull-upu</i>:<br>to je povoleno pouze pro <i>Vstupní</"
+"i> bloky"
+
+#: app/scripts/services/graph.js:183
+msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+msgstr "Neplatné zapojení bloku:<br><i>Pull-up</i>je již připojen"
+
+#: app/scripts/services/tools.js:1026
+msgid "Invalid collection {{name}}"
+msgstr "Neplatná kolekce {{name}}"
+
+#: app/scripts/services/graph.js:141 app/scripts/services/graph.js:148
+#: app/scripts/services/graph.js:155
+msgid "Invalid connection"
+msgstr "Neplatné spojení"
+
+#: app/scripts/services/graph.js:210
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Neplatné spojení: {{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:171
+msgid "Invalid multiple input connections"
+msgstr "Neplatné vícenásobná vstupní připojení"
+
+#: app/scripts/services/project.js:450 app/scripts/services/project.js:81
+msgid "Invalid project format"
+msgstr "Neplatný formát projektu"
+
+#: app/scripts/services/drivers.js:305
+msgid "It is recommended to use <b>USB 2.0</b> ports"
+msgstr "Do doporučeno využívat <b>USB 2.0</b> porty"
+
+#: app/views/menu.html:121
+msgid "Language"
+msgstr "Jazyk"
+
+#: app/scripts/services/project.js:94
+msgid "Load"
+msgstr "Nahrát"
+
+#: app/scripts/services/blocks.js:1025 app/scripts/services/blocks.js:1079
+#: app/scripts/services/blocks.js:208 app/scripts/services/blocks.js:276
+msgid "Local parameter"
+msgstr "Lokální parametr"
+
+#: app/scripts/services/utils.js:837
+msgid "Maximum bus size: 96 bits"
+msgstr "Maximální šířka sběrnice: 96 bitů"
+
+#: app/views/menu.html:365
+msgid "Memory"
+msgstr "Paměť"
+
+#: app/scripts/services/utils.js:571
+msgid "Name"
+msgstr "Jméno"
+
+#: app/views/menu.html:32
+msgid "New"
+msgstr "Nový"
+
+#: app/scripts/controllers/menu.js:700
+msgid "No collections stored"
+msgstr "Žádné kolekce neuloženy"
+
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:291
+#: app/scripts/services/project.js:133
+msgid "OK"
+msgstr "Budiž"
+
+#: app/views/menu.html:35
+msgid "Open"
+msgstr "Otevřít"
+
+#: app/scripts/services/utils.js:594
+msgid "Open SVG"
+msgstr "Otevřít SVG"
+
+#: app/scripts/services/project.js:497
+msgid "Original file {{file}} does not exist"
+msgstr "Původní soubor {{file}} neexistuje"
+
+#: app/views/menu.html:359
+msgid "Output"
+msgstr "Výstup"
+
+#: app/views/menu.html:107
+msgid "Paste"
+msgstr "Vložit"
+
+#: app/scripts/controllers/menu.js:380
+msgid "Path {{path}} does not exist"
+msgstr "Cesta {{path}} neexistuje"
+
+#: app/scripts/services/utils.js:965
+msgid "Please run: {{cmd}}"
+msgstr "Prosím spusťte: {{cmd}}"
+
+#: app/views/menu.html:118
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: app/views/menu.html:143
+msgid "Project information"
+msgstr "Informace o projektu"
+
+#: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
+msgid "Project information updated"
+msgstr "Informace o projektu aktualizovány"
+
+#: app/scripts/services/project.js:120
+msgid "Project {{name}} loaded"
+msgstr "Projekt {{name}} nahrán"
+
+#: app/scripts/services/project.js:357
+msgid "Project {{name}} saved"
+msgstr "Projekt {{name}} uložen"
+
+#: app/scripts/services/tools.js:837
+msgid "Python 2.7 is required"
+msgstr "Je potřeba Python verze 2.7"
+
+#: app/views/menu.html:85
+msgid "Quit"
+msgstr "Ukončit"
+
+#: app/views/design.html:5
+msgid "Read only"
+msgstr "Pouze pro čtení"
+
+#: app/views/menu.html:97
+msgid "Redo"
+msgstr "Znovu"
+
+#: app/views/menu.html:295
+msgid "Reload"
+msgstr "Znovu nahrát"
+
+#: app/scripts/services/tools.js:528
+msgid "Remote host {{name}} not connected"
+msgstr "Vzdálený hostitel {{name}} není připojen"
+
+#: app/views/menu.html:136
+msgid "Remote hostname"
+msgstr "Jméno vzdáleného hostitele"
+
+#: app/views/menu.html:255 app/views/menu.html:299
+msgid "Remove"
+msgstr "Odebrat"
+
+#: app/views/menu.html:311
+msgid "Remove all"
+msgstr "Odebrat vše"
+
+#: app/scripts/services/utils.js:596
+msgid "Reset SVG"
+msgstr "Obnovit SVG"
+
+#: app/views/menu.html:260
+msgid "Reset default"
+msgstr "Obnovit výchozí"
+
+#: app/views/menu.html:50
+msgid "Save"
+msgstr "Uložit"
+
+#: app/scripts/services/utils.js:595
+msgid "Save SVG"
+msgstr "Uložit SVG"
+
+#: app/views/menu.html:53
+msgid "Save as"
+msgstr "Uložit jako"
+
+#: app/views/menu.html:181
+msgid "Select"
+msgstr "Vybrat"
+
+#: app/views/menu.html:110
+msgid "Select all"
+msgstr "Vybrat vše"
+
+#: app/scripts/services/utils.js:715
+msgid "Select your board"
+msgstr "Vyberte vaši desku"
+
+#: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
+msgid "Show clock"
+msgstr "Zobrazit hodiny"
+
+#: app/views/menu.html:333
+msgid "Source code"
+msgstr "Zdrojový kód"
+
+#: app/views/languages.html:10
+msgid "Spanish"
+msgstr "španělština"
+
+#: app/scripts/controllers/menu.js:629
+msgid "Start build"
+msgstr "Začínám překlad"
+
+#: app/scripts/controllers/menu.js:642
+msgid "Start upload"
+msgstr "Začínám nahrávat"
+
+#: app/scripts/controllers/menu.js:619
+msgid "Start verification"
+msgstr "Začínám kontrolovat"
+
+#: app/scripts/services/tools.js:285
+msgid "Synchronize remote files ..."
+msgstr "Synchronizace vzdálených souborů..."
+
+#: app/views/menu.html:66
+msgid "Testbench"
+msgstr "Testbench"
+
+#: app/scripts/services/tools.js:1005
+msgid "The collection {{name}} already exists."
+msgstr "Kolekce {{name}} již existuje."
+
+#: app/scripts/controllers/menu.js:598
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"{{name}} board?"
+msgstr ""
+"Současná konfigurace FPGA vstupu/výstupu bude ztracena. Přejete si změnit na "
+"desku {{name}}?"
+
+#: app/scripts/services/tools.js:712
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "Nástroj bude odstraněn. Přejete si pokračovat?"
+
+#: app/scripts/services/tools.js:697
+msgid "The toolchain will be restored to default. Do you want to continue?"
+msgstr "Nástroj bude obnoven do výchozího stavu. Přejete si pokračovat?"
+
+#: app/scripts/services/tools.js:686
+msgid ""
+"The toolchain will be updated. This operation requires Internet connection. "
+"Do you want to continue?"
+msgstr ""
+"Nástroj bude aktualizován. Tato operace vyžaduje připojení na internet. "
+"Přejete si pokračovat?"
+
+#: app/scripts/services/project.js:419
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"Operace importu vyžaduje projektovou cestu. Potřebujete uložit současný "
+"projekt. Přejete si pokračovat?"
+
+#: app/scripts/services/project.js:98
+msgid "This project is designed for the {{name}} board."
+msgstr "Tento projekt je navržen pro desku {{name}}."
+
+#: app/views/menu.html:243
+msgid "Toolchain"
+msgstr "Nástroj"
+
+#: app/scripts/services/tools.js:913
+msgid "Toolchain installed"
+msgstr "Nástroj nainstalován"
+
+#: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
+#: app/scripts/services/tools.js:252
+msgid "Toolchain not installed"
+msgstr "Nástroj nenainstalován"
+
+#: app/scripts/services/tools.js:717
+msgid "Toolchain removed"
+msgstr "Nástroj odstraněn"
+
+#: app/scripts/services/tools.js:261
+msgid "Toolchain version does not match"
+msgstr "Verze nástroje nesouhlasí"
+
+#: app/views/menu.html:230
+msgid "Tools"
+msgstr "Nástroje"
+
+#: app/views/menu.html:94
+msgid "Undo"
+msgstr "Zpět"
+
+#: app/scripts/services/tools.js:372
+msgid "Unknown board"
+msgstr "Neznámá deska"
+
+#: app/scripts/services/project.js:142
+msgid "Unsupported project format {{version}}"
+msgstr "Nepodporovaný formát projektu {{version}}"
+
+#: app/scripts/app.js:64
+msgid "Untitled"
+msgstr "Nepojmenovaný"
+
+#: app/views/menu.html:250
+msgid "Update"
+msgstr "Aktualizovat"
+
+#: app/scripts/services/blocks.js:1020 app/scripts/services/blocks.js:1064
+#: app/scripts/services/blocks.js:843 app/scripts/services/blocks.js:939
+msgid "Update the block name"
+msgstr "Aktualizovat jméno bloku"
+
+#: app/views/menu.html:239
+msgid "Upload"
+msgstr "Nahrát"
+
+#: app/scripts/controllers/menu.js:643
+msgid "Upload done"
+msgstr "Nahrávání hotovo"
+
+#: app/scripts/controllers/menu.js:620
+msgid "Verification done"
+msgstr "Kontrola hotová"
+
+#: app/views/menu.html:233
+msgid "Verify"
+msgstr "Zkontrolovat"
+
+#: app/scripts/services/utils.js:572 app/views/menu.html:326
+msgid "Version"
+msgstr "Verze"
+
+#: app/views/menu.html:149
+msgid "View"
+msgstr "Zaobrazit"
+
+#: app/views/menu.html:323
+msgid "View license"
+msgstr "Zobrazit licenci"
+
+#: app/scripts/services/tools.js:489
+msgid "Warnings detected in the design"
+msgstr "V návrhu byla zjištěna varování"
+
+#: app/scripts/services/blocks.js:516
+msgid "Wrong block format: {{type}}"
+msgstr "Špatný formát bloku: {{type}}"
+
+#: app/scripts/services/blocks.js:1010 app/scripts/services/blocks.js:1053
+#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:155
+#: app/scripts/services/blocks.js:228 app/scripts/services/blocks.js:297
+#: app/scripts/services/blocks.js:89 app/scripts/services/blocks.js:928
+msgid "Wrong block name {{name}}"
+msgstr "Špatný název bloku {{name}}"
+
+#: app/scripts/services/blocks.js:428
+msgid "Wrong parameter name {{name}}"
+msgstr "Špatný parametr {{name}}"
+
+#: app/scripts/services/blocks.js:398 app/scripts/services/blocks.js:413
+msgid "Wrong port name {{name}}"
+msgstr "Špatné jméno portu {{name}}"
+
+#: app/scripts/services/project.js:129
+msgid "Wrong project format: {{name}}"
+msgstr "Špatný formát projektu: {{name}}"
+
+#: app/scripts/services/tools.js:525
+msgid "Wrong remote hostname {{name}}"
+msgstr "Špatný název vzdáleného hostitele {{name}}"
+
+#: app/scripts/services/project.js:99
+msgid "You can load it as it is or convert it for the {{name}} board."
+msgstr "Můžete nahrát tak jak je, nebo převést pro desku {{name}}."
+
+#: app/scripts/controllers/menu.js:282
+msgid "Your changes will be lost if you don’t save them"
+msgstr "Vaše změny budou ztraceny pokud je neuložíte"
+
+#: app/views/design.html:6
+msgid "back"
+msgstr "zpět"
+
+#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:940
+msgid "{{app}} is required."
+msgstr "{{app}} je vyžadováno."
+
+#: app/scripts/controllers/menu.js:498
+msgid "{{board}} datasheet not defined"
+msgstr "{{board}} katalogový list není definován"
+
+#: app/scripts/controllers/menu.js:488
+msgid "{{board}} pinout not defined"
+msgstr "{{board}} vývody nejsou definované"
+
+#: app/scripts/controllers/menu.js:519
+msgid "{{board}} rules not defined"
+msgstr "{{board}} pravidla nejsou definována"
+
+#: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
+msgid "{{name}} exported"
+msgstr "{{name}} exportováno"

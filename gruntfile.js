@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     all('styles'),
     all('views')
   ];
+  var pkg = grunt.file.readJSON('app/package.json');
 
   require('load-grunt-tasks')(grunt, options);
 
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
 
-    pkg: grunt.file.readJSON('app/package.json'),
+    pkg: pkg,
 
     // Automatically inject Bower components into the app
     wiredep: {
@@ -125,8 +126,8 @@ module.exports = function(grunt) {
         flavor: 'normal',
         zip: false,
         buildDir: 'dist/',
-        winIco: 'doc/images/icestudio-logo.ico',
-        macIcns: 'doc/images/icestudio-logo.icns',
+        winIco: 'docs/resources/images/logo/icestudio-logo.ico',
+        macIcns: 'docs/resources/images/logo/icestudio-logo.icns',
         macPlist: { 'CFBundleIconFile': 'nw.icns' },
         platforms: platforms
       },
@@ -149,8 +150,8 @@ module.exports = function(grunt) {
       options: {
         basepath: '.',
         title: 'Icestudio Installer',
-        icon: 'doc/images/icestudio-logo.icns',
-        background: 'doc/images/installer-background.png',
+        icon: 'docs/resources/images/logo/icestudio-logo.icns',
+        background: 'docs/resources/images/installation/installer-background.png',
         window: {
           size: {
             width: 512,
@@ -184,8 +185,8 @@ module.exports = function(grunt) {
           name: 'Icestudio',
           exec: 'icestudio',
           arch: '32bit',
-          icons: 'doc/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          icons: 'docs/resources/icons',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
         },
         files: [{
@@ -199,8 +200,8 @@ module.exports = function(grunt) {
           name: 'Icestudio',
           exec: 'icestudio',
           arch: '64bit',
-          icons: 'doc/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          icons: 'docs/resources/icons',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
         },
         files: [{
@@ -422,6 +423,7 @@ module.exports = function(grunt) {
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
+    'checksettings',
     'jshint',
     'clean:dist',
     'clean:toolchain',
@@ -440,4 +442,9 @@ module.exports = function(grunt) {
   .concat([
     'clean:tmp'
   ]));
+  grunt.registerTask('checksettings', function() {
+    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+      grunt.fail.fatal('Apio settings are in debug mode');
+    }
+  });
 };

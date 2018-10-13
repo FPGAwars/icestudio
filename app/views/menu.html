@@ -122,23 +122,14 @@
                     <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
                   </li>
                   <li class="divider"></li>
-                  <li class="dropdown-submenu" uib-dropdown>
-                    <a href uib-dropdown-toggle>
+                  <li>
+                    <a href ng-click="toggleBoardRules()">
                       {{ 'Board rules' | translate }}&ensp;
                       <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
-                    <ul uib-dropdown-menu>
-                      <li ng-class="profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="!profile.data.boardRules ? enableBoardRules() : ''">
-                          {{ 'Enable' | translate }}
-                        </a>
-                      </li>
-                      <li ng-class="!profile.data.boardRules ? 'disabled' : ''">
-                        <a href ng-click="profile.data.boardRules ? disableBoardRules() : ''">
-                          {{ 'Disable' | translate }}
-                        </a>
-                      </li>
-                    </ul>
+                  </li>
+                  <li>
+                    <a href ng-click="setExternalCollections()">{{ 'External collections' | translate }}</a>
                   </li>
                   <li>
                     <a href ng-click="setRemoteHostname()">
@@ -173,6 +164,9 @@
               <li>
                 <a href ng-click="showCollectionData()">{{ 'Collection info' | translate }}</a>
               </li>
+              <li>
+                <a href ng-click="showCommandOutput()">{{ 'Command output' | translate }}</a>
+              </li>
               <li class="divider"></li>
               <li>
                 <a href ng-click="toggleFPGAResources()">
@@ -189,29 +183,42 @@
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Board' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <li ng-repeat="board in common.boards">
-                    <a href ng-click="selectBoard(board)">
-                      {{ board.info.label }}&ensp;
-                      <span ng-show="common.selectedBoard.name == board.name" class="glyphicon glyphicon-ok-circle"></span>
-                    </a>
-                  </li>
-                </ul>
+                   <li><a><b>HX1K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'HX1K'" board="board"></menuboard>
+                   </li>
+                   <li><a><b>HX8K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'HX8K'" board="board"></menuboard>
+                   </li>
+                   <li><a><b>LP8K</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'LP8K'" board="board"></menuboard>
+                   </li>
+                 </ul>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Collection' | translate }}</a>
                 <ul uib-dropdown-menu>
-                  <data ng-init="collection = common.collections[0]"/>
+                  <data ng-init="collection = common.defaultCollection"/>
                   <li>
                     <a href ng-click="selectCollection(collection)" ng-show="collection.name == ''">
                       {{ 'Default' | translate }}&ensp;
                       <span ng-show="common.selectedCollection.name == ''" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
-                  <li class="divider" ng-show="common.collections.length > 1"></li>
-                  <li ng-repeat="collection in common.collections">
+                  <li class="divider" ng-show="common.internalCollections.length > 0"></li>
+                  <li ng-repeat="collection in common.internalCollections">
                     <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
                       {{ collection.name }}&ensp;
-                      <span ng-show="common.selectedCollection.name == collection.name" class="glyphicon glyphicon-ok-circle"></span>
+                      <span ng-show="common.selectedCollection.path == collection.path" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                  <li class="divider" ng-show="common.externalCollections.length > 0"></li>
+                  <li ng-repeat="collection in common.externalCollections">
+                    <a href ng-click="selectCollection(collection)" ng-hide="collection.name == ''">
+                      {{ collection.name }}&ensp;
+                      <span ng-show="common.selectedCollection.path == collection.path" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
                 </ul>
@@ -283,11 +290,16 @@
                       {{ 'Add' | translate }}
                     </a>
                   </li>
+                  <li>
+                    <a href ng-click="reloadCollections()">
+                      {{ 'Reload' | translate }}
+                    </a>
+                  </li>
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Remove' | translate }}</a>
                     <ul uib-dropdown-menu
-                        ng-show="common.collections.length > 1">
-                      <li ng-repeat="collection in common.collections">
+                        ng-show="common.internalCollections.length > 0">
+                      <li ng-repeat="collection in common.internalCollections">
                         <a href ng-click="removeCollection(collection)" ng-if="collection.name != ''">
                           {{ collection.name | translate }}
                         </a>
@@ -348,6 +360,9 @@
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.constant')">
                   <div class="marker marker-orange"></div>{{ 'Constant' | translate }}
+                </a>
+                <a href ng-click="project.addBasicBlock('basic.memory')">
+                  <div class="marker marker-orange"></div>{{ 'Memory' | translate }}
                 </a>
                 <a href ng-click="project.addBasicBlock('basic.code')">
                   <div class="marker marker-blue"></div>{{ 'Code' | translate }}

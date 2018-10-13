@@ -132,6 +132,8 @@ angular.module('icestudio')
      rules += 'ATTRS{idVendor}==\\"0483\\", ATTRS{idProduct}==\\"5740\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"\n';
      rules += '# Disable ModemManager for TinyFPGA B2\n';
      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+     rules += '# Disable ModemManager for TinyFPGA BX\n';
+     rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
      configureLinuxDrivers([
        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
      ].concat(reloadRules()), function() {
@@ -302,8 +304,7 @@ angular.module('icestudio')
      */
 
     function enableWindowsDriversFTDI() {
-      var message = gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') +
-                    gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports');
+      var message = gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') + gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports');
       alertify.confirm(message, function () {
         enableWindowsDrivers('ftdi');
       });
@@ -317,7 +318,7 @@ angular.module('icestudio')
     }
 
     function enableWindowsDriversSerial() {
-      var message = gettextCatalog.getString('<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board</li><li>Install the driver</li><li>Unplug and reconnect the board</li></ol>');
+      var message = gettextCatalog.getString('<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>');
       alertify.confirm(message, function () {
         enableWindowsDrivers('serial');
       });
