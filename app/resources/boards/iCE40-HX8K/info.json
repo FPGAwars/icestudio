@@ -1,6 +1,6 @@
 {
   "label": "iCE40-HX8K Breakout Board",
-  "datasheet": "http://www.latticesemi.com/view_document?document_id=50373",
+  "datasheet": "http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard",
   "interface": "FTDI",
   "FPGAResources": {
     "ffs": 7680,

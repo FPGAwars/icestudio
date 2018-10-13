@@ -1,0 +1,12 @@
+{
+  "label": "iCE40 UltraPlus Breakout Board",
+  "datasheet": "http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}
