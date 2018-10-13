@@ -28,12 +28,12 @@
   {
     "type": "UP5K",
     "boards": [
-      "fpga101",
-      "iCE40-UP5K",
       "iCEBreaker",
       "iCEBreaker-bitsy",
       "upduino",
       "upduino2"
+      "fpga101",
+      "iCE40-UP5K"
     ]
   }
 ]

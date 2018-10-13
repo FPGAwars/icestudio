@@ -41,10 +41,10 @@ Visual editor for open FPGA boards. Built on top of the [Icestorm project](http:
 
 | Board name | Interface |
 |:-|:-:|
-| [UPDuino v1.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino) | FTDI |
-| [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l) | FTDI |
 | [iCEBreaker](https://github.com/icebreaker-fpga/icebreaker) | FTDI |
 | [iCEBreaker bitsy](https://github.com/icebreaker-fpga/icebreaker) | FTDI |
+| [UPDuino v1.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino) | FTDI |
+| [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l) | FTDI |
 | [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge) | FTDI |
 | [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard) | FTDI |
 
