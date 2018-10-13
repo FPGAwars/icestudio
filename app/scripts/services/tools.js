@@ -174,9 +174,9 @@ angular.module('icestudio')
         removeFiles(resources);
         resources = [];
         // Find included files
-        resources = resources.concat(findIncludedFiles(code, reject));
+        resources = resources.concat(findIncludedFiles(code));
         // Find list files
-        resources = resources.concat(findInlineFiles(code, reject));
+        resources = resources.concat(findInlineFiles(code));
         // Sync resources
         resources = _.uniq(resources);
         // Remove internal files

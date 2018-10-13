@@ -384,13 +384,11 @@ joint.dia.CommandManager = Backbone.Model.extend({
     if (command) {
       this.applyCommand(command);
       this.undoStack.push(command);
-      if (command) {
-        if (!(command[0] && command[0].action === 'lang')) {
-          // Avoid lang changes
-          this.changesStack.push(command);
-        }
-        this.triggerChange();
+      if (!(command[0] && command[0].action === 'lang')) {
+        // Avoid lang changes
+        this.changesStack.push(command);
       }
+      this.triggerChange();
     }
   },
 

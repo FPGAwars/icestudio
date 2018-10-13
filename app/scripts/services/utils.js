@@ -639,11 +639,7 @@ angular.module('icestudio')
       }
 
       function optimizeSVG(data, callback) {
-        SVGO.optimize(data, function(result) {
-          if (callback) {
-            callback(result);
-          }
-        });
+        SVGO.optimize(data, callback);
       }
 
       function registerSave() {

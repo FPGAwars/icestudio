@@ -818,16 +818,16 @@ angular.module('icestudio')
           editBasicOutput(cellView, callback);
           break;
         case 'basic.constant':
-          editBasicConstant(cellView, callback);
+          editBasicConstant(cellView);
           break;
         case 'basic.memory':
-          editBasicMemory(cellView, callback);
+          editBasicMemory(cellView);
           break;
         case 'basic.code':
           editBasicCode(cellView, callback);
           break;
         case 'basic.info':
-          editBasicInfo(cellView, callback);
+          editBasicInfo(cellView);
           break;
         default:
           break;
@@ -1165,7 +1165,7 @@ angular.module('icestudio')
       return found;
     }
 
-    function editBasicInfo(cellView, callback) {
+    function editBasicInfo(cellView) {
       var block = cellView.model.attributes;
       var data = utils.clone(block.data);
       // Toggle readonly
@@ -1176,9 +1176,6 @@ angular.module('icestudio')
       }
       cellView.model.set('data', data);
       cellView.apply();
-      if (callback) {
-        callback();
-      }
     }
 
   });

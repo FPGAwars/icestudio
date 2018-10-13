@@ -383,6 +383,9 @@ joint.routers.ice = (function(g, _, joint) {
       var loopsRemain = opt.maximumLoops;
       var endPointsKeys = _.invoke(endPoints, 'toString');
 
+      var currentDirAngle;
+      var previousDirAngle;
+
       // main route finding loop
       while (!openSet.isEmpty() && loopsRemain > 0) {
 
@@ -390,9 +393,9 @@ joint.routers.ice = (function(g, _, joint) {
         var currentKey = openSet.pop();
         var currentPoint = g.point(currentKey);
         var currentDist = costs[currentKey];
-        var previousDirAngle = currentDirAngle;
+        previousDirAngle = currentDirAngle;
         /* jshint -W116 */
-        var currentDirAngle = parents[currentKey] ? getDirectionAngle(parents[currentKey], currentPoint, dirLen)
+        currentDirAngle = parents[currentKey] ? getDirectionAngle(parents[currentKey], currentPoint, dirLen)
             : opt.previousDirAngle != null ? opt.previousDirAngle : getDirectionAngle(startCenter, currentPoint, dirLen);
         /* jshint +W116 */
 
@@ -494,14 +497,17 @@ joint.routers.ice = (function(g, _, joint) {
     var newVertices = [];
     var tailPoint = sourceBBox.center().snapToGrid(opt.step);
 
+    var from;
+    var to;
+
     // find a route by concating all partial routes (routes need to go through the vertices)
     // startElement -> vertex[1] -> ... -> vertex[n] -> endElement
     for (var i = 0, len = oldVertices.length; i <= len; i++) {
 
       var partialRoute = null;
 
-      var from = to || sourceBBox;
-      var to = oldVertices[i];
+      from = to || sourceBBox;
+      to = oldVertices[i];
 
       if (!to) {
 

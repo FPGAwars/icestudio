@@ -73,7 +73,7 @@ angular.module('icestudio')
           width: sbox.width * state.zoom,
           height: sbox.height * state.zoom
         };
-        var scale = 1;
+        var scale;
         if (tbox.width/sbox.width > tbox.height/sbox.height) {
           scale = tbox.height / sbox.height;
         }
@@ -386,9 +386,7 @@ angular.module('icestudio')
           if (type.indexOf('basic.') !== -1) {
             // Edit basic blocks
             if (paper.options.enabled) {
-              blocks.editBasic(type, cellView, function(cell) {
-                addCell(cell);
-              });
+              blocks.editBasic(type, cellView, addCell);
             }
           }
           else if (common.allDependencies[type]) {
