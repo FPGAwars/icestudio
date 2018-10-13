@@ -23,7 +23,7 @@ set_io --warn-no-port PIN_12 H1
 set_io --warn-no-port PIN_13 J1
 
 
-# ------------ Right side ------------------------------------------------------
+# ------------ Right side -----------------------------------------------------
 set_io --warn-no-port SDO    G6
 set_io --warn-no-port SDI    H7
 set_io --warn-no-port SCK    G7

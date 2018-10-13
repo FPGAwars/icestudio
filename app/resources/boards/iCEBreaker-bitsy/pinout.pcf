@@ -5,6 +5,7 @@
 #- GPL license
 # -----------------------------------------------------------------------------
 
+
 # ------------ Buttons and LEDs -----------------------------------------------
 set_io --warn-no-port BTN  10  # input
 set_io --warn-no-port LEDR 11  # output
@@ -42,11 +43,11 @@ set_io --warn-no-port P03 45
 set_io --warn-no-port P04 46
 set_io --warn-no-port P05 47
 set_io --warn-no-port P06 48
-set_io --warn-no-port P07 2
-set_io --warn-no-port P08 3
-set_io --warn-no-port P09 4
-set_io --warn-no-port P10 6
-set_io --warn-no-port P11 9
+set_io --warn-no-port P07  2
+set_io --warn-no-port P08  3
+set_io --warn-no-port P09  4
+set_io --warn-no-port P10  6
+set_io --warn-no-port P11  9
 set_io --warn-no-port P12 13
 set_io --warn-no-port P13 12
 

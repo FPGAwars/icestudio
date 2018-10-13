@@ -35,7 +35,7 @@ angular.module('icestudio')
       var ret = {};
       try {
         var data = nodeFs.readFileSync(nodePath.join(filepath, filename));
-        ret = JSON.parse(data.toString());
+        ret = JSON.parse(data);
       }
       catch (err) { }
       return ret;
