@@ -24,5 +24,16 @@
       "TinyFPGA-B2",
       "TinyFPGA-BX"
     ]
+  },
+  {
+    "type": "UP5K",
+    "boards": [
+      "iCEBreaker",
+      "iCEBreaker-bitsy",
+      "upduino",
+      "upduino2",
+      "fpga101",
+      "iCE40-UP5K"
+    ]
   }
 ]

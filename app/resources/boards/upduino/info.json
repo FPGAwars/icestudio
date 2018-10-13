@@ -1,0 +1,12 @@
+{
+  "label": "UPDuino v1.0",
+  "datasheet": "https://github.com/gtjennings1/UPDuino_v1_0",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}

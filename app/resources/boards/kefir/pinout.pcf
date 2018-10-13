@@ -21,36 +21,37 @@ set_io --warn-no-port LED4 121  # output
 set_io --warn-no-port IO0 138
 set_io --warn-no-port IO1 141
 set_io --warn-no-port IO2 143
-set_io --warn-no-port IO3 1
-set_io --warn-no-port IO4 4
-set_io --warn-no-port IO5 8
-set_io --warn-no-port IO6 10
-set_io --warn-no-port IO7 12
-set_io --warn-no-port IO8 19
-set_io --warn-no-port IO9 21
+set_io --warn-no-port IO3   1
+set_io --warn-no-port IO4   4
+set_io --warn-no-port IO5   8
+set_io --warn-no-port IO6  10
+set_io --warn-no-port IO7  12
+set_io --warn-no-port IO8  19
+set_io --warn-no-port IO9  21
 set_io --warn-no-port IO10 23
 set_io --warn-no-port IO11 25
 set_io --warn-no-port IO12 28
 set_io --warn-no-port IO13 31
-set_io --warn-no-port SCL 17
-set_io --warn-no-port SDA 18
+set_io --warn-no-port SCL  17
+set_io --warn-no-port SDA  18
+
 # ChipKit connectors
 set_io --warn-no-port IO26 139
 set_io --warn-no-port IO27 142
 set_io --warn-no-port IO28 144
-set_io --warn-no-port IO29 2
-set_io --warn-no-port IO30 3
-set_io --warn-no-port IO31 7
-set_io --warn-no-port IO32 9
-set_io --warn-no-port IO33 11
-set_io --warn-no-port IO34 20
-set_io --warn-no-port IO35 22
-set_io --warn-no-port IO36 24
-set_io --warn-no-port IO37 26
-set_io --warn-no-port IO38 29
-set_io --warn-no-port IO39 32
-set_io --warn-no-port IO40 33
-set_io --warn-no-port IO41 34
+set_io --warn-no-port IO29   2
+set_io --warn-no-port IO30   3
+set_io --warn-no-port IO31   7
+set_io --warn-no-port IO32   9
+set_io --warn-no-port IO33  11
+set_io --warn-no-port IO34  20
+set_io --warn-no-port IO35  22
+set_io --warn-no-port IO36  24
+set_io --warn-no-port IO37  26
+set_io --warn-no-port IO38  29
+set_io --warn-no-port IO39  32
+set_io --warn-no-port IO40  33
+set_io --warn-no-port IO41  34
 
 # PMOD A
 set_io --warn-no-port PMA0 74
@@ -74,14 +75,14 @@ set_io --warn-no-port PMB7 99
 
 # Milk channel A
 # As an RS-232 port
-set_io --warn-no-port TXD 37 # input
-set_io --warn-no-port RXD 38 # output
-set_io --warn-no-port RTS 39 # input
-set_io --warn-no-port CTS 41 # output
-set_io --warn-no-port DTR 42 # input
-set_io --warn-no-port DSR 43 # output
-set_io --warn-no-port DCD 44 # output
-set_io --warn-no-port RI  45 # output
+set_io --warn-no-port TXD 37  # input
+set_io --warn-no-port RXD 38  # output
+set_io --warn-no-port RTS 39  # input
+set_io --warn-no-port CTS 41  # output
+set_io --warn-no-port DTR 42  # input
+set_io --warn-no-port DSR 43  # output
+set_io --warn-no-port DCD 44  # output
+set_io --warn-no-port RI  45  # output
 # FTDI generic names
 set_io --warn-no-port AD0 37
 set_io --warn-no-port AD1 38
@@ -131,5 +132,3 @@ set_io --warn-no-port U_VMO 113  # output
 set_io --warn-no-port U_VMI 114  # input
 set_io --warn-no-port U_VPI 115  # input
 set_io --warn-no-port U_NOE 116  # output
-
-

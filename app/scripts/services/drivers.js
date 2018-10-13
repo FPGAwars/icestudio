@@ -107,6 +107,8 @@ angular.module('icestudio')
    function enableLinuxDriversFTDI() {
      var rules = '';
      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
+     rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+     rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6014\\", ';
      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
      configureLinuxDrivers([
        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'

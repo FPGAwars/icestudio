@@ -155,6 +155,15 @@ LP8K
 * `TinyFPGA B2 <https://tinyfpga.com/b-series-guide.html>`_
 * `TinyFPGA BX <https://tinyfpga.com/bx/guide.html>`_
 
+UP5K
+
+* `iCEBreaker <https://github.com/icebreaker-fpga/icebreaker>`_
+* `iCEBreaker bitsy <https://github.com/icebreaker-fpga/icebreaker>`_
+* `UPDuino v1.0 <http://gnarlygrey.atspace.cc/development-platform.html#upduino>`_
+* `UPDuino v2.0 <http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l>`_
+* `FPGA 101 Workshop Badge Board <https://github.com/mmicko/workshop_badge>`_
+* `iCE40 UltraPlus Breakout Board <http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard>`_
+
 When a board is selected all I/O block combos are updated and its current values reset.
 
 .. hint::

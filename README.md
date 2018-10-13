@@ -37,6 +37,17 @@ Visual editor for open FPGA boards. Built on top of the [Icestorm project](http:
 | [TinyFPGA B2](https://tinyfpga.com/b-series-guide.html) | Serial |
 | [TinyFPGA BX](https://tinyfpga.com/bx/guide.html) | Serial |
 
+#### UP5K
+
+| Board name | Interface |
+|:-|:-:|
+| [iCEBreaker](https://github.com/icebreaker-fpga/icebreaker) | FTDI |
+| [iCEBreaker bitsy](https://github.com/icebreaker-fpga/icebreaker) | FTDI |
+| [UPDuino v1.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino) | FTDI |
+| [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l) | FTDI |
+| [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge) | FTDI |
+| [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard) | FTDI |
+
 ## Installation
 
 * **GNU/Linux**
@@ -165,6 +176,7 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 |Version | Contributors |
 |:-:|:-:|
+| 0.4 | [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden) |
 | 0.3 | [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
 | 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
 | 0.1 | [Miguel Sánchez de León Peque](https://github.com/Peque) |

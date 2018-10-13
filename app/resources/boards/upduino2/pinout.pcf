@@ -1,0 +1,47 @@
+# -----------------------------------------------------------------------------
+#- UPduino v2.0 constraint file (.pcf)
+#- By Miodrag Milanovic
+#- March - 2018
+#- GPL license
+# -----------------------------------------------------------------------------
+
+
+# ------------ RGB LED Driver -------------------------------------------------
+set_io --warn-no-port LED_G 39  # output
+set_io --warn-no-port LED_B 40  # output
+set_io --warn-no-port LED_R 41  # output
+
+
+# ------------ Left side ------------------------------------------------------
+set_io --warn-no-port PIN_2   2
+set_io --warn-no-port PIN_46 46
+set_io --warn-no-port PIN_47 47
+set_io --warn-no-port PIN_45 45
+set_io --warn-no-port PIN_48 48
+set_io --warn-no-port PIN_3   3
+set_io --warn-no-port PIN_4   4
+set_io --warn-no-port PIN_44 44
+set_io --warn-no-port PIN_6   6
+set_io --warn-no-port PIN_9   9
+set_io --warn-no-port PIN_11 11
+set_io --warn-no-port PIN_18 18
+set_io --warn-no-port PIN_19 19
+set_io --warn-no-port PIN_13 13
+set_io --warn-no-port PIN_21 21
+set_io --warn-no-port PIN_12 12
+
+# ------------ Right side ------------------------------------------------------
+set_io --warn-no-port PIN_28 28
+set_io --warn-no-port PIN_38 38
+set_io --warn-no-port PIN_42 42
+set_io --warn-no-port PIN_35 35
+set_io --warn-no-port PIN_43 43
+set_io --warn-no-port PIN_34 34
+set_io --warn-no-port PIN_37 37
+set_io --warn-no-port PIN_31 31
+set_io --warn-no-port PIN_35 35
+set_io --warn-no-port PIN_32 32
+set_io --warn-no-port PIN_27 27
+set_io --warn-no-port PIN_26 26
+set_io --warn-no-port PIN_25 25
+set_io --warn-no-port PIN_23 23

@@ -1,0 +1,12 @@
+{
+  "label": "FPGA 101 Workshop Badge Board",
+  "datasheet": "https://github.com/mmicko/workshop_badge",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}

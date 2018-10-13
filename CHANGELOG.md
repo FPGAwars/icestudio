@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Support UP5K boards (#)
+- [iCEBreaker](https://github.com/icebreaker-fpga/icebreaker)
+- [iCEBreaker bitsy](https://github.com/icebreaker-fpga/icebreaker)
+- [UPDuino v1.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino)
+- [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l)
+- [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge)
+- [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard)
+
 ### General
 - Add cs_CZ translation (by nerakino)
 - Add nl_NL translation (by @elektor-labs)

@@ -13,20 +13,23 @@
 
 import os
 import re
+import sys
 import json
 
-print('Pinout generator')
-print('----------------')
-
-# Python 2-3 compat
-try:
-    input = raw_input
-except Exception:
-    pass
+if len(sys.argv) < 2:
+    print('Insert a board name')
+    exit(1)
 
 # Load parameters
-name = input('Insert board name: ')  # eg. icoboard
+name = sys.argv[1]
 path = os.path.join(os.path.dirname(__file__), name)
+
+# Check board
+if not os.path.isdir(name):
+    print('Board {} does not exist'.format(name))
+    exit(1)
+
+print('Generating pinout...')
 
 # Regex pattern
 pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output))?'
