@@ -25,12 +25,21 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>Οδηγίες εγκατάστασης του οδηγού FTDI</h4><ol><li>Συνδέστε την FPGA "
+"πλακέτα σε μια θύρα USB και περιμένετε μέχρι να ολοκληρωθεί η εγκατάσταση "
+"του προεπιλεγμένου οδηγού από τα Windows</li><li>Πατώντας το κουμπί ΟΚ, η "
+"εγκατάσταση του οδηγού FTDI θα ξεκινήσει σε ένα άλλο παράθυρο</li><li>Κατα "
+"την εγκατάσταση, αντικαταστήστε το <b>(Interface 0)</b> οδηγό με τον "
+"<b>libusbK</b></li><li>Αποσυνδέστε και επανασυνδέστε την πλακέτα</li></ol>"
 
 #: app/scripts/services/drivers.js:314
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
+"<h4>Οδηγίες απεγκατάστασης του οδηγού FTDI</h4><ol><li>Βρείτε τον οδηγό της "
+"FPGA USB συσκευής </li><li>Διαλέξτε την πλακέτα και απεγκαταστήσετε τον "
+"οδηγό</li></ol>"
 
 #: app/scripts/services/drivers.js:321
 msgid ""
@@ -41,12 +50,21 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Οδηγίες εγκατάστασης του σειριακού οδηγού</h4><ol><li>Συνδέστε την FPGA "
+"πλακέτα σε μια θύρα USB και περιμένετε μέχρι να ολοκληρωθεί η εγκατάσταση "
+"του προεπιλεγμένου οδηγού από τα Windows</li><li>Πατώντας το κουμπί ΟΚ, η "
+"εγκατάσταση του σειριακού οδηγού θα ξεκινήσει σε ένα άλλο παράθυρο</"
+"li><li>Ακολουθήστε τα βήματα για να ολοκληρώσετε την εγκατάσταση</"
+"li><li>Αποσυνδέστε και επανασυνδέστε την πλακέτα</li></ol>"
 
 #: app/scripts/services/drivers.js:328
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
+"<h4>Οδηγίες απεγκατάστασης του σειριακού οδηγού</h4><ol><li>Βρείτε τον οδηγό "
+"της FPGA USB συσκευής </li><li>Διαλέξτε την πλακέτα και απεγκαταστήσετε τον "
+"οδηγό</li></ol>"
 
 #: app/views/menu.html:345
 msgid "About Icestudio"
@@ -82,15 +100,15 @@ msgstr "Συντάκτης"
 
 #: app/views/menu.html:356
 msgid "Basic"
-msgstr ""
+msgstr "Basic"
 
 #: app/views/languages.html:52
 msgid "Basque"
-msgstr ""
+msgstr "Βασκικά"
 
 #: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
 msgid "Binary"
-msgstr ""
+msgstr "Δυαδικό"
 
 #: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
 #: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
@@ -105,7 +123,7 @@ msgstr "Το Block {{name}} εισάχθηκε"
 
 #: app/views/menu.html:38
 msgid "Blocks"
-msgstr ""
+msgstr "Blocks"
 
 #: app/views/menu.html:184
 msgid "Board"
@@ -145,11 +163,11 @@ msgstr "Ο Bootloader δεν είναι ενεργός"
 
 #: app/views/menu.html:240
 msgid "Build"
-msgstr ""
+msgstr "Χτίσιμο"
 
 #: app/scripts/controllers/menu.js:630
 msgid "Build done"
-msgstr ""
+msgstr "Το χτίσιμο ολοκληρώθηκε"
 
 #: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
 msgid "Cancel"
@@ -157,7 +175,7 @@ msgstr "Ακυρωση"
 
 #: app/views/languages.html:58
 msgid "Catalan"
-msgstr "Catalan"
+msgstr "Καταλανικά"
 
 #: app/scripts/services/tools.js:820
 msgid "Check Internet connection..."
@@ -169,7 +187,7 @@ msgstr "Έλεγχος Python..."
 
 #: app/views/languages.html:40
 msgid "Chinese"
-msgstr "Chinese"
+msgstr "Κινέζικα"
 
 #: app/scripts/services/project.js:143
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -190,7 +208,7 @@ msgstr "Πατήστε εδώ για εμφάνιση"
 
 #: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
 msgid "Clock not allowed for data buses"
-msgstr ""
+msgstr "Το ρολόι δεν επιτρέπετε για διαύλους δεδομένων"
 
 #: app/scripts/controllers/menu.js:277
 msgid "Close"
@@ -250,7 +268,7 @@ msgstr "Η παραμετροποίηση δεν ολοκληρώθηκε"
 
 #: app/views/menu.html:366
 msgid "Constant"
-msgstr ""
+msgstr "Σταθερά"
 
 #: app/scripts/services/project.js:95
 msgid "Convert"
@@ -270,19 +288,19 @@ msgstr "Αποκόλληση"
 
 #: app/views/languages.html:34
 msgid "Czech"
-msgstr "Czech"
+msgstr "Τσέχικα"
 
 #: app/views/menu.html:158
 msgid "Datasheet"
-msgstr ""
+msgstr "Δελτίο δεδομένων"
 
 #: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
 msgid "Decimal"
-msgstr ""
+msgstr "Δεκαδικο"
 
 #: app/views/menu.html:210
 msgid "Default"
-msgstr ""
+msgstr "Προεπηλεγμένο"
 
 #: app/scripts/services/tools.js:674
 msgid ""
@@ -332,15 +350,15 @@ msgstr "Οδηγοί ενεργοποιήθηκαν"
 
 #: app/scripts/services/tools.js:411
 msgid "Duplicated FPGA I/O ports"
-msgstr ""
+msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
 #: app/scripts/services/blocks.js:479
 msgid "Duplicated block attributes"
-msgstr ""
+msgstr "Τα χαρακτηριστικά του block υπάρχουν ήδη"
 
 #: app/views/languages.html:28
 msgid "Dutch"
-msgstr "Dutch"
+msgstr "Ολλανδικά"
 
 #: app/views/menu.html:91
 msgid "Edit"
@@ -356,47 +374,47 @@ msgstr "Ενεργοποίηση"
 
 #: app/views/languages.html:4
 msgid "English"
-msgstr "English"
+msgstr "Αγγλικά"
 
 #: app/scripts/services/blocks.js:203
 msgid "Enter the constant blocks"
-msgstr ""
+msgstr "Εισαγάγετε τα constant blocks"
 
 #: app/scripts/controllers/menu.js:359
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής βιβλιοθήκης"
 
 #: app/scripts/services/blocks.js:58
 msgid "Enter the input blocks"
-msgstr ""
+msgstr "Εισαγάγετε τα blocks εισόδου"
 
 #: app/scripts/services/blocks.js:365
 msgid "Enter the input ports"
-msgstr ""
+msgstr "Εισαγάγετε τις θύρες εισόδου"
 
 #: app/scripts/services/blocks.js:261
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "Εισαγάγετε τα blocks μνήμης"
 
 #: app/scripts/services/blocks.js:130
 msgid "Enter the output blocks"
-msgstr ""
+msgstr "Εισαγάγετε τα block εξόδου"
 
 #: app/scripts/services/blocks.js:370
 msgid "Enter the output ports"
-msgstr ""
+msgstr "Εισαγάγετε τις θύρες εξόδου"
 
 #: app/scripts/services/blocks.js:375
 msgid "Enter the parameters"
-msgstr ""
+msgstr "Εισαγάγετε τις παραμέτρους"
 
 #: app/scripts/controllers/menu.js:422
 msgid "Enter the remote hostname user@host"
-msgstr ""
+msgstr "Εισαγάγετε το όνομα του απομακρυσμένου υπολογιστή/συσκευής (user@host)"
 
 #: app/scripts/services/tools.js:704
 msgid "Error: default toolchain not found in '{{dir}}'"
-msgstr ""
+msgstr "Σφάλμα: το προεπιλεγμένο toolchain δεν βρέθηκε στο '{{dir}}'"
 
 #: app/scripts/services/utils.js:753
 msgid "Error: {{error}}"
@@ -428,28 +446,28 @@ msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
 
 #: app/scripts/services/tools.js:855
 msgid "Extract default apio files..."
-msgstr ""
+msgstr "Εξαγωγή αρχείων apio..."
 
 #: app/scripts/services/tools.js:865
 msgid "Extract default apio packages..."
-msgstr ""
+msgstr "Εξαγωγή πακέτων apio..."
 
 #: app/scripts/services/tools.js:843
 msgid "Extract virtualenv files..."
-msgstr ""
+msgstr "Εξαγωγή αρχείων εικονικού περιβάλλοντος..."
 
 #: app/scripts/services/tools.js:408
 msgid "FPGA I/O ports not defined"
-msgstr ""
+msgstr "Δεν έχουν δηλωθεί οι πύλες εισόδου/εξόδου της FPGA"
 
 #: app/scripts/services/blocks.js:135 app/scripts/services/blocks.js:63
 #: app/scripts/services/blocks.js:848 app/scripts/services/blocks.js:944
 msgid "FPGA pin"
-msgstr ""
+msgstr "Ακροδέκτης FPGA"
 
 #: app/views/menu.html:173
 msgid "FPGA resources"
-msgstr ""
+msgstr "FPGA πόροι"
 
 #: app/views/menu.html:29
 msgid "File"
@@ -472,19 +490,19 @@ msgstr "Το αρχείο {{file}} εισάχθηκε"
 
 #: app/views/menu.html:114
 msgid "Fit content"
-msgstr ""
+msgstr "Πλήρης εμφάνιση"
 
 #: app/views/languages.html:16
 msgid "French"
-msgstr "French"
+msgstr "Γαλικά"
 
 #: app/views/languages.html:46
 msgid "Galician"
-msgstr "Galician"
+msgstr "Γαλικιανά"
 
 #: app/views/languages.html:22
 msgid "German"
-msgstr "German"
+msgstr "Γερμανικά"
 
 #: app/views/menu.html:324
 msgid "Help"
@@ -492,7 +510,7 @@ msgstr "Βοήθεια"
 
 #: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
 msgid "Hexadecimal"
-msgstr "Hexadecimal"
+msgstr "Δεκαεξαδικό"
 
 #: app/scripts/services/utils.js:587
 msgid "Image"
@@ -516,7 +534,7 @@ msgstr "Εγκατάσταση"
 
 #: app/scripts/services/tools.js:860
 msgid "Install default apio..."
-msgstr ""
+msgstr "Εγκατάσταση προεπιλεγμένου apio..."
 
 #: app/scripts/services/tools.js:912
 msgid "Installation completed"
@@ -532,15 +550,16 @@ msgstr "Είναι απαραίτητη η συνδεσιμότητα στο δ�
 
 #: app/scripts/services/graph.js:177
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
-msgstr ""
+msgstr "Μη έγκυρη <i>Pull up</i> σύνδεση:<br>το block είναι ήδη συνδεδεμένο"
 
 #: app/scripts/services/graph.js:191
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
+"Μη έγκυρη <i>Pull up</i> σύνδεση:<br>μόνο block <i>εισόδου</i>επιτρέπονται"
 
 #: app/scripts/services/graph.js:183
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
-msgstr ""
+msgstr "Μη έγκυρη σύνδεση block:<br>Το <i>Pull up</i> είναι ήδη συνδεδεμένο"
 
 #: app/scripts/services/tools.js:1026
 msgid "Invalid collection {{name}}"
@@ -573,7 +592,7 @@ msgstr "Γλώσσα"
 
 #: app/scripts/services/project.js:94
 msgid "Load"
-msgstr ""
+msgstr "Load"
 
 #: app/scripts/services/blocks.js:1025 app/scripts/services/blocks.js:1079
 #: app/scripts/services/blocks.js:208 app/scripts/services/blocks.js:276
@@ -582,7 +601,7 @@ msgstr "Τοπική παράμετρος"
 
 #: app/scripts/services/utils.js:833
 msgid "Maximum bus size: 96 bits"
-msgstr ""
+msgstr "Μέγιστο μέγεθος διαύλου: 96 bits"
 
 #: app/views/menu.html:369
 msgid "Memory"
@@ -675,11 +694,11 @@ msgstr "Επαναφόρτωση"
 
 #: app/scripts/services/tools.js:528
 msgid "Remote host {{name}} not connected"
-msgstr ""
+msgstr "Ο απομακρυσμένος υπολογιστής/συσκευή {{name}} δεν είναι συνδεδεμένος"
 
 #: app/views/menu.html:136
 msgid "Remote hostname"
-msgstr ""
+msgstr "Απομακρυσμένο όνομα υπολογιστή/συσκευής"
 
 #: app/views/menu.html:259 app/views/menu.html:303
 msgid "Remove"
@@ -723,7 +742,7 @@ msgstr "Διαλέξτε την πλακέτα σας"
 
 #: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
 msgid "Show clock"
-msgstr ""
+msgstr "Εμφάνιση Ρολογιού"
 
 #: app/views/menu.html:337
 msgid "Source code"
@@ -731,27 +750,27 @@ msgstr "Πηγαίος κώδικας"
 
 #: app/views/languages.html:10
 msgid "Spanish"
-msgstr ""
+msgstr "Ισπανικά"
 
 #: app/scripts/controllers/menu.js:629
 msgid "Start build"
-msgstr ""
+msgstr "Έναρξη χτισίματος"
 
 #: app/scripts/controllers/menu.js:642
 msgid "Start upload"
-msgstr ""
+msgstr "Έναρξη μεταφόρτωσης"
 
 #: app/scripts/controllers/menu.js:619
 msgid "Start verification"
-msgstr ""
+msgstr "Έναρξη επαλήθευσης"
 
 #: app/scripts/services/tools.js:285
 msgid "Synchronize remote files ..."
-msgstr ""
+msgstr "Συγχρονισμός απομακρυσμένων αρχείων ..."
 
 #: app/views/menu.html:66
 msgid "Testbench"
-msgstr ""
+msgstr "Testbench"
 
 #: app/scripts/services/tools.js:1005
 msgid "The collection {{name}} already exists."
@@ -762,6 +781,8 @@ msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr ""
+"Η τωρινές ρυθμίσεις εισόδου/εξόδου της FPGA  θα χαθούν. Θέλετε να αλλάξετε "
+"την πλακέτα σε {{name}}?"
 
 #: app/scripts/services/tools.js:712
 msgid "The toolchain will be removed. Do you want to continue?"
@@ -784,6 +805,8 @@ msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr ""
+"Αυτή η διαδικασία εισαγωγής χρειάζεται μια διαδρομή έργου.Θα πρέπει να "
+"σώσετε το τρέχων έργο. Θέλετε να συνεχίσετε?"
 
 #: app/scripts/services/project.js:98
 msgid "This project is designed for the {{name}} board."
@@ -833,12 +856,12 @@ msgstr "Άτιτλο"
 
 #: app/views/menu.html:254
 msgid "Update"
-msgstr "Αναβάθμηση"
+msgstr "Ενημέρωση"
 
 #: app/scripts/services/blocks.js:1020 app/scripts/services/blocks.js:1064
 #: app/scripts/services/blocks.js:843 app/scripts/services/blocks.js:939
 msgid "Update the block name"
-msgstr ""
+msgstr "Ενημερώστε το όνομα του block"
 
 #: app/views/menu.html:243
 msgid "Upload"
@@ -870,7 +893,7 @@ msgstr "Προβολή άδειας"
 
 #: app/scripts/services/tools.js:489
 msgid "Warnings detected in the design"
-msgstr " προειδοποιήσεις εντοπίστηκαν στο έργο"
+msgstr "Προειδοποιήσεις εντοπίστηκαν στο έργο"
 
 #: app/scripts/services/blocks.js:516
 msgid "Wrong block format: {{type}}"
@@ -893,40 +916,42 @@ msgstr "Λάθος όνομα θύρας: {{name}}"
 
 #: app/scripts/services/project.js:129
 msgid "Wrong project format: {{name}}"
-msgstr ""
+msgstr "Λάθος μορφοποίηση έργου: {{name}}"
 
 #: app/scripts/services/tools.js:525
 msgid "Wrong remote hostname {{name}}"
-msgstr ""
+msgstr "Εσφαλμένη διεύθυνση απομακρυσμένου υπολογιστή/συσκευής"
 
 #: app/scripts/services/project.js:99
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr ""
+"Μπορείτε να το φορτώσετε όπως είναι ή να το μετατρέψετε για την πλακέτα "
+"{{name}}"
 
 #: app/scripts/controllers/menu.js:282
 msgid "Your changes will be lost if you don’t save them"
-msgstr ""
+msgstr "Οι αλλαγές σας θα χαθούν αν δεν τις αποθηκεύσετε"
 
 #: app/views/design.html:6
 msgid "back"
-msgstr ""
+msgstr "επιστροφή"
 
 #: app/scripts/services/drivers.js:209 app/scripts/services/utils.js:936
 msgid "{{app}} is required."
-msgstr ""
+msgstr "{{app}} είναι απαρέτητη"
 
 #: app/scripts/controllers/menu.js:498
 msgid "{{board}} datasheet not defined"
-msgstr ""
+msgstr "το δελτίο δεδομένων για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
 #: app/scripts/controllers/menu.js:488
 msgid "{{board}} pinout not defined"
-msgstr ""
+msgstr "το pinout για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
 #: app/scripts/controllers/menu.js:519
 msgid "{{board}} rules not defined"
-msgstr ""
+msgstr "οι κανόνες για την πλακέτα {{board}} δεν έχουν δηλωθεί"
 
 #: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
 msgid "{{name}} exported"
-msgstr ""
+msgstr "Το {{name}} εξήχθη"
