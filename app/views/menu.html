@@ -232,7 +232,7 @@
 
           <li uib-dropdown ng-mouseover="showMenu('tools')" ng-mouseleave="hideMenu()" ng-click="fixMenu('tools')" is-open="status.tools">
             <a href uib-dropdown-toggle>{{ 'Tools' | translate }}<span class="caret"></span></a>
-            <ul uib-dropdown-menu>
+            <ul uib-dropdown-menu style="min-width: 180px">
               <li>
                 <a href ng-click="verifyCode()">{{ 'Verify' | translate }}<span class="shortcut">{{ 'verifyCode' | shortcut }}</span></a>
               </li>
