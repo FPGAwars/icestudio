@@ -14,6 +14,7 @@ angular.module('icestudio')
     $scope.profile = profile;
     $scope.information = {};
     $scope.topModule = true;
+    $scope.isNavigating = false;
 
     // Intialization
 
@@ -23,17 +24,23 @@ angular.module('icestudio')
 
     $scope.breadcrumbsNavitate = function(selectedItem) {
       var item;
-      do {
-        graph.breadcrumbs.pop();
-        item = graph.breadcrumbs.slice(-1)[0];
+      if (!$scope.isNavigating) {
+        $scope.isNavigating = true;
+        do {
+          graph.breadcrumbs.pop();
+          item = graph.breadcrumbs.slice(-1)[0];
+        }
+        while (selectedItem !== item);
+        loadSelectedGraph();
       }
-      while (selectedItem !== item);
-      loadSelectedGraph();
     };
 
     $scope.breadcrumbsBack = function() {
-      graph.breadcrumbs.pop();
-      loadSelectedGraph();
+      if (!$scope.isNavigating) {
+        $scope.isNavigating = true;
+        graph.breadcrumbs.pop();
+        loadSelectedGraph();
+      }
     };
 
     function loadSelectedGraph() {
@@ -42,7 +49,9 @@ angular.module('icestudio')
       if (n === 1) {
         var design = project.get('design');
         opt.disabled = false;
-        graph.loadDesign(design, opt);
+        graph.loadDesign(design, opt, function() {
+          $scope.isNavigating = false;
+        });
         $scope.topModule = true;
       }
       else {
@@ -50,6 +59,7 @@ angular.module('icestudio')
         var dependency = common.allDependencies[type];
         graph.loadDesign(dependency.design, opt, function() {
           graph.fitContent();
+          $scope.isNavigating = false;
         });
         $scope.information = dependency.package;
       }
