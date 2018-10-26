@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.8.11\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
 "Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -102,7 +102,7 @@ msgstr "Συντάκτης"
 msgid "Basic"
 msgstr "Basic"
 
-#: app/views/languages.html:52
+#: app/views/languages.html:58
 msgid "Basque"
 msgstr "Βασκικά"
 
@@ -173,7 +173,7 @@ msgstr "Το χτίσιμο ολοκληρώθηκε"
 msgid "Cancel"
 msgstr "Ακυρωση"
 
-#: app/views/languages.html:58
+#: app/views/languages.html:64
 msgid "Catalan"
 msgstr "Καταλανικά"
 
@@ -185,7 +185,7 @@ msgstr "Έλεγχος συνδεσιμότητας..."
 msgid "Check Python..."
 msgstr "Έλεγχος Python..."
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Chinese"
 msgstr "Κινέζικα"
 
@@ -496,13 +496,17 @@ msgstr "Πλήρης εμφάνιση"
 msgid "French"
 msgstr "Γαλικά"
 
-#: app/views/languages.html:46
+#: app/views/languages.html:52
 msgid "Galician"
 msgstr "Γαλικιανά"
 
 #: app/views/languages.html:22
 msgid "German"
 msgstr "Γερμανικά"
+
+#: app/views/languages.html:40
+msgid "Greek"
+msgstr "Ελληνικά"
 
 #: app/views/menu.html:324
 msgid "Help"
