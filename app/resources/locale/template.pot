@@ -62,7 +62,7 @@ msgstr ""
 msgid "Basic"
 msgstr ""
 
-#: app/views/languages.html:52
+#: app/views/languages.html:58
 msgid "Basque"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/views/languages.html:58
+#: app/views/languages.html:64
 msgid "Catalan"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Check Python..."
 msgstr ""
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Chinese"
 msgstr ""
 
@@ -467,12 +467,16 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: app/views/languages.html:46
+#: app/views/languages.html:52
 msgid "Galician"
 msgstr ""
 
 #: app/views/languages.html:22
 msgid "German"
+msgstr ""
+
+#: app/views/languages.html:40
+msgid "Greek"
 msgstr ""
 
 #: app/views/menu.html:324
