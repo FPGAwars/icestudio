@@ -16,11 +16,11 @@ set_io --warn-no-port LEDG 37  # output
 set_io --warn-no-port BTN1 20  # input
 set_io --warn-no-port BTN2 19  # input
 set_io --warn-no-port BTN3 18  # input
-set_io --warn-no-port LED1 27  # output
-set_io --warn-no-port LED2 25  # output
-set_io --warn-no-port LED3 21  # output
+set_io --warn-no-port LED1 26  # output
+set_io --warn-no-port LED2 27  # output
+set_io --warn-no-port LED3 25  # output
 set_io --warn-no-port LED4 23  # output
-set_io --warn-no-port LED5 26  # output
+set_io --warn-no-port LED5 21  # output
 
 
 # ------------ RGB LED Driver -------------------------------------------------
