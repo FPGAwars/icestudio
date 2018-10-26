@@ -271,7 +271,7 @@ angular.module('icestudio')
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 30);
+      resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 100000);
       resultAlert.callback = function(isClicked) {
         if (isClicked) {
           // Install the new toolchain
