@@ -103,17 +103,17 @@ npm start
 
 |  Language  | Translated strings                        |
 |:----------:|:-----------------------------------------:|
-| Basque     | ![Progress](http://progressed.io/bar/99)  |
-| Galician   | ![Progress](http://progressed.io/bar/100) |
-| Catalan    | ![Progress](http://progressed.io/bar/91)  |
-| Chinese    | ![Progress](http://progressed.io/bar/91)  |
-| Czech      | ![Progress](http://progressed.io/bar/100) |
-| Dutch      | ![Progress](http://progressed.io/bar/100) |
 | English    | ![Progress](http://progressed.io/bar/100) |
+| Spanish    | ![Progress](http://progressed.io/bar/100) |
 | French     | ![Progress](http://progressed.io/bar/100) |
 | German     | ![Progress](http://progressed.io/bar/99)  |
+| Dutch      | ![Progress](http://progressed.io/bar/100) |
+| Czech      | ![Progress](http://progressed.io/bar/100) |
 | Greek      | ![Progress](http://progressed.io/bar/100) |
-| Spanish    | ![Progress](http://progressed.io/bar/100) |
+| Chinese    | ![Progress](http://progressed.io/bar/91)  |
+| Galician   | ![Progress](http://progressed.io/bar/100) |
+| Basque     | ![Progress](http://progressed.io/bar/99)  |
+| Catalan    | ![Progress](http://progressed.io/bar/91)  |
 
 **Contribute!**
 
