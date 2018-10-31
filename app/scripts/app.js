@@ -56,7 +56,7 @@ angular
           // Check if the toolchain is installed
           tools.checkToolchain();
         }
-		$('html').attr("lang", profile.get('language'));
+		$('html').attr('lang', profile.get('language'));
         // Rearrange collections
         collections.sort();
         // Initialize selected collection
