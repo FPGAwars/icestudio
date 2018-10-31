@@ -744,10 +744,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
     for (var i in data.pins) {
       var index = data.pins[i].index;
-      var comboId = '#combo' + this.id + index;
-      var comboSelector = this.$box.find(comboId);
       var value = data.pins[i].value;
-      comboSelector.val(value).change();
+      var name = data.pins[i].name;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId + ' option:contains(' + name + ')');
+      if (comboSelector) {
+        // Select by pin name
+        comboSelector.attr('selected', true);
+      } else {
+        // If there was a pin rename use the pin value
+        comboSelector = this.$box.find(comboId);
+        comboSelector.val(value).change();
+      }
     }
     this.updating = false;
   },
