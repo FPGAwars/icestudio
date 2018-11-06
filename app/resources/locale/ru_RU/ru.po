@@ -1,0 +1,949 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
+msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+msgstr "<b>Отсоедините</b> и <b>переподключите</b> плату"
+
+#: app/scripts/services/drivers.js:305
+msgid ""
+"<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
+"to the USB and wait until Windows finishes the default installation of the "
+"driver</li><li>When the OK button is clicked, the FTDI driver installer will "
+"be launched in a new window</li><li>In the installer, replace the "
+"<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
+"and reconnect the board</li></ol>"
+msgstr ""
+"<h4>Инструкция по установке драйверов для FTDI</h4><ol><li>Подключите плату "
+"к USB и дождитесь пока Windows установит драйвера по умолчанию</li><li>Когда "
+"будет нажата кнопка Ok, установка драйверов FTDI запустится в отдельном "
+"окне</li><li>В установщике замените <b> драйвер интерфейса (Interface 0)</b> "
+"на <b>libusbK</b></li><li>Отсоедините и переподключите плату</li></ol>"
+
+#: app/scripts/services/drivers.js:312
+msgid ""
+"<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+"<h4>Инструкция по установке драйверов FTDI</h4><ol><li>Найдите USB-"
+"устройство FPGA</li><li>Выберите интерфейс платы и удалите драйвер</li></ol>"
+
+#: app/scripts/services/drivers.js:319
+msgid ""
+"<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
+"board to the USB and wait until Windows finishes the default installation of "
+"the driver</li><li>When the OK button is clicked, the Serial driver "
+"installer will be launched in a new window</li><li>In the installer, follow "
+"the steps to install the driver</li><li>Unplug and reconnect the board</li></"
+"ol>"
+msgstr ""
+
+#: app/scripts/services/drivers.js:326
+msgid ""
+"<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgstr ""
+
+#: app/views/menu.html:341
+msgid "About Icestudio"
+msgstr "О программе"
+
+#: app/views/menu.html:290
+msgid "Add"
+msgstr "Добавить"
+
+#: app/scripts/controllers/menu.js:663
+msgid "Add a block to start"
+msgstr "Добавить блок в начало"
+
+#: app/views/menu.html:46
+msgid "Add as block"
+msgstr "Добавить как блок"
+
+#: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
+msgid "Address format"
+msgstr "Формат адреса"
+
+#: app/scripts/services/tools.js:1136
+msgid "All collections removed"
+msgstr "Все коллекции удалены"
+
+#: app/scripts/controllers/menu.js:692
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "Все сохраненные коллеции будут удалены. Продолжить ?"
+
+#: app/scripts/services/utils.js:574
+msgid "Author"
+msgstr "Автор"
+
+#: app/views/menu.html:352
+msgid "Basic"
+msgstr "Базовый"
+
+#: app/views/languages.html:52
+msgid "Basque"
+msgstr "Баскский"
+
+#: app/scripts/services/blocks.js:1072 app/scripts/services/blocks.js:269
+msgid "Binary"
+msgstr "Бинарный"
+
+#: app/scripts/services/blocks.js:1005 app/scripts/services/blocks.js:1048
+#: app/scripts/services/blocks.js:1105 app/scripts/services/blocks.js:1151
+#: app/scripts/services/blocks.js:902 app/scripts/services/blocks.js:923
+#: app/scripts/services/blocks.js:986
+msgid "Block updated"
+msgstr "Блок обновлен"
+
+#: app/scripts/services/project.js:445
+msgid "Block {{name}} imported"
+msgstr "Block {{name}} импортирован"
+
+#: app/views/menu.html:38
+msgid "Blocks"
+msgstr "Блоки"
+
+#: app/views/menu.html:184
+msgid "Board"
+msgstr "Плата"
+
+#: app/views/menu.html:127 app/views/menu.html:161
+msgid "Board rules"
+msgstr "Назначения платы"
+
+#: app/scripts/controllers/menu.js:434
+msgid "Board rules disabled"
+msgstr "Назначения платы отключены"
+
+#: app/scripts/controllers/menu.js:431
+msgid "Board rules enabled"
+msgstr "Назначения платы включены"
+
+#: app/scripts/services/tools.js:388
+msgid "Board {{name}} disconnected"
+msgstr "Плата {{name}} отключена"
+
+#: app/scripts/services/tools.js:368 app/scripts/services/tools.js:384
+msgid "Board {{name}} not available"
+msgstr "Плата {{name}} недоступна"
+
+#: app/scripts/services/tools.js:358
+msgid "Board {{name}} not connected"
+msgstr "Board {{name}} не подключена"
+
+#: app/scripts/app.js:48 app/scripts/controllers/menu.js:611
+msgid "Board {{name}} selected"
+msgstr "Выбрана плата {{name}}"
+
+#: app/scripts/services/tools.js:362 app/scripts/services/tools.js:381
+msgid "Bootloader not active"
+msgstr "Загрузчик не активен"
+
+#: app/views/menu.html:236
+msgid "Build"
+msgstr "Собрать"
+
+#: app/scripts/controllers/menu.js:630
+msgid "Build done"
+msgstr "Сборка закончена"
+
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
+msgid "Cancel"
+msgstr "Отменить"
+
+#: app/views/languages.html:58
+msgid "Catalan"
+msgstr "Каталонский"
+
+#: app/scripts/services/tools.js:820
+msgid "Check Internet connection..."
+msgstr "Проверка соединение с Интернетом..."
+
+#: app/scripts/services/tools.js:830
+msgid "Check Python..."
+msgstr "Проверка Python..."
+
+#: app/views/languages.html:40
+msgid "Chinese"
+msgstr "Китайский"
+
+#: app/scripts/services/project.js:143
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "Нажмите здесь <b>для загрузки новой версии</b> of Icestudio"
+
+#: app/scripts/services/tools.js:923
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "Нажмите здесь <b>для установки драйверов</b>"
+
+#: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
+#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:274
+msgid "Click here to install it"
+msgstr "Нажмите для установки"
+
+#: app/scripts/controllers/menu.js:390
+msgid "Click here to view"
+msgstr "Нажмите для просмотра"
+
+#: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
+msgid "Clock not allowed for data buses"
+msgstr "Сишгнал тактирования не разрешен для шин данных"
+
+#: app/scripts/controllers/menu.js:277
+msgid "Close"
+msgstr "Закрыть"
+
+#: app/views/menu.html:368
+msgid "Code"
+msgstr "Код"
+
+#: app/views/menu.html:201
+msgid "Collection"
+msgstr "Коллекция"
+
+#: app/views/menu.html:165
+msgid "Collection info"
+msgstr "Информация о коллекции"
+
+#: app/scripts/controllers/menu.js:544
+msgid "Collection {{collection}} info not defined"
+msgstr "Информация для {{collection}} не задана"
+
+#: app/scripts/services/tools.js:1020
+msgid "Collection {{name}} added"
+msgstr "Коллекция {{name}} добавлена"
+
+#: app/scripts/services/tools.js:1014
+msgid "Collection {{name}} not replaced"
+msgstr "Коллекция {{name}} не замещена"
+
+#: app/scripts/services/tools.js:1130
+msgid "Collection {{name}} removed"
+msgstr "Коллекция {{name}} удалена"
+
+#: app/scripts/services/tools.js:1010
+msgid "Collection {{name}} replaced"
+msgstr "Коллекция {{name}} замещена"
+
+#: app/scripts/controllers/menu.js:577
+msgid "Collection {{name}} selected"
+msgstr "Коллекция {{name}} выбрана"
+
+#: app/views/menu.html:286
+msgid "Collections"
+msgstr "Коллекции"
+
+#: app/scripts/controllers/menu.js:550 app/views/menu.html:168
+msgid "Command output"
+msgstr "Вывод команды"
+
+#: app/views/menu.html:337
+msgid "Community forum"
+msgstr "Форум сообщества"
+
+#: app/scripts/services/tools.js:402
+msgid "Configuration not completed"
+msgstr "Конфигурация неполна"
+
+#: app/views/menu.html:362
+msgid "Constant"
+msgstr "Константа"
+
+#: app/scripts/services/project.js:95
+msgid "Convert"
+msgstr "Сконвертировать"
+
+#: app/views/menu.html:104
+msgid "Copy"
+msgstr "Копировать"
+
+#: app/scripts/services/tools.js:848
+msgid "Create virtualenv..."
+msgstr "Создание virtualenv..."
+
+#: app/views/menu.html:101
+msgid "Cut"
+msgstr "Вырезать"
+
+#: app/views/languages.html:34
+msgid "Czech"
+msgstr "Чешский"
+
+#: app/views/menu.html:158
+msgid "Datasheet"
+msgstr "Даташит"
+
+#: app/scripts/services/blocks.js:1073 app/scripts/services/blocks.js:270
+msgid "Decimal"
+msgstr "Десятичный"
+
+#: app/views/menu.html:206
+msgid "Default"
+msgstr "По умолчанию"
+
+#: app/scripts/services/tools.js:674
+msgid ""
+"Default toolchain not found. Toolchain will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"Набор инструментов по умолчанию не обнаружен, но будет загружен из сети "
+"Интернет. Продолжить ?"
+
+#: app/scripts/services/utils.js:573
+msgid "Description"
+msgstr "Описание"
+
+#: app/views/menu.html:279
+msgid "Disable"
+msgstr "Отключить"
+
+#: app/scripts/controllers/menu.js:281
+msgid "Do you want to close the application?"
+msgstr "Закрыть приложение ?"
+
+#: app/scripts/controllers/menu.js:682
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "Удалить коллекцию {{name}} ?"
+
+#: app/scripts/services/tools.js:1006
+msgid "Do you want to replace it?"
+msgstr "Заменить ?"
+
+#: app/views/menu.html:330
+msgid "Documentation"
+msgstr "Документация"
+
+#: app/views/menu.html:270
+msgid "Drivers"
+msgstr "Драйвера"
+
+#: app/scripts/services/drivers.js:123 app/scripts/services/drivers.js:146
+#: app/scripts/services/drivers.js:236
+msgid "Drivers disabled"
+msgstr "Драйвера отключены"
+
+#: app/scripts/services/drivers.js:114 app/scripts/services/drivers.js:138
+#: app/scripts/services/drivers.js:226
+msgid "Drivers enabled"
+msgstr "Драйвера подключены"
+
+#: app/scripts/services/tools.js:411
+msgid "Duplicated FPGA I/O ports"
+msgstr "Дублирование портов ввода/вывода платы"
+
+#: app/scripts/services/blocks.js:479
+msgid "Duplicated block attributes"
+msgstr "Дублирование аттрибутов блока"
+
+#: app/views/languages.html:28
+msgid "Dutch"
+msgstr "Немецкий"
+
+#: app/views/menu.html:91
+msgid "Edit"
+msgstr "Редактировать"
+
+#: app/scripts/services/tools.js:995
+msgid "Edit the collection name"
+msgstr "Редактировать имя коллекции"
+
+#: app/views/menu.html:274
+msgid "Enable"
+msgstr "Включить"
+
+#: app/views/languages.html:4
+msgid "English"
+msgstr "Английский"
+
+#: app/scripts/services/blocks.js:203
+msgid "Enter the constant blocks"
+msgstr "Константные блоки"
+
+#: app/scripts/controllers/menu.js:359
+msgid "Enter the external collections path"
+msgstr "Путь до сторонней коллекции"
+
+#: app/scripts/services/blocks.js:58
+msgid "Enter the input blocks"
+msgstr "Входные блоки"
+
+#: app/scripts/services/blocks.js:365
+msgid "Enter the input ports"
+msgstr "Входные порты"
+
+#: app/scripts/services/blocks.js:261
+msgid "Enter the memory blocks"
+msgstr "Блоки памяти"
+
+#: app/scripts/services/blocks.js:130
+msgid "Enter the output blocks"
+msgstr ""
+
+#: app/scripts/services/blocks.js:370
+msgid "Enter the output ports"
+msgstr "Выходные порты"
+
+#: app/scripts/services/blocks.js:375
+msgid "Enter the parameters"
+msgstr "Параметры"
+
+#: app/scripts/controllers/menu.js:422
+msgid "Enter the remote hostname user@host"
+msgstr "Удаленный хост в формате user@host"
+
+#: app/scripts/services/tools.js:704
+msgid "Error: default toolchain not found in '{{dir}}'"
+msgstr "Ошибка: набор инструментов по умолчанию не найден в  '{{dir}}'"
+
+#: app/scripts/services/utils.js:757
+msgid "Error: {{error}}"
+msgstr "Ошибка: {{error}}"
+
+#: app/scripts/services/tools.js:485
+msgid "Errors detected in the design"
+msgstr "Найдены ошибки в схеме"
+
+#: app/views/menu.html:42
+msgid "Examples"
+msgstr "Примеры"
+
+#: app/scripts/services/tools.js:296
+msgid "Execute remote {{label}} ..."
+msgstr "Выполняется удаленно {{label}} ..."
+
+#: app/views/menu.html:57
+msgid "Export"
+msgstr "Экспорт"
+
+#: app/views/menu.html:132
+msgid "External collections"
+msgstr "Сторонняя коллекция"
+
+#: app/scripts/controllers/menu.js:376
+msgid "External collections updated"
+msgstr "Сторонние коллекции обновлены"
+
+#: app/scripts/services/tools.js:855
+msgid "Extract default apio files..."
+msgstr "Извлечение файлов apio..."
+
+#: app/scripts/services/tools.js:865
+msgid "Extract default apio packages..."
+msgstr "Извлечение пакетов apio..."
+
+#: app/scripts/services/tools.js:843
+msgid "Extract virtualenv files..."
+msgstr "Извлечение  файлов virtualenv..."
+
+#: app/scripts/services/tools.js:408
+msgid "FPGA I/O ports not defined"
+msgstr "Порты ввода/вывода платы не определены"
+
+#: app/scripts/services/blocks.js:135 app/scripts/services/blocks.js:63
+#: app/scripts/services/blocks.js:848 app/scripts/services/blocks.js:944
+msgid "FPGA pin"
+msgstr "Пин FPGA"
+
+#: app/views/menu.html:173
+msgid "FPGA resources"
+msgstr "Ресурсы FPGA"
+
+#: app/views/menu.html:29
+msgid "File"
+msgstr "Файл"
+
+#: app/scripts/services/project.js:460
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr "Файл {{file}} уже существует в папке проекта. Заменить его?"
+
+#: app/scripts/services/tools.js:222
+msgid "File {{file}} does not exist"
+msgstr "Файл {{file}} не существует"
+
+#: app/scripts/services/project.js:494
+msgid "File {{file}} imported"
+msgstr "Файл {{file}} импортирован"
+
+#: app/views/menu.html:114
+msgid "Fit content"
+msgstr "Подогнать размер схемы"
+
+#: app/views/languages.html:16
+msgid "French"
+msgstr "Французский"
+
+#: app/views/languages.html:46
+msgid "Galician"
+msgstr "Галлийский"
+
+#: app/views/languages.html:22
+msgid "German"
+msgstr "Немецкий"
+
+#: app/views/menu.html:320
+msgid "Help"
+msgstr "Помощь"
+
+#: app/scripts/services/blocks.js:1074 app/scripts/services/blocks.js:271
+msgid "Hexadecimal"
+msgstr "Шестнадцатеричный"
+
+#: app/scripts/services/utils.js:587
+msgid "Image"
+msgstr "Изображение"
+
+#: app/scripts/controllers/menu.js:846
+msgid "Image {{name}} saved"
+msgstr "Изображение {{name}} сохранено"
+
+#: app/views/menu.html:371
+msgid "Information"
+msgstr "Информация"
+
+#: app/views/menu.html:356
+msgid "Input"
+msgstr "Ввод"
+
+#: app/views/menu.html:247
+msgid "Install"
+msgstr "Установить"
+
+#: app/scripts/services/tools.js:860
+msgid "Install default apio..."
+msgstr "Установка apio..."
+
+#: app/scripts/services/tools.js:912
+msgid "Installation completed"
+msgstr "Установка завершена"
+
+#: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
+msgid "Installing toolchain"
+msgstr "Установка набора инструментов"
+
+#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:824
+msgid "Internet connection required"
+msgstr "Необходимо соединение с Интернетом"
+
+#: app/scripts/services/graph.js:177
+msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+msgstr "Неверное <i>подтягивающее</i> соединение:<br>блок уже подсоединен"
+
+#: app/scripts/services/graph.js:191
+msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgstr ""
+"Неверное <i>подтягивающее</i> соединение:<br>только <i>входы</i> блоков "
+"разрешены"
+
+#: app/scripts/services/graph.js:183
+msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+msgstr ""
+"Неверное соединение блока:<br><i>подтягивающее соединение</i> уже осущствлено"
+
+#: app/scripts/services/tools.js:1026
+msgid "Invalid collection {{name}}"
+msgstr "Неправильная коллекция {{name}}"
+
+#: app/scripts/services/graph.js:141 app/scripts/services/graph.js:148
+#: app/scripts/services/graph.js:155
+msgid "Invalid connection"
+msgstr "Неверное соединение"
+
+#: app/scripts/services/graph.js:210
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "Неверное соединение: {{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:171
+msgid "Invalid multiple input connections"
+msgstr "Неправильные множественные соединения"
+
+#: app/scripts/services/project.js:450 app/scripts/services/project.js:81
+msgid "Invalid project format"
+msgstr "Неправильный формат проекта"
+
+#: app/scripts/services/drivers.js:305
+msgid "It is recommended to use <b>USB 2.0</b> ports"
+msgstr "Рекомендуется использовать <b>USB 2.0</b> порты"
+
+#: app/views/menu.html:121
+msgid "Language"
+msgstr "Язык"
+
+#: app/scripts/services/project.js:94
+msgid "Load"
+msgstr "Загрузить"
+
+#: app/scripts/services/blocks.js:1025 app/scripts/services/blocks.js:1079
+#: app/scripts/services/blocks.js:208 app/scripts/services/blocks.js:276
+msgid "Local parameter"
+msgstr "Локальный параметр"
+
+#: app/scripts/services/utils.js:837
+msgid "Maximum bus size: 96 bits"
+msgstr "Максимальный размер шины: 96 бит"
+
+#: app/views/menu.html:365
+msgid "Memory"
+msgstr "Память"
+
+#: app/scripts/services/utils.js:571
+msgid "Name"
+msgstr "Имя"
+
+#: app/views/menu.html:32
+msgid "New"
+msgstr "Новый"
+
+#: app/scripts/controllers/menu.js:700
+msgid "No collections stored"
+msgstr "Нет сохраненных коллекций"
+
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:291
+#: app/scripts/services/project.js:133
+msgid "OK"
+msgstr "ОК"
+
+#: app/views/menu.html:35
+msgid "Open"
+msgstr "Открыть"
+
+#: app/scripts/services/utils.js:594
+msgid "Open SVG"
+msgstr "Открыть SVG"
+
+#: app/scripts/services/project.js:497
+#, fuzzy
+msgid "Original file {{file}} does not exist"
+msgstr "Оригинал файла {{file}} не существует"
+
+#: app/views/menu.html:359
+msgid "Output"
+msgstr "Вывод"
+
+#: app/views/menu.html:107
+msgid "Paste"
+msgstr "Вставить"
+
+#: app/scripts/controllers/menu.js:380
+msgid "Path {{path}} does not exist"
+msgstr "Путь {{path}} не существует"
+
+#: app/scripts/services/utils.js:965
+msgid "Please run: {{cmd}}"
+msgstr "Выполните команду: {{cmd}}"
+
+#: app/views/menu.html:118
+msgid "Preferences"
+msgstr "Настройки"
+
+#: app/views/menu.html:143
+msgid "Project information"
+msgstr "Информация о проекте"
+
+#: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
+msgid "Project information updated"
+msgstr "Информация о проекте обновлена"
+
+#: app/scripts/services/project.js:120
+msgid "Project {{name}} loaded"
+msgstr "Проект {{name}} загружен"
+
+#: app/scripts/services/project.js:357
+msgid "Project {{name}} saved"
+msgstr "Проект {{name}} сохранен"
+
+#: app/scripts/services/tools.js:837
+msgid "Python 2.7 is required"
+msgstr "Необходим Python 2.7"
+
+#: app/views/menu.html:85
+msgid "Quit"
+msgstr "Выход"
+
+#: app/views/design.html:5
+msgid "Read only"
+msgstr "Только для чтения"
+
+#: app/views/menu.html:97
+msgid "Redo"
+msgstr "Повторить"
+
+#: app/views/menu.html:295
+msgid "Reload"
+msgstr "Перезагрузить"
+
+#: app/scripts/services/tools.js:528
+msgid "Remote host {{name}} not connected"
+msgstr "Удаленный хост {{name}} не подключен"
+
+#: app/views/menu.html:136
+msgid "Remote hostname"
+msgstr "Удаленный хост"
+
+#: app/views/menu.html:255 app/views/menu.html:299
+msgid "Remove"
+msgstr "Удалить"
+
+#: app/views/menu.html:311
+msgid "Remove all"
+msgstr "Удалить все"
+
+#: app/scripts/services/utils.js:596
+msgid "Reset SVG"
+msgstr "Убрать SVG"
+
+#: app/views/menu.html:260
+msgid "Reset default"
+msgstr "Восстановить настройки по умолчанию"
+
+#: app/views/menu.html:50
+msgid "Save"
+msgstr "Сохранить"
+
+#: app/scripts/services/utils.js:595
+msgid "Save SVG"
+msgstr "Сохранить SVG"
+
+#: app/views/menu.html:53
+msgid "Save as"
+msgstr "Сохранить как"
+
+#: app/views/menu.html:181
+msgid "Select"
+msgstr "Выбрать"
+
+#: app/views/menu.html:110
+msgid "Select all"
+msgstr "Выбрать все"
+
+#: app/scripts/services/utils.js:715
+msgid "Select your board"
+msgstr "Выберите плату"
+
+#: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
+msgid "Show clock"
+msgstr "Показать тактирование"
+
+#: app/views/menu.html:333
+msgid "Source code"
+msgstr "Исходный код"
+
+#: app/views/languages.html:10
+msgid "Spanish"
+msgstr "Испанский"
+
+#: app/scripts/controllers/menu.js:629
+msgid "Start build"
+msgstr "Запуск сборки"
+
+#: app/scripts/controllers/menu.js:642
+msgid "Start upload"
+msgstr "Запуск загрузки в плату"
+
+#: app/scripts/controllers/menu.js:619
+msgid "Start verification"
+msgstr "Запуск проверки"
+
+#: app/scripts/services/tools.js:285
+msgid "Synchronize remote files ..."
+msgstr "Синхронизация файлов..."
+
+#: app/views/menu.html:66
+msgid "Testbench"
+msgstr "Тестбенч"
+
+#: app/scripts/services/tools.js:1005
+msgid "The collection {{name}} already exists."
+msgstr "Коллекция {{name}} уже существует"
+
+#: app/scripts/controllers/menu.js:598
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"{{name}} board?"
+msgstr ""
+"Текущая конфигурация портов ввода/вывода FPGA будет потеряна. Сменить "
+"текущую плату на {{name}} ?"
+
+#: app/scripts/services/tools.js:712
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "Набор инструментов будет удален. Продолжить ?"
+
+#: app/scripts/services/tools.js:697
+msgid "The toolchain will be restored to default. Do you want to continue?"
+msgstr ""
+"Набор инструментов будет возвращен к значению по умолчанию. Продолжить ?"
+
+#: app/scripts/services/tools.js:686
+msgid ""
+"The toolchain will be updated. This operation requires Internet connection. "
+"Do you want to continue?"
+msgstr ""
+"Набор инструментов будет обновлен. Для этой операции потребуется соединение "
+"с Интернетом. Продолжить ?"
+
+#: app/scripts/services/project.js:419
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"Для операции импорта требуется указать путь к проекту. Вы должны сохранить "
+"текущий проект. Продолжить ?"
+
+#: app/scripts/services/project.js:98
+msgid "This project is designed for the {{name}} board."
+msgstr "Этот проект был разработан для платы {{name}}."
+
+#: app/views/menu.html:243
+msgid "Toolchain"
+msgstr "Набор инструментов"
+
+#: app/scripts/services/tools.js:913
+msgid "Toolchain installed"
+msgstr "Набор инструментов установлен"
+
+#: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
+#: app/scripts/services/tools.js:252
+msgid "Toolchain not installed"
+msgstr "Набор инструментов установлен"
+
+#: app/scripts/services/tools.js:717
+msgid "Toolchain removed"
+msgstr "Набор инструментов удален"
+
+#: app/scripts/services/tools.js:261
+msgid "Toolchain version does not match"
+msgstr "Версии инструментов не совпадают"
+
+#: app/views/menu.html:230
+msgid "Tools"
+msgstr "Инструменты"
+
+#: app/views/menu.html:94
+msgid "Undo"
+msgstr "Отменить"
+
+#: app/scripts/services/tools.js:372
+msgid "Unknown board"
+msgstr "Неизвестная плата"
+
+#: app/scripts/services/project.js:142
+msgid "Unsupported project format {{version}}"
+msgstr "Неподдерживаемый формат проекта {{version}}"
+
+#: app/scripts/app.js:64
+msgid "Untitled"
+msgstr "Безымянный"
+
+#: app/views/menu.html:250
+msgid "Update"
+msgstr "Обновить"
+
+#: app/scripts/services/blocks.js:1020 app/scripts/services/blocks.js:1064
+#: app/scripts/services/blocks.js:843 app/scripts/services/blocks.js:939
+msgid "Update the block name"
+msgstr "Обновить имя блока"
+
+#: app/views/menu.html:239
+msgid "Upload"
+msgstr "Загрузка"
+
+#: app/scripts/controllers/menu.js:643
+msgid "Upload done"
+msgstr "Загрузка завершена"
+
+#: app/scripts/controllers/menu.js:620
+msgid "Verification done"
+msgstr "Проверка завершена"
+
+#: app/views/menu.html:233
+msgid "Verify"
+msgstr "Проверка"
+
+#: app/scripts/services/utils.js:572 app/views/menu.html:326
+msgid "Version"
+msgstr "Версия"
+
+#: app/views/menu.html:149
+msgid "View"
+msgstr "Вид"
+
+#: app/views/menu.html:323
+msgid "View license"
+msgstr "Просмотр лицензии"
+
+#: app/scripts/services/tools.js:489
+msgid "Warnings detected in the design"
+msgstr "Предупреждения в схеме"
+
+#: app/scripts/services/blocks.js:516
+msgid "Wrong block format: {{type}}"
+msgstr "Неправильный формат блока: {{type}}"
+
+#: app/scripts/services/blocks.js:1010 app/scripts/services/blocks.js:1053
+#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:155
+#: app/scripts/services/blocks.js:228 app/scripts/services/blocks.js:297
+#: app/scripts/services/blocks.js:89 app/scripts/services/blocks.js:928
+msgid "Wrong block name {{name}}"
+msgstr "Неправильное имя блока  {{name}}"
+
+#: app/scripts/services/blocks.js:428
+msgid "Wrong parameter name {{name}}"
+msgstr "Неправильное имя параметра {{name}}"
+
+#: app/scripts/services/blocks.js:398 app/scripts/services/blocks.js:413
+msgid "Wrong port name {{name}}"
+msgstr "Неправильное имя порта {{name}}"
+
+#: app/scripts/services/project.js:129
+msgid "Wrong project format: {{name}}"
+msgstr "Неправильный формат проекта: {{name}}"
+
+#: app/scripts/services/tools.js:525
+msgid "Wrong remote hostname {{name}}"
+msgstr "Неправильный удаленный хост {{name}}"
+
+#: app/scripts/services/project.js:99
+msgid "You can load it as it is or convert it for the {{name}} board."
+msgstr ""
+"Вы можете загрузить проект \"как есть\" или сконвертировать для платы "
+"{{name}}"
+
+#: app/scripts/controllers/menu.js:282
+msgid "Your changes will be lost if you don’t save them"
+msgstr "Ваши изменения могут быть потеряны, если вы их не сохраните"
+
+#: app/views/design.html:6
+msgid "back"
+msgstr "назад"
+
+#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:940
+msgid "{{app}} is required."
+msgstr "Требуется приложение {{app}}."
+
+#: app/scripts/controllers/menu.js:498
+msgid "{{board}} datasheet not defined"
+msgstr "Даташит для {{board}} не определен"
+
+#: app/scripts/controllers/menu.js:488
+msgid "{{board}} pinout not defined"
+msgstr "Разводка платы {{board}} не определена"
+
+#: app/scripts/controllers/menu.js:519
+msgid "{{board}} rules not defined"
+msgstr "Назначения для платы {{board}} не определены"
+
+#: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
+msgid "{{name}} exported"
+msgstr "{{name}} экспортирован(о)"
