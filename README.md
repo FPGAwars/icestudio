@@ -111,6 +111,7 @@ npm start
 | Czech      | ![Progress](http://progressed.io/bar/100) |
 | Greek      | ![Progress](http://progressed.io/bar/100) |
 | Chinese    | ![Progress](http://progressed.io/bar/91)  |
+| Russian    | ![Progress](http://progressed.io/bar/98)  |
 | Galician   | ![Progress](http://progressed.io/bar/100) |
 | Basque     | ![Progress](http://progressed.io/bar/99)  |
 | Catalan    | ![Progress](http://progressed.io/bar/91)  |
