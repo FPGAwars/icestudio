@@ -25,9 +25,15 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>Istruzioni per l'installazione dei driver FTDI</h4><ol><il>Collegare la "
+"scheda FPGA alla porta USB ed aspettare che Windows finisca con "
+"l'installazione dei driver predefiniti</li><li>Quando il tasto OK sarà "
+"premuto, la finestra di installazione del driver FTDI sarà lanciata su una "
+"nuova finestra</li><li>Nella finestra di installazione sostituisci "
+"<b>(Interface 0)</b> driver della scheda con <b>libusbK</b></"
+"li><li>Scollegare e ricollegare la scheda</li></ol>"
 
 #: app/scripts/services/drivers.js:314
-#, fuzzy
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -45,14 +51,20 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Istruzioni per l'installazione dei driver seriali</h4><ol><il>Collegare "
+"la scheda FPGA alla porta USB ed aspettare che Windows finisca con "
+"l'installazione dei driver predefiniti</li><li>Quando il tasto OK sarà "
+"premuto, la finestra di installazione del driver seriali sarà lanciata su "
+"una nuova finestra</li><li>Nella finestra di installazione, segui le "
+"istruzioni per installare il driver</li><li>Scollegare e ricollegare la "
+"scheda</li></ol>"
 
 #: app/scripts/services/drivers.js:328
-#, fuzzy
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
-"<h4>Istruzioni per didinstallazione dei driver seriali</h4><ol><li>Trova il "
+"<h4>Istruzioni per disinstallazione dei driver seriali</h4><ol><li>Trova il "
 "dispositivo FPGA USB</li><li>Seleziona l'interfaccia della scheda e "
 "disinstalla il driver</li></ol>"
 
@@ -73,17 +85,14 @@ msgid "Add as block"
 msgstr "Aggiungi come blocco"
 
 #: app/scripts/services/blocks.js:1069 app/scripts/services/blocks.js:266
-#, fuzzy
 msgid "Address format"
 msgstr "Codifica dell'indirizzo"
 
 #: app/scripts/services/tools.js:1136
-#, fuzzy
 msgid "All collections removed"
 msgstr "Tutte le collezioni sono state rimosse"
 
 #: app/scripts/controllers/menu.js:692
-#, fuzzy
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
 
@@ -123,17 +132,14 @@ msgid "Board"
 msgstr "Scheda"
 
 #: app/views/menu.html:127 app/views/menu.html:161
-#, fuzzy
 msgid "Board rules"
 msgstr "Regole della scheda"
 
 #: app/scripts/controllers/menu.js:434
-#, fuzzy
 msgid "Board rules disabled"
 msgstr "Regola della scheda disabilitate"
 
 #: app/scripts/controllers/menu.js:431
-#, fuzzy
 msgid "Board rules enabled"
 msgstr "Regole della scheda abilitate"
 
@@ -174,12 +180,10 @@ msgid "Catalan"
 msgstr "Catalano"
 
 #: app/scripts/services/tools.js:820
-#, fuzzy
 msgid "Check Internet connection..."
 msgstr "Sto controllando la connessione a internet..."
 
 #: app/scripts/services/tools.js:830
-#, fuzzy
 msgid "Check Python..."
 msgstr "Sto controllando Python..."
 
@@ -188,27 +192,23 @@ msgid "Chinese"
 msgstr "Cinese"
 
 #: app/scripts/services/project.js:143
-#, fuzzy
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Clicca qui per <b>scaricare la versione più recente</b> di Icestudio"
 
 #: app/scripts/services/tools.js:923
-#, fuzzy
 msgid "Click here to <b>setup the drivers</b>"
-msgstr "Clicca qua per <b>impostare i drivers</b>"
+msgstr "Clicca qui per <b>impostare i drivers</b>"
 
 #: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:341
 #: app/scripts/services/drivers.js:361 app/scripts/services/tools.js:274
 msgid "Click here to install it"
-msgstr "Clicca qui per installarlo"
+msgstr "Clicca qui per installarla"
 
 #: app/scripts/controllers/menu.js:390
-#, fuzzy
 msgid "Click here to view"
 msgstr "Clicca qui per visualizzarlo"
 
 #: app/scripts/services/blocks.js:871 app/scripts/services/blocks.js:99
-#, fuzzy
 msgid "Clock not allowed for data buses"
 msgstr "Segnale di clock non permesso nei segnali di bus"
 
@@ -225,12 +225,10 @@ msgid "Collection"
 msgstr "Collezione"
 
 #: app/views/menu.html:165
-#, fuzzy
 msgid "Collection info"
 msgstr "Informazioni della collezione"
 
 #: app/scripts/controllers/menu.js:544
-#, fuzzy
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 "Le informazioni della collezione {{collection}} non sono state definite"
@@ -240,7 +238,6 @@ msgid "Collection {{name}} added"
 msgstr "Collezione {{name}} aggiunta"
 
 #: app/scripts/services/tools.js:1014
-#, fuzzy
 msgid "Collection {{name}} not replaced"
 msgstr "Collezione {{name}} non rimpiazzata"
 
@@ -249,7 +246,6 @@ msgid "Collection {{name}} removed"
 msgstr "Collezione {{name}} rimossa"
 
 #: app/scripts/services/tools.js:1010
-#, fuzzy
 msgid "Collection {{name}} replaced"
 msgstr "Collezione {{name}} rimpiazzata"
 
@@ -262,9 +258,8 @@ msgid "Collections"
 msgstr "Collezioni"
 
 #: app/scripts/controllers/menu.js:550 app/views/menu.html:168
-#, fuzzy
 msgid "Command output"
-msgstr "Output del comando"
+msgstr "Output dei comandi"
 
 #: app/views/menu.html:341
 msgid "Community forum"
@@ -323,7 +318,6 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: app/views/menu.html:283
-#, fuzzy
 msgid "Disable"
 msgstr "Disattiva"
 
@@ -332,7 +326,6 @@ msgid "Do you want to close the application?"
 msgstr "Vuoi chiudere l'applicazione?"
 
 #: app/scripts/controllers/menu.js:682
-#, fuzzy
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Vuoi rimuovere la collezione {{name}}?"
 
@@ -359,9 +352,8 @@ msgid "Drivers enabled"
 msgstr "Drivers abilitati"
 
 #: app/scripts/services/tools.js:411
-#, fuzzy
 msgid "Duplicated FPGA I/O ports"
-msgstr "Porte I/O FPGA duplicate"
+msgstr "Porte I/O dell'FPGA duplicate"
 
 #: app/scripts/services/blocks.js:479
 msgid "Duplicated block attributes"
@@ -388,52 +380,42 @@ msgid "English"
 msgstr "Inglese"
 
 #: app/scripts/services/blocks.js:203
-#, fuzzy
 msgid "Enter the constant blocks"
-msgstr "Inserire i blocchi costante"
+msgstr "Inserire il nome dei blocchi costante"
 
 #: app/scripts/controllers/menu.js:359
-#, fuzzy
 msgid "Enter the external collections path"
 msgstr "Inserisci il percorso della collezione esterna"
 
 #: app/scripts/services/blocks.js:58
-#, fuzzy
 msgid "Enter the input blocks"
-msgstr "Inserire i blocchi di ingresso"
+msgstr "Inserire il nome dei blocchi di ingresso"
 
 #: app/scripts/services/blocks.js:365
-#, fuzzy
 msgid "Enter the input ports"
-msgstr "Inserire le porte di ingresso"
+msgstr "Inserire il nome delle porte di ingresso"
 
 #: app/scripts/services/blocks.js:261
-#, fuzzy
 msgid "Enter the memory blocks"
-msgstr "Inserire i blocchi di memoria"
+msgstr "Inserire il nome dei blocchi di memoria"
 
 #: app/scripts/services/blocks.js:130
-#, fuzzy
 msgid "Enter the output blocks"
-msgstr "Inserire i blocchi di uscita"
+msgstr "Inserire il nome dei blocchi di uscita"
 
 #: app/scripts/services/blocks.js:370
-#, fuzzy
 msgid "Enter the output ports"
-msgstr "Inserire  le porte di uscita"
+msgstr "Inserire il nome delle porte di uscita"
 
 #: app/scripts/services/blocks.js:375
-#, fuzzy
 msgid "Enter the parameters"
 msgstr "Inserire i parametri"
 
 #: app/scripts/controllers/menu.js:422
-#, fuzzy
 msgid "Enter the remote hostname user@host"
 msgstr "Inserisci il nome dell'host remoto user@host"
 
 #: app/scripts/services/tools.js:704
-#, fuzzy
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Errore: toolchain predefinita non trovata in '{{dir}}'"
 
@@ -442,7 +424,6 @@ msgid "Error: {{error}}"
 msgstr "Errore: {{error}}"
 
 #: app/scripts/services/tools.js:485
-#, fuzzy
 msgid "Errors detected in the design"
 msgstr "Errori trovati nel design"
 
@@ -451,7 +432,6 @@ msgid "Examples"
 msgstr "Esempi"
 
 #: app/scripts/services/tools.js:296
-#, fuzzy
 msgid "Execute remote {{label}} ..."
 msgstr "Sto eseguendo {{label}} remotamente…"
 
@@ -468,22 +448,18 @@ msgid "External collections updated"
 msgstr "Connessioni esterne aggiornate"
 
 #: app/scripts/services/tools.js:855
-#, fuzzy
 msgid "Extract default apio files..."
 msgstr "Sto estraendo i predefiniti di apio…"
 
 #: app/scripts/services/tools.js:865
-#, fuzzy
 msgid "Extract default apio packages..."
 msgstr "Sto estraendo i pacchetti predefiniti di apio…"
 
 #: app/scripts/services/tools.js:843
-#, fuzzy
 msgid "Extract virtualenv files..."
 msgstr "Sto estraendo i file della virtualenv..."
 
 #: app/scripts/services/tools.js:408
-#, fuzzy
 msgid "FPGA I/O ports not defined"
 msgstr "Porta I/O dell'FPGA non definita"
 
@@ -501,7 +477,6 @@ msgid "File"
 msgstr "File"
 
 #: app/scripts/services/project.js:460
-#, fuzzy
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "File {{file}} esiste già nella cartella. Vuoi rimpiazzarlo?"
@@ -515,7 +490,6 @@ msgid "File {{file}} imported"
 msgstr "File {{file}} importato"
 
 #: app/views/menu.html:114
-#, fuzzy
 msgid "Fit content"
 msgstr "Adatta ai contenuti"
 
@@ -560,7 +534,6 @@ msgid "Install"
 msgstr "Installa"
 
 #: app/scripts/services/tools.js:860
-#, fuzzy
 msgid "Install default apio..."
 msgstr "Sto installando i default di apio..."
 
@@ -569,7 +542,6 @@ msgid "Installation completed"
 msgstr "Installazione completata"
 
 #: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
-#, fuzzy
 msgid "Installing toolchain"
 msgstr "Sto installando la toolchain"
 
@@ -582,14 +554,12 @@ msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Connessione di tipo <i>Pull up</i> invalida:<br>blocco già connesso"
 
 #: app/scripts/services/graph.js:191
-#, fuzzy
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Connessione di tipo <i>Pull up</i> invalida:<br>solo i blocchi di "
 "<i>ingresso</i> sono permessi"
 
 #: app/scripts/services/graph.js:183
-#, fuzzy
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Connessione al blocco invalida:<br><i>Pull up</i> già connesso"
 
@@ -607,7 +577,6 @@ msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Connessione invalida: {{a}} → {{b}}"
 
 #: app/scripts/services/graph.js:171
-#, fuzzy
 msgid "Invalid multiple input connections"
 msgstr "Connessioni di multipli ingressi invalidi"
 
@@ -616,7 +585,6 @@ msgid "Invalid project format"
 msgstr "Formato del progetto invalido"
 
 #: app/scripts/services/drivers.js:307
-#, fuzzy
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "È raccomandato l'utilizzo di porte <b>USB 2.0</b>"
 
@@ -650,7 +618,6 @@ msgid "New"
 msgstr "Nuovo"
 
 #: app/scripts/controllers/menu.js:700
-#, fuzzy
 msgid "No collections stored"
 msgstr "Nessuna connessione memorizzata"
 
@@ -668,7 +635,6 @@ msgid "Open SVG"
 msgstr "Apri SVG"
 
 #: app/scripts/services/project.js:497
-#, fuzzy
 msgid "Original file {{file}} does not exist"
 msgstr "Filo originale {{file}} non esiste più"
 
@@ -681,7 +647,6 @@ msgid "Paste"
 msgstr "Incolla"
 
 #: app/scripts/controllers/menu.js:380
-#, fuzzy
 msgid "Path {{path}} does not exist"
 msgstr "IL percorso {{path}}è inesistente"
 
@@ -694,12 +659,10 @@ msgid "Preferences"
 msgstr "Preferenze"
 
 #: app/views/menu.html:143
-#, fuzzy
 msgid "Project information"
 msgstr "Informazioni del progetto"
 
 #: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
-#, fuzzy
 msgid "Project information updated"
 msgstr "Informazioni del progetto aggionate"
 
@@ -712,7 +675,6 @@ msgid "Project {{name}} saved"
 msgstr "Progetto {{name}} salvato"
 
 #: app/scripts/services/tools.js:837
-#, fuzzy
 msgid "Python 2.7 is required"
 msgstr "Python 2.7 è richiesto"
 
@@ -781,7 +743,6 @@ msgid "Select your board"
 msgstr "Seleziona la scheda"
 
 #: app/scripts/services/blocks.js:68 app/scripts/services/blocks.js:853
-#, fuzzy
 msgid "Show clock"
 msgstr "Mostra segnale di clock"
 
@@ -818,7 +779,6 @@ msgid "The collection {{name}} already exists."
 msgstr "La collezione {{name}} esiste già."
 
 #: app/scripts/controllers/menu.js:598
-#, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -831,7 +791,6 @@ msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "La toolchain sarà rimossa. Vuoi continuare?"
 
 #: app/scripts/services/tools.js:697
-#, fuzzy
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr ""
 "La toolchain sarà ripristinata con i valori predefiniti. Vuoi continuare?"
@@ -845,7 +804,6 @@ msgstr ""
 "Internet. Vuoi continuare?"
 
 #: app/scripts/services/project.js:419
-#, fuzzy
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -876,7 +834,6 @@ msgid "Toolchain removed"
 msgstr "Toolchain rimossa"
 
 #: app/scripts/services/tools.js:261
-#, fuzzy
 msgid "Toolchain version does not match"
 msgstr "La versione della Toolchain non corrisponde"
 
@@ -889,12 +846,10 @@ msgid "Undo"
 msgstr "Annulla"
 
 #: app/scripts/services/tools.js:372
-#, fuzzy
 msgid "Unknown board"
 msgstr "Scheda sconosciuta"
 
 #: app/scripts/services/project.js:142
-#, fuzzy
 msgid "Unsupported project format {{version}}"
 msgstr "Formato del progetto non supportato {{version}}"
 
@@ -920,7 +875,6 @@ msgid "Upload done"
 msgstr "Caricamento completato"
 
 #: app/scripts/controllers/menu.js:620
-#, fuzzy
 msgid "Verification done"
 msgstr "Verifica completata"
 
@@ -941,12 +895,10 @@ msgid "View license"
 msgstr "Visualizza licenza"
 
 #: app/scripts/services/tools.js:489
-#, fuzzy
 msgid "Warnings detected in the design"
 msgstr "Si sono rilevate delle avvertenze nel design"
 
 #: app/scripts/services/blocks.js:516
-#, fuzzy
 msgid "Wrong block format: {{type}}"
 msgstr "Formato del blocco erratot: {{type}}"
 
@@ -958,7 +910,6 @@ msgid "Wrong block name {{name}}"
 msgstr "Nome del blocco {{name}} errato"
 
 #: app/scripts/services/blocks.js:428
-#, fuzzy
 msgid "Wrong parameter name {{name}}"
 msgstr "Nome del parametro {{name}} errato"
 
@@ -975,7 +926,6 @@ msgid "Wrong remote hostname {{name}}"
 msgstr "Nome dell'host remoto {{name}} errato"
 
 #: app/scripts/services/project.js:99
-#, fuzzy
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "Puoi caricarlo così come è o convertirlo per la scheda {{name}}"
 
@@ -988,12 +938,10 @@ msgid "back"
 msgstr "indietro"
 
 #: app/scripts/services/drivers.js:209 app/scripts/services/utils.js:936
-#, fuzzy
 msgid "{{app}} is required."
 msgstr "{{app}} è richiesta."
 
 #: app/scripts/controllers/menu.js:498
-#, fuzzy
 msgid "{{board}} datasheet not defined"
 msgstr "La scheda tecnica di {{board}} non è definita"
 
@@ -1002,7 +950,6 @@ msgid "{{board}} pinout not defined"
 msgstr "{{board}} piedinatura non definita"
 
 #: app/scripts/controllers/menu.js:519
-#, fuzzy
 msgid "{{board}} rules not defined"
 msgstr "Regole di {{board}} non definite"
 
