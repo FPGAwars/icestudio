@@ -40,6 +40,10 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
 
     # Build json
     pinout = re.findall(pattern, data)
+
+    #Sorted in reverse order by name to avoid conflicting overlapping labels like D0 - LED0 - DD0
+    pinout=sorted(pinout, key=lambda pinout: pinout[1],reverse=True)
+
     format_pinout = []
     for item in pinout:
         format_pinout += [{
@@ -47,7 +51,7 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
             'value': item[2],
             'type': item[4] or 'inout'
         }]
-
+        
     # Save json file
     with open(os.path.join(path, 'pinout.json'), 'w') as outfile:
         json.dump(format_pinout, outfile)
