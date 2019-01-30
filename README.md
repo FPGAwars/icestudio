@@ -1,3 +1,8 @@
+# IMPORTANT! THIS IS A DEVELOPMENT REPOSITORY
+This repository is only for development purpouses and for trying experimental features.
+
+# If you want stable version of icestudio, go to the [official repository](https://github.com/FPGAwars/icestudio)
+
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
 
 [![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.3.3)](https://travis-ci.org/FPGAwars/icestudio)
