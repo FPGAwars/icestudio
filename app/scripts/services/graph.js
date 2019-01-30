@@ -59,11 +59,14 @@ angular.module('icestudio')
         // Target box
         var margin = 40;
         var menuFooterHeight = 93;
+        let win_width = window.get().width;
+        let win_height = window.get().height;
+
         var tbox = {
           x: margin,
           y: margin,
-          width: window.get().width - 2 * margin,
-          height: window.get().height - menuFooterHeight - 2 * margin
+          width: win_width - 2 * margin,
+          height: win_height - menuFooterHeight - 2 * margin
         };
         // Source box
         var sbox = V(paper.viewport).bbox(true, paper.svg);
@@ -98,6 +101,8 @@ angular.module('icestudio')
           },
           zoom: state.zoom * scale
         });
+        $('.paper.joint-theme-default>svg').attr('height',win_height);
+        $('.paper.joint-theme-default>svg').attr('width',win_width);
       }
       else {
         this.resetView();
