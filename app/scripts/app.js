@@ -1,6 +1,6 @@
 'use strict';
 /* For debug pourposes uncomment next line */
-require('nw.gui').Window.get().showDevTools();
+/*require('nw.gui').Window.get().showDevTools();*/
 
 angular
   .module('icestudio', [
