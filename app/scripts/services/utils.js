@@ -871,28 +871,24 @@ angular.module('icestudio')
     };
 
     this.newWindow = function(filepath, local) {
-      var execPath = process.execPath;
-      var command = [ coverPath(execPath) ];
-      if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
-        command.push(coverPath(nodePath.dirname(process.mainModule.filename)));
-      }
-      if (filepath) {
-        command.push(coverPath(filepath));
-      }
-      /*var win = window.get();
-      var position = {
-        x: win.x + 30,
-        y: win.y + 30
-      };
-      command.push(position.x + 'x' + position.y);*/
-      if (local) {
-        command.push('local');
-      }
-      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
-        if (error) {
-          throw error;
-        }
-      });
+      
+        var gui = require('nw.gui');
+    
+        // Create a new window and get it
+        var new_win = gui.Window.open('index.html', {
+            "new_instance": true,
+            "position": "center",
+            "toolbar": false,
+            "width": 900,
+            "height": 600,
+            "show": true,
+        });
+
+        setTimeout(function (){
+          this.focus();
+
+        }.bind(new_win),250);
+
     };
 
     this.coverPath = coverPath;
