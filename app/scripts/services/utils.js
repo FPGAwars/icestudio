@@ -871,11 +871,17 @@ angular.module('icestudio')
     };
 
     this.newWindow = function(filepath, local) {
-      
+
         var gui = require('nw.gui');
-    
-        // Create a new window and get it
+
+        // Create a new window and get it.
+        // new-instance and new_instance are necessary to maintain
+        // compatibility between different operating systems and avoid
+        // closing the application when creating a new window
+        // (little trick for nwjs bug)
+
         var new_win = gui.Window.open('index.html', {
+            "new-instance": true,
             "new_instance": true,
             "position": "center",
             "toolbar": false,
@@ -884,11 +890,10 @@ angular.module('icestudio')
             "show": true,
         });
 
+        // Force focus after small setup wait
         setTimeout(function (){
           this.focus();
-
         }.bind(new_win),250);
-
     };
 
     this.coverPath = coverPath;
