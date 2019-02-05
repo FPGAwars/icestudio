@@ -873,10 +873,34 @@ angular.module('icestudio')
     this.newWindow = function(filepath, local) {
       
         var gui = require('nw.gui');
-    
-        // Create a new window and get it
-        var new_win = gui.Window.open('index.html', {
-            "new_instance": true,
+
+        let params=false;
+        
+        if(typeof filepath !=='undefined'){
+            params={'filepath':filepath};
+        }
+        
+        if(typeof local !=='undefined' && local===true){
+            if(params===false) params={};
+            params.local='local';
+        }
+
+        // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
+        // that contains the same arguments that shell call, in this way the two calls will be 
+        // compatible. 
+        // If in the future you will add more paremeters to the new window , you should review
+        // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+
+        let url='index.html'+((params===false)?'' :'?icestudio_argv='+encodeURI(JSON.stringify(params) ));
+
+        // Create a new window and get it.
+        // new-instance and new_instance are necesary for OS compatibility
+        // to avoid crash on new window project after close parent
+        // (little trick for nwjs bug).
+
+        var new_win = gui.Window.open(url, {
+            "new-instance" : true,
+            "new_instance" : true,
             "position": "center",
             "toolbar": false,
             "width": 900,
@@ -884,12 +908,7 @@ angular.module('icestudio')
             "show": true,
         });
 
-        setTimeout(function (){
-          this.focus();
-
-        }.bind(new_win),250);
-
-    };
+   };
 
     this.coverPath = coverPath;
     function coverPath(filepath) {
