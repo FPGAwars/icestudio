@@ -467,6 +467,32 @@ angular.module('icestudio')
                 });
               }
 
+              // - Yosys syntax errors
+              // - main.v:31: ERROR: #...
+              re = /\smain\.v:([0-9]+):\s(.*?)(ERROR):\s(.*?), (.*?)[\r|\n]/g;
+              while (matchError = re.exec(stdout)) {
+
+                var msg = '';
+                var line = parseInt(matchError[1]);
+                var type = matchError[3].toLowerCase();
+                var preContent = matchError[5];
+                var postContent = matchError[4];
+
+                // If the error is about an unexpected token, the error is not
+                // deterministic, therefore we indicate that "the error
+                //is around this line ..."
+                if (preContent.indexOf('unexpected TOK_')>=0) {
+                    msg = 'Syntax error arround this line';
+                }else{
+                  msg = preContent+': '+postContent;
+                }
+                codeErrors.push( {
+                  line: line,
+                  msg: msg,
+                  type: type
+                });
+              }
+
               // Extract modules map from code
               var modules = mapCodeModules(code);
               var hasErrors = false;
