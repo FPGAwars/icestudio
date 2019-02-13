@@ -104,17 +104,27 @@ angular.module('icestudio')
         function() {
           // Convert
           project.design.board = common.selectedBoard.name;
-          _load(true);
+
+          _load(true, boardMigration( projectBoard, common.selectedBoard.name ) );
         });
       }
       else {
         _load();
       }
 
-      function _load(reset) {
+      function _load(reset,original_board) {
         common.allDependencies = project.dependencies;
         var opt = { reset: reset || false, disabled: false };
-        var ret = graph.loadDesign(project.design, opt, function() {
+
+          if(typeof original_board !== 'undefined' && original_board !== false) {
+              for (let i=0; i < common.boards.length;i++){
+                  if (common.boards[i].name == original_board){
+                      opt.original_pinout=common.boards[i].pinout;
+                  }
+              }
+          }
+
+          var ret = graph.loadDesign(project.design, opt, function() {
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -136,6 +146,21 @@ angular.module('icestudio')
         }, 100);
       }
     };
+
+    function boardMigration(old_board,new_board){
+
+        let pboard=false;
+
+        switch( old_board.toLowerCase() ){
+              case 'icezum alhambra': case 'icezum':
+                  switch( new_board.toLowerCase()){
+                      case 'alhambra-ii':  pboard = 'icezum'; break;
+                  }
+              break;
+          }
+        return pboard;
+    }
+
 
     function checkVersion(version) {
       if (version > common.VERSION) {
