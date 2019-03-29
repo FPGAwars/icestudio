@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "bower": "^1.8.0",
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.4",
     "grunt-angular-gettext": "^2.3.0",
     "grunt-appimage": "^0.6.0",
     "grunt-cli": "^1.2.0",
