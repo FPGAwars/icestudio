@@ -59,14 +59,14 @@ angular.module('icestudio')
                 // Target box
                 var margin = 40;
                 var menuFooterHeight = 93;
-                let win_width = window.get().width;
-                let win_height = window.get().height;
+                var  winWidth = window.get().width;
+                var winHeight = window.get().height;
 
                 var tbox = {
                     x: margin,
                     y: margin,
-                    width: win_width - 2 * margin,
-                    height: win_height - menuFooterHeight - 2 * margin
+                    width: winWidth - 2 * margin,
+                    height: winHeight - menuFooterHeight - 2 * margin
                 };
                 // Source box
                 var sbox = V(paper.viewport).bbox(true, paper.svg);
@@ -101,8 +101,8 @@ angular.module('icestudio')
                     },
                     zoom: state.zoom * scale
                 });
-                $('.paper.joint-theme-default>svg').attr('height',win_height);
-                $('.paper.joint-theme-default>svg').attr('width',win_width);
+                $('.paper.joint-theme-default>svg').attr('height',winHeight);
+                $('.paper.joint-theme-default>svg').attr('width',winWidth);
             }
             else {
                 this.resetView();
@@ -1151,7 +1151,7 @@ angular.module('icestudio')
             // - reset: clear I/O blocks values
             // - disabled: set disabled flag to the blocks
             // - offset: apply an offset to all the cells
-            // - original_pinout: if reset is true (conversion), this variable
+            // - originalPinout: if reset is true (conversion), this variable
             //   contains the pinout for the previous board.
 
             var cell;
@@ -1161,7 +1161,7 @@ angular.module('icestudio')
             opt = opt || {};
 
             // Blocks
-
+            var isMigrated=false;
             _.each(_graph.blocks, function(blockInstance) {
                 if (blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
@@ -1173,16 +1173,17 @@ angular.module('icestudio')
                         //   now is based on pin names, an improvement could be
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
-                        let replaced=false;
+                        var replaced=false;
                         for (var i in pins) {
                             replaced=false;
-                            if(typeof opt.original_pinout !== 'undefined'){
-                                for(let opin=0;opin<opt.original_pinout.length;opin++){
-                                    if(opt.original_pinout[opin].name==pins[i].name){
-                                        pins[i].name=opt.original_pinout[opin].name;
-                                        pins[i].value=parseInt(opt.original_pinout[opin].value);
-                                        opin=opt.original_pinout.length;
+                            if(typeof opt.originalPinout !== 'undefined'){
+                                for(var opin=0; opin < opt.originalPinout.length; opin++){
+                                    if( String(opt.originalPinout[opin].name) === String(pins[i].name) ) {
+                                        pins[i].name=opt.originalPinout[opin].name;
+                                        pins[i].value=parseInt(opt.originalPinout[opin].value);
+                                        opin=opt.originalPinout.length;
                                         replaced=true;
+                                        isMigrated=true;
                                     }
                                 }
                             }
@@ -1213,7 +1214,9 @@ angular.module('icestudio')
                 cells.push(cell);
             });
 
-           alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
+           if(isMigrated) {
+               alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
+           }
 
 
             // Wires

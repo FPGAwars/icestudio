@@ -48,7 +48,7 @@ angular.module('icestudio')
     win.on('resize', function() {
       graph.fitContent();
     });
-    
+
     // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
       var mb = new gui.Menu({type: 'menubar'});
@@ -66,20 +66,26 @@ angular.module('icestudio')
       // all arguments will be embeded in icestudio_argv param
       // that is a JSON string url encoded
 
-      let queryStr = unescape(window.location.search) + '&';
-      let regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
-      let val = queryStr.replace(regex, "$1");
-      let params = (val == queryStr) ? false : val;
+      // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
+      // unescape is deprecated javascript function, should use decodeURI instead
+
+      var queryStr = decodeURI(window.location.search) + '&';
+
+      var regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
+      var val = queryStr.replace(regex, '$1');
+      var params = (val === queryStr) ? false : val;
 
       // If there are url params, compatibilize it with shell call
       if(params !==false){
           params=JSON.parse(decodeURI(params));
-          if(typeof gui.App.argv ==='undefined') gui.App.argv=[];
-          for(let prop in params){
+          if(typeof gui.App.argv ==='undefined') {
+              gui.App.argv=[];
+          }
+          for(var prop in params){
             gui.App.argv.push(params[prop]);
           }
       }
-      
+
       var local = false;
       for (var i in gui.App.argv) {
         var arg = gui.App.argv[i];

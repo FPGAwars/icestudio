@@ -438,12 +438,18 @@ angular.module('icestudio')
               // ERROR: ... main.v:#...
               // Warning: ... main.v:#...
               re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)[\r|\n]/g;
+              var msg = '';
+              var line = -1;
+              var type=false;
+              var preContent = false;
+              var postContent = false;
+
               while (matchError = re.exec(stdout)) {
-                var msg = '';
-                var line = parseInt(matchError[3]);
-                var type = matchError[1].toLowerCase();
-                var preContent = matchError[2];
-                var postContent = matchError[4];
+                msg = '';
+                line = parseInt(matchError[3]);
+                type = matchError[1].toLowerCase();
+                preContent = matchError[2];
+                postContent = matchError[4];
                 // Process error
                 if (preContent === 'Parser error in line') {
                   postContent = postContent.substring(2); // remove :\s
@@ -472,10 +478,10 @@ angular.module('icestudio')
               re = /\smain\.v:([0-9]+):\s(.*?)(ERROR):\s(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
 
-                var msg = '';
-                var line = parseInt(matchError[1]);
-                var type = matchError[3].toLowerCase();
-                var preContent = matchError[4];
+                msg = '';
+                line = parseInt(matchError[1]);
+                type = matchError[3].toLowerCase();
+                preContent = matchError[4];
 
                 // If the error is about an unexpected token, the error is not
                 // deterministic, therefore we indicate that "the error

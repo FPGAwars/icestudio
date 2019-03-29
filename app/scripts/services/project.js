@@ -112,14 +112,14 @@ angular.module('icestudio')
         _load();
       }
 
-      function _load(reset,original_board) {
+      function _load(reset,originalBoard) {
         common.allDependencies = project.dependencies;
         var opt = { reset: reset || false, disabled: false };
 
-          if(typeof original_board !== 'undefined' && original_board !== false) {
-              for (let i=0; i < common.boards.length;i++){
-                  if (common.boards[i].name == original_board){
-                      opt.original_pinout=common.boards[i].pinout;
+          if(typeof originalBoard !== 'undefined' && originalBoard !== false) {
+              for (var i=0; i < common.boards.length;i++){
+                  if (String(common.boards[i].name) === String(originalBoard)){
+                      opt.originalPinout = common.boards[i].pinout;
                   }
               }
           }
@@ -147,13 +147,13 @@ angular.module('icestudio')
       }
     };
 
-    function boardMigration(old_board,new_board){
+    function boardMigration(oldBoard,newBoard){
 
-        let pboard=false;
+        var pboard=false;
 
-        switch( old_board.toLowerCase() ){
+        switch( oldBoard.toLowerCase() ){
               case 'icezum alhambra': case 'icezum':
-                  switch( new_board.toLowerCase()){
+                  switch( newBoard.toLowerCase()){
                       case 'alhambra-ii':  pboard = 'icezum'; break;
                   }
               break;
