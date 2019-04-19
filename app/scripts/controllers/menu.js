@@ -729,7 +729,10 @@ angular.module('icestudio')
         alertify.warning(gettextCatalog.getString('No collections stored'), 5);
       }
     };
-
+    
+    $scope.showChromeDevTools = function() {
+        win.showDevTools(); 
+    };
 
     //-- Help
 

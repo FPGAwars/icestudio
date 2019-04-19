@@ -28,6 +28,14 @@ angular.module('icestudio')
         case 'basic.output':
           newBasicOutput(callback);
           break;
+        case 'basic.outputLabel':
+          newBasicOutputLabel(callback);
+          break;
+         case 'basic.inputLabel':
+          newBasicInputLabel(callback);
+          break;
+ 
+
         case 'basic.constant':
           newBasicConstant(callback);
           break;
@@ -44,6 +52,69 @@ angular.module('icestudio')
           break;
       }
     }
+
+    function newBasicOutputLabel(callback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.outputLabel',
+        position: { x: 0, y: 0 }
+      };
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the input blocks'),
+          value: ''
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var virtual = !values[1];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
+          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
+          }
+          var pins = getPins(portInfo);
+          blockInstance.data = {
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual,
+            clock: clock
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
+      });
+    }
+
 
     function newBasicInput(callback) {
       var blockInstance = {
@@ -134,6 +205,61 @@ angular.module('icestudio')
           type: 'checkbox',
           label: gettextCatalog.getString('FPGA pin'),
           value: true
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var virtual = !values[1];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
+          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          var pins = getPins(portInfo);
+          blockInstance.data = {
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
+      });
+    }
+
+    function newBasicInputLabel(callback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.inputLabel',
+        position: { x: 0, y: 0 }
+      };
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the output blocks'),
+          value: ''
         }
       ];
       utils.renderForm(formSpecs, function(evt, values) {
@@ -526,7 +652,12 @@ angular.module('icestudio')
           return loadBasicInput(instance, disabled);
         case 'basic.output':
           return loadBasicOutput(instance, disabled);
-        case 'basic.constant':
+         case 'basic.outputLabel':
+          return loadBasicOutputLabel(instance, disabled);
+           case 'basic.inputLabel':
+          return loadBasicInputLabel(instance, disabled);
+
+          case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':
           return loadBasicMemory(instance, disabled);
@@ -560,6 +691,28 @@ angular.module('icestudio')
       return cell;
     }
 
+ function loadBasicOutputLabel(instance, disabled) {
+      var data = instance.data;
+      var rightPorts = [{
+        id: 'out',
+        name: '',
+        label: '',
+        size: data.pins ? data.pins.length : (data.size || 1)
+      }];
+
+      var cell = new joint.shapes.ice.Input({
+        id: instance.id,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        disabled: disabled,
+        rightPorts: rightPorts,
+        choices: common.pinoutInputHTML
+      });
+      return cell;
+    }
+
+
     function loadBasicOutput(instance, disabled) {
       var data = instance.data;
       var leftPorts = [{
@@ -579,6 +732,26 @@ angular.module('icestudio')
       });
       return cell;
     }
+    function loadBasicInputLabel(instance, disabled) {
+      var data = instance.data;
+      var leftPorts = [{
+        id: 'in',
+        name: '',
+        label: '',
+        size: data.pins ? data.pins.length : (data.size || 1)
+      }];
+      var cell = new joint.shapes.ice.Output({
+        id: instance.id,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        disabled: disabled,
+        leftPorts: leftPorts,
+        choices: common.pinoutOutputHTML
+      });
+      return cell;
+    }
+
 
     function loadBasicConstant(instance, disabled) {
       var bottomPorts = [{
@@ -710,7 +883,33 @@ angular.module('icestudio')
             clock: item.data.clock
           });
         }
-        else if (item.type === 'basic.output') {
+        else if (item.type === 'basic.outputLabel') {
+          if (!item.data.range) {
+            instance.data.ports.in.push({
+              name: item.id,
+              default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
+            });
+          }
+          leftPorts.push({
+            id: item.id,
+            name: item.data.name,
+            label: item.data.name + (item.data.range || ''),
+            size: item.data.pins ? item.data.pins.length : (item.data.size || 1),
+            clock: item.data.clock
+          });
+        }
+
+           else if (item.type === 'basic.inputLabel') {
+          rightPorts.push({
+            id: item.id,
+            name: item.data.name,
+            label: item.data.name + (item.data.range || ''),
+            size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
+          });
+        }
+   
+          
+          else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
             name: item.data.name,
@@ -817,7 +1016,15 @@ angular.module('icestudio')
         case 'basic.output':
           editBasicOutput(cellView, callback);
           break;
-        case 'basic.constant':
+          case 'basic.outputLabel':
+          editBasicOutputLabel(cellView, callback);
+          break;
+          case 'basic.inputLabel':
+          editBasicInputLabel(cellView, callback);
+          break;
+       
+
+          case 'basic.constant':
           editBasicConstant(cellView);
           break;
         case 'basic.memory':
@@ -1011,6 +1218,102 @@ angular.module('icestudio')
         }
       });
     }
+  function editBasicOutputLabel(cellView, callback) {
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name + (block.data.range || '')
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('FPGA pin'),
+          value: !block.data.virtual
+        },
+        {
+          type: 'checkbox',
+          label: gettextCatalog.getString('Show clock'),
+          value: block.data.clock
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var oldSize, newSize, offset = 0;
+        var label = values[0];
+        var virtual = !values[1];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
+          }
+          if ((block.data.range || '') !==
+              (portInfo.rangestr || '')) {
+            var pins = getPins(portInfo);
+            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Create new block
+            var blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual,
+                clock: clock
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
+              }
+            };
+            if (callback) {
+              graph.startBatch('change');
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
+              graph.stopBatch('change');
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else if (block.data.name !== portInfo.name ||
+                   block.data.virtual !== virtual ||
+                   block.data.clock !== clock) {
+            var size = block.data.pins ? block.data.pins.length : 1;
+            oldSize = block.data.virtual ? 1 : size;
+            newSize = virtual ? 1 : size;
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Edit block
+            graph.startBatch('change');
+            var data = utils.clone(block.data);
+            data.name = portInfo.name;
+            data.virtual = virtual;
+            data.clock = clock;
+            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+            cellView.model.translate(0, offset);
+            graph.stopBatch('change');
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+          }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+        }
+      });
+    }
+
 
     function editBasicConstant(cellView) {
       var block = cellView.model.attributes;

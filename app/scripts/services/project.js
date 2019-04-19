@@ -270,7 +270,9 @@ angular.module('icestudio')
         switch(block.type) {
           case 'basic.input':
           case 'basic.output':
-            block.data = {
+            case 'basic.outputLabel':
+          case 'basic.inputLabel':
+                block.data = {
               name: block.data.label,
               pins: [{
                 index: '0',
@@ -539,6 +541,9 @@ angular.module('icestudio')
           switch (block.type) {
             case 'basic.input':
             case 'basic.output':
+          
+            case 'basic.outputLabel':
+            case 'basic.inputLabel':
             case 'basic.constant':
             case 'basic.memory':
               break;
@@ -619,7 +624,10 @@ angular.module('icestudio')
       var i, pins;
       for (i in block.design.graph.blocks) {
         if (block.design.graph.blocks[i].type === 'basic.input' ||
-            block.design.graph.blocks[i].type === 'basic.output') {
+            block.design.graph.blocks[i].type === 'basic.output' ||
+            block.design.graph.blocks[i].type === 'basic.outputLabel'||
+ block.design.graph.blocks[i].type === 'inputLabel'
+        ) {
           if (block.design.graph.blocks[i].data.size === undefined) {
             pins = block.design.graph.blocks[i].data.pins;
             block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;
