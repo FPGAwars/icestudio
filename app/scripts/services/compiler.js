@@ -184,6 +184,7 @@ angular.module('icestudio')
       return ports;
     }
 
+
     function getContent(name, project) {
       var i, j, w;
       var content = [];
@@ -193,6 +194,69 @@ angular.module('icestudio')
         wire: [],
         assign: []
       };
+        //ONWORK
+        console.log('GRAPH',graph);
+        var vwiresLut={};
+        var lidx,widx, lin, vw;
+        //Create virtual wires
+        //
+        //First identify sources and targets
+        if( typeof graph !== 'undefined' && 
+            graph.blocks.length >0 && 
+            graph.wires.length>0){
+            
+            for(lidx in graph.blocks){
+                lin=graph.blocks[lidx];
+                if(lin.type=='basic.inputLabel'){
+                   for(widx in graph.wires){
+                        vw=graph.wires[widx];
+                       if(vw.target.block == lin.id){
+                        if(typeof vwiresLut[lin.data.name] === 'undefined'){
+                            vwiresLut[lin.data.name]={source:[],target:[]};
+                        }
+                           vwiresLut[lin.data.name].source.push(vw.source.block);
+                        
+                       }
+                   }
+            }
+            if(lin.type=='basic.outputLabel'){
+                   for(widx in graph.wires){
+                       vw=graph.wires[widx];
+                       if(vw.source.block == lin.id){
+                        if(typeof vwiresLut[lin.data.name] === 'undefined'){
+                            vwiresLut[lin.data.name]={source:[],target:[]};
+                        }
+                           vwiresLut[lin.data.name].target.push(vw.target.block);
+                        
+                       }
+                   }
+            }
+          }//for lin
+        }// if typeof....
+
+        console.log('VIRTUALW',vwiresLut);
+
+        //Create virtual wires
+        for(widx in vwiresLut){
+            vw=vwiresLut[widx];
+            if(vw.source.length>0 && vw.target.length>0){
+                for(var vi=0;vi<vw.source.length;vi++){
+                    for(var vj=0;vj<vw.target.length;vj++){
+                      
+                        graph.wires.push({
+                            size: undefined,
+                            source:{block:vw.source[vi],port:"out"},
+                            target:{block:vw.target[vj],port:"in"},
+                            vertices:undefined
+                        });
+                    }
+                }
+            }
+        } 
+
+        //Remove virtual blocks
+        //END ONWORK
+
 
       for (w in graph.wires) {
         var wire = graph.wires[w];
@@ -271,7 +335,9 @@ angular.module('icestudio')
             block.type !== 'basic.output' &&
             block.type !== 'basic.constant' &&
             block.type !== 'basic.memory' &&
-            block.type !== 'basic.info') {
+            block.type !== 'basic.info' &&
+            block.type !== 'basic.inputLabel' &&
+            block.type !== 'basic.outputLabel') {
 
           // Header
 

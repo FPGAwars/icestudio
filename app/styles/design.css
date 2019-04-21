@@ -629,3 +629,27 @@ g {
   width: 20px;
   height: 20px;
 }
+
+/* Colors */
+.color-indianred        {background: IndianRed !important;}
+.color-red              {background: Red  !important;}
+.color-deeppink         {background: DeepPink  !important;}
+.color-mediumvioletred  {background: MediumVioletRed  !important;}
+.color-coral            {background: Coral  !important;}
+.color-orangered        {background: OrangeRed  !important;}
+.color-darkorange       {background: DarkOrange  !important;}
+.color-gold             {background: Gold  !important;}
+.color-yellow           {background: Yellow  !important;}
+.color-fuchsia          {background: Fuchsia  !important;}
+.color-slateblue        {background: SlateBlue  !important;}
+.color-greenyellow      {background: GreenYellow  !important;}
+.color-springgreen      {background: SpringGreen  !important;}
+.color-darkgreen        {background: DarkGreen  !important;}
+.color-olivedrab        {background: OliveDrab  !important;}
+.color-lightseagreen    {background: LightSeaGreen  !important;}
+.color-turquoise        {background: Turquoise  !important;}
+.color-steelblue        {background: SteelBlue  !important;}
+.color-deepskyblue      {background: DeepSkyBlue  !important;}
+.color-royalblue        {background: RoyalBlue  !important;}
+.color-navy             {background: Navy  !important;}
+           
