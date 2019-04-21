@@ -689,7 +689,8 @@ angular.module('icestudio')
     }
 
     function newGeneric(type, block, callback) {
-      var blockInstance = {
+       
+        var blockInstance = {
         id: null,
         type: type,
         position: { x: 0, y: 0 }
@@ -929,6 +930,8 @@ angular.module('icestudio')
     }
 
     function loadGeneric(instance, block, disabled) {
+       
+     
       var i;
       var leftPorts = [];
       var rightPorts = [];
@@ -954,7 +957,7 @@ angular.module('icestudio')
             clock: item.data.clock
           });
         }
-        else if (item.type === 'basic.outputLabel') {
+              /*   else if (item.type === 'basic.outputLabel') {
           if (!item.data.range) {
             instance.data.ports.in.push({
               name: item.id,
@@ -977,7 +980,7 @@ angular.module('icestudio')
             label: item.data.name + (item.data.range || ''),
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
-        }
+        }*/
 
 
           else if (item.type === 'basic.output') {

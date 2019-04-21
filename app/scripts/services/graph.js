@@ -574,7 +574,6 @@ angular.module('icestudio')
 
             function computeAllPortsMap(upperBlock, lowerBlock) {
                 var portsMap = {};
-
                 // Compute the ports for each side: left, right and top.
                 // If there are ports with the same name they are ordered
                 // by position, from 0 to n.
@@ -1159,7 +1158,6 @@ angular.module('icestudio')
             var blocksMap = {};
 
             opt = opt || {};
-
             // Blocks
             var isMigrated=false;
             _.each(_graph.blocks, function(blockInstance) {
