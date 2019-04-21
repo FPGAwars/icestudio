@@ -165,6 +165,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     var portBodySelector = portSelector + '>.port-body';
     var portDefaultSelector = portSelector + '>.port-default';
 
+    var port_color=(typeof this.attributes.data.blockColor !== 'undefined')? this.attributes.data.blockColor : 'lime';
+
     attrs[portSelector] = {
       ref: '.body'
     };
@@ -178,9 +180,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     attrs[portBodySelector] = {
       port: {
         id: port.id,
-        type: type
+        type: type,
+        fill: port_color
       }
     };
+
+
 
     attrs[portDefaultSelector] = {
       display: (port.default && port.default.apply) ? 'inline' : 'none'
@@ -196,6 +201,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
     switch (type) {
       case 'left':
+
         attrs[portSelector]['ref-x'] = -8;
         attrs[portSelector]['ref-y'] = position;
         attrs[portLabelSelector]['dx'] = 4;
@@ -356,6 +362,9 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
     render: function() {
     console.log('RENDER',this,this.$box);
+    var color = this.options.model.attributes.data.blockColor;
+    console.log('COLOR',color);
+    console.log('--',this.$('.input-virtual-terminator'),'==');
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
     this.updateBox();
@@ -369,6 +378,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var $bottomPorts = this.$('.bottomPorts').empty();
     var portTemplate = _.template(this.model.portMarkup);
     var modelId = this.model.id;
+    console.log('**',this.$('.input-virtual-terminator'),'--');
 
     _.each(_.filter(this.model.ports, function(p) { return p.type === 'left'; }), function(port, index) {
       $leftPorts.append(V(portTemplate({ id: modelId, index: index, port: port})).node);
@@ -653,9 +663,9 @@ joint.shapes.ice.InputLabel = joint.shapes.ice.Model.extend({
                <path class="port-wire" id="port-wire-<%= id %>-<%= port.id %>"/>\
                  <text class="port-label"/>\
                  <circle class="port-body"/>\
-<polygon points="0 0,0 30,20 15" style="fill:lime;stroke-width:1" transform="translate(100 -15)"/>\
+<polygon  class="input-virtual-terminator" points="0 -5,0 34,20 16" style="fill:white;stroke:<%= port.fill %>;stroke-width:3" transform="translate(100 -15)"/>\
                </g>',
-    
+
     defaults: joint.util.deepSupplement({
     type: 'ice.Output',
     size: {
@@ -685,7 +695,7 @@ joint.shapes.ice.OutputLabel = joint.shapes.ice.Model.extend({
                  <circle class="port-body"/>\
 <polygon points="0 0,15 15,0 30,30 30,30 0" style="fill:lime;stroke-width:1" transform="translate(-122 -15)"/>\
                </g>',
-    
+
     defaults: joint.util.deepSupplement({
     type: 'ice.Input',
     size: {
@@ -831,9 +841,8 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     if (virtual) {
         // Virtual port (green)
-        console.log('IO',this,data);
       this.fpgaContentSelector.addClass('hidden');
-        
+
         this.virtualContentSelector.removeClass('hidden');
         if(typeof data.blockColor !== 'undefined'){
             if(typeof data.oldBlockColor !== 'undefined'){

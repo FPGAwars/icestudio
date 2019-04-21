@@ -34,7 +34,7 @@ angular.module('icestudio')
          case 'basic.inputLabel':
           newBasicInputLabel(callback);
           break;
- 
+
 
         case 'basic.constant':
           newBasicConstant(callback);
@@ -260,7 +260,7 @@ angular.module('icestudio')
           type: 'text',
           title: gettextCatalog.getString('Enter the output blocks'),
           value: ''
-          
+
         },
            {
             type:'combobox',
@@ -288,7 +288,7 @@ angular.module('icestudio')
              { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
              { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
              { value: 'navy', label: gettextCatalog.getString('Navy') }
-           
+
            ]
 
         }
@@ -945,8 +945,8 @@ angular.module('icestudio')
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
         }
-   
-          
+
+
           else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
@@ -1060,7 +1060,7 @@ angular.module('icestudio')
           case 'basic.inputLabel':
           editBasicInputLabel(cellView, callback);
           break;
-       
+
 
           case 'basic.constant':
           editBasicConstant(cellView);
@@ -1078,8 +1078,8 @@ angular.module('icestudio')
           break;
       }
     }
-  
-      
+
+
       function editBasicOutputLabel(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
@@ -1211,16 +1211,16 @@ angular.module('icestudio')
              { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
              { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
              { value: 'navy', label: gettextCatalog.getString('Navy') }
-           
+
            ]
 
         }
- 
+
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
-        var color = values[1]  
+        var color = values[1]
         var virtual = !values[2];
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1262,7 +1262,6 @@ angular.module('icestudio')
           else if (block.data.name !== portInfo.name ||
               block.data.virtual !== virtual||
               block.data.blockColor !== color) {
-              console.log('Actualizando color');
             var size = block.data.pins ? block.data.pins.length : 1;
             oldSize = block.data.virtual ? 1 : size;
             newSize = virtual ? 1 : size;
@@ -1288,7 +1287,7 @@ angular.module('icestudio')
         }
       });
     }
- 
+
     function editBasicInput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
@@ -1466,7 +1465,7 @@ angular.module('icestudio')
         }
       });
     }
- 
+
     function editBasicConstant(cellView) {
       var block = cellView.model.attributes;
       var formSpecs = [

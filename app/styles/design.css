@@ -640,7 +640,12 @@ g {
 .color-darkorange       {background: DarkOrange  !important;}
 .color-gold             {background: Gold  !important;}
 .color-yellow           {background: Yellow  !important;}
-.color-fuchsia          {background: Fuchsia  !important;}
+.color-fuchsia          {
+
+    background: white  !important;
+    border: 3px solid Fuchsia !important;
+    border-right:0px !important;
+}
 .color-slateblue        {background: SlateBlue  !important;}
 .color-greenyellow      {background: GreenYellow  !important;}
 .color-springgreen      {background: SpringGreen  !important;}
