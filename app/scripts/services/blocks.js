@@ -65,11 +65,43 @@ angular.module('icestudio')
           type: 'text',
           title: gettextCatalog.getString('Enter the input blocks'),
           value: ''
+        },
+ {
+            type:'combobox',
+            title: gettextCatalog.getString('Choose a color'),
+            value: 'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumVioletRed', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
         }
+
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var virtual = !values[1];
+        var color = values[1];
+        var virtual = !values[2];
         var clock = values[2];
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -99,6 +131,7 @@ angular.module('icestudio')
           }
           var pins = getPins(portInfo);
           blockInstance.data = {
+            blockColor:color,
             name: portInfo.name,
             range: portInfo.rangestr,
             pins: pins,
@@ -113,6 +146,8 @@ angular.module('icestudio')
           callback(cells);
         }
       });
+   win.showDevTools() ;
+   win.showDevTools() ;
     }
 
 
@@ -270,7 +305,7 @@ angular.module('icestudio')
              { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
              { value: 'red', label: gettextCatalog.getString('Red') },
              { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-             { value: 'mediumVioletRed', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
              { value: 'coral', label: gettextCatalog.getString('Coral') },
              { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
              { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
@@ -300,7 +335,6 @@ angular.module('icestudio')
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        console.log('LABELS',values,evt);
         // Validate values
         var portInfo, portInfos = [];
         for (var l in labels) {
@@ -786,7 +820,6 @@ angular.module('icestudio')
         leftPorts: leftPorts,
         choices: common.pinoutOutputHTML
         });
-        console.log(cell);
       return cell;
     }
 
@@ -1089,21 +1122,43 @@ angular.module('icestudio')
           title: gettextCatalog.getString('Update the block name'),
           value: block.data.name + (block.data.range || '')
         },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: block.data.clock
+              {
+            type:'combobox',
+            title: gettextCatalog.getString('Choose a color'),
+            value: (typeof block.data.blockColor !== 'undefined')? block.data.blockColor :'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
         }
+
       ];
       utils.renderForm(formSpecs, function(evt, values) {
         var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
+          var label = values[0];
+          var color = values[1];
+        var virtual = !values[2];
         var clock = values[2];
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1150,7 +1205,8 @@ angular.module('icestudio')
           }
           else if (block.data.name !== portInfo.name ||
                    block.data.virtual !== virtual ||
-                   block.data.clock !== clock) {
+              block.data.clock !== clock ||
+          block.data.blockColor !== color) {
             var size = block.data.pins ? block.data.pins.length : 1;
             oldSize = block.data.virtual ? 1 : size;
             newSize = virtual ? 1 : size;
@@ -1159,7 +1215,9 @@ angular.module('icestudio')
             // Edit block
             graph.startBatch('change');
             var data = utils.clone(block.data);
-            data.name = portInfo.name;
+              data.name = portInfo.name;
+              data.oldBlockColor=data.blockColor;
+              data.blockColor=color;
             data.virtual = virtual;
             data.clock = clock;
             cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
@@ -1193,7 +1251,7 @@ angular.module('icestudio')
              { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
              { value: 'red', label: gettextCatalog.getString('Red') },
              { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-             { value: 'mediumVioletRed', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
              { value: 'coral', label: gettextCatalog.getString('Coral') },
              { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
              { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
@@ -1220,7 +1278,7 @@ angular.module('icestudio')
       utils.renderForm(formSpecs, function(evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
-        var color = values[1]
+        var color = values[1];
         var virtual = !values[2];
         if (resultAlert) {
           resultAlert.dismiss(false);

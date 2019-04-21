@@ -214,8 +214,18 @@ angular.module('icestudio')
                         if(typeof vwiresLut[lin.data.name] === 'undefined'){
                             vwiresLut[lin.data.name]={source:[],target:[]};
                         }
+                           vwiresLut[lin.data.name].source.push(vw.source);
+
+                           /*                           if(vw.source.port === 'inlabel' || 
+                               vw.source.port==='outlabel' ||
+                               vw.source.port === 'in' ||
+                               vw.source.port === 'out'){
+
                            vwiresLut[lin.data.name].source.push(vw.source.block);
-                        
+                           }else{
+
+                           vwiresLut[lin.data.name].source.push(vw.source.port);
+                           }*/
                        }
                    }
             }
@@ -226,8 +236,19 @@ angular.module('icestudio')
                         if(typeof vwiresLut[lin.data.name] === 'undefined'){
                             vwiresLut[lin.data.name]={source:[],target:[]};
                         }
+
+
+                             vwiresLut[lin.data.name].target.push(vw.target);
+                               /* if(vw.target.port === 'inlabel' || 
+                               vw.target.port==='outlabel' ||
+                               vw.target.port === 'in' ||
+                               vw.target.port === 'out'){
+
                            vwiresLut[lin.data.name].target.push(vw.target.block);
-                        
+                           }else{
+                             vwiresLut[lin.data.name].target.push(vw.target.port);
+
+                           }*/
                        }
                    }
             }
@@ -244,9 +265,10 @@ angular.module('icestudio')
                     for(var vj=0;vj<vw.target.length;vj++){
                       
                         graph.wires.push({
+                            tcTodelete: true,
                             size: undefined,
-                            source:{block:vw.source[vi],port:"out"},
-                            target:{block:vw.target[vj],port:"in"},
+                            source:vw.source[vi],
+                            target:vw.target[vj],
                             vertices:undefined
                         });
                     }
@@ -255,6 +277,24 @@ angular.module('icestudio')
         } 
 
         //Remove virtual blocks
+        // Save temporal wires and delete it
+        //
+        graph.wires_virtual=[];
+        var wtemp=[];
+        for (var wi=0;wi<graph.wires.length;wi++){
+            if( graph.wires[wi].source.port === 'outlabel' ||
+                graph.wires[wi].target.port  === 'outlabel' ||
+                graph.wires[wi].source.port === 'inlabel' ||
+                graph.wires[wi].target.port === 'inlabel' ){
+                
+                graph.wires_virtual.push(graph.wires[wi]);
+                
+            }else{
+                wtemp.push(graph.wires[wi]);
+            }
+
+        }
+        graph.wires=wtemp;
         //END ONWORK
 
 
@@ -320,6 +360,28 @@ angular.module('icestudio')
 
       content = content.concat(getInstances(name, project.design.graph));
 
+        // Restore original graph
+        // delete temporal wires
+        //
+        
+        wtemp=[];
+        for (var wi=0;wi<graph.wires.length;wi++){
+            if(typeof graph.wires[wi].tcTodelete !== 'undefined'  &&
+                graph.wires[wi].tcTodelete === true){
+                //Nothing for now, only remove 
+            }else{
+                wtemp.push(graph.wires[wi]);
+            }
+
+        }
+        
+        graph.wires= graph.wires_virtual.concat(wtemp);
+        delete graph.wires_virtual;
+        //END ONWORK
+
+
+
+        
       return content.join('\n');
     }
 
