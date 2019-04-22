@@ -689,7 +689,7 @@ angular.module('icestudio')
     }
 
     function newGeneric(type, block, callback) {
-       
+
         var blockInstance = {
         id: null,
         type: type,
@@ -930,8 +930,8 @@ angular.module('icestudio')
     }
 
     function loadGeneric(instance, block, disabled) {
-       
-     
+
+
       var i;
       var leftPorts = [];
       var rightPorts = [];
@@ -957,31 +957,6 @@ angular.module('icestudio')
             clock: item.data.clock
           });
         }
-              /*   else if (item.type === 'basic.outputLabel') {
-          if (!item.data.range) {
-            instance.data.ports.in.push({
-              name: item.id,
-              default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
-            });
-          }
-          leftPorts.push({
-            id: item.id,
-            name: item.data.name,
-            label: item.data.name + (item.data.range || ''),
-            size: item.data.pins ? item.data.pins.length : (item.data.size || 1),
-            clock: item.data.clock
-          });
-        }
-
-           else if (item.type === 'basic.inputLabel') {
-          rightPorts.push({
-            id: item.id,
-            name: item.data.name,
-            label: item.data.name + (item.data.range || ''),
-            size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
-          });
-        }*/
-
 
           else if (item.type === 'basic.output') {
           rightPorts.push({

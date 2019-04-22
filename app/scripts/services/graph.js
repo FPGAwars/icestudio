@@ -1157,9 +1157,14 @@ angular.module('icestudio')
             var cells = [];
             var blocksMap = {};
 
+
             opt = opt || {};
             // Blocks
             var isMigrated=false;
+
+
+            console.log('CReando GRAPH',_graph,opt);
+
             _.each(_graph.blocks, function(blockInstance) {
                 if (blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
@@ -1172,14 +1177,20 @@ angular.module('icestudio')
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
                         var replaced=false;
+
+                        console.log('ORIGINAL',opt.originalPinout);
+                        console.log('DESTINO',opt.designPinout);
+                        console.log('-----------------------------');
                         for (var i in pins) {
                             replaced=false;
-                            if(typeof opt.originalPinout !== 'undefined'){
-                                for(var opin=0; opin < opt.originalPinout.length; opin++){
-                                    if( String(opt.originalPinout[opin].name) === String(pins[i].name) ) {
-                                        pins[i].name=opt.originalPinout[opin].name;
-                                        pins[i].value=parseInt(opt.originalPinout[opin].value);
-                                        opin=opt.originalPinout.length;
+                            if(typeof opt.designPinout !== 'undefined'){
+                                console.log('MIGRANDO!');
+                                for(var opin=0; opin < opt.designPinout.length; opin++){
+                                    if( String(opt.designPinout[opin].name) === String(pins[i].name) ) {
+                                        console.log('Reemplazando',pins[i],opt.designPinout[opin]);
+                                        pins[i].name=opt.designPinout[opin].name;
+                                        pins[i].value=opt.designPinout[opin].value;
+                                        opin=opt.designPinout.length;
                                         replaced=true;
                                         isMigrated=true;
                                     }
@@ -1187,7 +1198,7 @@ angular.module('icestudio')
                             }
                             if (replaced===false){
                                 pins[i].name = '';
-                                pins[i].value = 0;
+                                pins[i].value = '0';
                             }
                         }
 
