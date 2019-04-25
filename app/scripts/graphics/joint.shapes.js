@@ -164,7 +164,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     var portBodySelector = portSelector + '>.port-body';
     var portDefaultSelector = portSelector + '>.port-default';
 
-    var port_color=(typeof this.attributes.data.blockColor !== 'undefined')? this.attributes.data.blockColor : 'lime';
+    var portColor=(typeof this.attributes.data.blockColor !== 'undefined')? this.attributes.data.blockColor : 'lime';
 
     attrs[portSelector] = {
       ref: '.body'
@@ -180,7 +180,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
       port: {
         id: port.id,
         type: type,
-        fill: port_color
+        fill: portColor
       }
     };
 
@@ -360,7 +360,6 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
     render: function() {
-    var color = this.options.model.attributes.data.blockColor;
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
     this.updateBox();

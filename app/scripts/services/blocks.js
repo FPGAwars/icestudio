@@ -68,7 +68,7 @@ angular.module('icestudio')
         },
  {
             type:'combobox',
-            title: gettextCatalog.getString('Choose a color'),
+            label: gettextCatalog.getString('Choose a color'),
             value: 'fuchsia',
            options: [
              { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
@@ -146,8 +146,6 @@ angular.module('icestudio')
           callback(cells);
         }
       });
-   win.showDevTools() ;
-   win.showDevTools() ;
     }
 
 
@@ -299,7 +297,7 @@ angular.module('icestudio')
         },
            {
             type:'combobox',
-            title: gettextCatalog.getString('Choose a color'),
+            label: gettextCatalog.getString('Choose a color'),
             value: 'fuchsia',
            options: [
              { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
