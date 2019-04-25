@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="10.019799"
+   width="32.010254"
+   id="svg15"
+   version="1.1"
+   viewBox="0 0 32.010254 10.019799"
+   sodipodi:docname="arrow-right.svg"
+   inkscape:version="0.92.4 (33fec40, 2019-01-16)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1064"
+     inkscape:window-height="696"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="14.495355"
+     inkscape:cx="8.8232712"
+     inkscape:cy="-8.7876237"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg15" />
+  <metadata
+     id="metadata21">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs19" />
+  <polyline
+     transform="rotate(180,16.005149,10.50495)"
+     points="5.163 12 1 16 5.163 20"
+     style="fill:none;stroke:#c8c8c8;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.58823532"
+     id="polyline4" />
+  <polyline
+     transform="rotate(180,16.005149,10.50495)"
+     points="11.622 12 7.459 16 11.622 20"
+     style="fill:none;stroke:#cdcdcd;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.58823532"
+     id="polyline6" />
+  <polyline
+     transform="rotate(180,16.005149,10.50495)"
+     points="18.081 12 13.919 16 18.081 20"
+     style="fill:none;stroke:#e6e6e6;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.58823532"
+     id="polyline8" />
+  <polyline
+     transform="rotate(180,16.005149,10.50495)"
+     points="24.541 12 20.378 16 24.541 20"
+     style="fill:none;stroke:#f0f0f0;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.58823532"
+     id="polyline10" />
+  <polyline
+     transform="rotate(180,16.005149,10.50495)"
+     points="31 12 26.837 16 31 20"
+     style="fill:none;stroke:#f5f5f5;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.58823532"
+     id="polyline12" />
+</svg>

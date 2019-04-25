@@ -28,6 +28,14 @@ angular.module('icestudio')
         case 'basic.output':
           newBasicOutput(callback);
           break;
+        case 'basic.outputLabel':
+          newBasicOutputLabel(callback);
+          break;
+         case 'basic.inputLabel':
+          newBasicInputLabel(callback);
+          break;
+
+
         case 'basic.constant':
           newBasicConstant(callback);
           break;
@@ -44,6 +52,102 @@ angular.module('icestudio')
           break;
       }
     }
+
+    function newBasicOutputLabel(callback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.outputLabel',
+        position: { x: 0, y: 0 }
+      };
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the input blocks'),
+          value: ''
+        },
+ {
+            type:'combobox',
+            label: gettextCatalog.getString('Choose a color'),
+            value: 'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumVioletRed', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
+        }
+
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var color = values[1];
+        var virtual = !values[2];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
+          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
+          }
+          var pins = getPins(portInfo);
+          blockInstance.data = {
+            blockColor:color,
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual,
+            clock: clock
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
+      });
+    }
+
 
     function newBasicInput(callback) {
       var blockInstance = {
@@ -162,6 +266,94 @@ angular.module('icestudio')
           portInfo = portInfos[p];
           var pins = getPins(portInfo);
           blockInstance.data = {
+            name: portInfo.name,
+            range: portInfo.rangestr,
+            pins: pins,
+            virtual: virtual
+          };
+          cells.push(loadBasic(blockInstance));
+          // Next block position
+          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+        }
+        if (callback) {
+          callback(cells);
+        }
+      });
+    }
+
+    function newBasicInputLabel(callback) {
+      var blockInstance = {
+        id: null,
+        data: {},
+        type: 'basic.inputLabel',
+        position: { x: 0, y: 0 }
+      };
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the output blocks'),
+          value: ''
+
+        },
+           {
+            type:'combobox',
+            label: gettextCatalog.getString('Choose a color'),
+            value: 'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+        var color = values[1];
+        var virtual = !values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo, portInfos = [];
+        for (var l in labels) {
+          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+          if (portInfo) {
+            evt.cancel = false;
+            portInfos.push(portInfo);
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+            return;
+          }
+        }
+        // Create blocks
+        var cells = [];
+        for (var p in portInfos) {
+          portInfo = portInfos[p];
+          var pins = getPins(portInfo);
+            blockInstance.data = {
+            blockColor: color,
             name: portInfo.name,
             range: portInfo.rangestr,
             pins: pins,
@@ -495,7 +687,8 @@ angular.module('icestudio')
     }
 
     function newGeneric(type, block, callback) {
-      var blockInstance = {
+
+        var blockInstance = {
         id: null,
         type: type,
         position: { x: 0, y: 0 }
@@ -526,7 +719,12 @@ angular.module('icestudio')
           return loadBasicInput(instance, disabled);
         case 'basic.output':
           return loadBasicOutput(instance, disabled);
-        case 'basic.constant':
+         case 'basic.outputLabel':
+          return loadBasicOutputLabel(instance, disabled);
+           case 'basic.inputLabel':
+          return loadBasicInputLabel(instance, disabled);
+
+          case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':
           return loadBasicMemory(instance, disabled);
@@ -560,6 +758,28 @@ angular.module('icestudio')
       return cell;
     }
 
+ function loadBasicOutputLabel(instance, disabled) {
+      var data = instance.data;
+      var rightPorts = [{
+        id: 'outlabel',
+        name: '',
+        label: '',
+        size: data.pins ? data.pins.length : (data.size || 1)
+      }];
+
+      var cell = new joint.shapes.ice.OutputLabel({
+        id: instance.id,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        disabled: disabled,
+        rightPorts: rightPorts,
+        choices: common.pinoutInputHTML
+      });
+      return cell;
+    }
+
+
     function loadBasicOutput(instance, disabled) {
       var data = instance.data;
       var leftPorts = [{
@@ -579,6 +799,29 @@ angular.module('icestudio')
       });
       return cell;
     }
+    function loadBasicInputLabel(instance, disabled) {
+      var data = instance.data;
+      var leftPorts = [{
+        id: 'inlabel',
+        name: '',
+        label: '',
+        size: data.pins ? data.pins.length : (data.size || 1)
+      }];
+
+        //var cell = new joint.shapes.ice.Output({
+        var cell = new joint.shapes.ice.InputLabel({
+            id: instance.id,
+            blockColor:instance.blockColor,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        disabled: disabled,
+        leftPorts: leftPorts,
+        choices: common.pinoutOutputHTML
+        });
+      return cell;
+    }
+
 
     function loadBasicConstant(instance, disabled) {
       var bottomPorts = [{
@@ -685,6 +928,8 @@ angular.module('icestudio')
     }
 
     function loadGeneric(instance, block, disabled) {
+
+
       var i;
       var leftPorts = [];
       var rightPorts = [];
@@ -710,7 +955,8 @@ angular.module('icestudio')
             clock: item.data.clock
           });
         }
-        else if (item.type === 'basic.output') {
+
+          else if (item.type === 'basic.output') {
           rightPorts.push({
             id: item.id,
             name: item.data.name,
@@ -817,7 +1063,15 @@ angular.module('icestudio')
         case 'basic.output':
           editBasicOutput(cellView, callback);
           break;
-        case 'basic.constant':
+          case 'basic.outputLabel':
+          editBasicOutputLabel(cellView, callback);
+          break;
+          case 'basic.inputLabel':
+          editBasicInputLabel(cellView, callback);
+          break;
+
+
+          case 'basic.constant':
           editBasicConstant(cellView);
           break;
         case 'basic.memory':
@@ -832,6 +1086,240 @@ angular.module('icestudio')
         default:
           break;
       }
+    }
+
+
+      function editBasicOutputLabel(cellView, callback) {
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name + (block.data.range || '')
+        },
+              {
+            type:'combobox',
+            title: gettextCatalog.getString('Choose a color'),
+            value: (typeof block.data.blockColor !== 'undefined')? block.data.blockColor :'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
+        }
+
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var oldSize, newSize, offset = 0;
+          var label = values[0];
+          var color = values[1];
+        var virtual = !values[2];
+        var clock = values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
+            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
+          }
+          if ((block.data.range || '') !==
+              (portInfo.rangestr || '')) {
+            var pins = getPins(portInfo);
+            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Create new block
+            var blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual,
+                clock: clock
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
+              }
+            };
+            if (callback) {
+              graph.startBatch('change');
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
+              graph.stopBatch('change');
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else if (block.data.name !== portInfo.name ||
+                   block.data.virtual !== virtual ||
+              block.data.clock !== clock ||
+          block.data.blockColor !== color) {
+            var size = block.data.pins ? block.data.pins.length : 1;
+            oldSize = block.data.virtual ? 1 : size;
+            newSize = virtual ? 1 : size;
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Edit block
+            graph.startBatch('change');
+            var data = utils.clone(block.data);
+              data.name = portInfo.name;
+              data.oldBlockColor=data.blockColor;
+              data.blockColor=color;
+            data.virtual = virtual;
+            data.clock = clock;
+            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+            cellView.model.translate(0, offset);
+            graph.stopBatch('change');
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+          }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+        }
+      });
+    }
+
+    function editBasicInputLabel(cellView, callback) {
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Update the block name'),
+          value: block.data.name + (block.data.range || '')
+        },
+                   {
+            type:'combobox',
+            title: gettextCatalog.getString('Choose a color'),
+            value: (typeof block.data.blockColor !== 'undefined')? block.data.blockColor :'fuchsia',
+           options: [
+             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
+             { value: 'red', label: gettextCatalog.getString('Red') },
+             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
+             { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
+             { value: 'coral', label: gettextCatalog.getString('Coral') },
+             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
+             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
+             { value: 'gold', label: gettextCatalog.getString('Gold') },
+             { value: 'yellow', label: gettextCatalog.getString('Yellow') },
+             { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
+             { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
+             { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
+             { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
+             { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
+             { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
+             { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
+             { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
+             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
+             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
+             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
+             { value: 'navy', label: gettextCatalog.getString('Navy') }
+
+           ]
+
+        }
+
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var oldSize, newSize, offset = 0;
+        var label = values[0];
+        var color = values[1];
+        var virtual = !values[2];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        // Validate values
+        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          if ((block.data.range || '') !==
+              (portInfo.rangestr || '')) {
+            var pins = getPins(portInfo);
+            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Create new block
+            var blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
+              }
+            };
+            if (callback) {
+              graph.startBatch('change');
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
+              graph.stopBatch('change');
+              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+            }
+          }
+          else if (block.data.name !== portInfo.name ||
+              block.data.virtual !== virtual||
+              block.data.blockColor !== color) {
+            var size = block.data.pins ? block.data.pins.length : 1;
+            oldSize = block.data.virtual ? 1 : size;
+            newSize = virtual ? 1 : size;
+            // Update block position when size changes
+            offset = 16 * (oldSize - newSize);
+            // Edit block
+            graph.startBatch('change');
+            var data = utils.clone(block.data);
+              data.name = portInfo.name;
+             data.oldBlockColor=data.blockColor;
+              data.blockColor= color;
+            data.virtual = virtual;
+            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
+            cellView.model.translate(0, offset);
+            graph.stopBatch('change');
+            cellView.apply();
+            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+          }
+        }
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+        }
+      });
     }
 
     function editBasicInput(cellView, callback) {

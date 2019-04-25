@@ -31,7 +31,7 @@ angular
     $timeout(function(){
       $('body').addClass('waiting');
     }, 0);
-    // Load boards
+      // Load boards
     boards.loadBoards();
     // Load profile
     utils.loadProfile(profile, function() {

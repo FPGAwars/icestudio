@@ -164,6 +164,8 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     var portBodySelector = portSelector + '>.port-body';
     var portDefaultSelector = portSelector + '>.port-default';
 
+    var portColor=(typeof this.attributes.data.blockColor !== 'undefined')? this.attributes.data.blockColor : 'lime';
+
     attrs[portSelector] = {
       ref: '.body'
     };
@@ -177,9 +179,12 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     attrs[portBodySelector] = {
       port: {
         id: port.id,
-        type: type
+        type: type,
+        fill: portColor
       }
     };
+
+
 
     attrs[portDefaultSelector] = {
       display: (port.default && port.default.apply) ? 'inline' : 'none'
@@ -195,6 +200,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
 
     switch (type) {
       case 'left':
+
         attrs[portSelector]['ref-x'] = -8;
         attrs[portSelector]['ref-y'] = position;
         attrs[portLabelSelector]['dx'] = 4;
@@ -353,7 +359,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     self.model.graph.trigger('batch:stop');
   },
 
-  render: function() {
+    render: function() {
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
     this.updateBox();
@@ -634,6 +640,65 @@ joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   }, joint.shapes.ice.Model.prototype.defaults)
 });
 
+joint.shapes.ice.InputLabel = joint.shapes.ice.Model.extend({
+  markup: '<g class="rotatable">\
+             <g class="scalable">\
+               <rect class="body" />\
+             </g>\
+             <g class="leftPorts disable-port"/>\
+             <g class="rightPorts"/>\
+             <g class="topPorts disable-port"/>\
+             <g class="bottomPorts"/>\
+    </g>',
+  portMarkup: '<g class="port port<%= index %>">\
+               <g class="port-default" id="port-default-<%= id %>-<%= port.id %>">\
+               <path/><rect/>\
+               </g>\
+               <path class="port-wire" id="port-wire-<%= id %>-<%= port.id %>"/>\
+                 <text class="port-label"/>\
+                 <circle class="port-body"/>\
+               </g>',
+
+    //<polygon  class="input-virtual-terminator" points="0 -5,0 34,20 16" style="fill:white;stroke:<%= port.fill %>;stroke-width:3" transform="translate(100 -15)"/>\
+    defaults: joint.util.deepSupplement({
+    type: 'ice.Output',
+    size: {
+      width: 96,
+      height: 64
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+});
+
+
+joint.shapes.ice.OutputLabel = joint.shapes.ice.Model.extend({
+  markup: '<g class="rotatable">\
+             <g class="scalable">\
+               <rect class="body"/>\
+             </g>\
+             <g class="leftPorts disable-port"/>\
+             <g class="rightPorts"/>\
+             <g class="topPorts disable-port"/>\
+             <g class="bottomPorts"/>\
+    </g>',
+  portMarkup: '<g class="port port<%= index %>">\
+               <g class="port-default" id="port-default-<%= id %>-<%= port.id %>">\
+               <path/><rect/>\
+               </g>\
+               <path class="port-wire" id="port-wire-<%= id %>-<%= port.id %>"/>\
+                 <text class="port-label"/>\
+                 <circle class="port-body"/>\
+               </g>',
+
+    //<polygon points="1 0,15 15,0 30,30 30,30 0" style="fill:lime;stroke-width:1" transform="translate(-122 -15)"/>\
+    defaults: joint.util.deepSupplement({
+    type: 'ice.Input',
+    size: {
+      width: 96,
+      height: 64
+    }
+  }, joint.shapes.ice.Model.prototype.defaults)
+
+});
 
 joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
@@ -769,9 +834,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     $label.text(name || '');
 
     if (virtual) {
-      // Virtual port (green)
+        // Virtual port (green)
       this.fpgaContentSelector.addClass('hidden');
-      this.virtualContentSelector.removeClass('hidden');
+
+        this.virtualContentSelector.removeClass('hidden');
+        if(typeof data.blockColor !== 'undefined'){
+            if(typeof data.oldBlockColor !== 'undefined'){
+             this.virtualContentSelector.removeClass('color-'+data.oldBlockColor);
+            }
+            this.virtualContentSelector.addClass('color-'+data.blockColor);
+        }
       this.model.attributes.size.height = 64;
     }
     else {
@@ -2110,20 +2182,17 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
   render: function() {
     joint.dia.LinkView.prototype.render.apply(this, arguments);
-    // console.log('render');
     return this;
   },
 
   remove: function() {
     joint.dia.LinkView.prototype.remove.apply(this, arguments);
-    // console.log('remove');
     this.updateBifurcations();
     return this;
   },
 
   update: function() {
     joint.dia.LinkView.prototype.update.apply(this, arguments);
-    // console.log('update');
     this.updateBifurcations();
     return this;
   },

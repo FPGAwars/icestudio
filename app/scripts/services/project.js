@@ -38,21 +38,6 @@ angular.module('icestudio')
       };
     }
 
-    /* Dependency format
-    {
-      package: {
-        name: '',
-        version: '',
-        description: '',
-        author: '',
-        image: ''
-      },
-      design: {
-        graph: { blocks: [], wires: [] }
-      },
-    }
-    */
-
     this.get = function(key) {
       if (key in project) {
         return project[key];
@@ -115,11 +100,14 @@ angular.module('icestudio')
       function _load(reset,originalBoard) {
         common.allDependencies = project.dependencies;
         var opt = { reset: reset || false, disabled: false };
-
           if(typeof originalBoard !== 'undefined' && originalBoard !== false) {
               for (var i=0; i < common.boards.length;i++){
                   if (String(common.boards[i].name) === String(originalBoard)){
                       opt.originalPinout = common.boards[i].pinout;
+
+                  }
+                  if(String(common.boards[i].name) === String(project.design.board)){
+                      opt.designPinout = common.boards[i].pinout;
                   }
               }
           }
@@ -270,7 +258,9 @@ angular.module('icestudio')
         switch(block.type) {
           case 'basic.input':
           case 'basic.output':
-            block.data = {
+          case 'basic.outputLabel':
+          case 'basic.inputLabel':
+                block.data = {
               name: block.data.label,
               pins: [{
                 index: '0',
@@ -539,6 +529,8 @@ angular.module('icestudio')
           switch (block.type) {
             case 'basic.input':
             case 'basic.output':
+            case 'basic.outputLabel':
+            case 'basic.inputLabel':
             case 'basic.constant':
             case 'basic.memory':
               break;
@@ -619,7 +611,10 @@ angular.module('icestudio')
       var i, pins;
       for (i in block.design.graph.blocks) {
         if (block.design.graph.blocks[i].type === 'basic.input' ||
-            block.design.graph.blocks[i].type === 'basic.output') {
+            block.design.graph.blocks[i].type === 'basic.output' ||
+            block.design.graph.blocks[i].type === 'basic.outputLabel'||
+ block.design.graph.blocks[i].type === 'inputLabel'
+        ) {
           if (block.design.graph.blocks[i].data.size === undefined) {
             pins = block.design.graph.blocks[i].data.pins;
             block.design.graph.blocks[i].data.size = (pins && pins.length > 1) ? pins.length : undefined;

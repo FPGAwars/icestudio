@@ -317,6 +317,11 @@
                   </li>
                 </ul>
               </li>
+               <li class="divider"></li>
+              <li>
+                <a href ng-click="showChromeDevTools()">{{ 'Chrome Dev Tools' | translate }}</a>
+              </li>
+
             </ul>
           </li>
 
@@ -362,6 +367,14 @@
                 <a href ng-click="project.addBasicBlock('basic.output')">
                   <div class="marker marker-yellow"></div>{{ 'Output' | translate }}
                 </a>
+                <a href ng-click="project.addBasicBlock('basic.outputLabel')">
+                  <div class="marker marker-yellow"></div>{{ 'Output label' | translate }}
+                </a>
+                 <a href ng-click="project.addBasicBlock('basic.inputLabel')">
+                  <div class="marker marker-yellow"></div>{{ 'Input label' | translate }}
+                </a>
+
+
                 <a href ng-click="project.addBasicBlock('basic.constant')">
                   <div class="marker marker-orange"></div>{{ 'Constant' | translate }}
                 </a>
@@ -374,6 +387,8 @@
                 <a href ng-click="project.addBasicBlock('basic.info')">
                   <div class="marker marker-gray"></div>{{ 'Information' | translate }}
                 </a>
+              
+              
               </li>
             </ul>
           </li>

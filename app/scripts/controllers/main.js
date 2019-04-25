@@ -3,7 +3,7 @@
 angular.module('icestudio')
   .controller('MainCtrl', function($scope,
                                    gettextCatalog) {
-
+ 
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
     alertify.defaults.transition = 'fade';
