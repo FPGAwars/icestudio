@@ -1157,13 +1157,9 @@ angular.module('icestudio')
             var cells = [];
             var blocksMap = {};
 
-
             opt = opt || {};
             // Blocks
             var isMigrated=false;
-
-
-            console.log('CReando GRAPH',_graph,opt);
 
             _.each(_graph.blocks, function(blockInstance) {
                 if (blockInstance.type.indexOf('basic.') !== -1) {
@@ -1178,16 +1174,11 @@ angular.module('icestudio')
                         //   selected by icestudio developers
                         var replaced=false;
 
-                        console.log('ORIGINAL',opt.originalPinout);
-                        console.log('DESTINO',opt.designPinout);
-                        console.log('-----------------------------');
                         for (var i in pins) {
                             replaced=false;
                             if(typeof opt.designPinout !== 'undefined'){
-                                console.log('MIGRANDO!');
                                 for(var opin=0; opin < opt.designPinout.length; opin++){
                                     if( String(opt.designPinout[opin].name) === String(pins[i].name) ) {
-                                        console.log('Reemplazando',pins[i],opt.designPinout[opin]);
                                         pins[i].name=opt.designPinout[opin].name;
                                         pins[i].value=opt.designPinout[opin].value;
                                         opin=opt.designPinout.length;
@@ -1226,7 +1217,6 @@ angular.module('icestudio')
            if(isMigrated) {
                alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
            }
-
 
             // Wires
             _.each(_graph.wires, function(wireInstance) {

@@ -100,9 +100,6 @@ angular.module('icestudio')
       function _load(reset,originalBoard) {
         common.allDependencies = project.dependencies;
         var opt = { reset: reset || false, disabled: false };
-        console.log('BOARDS',common.boards);
-        console.log('Original '+originalBoard);
-          console.log('Proyecto',project);
           if(typeof originalBoard !== 'undefined' && originalBoard !== false) {
               for (var i=0; i < common.boards.length;i++){
                   if (String(common.boards[i].name) === String(originalBoard)){
