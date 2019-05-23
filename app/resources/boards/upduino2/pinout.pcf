@@ -39,7 +39,7 @@ set_io --warn-no-port PIN_43 43
 set_io --warn-no-port PIN_34 34
 set_io --warn-no-port PIN_37 37
 set_io --warn-no-port PIN_31 31
-set_io --warn-no-port PIN_35 35
+set_io --warn-no-port PIN_36 36
 set_io --warn-no-port PIN_32 32
 set_io --warn-no-port PIN_27 27
 set_io --warn-no-port PIN_26 26
