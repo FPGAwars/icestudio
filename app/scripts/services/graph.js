@@ -359,6 +359,8 @@ angular.module('icestudio')
             });
 
             paper.on('cell:pointerclick', function(cellView, evt, x, y) {
+                //M+
+                console.log('CLICK');
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -380,6 +382,8 @@ angular.module('icestudio')
             });
 
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+                //M+
+                console.log('DOUBLE CLICK');
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -395,13 +399,20 @@ angular.module('icestudio')
                         }
                     }
                     else if (common.allDependencies[type]) {
+                        //M+
+                        console.log('Dentro');
                         // Navigate inside generic blocks
                         z.index = 1;
                         var project = common.allDependencies[type];
+                        //M+
+
+                        console.log('PROJECT',project);
+                        console.log('COMMON',common);
                         var breadcrumbsLength = self.breadcrumbs.length;
                         $rootScope.$broadcast('navigateProject', {
                             update: breadcrumbsLength === 1,
-                            project: project
+                            project: project,
+                            submodule: type
                         });
                         self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                         utils.rootScopeSafeApply();
@@ -755,12 +766,16 @@ angular.module('icestudio')
                 angular.element('.paper').removeClass('looks-disabled');
                 angular.element('.board-container').removeClass('looks-disabled');
                 angular.element('.banner').addClass('hidden');
+                if(!common.isEditingSubmodule)
+                    angular.element('.banner-submodule').addClass('hidden');
+
             }
             else {
                 angular.element('#menu').addClass('is-disabled');
                 angular.element('.paper').addClass('looks-disabled');
                 angular.element('.board-container').addClass('looks-disabled');
                 angular.element('.banner').removeClass('hidden');
+                angular.element('.banner-submodule').removeClass('hidden');
             }
             var cells = graph.getCells();
             _.each(cells, function(cell) {
@@ -779,7 +794,7 @@ angular.module('icestudio')
                         cellView.$el.find('.port-body').removeClass('disable-graph');
                     }
                     else {
-                        cellView.$el.find('.port-body').addClass('disable-graph');
+                      cellView.$el.find('.port-body').addClass('disable-graph');
                     }
                 }
             });
@@ -1115,7 +1130,8 @@ angular.module('icestudio')
                 $('body').addClass('waiting');
 
                 setTimeout(function() {
-
+                    //M+
+                    console.log('OPT',opt);
                     commandManager.stopListening();
 
                     self.clearAll();

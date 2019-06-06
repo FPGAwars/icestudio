@@ -1354,7 +1354,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
   update: function() {
     this.renderPorts();
-    this.editor.setReadOnly(this.model.get('disabled'));
+   this.editor.setReadOnly(this.model.get('disabled'));
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
@@ -1993,7 +1993,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   },
 
   update: function() {
-    this.editor.setReadOnly(this.model.get('disabled'));
+   this.editor.setReadOnly(this.model.get('disabled'));
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 

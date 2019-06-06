@@ -59,6 +59,10 @@
 .banner {
   position: relative;
 }
+.banner-submodule {
+  position: relative;
+}
+
 
 .info {
   position: absolute;
@@ -83,6 +87,23 @@
   cursor: default;
   z-index: 1501;
 }
+
+.edit-button {
+  position: absolute;
+  top: 40px;
+  right: 100px;
+  font-size: 14px;
+  color: #63afcf;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1501;
+}
+
+.edit-button:hover {
+  text-decoration: none;
+}
+
 
 .back-button {
   position: absolute;

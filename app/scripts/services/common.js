@@ -120,5 +120,5 @@ angular.module('icestudio')
     this.showDrivers = function () {
       return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || false;
     };
-
+    this.isEditingSubmodule=false;
   });
