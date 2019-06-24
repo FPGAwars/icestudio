@@ -555,7 +555,6 @@ angular.module('icestudio')
 
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
-        console.log('DATA',graphData);
       var p = utils.cellsToProject(graphData.cells, opt);
 
       project.design.board = p.design.board;
