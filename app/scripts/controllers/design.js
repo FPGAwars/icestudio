@@ -1,5 +1,8 @@
 'use strict';
 
+// Value of event.which on a middle click
+const MIDDLE_CLICK_EVENT = 2;
+
 angular.module('icestudio')
   .controller('DesignCtrl', function ($rootScope,
                                       $scope,
@@ -19,6 +22,44 @@ angular.module('icestudio')
     // Intialization
 
     graph.createPaper($('.paper'));
+
+    // Allow panning using middle click and drag
+
+    // Middle click panning management
+    var middleClickDown = false;
+    var startX, startY;
+    var startPan;
+
+    $(document).on('mousemove', '.paper', function(event) {
+      if (middleClickDown) {
+        // Calculate the mouse movement since the beginning of the move
+        const deltaX = event.clientX - startX;
+        const deltaY = event.clientY - startY;
+        // Add the deltas to the startPan to get the new pan
+        const newPan = {
+          x: startPan.x + deltaX,
+          y: startPan.y + deltaY,
+        };
+        // Apply the pan.
+        graph.panAndZoom.pan(newPan);
+      }
+    });
+
+    $(document).on('mousedown', '.paper', function(event) {
+      if (event.which === MIDDLE_CLICK_EVENT) {
+        middleClickDown = true;
+        // Get the current pan
+        startPan = graph.getState().pan;
+        // Get the mouse position
+        startX = event.clientX;
+        startY = event.clientY;
+      }
+    });
+    $(document).on('mouseup', '.paper', function() {
+      if (event.which === MIDDLE_CLICK_EVENT) {
+        middleClickDown = false;
+      }
+    });
 
     // Breadcrumbs
 
