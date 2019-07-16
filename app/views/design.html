@@ -6,7 +6,7 @@
     <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
   </div>
   <div class="banner-submodule hidden">
-    <a class="edit-button" ng-click="editModeToggle()">&nbsp;&lt;&nbsp;{{ 'edit' | translate }}&nbsp;</a>
+      <a class="edit-button" ng-click="editModeToggle($event)"><img src="resources/images/lock.png" data-lock="resources/images/lock.png" data-unlock="resources/images/unlock.png"></a>
   </div>
 
   <div class="paper"></div>

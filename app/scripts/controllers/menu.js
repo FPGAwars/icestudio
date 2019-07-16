@@ -164,6 +164,13 @@ angular.module('icestudio')
     };
 
     $scope.saveProject = function() {
+
+        if(typeof common.isEditingSubmodule !== 'undefined' &&
+        common.isEditingSubmodule ===true){
+            alert('Para guardar el diseño con tus submódulos, tendrás que bloquear de nuevo el módulo y volver al nivel inicial para guardar.');
+
+            return;
+        }
       var filepath = project.path;
       if (filepath) {
         project.save(filepath, function () {
@@ -177,6 +184,16 @@ angular.module('icestudio')
     };
 
     $scope.saveProjectAs = function(localCallback) {
+        if(typeof common.isEditingSubmodule !== 'undefined' &&
+
+        common.isEditingSubmodule ===true){
+            var answ=confirm('Estás editando un submódulo, si lo guardas, guardarás sólo el submódulo, ¿Continuamos?');
+            if(answ===false){
+                return;
+
+            }
+        }
+
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
         project.save(filepath, function () {
@@ -729,9 +746,9 @@ angular.module('icestudio')
         alertify.warning(gettextCatalog.getString('No collections stored'), 5);
       }
     };
-    
+
     $scope.showChromeDevTools = function() {
-        win.showDevTools(); 
+        win.showDevTools();
     };
 
     //-- Help

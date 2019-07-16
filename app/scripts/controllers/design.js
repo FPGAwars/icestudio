@@ -266,24 +266,52 @@ angular.module('icestudio')
 
    	return temp.toLowerCase();
 }
-    $scope.editModeToggle = function() {
+    $scope.editModeToggle = function($event) {
+
+      var btn = $event.currentTarget;
 
       if (!$scope.isNavigating) {
+
           console.log('T1-------');
           console.log(common);
            var block=graph.breadcrumbs[graph.breadcrumbs.length-1];
           var tmp = false;
            var rw=true;
           if(common.isEditingSubmodule){
+              var lockImg= $('img',btn);
+              var lockImgSrc =lockImg.attr('data-lock');
+              lockImg[0].src=lockImgSrc;
+              console.log('LOCK',lockImgSrc);
+
 
           console.log('T2-------',block);
                   common.isEditingSubmodule=false;
+      var cells = $scope.graph.getCells();
+
+      // Sort Constant/Memory cells by x-coordinate
+      cells = _.sortBy(cells, function(cell) {
+        if (cell.get('type') === 'ice.Constant' ||
+            cell.get('type') === 'ice.Memory') {
+          return cell.get('position').x;
+        }
+      });
+
+      // Sort I/O cells by y-coordinate
+      cells = _.sortBy(cells, function(cell) {
+        if (cell.get('type') === 'ice.Input' ||
+            cell.get('type') === 'ice.Output') {
+          return cell.get('position').y;
+        }
+      });
+
+      $scope.graph.setCells(cells);
 
                  var graphData = $scope.graph.toJSON();
                  var p = utils.cellsToProject(graphData.cells);
                   tmp = utils.clone(common.allDependencies[block.type]);
                   tmp.design.graph=p.design.graph;
-                  tmp.package.name+='.ts'+(Math.floor(Math.random() * 2000)+1000);
+
+                  // tmp.package.name+='.ts'+(Math.floor(Math.random() * 2000)+1000);
 
                   var hId=utils.dependencyID(tmp);
 
@@ -295,6 +323,11 @@ angular.module('icestudio')
 //                  console.log(common);
           }else{
           //+M
+              var lockImg= $('img',btn);
+              var lockImgSrc =lockImg.attr('data-unlock');
+              console.log('UNLOCK',lockImgSrc);
+              lockImg[0].src=lockImgSrc;
+
 
           console.log('31-------');
                 tmp = common.allDependencies[block.type];
@@ -349,6 +382,7 @@ angular.module('icestudio')
     }
 
     $rootScope.$on('navigateProject', function(event, args) {
+
       var opt = { disabled: true };
             if(typeof args.submodule !== 'undefined'){
 
@@ -393,8 +427,8 @@ angular.module('icestudio')
       utils.rootScopeSafeApply();
     });
 
-    $rootScope.$on('editModeToggle', function(/*event*/) {
-        $scope.editModeToggle();
+    $rootScope.$on('editModeToggle', function(event) {
+        $scope.editModeToggle(event);
         utils.rootScopeSafeApply();
     });
 

@@ -383,7 +383,7 @@ angular.module('icestudio')
 
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
                 //M+
-                console.log('DOUBLE CLICK');
+
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -399,6 +399,13 @@ angular.module('icestudio')
                         }
                     }
                     else if (common.allDependencies[type]) {
+                    if(typeof common.isEditingSubmodule !== 'undefined' &&
+                        common.isEditingSubmodule ===true){
+                        alert('Para entrar en otro módulo debes salir del modo edición de submódulos.');
+
+                        return;
+                    }
+
                         //M+
                         console.log('Dentro');
                         // Navigate inside generic blocks
