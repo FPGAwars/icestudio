@@ -446,14 +446,26 @@ angular.module('icestudio')
       var values = getProjectInformation();
       utils.projectinfoprompt(values, function(evt, newValues) {
         if (!_.isEqual(values, newValues)) {
-          graph.setInfo(values, newValues, project);
+          if(subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined'){
+          
+            graph.setBlockInfo(values, newValues, common.submoduleId);
+          }else{ 
+            graph.setInfo(values, newValues, project);
+          }
           alertify.success(gettextCatalog.getString('Project information updated'));
         }
       });
     };
 
     function getProjectInformation() {
-      var p = project.get('package');
+      console.log('GETPROJECTINFORMATION');
+      var p = false;
+     if(subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined'){
+       p=common.allDependencies[common.submoduleId].package;
+        
+      }else{
+        p=project.get('package');
+      }
       return [
         p.name,
         p.version,

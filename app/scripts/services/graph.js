@@ -893,6 +893,28 @@ angular.module('icestudio')
             graph.stopBatch('change');
             return newBoard;
         };
+        this.setBlockInfo = function(values, newValues,blockId ) {
+
+            if(typeof common.allDependencies === 'undefined') return false;
+
+            graph.startBatch('change');
+            // Trigger info event
+            var data = {
+                previous: values,
+                next: newValues
+            };
+            graph.trigger('info', { data: data });
+
+        
+            common.allDependencies[blockId].package.name= newValues[0];
+            common.allDependencies[blockId].package.version= newValues[1];
+            common.allDependencies[blockId].package.description= newValues[2];
+            common.allDependencies[blockId].package.author= newValues[3];
+            common.allDependencies[blockId].package.image= newValues[4];
+
+            graph.stopBatch('change');
+        };
+
 
         this.setInfo = function(values, newValues, project) {
             graph.startBatch('change');
