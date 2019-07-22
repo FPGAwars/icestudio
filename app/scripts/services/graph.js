@@ -1183,9 +1183,11 @@ angular.module('icestudio')
             opt = opt || {};
             // Blocks
             var isMigrated=false;
-
+            console.log('graphToCells',_graph);
             _.each(_graph.blocks, function(blockInstance) {
-                if (blockInstance.type.indexOf('basic.') !== -1) {
+                console.log(blockInstance);
+
+                if (blockInstance.type!== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
                         (blockInstance.type === 'basic.input' ||
                             blockInstance.type === 'basic.output')) {
@@ -1224,6 +1226,7 @@ angular.module('icestudio')
                         cell = blocks.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], opt.disabled);
                     }
                 }
+
                 blocksMap[cell.id] = cell;
                 if (opt.new) {
                     var oldId = cell.id;
@@ -1235,6 +1238,8 @@ angular.module('icestudio')
                 }
                 updateCellAttributes(cell);
                 cells.push(cell);
+
+
             });
 
            if(isMigrated) {
