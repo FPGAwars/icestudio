@@ -755,6 +755,9 @@ angular.module('icestudio')
         rightPorts: rightPorts,
         choices: common.pinoutInputHTML
       });
+
+
+
       return cell;
     }
 
@@ -819,6 +822,7 @@ angular.module('icestudio')
         leftPorts: leftPorts,
         choices: common.pinoutOutputHTML
         });
+        console.log('BASIC INPUT LABEL',utils.clone(cell));
       return cell;
     }
 

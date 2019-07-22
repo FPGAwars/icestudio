@@ -392,6 +392,8 @@ angular.module('icestudio')
                 if (!shiftPressed) {
                     // Allow dblClick if Shift is not pressed
                     var type =  cellView.model.get('blockType');
+                    var blockId=cellView.model.get('id');
+
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
                         if (paper.options.enabled) {
@@ -419,7 +421,8 @@ angular.module('icestudio')
                         $rootScope.$broadcast('navigateProject', {
                             update: breadcrumbsLength === 1,
                             project: project,
-                            submodule: type
+                            submodule: type,
+                            submoduleId:blockId
                         });
                         self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                         utils.rootScopeSafeApply();

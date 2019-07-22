@@ -1,5 +1,7 @@
 'use strict';
 
+var subModuleActive=false;
+
 angular.module('icestudio')
         .controller('DesignCtrl', function ($rootScope,
                 $scope,
@@ -286,6 +288,7 @@ angular.module('icestudio')
 
                                         console.log('T2-------', block);
                                         common.isEditingSubmodule = false;
+                                        subModuleActive=false;
                                         var cells = $scope.graph.getCells();
 
                                         // Sort Constant/Memory cells by x-coordinate
@@ -337,6 +340,7 @@ angular.module('icestudio')
                                         $scope.toRestore = false;
                                         rw = false;
                                         common.isEditingSubmodule = true;
+                                        subModuleActive = true;
                                 }
 
                                 console.log('T4-------');
@@ -357,13 +361,16 @@ angular.module('icestudio')
                                 var design = project.get('design');
                                 opt.disabled = false;
                                 console.log('--------------------------------------------------------------');
-                                console.log(design, common.submoduleId, $scope.toRestore);
+                                console.log(utils.clone(design), utils.clone(common.submoduleId), utils.clone($scope.toRestore));
                                 console.log('--------------------------------------------------------------');
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
 
-
+                                        /* Substitution all modules of the same type */
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
-                                                if (design.graph.blocks[i].type === common.submoduleId) {
+/*                                                if (design.graph.blocks[i].type === common.submoduleId) {
+                                                        design.graph.blocks[i].type = $scope.toRestore;
+                                                }*/
+                                                if(common.submoduleUID === design.graph.blocks[i].id){
                                                         design.graph.blocks[i].type = $scope.toRestore;
                                                 }
                                         }
@@ -397,7 +404,13 @@ angular.module('icestudio')
                                 common.submoduleId = args.submodule;
 
                         }
+                        if (typeof args.submoduleId !== 'undefined') {
 
+                                common.submoduleUID = args.submoduleId;
+
+                        }
+
+ 
                         if (typeof args.editMode !== 'undefined') {
                                 ;
                                 opt.disabled = args.editMode;

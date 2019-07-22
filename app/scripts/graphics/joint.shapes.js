@@ -828,7 +828,11 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   applyShape: function() {
     var data = this.model.get('data');
     var name = data.name + (data.range || '');
-    var virtual = data.virtual || this.model.get('disabled');
+    var virtual = data.virtual || this.model.get('disabled') || subModuleActive;
+
+
+    console.log('EDIT MODE',subModuleActive);
+    //|| (typeof common.isEditingSubmodule !==false && common.isEditingSubmodule===true);
 
     var $label = this.$box.find('label');
     $label.text(name || '');
