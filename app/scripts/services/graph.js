@@ -360,7 +360,6 @@ angular.module('icestudio')
 
             paper.on('cell:pointerclick', function(cellView, evt, x, y) {
                 //M+
-                console.log('CLICK');
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -382,7 +381,6 @@ angular.module('icestudio')
             });
 
             paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
-                //M+
 
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
@@ -408,15 +406,9 @@ angular.module('icestudio')
                         return;
                     }
 
-                        //M+
-                        console.log('Dentro');
                         // Navigate inside generic blocks
                         z.index = 1;
                         var project = common.allDependencies[type];
-                        //M+
-
-                        console.log('PROJECT',project);
-                        console.log('COMMON',common);
                         var breadcrumbsLength = self.breadcrumbs.length;
                         $rootScope.$broadcast('navigateProject', {
                             update: breadcrumbsLength === 1,
@@ -1162,8 +1154,6 @@ angular.module('icestudio')
                 $('body').addClass('waiting');
 
                 setTimeout(function() {
-                    //M+
-                    console.log('OPT',opt);
                     commandManager.stopListening();
 
                     self.clearAll();
@@ -1208,9 +1198,7 @@ angular.module('icestudio')
             opt = opt || {};
             // Blocks
             var isMigrated=false;
-            console.log('graphToCells',_graph);
             _.each(_graph.blocks, function(blockInstance) {
-                console.log(blockInstance);
 
                 if (blockInstance.type!== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&

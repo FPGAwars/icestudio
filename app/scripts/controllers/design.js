@@ -38,8 +38,6 @@ angular.module('icestudio')
                                                 item = graph.breadcrumbs.slice(-1)[0];
                                         }
                                         while (selectedItem !== item);
-
-                                        console.log('BACK', selectedItem, item);
                                         loadSelectedGraph();
                                 }
 
@@ -53,11 +51,7 @@ angular.module('icestudio')
                                 loadSelectedGraph();
                         }
                 };
-                /*   function copyObj(src) {
-                         return Object.assign({}, src);
-                   }*/
                 function copyObj(src) {
-                        console.log('Copiando');
                         let target = {};
                         for (let prop in src) {
                                 if (src.hasOwnProperty(prop)) {
@@ -66,7 +60,6 @@ angular.module('icestudio')
                         }
                         return target;
                 }
-
 
                 function md5(string) {
 
@@ -273,9 +266,6 @@ angular.module('icestudio')
                         var btn = $event.currentTarget;
 
                         if (!$scope.isNavigating) {
-
-                                console.log('T1-------');
-                                console.log(common);
                                 var block = graph.breadcrumbs[graph.breadcrumbs.length - 1];
                                 var tmp = false;
                                 var rw = true;
@@ -283,10 +273,6 @@ angular.module('icestudio')
                                         var lockImg = $('img', btn);
                                         var lockImgSrc = lockImg.attr('data-lock');
                                         lockImg[0].src = lockImgSrc;
-                                        console.log('LOCK', lockImgSrc);
-
-
-                                        console.log('T2-------', block);
                                         common.isEditingSubmodule = false;
                                         subModuleActive=false;
                                         var cells = $scope.graph.getCells();
@@ -298,7 +284,6 @@ angular.module('icestudio')
                                                         return cell.get('position').x;
                                                 }
                                         });
-
                                         // Sort I/O cells by y-coordinate
                                         cells = _.sortBy(cells, function (cell) {
                                                 if (cell.get('type') === 'ice.Input' ||
@@ -308,34 +293,18 @@ angular.module('icestudio')
                                         });
 
                                         $scope.graph.setCells(cells);
-
+                                        
                                         var graphData = $scope.graph.toJSON();
                                         var p = utils.cellsToProject(graphData.cells);
                                         tmp = utils.clone(common.allDependencies[block.type]);
                                         tmp.design.graph = p.design.graph;
-                                        /*              for(var prop in tmp.design.graph.blocks){
-                                        
-                                                            tmp.design.graph.blocks[prop].id=tmp.design.graph.blocks[prop].id+'-1';
-                                                      } */
-                                        // tmp.package.name+='.ts'+(Math.floor(Math.random() * 2000)+1000);
-                                        console.log('CLONE',utils.clone(tmp));
                                         var hId = utils.dependencyID(tmp);
-
-                                        //                   var hId='SUBM-'+md5(tmp.package.name);
                                         common.allDependencies[hId] = tmp;
-
-                                        console.log('SALIENDO', tmp, common.submoduleId, graph);
                                         $scope.toRestore = hId;
-                                        //                  console.log(common);
                                 } else {
-                                        //+M
                                         var lockImg = $('img', btn);
                                         var lockImgSrc = lockImg.attr('data-unlock');
-                                        console.log('UNLOCK', lockImgSrc);
                                         lockImg[0].src = lockImgSrc;
-
-
-                                        console.log('31-------');
                                         tmp = common.allDependencies[block.type];
                                         $scope.toRestore = false;
                                         rw = false;
@@ -343,7 +312,6 @@ angular.module('icestudio')
                                         subModuleActive = true;
                                 }
 
-                                console.log('T4-------');
                                 $rootScope.$broadcast('navigateProject', {
                                         update: false,
                                         project: tmp,
@@ -355,21 +323,18 @@ angular.module('icestudio')
 
 
                 function loadSelectedGraph() {
+
                         var n = graph.breadcrumbs.length;
                         var opt = { disabled: true };
+
+                        console.log(n,utils.clone(project));
                         if (n === 1) {
+
                                 var design = project.get('design');
                                 opt.disabled = false;
-                                console.log('--------------------------------------------------------------');
-                                console.log(utils.clone(design), utils.clone(common.submoduleId), utils.clone($scope.toRestore));
-                                console.log('--------------------------------------------------------------');
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
 
-                                        /* Substitution all modules of the same type */
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
-/*                                                if (design.graph.blocks[i].type === common.submoduleId) {
-                                                        design.graph.blocks[i].type = $scope.toRestore;
-                                                }*/
                                                 if(common.submoduleUID === design.graph.blocks[i].id){
                                                         design.graph.blocks[i].type = $scope.toRestore;
                                                 }
@@ -377,7 +342,7 @@ angular.module('icestudio')
 
 
                                         $scope.toRestore = false;
-                                }
+                        }
                                 graph.loadDesign(design, opt, function () {
                                         $scope.isNavigating = false;
                                 });
@@ -385,10 +350,21 @@ angular.module('icestudio')
                         }
                         else {
 
-                                console.log('DOS');
                                 var type = graph.breadcrumbs[n - 1].type;
                                 var dependency = common.allDependencies[type];
-                                graph.loadDesign(dependency.design, opt, function () {
+                                var design=dependency.design;
+                                if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
+
+                                        for (var i = 0; i < design.graph.blocks.length; i++) {
+                                                if(common.submoduleUID === design.graph.blocks[i].id){
+                                                        common.allDependencies[type].design.graph.blocks[i].type = $scope.toRestore;
+                                                }
+                                        }
+
+
+                                        $scope.toRestore = false;
+                                }
+                               graph.loadDesign(dependency.design, opt, function () {
                                         graph.fitContent();
                                         $scope.isNavigating = false;
                                 });
@@ -409,22 +385,16 @@ angular.module('icestudio')
                                 common.submoduleUID = args.submoduleId;
 
                         }
-
- 
                         if (typeof args.editMode !== 'undefined') {
-                                ;
+                                
                                 opt.disabled = args.editMode;
                         }
 
                         if (args.update) {
                                 // Update the main project
-                                //M+
                                 project.update({ deps: false }, function () {
-
-                                        console.log('LOADDESIGN UNO', args, common);
                                         graph.loadDesign(args.project.design, opt, function () {
                                                 graph.fitContent();
-
                                         });
 
                                 });
@@ -432,10 +402,6 @@ angular.module('icestudio')
                         }
                         else {
                                 graph.loadDesign(args.project.design, opt, function () {
-
-
-                                        console.log('LOADDESIGN DOS', args);
-                                        console.log('TO RESTORES', $scope.toRestore);
                                         graph.fitContent();
                                 });
                         }

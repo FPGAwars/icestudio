@@ -458,7 +458,6 @@ angular.module('icestudio')
     };
 
     function getProjectInformation() {
-      console.log('GETPROJECTINFORMATION');
       var p = false;
       if (subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined') {
         p = common.allDependencies[common.submoduleId].package;
