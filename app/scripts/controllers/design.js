@@ -1,6 +1,6 @@
 'use strict';
 
-var subModuleActive=false;
+var subModuleActive = false;
 
 angular.module('icestudio')
         .controller('DesignCtrl', function ($rootScope,
@@ -274,7 +274,7 @@ angular.module('icestudio')
                                         var lockImgSrc = lockImg.attr('data-lock');
                                         lockImg[0].src = lockImgSrc;
                                         common.isEditingSubmodule = false;
-                                        subModuleActive=false;
+                                        subModuleActive = false;
                                         var cells = $scope.graph.getCells();
 
                                         // Sort Constant/Memory cells by x-coordinate
@@ -293,7 +293,7 @@ angular.module('icestudio')
                                         });
 
                                         $scope.graph.setCells(cells);
-                                        
+
                                         var graphData = $scope.graph.toJSON();
                                         var p = utils.cellsToProject(graphData.cells);
                                         tmp = utils.clone(common.allDependencies[block.type]);
@@ -301,6 +301,8 @@ angular.module('icestudio')
                                         var hId = utils.dependencyID(tmp);
                                         common.allDependencies[hId] = tmp;
                                         $scope.toRestore = hId;
+
+                                        common.forceBack = true;
                                 } else {
                                         var lockImg = $('img', btn);
                                         var lockImgSrc = lockImg.attr('data-unlock');
@@ -310,6 +312,7 @@ angular.module('icestudio')
                                         rw = false;
                                         common.isEditingSubmodule = true;
                                         subModuleActive = true;
+
                                 }
 
                                 $rootScope.$broadcast('navigateProject', {
@@ -318,6 +321,7 @@ angular.module('icestudio')
                                         editMode: rw
                                 });
                                 utils.rootScopeSafeApply();
+
                         }
                 };
 
@@ -327,7 +331,7 @@ angular.module('icestudio')
                         var n = graph.breadcrumbs.length;
                         var opt = { disabled: true };
 
-                        console.log(n,utils.clone(project));
+
                         if (n === 1) {
 
                                 var design = project.get('design');
@@ -335,16 +339,16 @@ angular.module('icestudio')
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
 
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
-                                                if(common.submoduleUID === design.graph.blocks[i].id){
+                                                if (common.submoduleUID === design.graph.blocks[i].id) {
                                                         design.graph.blocks[i].type = $scope.toRestore;
                                                 }
                                         }
 
-
                                         $scope.toRestore = false;
-                        }
+                                }
                                 graph.loadDesign(design, opt, function () {
                                         $scope.isNavigating = false;
+
                                 });
                                 $scope.topModule = true;
                         }
@@ -352,21 +356,20 @@ angular.module('icestudio')
 
                                 var type = graph.breadcrumbs[n - 1].type;
                                 var dependency = common.allDependencies[type];
-                                var design=dependency.design;
+                                var design = dependency.design;
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
 
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
-                                                if(common.submoduleUID === design.graph.blocks[i].id){
+                                                if (common.submoduleUID === design.graph.blocks[i].id) {
                                                         common.allDependencies[type].design.graph.blocks[i].type = $scope.toRestore;
                                                 }
                                         }
-
-
                                         $scope.toRestore = false;
                                 }
-                               graph.loadDesign(dependency.design, opt, function () {
+                                graph.loadDesign(dependency.design, opt, function () {
                                         graph.fitContent();
                                         $scope.isNavigating = false;
+
                                 });
                                 $scope.information = dependency.package;
                         }
@@ -386,7 +389,7 @@ angular.module('icestudio')
 
                         }
                         if (typeof args.editMode !== 'undefined') {
-                                
+
                                 opt.disabled = args.editMode;
                         }
 
@@ -408,6 +411,11 @@ angular.module('icestudio')
                         $scope.topModule = false;
                         $scope.information = args.project.package;
                         utils.rootScopeSafeApply();
+                        if (typeof common.forceBack !== 'undefined' && common.forceBack === true) {
+                                common.forceBack = false;
+                                $scope.breadcrumbsBack();
+                        }
+
                 });
 
                 $rootScope.$on('breadcrumbsBack', function (/*event*/) {
@@ -418,5 +426,6 @@ angular.module('icestudio')
                 $rootScope.$on('editModeToggle', function (event) {
                         $scope.editModeToggle(event);
                         utils.rootScopeSafeApply();
+
                 });
         });
