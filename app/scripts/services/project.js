@@ -319,8 +319,16 @@ angular.module('icestudio')
     }
 
     this.save = function(filepath, callback) {
-      var name = utils.basename(filepath);
-      this.updateTitle(name);
+      var backupProject=false;
+     var name = utils.basename(filepath);
+      if(subModuleActive){
+        backupProject=utils.clone(project);
+
+      }else{
+ 
+          this.updateTitle(name);
+      }
+
       sortGraph();
       this.update();
 
@@ -344,9 +352,9 @@ angular.module('icestudio')
               if (success) {
                 // 4. Success: save project
                 doSaveProject();
-              }
+              } 
             });
-          }
+           }
         }
         else {
           // No included files to copy
@@ -359,9 +367,17 @@ angular.module('icestudio')
         // 4. Save project
         doSaveProject();
       }
+      if(subModuleActive)
+      {
+        project=utils.clone(backupProject);
+//        sortGraph();
+//        this.update();
 
+
+      }else{
       this.path = filepath;
       this.filepath = filepath;
+      }
 
       function doSaveProject() {
         utils.saveFile(filepath, pruneProject(project))
@@ -556,10 +572,12 @@ angular.module('icestudio')
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
       var p = utils.cellsToProject(graphData.cells, opt);
-
       project.design.board = p.design.board;
       project.design.graph = p.design.graph;
       project.dependencies = p.dependencies;
+      if(subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined'){
+        project.package=common.allDependencies[common.submoduleId].package;
+      } 
       var state = graph.getState();
       project.design.state = {
         pan: {
