@@ -780,8 +780,11 @@ angular.module('icestudio')
         '    <p><i>Visual editor for open FPGA boards</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
         '    <p>License: GPL-2.0</p>',
-        '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2018</p>',
+        '    <p>Authors:</p>',
+        '    <ul style="list-style:none;margin:10px;padding:0;">   <li>Jesús Arroyo Torrens (creator)</li>',
+        '           <li>Carlos Jesús Venegas Arrabé</li>',
+        '</ul>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2019</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
