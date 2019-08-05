@@ -111,6 +111,11 @@ angular.module('icestudio')
         linux: { label: 'Ctrl+V', ctrl: true, key: 86 },
         mac: { label: '⌘+V', meta: true, key: 86 }
       },
+      pasteAndCloneSelected: {
+        linux: { label: 'Ctrl+Shift+V', ctrl: true,shift:true, key: 86 },
+        mac: { label: 'Shit+⌘+V', meta: true, shift:true,key: 86 }
+      },
+
       selectAll: {
         linux: { label: 'Ctrl+A', ctrl: true, key: 65 },
         mac: { label: '⌘+A', meta: true, key: 65 }

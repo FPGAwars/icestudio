@@ -298,7 +298,9 @@ angular.module('icestudio')
                                         var p = utils.cellsToProject(graphData.cells);
                                         tmp = utils.clone(common.allDependencies[block.type]);
                                         tmp.design.graph = p.design.graph;
-                                        var hId = utils.dependencyID(tmp);
+                                        /*var hId = utils.dependencyID(tmp);*/
+
+                                        var hId=block.type;
                                         common.allDependencies[hId] = tmp;
                                         $scope.toRestore = hId;
 
@@ -337,7 +339,6 @@ angular.module('icestudio')
                                 var design = project.get('design');
                                 opt.disabled = false;
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
-
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
                                                 if (common.submoduleUID === design.graph.blocks[i].id) {
                                                         design.graph.blocks[i].type = $scope.toRestore;
@@ -348,17 +349,15 @@ angular.module('icestudio')
                                 }
                                 graph.loadDesign(design, opt, function () {
                                         $scope.isNavigating = false;
-
                                 });
                                 $scope.topModule = true;
                         }
                         else {
-
                                 var type = graph.breadcrumbs[n - 1].type;
                                 var dependency = common.allDependencies[type];
                                 var design = dependency.design;
                                 if ($scope.toRestore !== false && common.submoduleId !== false && design.graph.blocks.length > 0) {
-
+                                        //toRestoreLn=$scope.toRestore;
                                         for (var i = 0; i < design.graph.blocks.length; i++) {
                                                 if (common.submoduleUID === design.graph.blocks[i].id) {
                                                         common.allDependencies[type].design.graph.blocks[i].type = $scope.toRestore;
@@ -366,9 +365,10 @@ angular.module('icestudio')
                                         }
                                         $scope.toRestore = false;
                                 }
+                                
                                 graph.loadDesign(dependency.design, opt, function () {
                                         graph.fitContent();
-                                        $scope.isNavigating = false;
+                                        $scope.isNavigating = false; 
 
                                 });
                                 $scope.information = dependency.package;

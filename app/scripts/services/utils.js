@@ -934,10 +934,12 @@ angular.module('icestudio')
     };
 
     this.copyToClipboard = function(selection, graph) {
+
       var cells = selectionToCells(selection, graph);
       var clipboard = {
         icestudio: this.cellsToProject(cells, graph)
       };
+
       // Send the clipboard object the global clipboard as a string
       nodeCP.copy(JSON.stringify(clipboard), function() {
         // Success

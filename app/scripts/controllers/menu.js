@@ -380,6 +380,17 @@ angular.module('icestudio')
         }, 250);
       }
     };
+var pasteAndClone = true;
+    $scope.pasteAndCloneSelected = function () {
+      if (paste) {
+        pasteAndClone = false;
+        graph.pasteAndCloneSelected();
+        setTimeout(function () {
+          pasteAndClone = true;
+        }, 250);
+      }
+    };
+
 
     $scope.selectAll = function () {
       checkGraph()
@@ -447,8 +458,7 @@ angular.module('icestudio')
       utils.projectinfoprompt(values, function (evt, newValues) {
         if (!_.isEqual(values, newValues)) {
           if (subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined') {
-
-            graph.setBlockInfo(values, newValues, common.submoduleId);
+             graph.setBlockInfo(values, newValues, common.submoduleId);
           } else {
             graph.setInfo(values, newValues, project);
           }
@@ -852,7 +862,8 @@ angular.module('icestudio')
     shortcuts.method('redoGraph2', $scope.redoGraph);
     shortcuts.method('cutSelected', $scope.cutSelected);
     shortcuts.method('copySelected', $scope.copySelected);
-    shortcuts.method('pasteSelected', $scope.pasteSelected);
+    shortcuts.method('pasteAndCloneSelected', $scope.pasteAndCloneSelected);
+   shortcuts.method('pasteSelected', $scope.pasteSelected);
     shortcuts.method('selectAll', $scope.selectAll);
     shortcuts.method('fitContent', $scope.fitContent);
 

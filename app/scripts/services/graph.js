@@ -897,12 +897,12 @@ angular.module('icestudio')
             };
             graph.trigger('info', { data: data });
 
-        
             common.allDependencies[blockId].package.name= newValues[0];
             common.allDependencies[blockId].package.version= newValues[1];
             common.allDependencies[blockId].package.description= newValues[2];
             common.allDependencies[blockId].package.author= newValues[3];
-            common.allDependencies[blockId].package.image= newValues[4];
+            common.allDependencies[blockId].package.image = newValues[4];
+            
 
             graph.stopBatch('change');
         };
@@ -1029,6 +1029,48 @@ angular.module('icestudio')
                 });
             }
         };
+        this.pasteAndCloneSelected = function() {
+            if (document.activeElement.tagName === 'A' ||
+                document.activeElement.tagName === 'BODY')
+            {
+                utils.pasteFromClipboard(function(object) {
+                    if (object.version === common.VERSION) {
+                        console.log('ON PASTE',object);
+
+                        var hash={};
+                        // We will clone all dependencies
+                        if(typeof object.dependencies !== false && 
+                            object.dependencies!==false &&
+                            object.dependencies !== null){
+                        
+                                var dependencies=utils.clone(object.dependencies);
+                                object.dependencies={};
+                                var hId=false;
+
+                                for(var dep in dependencies){
+                                    dependencies[dep].package.name=dependencies[dep].package.name+' CLONE';
+                                    hId=utils.dependencyID(dependencies[dep]);
+                                    console.log('CLONE '+dep+' => '+hId);
+                                    object.dependencies[hId]=dependencies[dep];
+                                    hash[dep]=hId;
+                                }
+
+                                //reassign dependencies
+                                
+                                object.design.graph.blocks = object.design.graph.blocks.map(function(e){
+                                    if(typeof e.type !== 'undefined' &&
+                                        typeof hash[e.type] !== 'undefined'){
+                                            e.type=hash[e.type];
+                                    }
+                                    return e;
+                                });
+                        }
+                        self.appendDesign(object.design, object.dependencies);
+                    }
+                });
+            }
+        };
+
 
         this.selectAll = function() {
             disableSelected();
@@ -1149,7 +1191,8 @@ angular.module('icestudio')
                 design.graph.blocks &&
                 design.graph.wires) {
 
-                opt = opt || {};
+                    console.log('D',utils.clone(design),utils.clone(common));
+                    opt = opt || {};
 
                 $('body').addClass('waiting');
 
@@ -1295,7 +1338,6 @@ angular.module('icestudio')
                 design.graph.wires) {
 
                 selectionView.cancelSelection();
-
                 // Merge dependencies
                 for (var type in dependencies) {
                     if (!(type in common.allDependencies)) {
