@@ -401,8 +401,7 @@ angular.module('icestudio')
                     else if (common.allDependencies[type]) {
                     if(typeof common.isEditingSubmodule !== 'undefined' &&
                         common.isEditingSubmodule ===true){
-                        alert('Para entrar en otro módulo debes salir del modo edición de submódulos.');
-
+                        alertify.warning(gettextCatalog.getString('To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'));
                         return;
                     }
 
@@ -1035,7 +1034,6 @@ angular.module('icestudio')
             {
                 utils.pasteFromClipboard(function(object) {
                     if (object.version === common.VERSION) {
-                        console.log('ON PASTE',object);
 
                         var hash={};
                         // We will clone all dependencies
@@ -1049,8 +1047,11 @@ angular.module('icestudio')
 
                                 for(var dep in dependencies){
                                     dependencies[dep].package.name=dependencies[dep].package.name+' CLONE';
+                                    var seq=(new Date).getTime();
+                                    var oldversion=dependencies[dep].package.version.replace(/(.*)(-c\d*)/,"$1");
+                                    dependencies[dep].package.version = oldversion+'-c'+seq;
+
                                     hId=utils.dependencyID(dependencies[dep]);
-                                    console.log('CLONE '+dep+' => '+hId);
                                     object.dependencies[hId]=dependencies[dep];
                                     hash[dep]=hId;
                                 }
@@ -1191,7 +1192,6 @@ angular.module('icestudio')
                 design.graph.blocks &&
                 design.graph.wires) {
 
-                    console.log('D',utils.clone(design),utils.clone(common));
                     opt = opt || {};
 
                 $('body').addClass('waiting');

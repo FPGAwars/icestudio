@@ -28,7 +28,7 @@ angular.module('icestudio')
                 $scope.breadcrumbsNavitate = function (selectedItem) {
                         var item;
                         if (common.isEditingSubmodule) {
-                                alert('Debes salir del modo de edición');
+                                                alertify.warning(gettextCatalog.getString('To navigate through design, you need to close "edit mode".'));
                         } else {
                                 if (!$scope.isNavigating) {
                                         $scope.isNavigating = true;
