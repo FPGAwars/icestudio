@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', function($rootScope,
+    .service('graph', function ($rootScope,
         joint,
         boards,
         blocks,
@@ -31,12 +31,12 @@ angular.module('icestudio')
         this.breadcrumbs = [{ name: '', type: '' }];
         this.addingDraggableBlock = false;
 
-        this.getState = function() {
+        this.getState = function () {
             // Clone state
             return utils.clone(state);
         };
 
-        this.setState = function(_state) {
+        this.setState = function (_state) {
             if (!_state) {
                 _state = {
                     pan: {
@@ -50,16 +50,16 @@ angular.module('icestudio')
             this.panAndZoom.pan(_state.pan);
         };
 
-        this.resetView = function() {
+        this.resetView = function () {
             this.setState(null);
         };
 
-        this.fitContent = function() {
+        this.fitContent = function () {
             if (!this.isEmpty()) {
                 // Target box
                 var margin = 40;
                 var menuFooterHeight = 93;
-                var  winWidth = window.get().width;
+                var winWidth = window.get().width;
                 var winHeight = window.get().height;
 
                 var tbox = {
@@ -77,7 +77,7 @@ angular.module('icestudio')
                     height: sbox.height * state.zoom
                 };
                 var scale;
-                if (tbox.width/sbox.width > tbox.height/sbox.height) {
+                if (tbox.width / sbox.width > tbox.height / sbox.height) {
                     scale = tbox.height / sbox.height;
                 }
                 else {
@@ -101,20 +101,20 @@ angular.module('icestudio')
                     },
                     zoom: state.zoom * scale
                 });
-                $('.paper.joint-theme-default>svg').attr('height',winHeight);
-                $('.paper.joint-theme-default>svg').attr('width',winWidth);
+                $('.paper.joint-theme-default>svg').attr('height', winHeight);
+                $('.paper.joint-theme-default>svg').attr('width', winWidth);
             }
             else {
                 this.resetView();
             }
         };
 
-        this.resetBreadcrumbs = function(name) {
+        this.resetBreadcrumbs = function (name) {
             this.breadcrumbs = [{ name: name, type: '' }];
             utils.rootScopeSafeApply();
         };
 
-        this.createPaper = function(element) {
+        this.createPaper = function (element) {
             graph = new joint.dia.Graph();
             paper = new joint.dia.Paper({
                 el: element,
@@ -133,11 +133,11 @@ angular.module('icestudio')
                 //   // FALSE means the event isn't guarded.
                 //   return false;
                 // },
-                validateMagnet: function(cellView, magnet) {
+                validateMagnet: function (cellView, magnet) {
                     // Prevent to start wires from an input port
                     return (magnet.getAttribute('type') === 'output');
                 },
-                validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+                validateConnection: function (cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
                     // Prevent output-output links
                     if (magnetS && magnetS.getAttribute('type') === 'output' &&
                         magnetT && magnetT.getAttribute('type') === 'output') {
@@ -244,7 +244,7 @@ angular.module('icestudio')
                 if (!paper.options.warningTimer) {
                     paper.options.warningTimer = true;
                     alertify.warning(message, 5);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         paper.options.warningTimer = false;
                     }, 4000);
                 }
@@ -265,7 +265,7 @@ angular.module('icestudio')
                     eventsListenerElement: targetElement,
                     /*beforeZoom: function(oldzoom, newzoom) {
         },*/
-                    onZoom: function(scale) {
+                    onZoom: function (scale) {
                         state.zoom = scale;
                         // Close expanded combo
                         if (document.activeElement.className === 'select2-search__field') {
@@ -275,7 +275,7 @@ angular.module('icestudio')
                     },
                     /*beforePan: function(oldpan, newpan) {
         },*/
-                    onPan: function(newPan) {
+                    onPan: function (newPan) {
                         state.pan = newPan;
                         graph.trigger('state', state);
                         updateCellBoxes();
@@ -285,7 +285,7 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                _.each(cells, function(cell) {
+                _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cell.attributes.state = state;
                         var elementView = paper.findViewByModel(cell);
@@ -301,34 +301,34 @@ angular.module('icestudio')
 
             var shiftPressed = false;
 
-            $(document).on('keydown', function(evt) {
+            $(document).on('keydown', function (evt) {
                 if (utils.hasShift(evt)) {
                     shiftPressed = true;
                 }
             });
-            $(document).on('keyup', function(evt) {
+            $(document).on('keyup', function (evt) {
                 if (!utils.hasShift(evt)) {
                     shiftPressed = false;
                 }
             });
 
-            $(document).on('disableSelected', function() {
+            $(document).on('disableSelected', function () {
                 if (!shiftPressed) {
                     disableSelected();
                 }
             });
 
-            $('body').mousemove(function(event) {
+            $('body').mousemove(function (event) {
                 mousePosition = {
                     x: event.pageX,
                     y: event.pageY
                 };
             });
 
-            selectionView.on('selection-box:pointerdown', function(/*evt*/) {
+            selectionView.on('selection-box:pointerdown', function (/*evt*/) {
                 // Move selection to top view
                 if (hasSelection()) {
-                    selection.each(function(cell) {
+                    selection.each(function (cell) {
                         var cellView = paper.findViewByModel(cell);
                         if (!cellView.model.isLink()) {
                             if (cellView.$box.css('z-index') < z.index) {
@@ -339,7 +339,7 @@ angular.module('icestudio')
                 }
             });
 
-            selectionView.on('selection-box:pointerclick', function(evt) {
+            selectionView.on('selection-box:pointerclick', function (evt) {
                 if (self.addingDraggableBlock) {
                     // Set new block's position
                     self.addingDraggableBlock = false;
@@ -358,7 +358,7 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('cell:pointerclick', function(cellView, evt, x, y) {
+            paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
@@ -380,7 +380,7 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('cell:pointerdblclick', function(cellView, evt, x, y) {
+            paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
 
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
@@ -389,8 +389,8 @@ angular.module('icestudio')
                 selectionView.cancelSelection();
                 if (!shiftPressed) {
                     // Allow dblClick if Shift is not pressed
-                    var type =  cellView.model.get('blockType');
-                    var blockId=cellView.model.get('id');
+                    var type = cellView.model.get('blockType');
+                    var blockId = cellView.model.get('id');
 
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
@@ -399,11 +399,11 @@ angular.module('icestudio')
                         }
                     }
                     else if (common.allDependencies[type]) {
-                    if(typeof common.isEditingSubmodule !== 'undefined' &&
-                        common.isEditingSubmodule ===true){
-                        alertify.warning(gettextCatalog.getString('To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'));
-                        return;
-                    }
+                        if (typeof common.isEditingSubmodule !== 'undefined' &&
+                            common.isEditingSubmodule === true) {
+                            alertify.warning(gettextCatalog.getString('To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'));
+                            return;
+                        }
 
                         // Navigate inside generic blocks
                         z.index = 1;
@@ -413,7 +413,7 @@ angular.module('icestudio')
                             update: breadcrumbsLength === 1,
                             project: project,
                             submodule: type,
-                            submoduleId:blockId
+                            submoduleId: blockId
                         });
                         self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                         utils.rootScopeSafeApply();
@@ -431,7 +431,7 @@ angular.module('icestudio')
                 });
             }
 
-            paper.on('blank:pointerdown', function(evt, x, y) {
+            paper.on('blank:pointerdown', function (evt, x, y) {
                 // Disable current focus
                 document.activeElement.blur();
 
@@ -452,11 +452,11 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('blank:pointerup', function(/*cellView, evt*/) {
+            paper.on('blank:pointerup', function (/*cellView, evt*/) {
                 self.panAndZoom.disablePan();
             });
 
-            paper.on('cell:mouseover', function(cellView, evt) {
+            paper.on('cell:mouseover', function (cellView, evt) {
                 // Move selection to top view if !mousedown
                 if (!utils.hasButtonPressed(evt)) {
                     if (!cellView.model.isLink()) {
@@ -467,7 +467,7 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('cell:pointerup', function(cellView/*, evt*/) {
+            paper.on('cell:pointerup', function (cellView/*, evt*/) {
                 graph.trigger('batch:start');
                 processReplaceBlock(cellView.model);
                 graph.trigger('batch:stop');
@@ -476,11 +476,11 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('cell:pointermove', function(cellView/*, evt*/) {
+            paper.on('cell:pointermove', function (cellView/*, evt*/) {
                 debounceDisableReplacedBlock(cellView.model);
             });
 
-            selectionView.on('selection-box:pointermove', function(/*evt*/) {
+            selectionView.on('selection-box:pointermove', function (/*evt*/) {
                 if (self.addingDraggableBlock && hasSelection()) {
                     debounceDisableReplacedBlock(selection.at(0));
                 }
@@ -529,7 +529,7 @@ angular.module('icestudio')
                     var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
                     // 2. Reconnect the wires from the lowerBlock to the upperBlock
                     var wires = graph.getConnectedLinks(lowerBlock);
-                    _.each(wires, function(wire) {
+                    _.each(wires, function (wire) {
                         // Replace wire's source
                         replaceWireConnection(wire, 'source');
                         // Replace wire's target
@@ -613,8 +613,8 @@ angular.module('icestudio')
                 var upperPorts = upperBlock.get(portType);
                 var lowerPorts = lowerBlock.get(portType);
 
-                _.each(lowerPorts, function(lowerPort) {
-                    var matchedPorts = _.filter(upperPorts, function(upperPort) {
+                _.each(lowerPorts, function (lowerPort) {
+                    var matchedPorts = _.filter(upperPorts, function (upperPort) {
                         return lowerPort.name === upperPort.name &&
                             lowerPort.size === upperPort.size &&
                             !_.includes(usedUpperPorts, upperPort);
@@ -663,7 +663,7 @@ angular.module('icestudio')
                 disableReplacedBlock(lowerBlock);
             }, 100);
 
-            graph.on('add change:source change:target', function(cell) {
+            graph.on('add change:source change:target', function (cell) {
                 if (cell.isLink() && cell.get('source').id) {
                     // Link connected
                     var target = cell.get('target');
@@ -680,7 +680,7 @@ angular.module('icestudio')
                 }
             });
 
-            graph.on('remove', function(cell) {
+            graph.on('remove', function (cell) {
                 if (cell.isLink()) {
                     // Link removed
                     var target = cell.get('target');
@@ -718,18 +718,18 @@ angular.module('icestudio')
 
         function updateWiresOnObstacles() {
             var cells = graph.getCells();
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 if (cell.isLink()) {
                     paper.findViewByModel(cell).update();
                 }
             });
         }
 
-        this.setBoardRules = function(rules) {
+        this.setBoardRules = function (rules) {
             var cells = graph.getCells();
             profile.set('boardRules', rules);
 
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 if (!cell.isLink()) {
                     cell.attributes.rules = rules;
                     var cellView = paper.findViewByModel(cell);
@@ -738,7 +738,7 @@ angular.module('icestudio')
             });
         };
 
-        this.undo = function() {
+        this.undo = function () {
             if (!this.addingDraggableBlock) {
                 disableSelected();
                 commandManager.undo();
@@ -746,7 +746,7 @@ angular.module('icestudio')
             }
         };
 
-        this.redo = function() {
+        this.redo = function () {
             if (!this.addingDraggableBlock) {
                 disableSelected();
                 commandManager.redo();
@@ -754,20 +754,20 @@ angular.module('icestudio')
             }
         };
 
-        this.clearAll = function() {
+        this.clearAll = function () {
             graph.clear();
             this.appEnable(true);
             selectionView.cancelSelection();
         };
 
-        this.appEnable = function(value) {
+        this.appEnable = function (value) {
             paper.options.enabled = value;
             if (value) {
                 angular.element('#menu').removeClass('is-disabled');
                 angular.element('.paper').removeClass('looks-disabled');
                 angular.element('.board-container').removeClass('looks-disabled');
                 angular.element('.banner').addClass('hidden');
-                if(!common.isEditingSubmodule)
+                if (!common.isEditingSubmodule)
                     angular.element('.banner-submodule').addClass('hidden');
 
             }
@@ -779,7 +779,7 @@ angular.module('icestudio')
                 angular.element('.banner-submodule').removeClass('hidden');
             }
             var cells = graph.getCells();
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 var cellView = paper.findViewByModel(cell.id);
                 cellView.options.interactive = value;
                 if (cell.get('type') !== 'ice.Generic') {
@@ -795,30 +795,30 @@ angular.module('icestudio')
                         cellView.$el.find('.port-body').removeClass('disable-graph');
                     }
                     else {
-                      cellView.$el.find('.port-body').addClass('disable-graph');
+                        cellView.$el.find('.port-body').addClass('disable-graph');
                     }
                 }
             });
         };
 
-        this.createBlock = function(type, block) {
-            blocks.newGeneric(type, block, function(cell) {
+        this.createBlock = function (type, block) {
+            blocks.newGeneric(type, block, function (cell) {
                 self.addDraggableCell(cell);
             });
         };
 
-        this.createBasicBlock = function(type) {
-            blocks.newBasic(type, function(cells) {
+        this.createBasicBlock = function (type) {
+            blocks.newBasic(type, function (cells) {
                 self.addDraggableCells(cells);
             });
         };
 
-        this.addDraggableCell = function(cell) {
+        this.addDraggableCell = function (cell) {
             this.addingDraggableBlock = true;
             var menuHeight = $('#menu').height();
             cell.set('position', {
-                x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.get('size').width/2) / gridsize) * gridsize,
-                y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.get('size').height/2) / gridsize) * gridsize,
+                x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - cell.get('size').width / 2) / gridsize) * gridsize,
+                y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - cell.get('size').height / 2) / gridsize) * gridsize,
             });
             graph.trigger('batch:start');
             addCell(cell);
@@ -829,16 +829,16 @@ angular.module('icestudio')
             selectionView.startAddingSelection({ clientX: mousePosition.x, clientY: mousePosition.y });
         };
 
-        this.addDraggableCells = function(cells) {
+        this.addDraggableCells = function (cells) {
             this.addingDraggableBlock = true;
             var menuHeight = $('#menu').height();
             if (cells.length > 0) {
                 var firstCell = cells[0];
                 var offset = {
-                    x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCell.get('size').width/2) / gridsize) * gridsize - firstCell.get('position').x,
-                    y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCell.get('size').height/2) / gridsize) * gridsize - firstCell.get('position').y,
+                    x: Math.round(((mousePosition.x - state.pan.x) / state.zoom - firstCell.get('size').width / 2) / gridsize) * gridsize - firstCell.get('position').x,
+                    y: Math.round(((mousePosition.y - state.pan.y - menuHeight) / state.zoom - firstCell.get('size').height / 2) / gridsize) * gridsize - firstCell.get('position').y,
                 };
-                _.each(cells, function(cell) {
+                _.each(cells, function (cell) {
                     var position = cell.get('position');
                     cell.set('position', {
                         x: position.x + offset.x,
@@ -849,7 +849,7 @@ angular.module('icestudio')
                 addCells(cells);
                 disableSelected();
                 var opt = { transparent: true };
-                _.each(cells, function(cell) {
+                _.each(cells, function (cell) {
                     selection.add(cell);
                     selectionView.createSelectionBox(cell, opt);
                 });
@@ -857,19 +857,19 @@ angular.module('icestudio')
             }
         };
 
-        this.toJSON = function() {
+        this.toJSON = function () {
             return graph.toJSON();
         };
 
-        this.getCells = function() {
+        this.getCells = function () {
             return graph.getCells();
         };
 
-        this.setCells = function(cells) {
+        this.setCells = function (cells) {
             graph.attributes.cells.models = cells;
         };
 
-        this.selectBoard = function(board, reset) {
+        this.selectBoard = function (board, reset) {
             graph.startBatch('change');
             // Trigger board event
             var data = {
@@ -884,9 +884,9 @@ angular.module('icestudio')
             graph.stopBatch('change');
             return newBoard;
         };
-        this.setBlockInfo = function(values, newValues,blockId ) {
+        this.setBlockInfo = function (values, newValues, blockId) {
 
-            if(typeof common.allDependencies === 'undefined') return false;
+            if (typeof common.allDependencies === 'undefined') return false;
 
             graph.startBatch('change');
             // Trigger info event
@@ -896,18 +896,18 @@ angular.module('icestudio')
             };
             graph.trigger('info', { data: data });
 
-            common.allDependencies[blockId].package.name= newValues[0];
-            common.allDependencies[blockId].package.version= newValues[1];
-            common.allDependencies[blockId].package.description= newValues[2];
-            common.allDependencies[blockId].package.author= newValues[3];
+            common.allDependencies[blockId].package.name = newValues[0];
+            common.allDependencies[blockId].package.version = newValues[1];
+            common.allDependencies[blockId].package.description = newValues[2];
+            common.allDependencies[blockId].package.author = newValues[3];
             common.allDependencies[blockId].package.image = newValues[4];
-            
+
 
             graph.stopBatch('change');
         };
 
 
-        this.setInfo = function(values, newValues, project) {
+        this.setInfo = function (values, newValues, project) {
             graph.startBatch('change');
             // Trigger info event
             var data = {
@@ -925,7 +925,7 @@ angular.module('icestudio')
             graph.stopBatch('change');
         };
 
-        this.selectLanguage = function(language) {
+        this.selectLanguage = function (language) {
             graph.startBatch('change');
             // Trigger lang event
             var data = {
@@ -941,7 +941,7 @@ angular.module('icestudio')
         function resetBlocks() {
             var data, connectedLinks;
             var cells = graph.getCells();
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 if (cell.isLink()) {
                     return;
                 }
@@ -958,9 +958,9 @@ angular.module('icestudio')
                     data = utils.clone(cell.get('data'));
                     connectedLinks = graph.getConnectedLinks(cell);
                     if (data && data.ports && data.ports.in) {
-                        _.each(data.ports.in, function(port) {
+                        _.each(data.ports.in, function (port) {
                             var connected = false;
-                            _.each(connectedLinks, function(connectedLink) {
+                            _.each(connectedLinks, function (connectedLink) {
                                 if (connectedLink.get('target').port === port.name) {
                                     connected = true;
                                     return false;
@@ -975,13 +975,13 @@ angular.module('icestudio')
                 else if (type.indexOf('basic.') === -1) {
                     // Reset rules in Generic block ports
                     var block = common.allDependencies[type];
-                    data = { ports: { in: [] }};
+                    data = { ports: { in: [] } };
                     connectedLinks = graph.getConnectedLinks(cell);
                     if (block.design.graph.blocks) {
-                        _.each(block.design.graph.blocks, function(item) {
+                        _.each(block.design.graph.blocks, function (item) {
                             if (item.type === 'basic.input' && !item.data.range) {
                                 var connected = false;
-                                _.each(connectedLinks, function(connectedLink) {
+                                _.each(connectedLinks, function (connectedLink) {
                                     if (connectedLink.get('target').port === item.id) {
                                         connected = true;
                                         return false;
@@ -1000,71 +1000,69 @@ angular.module('icestudio')
             });
         }
 
-        this.resetCommandStack = function() {
+        this.resetCommandStack = function () {
             commandManager.reset();
         };
 
-        this.cutSelected = function() {
+        this.cutSelected = function () {
             if (hasSelection()) {
                 utils.copyToClipboard(selection, graph);
                 this.removeSelected();
             }
         };
 
-        this.copySelected = function() {
+        this.copySelected = function () {
             if (hasSelection()) {
                 utils.copyToClipboard(selection, graph);
             }
         };
 
-        this.pasteSelected = function() {
+        this.pasteSelected = function () {
             if (document.activeElement.tagName === 'A' ||
-                document.activeElement.tagName === 'BODY')
-            {
-                utils.pasteFromClipboard(function(object) {
+                document.activeElement.tagName === 'BODY') {
+                utils.pasteFromClipboard(function (object) {
                     if (object.version === common.VERSION) {
                         self.appendDesign(object.design, object.dependencies);
                     }
                 });
             }
         };
-        this.pasteAndCloneSelected = function() {
+        this.pasteAndCloneSelected = function () {
             if (document.activeElement.tagName === 'A' ||
-                document.activeElement.tagName === 'BODY')
-            {
-                utils.pasteFromClipboard(function(object) {
+                document.activeElement.tagName === 'BODY') {
+                utils.pasteFromClipboard(function (object) {
                     if (object.version === common.VERSION) {
 
-                        var hash={};
+                        var hash = {};
                         // We will clone all dependencies
-                        if(typeof object.dependencies !== false && 
-                            object.dependencies!==false &&
-                            object.dependencies !== null){
-                        
-                                var dependencies=utils.clone(object.dependencies);
-                                object.dependencies={};
-                                var hId=false;
+                        if (typeof object.dependencies !== false &&
+                            object.dependencies !== false &&
+                            object.dependencies !== null) {
 
-                                for(var dep in dependencies){
-                                    dependencies[dep].package.name=dependencies[dep].package.name+' CLONE';
-                                    var seq=(new Date).getTime();
-                                    var oldversion=dependencies[dep].package.version.replace(/(.*)(-c\d*)/,"$1");
-                                    dependencies[dep].package.version = oldversion+'-c'+seq;
+                            var dependencies = utils.clone(object.dependencies);
+                            object.dependencies = {};
+                            var hId = false;
 
-                                    hId=utils.dependencyID(dependencies[dep]);
-                                    object.dependencies[hId]=dependencies[dep];
-                                    hash[dep]=hId;
+                            for (var dep in dependencies) {
+                                dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
+                                var seq = (new Date).getTime();
+                                var oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, "$1");
+                                dependencies[dep].package.version = oldversion + '-c' + seq;
+
+                                hId = utils.dependencyID(dependencies[dep]);
+                                object.dependencies[hId] = dependencies[dep];
+                                hash[dep] = hId;
+                            }
+
+                            //reassign dependencies
+
+                            object.design.graph.blocks = object.design.graph.blocks.map(function (e) {
+                                if (typeof e.type !== 'undefined' &&
+                                    typeof hash[e.type] !== 'undefined') {
+                                    e.type = hash[e.type];
                                 }
-
-                                //reassign dependencies
-                                
-                                object.design.graph.blocks = object.design.graph.blocks.map(function(e){
-                                    if(typeof e.type !== 'undefined' &&
-                                        typeof hash[e.type] !== 'undefined'){
-                                            e.type=hash[e.type];
-                                    }
-                                    return e;
-                                });
+                                return e;
+                            });
                         }
                         self.appendDesign(object.design, object.dependencies);
                     }
@@ -1073,10 +1071,10 @@ angular.module('icestudio')
         };
 
 
-        this.selectAll = function() {
+        this.selectAll = function () {
             disableSelected();
             var cells = graph.getCells();
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 if (!cell.isLink()) {
                     selection.add(cell);
                     selectionView.createSelectionBox(cell);
@@ -1088,7 +1086,7 @@ angular.module('icestudio')
             return selection && selection.length > 0;
         }
 
-        this.removeSelected = function() {
+        this.removeSelected = function () {
             if (hasSelection()) {
                 graph.removeCells(selection.models);
                 selectionView.cancelSelection();
@@ -1104,19 +1102,19 @@ angular.module('icestudio')
 
         var stepValue = 8;
 
-        this.stepLeft = function() {
+        this.stepLeft = function () {
             performStep({ x: -stepValue, y: 0 });
         };
 
-        this.stepUp = function() {
+        this.stepUp = function () {
             performStep({ x: 0, y: -stepValue });
         };
 
-        this.stepRight = function() {
+        this.stepRight = function () {
             performStep({ x: stepValue, y: 0 });
         };
 
-        this.stepDown = function() {
+        this.stepDown = function () {
             performStep({ x: 0, y: stepValue });
         };
 
@@ -1139,12 +1137,12 @@ angular.module('icestudio')
                 // Move a step
                 step(offset);
                 // Launch timer
-                stepTimer = setTimeout(function() {
+                stepTimer = setTimeout(function () {
                     graph.stopBatch('change');
                 }, stepGroupingInterval);
                 // Reset counter
                 stepCounter = Date.now();
-                setTimeout(function() {
+                setTimeout(function () {
                     allowStep = true;
                 }, allosStepInterval);
             }
@@ -1153,12 +1151,12 @@ angular.module('icestudio')
         function step(offset) {
             var processedWires = {};
             // Translate blocks
-            selection.each(function(cell) {
+            selection.each(function (cell) {
                 cell.translate(offset.x, offset.y);
                 selectionView.updateBox(cell);
                 // Translate link vertices
                 var connectedWires = graph.getConnectedLinks(cell);
-                _.each(connectedWires, function(wire) {
+                _.each(connectedWires, function (wire) {
 
                     if (processedWires[wire.id]) {
                         return;
@@ -1167,7 +1165,7 @@ angular.module('icestudio')
                     var vertices = wire.get('vertices');
                     if (vertices && vertices.length) {
                         var newVertices = [];
-                        _.each(vertices, function(vertex) {
+                        _.each(vertices, function (vertex) {
                             newVertices.push({ x: vertex.x + offset.x, y: vertex.y + offset.y });
                         });
                         wire.set('vertices', newVertices);
@@ -1178,25 +1176,25 @@ angular.module('icestudio')
             });
         }
 
-        this.isEmpty = function() {
+        this.isEmpty = function () {
             return (graph.getCells().length === 0);
         };
 
-        this.isEnabled = function() {
+        this.isEnabled = function () {
             return paper.options.enabled;
         };
 
-        this.loadDesign = function(design, opt, callback) {
+        this.loadDesign = function (design, opt, callback) {
             if (design &&
                 design.graph &&
                 design.graph.blocks &&
                 design.graph.wires) {
 
-                    opt = opt || {};
+                opt = opt || {};
 
                 $('body').addClass('waiting');
 
-                setTimeout(function() {
+                setTimeout(function () {
                     commandManager.stopListening();
 
                     self.clearAll();
@@ -1240,10 +1238,10 @@ angular.module('icestudio')
 
             opt = opt || {};
             // Blocks
-            var isMigrated=false;
-            _.each(_graph.blocks, function(blockInstance) {
+            var isMigrated = false;
+            _.each(_graph.blocks, function (blockInstance) {
 
-                if (blockInstance.type!== false && blockInstance.type.indexOf('basic.') !== -1) {
+                if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
                         (blockInstance.type === 'basic.input' ||
                             blockInstance.type === 'basic.output')) {
@@ -1253,22 +1251,22 @@ angular.module('icestudio')
                         //   now is based on pin names, an improvement could be
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
-                        var replaced=false;
+                        var replaced = false;
 
                         for (var i in pins) {
-                            replaced=false;
-                            if(typeof opt.designPinout !== 'undefined'){
-                                for(var opin=0; opin < opt.designPinout.length; opin++){
-                                    if( String(opt.designPinout[opin].name) === String(pins[i].name) ) {
-                                        pins[i].name=opt.designPinout[opin].name;
-                                        pins[i].value=opt.designPinout[opin].value;
-                                        opin=opt.designPinout.length;
-                                        replaced=true;
-                                        isMigrated=true;
+                            replaced = false;
+                            if (typeof opt.designPinout !== 'undefined') {
+                                for (var opin = 0; opin < opt.designPinout.length; opin++) {
+                                    if (String(opt.designPinout[opin].name) === String(pins[i].name)) {
+                                        pins[i].name = opt.designPinout[opin].name;
+                                        pins[i].value = opt.designPinout[opin].value;
+                                        opin = opt.designPinout.length;
+                                        replaced = true;
+                                        isMigrated = true;
                                     }
                                 }
                             }
-                            if (replaced===false){
+                            if (replaced === false) {
                                 pins[i].name = '';
                                 pins[i].value = '0';
                             }
@@ -1298,19 +1296,19 @@ angular.module('icestudio')
 
             });
 
-           if(isMigrated) {
-               alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
-           }
+            if (isMigrated) {
+                alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
+            }
 
             // Wires
-            _.each(_graph.wires, function(wireInstance) {
+            _.each(_graph.wires, function (wireInstance) {
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
                 if (opt.offset) {
                     var newVertices = [];
                     var vertices = wireInstance.vertices;
                     if (vertices && vertices.length) {
-                        _.each(vertices, function(vertex) {
+                        _.each(vertices, function (vertex) {
                             newVertices.push({
                                 x: vertex.x + opt.offset.x,
                                 y: vertex.y + opt.offset.y
@@ -1330,7 +1328,7 @@ angular.module('icestudio')
             return cells;
         }
 
-        this.appendDesign = function(design, dependencies) {
+        this.appendDesign = function (design, dependencies) {
             if (design &&
                 dependencies &&
                 design.graph &&
@@ -1363,7 +1361,7 @@ angular.module('icestudio')
                 graph.addCells(cells);
 
                 // Select pasted elements
-                _.each(cells, function(cell) {
+                _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         var cellView = paper.findViewByModel(cell);
                         if (cellView.$box.css('z-index') < z.index) {
@@ -1378,7 +1376,7 @@ angular.module('icestudio')
 
         function graphOrigin(graph) {
             var origin = { x: Infinity, y: Infinity };
-            _.each(graph.blocks, function(block) {
+            _.each(graph.blocks, function (block) {
                 var position = block.position;
                 if (position.x < origin.x) {
                     origin.x = position.x;
@@ -1410,11 +1408,11 @@ angular.module('icestudio')
         }
 
         function addCells(cells) {
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 updateCellAttributes(cell);
             });
             graph.addCells(cells);
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 if (!cell.isLink()) {
                     var cellView = paper.findViewByModel(cell);
                     if (cellView.$box.css('z-index') < z.index) {
@@ -1424,10 +1422,10 @@ angular.module('icestudio')
             });
         }
 
-        this.resetCodeErrors = function() {
+        this.resetCodeErrors = function () {
             var cells = graph.getCells();
-            return new Promise(function(resolve) {
-                _.each(cells, function(cell) {
+            return new Promise(function (resolve) {
+                _.each(cells, function (cell) {
                     var cellView;
                     if (cell.get('type') === 'ice.Code') {
                         cellView = paper.findViewByModel(cell);
@@ -1447,9 +1445,9 @@ angular.module('icestudio')
             });
         };
 
-        $(document).on('codeError', function(evt, codeError) {
+        $(document).on('codeError', function (evt, codeError) {
             var cells = graph.getCells();
-            _.each(cells, function(cell) {
+            _.each(cells, function (cell) {
                 var blockId, cellView;
                 if ((codeError.blockType === 'code' && cell.get('type') === 'ice.Code') ||
                     (codeError.blockType === 'constant' && cell.get('type') === 'ice.Constant')) {

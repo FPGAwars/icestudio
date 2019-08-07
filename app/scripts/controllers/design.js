@@ -28,7 +28,7 @@ angular.module('icestudio')
                 $scope.breadcrumbsNavitate = function (selectedItem) {
                         var item;
                         if (common.isEditingSubmodule) {
-                                                alertify.warning(gettextCatalog.getString('To navigate through design, you need to close "edit mode".'));
+                                alertify.warning(gettextCatalog.getString('To navigate through design, you need to close "edit mode".'));
                         } else {
                                 if (!$scope.isNavigating) {
                                         $scope.isNavigating = true;
@@ -300,7 +300,7 @@ angular.module('icestudio')
                                         tmp.design.graph = p.design.graph;
                                         /*var hId = utils.dependencyID(tmp);*/
 
-                                        var hId=block.type;
+                                        var hId = block.type;
                                         common.allDependencies[hId] = tmp;
                                         $scope.toRestore = hId;
 
@@ -365,10 +365,10 @@ angular.module('icestudio')
                                         }
                                         $scope.toRestore = false;
                                 }
-                                
+
                                 graph.loadDesign(dependency.design, opt, function () {
                                         graph.fitContent();
-                                        $scope.isNavigating = false; 
+                                        $scope.isNavigating = false;
 
                                 });
                                 $scope.information = dependency.package;

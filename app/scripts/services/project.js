@@ -615,6 +615,14 @@ angular.module('icestudio')
       if (block) {
         block = _safeLoad(block);
         block = pruneBlock(block);
+        if(block.package.name.toLowerCase().indexOf('generic-')===0){
+          console.log('Detectado GENERIC');
+          var seq = (new Date).getTime();
+
+          block.package.otid=seq;
+        }
+        console.log('ADDBLOCL',block);
+
         var type = utils.dependencyID(block);
         utils.mergeDependencies(type, block);
         graph.createBlock(type, block);
