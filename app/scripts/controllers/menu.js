@@ -40,6 +40,8 @@ angular.module('icestudio')
     var changedUndoStack = [];
     var currentUndoStack = [];
 
+
+
     // Window events
     var win = gui.Window.get();
     win.on('close', function () {
@@ -48,8 +50,7 @@ angular.module('icestudio')
     win.on('resize', function () {
       graph.fitContent();
     });
-
-    // Darwin fix for shortcuts
+        // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
       var mb = new gui.Menu({ type: 'menubar' });
       mb.createMacBuiltin('Icestudio');
@@ -65,7 +66,7 @@ angular.module('icestudio')
       // Parse GET url parmeters for window instance arguments
       // all arguments will be embeded in icestudio_argv param
       // that is a JSON string url encoded
-
+ 
       // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
       // unescape is deprecated javascript function, should use decodeURI instead
 
@@ -84,7 +85,7 @@ angular.module('icestudio')
         for (var prop in params) {
           gui.App.argv.push(params[prop]);
         }
-      }
+       }
 
       var local = false;
       for (var i in gui.App.argv) {
@@ -100,13 +101,17 @@ angular.module('icestudio')
       }
       else {
         project.path = '';
-      }
+      } 
 
+      var versionW=$scope.profile.get('displayVersionInfoWindow'); 
+      if( versionW === 'yes' ){
+        $('#version-info-tab').removeClass('hidden');
+      }
     }, 0);
 
     function processArg(arg) {
-      if (nodeFs.existsSync(arg)) {
-        // Open filepath
+      if (nodeFs.existsSync(arg))  {
+        // Open filepath 
         var filepath = arg;
         project.open(filepath);
       }
@@ -119,8 +124,28 @@ angular.module('icestudio')
         };
         win.moveTo(offset.x, offset.y);
       }
-    }
+    } 
 
+    /*
+     * This function triggers when version info window will be closed 
+     *                                                                 */
+    $scope.closeVersionInfoWindow = function () {
+      $('#version-info-tab').addClass('hidden');
+      var nodisplay=$('input[name="version-info-tab--no-display"]').is(':checked');
+      if(nodisplay){
+          profile.set('displayVersionInfoWindow','no'); 
+      }else{
+          profile.set('displayVersionInfoWindow','yes'); 
+      }
+    };
+
+    $scope.openVersionInfoWindow = function () {
+      $('#version-info-tab').removeClass('hidden');
+      var versionW=$scope.profile.get('displayVersionInfoWindow');
+      if( versionW === 'no' ){
+        $('input[name="version-info-tab--no-display"]').prop('checked',true);
+      }
+    };
 
     //-- File
 

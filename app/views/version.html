@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<div id="version-info-tab" ng-controller="MenuCtrl"  class="hidden">
+    <div class="version-info-tab--bg"></div>
+    <div class="version-info-tab--body">
+        <div class="version-info-tab--body--content">
+            <h1>{{ 'August 2019 (version 0.5.0-dev-inception)' | translate }}</h1>
+            <hr>
+            <p>{{ 'Wellcome to "Inception" Icestudio version. This version is focused on submodules.' | translate }}</p>
+            <p>{{ 'With this version we try to' | translate }}</p>
+        </div>
+    <div class="version-info-tab--options">
+        <div class="version-info-tab--options--group"><input type="checkbox" name="version-info-tab--no-display"><label for="version-info-tab--no-display">{{ 'Don\'t display' | translate }}</label></div>
+        <div class="version-info-tab--options--group"></div>
+        <div class="version-info-tab--options--group util--text-align-right"><button ng-click="closeVersionInfoWindow()" >{{ 'Close' | translate }}</button></div>
+    </div>
+
+    </div>
+</div>
