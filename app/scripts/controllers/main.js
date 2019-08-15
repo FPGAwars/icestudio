@@ -19,4 +19,15 @@ angular.module('icestudio')
       alertify.set('confirm', 'labels', labels);
     }, 100);
 
+    /* Functions that checks if new version is available */
+    function checkForNewVersion(){
+      var notification = alertify.notify('<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
+                                          <div class="new-version-notifier-box--text">There is a new version available<br/><a href="">Click here to download it.</a></div></div>', 'notify',30, function(){  console.log('Notification hide'); });
+    }
+
+    setTimeout(function(){
+    checkForNewVersion();
+
+      },30000);
+
   });
