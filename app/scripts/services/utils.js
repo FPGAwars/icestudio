@@ -1185,4 +1185,8 @@ angular.module('icestudio')
       $('body').removeClass('waiting');
     };
 
+    this.isFunction = function (functionToCheck) {
+      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+     };
+
   });

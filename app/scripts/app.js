@@ -27,7 +27,10 @@ angular
                 collections,
                 gettextCatalog,
                 $timeout)
-   {
+   
+                {
+
+                  console.log('APP.RUN');
     $timeout(function(){
       $('body').addClass('waiting');
     }, 0);

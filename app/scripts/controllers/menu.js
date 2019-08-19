@@ -41,7 +41,6 @@ angular.module('icestudio')
     var currentUndoStack = [];
 
 
-
     // Window events
     var win = gui.Window.get();
     win.on('close', function () {
@@ -192,7 +191,8 @@ angular.module('icestudio')
 
       if (typeof common.isEditingSubmodule !== 'undefined' &&
         common.isEditingSubmodule === true) {
-        alert('Para guardar el diseño con tus submódulos, tendrás que bloquear de nuevo el módulo y volver al nivel inicial para guardar.');
+        alertify.alert(gettextCatalog.getString('Save submodule'), 
+                       gettextCatalog.getString('To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'), function(){ });
 
         return;
       }
@@ -208,16 +208,7 @@ angular.module('icestudio')
       }
     };
 
-    $scope.saveProjectAs = function (localCallback) {
-      if (typeof common.isEditingSubmodule !== 'undefined' &&
-
-        common.isEditingSubmodule === true) {
-        var answ = confirm('Estás editando un submódulo, si lo guardas, guardarás sólo el submódulo, ¿Continuamos?');
-        if (answ === false) {
-          return;
-
-        }
-      }
+    $scope.doSaveProjectAs = function(localCallback){
 
       utils.saveDialog('#input-save-project', '.ice', function (filepath) {
         updateWorkingdir(filepath);
@@ -229,6 +220,35 @@ angular.module('icestudio')
           localCallback();
         }
       });
+
+
+
+    }
+    $scope.saveProjectAs = function (localCallback) {
+      if (typeof common.isEditingSubmodule !== 'undefined' &&
+
+        common.isEditingSubmodule === true) {
+        alertify.confirm(gettextCatalog.getString('Export submodule'), gettextCatalog.getString('You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'), 
+                function(){
+
+          $scope.doSaveProjectAs(localCallback);
+
+                 }
+            , function(){ 
+
+
+          
+          
+          }
+            
+            );
+
+
+      }else{
+          $scope.doSaveProjectAs(localCallback);
+
+      }
+
     };
 
     function reloadCollectionsIfRequired(filepath) {
@@ -909,24 +929,24 @@ var pasteAndClone = true;
         removeSelected();
       }
       else {
-        $rootScope.$broadcast('breadcrumbsBack');
+        $rootScope.$broadcast('breadcrumbsBack'); 
       }
     });
 
     shortcuts.method('takeSnapshot', takeSnapshot);
-
-    // Detect shortcuts
 
     $(document).on('keydown', function (event) {
       var opt = {
         prompt: promptShown,
         disabled: !graph.isEnabled()
       };
-
+      event.stopImmediatePropagation();
       var ret = shortcuts.execute(event, opt);
-      if (ret.preventDefault) {
-        event.preventDefault();
-      }
+        if (ret.preventDefault) {
+          event.preventDefault();
+        }
+        
+
     });
 
     function takeSnapshot() {
@@ -964,7 +984,10 @@ var pasteAndClone = true;
     $(document).on('mousedown', '.paper', function () {
       mousedown = true;
       // Close current menu
-      $scope.status[menu] = false;
+      if(typeof $scope.status !== 'undefined' &&
+         typeof $scope.status[menu] !== 'undefined'){
+              $scope.status[menu] = false;
+           }
       utils.rootScopeSafeApply();
     });
 

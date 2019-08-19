@@ -12,7 +12,7 @@ angular.module('icestudio')
                                gettextCatalog,
                                nodeFs,
                                nodePath) {
-
+console.log('PROJECT');
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
     this.filepath = ''; // Used to find external resources (.v, .vh, .list)
