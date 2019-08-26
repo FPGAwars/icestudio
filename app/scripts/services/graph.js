@@ -1304,7 +1304,7 @@ angular.module('icestudio')
 
             function getBlocksFromLib(id){
                 for(var dep in common.allDependencies){
-                    console.log('Chequeando '+id+' '+dep);
+//                    console.log('Chequeando '+id+' '+dep);
                     if(id===dep){
                         return common.allDependencies[dep].design.graph.blocks;
                     }
@@ -1331,15 +1331,21 @@ angular.module('icestudio')
                     } 
                 }
                 if(founded !== false){
-                    console.log('BLK FOUND',blk[founded]);
+                   console.log('BLK FOUND',blk[founded]);
                     switch(blk[founded].type){
-                        case 'basic.code': case 'basic.input': case 'basic.output':founded=true; break;
+                      case 'basic.memory':
+                      case 'basic.constant':  
+                      case 'basic.outputLabel': case 'basic.inputLabel': 
+                      case 'basic.code': 
+                      case 'basic.input': case 'basic.output':
+                          founded=true; 
+                          break;
                     
                         default:
-                            console.log('Match bloque OK',blk[founded]);
+              //              console.log('Match bloque OK',blk[founded]);
                             /* Generic type, look into the library */
                             blk2=getBlocksFromLib(blk[i].type);
-                            console.log('Lib',blk2);
+ //                           console.log('Lib',blk2);
                             founded=outputExists(wre[edge].port,blk2);                            
                     }
                 }
@@ -1347,29 +1353,29 @@ angular.module('icestudio')
             }
 
             // Wires
-            console.log('WIRES',_graph.wires);
-            console.log('COMMON',common);
-            console.log('GRAPH',_graph);
+//            console.log('WIRES',_graph.wires);
+ //           console.log('COMMON',common);
+  //          console.log('GRAPH',_graph);
             var test=false;
              var todelete=[];
 
             for(var i=0;i<_graph.wires.length;i++){
-                console.log('---Testeamos la entrada');
+//                console.log('---Testeamos la entrada');
                 test=wireExists(_graph.wires[i],_graph.blocks,'source');
                 if(test){
-                     console.log('-----Encontrado,testeamos la salida');
+//                     console.log('-----Encontrado,testeamos la salida');
 
                     test=wireExists(_graph.wires[i],_graph.blocks,'target');
                     if(test===true){
-                        console.log('DEFINITIVAMENTE ENCONTRADO');
+//                        console.log('DEFINITIVAMENTE ENCONTRADO');
                     }else{
-                        console.log('ELIMINAR 1');
+  //                      console.log('ELIMINAR 1');
 
                         todelete.push(i);
                     }
                 }else{
 
-                    console.log('ELIMINAR 2');
+//                    console.log('ELIMINAR 2');
                     todelete.push(i);
                 }
             } 
