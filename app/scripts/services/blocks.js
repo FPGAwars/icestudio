@@ -978,8 +978,8 @@ angular.module('icestudio')
         }
       }
 
-      var size = instance.size;
-
+//      var size = instance.size;
+      var size=false;
       if (!size) {
         var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
         var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);

@@ -277,6 +277,18 @@ angular.module('icestudio')
                                         subModuleActive = false;
                                         var cells = $scope.graph.getCells();
 
+                                       /* _.each(cells, function (cell) {
+                                                if (!cell.isLink()) {
+                                                    var elementView = graph.paper.findViewByModel(cell);
+                                                    // Pan blocks
+                                                    elementView.updateBox();
+                                                    // Pan selection boxes
+                                                    selectionView.updateBox(elementView.model);
+                                                }
+                                            });
+*/
+
+
                                         // Sort Constant/Memory cells by x-coordinate
                                         cells = _.sortBy(cells, function (cell) {
                                                 if (cell.get('type') === 'ice.Constant' ||
@@ -291,8 +303,7 @@ angular.module('icestudio')
                                                         return cell.get('position').y;
                                                 }
                                         });
-
-                                        $scope.graph.setCells(cells);
+                                       $scope.graph.setCells(cells);
 
                                         var graphData = $scope.graph.toJSON();
                                         var p = utils.cellsToProject(graphData.cells);
@@ -348,6 +359,8 @@ angular.module('icestudio')
                                         $scope.toRestore = false;
                                 }
                                 graph.loadDesign(design, opt, function () {
+
+                                        console.log('PADRE');
                                         $scope.isNavigating = false;
                                 });
                                 $scope.topModule = true;
@@ -367,6 +380,7 @@ angular.module('icestudio')
                                 }
 
                                 graph.loadDesign(dependency.design, opt, function () {
+                                        console.log('hijo');
                                         graph.fitContent();
                                         $scope.isNavigating = false;
 
@@ -397,6 +411,7 @@ angular.module('icestudio')
                                 // Update the main project
                                 project.update({ deps: false }, function () {
                                         graph.loadDesign(args.project.design, opt, function () {
+                                                console.log('TOP');
                                                 graph.fitContent();
                                         });
 
@@ -405,6 +420,7 @@ angular.module('icestudio')
                         }
                         else {
                                 graph.loadDesign(args.project.design, opt, function () {
+                                        console.log('PRETOP');
                                         graph.fitContent();
                                 });
                         }

@@ -116,6 +116,7 @@ angular.module('icestudio')
 
         this.createPaper = function (element) {
             graph = new joint.dia.Graph();
+        
             paper = new joint.dia.Paper({
                 el: element,
                 width: 2000,
@@ -220,6 +221,7 @@ angular.module('icestudio')
                 }
             });
 
+            
             // Command Manager
 
             commandManager = new joint.dia.CommandManager({
@@ -524,6 +526,7 @@ angular.module('icestudio')
             }
 
             function replaceBlock(upperBlock, lowerBlock) {
+                
                 if (lowerBlock) {
                     // 1. Compute portsMap between the upperBlock and the lowerBlock
                     var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
@@ -1200,7 +1203,20 @@ angular.module('icestudio')
                     self.clearAll();
 
                     var cells = graphToCells(design.graph, opt);
+//                                        var cells = $scope.graph.getCells();
 
+                    var update=false;
+                    _.each(cells,function(cell){
+//                        console.log(cell);
+                        if(cell.attributes.type==='ice.Generic'){                         
+                            console.log(cell);
+                            update=true;
+                        }
+
+                    });
+                    if(update){
+                        console.log('JOINT',joint);
+                    }
                     graph.addCells(cells);
 
                     self.setState(design.state);
