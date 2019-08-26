@@ -728,16 +728,28 @@ var pasteAndClone = true;
     //-- Tools
 
     $scope.verifyCode = function () {
+      console.log('Verificando 0');
       var startMessage = gettextCatalog.getString('Start verification');
       var endMessage = gettextCatalog.getString('Verification done');
       checkGraph()
         .then(function () {
+          console.log('Aceptada la promesa')
           return tools.verifyCode(startMessage, endMessage);
         })
-        .catch(function () { });
+        .catch(function () {
+
+         });
     };
 
     $scope.buildCode = function () {
+      if (typeof common.isEditingSubmodule !== 'undefined' &&
+        common.isEditingSubmodule === true) {
+        alertify.alert(gettextCatalog.getString('Build'), 
+                       gettextCatalog.getString('You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>'), function(){ });
+
+        return;
+      }
+
       var startMessage = gettextCatalog.getString('Start build');
       var endMessage = gettextCatalog.getString('Build done');
       checkGraph()
@@ -751,6 +763,15 @@ var pasteAndClone = true;
     };
 
     $scope.uploadCode = function () {
+ if (typeof common.isEditingSubmodule !== 'undefined' &&
+        common.isEditingSubmodule === true) {
+        alertify.alert(gettextCatalog.getString('Upload'), 
+                       gettextCatalog.getString('You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>'), function(){ });
+
+        return;
+      }
+
+
       var startMessage = gettextCatalog.getString('Start upload');
       var endMessage = gettextCatalog.getString('Upload done');
       checkGraph()
@@ -765,10 +786,13 @@ var pasteAndClone = true;
 
     function checkGraph() {
       return new Promise(function (resolve, reject) {
+        console.log(resolve,reject);
         if (!graph.isEmpty()) {
+          console.log('No isEmpty');
           resolve();
         }
         else {
+          console.log('Empty');
           if (resultAlert) {
             resultAlert.dismiss(true);
           }

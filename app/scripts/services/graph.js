@@ -1331,7 +1331,7 @@ angular.module('icestudio')
                     } 
                 }
                 if(founded !== false){
-                   console.log('BLK FOUND',blk[founded]);
+                 //  console.log('BLK FOUND',blk[founded]);
                     switch(blk[founded].type){
                       case 'basic.memory':
                       case 'basic.constant':  

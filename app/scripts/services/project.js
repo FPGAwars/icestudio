@@ -12,12 +12,11 @@ angular.module('icestudio')
                                gettextCatalog,
                                nodeFs,
                                nodePath) {
-console.log('PROJECT');
     this.name = '';  // Used in File dialogs
     this.path = '';  // Used in Save / Save as
     this.filepath = ''; // Used to find external resources (.v, .vh, .list)
     this.changed = false;
-
+    this.backup  =false;
     var project = _default();
 
     function _default() {
@@ -568,7 +567,13 @@ console.log('PROJECT');
 
       return _project;
     }
+    this.snapshot = function(){
+      this.backup=utils.clone(project);
+    }
+    this.restoreSnapshot =function(){
+      project=utils.clone(this.backup);
 
+    }
     this.update = function(opt, callback) {
       var graphData = graph.toJSON();
       var p = utils.cellsToProject(graphData.cells, opt);

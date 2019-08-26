@@ -9,6 +9,7 @@ angular.module('icestudio')
     this.generate = function(target, project, opt) {
       var content = '';
       var files = [];
+      console.log('GENERATE PCF',target,project,opt);
       switch(target) {
         case 'verilog':
           content += header('//', opt);

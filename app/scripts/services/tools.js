@@ -36,6 +36,7 @@ angular.module('icestudio')
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
     this.verifyCode = function(startMessage, endMessage) {
+      console.log('VerifyCode 1');
       return apioRun(['verify'], startMessage, endMessage);
     };
 
@@ -48,6 +49,8 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
+      console.log('apioRun::',commands,startMessage,endMessage);
+
       return new Promise(function(resolve) {
         var sourceCode = '';
 
@@ -61,9 +64,10 @@ angular.module('icestudio')
           if (resultAlert) {
             resultAlert.dismiss(false);
           }
-
+          console.log('RESETCODE ERRORS');
           graph.resetCodeErrors()
           .then(function() {
+            console.log('Toolchain installed');
             return checkToolchainInstalled();
           })
           .then(function() {
@@ -71,10 +75,11 @@ angular.module('icestudio')
             if (startMessage) {
               startAlert = alertify.message(startMessage, 100000);
             }
-            return generateCode();
+            return generateCode(commands);
           })
           .then(function(output) {
             sourceCode = output.code;
+            console.log('APIO 1',output);
             return syncResources(output.code, output.internalResources);
           })
           .then(function() {
@@ -104,7 +109,8 @@ angular.module('icestudio')
             restoreTask();
             resolve();
           })
-          .catch(function() {
+          .catch(function(e) {
+            console.log('ERROR APIO',e);
             // Error
             utils.endBlockingTask();
             restoreTask();
@@ -135,8 +141,9 @@ angular.module('icestudio')
       });
     }
 
-    function generateCode() {
+    function generateCode(cmd) {
       return new Promise(function(resolve) {
+        project.snapshot();
         project.update();
         var opt = {
           datetime: false,
@@ -151,16 +158,22 @@ angular.module('icestudio')
         var verilogFile = compiler.generate('verilog', project.get(), opt)[0];
         nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, verilogFile.name), verilogFile.content, 'utf8');
 
+       if(cmd.indexOf('verify')>-1 && cmd.length===1){
+          //only verification
+       }else{
         // PCF file
         var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
         nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
-
+       }
         // List files
         var listFiles = compiler.generate('list', project.get());
         for (var i in listFiles) {
           var listFile = listFiles[i];
+
           nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, listFile.name), listFile.content, 'utf8');
         }
+
+        project.restoreSnapshot();
         resolve({
           code: verilogFile.content,
           internalResources: listFiles.map(function (res) { return res.name; })
