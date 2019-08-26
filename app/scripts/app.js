@@ -1,4 +1,5 @@
 'use strict';
+require('nw.gui').Window.get().showDevTools();
 
 angular
   .module('icestudio', [
@@ -30,7 +31,7 @@ angular
    
                 {
 
-                  console.log('APP.RUN');
+
     $timeout(function(){
       $('body').addClass('waiting');
     }, 0);

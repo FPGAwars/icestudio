@@ -1302,10 +1302,85 @@ angular.module('icestudio')
                 alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
             }
 
+            function getBlocksFromLib(id){
+                for(var dep in common.allDependencies){
+                    console.log('Chequeando '+id+' '+dep);
+                    if(id===dep){
+                        return common.allDependencies[dep].design.graph.blocks;
+                    }
+                }
+                return false;
+            }
+            function outputExists(oid,blks){
+                var founded=false;
+                for(var i=0;i<blks.length;i++){
+                    if(blks[i].id===oid) return true;
+                }
+                return founded;
+            }
+            /* Check if wire source exists (block+port) */
+            function wireExists(wre,blk,edge){
+                
+                var founded=false;
+                var blk2=false;
+
+                for(var i=0;i<blk.length;i++){
+                    if(wre[edge].block === blk[i].id){
+                        founded=i;
+                        break;
+                    }
+                }
+                if(founded !== false){
+                    console.log('BLK FOUND',blk[founded]);
+                    switch(blk[founded].type){
+                        case 'basic.code': case 'basic.input': case 'basic.output':founded=true; break;
+                    
+                        default:
+                            console.log('Match bloque OK',blk[founded]);
+                            /* Generic type, look into the library */
+                            blk2=getBlocksFromLib(blk[i].type);
+                            console.log('Lib',blk2);
+                            founded=outputExists(wre[edge].port,blk2);                            
+                    }
+                }
+                return founded;
+            }
+
             // Wires
-            var todelete=[];
+            console.log('WIRES',_graph.wires);
+            console.log('COMMON',common);
+            console.log('GRAPH',_graph);
+            var test=false;
+             var todelete=[];
+
+            for(var i=0;i<_graph.wires.length;i++){
+                console.log('---Testeamos la entrada');
+                test=wireExists(_graph.wires[i],_graph.blocks,'source');
+                if(test){
+                     console.log('-----Encontrado,testeamos la salida');
+
+                    test=wireExists(_graph.wires[i],_graph.blocks,'target');
+                    if(test===true){
+                        console.log('DEFINITIVAMENTE ENCONTRADO');
+                    }else{
+                        console.log('ELIMINAR 1');
+
+                        todelete.push(i);
+                    }
+                }else{
+
+                    console.log('ELIMINAR 2');
+                    todelete.push(i);
+                }
+            } 
+             for(var z=0;z<todelete.length;z++){
+
+                _graph.wires.splice(todelete[z],1);
+            }
+
+         /*   var todelete=[];
             var wcheck=false;
-            var candidate='';
+            var candidate=''; 
             var hasWires=false;
             for(var i=0;i<_graph.wires.length;i++){
                 candidate=_graph.wires[i].target;
@@ -1320,23 +1395,27 @@ angular.module('icestudio')
                                 if(candidate.port===_graph.blocks[j].data.ports.in[k].name){
                                     wcheck=true;
                                     break;
+                                
                                 }
                             }
                         }
+                        
                         break;
+
                     }
+
                 }   
                 if(wcheck===false && hasWires===true){
+                    console.log('A borrar',candidate);
                     todelete.push(i);
                 }
                 wcheck=false;
             }
-
             for(var z=0;z<todelete.length;z++){
 
                 _graph.wires.splice(todelete[z],1);
             }
-
+*/
             _.each(_graph.wires, function (wireInstance) {
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
