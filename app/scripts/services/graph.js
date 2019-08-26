@@ -1328,7 +1328,7 @@ angular.module('icestudio')
                     if(wre[edge].block === blk[i].id){
                         founded=i;
                         break;
-                    }
+                    } 
                 }
                 if(founded !== false){
                     console.log('BLK FOUND',blk[founded]);

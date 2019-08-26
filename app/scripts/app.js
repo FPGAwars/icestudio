@@ -1,5 +1,5 @@
 'use strict';
-require('nw.gui').Window.get().showDevTools();
+//require('nw.gui').Window.get().showDevTools();
 
 angular
   .module('icestudio', [
