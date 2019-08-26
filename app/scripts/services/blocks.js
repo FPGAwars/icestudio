@@ -1026,6 +1026,7 @@ angular.module('icestudio')
       var sourceSelector, targetSelector;
       var leftPorts = target.get('leftPorts');
       var rightPorts = source.get('rightPorts');
+
       for (var _out = 0; _out < rightPorts.length; _out++) {
         if (rightPorts[_out] === instance.source.port) {
           sourceSelector = _out;

@@ -359,8 +359,6 @@ angular.module('icestudio')
                                         $scope.toRestore = false;
                                 }
                                 graph.loadDesign(design, opt, function () {
-
-                                        console.log('PADRE');
                                         $scope.isNavigating = false;
                                 });
                                 $scope.topModule = true;
@@ -380,7 +378,6 @@ angular.module('icestudio')
                                 }
 
                                 graph.loadDesign(dependency.design, opt, function () {
-                                        console.log('hijo');
                                         graph.fitContent();
                                         $scope.isNavigating = false;
 
@@ -411,7 +408,6 @@ angular.module('icestudio')
                                 // Update the main project
                                 project.update({ deps: false }, function () {
                                         graph.loadDesign(args.project.design, opt, function () {
-                                                console.log('TOP');
                                                 graph.fitContent();
                                         });
 
@@ -420,7 +416,6 @@ angular.module('icestudio')
                         }
                         else {
                                 graph.loadDesign(args.project.design, opt, function () {
-                                        console.log('PRETOP');
                                         graph.fitContent();
                                 });
                         }

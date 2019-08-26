@@ -298,7 +298,6 @@ angular.module('icestudio')
                     }
                 });
             }
-
             // Events
 
             var shiftPressed = false;
@@ -713,7 +712,6 @@ angular.module('icestudio')
                     }
                 }
             }
-
             // Initialize state
             graph.trigger('state', state);
 
@@ -1203,20 +1201,8 @@ angular.module('icestudio')
                     self.clearAll();
 
                     var cells = graphToCells(design.graph, opt);
-//                                        var cells = $scope.graph.getCells();
 
-                    var update=false;
-                    _.each(cells,function(cell){
-//                        console.log(cell);
-                        if(cell.attributes.type==='ice.Generic'){                         
-                            console.log(cell);
-                            update=true;
-                        }
 
-                    });
-                    if(update){
-                        console.log('JOINT',joint);
-                    }
                     graph.addCells(cells);
 
                     self.setState(design.state);
@@ -1317,6 +1303,40 @@ angular.module('icestudio')
             }
 
             // Wires
+            var todelete=[];
+            var wcheck=false;
+            var candidate='';
+            var hasWires=false;
+            for(var i=0;i<_graph.wires.length;i++){
+                candidate=_graph.wires[i].target;
+                hasWires=false;
+                for(var j=0;j<_graph.blocks.length;j++){
+        
+                    if(candidate.block === _graph.blocks[j].id){
+                        if(typeof _graph.blocks[j].data.ports !== 'undefined' &&
+                           typeof _graph.blocks[j].data.ports.in !== 'undefined'){
+                            hasWires=true;
+                            for(var k=0;k<_graph.blocks[j].data.ports.in.length;k++){
+                                if(candidate.port===_graph.blocks[j].data.ports.in[k].name){
+                                    wcheck=true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }   
+                if(wcheck===false && hasWires===true){
+                    todelete.push(i);
+                }
+                wcheck=false;
+            }
+
+            for(var z=0;z<todelete.length;z++){
+
+                _graph.wires.splice(todelete[z],1);
+            }
+
             _.each(_graph.wires, function (wireInstance) {
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
