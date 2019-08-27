@@ -36,7 +36,7 @@ angular.module('icestudio')
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
     this.verifyCode = function(startMessage, endMessage) {
-      console.log('VerifyCode 1');
+//      console.log('VerifyCode 1');
       return apioRun(['verify'], startMessage, endMessage);
     };
 
@@ -49,7 +49,7 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
-      console.log('apioRun::',commands,startMessage,endMessage);
+//      console.log('apioRun::',commands,startMessage,endMessage);
 
       return new Promise(function(resolve) {
         var sourceCode = '';
@@ -64,10 +64,10 @@ angular.module('icestudio')
           if (resultAlert) {
             resultAlert.dismiss(false);
           }
-          console.log('RESETCODE ERRORS');
+          //console.log('RESETCODE ERRORS');
           graph.resetCodeErrors()
           .then(function() {
-            console.log('Toolchain installed');
+            //console.log('Toolchain installed');
             return checkToolchainInstalled();
           })
           .then(function() {
@@ -79,7 +79,7 @@ angular.module('icestudio')
           })
           .then(function(output) {
             sourceCode = output.code;
-            console.log('APIO 1',output);
+            //console.log('APIO 1',output);
             return syncResources(output.code, output.internalResources);
           })
           .then(function() {
@@ -110,7 +110,7 @@ angular.module('icestudio')
             resolve();
           })
           .catch(function(e) {
-            console.log('ERROR APIO',e);
+//            console.log('ERROR APIO',e);
             // Error
             utils.endBlockingTask();
             restoreTask();
