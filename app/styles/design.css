@@ -7,6 +7,9 @@
 
 }
 
+.joint-paper.joint-theme-default{
+  overflow:hidden;
+}
 .paper svg {
   background: transparent;
   position: relative;
@@ -547,7 +550,26 @@ g {
 }
 
 .highlight-error {
-  background: #ff8084 !important;
+  background: #c75c5c !important;
+}
+
+.sticker-error{
+
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  z-index:10;
+  width:38px;
+  height:38px;
+  background: url(../resources/images/alert.svg) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.sticker-error.error-code-editor{
+top:-27px;
+right:-27px;
 }
 
 .highlight-yellow {

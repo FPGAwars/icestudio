@@ -415,6 +415,8 @@ angular.module('icestudio')
                         z.index = 1;
                         var project = common.allDependencies[type];
                         var breadcrumbsLength = self.breadcrumbs.length;
+
+                        $('body').addClass('waiting');
                         $rootScope.$broadcast('navigateProject', {
                             update: breadcrumbsLength === 1,
                             project: project,
@@ -1340,6 +1342,7 @@ angular.module('icestudio')
 
 
             _.each(_graph.blocks, function (blockInstance) {
+            
 
                 if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
@@ -1402,7 +1405,7 @@ angular.module('icestudio')
 
 
            _.each(_graph.wires, function (wireInstance) {
-               console.log('>>>CABLE',wireInstance);
+          //     console.log('>>>CABLE',wireInstance);
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
                 if (opt.offset) {
@@ -1429,7 +1432,7 @@ angular.module('icestudio')
             return cells;
         }
 
-        this.appendDesign = function (design, dependencies) {
+         this.appendDesign = function (design, dependencies) {
             if (design &&
                 dependencies &&
                 design.graph &&
@@ -1530,16 +1533,19 @@ angular.module('icestudio')
                     var cellView;
                     if (cell.get('type') === 'ice.Code') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.find('.code-content').removeClass('highlight-error');
+                        cellView.$box.find('.code-content').removeClass('highlight-error').remove('.sticker-error');
+;
                         cellView.clearAnnotations();
                     }
                     else if (cell.get('type') === 'ice.Generic') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.removeClass('highlight-error');
+                        cellView.$box.removeClass('highlight-error').remove('.sticker-error');
+;
                     }
                     else if (cell.get('type') === 'ice.Constant') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.removeClass('highlight-error');
+                        cellView.$box.removeClass('highlight-error').remove('.sticker-error');
+
                     }
                 });
                 resolve();
@@ -1561,10 +1567,12 @@ angular.module('icestudio')
                     cellView = paper.findViewByModel(cell);
                     if (codeError.type === 'error') {
                         if (cell.get('type') === 'ice.Code') {
-                            cellView.$box.find('.code-content').addClass('highlight-error');
+                            cellView.$box.find('.code-content').addClass('highlight-error').remove('.sticker-error').append('<div class="sticker-error error-code-editor"></div>');
+                            
                         }
                         else {
-                            cellView.$box.addClass('highlight-error');
+                            cellView.$box.addClass('highlight-error').remove('.sticker-error').append('<div class="sticker-error"></div>');
+
                         }
                     }
                     if (cell.get('type') === 'ice.Code') {

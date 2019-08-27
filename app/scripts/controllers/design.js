@@ -358,8 +358,13 @@ angular.module('icestudio')
 
                                         $scope.toRestore = false;
                                 }
+
+
+                                graph.fitContent();
+                                graph.resetView();
                                 graph.loadDesign(design, opt, function () {
                                         $scope.isNavigating = false;
+                                graph.fitContent();
                                 });
                                 $scope.topModule = true;
                         }
@@ -376,9 +381,13 @@ angular.module('icestudio')
                                         }
                                         $scope.toRestore = false;
                                 }
-
+                                
+//                               graph.fitContent();
+  graph.fitContent();
+                                graph.resetView();
                                 graph.loadDesign(dependency.design, opt, function () {
-                                        graph.fitContent();
+                                        graph.resetView();
+                                       graph.fitContent();
                                         $scope.isNavigating = false;
 
                                 });
@@ -406,22 +415,34 @@ angular.module('icestudio')
 
                         if (args.update) {
                                 // Update the main project
+                        //        graph.fitContent();
+
+ graph.fitContent();
+                        graph.resetView();
                                 project.update({ deps: false }, function () {
                                         graph.loadDesign(args.project.design, opt, function () {
-                                                graph.fitContent();
+                                        graph.resetView();
+                                        graph.fitContent();
                                         });
 
                                 });
 
                         }
                         else {
+                        //        graph.fitContent();
+                              //  utils.rootScopeSafeApply();
+                              
+                              graph.fitContent();
+                                graph.resetView();
+
                                 graph.loadDesign(args.project.design, opt, function () {
+                                        graph.resetView();
                                         graph.fitContent();
                                 });
                         }
                         $scope.topModule = false;
                         $scope.information = args.project.package;
-                        utils.rootScopeSafeApply();
+                        //utils.rootScopeSafeApply();
                         if (typeof common.forceBack !== 'undefined' && common.forceBack === true) {
                                 common.forceBack = false;
                                 $scope.breadcrumbsBack();
@@ -430,6 +451,7 @@ angular.module('icestudio')
                 });
 
                 $rootScope.$on('breadcrumbsBack', function (/*event*/) {
+
                         $scope.breadcrumbsBack();
                         utils.rootScopeSafeApply();
                 });

@@ -57,6 +57,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     if (id) {
       var view = this.options.paper.findViewByModel(id);
       if (view) {
+
         // Trigger dblclick in selection to the Cell View
         view.notify('cell:pointerdblclick', evt);
       }
