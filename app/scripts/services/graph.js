@@ -101,8 +101,8 @@ angular.module('icestudio')
                     },
                     zoom: state.zoom * scale
                 });
-                $('.paper.joint-theme-default>svg').attr('height', winHeight);
-                $('.paper.joint-theme-default>svg').attr('width', winWidth);
+                $('.joint-paper.joint-theme-default>svg').attr('height', winHeight);
+                $('.joint-paper.joint-theme-default>svg').attr('width', winWidth);
             }
             else {
                 this.resetView();
@@ -417,6 +417,7 @@ angular.module('icestudio')
                         var breadcrumbsLength = self.breadcrumbs.length;
 
                         $('body').addClass('waiting');
+                        setTimeout(function(){
                         $rootScope.$broadcast('navigateProject', {
                             update: breadcrumbsLength === 1,
                             project: project,
@@ -425,6 +426,7 @@ angular.module('icestudio')
                         });
                         self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                         utils.rootScopeSafeApply();
+                    },100);
                     }
                 }
             });
@@ -1227,7 +1229,7 @@ angular.module('icestudio')
 
                     $('body').removeClass('waiting');
 
-                }, 20);
+                }, 100);
 
                 return true;
             }

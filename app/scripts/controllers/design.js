@@ -360,7 +360,6 @@ angular.module('icestudio')
                                 }
 
 
-                                graph.fitContent();
                                 graph.resetView();
                                 graph.loadDesign(design, opt, function () {
                                         $scope.isNavigating = false;
@@ -383,10 +382,8 @@ angular.module('icestudio')
                                 }
                                 
 //                               graph.fitContent();
-  graph.fitContent();
                                 graph.resetView();
                                 graph.loadDesign(dependency.design, opt, function () {
-                                        graph.resetView();
                                        graph.fitContent();
                                         $scope.isNavigating = false;
 
@@ -417,11 +414,9 @@ angular.module('icestudio')
                                 // Update the main project
                         //        graph.fitContent();
 
- graph.fitContent();
                         graph.resetView();
                                 project.update({ deps: false }, function () {
                                         graph.loadDesign(args.project.design, opt, function () {
-                                        graph.resetView();
                                         graph.fitContent();
                                         });
 
@@ -432,11 +427,9 @@ angular.module('icestudio')
                         //        graph.fitContent();
                               //  utils.rootScopeSafeApply();
                               
-                              graph.fitContent();
                                 graph.resetView();
 
                                 graph.loadDesign(args.project.design, opt, function () {
-                                        graph.resetView();
                                         graph.fitContent();
                                 });
                         }
@@ -451,7 +444,6 @@ angular.module('icestudio')
                 });
 
                 $rootScope.$on('breadcrumbsBack', function (/*event*/) {
-
                         $scope.breadcrumbsBack();
                         utils.rootScopeSafeApply();
                 });

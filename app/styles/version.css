@@ -19,6 +19,7 @@ left:0;
 
 .version-info-tab--body{
 
+max-width:1280px;
     z-index:10;
     background-color:white;
     opacity:1;
