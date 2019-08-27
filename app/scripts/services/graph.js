@@ -359,6 +359,11 @@ angular.module('icestudio')
                 }
             });
 
+            paper.on('debug:test',function(args){
+
+                console.log('DEBUG->TEST');
+            });
+
             paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
                 if (!checkInsideViewBox(cellView, x, y)) {
@@ -1196,12 +1201,13 @@ angular.module('icestudio')
                 $('body').addClass('waiting');
 
                 setTimeout(function () {
+
                     commandManager.stopListening();
 
                     self.clearAll();
 
                     var cells = graphToCells(design.graph, opt);
-
+                    
 
                     graph.addCells(cells);
 
@@ -1237,10 +1243,102 @@ angular.module('icestudio')
             var cell;
             var cells = [];
             var blocksMap = {};
-
             opt = opt || {};
             // Blocks
             var isMigrated = false;
+
+
+            function getBlocksFromLib(id){
+                for(var dep in common.allDependencies){
+//                    console.log('Chequeando '+id+' '+dep);
+                    if(id===dep){
+                        return common.allDependencies[dep].design.graph.blocks;
+                    }
+                }
+                return false;
+            }
+            function outputExists(oid,blks){
+                var founded=false;
+                for(var i=0;i<blks.length;i++){
+                    if(blks[i].id===oid) return true;
+                }
+                return founded;
+            }
+            /* Check if wire source exists (block+port) */
+            function wireExists(wre,blk,edge){
+                
+                var founded=false;
+                var blk2=false;
+
+                for(var i=0;i<blk.length;i++){
+                    if(wre[edge].block === blk[i].id){
+                        founded=i;
+                        break;
+                    } 
+                }
+                if(founded !== false){
+//                    console.log('BLK FOUND',blk[founded].type);
+                    switch(blk[founded].type){
+                      case 'basic.memory':
+                      case 'basic.constant':  
+                      case 'basic.outputLabel': case 'basic.inputLabel': 
+                      case 'basic.code': 
+                      case 'basic.input': case 'basic.output':
+                          founded=true; 
+                          break;
+                    
+                        default:
+              //              console.log('Match bloque OK',blk[founded]);
+                            /* Generic type, look into the library */
+                            blk2=getBlocksFromLib(blk[i].type);
+ //                           console.log('Lib',blk2);
+                            founded=outputExists(wre[edge].port,blk2);                            
+                    }
+                }
+                return founded;
+            }
+
+            // Wires
+//            console.log('WIRES',_graph.wires);
+//            console.log('COMMON',common);
+//            console.log('GRAPH',_graph);
+            var test=false;
+             var todelete=[];
+
+            for(var i=0;i<_graph.wires.length;i++){
+//                console.log('---Testeamos la entrada');
+                test=wireExists(_graph.wires[i],_graph.blocks,'source');
+                if(test){
+//                     console.log('-----Encontrado,testeamos la salida');
+
+                    test=wireExists(_graph.wires[i],_graph.blocks,'target');
+                    if(test===true){
+//                        console.log('DEFINITIVAMENTE ENCONTRADO');
+                    }else{
+  //                      console.log('ELIMINAR 1');
+
+                        todelete.push(i);
+                    }
+                }else{
+
+//                    console.log('ELIMINAR 2');
+                    todelete.push(i);
+                }
+            }
+  //          console.log('FILTRADO REALIZADO',utils.clone(_graph.wires)); 
+   //         console.log('TODELETE',todelete);
+            var tempw=[];
+             for(var z=0;z<_graph.wires.length;z++){
+
+                if(todelete.indexOf(z)===-1){
+                    tempw.push(_graph.wires[z]);
+                }
+            }
+            _graph.wires=utils.clone(tempw);
+
+//            console.log('FILTRADO REALIZADO2',utils.clone(_graph.wires)); 
+
+
             _.each(_graph.blocks, function (blockInstance) {
 
                 if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
@@ -1302,127 +1400,9 @@ angular.module('icestudio')
                 alertify.warning(gettextCatalog.getString('If you have blank IN/OUT pins, it\'s because there is no equivalent in this board'));
             }
 
-            function getBlocksFromLib(id){
-                for(var dep in common.allDependencies){
-//                    console.log('Chequeando '+id+' '+dep);
-                    if(id===dep){
-                        return common.allDependencies[dep].design.graph.blocks;
-                    }
-                }
-                return false;
-            }
-            function outputExists(oid,blks){
-                var founded=false;
-                for(var i=0;i<blks.length;i++){
-                    if(blks[i].id===oid) return true;
-                }
-                return founded;
-            }
-            /* Check if wire source exists (block+port) */
-            function wireExists(wre,blk,edge){
-                
-                var founded=false;
-                var blk2=false;
 
-                for(var i=0;i<blk.length;i++){
-                    if(wre[edge].block === blk[i].id){
-                        founded=i;
-                        break;
-                    } 
-                }
-                if(founded !== false){
-                 //  console.log('BLK FOUND',blk[founded]);
-                    switch(blk[founded].type){
-                      case 'basic.memory':
-                      case 'basic.constant':  
-                      case 'basic.outputLabel': case 'basic.inputLabel': 
-                      case 'basic.code': 
-                      case 'basic.input': case 'basic.output':
-                          founded=true; 
-                          break;
-                    
-                        default:
-              //              console.log('Match bloque OK',blk[founded]);
-                            /* Generic type, look into the library */
-                            blk2=getBlocksFromLib(blk[i].type);
- //                           console.log('Lib',blk2);
-                            founded=outputExists(wre[edge].port,blk2);                            
-                    }
-                }
-                return founded;
-            }
-
-            // Wires
-//            console.log('WIRES',_graph.wires);
- //           console.log('COMMON',common);
-  //          console.log('GRAPH',_graph);
-            var test=false;
-             var todelete=[];
-
-            for(var i=0;i<_graph.wires.length;i++){
-//                console.log('---Testeamos la entrada');
-                test=wireExists(_graph.wires[i],_graph.blocks,'source');
-                if(test){
-//                     console.log('-----Encontrado,testeamos la salida');
-
-                    test=wireExists(_graph.wires[i],_graph.blocks,'target');
-                    if(test===true){
-//                        console.log('DEFINITIVAMENTE ENCONTRADO');
-                    }else{
-  //                      console.log('ELIMINAR 1');
-
-                        todelete.push(i);
-                    }
-                }else{
-
-//                    console.log('ELIMINAR 2');
-                    todelete.push(i);
-                }
-            } 
-             for(var z=0;z<todelete.length;z++){
-
-                _graph.wires.splice(todelete[z],1);
-            }
-
-         /*   var todelete=[];
-            var wcheck=false;
-            var candidate=''; 
-            var hasWires=false;
-            for(var i=0;i<_graph.wires.length;i++){
-                candidate=_graph.wires[i].target;
-                hasWires=false;
-                for(var j=0;j<_graph.blocks.length;j++){
-        
-                    if(candidate.block === _graph.blocks[j].id){
-                        if(typeof _graph.blocks[j].data.ports !== 'undefined' &&
-                           typeof _graph.blocks[j].data.ports.in !== 'undefined'){
-                            hasWires=true;
-                            for(var k=0;k<_graph.blocks[j].data.ports.in.length;k++){
-                                if(candidate.port===_graph.blocks[j].data.ports.in[k].name){
-                                    wcheck=true;
-                                    break;
-                                
-                                }
-                            }
-                        }
-                        
-                        break;
-
-                    }
-
-                }   
-                if(wcheck===false && hasWires===true){
-                    console.log('A borrar',candidate);
-                    todelete.push(i);
-                }
-                wcheck=false;
-            }
-            for(var z=0;z<todelete.length;z++){
-
-                _graph.wires.splice(todelete[z],1);
-            }
-*/
-            _.each(_graph.wires, function (wireInstance) {
+           _.each(_graph.wires, function (wireInstance) {
+               console.log('>>>CABLE',wireInstance);
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
                 if (opt.offset) {
