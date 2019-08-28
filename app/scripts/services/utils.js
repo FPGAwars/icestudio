@@ -1,29 +1,29 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('utils', function($rootScope,
-                             gettextCatalog,
-                             common,
-                             _package,
-                             window,
-                             nodeFs,
-                             nodeFse,
-                             nodePath,
-                             nodeChildProcess,
-                             nodeExtract,
-                             nodeZlib,
-                             nodeOnline,
-                             nodeGlob,
-                             nodeSha1,
-                             nodeCP,
-                             nodeGetOS,
-                             nodeLangInfo,
-                             gui,
-                             SVGO) {
+  .service('utils', function ($rootScope,
+    gettextCatalog,
+    common,
+    _package,
+    window,
+    nodeFs,
+    nodeFse,
+    nodePath,
+    nodeChildProcess,
+    nodeExtract,
+    nodeZlib,
+    nodeOnline,
+    nodeGlob,
+    nodeSha1,
+    nodeCP,
+    nodeGetOS,
+    nodeLangInfo,
+    gui,
+    SVGO) {
 
     var _pythonExecutableCached = null;
     // Get the system executable
-    this.getPythonExecutable = function() {
+    this.getPythonExecutable = function () {
       if (!_pythonExecutableCached) {
         const possibleExecutables = [];
 
@@ -51,13 +51,13 @@ angular.module('icestudio')
       try {
         const result = nodeChildProcess.spawnSync(executable, args);
         return 0 === result.status && result.stdout.toString().startsWith('2.7');
-      } catch(e) {
+      } catch (e) {
         return false;
       }
     }
 
-    this.extractZip = function(source, destination, callback) {
-      nodeExtract(source, {dir: destination}, function(error) {
+    this.extractZip = function (source, destination, callback) {
+      nodeExtract(source, { dir: destination }, function (error) {
         if (error) {
           callback(true);
         }
@@ -67,7 +67,7 @@ angular.module('icestudio')
       });
     };
 
-    this.extractVirtualenv = function(callback) {
+    this.extractVirtualenv = function (callback) {
       this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
     };
 
@@ -76,27 +76,27 @@ angular.module('icestudio')
       event.preventDefault();
     }
 
-    this.enableClickEvents = function() {
+    this.enableClickEvents = function () {
       document.removeEventListener('click', disableEvent, true);
     };
 
-    this.disableClickEvents = function() {
+    this.disableClickEvents = function () {
       document.addEventListener('click', disableEvent, true);
     };
 
-    this.enableKeyEvents = function() {
+    this.enableKeyEvents = function () {
       document.removeEventListener('keyup', disableEvent, true);
       document.removeEventListener('keydown', disableEvent, true);
       document.removeEventListener('keypress', disableEvent, true);
     };
 
-    this.disableKeyEvents = function() {
+    this.disableKeyEvents = function () {
       document.addEventListener('keyup', disableEvent, true);
       document.addEventListener('keydown', disableEvent, true);
       document.addEventListener('keypress', disableEvent, true);
     };
 
-    this.executeCommand = function(command, callback) {
+    this.executeCommand = function (command, callback) {
       nodeChildProcess.exec(command.join(' '),
         function (error, stdout, stderr) {
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
@@ -114,15 +114,15 @@ angular.module('icestudio')
       );
     };
 
-    this.createVirtualenv = function(callback) {
+    this.createVirtualenv = function (callback) {
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
       if (!nodeFs.existsSync(common.ENV_DIR)) {
         nodeFs.mkdirSync(common.ENV_DIR);
         var command = [this.getPythonExecutable(),
-         coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-         coverPath(common.ENV_DIR)];
+        coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
+        coverPath(common.ENV_DIR)];
         if (common.WIN32) {
           command.push('--always-copy');
         }
@@ -133,7 +133,7 @@ angular.module('icestudio')
       }
     };
 
-    this.checkDefaultToolchain = function() {
+    this.checkDefaultToolchain = function () {
       try {
         // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
@@ -143,40 +143,40 @@ angular.module('icestudio')
       }
     };
 
-    this.installDefaultPythonPackagesDir = function(defaultDir, callback) {
+    this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
       var self = this;
       nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
         if (!error) {
-          files = files.map(function(item) { return coverPath(item); });
+          files = files.map(function (item) { return coverPath(item); });
           self.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
     };
 
-    this.extractDefaultPythonPackages = function(callback) {
+    this.extractDefaultPythonPackages = function (callback) {
       this.extractZip(common.DEFAULT_PYTHON_PACKAGES_ZIP, common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
     };
 
-    this.installDefaultPythonPackages = function(callback) {
+    this.installDefaultPythonPackages = function (callback) {
       this.installDefaultPythonPackagesDir(common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
     };
 
-    this.extractDefaultApio = function(callback) {
+    this.extractDefaultApio = function (callback) {
       this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
     };
 
-    this.installDefaultApio = function(callback) {
+    this.installDefaultApio = function (callback) {
       this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
     };
 
-    this.extractDefaultApioPackages = function(callback) {
+    this.extractDefaultApioPackages = function (callback) {
       this.extractZip(common.DEFAULT_APIO_PACKAGES_ZIP, common.APIO_HOME_DIR, callback);
     };
 
-    this.isOnline = function(callback, error) {
+    this.isOnline = function (callback, error) {
       nodeOnline({
         timeout: 5000
-      }, function(err, online) {
+      }, function (err, online) {
         if (online) {
           callback();
         }
@@ -187,30 +187,30 @@ angular.module('icestudio')
       });
     };
 
-    this.installOnlinePythonPackages = function(callback) {
+    this.installOnlinePythonPackages = function (callback) {
       var pythonPackages = [];
       this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages, callback);
     };
 
-    this.installOnlineApio = function(callback) {
+    this.installOnlineApio = function (callback) {
       var versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
       var extraPackages = _package.apio.extras || [];
       var apio = this.getApioInstallable();
       this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
-    this.getApioInstallable = function() {
+    this.getApioInstallable = function () {
       return _package.apio.branch ?
         common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch) : 'apio';
     };
 
-    this.apioInstall = function(pkg, callback) {
+    this.apioInstall = function (pkg, callback) {
       this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
     };
 
     this.toolchainDisabled = false;
 
-    this.getApioExecutable = function() {
+    this.getApioExecutable = function () {
       var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
       if (nodeFs.existsSync(candidateApio)) {
         if (!this.toolchainDisabled) {
@@ -224,19 +224,19 @@ angular.module('icestudio')
       return common.APIO_CMD;
     };
 
-    this.removeToolchain = function() {
+    this.removeToolchain = function () {
       this.deleteFolderRecursive(common.ENV_DIR);
       this.deleteFolderRecursive(common.CACHE_DIR);
       this.deleteFolderRecursive(common.APIO_HOME_DIR);
     };
 
-    this.removeCollections = function() {
+    this.removeCollections = function () {
       this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
     };
 
-    this.deleteFolderRecursive = function(path) {
+    this.deleteFolderRecursive = function (path) {
       if (nodeFs.existsSync(path)) {
-        nodeFs.readdirSync(path).forEach(function(file/*, index*/) {
+        nodeFs.readdirSync(path).forEach(function (file/*, index*/) {
           var curPath = nodePath.join(path, file);
           if (nodeFs.lstatSync(curPath).isDirectory()) { // recursive
             this.deleteFolderRecursive(curPath);
@@ -257,15 +257,15 @@ angular.module('icestudio')
       return b.substr(0, b.lastIndexOf('.'));
     }
 
-    this.dirname = function(filepath) {
+    this.dirname = function (filepath) {
       return nodePath.dirname(filepath);
     };
 
-    this.readFile = function(filepath) {
-      return new Promise(function(resolve, reject) {
+    this.readFile = function (filepath) {
+      return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {
           nodeFs.readFile(filepath,
-            function(err, content) {
+            function (err, content) {
               if (err) {
                 reject(err.toString());
               }
@@ -287,14 +287,14 @@ angular.module('icestudio')
       });
     };
 
-    this.saveFile = function(filepath, data) {
-      return new Promise(function(resolve, reject) {
+    this.saveFile = function (filepath, data) {
+      return new Promise(function (resolve, reject) {
         var content = data;
         if (typeof data !== 'string') {
           content = JSON.stringify(data, null, 2);
         }
         nodeFs.writeFile(filepath, content,
-          function(err) {
+          function (err) {
             if (err) {
               reject(err.toString());
             }
@@ -332,13 +332,13 @@ angular.module('icestudio')
       }
     }
 
-    this.findCollections = function(folder) {
+    this.findCollections = function (folder) {
       var collectionsPaths = [];
       try {
         if (folder) {
-          collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
+          collectionsPaths = nodeFs.readdirSync(folder).map(function (name) {
             return nodePath.join(folder, name);
-          }).filter(function(path) {
+          }).filter(function (path) {
             return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
           });
         }
@@ -391,7 +391,7 @@ angular.module('icestudio')
 
         level--;
 
-        content.forEach(function(name) {
+        content.forEach(function (name) {
           var path = nodePath.join(folder, name);
 
           if (isDirectory(path)) {
@@ -418,7 +418,7 @@ angular.module('icestudio')
 
     this.getFilesRecursive = getFilesRecursive;
 
-    this.setLocale = function(locale, callback) {
+    this.setLocale = function (locale, callback) {
       // Update current locale format
       locale = splitLocale(locale);
       // Load supported languages
@@ -438,7 +438,7 @@ angular.module('icestudio')
         }
       }
       if (callback) {
-        setTimeout(function() {
+        setTimeout(function () {
           callback();
         }, 50);
       }
@@ -460,7 +460,7 @@ angular.module('icestudio')
 
     function getSupportedLanguages() {
       var supported = [];
-      nodeFs.readdirSync(common.LOCALE_DIR).forEach(function(element/*, index*/) {
+      nodeFs.readdirSync(common.LOCALE_DIR).forEach(function (element/*, index*/) {
         var curPath = nodePath.join(common.LOCALE_DIR, element);
         if (nodeFs.lstatSync(curPath).isDirectory()) {
           supported.push(splitLocale(element));
@@ -475,7 +475,7 @@ angular.module('icestudio')
       if (locale.country) {
         for (i = 0; i < supported.length; i++) {
           if (locale.lang === supported[i].lang &&
-              locale.country === supported[i].country) {
+            locale.country === supported[i].country) {
             return supported[i].lang + '_' + supported[i].country;
           }
         }
@@ -490,12 +490,12 @@ angular.module('icestudio')
       return 'en';
     }
 
-    this.renderForm = function(specs, callback) {
+    this.renderForm = function (specs, callback) {
       var content = [];
       content.push('<div>');
       for (var i in specs) {
         var spec = specs[i];
-        switch(spec.type) {
+        switch (spec.type) {
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
@@ -510,7 +510,7 @@ angular.module('icestudio')
             ');
             break;
           case 'combobox':
-            var options = spec.options.map(function(option) {
+            var options = spec.options.map(function (option) {
               var selected = spec.value === option.value ? ' selected' : '';
               return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
             }).join('');
@@ -527,32 +527,32 @@ angular.module('icestudio')
       }
       content.push('</div>');
       alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        if (callback) {
-          for (var i in specs) {
-            var spec = specs[i];
-            switch(spec.type) {
-              case 'text':
-              case 'combobox':
-                values.push($('#form' + i).val());
-                break;
-              case 'checkbox':
-                values.push($('#form' + i).prop('checked'));
-                break;
+        .set('onok', function (evt) {
+          var values = [];
+          if (callback) {
+            for (var i in specs) {
+              var spec = specs[i];
+              switch (spec.type) {
+                case 'text':
+                case 'combobox':
+                  values.push($('#form' + i).val());
+                  break;
+                case 'checkbox':
+                  values.push($('#form' + i).prop('checked'));
+                  break;
+              }
             }
+            callback(evt, values);
           }
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
+        })
+        .set('oncancel', function (/*evt*/) {
+        });
       // Restore input values
-      setTimeout(function(){
+      setTimeout(function () {
         $('#form0').select();
         for (var i in specs) {
           var spec = specs[i];
-          switch(spec.type) {
+          switch (spec.type) {
             case 'text':
             case 'combobox':
               $('#form' + i).val(spec.value);
@@ -565,7 +565,7 @@ angular.module('icestudio')
       }, 50);
     };
 
-    this.projectinfoprompt = function(values, callback) {
+    this.projectinfoprompt = function (values, callback) {
       var i;
       var content = [];
       var messages = [
@@ -608,28 +608,28 @@ angular.module('icestudio')
         $('#preview-svg').attr('src', blankImage);
       }
 
-      var prevOnshow = alertify.confirm().get('onshow') || function() {};
+      var prevOnshow = alertify.confirm().get('onshow') || function () { };
 
       alertify.confirm()
-      .set('onshow', function() {
-        prevOnshow();
-        registerOpen();
-        registerSave();
-        registerReset();
-      });
+        .set('onshow', function () {
+          prevOnshow();
+          registerOpen();
+          registerSave();
+          registerReset();
+        });
 
       function registerOpen() {
         // Open SVG
         var chooserOpen = $('#input-open-svg');
         chooserOpen.unbind('change');
-        chooserOpen.change(function(/*evt*/) {
+        chooserOpen.change(function (/*evt*/) {
           var filepath = $(this).val();
 
-          nodeFs.readFile(filepath, 'utf8', function(err, data) {
+          nodeFs.readFile(filepath, 'utf8', function (err, data) {
             if (err) {
               throw err;
             }
-            optimizeSVG(data, function(result) {
+            optimizeSVG(data, function (result) {
               image = encodeURI(result.data);
               registerSave();
               $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
@@ -651,13 +651,13 @@ angular.module('icestudio')
           label.attr('for', 'input-save-svg');
           var chooserSave = $('#input-save-svg');
           chooserSave.unbind('change');
-          chooserSave.change(function(/*evt*/) {
+          chooserSave.change(function (/*evt*/) {
             if (image) {
               var filepath = $(this).val();
               if (!filepath.endsWith('.svg')) {
                 filepath += '.svg';
               }
-              nodeFs.writeFile(filepath, decodeURI(image), function(err) {
+              nodeFs.writeFile(filepath, decodeURI(image), function (err) {
                 if (err) {
                   throw err;
                 }
@@ -675,7 +675,7 @@ angular.module('icestudio')
       function registerReset() {
         // Reset SVG
         var reset = $('#reset-svg');
-        reset.click(function(/*evt*/) {
+        reset.click(function (/*evt*/) {
           image = '';
           registerSave();
           $('#preview-svg').attr('src', blankImage);
@@ -683,22 +683,22 @@ angular.module('icestudio')
       }
 
       alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        for (var i = 0; i < n; i++) {
-          values.push($('#input' + i).val());
-        }
-        values.push(image);
-        if (callback) {
-          callback(evt, values);
-        }
-        // Restore onshow
-        alertify.confirm().set('onshow', prevOnshow);
-      })
-      .set('oncancel', function(/*evt*/) {
-        // Restore onshow
-        alertify.confirm().set('onshow', prevOnshow);
-      });
+        .set('onok', function (evt) {
+          var values = [];
+          for (var i = 0; i < n; i++) {
+            values.push($('#input' + i).val());
+          }
+          values.push(image);
+          if (callback) {
+            callback(evt, values);
+          }
+          // Restore onshow
+          alertify.confirm().set('onshow', prevOnshow);
+        })
+        .set('oncancel', function (/*evt*/) {
+          // Restore onshow
+          alertify.confirm().set('onshow', prevOnshow);
+        });
     };
 
     this.selectBoardPrompt = function (callback) {
@@ -719,7 +719,7 @@ angular.module('icestudio')
         })
       }];
 
-      this.renderForm(formSpecs, function(evt, values) {
+      this.renderForm(formSpecs, function (evt, values) {
         var selectedBoard = values[0];
         if (selectedBoard) {
           evt.cancel = false;
@@ -739,7 +739,7 @@ angular.module('icestudio')
       }.bind(this));
     };
 
-    this.copySync = function(orig, dest) {
+    this.copySync = function (orig, dest) {
       var ret = true;
       try {
         if (nodeFs.existsSync(orig)) {
@@ -757,7 +757,7 @@ angular.module('icestudio')
       return ret;
     };
 
-    this.findIncludedFiles = function(code) {
+    this.findIncludedFiles = function (code) {
       var ret = [];
       var patterns = [
         /[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
@@ -775,29 +775,29 @@ angular.module('icestudio')
       return ret;
     };
 
-    this.bold = function(text) {
+    this.bold = function (text) {
       return '<b>' + text + '</b>';
     };
 
-    this.openDialog = function(inputID, ext, callback) {
+    this.openDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);
       chooser.unbind('change');
-      chooser.change(function(/*evt*/) {
+      chooser.change(function (/*evt*/) {
         var filepath = $(this).val();
         //if (filepath.endsWith(ext)) {
-          if (callback) {
-            callback(filepath);
-          }
+        if (callback) {
+          callback(filepath);
+        }
         //}
         $(this).val('');
       });
       chooser.trigger('click');
     };
 
-    this.saveDialog = function(inputID, ext, callback) {
+    this.saveDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);
       chooser.unbind('change');
-      chooser.change(function(/*evt*/) {
+      chooser.change(function (/*evt*/) {
         var filepath = $(this).val();
         if (!filepath.endsWith(ext)) {
           filepath += ext;
@@ -810,17 +810,17 @@ angular.module('icestudio')
       chooser.trigger('click');
     };
 
-    this.updateWindowTitle = function(title) {
+    this.updateWindowTitle = function (title) {
       window.get().title = title;
     };
 
-    this.rootScopeSafeApply = function() {
-      if(!$rootScope.$$phase) {
+    this.rootScopeSafeApply = function () {
+      if (!$rootScope.$$phase) {
         $rootScope.$apply();
       }
     };
 
-    this.parsePortLabel = function(data, pattern) {
+    this.parsePortLabel = function (data, pattern) {
       // e.g: name[x:y]
       var match, ret = {};
       var maxSize = 95;
@@ -836,10 +836,10 @@ angular.module('icestudio')
           }
           else {
             if (match[3] > match[4]) {
-              ret.range = _.range(match[3], parseInt(match[4])-1, -1);
+              ret.range = _.range(match[3], parseInt(match[4]) - 1, -1);
             }
             else {
-              ret.range = _.range(match[3], parseInt(match[4])+1, +1);
+              ret.range = _.range(match[3], parseInt(match[4]) + 1, +1);
             }
           }
         }
@@ -848,7 +848,7 @@ angular.module('icestudio')
       return null;
     };
 
-    this.parseParamLabel = function(data, pattern) {
+    this.parseParamLabel = function (data, pattern) {
       // e.g: name
       var match, ret = {};
       pattern = pattern || common.PATTERN_PARAM_LABEL;
@@ -860,65 +860,65 @@ angular.module('icestudio')
       return null;
     };
 
-    this.clone = function(data) {
+    this.clone = function (data) {
       return JSON.parse(JSON.stringify(data));
     };
 
-    this.dependencyID = function(dependency) {
+    this.dependencyID = function (dependency) {
       if (dependency.package && dependency.design) {
         return nodeSha1(JSON.stringify(dependency.package) +
-                        JSON.stringify(dependency.design));
+          JSON.stringify(dependency.design));
       }
     };
 
-    this.newWindow = function(filepath, local) {
+    this.newWindow = function (filepath, local) {
 
-        var gui = require('nw.gui');
+      var gui = require('nw.gui');
 
-        var params=false;
+      var params = false;
 
-        if(typeof filepath !=='undefined'){
-            params={'filepath':filepath};
+      if (typeof filepath !== 'undefined') {
+        params = { 'filepath': filepath };
+      }
+
+      if (typeof local !== 'undefined' && local === true) {
+        if (params === false) {
+          params = {};
         }
+        params.local = 'local';
+      }
 
-        if(typeof local !=='undefined' && local===true){
-            if(params===false) {
-                params = {};
-            }
-            params.local='local';
-        }
+      // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
+      // that contains the same arguments that shell call, in this way the two calls will be
+      // compatible.
+      // If in the future you will add more paremeters to the new window , you should review
+      // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
 
-        // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
-        // that contains the same arguments that shell call, in this way the two calls will be
-        // compatible.
-        // If in the future you will add more paremeters to the new window , you should review
-        // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+      var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(JSON.stringify(params)));
 
-        var url='index.html'+((params===false)?'' :'?icestudio_argv='+encodeURI(JSON.stringify(params) ));
+      // Create a new window and get it.
+      // new-instance and new_instance are necesary for OS compatibility
+      // to avoid crash on new window project after close parent
+      // (little trick for nwjs bug).
 
-        // Create a new window and get it.
-        // new-instance and new_instance are necesary for OS compatibility
-        // to avoid crash on new window project after close parent
-        // (little trick for nwjs bug).
+      gui.Window.open(url, {
+        'new-instance': true,
+        'new_instance': true,
+        'position': 'center',
+        'toolbar': false,
+        'width': 900,
+        'height': 600,
+        'show': true,
+      });
 
-        gui.Window.open(url, {
-            'new-instance' : true,
-            'new_instance' : true,
-            'position': 'center',
-            'toolbar': false,
-            'width': 900,
-            'height': 600,
-            'show': true,
-        });
-
-   };
+    };
 
     this.coverPath = coverPath;
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }
 
-    this.mergeDependencies = function(type, block) {
+    this.mergeDependencies = function (type, block) {
       if (type in common.allDependencies) {
         return; // If the block is already in dependencies
       }
@@ -934,7 +934,7 @@ angular.module('icestudio')
       common.allDependencies[type] = block;
     };
 
-    this.copyToClipboard = function(selection, graph) {
+    this.copyToClipboard = function (selection, graph) {
 
       var cells = selectionToCells(selection, graph);
       var clipboard = {
@@ -942,39 +942,35 @@ angular.module('icestudio')
       };
 
       // Send the clipboard object the global clipboard as a string
-      nodeCP.copy(JSON.stringify(clipboard), function() {
+      nodeCP.copy(JSON.stringify(clipboard), function () {
         // Success
       });
     };
 
-    this.pasteFromClipboard = function(callback) {
-      nodeCP.paste(function(err, text) {
+    this.pasteFromClipboard = function (callback) {
+      nodeCP.paste(function (err, text) {
         if (err) {
           if (common.LINUX) {
             // xclip installation message
             var cmd = '';
             var message = gettextCatalog.getString('{{app}} is required.', { app: '<b>xclip</b>' });
-            nodeGetOS(function(e, os) {
+            nodeGetOS(function (e, os) {
               if (!e) {
                 if (os.dist.indexOf('Debian') !== -1 ||
-                    os.dist.indexOf('Ubuntu Linux') !== -1 ||
-                    os.dist.indexOf('Linux Mint') !== -1)
-                {
+                  os.dist.indexOf('Ubuntu Linux') !== -1 ||
+                  os.dist.indexOf('Linux Mint') !== -1) {
                   cmd = 'sudo apt-get install xclip';
                 }
-                else if (os.dist.indexOf('Fedora'))
-                {
+                else if (os.dist.indexOf('Fedora')) {
                   cmd = 'sudo dnf install xclip';
                 }
                 else if (os.dist.indexOf('RHEL') !== -1 ||
-                         os.dist.indexOf('RHAS') !== -1 ||
-                         os.dist.indexOf('Centos') !== -1 ||
-                         os.dist.indexOf('Red Hat Linux') !== -1)
-                {
+                  os.dist.indexOf('RHAS') !== -1 ||
+                  os.dist.indexOf('Centos') !== -1 ||
+                  os.dist.indexOf('Red Hat Linux') !== -1) {
                   cmd = 'sudo yum install xclip';
                 }
-                else if (os.dist.indexOf('Arch Linux') !== -1)
-                {
+                else if (os.dist.indexOf('Arch Linux') !== -1) {
                   cmd = 'sudo pacman install xclip';
                 }
                 if (cmd) {
@@ -998,7 +994,7 @@ angular.module('icestudio')
     function selectionToCells(selection, graph) {
       var cells = [];
       var blocksMap = {};
-      selection.each(function(block) {
+      selection.each(function (block) {
         // Add block
         cells.push(block.attributes);
         // Map blocks
@@ -1006,7 +1002,7 @@ angular.module('icestudio')
         // Add connected wires
         var processedWires = {};
         var connectedWires = graph.getConnectedLinks(block);
-        _.each(connectedWires, function(wire) {
+        _.each(connectedWires, function (wire) {
 
           if (processedWires[wire.id]) {
             return;
@@ -1024,7 +1020,7 @@ angular.module('icestudio')
       return cells;
     }
 
-    this.cellsToProject = function(cells, opt) {
+    this.cellsToProject = function (cells, opt) {
       // Convert a list of cells into the following sections of a project:
       // - design.graph
       // - dependencies
@@ -1043,21 +1039,21 @@ angular.module('icestudio')
         var cell = cells[c];
 
         if (cell.type === 'ice.Generic' ||
-            cell.type === 'ice.Input' ||
-            cell.type === 'ice.Output' ||
-            cell.type === 'ice.Code' ||
-            cell.type === 'ice.Info' ||
-            cell.type === 'ice.Constant' ||
-            cell.type === 'ice.Memory') {
+          cell.type === 'ice.Input' ||
+          cell.type === 'ice.Output' ||
+          cell.type === 'ice.Code' ||
+          cell.type === 'ice.Info' ||
+          cell.type === 'ice.Constant' ||
+          cell.type === 'ice.Memory') {
           var block = {};
           block.id = cell.id;
           block.type = cell.blockType;
           block.data = cell.data;
           block.position = cell.position;
           if (cell.type === 'ice.Generic' ||
-              cell.type === 'ice.Code' ||
-              cell.type === 'ice.Info' ||
-              cell.type === 'ice.Memory') {
+            cell.type === 'ice.Code' ||
+            cell.type === 'ice.Info' ||
+            cell.type === 'ice.Memory') {
             block.size = cell.size;
           }
           blocks.push(block);
@@ -1086,7 +1082,7 @@ angular.module('icestudio')
       return p;
     };
 
-    this.findSubDependencies = function(dependency) {
+    this.findSubDependencies = function (dependency) {
       var subDependencies = [];
       if (dependency) {
         var blocks = dependency.design.graph.blocks;
@@ -1103,7 +1099,7 @@ angular.module('icestudio')
       return subDependencies;
     };
 
-    this.hasInputRule = function(port, apply) {
+    this.hasInputRule = function (port, apply) {
       apply = (apply === undefined) ? true : apply;
       var _default;
       var rules = common.selectedBoard.rules;
@@ -1111,7 +1107,7 @@ angular.module('icestudio')
         var allInitPorts = rules.input;
         if (allInitPorts) {
           for (var i in allInitPorts) {
-            if (port === allInitPorts[i].port){
+            if (port === allInitPorts[i].port) {
               _default = allInitPorts[i];
               _default.apply = apply;
               break;
@@ -1122,46 +1118,46 @@ angular.module('icestudio')
       return _.clone(_default);
     };
 
-    this.hasLeftButton = function(evt) {
+    this.hasLeftButton = function (evt) {
       return evt.which === 1;
     };
 
-    this.hasMiddleButton = function(evt) {
+    this.hasMiddleButton = function (evt) {
       return evt.which === 2;
     };
 
-    this.hasRightButton = function(evt) {
+    this.hasRightButton = function (evt) {
       return evt.which === 3;
     };
 
-    this.hasButtonPressed = function(evt) {
+    this.hasButtonPressed = function (evt) {
       return evt.which !== 0;
     };
 
-    this.hasShift = function(evt) {
+    this.hasShift = function (evt) {
       return evt.shiftKey;
     };
 
-    this.hasCtrl = function(evt) {
+    this.hasCtrl = function (evt) {
       return evt.ctrlKey;
     };
 
-    this.loadProfile = function(profile, callback) {
-      profile.load(function() {
+    this.loadProfile = function (profile, callback) {
+      profile.load(function () {
         if (callback) {
           callback();
         }
       });
     };
 
-    this.loadLanguage = function(profile, callback) {
+    this.loadLanguage = function (profile, callback) {
       var lang = profile.get('language');
       if (lang) {
         this.setLocale(lang, callback);
       }
       else {
         // If lang is empty, use the system language
-        nodeLangInfo(function(err, sysLang) {
+        nodeLangInfo(function (err, sysLang) {
           if (!err) {
             profile.set('language', this.setLocale(sysLang, callback));
           }
@@ -1169,7 +1165,7 @@ angular.module('icestudio')
       }
     };
 
-    this.digestId = function(id) {
+    this.digestId = function (id) {
       if (id.indexOf('-') !== -1) {
         id = nodeSha1(id).toString();
       }
@@ -1188,14 +1184,14 @@ angular.module('icestudio')
 
     this.isFunction = function (functionToCheck) {
       return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
-     };
+    };
 
-    this.openDevToolsUI = function(){
+    this.openDevToolsUI = function () {
       window.get().showDevTools();
-     };
-  this.openUrlExternalBrowser = function(url){
+    };
+    this.openUrlExternalBrowser = function (url) {
 
-    gui.Shell.openExternal( url );
-  };
+      gui.Shell.openExternal(url);
+    };
 
   });

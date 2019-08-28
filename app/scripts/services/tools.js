@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('tools', function(project,
-                             compiler,
-                             profile,
-                             collections,
-                             drivers,
-                             graph,
-                             utils,
-                             common,
-                             gettextCatalog,
-                             gettext,
-                             nodeGettext,
-                             nodeFs,
-                             nodeFse,
-                             nodePath,
-                             nodeChildProcess,
-                             nodeSSHexec,
-                             nodeRSync,
-                             nodeAdmZip,
-                             _package,
-                             $rootScope) {
+  .service('tools', function (project,
+    compiler,
+    profile,
+    collections,
+    drivers,
+    graph,
+    utils,
+    common,
+    gettextCatalog,
+    gettext,
+    nodeGettext,
+    nodeFs,
+    nodeFse,
+    nodePath,
+    nodeChildProcess,
+    nodeSSHexec,
+    nodeRSync,
+    nodeAdmZip,
+    _package,
+    $rootScope) {
 
     var taskRunning = false;
     var resources = [];
@@ -35,23 +35,23 @@ angular.module('icestudio')
     // Remove old build directory on start
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
-    this.verifyCode = function(startMessage, endMessage) {
-//      console.log('VerifyCode 1');
+    this.verifyCode = function (startMessage, endMessage) {
+      //      console.log('VerifyCode 1');
       return apioRun(['verify'], startMessage, endMessage);
     };
 
-    this.buildCode = function(startMessage, endMessage) {
+    this.buildCode = function (startMessage, endMessage) {
       return apioRun(['build', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
-    this.uploadCode = function(startMessage, endMessage) {
+    this.uploadCode = function (startMessage, endMessage) {
       return apioRun(['upload', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     function apioRun(commands, startMessage, endMessage) {
-//      console.log('apioRun::',commands,startMessage,endMessage);
+      //      console.log('apioRun::',commands,startMessage,endMessage);
 
-      return new Promise(function(resolve) {
+      return new Promise(function (resolve) {
         var sourceCode = '';
 
         if (!taskRunning) {
@@ -66,61 +66,61 @@ angular.module('icestudio')
           }
           //console.log('RESETCODE ERRORS');
           graph.resetCodeErrors()
-          .then(function() {
-            //console.log('Toolchain installed');
-            return checkToolchainInstalled();
-          })
-          .then(function() {
-            utils.beginBlockingTask();
-            if (startMessage) {
-              startAlert = alertify.message(startMessage, 100000);
-            }
-            return generateCode(commands);
-          })
-          .then(function(output) {
-            sourceCode = output.code;
-            //console.log('APIO 1',output);
-            return syncResources(output.code, output.internalResources);
-          })
-          .then(function() {
-            var hostname = profile.get('remoteHostname');
-            var command = commands[0];
-            if (command === 'build' || command === 'upload') {
-              if (profile.get('showFPGAResources')) {
-                commands = commands.concat('--verbose-arachne');
+            .then(function () {
+              //console.log('Toolchain installed');
+              return checkToolchainInstalled();
+            })
+            .then(function () {
+              utils.beginBlockingTask();
+              if (startMessage) {
+                startAlert = alertify.message(startMessage, 100000);
               }
-            }
-            if (hostname) {
-              return executeRemote(commands, hostname);
-            }
-            else {
-              return executeLocal(commands);
-            }
-          })
-          .then(function(result) {
-            return processResult(result, sourceCode);
-          })
-          .then(function() {
-            // Success
-            if (endMessage) {
-              resultAlert = alertify.success(gettextCatalog.getString(endMessage));
-            }
-            utils.endBlockingTask();
-            restoreTask();
-            resolve();
-          })
-          .catch(function(e) {
-//            console.log('ERROR APIO',e);
-            // Error
-            utils.endBlockingTask();
-            restoreTask();
-          });
+              return generateCode(commands);
+            })
+            .then(function (output) {
+              sourceCode = output.code;
+              //console.log('APIO 1',output);
+              return syncResources(output.code, output.internalResources);
+            })
+            .then(function () {
+              var hostname = profile.get('remoteHostname');
+              var command = commands[0];
+              if (command === 'build' || command === 'upload') {
+                if (profile.get('showFPGAResources')) {
+                  commands = commands.concat('--verbose-arachne');
+                }
+              }
+              if (hostname) {
+                return executeRemote(commands, hostname);
+              }
+              else {
+                return executeLocal(commands);
+              }
+            })
+            .then(function (result) {
+              return processResult(result, sourceCode);
+            })
+            .then(function () {
+              // Success
+              if (endMessage) {
+                resultAlert = alertify.success(gettextCatalog.getString(endMessage));
+              }
+              utils.endBlockingTask();
+              restoreTask();
+              resolve();
+            })
+            .catch(function (/* e */) {
+              // console.log('ERROR APIO',e);
+              // Error
+              utils.endBlockingTask();
+              restoreTask();
+            });
         }
       });
     }
 
     function restoreTask() {
-      setTimeout(function() {
+      setTimeout(function () {
         // Wait 1s before run a task again
         if (startAlert) {
           startAlert.dismiss(false);
@@ -130,7 +130,7 @@ angular.module('icestudio')
     }
 
     function checkToolchainInstalled() {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         if (toolchain.installed) {
           resolve();
         }
@@ -142,7 +142,7 @@ angular.module('icestudio')
     }
 
     function generateCode(cmd) {
-      return new Promise(function(resolve) {
+      return new Promise(function (resolve) {
         project.snapshot();
         project.update();
         var opt = {
@@ -158,13 +158,13 @@ angular.module('icestudio')
         var verilogFile = compiler.generate('verilog', project.get(), opt)[0];
         nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, verilogFile.name), verilogFile.content, 'utf8');
 
-       if(cmd.indexOf('verify')>-1 && cmd.length===1){
+        if (cmd.indexOf('verify') > -1 && cmd.length === 1) {
           //only verification
-       }else{
-        // PCF file
-        var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
-        nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
-       }
+        } else {
+          // PCF file
+          var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
+          nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+        }
         // List files
         var listFiles = compiler.generate('list', project.get());
         for (var i in listFiles) {
@@ -182,7 +182,7 @@ angular.module('icestudio')
     }
 
     function syncResources(code, internalResources) {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         // Remove resources
         removeFiles(resources);
         resources = [];
@@ -200,7 +200,7 @@ angular.module('icestudio')
     }
 
     function removeFiles(files) {
-      _.each(files, function(file) {
+      _.each(files, function (file) {
         var filepath = nodePath.join(common.BUILD_DIR, file);
         nodeFse.removeSync(filepath);
       });
@@ -225,7 +225,7 @@ angular.module('icestudio')
     }
 
     function syncFiles(files, reject) {
-      _.each(files, function(file) {
+      _.each(files, function (file) {
         var destPath = nodePath.join(common.BUILD_DIR, file);
         var origPath = nodePath.join(utils.dirname(project.filepath), file);
 
@@ -242,7 +242,7 @@ angular.module('icestudio')
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
-      nodeChildProcess.exec([apio, '--version'].join(' '), function(error, stdout/*, stderr*/) {
+      nodeChildProcess.exec([apio, '--version'].join(' '), function (error, stdout/*, stderr*/) {
         if (error) {
           toolchain.apio = '';
           toolchain.installed = false;
@@ -255,9 +255,9 @@ angular.module('icestudio')
         else {
           toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
           toolchain.installed = toolchain.apio >= _package.apio.min &&
-                                toolchain.apio < _package.apio.max;
+            toolchain.apio < _package.apio.max;
           if (toolchain.installed) {
-            nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function(error/*, stdout, stderr*/) {
+            nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function (error/*, stdout, stderr*/) {
               toolchain.installed = !error;
               if (error) {
                 toolchain.apio = '';
@@ -285,7 +285,7 @@ angular.module('icestudio')
         resultAlert.dismiss(false);
       }
       resultAlert = alertify.warning(message + '.<br>' + gettextCatalog.getString('Click here to install it'), 100000);
-      resultAlert.callback = function(isClicked) {
+      resultAlert.callback = function (isClicked) {
         if (isClicked) {
           // Install the new toolchain
           $rootScope.$broadcast('installToolchain');
@@ -294,7 +294,7 @@ angular.module('icestudio')
     }
 
     function executeRemote(commands, hostname) {
-      return new Promise(function(resolve) {
+      return new Promise(function (resolve) {
         startAlert.setContent(gettextCatalog.getString('Synchronize remote files ...'));
         nodeRSync({
           src: common.BUILD_DIR + '/',
@@ -320,10 +320,10 @@ angular.module('icestudio')
     }
 
     function executeLocal(commands) {
-      return new Promise(function(resolve) {
+      return new Promise(function (resolve) {
         if (commands[0] === 'upload') {
           // Upload command requires drivers setup (Mac OS)
-          drivers.preUpload(function() {
+          drivers.preUpload(function () {
             _executeLocal();
           });
         }
@@ -337,7 +337,7 @@ angular.module('icestudio')
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
           nodeChildProcess.exec(command,
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
-            function(error, stdout, stderr) {
+            function (error, stdout, stderr) {
               if (commands[0] === 'upload') {
                 // Upload command requires to restore the drivers (Mac OS)
                 drivers.postUpload();
@@ -356,7 +356,7 @@ angular.module('icestudio')
       var stdout = result.stdout;
       var stderr = result.stderr;
 
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         if (_error || stderr) {
           // -- Process errors
           reject();
@@ -366,8 +366,8 @@ angular.module('icestudio')
             var boardLabel = common.selectedBoard.info.label;
             // - Apio errors
             if ((stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) ||
-                (stdout.indexOf('USBError') !== -1) ||
-                (stdout.indexOf('Activate bootloader') !== -1)) {
+              (stdout.indexOf('USBError') !== -1) ||
+              (stdout.indexOf('Activate bootloader') !== -1)) {
               var errorMessage = gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) });
               if (stdout.indexOf('Activate bootloader') !== -1) {
                 if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
@@ -411,13 +411,13 @@ angular.module('icestudio')
             }
             // Yosys error (Mac OS)
             else if (stdout.indexOf('Library not loaded:') !== -1 &&
-                     stdout.indexOf('libffi') !== -1) {
+              stdout.indexOf('libffi') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Configuration not completed'), 30);
               setupDriversAlert();
             }
             // - Arachne-pnr errors
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
-                     stdout.indexOf('fatal error: unknown pin') !== -1) {
+              stdout.indexOf('fatal error: unknown pin') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
             }
             else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
@@ -453,7 +453,7 @@ angular.module('icestudio')
               re = /(ERROR|Warning):\s(.*?)\smain\.v:([0-9]+)(.*?)[\r|\n]/g;
               var msg = '';
               var line = -1;
-              var type=false;
+              var type = false;
               var preContent = false;
               var postContent = false;
 
@@ -499,12 +499,12 @@ angular.module('icestudio')
                 // If the error is about an unexpected token, the error is not
                 // deterministic, therefore we indicate that "the error
                 //is around this line ..."
-                if (preContent.indexOf('unexpected TOK_')>=0) {
-                    msg = 'Syntax error arround this line';
-                }else{
+                if (preContent.indexOf('unexpected TOK_') >= 0) {
+                  msg = 'Syntax error arround this line';
+                } else {
                   msg = preContent;
                 }
-                codeErrors.push( {
+                codeErrors.push({
                   line: line,
                   msg: msg,
                   type: type
@@ -540,8 +540,8 @@ angular.module('icestudio')
                 var stdoutError = stdout.split('\n').filter(function (line) {
                   line = line.toLowerCase();
                   return (line.indexOf('error: ') !== -1 ||
-                          line.indexOf('not installed') !== -1 ||
-                          line.indexOf('already declared') !== -1);
+                    line.indexOf('not installed') !== -1 ||
+                    line.indexOf('already declared') !== -1);
                 });
                 // stdoutWarning.forEach(function (warning) {
                 //   alertify.warning(warning, 20);
@@ -565,7 +565,7 @@ angular.module('icestudio')
           else if (stderr) {
             // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
-                stderr.indexOf('Connection refused') !== -1) {
+              stderr.indexOf('Connection refused') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
             }
             else if (stderr.indexOf('No route to host') !== -1) {
@@ -680,8 +680,7 @@ angular.module('icestudio')
               for (var j in module.params) {
                 var param = module.params[j];
                 if ((codeError.line === param.line) ||
-                    (matchConstant && param.name === matchConstant[1]))
-                {
+                  (matchConstant && param.name === matchConstant[1])) {
                   newCodeError.blockId = param.name;
                   newCodeError.blockType = 'constant';
                   break;
@@ -702,11 +701,11 @@ angular.module('icestudio')
 
     // Toolchain methods
 
-    $rootScope.$on('installToolchain', function(/*event*/) {
+    $rootScope.$on('installToolchain', function (/*event*/) {
       this.installToolchain();
     }.bind(this));
 
-    this.installToolchain = function() {
+    this.installToolchain = function () {
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
@@ -716,66 +715,66 @@ angular.module('icestudio')
       }
       else {
         alertify.confirm(gettextCatalog.getString('Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'),
-          function() {
+          function () {
             utils.removeToolchain();
             installOnlineToolchain();
-        });
+          });
       }
     };
 
-    this.updateToolchain = function() {
+    this.updateToolchain = function () {
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
       alertify.confirm(gettextCatalog.getString('The toolchain will be updated. This operation requires Internet connection. Do you want to continue?'),
-        function() {
+        function () {
           installOnlineToolchain();
-      });
+        });
     };
 
-    this.resetToolchain = function() {
+    this.resetToolchain = function () {
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
       if (utils.checkDefaultToolchain()) {
         alertify.confirm(gettextCatalog.getString('The toolchain will be restored to default. Do you want to continue?'),
-          function() {
+          function () {
             utils.removeToolchain();
             installDefaultToolchain();
-        });
+          });
       }
       else {
-        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: common.TOOLCHAIN_DIR}));
+        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: common.TOOLCHAIN_DIR }));
       }
     };
 
-    this.removeToolchain = function() {
+    this.removeToolchain = function () {
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
       alertify.confirm(gettextCatalog.getString('The toolchain will be removed. Do you want to continue?'),
-        function() {
+        function () {
           utils.removeToolchain();
           toolchain.apio = '';
           toolchain.installed = false;
           alertify.success(gettextCatalog.getString('Toolchain removed'));
-      });
+        });
     };
 
-    $rootScope.$on('enableDrivers', function(/*event*/) {
+    $rootScope.$on('enableDrivers', function (/*event*/) {
       this.enableDrivers();
     }.bind(this));
 
-    this.enableDrivers = function() {
-      checkToolchain(function() {
+    this.enableDrivers = function () {
+      checkToolchain(function () {
         if (toolchain.installed) {
           drivers.enable();
         }
       });
     };
 
-    this.disableDrivers = function() {
-      checkToolchain(function() {
+    this.disableDrivers = function () {
+      checkToolchain(function () {
         if (toolchain.installed) {
           drivers.disable();
         }
@@ -795,8 +794,8 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-      toolchainAlert = alertify.alert(content, function() {
-        setTimeout(function() {
+      toolchainAlert = alertify.alert(content, function () {
+        setTimeout(function () {
           initProgress();
           // Restore OK button
           $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
@@ -832,8 +831,8 @@ angular.module('icestudio')
         '    </div>',
         '  </div>',
         '</div>'].join('\n');
-      toolchainAlert = alertify.alert(content, function() {
-        setTimeout(function() {
+      toolchainAlert = alertify.alert(content, function () {
+        setTimeout(function () {
           initProgress();
           // Restore OK button
           $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
@@ -862,7 +861,7 @@ angular.module('icestudio')
 
     function checkInternetConnection(callback) {
       updateProgress(gettextCatalog.getString('Check Internet connection...'), 0);
-      utils.isOnline(callback, function() {
+      utils.isOnline(callback, function () {
         closeToolchainAlert();
         restoreStatus();
         resultAlert = alertify.error(gettextCatalog.getString('Internet connection required'), 30);
@@ -950,7 +949,7 @@ angular.module('icestudio')
     }
 
     function installationCompleted(callback) {
-      checkToolchain(function() {
+      checkToolchain(function () {
         if (toolchain.installed) {
           closeToolchainAlert();
           updateProgress(gettextCatalog.getString('Installation completed'), 100);
@@ -966,9 +965,9 @@ angular.module('icestudio')
       if (common.showDrivers()) {
         var message = gettextCatalog.getString('Click here to <b>setup the drivers</b>');
         if (!infoAlert) {
-          setTimeout(function() {
+          setTimeout(function () {
             infoAlert = alertify.message(message, 30);
-            infoAlert.callback = function(isClicked) {
+            infoAlert.callback = function (isClicked) {
               infoAlert = null;
               if (isClicked) {
                 if (resultAlert) {
@@ -1025,19 +1024,19 @@ angular.module('icestudio')
 
     // Collections management
 
-    this.addCollections = function(filepaths) {
+    this.addCollections = function (filepaths) {
       // Load zip file
-      async.eachSeries(filepaths, function(filepath, nextzip) {
+      async.eachSeries(filepaths, function (filepath, nextzip) {
         //alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
         var zipData = nodeAdmZip(filepath);
         var _collections = getCollections(zipData);
 
-        async.eachSeries(_collections, function(collection, next) {
-          setTimeout(function() {
+        async.eachSeries(_collections, function (collection, next) {
+          setTimeout(function () {
             if (collection.package && (collection.blocks || collection.examples)) {
 
               alertify.prompt(gettextCatalog.getString('Edit the collection name'), collection.origName,
-                function(evt, name) {
+                function (evt, name) {
                   if (!name) {
                     return false;
                   }
@@ -1048,36 +1047,36 @@ angular.module('icestudio')
                     alertify.confirm(
                       gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(name) }) + '<br>' +
                       gettextCatalog.getString('Do you want to replace it?'),
-                      function() {
+                      function () {
                         utils.deleteFolderRecursive(destPath);
                         installCollection(collection, zipData);
                         alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(name) }));
                         next(name);
                       },
-                      function() {
+                      function () {
                         alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(name) }));
                         next(name);
                       });
-                    }
-                    else {
-                      installCollection(collection, zipData);
-                      alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
-                      next(name);
-                    }
+                  }
+                  else {
+                    installCollection(collection, zipData);
+                    alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
+                    next(name);
+                  }
                 });
-              }
-              else {
-                alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
-              }
-            }, 0);
-          }, function(name) {
-            collections.loadInternalCollections();
-            // If the selected collection is replaced, load it again
-            if (common.selectedCollection.name === name) {
-              collections.selectCollection(name);
             }
-            utils.rootScopeSafeApply();
-            nextzip();
+            else {
+              alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
+            }
+          }, 0);
+        }, function (name) {
+          collections.loadInternalCollections();
+          // If the selected collection is replaced, load it again
+          if (common.selectedCollection.name === name) {
+            collections.selectCollection(name);
+          }
+          utils.rootScopeSafeApply();
+          nextzip();
         });
       });
     };
@@ -1088,7 +1087,7 @@ angular.module('icestudio')
       var zipEntries = zipData.getEntries();
 
       // Validate collections
-      zipEntries.forEach(function(zipEntry) {
+      zipEntries.forEach(function (zipEntry) {
         data = zipEntry.entryName.match(/^([^\/]+)\/$/);
         if (data) {
           _collections[data[1]] = {
@@ -1165,56 +1164,60 @@ angular.module('icestudio')
         var newPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
         zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/false);
       }
-      catch(e) {}
+      catch (e) { }
     }
 
-    this.removeCollection = function(collection) {
+    this.removeCollection = function (collection) {
       utils.deleteFolderRecursive(collection.path);
       collections.loadInternalCollections();
       alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
     };
 
-    this.removeAllCollections = function() {
+    this.removeAllCollections = function () {
       utils.removeCollections();
       collections.loadInternalCollections();
       alertify.success(gettextCatalog.getString('All collections removed'));
     };
-    this.checkForNewVersion =  function(){
-      if(typeof _package.updatecheck !== 'undefined'){
+    this.checkForNewVersion = function () {
+      if (typeof _package.updatecheck !== 'undefined') {
 
-        $.getJSON(_package.updatecheck+'?_tsi=' + new Date().getTime(),function(result){
-                var hasNewVersion=false;
-                if(result !== false ){
-                  if( typeof result.version !== 'undefined' && _package.version < result.version) hasNewVersion='stable';
-                  if( typeof result.nightly !== 'undefined' && _package.version < result.nightly ) hasNewVersion='nightly';
-                  if(hasNewVersion!==false){
-                    var msg='';
-                    if(hasNewVersion==='stable'){
-                      msg='<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
-                                          <div class="new-version-notifier-box--text">'+gettextCatalog.getString('There is a new stable version available')+'<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
-                                          
-                    }else{
-                         msg='<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
-                                          <div class="new-version-notifier-box--text">'+gettextCatalog.getString('There is a new nightly version available')+'<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
-                      
-                    }
-                        alertify.notify(msg, 'notify',30);
+        $.getJSON(_package.updatecheck + '?_tsi=' + new Date().getTime(), function (result) {
+          var hasNewVersion = false;
+          if (result !== false) {
+            if (typeof result.version !== 'undefined' && _package.version < result.version) {
+              hasNewVersion = 'stable';
+            }
+            if (typeof result.nightly !== 'undefined' && _package.version < result.nightly) {
+              hasNewVersion = 'nightly';
+            }
+            if (hasNewVersion !== false) {
+              var msg = '';
+              if (hasNewVersion === 'stable') {
+                msg = '<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
+                                          <div class="new-version-notifier-box--text">'+ gettextCatalog.getString('There is a new stable version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
 
-                                          
-                  }
-                }
+              } else {
+                msg = '<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
+                                          <div class="new-version-notifier-box--text">'+ gettextCatalog.getString('There is a new nightly version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
+
               }
+              alertify.notify(msg, 'notify', 30);
+
+
+            }
+          }
+        }
         );
       }
     };
-  this.ifDevelopmentMode =function(){
-      if(typeof _package.development !== 'undefined' &&
-         typeof _package.development.mode !== 'undefined' &&
-          _package.development.mode === true
-      ){
+    this.ifDevelopmentMode = function () {
+      if (typeof _package.development !== 'undefined' &&
+        typeof _package.development.mode !== 'undefined' &&
+        _package.development.mode === true
+      ) {
         utils.openDevToolsUI();
       }
 
-  };
+    };
 
   });

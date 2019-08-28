@@ -359,10 +359,10 @@ angular.module('icestudio')
                 }
             });
 
-            paper.on('debug:test',function(args){
+            /*paper.on('debug:test',function(args){
 
                 console.log('DEBUG->TEST');
-            });
+            });*/
 
             paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
@@ -777,8 +777,9 @@ angular.module('icestudio')
                 angular.element('.paper').removeClass('looks-disabled');
                 angular.element('.board-container').removeClass('looks-disabled');
                 angular.element('.banner').addClass('hidden');
-                if (!common.isEditingSubmodule)
+                if (!common.isEditingSubmodule){
                     angular.element('.banner-submodule').addClass('hidden');
+                }
 
             }
             else {
@@ -896,7 +897,9 @@ angular.module('icestudio')
         };
         this.setBlockInfo = function (values, newValues, blockId) {
 
-            if (typeof common.allDependencies === 'undefined') return false;
+            if (typeof common.allDependencies === 'undefined'){
+                 return false;
+            }
 
             graph.startBatch('change');
             // Trigger info event
@@ -1055,8 +1058,9 @@ angular.module('icestudio')
 
                             for (var dep in dependencies) {
                                 dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
-                                var seq = (new Date).getTime();
-                                var oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, "$1");
+                                var  dat= new Date();
+                                var seq = dat.getTime();
+                                var oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, '$1');
                                 dependencies[dep].package.version = oldversion + '-c' + seq;
 
                                 hId = utils.dependencyID(dependencies[dep]);
@@ -1264,7 +1268,9 @@ angular.module('icestudio')
             function outputExists(oid,blks){
                 var founded=false;
                 for(var i=0;i<blks.length;i++){
-                    if(blks[i].id===oid) return true;
+                    if(blks[i].id===oid){
+                        return true;
+                    }
                 }
                 return founded;
             }

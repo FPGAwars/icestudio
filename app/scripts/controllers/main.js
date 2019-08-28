@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('icestudio')
-  .controller('MainCtrl', function($scope,
-                                   gettextCatalog,tools,utils) {
- 
+  .controller('MainCtrl', function ($scope,
+    gettextCatalog, tools, utils) {
+
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
     alertify.defaults.transition = 'fade';
     alertify.defaults.notifier.delay = 3;
 
-    setTimeout(function() {
+    setTimeout(function () {
       var labels = {
         'ok': gettextCatalog.getString('OK'),
         'cancel': gettextCatalog.getString('Cancel')
@@ -23,15 +23,15 @@ angular.module('icestudio')
     /* activate development tools */
     tools.ifDevelopmentMode();
 
-    $(document).delegate('.action-open-url-external-browser','click',function(e){
+    $(document).delegate('.action-open-url-external-browser', 'click', function (e) {
       e.preventDefault();
       utils.openUrlExternalBrowser($(this).prop('href'));
       return false;
-    }) ;
+    });
 
     /* Functions that checks if new version is available */
-    setTimeout(function(){
+    setTimeout(function () {
       tools.checkForNewVersion();
-    },30000);
+    }, 30000);
 
   });

@@ -49,7 +49,7 @@ angular.module('icestudio')
     win.on('resize', function () {
       graph.fitContent();
     });
-        // Darwin fix for shortcuts
+    // Darwin fix for shortcuts
     if (process.platform === 'darwin') {
       var mb = new gui.Menu({ type: 'menubar' });
       mb.createMacBuiltin('Icestudio');
@@ -65,7 +65,7 @@ angular.module('icestudio')
       // Parse GET url parmeters for window instance arguments
       // all arguments will be embeded in icestudio_argv param
       // that is a JSON string url encoded
- 
+
       // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
       // unescape is deprecated javascript function, should use decodeURI instead
 
@@ -84,7 +84,7 @@ angular.module('icestudio')
         for (var prop in params) {
           gui.App.argv.push(params[prop]);
         }
-       }
+      }
 
       var local = false;
       for (var i in gui.App.argv) {
@@ -100,19 +100,19 @@ angular.module('icestudio')
       }
       else {
         project.path = '';
-      } 
-
-       }, 0);
-
-     setTimeout(function(){
-      var versionW=$scope.profile.get('displayVersionInfoWindow');
-      if( versionW === 'yes' ){
-        $scope.openVersionInfoWindow();  
       }
-    },2000);
+
+    }, 0);
+
+    setTimeout(function () {
+      var versionW = $scope.profile.get('displayVersionInfoWindow');
+      if (versionW === 'yes') {
+        $scope.openVersionInfoWindow();
+      }
+    }, 2000);
 
     function processArg(arg) {
-      if (nodeFs.existsSync(arg))  {
+      if (nodeFs.existsSync(arg)) {
         // Open filepath 
         var filepath = arg;
         project.open(filepath);
@@ -126,26 +126,26 @@ angular.module('icestudio')
         };
         win.moveTo(offset.x, offset.y);
       }
-    } 
+    }
 
     /*
      * This function triggers when version info window will be closed 
      *                                                                 */
     $scope.closeVersionInfoWindow = function () {
       $('#version-info-tab').addClass('hidden');
-      var nodisplay=$('input[name="version-info-tab--no-display"]').is(':checked');
-      if(nodisplay){
-          profile.set('displayVersionInfoWindow','no'); 
-      }else{
-          profile.set('displayVersionInfoWindow','yes'); 
+      var nodisplay = $('input[name="version-info-tab--no-display"]').is(':checked');
+      if (nodisplay) {
+        profile.set('displayVersionInfoWindow', 'no');
+      } else {
+        profile.set('displayVersionInfoWindow', 'yes');
       }
     };
 
     $scope.openVersionInfoWindow = function () {
       $('#version-info-tab').removeClass('hidden');
-      var versionW=$scope.profile.get('displayVersionInfoWindow');
-      if( versionW === 'no' ){
-        $('input[name="version-info-tab--no-display"]').prop('checked',true);
+      var versionW = $scope.profile.get('displayVersionInfoWindow');
+      if (versionW === 'no') {
+        $('input[name="version-info-tab--no-display"]').prop('checked', true);
       }
     };
 
@@ -194,8 +194,8 @@ angular.module('icestudio')
 
       if (typeof common.isEditingSubmodule !== 'undefined' &&
         common.isEditingSubmodule === true) {
-        alertify.alert(gettextCatalog.getString('Save submodule'), 
-                       gettextCatalog.getString('To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'), function(){ });
+        alertify.alert(gettextCatalog.getString('Save submodule'),
+          gettextCatalog.getString('To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'), function () { });
 
         return;
       }
@@ -211,7 +211,7 @@ angular.module('icestudio')
       }
     };
 
-    $scope.doSaveProjectAs = function(localCallback){
+    $scope.doSaveProjectAs = function (localCallback) {
 
       utils.saveDialog('#input-save-project', '.ice', function (filepath) {
         updateWorkingdir(filepath);
@@ -226,29 +226,21 @@ angular.module('icestudio')
 
 
 
-    }
+    };
+
     $scope.saveProjectAs = function (localCallback) {
       if (typeof common.isEditingSubmodule !== 'undefined' &&
 
         common.isEditingSubmodule === true) {
-        alertify.confirm(gettextCatalog.getString('Export submodule'), gettextCatalog.getString('You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'), 
-                function(){
+        alertify.confirm(gettextCatalog.getString('Export submodule'), gettextCatalog.getString('You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'),
+          function () {
+            $scope.doSaveProjectAs(localCallback);
+          }, function () {
 
-          $scope.doSaveProjectAs(localCallback);
+          });
 
-                 }
-            , function(){ 
-
-
-          
-          
-          }
-            
-            );
-
-
-      }else{
-          $scope.doSaveProjectAs(localCallback);
+      } else {
+        $scope.doSaveProjectAs(localCallback);
 
       }
 
@@ -428,7 +420,7 @@ angular.module('icestudio')
         }, 250);
       }
     };
-var pasteAndClone = true;
+    var pasteAndClone = true;
     $scope.pasteAndCloneSelected = function () {
       if (paste) {
         pasteAndClone = false;
@@ -506,7 +498,7 @@ var pasteAndClone = true;
       utils.projectinfoprompt(values, function (evt, newValues) {
         if (!_.isEqual(values, newValues)) {
           if (subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined') {
-             graph.setBlockInfo(values, newValues, common.submoduleId);
+            graph.setBlockInfo(values, newValues, common.submoduleId);
           } else {
             graph.setInfo(values, newValues, project);
           }
@@ -731,25 +723,22 @@ var pasteAndClone = true;
     //-- Tools
 
     $scope.verifyCode = function () {
-      console.log('Verificando 0');
       var startMessage = gettextCatalog.getString('Start verification');
       var endMessage = gettextCatalog.getString('Verification done');
       checkGraph()
         .then(function () {
-          console.log('Aceptada la promesa')
           return tools.verifyCode(startMessage, endMessage);
         })
         .catch(function () {
 
-         });
+        });
     };
 
     $scope.buildCode = function () {
       if (typeof common.isEditingSubmodule !== 'undefined' &&
         common.isEditingSubmodule === true) {
-        alertify.alert(gettextCatalog.getString('Build'), 
-                       gettextCatalog.getString('You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>'), function(){ });
-
+        alertify.alert(gettextCatalog.getString('Build'),
+          gettextCatalog.getString('You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>'), function () { });
         return;
       }
 
@@ -766,10 +755,10 @@ var pasteAndClone = true;
     };
 
     $scope.uploadCode = function () {
- if (typeof common.isEditingSubmodule !== 'undefined' &&
+      if (typeof common.isEditingSubmodule !== 'undefined' &&
         common.isEditingSubmodule === true) {
-        alertify.alert(gettextCatalog.getString('Upload'), 
-                       gettextCatalog.getString('You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>'), function(){ });
+        alertify.alert(gettextCatalog.getString('Upload'),
+          gettextCatalog.getString('You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>'), function () { });
 
         return;
       }
@@ -789,7 +778,7 @@ var pasteAndClone = true;
 
     function checkGraph() {
       return new Promise(function (resolve, reject) {
-        console.log(resolve,reject);
+        console.log(resolve, reject);
         if (!graph.isEmpty()) {
           console.log('No isEmpty');
           resolve();
@@ -935,7 +924,7 @@ var pasteAndClone = true;
     shortcuts.method('cutSelected', $scope.cutSelected);
     shortcuts.method('copySelected', $scope.copySelected);
     shortcuts.method('pasteAndCloneSelected', $scope.pasteAndCloneSelected);
-   shortcuts.method('pasteSelected', $scope.pasteSelected);
+    shortcuts.method('pasteSelected', $scope.pasteSelected);
     shortcuts.method('selectAll', $scope.selectAll);
     shortcuts.method('fitContent', $scope.fitContent);
 
@@ -956,7 +945,7 @@ var pasteAndClone = true;
         removeSelected();
       }
       else {
-        $rootScope.$broadcast('breadcrumbsBack'); 
+        $rootScope.$broadcast('breadcrumbsBack');
       }
     });
 
@@ -969,10 +958,10 @@ var pasteAndClone = true;
       };
       event.stopImmediatePropagation();
       var ret = shortcuts.execute(event, opt);
-        if (ret.preventDefault) {
-          event.preventDefault();
-        }
-        
+      if (ret.preventDefault) {
+        event.preventDefault();
+      }
+
 
     });
 
@@ -1011,10 +1000,10 @@ var pasteAndClone = true;
     $(document).on('mousedown', '.paper', function () {
       mousedown = true;
       // Close current menu
-      if(typeof $scope.status !== 'undefined' &&
-         typeof $scope.status[menu] !== 'undefined'){
-              $scope.status[menu] = false;
-           }
+      if (typeof $scope.status !== 'undefined' &&
+        typeof $scope.status[menu] !== 'undefined') {
+        $scope.status[menu] = false;
+      }
       utils.rootScopeSafeApply();
     });
 
@@ -1054,5 +1043,5 @@ var pasteAndClone = true;
         event.preventDefault();
       }
     });
-  
+
   });

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('profile', function(utils,
-                               common,
-                               nodeFs) {
+  .service('profile', function (utils,
+    common,
+    nodeFs) {
 
     this.data = {
       'board': '',
@@ -20,58 +20,58 @@ angular.module('icestudio')
       this.data['macosFTDIDrivers'] = false;
     }
 
-    this.load = function(callback) {
+    this.load = function (callback) {
       var self = this;
       utils.readFile(common.PROFILE_PATH)
-      .then(function(data) {
-        self.data = {
-          'board': data.board || '',
-          'boardRules': data.boardRules !== false,
-          'collection': data.collection || '',
-          'language': data.language || '',
-          'externalCollections': data.externalCollections || '',
-          'remoteHostname': data.remoteHostname || '',
-          'showFPGAResources': data.showFPGAResources || false,
-          'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes'
+        .then(function (data) {
+          self.data = {
+            'board': data.board || '',
+            'boardRules': data.boardRules !== false,
+            'collection': data.collection || '',
+            'language': data.language || '',
+            'externalCollections': data.externalCollections || '',
+            'remoteHostname': data.remoteHostname || '',
+            'showFPGAResources': data.showFPGAResources || false,
+            'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes'
 
-        };
-        if (common.DARWIN)  {
-          self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
-        } 
-        if (callback) {
-          callback();
-        }
-      })
-      .catch(function(error) {
-        console.warn(error);
-        if (callback) {
-          callback();
-        }
-      });
+          };
+          if (common.DARWIN) {
+            self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
+          }
+          if (callback) {
+            callback();
+          }
+        })
+        .catch(function (error) {
+          console.warn(error);
+          if (callback) {
+            callback();
+          }
+        });
     };
 
-    this.set = function(key, value) {
+    this.set = function (key, value) {
       if (this.data.hasOwnProperty(key)) {
         this.data[key] = value;
         this.save();
       }
     };
 
-    this.get = function(key) {
+    this.get = function (key) {
       return this.data[key];
     };
 
-    this.save = function() {
+    this.save = function () {
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
       utils.saveFile(common.PROFILE_PATH, this.data)
-      .then(function() {
-        // Success
-      })
-      .catch(function(error) {
-        alertify.error(error, 30);
-      });
+        .then(function () {
+          // Success
+        })
+        .catch(function (error) {
+          alertify.error(error, 30);
+        });
     };
 
   });
