@@ -35,7 +35,7 @@ angular.module('icestudio')
           'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes'
 
         };
-        if (common.DARWIN) {
+        if (common.DARWIN)  {
           self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
         } 
         if (callback) {

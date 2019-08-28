@@ -102,11 +102,14 @@ angular.module('icestudio')
         project.path = '';
       } 
 
-      var versionW=$scope.profile.get('displayVersionInfoWindow'); 
+       }, 0);
+
+     setTimeout(function(){
+      var versionW=$scope.profile.get('displayVersionInfoWindow');
       if( versionW === 'yes' ){
-        $('#version-info-tab').removeClass('hidden');
+        $scope.openVersionInfoWindow();  
       }
-    }, 0);
+    },2000);
 
     function processArg(arg) {
       if (nodeFs.existsSync(arg))  {
@@ -1051,5 +1054,5 @@ var pasteAndClone = true;
         event.preventDefault();
       }
     });
-
+  
   });

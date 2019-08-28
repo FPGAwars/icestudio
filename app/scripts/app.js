@@ -30,7 +30,7 @@ angular
                 $timeout)
    
                 {
-
+ 
 
     $timeout(function(){
       $('body').addClass('waiting');

@@ -2,7 +2,7 @@
 
 angular.module('icestudio')
   .controller('MainCtrl', function($scope,
-                                   gettextCatalog) {
+                                   gettextCatalog,tools,utils) {
  
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
@@ -19,15 +19,19 @@ angular.module('icestudio')
       alertify.set('confirm', 'labels', labels);
     }, 100);
 
+    /* If in package.json appears development:{mode:true}*/
+    /* activate development tools */
+    tools.ifDevelopmentMode();
+
+    $(document).delegate('.action-open-url-external-browser','click',function(e){
+      e.preventDefault();
+      utils.openUrlExternalBrowser($(this).prop('href'));
+      return false;
+    }) ;
+
     /* Functions that checks if new version is available */
-    function checkForNewVersion(){
-      var notification = alertify.notify('<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
-                                          <div class="new-version-notifier-box--text">There is a new version available<br/><a href="">Click here to download it.</a></div></div>', 'notify',30, function(){  console.log('Notification hide'); });
-    }
-
     setTimeout(function(){
-    checkForNewVersion();
-
-      },30000);
+      tools.checkForNewVersion();
+    },30000);
 
   });

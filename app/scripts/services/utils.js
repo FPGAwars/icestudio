@@ -18,6 +18,7 @@ angular.module('icestudio')
                              nodeCP,
                              nodeGetOS,
                              nodeLangInfo,
+                             gui,
                              SVGO) {
 
     var _pythonExecutableCached = null;
@@ -1188,5 +1189,13 @@ angular.module('icestudio')
     this.isFunction = function (functionToCheck) {
       return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
      };
+
+    this.openDevToolsUI = function(){
+      window.get().showDevTools();
+     };
+  this.openUrlExternalBrowser = function(url){
+
+    gui.Shell.openExternal( url );
+  };
 
   });

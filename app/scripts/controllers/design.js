@@ -277,17 +277,6 @@ angular.module('icestudio')
                                         subModuleActive = false;
                                         var cells = $scope.graph.getCells();
 
-                                       /* _.each(cells, function (cell) {
-                                                if (!cell.isLink()) {
-                                                    var elementView = graph.paper.findViewByModel(cell);
-                                                    // Pan blocks
-                                                    elementView.updateBox();
-                                                    // Pan selection boxes
-                                                    selectionView.updateBox(elementView.model);
-                                                }
-                                            });
-*/
-
 
                                         // Sort Constant/Memory cells by x-coordinate
                                         cells = _.sortBy(cells, function (cell) {
