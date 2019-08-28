@@ -1535,18 +1535,22 @@ angular.module('icestudio')
                     var cellView;
                     if (cell.get('type') === 'ice.Code') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.find('.code-content').removeClass('highlight-error').remove('.sticker-error');
-;
+                        cellView.$box.find('.code-content').removeClass('highlight-error');
+                        $('.sticker-error',cellView.$box).remove();
                         cellView.clearAnnotations();
                     }
                     else if (cell.get('type') === 'ice.Generic') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.removeClass('highlight-error').remove('.sticker-error');
-;
+
+                        $('.sticker-error',cellView.$box).remove();
+                        cellView.$box.remove('.sticker-error').removeClass('highlight-error');
+
                     }
                     else if (cell.get('type') === 'ice.Constant') {
                         cellView = paper.findViewByModel(cell);
-                        cellView.$box.removeClass('highlight-error').remove('.sticker-error');
+
+                        $('.sticker-error',cellView.$box).remove();
+                        cellView.$box.remove('.sticker-error').removeClass('highlight-error');
 
                     }
                 });
@@ -1569,11 +1573,15 @@ angular.module('icestudio')
                     cellView = paper.findViewByModel(cell);
                     if (codeError.type === 'error') {
                         if (cell.get('type') === 'ice.Code') {
-                            cellView.$box.find('.code-content').addClass('highlight-error').remove('.sticker-error').append('<div class="sticker-error error-code-editor"></div>');
+
+                            $('.sticker-error',cellView.$box).remove();
+                            cellView.$box.find('.code-content').addClass('highlight-error').append('<div class="sticker-error error-code-editor"></div>');
                             
                         }
                         else {
-                            cellView.$box.addClass('highlight-error').remove('.sticker-error').append('<div class="sticker-error"></div>');
+
+                            $('.sticker-error',cellView.$box).remove();
+                            cellView.$box.addClass('highlight-error').append('<div class="sticker-error"></div>');
 
                         }
                     }
