@@ -54,7 +54,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 
 You can install **stable** or **nightly** Icestudio versions.
 
-Because Icestudio is in development proccess, until it rises to 1.0 version,, we are recommending to install **nightly** Icestudio versions, that have the latest features.
+Because Icestudio is in development proccess, until it rises to 1.0 version, we are recommending to install **nightly** Icestudio versions, that have the latest features.
 
 
 * **GNU/Linux**
