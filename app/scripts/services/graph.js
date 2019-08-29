@@ -116,7 +116,7 @@ angular.module('icestudio')
 
         this.createPaper = function (element) {
             graph = new joint.dia.Graph();
-        
+
             paper = new joint.dia.Paper({
                 el: element,
                 width: 2000,
@@ -221,7 +221,7 @@ angular.module('icestudio')
                 }
             });
 
-            
+
             // Command Manager
 
             commandManager = new joint.dia.CommandManager({
@@ -417,16 +417,16 @@ angular.module('icestudio')
                         var breadcrumbsLength = self.breadcrumbs.length;
 
                         $('body').addClass('waiting');
-                        setTimeout(function(){
-                        $rootScope.$broadcast('navigateProject', {
-                            update: breadcrumbsLength === 1,
-                            project: project,
-                            submodule: type,
-                            submoduleId: blockId
-                        });
-                        self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-                        utils.rootScopeSafeApply();
-                    },100);
+                        setTimeout(function () {
+                            $rootScope.$broadcast('navigateProject', {
+                                update: breadcrumbsLength === 1,
+                                project: project,
+                                submodule: type,
+                                submoduleId: blockId
+                            });
+                            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+                            utils.rootScopeSafeApply();
+                        }, 100);
                     }
                 }
             });
@@ -534,7 +534,7 @@ angular.module('icestudio')
             }
 
             function replaceBlock(upperBlock, lowerBlock) {
-                
+
                 if (lowerBlock) {
                     // 1. Compute portsMap between the upperBlock and the lowerBlock
                     var portsMap = computeAllPortsMap(upperBlock, lowerBlock);
@@ -777,7 +777,7 @@ angular.module('icestudio')
                 angular.element('.paper').removeClass('looks-disabled');
                 angular.element('.board-container').removeClass('looks-disabled');
                 angular.element('.banner').addClass('hidden');
-                if (!common.isEditingSubmodule){
+                if (!common.isEditingSubmodule) {
                     angular.element('.banner-submodule').addClass('hidden');
                 }
 
@@ -897,8 +897,8 @@ angular.module('icestudio')
         };
         this.setBlockInfo = function (values, newValues, blockId) {
 
-            if (typeof common.allDependencies === 'undefined'){
-                 return false;
+            if (typeof common.allDependencies === 'undefined') {
+                return false;
             }
 
             graph.startBatch('change');
@@ -1058,7 +1058,7 @@ angular.module('icestudio')
 
                             for (var dep in dependencies) {
                                 dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
-                                var  dat= new Date();
+                                var dat = new Date();
                                 var seq = dat.getTime();
                                 var oldversion = dependencies[dep].package.version.replace(/(.*)(-c\d*)/, '$1');
                                 dependencies[dep].package.version = oldversion + '-c' + seq;
@@ -1215,7 +1215,7 @@ angular.module('icestudio')
                     self.clearAll();
 
                     var cells = graphToCells(design.graph, opt);
-                    
+
 
                     graph.addCells(cells);
 
@@ -1256,101 +1256,85 @@ angular.module('icestudio')
             var isMigrated = false;
 
 
-            function getBlocksFromLib(id){
-                for(var dep in common.allDependencies){
-//                    console.log('Chequeando '+id+' '+dep);
-                    if(id===dep){
+            function getBlocksFromLib(id) {
+                for (var dep in common.allDependencies) {
+                    if (id === dep) {
                         return common.allDependencies[dep].design.graph.blocks;
                     }
                 }
                 return false;
             }
-            function outputExists(oid,blks){
-                var founded=false;
-                for(var i=0;i<blks.length;i++){
-                    if(blks[i].id===oid){
+            function outputExists(oid, blks) {
+                var founded = false;
+                for (var i = 0; i < blks.length; i++) {
+                    if (blks[i].id === oid) {
                         return true;
                     }
                 }
                 return founded;
             }
             /* Check if wire source exists (block+port) */
-            function wireExists(wre,blk,edge){
-                
-                var founded=false;
-                var blk2=false;
+            function wireExists(wre, blk, edge) {
 
-                for(var i=0;i<blk.length;i++){
-                    if(wre[edge].block === blk[i].id){
-                        founded=i;
+                var founded = false;
+                var blk2 = false;
+
+                for (var i = 0; i < blk.length; i++) {
+                    if (wre[edge].block === blk[i].id) {
+                        founded = i;
                         break;
-                    } 
+                    }
                 }
-                if(founded !== false){
-//                    console.log('BLK FOUND',blk[founded].type);
-                    switch(blk[founded].type){
-                      case 'basic.memory':
-                      case 'basic.constant':  
-                      case 'basic.outputLabel': case 'basic.inputLabel': 
-                      case 'basic.code': 
-                      case 'basic.input': case 'basic.output':
-                          founded=true; 
-                          break;
-                    
+                if (founded !== false) {
+                    switch (blk[founded].type) {
+                        case 'basic.memory':
+                        case 'basic.constant':
+                        case 'basic.outputLabel': case 'basic.inputLabel':
+                        case 'basic.code':
+                        case 'basic.input': case 'basic.output':
+                            founded = true;
+                            break;
+
                         default:
-              //              console.log('Match bloque OK',blk[founded]);
                             /* Generic type, look into the library */
-                            blk2=getBlocksFromLib(blk[i].type);
- //                           console.log('Lib',blk2);
-                            founded=outputExists(wre[edge].port,blk2);                            
+                            blk2 = getBlocksFromLib(blk[i].type);
+                            founded = outputExists(wre[edge].port, blk2);
                     }
                 }
                 return founded;
             }
 
             // Wires
-//            console.log('WIRES',_graph.wires);
-//            console.log('COMMON',common);
-//            console.log('GRAPH',_graph);
-            var test=false;
-             var todelete=[];
+            var test = false;
+            var todelete = [];
 
-            for(var i=0;i<_graph.wires.length;i++){
-//                console.log('---Testeamos la entrada');
-                test=wireExists(_graph.wires[i],_graph.blocks,'source');
-                if(test){
-//                     console.log('-----Encontrado,testeamos la salida');
+            for (var i = 0; i < _graph.wires.length; i++) {
+                test = wireExists(_graph.wires[i], _graph.blocks, 'source');
+                if (test) {
 
-                    test=wireExists(_graph.wires[i],_graph.blocks,'target');
-                    if(test===true){
-//                        console.log('DEFINITIVAMENTE ENCONTRADO');
-                    }else{
-  //                      console.log('ELIMINAR 1');
-
+                    test = wireExists(_graph.wires[i], _graph.blocks, 'target');
+                    if (test === true) {
+                    } else {
                         todelete.push(i);
                     }
-                }else{
+                } else {
 
-//                    console.log('ELIMINAR 2');
                     todelete.push(i);
                 }
             }
-  //          console.log('FILTRADO REALIZADO',utils.clone(_graph.wires)); 
-   //         console.log('TODELETE',todelete);
-            var tempw=[];
-             for(var z=0;z<_graph.wires.length;z++){
+            var tempw = [];
+            for (var z = 0; z < _graph.wires.length; z++) {
 
-                if(todelete.indexOf(z)===-1){
+                if (todelete.indexOf(z) === -1) {
                     tempw.push(_graph.wires[z]);
                 }
             }
-            _graph.wires=utils.clone(tempw);
+            _graph.wires = utils.clone(tempw);
 
-//            console.log('FILTRADO REALIZADO2',utils.clone(_graph.wires)); 
 
 
             _.each(_graph.blocks, function (blockInstance) {
-            
+
 
                 if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
@@ -1412,8 +1396,7 @@ angular.module('icestudio')
             }
 
 
-           _.each(_graph.wires, function (wireInstance) {
-          //     console.log('>>>CABLE',wireInstance);
+            _.each(_graph.wires, function (wireInstance) {
                 var source = blocksMap[wireInstance.source.block];
                 var target = blocksMap[wireInstance.target.block];
                 if (opt.offset) {
@@ -1440,7 +1423,7 @@ angular.module('icestudio')
             return cells;
         }
 
-         this.appendDesign = function (design, dependencies) {
+        this.appendDesign = function (design, dependencies) {
             if (design &&
                 dependencies &&
                 design.graph &&
@@ -1542,20 +1525,20 @@ angular.module('icestudio')
                     if (cell.get('type') === 'ice.Code') {
                         cellView = paper.findViewByModel(cell);
                         cellView.$box.find('.code-content').removeClass('highlight-error');
-                        $('.sticker-error',cellView.$box).remove();
+                        $('.sticker-error', cellView.$box).remove();
                         cellView.clearAnnotations();
                     }
                     else if (cell.get('type') === 'ice.Generic') {
                         cellView = paper.findViewByModel(cell);
 
-                        $('.sticker-error',cellView.$box).remove();
+                        $('.sticker-error', cellView.$box).remove();
                         cellView.$box.remove('.sticker-error').removeClass('highlight-error');
 
                     }
                     else if (cell.get('type') === 'ice.Constant') {
                         cellView = paper.findViewByModel(cell);
 
-                        $('.sticker-error',cellView.$box).remove();
+                        $('.sticker-error', cellView.$box).remove();
                         cellView.$box.remove('.sticker-error').removeClass('highlight-error');
 
                     }
@@ -1580,13 +1563,13 @@ angular.module('icestudio')
                     if (codeError.type === 'error') {
                         if (cell.get('type') === 'ice.Code') {
 
-                            $('.sticker-error',cellView.$box).remove();
+                            $('.sticker-error', cellView.$box).remove();
                             cellView.$box.find('.code-content').addClass('highlight-error').append('<div class="sticker-error error-code-editor"></div>');
-                            
+
                         }
                         else {
 
-                            $('.sticker-error',cellView.$box).remove();
+                            $('.sticker-error', cellView.$box).remove();
                             cellView.$box.addClass('highlight-error').append('<div class="sticker-error"></div>');
 
                         }

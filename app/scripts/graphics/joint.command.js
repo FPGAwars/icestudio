@@ -53,7 +53,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   addCommand: function(cmdName, cell, graph, options) {
 
-//    console.log('CMD',cmdName,cell,graph,options);
     if (cmdName === 'change:labels' ||
         cmdName === 'change:z') {
       return;
@@ -179,7 +178,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   initBatchCommand: function() {
 
-    // console.log('initBatchCommand', this.batchCommand);
 
     if (!this.batchCommand) {
 
@@ -199,7 +197,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
   storeBatchCommand: function() {
 
-    // console.log('storeBatchCommand', this.batchCommand, this.batchLevel);
 
     // In order to store batch command it is necesary to run storeBatchCommand as many times as
     // initBatchCommand was executed
@@ -276,7 +273,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
           var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          //console.log('UNDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
             // Invert relative movement
             cmd.options.ty *= -1;
@@ -346,7 +342,6 @@ joint.dia.CommandManager = Backbone.Model.extend({
           var data = null;
           var options = null;
           var attribute = cmd.action.substr(this.PREFIX_LENGTH);
-          //console.log('REDO', cmd.action, cmd);
           if (attribute === 'data' && cmd.options.translateBy) {
             cmd.options.ty *= -1;
             options = cmd.options;

@@ -778,13 +778,10 @@ angular.module('icestudio')
 
     function checkGraph() {
       return new Promise(function (resolve, reject) {
-        console.log(resolve, reject);
         if (!graph.isEmpty()) {
-          console.log('No isEmpty');
           resolve();
         }
         else {
-          console.log('Empty');
           if (resultAlert) {
             resultAlert.dismiss(true);
           }

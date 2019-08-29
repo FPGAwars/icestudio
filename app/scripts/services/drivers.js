@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('drivers', function(gettextCatalog,
-                               profile,
-                               common,
-                               gui,
-                               utils,
-                               nodePath,
-                               nodeSudo,
-                               nodeChildProcess,
-                               $rootScope) {
+  .service('drivers', function (gettextCatalog,
+    profile,
+    common,
+    gui,
+    utils,
+    nodePath,
+    nodeSudo,
+    nodeChildProcess,
+    $rootScope) {
 
-    this.enable = function() {
+    this.enable = function () {
       switch (common.selectedBoard.info.interface) {
         case 'FTDI':
           enableDriversFTDI();
@@ -24,7 +24,7 @@ angular.module('icestudio')
       }
     };
 
-    this.disable = function() {
+    this.disable = function () {
       switch (common.selectedBoard.info.interface) {
         case 'FTDI':
           disableDriversFTDI();
@@ -85,7 +85,7 @@ angular.module('icestudio')
       }
     }
 
-    this.preUpload = function(callback) {
+    this.preUpload = function (callback) {
       if (common.DARWIN) {
         preUploadDarwin(callback);
       }
@@ -94,80 +94,79 @@ angular.module('icestudio')
       }
     };
 
-    this.postUpload = function() {
+    this.postUpload = function () {
       if (common.DARWIN) {
         postUploadDarwin();
       }
-   };
+    };
 
-   /*
-    * Linux drivers
-    */
+    /*
+     * Linux drivers
+     */
 
-   function enableLinuxDriversFTDI() {
-     var rules = '';
-     rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
-     rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
-     rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6014\\", ';
-     rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
-     configureLinuxDrivers([
-       'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
-     ].concat(reloadRules()), function() {
-       alertify.success(gettextCatalog.getString('Drivers enabled'));
-     });
-   }
+    function enableLinuxDriversFTDI() {
+      var rules = '';
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6014\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
+      configureLinuxDrivers([
+        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
+      ].concat(reloadRules()), function () {
+        alertify.success(gettextCatalog.getString('Drivers enabled'));
+      });
+    }
 
-   function disableLinuxDriversFTDI() {
-     configureLinuxDrivers([
-       'rm -f /etc/udev/rules.d/80-icestick.rules',
-       'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'
-     ].concat(reloadRules()), function() {
-       alertify.warning(gettextCatalog.getString('Drivers disabled'));
-     });
-   }
+    function disableLinuxDriversFTDI() {
+      configureLinuxDrivers([
+        'rm -f /etc/udev/rules.d/80-icestick.rules',
+        'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'
+      ].concat(reloadRules()), function () {
+        alertify.warning(gettextCatalog.getString('Drivers disabled'));
+      });
+    }
 
-   function enableLinuxDriversSerial() {
-     var rules = '';
-     rules += '# Disable ModemManager for BlackIce\n';
-     rules += 'ATTRS{idVendor}==\\"0483\\", ATTRS{idProduct}==\\"5740\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"\n';
-     rules += '# Disable ModemManager for TinyFPGA B2\n';
-     rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
-     rules += '# Disable ModemManager for TinyFPGA BX\n';
-     rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
-     configureLinuxDrivers([
-       'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
-     ].concat(reloadRules()), function() {
-       alertify.success(gettextCatalog.getString('Drivers enabled'));
-     });
-   }
+    function enableLinuxDriversSerial() {
+      var rules = '';
+      rules += '# Disable ModemManager for BlackIce\n';
+      rules += 'ATTRS{idVendor}==\\"0483\\", ATTRS{idProduct}==\\"5740\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"\n';
+      rules += '# Disable ModemManager for TinyFPGA B2\n';
+      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+      rules += '# Disable ModemManager for TinyFPGA BX\n';
+      rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+      configureLinuxDrivers([
+        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
+      ].concat(reloadRules()), function () {
+        alertify.success(gettextCatalog.getString('Drivers enabled'));
+      });
+    }
 
-   function disableLinuxDriversSerial() {
-     configureLinuxDrivers([
-       'rm -f /etc/udev/rules.d/80-fpga-serial.rules'
-     ].concat(reloadRules()), function() {
-       alertify.warning(gettextCatalog.getString('Drivers disabled'));
-     });
-   }
+    function disableLinuxDriversSerial() {
+      configureLinuxDrivers([
+        'rm -f /etc/udev/rules.d/80-fpga-serial.rules'
+      ].concat(reloadRules()), function () {
+        alertify.warning(gettextCatalog.getString('Drivers disabled'));
+      });
+    }
 
-   function reloadRules() {
-     return [
-       'udevadm control --reload-rules',
-       'udevadm trigger',
-       'service udev restart'
-     ];
-   }
+    function reloadRules() {
+      return [
+        'udevadm control --reload-rules',
+        'udevadm trigger',
+        'service udev restart'
+      ];
+    }
 
-   function configureLinuxDrivers(commands, callback) {
-     var command = 'sh -c "' + commands.join('; ') + '"';
-     utils.beginBlockingTask();
-     nodeSudo.exec(command, {name: 'Icestudio'}, function(error/*, stdout, stderr*/) {
-      // console.log(error, stdout, stderr);
-      utils.endBlockingTask();
-      if (!error) {
-        if (callback) {
-          callback();
-        }
-        setTimeout(function() {
+    function configureLinuxDrivers(commands, callback) {
+      var command = 'sh -c "' + commands.join('; ') + '"';
+      utils.beginBlockingTask();
+      nodeSudo.exec(command, { name: 'Icestudio' }, function (error/*, stdout, stderr*/) {
+        utils.endBlockingTask();
+        if (!error) {
+          if (callback) {
+            callback();
+          }
+          setTimeout(function () {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }, 1000);
         }
@@ -202,17 +201,17 @@ angular.module('icestudio')
         brewCommands = brewCommands.concat(brewInstall(brewPackages[i]));
       }
       utils.beginBlockingTask();
-      nodeChildProcess.exec(brewCommands.join('; '), function(error, stdout, stderr) {
+      nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
-              (stderr.indexOf('brew: No such file or directory') !== -1)) {
+            (stderr.indexOf('brew: No such file or directory') !== -1)) {
             alertify.warning(gettextCatalog.getString('{{app}} is required.', { app: '<b>Homebrew</b>' }) + '<br>' +
-                             '<u>' + gettextCatalog.getString('Click here to install it') + '</u>', 30)
-            .callback = function(isClicked) {
-              if (isClicked) {
-                gui.Shell.openExternal('https://brew.sh');
-              }
-            };
+              '<u>' + gettextCatalog.getString('Click here to install it') + '</u>', 30)
+              .callback = function (isClicked) {
+                if (isClicked) {
+                  gui.Shell.openExternal('https://brew.sh');
+                }
+              };
           }
           else if (stderr.indexOf('Error: Failed to download') !== -1) {
             alertify.error(gettextCatalog.getString('Internet connection required'), 30);
@@ -287,8 +286,7 @@ angular.module('icestudio')
     function processDriverDarwin(driver, load, callback) {
       if (driver) {
         var command = (load ? 'kextload' : 'kextunload') + ' -b ' + driver;
-        nodeSudo.exec(command, {name: 'Icestudio'}, function(/*error, stdout, stderr*/) {
-          //console.log(error, stdout, stderr);
+        nodeSudo.exec(command, { name: 'Icestudio' }, function (/*error, stdout, stderr*/) {
           if (callback) {
             callback();
           }
@@ -334,16 +332,15 @@ angular.module('icestudio')
     function enableWindowsDrivers(type) {
       var option = '--' + type + '-enable';
       utils.beginBlockingTask();
-      nodeSudo.exec([common.APIO_CMD, 'drivers', option].join(' '),  {name: 'Icestudio'}, function(error, stdout, stderr) {
-        // console.log(error, stdout, stderr);
+      nodeSudo.exec([common.APIO_CMD, 'drivers', option].join(' '), { name: 'Icestudio' }, function (error, stdout, stderr) {
         utils.endBlockingTask();
         if (stderr) {
           alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-          .callback = function(isClicked) {
-            if (isClicked) {
-              $rootScope.$broadcast('installToolchain');
-            }
-          };
+            .callback = function (isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
         }
         else if (!error) {
           alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
@@ -354,16 +351,15 @@ angular.module('icestudio')
     function disableWindowsDrivers(type) {
       var option = '--' + type + '-disable';
       utils.beginBlockingTask();
-      nodeChildProcess.exec([common.APIO_CMD, 'drivers', option].join(' '), function(error, stdout, stderr) {
-        // console.log(error, stdout, stderr);
+      nodeChildProcess.exec([common.APIO_CMD, 'drivers', option].join(' '), function (error, stdout, stderr) {
         utils.endBlockingTask();
         if (stderr) {
           alertify.error(gettextCatalog.getString('Toolchain not installed') + '.<br>' + gettextCatalog.getString('Click here to install it'), 30)
-          .callback = function(isClicked) {
-            if (isClicked) {
-              $rootScope.$broadcast('installToolchain');
-            }
-          };
+            .callback = function (isClicked) {
+              if (isClicked) {
+                $rootScope.$broadcast('installToolchain');
+              }
+            };
         }
       });
     }
