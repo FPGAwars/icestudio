@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
@@ -99,7 +99,7 @@ msgstr "Autor"
 msgid "Basic"
 msgstr "Základní prvky"
 
-#: app/views/languages.html:64
+#: app/views/languages.html:70
 msgid "Basque"
 msgstr "baskičtina"
 
@@ -116,7 +116,7 @@ msgstr "Binární"
 msgid "Block updated"
 msgstr "Blok aktualizován"
 
-#: app/scripts/services/project.js:463
+#: app/scripts/services/project.js:460
 msgid "Block {{name}} imported"
 msgstr "Blok {{name}} importován"
 
@@ -168,11 +168,11 @@ msgstr "Sestavení"
 msgid "Build done"
 msgstr "Sestavení hotovo"
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:135
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:132
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: app/views/languages.html:70
+#: app/views/languages.html:76
 msgid "Catalan"
 msgstr "katalánština"
 
@@ -184,7 +184,7 @@ msgstr "Kontrola připojení na internet..."
 msgid "Check Python..."
 msgstr "Kontrola Pythonu..."
 
-#: app/views/languages.html:46
+#: app/views/languages.html:52
 msgid "Chinese"
 msgstr "čínština"
 
@@ -197,7 +197,7 @@ msgstr ""
 msgid "Chrome Dev Tools"
 msgstr ""
 
-#: app/scripts/services/project.js:159
+#: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Klikněte zde <b>ke stažení novější verze</b> Icestudia"
 
@@ -300,7 +300,7 @@ msgstr "Vytvoření virtuálního prostředí..."
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:40
 msgid "Czech"
 msgstr "čeština"
 
@@ -390,7 +390,7 @@ msgstr "Duplikované FPGA vstupně výstupní porty"
 msgid "Duplicated block attributes"
 msgstr "Duplikované blokové atributy"
 
-#: app/views/languages.html:28
+#: app/views/languages.html:34
 msgid "Dutch"
 msgstr "holandský"
 
@@ -507,7 +507,7 @@ msgstr "FPGA prostředky"
 msgid "File"
 msgstr "Soubor"
 
-#: app/scripts/services/project.js:478
+#: app/scripts/services/project.js:475
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
@@ -516,7 +516,7 @@ msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
 msgid "File {{file}} does not exist"
 msgstr "Soubor {{file}} neexistuje"
 
-#: app/scripts/services/project.js:512
+#: app/scripts/services/project.js:509
 msgid "File {{file}} imported"
 msgstr "Soubor {{file}} importován"
 
@@ -533,11 +533,11 @@ msgstr "francouzština"
 msgid "Fuchsia"
 msgstr ""
 
-#: app/views/languages.html:58
+#: app/views/languages.html:64
 msgid "Galician"
 msgstr "galicijština"
 
-#: app/views/languages.html:22
+#: app/views/languages.html:28
 msgid "German"
 msgstr "němčina"
 
@@ -546,7 +546,7 @@ msgstr "němčina"
 msgid "Gold"
 msgstr ""
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Greek"
 msgstr ""
 
@@ -563,7 +563,7 @@ msgstr "Nápověda"
 msgid "Hexadecimal"
 msgstr "Šestnáctkové"
 
-#: app/scripts/services/graph.js:1227
+#: app/scripts/services/graph.js:1218
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
@@ -645,7 +645,7 @@ msgstr "Neplatné spojení: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Neplatné vícenásobná vstupní připojení"
 
-#: app/scripts/services/project.js:468 app/scripts/services/project.js:66
+#: app/scripts/services/project.js:465 app/scripts/services/project.js:66
 msgid "Invalid project format"
 msgstr "Neplatný formát projektu"
 
@@ -653,7 +653,7 @@ msgstr "Neplatný formát projektu"
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "Do doporučeno využívat <b>USB 2.0</b> porty"
 
-#: app/views/languages.html:76
+#: app/views/languages.html:22
 msgid "Italian"
 msgstr ""
 
@@ -706,7 +706,7 @@ msgid "No collections stored"
 msgstr "Žádné kolekce neuloženy"
 
 #: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:320
-#: app/scripts/services/project.js:134
+#: app/scripts/services/project.js:131
 msgid "OK"
 msgstr "Budiž"
 
@@ -728,7 +728,7 @@ msgstr "Otevřít SVG"
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:515
+#: app/scripts/services/project.js:512
 msgid "Original file {{file}} does not exist"
 msgstr "Původní soubor {{file}} neexistuje"
 
@@ -764,11 +764,11 @@ msgstr "Informace o projektu"
 msgid "Project information updated"
 msgstr "Informace o projektu aktualizovány"
 
-#: app/scripts/services/project.js:121
+#: app/scripts/services/project.js:118
 msgid "Project {{name}} loaded"
 msgstr "Projekt {{name}} nahrán"
 
-#: app/scripts/services/project.js:375
+#: app/scripts/services/project.js:372
 msgid "Project {{name}} saved"
 msgstr "Projekt {{name}} uložen"
 
@@ -826,7 +826,7 @@ msgstr "Obnovit výchozí"
 msgid "RoyalBlue"
 msgstr ""
 
-#: app/views/languages.html:52
+#: app/views/languages.html:58
 msgid "Russian"
 msgstr ""
 
@@ -929,7 +929,7 @@ msgstr ""
 "Nástroj bude aktualizován. Tato operace vyžaduje připojení na internet. "
 "Přejete si pokračovat?"
 
-#: app/scripts/services/project.js:437
+#: app/scripts/services/project.js:434
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -980,7 +980,7 @@ msgstr "Zpět"
 msgid "Unknown board"
 msgstr "Neznámá deska"
 
-#: app/scripts/services/project.js:158
+#: app/scripts/services/project.js:155
 msgid "Unsupported project format {{version}}"
 msgstr "Nepodporovaný formát projektu {{version}}"
 
@@ -1051,7 +1051,7 @@ msgstr "Špatný parametr {{name}}"
 msgid "Wrong port name {{name}}"
 msgstr "Špatné jméno portu {{name}}"
 
-#: app/scripts/services/project.js:130
+#: app/scripts/services/project.js:127
 msgid "Wrong project format: {{name}}"
 msgstr "Špatný formát projektu: {{name}}"
 

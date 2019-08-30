@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016-2018 FPGAwars
+Copyright (c) 2016-2019 FPGAwars
 Copyright (c) 2013 client IO
 */
 
@@ -371,7 +371,7 @@ joint.ui.SelectionView = Backbone.View.extend({
   updateBox: function(element) {
 
     var margin = 8;
-  
+
     var bbox = element.getBBox();
     var state = this.options.state;
 
