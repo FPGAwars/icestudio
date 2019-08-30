@@ -101,21 +101,21 @@ npm start
 
 ### Languages
 
-|  Language  | Translated strings                        |
-|:----------:|:-----------------------------------------:|
-| English    | ![Progress](http://progressed.io/bar/100) |
-| Spanish    | ![Progress](http://progressed.io/bar/100) |
-| French     | ![Progress](http://progressed.io/bar/98)  |
-| Italian    | ![Progress](http://progressed.io/bar/98)  |
-| Dutch      | ![Progress](http://progressed.io/bar/98)  |
-| Czech      | ![Progress](http://progressed.io/bar/98)  |
-| Greek      | ![Progress](http://progressed.io/bar/98)  |
-| German     | ![Progress](http://progressed.io/bar/97)  |
-| Russian    | ![Progress](http://progressed.io/bar/96)  |
-| Chinese    | ![Progress](http://progressed.io/bar/90)  |
-| Galician   | ![Progress](http://progressed.io/bar/98)  |
-| Basque     | ![Progress](http://progressed.io/bar/97)  |
-| Catalan    | ![Progress](http://progressed.io/bar/90)  |
+|  Language  | Translated strings                           |
+|:----------:|:--------------------------------------------:|
+| English    | ![Progress](http://progress-bar.dev/100) |
+| Spanish    | ![Progress](http://progress-bar.dev/100) |
+| French     | ![Progress](http://progress-bar.dev/98)  |
+| Italian    | ![Progress](http://progress-bar.dev/98)  |
+| Dutch      | ![Progress](http://progress-bar.dev/98)  |
+| Czech      | ![Progress](http://progress-bar.dev/98)  |
+| Greek      | ![Progress](http://progress-bar.dev/98)  |
+| German     | ![Progress](http://progress-bar.dev/97)  |
+| Russian    | ![Progress](http://progress-bar.dev/96)  |
+| Chinese    | ![Progress](http://progress-bar.dev/90)  |
+| Galician   | ![Progress](http://progress-bar.dev/98)  |
+| Basque     | ![Progress](http://progress-bar.dev/97)  |
+| Catalan    | ![Progress](http://progress-bar.dev/90)  |
 
 **Contribute!**
 
