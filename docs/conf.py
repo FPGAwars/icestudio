@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Icestudio'
-copyright = u'2016-2018, Jesús Arroyo Torrens'
+copyright = u'2016-2019, Jesús Arroyo Torrens'
 author = u'Jesús Arroyo Torrens'
 
 # The version info for the project you're documenting, acts as replacement for
