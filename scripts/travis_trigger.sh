@@ -1,15 +1,15 @@
 #!/bin/sh
 
-echo "> travis login --org"
+echo "> travis login"
 travis login --org
 
 echo "> travis token"
-travis token
+travis token --org
 
-echo "\n> Enter the token: "
+echo "> Enter the token: "
 read TOKEN
 
-echo "\n> Enter the tag: "
+echo "> Enter the tag: "
 read TAG
 
 body="{
@@ -18,7 +18,7 @@ body="{
   }
 }"
 
-echo "\n> Trigger travis build: "
+echo "> Trigger travis build: "
 curl -s -X POST \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
@@ -27,4 +27,4 @@ curl -s -X POST \
   -d "$body" \
   https://api.travis-ci.org/repo/FPGAwars%2Ficestudio/requests
 
-echo "\n> Done!"
+echo "> Done!"
