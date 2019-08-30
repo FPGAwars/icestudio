@@ -105,16 +105,17 @@ npm start
 |:----------:|:-----------------------------------------:|
 | English    | ![Progress](http://progressed.io/bar/100) |
 | Spanish    | ![Progress](http://progressed.io/bar/100) |
-| French     | ![Progress](http://progressed.io/bar/100) |
-| German     | ![Progress](http://progressed.io/bar/99)  |
-| Dutch      | ![Progress](http://progressed.io/bar/100) |
-| Czech      | ![Progress](http://progressed.io/bar/100) |
-| Greek      | ![Progress](http://progressed.io/bar/100) |
-| Chinese    | ![Progress](http://progressed.io/bar/91)  |
-| Russian    | ![Progress](http://progressed.io/bar/98)  |
-| Galician   | ![Progress](http://progressed.io/bar/100) |
-| Basque     | ![Progress](http://progressed.io/bar/99)  |
-| Catalan    | ![Progress](http://progressed.io/bar/91)  |
+| French     | ![Progress](http://progressed.io/bar/98)  |
+| Italian    | ![Progress](http://progressed.io/bar/98)  |
+| Dutch      | ![Progress](http://progressed.io/bar/98)  |
+| Czech      | ![Progress](http://progressed.io/bar/98)  |
+| Greek      | ![Progress](http://progressed.io/bar/98)  |
+| German     | ![Progress](http://progressed.io/bar/97)  |
+| Russian    | ![Progress](http://progressed.io/bar/96)  |
+| Chinese    | ![Progress](http://progressed.io/bar/90)  |
+| Galician   | ![Progress](http://progressed.io/bar/98)  |
+| Basque     | ![Progress](http://progressed.io/bar/97)  |
+| Catalan    | ![Progress](http://progressed.io/bar/90)  |
 
 **Contribute!**
 

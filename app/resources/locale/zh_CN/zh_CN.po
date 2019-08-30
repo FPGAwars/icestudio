@@ -12,11 +12,11 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: app/scripts/services/drivers.js:169 app/scripts/services/drivers.js:347
+#: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>拔下</b>并<b>重新连接</b>开发板"
 
-#: app/scripts/services/drivers.js:305
+#: app/scripts/services/drivers.js:307
 msgid ""
 "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
 "to the USB and wait until Windows finishes the default installation of the "
@@ -26,7 +26,7 @@ msgid ""
 "and reconnect the board</li></ol>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:312
+#: app/scripts/services/drivers.js:314
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -34,7 +34,7 @@ msgstr ""
 "<h4>FTDI 驱动程序卸载说明</h4><ol><li>找到 FPGA USB 设备</li><li>选择开发板接"
 "口并卸载驱动程序</li></ol>"
 
-#: app/scripts/services/drivers.js:319
+#: app/scripts/services/drivers.js:321
 msgid ""
 "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
 "board to the USB and wait until Windows finishes the default installation of "
@@ -44,7 +44,7 @@ msgid ""
 "ol>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:326
+#: app/scripts/services/drivers.js:328
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -52,15 +52,15 @@ msgstr ""
 "<h4>FTDI 驱动程序卸载说明</h4><ol><li>找到 FPGA USB 设备</li><li>选择开发板接"
 "口并卸载驱动程序</li></ol>"
 
-#: app/views/menu.html:341
+#: app/views/menu.html:345
 msgid "About Icestudio"
 msgstr "关于 Icestudio"
 
-#: app/views/menu.html:290
+#: app/views/menu.html:294
 msgid "Add"
 msgstr "添加"
 
-#: app/scripts/controllers/menu.js:663
+#: app/scripts/controllers/menu.js:692
 msgid "Add a block to start"
 msgstr "添加图块并开始"
 
@@ -72,11 +72,11 @@ msgstr "添加为图块"
 msgid "Address format"
 msgstr ""
 
-#: app/scripts/services/tools.js:1136
+#: app/scripts/services/tools.js:1167
 msgid "All collections removed"
 msgstr "所有集合已删除"
 
-#: app/scripts/controllers/menu.js:692
+#: app/scripts/controllers/menu.js:721
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "所有存储的集合将会丢失。是否继续？"
 
@@ -84,11 +84,11 @@ msgstr "所有存储的集合将会丢失。是否继续？"
 msgid "Author"
 msgstr "作者"
 
-#: app/views/menu.html:352
+#: app/views/menu.html:356
 msgid "Basic"
 msgstr "基础"
 
-#: app/views/languages.html:52
+#: app/views/languages.html:64
 msgid "Basque"
 msgstr "Basque"
 
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Block updated"
 msgstr "图块已更新"
 
-#: app/scripts/services/project.js:445
+#: app/scripts/services/project.js:470
 msgid "Block {{name}} imported"
 msgstr "图块 {{name}} 已被导入"
 
@@ -119,11 +119,11 @@ msgstr "开发板"
 msgid "Board rules"
 msgstr "开发板规则"
 
-#: app/scripts/controllers/menu.js:434
+#: app/scripts/controllers/menu.js:463
 msgid "Board rules disabled"
 msgstr "开发板规则关闭"
 
-#: app/scripts/controllers/menu.js:431
+#: app/scripts/controllers/menu.js:460
 msgid "Board rules enabled"
 msgstr "开发板规则开启"
 
@@ -139,7 +139,7 @@ msgstr "开发板 {{name}} 不可用"
 msgid "Board {{name}} not connected"
 msgstr "开发板 {{name}} 未连接"
 
-#: app/scripts/app.js:48 app/scripts/controllers/menu.js:611
+#: app/scripts/app.js:48 app/scripts/controllers/menu.js:640
 msgid "Board {{name}} selected"
 msgstr "开发板 {{name}} 已选中"
 
@@ -147,48 +147,48 @@ msgstr "开发板 {{name}} 已选中"
 msgid "Bootloader not active"
 msgstr "Bootloader 失效"
 
-#: app/views/menu.html:236
+#: app/views/menu.html:240
 msgid "Build"
 msgstr "构建"
 
-#: app/scripts/controllers/menu.js:630
+#: app/scripts/controllers/menu.js:659
 msgid "Build done"
 msgstr "构建成功"
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:134
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:144
 msgid "Cancel"
 msgstr "取消"
 
-#: app/views/languages.html:58
+#: app/views/languages.html:70
 msgid "Catalan"
 msgstr "Catalan"
 
-#: app/scripts/services/tools.js:820
+#: app/scripts/services/tools.js:851
 msgid "Check Internet connection..."
 msgstr "检测网络连接..."
 
-#: app/scripts/services/tools.js:830
+#: app/scripts/services/tools.js:861
 msgid "Check Python..."
 msgstr "检测 Python..."
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Chinese"
 msgstr "中文"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:168
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 
-#: app/scripts/services/tools.js:923
+#: app/scripts/services/tools.js:954
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "点击此处 <b>安装驱动程序</b>"
 
-#: app/scripts/services/drivers.js:208 app/scripts/services/drivers.js:339
-#: app/scripts/services/drivers.js:359 app/scripts/services/tools.js:274
+#: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:341
+#: app/scripts/services/drivers.js:361 app/scripts/services/tools.js:274
 msgid "Click here to install it"
 msgstr "点击此处安装"
 
-#: app/scripts/controllers/menu.js:390
+#: app/scripts/controllers/menu.js:419
 msgid "Click here to view"
 msgstr "点击此处浏览"
 
@@ -196,15 +196,15 @@ msgstr "点击此处浏览"
 msgid "Clock not allowed for data buses"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:277
+#: app/scripts/controllers/menu.js:306
 msgid "Close"
 msgstr "关闭"
 
-#: app/views/menu.html:368
+#: app/views/menu.html:372
 msgid "Code"
 msgstr "代码"
 
-#: app/views/menu.html:201
+#: app/views/menu.html:205
 msgid "Collection"
 msgstr "集合"
 
@@ -212,39 +212,39 @@ msgstr "集合"
 msgid "Collection info"
 msgstr "集合信息"
 
-#: app/scripts/controllers/menu.js:544
+#: app/scripts/controllers/menu.js:573
 msgid "Collection {{collection}} info not defined"
 msgstr "集合 {{collection}} 的信息未定义"
 
-#: app/scripts/services/tools.js:1020
+#: app/scripts/services/tools.js:1051
 msgid "Collection {{name}} added"
 msgstr "已添加集合 {{name}} "
 
-#: app/scripts/services/tools.js:1014
+#: app/scripts/services/tools.js:1045
 msgid "Collection {{name}} not replaced"
 msgstr "集合 {{name}} 未被替换"
 
-#: app/scripts/services/tools.js:1130
+#: app/scripts/services/tools.js:1161
 msgid "Collection {{name}} removed"
 msgstr "已移除集合 {{name}} "
 
-#: app/scripts/services/tools.js:1010
+#: app/scripts/services/tools.js:1041
 msgid "Collection {{name}} replaced"
 msgstr "已替换集合 {{name}} "
 
-#: app/scripts/controllers/menu.js:577
+#: app/scripts/controllers/menu.js:606
 msgid "Collection {{name}} selected"
 msgstr "已选中集合 {{name}} "
 
-#: app/views/menu.html:286
+#: app/views/menu.html:290
 msgid "Collections"
 msgstr "集合"
 
-#: app/scripts/controllers/menu.js:550 app/views/menu.html:168
+#: app/scripts/controllers/menu.js:579 app/views/menu.html:168
 msgid "Command output"
 msgstr ""
 
-#: app/views/menu.html:337
+#: app/views/menu.html:341
 msgid "Community forum"
 msgstr "社区论坛"
 
@@ -252,7 +252,7 @@ msgstr "社区论坛"
 msgid "Configuration not completed"
 msgstr "配置未完成"
 
-#: app/views/menu.html:362
+#: app/views/menu.html:366
 msgid "Constant"
 msgstr "常量"
 
@@ -264,7 +264,7 @@ msgstr "转换"
 msgid "Copy"
 msgstr "复制"
 
-#: app/scripts/services/tools.js:848
+#: app/scripts/services/tools.js:879
 msgid "Create virtualenv..."
 msgstr "编译 virtualenv..."
 
@@ -284,11 +284,11 @@ msgstr "数据表"
 msgid "Decimal"
 msgstr ""
 
-#: app/views/menu.html:206
+#: app/views/menu.html:210
 msgid "Default"
 msgstr "默认"
 
-#: app/scripts/services/tools.js:674
+#: app/scripts/services/tools.js:705
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -298,37 +298,37 @@ msgstr "未找到默认工具链，将使用网络下载。这个操作需要Int
 msgid "Description"
 msgstr "描述"
 
-#: app/views/menu.html:279
+#: app/views/menu.html:283
 msgid "Disable"
 msgstr "关闭"
 
-#: app/scripts/controllers/menu.js:281
+#: app/scripts/controllers/menu.js:310
 msgid "Do you want to close the application?"
 msgstr "您是否要关闭应用程序？"
 
-#: app/scripts/controllers/menu.js:682
+#: app/scripts/controllers/menu.js:711
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是否要移除集合 {{name}}？"
 
-#: app/scripts/services/tools.js:1006
+#: app/scripts/services/tools.js:1037
 msgid "Do you want to replace it?"
 msgstr "您是否要替换？"
 
-#: app/views/menu.html:330
+#: app/views/menu.html:334
 msgid "Documentation"
 msgstr "文档"
 
-#: app/views/menu.html:270
+#: app/views/menu.html:274
 msgid "Drivers"
 msgstr "驱动"
 
-#: app/scripts/services/drivers.js:123 app/scripts/services/drivers.js:146
-#: app/scripts/services/drivers.js:236
+#: app/scripts/services/drivers.js:125 app/scripts/services/drivers.js:148
+#: app/scripts/services/drivers.js:238
 msgid "Drivers disabled"
 msgstr "驱动关闭"
 
-#: app/scripts/services/drivers.js:114 app/scripts/services/drivers.js:138
-#: app/scripts/services/drivers.js:226
+#: app/scripts/services/drivers.js:116 app/scripts/services/drivers.js:140
+#: app/scripts/services/drivers.js:228
 msgid "Drivers enabled"
 msgstr "驱动开启"
 
@@ -348,11 +348,11 @@ msgstr "Dutch"
 msgid "Edit"
 msgstr "编辑"
 
-#: app/scripts/services/tools.js:995
+#: app/scripts/services/tools.js:1026
 msgid "Edit the collection name"
 msgstr "编辑集合名称"
 
-#: app/views/menu.html:274
+#: app/views/menu.html:278
 msgid "Enable"
 msgstr "开启"
 
@@ -364,7 +364,7 @@ msgstr "English"
 msgid "Enter the constant blocks"
 msgstr "输入常量图块名称"
 
-#: app/scripts/controllers/menu.js:359
+#: app/scripts/controllers/menu.js:388
 msgid "Enter the external collections path"
 msgstr ""
 
@@ -392,19 +392,19 @@ msgstr "输入输出端口名称"
 msgid "Enter the parameters"
 msgstr "输入参数"
 
-#: app/scripts/controllers/menu.js:422
+#: app/scripts/controllers/menu.js:451
 msgid "Enter the remote hostname user@host"
 msgstr "输入远程主机 用户名@主机名"
 
-#: app/scripts/services/tools.js:704
+#: app/scripts/services/tools.js:735
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "错误: 默认工具链在路径 '{{dir}}' 下未找到"
 
-#: app/scripts/services/utils.js:757
+#: app/scripts/services/utils.js:753
 msgid "Error: {{error}}"
 msgstr "错误: {{error}}"
 
-#: app/scripts/services/tools.js:485
+#: app/scripts/services/tools.js:516
 msgid "Errors detected in the design"
 msgstr "设计中检测到错误"
 
@@ -424,19 +424,19 @@ msgstr "导出"
 msgid "External collections"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:376
+#: app/scripts/controllers/menu.js:405
 msgid "External collections updated"
 msgstr ""
 
-#: app/scripts/services/tools.js:855
+#: app/scripts/services/tools.js:886
 msgid "Extract default apio files..."
 msgstr "提取默认apio文件..."
 
-#: app/scripts/services/tools.js:865
+#: app/scripts/services/tools.js:896
 msgid "Extract default apio packages..."
 msgstr "提取默认apio包..."
 
-#: app/scripts/services/tools.js:843
+#: app/scripts/services/tools.js:874
 msgid "Extract virtualenv files..."
 msgstr "提取 virtualenv 文件..."
 
@@ -457,7 +457,7 @@ msgstr "FPGA 资源"
 msgid "File"
 msgstr "文件"
 
-#: app/scripts/services/project.js:460
+#: app/scripts/services/project.js:485
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
@@ -466,7 +466,7 @@ msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
 msgid "File {{file}} does not exist"
 msgstr "文件 {{file}} 不存在"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:519
 msgid "File {{file}} imported"
 msgstr "已导入文件 {{file}} "
 
@@ -478,7 +478,7 @@ msgstr "缩放以适应窗口"
 msgid "French"
 msgstr "French"
 
-#: app/views/languages.html:46
+#: app/views/languages.html:58
 msgid "Galician"
 msgstr "Galician"
 
@@ -486,7 +486,11 @@ msgstr "Galician"
 msgid "German"
 msgstr "German"
 
-#: app/views/menu.html:320
+#: app/views/languages.html:40
+msgid "Greek"
+msgstr ""
+
+#: app/views/menu.html:324
 msgid "Help"
 msgstr "帮助"
 
@@ -494,78 +498,88 @@ msgstr "帮助"
 msgid "Hexadecimal"
 msgstr ""
 
+#: app/scripts/services/graph.js:1218
+msgid ""
+"If you have blank IN/OUT pins, it's because there is no equivalent in this "
+"board"
+msgstr ""
+
 #: app/scripts/services/utils.js:587
 msgid "Image"
 msgstr "镜像"
 
-#: app/scripts/controllers/menu.js:846
+#: app/scripts/controllers/menu.js:875
 msgid "Image {{name}} saved"
 msgstr "镜像 {{name}} 已保存"
 
-#: app/views/menu.html:371
+#: app/views/menu.html:375
 msgid "Information"
 msgstr "信息"
 
-#: app/views/menu.html:356
+#: app/views/menu.html:360
 msgid "Input"
 msgstr "输入"
 
-#: app/views/menu.html:247
+#: app/views/menu.html:251
 msgid "Install"
 msgstr "安装"
 
-#: app/scripts/services/tools.js:860
+#: app/scripts/services/tools.js:891
 msgid "Install default apio..."
 msgstr "安装默认 apio..."
 
-#: app/scripts/services/tools.js:912
+#: app/scripts/services/tools.js:943
 msgid "Installation completed"
 msgstr "安装成功"
 
-#: app/scripts/services/tools.js:746 app/scripts/services/tools.js:783
+#: app/scripts/services/tools.js:777 app/scripts/services/tools.js:814
 msgid "Installing toolchain"
 msgstr "安装工具链"
 
-#: app/scripts/services/drivers.js:216 app/scripts/services/tools.js:824
+#: app/scripts/services/drivers.js:218 app/scripts/services/tools.js:855
 msgid "Internet connection required"
 msgstr "需要 Internet 连接"
 
-#: app/scripts/services/graph.js:177
+#: app/scripts/services/graph.js:182
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "无效的 <i>上拉</i> 连接：<br>图块已被连接"
 
-#: app/scripts/services/graph.js:191
+#: app/scripts/services/graph.js:196
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "无效的 <i>上拉</i> 连接：<br>只有 <i>输入</i> 图块才能被上拉"
 
-#: app/scripts/services/graph.js:183
+#: app/scripts/services/graph.js:188
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "无效的图块连接：<br><i>上拉</i> 已经使用"
 
-#: app/scripts/services/tools.js:1026
+#: app/scripts/services/tools.js:1057
 msgid "Invalid collection {{name}}"
 msgstr "无效的集合 {{name}}"
 
-#: app/scripts/services/graph.js:141 app/scripts/services/graph.js:148
-#: app/scripts/services/graph.js:155
+#: app/scripts/services/graph.js:146 app/scripts/services/graph.js:153
+#: app/scripts/services/graph.js:160
 msgid "Invalid connection"
 msgstr "无效的连接"
 
-#: app/scripts/services/graph.js:210
+#: app/scripts/services/graph.js:215
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "无效的连接 {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:171
+#: app/scripts/services/graph.js:176
 msgid "Invalid multiple input connections"
 msgstr "无效的多输入连接"
 
-#: app/scripts/services/project.js:450 app/scripts/services/project.js:81
+#: app/scripts/services/project.js:475 app/scripts/services/project.js:81
 msgid "Invalid project format"
 msgstr "无效的项目格式"
 
-#: app/scripts/services/drivers.js:305
+#: app/scripts/services/drivers.js:307
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "建议使用 <b>USB 2.0</b> 接口"
+
+#: app/views/languages.html:76
+msgid "Italian"
+msgstr ""
 
 #: app/views/menu.html:121
 msgid "Language"
@@ -580,11 +594,11 @@ msgstr "载入"
 msgid "Local parameter"
 msgstr "本地参数"
 
-#: app/scripts/services/utils.js:837
+#: app/scripts/services/utils.js:833
 msgid "Maximum bus size: 96 bits"
 msgstr "最大总线宽度：96 bits"
 
-#: app/views/menu.html:365
+#: app/views/menu.html:369
 msgid "Memory"
 msgstr ""
 
@@ -596,12 +610,12 @@ msgstr "名称"
 msgid "New"
 msgstr "新建"
 
-#: app/scripts/controllers/menu.js:700
+#: app/scripts/controllers/menu.js:729
 msgid "No collections stored"
 msgstr "没有存储的集合"
 
-#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:291
-#: app/scripts/services/project.js:133
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:320
+#: app/scripts/services/project.js:143
 msgid "OK"
 msgstr "确定"
 
@@ -613,11 +627,11 @@ msgstr "打开"
 msgid "Open SVG"
 msgstr "打开 SVG"
 
-#: app/scripts/services/project.js:497
+#: app/scripts/services/project.js:522
 msgid "Original file {{file}} does not exist"
 msgstr "原始文件 {{file}} 不存在"
 
-#: app/views/menu.html:359
+#: app/views/menu.html:363
 msgid "Output"
 msgstr "输出"
 
@@ -625,11 +639,11 @@ msgstr "输出"
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/scripts/controllers/menu.js:380
+#: app/scripts/controllers/menu.js:409
 msgid "Path {{path}} does not exist"
 msgstr ""
 
-#: app/scripts/services/utils.js:965
+#: app/scripts/services/utils.js:978
 msgid "Please run: {{cmd}}"
 msgstr "请运行： {{cmd}}"
 
@@ -641,19 +655,19 @@ msgstr "个性化"
 msgid "Project information"
 msgstr "项目信息"
 
-#: app/scripts/controllers/menu.js:390 app/scripts/controllers/menu.js:404
+#: app/scripts/controllers/menu.js:419 app/scripts/controllers/menu.js:433
 msgid "Project information updated"
 msgstr "项目信息已更新"
 
-#: app/scripts/services/project.js:120
+#: app/scripts/services/project.js:130
 msgid "Project {{name}} loaded"
 msgstr "项目 {{name}} 已载入"
 
-#: app/scripts/services/project.js:357
+#: app/scripts/services/project.js:382
 msgid "Project {{name}} saved"
 msgstr "项目 {{name}} 已保存"
 
-#: app/scripts/services/tools.js:837
+#: app/scripts/services/tools.js:868
 msgid "Python 2.7 is required"
 msgstr "需要安装 Python 2.7"
 
@@ -669,11 +683,11 @@ msgstr "只读"
 msgid "Redo"
 msgstr "重做"
 
-#: app/views/menu.html:295
+#: app/views/menu.html:299
 msgid "Reload"
 msgstr ""
 
-#: app/scripts/services/tools.js:528
+#: app/scripts/services/tools.js:559
 msgid "Remote host {{name}} not connected"
 msgstr "远程主机 {{name}} 未连接"
 
@@ -681,11 +695,11 @@ msgstr "远程主机 {{name}} 未连接"
 msgid "Remote hostname"
 msgstr "远程主机名"
 
-#: app/views/menu.html:255 app/views/menu.html:299
+#: app/views/menu.html:259 app/views/menu.html:303
 msgid "Remove"
 msgstr "移除"
 
-#: app/views/menu.html:311
+#: app/views/menu.html:315
 msgid "Remove all"
 msgstr "移除全部"
 
@@ -693,9 +707,13 @@ msgstr "移除全部"
 msgid "Reset SVG"
 msgstr "重载 SVG"
 
-#: app/views/menu.html:260
+#: app/views/menu.html:264
 msgid "Reset default"
 msgstr "重置默认"
+
+#: app/views/languages.html:52
+msgid "Russian"
+msgstr ""
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -717,7 +735,7 @@ msgstr "选择"
 msgid "Select all"
 msgstr "全选"
 
-#: app/scripts/services/utils.js:715
+#: app/scripts/services/utils.js:711
 msgid "Select your board"
 msgstr ""
 
@@ -725,7 +743,7 @@ msgstr ""
 msgid "Show clock"
 msgstr "显示时钟"
 
-#: app/views/menu.html:333
+#: app/views/menu.html:337
 msgid "Source code"
 msgstr "源代码"
 
@@ -733,15 +751,15 @@ msgstr "源代码"
 msgid "Spanish"
 msgstr "Spanish"
 
-#: app/scripts/controllers/menu.js:629
+#: app/scripts/controllers/menu.js:658
 msgid "Start build"
 msgstr "开始编译"
 
-#: app/scripts/controllers/menu.js:642
+#: app/scripts/controllers/menu.js:671
 msgid "Start upload"
 msgstr "开始上传"
 
-#: app/scripts/controllers/menu.js:619
+#: app/scripts/controllers/menu.js:648
 msgid "Start verification"
 msgstr "开始验证"
 
@@ -753,31 +771,31 @@ msgstr "远程文件同步..."
 msgid "Testbench"
 msgstr "测试平台"
 
-#: app/scripts/services/tools.js:1005
+#: app/scripts/services/tools.js:1036
 msgid "The collection {{name}} already exists."
 msgstr "集合 {{name}} 已存在。"
 
-#: app/scripts/controllers/menu.js:598
+#: app/scripts/controllers/menu.js:627
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr "目前FPGA的I/O配置将会丢失，您是否确定换用 {{name}} 开发板？"
 
-#: app/scripts/services/tools.js:712
+#: app/scripts/services/tools.js:743
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "工具链将被移除，是否继续？"
 
-#: app/scripts/services/tools.js:697
+#: app/scripts/services/tools.js:728
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr "工具链将被重置默认，是否继续？"
 
-#: app/scripts/services/tools.js:686
+#: app/scripts/services/tools.js:717
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
 msgstr "工具链将被更新，这个操作需要Internet连接，是否继续？"
 
-#: app/scripts/services/project.js:419
+#: app/scripts/services/project.js:444
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -787,21 +805,21 @@ msgstr "本次导入操作需要项目路径，您必须保存当前项目，是
 msgid "This project is designed for the {{name}} board."
 msgstr "该项目为开发板 {{name}} 设计使用。"
 
-#: app/views/menu.html:243
+#: app/views/menu.html:247
 msgid "Toolchain"
 msgstr "工具链"
 
-#: app/scripts/services/tools.js:913
+#: app/scripts/services/tools.js:944
 msgid "Toolchain installed"
 msgstr "工具链已安装"
 
-#: app/scripts/services/drivers.js:339 app/scripts/services/drivers.js:359
+#: app/scripts/services/drivers.js:341 app/scripts/services/drivers.js:361
 #: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
 #: app/scripts/services/tools.js:252
 msgid "Toolchain not installed"
 msgstr "工具链未安装"
 
-#: app/scripts/services/tools.js:717
+#: app/scripts/services/tools.js:748
 msgid "Toolchain removed"
 msgstr "工具链已移除"
 
@@ -809,7 +827,7 @@ msgstr "工具链已移除"
 msgid "Toolchain version does not match"
 msgstr "工具链版本不匹配"
 
-#: app/views/menu.html:230
+#: app/views/menu.html:234
 msgid "Tools"
 msgstr "工具"
 
@@ -821,15 +839,15 @@ msgstr "撤销"
 msgid "Unknown board"
 msgstr "未知的开发板"
 
-#: app/scripts/services/project.js:142
+#: app/scripts/services/project.js:167
 msgid "Unsupported project format {{version}}"
 msgstr ""
 
-#: app/scripts/app.js:64
+#: app/scripts/app.js:65
 msgid "Untitled"
 msgstr "未命名"
 
-#: app/views/menu.html:250
+#: app/views/menu.html:254
 msgid "Update"
 msgstr "更新"
 
@@ -838,23 +856,23 @@ msgstr "更新"
 msgid "Update the block name"
 msgstr "更新图块名称"
 
-#: app/views/menu.html:239
+#: app/views/menu.html:243
 msgid "Upload"
 msgstr "上传"
 
-#: app/scripts/controllers/menu.js:643
+#: app/scripts/controllers/menu.js:672
 msgid "Upload done"
 msgstr "上传成功"
 
-#: app/scripts/controllers/menu.js:620
+#: app/scripts/controllers/menu.js:649
 msgid "Verification done"
 msgstr "验证成功"
 
-#: app/views/menu.html:233
+#: app/views/menu.html:237
 msgid "Verify"
 msgstr "验证"
 
-#: app/scripts/services/utils.js:572 app/views/menu.html:326
+#: app/scripts/services/utils.js:572 app/views/menu.html:330
 msgid "Version"
 msgstr "版本"
 
@@ -862,11 +880,11 @@ msgstr "版本"
 msgid "View"
 msgstr "查看"
 
-#: app/views/menu.html:323
+#: app/views/menu.html:327
 msgid "View license"
 msgstr "查看许可"
 
-#: app/scripts/services/tools.js:489
+#: app/scripts/services/tools.js:520
 msgid "Warnings detected in the design"
 msgstr "设计中发现警告"
 
@@ -889,11 +907,11 @@ msgstr "参数名称错误 {{name}}"
 msgid "Wrong port name {{name}}"
 msgstr "端口名称错误 {{name}}"
 
-#: app/scripts/services/project.js:129
+#: app/scripts/services/project.js:139
 msgid "Wrong project format: {{name}}"
 msgstr "项目格式错误： {{name}}"
 
-#: app/scripts/services/tools.js:525
+#: app/scripts/services/tools.js:556
 msgid "Wrong remote hostname {{name}}"
 msgstr "远程主机名错误 {{name}}"
 
@@ -901,7 +919,7 @@ msgstr "远程主机名错误 {{name}}"
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "您可以载入原始项目，或转换以适应开发板 {{name}}。"
 
-#: app/scripts/controllers/menu.js:282
+#: app/scripts/controllers/menu.js:311
 msgid "Your changes will be lost if you don’t save them"
 msgstr "如果不保存，您的更改将会丢失"
 
@@ -909,23 +927,23 @@ msgstr "如果不保存，您的更改将会丢失"
 msgid "back"
 msgstr "后退"
 
-#: app/scripts/services/drivers.js:207 app/scripts/services/utils.js:940
+#: app/scripts/services/drivers.js:209 app/scripts/services/utils.js:953
 msgid "{{app}} is required."
 msgstr "需要 {{app}} 。"
 
-#: app/scripts/controllers/menu.js:498
+#: app/scripts/controllers/menu.js:527
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} 数据表未定义"
 
-#: app/scripts/controllers/menu.js:488
+#: app/scripts/controllers/menu.js:517
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} 引脚未定义"
 
-#: app/scripts/controllers/menu.js:519
+#: app/scripts/controllers/menu.js:548
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 规则未定义"
 
-#: app/scripts/controllers/menu.js:229 app/scripts/controllers/menu.js:253
+#: app/scripts/controllers/menu.js:258 app/scripts/controllers/menu.js:282
 msgid "{{name}} exported"
 msgstr "{{name}} 已导出"
 
