@@ -1,8 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-### Support UP5K boards (#)
+## [0.4.0] - 2019-08-30
+### Support UP5K boards (#281)
 - [iCEBreaker](https://github.com/icebreaker-fpga/icebreaker)
 - [iCEBreaker bitsy](https://github.com/icebreaker-fpga/icebreaker)
 - [UPDuino v1.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino)
@@ -10,10 +10,22 @@ All notable changes to this project will be documented in this file.
 - [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge)
 - [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard)
 
+### Bugfixes
+- Fix FTDI issue in Windows (toolchain-icestorm 1.11.1)
+- Fix low resolution retina and improve performance (#303)
+- Fix clossing app with multiple windows (#304)
+- Fix blank syntax error messages (#306)
+- Fix regular expressions to parse error messages (#308)
+
 ### General
 - Add cs_CZ translation (by nerakino)
 - Add nl_NL translation (by @elektor-labs)
+- Add el_GR translation (by @ratmole)
+- Add ru_RU translation (by Олег Бахарев)
+- Add it_IT translation (by @wifasoi)
 - Use venv --always-copy flag only for Windows (#244)
+- Improve navigation control
+- Improve project conversions
 
 ## [0.3.3] - 2018-09-16
 ### General
