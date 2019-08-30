@@ -23,6 +23,7 @@
   "-W083": true,
   "-W084": true,
   "globals": {
+    "subModuleActive":false,
     "$": false,
     "angular": false,
     "console": false,

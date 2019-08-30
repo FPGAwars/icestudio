@@ -9,6 +9,8 @@ Visual editor for open FPGA boards. Built on top of the [Icestorm project](http:
 
     Graphic design -> Verilog, PCF -> Bistream -> FPGA
 
+For more information visit our site [icestudio.io](https://icestudio.io)
+
 ### Supported boards
 
 #### HX1K
@@ -50,22 +52,31 @@ Visual editor for open FPGA boards. Built on top of the [Icestorm project](http:
 
 ## Installation
 
+You can install **stable** or **nightly** Icestudio versions.
+
+Because Icestudio is in development proccess, until it rises to 1.0 version, we are recommending to install **nightly** Icestudio versions, that have the latest features.
+
+
 * **GNU/Linux**
 
   1. Install [Python 2.7](https://www.python.org) and **xclip**
-  2. Download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases)
+  2. For **stable** version, download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases)
+  3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
+
 
 
 * **Windows**
 
-  1. Download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases)
-
+  1. For **stable** version, download and execute the [Windows installer](https://github.com/FPGAwars/icestudio/releases)
+  2. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
+  
 
 * **Mac OS**
 
   1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
-  2. Download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
-
+  2. For **stable** version, download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
+  3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
+  
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
 
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main-1.png" width="700" align="center">
@@ -171,9 +182,11 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
  We use the GitHub [issues](https://github.com/FPGAwars/icestudio/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) to track the work and schedule our new features and improvements.
 
-## Authors
+## Development Team
 
-* [Jesús Arroyo Torrens](https://github.com/Jesus89)
+* **Jesús Arroyo Torrens**, creator [Github page](https://github.com/Jesus89)
+* **Carlos Venegas Arrabé**,concepts and development [Github page](https://github.com/cavearr)
+* **Juan González Gómez**, concepts and testing [Github page](https://github.com/Obijuan)
 
 ## Contributors
 

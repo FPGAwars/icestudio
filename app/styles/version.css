@@ -1,0 +1,76 @@
+#version-info-tab{
+position:fixed;
+width:100%;
+height:100vh;
+z-index:999999999;
+top:0;
+left:0;
+}
+
+.version-info-tab--bg{
+
+    z-index:0;
+    background-color:black;
+    opacity:0.5;
+    position:absolute;
+    width:100%;
+    height:100vh;
+}
+
+.version-info-tab--body{
+
+max-width:1280px;
+    z-index:10;
+    background-color:white;
+    opacity:1;
+    position:absolute;
+    width:90%;
+    height:90vh;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+    padding:50px;
+    -webkit-box-shadow: 3px 2px 5px 0px rgba(66,61,66,1);
+    -moz-box-shadow: 3px 2px 5px 0px rgba(66,61,66,1);
+    box-shadow: 3px 2px 5px 0px rgba(66,61,66,1);
+    border-radius:3px;
+}
+
+.version-info-tab--options{
+
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:70px;
+}
+
+.version-info-tab--options--group{
+    display:inline-block;
+    width:33%;
+    padding:20px;
+}
+
+.version-info-tab--options--group label{
+
+    margin-left:10px;
+}
+
+.version-info-tab--body--content{
+
+    width:100%;
+    height: calc(100% - 70px);
+    position:absolute;
+    top:0;
+    left:0;
+    overflow:auto;
+    border-bottom: 1px solid grey;
+    padding:50px;
+}
+.util--text-align-right{
+
+    text-align:right !important;
+}
+

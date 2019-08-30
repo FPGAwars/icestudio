@@ -5,6 +5,10 @@
     <div class="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
     <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
   </div>
+  <div class="banner-submodule hidden">
+      <a class="edit-button" ng-click="editModeToggle($event)"><img src="resources/images/lock.png" data-lock="resources/images/lock.png" data-unlock="resources/images/unlock.png"></a>
+  </div>
+
   <div class="paper"></div>
   <div class="footer ice-bar">
     <div class="breadcrumbs-container">

@@ -755,6 +755,9 @@ angular.module('icestudio')
         rightPorts: rightPorts,
         choices: common.pinoutInputHTML
       });
+
+
+
       return cell;
     }
 
@@ -975,8 +978,8 @@ angular.module('icestudio')
         }
       }
 
-      var size = instance.size;
-
+//      var size = instance.size;
+      var size=false;
       if (!size) {
         var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
         var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
@@ -1023,6 +1026,7 @@ angular.module('icestudio')
       var sourceSelector, targetSelector;
       var leftPorts = target.get('leftPorts');
       var rightPorts = source.get('rightPorts');
+
       for (var _out = 0; _out < rightPorts.length; _out++) {
         if (rightPorts[_out] === instance.source.port) {
           sourceSelector = _out;

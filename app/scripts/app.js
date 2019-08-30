@@ -16,7 +16,7 @@ angular
         .otherwise({
           redirectTo: '/'
         });
-    }
+    } 
   ])
   .run(function(profile,
                 project,
@@ -27,16 +27,19 @@ angular
                 collections,
                 gettextCatalog,
                 $timeout)
-  {
+   
+                {
+ 
+
     $timeout(function(){
       $('body').addClass('waiting');
     }, 0);
       // Load boards
     boards.loadBoards();
-    // Load profile
+    // Load profile 
     utils.loadProfile(profile, function() {
-      // Load collections
-      collections.loadAllCollections();
+      // Load collections 
+      collections.loadAllCollections() ;
       // Load language
       utils.loadLanguage(profile, function() {
         if (profile.get('board') === '') {
@@ -48,14 +51,16 @@ angular
             alertify.success(gettextCatalog.getString('Board {{name}} selected',  { name: utils.bold(newBoard.info.label) }));
             // Check if the toolchain is installed
             tools.checkToolchain();
-          });
+          }); 
         }
-        else {
+        else { 
           // Initialize selected board
           profile.set('board', boards.selectBoard(profile.get('board')).name);
           // Check if the toolchain is installed
           tools.checkToolchain();
         }
+
+
 		$('html').attr('lang', profile.get('language'));
         // Rearrange collections
         collections.sort();
