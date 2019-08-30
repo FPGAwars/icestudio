@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
@@ -103,7 +103,7 @@ msgstr "Auteur"
 msgid "Basic"
 msgstr "Basique"
 
-#: app/views/languages.html:64
+#: app/views/languages.html:70
 msgid "Basque"
 msgstr "Basque"
 
@@ -120,7 +120,7 @@ msgstr "Binaire"
 msgid "Block updated"
 msgstr "Bloc mis à jour"
 
-#: app/scripts/services/project.js:463
+#: app/scripts/services/project.js:460
 msgid "Block {{name}} imported"
 msgstr "Bloc {{name}} importé"
 
@@ -172,11 +172,11 @@ msgstr "Construire"
 msgid "Build done"
 msgstr "Construction terminée"
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:135
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:132
 msgid "Cancel"
 msgstr "Annuler"
 
-#: app/views/languages.html:70
+#: app/views/languages.html:76
 msgid "Catalan"
 msgstr "Catalan"
 
@@ -188,7 +188,7 @@ msgstr "Vérifier la connexion Internet..."
 msgid "Check Python..."
 msgstr "Vérifier Python..."
 
-#: app/views/languages.html:46
+#: app/views/languages.html:52
 msgid "Chinese"
 msgstr "Chinois"
 
@@ -201,7 +201,7 @@ msgstr ""
 msgid "Chrome Dev Tools"
 msgstr ""
 
-#: app/scripts/services/project.js:159
+#: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Cliquer ici pour <b>télécharger une nouvelle version</b> de Icestudio"
 
@@ -304,7 +304,7 @@ msgstr "Créer l'environnement virtuel..."
 msgid "Cut"
 msgstr "Couper"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:40
 msgid "Czech"
 msgstr "Tchèque"
 
@@ -395,7 +395,7 @@ msgstr "Ports d'entrée/sortie FPGA dupliqués"
 msgid "Duplicated block attributes"
 msgstr "Attributs de bloc dupliqués"
 
-#: app/views/languages.html:28
+#: app/views/languages.html:34
 msgid "Dutch"
 msgstr "Néerlandais"
 
@@ -512,7 +512,7 @@ msgstr "Ressources FPGA"
 msgid "File"
 msgstr "Fichier"
 
-#: app/scripts/services/project.js:478
+#: app/scripts/services/project.js:475
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -523,7 +523,7 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "Le fichier {{file}} n'existe pas"
 
-#: app/scripts/services/project.js:512
+#: app/scripts/services/project.js:509
 msgid "File {{file}} imported"
 msgstr "Fichier {{file}} importé"
 
@@ -540,11 +540,11 @@ msgstr "Français"
 msgid "Fuchsia"
 msgstr ""
 
-#: app/views/languages.html:58
+#: app/views/languages.html:64
 msgid "Galician"
 msgstr "Galicien"
 
-#: app/views/languages.html:22
+#: app/views/languages.html:28
 msgid "German"
 msgstr "Allemand"
 
@@ -553,7 +553,7 @@ msgstr "Allemand"
 msgid "Gold"
 msgstr ""
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Greek"
 msgstr ""
 
@@ -570,7 +570,7 @@ msgstr "Aide"
 msgid "Hexadecimal"
 msgstr "Hexadécimal"
 
-#: app/scripts/services/graph.js:1227
+#: app/scripts/services/graph.js:1218
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
@@ -652,7 +652,7 @@ msgstr "Connexion invalide: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "Connexions de multiples entrées invalides"
 
-#: app/scripts/services/project.js:468 app/scripts/services/project.js:66
+#: app/scripts/services/project.js:465 app/scripts/services/project.js:66
 msgid "Invalid project format"
 msgstr "Format de projet invalide"
 
@@ -660,7 +660,7 @@ msgstr "Format de projet invalide"
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "Des ports <b>USB 2.0</b> sont recommandés"
 
-#: app/views/languages.html:76
+#: app/views/languages.html:22
 msgid "Italian"
 msgstr ""
 
@@ -713,7 +713,7 @@ msgid "No collections stored"
 msgstr "Pas de collections sauvegardées"
 
 #: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:320
-#: app/scripts/services/project.js:134
+#: app/scripts/services/project.js:131
 msgid "OK"
 msgstr "OK"
 
@@ -735,7 +735,7 @@ msgstr "Ouvrir SVG"
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:515
+#: app/scripts/services/project.js:512
 msgid "Original file {{file}} does not exist"
 msgstr "Le fichier original {{file}} n'existe pas"
 
@@ -771,11 +771,11 @@ msgstr "Informations du projet"
 msgid "Project information updated"
 msgstr "Informations du projet mises à jour"
 
-#: app/scripts/services/project.js:121
+#: app/scripts/services/project.js:118
 msgid "Project {{name}} loaded"
 msgstr "Projet {{name}} chargé"
 
-#: app/scripts/services/project.js:375
+#: app/scripts/services/project.js:372
 msgid "Project {{name}} saved"
 msgstr "Projet {{name}} sauvegardé"
 
@@ -833,7 +833,7 @@ msgstr "Réinitialiser avec les paramètres par défaut"
 msgid "RoyalBlue"
 msgstr ""
 
-#: app/views/languages.html:52
+#: app/views/languages.html:58
 msgid "Russian"
 msgstr ""
 
@@ -936,7 +936,7 @@ msgstr ""
 "La toolchain va être mise à jour. Cette opération a besoin d'une connexion "
 "Internet.Voulez-vous continuer ?"
 
-#: app/scripts/services/project.js:437
+#: app/scripts/services/project.js:434
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -987,7 +987,7 @@ msgstr "Revenir en arrière"
 msgid "Unknown board"
 msgstr "Carte inconnue"
 
-#: app/scripts/services/project.js:158
+#: app/scripts/services/project.js:155
 msgid "Unsupported project format {{version}}"
 msgstr "Format {{version}} de projet non supporté"
 
@@ -1058,7 +1058,7 @@ msgstr "Mauvais nom de paramètre {{name}}"
 msgid "Wrong port name {{name}}"
 msgstr "Mauvais nom de port {{name}}"
 
-#: app/scripts/services/project.js:130
+#: app/scripts/services/project.js:127
 msgid "Wrong project format: {{name}}"
 msgstr "Mauvais format de projet: {{name}}"
 

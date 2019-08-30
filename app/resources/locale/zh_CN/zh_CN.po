@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
@@ -88,7 +88,7 @@ msgstr "作者"
 msgid "Basic"
 msgstr "基础"
 
-#: app/views/languages.html:64
+#: app/views/languages.html:70
 msgid "Basque"
 msgstr "Basque"
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "Block updated"
 msgstr "图块已更新"
 
-#: app/scripts/services/project.js:463
+#: app/scripts/services/project.js:460
 msgid "Block {{name}} imported"
 msgstr "图块 {{name}} 已被导入"
 
@@ -157,11 +157,11 @@ msgstr "构建"
 msgid "Build done"
 msgstr "构建成功"
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:135
+#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:132
 msgid "Cancel"
 msgstr "取消"
 
-#: app/views/languages.html:70
+#: app/views/languages.html:76
 msgid "Catalan"
 msgstr "Catalan"
 
@@ -173,7 +173,7 @@ msgstr "检测网络连接..."
 msgid "Check Python..."
 msgstr "检测 Python..."
 
-#: app/views/languages.html:46
+#: app/views/languages.html:52
 msgid "Chinese"
 msgstr "中文"
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Chrome Dev Tools"
 msgstr ""
 
-#: app/scripts/services/project.js:159
+#: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr "编译 virtualenv..."
 msgid "Cut"
 msgstr "剪切"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:40
 msgid "Czech"
 msgstr "Czech"
 
@@ -377,7 +377,7 @@ msgstr "重复的 FPGA I/O 接口"
 msgid "Duplicated block attributes"
 msgstr "重复的图块属性"
 
-#: app/views/languages.html:28
+#: app/views/languages.html:34
 msgid "Dutch"
 msgstr "Dutch"
 
@@ -494,7 +494,7 @@ msgstr "FPGA 资源"
 msgid "File"
 msgstr "文件"
 
-#: app/scripts/services/project.js:478
+#: app/scripts/services/project.js:475
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
@@ -503,7 +503,7 @@ msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
 msgid "File {{file}} does not exist"
 msgstr "文件 {{file}} 不存在"
 
-#: app/scripts/services/project.js:512
+#: app/scripts/services/project.js:509
 msgid "File {{file}} imported"
 msgstr "已导入文件 {{file}} "
 
@@ -520,11 +520,11 @@ msgstr "French"
 msgid "Fuchsia"
 msgstr ""
 
-#: app/views/languages.html:58
+#: app/views/languages.html:64
 msgid "Galician"
 msgstr "Galician"
 
-#: app/views/languages.html:22
+#: app/views/languages.html:28
 msgid "German"
 msgstr "German"
 
@@ -533,7 +533,7 @@ msgstr "German"
 msgid "Gold"
 msgstr ""
 
-#: app/views/languages.html:40
+#: app/views/languages.html:46
 msgid "Greek"
 msgstr ""
 
@@ -550,7 +550,7 @@ msgstr "帮助"
 msgid "Hexadecimal"
 msgstr ""
 
-#: app/scripts/services/graph.js:1227
+#: app/scripts/services/graph.js:1218
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
@@ -630,7 +630,7 @@ msgstr "无效的连接 {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "无效的多输入连接"
 
-#: app/scripts/services/project.js:468 app/scripts/services/project.js:66
+#: app/scripts/services/project.js:465 app/scripts/services/project.js:66
 msgid "Invalid project format"
 msgstr "无效的项目格式"
 
@@ -638,7 +638,7 @@ msgstr "无效的项目格式"
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "建议使用 <b>USB 2.0</b> 接口"
 
-#: app/views/languages.html:76
+#: app/views/languages.html:22
 msgid "Italian"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgid "No collections stored"
 msgstr "没有存储的集合"
 
 #: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:320
-#: app/scripts/services/project.js:134
+#: app/scripts/services/project.js:131
 msgid "OK"
 msgstr "确定"
 
@@ -713,7 +713,7 @@ msgstr "打开 SVG"
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:515
+#: app/scripts/services/project.js:512
 msgid "Original file {{file}} does not exist"
 msgstr "原始文件 {{file}} 不存在"
 
@@ -749,11 +749,11 @@ msgstr "项目信息"
 msgid "Project information updated"
 msgstr "项目信息已更新"
 
-#: app/scripts/services/project.js:121
+#: app/scripts/services/project.js:118
 msgid "Project {{name}} loaded"
 msgstr "项目 {{name}} 已载入"
 
-#: app/scripts/services/project.js:375
+#: app/scripts/services/project.js:372
 msgid "Project {{name}} saved"
 msgstr "项目 {{name}} 已保存"
 
@@ -811,7 +811,7 @@ msgstr "重置默认"
 msgid "RoyalBlue"
 msgstr ""
 
-#: app/views/languages.html:52
+#: app/views/languages.html:58
 msgid "Russian"
 msgstr ""
 
@@ -910,7 +910,7 @@ msgid ""
 "Do you want to continue?"
 msgstr "工具链将被更新，这个操作需要Internet连接，是否继续？"
 
-#: app/scripts/services/project.js:437
+#: app/scripts/services/project.js:434
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -959,7 +959,7 @@ msgstr "撤销"
 msgid "Unknown board"
 msgstr "未知的开发板"
 
-#: app/scripts/services/project.js:158
+#: app/scripts/services/project.js:155
 msgid "Unsupported project format {{version}}"
 msgstr ""
 
@@ -1030,7 +1030,7 @@ msgstr "参数名称错误 {{name}}"
 msgid "Wrong port name {{name}}"
 msgstr "端口名称错误 {{name}}"
 
-#: app/scripts/services/project.js:130
+#: app/scripts/services/project.js:127
 msgid "Wrong project format: {{name}}"
 msgstr "项目格式错误： {{name}}"
 
