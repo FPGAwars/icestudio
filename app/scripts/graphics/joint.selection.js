@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016-2018 FPGAwars
+Copyright (c) 2016-2019 FPGAwars
 Copyright (c) 2013 client IO
 */
 
@@ -374,13 +374,20 @@ joint.ui.SelectionView = Backbone.View.extend({
     var bbox = element.getBBox();
     var state = this.options.state;
 
+    var view = this.options.paper.findViewByModel(element);
+    var el = view.$box.children().not('.hidden').first();
+
+    var position = el.position();
+    var width = el.outerWidth();
+    var height = el.outerHeight();
+
     $('div[data-model=\'' + element.get('id') + '\']').css({
-      left: bbox.x * state.zoom + state.pan.x +
-            bbox.width / 2.0 * (state.zoom - 1) - margin,
-      top: bbox.y * state.zoom + state.pan.y +
-           bbox.height / 2.0 * (state.zoom - 1) - margin,
-      width: bbox.width + 2 * margin,
-      height: bbox.height + 2 * margin,
+      left: (bbox.x + position.left) * state.zoom + state.pan.x +
+            (width / 2 - position.left) * (state.zoom - 1) - margin,
+      top: (bbox.y + position.top) * state.zoom + state.pan.y +
+           (height / 2 - position.top) * (state.zoom - 1) - margin,
+      width: width + 2 * margin,
+      height: height + 2 * margin,
       transform: 'scale(' + state.zoom + ')'
     });
   }

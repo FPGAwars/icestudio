@@ -77,8 +77,8 @@ angular.module('icestudio')
         var name = utils.basename(filepath);
         self.load(name, data);
       })
-      .catch(function(error) {
-        alertify.error(error, 30);
+      .catch(function() {
+        alertify.error(gettextCatalog.getString('Invalid project format'), 30);
       });
     };
 
@@ -104,17 +104,27 @@ angular.module('icestudio')
         function() {
           // Convert
           project.design.board = common.selectedBoard.name;
-          _load(true);
+
+          _load(true, boardMigration( projectBoard, common.selectedBoard.name ) );
         });
       }
       else {
         _load();
       }
 
-      function _load(reset) {
+      function _load(reset,originalBoard) {
         common.allDependencies = project.dependencies;
         var opt = { reset: reset || false, disabled: false };
-        var ret = graph.loadDesign(project.design, opt, function() {
+
+          if(typeof originalBoard !== 'undefined' && originalBoard !== false) {
+              for (var i=0; i < common.boards.length;i++){
+                  if (String(common.boards[i].name) === String(originalBoard)){
+                      opt.originalPinout = common.boards[i].pinout;
+                  }
+              }
+          }
+
+          var ret = graph.loadDesign(project.design, opt, function() {
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -136,6 +146,21 @@ angular.module('icestudio')
         }, 100);
       }
     };
+
+    function boardMigration(oldBoard,newBoard){
+
+        var pboard=false;
+
+        switch( oldBoard.toLowerCase() ){
+              case 'icezum alhambra': case 'icezum':
+                  switch( newBoard.toLowerCase()){
+                      case 'alhambra-ii':  pboard = 'icezum'; break;
+                  }
+              break;
+          }
+        return pboard;
+    }
+
 
     function checkVersion(version) {
       if (version > common.VERSION) {
@@ -168,6 +193,7 @@ angular.module('icestudio')
           project = convert10To12(project);
           break;
       }
+      project.version = common.VERSION;
       return project;
     }
 
@@ -302,7 +328,7 @@ angular.module('icestudio')
       return project;
     }
 
-    this.save = function(filepath) {
+    this.save = function(filepath, callback) {
       var name = utils.basename(filepath);
       this.updateTitle(name);
       sortGraph();
@@ -350,6 +376,9 @@ angular.module('icestudio')
       function doSaveProject() {
         utils.saveFile(filepath, pruneProject(project))
         .then(function() {
+          if (callback) {
+            callback();
+          }
           alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
         })
         .catch(function(error) {
@@ -442,8 +471,8 @@ angular.module('icestudio')
           }
         }
       })
-      .catch(function(error) {
-        alertify.error(error, 30);
+      .catch(function() {
+        alertify.error(gettextCatalog.getString('Invalid project format'), 30);
       });
     };
 

@@ -32,6 +32,7 @@ module.exports = function(grunt) {
     all('styles'),
     all('views')
   ];
+  var pkg = grunt.file.readJSON('app/package.json');
 
   require('load-grunt-tasks')(grunt, options);
 
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
 
-    pkg: grunt.file.readJSON('app/package.json'),
+    pkg: pkg,
 
     // Automatically inject Bower components into the app
     wiredep: {
@@ -185,7 +186,7 @@ module.exports = function(grunt) {
           exec: 'icestudio',
           arch: '32bit',
           icons: 'docs/resources/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage'
         },
         files: [{
@@ -200,7 +201,7 @@ module.exports = function(grunt) {
           exec: 'icestudio',
           arch: '64bit',
           icons: 'docs/resources/icons',
-          comment: 'Experimental graphic editor for open FPGAs',
+          comment: 'Visual editor for open FPGA boards',
           archive: 'dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage'
         },
         files: [{
@@ -422,6 +423,7 @@ module.exports = function(grunt) {
     'watch:scripts'
   ]);
   grunt.registerTask('dist', [
+    'checksettings',
     'jshint',
     'clean:dist',
     'clean:toolchain',
@@ -440,4 +442,12 @@ module.exports = function(grunt) {
   .concat([
     'clean:tmp'
   ]));
+  grunt.registerTask('checksettings', function() {
+    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+      grunt.fail.fatal('Apio settings are in debug mode');
+    }
+  });
 };
+
+// Disable Deprecation Warnings
+var os = require('os'); os.tmpDir = os.tmpdir;

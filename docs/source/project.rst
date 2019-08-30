@@ -6,7 +6,7 @@ Project
 Definition
 ----------
 
-* Version: 1.1.
+* Version: 1.2.
 * Package: project information.
 * Design: board information and circuit design.
 * Dependencies: all used dependencies in one level.
@@ -16,7 +16,7 @@ Extension: **.ice**
 .. code-block:: json
 
     {
-      "version": "1.1",
+      "version": "1.2",
       "package": {
         "name": "",
         "version": "",
@@ -29,13 +29,6 @@ Extension: **.ice**
         "graph": {
           "blocks": [],
           "wires": []
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       },
       "dependencies": {}
@@ -140,7 +133,7 @@ File: **in-out.ice**
 
     |
 
-    .. literalinclude:: ../resources/samples/in-out.ice
+    .. literalinclude:: ../../samples/in-out.ice
        :language: json
 
 |
@@ -162,7 +155,7 @@ File: **not.ice**
 
     |
 
-    .. literalinclude:: ../resources/samples/not.ice
+    .. literalinclude:: ../../samples/not.ice
        :language: json
 
 |
@@ -184,7 +177,7 @@ File: **mux.ice**
 
     |
 
-    .. literalinclude:: ../resources/samples/mux.ice
+    .. literalinclude:: ../../samples/mux.ice
        :language: json
 
 |
@@ -206,7 +199,7 @@ File: **assign.ice**
 
     |
 
-    .. literalinclude:: ../resources/samples/assign.ice
+    .. literalinclude:: ../../samples/assign.ice
        :language: json
 
 |
@@ -228,7 +221,7 @@ File: **complex.ice**
 
     |
 
-    .. literalinclude:: ../resources/samples/complex.ice
+    .. literalinclude:: ../../samples/complex.ice
        :language: json
 
 |

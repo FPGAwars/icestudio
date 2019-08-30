@@ -1,0 +1,12 @@
+{
+  "label": "TinyFPGA BX",
+  "datasheet": "https://github.com/tinyfpga/TinyFPGA-BX",
+  "interface": "Serial",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 23,
+    "plbs": 960,
+    "brams": 32
+  }
+}

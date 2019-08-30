@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "",
     "version": "",
@@ -29,18 +29,6 @@
           "position": {
             "x": 144,
             "y": 104
-          }
-        },
-        {
-          "id": "3b4f62a5-2b6f-4b07-ade6-e43431029237",
-          "type": "11a6f454705778e2f00adba4e5b28dcd9411bc8f",
-          "position": {
-            "x": 384,
-            "y": 192
-          },
-          "size": {
-            "width": 96,
-            "height": 64
           }
         },
         {
@@ -81,6 +69,18 @@
             "x": 144,
             "y": 296
           }
+        },
+        {
+          "id": "3b4f62a5-2b6f-4b07-ade6-e43431029237",
+          "type": "11a6f454705778e2f00adba4e5b28dcd9411bc8f",
+          "position": {
+            "x": 384,
+            "y": 192
+          },
+          "size": {
+            "width": 96,
+            "height": 64
+          }
         }
       ],
       "wires": [
@@ -115,13 +115,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 0,
-        "y": 0
-      },
-      "zoom": 1
     }
   },
   "dependencies": {
@@ -229,13 +222,6 @@
               }
             }
           ]
-        },
-        "state": {
-          "pan": {
-            "x": 0,
-            "y": 0
-          },
-          "zoom": 1
         }
       }
     }

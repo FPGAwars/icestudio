@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------------------
+#- FPGA 101 constraint file (.pcf)
+#- By Miodrag Milanovic
+#- March - 2018
+#- GPL license
+# -----------------------------------------------------------------------------
+
+
+# ------------ RGB LED Driver -------------------------------------------------
+set_io --warn-no-port LED_G 39  # output
+set_io --warn-no-port LED_B 40  # output
+set_io --warn-no-port LED_R 41  # output
+
+
+# ------------ Buttons --------------------------------------------------------
+set_io --warn-no-port BTN0 23  # input
+set_io --warn-no-port BTN1 25  # input
+set_io --warn-no-port BTN2 26  # input
+set_io --warn-no-port BTN3 27  # input
+set_io --warn-no-port BTN4 21  # input
+set_io --warn-no-port BTN5 12  # input
+
+
+# ------------ LCD connector --------------------------------------------------
+set_io --warn-no-port LCD_CLK 18  # output
+set_io --warn-no-port LCD_DEN 19  # output
+set_io --warn-no-port LCD_VS  11  # output
+set_io --warn-no-port LCD_HS   9  # output
+set_io --warn-no-port LCD_RST  2  # output
+set_io --warn-no-port LCD_D7   6  # output
+set_io --warn-no-port LCD_D6  44  # output
+set_io --warn-no-port LCD_D5   4  # output
+set_io --warn-no-port LCD_D4   3  # output
+set_io --warn-no-port LCD_D3  48  # output
+set_io --warn-no-port LCD_D2  45  # output
+set_io --warn-no-port LCD_D1  47  # output
+set_io --warn-no-port LCD_D0  46  # output
+set_io --warn-no-port LCD_PWM 13  # output
+
+
+# ------------ Audio jack -----------------------------------------------------
+set_io --warn-no-port AUDIO 37  # output
+
+
+# ------------ System 12 MHz clock --------------------------------------------
+set_io --warn-no-port CLK 35  # input
+
+
+# ------------ PMOD connector -------------------------------------------------
+set_io --warn-no-port PMOD0 32
+set_io --warn-no-port PMOD1 31
+set_io --warn-no-port PMOD2 34
+set_io --warn-no-port PMOD3 43
+set_io --warn-no-port PMOD4 36
+set_io --warn-no-port PMOD5 42
+set_io --warn-no-port PMOD6 38
+set_io --warn-no-port PMOD7 28

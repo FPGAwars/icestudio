@@ -1,0 +1,67 @@
+# -----------------------------------------------------------------------------
+#- iCEBreaker bitsy constraint file (.pcf)
+#- By Miodrag Milanovic
+#- March - 2018
+#- GPL license
+# -----------------------------------------------------------------------------
+
+
+# ------------ Buttons and LEDs -----------------------------------------------
+set_io --warn-no-port BTN  10  # input
+set_io --warn-no-port LEDR 11  # output
+set_io --warn-no-port LEDG 37  # output
+
+
+# ------------ RGB LED Driver -------------------------------------------------
+set_io --warn-no-port LED_R 39  # output
+set_io --warn-no-port LED_G 40  # output
+set_io --warn-no-port LED_B 41  # output
+
+
+# ------------ System 12 MHz clock --------------------------------------------
+set_io --warn-no-port CLK 35  # input
+
+
+# ------------ USB ------------------------------------------------------------
+set_io --warn-no-port USB_DP  43  # input
+set_io --warn-no-port USB_DN  42  # input
+set_io --warn-no-port USB_DET 38  # input
+
+
+# ------------ SPI Flash ------------------------------------------------------
+set_io --warn-no-port F_SCK 15
+set_io --warn-no-port F_SSB 16
+set_io --warn-no-port F_IO0 14
+set_io --warn-no-port F_IO1 17
+set_io --warn-no-port F_IO2 12
+set_io --warn-no-port F_IO3 13
+
+
+# ------------ GPIO -----------------------------------------------------------
+set_io --warn-no-port P02 44
+set_io --warn-no-port P03 45
+set_io --warn-no-port P04 46
+set_io --warn-no-port P05 47
+set_io --warn-no-port P06 48
+set_io --warn-no-port P07  2
+set_io --warn-no-port P08  3
+set_io --warn-no-port P09  4
+set_io --warn-no-port P10  6
+set_io --warn-no-port P11  9
+set_io --warn-no-port P12 13
+set_io --warn-no-port P13 12
+
+set_io --warn-no-port P17 25
+set_io --warn-no-port P18 26
+set_io --warn-no-port P19 27
+set_io --warn-no-port P20 28
+set_io --warn-no-port P21 31
+set_io --warn-no-port P22 32
+set_io --warn-no-port P23 34
+set_io --warn-no-port P24 36
+
+set_io --warn-no-port P32 18
+set_io --warn-no-port P34 19
+set_io --warn-no-port P36 20
+set_io --warn-no-port P38 21
+set_io --warn-no-port P40 23

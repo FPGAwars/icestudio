@@ -7,34 +7,35 @@ angular.module('icestudio')
                               nodePath) {
     const DEFAULT = 'icezum';
 
-    this.loadBoards = function(path) {
-      path = path || nodePath.join('resources', 'boards');
+    this.loadBoards = function() {
       var boards = [];
-      var contents = nodeFs.readdirSync(path);
-      contents.forEach(function (content) {
-        var contentPath = nodePath.join(path, content);
-        if (nodeFs.statSync(contentPath).isDirectory()) {
-          if (!content.startsWith('_')) {
+      var path = nodePath.join('resources', 'boards');
+      var menu = nodeFs.readFileSync(nodePath.join(path, 'menu.json'));
+      JSON.parse(menu).forEach(function(section) {
+        section.boards.forEach(function(name) {
+          var contentPath = nodePath.join(path, name);
+          if (nodeFs.statSync(contentPath).isDirectory()) {
             var info = readJSONFile(contentPath, 'info.json');
             var pinout = readJSONFile(contentPath, 'pinout.json');
             var rules = readJSONFile(contentPath, 'rules.json');
             boards.push({
-              'name': content,
-              'info': info,
-              'pinout': pinout,
-              'rules': rules
+              name: name,
+              info: info,
+              pinout: pinout,
+              rules: rules,
+              type: section.type,
             });
           }
-        }
+        });
       });
-      common.boards = _.sortBy(boards, 'info.label');
+      common.boards = boards;
     };
 
     function readJSONFile(filepath, filename) {
       var ret = {};
       try {
         var data = nodeFs.readFileSync(nodePath.join(filepath, filename));
-        ret = JSON.parse(data.toString());
+        ret = JSON.parse(data);
       }
       catch (err) { }
       return ret;

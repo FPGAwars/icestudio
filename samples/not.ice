@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "package": {
     "name": "Not",
     "version": "1.0",
@@ -11,34 +11,6 @@
     "board": "icezum",
     "graph": {
       "blocks": [
-        {
-          "id": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
-          "type": "basic.code",
-          "data": {
-            "code": "// NOT logic gate\n\nassign b = ~a;",
-            "params": [],
-            "ports": {
-              "in": [
-                {
-                  "name": "a"
-                }
-              ],
-              "out": [
-                {
-                  "name": "b"
-                }
-              ]
-            }
-          },
-          "position": {
-            "x": 248,
-            "y": 88
-          },
-          "size": {
-            "width": 384,
-            "height": 256
-          }
-        },
         {
           "id": "a4058fa5-b66e-4e5e-b542-28d7c3e9d3cd",
           "type": "basic.input",
@@ -76,6 +48,34 @@
             "x": 728,
             "y": 184
           }
+        },
+        {
+          "id": "364b95cc-e8ff-4c65-b332-d6125c5968ee",
+          "type": "basic.code",
+          "data": {
+            "code": "// NOT logic gate\n\nassign b = ~a;",
+            "params": [],
+            "ports": {
+              "in": [
+                {
+                  "name": "a"
+                }
+              ],
+              "out": [
+                {
+                  "name": "b"
+                }
+              ]
+            }
+          },
+          "position": {
+            "x": 248,
+            "y": 88
+          },
+          "size": {
+            "width": 384,
+            "height": 256
+          }
         }
       ],
       "wires": [
@@ -100,13 +100,6 @@
           }
         }
       ]
-    },
-    "state": {
-      "pan": {
-        "x": 0,
-        "y": 0
-      },
-      "zoom": 1
     }
   },
   "dependencies": {}

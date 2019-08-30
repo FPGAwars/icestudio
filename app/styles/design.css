@@ -277,8 +277,8 @@ g {
 }
 
 .io-block .io-fpga-content .header svg {
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 4px;
+  padding-right: 0px;
   width: 10px;
   stroke: #444;
 }
@@ -500,14 +500,16 @@ g {
   left: 0;
   right: 0;
   bottom: 0;
-  margin: 7px;
-  border-radius: 5px;
-  border: 1px solid transparent;
+  margin: 0;
   pointer-events: none;
   overflow: visible;
 }
 
 .info-block .info-render a {
+  pointer-events: all;
+}
+
+.info-block .info-render details {
   pointer-events: all;
 }
 

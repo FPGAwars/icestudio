@@ -13,20 +13,23 @@
 
 import os
 import re
+import sys
 import json
 
-print('Pinout generator')
-print('----------------')
-
-# Python 2-3 compat
-try:
-    input = raw_input
-except Exception:
-    pass
+if len(sys.argv) < 2:
+    print('Insert a board name')
+    exit(1)
 
 # Load parameters
-name = input('Insert board name: ')  # eg. icoboard
+name = sys.argv[1]
 path = os.path.join(os.path.dirname(__file__), name)
+
+# Check board
+if not os.path.isdir(name):
+    print('Board {} does not exist'.format(name))
+    exit(1)
+
+print('Generating pinout...')
 
 # Regex pattern
 pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output))?'
@@ -37,6 +40,10 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
 
     # Build json
     pinout = re.findall(pattern, data)
+
+    #Sorted in reverse order by name to avoid conflicting overlapping labels like D0 - LED0 - DD0
+    pinout=sorted(pinout, key=lambda pinout: pinout[1],reverse=True)
+
     format_pinout = []
     for item in pinout:
         format_pinout += [{
@@ -44,7 +51,7 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
             'value': item[2],
             'type': item[4] or 'inout'
         }]
-
+        
     # Save json file
     with open(os.path.join(path, 'pinout.json'), 'w') as outfile:
         json.dump(format_pinout, outfile)

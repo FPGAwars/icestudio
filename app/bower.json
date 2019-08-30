@@ -1,6 +1,6 @@
 {
   "name": "icestudio",
-  "description": "Experimental graphic editor for open FPGAs",
+  "description": "Visual editor for open FPGA boards",
   "main": "index.html",
   "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
   "contributors": [

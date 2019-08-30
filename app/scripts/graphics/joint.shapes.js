@@ -93,10 +93,10 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
         display: 'none'
       },
       '.port-default rect': {
-        x: '-40',
-        y: '-10',
-        width: '20',
-        height: '20',
+        x: '-32',
+        y: '-8',
+        width: '16',
+        height: '16',
         rx: '3',
         ry: '3',
         stroke: '#777',
@@ -392,6 +392,15 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   removeBox: function(/*event*/) {
     this.$box.remove();
+  },
+
+  updateScrollStatus: function(status) {
+    if (this.editor) {
+      this.editor.renderer.scrollBarV.element.style.visibility = status ? '' : 'hidden';
+      this.editor.renderer.scrollBarH.element.style.visibility = status ? '' : 'hidden';
+      this.editor.renderer.scroller.style.right = 0;
+      this.editor.renderer.scroller.style.bottom = 0;
+    }
   }
 });
 
@@ -735,10 +744,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
     for (var i in data.pins) {
       var index = data.pins[i].index;
-      var comboId = '#combo' + this.id + index;
-      var comboSelector = this.$box.find(comboId);
       var value = data.pins[i].value;
-      comboSelector.val(value).change();
+      var name = data.pins[i].name;
+      var comboId = '#combo' + this.id + index;
+      var comboSelector = this.$box.find(comboId + ' option:contains(' + name + ')');
+      if (comboSelector) {
+        // Select by pin name
+        comboSelector.attr('selected', true);
+      } else {
+        // If there was a pin rename use the pin value
+        comboSelector = this.$box.find(comboId);
+        comboSelector.val(value).change();
+      }
     }
     this.updating = false;
   },
@@ -1067,14 +1084,14 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setOption("firstLineNumber", 0);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
           ' + editorLabel + '.renderer.$gutter.style.background = "#F0F0F0";\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -1105,6 +1122,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     var self = this;
     this.editor = ace.edit(this.editorSelector[0]);
+    this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1132,6 +1150,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       }
     });
     this.editor.on('focus', function() {
+      self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       self.editor.setHighlightGutterLine(true);
@@ -1139,6 +1158,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
     this.editor.on('blur', function() {
+      self.updateScrollStatus(false);
       var selection = self.editor.session.selection;
       if (selection) {
         selection.clearSelection();
@@ -1176,6 +1196,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.applyName();
     this.applyLocal();
     this.applyValue(opt);
+    this.applyFormat();
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   applyName: function() {
@@ -1230,6 +1254,30 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     setTimeout(function(self) {
       self.updating = false;
     }, 10, this);
+  },
+
+  applyFormat: function() {
+    this.updating = true;
+
+    var self = this;
+    var data = this.model.get('data');
+    var radix = data.format;
+    this.editor.session.gutterRenderer = {
+      getWidth: function(session, lastLineNumber, config) {
+          return lastLineNumber.toString().length * config.characterWidth;
+      },
+      getText: function(session, row) {
+          var text = row.toString(radix).toUpperCase();
+          var config = self.editor.renderer.layerConfig;
+          var size = config.lastRow.toString(radix).length;
+          while (text.length < size) {text = '0' + text;}
+          return (radix === 16 ? '0x' : '') + text;
+      }
+    };
+    this.editor.renderer.setShowGutter(false);
+    this.editor.renderer.setShowGutter(true);
+
+    this.updating = false;
   },
 
   update: function() {
@@ -1329,12 +1377,12 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setHighlightGutterLine(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
+          ' + editorLabel + '.renderer.setShowGutter(true);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
+          ' + editorLabel + '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -1364,6 +1412,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     var self = this;
     this.editor = ace.edit(this.editorSelector[0]);
+    this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1385,12 +1434,14 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           self.deltas = [];
           // Set data.code
           self.model.attributes.data.code = self.editor.session.getValue();
+
         }, undoGroupingInterval);
         // Reset counter
         self.counter = Date.now();
       }
     });
     this.editor.on('focus', function() {
+      self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       self.editor.setHighlightGutterLine(true);
@@ -1398,6 +1449,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
     this.editor.on('blur', function() {
+      self.updateScrollStatus(false);
       var selection = self.editor.session.selection;
       if (selection) {
         selection.clearSelection();
@@ -1474,6 +1526,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
   apply: function(opt) {
     this.applyValue(opt);
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   setAnnotation: function(codeError) {
@@ -1624,27 +1679,27 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.$box = $(joint.util.template(
       '\
       <div class="info-block">\
+        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
         <div class="info-content' + (readonly ? ' hidden' : '') + '"></div>\
         <div class="info-editor' + (readonly ? ' hidden' : '') + '" id="' + editorLabel + '"></div>\
         <script>\
           var ' + editorLabel + ' = ace.edit("' + editorLabel + '");\
           ' + editorLabel + '.setTheme("ace/theme/chrome");\
-          ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.setHighlightActiveLine(false);\
           ' + editorLabel + '.setShowPrintMargin(false);\
           ' + editorLabel + '.setAutoScrollEditorIntoView(true);\
-          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
+          ' + editorLabel + '.renderer.setShowGutter(false);\
           ' + editorLabel + '.renderer.$cursorLayer.element.style.opacity = 0;\
+          ' + editorLabel + '.session.setMode("ace/mode/markdown");\
         </script>\
-        <div class="info-render markdown-body' + (readonly ? '' : ' hidden') + '"></div>\
         <div class="resizer"/></div>\
       </div>\
       '
     )());
 
+    this.renderSelector = this.$box.find('.info-render');
     this.editorSelector = this.$box.find('.info-editor');
     this.contentSelector = this.$box.find('.info-content');
-    this.renderSelector = this.$box.find('.info-render');
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -1662,6 +1717,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
     var self = this;
     this.editor = ace.edit(this.editorSelector[0]);
+    this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
     this.editor.commands.removeCommand('undo');
     this.editor.commands.removeCommand('redo');
@@ -1689,12 +1745,14 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
       }
     });
     this.editor.on('focus', function() {
+      self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       // Show cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
     });
     this.editor.on('blur', function() {
+      self.updateScrollStatus(false);
       var selection = self.editor.session.selection;
       if (selection) {
         selection.clearSelection();
@@ -1772,9 +1830,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var readonly = this.model.get('data').readonly;
     if (readonly) {
       this.$box.addClass('info-block-readonly');
+      this.renderSelector.removeClass('hidden');
       this.editorSelector.addClass('hidden');
       this.contentSelector.addClass('hidden');
-      this.renderSelector.removeClass('hidden');
       this.disableResizer();
       // Clear selection
       var selection = this.editor.session.selection;
@@ -1785,16 +1843,16 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     }
     else {
       this.$box.removeClass('info-block-readonly');
+      this.renderSelector.addClass('hidden');
       this.editorSelector.removeClass('hidden');
       this.contentSelector.removeClass('hidden');
-      this.renderSelector.addClass('hidden');
       this.enableResizer();
     }
   },
 
   applyText: function() {
     var data = this.model.get('data');
-    var markdown = data.info || '';
+    var markdown = data.text || data.info || '';
 
     // Replace emojis
     markdown = markdown.replace(/(:.*:)/g, function (match) {
@@ -1850,6 +1908,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.applyValue(opt);
     this.applyReadonly();
     this.updateBox();
+    if (this.editor) {
+      this.editor.resize();
+    }
   },
 
   render: function() {
@@ -1870,12 +1931,12 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var data = this.model.get('data');
 
     if (data.readonly) {
-      // This is required because this.renderSelector may be not available
+      // Scale render
       this.renderSelector.css({
-        left: (bbox.width - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
-        top: (bbox.height - 14) / 2.0 * (state.zoom - 1) - 2 / state.zoom,
-        width: bbox.width - 14,
-        height: bbox.height - 14,
+        left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
+        top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
+        width: Math.round(bbox.width),
+        height: Math.round(bbox.height),
         transform: 'scale(' + state.zoom + ')',
         'font-size': aceFontSize + 'px'
       });

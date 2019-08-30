@@ -1,7 +1,7 @@
 {
   "name": "icestudio",
-  "version": "0.3.3-beta",
-  "description": "Experimental graphic editor for open FPGAs",
+  "version": "0.4.0",
+  "description": "Visual editor for open FPGA boards",
   "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
@@ -18,16 +18,17 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.3.3",
-    "max": "0.4.0",
+    "min": "0.4.0",
+    "max": "0.5.0",
     "extras": [
       "blackiceprog",
-      "tinyfpgab"
+      "tinyfpgab",
+      "tinyprog"
     ],
     "external": "",
-    "develop": false
+    "branch": ""
   },
-  "collection": "0.3.3-beta",
+  "collection": "0.3.3",
   "engines": {
     "node": ">= 0.10.0"
   },

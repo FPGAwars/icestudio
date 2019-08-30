@@ -3,23 +3,26 @@
 #- By Juan Gonzalez (Obijuan)
 #- April - 2016
 #- GPL license
+#- Repo: https://github.com/FPGAwars/icezum/wiki
+#- Pinout: https://github.com/FPGAwars/icezum/blob/master/doc/pinout/icezum-pinout.pdf
 # -----------------------------------------------------------------------------
-# --  Repo: https://github.com/FPGAwars/icezum/wiki
-# --  Pinout: https://github.com/FPGAwars/icezum/blob/master/doc/pinout/icezum-pinout.pdf
+
 
 # ------------ User Leds ------------------------------------------------------
-set_io --warn-no-port LED0  95   # output
-set_io --warn-no-port LED1  96   # output
-set_io --warn-no-port LED2  97   # output
-set_io --warn-no-port LED3  98   # output
-set_io --warn-no-port LED4  99   # output
-set_io --warn-no-port LED5  101  # output
-set_io --warn-no-port LED6  102  # output
-set_io --warn-no-port LED7  104  # output
+set_io --warn-no-port LED0  95  # output
+set_io --warn-no-port LED1  96  # output
+set_io --warn-no-port LED2  97  # output
+set_io --warn-no-port LED3  98  # output
+set_io --warn-no-port LED4  99  # output
+set_io --warn-no-port LED5 101  # output
+set_io --warn-no-port LED6 102  # output
+set_io --warn-no-port LED7 104  # output
+
 
 # ------------ User push buttons ----------------------------------------------
-set_io --warn-no-port SW1  10  # input
-set_io --warn-no-port SW2  11  # input
+set_io --warn-no-port SW1 10  # input
+set_io --warn-no-port SW2 11  # input
+
 
 # ------------ 5v Digital I/O -------------------------------------------------
 
@@ -41,64 +44,67 @@ set_io --warn-no-port SW2  11  # input
 #                                                     *   *   *   *   *   *
 # --- Bottom female header
 #               -------------------------------     -------------------------
-#              |  x 5V  R 3v3 5vP  GND GND PWR |   | DD0 DD1 DD2 DD3 DD4 DD5 |
+#              |  x 5V  R 3V3 5vP  GND GND PWR |   | DD0 DD1 DD2 DD3 DD4 DD5 |
 #               -------------------------------     -------------------------
 
 # -- In top female header
-set_io --warn-no-port D13  144
-set_io --warn-no-port D12  143
-set_io --warn-no-port D11  142
-set_io --warn-no-port D10  141
-set_io --warn-no-port D9   139
-set_io --warn-no-port D8   138
-set_io --warn-no-port D7   112
-set_io --warn-no-port D6   113
-set_io --warn-no-port D5   114
-set_io --warn-no-port D4   115
-set_io --warn-no-port D3   116
-set_io --warn-no-port D2   117
-set_io --warn-no-port D1   118
-set_io --warn-no-port D0   119
+set_io --warn-no-port D13 144
+set_io --warn-no-port D12 143
+set_io --warn-no-port D11 142
+set_io --warn-no-port D10 141
+set_io --warn-no-port D9  139
+set_io --warn-no-port D8  138
+set_io --warn-no-port D7  112
+set_io --warn-no-port D6  113
+set_io --warn-no-port D5  114
+set_io --warn-no-port D4  115
+set_io --warn-no-port D3  116
+set_io --warn-no-port D2  117
+set_io --warn-no-port D1  118
+set_io --warn-no-port D0  119
 
 # -- In Bottom female header
-set_io --warn-no-port DD0   78
-set_io --warn-no-port DD1   79
-set_io --warn-no-port DD2   80
-set_io --warn-no-port DD3   81
-set_io --warn-no-port DD4   88
-set_io --warn-no-port DD5   87
+set_io --warn-no-port DD0 78
+set_io --warn-no-port DD1 79
+set_io --warn-no-port DD2 80
+set_io --warn-no-port DD3 81
+set_io --warn-no-port DD4 88
+set_io --warn-no-port DD5 87
 
-# ------------------------- FPGA Direct 3v3 GPIO ------------------------------
+# ------------------------- FPGA Direct 3V3 GPIO ------------------------------
 #
-#        -----------------
-#       | GP1 GP3 GP5 GP7 |
-#      >| GP0 GP2 GP4 GP6 |
-#        -----------------
+#       -----------------
+#      | GP1 GP3 GP5 GP7 |
+#    > | GP0 GP2 GP4 GP6 |
+#       -----------------
 #
-set_io --warn-no-port GP0  37
-set_io --warn-no-port GP1  38
-set_io --warn-no-port GP2  39
-set_io --warn-no-port GP3  41
-set_io --warn-no-port GP4  42
-set_io --warn-no-port GP5  43
-set_io --warn-no-port GP6  49
-set_io --warn-no-port GP7  50
+set_io --warn-no-port GP0 37
+set_io --warn-no-port GP1 38
+set_io --warn-no-port GP2 39
+set_io --warn-no-port GP3 41
+set_io --warn-no-port GP4 42
+set_io --warn-no-port GP5 43
+set_io --warn-no-port GP6 49
+set_io --warn-no-port GP7 50
+
 
 # -------------------------- I2C ADC ------------------------------------------
-set_io --warn-no-port ADC_SCL  91  # output
-set_io --warn-no-port ADC_SDA  90
-set_io --warn-no-port ADC_INT  93  # input
+set_io --warn-no-port ADC_SCL 91  # output
+set_io --warn-no-port ADC_SDA 90
+set_io --warn-no-port ADC_INT 93  # input
 
-# -------------------------- SYSTEM CLOCK -------------------------------------
+
+# ------------ System 12 MHz clock --------------------------------------------
 set_io --warn-no-port CLK 21  # input
+
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
 set_io --warn-no-port RES  66  # input
 set_io --warn-no-port DONE 65  # output
 set_io --warn-no-port SS   71  # output
-set_io --warn-no-port MISO 67  # input
-set_io --warn-no-port MOSI 68  # output
+set_io --warn-no-port MISO 68  # input
+set_io --warn-no-port MOSI 67  # output
 set_io --warn-no-port SCK  70  # output
 #
 # --- FTDI 1: (Serial port)

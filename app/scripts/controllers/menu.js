@@ -34,6 +34,7 @@ angular.module('icestudio')
 
     var zeroProject = true;  // New project without changes
     var resultAlert = null;
+    var winCommandOutput = null;
 
     var buildUndoStack = [];
     var changedUndoStack = [];
@@ -55,20 +56,52 @@ angular.module('icestudio')
       win.menu = mb;
     }
 
+    // New window, get the focus
+    win.focus();
+
     // Load app arguments
     setTimeout(function() {
+
+      // Parse GET url parmeters for window instance arguments
+      // all arguments will be embeded in icestudio_argv param
+      // that is a JSON string url encoded
+
+      // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
+      // unescape is deprecated javascript function, should use decodeURI instead
+
+      var queryStr = decodeURI(window.location.search) + '&';
+
+      var regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
+      var val = queryStr.replace(regex, '$1');
+      var params = (val === queryStr) ? false : val;
+
+      // If there are url params, compatibilize it with shell call
+      if(params !==false){
+          params=JSON.parse(decodeURI(params));
+          if(typeof gui.App.argv ==='undefined') {
+              gui.App.argv=[];
+          }
+          for(var prop in params){
+            gui.App.argv.push(params[prop]);
+          }
+      }
+
       var local = false;
       for (var i in gui.App.argv) {
         var arg = gui.App.argv[i];
         processArg(arg);
         local = arg === 'local' || local;
       }
-      if (local) {
-        project.path = '';
-      }
-      else {
+      var editable = !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
+                     !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
+                     project.path.startsWith(common.selectedCollection.path);
+      if (editable || !local) {
         updateWorkingdir(project.path);
       }
+      else {
+        project.path = '';
+      }
+
     }, 0);
 
     function processArg(arg) {
@@ -76,7 +109,6 @@ angular.module('icestudio')
         // Open filepath
         var filepath = arg;
         project.open(filepath);
-        //zeroProject = false;
       }
       else {
         // Move window
@@ -103,7 +135,6 @@ angular.module('icestudio')
           // the projec in the same window
           updateWorkingdir(filepath);
           project.open(filepath);
-          //zeroProject = false;
         }
         else if (project.changed || !equalWorkingFilepath(filepath)) {
           // If this is not the first action, and
@@ -117,9 +148,12 @@ angular.module('icestudio')
     $scope.openProject = function(filepath) {
       if (zeroProject) {
         // If this is the first action, open
-        // the projec in the same window
+        // the project in the same window
+        var editable = !filepath.startsWith(common.DEFAULT_COLLECTION_DIR) &&
+                       !filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
+                       filepath.startsWith(common.selectedCollection.path);
+        updateWorkingdir(editable ? filepath : '');
         project.open(filepath, true);
-        //zeroProject = false;
       }
       else {
         // If this is not the first action, and
@@ -132,7 +166,9 @@ angular.module('icestudio')
     $scope.saveProject = function() {
       var filepath = project.path;
       if (filepath) {
-        project.save(filepath);
+        project.save(filepath, function () {
+          reloadCollectionsIfRequired(filepath);
+        });
         resetChangedStack();
       }
       else {
@@ -143,13 +179,30 @@ angular.module('icestudio')
     $scope.saveProjectAs = function(localCallback) {
       utils.saveDialog('#input-save-project', '.ice', function(filepath) {
         updateWorkingdir(filepath);
-        project.save(filepath);
+        project.save(filepath, function () {
+          reloadCollectionsIfRequired(filepath);
+        });
         resetChangedStack();
         if (localCallback) {
           localCallback();
         }
       });
     };
+
+    function reloadCollectionsIfRequired(filepath) {
+      var selected = common.selectedCollection.name;
+      if (filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR)) {
+        collections.loadInternalCollections();
+      }
+      if (filepath.startsWith(profile.get('externalCollections'))) {
+        collections.loadExternalCollections();
+      }
+      if (selected &&
+          filepath.startsWith(nodePath.join(common.INTERNAL_COLLECTIONS_DIR, selected)) ||
+          filepath.startsWith(nodePath.join(profile.get('externalCollections'), selected))) {
+        collections.selectCollection(common.selectedCollection.path);
+      }
+    }
 
     $rootScope.$on('saveProjectAs', function(event, callback) {
       $scope.saveProjectAs(callback);
@@ -327,6 +380,38 @@ angular.module('icestudio')
       graph.fitContent();
     };
 
+    $scope.setExternalCollections = function() {
+      var externalCollections = profile.get('externalCollections');
+      var formSpecs = [
+        {
+          type: 'text',
+          title: gettextCatalog.getString('Enter the external collections path'),
+          value: externalCollections || ''
+        }
+      ];
+      utils.renderForm(formSpecs, function(evt, values) {
+        var newExternalCollections = values[0];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        if (newExternalCollections !== externalCollections) {
+          if (newExternalCollections === '' || nodeFs.existsSync(newExternalCollections)) {
+            profile.set('externalCollections', newExternalCollections);
+            collections.loadExternalCollections();
+            collections.selectCollection(); // default
+            utils.rootScopeSafeApply();
+            if (common.selectedCollection.path.startsWith(newExternalCollections)) {
+            }
+            alertify.success(gettextCatalog.getString('External collections updated'));
+          }
+          else {
+            evt.cancel = true;
+            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', { path: newExternalCollections }, 5));
+          }
+        }
+      });
+    };
+
     $(document).on('infoChanged', function(evt, newValues) {
       var values = getProjectInformation();
       if (!_.isEqual(values, newValues)) {
@@ -369,14 +454,14 @@ angular.module('icestudio')
       });
     };
 
-    $scope.enableBoardRules = function() {
-      graph.setBoardRules(true);
-      alertify.success(gettextCatalog.getString('Board rules enabled'));
-    };
-
-    $scope.disableBoardRules = function() {
-      graph.setBoardRules(false);
-      alertify.success(gettextCatalog.getString('Board rules disabled'));
+    $scope.toggleBoardRules = function() {
+      graph.setBoardRules(!profile.get('boardRules'));
+      if (profile.get('boardRules')) {
+        alertify.success(gettextCatalog.getString('Board rules enabled'));
+      }
+      else {
+        alertify.success(gettextCatalog.getString('Board rules disabled'));
+      }
     };
 
     $(document).on('langChanged', function(evt, lang) {
@@ -489,10 +574,35 @@ angular.module('icestudio')
       }
     };
 
+    $scope.showCommandOutput = function() {
+      winCommandOutput = gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.commandOutput), {
+        title: gettextCatalog.getString('Command output'),
+        focus: true,
+        toolbar: false,
+        resizable: true,
+        width: 700,
+        height: 400,
+        'min_width': 300,
+        'min_height': 300,
+        icon: 'resources/images/icestudio-logo.png'
+      });
+    };
+
+    $(document).on('commandOutputChanged', function(evt, commandOutput) {
+      if (winCommandOutput) {
+        try {
+          winCommandOutput.window.location.href = 'resources/viewers/plain/output.html?content=' + encodeURIComponent(commandOutput);
+        }
+        catch (e) {
+          winCommandOutput = null;
+        }
+      }
+    });
+
     $scope.selectCollection = function(collection) {
-      if (common.selectedCollection.name !== collection.name) {
-        var name = collections.selectCollection(collection.name);
-        profile.set('collection', name);
+      if (common.selectedCollection.path !== collection.path) {
+        var name = collection.name;
+        profile.set('collection', collections.selectCollection(collection.path));
         alertify.success(gettextCatalog.getString('Collection {{name}} selected',  { name: utils.bold(name ? name : 'Default') }));
       }
     };
@@ -593,8 +703,8 @@ angular.module('icestudio')
     };
 
     $scope.reloadCollections = function() {
-      collections.loadCollections();
-      collections.selectCollection(common.selectedCollection.name);
+      collections.loadAllCollections();
+      collections.selectCollection(common.selectedCollection.path);
     };
 
     $scope.removeCollection = function(collection) {
@@ -607,7 +717,7 @@ angular.module('icestudio')
     };
 
     $scope.removeAllCollections = function() {
-      if (common.collections.length > 1) {
+      if (common.internalCollections.length > 0) {
         alertify.confirm(gettextCatalog.getString('All stored collections will be lost. Do you want to continue?'),
         function() {
           tools.removeAllCollections();
@@ -636,11 +746,11 @@ angular.module('icestudio')
         '  </div>',
         '  <div class="col-sm-7" style="margin-left: 20px;">',
         '    <h4>Icestudio</h4>',
-        '    <p><i>Graphic editor for open FPGAs</i></p>',
+        '    <p><i>Visual editor for open FPGA boards</i></p>',
         '    <p>Version: ' + $scope.version + '</p>',
-        '    <p>License: GPL v2</p>',
+        '    <p>License: GPL-2.0</p>',
         '    <p>Created by Jesús Arroyo Torrens</p>',
-        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2018</p>',
+        '    <p><span class="copyleft">&copy;</span> FPGAwars 2016-2019</p>',
         '  </div>',
         '</div>'].join('\n');
       alertify.alert(content);
@@ -663,7 +773,6 @@ angular.module('icestudio')
       changedUndoStack = currentUndoStack;
       project.changed = false;
       project.updateTitle();
-      zeroProject = false;
     }
 
     function resetBuildStack() {

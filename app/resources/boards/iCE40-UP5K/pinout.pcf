@@ -1,0 +1,144 @@
+# -----------------------------------------------------------------------------
+#- iCE40-UP5K constraint file (.pcf)
+#- By Jesus Arroyo Torrens and Juan Gonzalez (Obijuan)
+#- April - 2018
+#- GPL license
+#- Board info: http://www.latticesemi.com/view_document?document_id=51987
+# -----------------------------------------------------------------------------
+
+
+# ------------ LEDs -----------------------------------------------------------
+set_io --warn-no-port LED_R 41  # output
+set_io --warn-no-port LED_G 40  # output
+set_io --warn-no-port LED_B 39  # output
+
+
+# ------------ Switch buttons -------------------------------------------------
+set_io --warn-no-port SW1 23  # input
+set_io --warn-no-port SW2 25  # input
+set_io --warn-no-port SW3 34  # input
+set_io --warn-no-port SW4 43  # input
+
+
+# ------------ System 12 MHz clock --------------------------------------------
+set_io --warn-no-port CLK 35  # input
+
+
+# ------------ Programming jumpers --------------------------------------------
+#
+#             J6
+#       ---------------
+#      | F_MOSI MISO   | <
+#      |   MOSI F_MISO |
+#       ---------------
+#
+#    For programming Flash  ==
+#    For programming iCE    ||
+
+
+# ------------ PMOD socket ----------------------------------------------------
+#
+#       ----------
+#    > |   SS 38B |
+#      | MOSI 39A |
+#      | MISO 43A |
+#      |  SCK 42B |
+#      |  GND GND |
+#      |  3V3 3V3 |
+#       ----------
+
+set_io --warn-no-port SS   16  # output
+set_io --warn-no-port MOSI 17  # output
+set_io --warn-no-port MISO 14  # input
+set_io --warn-no-port SCK  15  # output
+
+set_io --warn-no-port 38B 27
+set_io --warn-no-port 39A 26
+set_io --warn-no-port 43A 32
+set_io --warn-no-port 42B 31
+
+
+# ------------ Aardvark connector ---------------------------------------------
+#
+#       ---------------
+#    > |     NC GND    |
+#      |     NC NC     |
+#      | F_MISO NC     |
+#      |    SCK F_MOSI |
+#      |     SS GND    |
+#       ---------------
+
+
+# ------------ HEADER A -------------------------------------------------------
+#
+#       -------------------------------
+#      | GND SS    SCK MISO  MOSI  3V3 |
+#      | GND LED_R GND LED_G LED_B 3V3 | <
+#       -------------------------------
+
+
+# ------------ HEADER B -------------------------------------------------------
+#
+#       ----------
+#    > | 3V3 3V3  |
+#      | 37A NC   |
+#      | 36B NC   |
+#      | 39A 48B  |
+#      | 38B 51A  |
+#      | 43A 50B  |
+#      | 42B 41A  |
+#      | 45A ICLK |
+#      | 44B GND  |
+#      | 49A GND  |
+#       ----------
+
+set_io --warn-no-port 37A 23
+set_io --warn-no-port 36B 25
+set_io --warn-no-port 39A 26
+set_io --warn-no-port 38B 27
+set_io --warn-no-port 43A 32
+set_io --warn-no-port 42B 31
+set_io --warn-no-port 45A 37
+set_io --warn-no-port 44B 34
+set_io --warn-no-port 49A 43
+
+set_io --warn-no-port 48B  36
+set_io --warn-no-port 51A  42
+set_io --warn-no-port 50B  38
+set_io --warn-no-port 41A  28
+set_io --warn-no-port ICLK 35  # input
+
+
+# ------------ HEADER C -------------------------------------------------------
+#
+#       ---------
+#    > | 3V3 22A |
+#      |  8A 23B |
+#      |  9B 24A |
+#      |  4A 25B |
+#      |  5B 29B |
+#      |  2A 31B |
+#      |  3B 20A |
+#      |  6A 16A |
+#      | GND 13B |
+#       ---------
+
+set_io --warn-no-port 8A  4
+set_io --warn-no-port 9B  3
+set_io --warn-no-port 4A 48
+set_io --warn-no-port 5B 45
+set_io --warn-no-port 2A 47
+set_io --warn-no-port 3B 44
+set_io --warn-no-port 0A 46
+set_io --warn-no-port 6A  2
+
+set_io --warn-no-port 22A 12
+set_io --warn-no-port 23B 21
+set_io --warn-no-port 24A 13
+set_io --warn-no-port 25B 20
+set_io --warn-no-port 29B 19
+set_io --warn-no-port 31B 18
+set_io --warn-no-port 20A 11
+set_io --warn-no-port 18A 10
+set_io --warn-no-port 16A  9
+set_io --warn-no-port 13B  6

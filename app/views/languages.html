@@ -18,9 +18,45 @@
   </a>
 </li>
 <li>
+  <a href ng-click="selectLanguage('it_IT')">
+    {{ 'Italian' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'it_IT'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('de_DE')">
+    {{ 'German' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'de_DE'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('nl_NL')">
+    {{ 'Dutch' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'nl_NL'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('cs_CZ')">
+    {{ 'Czech' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'cs_CZ'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('el_GR')">
+    {{ 'Greek' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'el_GR'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
   <a href ng-click="selectLanguage('zh_CN')">
     {{ 'Chinese' | translate }}&ensp;
     <span ng-show="profile.data.language == 'zh_CN'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('ru_RU')">
+    {{ 'Russian' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'ru_RU'" class="glyphicon glyphicon-ok-circle"></span>
   </a>
 </li>
 <li>

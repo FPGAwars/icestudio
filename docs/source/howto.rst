@@ -79,11 +79,13 @@ There are different types of blocks:
 
     Click on **Basic > Input** or **Basic > Output**, write the block's name and press OK or Enter.
 
-    These blocks can be configured as **virtual** (green). Then, the FPGA pin selector won't be shown.
-
     Also, it can be configured as **buses** using the ``[x:y]`` notation (``x`` is the most significant bit).
 
-    .. image:: ../resources/images/howto/io.png
+    .. image:: ../resources/images/howto/io-fpga.png
+
+    If these blocks are used to build generic blocks, they should be configured as **virtual** (green). Then, the FPGA pin selector won't be shown.
+
+    .. image:: ../resources/images/howto/io-virtual.png
 
  |
 
@@ -97,7 +99,17 @@ There are different types of blocks:
 
  |
 
- 3. *Code blocks*
+ 3. *Memory blocks*
+
+    Click on **Basic > Memory**, write the block's name and press OK or Enter.
+
+    These blocks can be configures as **local**. Then, this parameter won't be exported. Also you can update the **address format** of the memory to be *binary*, *decimal* or *hexadecimal*.
+
+    .. image:: ../resources/images/howto/memory.png
+
+ |
+
+ 4. *Code blocks*
 
     Click on **Basic > Code**, add the code ports. Port names are separated by a comma. E.g.: ``a, b``.
 
@@ -111,27 +123,23 @@ There are different types of blocks:
 
  |
 
- 4. *Info blocks*
+ 5. *Info blocks*
 
     Click on **Basic > Info**.
 
-    This block contains a text editor to add comments about the project.
+    This block contains a text editor to add comments about the project in **Markdown** or **HTML**.
 
     .. image:: ../resources/images/howto/info.png
 
     |
 
-    It can be converted into a Readonly text block by editing the block (double-click).
+    It can be rendered simply by double-clicking the block.
 
-    .. image:: ../resources/images/howto/info-prompt.png
-
-    |
-
-    .. image:: ../resources/images/howto/info-readonly.png
+    .. image:: ../resources/images/howto/info-render.png
 
  |
 
- 5. *Bit blocks*
+ 6. *Bit blocks*
 
     Click on **Bit > 0** or **Bit > 1**.
 
@@ -141,7 +149,7 @@ There are different types of blocks:
 
  |
 
- 6. *Logic blocks*
+ 7. *Logic blocks*
 
     Go to the **Logic** menu and select a block. This menu contains **Gates**, **Combinational blocks** and **Sequential blocks**.
 
@@ -149,7 +157,7 @@ There are different types of blocks:
 
  |
 
- 7. *Setup blocks*
+ 8. *Setup blocks*
 
     Click on **Setup > Pull up** or **Setup > Tri-state**.
 
@@ -173,7 +181,7 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
 4. **Select your board**
 
-   Go to **Select > Board** and select **IceZUM Alhambra**, **Kéfir I iCE40-HX4K**, **Nandland Go board**, **iCE40-HX8K Breakout Board**, **iCEstick Evaluation Kit** or **icoBOARD 1.0**.
+   Go to **Select > Board** and select the board from the list.
 
    .. image:: ../resources/images/howto/board.png
 
@@ -245,6 +253,14 @@ Upload a bitstream
 
    |
 
+Show the commands output
+------------------------
+
+After executing *Tools > Verify*, *Tools > Build* or *Tools > Upload* you can see the executed command and the output in a new windows opened from **View > Command output**.
+
+.. image:: ../resources/images/howto/toolchain-output.png
+
+|
 
 Create a block
 --------------
@@ -319,13 +335,18 @@ Go to **Tools > Collections > Add** and select a collection package (ZIP file).
 Select a collection
 -------------------
 
-Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application.
+Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application, then the installed internal collections and finally the external collections.
 
 
 View the selected collection info
 ---------------------------------
 
 Go to **View > Collection info**. A new window will appear with the README.md file content.
+
+Load external collections
+-------------------------
+
+Go to **Edit > Preferences > External collection** and insert an absolute path of your system containing Icestudio collections.
 
 
 Create a collection package
@@ -433,7 +454,7 @@ Go to **View > Board rules**
 Disable the board rules
 -----------------------
 
-Go to **Edit > Preferences > Board rules > Disable**
+Go to **Edit > Preferences > Board rules**
 
 .. image:: ../resources/images/howto/disable-rules.png
 

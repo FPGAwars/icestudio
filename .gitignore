@@ -9,6 +9,9 @@
 *.vcd
 *.mo
 
+*.swp
+*~
+
 .tmp
 dist
 cache

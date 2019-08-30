@@ -20,7 +20,9 @@ angular.module('icestudio')
     this.pinoutOutputHTML = '';
 
     // Selected collection
-    this.collections = [];
+    this.defaultCollection = null;
+    this.internalCollections = [];
+    this.externalCollections = [];
     this.selectedCollection = null;
 
     // FPGA resources
@@ -32,8 +34,11 @@ angular.module('icestudio')
       brams: '-'
     };
 
-    //
-    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git#egg=apio';
+    // Command output
+    this.commandOutput = '';
+
+    // Apio URL
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
@@ -43,10 +48,11 @@ angular.module('icestudio')
     // Paths
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
+    this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
-    this.COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
+    this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');

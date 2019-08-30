@@ -6,11 +6,12 @@ angular.module('icestudio')
                                nodeFs) {
 
     this.data = {
-      'language': '',
-      'remoteHostname': '',
-      'collection': '',
       'board': '',
       'boardRules': true,
+      'collection': '',
+      'externalCollections': '',
+      'language': '',
+      'remoteHostname': '',
       'showFPGAResources': false
     };
 
@@ -23,11 +24,12 @@ angular.module('icestudio')
       utils.readFile(common.PROFILE_PATH)
       .then(function(data) {
         self.data = {
-          'language': data.language || '',
-          'remoteHostname': data.remoteHostname || '',
-          'collection': data.collection || '',
           'board': data.board || '',
           'boardRules': data.boardRules !== false,
+          'collection': data.collection || '',
+          'language': data.language || '',
+          'externalCollections': data.externalCollections || '',
+          'remoteHostname': data.remoteHostname || '',
           'showFPGAResources': data.showFPGAResources || false
         };
         if (common.DARWIN) {

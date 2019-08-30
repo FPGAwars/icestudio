@@ -11,11 +11,23 @@ GNU/Linux
 
 .. code::
 
-  $ chmod a+x icestudio-0.3.2*.AppImage
+  $ chmod a+x icestudio-0.4.0*.AppImage
 
 .. hint::
 
   You can download the ZIP release and install it in the system using the script `linux_installer.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_installer.sh>`_. This script registers the *.ice* files as *Icestudio project*. There is also a `linux_uninstaller.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_uninstaller.sh>`_ to revert the previous configuration.
+
+.. warning::
+
+  Ubuntu/Debian users may need to add own "username" to the "dialout"
+  group if they are not "root", doing this issuing a
+  ``sudo usermod -a -G dialout $USER``.
+
+  Ubuntu 18.04 users should install:
+    - libgconf: `sudo apt install libgconf-2-4`
+    - canberra-gtk-module: `sudo apt install libcanberra-gtk-module`
+
+  Also if the fonts don't look good, this is because a bug in the Ubuntu distribution. Try `<this workaround https://steemit.com/linux/@arrowj/fixing-font-rendering-issues-in-ubuntu-bionic-beaver-lts>`_.
 
 Mac OS
 ------

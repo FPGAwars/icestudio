@@ -36,8 +36,8 @@ mkdir -p ${APP_DIR}
 
 echo "[Desktop Entry]
 Name=Icestudio
-Comment=Experimental graphic editor for open FPGAs
-Comment[es]=Editor gráfico experimental para FPGAs libres
+Comment=Visual editor for open FPGA boards
+Comment[es]=Editor visual para placas FPGA libres
 Type=Application
 Categories=Development;Education;Graphics;
 StartupNotify=true

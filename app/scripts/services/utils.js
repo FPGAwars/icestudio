@@ -98,11 +98,13 @@ angular.module('icestudio')
     this.executeCommand = function(command, callback) {
       nodeChildProcess.exec(command.join(' '),
         function (error, stdout, stderr) {
+          common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
+          $(document).trigger('commandOutputChanged', [common.commandOutput]);
           if (error) {
             this.enableKeyEvents();
             this.enableClickEvents();
             callback(true);
-            alertify.error(stdout + '\n' + stderr, 30);
+            alertify.error(error.message, 30);
           }
           else {
             callback();
@@ -120,7 +122,7 @@ angular.module('icestudio')
         var command = [this.getPythonExecutable(),
          coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
          coverPath(common.ENV_DIR)];
-        if (!common.DARWIN) {
+        if (common.WIN32) {
           command.push('--always-copy');
         }
         this.executeCommand(command, callback);
@@ -192,12 +194,17 @@ angular.module('icestudio')
     this.installOnlineApio = function(callback) {
       var versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
       var extraPackages = _package.apio.extras || [];
-      var apio = _package.apio.develop ? common.APIO_PIP_VCS : 'apio';
+      var apio = this.getApioInstallable();
       this.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
-    this.apioInstall = function(_package, callback) {
-      this.executeCommand([common.APIO_CMD, 'install', _package], callback);
+    this.getApioInstallable = function() {
+      return _package.apio.branch ?
+        common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch) : 'apio';
+    };
+
+    this.apioInstall = function(pkg, callback) {
+      this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
     };
 
     this.toolchainDisabled = false;
@@ -223,7 +230,7 @@ angular.module('icestudio')
     };
 
     this.removeCollections = function() {
-      this.deleteFolderRecursive(common.COLLECTIONS_DIR);
+      this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
     };
 
     this.deleteFolderRecursive = function(path) {
@@ -268,7 +275,7 @@ angular.module('icestudio')
                   resolve(data);
                 }
                 else {
-                  reject(gettextCatalog.getString('Invalid project format'));
+                  reject();
                 }
               }
             });
@@ -324,27 +331,76 @@ angular.module('icestudio')
       }
     }
 
-    this.getFilesRecursive = getFilesRecursive;
+    this.findCollections = function(folder) {
+      var collectionsPaths = [];
+      try {
+        if (folder) {
+          collectionsPaths = nodeFs.readdirSync(folder).map(function(name) {
+            return nodePath.join(folder, name);
+          }).filter(function(path) {
+            return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
+          });
+        }
+      }
+      catch (e) {
+        console.warn(e);
+      }
+      return collectionsPaths;
+    };
 
-    function getFilesRecursive(folder) {
+    function isCollectionPath(path) {
+      var result = false;
+      try {
+        var content = nodeFs.readdirSync(path);
+        result = content &&
+          contains(content, 'package.json') && isFile(nodePath.join(path, 'package.json')) &&
+          (
+            (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
+            (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
+          );
+      }
+      catch (e) {
+        console.warn(e);
+      }
+      return result;
+    }
+
+    function isFile(path) {
+      return nodeFs.lstatSync(path).isFile();
+    }
+
+    function isDirectory(path) {
+      return nodeFs.lstatSync(path).isDirectory();
+    }
+
+    function isSymbolicLink(path) {
+      return nodeFs.lstatSync(path).isSymbolicLink();
+    }
+
+    function contains(array, item) {
+      return array.indexOf(item) !== -1;
+    }
+
+    function getFilesRecursive(folder, level) {
       var fileTree = [];
       var validator = /.*\.(ice|json|md)$/;
 
-      if (nodeFs.existsSync(folder)) {
-        var fileContents = nodeFs.readdirSync(folder);
-        var stats;
+      try {
+        var content = nodeFs.readdirSync(folder);
 
-        fileContents.forEach(function (name) {
+        level--;
+
+        content.forEach(function(name) {
           var path = nodePath.join(folder, name);
-          stats = nodeFs.lstatSync(path);
 
-          if (stats.isDirectory()) {
+          if (isDirectory(path)) {
             fileTree.push({
               name: name,
               path: path,
-              children: getFilesRecursive(path, validator)
+              children: (level >= 0) ? getFilesRecursive(path, level) : []
             });
-          } else if (validator.test(name)) {
+          }
+          else if (validator.test(name)) {
             fileTree.push({
               name: basename(name),
               path: path
@@ -352,8 +408,14 @@ angular.module('icestudio')
           }
         });
       }
+      catch (e) {
+        console.warn(e);
+      }
+
       return fileTree;
     }
+
+    this.getFilesRecursive = getFilesRecursive;
 
     this.setLocale = function(locale, callback) {
       // Update current locale format
@@ -366,8 +428,9 @@ angular.module('icestudio')
       // Application strings
       gettextCatalog.loadRemote(nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json'));
       // Collections strings
-      for (var c in common.collections) {
-        var collection = common.collections[c];
+      var collections = [common.defaultCollection].concat(common.internalCollections).concat(common.externalCollections);
+      for (var c in collections) {
+        var collection = collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
           gettextCatalog.loadRemote(filepath);
@@ -426,116 +489,78 @@ angular.module('icestudio')
       return 'en';
     }
 
-    this.multiprompt = function(messages, values, callback) {
-      var i;
+    this.renderForm = function(specs, callback) {
       var content = [];
-      var n = messages.length;
       content.push('<div>');
-      for (i in messages) {
-        if (i > 0) {
-          content.push('<br>');
+      for (var i in specs) {
+        var spec = specs[i];
+        switch(spec.type) {
+          case 'text':
+            content.push('\
+              <p>' + spec.title + '</p>\
+              <input class="ajs-input" type="text" id="form' + i + '"/>\
+            ');
+            break;
+          case 'checkbox':
+            content.push('\
+              <div class="checkbox">\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
+              </div>\
+            ');
+            break;
+          case 'combobox':
+            var options = spec.options.map(function(option) {
+              var selected = spec.value === option.value ? ' selected' : '';
+              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
+            }).join('');
+            content.push('\
+              <div class="form-group">\
+                <label style="font-weight:normal">' + spec.label + '</label>\
+                <select class="form-control" id="form' + i + '">\
+                  ' + options + '\
+                </select>\
+              </div>\
+            ');
+            break;
         }
-        content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '"/>');
       }
       content.push('</div>');
-      // Restore values
-      for (i = 0; i < n; i++) {
-        $('#input' + i.toString()).val(values[i]);
-      }
-
       alertify.confirm(content.join('\n'))
       .set('onok', function(evt) {
         var values = [];
-        for (var i = 0; i < n; i++) {
-          values.push($('#input' + i.toString()).val());
-        }
         if (callback) {
+          for (var i in specs) {
+            var spec = specs[i];
+            switch(spec.type) {
+              case 'text':
+              case 'combobox':
+                values.push($('#form' + i).val());
+                break;
+              case 'checkbox':
+                values.push($('#form' + i).prop('checked'));
+                break;
+            }
+          }
           callback(evt, values);
         }
       })
       .set('oncancel', function(/*evt*/) {
       });
-    };
-
-    this.checkboxprompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[0] ? 'checked' : '') + '>' + messages[0] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#check').prop('checked', values[0]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#check').prop('checked'));
-        if (callback) {
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-    };
-
-    this.inputcheckboxprompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
-      content.push('  <br>');
-      content.push('  <div class="checkbox"><label><input id="check" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#label').val(values[0]);
-      $('#check').prop('checked', values[1]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#label').val());
-        values.push($('#check').prop('checked'));
-        if (callback) {
-          callback(evt, values);
-        }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-
+      // Restore input values
       setTimeout(function(){
-        $('#label').select();
-      }, 50);
-    };
-
-    this.inputcheckbox2prompt = function(messages, values, callback) {
-      var content = [];
-      content.push('<div>');
-      content.push('  <p>' + messages[0] + '</p>');
-      content.push('  <input id="label" class="ajs-input" type="text" value="' + values[0] + '">');
-      content.push('  <br>');
-      content.push('  <div class="checkbox"><label><input id="check1" type="checkbox" value="" ' + (values[1] ? 'checked' : '') + '>' + messages[1] + '</label></div></li>');
-      content.push('  <div class="checkbox"><label><input id="check2" type="checkbox" value="" ' + (values[2] ? 'checked' : '') + '>' + messages[2] + '</label></div></li>');
-      content.push('</div>');
-      // Restore values
-      $('#label').val(values[0]);
-      $('#check1').prop('checked', values[1]);
-      $('#check2').prop('checked', values[2]);
-
-      alertify.confirm(content.join('\n'))
-      .set('onok', function(evt) {
-        var values = [];
-        values.push($('#label').val());
-        values.push($('#check1').prop('checked'));
-        values.push($('#check2').prop('checked'));
-        if (callback) {
-          callback(evt, values);
+        $('#form0').select();
+        for (var i in specs) {
+          var spec = specs[i];
+          switch(spec.type) {
+            case 'text':
+            case 'combobox':
+              $('#form' + i).val(spec.value);
+              break;
+            case 'checkbox':
+              $('#form' + i).prop('checked', spec.value);
+              break;
+          }
         }
-      })
-      .set('oncancel', function(/*evt*/) {
-      });
-
-      setTimeout(function(){
-        $('#label').select();
       }, 50);
     };
 
@@ -557,7 +582,7 @@ angular.module('icestudio')
           //content.push('<br>');
         }
         content.push('  <p>' + messages[i] + '</p>');
-        content.push('  <input class="ajs-input" id="input' + i.toString() + '" type="text" value="' + values[i] + '">');
+        content.push('  <input class="ajs-input" id="input' + i + '" type="text" value="' + values[i] + '">');
       }
       content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
@@ -573,7 +598,7 @@ angular.module('icestudio')
       content.push('</div>');
       // Restore values
       for (i = 0; i < n; i++) {
-        $('#input' + i.toString()).val(values[i]);
+        $('#input' + i).val(values[i]);
       }
       if (image) {
         $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
@@ -614,11 +639,7 @@ angular.module('icestudio')
       }
 
       function optimizeSVG(data, callback) {
-        SVGO.optimize(data, function(result) {
-          if (callback) {
-            callback(result);
-          }
-        });
+        SVGO.optimize(data, callback);
       }
 
       function registerSave() {
@@ -664,7 +685,7 @@ angular.module('icestudio')
       .set('onok', function(evt) {
         var values = [];
         for (var i = 0; i < n; i++) {
-          values.push($('#input' + i.toString()).val());
+          values.push($('#input' + i).val());
         }
         values.push(image);
         if (callback) {
@@ -677,6 +698,44 @@ angular.module('icestudio')
         // Restore onshow
         alertify.confirm().set('onshow', prevOnshow);
       });
+    };
+
+    this.selectBoardPrompt = function (callback) {
+      // Disable user events
+      this.disableKeyEvents();
+      // Hide Cancel button
+      $('.ajs-cancel').addClass('hidden');
+
+      var formSpecs = [{
+        type: 'combobox',
+        label: gettextCatalog.getString('Select your board'),
+        value: '',
+        options: common.boards.map(function (board) {
+          return {
+            value: board.name,
+            label: board.info.label
+          };
+        })
+      }];
+
+      this.renderForm(formSpecs, function(evt, values) {
+        var selectedBoard = values[0];
+        if (selectedBoard) {
+          evt.cancel = false;
+          if (callback) {
+            callback(selectedBoard);
+          }
+          // Enable user events
+          this.enableKeyEvents();
+          // Restore Cancel button
+          setTimeout(function () {
+            $('.ajs-cancel').removeClass('hidden');
+          }, 200);
+        }
+        else {
+          evt.cancel = true;
+        }
+      }.bind(this));
     };
 
     this.copySync = function(orig, dest) {
@@ -812,29 +871,46 @@ angular.module('icestudio')
     };
 
     this.newWindow = function(filepath, local) {
-      var execPath = process.execPath;
-      var command = [ coverPath(execPath) ];
-      if (execPath.endsWith('nw') || execPath.endsWith('nw.exe') || execPath.endsWith('nwjs Helper')) {
-        command.push(coverPath(nodePath.dirname(process.mainModule.filename)));
-      }
-      if (filepath) {
-        command.push(coverPath(filepath));
-      }
-      /*var win = window.get();
-      var position = {
-        x: win.x + 30,
-        y: win.y + 30
-      };
-      command.push(position.x + 'x' + position.y);*/
-      if (local) {
-        command.push('local');
-      }
-      nodeChildProcess.exec(command.join(' '), [], function(error/*, stdout/*, stderr*/) {
-        if (error) {
-          throw error;
+
+        var gui = require('nw.gui');
+
+        var params=false;
+
+        if(typeof filepath !=='undefined'){
+            params={'filepath':filepath};
         }
-      });
-    };
+
+        if(typeof local !=='undefined' && local===true){
+            if(params===false) {
+                params = {};
+            }
+            params.local='local';
+        }
+
+        // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
+        // that contains the same arguments that shell call, in this way the two calls will be
+        // compatible.
+        // If in the future you will add more paremeters to the new window , you should review
+        // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+
+        var url='index.html'+((params===false)?'' :'?icestudio_argv='+encodeURI(JSON.stringify(params) ));
+
+        // Create a new window and get it.
+        // new-instance and new_instance are necesary for OS compatibility
+        // to avoid crash on new window project after close parent
+        // (little trick for nwjs bug).
+
+        gui.Window.open(url, {
+            'new-instance' : true,
+            'new_instance' : true,
+            'position': 'center',
+            'toolbar': false,
+            'width': 900,
+            'height': 600,
+            'show': true,
+        });
+
+   };
 
     this.coverPath = coverPath;
     function coverPath(filepath) {
@@ -1067,22 +1143,27 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
-    this.loadLanguage = function(profile, callback) {
-      var self = this;
+    this.loadProfile = function(profile, callback) {
       profile.load(function() {
-        var lang = profile.get('language');
-        if (lang) {
-          self.setLocale(lang, callback);
-        }
-        else {
-          // If lang is empty, use the system language
-          nodeLangInfo(function(err, sysLang) {
-            if (!err) {
-              profile.set('language', self.setLocale(sysLang, callback));
-            }
-          });
+        if (callback) {
+          callback();
         }
       });
+    };
+
+    this.loadLanguage = function(profile, callback) {
+      var lang = profile.get('language');
+      if (lang) {
+        this.setLocale(lang, callback);
+      }
+      else {
+        // If lang is empty, use the system language
+        nodeLangInfo(function(err, sysLang) {
+          if (!err) {
+            profile.set('language', this.setLocale(sysLang, callback));
+          }
+        }.bind(this));
+      }
     };
 
     this.digestId = function(id) {
