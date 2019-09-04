@@ -293,15 +293,15 @@ angular.module('icestudio')
                 _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cell.attributes.state = state;
-                        var elementView = paper.findViewByModel(cell);
+                         var elementView = paper.findViewByModel(cell);
                         // Pan blocks
-                        temp=elementView.updateBox();
+                        elementView.updateBox();
                         /*if(typeof temp !== 'undefined'){
                             tasks=tasks.concat(temp);
                         }*/
                         // Pan selection boxes
-/*                        temp=selectionView.updateBox(elementView.model);
-                         if(typeof temp !== 'undefined'){
+                        selectionView.updateBox(elementView.model);
+/*                         if(typeof temp !== 'undefined'){
                             tasks=tasks.concat(temp);
                         }*/
 
@@ -388,6 +388,8 @@ angular.module('icestudio')
 
             paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
+                 console.time('CLICK1');
+                
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -406,24 +408,36 @@ angular.module('icestudio')
                         }
                     }
                 }
+
+                 console.timeEnd('CLICK1');
             });
 
             paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
 
+                 console.time('CLICK2');
+                 console.log(cellView);
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
                 }
                 selectionView.cancelSelection();
                 if (!shiftPressed) {
+ 
                     // Allow dblClick if Shift is not pressed
+                    console.time('setup');
                     var type = cellView.model.get('blockType');
                     var blockId = cellView.model.get('id');
+
+                    console.timeEnd('setup');
 
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
                         if (paper.options.enabled) {
+
+                            console.time('editBasic');  
                             blocks.editBasic(type, cellView, addCell);
+
+                            console.timeEnd('editBasic');
                         }
                     }
                     else if (common.allDependencies[type]) {
@@ -451,6 +465,8 @@ angular.module('icestudio')
                         }, 100);
                     }
                 }
+
+                console.timeEnd('CLICK2');
             });
 
             function checkInsideViewBox(view, x, y) {

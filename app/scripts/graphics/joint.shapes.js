@@ -873,7 +873,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     var self = this;
     var selector = this.$box.find('.select2');
-    selector.on('mousedown click', function (event) { event.stopPropagation(); });
+    selector.on('mousedown click', function (event) { event.stopPropagation(); console.log('IOView'); });
     selector.on('change', function (event) {
       if (!self.updating) {
         var target = $(event.target);
@@ -1239,7 +1239,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     // Prevent paper from handling pointerdown.
-    this.inputSelector.on('mousedown click', function (event) { event.stopPropagation(); });
+    this.inputSelector.on('mousedown click', function (event) { event.stopPropagation();console.log(ConstantView); });
 
     this.updateBox();
 
@@ -1426,7 +1426,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     // Prevent paper from handling pointerdown.
-    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation();console.log('MemoryView'); });
 
     this.updateBox();
 
@@ -1724,7 +1724,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
     // Prevent paper from handling pointerdown.
-    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation();console.log('EDITOR VIEW'); });
 
     this.updateBox();
 
@@ -2172,7 +2172,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.model.on('remove', this.removeBox, this);
 
     // Prevent paper from handling pointerdown.
-    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation(); });
+    this.editorSelector.on('mousedown click', function (event) { console.log('IO DOWN'); event.stopPropagation(); console.log('Infoview'); });
 
     this.updateBox();
 
