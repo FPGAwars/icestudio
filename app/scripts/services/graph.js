@@ -287,16 +287,38 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
+                console.time('updatecellboxes');
+                var tasks=[];
+                var temp;
                 _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cell.attributes.state = state;
                         var elementView = paper.findViewByModel(cell);
                         // Pan blocks
-                        elementView.updateBox();
+                        temp=elementView.updateBox();
+                        /*if(typeof temp !== 'undefined'){
+                            tasks=tasks.concat(temp);
+                        }*/
                         // Pan selection boxes
-                        selectionView.updateBox(elementView.model);
+/*                        temp=selectionView.updateBox(elementView.model);
+                         if(typeof temp !== 'undefined'){
+                            tasks=tasks.concat(temp);
+                        }*/
+
                     }
                 });
+               /* if(tasks.length>0){
+                       var i=tasks.length;
+                        for(i=0;i<tasks.length;i++){
+       
+                             if(tasks[i].e !== null){
+                    //           console.log(this.pendingTasks[i].e,this.pendingTasks[i].property,this.pendingTasks[i].value);
+                                  tasks[i].e.style[tasks[i].property]=tasks[i].value;
+                            }
+                        }
+
+                }*/
+                console.timeEnd('updatecellboxes');
             }
             // Events
 

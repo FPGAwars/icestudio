@@ -556,8 +556,8 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       }
     }
   },
-
   updateBox: function () {
+    var pendingTasks=[];
     var i, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
@@ -569,9 +569,16 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
-    this.$('.port-wire').css('stroke-width', width);
+//    this.$('.port-wire').css('stroke-width', width);
+
+    //var pwires=document.getElementsByClassName('port-wire');
+    var pwires=this.$el[0].getElementsByClassName('port-wire');
+for (i=0;i<pwires.length;i++){
+    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
+  }    
+
     // Set buses
-    for (i in leftPorts) {
+    /*for (i in leftPorts) {
       port = leftPorts[i];
       if (port.size > 1) {
         this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
@@ -582,12 +589,43 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       if (port.size > 1) {
         this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
       }
+    }*/
+    var nwidth=width*3;
+    var tokId='port-wire-' + modelId + '-'; 
+    var dome;
+    //for (i in leftPorts) {
+    for(i=0;i<leftPorts.length;i++){
+      port = leftPorts[i];
+      if (port.size > 1) {
+   //     this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+
+          dome=document.getElementById(tokId+port.id);
+
+        pendingTasks.push({e: dome ,property:'stroke-width',value:nwidth+'px'});
+
+      }
     }
+  
+    for(i=0;i<rightPorts.length;i++){
+//    for (i in rightPorts) {
+      port = rightPorts[i];
+      if (port.size > 1) {
+//        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+
+          dome=document.getElementById(tokId+port.id);
+ 
+        pendingTasks.push({e:  dome,property:'stroke-width',value:nwidth+'px'});
+
+
+      } 
+    }
+
     // Render rules
-    if (data && data.ports && data.ports.in) {
+    var portDefault,paths,rects,j;
+    /*if (data && data.ports && data.ports.in) {
       for (i in data.ports.in) {
         port = data.ports.in[i];
-        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
+         portDefault = this.$('#port-default-' + modelId + '-' + port.name);
         if (rules && port.default && port.default.apply) {
           portDefault.css('display', 'inline');
           portDefault.find('path').css('stroke-width', width);
@@ -597,24 +635,85 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
           portDefault.css('display', 'none');
         }
       }
+    }*/
+  if (data && data.ports && data.ports.in) {
+      tokId='port-default-' + modelId + '-';
+      for(i=0;i<data.ports.in.length;i++){
+      //for (i in data.ports.in) {
+        port = data.ports.in[i];
+        //MEGA CUELLO DE BOTELLA
+//        portDefault = this.$('#port-default-' + modelId + '-' + port.name);
+        portDefault = document.getElementById(tokId+port.name)
+        if (portDefault!== null && rules && port.default && port.default.apply) {
+         // portDefault.css('display', 'inline');
+         // portDefault.find('path').css('stroke-width', width);
+          //portDefault.find('rect').css('stroke-width', state.zoom);
+
+          pendingTasks.push({e: portDefault, property:'display',value:'inline'});
+        
+          paths= portDefault.querySelectorAll('path');
+          for(j=0;j<paths.length;j++)
+            pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+        
+          rects= portDefault.querySelectorAll('rect');
+          for(j=0;j<rects.length;j++)
+            pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+            
+          //pendingTasks.push({e: portDefault.querySelectorAll('rect'), property:'stroke-width',value:state.zoom+'px'});
+
+        }
+        else {
+//          portDefault.css('display', 'none');
+
+          pendingTasks.push({e: portDefault, property:'display',value:'none'});
+        }
+      }
     }
 
     // Render content
-    this.$box.find('.generic-content').css({
+    /*this.$box.find('.generic-content').css({
       left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
       top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
       width: Math.round(bbox.width),
       height: Math.round(bbox.height),
       transform: 'scale(' + state.zoom + ')'
-    });
+    });*/
+    var gcontent= this.$box[0].querySelectorAll('.generic-content');
+    
+    
+    for(i=0;i<gcontent.length;i++){
+      pendingTasks.push({e: gcontent[i], property:'left',value:  Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px' });
+      pendingTasks.push({e: gcontent[i], property:'top',value:  Math.round(bbox.height / 2.0 * (state.zoom - 1))+'px' });
+      pendingTasks.push({e: gcontent[i], property:'width',value: Math.round(bbox.width)+'px' });
+      pendingTasks.push({e: gcontent[i], property:'height',value: Math.round(bbox.height)+'px' });
+      pendingTasks.push({e: gcontent[i], property:'transform',value: 'scale(' + state.zoom + ')'});
+    }
+
 
     // Render block
-    this.$box.css({
+    /*this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
-    });
+    }); */
+   pendingTasks.push({e: this.$box[0], property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
+   pendingTasks.push({e: this.$box[0], property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
+   pendingTasks.push({e: this.$box[0], property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
+   pendingTasks.push({e: this.$box[0], property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
+ 
+    i=pendingTasks.length;
+ //   pendingTasks= pendingTasks.reverse();
+    for(i=0;i<pendingTasks.length;i++){
+       
+        if(pendingTasks[i].e !== null){
+
+//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
+          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
+        }
+    }
+    return pendingTasks;
+
   }
 });
 
@@ -752,10 +851,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       </div>\
       '
     )());
+ 
 
     this.virtualContentSelector = this.$box.find('.io-virtual-content');
     this.fpgaContentSelector = this.$box.find('.io-fpga-content');
     this.headerSelector = this.$box.find('.header');
+    this.nativeDom={
+        box: this.$box[0],
+        virtualContentSelector : this.$box[0].querySelectorAll('.io-virtual-content'),
+        fpgaContentSelector : this.$box[0].querySelectorAll('.io-fpga-content')
+ 
+
+    };
 
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
@@ -893,9 +1000,12 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
-
+  pendingRender:false,
   updateBox: function () {
-    var i, port;
+
+    var pendingTasks = [];
+    var i,j,k, port;
+//    console.time('setup');
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
@@ -903,72 +1013,175 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
     var modelId = this.model.id;
-
+    var portDefault,tokId, dome;
+    var paths, rects;
+//console.timeEnd('setup');
+//console.time('calculate');
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
-    this.$('.port-wire').css('stroke-width', width);
+    //this.$('.port-wire').css('stroke-width', width);
+
+    //var pwires=document.getElementsByClassName('port-wire');
+    var pwires=this.$el[0].getElementsByClassName('port-wire');
+  for (i=0;i<pwires.length;i++){
+    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
+  }    
+   // pendingTasks.push({e: this.$('.port-wire'),property:'stroke-width',value:width});
     // Set buses
-    for (i in leftPorts) {
+    var nwidth=width*3;
+    tokId='port-wire-' + modelId + '-'; 
+    //for (i in leftPorts) {
+    for(i=0;i<leftPorts.length;i++){
       port = leftPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+   //     this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+
+          dome=document.getElementById(tokId+port.id);
+
+        pendingTasks.push({e: dome ,property:'stroke-width',value:nwidth+'px'});
+
       }
     }
-    for (i in rightPorts) {
+  
+    for(i=0;i<rightPorts.length;i++){
+//    for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
+//        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
+
+          dome=document.getElementById(tokId+port.id);
+ 
+        pendingTasks.push({e:  dome,property:'stroke-width',value:nwidth+'px'});
+
+
+      } 
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
-      for (i in data.ports.in) {
+      tokId='port-default-' + modelId + '-';
+      for(i=0;i<data.ports.in.length;i++){
+      //for (i in data.ports.in) {
         port = data.ports.in[i];
-        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        if (rules && port.default && port.default.apply) {
-          portDefault.css('display', 'inline');
-          portDefault.find('path').css('stroke-width', width);
-          portDefault.find('rect').css('stroke-width', state.zoom);
+        //MEGA CUELLO DE BOTELLA
+//        portDefault = this.$('#port-default-' + modelId + '-' + port.name);
+        portDefault = document.getElementById(tokId+port.name)
+        if (portDefault !== null && rules && port.default && port.default.apply) {
+         // portDefault.css('display', 'inline');
+         // portDefault.find('path').css('stroke-width', width);
+          //portDefault.find('rect').css('stroke-width', state.zoom);
+
+          pendingTasks.push({e: portDefault, property:'display',value:'inline'});
+        
+          paths= portDefault.querySelectorAll('path');
+          for(j=0;j<paths.length;j++)
+            pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+        
+          rects= portDefault.querySelectorAll('rect');
+          for(j=0;j<rects.length;j++)
+            pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+            
+          //pendingTasks.push({e: portDefault.querySelectorAll('rect'), property:'stroke-width',value:state.zoom+'px'});
+
         }
         else {
-          portDefault.css('display', 'none');
+//          portDefault.css('display', 'none');
+
+          pendingTasks.push({e: portDefault, property:'display',value:'none'});
         }
       }
     }
-
+//console.timeEnd('calculate');
+//console.time('render');
     // Render io virtual content
     var virtualtopOffset = 24;
-    this.virtualContentSelector.css({
+/*    this.virtualContentSelector.css({
       left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
       top: Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom),
       width: Math.round(bbox.width),
       height: Math.round(bbox.height - virtualtopOffset),
       transform: 'scale(' + state.zoom + ')'
-    });
+    });*/
 
+
+  
+//  i=this.nativeDom.virtualContentSelector.length;
+
+  for(i=0;i<this.nativeDom.virtualContentSelector.length;i++){
+
+   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'left',value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
+   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'top',value:  Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom)+'px' });
+   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'width',value: Math.round(bbox.width)+'px'});
+   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'height',value:  Math.round(bbox.height - virtualtopOffset)+'px'});
+   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'transform',value: 'scale(' + state.zoom + ')' });
+
+  }
     // Render io FPGA content
     var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
-    this.fpgaContentSelector.css({
+  /*  this.fpgaContentSelector.css({
       left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
       top: Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom),
       width: Math.round(bbox.width),
       height: Math.round(bbox.height - fpgaTopOffset),
       transform: 'scale(' + state.zoom + ')'
     });
+*/  
 
-    if (data.name || data.range || data.clock) {
+  for(i=0;i<this.nativeDom.fpgaContentSelector.length;i++){
+
+
+   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'left',value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px' });
+   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'top',value:  Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom)+'px' });
+   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'width',value:  Math.round(bbox.width)+'px' });
+   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'height',value:  Math.round(bbox.height - fpgaTopOffset)+'px' });
+   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'transform',value:  'scale(' + state.zoom + ')' });
+  }
+   if (data.name || data.range || data.clock) {
       this.headerSelector.removeClass('hidden');
     } else {
       this.headerSelector.addClass('hidden');
     }
 
     // Render block
+/*
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
     });
+*/
+   pendingTasks.push({e: this.nativeDom.box, property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
+   pendingTasks.push({e: this.nativeDom.box, property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
+   pendingTasks.push({e: this.nativeDom.box, property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
+   pendingTasks.push({e: this.nativeDom.box, property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
+   
+
+//    console.timeEnd('render');
+//    console.time('draw');
+    i=pendingTasks.length;
+  //  pendingTasks= pendingTasks.reverse();
+    for(i=0;i<pendingTasks.length;i++){
+       
+        if(pendingTasks[i].e !== null){
+
+//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
+          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
+        }
+    }
+    return pendingTasks;
+  },
+
+  drawPendingTasks: function(tasks){
+    var i=tasks.length;
+    for(i=0;i<tasks.length;i++){
+       
+        if(this.tasks[i].e !== null){
+
+//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
+          tasks[i].e.style[tasks[i].property]=tasks[i].value;
+        }
+    }
+  
   },
 
   removeBox: function () {
@@ -1091,21 +1304,34 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
-
+    var pendingTasks=[];
     // Set wire width
     var width = WIRE_WIDTH * state.zoom;
-    this.$('.port-wire').css('stroke-width', width);
-
+    //this.$('.port-wire').css('stroke-width', width);
+//    var test = this.$('.port-wire').css('stroke-width', width);
+var pwires=this.$el[0].getElementsByClassName('port-wire');
+var i;
+  for (i=0;i<pwires.length;i++){
+    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
+  }  
     // Render content
     var topOffset = (data.name || data.local) ? 0 : 24;
-    this.contentSelector.css({
+    /*this.contentSelector.css({
       left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
       top: Math.round((bbox.height + topOffset) / 2.0 * (state.zoom - 1) + topOffset),
       width: Math.round(bbox.width),
       height: Math.round(bbox.height - topOffset),
       transform: 'scale(' + state.zoom + ')'
     });
-
+*/
+    var contentSel= this.$box[0].querySelectorAll('.constant-content');
+for(i=0;i<contentSel.length;i++){
+    pendingTasks.push({e:contentSel[i],property:'left'     ,value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
+    pendingTasks.push({e:contentSel[i],property:'top'      ,value: Math.round((bbox.height + topOffset) / 2.0 * (state.zoom - 1) + topOffset)+'px'});
+    pendingTasks.push({e:contentSel[i],property:'width'    ,value: Math.round(bbox.width)+'px'});
+    pendingTasks.push({e:contentSel[i],property:'height'   ,value: Math.round(bbox.height - topOffset)+'px'});
+    pendingTasks.push({e:contentSel[i],property:'transform',value: 'scale(' + state.zoom + ')'});
+}
     if (data.name || data.local) {
       this.headerSelector.removeClass('hidden');
     } else {
@@ -1113,12 +1339,31 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render block
-    this.$box.css({
+    /*this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
       top: bbox.y * state.zoom + state.pan.y,
       width: bbox.width * state.zoom,
       height: bbox.height * state.zoom
     });
+    */
+   pendingTasks.push({e: this.$box[0], property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
+   pendingTasks.push({e: this.$box[0], property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
+   pendingTasks.push({e: this.$box[0], property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
+   pendingTasks.push({e: this.$box[0], property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
+ 
+
+    i=pendingTasks.length;
+  //  pendingTasks= pendingTasks.reverse();
+    for(i=0;i<pendingTasks.length;i++){
+       
+        if(pendingTasks[i].e !== null){
+
+//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
+          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
+        }
+    }
+    return pendingTasks;
+
   }
 });
 
