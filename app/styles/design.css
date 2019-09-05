@@ -803,3 +803,12 @@ right:-27px;
 .ace_gutter-layer{
 
 }
+
+.marker-vertex-remove-area {
+    fill: green;
+    stroke: darkgreen;
+}
+.marker-vertex-remove {
+    fill: white;
+    stroke: white;
+}

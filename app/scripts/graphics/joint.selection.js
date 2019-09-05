@@ -29,14 +29,23 @@ joint.ui.SelectionView = Backbone.View.extend({
     _.bindAll(this, 'click','startSelecting', 'stopSelecting', 'adjustSelection');
 
     $(document.body).on('mouseup touchend', function(evt) {
-      if (evt.which === 1) {
+      if (evt.which === 1)  {
         // Mouse left button
         this.stopSelecting(evt);
 
       }else if(evt.which ===3){
-
-      console.log('CHECK',evt.which);
-        this.dblclick(evt);
+        this.stopSelecting(evt);
+       // this.dblclick(evt);
+     //   view.notify('cell:pointerdblclick', evt);
+          var id = evt.target.parentNode.parentNode.parentNode.getAttribute('model-id');
+     if (id) {
+       var view = this.options.paper.findViewByModel(id);
+       if (view) {
+         // Trigger dblclick in selection to the Cell View
+           view.notify('cell:pointerdblclick', evt);
+        
+       }
+     }
       }
     }.bind(this));
     $(document.body).on('mousemove touchmove', this.adjustSelection);
@@ -51,7 +60,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     if (evt.which === 1) {
       // Mouse left button
-      console.log('CHECK3');
       this.trigger('selection-box:pointerclick', evt);
     }
   },
@@ -60,13 +68,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
 
     var id = evt.target.getAttribute('data-model');
-    console.log(evt,id);
     if (id) {
-      console.time('VIEW');
       var view = this.options.paper.findViewByModel(id);
-      console.timeEnd('VIEW');
       if (view) {
-        console.log('Lanzando dblclick');
         // Trigger dblclick in selection to the Cell View
         view.notify('cell:pointerdblclick', evt);
       }
@@ -380,7 +384,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   updateBox: function(element) {
 
-    console.log('SELECCION');
     var margin = 8;
 
     var bbox = element.getBBox();
@@ -394,9 +397,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     var height = el.outerHeight();
 
     var i, pendingTasks=[];
-    console.log('id='+element.get('id'),width,height);
     var sels= document.querySelectorAll( 'div[data-model="' + element.get('id') + '"]');
-    console.log(sels);
     for(i=0;i< sels.length;i++){
       /*pendingTasks.push({e:sels[i],property:'left', value: ((bbox.x + position.left) * state.zoom + state.pan.x +
                                                                 (width / 2 - position.left) * (state.zoom - 1) - margin)+'px'});
@@ -407,7 +408,6 @@ joint.ui.SelectionView = Backbone.View.extend({
       pendingTasks.push({e:sels[i],property:'width', value:Math.round( (bbox.width))+'px'});
       pendingTasks.push({e:sels[i],property:'height', value: (height + 2 * margin)+'px'});
       pendingTasks.push({e:sels[i],property:'transform', value: 'scale(' + state.zoom + ')'});*/
-      console.log('STATE',state);
       pendingTasks.push({e: sels[i], property:'left',value:  Math.round(
                                                                     ((bbox.x)*state.zoom+ state.pan.x)+
                                                                     (bbox.width / 2.0 * (state.zoom - 1))         
@@ -423,7 +423,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
 
     }
-console.log(pendingTasks);
   i=pendingTasks.length;
   //  pendingTasks= pendingTasks.reverse();
     for(i=0;i<pendingTasks.length;i++){

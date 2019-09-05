@@ -287,7 +287,6 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                console.time('updatecellboxes');
                 var tasks=[];
                 var temp;
                 _.each(cells, function (cell) {
@@ -318,7 +317,6 @@ angular.module('icestudio')
                         }
 
                 }*/
-                console.timeEnd('updatecellboxes');
             }
             // Events
 
@@ -329,6 +327,9 @@ angular.module('icestudio')
                     shiftPressed = true;
                 }
             });
+
+
+ 
             $(document).on('keyup', function (evt) {
                 if (!utils.hasShift(evt)) {
                     shiftPressed = false;
@@ -388,7 +389,6 @@ angular.module('icestudio')
 
             paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
-                 console.time('CLICK1');
                 
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
@@ -409,13 +409,10 @@ angular.module('icestudio')
                     }
                 }
 
-                 console.timeEnd('CLICK1');
             });
 
             paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
 
-                 console.time('CLICK2');
-                 console.log(cellView);
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -424,20 +421,16 @@ angular.module('icestudio')
                 if (!shiftPressed) {
  
                     // Allow dblClick if Shift is not pressed
-                    console.time('setup');
                     var type = cellView.model.get('blockType');
                     var blockId = cellView.model.get('id');
 
-                    console.timeEnd('setup');
 
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
                         if (paper.options.enabled) {
 
-                            console.time('editBasic');  
                             blocks.editBasic(type, cellView, addCell);
 
-                            console.timeEnd('editBasic');
                         }
                     }
                     else if (common.allDependencies[type]) {
@@ -466,7 +459,6 @@ angular.module('icestudio')
                     }
                 }
 
-                console.timeEnd('CLICK2');
             });
 
             function checkInsideViewBox(view, x, y) {

@@ -1009,7 +1009,6 @@ angular.module('icestudio')
     // mousedown event
     var mousedown = false;
     $(document).on('mouseup', function () {
-      console.log('MOUSEUP');
       mousedown = false;
     });
 
