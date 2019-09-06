@@ -873,6 +873,7 @@ angular.module('icestudio')
 
     this.newWindow = function (filepath, local) {
 
+      //var gui = require('nw.gui');
       var gui = require('nw.gui');
 
       var params = false;
@@ -902,10 +903,10 @@ angular.module('icestudio')
       // (little trick for nwjs bug).
 
       gui.Window.open(url, {
-        'new-instance': true,
-        'new_instance': true,
+  //      'new-instance': true,  //Deprecated for new nwjs versios 
+  //      'new_instance': true,  //Deprecated for new nwjs versios 
         'position': 'center',
-        'toolbar': false,
+//        'toolbar': false,   //Deprecated for new nwjs versios 
         'width': 900,
         'height': 600,
         'show': true,
@@ -1150,7 +1151,7 @@ angular.module('icestudio')
       });
     };
 
-    this.loadLanguage = function (profile, callback) {
+    this.loadLanguage = function (profile, callback) { 
       var lang = profile.get('language');
       if (lang) {
         this.setLocale(lang, callback);
@@ -1187,7 +1188,7 @@ angular.module('icestudio')
     };
 
     this.openDevToolsUI = function () {
-      window.get().showDevTools();
+      gui.Window.get().showDevTools();
     };
     this.openUrlExternalBrowser = function (url) {
 

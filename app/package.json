@@ -10,7 +10,7 @@
   "main": "index.html",
   "single-instance": false,
   "development": {
-    "mode": false
+    "mode":true
   },
   "window": {
     "width": 900,

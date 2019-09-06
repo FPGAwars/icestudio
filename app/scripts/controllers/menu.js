@@ -113,7 +113,7 @@ angular.module('icestudio')
 
     function processArg(arg) {
       if (nodeFs.existsSync(arg)) {
-        // Open filepath 
+        // Open filepath
         var filepath = arg;
         project.open(filepath);
       }
@@ -129,7 +129,7 @@ angular.module('icestudio')
     }
 
     /*
-     * This function triggers when version info window will be closed 
+     * This function triggers when version info window will be closed
      *                                                                 */
     $scope.closeVersionInfoWindow = function () {
       $('#version-info-tab').addClass('hidden');
@@ -566,7 +566,7 @@ angular.module('icestudio')
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name, {
         title: common.selectedBoard.info.label + ' - PCF',
         focus: true,
-        toolbar: false,
+        //toolbar: false,
         resizable: true,
         width: 700,
         height: 700,
@@ -582,7 +582,7 @@ angular.module('icestudio')
         gui.Window.open('resources/viewers/svg/pinout.html?board=' + board.name, {
           title: common.selectedBoard.info.label + ' - Pinout',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: true,
           width: 500,
           height: 700,
@@ -613,7 +613,7 @@ angular.module('icestudio')
         gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
           title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: false,
           width: 500,
           height: 500,
@@ -638,7 +638,7 @@ angular.module('icestudio')
         gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
           title: (collection.name ? collection.name : 'Default') + ' Collection - Data',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: true,
           width: 700,
           height: 700,
@@ -656,7 +656,7 @@ angular.module('icestudio')
       winCommandOutput = gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.commandOutput), {
         title: gettextCatalog.getString('Command output'),
         focus: true,
-        toolbar: false,
+/*        toolbar: false,*/
         resizable: true,
         width: 700,
         height: 400,
@@ -827,13 +827,15 @@ angular.module('icestudio')
     };
 
     $scope.showChromeDevTools = function () {
-      win.showDevTools();
+
+      //win.showDevTools();
+       utils.openDevToolsUI();
     };
 
     //-- Help
 
     $scope.openUrl = function (url) {
-      event.preventDefault();
+//      event.preventDefault();
       gui.Shell.openExternal(url);
     };
 
@@ -975,8 +977,6 @@ angular.module('icestudio')
       if (ret.preventDefault) {
         event.preventDefault();
       }
-
-
     });
 
     function takeSnapshot() {

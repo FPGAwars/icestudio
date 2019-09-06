@@ -33,19 +33,6 @@ joint.ui.SelectionView = Backbone.View.extend({
         // Mouse left button
         this.stopSelecting(evt);
 
-      }else if(evt.which ===3){
-        this.stopSelecting(evt);
-       // this.dblclick(evt);
-     //   view.notify('cell:pointerdblclick', evt);
-          var id = evt.target.parentNode.parentNode.parentNode.getAttribute('model-id');
-     if (id) {
-       var view = this.options.paper.findViewByModel(id);
-       if (view) {
-         // Trigger dblclick in selection to the Cell View
-           view.notify('cell:pointerdblclick', evt);
-        
-       }
-     }
       }
     }.bind(this));
     $(document.body).on('mousemove touchmove', this.adjustSelection);
