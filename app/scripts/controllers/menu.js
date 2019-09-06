@@ -10,11 +10,11 @@ angular.module('icestudio')
     collections,
     graph,
     tools,
-    utils,
+    utils, 
     common,
     shortcuts,
     gettextCatalog,
-    gui,
+    gui, 
     _package,
     nodeFs,
     nodePath) {
@@ -58,7 +58,6 @@ angular.module('icestudio')
 
     // New window, get the focus
     win.focus();
-
     // Load app arguments
     setTimeout(function () {
 
@@ -69,26 +68,46 @@ angular.module('icestudio')
       // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
       // unescape is deprecated javascript function, should use decodeURI instead
 
-      var queryStr = decodeURI(window.location.search) + '&';
+      var urlparams=window.location.search;
 
+      var queryStr='';
+      if(window.location.search.indexOf('?icestudio_argv=')===0){
+        console.log('BASE64');
+        queryStr='?icestudio_argv='+atob(decodeURI(window.location.search.replace('?icestudio_argv=','')))+'&';
+      }else{
+
+        queryStr = decodeURI(window.location.search) + '&';
+      }
+      console.log(queryStr); 
       var regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
       var val = queryStr.replace(regex, '$1');
+      
       var params = (val === queryStr) ? false : val;
-
       // If there are url params, compatibilize it with shell call
-      if (params !== false) {
-        params = JSON.parse(decodeURI(params));
         if (typeof gui.App.argv === 'undefined') {
           gui.App.argv = [];
         }
+  
+      if (params !== false) {
+        params = JSON.parse(decodeURI(params));
+
+      console.log('PARAMS',params);
+ 
         for (var prop in params) {
+          console.log('PROP',prop,params[prop]);
           gui.App.argv.push(params[prop]);
         }
       }
-
+      var argv=gui.App.argv;
+      if(params !==false){
+         for (var prop in params) {
+          argv.push(params[prop]);
+        }
+ 
+      }
       var local = false;
-      for (var i in gui.App.argv) {
-        var arg = gui.App.argv[i];
+      for (var i in argv) {
+        var arg = argv[i];
         processArg(arg);
         local = arg === 'local' || local;
       }
