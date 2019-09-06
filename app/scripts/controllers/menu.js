@@ -610,7 +610,8 @@ angular.module('icestudio')
       var board = common.selectedBoard;
       var rules = JSON.stringify(board.rules);
       if (rules !== '{}') {
-        gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
+        var enc_rules=encodeURIComponent(rules);
+        gui.Window.open('resources/viewers/table/rules.html?rules=' + enc_rules, {
           title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
           //toolbar: false,

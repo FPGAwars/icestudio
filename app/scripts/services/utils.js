@@ -873,8 +873,7 @@ angular.module('icestudio')
 
     this.newWindow = function (filepath, local) {
 
-      //var gui = require('nw.gui');
-      var gui = require('nw.gui');
+
 
       var params = false;
 
@@ -896,14 +895,14 @@ angular.module('icestudio')
       // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
 
       var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(JSON.stringify(params)));
-
+console.log(url);
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility
       // to avoid crash on new window project after close parent
       // (little trick for nwjs bug).
 
       gui.Window.open(url, {
-  //      'new-instance': true,  //Deprecated for new nwjs versios 
+      new_instance: true,  //Deprecated for new nwjs versios 
   //      'new_instance': true,  //Deprecated for new nwjs versios 
         'position': 'center',
 //        'toolbar': false,   //Deprecated for new nwjs versios 
