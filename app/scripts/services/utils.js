@@ -29,9 +29,9 @@ angular.module('icestudio')
 
         if (common.WIN32) {
           possibleExecutables.push('python.exe');
-          possibleExecutables.push('C:\\Python27\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
         } else {
-          possibleExecutables.push('python2.7');
+          possibleExecutables.push('python3.7');
           possibleExecutables.push('python');
         }
 
@@ -893,7 +893,7 @@ angular.module('icestudio')
       // compatible.
       // If in the future you will add more paremeters to the new window , you should review
       // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
-      
+
       var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility
@@ -902,10 +902,10 @@ angular.module('icestudio')
        //url='index.html?icestudio_argv=fsdfsfa';
         console.log(url);
        gui.Window.open(url, {
-     // new_instance: true,  //Deprecated for new nwjs versios 
-  //      'new_instance': true,  //Deprecated for new nwjs versios 
+     // new_instance: true,  //Deprecated for new nwjs versios
+  //      'new_instance': true,  //Deprecated for new nwjs versios
         'position': 'center',
-//        'toolbar': false,   //Deprecated for new nwjs versios 
+//        'toolbar': false,   //Deprecated for new nwjs versios
         'width': 900,
         'height': 600,
         'show': true,
@@ -1150,7 +1150,7 @@ angular.module('icestudio')
       });
     };
 
-    this.loadLanguage = function (profile, callback) { 
+    this.loadLanguage = function (profile, callback) {
       var lang = profile.get('language');
       if (lang) {
         this.setLocale(lang, callback);

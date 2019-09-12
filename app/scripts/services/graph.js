@@ -287,36 +287,17 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                var tasks=[];
-                var temp;
                 _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cell.attributes.state = state;
                          var elementView = paper.findViewByModel(cell);
                         // Pan blocks
                         elementView.updateBox();
-                        /*if(typeof temp !== 'undefined'){
-                            tasks=tasks.concat(temp);
-                        }*/
                         // Pan selection boxes
                         selectionView.updateBox(elementView.model);
-/*                         if(typeof temp !== 'undefined'){
-                            tasks=tasks.concat(temp);
-                        }*/
 
                     }
                 });
-               /* if(tasks.length>0){
-                       var i=tasks.length;
-                        for(i=0;i<tasks.length;i++){
-       
-                             if(tasks[i].e !== null){
-                    //           console.log(this.pendingTasks[i].e,this.pendingTasks[i].property,this.pendingTasks[i].value);
-                                  tasks[i].e.style[tasks[i].property]=tasks[i].value;
-                            }
-                        }
-
-                }*/
             }
             // Events
 
@@ -816,35 +797,38 @@ angular.module('icestudio')
                 angular.element('.banner').addClass('hidden');
                 
                 ael = document.getElementById('menu');
-                if(typeof ael !== 'undefined')
+                if(typeof ael !== 'undefined'){
                     ael.classList.remove('is-disabled');
-                
+                }
                 ael = document.getElementsByClassName('paper');
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                        ael[i].classList.remove('looks-disabled');
                     }
+                }
                 
                 ael = document.getElementsByClassName('board-container');
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                         ael[i].classList.remove('looks-disabled');
                     }
+                }
             
                 ael = document.getElementsByClassName('banner');
              
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                         ael[i].classList.add('hidden');
                     }
-
+                }
                 if (!common.isEditingSubmodule) {
                    angular.element('.banner-submodule').addClass('hidden');
                    ael=document.getElementsByClassName('banner-submodule');
-                   if(typeof ael !== 'undefined' && ael.length>0)
+                   if(typeof ael !== 'undefined' && ael.length>0){
                         for(i=0;i<ael.length;i++){
                         ael[i].classList.add('hidden');
                     }
+                }
                 }
 
             }
@@ -859,36 +843,39 @@ angular.module('icestudio')
                  
                 ael = document.getElementById('menu');
 
-                if(typeof ael !== 'undefined')
+                if(typeof ael !== 'undefined'){
                         ael.classList.add('is-disabled');
+                }
                 
                 ael = document.getElementsByClassName('paper');
                 
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                         ael[i].classList.add('looks-disabled');
                     }
+                }
                 
                 ael = document.getElementsByClassName('board-container');
                 
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                         ael[i].classList.add('looks-disabled');
                     }
-                
+                }
                 ael = document.getElementsByClassName('banner');
                 
-                if(typeof ael !== 'undefined' && ael.length>0)
+                if(typeof ael !== 'undefined' && ael.length>0){
                     for(i=0;i<ael.length;i++){
                         ael[i].classList.remove('hidden');
                     }
-                
+                } 
                 ael = document.getElementsByClassName('banner-submodule');
                
-                if(typeof ael !== 'undefined' && ael.length >0)
-                for(i=0;i<ael.length;i++)
+                if(typeof ael !== 'undefined' && ael.length >0){
+                for(i=0;i<ael.length;i++){
                     ael[i].classList.remove('hidden');
-
+                }
+                   }
             }
 
             var cells = graph.getCells();

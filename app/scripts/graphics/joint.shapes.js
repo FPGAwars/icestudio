@@ -607,10 +607,8 @@ for (i=0;i<pwires.length;i++){
     }
   
     for(i=0;i<rightPorts.length;i++){
-//    for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-//        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
           dome=document.getElementById(tokId+port.id);
  
@@ -622,62 +620,36 @@ for (i=0;i<pwires.length;i++){
 
     // Render rules
     var portDefault,paths,rects,j;
-    /*if (data && data.ports && data.ports.in) {
-      for (i in data.ports.in) {
-        port = data.ports.in[i];
-         portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        if (rules && port.default && port.default.apply) {
-          portDefault.css('display', 'inline');
-          portDefault.find('path').css('stroke-width', width);
-          portDefault.find('rect').css('stroke-width', state.zoom);
-        }
-        else {
-          portDefault.css('display', 'none');
-        }
-      }
-    }*/
-  if (data && data.ports && data.ports.in) {
+
+    if (data && data.ports && data.ports.in) {
       tokId='port-default-' + modelId + '-';
       for(i=0;i<data.ports.in.length;i++){
       //for (i in data.ports.in) {
         port = data.ports.in[i];
-        //MEGA CUELLO DE BOTELLA
-//        portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        portDefault = document.getElementById(tokId+port.name)
+        portDefault = document.getElementById(tokId+port.name);
         if (portDefault!== null && rules && port.default && port.default.apply) {
-         // portDefault.css('display', 'inline');
-         // portDefault.find('path').css('stroke-width', width);
-          //portDefault.find('rect').css('stroke-width', state.zoom);
 
           pendingTasks.push({e: portDefault, property:'display',value:'inline'});
         
           paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++)
+          for(j=0;j<paths.length;j++){
             pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+          }
         
           rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++)
+          for(j=0;j<rects.length;j++){
             pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+          }
             
-          //pendingTasks.push({e: portDefault.querySelectorAll('rect'), property:'stroke-width',value:state.zoom+'px'});
 
         }
         else {
-//          portDefault.css('display', 'none');
 
           pendingTasks.push({e: portDefault, property:'display',value:'none'});
         }
       }
     }
 
-    // Render content
-    /*this.$box.find('.generic-content').css({
-      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
-      top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
-      width: Math.round(bbox.width),
-      height: Math.round(bbox.height),
-      transform: 'scale(' + state.zoom + ')'
-    });*/
     var gcontent= this.$box[0].querySelectorAll('.generic-content');
     
     
@@ -690,25 +662,16 @@ for (i=0;i<pwires.length;i++){
     }
 
 
-    // Render block
-    /*this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x,
-      top: bbox.y * state.zoom + state.pan.y,
-      width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom
-    }); */
    pendingTasks.push({e: this.$box[0], property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
    pendingTasks.push({e: this.$box[0], property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
    pendingTasks.push({e: this.$box[0], property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
    pendingTasks.push({e: this.$box[0], property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
  
     i=pendingTasks.length;
- //   pendingTasks= pendingTasks.reverse();
     for(i=0;i<pendingTasks.length;i++){
        
         if(pendingTasks[i].e !== null){
 
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
           pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
         }
     }
@@ -1004,8 +967,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   updateBox: function () {
 
     var pendingTasks = [];
-    var i,j,k, port;
-//    console.time('setup');
+    var i,j, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
@@ -1015,26 +977,18 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var modelId = this.model.id;
     var portDefault,tokId, dome;
     var paths, rects;
-//console.timeEnd('setup');
-//console.time('calculate');
-    // Render ports width
     var width = WIRE_WIDTH * state.zoom;
-    //this.$('.port-wire').css('stroke-width', width);
 
-    //var pwires=document.getElementsByClassName('port-wire');
     var pwires=this.$el[0].getElementsByClassName('port-wire');
   for (i=0;i<pwires.length;i++){
     pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
   }    
-   // pendingTasks.push({e: this.$('.port-wire'),property:'stroke-width',value:width});
     // Set buses
     var nwidth=width*3;
     tokId='port-wire-' + modelId + '-'; 
-    //for (i in leftPorts) {
     for(i=0;i<leftPorts.length;i++){
       port = leftPorts[i];
       if (port.size > 1) {
-   //     this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
           dome=document.getElementById(tokId+port.id);
 
@@ -1044,10 +998,8 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
   
     for(i=0;i<rightPorts.length;i++){
-//    for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-//        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
           dome=document.getElementById(tokId+port.id);
  
@@ -1060,51 +1012,31 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     if (data && data.ports && data.ports.in) {
       tokId='port-default-' + modelId + '-';
       for(i=0;i<data.ports.in.length;i++){
-      //for (i in data.ports.in) {
         port = data.ports.in[i];
-        //MEGA CUELLO DE BOTELLA
-//        portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        portDefault = document.getElementById(tokId+port.name)
+        portDefault = document.getElementById(tokId+port.name);
         if (portDefault !== null && rules && port.default && port.default.apply) {
-         // portDefault.css('display', 'inline');
-         // portDefault.find('path').css('stroke-width', width);
-          //portDefault.find('rect').css('stroke-width', state.zoom);
 
           pendingTasks.push({e: portDefault, property:'display',value:'inline'});
         
           paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++)
+          for(j=0;j<paths.length;j++){
             pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+          }
         
           rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++)
+          for(j=0;j<rects.length;j++){
             pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+          }
             
-          //pendingTasks.push({e: portDefault.querySelectorAll('rect'), property:'stroke-width',value:state.zoom+'px'});
 
         }
         else {
-//          portDefault.css('display', 'none');
 
           pendingTasks.push({e: portDefault, property:'display',value:'none'});
         }
       }
     }
-//console.timeEnd('calculate');
-//console.time('render');
-    // Render io virtual content
     var virtualtopOffset = 24;
-/*    this.virtualContentSelector.css({
-      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
-      top: Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom),
-      width: Math.round(bbox.width),
-      height: Math.round(bbox.height - virtualtopOffset),
-      transform: 'scale(' + state.zoom + ')'
-    });*/
-
-
-  
-//  i=this.nativeDom.virtualContentSelector.length;
 
   for(i=0;i<this.nativeDom.virtualContentSelector.length;i++){
 
@@ -1117,14 +1049,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   }
     // Render io FPGA content
     var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
-  /*  this.fpgaContentSelector.css({
-      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
-      top: Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom),
-      width: Math.round(bbox.width),
-      height: Math.round(bbox.height - fpgaTopOffset),
-      transform: 'scale(' + state.zoom + ')'
-    });
-*/  
 
   for(i=0;i<this.nativeDom.fpgaContentSelector.length;i++){
 
@@ -1142,29 +1066,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render block
-/*
-    this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x,
-      top: bbox.y * state.zoom + state.pan.y,
-      width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom
-    });
-*/
    pendingTasks.push({e: this.nativeDom.box, property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
    pendingTasks.push({e: this.nativeDom.box, property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
    pendingTasks.push({e: this.nativeDom.box, property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
    pendingTasks.push({e: this.nativeDom.box, property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
    
 
-//    console.timeEnd('render');
-//    console.time('draw');
     i=pendingTasks.length;
-  //  pendingTasks= pendingTasks.reverse();
     for(i=0;i<pendingTasks.length;i++){
        
         if(pendingTasks[i].e !== null){
-
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
           pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
         }
     }
@@ -1174,10 +1085,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   drawPendingTasks: function(tasks){
     var i=tasks.length;
     for(i=0;i<tasks.length;i++){
-       
         if(this.tasks[i].e !== null){
-
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
           tasks[i].e.style[tasks[i].property]=tasks[i].value;
         }
     }
@@ -1897,18 +1805,13 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
     var modelId = this.model.id;
-    var editor_updated=false;
+    var editorUpdated=false;
     // Set font size
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
-        editor_updated=true;
+        editorUpdated=true;
         this.prevZoom = state.zoom;
         // Scale editor
-/*        this.editorSelector.css({
-          margin: 7 * state.zoom,
-          'border-radius': 5 * state.zoom,
-          'border-width': state.zoom + 0.5
-        });*/
         for(i=0;i<this.nativeDom.editorSelector.length;i++){
           pendingTasks.push({e:this.nativeDom.editorSelector[i],property:'margin',value: (7*state.zoom)+'px'});
           pendingTasks.push({e:this.nativeDom.editorSelector[i],property:'border-radius',value: (5*state.zoom)+'px'});
@@ -1919,76 +1822,46 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
         var annotationSize = Math.round(15 * state.zoom) + 'px';
 
         anotations=this.$box[0].querySelectorAll('.ace_error');
-        for(i=0;i<anotations.length;i++)
+        for(i=0;i<anotations.length;i++){
           pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
-          //this.$box.find('.ace_error').css('background-size', annotationSize + ' ' + annotationSize);
+        }
         anotations=this.$box[0].querySelectorAll('.ace_warning');
-        for(i=0;i<anotations.length;i++)
+        for(i=0;i<anotations.length;i++){
           pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
+        }
 
-       // this.$box.find('.ace_warning').css('background-size', annotationSize + ' ' + annotationSize);
        anotations=this.$box[0].querySelectorAll('.ace_info');
-       for(i=0;i<anotations.length;i++)
+       for(i=0;i<anotations.length;i++){
           pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
-
-        //this.$box.find('.ace_info').css('background-size', annotationSize + ' ' + annotationSize);
+       }
 
 
         // Scale padding
-//        this.$box.find('.ace_text-layer').css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
        anotations=this.$box[0].querySelectorAll('.ace_text-layer');
-       for(i=0;i<anotations.length;i++)
+       for(i=0;i<anotations.length;i++){
           pendingTasks.push({e:anotations[i],property:'padding',value:  '0px ' + Math.round(4 * state.zoom) + 'px'});
+       }
 
-        // Scale gutters
         //var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
         
-       /* if (this.nativeDom.rule) {
-          pendingTasks.push({e:this.nativeDom.rule,property:'paddingLeft',value:  Math.round(19 * state.zoom) + 'px'});
-          pendingTasks.push({e:this.nativeDom.rule,property:'paddingRight',value: Math.round(13 * state.zoom) + 'px'});
-//          this.nativeDom.rule.style.paddingLeft = Math.round(19 * state.zoom) + 'px';
- //         this.nativeDom.rule.style.paddingRight = Math.round(13 * state.zoom) + 'px';
-        }*/
-        // Scale font size
-//        this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
-        // Scale cursor
-//        this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
         
       }
-  //    this.editor.resize();
+      //    this.editor.resize();
     }
 
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
 
-/*    this.$('.port-wire').css('stroke-width', width);
-    // Set buses
-    for (i in leftPorts) {
-      port = leftPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
-    }
-    for (i in rightPorts) {
-      port = rightPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
-    }*/
-
     var pwires=this.$el[0].getElementsByClassName('port-wire');
   for (i=0;i<pwires.length;i++){
     pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
   }    
-   // pendingTasks.push({e: this.$('.port-wire'),property:'stroke-width',value:width});
     // Set buses
     var nwidth=width*3;
     tokId='port-wire-' + modelId + '-'; 
-    //for (i in leftPorts) {
     for(i=0;i<leftPorts.length;i++){
       port = leftPorts[i];
       if (port.size > 1) {
-   //     this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
           dome=document.getElementById(tokId+port.id);
 
@@ -1998,10 +1871,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
   
     for(i=0;i<rightPorts.length;i++){
-//    for (i in rightPorts) {
       port = rightPorts[i];
       if (port.size > 1) {
-//        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
           dome=document.getElementById(tokId+port.id);
  
@@ -2012,50 +1883,27 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render rules
-  /*  if (data && data.ports && data.ports.in) {
-      for (i in data.ports.in) {
-        port = data.ports.in[i];
-        var portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        if (rules && port.default && port.default.apply) {
-          portDefault.css('display', 'inline');
-          portDefault.find('path').css('stroke-width', width);
-          portDefault.find('rect').css('stroke-width', state.zoom);
-        }
-        else {
-          portDefault.css('display', 'none');
-        }
-      }
-    }
-*/
-    // Render rules
     if (data && data.ports && data.ports.in) {
       tokId='port-default-' + modelId + '-';
       for(i=0;i<data.ports.in.length;i++){
-      //for (i in data.ports.in) {
         port = data.ports.in[i];
-        //MEGA CUELLO DE BOTELLA
-//        portDefault = this.$('#port-default-' + modelId + '-' + port.name);
-        portDefault = document.getElementById(tokId+port.name)
+        portDefault = document.getElementById(tokId+port.name);
         if (portDefault !== null && rules && port.default && port.default.apply) {
-         // portDefault.css('display', 'inline');
-         // portDefault.find('path').css('stroke-width', width);
-          //portDefault.find('rect').css('stroke-width', state.zoom);
 
           pendingTasks.push({e: portDefault, property:'display',value:'inline'});
         
           paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++)
+          for(j=0;j<paths.length;j++){
             pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
-        
+          }
           rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++)
+          for(j=0;j<rects.length;j++){
             pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+          }
             
-          //pendingTasks.push({e: portDefault.querySelectorAll('rect'), property:'stroke-width',value:state.zoom+'px'});
 
         }
         else {
-//          portDefault.css('display', 'none');
 
           pendingTasks.push({e: portDefault, property:'display',value:'none'});
         }
@@ -2063,14 +1911,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     }
 
     // Render content
-/*    this.contentSelector.css({
-      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
-      top: Math.round(bbox.height / 2.0 * (state.zoom - 1)),
-      width: Math.round(bbox.width),
-      height: Math.round(bbox.height),
-      transform: 'scale(' + state.zoom + ')'
-    });*/
-
     for(i=0;i< this.nativeDom.contentSelector.length;i++){
      pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'left'     ,value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
      pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'top'      ,value: Math.round(bbox.height / 2.0 * (state.zoom - 1))+'px'});
@@ -2081,13 +1921,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
 
     // Render block
-/*    this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x,
-      top: bbox.y * state.zoom + state.pan.y,
-      width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom
-    });
-*/
    pendingTasks.push({e: this.nativeDom.box, property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
    pendingTasks.push({e: this.nativeDom.box, property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
    pendingTasks.push({e: this.nativeDom.box, property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
@@ -2095,21 +1928,17 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
    
 
     i=pendingTasks.length;
-  //  pendingTasks= pendingTasks.reverse();
     for(i=0;i<pendingTasks.length;i++){
        
         if(pendingTasks[i].e !== null){
 
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
           pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
         }
     }
 
     if (this.editor) {
-      if(editor_updated){
-        // Scale font size
+      if(editorUpdated){
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
-        // Scale cursor
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
         
       }

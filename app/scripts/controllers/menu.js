@@ -68,11 +68,9 @@ angular.module('icestudio')
       // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
       // unescape is deprecated javascript function, should use decodeURI instead
 
-      var urlparams=window.location.search;
 
       var queryStr='';
       if(window.location.search.indexOf('?icestudio_argv=')===0){
-        console.log('BASE64');
         queryStr='?icestudio_argv='+atob(decodeURI(window.location.search.replace('?icestudio_argv=','')))+'&';
       }else{
 
@@ -88,19 +86,17 @@ angular.module('icestudio')
           gui.App.argv = [];
         }
   
+      var prop; 
       if (params !== false) {
         params = JSON.parse(decodeURI(params));
 
-      console.log('PARAMS',params);
- 
-        for (var prop in params) {
-          console.log('PROP',prop,params[prop]);
+        for ( prop in params) {
           gui.App.argv.push(params[prop]);
         }
       }
       var argv=gui.App.argv;
       if(params !==false){
-         for (var prop in params) {
+         for (prop in params) {
           argv.push(params[prop]);
         }
  
@@ -629,8 +625,8 @@ angular.module('icestudio')
       var board = common.selectedBoard;
       var rules = JSON.stringify(board.rules);
       if (rules !== '{}') {
-        var enc_rules=encodeURIComponent(rules);
-        gui.Window.open('resources/viewers/table/rules.html?rules=' + enc_rules, {
+        var encRules=encodeURIComponent(rules);
+        gui.Window.open('resources/viewers/table/rules.html?rules=' + encRules, {
           title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
           //toolbar: false,

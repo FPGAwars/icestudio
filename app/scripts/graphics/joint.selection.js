@@ -371,30 +371,15 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   updateBox: function(element) {
 
-    var margin = 8;
 
     var bbox = element.getBBox();
     var state = this.options.state;
 
-    var view = this.options.paper.findViewByModel(element);
-    var el = view.$box.children().not('.hidden').first();
 
-    var position = el.position();
-    var width = el.outerWidth();
-    var height = el.outerHeight();
 
     var i, pendingTasks=[];
     var sels= document.querySelectorAll( 'div[data-model="' + element.get('id') + '"]');
     for(i=0;i< sels.length;i++){
-      /*pendingTasks.push({e:sels[i],property:'left', value: ((bbox.x + position.left) * state.zoom + state.pan.x +
-                                                                (width / 2 - position.left) * (state.zoom - 1) - margin)+'px'});
-      pendingTasks.push({e:sels[i],property:'top', value: ((bbox.y + position.top) * state.zoom + state.pan.y +
-                                                          (height / 2 - position.top) * (state.zoom - 1) - margin)+'px'});
-                                                          
-      //pendingTasks.push({e:sels[i],property:'width', value: (width + 2 * margin)+'px'});
-      pendingTasks.push({e:sels[i],property:'width', value:Math.round( (bbox.width))+'px'});
-      pendingTasks.push({e:sels[i],property:'height', value: (height + 2 * margin)+'px'});
-      pendingTasks.push({e:sels[i],property:'transform', value: 'scale(' + state.zoom + ')'});*/
       pendingTasks.push({e: sels[i], property:'left',value:  Math.round(
                                                                     ((bbox.x)*state.zoom+ state.pan.x)+
                                                                     (bbox.width / 2.0 * (state.zoom - 1))         
@@ -411,25 +396,13 @@ joint.ui.SelectionView = Backbone.View.extend({
 
     }
   i=pendingTasks.length;
-  //  pendingTasks= pendingTasks.reverse();
     for(i=0;i<pendingTasks.length;i++){
-       
         if(pendingTasks[i].e !== null){
 
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
           pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
         }
     }
 
-/*    .css({
-      left: (bbox.x + position.left) * state.zoom + state.pan.x +
-            (width / 2 - position.left) * (state.zoom - 1) - margin,
-      top: (bbox.y + position.top) * state.zoom + state.pan.y +
-           (height / 2 - position.top) * (state.zoom - 1) - margin,
-      width: width + 2 * margin,
-      height: height + 2 * margin,
-      transform: 'scale(' + state.zoom + ')'
-    });*/
   }
 
 });

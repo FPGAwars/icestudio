@@ -9,7 +9,7 @@
 !define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
 !ifndef PYTHON
-  !define PYTHON     "python-2.7.13.amd64.msi"
+  !define PYTHON     "python-3.7.4-amd64.exe"
 !endif
 !define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
@@ -115,7 +115,7 @@ Section "Install Python"
 
   ${If} $R0 != "0"
     MessageBox MB_YESNO \
-    "Python 2.7.13 will be installed. Do you want to continue?" \
+    "Python 3.7.4 will be installed. Do you want to continue?" \
     IDYES continue
     Quit
 
@@ -133,9 +133,10 @@ Section "Install Python"
 
 SectionEnd
 
+
 Function "ValidatePythonVersion"
 
-  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(2,7)])"'
+  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(3,7)])"'
 
 FunctionEnd
 
@@ -148,19 +149,20 @@ Section "${NAME} ${VERSION}"
   SetOutPath "$INSTDIR"
 
   # install app files
-  File "${APP}\icestudio.exe"
-  File "${APP}\icudtl.dat"
-  File "${APP}\nw.pak"
-  File /r "${APP}\toolchain"
+  #File "${APP}\icestudio.exe"
+  #File "${APP}\icudtl.dat"
+  #File "${APP}\resources.pak"
+  #File /r "${APP}\toolchain"
 
-  File "${APP}\index.html"
-  File "${APP}\package.json"
-  File /r "${APP}\fonts"
-  File /r "${APP}\node_modules"
-  File /r "${APP}\resources"
-  File /r "${APP}\scripts"
-  File /r "${APP}\styles"
-  File /r "${APP}\views"
+#  File "${APP}\index.html"
+#  File "${APP}\package.json"
+#  File /r "${APP}\fonts"
+#  File /r "${APP}\node_modules"
+#  File /r "${APP}\resources"
+#  File /r "${APP}\scripts"
+#  File /r "${APP}\styles"
+#  File /r "${APP}\views"
+  File /r "${APP}\"
 
   # define uninstaller name
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"

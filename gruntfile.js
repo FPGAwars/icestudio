@@ -57,8 +57,8 @@ module.exports = function(grunt) {
     exec: {
       nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
-      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-2.7.13.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-2.7.13.amd64.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
+      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-3.7.4.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.7.4-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
     // Execute nw-build packaging
     nwjs: {
       options: {
-        version: '0.12.3',
+        version: '0.35.5',
         flavor: 'normal',
         zip: false,
         buildDir: 'dist/',
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+          src: ['**'].concat(appFiles)
         }]
       },
       linux64: {
@@ -207,7 +207,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+          src: ['**'].concat(appFiles)
         }]
       },
     },
@@ -221,7 +221,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
@@ -232,7 +232,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux64'
         }]
       },
@@ -243,7 +243,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win32/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win32'
         }]
       },
@@ -254,7 +254,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win64/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win64'
         }]
       },
@@ -321,15 +321,15 @@ module.exports = function(grunt) {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi',
-        dest: 'cache/python/python-2.7.13.msi'
+        src: 'https://www.python.org/ftp/python/3.7.4/python-3.7.4.exe',
+        dest: 'cache/python/python-3.7.4.exe'
       },
       python64: {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
-        dest: 'cache/python/python-2.7.13.amd64.msi'
+        src: 'https://www.python.org/ftp/python/3.7.4/python-3.7.4-amd64.exe',
+        dest: 'cache/python/python-3.7.4-amd64.exe'
       },
       collection: {
         options: {

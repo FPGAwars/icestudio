@@ -8,9 +8,8 @@
   "updatecheck": "https://raw.githubusercontent.com/FPGAwars/icestudio/develop/app/package.json",
   "license": "GPL-2.0",
   "main": "index.html",
-  "main2": "main.js",
   "development": {
-    "mode":true
+    "mode": false
   },
   "window": {
     "width": 900,
