@@ -1,22 +1,22 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('collections', function(utils,
-                                   common,
-                                   profile,
-                                   gettextCatalog,
-                                   nodePath) {
+  .service('collections', function (utils,
+    common,
+    profile,
+    gettextCatalog,
+    nodePath) {
 
     const DEFAULT = '';
     const MAX_LEVEL_SEARCH = 20;
 
-    this.loadAllCollections = function() {
+    this.loadAllCollections = function () {
       this.loadDefaultCollection();
       this.loadInternalCollections();
       this.loadExternalCollections();
     };
 
-    this.loadDefaultCollection = function() {
+    this.loadDefaultCollection = function () {
       common.defaultCollection = getCollection(
         DEFAULT,
         common.DEFAULT_COLLECTION_DIR,
@@ -39,7 +39,7 @@ angular.module('icestudio')
 
     function loadCollections(paths) {
       var collections = [];
-      paths.forEach(function(path) {
+      paths.forEach(function (path) {
         collections.push(getCollection(
           nodePath.basename(path),
           path,
@@ -78,7 +78,7 @@ angular.module('icestudio')
               try {
                 collection.content.package = require(child.path);
               }
-              catch (e) {}
+              catch (e) { }
             }
             break;
           case 'README':
@@ -91,7 +91,7 @@ angular.module('icestudio')
       return collection;
     }
 
-    this.selectCollection = function(path) {
+    this.selectCollection = function (path) {
       var selectedCollection = null;
       var collections = common.internalCollections.concat(common.externalCollections);
       for (var i in collections) {
@@ -108,7 +108,7 @@ angular.module('icestudio')
       return selectedCollection.path;
     };
 
-    this.sort = function() {
+    this.sort = function () {
       sortCollections([common.defaultCollection]);
       sortCollections(common.internalCollections);
       sortCollections(common.externalCollection);

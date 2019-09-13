@@ -37,7 +37,7 @@ angular.module('icestudio')
 
         for (var i in possibleExecutables) {
           var executable = possibleExecutables[i];
-          if (isPython2(executable)) {
+          if (isPython3(executable)) {
             _pythonExecutableCached = executable;
             break;
           }
@@ -46,11 +46,13 @@ angular.module('icestudio')
       return _pythonExecutableCached;
     };
 
-    function isPython2(executable) {
-      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+    function isPython3(executable) {
+      //      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+      const args = ['-V'];
+
       try {
         const result = nodeChildProcess.spawnSync(executable, args);
-        return 0 === result.status && result.stdout.toString().startsWith('2.7');
+        return 0 === result.status && result.stdout.toString().indexOf('3.7') >= 0;
       } catch (e) {
         return false;
       }
@@ -434,7 +436,7 @@ angular.module('icestudio')
         var collection = collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
-          gettextCatalog.loadRemote('file://'+filepath);
+          gettextCatalog.loadRemote('file://' + filepath);
         }
       }
       if (callback) {
@@ -899,13 +901,12 @@ angular.module('icestudio')
       // new-instance and new_instance are necesary for OS compatibility
       // to avoid crash on new window project after close parent
       // (little trick for nwjs bug).
-       //url='index.html?icestudio_argv=fsdfsfa';
-        console.log(url);
-       gui.Window.open(url, {
-     // new_instance: true,  //Deprecated for new nwjs versios
-  //      'new_instance': true,  //Deprecated for new nwjs versios
+      //url='index.html?icestudio_argv=fsdfsfa';
+      gui.Window.open(url, {
+        // new_instance: true,  //Deprecated for new nwjs versios
+        //      'new_instance': true,  //Deprecated for new nwjs versios
         'position': 'center',
-//        'toolbar': false,   //Deprecated for new nwjs versios
+        //        'toolbar': false,   //Deprecated for new nwjs versios
         'width': 900,
         'height': 600,
         'show': true,

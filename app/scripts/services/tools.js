@@ -871,7 +871,7 @@ angular.module('icestudio')
       else {
         closeToolchainAlert();
         restoreStatus();
-        resultAlert = alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
+        resultAlert = alertify.error(gettextCatalog.getString('Python 3.7 is required'), 30);
         callback(true);
       }
     }

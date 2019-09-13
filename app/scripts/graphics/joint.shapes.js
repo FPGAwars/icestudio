@@ -557,7 +557,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
   updateBox: function () {
-    var pendingTasks=[];
+    var pendingTasks = [];
     var i, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
@@ -569,111 +569,91 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     // Render ports width
     var width = WIRE_WIDTH * state.zoom;
-//    this.$('.port-wire').css('stroke-width', width);
-
-    //var pwires=document.getElementsByClassName('port-wire');
-    var pwires=this.$el[0].getElementsByClassName('port-wire');
-for (i=0;i<pwires.length;i++){
-    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
-  }    
-
-    // Set buses
-    /*for (i in leftPorts) {
-      port = leftPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
+    var pwires = this.$el[0].getElementsByClassName('port-wire');
+    for (i = 0; i < pwires.length; i++) {
+      pendingTasks.push({ e: pwires[i], property: 'stroke-width', value: width + 'px' });
     }
-    for (i in rightPorts) {
-      port = rightPorts[i];
-      if (port.size > 1) {
-        this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
-      }
-    }*/
-    var nwidth=width*3;
-    var tokId='port-wire-' + modelId + '-'; 
+    var nwidth = width * 3;
+    var tokId = 'port-wire-' + modelId + '-';
     var dome;
-    //for (i in leftPorts) {
-    for(i=0;i<leftPorts.length;i++){
+    for (i = 0; i < leftPorts.length; i++) {
       port = leftPorts[i];
       if (port.size > 1) {
-   //     this.$('#port-wire-' + modelId + '-' + port.id).css('stroke-width', width * 3);
 
-          dome=document.getElementById(tokId+port.id);
+        dome = document.getElementById(tokId + port.id);
 
-        pendingTasks.push({e: dome ,property:'stroke-width',value:nwidth+'px'});
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
       }
     }
-  
-    for(i=0;i<rightPorts.length;i++){
+
+    for (i = 0; i < rightPorts.length; i++) {
       port = rightPorts[i];
       if (port.size > 1) {
 
-          dome=document.getElementById(tokId+port.id);
- 
-        pendingTasks.push({e:  dome,property:'stroke-width',value:nwidth+'px'});
+        dome = document.getElementById(tokId + port.id);
+
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
 
-      } 
+      }
     }
 
     // Render rules
-    var portDefault,paths,rects,j;
+    var portDefault, paths, rects, j;
 
     if (data && data.ports && data.ports.in) {
-      tokId='port-default-' + modelId + '-';
-      for(i=0;i<data.ports.in.length;i++){
-      //for (i in data.ports.in) {
+      tokId = 'port-default-' + modelId + '-';
+      for (i = 0; i < data.ports.in.length; i++) {
         port = data.ports.in[i];
-        portDefault = document.getElementById(tokId+port.name);
-        if (portDefault!== null && rules && port.default && port.default.apply) {
+        portDefault = document.getElementById(tokId + port.name);
+        if (portDefault !== null && rules && port.default && port.default.apply) {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'inline'});
-        
-          paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++){
-            pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'inline' });
+
+          paths = portDefault.querySelectorAll('path');
+          for (j = 0; j < paths.length; j++) {
+            pendingTasks.push({ e: paths[j], property: 'stroke-width', value: width + 'px' });
           }
-        
-          rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++){
-            pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+
+          rects = portDefault.querySelectorAll('rect');
+          for (j = 0; j < rects.length; j++) {
+            pendingTasks.push({ e: rects[j], property: 'stroke-width', value: state.zoom + 'px' });
           }
-            
+
 
         }
         else {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'none'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'none' });
         }
       }
     }
 
-    var gcontent= this.$box[0].querySelectorAll('.generic-content');
-    
-    
-    for(i=0;i<gcontent.length;i++){
-      pendingTasks.push({e: gcontent[i], property:'left',value:  Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px' });
-      pendingTasks.push({e: gcontent[i], property:'top',value:  Math.round(bbox.height / 2.0 * (state.zoom - 1))+'px' });
-      pendingTasks.push({e: gcontent[i], property:'width',value: Math.round(bbox.width)+'px' });
-      pendingTasks.push({e: gcontent[i], property:'height',value: Math.round(bbox.height)+'px' });
-      pendingTasks.push({e: gcontent[i], property:'transform',value: 'scale(' + state.zoom + ')'});
+    var gcontent = this.$box[0].querySelectorAll('.generic-content');
+
+
+    for (i = 0; i < gcontent.length; i++) {
+      pendingTasks.push({ e: gcontent[i], property: 'left', value: Math.round(bbox.width / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: gcontent[i], property: 'top', value: Math.round(bbox.height / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: gcontent[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: gcontent[i], property: 'height', value: Math.round(bbox.height) + 'px' });
+      pendingTasks.push({ e: gcontent[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
     }
 
 
-   pendingTasks.push({e: this.$box[0], property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
-   pendingTasks.push({e: this.$box[0], property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
-   pendingTasks.push({e: this.$box[0], property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
-   pendingTasks.push({e: this.$box[0], property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
- 
-    i=pendingTasks.length;
-    for(i=0;i<pendingTasks.length;i++){
-       
-        if(pendingTasks[i].e !== null){
+    pendingTasks.push({ e: this.$box[0], property: 'left', value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'top', value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'width', value: Math.round(bbox.width * state.zoom) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'height', value: Math.round(bbox.height * state.zoom) + 'px' });
 
-          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
-        }
+    i = pendingTasks.length;
+    for (i = 0; i < pendingTasks.length; i++) {
+
+      if (pendingTasks[i].e !== null) {
+
+        pendingTasks[i].e.style[pendingTasks[i].property] = pendingTasks[i].value;
+      }
     }
     return pendingTasks;
 
@@ -814,16 +794,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       </div>\
       '
     )());
- 
+
 
     this.virtualContentSelector = this.$box.find('.io-virtual-content');
     this.fpgaContentSelector = this.$box.find('.io-fpga-content');
     this.headerSelector = this.$box.find('.header');
-    this.nativeDom={
-        box: this.$box[0],
-        virtualContentSelector : this.$box[0].querySelectorAll('.io-virtual-content'),
-        fpgaContentSelector : this.$box[0].querySelectorAll('.io-fpga-content')
- 
+    this.nativeDom = {
+      box: this.$box[0],
+      virtualContentSelector: this.$box[0].querySelectorAll('.io-virtual-content'),
+      fpgaContentSelector: this.$box[0].querySelectorAll('.io-fpga-content')
+
 
     };
 
@@ -836,7 +816,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     // Prevent paper from handling pointerdown.
     var self = this;
     var selector = this.$box.find('.select2');
-    selector.on('mousedown click', function (event) { event.stopPropagation();  });
+    selector.on('mousedown click', function (event) { event.stopPropagation(); });
     selector.on('change', function (event) {
       if (!self.updating) {
         var target = $(event.target);
@@ -963,11 +943,11 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
-  pendingRender:false,
+  pendingRender: false,
   updateBox: function () {
 
     var pendingTasks = [];
-    var i,j, port;
+    var i, j, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
@@ -975,121 +955,121 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
     var modelId = this.model.id;
-    var portDefault,tokId, dome;
+    var portDefault, tokId, dome;
     var paths, rects;
     var width = WIRE_WIDTH * state.zoom;
 
-    var pwires=this.$el[0].getElementsByClassName('port-wire');
-  for (i=0;i<pwires.length;i++){
-    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
-  }    
+    var pwires = this.$el[0].getElementsByClassName('port-wire');
+    for (i = 0; i < pwires.length; i++) {
+      pendingTasks.push({ e: pwires[i], property: 'stroke-width', value: width + 'px' });
+    }
     // Set buses
-    var nwidth=width*3;
-    tokId='port-wire-' + modelId + '-'; 
-    for(i=0;i<leftPorts.length;i++){
+    var nwidth = width * 3;
+    tokId = 'port-wire-' + modelId + '-';
+    for (i = 0; i < leftPorts.length; i++) {
       port = leftPorts[i];
       if (port.size > 1) {
 
-          dome=document.getElementById(tokId+port.id);
+        dome = document.getElementById(tokId + port.id);
 
-        pendingTasks.push({e: dome ,property:'stroke-width',value:nwidth+'px'});
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
       }
     }
-  
-    for(i=0;i<rightPorts.length;i++){
+
+    for (i = 0; i < rightPorts.length; i++) {
       port = rightPorts[i];
       if (port.size > 1) {
 
-          dome=document.getElementById(tokId+port.id);
- 
-        pendingTasks.push({e:  dome,property:'stroke-width',value:nwidth+'px'});
+        dome = document.getElementById(tokId + port.id);
+
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
 
-      } 
+      }
     }
     // Render rules
     if (data && data.ports && data.ports.in) {
-      tokId='port-default-' + modelId + '-';
-      for(i=0;i<data.ports.in.length;i++){
+      tokId = 'port-default-' + modelId + '-';
+      for (i = 0; i < data.ports.in.length; i++) {
         port = data.ports.in[i];
-        portDefault = document.getElementById(tokId+port.name);
+        portDefault = document.getElementById(tokId + port.name);
         if (portDefault !== null && rules && port.default && port.default.apply) {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'inline'});
-        
-          paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++){
-            pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'inline' });
+
+          paths = portDefault.querySelectorAll('path');
+          for (j = 0; j < paths.length; j++) {
+            pendingTasks.push({ e: paths[j], property: 'stroke-width', value: width + 'px' });
           }
-        
-          rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++){
-            pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+
+          rects = portDefault.querySelectorAll('rect');
+          for (j = 0; j < rects.length; j++) {
+            pendingTasks.push({ e: rects[j], property: 'stroke-width', value: state.zoom + 'px' });
           }
-            
+
 
         }
         else {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'none'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'none' });
         }
       }
     }
     var virtualtopOffset = 24;
 
-  for(i=0;i<this.nativeDom.virtualContentSelector.length;i++){
+    for (i = 0; i < this.nativeDom.virtualContentSelector.length; i++) {
 
-   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'left',value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
-   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'top',value:  Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom)+'px' });
-   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'width',value: Math.round(bbox.width)+'px'});
-   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'height',value:  Math.round(bbox.height - virtualtopOffset)+'px'});
-   pendingTasks.push({e: this.nativeDom.virtualContentSelector[i], property:'transform',value: 'scale(' + state.zoom + ')' });
+      pendingTasks.push({ e: this.nativeDom.virtualContentSelector[i], property: 'left', value: Math.round(bbox.width / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.virtualContentSelector[i], property: 'top', value: Math.round((bbox.height - virtualtopOffset) / 2.0 * (state.zoom - 1) + virtualtopOffset / 2.0 * state.zoom) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.virtualContentSelector[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.virtualContentSelector[i], property: 'height', value: Math.round(bbox.height - virtualtopOffset) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.virtualContentSelector[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
 
-  }
+    }
     // Render io FPGA content
     var fpgaTopOffset = (data.name || data.range || data.clock) ? 0 : 24;
 
-  for(i=0;i<this.nativeDom.fpgaContentSelector.length;i++){
+    for (i = 0; i < this.nativeDom.fpgaContentSelector.length; i++) {
 
 
-   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'left',value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px' });
-   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'top',value:  Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom)+'px' });
-   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'width',value:  Math.round(bbox.width)+'px' });
-   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'height',value:  Math.round(bbox.height - fpgaTopOffset)+'px' });
-   pendingTasks.push({e: this.nativeDom.fpgaContentSelector[i], property:'transform',value:  'scale(' + state.zoom + ')' });
-  }
-   if (data.name || data.range || data.clock) {
+      pendingTasks.push({ e: this.nativeDom.fpgaContentSelector[i], property: 'left', value: Math.round(bbox.width / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.fpgaContentSelector[i], property: 'top', value: Math.round((bbox.height - fpgaTopOffset) / 2.0 * (state.zoom - 1) + fpgaTopOffset / 2.0 * state.zoom) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.fpgaContentSelector[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.fpgaContentSelector[i], property: 'height', value: Math.round(bbox.height - fpgaTopOffset) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.fpgaContentSelector[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
+    }
+    if (data.name || data.range || data.clock) {
       this.headerSelector.removeClass('hidden');
     } else {
       this.headerSelector.addClass('hidden');
     }
 
     // Render block
-   pendingTasks.push({e: this.nativeDom.box, property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
-   pendingTasks.push({e: this.nativeDom.box, property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
-   pendingTasks.push({e: this.nativeDom.box, property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
-   pendingTasks.push({e: this.nativeDom.box, property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
-   
+    pendingTasks.push({ e: this.nativeDom.box, property: 'left', value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'top', value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'width', value: Math.round(bbox.width * state.zoom) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'height', value: Math.round(bbox.height * state.zoom) + 'px' });
 
-    i=pendingTasks.length;
-    for(i=0;i<pendingTasks.length;i++){
-       
-        if(pendingTasks[i].e !== null){
-          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
-        }
+
+    i = pendingTasks.length;
+    for (i = 0; i < pendingTasks.length; i++) {
+
+      if (pendingTasks[i].e !== null) {
+        pendingTasks[i].e.style[pendingTasks[i].property] = pendingTasks[i].value;
+      }
     }
     return pendingTasks;
   },
 
-  drawPendingTasks: function(tasks){
-    var i=tasks.length;
-    for(i=0;i<tasks.length;i++){
-        if(this.tasks[i].e !== null){
-          tasks[i].e.style[tasks[i].property]=tasks[i].value;
-        }
+  drawPendingTasks: function (tasks) {
+    var i = tasks.length;
+    for (i = 0; i < tasks.length; i++) {
+      if (this.tasks[i].e !== null) {
+        tasks[i].e.style[tasks[i].property] = tasks[i].value;
+      }
     }
-  
+
   },
 
   removeBox: function () {
@@ -1212,34 +1192,24 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
-    var pendingTasks=[];
+    var pendingTasks = [];
     // Set wire width
     var width = WIRE_WIDTH * state.zoom;
-    //this.$('.port-wire').css('stroke-width', width);
-//    var test = this.$('.port-wire').css('stroke-width', width);
-var pwires=this.$el[0].getElementsByClassName('port-wire');
-var i;
-  for (i=0;i<pwires.length;i++){
-    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
-  }  
+    var pwires = this.$el[0].getElementsByClassName('port-wire');
+    var i;
+    for (i = 0; i < pwires.length; i++) {
+      pendingTasks.push({ e: pwires[i], property: 'stroke-width', value: width + 'px' });
+    }
     // Render content
     var topOffset = (data.name || data.local) ? 0 : 24;
-    /*this.contentSelector.css({
-      left: Math.round(bbox.width / 2.0 * (state.zoom - 1)),
-      top: Math.round((bbox.height + topOffset) / 2.0 * (state.zoom - 1) + topOffset),
-      width: Math.round(bbox.width),
-      height: Math.round(bbox.height - topOffset),
-      transform: 'scale(' + state.zoom + ')'
-    });
-*/
-    var contentSel= this.$box[0].querySelectorAll('.constant-content');
-for(i=0;i<contentSel.length;i++){
-    pendingTasks.push({e:contentSel[i],property:'left'     ,value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
-    pendingTasks.push({e:contentSel[i],property:'top'      ,value: Math.round((bbox.height + topOffset) / 2.0 * (state.zoom - 1) + topOffset)+'px'});
-    pendingTasks.push({e:contentSel[i],property:'width'    ,value: Math.round(bbox.width)+'px'});
-    pendingTasks.push({e:contentSel[i],property:'height'   ,value: Math.round(bbox.height - topOffset)+'px'});
-    pendingTasks.push({e:contentSel[i],property:'transform',value: 'scale(' + state.zoom + ')'});
-}
+    var contentSel = this.$box[0].querySelectorAll('.constant-content');
+    for (i = 0; i < contentSel.length; i++) {
+      pendingTasks.push({ e: contentSel[i], property: 'left', value: Math.round(bbox.width / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: contentSel[i], property: 'top', value: Math.round((bbox.height + topOffset) / 2.0 * (state.zoom - 1) + topOffset) + 'px' });
+      pendingTasks.push({ e: contentSel[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: contentSel[i], property: 'height', value: Math.round(bbox.height - topOffset) + 'px' });
+      pendingTasks.push({ e: contentSel[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
+    }
     if (data.name || data.local) {
       this.headerSelector.removeClass('hidden');
     } else {
@@ -1247,28 +1217,20 @@ for(i=0;i<contentSel.length;i++){
     }
 
     // Render block
-    /*this.$box.css({
-      left: bbox.x * state.zoom + state.pan.x,
-      top: bbox.y * state.zoom + state.pan.y,
-      width: bbox.width * state.zoom,
-      height: bbox.height * state.zoom
-    });
-    */
-   pendingTasks.push({e: this.$box[0], property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
-   pendingTasks.push({e: this.$box[0], property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
-   pendingTasks.push({e: this.$box[0], property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
-   pendingTasks.push({e: this.$box[0], property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
- 
+    pendingTasks.push({ e: this.$box[0], property: 'left', value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'top', value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'width', value: Math.round(bbox.width * state.zoom) + 'px' });
+    pendingTasks.push({ e: this.$box[0], property: 'height', value: Math.round(bbox.height * state.zoom) + 'px' });
 
-    i=pendingTasks.length;
-  //  pendingTasks= pendingTasks.reverse();
-    for(i=0;i<pendingTasks.length;i++){
-       
-        if(pendingTasks[i].e !== null){
 
-//           console.log(pendingTasks[i].e,pendingTasks[i].property,pendingTasks[i].value);
-          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
-        }
+    i = pendingTasks.length;
+    //  pendingTasks= pendingTasks.reverse();
+    for (i = 0; i < pendingTasks.length; i++) {
+
+      if (pendingTasks[i].e !== null) {
+
+        pendingTasks[i].e.style[pendingTasks[i].property] = pendingTasks[i].value;
+      }
     }
     return pendingTasks;
 
@@ -1616,12 +1578,12 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     this.editorSelector = this.$box.find('.code-editor');
     this.contentSelector = this.$box.find('.code-content');
-    this.nativeDom={
-        box: this.$box[0],
-       // rule: getCSSRule('.ace_folding-enabled > .ace_gutter-cell'),
-        editorSelector : this.$box[0].querySelectorAll('.code-editor'),
-        contentSelector : this.$box[0].querySelectorAll('.code-content')
- 
+    this.nativeDom = {
+      box: this.$box[0],
+      // rule: getCSSRule('.ace_folding-enabled > .ace_gutter-cell'),
+      editorSelector: this.$box[0].querySelectorAll('.code-editor'),
+      contentSelector: this.$box[0].querySelectorAll('.code-content')
+
 
     };
 
@@ -1796,55 +1758,55 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   },
 
   updateBox: function () {
-    var pendingTasks= [];
-    var i,j, port,portDefault,tokId,paths,rects,dome,anotations;
+    var pendingTasks = [];
+    var i, j, port, portDefault, tokId, paths, rects, dome, anotations;
     var bbox = this.model.getBBox();
-    var data = this.model.get('data'); 
+    var data = this.model.get('data');
     var state = this.model.get('state');
     var rules = this.model.get('rules');
     var leftPorts = this.model.get('leftPorts');
     var rightPorts = this.model.get('rightPorts');
     var modelId = this.model.id;
-    var editorUpdated=false;
+    var editorUpdated = false;
     // Set font size
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
-        editorUpdated=true;
+        editorUpdated = true;
         this.prevZoom = state.zoom;
         // Scale editor
-        for(i=0;i<this.nativeDom.editorSelector.length;i++){
-          pendingTasks.push({e:this.nativeDom.editorSelector[i],property:'margin',value: (7*state.zoom)+'px'});
-          pendingTasks.push({e:this.nativeDom.editorSelector[i],property:'border-radius',value: (5*state.zoom)+'px'});
-          pendingTasks.push({e:this.nativeDom.editorSelector[i],property:'border-width',value: (state.zoom+0.5)});
+        for (i = 0; i < this.nativeDom.editorSelector.length; i++) {
+          pendingTasks.push({ e: this.nativeDom.editorSelector[i], property: 'margin', value: (7 * state.zoom) + 'px' });
+          pendingTasks.push({ e: this.nativeDom.editorSelector[i], property: 'border-radius', value: (5 * state.zoom) + 'px' });
+          pendingTasks.push({ e: this.nativeDom.editorSelector[i], property: 'border-width', value: (state.zoom + 0.5) });
         }
-        
+
         // Scale annotations
         var annotationSize = Math.round(15 * state.zoom) + 'px';
 
-        anotations=this.$box[0].querySelectorAll('.ace_error');
-        for(i=0;i<anotations.length;i++){
-          pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
+        anotations = this.$box[0].querySelectorAll('.ace_error');
+        for (i = 0; i < anotations.length; i++) {
+          pendingTasks.push({ e: anotations[i], property: 'background-size', value: annotationSize + ' ' + annotationSize });
         }
-        anotations=this.$box[0].querySelectorAll('.ace_warning');
-        for(i=0;i<anotations.length;i++){
-          pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
+        anotations = this.$box[0].querySelectorAll('.ace_warning');
+        for (i = 0; i < anotations.length; i++) {
+          pendingTasks.push({ e: anotations[i], property: 'background-size', value: annotationSize + ' ' + annotationSize });
         }
 
-       anotations=this.$box[0].querySelectorAll('.ace_info');
-       for(i=0;i<anotations.length;i++){
-          pendingTasks.push({e:anotations[i],property:'background-size',value: annotationSize + ' ' + annotationSize});
-       }
+        anotations = this.$box[0].querySelectorAll('.ace_info');
+        for (i = 0; i < anotations.length; i++) {
+          pendingTasks.push({ e: anotations[i], property: 'background-size', value: annotationSize + ' ' + annotationSize });
+        }
 
 
         // Scale padding
-       anotations=this.$box[0].querySelectorAll('.ace_text-layer');
-       for(i=0;i<anotations.length;i++){
-          pendingTasks.push({e:anotations[i],property:'padding',value:  '0px ' + Math.round(4 * state.zoom) + 'px'});
-       }
+        anotations = this.$box[0].querySelectorAll('.ace_text-layer');
+        for (i = 0; i < anotations.length; i++) {
+          pendingTasks.push({ e: anotations[i], property: 'padding', value: '0px ' + Math.round(4 * state.zoom) + 'px' });
+        }
 
         //var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
-        
-        
+
+
       }
       //    this.editor.resize();
     }
@@ -1852,99 +1814,99 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     // Set ports width
     var width = WIRE_WIDTH * state.zoom;
 
-    var pwires=this.$el[0].getElementsByClassName('port-wire');
-  for (i=0;i<pwires.length;i++){
-    pendingTasks.push({e:pwires[i],property:'stroke-width',value: width+'px'});
-  }    
+    var pwires = this.$el[0].getElementsByClassName('port-wire');
+    for (i = 0; i < pwires.length; i++) {
+      pendingTasks.push({ e: pwires[i], property: 'stroke-width', value: width + 'px' });
+    }
     // Set buses
-    var nwidth=width*3;
-    tokId='port-wire-' + modelId + '-'; 
-    for(i=0;i<leftPorts.length;i++){
+    var nwidth = width * 3;
+    tokId = 'port-wire-' + modelId + '-';
+    for (i = 0; i < leftPorts.length; i++) {
       port = leftPorts[i];
       if (port.size > 1) {
 
-          dome=document.getElementById(tokId+port.id);
+        dome = document.getElementById(tokId + port.id);
 
-        pendingTasks.push({e: dome ,property:'stroke-width',value:nwidth+'px'});
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
       }
     }
-  
-    for(i=0;i<rightPorts.length;i++){
+
+    for (i = 0; i < rightPorts.length; i++) {
       port = rightPorts[i];
       if (port.size > 1) {
 
-          dome=document.getElementById(tokId+port.id);
- 
-        pendingTasks.push({e:  dome,property:'stroke-width',value:nwidth+'px'});
+        dome = document.getElementById(tokId + port.id);
+
+        pendingTasks.push({ e: dome, property: 'stroke-width', value: nwidth + 'px' });
 
 
-      } 
+      }
     }
 
     // Render rules
     if (data && data.ports && data.ports.in) {
-      tokId='port-default-' + modelId + '-';
-      for(i=0;i<data.ports.in.length;i++){
+      tokId = 'port-default-' + modelId + '-';
+      for (i = 0; i < data.ports.in.length; i++) {
         port = data.ports.in[i];
-        portDefault = document.getElementById(tokId+port.name);
+        portDefault = document.getElementById(tokId + port.name);
         if (portDefault !== null && rules && port.default && port.default.apply) {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'inline'});
-        
-          paths= portDefault.querySelectorAll('path');
-          for(j=0;j<paths.length;j++){
-            pendingTasks.push({e:paths[j], property:'stroke-width',value:width+'px'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'inline' });
+
+          paths = portDefault.querySelectorAll('path');
+          for (j = 0; j < paths.length; j++) {
+            pendingTasks.push({ e: paths[j], property: 'stroke-width', value: width + 'px' });
           }
-          rects= portDefault.querySelectorAll('rect');
-          for(j=0;j<rects.length;j++){
-            pendingTasks.push({e:rects[j], property:'stroke-width',value:state.zoom+'px'});
+          rects = portDefault.querySelectorAll('rect');
+          for (j = 0; j < rects.length; j++) {
+            pendingTasks.push({ e: rects[j], property: 'stroke-width', value: state.zoom + 'px' });
           }
-            
+
 
         }
         else {
 
-          pendingTasks.push({e: portDefault, property:'display',value:'none'});
+          pendingTasks.push({ e: portDefault, property: 'display', value: 'none' });
         }
       }
     }
 
     // Render content
-    for(i=0;i< this.nativeDom.contentSelector.length;i++){
-     pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'left'     ,value: Math.round(bbox.width / 2.0 * (state.zoom - 1))+'px'});
-     pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'top'      ,value: Math.round(bbox.height / 2.0 * (state.zoom - 1))+'px'});
-     pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'width'    ,value: Math.round(bbox.width)+'px'});
-     pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'height'   ,value: Math.round(bbox.height)+'px'});
-     pendingTasks.push({e:this.nativeDom.contentSelector[i], property:'transform',value: 'scale(' + state.zoom + ')'});
+    for (i = 0; i < this.nativeDom.contentSelector.length; i++) {
+      pendingTasks.push({ e: this.nativeDom.contentSelector[i], property: 'left', value: Math.round(bbox.width / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.contentSelector[i], property: 'top', value: Math.round(bbox.height / 2.0 * (state.zoom - 1)) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.contentSelector[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.contentSelector[i], property: 'height', value: Math.round(bbox.height) + 'px' });
+      pendingTasks.push({ e: this.nativeDom.contentSelector[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
     }
 
 
     // Render block
-   pendingTasks.push({e: this.nativeDom.box, property:'left',value:  Math.round( bbox.x * state.zoom + state.pan.x)+'px' });
-   pendingTasks.push({e: this.nativeDom.box, property:'top',value:  Math.round(bbox.y * state.zoom + state.pan.y)+'px' });
-   pendingTasks.push({e: this.nativeDom.box, property:'width',value:  Math.round(bbox.width * state.zoom) +'px'});
-   pendingTasks.push({e: this.nativeDom.box, property:'height',value: Math.round ( bbox.height *  state.zoom) +'px' });
-   
+    pendingTasks.push({ e: this.nativeDom.box, property: 'left', value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'top', value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'width', value: Math.round(bbox.width * state.zoom) + 'px' });
+    pendingTasks.push({ e: this.nativeDom.box, property: 'height', value: Math.round(bbox.height * state.zoom) + 'px' });
 
-    i=pendingTasks.length;
-    for(i=0;i<pendingTasks.length;i++){
-       
-        if(pendingTasks[i].e !== null){
 
-          pendingTasks[i].e.style[pendingTasks[i].property]=pendingTasks[i].value;
-        }
+    i = pendingTasks.length;
+    for (i = 0; i < pendingTasks.length; i++) {
+
+      if (pendingTasks[i].e !== null) {
+
+        pendingTasks[i].e.style[pendingTasks[i].property] = pendingTasks[i].value;
+      }
     }
 
     if (this.editor) {
-      if(editorUpdated){
+      if (editorUpdated) {
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
-        
+
       }
       this.editor.resize();
     }
- 
+
     return pendingTasks;
 
   }
@@ -2001,7 +1963,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.model.on('remove', this.removeBox, this);
 
     // Prevent paper from handling pointerdown.
-    this.editorSelector.on('mousedown click', function (event) {  event.stopPropagation();  });
+    this.editorSelector.on('mousedown click', function (event) { event.stopPropagation(); });
 
     this.updateBox();
 
