@@ -23,7 +23,6 @@ joint.ui.SelectionView = Backbone.View.extend({
 
   showtooltip: true,
   $selectionArea: null,
-  domHash:{},
 
   initialize: function (options) {
 
@@ -370,7 +369,6 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-
   updateBox: function (element) {
 
 
@@ -379,16 +377,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
 
 
-    var i,n, pendingTasks = [];
-    var sel='div[data-model="' + element.get('id') + '"]';
-    var sels=[];
-    if(typeof this.domHash[sel] !== 'undefined'){
-      sels=this.domHash[sel];
-    }else{ 
-      sels = document.querySelectorAll(sel);
-      this.domHash[sel]=sels;
-    }
-    for (i = 0, n=sels.length; i < n; i++) {
+    var i, pendingTasks = [];
+    var sels = document.querySelectorAll('div[data-model="' + element.get('id') + '"]');
+    for (i = 0; i < sels.length; i++) {
       pendingTasks.push({
         e: sels[i], property: 'left', value: Math.round(
           ((bbox.x) * state.zoom + state.pan.x) +

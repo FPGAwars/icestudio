@@ -6,7 +6,8 @@ joint.routers.ice = (function (g, _, joint) {
   var config = {
 
     // size of the step to find a route
-    step: 8,
+    //step: 8,
+    step: 4,
 
     // use of the perpendicular linkView option to connect center of element with first vertex
     perpendicular: true,
@@ -19,7 +20,8 @@ joint.routers.ice = (function (g, _, joint) {
 
     // if number of route finding loops exceed the maximum, stops searching and returns
     // fallback route
-    maximumLoops: 2000,
+    //maximumLoops: 2000,
+    maximumLoops: 200,
 
     // possible starting directions from an element
     startDirections: ['right', 'bottom'],
@@ -173,6 +175,7 @@ joint.routers.ice = (function (g, _, joint) {
       });
     }).toArray();
 */
+    var x,y,origin,corner;
     // Add all rectangles to the map's grid
     _.chain(blockRectangles.concat(labelRectangles))
       // expand their boxes by specific padding
@@ -180,11 +183,11 @@ joint.routers.ice = (function (g, _, joint) {
       // build the map
       .foldl(function (map, bbox) {
 
-        var origin = bbox.origin().snapToGrid(mapGridSize);
-        var corner = bbox.corner().snapToGrid(mapGridSize);
+        origin = bbox.origin().snapToGrid(mapGridSize);
+        corner = bbox.corner().snapToGrid(mapGridSize);
 
-        for (var x = origin.x; x <= corner.x; x += mapGridSize) {
-          for (var y = origin.y; y <= corner.y; y += mapGridSize) {
+        for ( x = origin.x; x <= corner.x; x += mapGridSize) {
+          for (y = origin.y; y <= corner.y; y += mapGridSize) {
 
             var gridKey = x + '@' + y;
 
@@ -352,7 +355,6 @@ joint.routers.ice = (function (g, _, joint) {
     var startPoints, endPoints;
     var startCenter, endCenter;
 
-    iprof.start('joint.routers.findRoute::setPoints1');
     // set of points we start pathfinding from
     if (start instanceof g.rect) {
       startPoints = getRectPoints(start, opt.startDirections, opt);
@@ -371,21 +373,16 @@ joint.routers.ice = (function (g, _, joint) {
       endPoints = [endCenter];
     }
 
-    iprof.end('joint.routers.findRoute::setPoints1');
-
-    iprof.start('joint.routers.findRoute::filter1');
     // take into account only accessible end points
     startPoints = _.filter(startPoints, map.isPointAccessible, map);
     endPoints = _.filter(endPoints, map.isPointAccessible, map);
 
-    iprof.end('joint.routers.findRoute::filter1');
 
     // Check if there is a accessible end point.
     // We would have to use a fallback route otherwise.
     if (startPoints.length > 0 && endPoints.length > 0) {
 
 
-      iprof.start('joint.routers.findRoute::sortedSet');
       // The set of tentative points to be evaluated, initially containing the start points.
       var openSet = new SortedSet();
       // Keeps reference to a point that is immediate predecessor of given element.
@@ -399,7 +396,6 @@ joint.routers.ice = (function (g, _, joint) {
         costs[key] = 0;
       });
 
-      iprof.end('joint.routers.findRoute::sortedSet');
 
       // directions
       var dir, dirChange;
@@ -411,7 +407,6 @@ joint.routers.ice = (function (g, _, joint) {
       var currentDirAngle;
       var previousDirAngle;
 
-      iprof.start('joint.routers.findRoute::Loop');
       // main route finding loop
       while (!openSet.isEmpty() && loopsRemain > 0) {
 
@@ -469,7 +464,6 @@ joint.routers.ice = (function (g, _, joint) {
         loopsRemain--;
       }
 
-      iprof.start('joint.routers.findRoute::Loop');
     }
 
     // no route found ('to' point wasn't either accessible or finding route took
@@ -484,13 +478,14 @@ joint.routers.ice = (function (g, _, joint) {
     opt.penalties = _.result(opt, 'penalties');
     opt.paddingBox = _.result(opt, 'paddingBox');
 
-    _.each(opt.directions, function (direction) {
+    for(var i=0,no=opt.directions.length;i<no;i++){
+    //_.each(opt.directions, function (direction) {
 
       var point1 = g.point(0, 0);
-      var point2 = g.point(direction.offsetX, direction.offsetY);
+      var point2 = g.point(opt.directions[i].offsetX, opt.directions[i].offsetY);
 
-      direction.angle = g.normalizeAngle(point1.theta(point2));
-    });
+      opt.directions[i].angle = g.normalizeAngle(point1.theta(point2));
+    }
   }
 
   // initiation of the route finding
