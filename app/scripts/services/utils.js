@@ -872,7 +872,7 @@ angular.module('icestudio')
       }
       return null;
     };
-
+/*
     this.isObject =function(obj) {
       var type = typeof obj;
       return type === 'function' || type === 'object' && !!obj;
@@ -891,11 +891,11 @@ angular.module('icestudio')
       }
       return target;
     };
+*/
 
-
-/*    this.clone = function (data) {
+    this.clone = function (data) {
       return JSON.parse(JSON.stringify(data));
-    };*/
+    };
 
     this.dependencyID = function (dependency) {
       if (dependency.package && dependency.design) {
