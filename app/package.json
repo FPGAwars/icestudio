@@ -9,7 +9,7 @@
   "license": "GPL-2.0",
   "main": "index.html",
   "development": {
-    "mode": false
+    "mode": true
   },
   "window": {
     "width": 900,
@@ -21,7 +21,7 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.4.1",
+    "min": "0.4.0",
     "max": "0.5.0",
     "extras": [
       "blackiceprog",

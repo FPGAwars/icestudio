@@ -148,6 +148,21 @@ joint.routers.ice = (function (g, _, joint) {
 
     // Compute rectangles from all the port labels
     var state = this.paper.options.getState();
+    var plabels=document.querySelectorAll('.port-label');
+    var labelRectangles=[];
+      var rect = false;
+    var i,npl;
+    for(i=0,npl=plabels.length;i<npl;i++){
+      rect = V(plabels[i]).bbox();
+      labelRectangles.push( g.rect({
+        x: (rect.x - state.pan.x) / state.zoom,
+        y: (rect.y - state.pan.y) / state.zoom,
+        width: rect.width / state.zoom,
+        height: rect.height / state.zoom
+      }));
+
+    }
+    /*
     var labelRectangles = $('.port-label').map(function (index, node) {
       var rect = V(node).bbox();
       return g.rect({
@@ -157,7 +172,7 @@ joint.routers.ice = (function (g, _, joint) {
         height: rect.height / state.zoom
       });
     }).toArray();
-
+*/
     // Add all rectangles to the map's grid
     _.chain(blockRectangles.concat(labelRectangles))
       // expand their boxes by specific padding
@@ -337,6 +352,7 @@ joint.routers.ice = (function (g, _, joint) {
     var startPoints, endPoints;
     var startCenter, endCenter;
 
+    iprof.start('joint.routers.findRoute::setPoints1');
     // set of points we start pathfinding from
     if (start instanceof g.rect) {
       startPoints = getRectPoints(start, opt.startDirections, opt);
@@ -355,14 +371,21 @@ joint.routers.ice = (function (g, _, joint) {
       endPoints = [endCenter];
     }
 
+    iprof.end('joint.routers.findRoute::setPoints1');
+
+    iprof.start('joint.routers.findRoute::filter1');
     // take into account only accessible end points
     startPoints = _.filter(startPoints, map.isPointAccessible, map);
     endPoints = _.filter(endPoints, map.isPointAccessible, map);
+
+    iprof.end('joint.routers.findRoute::filter1');
 
     // Check if there is a accessible end point.
     // We would have to use a fallback route otherwise.
     if (startPoints.length > 0 && endPoints.length > 0) {
 
+
+      iprof.start('joint.routers.findRoute::sortedSet');
       // The set of tentative points to be evaluated, initially containing the start points.
       var openSet = new SortedSet();
       // Keeps reference to a point that is immediate predecessor of given element.
@@ -376,6 +399,8 @@ joint.routers.ice = (function (g, _, joint) {
         costs[key] = 0;
       });
 
+      iprof.end('joint.routers.findRoute::sortedSet');
+
       // directions
       var dir, dirChange;
       var dirs = opt.directions;
@@ -386,6 +411,7 @@ joint.routers.ice = (function (g, _, joint) {
       var currentDirAngle;
       var previousDirAngle;
 
+      iprof.start('joint.routers.findRoute::Loop');
       // main route finding loop
       while (!openSet.isEmpty() && loopsRemain > 0) {
 
@@ -442,6 +468,8 @@ joint.routers.ice = (function (g, _, joint) {
 
         loopsRemain--;
       }
+
+      iprof.start('joint.routers.findRoute::Loop');
     }
 
     // no route found ('to' point wasn't either accessible or finding route took

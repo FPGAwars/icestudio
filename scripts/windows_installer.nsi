@@ -127,7 +127,8 @@ Section "Install Python"
       File ${PYPATH}
 
       # execute Python msi
-      ExecWait '"msiexec" /i "$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
+      # now there isn't MSI      ExecWait '"msiexec" /i "$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
+      ExecWait '"$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
 
   ${EndIf}
 

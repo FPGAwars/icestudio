@@ -287,7 +287,21 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                _.each(cells, function (cell) {
+                
+                for (var i = 0, len = cells.length; i < len; i++) {
+ 
+                    if (!cells[i].isLink()) {
+                        cells[i].attributes.state = state;
+                        var elementView = paper.findViewByModel(cells[i]);
+                        // Pan blocks
+                        elementView.updateBox();
+                        // Pan selection boxes
+                        selectionView.updateBox(elementView.model);
+
+                    }
+                }
+               
+               /* _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cell.attributes.state = state;
                         var elementView = paper.findViewByModel(cell);
@@ -297,7 +311,7 @@ angular.module('icestudio')
                         selectionView.updateBox(elementView.model);
 
                     }
-                });
+                });*/
             }
             // Events
 
@@ -735,27 +749,29 @@ angular.module('icestudio')
             graph.trigger('state', state);
 
         };
-
+    
         function updateWiresOnObstacles() {
             var cells = graph.getCells();
-            _.each(cells, function (cell) {
-                if (cell.isLink()) {
-                    paper.findViewByModel(cell).update();
+
+            //_.each(cells, function (cell) {
+            for(var i=0, n=cells.length;i<n;i++){
+                if (cells[i].isLink()) {
+                    paper.findViewByModel(cells[i]).update();
                 }
-            });
+            }
         }
 
         this.setBoardRules = function (rules) {
             var cells = graph.getCells();
             profile.set('boardRules', rules);
 
-            _.each(cells, function (cell) {
-                if (!cell.isLink()) {
-                    cell.attributes.rules = rules;
-                    var cellView = paper.findViewByModel(cell);
+            for(var i=0, n=cells.length;i<n;i++){
+                if (!cells[i].isLink()) {
+                    cells[i].attributes.rules = rules;
+                    var cellView = paper.findViewByModel(cells[i]);
                     cellView.updateBox();
                 }
-            });
+            }
         };
 
         this.undo = function () {

@@ -1758,6 +1758,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   },
 
   updateBox: function () {
+    iprof.start('editor::updateBox');
     var pendingTasks = [];
     var i, j, port, portDefault, tokId, paths, rects, dome, anotations;
     var bbox = this.model.getBBox();
@@ -1809,6 +1810,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
       }
       //    this.editor.resize();
+    
     }
 
     // Set ports width
@@ -1907,7 +1909,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
+    iprof.end('editor::updateBox');
+
     return pendingTasks;
+
 
   }
 });
@@ -2480,6 +2485,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     this._translateAndAutoOrientArrows(this._V.markerSource, this._V.markerTarget);
   },
 
+  cacheUpdateBifurcations:{},
   updateBifurcations: function () {
     if (this._V.markerBifurcations) {
       var self = this;
@@ -2488,22 +2494,34 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
       // Find all the wires in the same port
       var portWires = [];
-      _.each(allWires, function (wire) {
-        var wireSource = wire.get('source');
-        var cwireSource = currentWire.get('source');
+      var wireSource=false;
+      var cwireSource=false;
+      var wireView=false;
+      var markerBifurcations=false;
+
+      for(var i=0,n=allWires.length;i<n;i++){
+     
+        wireSource = allWires[i].get('source');
+        cwireSource = currentWire.get('source');
         if ((wireSource.id === cwireSource.id) &&
           (wireSource.port === cwireSource.port)) {
           // Wire with the same source of currentWire
-          var wireView = self.paper.findViewByModel(wire);
+          wireView = self.paper.findViewByModel(allWires[i]);
           // Clean the wire bifurcations
-          var markerBifurcations = $(wireView._V.markerBifurcations.node).empty();
+          if(typeof this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node] === 'undefined'){
+           this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node]=$(wireView._V.markerBifurcations.node).empty();
+          }
+
+          markerBifurcations = this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node];
+
           portWires.push({
-            id: wire.get('id'),
+            id: allWires[i].get('id'),
             view: wireView,
             markers: markerBifurcations
           });
         }
-      });
+     
+    }
 
       var points = [];
 
@@ -2513,14 +2531,17 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
           this.model.get('bifurcationMarkup') ||
           this.model.bifurcationMarkup
         );
-        _.each(portWires, function (wireA) {
-          _.each(portWires, function (wireB) {
-            if (wireA.id !== wireB.id) {
+        var A,B,nW;
+          for(A=0,nW=portWires.length;A<nW;A++){
+//        _.each(portWires, function (wireA) {
+          for(B=0;B<nW;B++){
+ //         _.each(portWires, function (wireB) {
+            if (portWires[A].id !== portWires[B].id) {
               // Not the same wire
-              findBifurcations(wireA.view, wireB.view, wireA.markers);
+              findBifurcations(portWires[A].view, portWires[B].view, portWires[A].markers);
             }
-          });
-        });
+          }
+        }
       }
 
       /* jshint -W082 */
@@ -2552,12 +2573,14 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
       function contains(point, points) {
         var found = false;
-        _.each(points, function (p) {
-          if (p.x === point.x && p.y === point.y) {
+        var np=points.length;
+
+        for(var i=0;i<np;i++) {
+          if (points[i].x === point.x && points[i].y === point.y) {
             found = true;
             return;
           }
-        });
+        }
         return found;
       }
 

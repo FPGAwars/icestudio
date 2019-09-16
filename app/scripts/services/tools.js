@@ -704,12 +704,14 @@ angular.module('icestudio')
         resultAlert.dismiss(false);
       }
       if (utils.checkDefaultToolchain()) {
+        console.log('Instalando Default Toolchain');
         utils.removeToolchain();
         installDefaultToolchain();
       }
       else {
         alertify.confirm(gettextCatalog.getString('Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'),
           function () {
+            console.log('Instalando Online Toolchain');
             utils.removeToolchain();
             installOnlineToolchain();
           });
@@ -908,6 +910,8 @@ angular.module('icestudio')
     function installOnlineApio(callback) {
       var extraPackages = _package.apio.extras || [];
       var apio = utils.getApioInstallable();
+
+      console.log('Install Online Apio');
       updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }

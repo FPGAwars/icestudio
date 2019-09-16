@@ -99,7 +99,16 @@ angular.module('icestudio')
     };
 
     this.executeCommand = function (command, callback) {
-      nodeChildProcess.exec(command.join(' '),
+      const fs = require('fs');
+      console.log('EXECUTE COMMAND',fs);
+      var cmd=command.join(' ');
+      fs.appendFile('/home/carlos/icestudio.log',cmd+"\n", function(err) {
+        if (err){
+           throw err;
+        }
+        console.log('The "data to append" was appended to file!');
+      });
+      nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
           $(document).trigger('commandOutputChanged', [common.commandOutput]);
