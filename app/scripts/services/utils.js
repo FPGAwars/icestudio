@@ -21,6 +21,8 @@ angular.module('icestudio')
     gui,
     SVGO) {
 
+
+
     var _pythonExecutableCached = null;
     // Get the system executable
     this.getPythonExecutable = function () {
@@ -871,9 +873,29 @@ angular.module('icestudio')
       return null;
     };
 
-    this.clone = function (data) {
-      return JSON.parse(JSON.stringify(data));
+    this.isObject =function(obj) {
+      var type = typeof obj;
+      return type === 'function' || type === 'object' && !!obj;
     };
+    this.clone=function (src) {
+      let target = {};
+      for (let prop in src) {
+        if (src.hasOwnProperty(prop)) {
+          // if the value is a nested object, recursively copy all it's properties
+          if (this.isObject(src[prop])) {
+            target[prop] = this.clone(src[prop]);
+          } else {
+            target[prop] = src[prop];
+          }
+        }
+      }
+      return target;
+    };
+
+
+/*    this.clone = function (data) {
+      return JSON.parse(JSON.stringify(data));
+    };*/
 
     this.dependencyID = function (dependency) {
       if (dependency.package && dependency.design) {

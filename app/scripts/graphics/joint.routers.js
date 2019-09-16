@@ -6,8 +6,7 @@ joint.routers.ice = (function (g, _, joint) {
   var config = {
 
     // size of the step to find a route
-    //step: 8,
-    step: 4,
+step: 8,
 
     // use of the perpendicular linkView option to connect center of element with first vertex
     perpendicular: true,
@@ -20,8 +19,7 @@ joint.routers.ice = (function (g, _, joint) {
 
     // if number of route finding loops exceed the maximum, stops searching and returns
     // fallback route
-    //maximumLoops: 2000,
-    maximumLoops: 200,
+    maximumLoops: 2000,
 
     // possible starting directions from an element
     startDirections: ['right', 'bottom'],
