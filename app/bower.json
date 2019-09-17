@@ -4,7 +4,7 @@
   "main": "index.html",
   "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
   "contributors": [
-    "Carlos Venegas Arrabe <carlos@magnitude.es>",
+    "Carlos Venegas Arrabe <carlos@magnitude.es> ace 1.2.9",
     "Tom Calvo <calvo.tom@gmail.com>"
   ],
   "license": "GPL-2.0",
@@ -30,7 +30,7 @@
     "joint": "~1.1.0",
     "angular-bootstrap": "~1.3.3",
     "bootstrap": "~3.3.7",
-    "ace-builds": "~1.2.9",
+    "ace-builds": "~1.4.6",
     "select2": "~4.0.5",
     "async": "~1.5.2",
     "svg-pan-zoom": "~3.4.1",
