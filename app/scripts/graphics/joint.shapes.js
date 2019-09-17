@@ -1758,7 +1758,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   },
 
   updateBox: function () {
-    iprof.start('editor::updateBox');
     var pendingTasks = [];
     var i, j, port, portDefault, tokId, paths, rects, dome, anotations;
     var bbox = this.model.getBBox();
@@ -1909,7 +1908,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
       this.editor.resize();
     }
 
-    iprof.end('editor::updateBox');
 
     return pendingTasks;
 

@@ -878,8 +878,8 @@ angular.module('icestudio')
       return type === 'function' || type === 'object' && !!obj;
     }; 
     this.cloneObject=function (src) {
-      let target = {};
-      for (let prop in src) {
+      var target = {};
+      for (var prop in src) {
         if (src.hasOwnProperty(prop)) {
           // if the value is a nested object, recursively copy all it's properties
           if(Array.isArray(src[prop])){
@@ -898,7 +898,7 @@ angular.module('icestudio')
       var target=src;
       if(Array.isArray(src)){
           target=[];
-          for(let i=0,n=src.length;i<n;i++){
+          for(var i=0,n=src.length;i<n;i++){
             target[i]=this.fastClone(src[i]);
           }
           
@@ -913,18 +913,19 @@ angular.module('icestudio')
   this.vanillaClone= function(obj) {
   var clone = {};
   for(var i in obj) {
-      if(obj[i] != null &&  typeof(obj[i])=="object")
+      if(obj[i] !== null &&  typeof(obj[i])==="object"){
           clone[i] = this.clone(obj[i]);
-      else
+      }else{
           clone[i] = obj[i];
+      }
   }
   return clone;
 };
 
    this.clone = function (data) {
-//      var clon1= JSON.parse(JSON.stringify(data));
- //     var clon2= this.fastClone(data);
-// /     console.log('CLONES',clon1,clon2);
+      //var clon1= JSON.parse(JSON.stringify(data));
+      // var clon2= this.fastClone(data);
+      //  console.log('CLONES',clon1,clon2);
       return    this.fastClone(data);
 
      };

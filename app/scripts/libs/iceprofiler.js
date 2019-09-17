@@ -1,10 +1,9 @@
+/* exported iprof */
 
-var iceProfiler=function(){
+'use strict';
+var IceProfiler=function(){
     this.measures={};
     this.stats={};
-
-
-
 
     this.start=function(label){
        this.measures[label]={
@@ -13,7 +12,7 @@ var iceProfiler=function(){
                                 elapsed:-1
                             };
     
-    }
+    };
 
     this.end=function(label){
 
@@ -29,9 +28,10 @@ var iceProfiler=function(){
         this.stats[label].acc += this.measures[label].elapsed;
         this.stats[label].n++;
     
-    }
+    };
 };
 
+var iprof = new IceProfiler();
 
 
-var iprof = new iceProfiler();
+

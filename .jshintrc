@@ -22,7 +22,8 @@
   "-W083": true,
   "-W084": true,
   "globals": {
-    "iceProfiler":false,
+    "iprof":false,
+    "IceProfiler":false,
     "subModuleActive":false,
     "$": false,
     "angular": false,

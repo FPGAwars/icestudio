@@ -70,7 +70,7 @@ ToolchainBuilder.prototype.build = function () {
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
   return new Promise(function(resolve, reject) {
     if (getPythonExecutable()) { resolve(); }
-    else { reject('Python 2.7 is not available'); }
+    else { reject('Python 3.7 is not available'); }
   });
 };
 
@@ -278,15 +278,15 @@ function getPythonExecutable() {
 
     if (process.platform === 'win32') {
       possibleExecutables.push('python.exe');
-      possibleExecutables.push('C:\\Python27\\python.exe');
+      possibleExecutables.push('C:\\Python37\\python.exe');
     } else {
-      possibleExecutables.push('python2.7');
+      possibleExecutables.push('python3.7');
       possibleExecutables.push('python');
     }
 
     for (var i in possibleExecutables) {
       var executable = possibleExecutables[i];
-      if (isPython2(executable)) {
+      if (isPython3(executable)) {
         _pythonExecutableCached = executable;
         break;
       }
@@ -295,11 +295,12 @@ function getPythonExecutable() {
   return _pythonExecutableCached;
 }
 
-function isPython2(executable) {
-  const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+function isPython3(executable) {
+  const args = ['-V'];
   try {
     const result = childProcess.spawnSync(executable, args);
-    return 0 === result.status && result.stdout.toString().startsWith('2.7');
+    return 0 === result.status && result.stdout.toString().indexOf('3.7') >= 0;
+
   } catch(e) {
     return false;
   }
