@@ -2470,8 +2470,8 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     // Necessary path finding
     var route = this.route = this.findRoute(this.model.get('vertices') || [], opt);
     // finds all the connection points taking new vertices into account
-    this._findConnectionPoints(route);
 
+    this._findConnectionPoints(route);
     var pathData = this.getPathData(route);
 
     // The markup needs to contain a `.connection`

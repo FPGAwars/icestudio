@@ -130,7 +130,7 @@ angular.module('icestudio')
                 //markAvailable: true,
                 getState: this.getState,
                 defaultLink: new joint.shapes.ice.Wire(),
-                // guard: function(evt, view) {
+                // guard: function(evt, view) vg
                 //   // FALSE means the event isn't guarded.
                 //   return false;
                 // },
@@ -254,7 +254,7 @@ angular.module('icestudio')
 
             var targetElement = element[0];
 
-            this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
+            this.panAndZoom = svgPanZoom(targetElement.childNodes[2],
                 {
                     fit: false,
                     center: false,
@@ -1310,7 +1310,6 @@ angular.module('icestudio')
                 opt = opt || {};
 
                 $('body').addClass('waiting');
-
                 setTimeout(function () {
 
                     commandManager.stopListening();
