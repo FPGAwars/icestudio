@@ -35,6 +35,8 @@ angular.module('icestudio')
         } else {
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python');
+          possibleExecutables.push('python3');
+ 
         }
 
         for (var i in possibleExecutables) {
