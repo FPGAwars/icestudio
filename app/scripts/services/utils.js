@@ -872,18 +872,20 @@ angular.module('icestudio')
       }
       return null;
     };
-/*
+
     this.isObject =function(obj) {
       var type = typeof obj;
       return type === 'function' || type === 'object' && !!obj;
-    };
-    this.clone=function (src) {
+    }; 
+    this.cloneObject=function (src) {
       let target = {};
       for (let prop in src) {
         if (src.hasOwnProperty(prop)) {
           // if the value is a nested object, recursively copy all it's properties
-          if (this.isObject(src[prop])) {
-            target[prop] = this.clone(src[prop]);
+          if(Array.isArray(src[prop])){
+            target[prop] = this.fastClone(src[prop]);
+          }else if (this.isObject(src[prop])) {
+            target[prop] = this.cloneObject(src[prop]);
           } else {
             target[prop] = src[prop];
           }
@@ -891,11 +893,41 @@ angular.module('icestudio')
       }
       return target;
     };
-*/
 
-    this.clone = function (data) {
-      return JSON.parse(JSON.stringify(data));
+    this.fastClone=function (src) {
+      var target=src;
+      if(Array.isArray(src)){
+          target=[];
+          for(let i=0,n=src.length;i<n;i++){
+            target[i]=this.fastClone(src[i]);
+          }
+          
+      }else if(this.isObject(src)){
+        target =this.cloneObject(src);
+      }
+
+      return target;
     };
+
+
+  this.vanillaClone= function(obj) {
+  var clone = {};
+  for(var i in obj) {
+      if(obj[i] != null &&  typeof(obj[i])=="object")
+          clone[i] = this.clone(obj[i]);
+      else
+          clone[i] = obj[i];
+  }
+  return clone;
+};
+
+   this.clone = function (data) {
+//      var clon1= JSON.parse(JSON.stringify(data));
+ //     var clon2= this.fastClone(data);
+// /     console.log('CLONES',clon1,clon2);
+      return    this.fastClone(data);
+
+     };
 
     this.dependencyID = function (dependency) {
       if (dependency.package && dependency.design) {

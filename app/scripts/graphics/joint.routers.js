@@ -148,7 +148,7 @@ step: 8,
 
     // Compute rectangles from all the port labels
     var state = this.paper.options.getState();
-    var plabels=document.querySelectorAll('.port-label');
+   var plabels=document.querySelectorAll('.port-label');
     var labelRectangles=[];
       var rect = false;
     var i,npl;
@@ -162,8 +162,8 @@ step: 8,
       }));
 
     }
-    /*
-    var labelRectangles = $('.port-label').map(function (index, node) {
+    
+   /* var labelRectangles = $('.port-label').map(function (index, node) {
       var rect = V(node).bbox();
       return g.rect({
         x: (rect.x - state.pan.x) / state.zoom,
@@ -171,8 +171,8 @@ step: 8,
         width: rect.width / state.zoom,
         height: rect.height / state.zoom
       });
-    }).toArray();
-*/
+    }).toArray();*/
+
     var x,y,origin,corner;
     // Add all rectangles to the map's grid
     _.chain(blockRectangles.concat(labelRectangles))
