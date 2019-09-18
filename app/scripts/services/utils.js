@@ -19,9 +19,8 @@ angular.module('icestudio')
     nodeGetOS,
     nodeLangInfo,
     gui,
-    SVGO) {
-
-
+    SVGO,
+    fastCopy) {
 
     var _pythonExecutableCached = null;
     // Get the system executable
@@ -875,60 +874,13 @@ angular.module('icestudio')
       return null;
     };
 
-    this.isObject =function(obj) {
-      var type = typeof obj;
-      return type === 'function' || type === 'object' && !!obj;
-    }; 
-    this.cloneObject=function (src) {
-      var target = {};
-      for (var prop in src) {
-        if (src.hasOwnProperty(prop)) {
-          // if the value is a nested object, recursively copy all it's properties
-          if(Array.isArray(src[prop])){
-            target[prop] = this.fastClone(src[prop]);
-          }else if (this.isObject(src[prop])) {
-            target[prop] = this.cloneObject(src[prop]);
-          } else {
-            target[prop] = src[prop];
-          }
-        }
-      }
-      return target;
-    };
-
-    this.fastClone=function (src) {
-      var target=src;
-      if(Array.isArray(src)){
-          target=[];
-          for(var i=0,n=src.length;i<n;i++){
-            target[i]=this.fastClone(src[i]);
-          }
-          
-      }else if(this.isObject(src)){
-        target =this.cloneObject(src);
-      }
-
-      return target;
-    };
-
-
-  this.vanillaClone= function(obj) {
-  var clone = {};
-  for(var i in obj) {
-      if(obj[i] !== null &&  typeof(obj[i])==="object"){
-          clone[i] = this.clone(obj[i]);
-      }else{
-          clone[i] = obj[i];
-      }
-  }
-  return clone;
-};
-
    this.clone = function (data) {
-      //var clon1= JSON.parse(JSON.stringify(data));
-      // var clon2= this.fastClone(data);
-      //  console.log('CLONES',clon1,clon2);
-      return    this.fastClone(data);
+      // Very slow in comparison but more stable for all types
+      // of objects, if fails, rollback to JSON method or try strict
+      // on fast-copy module  
+      //return  JSON.parse(JSON.stringify(data));
+      return fastCopy(data);
+     
 
      };
 

@@ -128,7 +128,8 @@ Section "Install Python"
 
       # execute Python msi
       # now there isn't MSI      ExecWait '"msiexec" /i "$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
-      ExecWait '"$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
+      # https://docs.python.org/3/using/windows.html#customization-via-ini-files
+      ExecWait '"$INSTDIR\python\${PYTHON}" /passive /norestart PrependPath=1'
 
   ${EndIf}
 
@@ -188,7 +189,9 @@ SectionEnd
 
 
 Function "LaunchLink"
-
+ ReadEnvStr $R0 "PATH"
+# SetEnv::SetEnvVar "PATH" $R0
+ System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
  Exec "$INSTDIR\icestudio.exe"
 
 FunctionEnd
