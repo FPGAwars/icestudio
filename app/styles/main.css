@@ -17,7 +17,7 @@ body {
   overflow: hidden;
   margin: 0;
   height: 100%;
-  font-family:'LatoWeb' !important;
+  font-family:'LatoWeb';
 }
 
 .hidden {
