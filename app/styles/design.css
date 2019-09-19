@@ -229,6 +229,7 @@ g {
   right: 0;
   bottom: 0;
   position: absolute;
+  max-height:100%;
 }
 
 .generic-block .generic-content label {
