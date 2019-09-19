@@ -1,6 +1,8 @@
+
 * {
   -webkit-user-select: none;
   user-select: none;
+  
 }
 
 .notransition {
@@ -15,6 +17,7 @@ body {
   overflow: hidden;
   margin: 0;
   height: 100%;
+  font-family:'LatoWeb' !important;
 }
 
 .hidden {
