@@ -27,6 +27,14 @@ angular.module('icestudio')
             content: content
           });
           break;
+        case 'lpf':
+          content += header('#', opt);
+          content += lpfCompiler(project, opt);
+          files.push({
+            name: 'main.lpf',
+            content: content
+          });
+          break;
         case 'list':
           files = listCompiler(project);
           break;
@@ -764,6 +772,102 @@ angular.module('icestudio')
         }
       }
 
+      return code;
+    }
+
+    function lpfCompiler(project, opt) {
+      var i, j, block, pin, value, code = '';
+      var blocks = project.design.graph.blocks;
+      opt = opt || {};
+
+      for (i in blocks) {
+        block = blocks[i];
+        if (block.type === 'basic.input' ||
+            block.type === 'basic.output') {
+
+          if (block.data.pins.length > 1) {
+            for (var p in block.data.pins) {
+              pin = block.data.pins[p];
+              value = block.data.virtual ? '' : pin.value;
+              code += 'LOCATE COMP "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" SITE "';
+              code += value;
+              code += '";\n';
+
+              code += 'IOBUF PORT "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+            }
+          }
+          else if (block.data.pins.length > 0) {
+            pin = block.data.pins[0];
+            value = block.data.virtual ? '' : pin.value;
+            code += 'LOCATE COMP "';
+            code += utils.digestId(block.id);
+            code += '" SITE "';
+            code += value;
+            code += '";\n';
+
+            code += 'IOBUF PORT "';
+            code += utils.digestId(block.id);
+            code += '" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+          }
+        }
+      }
+
+/*      if (opt.boardRules) {
+        // Declare init input ports
+
+        var used = [];
+        var initPorts = opt.initPorts || getInitPorts(project);
+        for (i in initPorts) {
+          var initPort = initPorts[i];
+          if (used.indexOf(initPort.pin) !== -1) {
+            break;
+          }
+          used.push(initPort.pin);
+
+          // Find existing input block with the initPort value
+          var found = false;
+          for (j in blocks) {
+            block = blocks[j];
+            if (block.type === 'basic.input' &&
+            !block.data.range &&
+            !block.data.virtual &&
+            initPort.pin === block.data.pins[0].value) {
+              found = true;
+              used.push(initPort.pin);
+              break;
+            }
+          }
+
+          if (!found) {
+            code += 'set_io v';
+            code += initPorts[i].name;
+            code += ' ';
+            code += initPorts[i].pin;
+            code += '\n';
+          }
+        }
+
+        // Declare init output pins
+
+        var initPins = opt.initPins || getInitPins(project);
+        if (initPins.length > 1) {
+          for (i in initPins) {
+            code += 'set_io vinit[' + i + '] ';
+            code += initPins[i].pin;
+            code += '\n';
+          }
+        }
+        else if (initPins.length > 0) {
+          code += 'set_io vinit ';
+          code += initPins[0].pin;
+          code += '\n';
+        }
+      }
+*/
       return code;
     }
 
