@@ -778,8 +778,15 @@ angular.module('icestudio')
     function lpfCompiler(project, opt) {
       var i, j, block, pin, value, code = '';
       var blocks = project.design.graph.blocks;
+      var pullmode;
       opt = opt || {};
 
+      var pinout;
+      for (var i = 0; i < common.boards.length; i++) {
+        if (String(common.boards[i].name) === String(project.design.board)) {
+          pinout = common.boards[i].pinout;
+        }
+      }
       for (i in blocks) {
         block = blocks[i];
         if (block.type === 'basic.input' ||
@@ -795,9 +802,15 @@ angular.module('icestudio')
               code += value;
               code += '";\n';
 
+              pullmode = 'NONE';
+              for (var i in pinout) {
+                if (pinout[i].value === value) { 
+                  pullmode = pinout[i].pullmode ? pinout[i].pullmode : 'NONE';
+                }
+              }                
               code += 'IOBUF PORT "';
               code += utils.digestId(block.id);
-              code += '[' + pin.index + ']" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+              code += '[' + pin.index + ']" PULLMODE=' + pullmode + ' IO_TYPE=LVCMOS33 DRIVE=4;\n';
             }
           }
           else if (block.data.pins.length > 0) {
@@ -809,9 +822,15 @@ angular.module('icestudio')
             code += value;
             code += '";\n';
 
+            pullmode = 'NONE';
+            for (var i in pinout) {
+              if (pinout[i].value === value) { 
+                pullmode = pinout[i].pullmode ? pinout[i].pullmode : 'NONE';
+              }
+            }     
             code += 'IOBUF PORT "';
             code += utils.digestId(block.id);
-            code += '" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+            code += '" PULLMODE=' + pullmode + ' IO_TYPE=LVCMOS33 DRIVE=4;\n';
           }
         }
       }
