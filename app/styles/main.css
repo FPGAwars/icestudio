@@ -1,3 +1,10 @@
+/* Webfont: Lato-Black */@font-face {
+  font-family: 'SVG-SANS';
+  src: url('../resources/fonts/freefont/FreeSerifBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
 
 * {
   -webkit-user-select: none;
@@ -79,6 +86,10 @@ body {
 
 .alertify .ajs-body .ajs-content .ajs-input {
   border-radius: 4px;
+}
+.alertify .ajs-body .ajs-content .ajs-input{
+  width:auto;
+  max-width:100%;
 }
 
 .ajs-header {
