@@ -221,7 +221,8 @@ g {
 }
 
 .generic-block .generic-content img {
-  width: 100%;
+  width: auto;
+  max-width:100%;
   height: auto;
   margin: auto;
   top: 0;
