@@ -286,7 +286,7 @@ step: 8,
 
       current = parent;
     }
-
+ 
     var startDiff = normalizePoint(g.point(current).difference(startCenter));
     if (!startDiff.equals(prevDiff)) {
       route.unshift(current);

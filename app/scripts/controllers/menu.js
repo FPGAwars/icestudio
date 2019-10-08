@@ -1074,5 +1074,17 @@ angular.module('icestudio')
         event.preventDefault();
       }
     });
+    // Open links on external Browser
+/*    $(document).click('.open-in-system-browser', function (e) {
+      e.preventDefault();
+      var link=$(e.target).closest('a'); 
+      var href=$(link).attr('href');
+      if(typeof href !== 'undefined') {
+      
+        utils.openUrlExternalBrowser(href);
+      }
+      return false;
+    });*/
+
 
   });

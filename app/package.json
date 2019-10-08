@@ -3,7 +3,21 @@
   "version": "0.5.1-nightly",
   "nightly": "0.5.1-nightly",
   "description": "Visual editor for open FPGA boards",
-  "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
+  "contributors": [
+    {
+      "name": "Jesús Arroyo Torrens",
+      "email": "jesus.arroyo.torrens@gmail.com",
+      "url": "https://github.com/Jesus89"
+    },
+    {
+      "name": "Carlos Venegas Arrabe",
+      "url": "https://github.com/cavearr"
+    },
+    {
+      "name": "Juan González Gómez",
+      "url": "https://github.com/Obijuan"
+    }
+  ],
   "repository": "https://github.com/FPGAwars/icestudio",
   "updatecheck": "https://raw.githubusercontent.com/FPGAwars/icestudio/develop/app/package.json",
   "license": "GPL-2.0",

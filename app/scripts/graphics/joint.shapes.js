@@ -2465,6 +2465,7 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
   },
 
   updateConnection: function (opt) {
+    
     opt = opt || {};
 
     // Necessary path finding
@@ -2506,12 +2507,6 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
           // Wire with the same source of currentWire
           wireView = self.paper.findViewByModel(allWires[i]);
           // Clean the wire bifurcations
-          /*if(typeof this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node] === 'undefined'){
-           this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node]=$(wireView._V.markerBifurcations.node).empty();
-          }
-
-          markerBifurcations = this.cacheUpdateBifurcations[wireView._V.markerBifurcations.node];
-*/
           markerBifurcations=$(wireView._V.markerBifurcations.node).empty();
           portWires.push({
             id: allWires[i].get('id'),
