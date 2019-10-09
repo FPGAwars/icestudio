@@ -850,9 +850,11 @@ angular.module('icestudio')
 
     //-- Help
 
-    $scope.openUrl = function (url) {
-//      event.preventDefault();
-      gui.Shell.openExternal(url);
+    $scope.openUrl = function (url,$event) {
+      $event.preventDefault();
+
+      utils.openUrlExternalBrowser(url);
+      return false;
     };
 
     $scope.about = function () {
@@ -1074,17 +1076,6 @@ angular.module('icestudio')
         event.preventDefault();
       }
     });
-    // Open links on external Browser
-/*    $(document).click('.open-in-system-browser', function (e) {
-      e.preventDefault();
-      var link=$(e.target).closest('a'); 
-      var href=$(link).attr('href');
-      if(typeof href !== 'undefined') {
-      
-        utils.openUrlExternalBrowser(href);
-      }
-      return false;
-    });*/
 
 
   });

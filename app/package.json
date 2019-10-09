@@ -23,7 +23,7 @@
   "license": "GPL-2.0",
   "main": "index.html",
   "development": {
-    "mode": true
+    "mode": false
   },
   "window": {
     "width": 900,
