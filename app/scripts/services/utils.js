@@ -33,8 +33,8 @@ angular.module('icestudio')
           possibleExecutables.push('C:\\Python37\\python.exe');
         } else {
           possibleExecutables.push('python3.7');
-          possibleExecutables.push('python');
           possibleExecutables.push('python3');
+          possibleExecutables.push('python');
  
         }
 
