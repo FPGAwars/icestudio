@@ -37,9 +37,9 @@ RequestExecutionLevel admin
 !define MUI_DIRECTORYPAGE_VERIFYONLEAVE
 
 # run after installing
-!define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Start ${NAME} ${VERSION}"
-!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
+#!define MUI_FINISHPAGE_RUN
+#!define MUI_FINISHPAGE_RUN_TEXT "Start ${NAME} ${VERSION}"
+#!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 
 # installer pages
 !insertmacro MUI_PAGE_WELCOME

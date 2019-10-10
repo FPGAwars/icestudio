@@ -8,9 +8,9 @@ module.exports = function(grunt) {
   var platforms, options, distCommands;
 
   if (DARWIN) {
-    platforms = ['osx32', 'osx64'];
+    platforms = ['osx64'];
     options = { scope: ['devDependencies', 'darwinDependencies'] };
-    distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
+    distCommands = [ 'compress:osx64', 'appdmg'];
   }
   else {
     platforms = ['linux32', 'linux64', 'win32', 'win64'];

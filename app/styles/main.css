@@ -88,10 +88,14 @@ body {
   border-radius: 4px;
 }
 .alertify .ajs-body .ajs-content .ajs-input{
-  width:auto;
-  max-width:100%;
-}
+  width:100%;
+ }
 
+ #preview-svg.ajs-input{
+   width:auto;
+   max-width:100%;
+   
+ }
 .ajs-header {
   display: none;
 }
