@@ -53,6 +53,6 @@
     "nw": "0.35.5-sdk"
   },
   "darwinDependencies": {
-    "grunt-appdmg": "^0.4.0"
+    "grunt-appdmg": "^1.0.0"
   }
 }

@@ -128,7 +128,7 @@ module.exports = function(grunt) {
         buildDir: 'dist/',
         winIco: 'docs/resources/images/logo/icestudio-logo.ico',
         macIcns: 'docs/resources/images/logo/nw.icns',
-        macPlist: { 'CFBundleIconFile': 'nw.icns' },
+        macPlist: { 'CFBundleIconFile': 'app' },
         platforms: platforms
       },
       src: ['dist/tmp/**']
