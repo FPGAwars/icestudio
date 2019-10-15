@@ -24,7 +24,7 @@ function ToolchainBuilder(options) {
     buildDir: './build',
     cacheDir: './cache',
     extraPackages: [],
-    platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
+    platforms: ['linux32', 'linux64', 'win32', 'win64',  'osx64'],
   };
 
   // Assign options
@@ -281,6 +281,7 @@ function getPythonExecutable() {
       possibleExecutables.push('C:\\Python37\\python.exe');
     } else {
       possibleExecutables.push('python3.7');
+      possibleExecutables.push('python3');
       possibleExecutables.push('python');
     }
 

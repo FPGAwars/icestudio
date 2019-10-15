@@ -50,12 +50,10 @@ angular.module('icestudio')
     };
 
     function isPython3(executable) {
-      //      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
-      const args = ['-V'];
-
+      executable+=' -V';
       try {
-        const result = nodeChildProcess.spawnSync(executable, args);
-        return 0 === result.status && result.stdout.toString().indexOf('3.7') >= 0;
+        const result = nodeChildProcess.execSync(executable);
+        return (result !== false && result !== null && result.toString().indexOf('3.7') >= 0);
       } catch (e) {
         return false;
       }
