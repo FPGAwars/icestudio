@@ -265,9 +265,7 @@ angular.module('icestudio')
                     minZoom: ZOOM_MIN,
                     maxZoom: ZOOM_MAX,
                     eventsListenerElement: targetElement,
-                    /*beforeZoom: function(oldzoom, newzoom) {
-        },*/
-                    onZoom: function (scale) {
+                   onZoom: function (scale) {
                         state.zoom = scale;
                         // Close expanded combo
                         if (document.activeElement.className === 'select2-search__field') {
@@ -275,9 +273,7 @@ angular.module('icestudio')
                         }
                         updateCellBoxes();
                     },
-                    /*beforePan: function(oldpan, newpan) {
-        },*/
-                    onPan: function (newPan) {
+                   onPan: function (newPan) {
                         state.pan = newPan;
                         graph.trigger('state', state);
                         updateCellBoxes();
@@ -301,17 +297,6 @@ angular.module('icestudio')
                     }
                 }
                
-               /* _.each(cells, function (cell) {
-                    if (!cell.isLink()) {
-                        cell.attributes.state = state;
-                        var elementView = paper.findViewByModel(cell);
-                        // Pan blocks
-                        elementView.updateBox();
-                        // Pan selection boxes
-                        selectionView.updateBox(elementView.model);
-
-                    }
-                });*/
             }
             // Events
 

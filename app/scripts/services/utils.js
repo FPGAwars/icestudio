@@ -32,6 +32,8 @@ angular.module('icestudio')
           possibleExecutables.push('python.exe');
           possibleExecutables.push('C:\\Python37\\python.exe');
         } else {
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3');
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3');
           possibleExecutables.push('python');
@@ -101,13 +103,11 @@ angular.module('icestudio')
 
     this.executeCommand = function (command, callback) {
       const fs = require('fs');
-      console.log('EXECUTE COMMAND',fs);
       var cmd=command.join(' ');
       fs.appendFile('/home/carlos/icestudio.log',cmd+"\n", function(err) {
         if (err){
            throw err;
         }
-        console.log('The "data to append" was appended to file!');
       });
       nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {

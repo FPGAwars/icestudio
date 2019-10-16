@@ -1077,5 +1077,4 @@ angular.module('icestudio')
       }
     });
 
-
   });
