@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
@@ -196,11 +196,11 @@ msgstr "Cinese"
 #: app/scripts/services/blocks.js:1103 app/scripts/services/blocks.js:1224
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "Scegli un colore"
 
 #: app/views/menu.html:322
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Strumenti di sviluppo Chrome"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -296,7 +296,7 @@ msgstr "Copia"
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "Corallo"
 
 #: app/scripts/services/tools.js:879
 msgid "Create virtualenv..."
@@ -313,12 +313,12 @@ msgstr "Ceco"
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "VerdeScuro"
 
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "ArancioneScuro"
 
 #: app/views/menu.html:158
 msgid "Datasheet"
@@ -331,12 +331,12 @@ msgstr "Decimale"
 #: app/scripts/services/blocks.js:1108 app/scripts/services/blocks.js:1229
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "RosaScuro"
 
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "BluCieloProfondo"
 
 #: app/views/menu.html:210
 msgid "Default"
@@ -537,7 +537,7 @@ msgstr "Francese"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "Fuchsia"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -550,16 +550,16 @@ msgstr "Tedesco"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "Oro"
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Greco"
 
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "VerdeAcido"
 
 #: app/views/menu.html:329
 msgid "Help"
@@ -574,6 +574,7 @@ msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
+"Se hai pin IN/OUT vuoti, è perché non esiste un equivalente in questa scheda"
 
 #: app/scripts/services/utils.js:587
 msgid "Image"
@@ -586,7 +587,7 @@ msgstr "Immagine {{name}} salvata"
 #: app/scripts/services/blocks.js:1106 app/scripts/services/blocks.js:1227
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "RossoIndiano"
 
 #: app/views/menu.html:388
 msgid "Information"
@@ -598,7 +599,7 @@ msgstr "Ingresso"
 
 #: app/views/menu.html:374
 msgid "Input label"
-msgstr ""
+msgstr "Etichetta di Input"
 
 #: app/views/menu.html:251
 msgid "Install"
@@ -661,7 +662,7 @@ msgstr "È raccomandato l'utilizzo di porte <b>USB 2.0</b>"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italiano"
 
 #: app/views/menu.html:121
 msgid "Language"
@@ -670,7 +671,7 @@ msgstr "Lingua"
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "VerdeAcqua"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -688,7 +689,7 @@ msgstr "Dimensione massima del bus: 96 bits"
 #: app/scripts/services/blocks.js:1109 app/scripts/services/blocks.js:1230
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "RossoViolaceo"
 
 #: app/views/menu.html:382
 msgid "Memory"
@@ -701,7 +702,7 @@ msgstr "Nome"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "BluIntenso"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -719,7 +720,7 @@ msgstr "OK"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "VerdeOlivo"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -732,7 +733,7 @@ msgstr "Apri SVG"
 #: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "RossoArancio"
 
 #: app/scripts/services/project.js:512
 msgid "Original file {{file}} does not exist"
@@ -744,7 +745,7 @@ msgstr "Uscita"
 
 #: app/views/menu.html:371
 msgid "Output label"
-msgstr ""
+msgstr "Etichetta di Output"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -793,7 +794,7 @@ msgstr "Solo lettura"
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
-msgstr ""
+msgstr "Rosso"
 
 #: app/views/menu.html:97
 msgid "Redo"
@@ -830,11 +831,11 @@ msgstr "Ripristina ai valori predefiniti"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "BluReale"
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Russo"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -867,7 +868,7 @@ msgstr "Mostra segnale di clock"
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "BluArdesia"
 
 #: app/views/menu.html:342
 msgid "Source code"
@@ -880,7 +881,7 @@ msgstr "Spagnolo"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "VerdePrimavera"
 
 #: app/scripts/controllers/menu.js:658
 msgid "Start build"
@@ -897,7 +898,7 @@ msgstr "Inizia verifica"
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "BluAcciaio"
 
 #: app/scripts/services/tools.js:285
 msgid "Synchronize remote files ..."
@@ -977,7 +978,7 @@ msgstr "Strumenti"
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "Turchese"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1069,7 +1070,7 @@ msgstr "Nome dell'host remoto {{name}} errato"
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "Giallo"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
