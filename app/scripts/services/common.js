@@ -51,6 +51,7 @@ angular.module('icestudio')
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
+    this.LOGFILE = nodePath.join(process.env.HOME,'icestudio.log');
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
