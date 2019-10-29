@@ -102,9 +102,9 @@ angular.module('icestudio')
     };
 
     this.executeCommand = function (command, callback) {
-//      const fs = require('fs');
       var cmd=command.join(' ');
-      nodeFs.appendFile(common.LOGFILE,'utils.executeCommand=>'+cmd+"\n");
+      //const fs = require('fs');
+      nodeFs.appendFileSync(common.LOGFILE,'utils.executeCommand=>'+cmd+"\n");
       nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;

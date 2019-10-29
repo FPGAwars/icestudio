@@ -330,7 +330,7 @@ angular.module('icestudio')
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
 
-          nodeFs.appendFile(common.LOGFILE,'tools._executeLocal>'+command+"\n");
+          nodeFs.appendFileSync(common.LOGFILE,'tools._executeLocal>'+command+"\n");
 
           nodeChildProcess.exec(command,
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
