@@ -104,7 +104,7 @@ angular.module('icestudio')
     this.executeCommand = function (command, callback) {
       const fs = require('fs');
       var cmd=command.join(' ');
-      fs.appendFile('/home/carlos/icestudio.log',cmd+"\n", function(err) {
+      fs.appendFile('icestudio.log','utils.executeCommand=>'+cmd+"\n", function(err) {
         if (err){
            throw err;
         }
