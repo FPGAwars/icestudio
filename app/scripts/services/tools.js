@@ -329,9 +329,12 @@ angular.module('icestudio')
         function _executeLocal() {
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
-          const fs= require('fs');
-          fs.appendFileSync(common.LOGFILE,'tools._executeLocal>'+command+"\n");
+          if (typeof common.DEBUGMODE !== 'undefined' &&
+            common.DEBUGMODE === 1) {
 
+            const fs = require('fs');
+            fs.appendFileSync(common.LOGFILE, 'tools._executeLocal>' + command + "\n");
+          }
           nodeChildProcess.exec(command,
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
             function (error, stdout, stderr) {

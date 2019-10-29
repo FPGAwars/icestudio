@@ -37,7 +37,7 @@ angular.module('icestudio')
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3');
           possibleExecutables.push('python');
- 
+
         }
 
         for (var i in possibleExecutables) {
@@ -52,7 +52,7 @@ angular.module('icestudio')
     };
 
     function isPython3(executable) {
-      executable+=' -V';
+      executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
         return (result !== false && result !== null && result.toString().indexOf('3.7') >= 0);
@@ -102,9 +102,13 @@ angular.module('icestudio')
     };
 
     this.executeCommand = function (command, callback) {
-      var cmd=command.join(' ');
+      var cmd = command.join(' ');
       //const fs = require('fs');
-      nodeFs.appendFileSync(common.LOGFILE,'utils.executeCommand=>'+cmd+"\n");
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
+
+        nodeFs.appendFileSync(common.LOGFILE, 'utils.executeCommand=>' + cmd + "\n");
+      }
       nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
@@ -868,15 +872,15 @@ angular.module('icestudio')
       return null;
     };
 
-   this.clone = function (data) {
+    this.clone = function (data) {
       // Very slow in comparison but more stable for all types
       // of objects, if fails, rollback to JSON method or try strict
       // on fast-copy module  
       //return  JSON.parse(JSON.stringify(data));
       return fastCopy(data);
-     
 
-     };
+
+    };
 
     this.dependencyID = function (dependency) {
       if (dependency.package && dependency.design) {
@@ -1204,8 +1208,8 @@ angular.module('icestudio')
     };
     this.openUrlExternalBrowser = function (url) {
 
-          gui.Shell.openExternal(url);
-        //require('nw.gui').Shell.openExternal( url);
+      gui.Shell.openExternal(url);
+      //require('nw.gui').Shell.openExternal( url);
     };
 
   });

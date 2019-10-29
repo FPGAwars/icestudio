@@ -201,14 +201,20 @@ angular.module('icestudio')
         brewCommands = brewCommands.concat(brewInstall(brewPackages[i]));
       }
       utils.beginBlockingTask();
-      //M+
-      const fs = require('fs');
-      fs.appendFileSync(common.LOGFILE,'drivers.enableDarwinDrivers'+"\n");
-   
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
+
+        const fs = require('fs');
+        fs.appendFileSync(common.LOGFILE, 'drivers.enableDarwinDrivers' + "\n");
+      }
       nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
-         const fso = require('fs');
-         fso.appendFileSync(common.LOGFILE,'stdout=>'+stdout+"\n");
- 
+        if (typeof common.DEBUGMODE !== 'undefined' &&
+          common.DEBUGMODE === 1) {
+          const fs = require('fs');
+          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stderr + "\n");
+
+          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stdout + "\n");
+        }
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
             (stderr.indexOf('brew: No such file or directory') !== -1)) {
@@ -235,9 +241,12 @@ angular.module('icestudio')
         }
         utils.endBlockingTask();
       });
-     fs.appendFileSync(common.LOGFILE,'/drivers.enableDarwinDrivers'+"\n");
-   
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
 
+        fs.appendFileSync(common.LOGFILE, '/drivers.enableDarwinDrivers' + "\n");
+
+      }
     }
 
     function disableDarwinDrivers(profileSetting) {

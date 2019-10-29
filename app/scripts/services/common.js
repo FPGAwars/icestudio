@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('common', function(nodePath,
-                              nodeTmp) {
+  .service('common', function (nodePath,
+    nodeTmp) {
 
     // Project version
     this.VERSION = '1.2';
@@ -34,6 +34,9 @@ angular.module('icestudio')
       brams: '-'
     };
 
+    // Debug mode (uncomment)
+    // this.DEBUGMODE = 1;
+
     // Command output
     this.commandOutput = '';
 
@@ -51,7 +54,7 @@ angular.module('icestudio')
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
-    this.LOGFILE = nodePath.join(process.env.HOME,'icestudio.log');
+    this.LOGFILE = nodePath.join(process.env.HOME, 'icestudio.log');
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
@@ -121,5 +124,5 @@ angular.module('icestudio')
     this.showDrivers = function () {
       return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || false;
     };
-    this.isEditingSubmodule=false;
+    this.isEditingSubmodule = false;
   });
