@@ -243,7 +243,7 @@ angular.module('icestudio')
       });
       if (typeof common.DEBUGMODE !== 'undefined' &&
         common.DEBUGMODE === 1) {
-
+        const fs = require('fs');
         fs.appendFileSync(common.LOGFILE, '/drivers.enableDarwinDrivers' + "\n");
 
       }
