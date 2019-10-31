@@ -12,11 +12,11 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/scripts/services/drivers.js:171 app/scripts/services/drivers.js:349
+#: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>Αποσυνδέστε</b> και <b>επανασυνδέστε</b> την πλακέτα"
 
-#: app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:305
 msgid ""
 "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
 "to the USB and wait until Windows finishes the default installation of the "
@@ -32,7 +32,7 @@ msgstr ""
 "την εγκατάσταση, αντικαταστήστε τον οδηγό <b>(Interface 0)</b> με τον "
 "<b>libusbK</b></li><li>Αποσυνδέστε και επανασυνδέστε την πλακέτα</li></ol>"
 
-#: app/scripts/services/drivers.js:314
+#: app/scripts/services/drivers.js:312
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -41,7 +41,7 @@ msgstr ""
 "FPGA USB συσκευής</li><li>Διαλέξτε την πλακέτα και απεγκαταστήσετε τον "
 "οδηγό</li></ol>"
 
-#: app/scripts/services/drivers.js:321
+#: app/scripts/services/drivers.js:319
 msgid ""
 "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
 "board to the USB and wait until Windows finishes the default installation of "
@@ -57,7 +57,7 @@ msgstr ""
 "li><li>Ακολουθήστε τα βήματα για να ολοκληρώσετε την εγκατάσταση</"
 "li><li>Αποσυνδέστε και επανασυνδέστε την πλακέτα</li></ol>"
 
-#: app/scripts/services/drivers.js:328
+#: app/scripts/services/drivers.js:326
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
@@ -66,15 +66,15 @@ msgstr ""
 "της FPGA USB συσκευής</li><li>Διαλέξτε την πλακέτα και απεγκαταστήσετε τον "
 "οδηγό</li></ol>"
 
-#: app/views/menu.html:350
+#: app/views/menu.html:356
 msgid "About Icestudio"
 msgstr "Σχετικά με το Icestudio"
 
-#: app/views/menu.html:294
+#: app/views/menu.html:297
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: app/scripts/controllers/menu.js:692
+#: app/scripts/controllers/menu.js:788
 msgid "Add a block to start"
 msgstr "Προσθέστε ένα block στην αρχή"
 
@@ -82,23 +82,27 @@ msgstr "Προσθέστε ένα block στην αρχή"
 msgid "Add as block"
 msgstr "Προσθήκη ως block"
 
-#: app/scripts/services/blocks.js:1557 app/scripts/services/blocks.js:458
+#: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:458
 msgid "Address format"
 msgstr "Μορφοποίηση Διεύθυνσης"
 
-#: app/scripts/services/tools.js:1167
+#: app/scripts/services/tools.js:1173
 msgid "All collections removed"
 msgstr "Όλες οι συλλογές διαγράφηκαν"
 
-#: app/scripts/controllers/menu.js:721
+#: app/scripts/controllers/menu.js:817
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Όλες οι αποθηκευμένες συλλογές θα διαγραφούν. θέλετε να συνεχίσετε?"
 
-#: app/scripts/services/utils.js:574
+#: app/scripts/services/utils.js:575
 msgid "Author"
 msgstr "Συντάκτης"
 
-#: app/views/menu.html:361
+#: app/views/version.html:33
+msgid "Automatic check for new versions"
+msgstr ""
+
+#: app/views/menu.html:367
 msgid "Basic"
 msgstr "Basic"
 
@@ -106,20 +110,26 @@ msgstr "Basic"
 msgid "Basque"
 msgstr "Βασκικά"
 
-#: app/scripts/services/blocks.js:1560 app/scripts/services/blocks.js:461
+#: app/views/version.html:34
+msgid ""
+"Because Icestudio is in actively development it is important to stay your "
+"icestudio in the last version. Now we are notifying you!"
+msgstr ""
+
+#: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
 msgstr "Δυαδικό"
 
-#: app/scripts/services/blocks.js:1179 app/scripts/services/blocks.js:1203
-#: app/scripts/services/blocks.js:1293 app/scripts/services/blocks.js:1315
-#: app/scripts/services/blocks.js:1390 app/scripts/services/blocks.js:1411
-#: app/scripts/services/blocks.js:1474 app/scripts/services/blocks.js:1493
-#: app/scripts/services/blocks.js:1536 app/scripts/services/blocks.js:1593
-#: app/scripts/services/blocks.js:1639
+#: app/scripts/services/blocks.js:1183 app/scripts/services/blocks.js:1207
+#: app/scripts/services/blocks.js:1297 app/scripts/services/blocks.js:1319
+#: app/scripts/services/blocks.js:1394 app/scripts/services/blocks.js:1415
+#: app/scripts/services/blocks.js:1478 app/scripts/services/blocks.js:1497
+#: app/scripts/services/blocks.js:1540 app/scripts/services/blocks.js:1597
+#: app/scripts/services/blocks.js:1643
 msgid "Block updated"
 msgstr "Το block ενημερώθηκε"
 
-#: app/scripts/services/project.js:460
+#: app/scripts/services/project.js:475
 msgid "Block {{name}} imported"
 msgstr "Το {{name}} block εισάχθηκε"
 
@@ -127,47 +137,47 @@ msgstr "Το {{name}} block εισάχθηκε"
 msgid "Blocks"
 msgstr "Blocks"
 
-#: app/views/menu.html:184
+#: app/views/menu.html:187
 msgid "Board"
 msgstr "Πλακέτα"
 
-#: app/views/menu.html:127 app/views/menu.html:161
+#: app/views/menu.html:130 app/views/menu.html:164
 msgid "Board rules"
 msgstr "Κανόνες πλακέτας"
 
-#: app/scripts/controllers/menu.js:463
+#: app/scripts/controllers/menu.js:541
 msgid "Board rules disabled"
 msgstr "Οι κανόνες της πλακέτας απενεργοποιήθηκαν"
 
-#: app/scripts/controllers/menu.js:460
+#: app/scripts/controllers/menu.js:538
 msgid "Board rules enabled"
 msgstr "Οι κανόνες της πλακέτας ενεργοποιήθηκαν"
 
-#: app/scripts/services/tools.js:388
+#: app/scripts/services/tools.js:395
 msgid "Board {{name}} disconnected"
 msgstr "Η πλακέτα {{name}} αποσυνδέθηκε"
 
-#: app/scripts/services/tools.js:368 app/scripts/services/tools.js:384
+#: app/scripts/services/tools.js:375 app/scripts/services/tools.js:391
 msgid "Board {{name}} not available"
 msgstr "Η πλακέτα {{name}} δεν είναι διαθέσιμη"
 
-#: app/scripts/services/tools.js:358
+#: app/scripts/services/tools.js:365
 msgid "Board {{name}} not connected"
 msgstr "Η πλακέτα {{name}} δεν είναι συνδεδεμένη"
 
-#: app/scripts/app.js:48 app/scripts/controllers/menu.js:640
+#: app/scripts/app.js:51 app/scripts/controllers/menu.js:718
 msgid "Board {{name}} selected"
 msgstr "Η πλακέτα {{name}} επιλέχθηκε"
 
-#: app/scripts/services/tools.js:362 app/scripts/services/tools.js:381
+#: app/scripts/services/tools.js:369 app/scripts/services/tools.js:388
 msgid "Bootloader not active"
 msgstr "Ο Bootloader δεν είναι ενεργός"
 
-#: app/views/menu.html:240
+#: app/scripts/controllers/menu.js:740 app/views/menu.html:243
 msgid "Build"
 msgstr "Χτίσιμο"
 
-#: app/scripts/controllers/menu.js:659
+#: app/scripts/controllers/menu.js:746
 msgid "Build done"
 msgstr "Το χτίσιμο ολοκληρώθηκε"
 
@@ -179,11 +189,11 @@ msgstr "Ακύρωση"
 msgid "Catalan"
 msgstr "Καταλανικά"
 
-#: app/scripts/services/tools.js:851
+#: app/scripts/services/tools.js:857
 msgid "Check Internet connection..."
 msgstr "Έλεγχος συνδεσιμότητας..."
 
-#: app/scripts/services/tools.js:861
+#: app/scripts/services/tools.js:867
 msgid "Check Python..."
 msgstr "Έλεγχος Python..."
 
@@ -191,12 +201,12 @@ msgstr "Έλεγχος Python..."
 msgid "Chinese"
 msgstr "Κινέζικα"
 
-#: app/scripts/services/blocks.js:1103 app/scripts/services/blocks.js:1224
+#: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
 msgstr ""
 
-#: app/views/menu.html:322
+#: app/views/menu.html:325
 msgid "Chrome Dev Tools"
 msgstr ""
 
@@ -204,81 +214,85 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Πατήστε εδώ <b>για να κατεβάσετε την νέα έκδοση</b> του icestudio"
 
-#: app/scripts/services/tools.js:954
+#: app/scripts/services/tools.js:960
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Πατήστε εδώ <b>για να εγκαταστήσετε τους νέους οδηγούς"
 
-#: app/scripts/services/drivers.js:210 app/scripts/services/drivers.js:341
-#: app/scripts/services/drivers.js:361 app/scripts/services/tools.js:274
+#: app/scripts/services/drivers.js:209 app/scripts/services/drivers.js:338
+#: app/scripts/services/drivers.js:357 app/scripts/services/tools.js:281
 msgid "Click here to install it"
 msgstr "Πατήστε εδώ για να το εγκαταστήσετε"
 
-#: app/scripts/controllers/menu.js:419
+#: app/scripts/controllers/menu.js:487
 msgid "Click here to view"
 msgstr "Πατήστε εδώ για εμφάνιση"
 
-#: app/scripts/services/blocks.js:1148 app/scripts/services/blocks.js:129
-#: app/scripts/services/blocks.js:1359 app/scripts/services/blocks.js:203
+#: app/scripts/services/blocks.js:1152 app/scripts/services/blocks.js:129
+#: app/scripts/services/blocks.js:1363 app/scripts/services/blocks.js:203
 msgid "Clock not allowed for data buses"
 msgstr "Το ρολόι δεν επιτρέπετε για διαύλους δεδομένων"
 
-#: app/scripts/controllers/menu.js:306
+#: app/views/menu.html:110
+msgid "Clone"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: app/views/menu.html:385
+#: app/views/menu.html:389
 msgid "Code"
 msgstr "Κώδικας"
 
-#: app/views/menu.html:205
+#: app/views/menu.html:208
 msgid "Collection"
 msgstr "Βιβλιοθήκη"
 
-#: app/views/menu.html:165
+#: app/views/menu.html:168
 msgid "Collection info"
 msgstr "Λεπτομέρειες βιβλιοθήκης"
 
-#: app/scripts/controllers/menu.js:573
+#: app/scripts/controllers/menu.js:651
 msgid "Collection {{collection}} info not defined"
 msgstr "Δεν υπάρχουν πληροφορίες για την βιβλιοθήκη {{collection}}"
 
-#: app/scripts/services/tools.js:1051
+#: app/scripts/services/tools.js:1057
 msgid "Collection {{name}} added"
 msgstr "Η βιβλιοθήκη {{name}} προστέθηκε"
 
-#: app/scripts/services/tools.js:1045
+#: app/scripts/services/tools.js:1051
 msgid "Collection {{name}} not replaced"
 msgstr "Η βιβλιοθήκη {{name}} δεν αντικαταστάθηκε"
 
-#: app/scripts/services/tools.js:1161
+#: app/scripts/services/tools.js:1167
 msgid "Collection {{name}} removed"
 msgstr "Η βιβλιοθήκη {{name}} αφαιρέθηκε"
 
-#: app/scripts/services/tools.js:1041
+#: app/scripts/services/tools.js:1047
 msgid "Collection {{name}} replaced"
 msgstr "Η βιβλιοθήκη {{name}} αντικαταστάθηκε"
 
-#: app/scripts/controllers/menu.js:606
+#: app/scripts/controllers/menu.js:684
 msgid "Collection {{name}} selected"
 msgstr "Η βιβλιοθήκη {{name}} επιλέχθηκε"
 
-#: app/views/menu.html:290
+#: app/views/menu.html:293
 msgid "Collections"
 msgstr "Βιβλιοθήκες"
 
-#: app/scripts/controllers/menu.js:579 app/views/menu.html:168
+#: app/scripts/controllers/menu.js:657 app/views/menu.html:171
 msgid "Command output"
 msgstr "Τερματικό εξόδου εντολών"
 
-#: app/views/menu.html:346
+#: app/views/menu.html:352
 msgid "Community forum"
 msgstr "Φόρουμ κοινότητας"
 
-#: app/scripts/services/tools.js:402
+#: app/scripts/services/tools.js:409
 msgid "Configuration not completed"
 msgstr "Η παραμετροποίηση δεν ολοκληρώθηκε"
 
-#: app/views/menu.html:379
+#: app/views/menu.html:383
 msgid "Constant"
 msgstr "Σταθερά"
 
@@ -290,12 +304,16 @@ msgstr "Μετατροπή"
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
+#: app/views/version.html:15
+msgid "Copy & Paste OR Copy & Clone blocks"
+msgstr ""
+
+#: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
 msgstr ""
 
-#: app/scripts/services/tools.js:879
+#: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
 msgstr "Δημιουργία εικονικού περιβάλλοντος..."
 
@@ -307,39 +325,39 @@ msgstr "Αποκόλληση"
 msgid "Czech"
 msgstr "Τσέχικα"
 
-#: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
+#: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
 msgstr ""
 
-#: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
+#: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
 msgstr ""
 
-#: app/views/menu.html:158
+#: app/views/menu.html:161
 msgid "Datasheet"
 msgstr "Δελτίο δεδομένων"
 
-#: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:462
+#: app/scripts/services/blocks.js:1565 app/scripts/services/blocks.js:462
 msgid "Decimal"
 msgstr "Δεκαδικό"
 
-#: app/scripts/services/blocks.js:1108 app/scripts/services/blocks.js:1229
+#: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
 msgstr ""
 
-#: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
+#: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
 msgstr ""
 
-#: app/views/menu.html:210
+#: app/views/menu.html:213
 msgid "Default"
 msgstr "Προεπηλεγμένο"
 
-#: app/scripts/services/tools.js:705
+#: app/scripts/services/tools.js:711
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
@@ -347,45 +365,49 @@ msgstr ""
 "Δεν βρέθηκε προεπιλεγμένο toolchain. Θα γίνει λήψη του toolchain και θα "
 "χρειαστεί σύνδεση στο διαδίκτυο. Θέλετε να συνεχίσετε?"
 
-#: app/scripts/services/utils.js:573
+#: app/scripts/services/utils.js:574
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: app/views/menu.html:283
+#: app/views/menu.html:286
 msgid "Disable"
 msgstr "Απενεργοποίηση"
 
-#: app/scripts/controllers/menu.js:310
+#: app/scripts/controllers/menu.js:367
 msgid "Do you want to close the application?"
 msgstr "Θέλετε να κλείσετε την εφαρμογή?"
 
-#: app/scripts/controllers/menu.js:711
+#: app/scripts/controllers/menu.js:807
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Θέλετε να διαγράψετε τη βιβλιοθήκη {{name}}?"
 
-#: app/scripts/services/tools.js:1037
+#: app/scripts/services/tools.js:1043
 msgid "Do you want to replace it?"
 msgstr "Θέλετε να γίνει αντικαταστήσετε?"
 
-#: app/views/menu.html:339
+#: app/views/menu.html:345
 msgid "Documentation"
 msgstr "Τεκμηρίωση"
 
-#: app/views/menu.html:274
+#: app/views/version.html:41
+msgid "Don't display"
+msgstr ""
+
+#: app/views/menu.html:277
 msgid "Drivers"
 msgstr "Οδήγοι"
 
 #: app/scripts/services/drivers.js:125 app/scripts/services/drivers.js:148
-#: app/scripts/services/drivers.js:238
+#: app/scripts/services/drivers.js:237
 msgid "Drivers disabled"
 msgstr "Οι οδηγοί απενεργοποιήθηκαν"
 
 #: app/scripts/services/drivers.js:116 app/scripts/services/drivers.js:140
-#: app/scripts/services/drivers.js:228
+#: app/scripts/services/drivers.js:227
 msgid "Drivers enabled"
 msgstr "Οι οδηγοί ενεργοποιήθηκαν"
 
-#: app/scripts/services/tools.js:411
+#: app/scripts/services/tools.js:418
 msgid "Duplicated FPGA I/O ports"
 msgstr "Οι FPGA θύρες εισόδου/εξόδου υπάρχουν ήδη"
 
@@ -401,11 +423,11 @@ msgstr "Ολλανδικά"
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: app/scripts/services/tools.js:1026
+#: app/scripts/services/tools.js:1032
 msgid "Edit the collection name"
 msgstr "Επεξεργασία ονόματος βιβλιοθήκης"
 
-#: app/views/menu.html:278
+#: app/views/menu.html:281
 msgid "Enable"
 msgstr "Ενεργοποίηση"
 
@@ -417,7 +439,7 @@ msgstr "Αγγλικά"
 msgid "Enter the constant blocks"
 msgstr "Εισαγάγετε τα constant blocks"
 
-#: app/scripts/controllers/menu.js:388
+#: app/scripts/controllers/menu.js:456
 msgid "Enter the external collections path"
 msgstr "Εισαγάγετε τη διαδρομή της εξωτερικής βιβλιοθήκης"
 
@@ -445,19 +467,19 @@ msgstr "Εισαγάγετε τις θύρες εξόδου"
 msgid "Enter the parameters"
 msgstr "Εισαγάγετε τις παραμέτρους"
 
-#: app/scripts/controllers/menu.js:451
+#: app/scripts/controllers/menu.js:529
 msgid "Enter the remote hostname user@host"
 msgstr "Εισαγάγετε το όνομα του απομακρυσμένου υπολογιστή/συσκευής (user@host)"
 
-#: app/scripts/services/tools.js:735
+#: app/scripts/services/tools.js:741
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "Σφάλμα: το προεπιλεγμένο toolchain δεν βρέθηκε στο '{{dir}}'"
 
-#: app/scripts/services/utils.js:753
+#: app/scripts/services/utils.js:754
 msgid "Error: {{error}}"
 msgstr "Σφάλμα: {{error}}"
 
-#: app/scripts/services/tools.js:516
+#: app/scripts/services/tools.js:523
 msgid "Errors detected in the design"
 msgstr "Λάθη εντοπίστηκαν στο σχεδιασμό"
 
@@ -465,7 +487,7 @@ msgstr "Λάθη εντοπίστηκαν στο σχεδιασμό"
 msgid "Examples"
 msgstr "Παράδειγματα"
 
-#: app/scripts/services/tools.js:296
+#: app/scripts/services/tools.js:303
 msgid "Execute remote {{label}} ..."
 msgstr "Εκτέλεση απομακρυσμένου {{label}} ..."
 
@@ -473,36 +495,40 @@ msgstr "Εκτέλεση απομακρυσμένου {{label}} ..."
 msgid "Export"
 msgstr "Εξαγωγή"
 
-#: app/views/menu.html:132
+#: app/scripts/controllers/menu.js:235
+msgid "Export submodule"
+msgstr ""
+
+#: app/views/menu.html:135
 msgid "External collections"
 msgstr "Εξωτερικές βιβλιοθήκες"
 
-#: app/scripts/controllers/menu.js:405
+#: app/scripts/controllers/menu.js:473
 msgid "External collections updated"
 msgstr "Οι εξωτερικές βιβλιοθήκες ανανεώθηκαν"
 
-#: app/scripts/services/tools.js:886
+#: app/scripts/services/tools.js:892
 msgid "Extract default apio files..."
 msgstr "Εξαγωγή αρχείων apio..."
 
-#: app/scripts/services/tools.js:896
+#: app/scripts/services/tools.js:902
 msgid "Extract default apio packages..."
 msgstr "Εξαγωγή πακέτων apio..."
 
-#: app/scripts/services/tools.js:874
+#: app/scripts/services/tools.js:880
 msgid "Extract virtualenv files..."
 msgstr "Εξαγωγή αρχείων εικονικού περιβάλλοντος..."
 
-#: app/scripts/services/tools.js:408
+#: app/scripts/services/tools.js:415
 msgid "FPGA I/O ports not defined"
 msgstr "Δεν έχουν δηλωθεί οι πύλες εισόδου/εξόδου της FPGA"
 
-#: app/scripts/services/blocks.js:1336 app/scripts/services/blocks.js:1432
+#: app/scripts/services/blocks.js:1340 app/scripts/services/blocks.js:1436
 #: app/scripts/services/blocks.js:167 app/scripts/services/blocks.js:239
 msgid "FPGA pin"
 msgstr "Ακροδέκτης FPGA"
 
-#: app/views/menu.html:173
+#: app/views/menu.html:176
 msgid "FPGA resources"
 msgstr "FPGA πόροι"
 
@@ -510,22 +536,22 @@ msgstr "FPGA πόροι"
 msgid "File"
 msgstr "Αρχείο"
 
-#: app/scripts/services/project.js:475
+#: app/scripts/services/project.js:490
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
 "Το αρχείο {{file}} υπάρχει ήδη στην διαδρομή του έργου. θέλετε να το "
 "αντικαταστήσετε?"
 
-#: app/scripts/services/tools.js:222
+#: app/scripts/services/tools.js:229
 msgid "File {{file}} does not exist"
 msgstr "Το αρχείο {{file}} δεν υπάρχει"
 
-#: app/scripts/services/project.js:509
+#: app/scripts/services/project.js:524
 msgid "File {{file}} imported"
 msgstr "Το αρχείο {{file}} εισάχθηκε"
 
-#: app/views/menu.html:114
+#: app/views/menu.html:117
 msgid "Fit content"
 msgstr "Πλήρης εμφάνιση"
 
@@ -533,7 +559,7 @@ msgstr "Πλήρης εμφάνιση"
 msgid "French"
 msgstr "Γαλικά"
 
-#: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
+#: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
 msgstr ""
@@ -542,11 +568,15 @@ msgstr ""
 msgid "Galician"
 msgstr "Γαλικιανά"
 
+#: app/views/version.html:24
+msgid "Generic blocks"
+msgstr ""
+
 #: app/views/languages.html:28
 msgid "German"
 msgstr "Γερμανικά"
 
-#: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
+#: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
 msgstr ""
@@ -555,105 +585,129 @@ msgstr ""
 msgid "Greek"
 msgstr "Ελληνικά"
 
-#: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
+#: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
 msgstr ""
 
-#: app/views/menu.html:329
+#: app/views/menu.html:332
 msgid "Help"
 msgstr "Βοήθεια"
 
-#: app/scripts/services/blocks.js:1562 app/scripts/services/blocks.js:463
+#: app/scripts/services/blocks.js:1566 app/scripts/services/blocks.js:463
 msgid "Hexadecimal"
 msgstr "Δεκαεξαδικό"
 
-#: app/scripts/services/graph.js:1218
+#: app/views/version.html:6
+msgid "Icestudio Inception"
+msgstr ""
+
+#: app/views/version.html:21
+msgid ""
+"If you are clonning blocks, it is very important than you change block "
+"information to identify the new block features."
+msgstr ""
+
+#: app/views/version.html:25
+msgid ""
+"If you are developing a collection, you can make Generic blocks that works "
+"as templates. When you insert a generic block from a collection, acts as a "
+"clone for rapidly modifications without do a copy and clone operation."
+msgstr ""
+
+#: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
 
-#: app/scripts/services/utils.js:587
+#: app/scripts/services/utils.js:588
 msgid "Image"
 msgstr "Εικόνα"
 
-#: app/scripts/controllers/menu.js:878
+#: app/scripts/controllers/menu.js:995
 msgid "Image {{name}} saved"
 msgstr "H eικόνα {{name}} αποθηκεύτηκε"
 
-#: app/scripts/services/blocks.js:1106 app/scripts/services/blocks.js:1227
+#: app/views/version.html:20
+msgid ""
+"In other way, if you copy and clone a block, you make it independently of "
+"the original block type and  the modifications only affect at this new block "
+"type"
+msgstr ""
+
+#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
 msgstr ""
 
-#: app/views/menu.html:388
+#: app/views/menu.html:392
 msgid "Information"
 msgstr "Πληροφορίες"
 
-#: app/views/menu.html:365
+#: app/views/menu.html:371
 msgid "Input"
 msgstr "Είσοδος"
 
-#: app/views/menu.html:374
+#: app/views/menu.html:380
 msgid "Input label"
 msgstr ""
 
-#: app/views/menu.html:251
+#: app/views/menu.html:254
 msgid "Install"
 msgstr "Εγκατάσταση"
 
-#: app/scripts/services/tools.js:891
+#: app/scripts/services/tools.js:897
 msgid "Install default apio..."
 msgstr "Εγκατάσταση προεπιλεγμένου apio..."
 
-#: app/scripts/services/tools.js:943
+#: app/scripts/services/tools.js:949
 msgid "Installation completed"
 msgstr "Η εγκατάσταση ολοκληρώθηκε"
 
-#: app/scripts/services/tools.js:777 app/scripts/services/tools.js:814
+#: app/scripts/services/tools.js:783 app/scripts/services/tools.js:820
 msgid "Installing toolchain"
 msgstr "Γίνεται εγκατάσταση του toolchain"
 
-#: app/scripts/services/drivers.js:218 app/scripts/services/tools.js:855
+#: app/scripts/services/drivers.js:217 app/scripts/services/tools.js:861
 msgid "Internet connection required"
 msgstr "Είναι απαραίτητη η συνδεσιμότητα στο διαδίκτυο"
 
-#: app/scripts/services/graph.js:182
+#: app/scripts/services/graph.js:183
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Μη έγκυρη <i>Pull up</i> σύνδεση:<br>το block είναι ήδη συνδεδεμένο"
 
-#: app/scripts/services/graph.js:196
+#: app/scripts/services/graph.js:197
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Μη έγκυρη <i>Pull up</i> σύνδεση:<br>μόνο block <i>εισόδου</i>επιτρέπονται"
 
-#: app/scripts/services/graph.js:188
+#: app/scripts/services/graph.js:189
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Μη έγκυρη σύνδεση block:<br>Το <i>Pull up</i> είναι ήδη συνδεδεμένο"
 
-#: app/scripts/services/tools.js:1057
+#: app/scripts/services/tools.js:1063
 msgid "Invalid collection {{name}}"
 msgstr "Μη έγκυρη βιβλιοθήκη {{name}}"
 
-#: app/scripts/services/graph.js:146 app/scripts/services/graph.js:153
-#: app/scripts/services/graph.js:160
+#: app/scripts/services/graph.js:147 app/scripts/services/graph.js:154
+#: app/scripts/services/graph.js:161
 msgid "Invalid connection"
 msgstr "Μη έγκυρη σύνδεση"
 
-#: app/scripts/services/graph.js:215
+#: app/scripts/services/graph.js:216
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Μη έγκυρη σύνδεση: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:176
+#: app/scripts/services/graph.js:177
 msgid "Invalid multiple input connections"
 msgstr "Πολλαπλές μη έγκυρες συνδέσεις"
 
-#: app/scripts/services/project.js:465 app/scripts/services/project.js:66
+#: app/scripts/services/project.js:480 app/scripts/services/project.js:66
 msgid "Invalid project format"
 msgstr "Μη έγκυρη μορφοποίηση έργου"
 
-#: app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:305
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "Συνιστάτε η χρήση θύρας <b>USB 2.0</b>"
 
@@ -661,11 +715,15 @@ msgstr "Συνιστάτε η χρήση θύρας <b>USB 2.0</b>"
 msgid "Italian"
 msgstr ""
 
-#: app/views/menu.html:121
+#: app/views/version.html:29
+msgid "Labels"
+msgstr ""
+
+#: app/views/menu.html:124
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
+#: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
 msgstr ""
@@ -674,29 +732,29 @@ msgstr ""
 msgid "Load"
 msgstr "Φόρτωση"
 
-#: app/scripts/services/blocks.js:1513 app/scripts/services/blocks.js:1567
+#: app/scripts/services/blocks.js:1517 app/scripts/services/blocks.js:1571
 #: app/scripts/services/blocks.js:400 app/scripts/services/blocks.js:468
 msgid "Local parameter"
 msgstr "Τοπική παράμετρος"
 
-#: app/scripts/services/utils.js:833
+#: app/scripts/services/utils.js:834
 msgid "Maximum bus size: 96 bits"
 msgstr "Μέγιστο μέγεθος διαύλου: 96 bits"
 
-#: app/scripts/services/blocks.js:1109 app/scripts/services/blocks.js:1230
+#: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
 msgstr ""
 
-#: app/views/menu.html:382
+#: app/views/menu.html:386
 msgid "Memory"
 msgstr "Μνήμη"
 
-#: app/scripts/services/utils.js:571
+#: app/scripts/services/utils.js:572
 msgid "Name"
 msgstr "Όνομα"
 
-#: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
+#: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
 msgstr ""
@@ -705,16 +763,16 @@ msgstr ""
 msgid "New"
 msgstr "Δημιουργία"
 
-#: app/scripts/controllers/menu.js:729
+#: app/scripts/controllers/menu.js:825
 msgid "No collections stored"
 msgstr "Δεν έχουν αποθηκευτεί βιβλιοθήκες"
 
-#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:320
+#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:377
 #: app/scripts/services/project.js:131
 msgid "OK"
 msgstr "ΟΚ"
 
-#: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
+#: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
 msgstr ""
@@ -723,24 +781,24 @@ msgstr ""
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: app/scripts/services/utils.js:594
+#: app/scripts/services/utils.js:595
 msgid "Open SVG"
 msgstr "Άνοιγμα SVG"
 
-#: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
+#: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:512
+#: app/scripts/services/project.js:527
 msgid "Original file {{file}} does not exist"
 msgstr "Το αρχικό αρχείο {{file}}  δεν υπάρχει"
 
-#: app/views/menu.html:368
+#: app/views/menu.html:374
 msgid "Output"
 msgstr "Έξοδος"
 
-#: app/views/menu.html:371
+#: app/views/menu.html:377
 msgid "Output label"
 msgstr ""
 
@@ -748,23 +806,23 @@ msgstr ""
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: app/scripts/controllers/menu.js:409
+#: app/scripts/controllers/menu.js:477
 msgid "Path {{path}} does not exist"
 msgstr "Η διαδρομή {{path}} δεν υπάρχει"
 
-#: app/scripts/services/utils.js:978
+#: app/scripts/services/utils.js:977
 msgid "Please run: {{cmd}}"
 msgstr "Παρακαλώ εκτελέστε: {{cmd}}"
 
-#: app/views/menu.html:118
+#: app/views/menu.html:121
 msgid "Preferences"
 msgstr "Επιλογές"
 
-#: app/views/menu.html:143
+#: app/views/menu.html:146
 msgid "Project information"
 msgstr "Πληροφορίες έργου"
 
-#: app/scripts/controllers/menu.js:419 app/scripts/controllers/menu.js:433
+#: app/scripts/controllers/menu.js:487 app/scripts/controllers/menu.js:505
 msgid "Project information updated"
 msgstr "Οι πληροφορίες του έργου ανανεωθήκαν"
 
@@ -772,11 +830,11 @@ msgstr "Οι πληροφορίες του έργου ανανεωθήκαν"
 msgid "Project {{name}} loaded"
 msgstr "Το έργο {{name}} φορτώθηκε"
 
-#: app/scripts/services/project.js:372
+#: app/scripts/services/project.js:387
 msgid "Project {{name}} saved"
 msgstr "Το έργο {{name}} αποθηκεύτηκε"
 
-#: app/scripts/services/tools.js:868
+#: app/scripts/services/tools.js:874
 msgid "Python 2.7 is required"
 msgstr "Η Python 2.7 είναι απαραίτητη"
 
@@ -788,7 +846,7 @@ msgstr "Έξοδος"
 msgid "Read only"
 msgstr "Μόνο για ανάγνωση"
 
-#: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
+#: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
 msgstr ""
@@ -797,35 +855,35 @@ msgstr ""
 msgid "Redo"
 msgstr "Επανάληψη"
 
-#: app/views/menu.html:299
+#: app/views/menu.html:302
 msgid "Reload"
 msgstr "Επαναφόρτωση"
 
-#: app/scripts/services/tools.js:559
+#: app/scripts/services/tools.js:566
 msgid "Remote host {{name}} not connected"
 msgstr "Ο απομακρυσμένος υπολογιστής/συσκευή {{name}} δεν είναι συνδεδεμένος"
 
-#: app/views/menu.html:136
+#: app/views/menu.html:139
 msgid "Remote hostname"
 msgstr "Απομακρυσμένο όνομα υπολογιστή/συσκευής"
 
-#: app/views/menu.html:259 app/views/menu.html:303
+#: app/views/menu.html:262 app/views/menu.html:306
 msgid "Remove"
 msgstr "Διαγραφή"
 
-#: app/views/menu.html:315
+#: app/views/menu.html:318
 msgid "Remove all"
 msgstr "Διαγραφή όλων"
 
-#: app/scripts/services/utils.js:596
+#: app/scripts/services/utils.js:597
 msgid "Reset SVG"
 msgstr "Επαναφορά SVG"
 
-#: app/views/menu.html:264
+#: app/views/menu.html:267
 msgid "Reset default"
 msgstr "Επαναφορά  προεπιλογών"
 
-#: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
+#: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
 msgstr ""
@@ -838,7 +896,7 @@ msgstr ""
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: app/scripts/services/utils.js:595
+#: app/scripts/services/utils.js:596
 msgid "Save SVG"
 msgstr "Αποθήκευση SVG"
 
@@ -846,28 +904,32 @@ msgstr "Αποθήκευση SVG"
 msgid "Save as"
 msgstr "Αποθήκευση ως"
 
-#: app/views/menu.html:181
+#: app/scripts/controllers/menu.js:197
+msgid "Save submodule"
+msgstr ""
+
+#: app/views/menu.html:184
 msgid "Select"
 msgstr "Επιλογή"
 
-#: app/views/menu.html:110
+#: app/views/menu.html:113
 msgid "Select all"
 msgstr "Επιλογή όλων"
 
-#: app/scripts/services/utils.js:711
+#: app/scripts/services/utils.js:712
 msgid "Select your board"
 msgstr "Διαλέξτε την πλακέτα σας"
 
-#: app/scripts/services/blocks.js:1341 app/scripts/services/blocks.js:172
+#: app/scripts/services/blocks.js:1345 app/scripts/services/blocks.js:172
 msgid "Show clock"
 msgstr "Εμφάνιση Ρολογιού"
 
-#: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
+#: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
 msgstr ""
 
-#: app/views/menu.html:342
+#: app/views/menu.html:348
 msgid "Source code"
 msgstr "Πηγαίος κώδικας"
 
@@ -875,29 +937,40 @@ msgstr "Πηγαίος κώδικας"
 msgid "Spanish"
 msgstr "Ισπανικά"
 
-#: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
+#: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:658
+#: app/scripts/controllers/menu.js:745
 msgid "Start build"
 msgstr "Έναρξη χτισίματος"
 
-#: app/scripts/controllers/menu.js:671
+#: app/scripts/controllers/menu.js:767
 msgid "Start upload"
 msgstr "Έναρξη μεταφόρτωσης"
 
-#: app/scripts/controllers/menu.js:648
+#: app/scripts/controllers/menu.js:726
 msgid "Start verification"
 msgstr "Έναρξη επαλήθευσης"
 
-#: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
+#: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
 msgstr ""
 
-#: app/scripts/services/tools.js:285
+#: app/views/version.html:11
+msgid "Submodule edition"
+msgstr ""
+
+#: app/views/version.html:16
+msgid ""
+"Submodule edition affect at all of the same block types. For example if you "
+"have in you design six AND blocks, if you modify one of them, yo modify all "
+"of them."
+msgstr ""
+
+#: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
 msgstr "Συγχρονισμός απομακρυσμένων αρχείων ..."
 
@@ -905,11 +978,11 @@ msgstr "Συγχρονισμός απομακρυσμένων αρχείων ...
 msgid "Testbench"
 msgstr "Testbench"
 
-#: app/scripts/services/tools.js:1036
+#: app/scripts/services/tools.js:1042
 msgid "The collection {{name}} already exists."
 msgstr "Η βιβλιοθήκη {{name}} υπάρχει ήδη."
 
-#: app/scripts/controllers/menu.js:627
+#: app/scripts/controllers/menu.js:705
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -917,15 +990,15 @@ msgstr ""
 "Η τωρινές ρυθμίσεις εισόδου/εξόδου της FPGA  θα χαθούν. Θέλετε να αλλάξετε "
 "την πλακέτα σε {{name}}?"
 
-#: app/scripts/services/tools.js:743
+#: app/scripts/services/tools.js:749
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Το toolchan θα διαγραφεί. Θέλετε να συνεχίσετε?"
 
-#: app/scripts/services/tools.js:728
+#: app/scripts/services/tools.js:734
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr "Το toolchain θα αρχικοποιηθεί, Θέλετε να συνεχίσετε?"
 
-#: app/scripts/services/tools.js:717
+#: app/scripts/services/tools.js:723
 msgid ""
 "The toolchain will be updated. This operation requires Internet connection. "
 "Do you want to continue?"
@@ -933,7 +1006,27 @@ msgstr ""
 "Το toolchain θα αναβαθμιστεί και θα χρειαστεί σύνδεση στο διαδίκτυο για "
 "αυτό, θέλετε να συνεχίσετε?"
 
-#: app/scripts/services/project.js:434
+#: app/views/version.html:30
+msgid ""
+"The use of labels permits clarify larger designs, connecting blocks without "
+"wires."
+msgstr ""
+
+#: app/views/version.html:9
+msgid ""
+"There are a number of updates in this version that we hope you will like, "
+"some of the key highlights include:"
+msgstr ""
+
+#: app/scripts/services/tools.js:1195
+msgid "There is a new nightly version available"
+msgstr ""
+
+#: app/scripts/services/tools.js:1191
+msgid "There is a new stable version available"
+msgstr ""
+
+#: app/scripts/services/project.js:449
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -941,37 +1034,69 @@ msgstr ""
 "Αυτή η διαδικασία εισαγωγής χρειάζεται μια διαδρομή έργου.Θα πρέπει να "
 "σώσετε το τρέχων έργο. Θέλετε να συνεχίσετε?"
 
+#: app/views/version.html:17
+msgid "This is a very powerfull feature to maintain large designs."
+msgstr ""
+
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
 msgstr "Αυτό το έργο έχει σχεδιαστεί για την πλακέτα {{name}}."
 
-#: app/views/menu.html:247
+#: app/views/version.html:12
+msgid ""
+"This version improve the edition capatabilities, including the possibility "
+"of editing block contents."
+msgstr ""
+
+#: app/views/version.html:26
+msgid ""
+"To do it, only is necessary that prefix the block identifier with Generic-"
+msgstr ""
+
+#: app/scripts/services/graph.js:410
+msgid ""
+"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
+"mode\", lock the keylock to do it."
+msgstr ""
+
+#: app/scripts/controllers/design.js:32
+msgid "To navigate through design, you need to close \"edit mode\"."
+msgstr ""
+
+#: app/scripts/controllers/menu.js:198
+msgid ""
+"To save your design you need to lock the keylock and go to top level design."
+"<br/><br/>If you want to export this submodule to a file, execute \"Save as"
+"\" command to do it."
+msgstr ""
+
+#: app/views/menu.html:250
 msgid "Toolchain"
 msgstr "Toolchain"
 
-#: app/scripts/services/tools.js:944
+#: app/scripts/services/tools.js:950
 msgid "Toolchain installed"
 msgstr "Το Toolchain εγκαταστάθηκε"
 
-#: app/scripts/services/drivers.js:341 app/scripts/services/drivers.js:361
-#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:237
-#: app/scripts/services/tools.js:252
+#: app/scripts/services/drivers.js:338 app/scripts/services/drivers.js:357
+#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:244
+#: app/scripts/services/tools.js:259
 msgid "Toolchain not installed"
 msgstr "Το Toolchain δεν εγκαταστάθηκε"
 
-#: app/scripts/services/tools.js:748
+#: app/scripts/services/tools.js:754
 msgid "Toolchain removed"
 msgstr "Το Toolchain διαγράφηκε"
 
-#: app/scripts/services/tools.js:261
+#: app/scripts/services/tools.js:268
 msgid "Toolchain version does not match"
 msgstr "Η έκδοση του Toolchain δεν ταιριάζει"
 
-#: app/views/menu.html:234
+#: app/views/menu.html:237
 msgid "Tools"
 msgstr "Εργαλεία"
 
-#: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
+#: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
 msgstr ""
@@ -980,7 +1105,7 @@ msgstr ""
 msgid "Undo"
 msgstr "Αναίρεση"
 
-#: app/scripts/services/tools.js:372
+#: app/scripts/services/tools.js:379
 msgid "Unknown board"
 msgstr "Άγνωστη πλακέτα"
 
@@ -988,60 +1113,68 @@ msgstr "Άγνωστη πλακέτα"
 msgid "Unsupported project format {{version}}"
 msgstr "Μη υποστηριζόμενη μορφοποίηση έργου {{version}}"
 
-#: app/scripts/app.js:65
+#: app/scripts/app.js:70
 msgid "Untitled"
 msgstr "Άτιτλο"
 
-#: app/views/menu.html:254
+#: app/views/menu.html:257
 msgid "Update"
 msgstr "Ενημέρωση"
 
-#: app/scripts/services/blocks.js:1098 app/scripts/services/blocks.js:1219
-#: app/scripts/services/blocks.js:1331 app/scripts/services/blocks.js:1427
-#: app/scripts/services/blocks.js:1508 app/scripts/services/blocks.js:1552
+#: app/scripts/services/blocks.js:1102 app/scripts/services/blocks.js:1223
+#: app/scripts/services/blocks.js:1335 app/scripts/services/blocks.js:1431
+#: app/scripts/services/blocks.js:1512 app/scripts/services/blocks.js:1556
 msgid "Update the block name"
 msgstr "Ενημερώστε το όνομα του block"
 
-#: app/views/menu.html:243
+#: app/scripts/controllers/menu.js:760 app/views/menu.html:246
 msgid "Upload"
 msgstr "Μεταφόρτωση"
 
-#: app/scripts/controllers/menu.js:672
+#: app/scripts/controllers/menu.js:768
 msgid "Upload done"
 msgstr "Η μεταφόρτωση ολοκληρωθηκε"
 
-#: app/scripts/controllers/menu.js:649
+#: app/scripts/controllers/menu.js:727
 msgid "Verification done"
 msgstr "Η επαλήθευση ολοκληρωθηκε"
 
-#: app/views/menu.html:237
+#: app/views/menu.html:240
 msgid "Verify"
 msgstr "Επαλήθευση"
 
-#: app/scripts/services/utils.js:572 app/views/menu.html:335
+#: app/scripts/services/utils.js:573 app/views/menu.html:341
 msgid "Version"
 msgstr "Έκδοση"
 
-#: app/views/menu.html:149
+#: app/views/menu.html:338
+msgid "Version notes"
+msgstr ""
+
+#: app/views/menu.html:152
 msgid "View"
 msgstr "Προβολή"
 
-#: app/views/menu.html:332
+#: app/views/menu.html:335
 msgid "View license"
 msgstr "Προβολή άδειας"
 
-#: app/scripts/services/tools.js:520
+#: app/scripts/services/tools.js:527
 msgid "Warnings detected in the design"
 msgstr "Προειδοποιήσεις εντοπίστηκαν στο έργο"
+
+#: app/views/version.html:8
+msgid "Wellcome to Inception, Icestudio version, focused on submodules."
+msgstr ""
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
 msgstr "Λάθος μορφοποίηση block: {{type}}"
 
-#: app/scripts/services/blocks.js:119 app/scripts/services/blocks.js:1208
-#: app/scripts/services/blocks.js:1320 app/scripts/services/blocks.js:1416
-#: app/scripts/services/blocks.js:1498 app/scripts/services/blocks.js:1541
-#: app/scripts/services/blocks.js:1598 app/scripts/services/blocks.js:193
+#: app/scripts/services/blocks.js:119 app/scripts/services/blocks.js:1212
+#: app/scripts/services/blocks.js:1324 app/scripts/services/blocks.js:1420
+#: app/scripts/services/blocks.js:1502 app/scripts/services/blocks.js:1545
+#: app/scripts/services/blocks.js:1602 app/scripts/services/blocks.js:193
 #: app/scripts/services/blocks.js:259 app/scripts/services/blocks.js:346
 #: app/scripts/services/blocks.js:420 app/scripts/services/blocks.js:489
 msgid "Wrong block name {{name}}"
@@ -1059,13 +1192,20 @@ msgstr "Λάθος όνομα θύρας: {{name}}"
 msgid "Wrong project format: {{name}}"
 msgstr "Λάθος μορφοποίηση έργου: {{name}}"
 
-#: app/scripts/services/tools.js:556
+#: app/scripts/services/tools.js:563
 msgid "Wrong remote hostname {{name}}"
 msgstr "Εσφαλμένη διεύθυνση απομακρυσμένου υπολογιστή/συσκευής"
 
-#: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
+#: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:235
+msgid ""
+"You are editing a submodule, if you save it, you save only the submodule (in "
+"this situation \"save as\" works like \"export module\"), Do you like to "
+"continue?"
 msgstr ""
 
 #: app/scripts/services/project.js:84
@@ -1074,7 +1214,19 @@ msgstr ""
 "Μπορείτε να το φορτώσετε όπως είναι ή να το μετατρέψετε για την πλακέτα "
 "{{name}}"
 
-#: app/scripts/controllers/menu.js:311
+#: app/scripts/controllers/menu.js:741
+msgid ""
+"You can only build at top-level design. Inside submodules you only can "
+"<strong>Verify</strong>"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:761
+msgid ""
+"You can only upload  your design at top-level design. Inside submodules you "
+"only can <strong>Verify</strong>"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Οι αλλαγές σας θα χαθούν αν δεν τις αποθηκεύσετε"
 
@@ -1082,22 +1234,22 @@ msgstr "Οι αλλαγές σας θα χαθούν αν δεν τις αποθ
 msgid "back"
 msgstr "επιστροφή"
 
-#: app/scripts/services/drivers.js:209 app/scripts/services/utils.js:953
+#: app/scripts/services/drivers.js:208 app/scripts/services/utils.js:956
 msgid "{{app}} is required."
 msgstr "{{app}} είναι απαρέτητ."
 
-#: app/scripts/controllers/menu.js:527
+#: app/scripts/controllers/menu.js:605
 msgid "{{board}} datasheet not defined"
 msgstr "το δελτίο δεδομένων για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
-#: app/scripts/controllers/menu.js:517
+#: app/scripts/controllers/menu.js:595
 msgid "{{board}} pinout not defined"
 msgstr "το pinout για την πλακέτα {{board}} δεν έχει δηλωθεί"
 
-#: app/scripts/controllers/menu.js:548
+#: app/scripts/controllers/menu.js:626
 msgid "{{board}} rules not defined"
 msgstr "οι κανόνες για την πλακέτα {{board}} δεν έχουν δηλωθεί"
 
-#: app/scripts/controllers/menu.js:258 app/scripts/controllers/menu.js:282
+#: app/scripts/controllers/menu.js:315 app/scripts/controllers/menu.js:339
 msgid "{{name}} exported"
 msgstr "Το {{name}} εξήχθη"

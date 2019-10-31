@@ -334,11 +334,11 @@
               <li disabled>
                 <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'View license' | translate }}</a>
               </li>
-              <li class="disabled">
-                <a href>{{ 'Version' | translate }} {{ version }}</a>
-              </li>
               <li>
                 <a href ng-click="openVersionInfoWindow()">{{ 'Version notes' | translate }}</a>
+              </li>
+              <li class="disabled">
+                <a href>{{ 'Version' | translate }} {{ version }}</a>
               </li>
               <li class="divider"></li>
               <li>
@@ -376,11 +376,9 @@
                 <a href ng-click="project.addBasicBlock('basic.outputLabel')">
                   <div class="marker marker-yellow"></div>{{ 'Output label' | translate }}
                 </a>
-                 <a href ng-click="project.addBasicBlock('basic.inputLabel')">
+                <a href ng-click="project.addBasicBlock('basic.inputLabel')">
                   <div class="marker marker-yellow"></div>{{ 'Input label' | translate }}
                 </a>
-
-
                 <a href ng-click="project.addBasicBlock('basic.constant')">
                   <div class="marker marker-orange"></div>{{ 'Constant' | translate }}
                 </a>
@@ -393,8 +391,6 @@
                 <a href ng-click="project.addBasicBlock('basic.info')">
                   <div class="marker marker-gray"></div>{{ 'Information' | translate }}
                 </a>
-              
-              
               </li>
             </ul>
           </li>

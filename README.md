@@ -115,18 +115,18 @@ npm start
 |  Language  | Translated strings                       |
 |:----------:|:----------------------------------------:|
 | English    | ![Progress](http://progress-bar.dev/100) |
-| Spanish    | ![Progress](http://progress-bar.dev/100) |
-| Italian    | ![Progress](http://progress-bar.dev/100) |
-| French     | ![Progress](http://progress-bar.dev/98)  |
-| Dutch      | ![Progress](http://progress-bar.dev/98)  |
-| Czech      | ![Progress](http://progress-bar.dev/98)  |
-| Greek      | ![Progress](http://progress-bar.dev/98)  |
-| German     | ![Progress](http://progress-bar.dev/97)  |
-| Russian    | ![Progress](http://progress-bar.dev/96)  |
-| Chinese    | ![Progress](http://progress-bar.dev/90)  |
-| Galician   | ![Progress](http://progress-bar.dev/98)  |
-| Basque     | ![Progress](http://progress-bar.dev/97)  |
-| Catalan    | ![Progress](http://progress-bar.dev/90)  |
+| Spanish    | ![Progress](http://progress-bar.dev/81)  |
+| Italian    | ![Progress](http://progress-bar.dev/89)  |
+| French     | ![Progress](http://progress-bar.dev/78)  |
+| Dutch      | ![Progress](http://progress-bar.dev/78)  |
+| Czech      | ![Progress](http://progress-bar.dev/78)  |
+| Greek      | ![Progress](http://progress-bar.dev/79)  |
+| German     | ![Progress](http://progress-bar.dev/77)  |
+| Russian    | ![Progress](http://progress-bar.dev/77)  |
+| Chinese    | ![Progress](http://progress-bar.dev/72)  |
+| Galician   | ![Progress](http://progress-bar.dev/78)  |
+| Basque     | ![Progress](http://progress-bar.dev/77)  |
+| Catalan    | ![Progress](http://progress-bar.dev/72)  |
 
 **Contribute!**
 
