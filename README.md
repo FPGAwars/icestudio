@@ -115,7 +115,7 @@ npm start
 |  Language  | Translated strings                       |
 |:----------:|:----------------------------------------:|
 | English    | ![Progress](http://progress-bar.dev/100) |
-| Spanish    | ![Progress](http://progress-bar.dev/81)  |
+| Spanish    | ![Progress](http://progress-bar.dev/92)  |
 | Italian    | ![Progress](http://progress-bar.dev/89)  |
 | French     | ![Progress](http://progress-bar.dev/78)  |
 | Dutch      | ![Progress](http://progress-bar.dev/78)  |

@@ -100,7 +100,7 @@ msgstr "Autor"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "Comprobación automática de nuevas versiones"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -115,6 +115,8 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"Debido a que Icestudio está en desarrollo activo, es importante mantener su "
+"icestudio en la última versión. Ahora te estamos notificando!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -208,7 +210,7 @@ msgstr "Selecciona un color"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Chrome Dev Tools"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -235,7 +237,7 @@ msgstr "Reloj no permitido para buses de datos"
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "Clonar"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -307,7 +309,7 @@ msgstr "Copiar"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "Copiar y pegar O Copiar y clonar bloques"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
@@ -392,7 +394,7 @@ msgstr "Documentación"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "No mostrar"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -498,7 +500,7 @@ msgstr "Exportar"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "Exportar submódulo"
 
 #: app/views/menu.html:135
 msgid "External collections"
@@ -571,7 +573,7 @@ msgstr "Gallego"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "Bloques genéricos"
 
 #: app/views/languages.html:28
 msgid "German"
@@ -601,13 +603,15 @@ msgstr "Hexadecimal"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
-msgstr ""
+msgstr "Icestudio Inception"
 
 #: app/views/version.html:21
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
+"Si estás clonando bloques, es muy importante que cambies la información del "
+"bloque para identificar las nuevas características del bloque."
 
 #: app/views/version.html:25
 msgid ""
@@ -615,6 +619,10 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"Si estás desarrollando una colección, puedes crear bloques genéricos que "
+"funcionen como plantillas. Cuando insertas un bloque genérico de una "
+"colección, actúa como un clon para modificaciones rápidas sin hacer una "
+"operación de copia y clonación"
 
 #: app/scripts/services/graph.js:1395
 msgid ""
@@ -638,6 +646,9 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"De otra manera, si copias y clonas un bloque, lo haces independientemente "
+"del tipo de bloque original y las modificaciones solo afectan a este nuevo "
+"tipo de bloque"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
@@ -717,11 +728,11 @@ msgstr "Se recomienda utilizar puertos <b>USB 2.0</b>"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italiano"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "Etiquetas"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -910,7 +921,7 @@ msgstr "Guardar como"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "Guardar submódulo"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -965,7 +976,7 @@ msgstr ""
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "Edición de submódulo"
 
 #: app/views/version.html:16
 msgid ""
@@ -973,6 +984,9 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"La edición de submódulo afecta a todos los mismos tipos de bloque. Por "
+"ejemplo, si tienes en tu diseño seis bloques AND, si modifica uno de ellos, "
+"modificas todos ellos."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1016,20 +1030,24 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
+"El uso de etiquetas permite aclarar diseños más grandes, conectando bloques "
+"sin cables."
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
 msgstr ""
+"Hay una serie de actualizaciones en esta versión que esperamos te gusten, "
+"algunos de los aspectos más destacados incluyen:"
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "Hay una nueva versión nightly disponible"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "Hay una nueva versión estable disponible"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1041,7 +1059,7 @@ msgstr ""
 
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
-msgstr ""
+msgstr "Esta es una característica muy poderosa para mantener grandes diseños."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1052,21 +1070,27 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
+"Esta versión mejora las capacidades de edición, incluida la posibilidad de "
+"editar contenidos de bloque."
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
 msgstr ""
+"Para hacerlo, solo es necesario que prefijes el identificador de bloque con "
+"Generic-"
 
 #: app/scripts/services/graph.js:410
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"Para entrar al \"modo de edición\" del bloque más profundo, debes finalizar "
+"el \"modo de edición\" actual, bloqueando el candado."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr ""
+msgstr "Para navegar por el diseño, debes cerrar el \"modo de edición\"."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1074,6 +1098,9 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"Para guardar tu diseño, debes bloquear el candado e ir al diseño de nivel "
+"superior. <br/> <br/> Si deseas exportar este submódulo a un archivo, "
+"ejecuta el comando \"Guardar como\" para hacerlo."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1154,7 +1181,7 @@ msgstr "Versión"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "Notas de la versión"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1170,7 +1197,7 @@ msgstr "Advertencias detectadas en el diseño"
 
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
-msgstr ""
+msgstr "Bienvenido a Inception, versión de Icestudio, enfocada en submódulos."
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
@@ -1212,6 +1239,9 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"Estás editando un submódulo, si lo guardas, guardas solo el submódulo (en "
+"esta situación \"guardar como\" funciona como \"módulo de exportación\"), "
+"¿Te gustaría continuar?"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1222,12 +1252,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
+"Solo puedes construir en el diseño de nivel superior. Dentro de los "
+"submódulos solo puedes <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
+"Solo puedes cargar su diseño en el diseño de nivel superior. Dentro de los "
+"submódulos solo puedes <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
