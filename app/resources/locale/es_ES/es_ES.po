@@ -115,7 +115,7 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
-"Debido a que Icestudio está en desarrollo activo, es importante mantener su "
+"Debido a que Icestudio está en desarrollo activo, es importante mantener tu "
 "icestudio en la última versión. Ahora te estamos notificando!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
@@ -984,7 +984,7 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
-"La edición de submódulo afecta a todos los mismos tipos de bloque. Por "
+"La edición de submódulos afecta a todos los mismos tipos de bloque. Por "
 "ejemplo, si tienes en tu diseño seis bloques AND, si modifica uno de ellos, "
 "modificas todos ellos."
 
