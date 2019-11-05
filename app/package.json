@@ -59,7 +59,7 @@
     "getos": "~3.0.1",
     "glob": "^7.1.4",
     "is-online": "~5.2.0",
-    "jquery": "~3.2.1",
+    "jquery": "~3.0.0",
     "lodash.debounce": "~4.0.8",
     "marked": "~0.3.19",
     "node-emoji": "~1.8.1",
