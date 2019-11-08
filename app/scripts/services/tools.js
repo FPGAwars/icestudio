@@ -156,7 +156,7 @@ angular.module('icestudio')
           //only verification
         } else {
           var archName = common.selectedBoard.info.arch;
-          if (archName == "ecp5")
+          if (archName === 'ecp5')
           {
             // LPF file
             var lpfFile = compiler.generate('lpf', project.get(), opt)[0];

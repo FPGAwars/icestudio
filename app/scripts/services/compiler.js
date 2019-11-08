@@ -776,13 +776,13 @@ angular.module('icestudio')
     }
 
     function lpfCompiler(project, opt) {
-      var i, j, block, pin, value, code = '';
+      var i, block, pin, value, code = '';
       var blocks = project.design.graph.blocks;
       var pullmode;
       opt = opt || {};
 
       var pinout;
-      for (var i = 0; i < common.boards.length; i++) {
+      for (i = 0; i < common.boards.length; i++) {
         if (String(common.boards[i].name) === String(project.design.board)) {
           pinout = common.boards[i].pinout;
         }
@@ -803,9 +803,9 @@ angular.module('icestudio')
               code += '";\n';
 
               pullmode = 'NONE';
-              for (var i in pinout) {
-                if (pinout[i].value === value) { 
-                  pullmode = pinout[i].pullmode ? pinout[i].pullmode : 'NONE';
+              for (var j in pinout) {
+                if (pinout[j].value === value) { 
+                  pullmode = pinout[j].pullmode ? pinout[j].pullmode : 'NONE';
                 }
               }                
               code += 'IOBUF PORT "';
@@ -823,9 +823,9 @@ angular.module('icestudio')
             code += '";\n';
 
             pullmode = 'NONE';
-            for (var i in pinout) {
-              if (pinout[i].value === value) { 
-                pullmode = pinout[i].pullmode ? pinout[i].pullmode : 'NONE';
+            for (var k in pinout) {
+              if (pinout[k].value === value) { 
+                pullmode = pinout[k].pullmode ? pinout[k].pullmode : 'NONE';
               }
             }     
             code += 'IOBUF PORT "';
