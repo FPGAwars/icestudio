@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.4.0)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.4.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
+[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.5.0)](https://travis-ci.org/FPGAwars/icestudio)
+[![Version](https://img.shields.io/badge/version-v0.5.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
 [![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
 [![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
@@ -115,18 +115,18 @@ npm start
 |  Language  | Translated strings                       |
 |:----------:|:----------------------------------------:|
 | English    | ![Progress](http://progress-bar.dev/100) |
-| Spanish    | ![Progress](http://progress-bar.dev/100) |
-| French     | ![Progress](http://progress-bar.dev/98)  |
-| Italian    | ![Progress](http://progress-bar.dev/98)  |
-| Dutch      | ![Progress](http://progress-bar.dev/98)  |
-| Czech      | ![Progress](http://progress-bar.dev/98)  |
-| Greek      | ![Progress](http://progress-bar.dev/98)  |
-| German     | ![Progress](http://progress-bar.dev/97)  |
-| Russian    | ![Progress](http://progress-bar.dev/96)  |
-| Chinese    | ![Progress](http://progress-bar.dev/90)  |
-| Galician   | ![Progress](http://progress-bar.dev/98)  |
-| Basque     | ![Progress](http://progress-bar.dev/97)  |
-| Catalan    | ![Progress](http://progress-bar.dev/90)  |
+| Spanish    | ![Progress](http://progress-bar.dev/92)  |
+| Italian    | ![Progress](http://progress-bar.dev/89)  |
+| French     | ![Progress](http://progress-bar.dev/78)  |
+| Dutch      | ![Progress](http://progress-bar.dev/78)  |
+| Czech      | ![Progress](http://progress-bar.dev/78)  |
+| Greek      | ![Progress](http://progress-bar.dev/79)  |
+| German     | ![Progress](http://progress-bar.dev/77)  |
+| Russian    | ![Progress](http://progress-bar.dev/77)  |
+| Chinese    | ![Progress](http://progress-bar.dev/72)  |
+| Galician   | ![Progress](http://progress-bar.dev/78)  |
+| Basque     | ![Progress](http://progress-bar.dev/77)  |
+| Catalan    | ![Progress](http://progress-bar.dev/72)  |
 
 **Contribute!**
 
@@ -192,6 +192,7 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 |Version | Contributors |
 |:-:|:-:|
+| 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes) |
 | 0.4 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
 | 0.3 | [Luke Valenty](https://github.com/tinyfpga), [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
 | 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |

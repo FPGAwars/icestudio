@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2019-10-31
+### General
+- Submodule edition
+- Copy & Paste OR Copy & Clone blocks
+- Generic blocks
+- Labels: input/output
+- Automatic check for new versions
+
 ## [0.4.0] - 2019-08-30
 ### Support UP5K boards (#281)
 - [iCEBreaker](https://github.com/icebreaker-fpga/icebreaker)
