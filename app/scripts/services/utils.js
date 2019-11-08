@@ -875,7 +875,7 @@ angular.module('icestudio')
     this.clone = function (data) {
       // Very slow in comparison but more stable for all types
       // of objects, if fails, rollback to JSON method or try strict
-      // on fast-copy module  
+      // on fast-copy module
       //return  JSON.parse(JSON.stringify(data));
       return fastCopy(data);
 
@@ -905,19 +905,20 @@ angular.module('icestudio')
         }
         params.local = 'local';
       }
-
       // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
       // that contains the same arguments that shell call, in this way the two calls will be
       // compatible.
       // If in the future you will add more paremeters to the new window , you should review
       // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
 
+//      console.log('PARAMS',params);
       var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility
       // to avoid crash on new window project after close parent
       // (little trick for nwjs bug).
       //url='index.html?icestudio_argv=fsdfsfa';
+
       gui.Window.open(url, {
         // new_instance: true,  //Deprecated for new nwjs versios
         //      'new_instance': true,  //Deprecated for new nwjs versios

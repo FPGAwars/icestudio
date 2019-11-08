@@ -10,11 +10,11 @@ angular.module('icestudio')
     collections,
     graph,
     tools,
-    utils, 
+    utils,
     common,
     shortcuts,
     gettextCatalog,
-    gui, 
+    gui,
     _package,
     nodeFs,
     nodePath) {
@@ -59,6 +59,7 @@ angular.module('icestudio')
     // New window, get the focus
     win.focus();
     // Load app arguments
+
     setTimeout(function () {
 
       // Parse GET url parmeters for window instance arguments
@@ -76,17 +77,16 @@ angular.module('icestudio')
 
         queryStr = decodeURI(window.location.search) + '&';
       }
-      console.log(queryStr); 
       var regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
       var val = queryStr.replace(regex, '$1');
-      
+
       var params = (val === queryStr) ? false : val;
       // If there are url params, compatibilize it with shell call
         if (typeof gui.App.argv === 'undefined') {
           gui.App.argv = [];
         }
-  
-      var prop; 
+
+        var prop;
       if (params !== false) {
         params = JSON.parse(decodeURI(params));
 
@@ -95,11 +95,17 @@ angular.module('icestudio')
         }
       }
       var argv=gui.App.argv;
+
+      if(window.opener.opener !== null){
+        argv=[];
+    }
+
+
       if(params !==false){
          for (prop in params) {
           argv.push(params[prop]);
         }
- 
+
       }
       var local = false;
       for (var i in argv) {
@@ -107,24 +113,26 @@ angular.module('icestudio')
         processArg(arg);
         local = arg === 'local' || local;
       }
+
+
+      console.log('ARGV',argv);
       var editable = !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
         !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
         project.path.startsWith(common.selectedCollection.path);
-      if (editable || !local) {
+
+      if (editable || !local ) {
+
         updateWorkingdir(project.path);
       }
       else {
         project.path = '';
       }
-
-    }, 0);
-
-    setTimeout(function () {
       var versionW = $scope.profile.get('displayVersionInfoWindow');
       if (versionW === 'yes') {
         $scope.openVersionInfoWindow();
       }
-    }, 2000);
+
+    }, 500);
 
     function processArg(arg) {
       if (nodeFs.existsSync(arg)) {
@@ -1076,5 +1084,7 @@ angular.module('icestudio')
         event.preventDefault();
       }
     });
+
+
 
   });
