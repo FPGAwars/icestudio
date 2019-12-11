@@ -144,7 +144,7 @@ ToolchainBuilder.prototype.downloadApio = function () {
     var versionRange = '">=' + self.options.apioMin + ',<' + self.options.apioMax + '"';
     var command = [
       self.options.venvPip, 'download', '--dest', self.options.apioDir,
-      'git+https://github.com/mmicko/apio.git@develop#egg=apio[' + self.options.extraPackages.toString() + ']' + versionRange
+      'apio[' + self.options.extraPackages.toString() + ']' + versionRange
     ];
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {
