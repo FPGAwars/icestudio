@@ -853,7 +853,9 @@ angular.module('icestudio')
         createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
-        apioInstallIcestorm,
+        apioInstallYosys,
+        apioInstallIce40,
+        apioInstallECP5,
         apioInstallIverilog,
         apioInstallDrivers,
         apioInstallScons,
@@ -925,9 +927,19 @@ angular.module('icestudio')
       utils.apioInstall('system', callback);
     }
 
-    function apioInstallIcestorm(callback) {
-      updateProgress('apio install icestorm', 50);
-      utils.apioInstall('icestorm', callback);
+    function apioInstallYosys(callback) {
+      updateProgress('apio install yosys', 50);
+      utils.apioInstall('yosys', callback);
+    }
+
+    function apioInstallIce40(callback) {
+      updateProgress('apio install ice40', 50);
+      utils.apioInstall('ice40', callback);
+    }
+
+    function apioInstallECP5(callback) {
+      updateProgress('apio install ecp5', 50);
+      utils.apioInstall('ecp5', callback);
     }
 
     function apioInstallIverilog(callback) {
