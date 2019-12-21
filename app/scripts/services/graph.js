@@ -1439,9 +1439,10 @@ angular.module('icestudio')
                             replaced = false;
                             if (typeof opt.designPinout !== 'undefined') {
                                 for (var opin = 0; opin < opt.designPinout.length; opin++) {
-                                    if (String(opt.designPinout[opin].name) === String(pins[i].name)) {
+                                    if (String(opt.designPinout[opin].name) === String(pins[i].name)) {                                        
                                         pins[i].name = opt.designPinout[opin].name;
                                         pins[i].value = opt.designPinout[opin].value;
+                                        pins[i].pullmode = opt.designPinout[opin].pullmode;
                                         opin = opt.designPinout.length;
                                         replaced = true;
                                         isMigrated = true;
@@ -1451,6 +1452,7 @@ angular.module('icestudio')
                             if (replaced === false) {
                                 pins[i].name = '';
                                 pins[i].value = '0';
+                                pins[i].pullmode = 'NONE';
                             }
                         }
 

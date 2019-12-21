@@ -13,6 +13,7 @@
       "alhambra-ii",
       "blackice",
       "blackice-ii",
+      "blackice-mx",
       "icoboard",
       "kefir",
       "iCE40-HX8K"
@@ -34,6 +35,15 @@
       "upduino2",
       "fpga101",
       "iCE40-UP5K"
+    ]
+  },
+  {
+    "type": "ECP5",
+    "boards": [
+      "ulx3s-12f",
+      "ulx3s-25f",
+      "ulx3s-45f",
+      "ulx3s-85f"
     ]
   }
 ]

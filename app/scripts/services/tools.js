@@ -155,9 +155,17 @@ angular.module('icestudio')
         if (cmd.indexOf('verify') > -1 && cmd.length === 1) {
           //only verification
         } else {
-          // PCF file
-          var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
-          nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+          var archName = common.selectedBoard.info.arch;
+          if (archName === 'ecp5')
+          {
+            // LPF file
+            var lpfFile = compiler.generate('lpf', project.get(), opt)[0];
+            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, lpfFile.name), lpfFile.content, 'utf8');            
+          } else {
+            // PCF file
+            var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
+            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+          }
         }
         // List files
         var listFiles = compiler.generate('list', project.get());
@@ -296,8 +304,8 @@ angular.module('icestudio')
           ssh: true,
           recursive: true,
           delete: true,
-          include: ['*.v', '*.pcf', '*.list'],
-          exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
+          include: ['*.v', '*.pcf', '*.lpf', '*.list'],
+          exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin', '*.config', '*.json']
         }, function (error, stdout, stderr/*, cmd*/) {
           if (!error) {
             startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
@@ -851,7 +859,9 @@ angular.module('icestudio')
         createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
-        apioInstallIcestorm,
+        apioInstallYosys,
+        apioInstallIce40,
+        apioInstallECP5,
         apioInstallIverilog,
         apioInstallDrivers,
         apioInstallScons,
@@ -924,9 +934,19 @@ angular.module('icestudio')
       utils.apioInstall('system', callback);
     }
 
-    function apioInstallIcestorm(callback) {
-      updateProgress('apio install icestorm', 50);
-      utils.apioInstall('icestorm', callback);
+    function apioInstallYosys(callback) {
+      updateProgress('apio install yosys', 50);
+      utils.apioInstall('yosys', callback);
+    }
+
+    function apioInstallIce40(callback) {
+      updateProgress('apio install ice40', 50);
+      utils.apioInstall('ice40', callback);
+    }
+
+    function apioInstallECP5(callback) {
+      updateProgress('apio install ecp5', 50);
+      utils.apioInstall('ecp5', callback);
     }
 
     function apioInstallIverilog(callback) {

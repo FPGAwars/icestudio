@@ -191,7 +191,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', (platform.startsWith('windows') ? 'drivers' : ''), 'scons'];
+      var packages = ['system', 'ice40', 'yosys', 'ecp5', 'verilator', 'iverilog', (platform.startsWith('windows') ? 'drivers' : ''), 'scons'];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);

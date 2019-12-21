@@ -373,11 +373,11 @@ angular.module('icestudio')
       var pins = [];
       if (portInfo.range) {
         for (var r in portInfo.range) {
-          pins.push({ index: portInfo.range[r].toString(), name: '', value: '' });
+          pins.push({ index: portInfo.range[r].toString(), name: '', value: '', pullmode: '' });
         }
       }
       else {
-        pins.push({ index: '0', name: '', value: '' });
+        pins.push({ index: '0', name: '', value: '', pullmode: '' });
       }
       return pins;
     }
