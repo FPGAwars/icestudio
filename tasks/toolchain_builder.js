@@ -70,7 +70,7 @@ ToolchainBuilder.prototype.build = function () {
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
   return new Promise(function(resolve, reject) {
     if (getPythonExecutable()) { resolve(); }
-    else { reject('Python 3.7 is not available'); }
+    else { reject('Python 3.5/3.6/3.7/3.8 is not available'); }
   });
 };
 
@@ -278,9 +278,15 @@ function getPythonExecutable() {
 
     if (process.platform === 'win32') {
       possibleExecutables.push('python.exe');
+      possibleExecutables.push('C:\\Python38\\python.exe');
       possibleExecutables.push('C:\\Python37\\python.exe');
+      possibleExecutables.push('C:\\Python36\\python.exe');
+      possibleExecutables.push('C:\\Python35\\python.exe');
     } else {
+      possibleExecutables.push('python3.8');
       possibleExecutables.push('python3.7');
+      possibleExecutables.push('python3.6');
+      possibleExecutables.push('python3.5');
       possibleExecutables.push('python3');
       possibleExecutables.push('python');
     }
@@ -300,8 +306,11 @@ function isPython3(executable) {
   const args = ['-V'];
   try {
     const result = childProcess.spawnSync(executable, args);
-    return 0 === result.status && result.stdout.toString().indexOf('3.7') >= 0;
-
+    return 0 === result.status &&
+     (result.stdout.toString().indexOf('3.5') >= 0 || 
+      result.stdout.toString().indexOf('3.6') >= 0 ||
+      result.stdout.toString().indexOf('3.7') >= 0 || 
+      result.stdout.toString().indexOf('3.8') >= 0);
   } catch(e) {
     return false;
   }
