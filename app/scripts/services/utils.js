@@ -19,7 +19,8 @@ angular.module('icestudio')
     nodeGetOS,
     nodeLangInfo,
     gui,
-    SVGO) {
+    SVGO,
+    fastCopy) {
 
     var _pythonExecutableCached = null;
     // Get the system executable
@@ -29,15 +30,19 @@ angular.module('icestudio')
 
         if (common.WIN32) {
           possibleExecutables.push('python.exe');
-          possibleExecutables.push('C:\\Python27\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
         } else {
-          possibleExecutables.push('python2.7');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3');
+          possibleExecutables.push('python3.7');
+          possibleExecutables.push('python3');
           possibleExecutables.push('python');
+
         }
 
         for (var i in possibleExecutables) {
           var executable = possibleExecutables[i];
-          if (isPython2(executable)) {
+          if (isPython3(executable)) {
             _pythonExecutableCached = executable;
             break;
           }
@@ -46,11 +51,11 @@ angular.module('icestudio')
       return _pythonExecutableCached;
     };
 
-    function isPython2(executable) {
-      const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+    function isPython3(executable) {
+      executable += ' -V';
       try {
-        const result = nodeChildProcess.spawnSync(executable, args);
-        return 0 === result.status && result.stdout.toString().startsWith('2.7');
+        const result = nodeChildProcess.execSync(executable);
+        return (result !== false && result !== null && result.toString().indexOf('3.7') >= 0);
       } catch (e) {
         return false;
       }
@@ -97,7 +102,14 @@ angular.module('icestudio')
     };
 
     this.executeCommand = function (command, callback) {
-      nodeChildProcess.exec(command.join(' '),
+      var cmd = command.join(' ');
+      //const fs = require('fs');
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
+
+        nodeFs.appendFileSync(common.LOGFILE, 'utils.executeCommand=>' + cmd + "\n");
+      }
+      nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
           $(document).trigger('commandOutputChanged', [common.commandOutput]);
@@ -434,7 +446,7 @@ angular.module('icestudio')
         var collection = collections[c];
         var filepath = nodePath.join(collection.path, 'locale', bestLang, bestLang + '.json');
         if (nodeFs.existsSync(filepath)) {
-          gettextCatalog.loadRemote(filepath);
+          gettextCatalog.loadRemote('file://' + filepath);
         }
       }
       if (callback) {
@@ -861,7 +873,13 @@ angular.module('icestudio')
     };
 
     this.clone = function (data) {
-      return JSON.parse(JSON.stringify(data));
+      // Very slow in comparison but more stable for all types
+      // of objects, if fails, rollback to JSON method or try strict
+      // on fast-copy module
+      //return  JSON.parse(JSON.stringify(data));
+      return fastCopy(data);
+
+
     };
 
     this.dependencyID = function (dependency) {
@@ -873,7 +891,7 @@ angular.module('icestudio')
 
     this.newWindow = function (filepath, local) {
 
-      var gui = require('nw.gui');
+
 
       var params = false;
 
@@ -887,25 +905,25 @@ angular.module('icestudio')
         }
         params.local = 'local';
       }
-
       // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
       // that contains the same arguments that shell call, in this way the two calls will be
       // compatible.
       // If in the future you will add more paremeters to the new window , you should review
       // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
 
-      var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(JSON.stringify(params)));
-
+//      console.log('PARAMS',params);
+      var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility
       // to avoid crash on new window project after close parent
       // (little trick for nwjs bug).
+      //url='index.html?icestudio_argv=fsdfsfa';
 
       gui.Window.open(url, {
-        'new-instance': true,
-        'new_instance': true,
+        // new_instance: true,  //Deprecated for new nwjs versios
+        //      'new_instance': true,  //Deprecated for new nwjs versios
         'position': 'center',
-        'toolbar': false,
+        //        'toolbar': false,   //Deprecated for new nwjs versios
         'width': 900,
         'height': 600,
         'show': true,
@@ -1187,11 +1205,12 @@ angular.module('icestudio')
     };
 
     this.openDevToolsUI = function () {
-      window.get().showDevTools();
+      gui.Window.get().showDevTools();
     };
     this.openUrlExternalBrowser = function (url) {
 
       gui.Shell.openExternal(url);
+      //require('nw.gui').Shell.openExternal( url);
     };
 
   });

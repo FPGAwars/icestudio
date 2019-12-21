@@ -337,6 +337,12 @@ angular.module('icestudio')
         function _executeLocal() {
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
+          if (typeof common.DEBUGMODE !== 'undefined' &&
+            common.DEBUGMODE === 1) {
+
+            const fs = require('fs');
+            fs.appendFileSync(common.LOGFILE, 'tools._executeLocal>' + command + "\n");
+          }
           nodeChildProcess.exec(command,
             { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
             function (error, stdout, stderr) {
@@ -881,7 +887,7 @@ angular.module('icestudio')
       else {
         closeToolchainAlert();
         restoreStatus();
-        resultAlert = alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
+        resultAlert = alertify.error(gettextCatalog.getString('Python 3.7 is required'), 30);
         callback(true);
       }
     }
@@ -918,6 +924,7 @@ angular.module('icestudio')
     function installOnlineApio(callback) {
       var extraPackages = _package.apio.extras || [];
       var apio = utils.getApioInstallable();
+
       updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }

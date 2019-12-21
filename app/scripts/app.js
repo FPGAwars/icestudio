@@ -2,8 +2,8 @@
 
 angular
   .module('icestudio', [
-    'ngRoute',
     'ui.bootstrap',
+    'ngRoute',
     'gettext'
   ])
   .config(['$routeProvider',

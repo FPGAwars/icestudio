@@ -290,7 +290,7 @@ angular.module('icestudio')
                 wtemp.push(iwtemp);
             }
         }
-        graph.wires=wtemp;
+        graph.wires=utils.clone(wtemp);
         // End of rearrange design connections for compilation
 
 
@@ -362,7 +362,18 @@ angular.module('icestudio')
         //
 
         wtemp=[];
-        for ( wi=0;wi<graph.wires.length;wi++){
+        var wn=0;
+        for ( wi=0,wn=graph.wiresVirtual.length; wi<wn; wi++){
+            if(typeof graph.wiresVirtual[wi].tcTodelete !== 'undefined'  &&
+                graph.wiresVirtual[wi].tcTodelete === true){
+                //Nothing for now, only remove
+            }else{
+                wtemp.push(graph.wiresVirtual[wi]);
+            }
+
+        }
+
+        for ( wi=0,wn=graph.wires.length;wi<wn; wi++){
             if(typeof graph.wires[wi].tcTodelete !== 'undefined'  &&
                 graph.wires[wi].tcTodelete === true){
                 //Nothing for now, only remove
@@ -372,12 +383,10 @@ angular.module('icestudio')
 
         }
 
-        graph.wires= graph.wiresVirtual.concat(wtemp);
+        graph.wires=wtemp;
+
         delete graph.wiresVirtual;
         //END ONWORK
-
-
-
 
       return content.join('\n');
     }

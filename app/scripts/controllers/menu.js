@@ -58,8 +58,8 @@ angular.module('icestudio')
 
     // New window, get the focus
     win.focus();
-
     // Load app arguments
+
     setTimeout(function () {
 
       // Parse GET url parmeters for window instance arguments
@@ -69,51 +69,74 @@ angular.module('icestudio')
       // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
       // unescape is deprecated javascript function, should use decodeURI instead
 
-      var queryStr = decodeURI(window.location.search) + '&';
 
+      var queryStr='';
+      if(window.location.search.indexOf('?icestudio_argv=')===0){
+        queryStr='?icestudio_argv='+atob(decodeURI(window.location.search.replace('?icestudio_argv=','')))+'&';
+      }else{
+
+        queryStr = decodeURI(window.location.search) + '&';
+      }
       var regex = new RegExp('.*?[&\\?]icestudio_argv=(.*?)&.*');
       var val = queryStr.replace(regex, '$1');
-      var params = (val === queryStr) ? false : val;
 
+      var params = (val === queryStr) ? false : val;
       // If there are url params, compatibilize it with shell call
-      if (params !== false) {
-        params = JSON.parse(decodeURI(params));
         if (typeof gui.App.argv === 'undefined') {
           gui.App.argv = [];
         }
-        for (var prop in params) {
+
+        var prop;
+      if (params !== false) {
+        params = JSON.parse(decodeURI(params));
+
+        for ( prop in params) {
           gui.App.argv.push(params[prop]);
         }
       }
+      var argv=gui.App.argv;
 
+      if(window.opener.opener !== null){
+        argv=[];
+    }
+
+
+      if(params !==false){
+         for (prop in params) {
+          argv.push(params[prop]);
+        }
+
+      }
       var local = false;
-      for (var i in gui.App.argv) {
-        var arg = gui.App.argv[i];
+      for (var i in argv) {
+        var arg = argv[i];
         processArg(arg);
         local = arg === 'local' || local;
       }
+
+
+      console.log('ARGV',argv);
       var editable = !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
         !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
         project.path.startsWith(common.selectedCollection.path);
-      if (editable || !local) {
+
+      if (editable || !local ) {
+
         updateWorkingdir(project.path);
       }
       else {
         project.path = '';
       }
-
-    }, 0);
-
-    setTimeout(function () {
       var versionW = $scope.profile.get('displayVersionInfoWindow');
       if (versionW === 'yes') {
         $scope.openVersionInfoWindow();
       }
-    }, 2000);
+
+    }, 500);
 
     function processArg(arg) {
       if (nodeFs.existsSync(arg)) {
-        // Open filepath 
+        // Open filepath
         var filepath = arg;
         project.open(filepath);
       }
@@ -129,7 +152,7 @@ angular.module('icestudio')
     }
 
     /*
-     * This function triggers when version info window will be closed 
+     * This function triggers when version info window will be closed
      *                                                                 */
     $scope.closeVersionInfoWindow = function () {
       $('#version-info-tab').addClass('hidden');
@@ -566,7 +589,7 @@ angular.module('icestudio')
       gui.Window.open('resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name, {
         title: common.selectedBoard.info.label + ' - PCF',
         focus: true,
-        toolbar: false,
+        //toolbar: false,
         resizable: true,
         width: 700,
         height: 700,
@@ -582,7 +605,7 @@ angular.module('icestudio')
         gui.Window.open('resources/viewers/svg/pinout.html?board=' + board.name, {
           title: common.selectedBoard.info.label + ' - Pinout',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: true,
           width: 500,
           height: 700,
@@ -610,10 +633,11 @@ angular.module('icestudio')
       var board = common.selectedBoard;
       var rules = JSON.stringify(board.rules);
       if (rules !== '{}') {
-        gui.Window.open('resources/viewers/table/rules.html?rules=' + rules, {
+        var encRules=encodeURIComponent(rules);
+        gui.Window.open('resources/viewers/table/rules.html?rules=' + encRules, {
           title: common.selectedBoard.info.label + ' - Rules',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: false,
           width: 500,
           height: 500,
@@ -638,7 +662,7 @@ angular.module('icestudio')
         gui.Window.open('resources/viewers/markdown/readme.html?readme=' + readme, {
           title: (collection.name ? collection.name : 'Default') + ' Collection - Data',
           focus: true,
-          toolbar: false,
+          //toolbar: false,
           resizable: true,
           width: 700,
           height: 700,
@@ -656,7 +680,7 @@ angular.module('icestudio')
       winCommandOutput = gui.Window.open('resources/viewers/plain/output.html?content=' + encodeURIComponent(common.commandOutput), {
         title: gettextCatalog.getString('Command output'),
         focus: true,
-        toolbar: false,
+/*        toolbar: false,*/
         resizable: true,
         width: 700,
         height: 400,
@@ -827,14 +851,18 @@ angular.module('icestudio')
     };
 
     $scope.showChromeDevTools = function () {
-      win.showDevTools();
+
+      //win.showDevTools();
+       utils.openDevToolsUI();
     };
 
     //-- Help
 
-    $scope.openUrl = function (url) {
-      event.preventDefault();
-      gui.Shell.openExternal(url);
+    $scope.openUrl = function (url,$event) {
+      $event.preventDefault();
+
+      utils.openUrlExternalBrowser(url);
+      return false;
     };
 
     $scope.about = function () {
@@ -975,8 +1003,6 @@ angular.module('icestudio')
       if (ret.preventDefault) {
         event.preventDefault();
       }
-
-
     });
 
     function takeSnapshot() {
@@ -1011,6 +1037,7 @@ angular.module('icestudio')
     $(document).on('mouseup', function () {
       mousedown = false;
     });
+
     $(document).on('mousedown', '.paper', function () {
       mousedown = true;
       // Close current menu
@@ -1057,5 +1084,7 @@ angular.module('icestudio')
         event.preventDefault();
       }
     });
+
+
 
   });

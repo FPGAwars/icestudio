@@ -15,7 +15,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
   // length of prefix 'change:' in the event name
   PREFIX_LENGTH: 7,
 
-  initialize: function(options) {
+  initialize: function (options) {
 
     _.bindAll(this, 'initBatchCommand', 'storeBatchCommand');
 
@@ -26,7 +26,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.listen();
   },
 
-  listen: function() {
+  listen: function () {
 
     this.listenTo(this.graph, 'state', this.updateState, this);
 
@@ -36,25 +36,25 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.listenTo(this.graph, 'batch:stop', this.storeBatchCommand, this);
   },
 
-  createCommand: function(options) {
+  createCommand: function (options) {
 
     var cmd = {
       action: undefined,
-      data: { id: undefined, type: undefined, previous: {}, next: {}},
+      data: { id: undefined, type: undefined, previous: {}, next: {} },
       batch: options && options.batch
     };
 
     return cmd;
   },
 
-  updateState: function(state) {
+  updateState: function (state) {
     this.state = state;
   },
 
-  addCommand: function(cmdName, cell, graph, options) {
+  addCommand: function (cmdName, cell, graph, options) {
 
     if (cmdName === 'change:labels' ||
-        cmdName === 'change:z') {
+      cmdName === 'change:z') {
       return;
     }
 
@@ -66,7 +66,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       return;
     }
 
-    var push = _.bind(function(cmd) {
+    var push = _.bind(function (cmd) {
 
       this.redoStack = [];
 
@@ -89,7 +89,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       // set command as the one used last.
       // in most cases we are working with same object, doing same action
       // etc. translate an object piece by piece
-      command = this.batchCommand[Math.max(this.lastCmdIndex,0)];
+      command = this.batchCommand[Math.max(this.lastCmdIndex, 0)];
 
       // Check if we are start working with new object or performing different action with it.
       // Note, that command is uninitialized when lastCmdIndex equals -1. (see 'initBatchCommand()')
@@ -98,15 +98,15 @@ joint.dia.CommandManager = Backbone.Model.extend({
 
         // trying to find command first, which was performing same action with the object
         // as we are doing now with cell
-        command = _.find(this.batchCommand, function(cmd, index) {
+        command = _.find(this.batchCommand, function (cmd, index) {
           this.lastCmdIndex = index;
           return cmd.data.id === cell.id && cmd.action === cmdName;
         }, this);
 
-    	  if (!command) {
+        if (!command) {
           // command with such an id and action was not found. Let's create new one
-    	    this.lastCmdIndex = this.batchCommand.push(this.createCommand({ batch:  true })) - 1;
-    	    command = _.last(this.batchCommand);
+          this.lastCmdIndex = this.batchCommand.push(this.createCommand({ batch: true })) - 1;
+          command = _.last(this.batchCommand);
         }
       }
 
@@ -176,12 +176,12 @@ joint.dia.CommandManager = Backbone.Model.extend({
   // (2) e.g When you are removing an element, you don't want all links connected to that element, which
   // are also being removed to be part of different command
 
-  initBatchCommand: function() {
+  initBatchCommand: function () {
 
 
     if (!this.batchCommand) {
 
-      this.batchCommand = [this.createCommand({ batch:  true})];
+      this.batchCommand = [this.createCommand({ batch: true })];
       this.lastCmdIndex = -1;
 
       // batch level counts how many times has been initBatchCommand executed.
@@ -195,7 +195,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     }
   },
 
-  storeBatchCommand: function() {
+  storeBatchCommand: function () {
 
 
     // In order to store batch command it is necesary to run storeBatchCommand as many times as
@@ -206,7 +206,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       // for example: calling `initBatchCommand` immediately followed by `storeBatchCommand`
       if (this.lastCmdIndex >= 0) {
 
-  	    this.redoStack = [];
+        this.redoStack = [];
 
         this.undoStack.push(this.batchCommand);
         if (this.batchCommand && this.batchCommand[0] && this.batchCommand[0].action !== 'lang') {
@@ -228,7 +228,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     }
   },
 
-  revertCommand: function(command) {
+  revertCommand: function (command) {
 
     this.stopListening();
 
@@ -240,7 +240,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       batchCommand = [command];
     }
 
-    for (var i = batchCommand.length - 1; i >= 0; i--)  {
+    for (var i = batchCommand.length - 1; i >= 0; i--) {
 
       var cmd = batchCommand[i], cell = this.graph.getCell(cmd.data.id);
 
@@ -250,7 +250,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
           if (cell) {
             cell.remove();
           }
-        	break;
+          break;
 
         case 'remove':
           cmd.data.attributes.state = this.state;
@@ -299,7 +299,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.listen();
   },
 
-  applyCommand: function(command) {
+  applyCommand: function (command) {
 
     this.stopListening();
 
@@ -311,7 +311,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
       batchCommand = [command];
     }
 
-    for (var i = 0; i < batchCommand.length; i++)  {
+    for (var i = 0; i < batchCommand.length; i++) {
 
       var cmd = batchCommand[i], cell = this.graph.getCell(cmd.data.id);
 
@@ -361,7 +361,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.listen();
   },
 
-  undo: function() {
+  undo: function () {
 
     var command = this.undoStack.pop();
     if (command) {
@@ -373,7 +373,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
   },
 
 
-  redo: function() {
+  redo: function () {
 
     var command = this.redoStack.pop();
 
@@ -388,7 +388,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     }
   },
 
-  cancel: function() {
+  cancel: function () {
 
     if (this.hasUndo()) {
 
@@ -397,7 +397,7 @@ joint.dia.CommandManager = Backbone.Model.extend({
     }
   },
 
-  reset: function() {
+  reset: function () {
 
     this.undoStack = [];
     this.redoStack = [];
@@ -405,30 +405,30 @@ joint.dia.CommandManager = Backbone.Model.extend({
     this.changesStack = [];
   },
 
-  hasUndo: function() {
+  hasUndo: function () {
 
     return this.undoStack.length > 0;
   },
 
-  hasRedo: function() {
+  hasRedo: function () {
 
     return this.redoStack.length > 0;
   },
 
-  triggerChange: function() {
+  triggerChange: function () {
     var currentUndoStack = _.clone(this.changesStack);
     $(document).trigger('stackChanged', [currentUndoStack]);
   },
 
-  triggerBoard: function(board) {
+  triggerBoard: function (board) {
     $(document).trigger('boardChanged', [board]);
   },
 
-  triggerInfo: function(info) {
+  triggerInfo: function (info) {
     $(document).trigger('infoChanged', [info]);
   },
 
-  triggerLanguage: function(lang) {
+  triggerLanguage: function (lang) {
     $(document).trigger('langChanged', [lang]);
   }
 
