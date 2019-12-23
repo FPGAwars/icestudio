@@ -30,11 +30,23 @@ angular.module('icestudio')
 
         if (common.WIN32) {
           possibleExecutables.push('python.exe');
+          possibleExecutables.push('C:\\Python38\\python.exe');
           possibleExecutables.push('C:\\Python37\\python.exe');
+          possibleExecutables.push('C:\\Python36\\python.exe');
+          possibleExecutables.push('C:\\Python35\\python.exe');
         } else {
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3');
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7');
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5');
+          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3');
+          possibleExecutables.push('python3.8');
           possibleExecutables.push('python3.7');
+          possibleExecutables.push('python3.6');
+          possibleExecutables.push('python3.5');
           possibleExecutables.push('python3');
           possibleExecutables.push('python');
 
@@ -55,7 +67,9 @@ angular.module('icestudio')
       executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
-        return (result !== false && result !== null && result.toString().indexOf('3.7') >= 0);
+        return (result !== false && result !== null && 
+          (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
+           result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0));
       } catch (e) {
         return false;
       }
