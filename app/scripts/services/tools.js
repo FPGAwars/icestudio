@@ -36,7 +36,7 @@ angular.module('icestudio')
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
     this.verifyCode = function (startMessage, endMessage) {
-      return apioRun(['verify'], startMessage, endMessage);
+      return apioRun(['verify', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     this.buildCode = function (startMessage, endMessage) {
@@ -160,7 +160,7 @@ angular.module('icestudio')
           {
             // LPF file
             var lpfFile = compiler.generate('lpf', project.get(), opt)[0];
-            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, lpfFile.name), lpfFile.content, 'utf8');            
+            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, lpfFile.name), lpfFile.content, 'utf8');
           } else {
             // PCF file
             var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
