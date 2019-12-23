@@ -590,16 +590,40 @@ angular.module('icestudio')
 
           if (stdout) {
             // Show used resources in the FPGA
-            common.FPGAResources.ffs = findValue(/DFF\s+([0-9]+)\s/g, stdout, common.FPGAResources.ffs);
-            common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
-            common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
-            common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
-            common.FPGAResources.brams = findValue(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            if(typeof common.FPGAResources.nextpnr === 'undefined'){
+              common.FPGAResources.nextpnr={
+                                              LC:  {used:'-',total:'-',percentage:'-'},
+                                              RAM: {used:'-',total:'-',percentage:'-'},
+                                              IO:  {used:'-',total:'-',percentage:'-'},
+                                              GB:  {used:'-',total:'-',percentage:'-'},
+                                              PLL: {used:'-',total:'-',percentage:'-'},
+                                              WB:  {used:'-',total:'-',percentage:'-'},
+                                              MF:{value:0}
+                                            }; 
+
+            }
+            common.FPGAResources.nextpnr.LC = findValueNPNR(/_LC:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.LC);
+            common.FPGAResources.nextpnr.RAM = findValueNPNR(/_RAM:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.RAM);
+            common.FPGAResources.nextpnr.IO = findValueNPNR(/SB_IO:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.IO);
+            common.FPGAResources.nextpnr.GB = findValueNPNR(/SB_GB:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.GB);
+            common.FPGAResources.nextpnr.PLL = findValueNPNR(/_PLL:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.PLL);
+            common.FPGAResources.nextpnr.WB = findValueNPNR(/_WARMBOOT:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.WB);
+            common.FPGAResources.nextpnr.MF=findMaxFreq(/Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g,stdout,common.FPGAResources.nextpnr.MF)
             utils.rootScopeSafeApply();
           }
         }
       });
     }
+
+    function findValueNPNR(pattern, output, previousValue) {
+      var match = pattern.exec(output);
+      return (match && match[1] && match[2] && match[3]) ? {used: match[1],total:match[2],percentage:match[3]} : previousValue;
+    }
+    function findMaxFreq(pattern, output, previousValue) {
+      var match = pattern.exec(output);
+      return (match && match[1]) ? {value: match[1]} : previousValue;
+    }
+
 
     function findValue(pattern, output, previousValue) {
       var match = pattern.exec(output);
