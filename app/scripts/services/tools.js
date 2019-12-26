@@ -152,9 +152,13 @@ angular.module('icestudio')
         var verilogFile = compiler.generate('verilog', project.get(), opt)[0];
         nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, verilogFile.name), verilogFile.content, 'utf8');
 
-        if (cmd.indexOf('verify') > -1 && cmd.length === 1) {
+
+
+        if (cmd.indexOf('verify') > -1 && cmd.indexOf('--board') > -1 && cmd.length === 3) {
           //only verification
+
         } else {
+
           var archName = common.selectedBoard.info.arch;
           if (archName === 'ecp5')
           {
@@ -174,7 +178,6 @@ angular.module('icestudio')
 
           nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, listFile.name), listFile.content, 'utf8');
         }
-
         project.restoreSnapshot();
         resolve({
           code: verilogFile.content,
