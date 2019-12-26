@@ -578,6 +578,7 @@ angular.module('icestudio')
         }
         // Validate values
         var i, inPortInfo, inPortInfos = [];
+        console.log('IN',inPorts);
         for (i in inPorts) {
           if (inPorts[i]) {
             inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
@@ -592,6 +593,8 @@ angular.module('icestudio')
             }
           }
         }
+        console.log('OUT',outPorts);
+        
         var o, outPortInfo, outPortInfos = [];
         for (o in outPorts) {
           if (outPorts[o]) {
