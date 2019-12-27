@@ -400,13 +400,13 @@ angular.module('icestudio')
             block.type !== 'basic.outputLabel') {
 
           // Header
-
           var instance;
           if (block.type === 'basic.code') {
             instance = name + '_' + utils.digestId(block.id);
           }
           else {
             instance = utils.digestId(block.type);
+          
           }
 
           //-- Parameters

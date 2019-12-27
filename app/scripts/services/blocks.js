@@ -578,7 +578,8 @@ angular.module('icestudio')
         }
         // Validate values
         var i, inPortInfo, inPortInfos = [];
-        console.log('IN',inPorts);
+       
+        let nib=0, nob=0;
         for (i in inPorts) {
           if (inPorts[i]) {
             inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
@@ -591,9 +592,10 @@ angular.module('icestudio')
               resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
               return;
             }
+          }else{
+            nib++;
           }
         }
-        console.log('OUT',outPorts);
         
         var o, outPortInfo, outPortInfos = [];
         for (o in outPorts) {
@@ -608,8 +610,18 @@ angular.module('icestudio')
               resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
               return;
             }
+          }else{
+            nob++;
           }
         }
+        if(nib>=inPorts.length && nob >= outPorts.length){
+               evt.cancel = true;
+              resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
+              return;
+ 
+
+        }
+
         var p, paramInfo, paramInfos = [];
         for (p in params) {
           if (params[p]) {

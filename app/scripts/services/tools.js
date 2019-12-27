@@ -369,7 +369,6 @@ angular.module('icestudio')
         if (_error || stderr) {
           // -- Process errors
           reject();
-          console.log('SALIDA',stdout);
           if (stdout) {
             var boardName = common.selectedBoard.name;
             var boardLabel = common.selectedBoard.info.label;
@@ -433,7 +432,6 @@ angular.module('icestudio')
               resultAlert = alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
             }
             else {
-              console.log('IVERILOG');
               var re, matchError, codeErrors = [];
 
               // - Iverilog errors & warnings
@@ -442,7 +440,6 @@ angular.module('icestudio')
               // main.v:#: syntax error
               re = /main.v:([0-9]+):\s(error|warning):\s(.*?)[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
-                console.log('ERROR1',matchError);  
                 codeErrors.push({
                   line: parseInt(matchError[1]),
                   msg: matchError[3].replace(/\sin\smain\..*$/, ''),
@@ -451,14 +448,12 @@ angular.module('icestudio')
               }
               re = /main.v:([0-9]+):\ssyntax\serror[\r|\n]/g;
               while (matchError = re.exec(stdout)) {
-                console.log('ERROR2',matchError);  
                 codeErrors.push({
                   line: parseInt(matchError[1]),
                   msg: 'Syntax error',
                   type: 'error'
                 });
               }
-              console.log(codeErrors);
               // - Yosys errors
               // ERROR: ... main.v:#...
               // Warning: ... main.v:#...
@@ -528,9 +523,7 @@ angular.module('icestudio')
               var hasErrors = false;
               var hasWarnings = false;
               for (var i in codeErrors) {
-                console.log('Normalizar',codeErrors[i]);
                 var codeError = normalizeCodeError(codeErrors[i], modules);
-                console.log('CERROR',codeError);
                 if (codeError) {
                   // Launch codeError event
                   $(document).trigger('codeError', [codeError]);
@@ -684,7 +677,6 @@ angular.module('icestudio')
 
     function normalizeCodeError(codeError, modules) {
       var newCodeError;
-      console.log('Normalizando errores',codeError,modules);
       // Find the module with the error
       for (var i in modules) {
         var module = modules[i];
@@ -708,6 +700,7 @@ angular.module('icestudio')
             }
             else {
               // Generic block
+
               newCodeError.blockId = module.name.split('_')[0];
               newCodeError.blockType = 'generic';
             }
