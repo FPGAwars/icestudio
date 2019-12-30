@@ -48,7 +48,6 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
-
       return new Promise(function (resolve) {
         var sourceCode = '';
 
@@ -71,10 +70,12 @@ angular.module('icestudio')
               if (startMessage) {
                 startAlert = alertify.message(startMessage, 100000);
               }
+
               return generateCode(commands);
             })
             .then(function (output) {
               sourceCode = output.code;
+
               return syncResources(output.code, output.internalResources);
             })
             .then(function () {

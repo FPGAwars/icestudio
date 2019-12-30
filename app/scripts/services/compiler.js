@@ -27,6 +27,15 @@ angular.module('icestudio')
             content: content
           });
           break;
+          case 'lpf':
+            content += header('#', opt);
+            content += lpfCompiler(project, opt);
+            files.push({
+              name: 'main.lpf',
+              content: content
+            });
+            break;
+
         case 'list':
           files = listCompiler(project);
           break;
@@ -770,6 +779,49 @@ angular.module('icestudio')
           code += 'set_io vinit ';
           code += initPins[0].pin;
           code += '\n';
+        }
+      }
+
+      return code;
+    }
+    function lpfCompiler(project, opt) {
+      var i, j, block, pin, value, code = '';
+      var blocks = project.design.graph.blocks;
+      opt = opt || {};
+
+      for (i in blocks) {
+        block = blocks[i];
+        if (block.type === 'basic.input' ||
+            block.type === 'basic.output') {
+
+          if (block.data.pins.length > 1) {
+            for (var p in block.data.pins) {
+              pin = block.data.pins[p];
+              value = block.data.virtual ? '' : pin.value;
+              code += 'LOCATE COMP "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" SITE "';
+              code += value;
+              code += '";\n';
+
+              code += 'IOBUF PORT "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+            }
+          }
+          else if (block.data.pins.length > 0) {
+            pin = block.data.pins[0];
+            value = block.data.virtual ? '' : pin.value;
+            code += 'LOCATE COMP "';
+            code += utils.digestId(block.id);
+            code += '" SITE "';
+            code += value;
+            code += '";\n';
+
+            code += 'IOBUF PORT "';
+            code += utils.digestId(block.id);
+            code += '" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+          }
         }
       }
 
