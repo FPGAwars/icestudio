@@ -59,7 +59,7 @@ Because Icestudio is in development proccess, until it rises to 1.0 version, we 
 
 * **GNU/Linux**
 
-  1. Install [Python 2.7](https://www.python.org) and **xclip**
+  1. Install [Python >= 3.5](https://www.python.org) and **xclip**
   2. For **stable** version, download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases)
   3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
 
@@ -73,7 +73,7 @@ Because Icestudio is in development proccess, until it rises to 1.0 version, we 
 
 * **Mac OS**
 
-  1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
+  1. Install [Python >=  3.5](https://www.python.org) and [Homebrew](https://brew.sh)
   2. For **stable** version, download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
   3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
   
@@ -85,7 +85,8 @@ Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more in
 
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/).
+Install [Python >= 3.5](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/), for windows developers nodejs version should be 10.17.x
+
 
 [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
