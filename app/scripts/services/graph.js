@@ -1434,12 +1434,25 @@ angular.module('icestudio')
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
                         var replaced = false;
-
+                        console.log('MIGRANDO',opt);
                         for (var i in pins) {
                             replaced = false;
                             if (typeof opt.designPinout !== 'undefined') {
                                 for (var opin = 0; opin < opt.designPinout.length; opin++) {
                                     if (String(opt.designPinout[opin].name) === String(pins[i].name)) {
+
+                                        replaced = true;
+                                    }else{
+                                        let prefix= String(pins[i].name).replace(/[0-9]/g, '');
+                                        if(String(opt.designPinout[opin].name) === prefix){
+
+                                            replaced=true;
+                                        }
+
+
+                                    }
+
+                                    if(replaced===true){
                                         pins[i].name = opt.designPinout[opin].name;
                                         pins[i].value = opt.designPinout[opin].value;
                                         opin = opt.designPinout.length;

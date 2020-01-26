@@ -144,6 +144,7 @@ angular.module('icestudio')
         case 'icezum alhambra': case 'icezum':
           switch (newBoard.toLowerCase()) {
             case 'alhambra-ii': pboard = 'icezum'; break;
+            default: pboard='icezum';
           }
           break;
       }
