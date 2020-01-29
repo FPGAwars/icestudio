@@ -85,6 +85,7 @@ var IcePlugManager=function(){
                     console.log('H:'+plug.manifest.height);
                     new_win.height=  plug.manifest.height;
                 }
+                new_win.focus();
 
         });
 
