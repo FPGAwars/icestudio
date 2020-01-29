@@ -52,6 +52,8 @@ angular.module('icestudio')
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
+    this.DEFAULT_PLUGIN_DIR = nodePath.resolve(nodePath.join('resources', 'plugins'));
+
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');

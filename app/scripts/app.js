@@ -1,5 +1,9 @@
 'use strict';
 
+/* exported ICEpm */
+var ICEpm = new IcePlugManager();
+
+
 angular
   .module('icestudio', [
     'ui.bootstrap',

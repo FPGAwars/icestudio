@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <title>Serial Terminal Icestudio Plugin 0.1</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/tailwind.css">
+    <style>
+      body{
+        padding:30px;
+      }
+    
+    </style>
+  </head>
+
+  <body>
+    <div id="device-info" class="hidden bg-white rounded-t-lg overflow-hidden border-b border-t border-l border-r border-gray-400 p-4 "></div>
+    <button  class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" data-action="serial-getdevices">Detect serial devices</button>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
