@@ -1,4 +1,3 @@
-
 'use strict';
 var IcePlugManager=function(){
 
@@ -34,8 +33,7 @@ var IcePlugManager=function(){
         fs.readdir(this.pluginDir, function(err, files) {
             this.toload=files.length;
             files.forEach(function(file) {
-                    console.log('Plugin::add',file);
-                    fs.readFile(this.pluginDir+'/'+file+'/manifest.json', 'utf8', function(err, contents) {
+                        fs.readFile(this.pluginDir+'/'+file+'/manifest.json', 'utf8', function(err, contents) {
                         let mf= JSON.parse(contents);
                         if(mf !== false){
                             this.plugins[file]={'dir':file,'manifest':mf};
@@ -74,22 +72,16 @@ var IcePlugManager=function(){
             return false;
         }
 
-        console.log('IcePlugManager::run '+id);
         nw.Window.open(this.pluginUri+'/'+id+'/index.html', {}, function(new_win) {
-                // do something with the newly created window
+         
                 if(typeof plug.manifest.width !=='undefined'){
-                    console.log('W:'+plug.manifest.width);
                     new_win.width=  plug.manifest.width;
                 }
                 if(typeof plug.manifest.height !=='undefined'){
-                    console.log('H:'+plug.manifest.height);
                     new_win.height=  plug.manifest.height;
                 }
                 new_win.focus();
-
         });
-
-
     }
 
     this.init=function(){

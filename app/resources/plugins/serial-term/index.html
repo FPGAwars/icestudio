@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="js/xterm/css/xterm.css" />
     <style>
       body{
         padding:30px;
@@ -14,9 +15,20 @@
   </head>
 
   <body>
-    <div id="device-info" class="hidden bg-white rounded-t-lg overflow-hidden border-b border-t border-l border-r border-gray-400 p-4 "></div>
-    <button  class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" data-action="serial-getdevices">Detect serial devices</button>
+    <div id="panel-config" class="panel">
+      <div id="device-info" class="hidden bg-white rounded-t-lg overflow-hidden border-b border-t border-l border-r border-gray-400 p-4 "></div>
 
-    <script src="js/main.js"></script>
+      <button  class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" data-action="serial-getdevices">Detect serial devices</button>
+      <button  id="bt-connect" class="m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden" data-action="serial-connect">🔌Connect</button>
+    </div>
+    <div id="panel-xterm" class="panel hidden">
+        <div id="info"></div>
+        <div id="terminal"></div>
+        <button  id="bt-disconnect" class="m-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" data-action="serial-disconnect">🔌Disconnect</button>
+
+    </div>
+
+      <script src="js/xterm/lib/xterm.js"></script>
+      <script src="js/main.js"></script>
   </body>
 </html>
