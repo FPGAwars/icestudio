@@ -32,6 +32,7 @@ var serialManager=function(){
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
     this.receiverUserF= false;
+    this.initialized=false;
 
     this.refreshDevices=function (callback){
         chrome.serial.getDevices(function(dev){
@@ -48,8 +49,14 @@ var serialManager=function(){
         this.info.conn=false;
     }
     
-    this.plug=function(id,callback_onconnect,callback_onreceive){
+    this.plug=function(id,userOptions,callback_onconnect,callback_onreceive){
         let options={bitrate:115200,dataBits:"eight",parityBit:"no",stopBits:"one"};
+        if(typeof userOptions !== 'undefined'){
+            for(let prop in userOptions){
+                options[prop]=userOptions[prop];
+            }
+        }
+        console.log('OPTIONS',options);
         chrome.serial.connect(this.devices[id].path, options, function(connectionInfo){
 
             if(typeof connectionInfo !== 'undefined' && connectionInfo !== false && typeof connectionInfo.connectionId !== 'undefined'){
@@ -62,7 +69,10 @@ var serialManager=function(){
                 }else{
                     this.receiverUserF=false;
                 }
-                chrome.serial.onReceive.addListener(reader_callback);
+                if(this.initialized===false) {
+                    chrome.serial.onReceive.addListener(reader_callback);
+                    this.initialized=true;
+                }
                 if(typeof callback_onconnect !== 'undefined') callback_onconnect(connectionInfo);
             }
 
@@ -93,7 +103,7 @@ var serialManager=function(){
 };
 
 let term=false;
-
+let localEcho=false;
 var sm= new serialManager();
 
 function renderSerialDevices(dev){
@@ -144,27 +154,29 @@ function renderPlug(connectionInfo){
     let xtermLe =document.getElementById('panel-xterm');
     addClass(configLe,'hidden');
     removeClass(xtermLe,'hidden');
+ 
     const terminal = document.getElementById('terminal');
     if(term===false){
         term = new Terminal();
         term.open(terminal); 
-    }else{
+   
+    term.onData(function(data) {
+        if (data == "\u007f") {
+          if(localEcho)  term.write("\b");
+            sm.write("\b");
+        }else if (data == "\r") {
+          if(localEcho) term.write("\n\r");
+            sm.write("\n");
+        }else {
+            if(localEcho) term.write(data);
+            sm.write(data);
+        }
+    });
+     }else{
 
         term.reset();
     }
     
-    term.onData(function(data) {
-        if (data == "\u007f") {
-            term.write("\b");
-            sm.write("\b");
-        }else if (data == "\r") {
-            term.write("\n\r");
-            sm.write("\n");
-        }else {
-            term.write(data);
-            sm.write(data);
-        }
-    });
 }
 
 function renderUnPlug(){
@@ -173,6 +185,18 @@ function renderUnPlug(){
     removeClass(configLe,'hidden');
     addClass(xtermLe,'hidden');
 }
+
+ let confEchoLe=document.getElementById('sconf-localecho');
+
+    confEchoLe.addEventListener('change',function(e){
+
+    e.preventDefault();
+    localEcho=this.checked;
+
+    return false;
+
+},false);
+
 
 let getDevicesLe=document.querySelectorAll('[data-action="serial-getdevices"]');
 
@@ -195,7 +219,29 @@ connectLe[0].addEventListener('click',function(e){
             result = '';
 
         if (listedDevices[i].checked) {
-            sm.plug( listedDevices[i].value,renderPlug,renderRec);
+
+            let opts={};
+            let opt=document.getElementById('sconf-bps');
+            let val=parseInt(opt.value);
+            switch(val){
+                case -1: 
+                    opt=document.getElementById('sconf-cbps');
+                    val=parseInt(opt.value);
+                    opts.bitrate=val;        
+                break;    
+                default: opts.bitrate=val;
+            }
+
+            opt=document.getElementById('sconf-databits');
+            val=opt.value;
+            opts.dataBits=val; 
+            opt=document.getElementById('sconf-paritybit');
+            val=opt.value;
+            opts.parityBit=val;
+            opt=document.getElementById('sconf-stopbits');
+            val=opt.value;
+            opts.stopBits=val; 
+            sm.plug( listedDevices[i].value,opts,renderPlug,renderRec);
             
         };
 
@@ -204,6 +250,17 @@ connectLe[0].addEventListener('click',function(e){
     return false;
 
 },false);
+
+let cleanLe=document.querySelectorAll('[data-action="serial-clean"]');
+
+cleanLe[0].addEventListener('click',function(e){
+
+    e.preventDefault();
+    term.reset(); 
+    return false;
+
+},false);
+
 
 
 let disconnectLe=document.querySelectorAll('[data-action="serial-disconnect"]');
