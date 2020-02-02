@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
@@ -49,12 +49,19 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Инструкция по установке драйвера последовательного порта</"
+"h4><ol><li>Присоедините FPGA к USB и дождитесь, когда Windows установит "
+"драйверы</li><li>Когда нажата кнопка 'ОК', драйвер последовательного порта "
+"будет запущен в новом окне</li><li>Следуйте подсказкам мастера установки</"
+"li><li>Отключите и снова подключите плату</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
 "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
+"<h4>Инструкция по удалению последовательного порта</h4><ol><li>Найдите "
+"устройство USB FPGA</li><li>Выберите интерфейс и удалите драйвер</li></ol>"
 
 #: app/views/menu.html:356
 msgid "About Icestudio"
@@ -90,7 +97,7 @@ msgstr "Автор"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "Автоматическая проверка новых версий"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -105,6 +112,8 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"Так как Icestudio активно развивается, важно своевременно устанавливать "
+"обновления. Установите обновление!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -133,15 +142,15 @@ msgstr "Плата"
 
 #: app/views/menu.html:130 app/views/menu.html:164
 msgid "Board rules"
-msgstr "Назначения платы"
+msgstr "Правила платы"
 
 #: app/scripts/controllers/menu.js:541
 msgid "Board rules disabled"
-msgstr "Назначения платы отключены"
+msgstr "Правила платы отключены"
 
 #: app/scripts/controllers/menu.js:538
 msgid "Board rules enabled"
-msgstr "Назначения платы включены"
+msgstr "Правила платы включены"
 
 #: app/scripts/services/tools.js:395
 msgid "Board {{name}} disconnected"
@@ -194,11 +203,11 @@ msgstr "Китайский"
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "Выберите цвет"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Инструменты разработчика Chrome"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -224,7 +233,7 @@ msgstr "Сишгнал тактирования не разрешен для ш�
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "Клонировать"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -296,12 +305,12 @@ msgstr "Копировать"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "Копировать и вставить ИЛИ Копировать и клонировать блоки"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "Коралловый"
 
 #: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
@@ -318,12 +327,12 @@ msgstr "Чешский"
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "Тёмно-зелёный"
 
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "Тёмно-оранжевый"
 
 #: app/views/menu.html:161
 msgid "Datasheet"
@@ -336,12 +345,12 @@ msgstr "Десятичный"
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "Тёмно-розовый"
 
 #: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "Тёмно-лазурный"
 
 #: app/views/menu.html:213
 msgid "Default"
@@ -381,7 +390,7 @@ msgstr "Документация"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "Не показывать"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -423,7 +432,7 @@ msgstr "Включить"
 
 #: app/views/languages.html:4
 msgid "English"
-msgstr "Английский"
+msgstr "English"
 
 #: app/scripts/services/blocks.js:395
 msgid "Enter the constant blocks"
@@ -447,7 +456,7 @@ msgstr "Блоки памяти"
 
 #: app/scripts/services/blocks.js:234 app/scripts/services/blocks.js:294
 msgid "Enter the output blocks"
-msgstr ""
+msgstr "Выходные блоки"
 
 #: app/scripts/services/blocks.js:562
 msgid "Enter the output ports"
@@ -487,7 +496,7 @@ msgstr "Экспорт"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "Экспорт субмодуля"
 
 #: app/views/menu.html:135
 msgid "External collections"
@@ -550,7 +559,7 @@ msgstr "Французский"
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "Фуксия"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -558,7 +567,7 @@ msgstr "Галлийский"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "Универсальные блоки"
 
 #: app/views/languages.html:28
 msgid "German"
@@ -567,16 +576,16 @@ msgstr "Немецкий"
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "Золотой"
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Греческий"
 
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "Зелёно-жёлтый"
 
 #: app/views/menu.html:332
 msgid "Help"
@@ -588,13 +597,15 @@ msgstr "Шестнадцатеричный"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
-msgstr ""
+msgstr "Icestudio Inception"
 
 #: app/views/version.html:21
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
+"Если вы клонируете блоки, не забывайте изменить информацию о блоке, чтобы "
+"блоки различались."
 
 #: app/views/version.html:25
 msgid ""
@@ -602,12 +613,16 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"Если вы работаете над коллекцией, попробуйте сделать Универсальные блоки и "
+"используйте их как шаблон. Когда вы вставляете Универсальный блок из "
+"коллекции, просходит клонирование без необходимости копировать или "
+"клонировать специально."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
-msgstr ""
+msgstr "Могли остаться пустые  пины, потому что на этой плате нет эквивалента"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -623,11 +638,13 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"Иначе, если вы копируете и клонируете блок, любые изменения копии не "
+"отразятся на оригинальном блоке"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "Ярко-красный"
 
 #: app/views/menu.html:392
 msgid "Information"
@@ -639,7 +656,7 @@ msgstr "Ввод"
 
 #: app/views/menu.html:380
 msgid "Input label"
-msgstr ""
+msgstr "Метка ввода"
 
 #: app/views/menu.html:254
 msgid "Install"
@@ -703,11 +720,11 @@ msgstr "Рекомендуется использовать <b>USB 2.0</b> по�
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Итальянский"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "Метки"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -716,7 +733,7 @@ msgstr "Язык"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "Светлая морская волна"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -734,7 +751,7 @@ msgstr "Максимальный размер шины: 96 бит"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "Умеренный красно-фиолетовый"
 
 #: app/views/menu.html:386
 msgid "Memory"
@@ -747,7 +764,7 @@ msgstr "Имя"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "Тёмно-синий"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -765,7 +782,7 @@ msgstr "ОК"
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "Тускло-коричневый"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -778,12 +795,11 @@ msgstr "Открыть SVG"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "Оранжево-красный"
 
 #: app/scripts/services/project.js:527
-#, fuzzy
 msgid "Original file {{file}} does not exist"
-msgstr "Оригинал файла {{file}} не существует"
+msgstr "Оригинальный файл {{file}} не существует"
 
 #: app/views/menu.html:374
 msgid "Output"
@@ -791,7 +807,7 @@ msgstr "Вывод"
 
 #: app/views/menu.html:377
 msgid "Output label"
-msgstr ""
+msgstr "Метка вывода"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -807,7 +823,7 @@ msgstr "Выполните команду: {{cmd}}"
 
 #: app/views/menu.html:121
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Параметры"
 
 #: app/views/menu.html:146
 msgid "Project information"
@@ -831,7 +847,7 @@ msgstr "Необходим Python 2.7"
 
 #: app/views/menu.html:85
 msgid "Quit"
-msgstr "Выход"
+msgstr "Закрыть Icestudio"
 
 #: app/views/design.html:5
 msgid "Read only"
@@ -840,7 +856,7 @@ msgstr "Только для чтения"
 #: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
-msgstr ""
+msgstr "Красный"
 
 #: app/views/menu.html:97
 msgid "Redo"
@@ -877,11 +893,11 @@ msgstr "Восстановить настройки по умолчанию"
 #: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "Королевский голубой"
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -897,7 +913,7 @@ msgstr "Сохранить как"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "Сохранить субмодуль"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -918,7 +934,7 @@ msgstr "Показать тактирование"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "Серовато-синий"
 
 #: app/views/menu.html:348
 msgid "Source code"
@@ -931,7 +947,7 @@ msgstr "Испанский"
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "Весенний зелёный"
 
 #: app/scripts/controllers/menu.js:745
 msgid "Start build"
@@ -948,11 +964,11 @@ msgstr "Запуск проверки"
 #: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "Голубая сталь"
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "Редактирование субмодуля"
 
 #: app/views/version.html:16
 msgid ""
@@ -960,6 +976,9 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"Редактирование субмодулей распространяется на все блоки того же типа. "
+"Например, если у вас в схеме использованы шесть блоков AND, и вы изменили "
+"один из них, то изменены будут все шесть."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1003,20 +1022,22 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
+"Использование меток улучшает читаемость больших схем, т.к. нет необходимости "
+"протягивать отдельные провода между блоками."
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
-msgstr ""
+msgstr "В этой версии есть нововведения, а именно:"
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "Доступна для установки ночная сборка"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "Доступна для установки стабильная сборка"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1028,7 +1049,7 @@ msgstr ""
 
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
-msgstr ""
+msgstr "Это очень мощная функция для работы с большими схемами."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1039,6 +1060,8 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
+"Эта версия исправляет возможности редакции, включая возможность "
+"редактирования содержимого блоков."
 
 #: app/views/version.html:26
 msgid ""
@@ -1046,21 +1069,29 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/graph.js:410
+#, fuzzy
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"Чтобы включить \"режим редактирования\" глубинного блока, вам следует "
+"завершить текущий \"режим редактирования\". Lock the keylock to do it."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr ""
+"Для перемещения по схеме, вы должны сперва закрыть \"режим редактирования\"."
 
 #: app/scripts/controllers/menu.js:198
+#, fuzzy
 msgid ""
 "To save your design you need to lock the keylock and go to top level design."
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"Чтобы сохранить схему, вы должны lock the keylock и выйти на верхний уровень."
+"<br/><br/>Если вы хотите экспортировать этот субмодуль в файл, используйте "
+"команду \"Сохранить как\"."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1091,7 +1122,7 @@ msgstr "Инструменты"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "Бирюзовый"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1141,7 +1172,7 @@ msgstr "Версия"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "Комментарии к этой версии"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1158,6 +1189,7 @@ msgstr "Предупреждения в схеме"
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
 msgstr ""
+"Добро пожаловать в Inception, версию Icestudio для работы с субмодулями."
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
@@ -1191,7 +1223,7 @@ msgstr "Неправильный удаленный хост {{name}}"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "Желтый"
 
 #: app/scripts/controllers/menu.js:235
 msgid ""
@@ -1199,6 +1231,9 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"Вы работаете с субмодулем. Если вы сохраните его, то будет сохранен только "
+"субмодуль (в таких случаях команда \"Сохранить как\" работает как \"Экспорт "
+"модуля\"). Вы хотите продолжить?"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1211,12 +1246,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
+"Сборка возможна на верхнем уровне.  В субмодулях доступна только "
+"<strong>Проверка</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
+"Выгрузка схем возможна на верхнем уровне. В субмодулях доступна только "
+"<strong>Проверка</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
@@ -1240,7 +1279,7 @@ msgstr "Разводка платы {{board}} не определена"
 
 #: app/scripts/controllers/menu.js:626
 msgid "{{board}} rules not defined"
-msgstr "Назначения для платы {{board}} не определены"
+msgstr "Правила для платы {{board}} не определены"
 
 #: app/scripts/controllers/menu.js:315 app/scripts/controllers/menu.js:339
 msgid "{{name}} exported"
