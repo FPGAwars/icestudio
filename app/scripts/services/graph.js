@@ -1434,7 +1434,6 @@ angular.module('icestudio')
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
                         var replaced = false;
-                        console.log('MIGRANDO',opt);
                         for (var i in pins) {
                             replaced = false;
                             if (typeof opt.designPinout !== 'undefined') {

@@ -290,20 +290,42 @@ angular.module('icestudio')
     this.readFile = function (filepath) {
       return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {
-          nodeFs.readFile(filepath,
+          nodeFs.readFile(filepath ,
             function (err, content) {
               if (err) {
                 reject(err.toString());
               }
               else {
-                var data = isJSON(content);
-                if (data) {
-                  // JSON data
-                  resolve(data);
+
+                var data = false;
+               function ab2str(buf) {
+                  return String.fromCharCode.apply(null, new Uint16Array(buf));
                 }
-                else {
-                  reject();
+                function endPromise(data){
+                    if (data) {
+                          // JSON data
+                        resolve(data);
+                      }
+                      else {
+                        reject();
+                        }
+
+       
                 }
+ 
+                var str=ab2str(content);
+               var name = basename(filepath);
+                var test=true;
+                if(test  && typeof ICEpm !== 'undefined' &&
+                  ICEpm.isFactory(name)){
+                   ICEpm.factory(name,str,endPromise);
+
+                }else{
+                   data = isJSON(content);
+                    endPromise(data);
+            
+                  }
+                
               }
             });
         }
@@ -925,7 +947,6 @@ angular.module('icestudio')
       // If in the future you will add more paremeters to the new window , you should review
       // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
 
-//      console.log('PARAMS',params);
       var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility

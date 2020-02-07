@@ -1268,7 +1268,7 @@ angular.module('icestudio')
 
     this.initializePluginManager= function(callback_on_run) {
         if(typeof ICEpm !== 'undefined'){
-          console.log(common);
+          console.log('ENV',common);
           ICEpm.setPluginDir(common.DEFAULT_PLUGIN_DIR,function(){
 
                   let plist=ICEpm.getAll();
@@ -1278,9 +1278,10 @@ angular.module('icestudio')
                   let html='';
                   let icon='';
                   for(let prop in plist){
-                    console.log('Añadiendo',plist[prop]);
+                    if(typeof plist[prop].manifest.type === 'undefined' ||
+                      plist[prop].manifest.type === 'app'  ){
                     html+= '<a href="#" data-action="icm-plugin-run" data-plugin="'+prop+'"><img class="icm-plugin-icon" src="'+uri+'/'+prop+'/'+plist[prop].manifest.icon+'"><span>'+plist[prop].manifest.name+'</span></a>';
-
+                      }
                   }
                   t.append(html);
 
@@ -1288,12 +1289,9 @@ angular.module('icestudio')
                   $('[data-action="icm-plugin-run"]').on('click',function(e){
                       e.preventDefault();
                       let ptarget=$(this).data('plugin');
-                    console.log('Arrancando '+ptarget);
                       if(typeof callback_on_run !== 'undefined'){
                         callback_on_run();
-
                       }
-
                       ICEpm.run(ptarget);
                       return false;
                   });

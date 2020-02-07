@@ -32,7 +32,7 @@ var serialManager=function(){
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
     this.receiverUserF= false;
-    this.initialized=false;
+    this.registeredCallbacks={};
 
     this.refreshDevices=function (callback){
         chrome.serial.getDevices(function(dev){
@@ -56,7 +56,6 @@ var serialManager=function(){
                 options[prop]=userOptions[prop];
             }
         }
-        console.log('OPTIONS',options);
         chrome.serial.connect(this.devices[id].path, options, function(connectionInfo){
 
             if(typeof connectionInfo !== 'undefined' && connectionInfo !== false && typeof connectionInfo.connectionId !== 'undefined'){
@@ -69,9 +68,9 @@ var serialManager=function(){
                 }else{
                     this.receiverUserF=false;
                 }
-                if(this.initialized===false) {
+                if(typeof this.registeredCallbacks[reader_callback.name] === 'undefined') {
                     chrome.serial.onReceive.addListener(reader_callback);
-                    this.initialized=true;
+                    this.registeredCallbacks[reader_callback.name]=true;
                 }
                 if(typeof callback_onconnect !== 'undefined') callback_onconnect(connectionInfo);
             }
@@ -104,7 +103,7 @@ var serialManager=function(){
 
 let term=false;
 let localEcho=false;
-var sm= new serialManager();
+let sm= new serialManager();
 
 function renderSerialDevices(dev){
 

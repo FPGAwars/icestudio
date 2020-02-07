@@ -115,7 +115,6 @@ angular.module('icestudio')
       }
 
 
-      console.log('ARGV',argv);
       var editable = !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
         !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
         project.path.startsWith(common.selectedCollection.path);

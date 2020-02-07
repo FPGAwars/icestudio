@@ -63,6 +63,7 @@
     "jquery": "~3.0.0",
     "lodash.debounce": "~4.0.8",
     "marked": "~0.3.19",
+    "mustache": "^4.0.0",
     "node-emoji": "~1.8.1",
     "node-lang-info": "~0.2.1",
     "openurl": "~1.1.1",
