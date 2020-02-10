@@ -299,8 +299,10 @@ angular.module('icestudio')
 
                 var data = false;
                function ab2str(buf) {
+                 console.log('ab2str');
                   return String.fromCharCode.apply(null, new Uint16Array(buf));
                 }
+                
                 function endPromise(data){
                     if (data) {
                           // JSON data
@@ -312,16 +314,21 @@ angular.module('icestudio')
 
        
                 }
- 
-                var str=ab2str(content);
+                console.log('PROYECTO', content);
                var name = basename(filepath);
                 var test=true;
                 if(test  && typeof ICEpm !== 'undefined' &&
                   ICEpm.isFactory(name)){
+
+               let str=ab2str(content);
+                    console.log('FACTORIA');
                    ICEpm.factory(name,str,endPromise);
 
                 }else{
+
                    data = isJSON(content);
+
+                   console.log('NORMAL',data);
                     endPromise(data);
             
                   }
