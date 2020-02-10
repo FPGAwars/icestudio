@@ -83,12 +83,12 @@ var IcePlugManager=function(){
                    if(typeof this.plugins[name].factory ==='undefined'){
 
                         const fs = require('fs');
-                        let contents=fs.readFileSync(this.pluginDir+'/'+name+'/main.js');
-                        function ab2str(buf) {
+                        let contents=fs.readFileSync(this.pluginDir+'/'+name+'/main.js',"utf8");
+                       /* function ab2str(buf) {
                              return String.fromCharCode.apply(null, new Uint16Array(buf));
-                         }
-                        let code=ab2str(contents);
-                        eval(code);
+                         }*/
+                        //let code=ab2str(contents);
+                        eval(contents);
                         this.promptFactory(name,str,callback);
                    
                    

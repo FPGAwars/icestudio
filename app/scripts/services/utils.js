@@ -290,7 +290,7 @@ angular.module('icestudio')
     this.readFile = function (filepath) {
       return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {
-          nodeFs.readFile(filepath ,
+          nodeFs.readFile(filepath ,"utf8",
             function (err, content) {
               if (err) {
                 reject(err.toString());
@@ -298,10 +298,10 @@ angular.module('icestudio')
               else {
 
                 var data = false;
-               function ab2str(buf) {
+               /*function ab2str(buf) {
                  console.log('ab2str');
                   return String.fromCharCode.apply(null, new Uint16Array(buf));
-                }
+                }*/
                 
                 function endPromise(data){
                     if (data) {
@@ -320,9 +320,9 @@ angular.module('icestudio')
                 if(test  && typeof ICEpm !== 'undefined' &&
                   ICEpm.isFactory(name)){
 
-               let str=ab2str(content);
+             //  let str=ab2str(content);
                     console.log('FACTORIA');
-                   ICEpm.factory(name,str,endPromise);
+                   ICEpm.factory(name,content,endPromise);
 
                 }else{
 
