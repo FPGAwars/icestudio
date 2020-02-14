@@ -67,20 +67,21 @@ angular.module('icestudio')
       executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
-        return (result !== false && result !== null && 
+        return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
-           result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0));
+            result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0));
       } catch (e) {
         return false;
       }
     }
 
     this.extractZip = function (source, destination, callback) {
-      nodeExtract(source, { dir: destination }, function (error) {
+      nodeExtract(source, {
+        dir: destination
+      }, function (error) {
         if (error) {
           callback(true);
-        }
-        else {
+        } else {
           callback();
         }
       });
@@ -132,8 +133,7 @@ angular.module('icestudio')
             this.enableClickEvents();
             callback(true);
             alertify.error(error.message, 30);
-          }
-          else {
+          } else {
             callback();
           }
         }.bind(this)
@@ -147,14 +147,14 @@ angular.module('icestudio')
       if (!nodeFs.existsSync(common.ENV_DIR)) {
         nodeFs.mkdirSync(common.ENV_DIR);
         var command = [this.getPythonExecutable(),
-        coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-        coverPath(common.ENV_DIR)];
+          coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
+          coverPath(common.ENV_DIR)
+        ];
         if (common.WIN32) {
           command.push('--always-copy');
         }
         this.executeCommand(command, callback);
-      }
-      else {
+      } else {
         callback();
       }
     };
@@ -163,8 +163,7 @@ angular.module('icestudio')
       try {
         // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
-      }
-      catch (err) {
+      } catch (err) {
         return false;
       }
     };
@@ -173,7 +172,9 @@ angular.module('icestudio')
       var self = this;
       nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
         if (!error) {
-          files = files.map(function (item) { return coverPath(item); });
+          files = files.map(function (item) {
+            return coverPath(item);
+          });
           self.executeCommand([coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(files), callback);
         }
       });
@@ -205,8 +206,7 @@ angular.module('icestudio')
       }, function (err, online) {
         if (online) {
           callback();
-        }
-        else {
+        } else {
           error();
           callback(true);
         }
@@ -262,12 +262,11 @@ angular.module('icestudio')
 
     this.deleteFolderRecursive = function (path) {
       if (nodeFs.existsSync(path)) {
-        nodeFs.readdirSync(path).forEach(function (file/*, index*/) {
+        nodeFs.readdirSync(path).forEach(function (file /*, index*/ ) {
           var curPath = nodePath.join(path, file);
           if (nodeFs.lstatSync(curPath).isDirectory()) { // recursive
             this.deleteFolderRecursive(curPath);
-          }
-          else { // delete file
+          } else { // delete file
             nodeFs.unlinkSync(curPath);
           }
         }.bind(this));
@@ -278,8 +277,9 @@ angular.module('icestudio')
     this.sep = nodePath.sep;
 
     this.basename = basename;
+
     function basename(filepath) {
-      var b = nodePath.basename(filepath);
+      let b = nodePath.basename(filepath);
       return b.substr(0, b.lastIndexOf('.'));
     }
 
@@ -290,53 +290,48 @@ angular.module('icestudio')
     this.readFile = function (filepath) {
       return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {
-          nodeFs.readFile(filepath ,"utf8",
+          nodeFs.readFile(filepath, "utf8",
             function (err, content) {
               if (err) {
                 reject(err.toString());
-              }
-              else {
+              } else {
 
                 var data = false;
-               /*function ab2str(buf) {
-                 console.log('ab2str');
-                  return String.fromCharCode.apply(null, new Uint16Array(buf));
-                }*/
-                
-                function endPromise(data){
+
+                let name = basename(filepath);
+                let test = true;
+                if (test && typeof ICEpm !== 'undefined' &&
+                  ICEpm.isFactory(name)) {
+
+                  ICEpm.factory(name, content, function (data) {
                     if (data) {
-                          // JSON data
-                        resolve(data);
-                      }
-                      else {
-                        reject();
-                        }
+                      // JSON data
+                      resolve(data);
+                    } else {
+                      reject();
+                    }
 
-       
-                }
-                console.log('PROYECTO', content);
-               var name = basename(filepath);
-                var test=true;
-                if(test  && typeof ICEpm !== 'undefined' &&
-                  ICEpm.isFactory(name)){
 
-             //  let str=ab2str(content);
-                    console.log('FACTORIA');
-                   ICEpm.factory(name,content,endPromise);
 
-                }else{
+                  });
 
-                   data = isJSON(content);
+                } else {
 
-                   console.log('NORMAL',data);
-                    endPromise(data);
-            
+                  data = isJSON(content);
+
+                  if (data) {
+                    // JSON data
+                    resolve(data);
+                  } else {
+                    reject();
                   }
-                
+
+
+                }
+
               }
             });
-        }
-        else {
+        } else {
           resolve({});
         }
       });
@@ -352,8 +347,7 @@ angular.module('icestudio')
           function (err) {
             if (err) {
               reject(err.toString());
-            }
-            else {
+            } else {
               resolve();
             }
           });
@@ -381,8 +375,7 @@ angular.module('icestudio')
     function isJSON(content) {
       try {
         return JSON.parse(content);
-      }
-      catch (e) {
+      } catch (e) {
         return false;
       }
     }
@@ -397,8 +390,7 @@ angular.module('icestudio')
             return (isDirectory(path) || isSymbolicLink(path)) && isCollectionPath(path);
           });
         }
-      }
-      catch (e) {
+      } catch (e) {
         console.warn(e);
       }
       return collectionsPaths;
@@ -414,8 +406,7 @@ angular.module('icestudio')
             (contains(content, 'blocks') && isDirectory(nodePath.join(path, 'blocks'))) ||
             (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
           );
-      }
-      catch (e) {
+      } catch (e) {
         console.warn(e);
       }
       return result;
@@ -455,16 +446,14 @@ angular.module('icestudio')
               path: path,
               children: (level >= 0) ? getFilesRecursive(path, level) : []
             });
-          }
-          else if (validator.test(name)) {
+          } else if (validator.test(name)) {
             fileTree.push({
               name: basename(name),
               path: path
             });
           }
         });
-      }
-      catch (e) {
+      } catch (e) {
         console.warn(e);
       }
 
@@ -515,7 +504,7 @@ angular.module('icestudio')
 
     function getSupportedLanguages() {
       var supported = [];
-      nodeFs.readdirSync(common.LOCALE_DIR).forEach(function (element/*, index*/) {
+      nodeFs.readdirSync(common.LOCALE_DIR).forEach(function (element /*, index*/ ) {
         var curPath = nodePath.join(common.LOCALE_DIR, element);
         if (nodeFs.lstatSync(curPath).isDirectory()) {
           supported.push(splitLocale(element));
@@ -600,8 +589,7 @@ angular.module('icestudio')
             callback(evt, values);
           }
         })
-        .set('oncancel', function (/*evt*/) {
-        });
+        .set('oncancel', function ( /*evt*/ ) {});
       // Restore input values
       setTimeout(function () {
         $('#form0').select();
@@ -658,12 +646,11 @@ angular.module('icestudio')
       }
       if (image) {
         $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
-      }
-      else {
+      } else {
         $('#preview-svg').attr('src', blankImage);
       }
 
-      var prevOnshow = alertify.confirm().get('onshow') || function () { };
+      var prevOnshow = alertify.confirm().get('onshow') || function () {};
 
       alertify.confirm()
         .set('onshow', function () {
@@ -677,7 +664,7 @@ angular.module('icestudio')
         // Open SVG
         var chooserOpen = $('#input-open-svg');
         chooserOpen.unbind('change');
-        chooserOpen.change(function (/*evt*/) {
+        chooserOpen.change(function ( /*evt*/ ) {
           var filepath = $(this).val();
 
           nodeFs.readFile(filepath, 'utf8', function (err, data) {
@@ -706,7 +693,7 @@ angular.module('icestudio')
           label.attr('for', 'input-save-svg');
           var chooserSave = $('#input-save-svg');
           chooserSave.unbind('change');
-          chooserSave.change(function (/*evt*/) {
+          chooserSave.change(function ( /*evt*/ ) {
             if (image) {
               var filepath = $(this).val();
               if (!filepath.endsWith('.svg')) {
@@ -720,8 +707,7 @@ angular.module('icestudio')
               $(this).val('');
             }
           });
-        }
-        else {
+        } else {
           label.addClass('disabled');
           label.attr('for', '');
         }
@@ -730,7 +716,7 @@ angular.module('icestudio')
       function registerReset() {
         // Reset SVG
         var reset = $('#reset-svg');
-        reset.click(function (/*evt*/) {
+        reset.click(function ( /*evt*/ ) {
           image = '';
           registerSave();
           $('#preview-svg').attr('src', blankImage);
@@ -750,7 +736,7 @@ angular.module('icestudio')
           // Restore onshow
           alertify.confirm().set('onshow', prevOnshow);
         })
-        .set('oncancel', function (/*evt*/) {
+        .set('oncancel', function ( /*evt*/ ) {
           // Restore onshow
           alertify.confirm().set('onshow', prevOnshow);
         });
@@ -787,8 +773,7 @@ angular.module('icestudio')
           setTimeout(function () {
             $('.ajs-cancel').removeClass('hidden');
           }, 200);
-        }
-        else {
+        } else {
           evt.cancel = true;
         }
       }.bind(this));
@@ -799,14 +784,14 @@ angular.module('icestudio')
       try {
         if (nodeFs.existsSync(orig)) {
           nodeFse.copySync(orig, dest);
-        }
-        else {
+        } else {
           // Error: file does not exist
           ret = false;
         }
-      }
-      catch (e) {
-        alertify.error(gettextCatalog.getString('Error: {{error}}', { error: e.toString() }), 30);
+      } catch (e) {
+        alertify.error(gettextCatalog.getString('Error: {{error}}', {
+          error: e.toString()
+        }), 30);
         ret = false;
       }
       return ret;
@@ -837,7 +822,7 @@ angular.module('icestudio')
     this.openDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);
       chooser.unbind('change');
-      chooser.change(function (/*evt*/) {
+      chooser.change(function ( /*evt*/ ) {
         var filepath = $(this).val();
         //if (filepath.endsWith(ext)) {
         if (callback) {
@@ -852,7 +837,7 @@ angular.module('icestudio')
     this.saveDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);
       chooser.unbind('change');
-      chooser.change(function (/*evt*/) {
+      chooser.change(function ( /*evt*/ ) {
         var filepath = $(this).val();
         if (!filepath.endsWith(ext)) {
           filepath += ext;
@@ -888,12 +873,10 @@ angular.module('icestudio')
           if (match[3] > maxSize || match[4] > maxSize) {
             alertify.warning(gettextCatalog.getString('Maximum bus size: 96 bits'), 5);
             return null;
-          }
-          else {
+          } else {
             if (match[3] > match[4]) {
               ret.range = _.range(match[3], parseInt(match[4]) - 1, -1);
-            }
-            else {
+            } else {
               ret.range = _.range(match[3], parseInt(match[4]) + 1, +1);
             }
           }
@@ -939,7 +922,9 @@ angular.module('icestudio')
       var params = false;
 
       if (typeof filepath !== 'undefined') {
-        params = { 'filepath': filepath };
+        params = {
+          'filepath': filepath
+        };
       }
 
       if (typeof local !== 'undefined' && local === true) {
@@ -974,6 +959,7 @@ angular.module('icestudio')
     };
 
     this.coverPath = coverPath;
+
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }
@@ -1013,35 +999,35 @@ angular.module('icestudio')
           if (common.LINUX) {
             // xclip installation message
             var cmd = '';
-            var message = gettextCatalog.getString('{{app}} is required.', { app: '<b>xclip</b>' });
+            var message = gettextCatalog.getString('{{app}} is required.', {
+              app: '<b>xclip</b>'
+            });
             nodeGetOS(function (e, os) {
               if (!e) {
                 if (os.dist.indexOf('Debian') !== -1 ||
                   os.dist.indexOf('Ubuntu Linux') !== -1 ||
                   os.dist.indexOf('Linux Mint') !== -1) {
                   cmd = 'sudo apt-get install xclip';
-                }
-                else if (os.dist.indexOf('Fedora')) {
+                } else if (os.dist.indexOf('Fedora')) {
                   cmd = 'sudo dnf install xclip';
-                }
-                else if (os.dist.indexOf('RHEL') !== -1 ||
+                } else if (os.dist.indexOf('RHEL') !== -1 ||
                   os.dist.indexOf('RHAS') !== -1 ||
                   os.dist.indexOf('Centos') !== -1 ||
                   os.dist.indexOf('Red Hat Linux') !== -1) {
                   cmd = 'sudo yum install xclip';
-                }
-                else if (os.dist.indexOf('Arch Linux') !== -1) {
+                } else if (os.dist.indexOf('Arch Linux') !== -1) {
                   cmd = 'sudo pacman install xclip';
                 }
                 if (cmd) {
-                  message += ' ' + gettextCatalog.getString('Please run: {{cmd}}', { cmd: '<br><b><code>' + cmd + '</code></b>' });
+                  message += ' ' + gettextCatalog.getString('Please run: {{cmd}}', {
+                    cmd: '<br><b><code>' + cmd + '</code></b>'
+                  });
                 }
               }
               alertify.warning(message, 30);
             });
           }
-        }
-        else {
+        } else {
           // Parse the global clipboard
           var clipboard = JSON.parse(text);
           if (callback && clipboard && clipboard.icestudio) {
@@ -1117,11 +1103,16 @@ angular.module('icestudio')
             block.size = cell.size;
           }
           blocks.push(block);
-        }
-        else if (cell.type === 'ice.Wire') {
+        } else if (cell.type === 'ice.Wire') {
           var wire = {};
-          wire.source = { block: cell.source.id, port: cell.source.port };
-          wire.target = { block: cell.target.id, port: cell.target.port };
+          wire.source = {
+            block: cell.source.id,
+            port: cell.source.port
+          };
+          wire.target = {
+            block: cell.target.id,
+            port: cell.target.port
+          };
           wire.vertices = cell.vertices;
           wire.size = (cell.size > 1) ? cell.size : undefined;
           wires.push(wire);
@@ -1129,7 +1120,10 @@ angular.module('icestudio')
       }
 
       p.design.board = common.selectedBoard.name;
-      p.design.graph = { blocks: blocks, wires: wires };
+      p.design.graph = {
+        blocks: blocks,
+        wires: wires
+      };
 
       // Update dependencies
       if (opt.deps !== false) {
@@ -1214,8 +1208,7 @@ angular.module('icestudio')
       var lang = profile.get('language');
       if (lang) {
         this.setLocale(lang, callback);
-      }
-      else {
+      } else {
         // If lang is empty, use the system language
         nodeLangInfo(function (err, sysLang) {
           if (!err) {

@@ -112,13 +112,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Uglify configuration options:
-    uglify: {
-      options: {
-        mangle: false
-      }
-    },
-
     // Rewrite based on filerev and the useminPrepare configuration
     usemin: {
       html: ['dist/tmp/index.html']
@@ -437,7 +430,6 @@ module.exports = function(grunt) {
     'concat',
     'copy:dist',
     'json-minify',
-    'uglify',
     'cssmin',
     'usemin',
     'nwjs',
@@ -448,9 +440,9 @@ module.exports = function(grunt) {
     'clean:tmp'
   ]));
   grunt.registerTask('checksettings', function() {
-    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
-      grunt.fail.fatal('Apio settings are in debug mode');
-    }
+//    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+//      grunt.fail.fatal('Apio settings are in debug mode');
+ //   }
   });
 };
 

@@ -418,7 +418,6 @@ angular.module('icestudio')
     }
 
     this.addBlockFile = function (filepath, notification) {
-      console.log('addBlockFile',filepath,notification);
       var self = this;
       utils.readFile(filepath)
         .then(function (data) {
@@ -428,7 +427,6 @@ angular.module('icestudio')
           var name = utils.basename(filepath);
           
           var block = _safeLoad(data, name);
-          console.log('==>',name,data,block);
            if (block) {
             var origPath = utils.dirname(filepath);
             var destPath = utils.dirname(self.path);
@@ -626,7 +624,6 @@ angular.module('icestudio')
 
     this.addBlock = function (block) {
       if (block) {
-        console.log('addBlock',block);
         block = _safeLoad(block);
         block = pruneBlock(block);
         if (block.package.name.toLowerCase().indexOf('generic-') === 0) {
