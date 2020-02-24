@@ -1,7 +1,8 @@
 {
   "name": "icestudio",
-  "version": "0.5.1",
-  "nightly": "0.5.1",
+  "version": "0.5.1b",
+  "nightly": "0.5.1b",
+  "flavour":"develop",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {

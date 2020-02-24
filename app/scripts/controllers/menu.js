@@ -128,8 +128,10 @@ angular.module('icestudio')
         project.path = '';
       }
       var versionW = $scope.profile.get('displayVersionInfoWindow');
-      if (versionW === 'yes') {
-        $scope.openVersionInfoWindow();
+      let lastversionReview = $scope.profile.get('lastVersionReview');  
+      let hasNewVersion=lastversionReview===false || lastversionReview < _package.version;
+      if (versionW === 'yes' ||hasNewVersion ) {
+        $scope.openVersionInfoWindow(hasNewVersion);
       }
 
     }, 500);
@@ -163,12 +165,23 @@ angular.module('icestudio')
       }
     };
 
-    $scope.openVersionInfoWindow = function () {
+    $scope.openVersionInfoWindow = function (showPopUp) {
+
       $('#version-info-tab').removeClass('hidden');
       var versionW = $scope.profile.get('displayVersionInfoWindow');
+      let noShowVersion=false;
       if (versionW === 'no') {
-        $('input[name="version-info-tab--no-display"]').prop('checked', true);
+        noShowVersion=true;
       }
+      if(typeof showPopUp !== 'undefined' && showPopUp===true){
+        profile.set('displayVersionInfoWindow','yes');
+        profile.set('lastVersionReview',_package.version);
+        noShowVersion=false;
+
+      }
+
+
+      $('input[name="version-info-tab--no-display"]').prop('checked', noShowVersion);
     };
 
     //-- File
