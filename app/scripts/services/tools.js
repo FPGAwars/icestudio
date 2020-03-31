@@ -1075,9 +1075,10 @@ angular.module('icestudio')
     }
 
     function updateProgress(message, value) {
-      angular.element('#progress-message')
+      console.log('ACTUALIZANDO PROGRESO',message,value);
+      $('#progress-message')
         .text(message);
-      var bar = angular.element('#progress-bar');
+      var bar = $('#progress-bar');
       if (value === 100) {
         bar.removeClass('progress-bar-striped active');
       }
@@ -1087,7 +1088,7 @@ angular.module('icestudio')
     }
 
     function initProgress() {
-      angular.element('#progress-bar')
+      $('#progress-bar')
         .addClass('notransition progress-bar-info progress-bar-striped active')
         .removeClass('progress-bar-danger')
         .text('0%')

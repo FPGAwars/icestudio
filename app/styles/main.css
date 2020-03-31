@@ -11,6 +11,9 @@
   user-select: none;
   
 }
+#progress-message{
+  overflow:hidden;
+}
 
 .notransition {
   -webkit-transition: none;
