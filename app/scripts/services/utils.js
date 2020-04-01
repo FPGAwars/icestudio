@@ -29,11 +29,11 @@ angular.module('icestudio')
         const possibleExecutables = [];
 
         if (common.WIN32) {
-          possibleExecutables.push('python.exe');
           possibleExecutables.push('C:\\Python38\\python.exe');
           possibleExecutables.push('C:\\Python37\\python.exe');
           possibleExecutables.push('C:\\Python36\\python.exe');
           possibleExecutables.push('C:\\Python35\\python.exe');
+          possibleExecutables.push('python.exe');
         } else {
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8');
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3');

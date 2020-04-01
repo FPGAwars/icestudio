@@ -1075,7 +1075,6 @@ angular.module('icestudio')
     }
 
     function updateProgress(message, value) {
-      console.log('ACTUALIZANDO PROGRESO',message,value);
       $('#progress-message')
         .text(message);
       var bar = $('#progress-bar');
