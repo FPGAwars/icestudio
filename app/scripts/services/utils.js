@@ -43,6 +43,12 @@ angular.module('icestudio')
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3');
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5');
           possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3');
+          possibleExecutables.push('/usr/local/bin/python3.8');
+          possibleExecutables.push('/usr/local/bin/python3.7');
+          possibleExecutables.push('/usr/local/bin/python3.6');
+          possibleExecutables.push('/usr/local/bin/python3.5');
+          possibleExecutables.push('/usr/local/bin/python3');
+          possibleExecutables.push('/usr/local/bin/python');
           possibleExecutables.push('python3.8');
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3.6');
