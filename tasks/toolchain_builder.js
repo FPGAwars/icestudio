@@ -321,10 +321,10 @@ function getPythonExecutable() {
   return _pythonExecutableCached;
 }
 
- function isPython3(executable) {
-      executable += ' -V';
-      try {
-        const result = nodeChildProcess.execSync(executable);
+ function isPython3(executable) {    
+  const args = ['-V'];
+  try {
+        const result = childProcess.spawnSync(executable, args);
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0));
