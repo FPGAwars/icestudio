@@ -35,7 +35,7 @@ function ToolchainBuilder(options) {
   }
 
 //  var venvRelease = 'virtualenv-15.2.0';
-  var venvRelease = 'virtualenv-16-7.10';
+  var venvRelease = 'virtualenv-20.0.15';
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
