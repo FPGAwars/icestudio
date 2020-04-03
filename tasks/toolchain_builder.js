@@ -34,7 +34,8 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-  var venvRelease = 'virtualenv-15.2.0';
+//  var venvRelease = 'virtualenv-15.2.0';
+  var venvRelease = 'virtualenv-16-7.10';
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
