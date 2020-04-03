@@ -37,12 +37,21 @@ angular.module('icestudio')
         } else {
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
+          
           possibleExecutables.push('/usr/bin/python3.8');
           possibleExecutables.push('/usr/bin/python3.7');
           possibleExecutables.push('/usr/bin/python3.6');
           possibleExecutables.push('/usr/bin/python3.5');
           possibleExecutables.push('/usr/bin/python3');
           possibleExecutables.push('/usr/bin/python');
+
+          possibleExecutables.push('/usr/local/bin/python3.8');
+          possibleExecutables.push('/usr/local/bin/python3.7');
+          possibleExecutables.push('/usr/local/bin/python3.6');
+          possibleExecutables.push('/usr/local/bin/python3.5');
+          possibleExecutables.push('/usr/local/bin/python3');
+          possibleExecutables.push('/usr/local/bin/python');
+
           possibleExecutables.push('python3.8');
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3.6');

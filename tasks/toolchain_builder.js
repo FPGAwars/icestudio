@@ -34,7 +34,6 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-//  var venvRelease = 'virtualenv-15.2.0';
   var venvRelease = 'virtualenv-16-7.10';
 
   // Prepare aux directories
@@ -284,20 +283,23 @@ function getPythonExecutable() {
           possibleExecutables.push('C:\\Python35\\python.exe');
           possibleExecutables.push('python.exe');
         } else {
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.8/bin/python3');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.7/bin/python3');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5');
-          possibleExecutables.push('/Library/Frameworks/Python.framework/Versions/3.5/bin/python3');
+          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
+          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
+
+          possibleExecutables.push('/usr/bin/python3.8');
+          possibleExecutables.push('/usr/bin/python3.7');
+          possibleExecutables.push('/usr/bin/python3.6');
+          possibleExecutables.push('/usr/bin/python3.5');
+          possibleExecutables.push('/usr/bin/python3');
+          possibleExecutables.push('/usr/bin/python');
+
           possibleExecutables.push('/usr/local/bin/python3.8');
           possibleExecutables.push('/usr/local/bin/python3.7');
           possibleExecutables.push('/usr/local/bin/python3.6');
           possibleExecutables.push('/usr/local/bin/python3.5');
           possibleExecutables.push('/usr/local/bin/python3');
           possibleExecutables.push('/usr/local/bin/python');
+ 
           possibleExecutables.push('python3.8');
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3.6');
@@ -319,21 +321,7 @@ function getPythonExecutable() {
   return _pythonExecutableCached;
 }
 
-/*function isPython3(executable) {
-  const args = ['-V'];
-  try {
-    const result = childProcess.spawnSync(executable, args);
-    return 0 === result.status &&
-     (result.stdout.toString().indexOf('3.5') >= 0 || 
-      result.stdout.toString().indexOf('3.6') >= 0 ||
-      result.stdout.toString().indexOf('3.7') >= 0 || 
-      result.stdout.toString().indexOf('3.8') >= 0);
-  } catch(e) {
-    return false;
-  }
-}*/
-
-    function isPython3(executable) {
+ function isPython3(executable) {
       executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
