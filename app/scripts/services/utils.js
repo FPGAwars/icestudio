@@ -64,9 +64,11 @@ angular.module('icestudio')
     };
 
     function isPython3(executable) {
+      console.log('Python test',executable);
       executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
+        console.log('==>',result.toString());
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0));

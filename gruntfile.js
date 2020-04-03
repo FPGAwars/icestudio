@@ -128,8 +128,8 @@ module.exports = function(grunt) {
     nwjs: {
       options: {
         version: '0.35.5',
-//      flavor: 'normal', // For stable branch
-        flavor: 'sdk',    // For development branch
+        flavor: 'normal', // For stable branch
+      //  flavor: 'sdk',    // For development branch
         zip: false,
         buildDir: 'dist/',
         winIco: 'docs/resources/images/logo/icestudio-logo.ico',
@@ -327,15 +327,15 @@ module.exports = function(grunt) {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/3.7.4/python-3.7.4.exe',
-        dest: 'cache/python/python-3.7.4.exe'
+        src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2.exe',
+        dest: 'cache/python/python-3.8.2.exe'
       },
       python64: {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/3.7.4/python-3.7.4-amd64.exe',
-        dest: 'cache/python/python-3.7.4-amd64.exe'
+        src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2-amd64.exe',
+        dest: 'cache/python/python-3.8.2-amd64.exe'
       },
       collection: {
         options: {
