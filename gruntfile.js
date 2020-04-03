@@ -62,8 +62,8 @@ module.exports = function(grunt) {
     exec: {
       nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
-      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-3.7.4.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.7.4-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
+      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-3.8.2.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
