@@ -70,6 +70,7 @@
     color: white;
     background: #444;
 }
+
 .read-only {
     color: white;
     background: #F00;
@@ -102,5 +103,5 @@
 }
 
 .icm-menu-button::before {
-    background: linear-gradient(#999 20%, transparent 20%, transparent 40%,#999  40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
+    background: linear-gradient(#999 20%, transparent 20%, transparent 40%, #999 40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
 }
