@@ -105,3 +105,28 @@
 .icm-menu-button::before {
     background: linear-gradient(#999 20%, transparent 20%, transparent 40%, #999 40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
 }
+
+.ajs-dialog {
+    background: #444 !important;
+}
+
+.ajs-body {
+    color: white !important;
+}
+
+.ajs-footer {
+    background: #444 !important;
+}
+
+.ajs-button {
+    color: white !important;
+    background: #333 !important;
+    border-radius: 4px;
+}
+
+.ajs-input,
+.form-control {
+    color: white;
+    background: #333 !important;
+    border: 1px solid #666 !important;
+}
