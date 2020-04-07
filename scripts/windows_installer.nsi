@@ -9,7 +9,7 @@
 !define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
 !ifndef PYTHON
-  !define PYTHON     "python-3.7.4-amd64.exe"
+  !define PYTHON     "python-3.8.2-amd64.exe"
 !endif
 !define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
@@ -115,7 +115,7 @@ Section "Install Python"
 
   ${If} $R0 != "0"
     MessageBox MB_YESNO \
-    "Python 3.7.4 will be installed. Do you want to continue?" \
+    "Python 3.8.2 will be installed. Do you want to continue?" \
     IDYES continue
     Quit
 
@@ -138,7 +138,7 @@ SectionEnd
 
 Function "ValidatePythonVersion"
 
-  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(3,7)])"'
+  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(3,8)])"'
 
 FunctionEnd
 
