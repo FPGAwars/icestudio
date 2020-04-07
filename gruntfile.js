@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+ module.exports = function(grunt) {
 
   const WIN32 = process.platform === 'win32';
   const DARWIN = process.platform === 'darwin';
