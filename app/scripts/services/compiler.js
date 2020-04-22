@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('compiler', function(common,
-                                utils,
-                                nodeSha1,
-                                _package) {
+  .service('compiler', function (common,
+    utils,
+    nodeSha1,
+    _package) {
 
-    this.generate = function(target, project, opt) {
+    this.generate = function (target, project, opt) {
       var content = '';
       var files = [];
-      switch(target) {
+      switch (target) {
         case 'verilog':
           content += header('//', opt);
           content += '`default_nettype none\n';
@@ -27,6 +27,15 @@ angular.module('icestudio')
             content: content
           });
           break;
+        case 'lpf':
+          content += header('#', opt);
+          content += lpfCompiler(project, opt);
+          files.push({
+            name: 'main.lpf',
+            content: content
+          });
+          break;
+
         case 'list':
           files = listCompiler(project);
           break;
@@ -145,8 +154,7 @@ angular.module('icestudio')
             name: utils.digestId(block.id),
             value: block.data.value
           });
-        }
-        else if (block.type === 'basic.memory') {
+        } else if (block.type === 'basic.memory') {
           var name = utils.digestId(block.id);
           params.push({
             name: name,
@@ -172,8 +180,7 @@ angular.module('icestudio')
             name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
-        }
-        else if (block.type === 'basic.output') {
+        } else if (block.type === 'basic.output') {
           ports.out.push({
             name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
@@ -194,112 +201,117 @@ angular.module('icestudio')
         wire: [],
         assign: []
       };
-        // We need to rearrange internal design specification to compile it
-        // Convert virtual labels to wire and some stuff .
+      // We need to rearrange internal design specification to compile it
+      // Convert virtual labels to wire and some stuff .
 
-        var vwiresLut={};
-        var lidx,widx, lin, vw;
-        var twire;
+      var vwiresLut = {};
+      var lidx, widx, lin, vw;
+      var twire;
 
-        //Create virtual wires
+      //Create virtual wires
 
-        //First identify sources and targets and create a look up table to work easy with it
-        if( typeof graph !== 'undefined' &&
-            graph.blocks.length >0 &&
-            graph.wires.length>0){
+      //First identify sources and targets and create a look up table to work easy with it
+      if (typeof graph !== 'undefined' &&
+        graph.blocks.length > 0 &&
+        graph.wires.length > 0) {
 
-            for(lidx in graph.blocks){
-                lin=graph.blocks[lidx];
-                if( lin.type === 'basic.inputLabel' ){
-                   for(widx in graph.wires){
-                        vw=graph.wires[widx];
-                       if(vw.target.block === lin.id){
-                            if(typeof vwiresLut[lin.data.name] === 'undefined'){
-                                vwiresLut[lin.data.name]={source:[],target:[]};
-                            }
-                            twire=vw.source;
-                            twire.size=vw.size;
-                            vwiresLut[lin.data.name].source.push(twire);
-                       }
-                   }
-            }
-            if( lin.type === 'basic.outputLabel' ){
-                   for(widx in graph.wires){
-                       vw=graph.wires[widx];
-                       if(vw.source.block === lin.id){
-                            if(typeof vwiresLut[lin.data.name] === 'undefined'){
-                                vwiresLut[lin.data.name]={source:[],target:[]};
-                            }
-
-                            twire=vw.target;
-                            twire.size=vw.size;
-                            vwiresLut[lin.data.name].target.push(twire);
-                       }
-                   }
-            }
-          }//for lin
-        }// if typeof....
-
-        //Create virtual wires
-        for(widx in vwiresLut){
-            vw=vwiresLut[widx];
-            if(vw.source.length>0 && vw.target.length>0){
-                for(var vi=0;vi<vw.source.length;vi++){
-                    for(var vj=0;vj<vw.target.length;vj++){
-                        graph.wires.push({
-                            tcTodelete: true,
-                            size: vw.size,
-                            source:vw.source[vi],
-                            target:vw.target[vj],
-                            vertices:undefined
-                        });
-                    }
+        for (lidx in graph.blocks) {
+          lin = graph.blocks[lidx];
+          if (lin.type === 'basic.inputLabel') {
+            for (widx in graph.wires) {
+              vw = graph.wires[widx];
+              if (vw.target.block === lin.id) {
+                if (typeof vwiresLut[lin.data.name] === 'undefined') {
+                  vwiresLut[lin.data.name] = {
+                    source: [],
+                    target: []
+                  };
                 }
+                twire = vw.source;
+                twire.size = vw.size;
+                vwiresLut[lin.data.name].source.push(twire);
+              }
             }
-        }
-
-        // Remove virtual blocks
-        // Save temporal wires and delete it
-
-        graph.wiresVirtual=[];
-        var wtemp=[];
-        var iwtemp;
-        var wi;
-        for (wi=0;wi<graph.wires.length;wi++){
-
-            if( graph.wires[wi].source.port === 'outlabel' ||
-                graph.wires[wi].target.port  === 'outlabel' ||
-                graph.wires[wi].source.port === 'inlabel' ||
-                graph.wires[wi].target.port === 'inlabel' ){
-
-                    graph.wiresVirtual.push(graph.wires[wi]);
-
-            }else{
-                iwtemp=graph.wires[wi];
-                if(typeof iwtemp.source.size !== 'undefined'){
-                    iwtemp.size=iwtemp.source.size;
+          }
+          if (lin.type === 'basic.outputLabel') {
+            for (widx in graph.wires) {
+              vw = graph.wires[widx];
+              if (vw.source.block === lin.id) {
+                if (typeof vwiresLut[lin.data.name] === 'undefined') {
+                  vwiresLut[lin.data.name] = {
+                    source: [],
+                    target: []
+                  };
                 }
-                wtemp.push(iwtemp);
+
+                twire = vw.target;
+                twire.size = vw.size;
+                vwiresLut[lin.data.name].target.push(twire);
+              }
             }
+          }
+        } //for lin
+      } // if typeof....
+
+      //Create virtual wires
+      for (widx in vwiresLut) {
+        vw = vwiresLut[widx];
+        if (vw.source.length > 0 && vw.target.length > 0) {
+          for (var vi = 0; vi < vw.source.length; vi++) {
+            for (var vj = 0; vj < vw.target.length; vj++) {
+              graph.wires.push({
+                tcTodelete: true,
+                size: vw.size,
+                source: vw.source[vi],
+                target: vw.target[vj],
+                vertices: undefined
+              });
+            }
+          }
         }
-        graph.wires=wtemp;
-        // End of rearrange design connections for compilation
+      }
+
+      // Remove virtual blocks
+      // Save temporal wires and delete it
+
+      graph.wiresVirtual = [];
+      var wtemp = [];
+      var iwtemp;
+      var wi;
+      for (wi = 0; wi < graph.wires.length; wi++) {
+
+        if (graph.wires[wi].source.port === 'outlabel' ||
+          graph.wires[wi].target.port === 'outlabel' ||
+          graph.wires[wi].source.port === 'inlabel' ||
+          graph.wires[wi].target.port === 'inlabel') {
+
+          graph.wiresVirtual.push(graph.wires[wi]);
+
+        } else {
+          iwtemp = graph.wires[wi];
+          if (typeof iwtemp.source.size !== 'undefined') {
+            iwtemp.size = iwtemp.source.size;
+          }
+          wtemp.push(iwtemp);
+        }
+      }
+      graph.wires = utils.clone(wtemp);
+      // End of rearrange design connections for compilation
 
 
       for (w in graph.wires) {
         var wire = graph.wires[w];
         if (wire.source.port === 'constant-out' ||
-            wire.source.port === 'memory-out') {
+          wire.source.port === 'memory-out') {
           // Local Parameters
           var constantBlock = findBlock(wire.source.block, graph);
           var paramValue = utils.digestId(constantBlock.id);
           if (paramValue) {
-            connections.localparam.push('localparam p' + w + ' = ' + paramValue  + ';');
+            connections.localparam.push('localparam p' + w + ' = ' + paramValue + ';');
           }
-        }
-        else {
+        } else {
           // Wires
-          var range = wire.size ? ' [0:' + (wire.size-1) +'] ' : ' ';
+          var range = wire.size ? ' [0:' + (wire.size - 1) + '] ' : ' ';
           connections.wire.push('wire' + range + 'w' + w + ';');
         }
         // Assignations
@@ -309,14 +321,12 @@ angular.module('icestudio')
             if (wire.source.block === block.id) {
               connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id) + ';');
             }
-          }
-          else if (block.type === 'basic.output') {
+          } else if (block.type === 'basic.output') {
             if (wire.target.block === block.id) {
               if (wire.source.port === 'constant-out' ||
-                  wire.source.port === 'memory-out') {
+                wire.source.port === 'memory-out') {
                 // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
-              }
-              else {
+              } else {
                 connections.assign.push('assign ' + utils.digestId(block.id) + ' = w' + w + ';');
               }
             }
@@ -331,15 +341,15 @@ angular.module('icestudio')
       // Wires Connections
 
       var numWires = graph.wires.length;
-        var gwi,gwj;
+      var gwi, gwj;
       for (i = 1; i < numWires; i++) {
         for (j = 0; j < i; j++) {
           gwi = graph.wires[i];
           gwj = graph.wires[j];
           if (gwi.source.block === gwj.source.block &&
-              gwi.source.port === gwj.source.port &&
-              gwi.source.port !== 'constant-out' &&
-              gwi.source.port !== 'memory-out') {
+            gwi.source.port === gwj.source.port &&
+            gwi.source.port !== 'constant-out' &&
+            gwi.source.port !== 'memory-out') {
             content.push('assign w' + i + ' = w' + j + ';');
           }
         }
@@ -349,27 +359,36 @@ angular.module('icestudio')
 
       content = content.concat(getInstances(name, project.design.graph));
 
-        // Restore original graph
-        // delete temporal wires
-        //
+      // Restore original graph
+      // delete temporal wires
+      //
 
-        wtemp=[];
-        for ( wi=0;wi<graph.wires.length;wi++){
-            if(typeof graph.wires[wi].tcTodelete !== 'undefined'  &&
-                graph.wires[wi].tcTodelete === true){
-                //Nothing for now, only remove
-            }else{
-                wtemp.push(graph.wires[wi]);
-            }
-
+      wtemp = [];
+      var wn = 0;
+      for (wi = 0, wn = graph.wiresVirtual.length; wi < wn; wi++) {
+        if (typeof graph.wiresVirtual[wi].tcTodelete !== 'undefined' &&
+          graph.wiresVirtual[wi].tcTodelete === true) {
+          //Nothing for now, only remove
+        } else {
+          wtemp.push(graph.wiresVirtual[wi]);
         }
 
-        graph.wires= graph.wiresVirtual.concat(wtemp);
-        delete graph.wiresVirtual;
-        //END ONWORK
+      }
 
+      for (wi = 0, wn = graph.wires.length; wi < wn; wi++) {
+        if (typeof graph.wires[wi].tcTodelete !== 'undefined' &&
+          graph.wires[wi].tcTodelete === true) {
+          //Nothing for now, only remove
+        } else {
+          wtemp.push(graph.wires[wi]);
+        }
 
+      }
 
+      graph.wires = wtemp;
+
+      delete graph.wiresVirtual;
+      //END ONWORK
 
       return content.join('\n');
     }
@@ -383,21 +402,20 @@ angular.module('icestudio')
         var block = blocks[b];
 
         if (block.type !== 'basic.input' &&
-            block.type !== 'basic.output' &&
-            block.type !== 'basic.constant' &&
-            block.type !== 'basic.memory' &&
-            block.type !== 'basic.info' &&
-            block.type !== 'basic.inputLabel' &&
-            block.type !== 'basic.outputLabel') {
+          block.type !== 'basic.output' &&
+          block.type !== 'basic.constant' &&
+          block.type !== 'basic.memory' &&
+          block.type !== 'basic.info' &&
+          block.type !== 'basic.inputLabel' &&
+          block.type !== 'basic.outputLabel') {
 
           // Header
-
           var instance;
           if (block.type === 'basic.code') {
             instance = name + '_' + utils.digestId(block.id);
-          }
-          else {
+          } else {
             instance = utils.digestId(block.type);
+
           }
 
           //-- Parameters
@@ -406,8 +424,8 @@ angular.module('icestudio')
           for (w in graph.wires) {
             wire = graph.wires[w];
             if ((block.id === wire.target.block) &&
-                (wire.source.port === 'constant-out' ||
-                 wire.source.port === 'memory-out')) {
+              (wire.source.port === 'constant-out' ||
+                wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
                 paramName = utils.digestId(paramName);
@@ -425,7 +443,7 @@ angular.module('icestudio')
 
           //-- Instance name
 
-          instance += ' ' +  utils.digestId(block.id);
+          instance += ' ' + utils.digestId(block.id);
 
           //-- Ports
 
@@ -438,7 +456,7 @@ angular.module('icestudio')
             }
             if (block.id === wire.target.block) {
               if (wire.source.port !== 'constant-out' &&
-                  wire.source.port !== 'memory-out') {
+                wire.source.port !== 'memory-out') {
                 connectPort(wire.target.port, portsNames, ports, block);
               }
             }
@@ -480,6 +498,7 @@ angular.module('icestudio')
     }
 
     this.getInitPorts = getInitPorts;
+
     function getInitPorts(project) {
       // Find not connected input wire ports to initialize
 
@@ -514,6 +533,7 @@ angular.module('icestudio')
     }
 
     this.getInitPins = getInitPins;
+
     function getInitPins(project) {
       // Find not used output pins to initialize
 
@@ -548,8 +568,8 @@ angular.module('icestudio')
       opt = opt || {};
 
       if (project &&
-          project.design &&
-          project.design.graph) {
+        project.design &&
+        project.design.graph) {
 
         var blocks = project.design.graph.blocks;
         var dependencies = project.dependencies;
@@ -575,9 +595,9 @@ angular.module('icestudio')
               for (i in blocks) {
                 block = blocks[i];
                 if (block.type === 'basic.input' &&
-                    !block.data.range &&
-                    !block.data.virtual &&
-                    initPort.pin === block.data.pins[0].value) {
+                  !block.data.range &&
+                  !block.data.virtual &&
+                  initPort.pin === block.data.pins[0].value) {
                   found = true;
                   source.block = block.id;
                   break;
@@ -591,12 +611,10 @@ angular.module('icestudio')
                   type: 'basic.input',
                   data: {
                     name: initPort.name,
-                    pins: [
-                      {
-                        index: '0',
-                        value: initPort.pin
-                      }
-                    ],
+                    pins: [{
+                      index: '0',
+                      value: initPort.pin
+                    }],
                     virtual: false
                   }
                 });
@@ -631,7 +649,7 @@ angular.module('icestudio')
               // Declare m port
               ports.out.push({
                 name: 'vinit',
-                range: '[0:' + (n-1) + ']'
+                range: '[0:' + (n - 1) + ']'
               });
               // Generate port value
               var value = n.toString() + '\'b';
@@ -687,7 +705,7 @@ angular.module('icestudio')
       for (i in blocks) {
         block = blocks[i];
         if (block.type === 'basic.input' ||
-            block.type === 'basic.output') {
+          block.type === 'basic.output') {
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
@@ -699,8 +717,7 @@ angular.module('icestudio')
               code += value;
               code += '\n';
             }
-          }
-          else if (block.data.pins.length > 0) {
+          } else if (block.data.pins.length > 0) {
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
@@ -729,9 +746,9 @@ angular.module('icestudio')
           for (j in blocks) {
             block = blocks[j];
             if (block.type === 'basic.input' &&
-            !block.data.range &&
-            !block.data.virtual &&
-            initPort.pin === block.data.pins[0].value) {
+              !block.data.range &&
+              !block.data.virtual &&
+              initPort.pin === block.data.pins[0].value) {
               found = true;
               used.push(initPort.pin);
               break;
@@ -756,11 +773,53 @@ angular.module('icestudio')
             code += initPins[i].pin;
             code += '\n';
           }
-        }
-        else if (initPins.length > 0) {
+        } else if (initPins.length > 0) {
           code += 'set_io vinit ';
           code += initPins[0].pin;
           code += '\n';
+        }
+      }
+
+      return code;
+    }
+
+    function lpfCompiler(project, opt) {
+      var i, block, pin, value, code = '';
+      var blocks = project.design.graph.blocks;
+      opt = opt || {};
+
+      for (i in blocks) {
+        block = blocks[i];
+        if (block.type === 'basic.input' ||
+          block.type === 'basic.output') {
+
+          if (block.data.pins.length > 1) {
+            for (var p in block.data.pins) {
+              pin = block.data.pins[p];
+              value = block.data.virtual ? '' : pin.value;
+              code += 'LOCATE COMP "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" SITE "';
+              code += value;
+              code += '";\n';
+
+              code += 'IOBUF PORT "';
+              code += utils.digestId(block.id);
+              code += '[' + pin.index + ']" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+            }
+          } else if (block.data.pins.length > 0) {
+            pin = block.data.pins[0];
+            value = block.data.virtual ? '' : pin.value;
+            code += 'LOCATE COMP "';
+            code += utils.digestId(block.id);
+            code += '" SITE "';
+            code += value;
+            code += '";\n';
+
+            code += 'IOBUF PORT "';
+            code += utils.digestId(block.id);
+            code += '" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+          }
         }
       }
 
@@ -772,8 +831,8 @@ angular.module('icestudio')
       var listFiles = [];
 
       if (project &&
-          project.design &&
-          project.design.graph) {
+        project.design &&
+        project.design.graph) {
 
         var blocks = project.design.graph.blocks;
         var dependencies = project.dependencies;
@@ -811,7 +870,10 @@ angular.module('icestudio')
       code += '`define DUMPSTR(x) `"x.vcd`"\n';
       code += '`timescale 10 ns / 1 ns\n\n';
 
-      var ports = { in: [], out: [] };
+      var ports = {
+        in: [],
+        out: []
+      };
       var content = '\n';
 
       content += '// Simulation time: 100ns (10 * 10ns)\n';
@@ -836,11 +898,11 @@ angular.module('icestudio')
       content += '\n// Input/Output\n';
       var _ports = [];
       for (i in input) {
-        content += 'reg ' + (input[i].range ? input[i].range + ' ': '') + input[i].name + ';\n';
+        content += 'reg ' + (input[i].range ? input[i].range + ' ' : '') + input[i].name + ';\n';
         _ports.push(' .' + input[i].id + '(' + input[i].name + ')');
       }
       for (o in output) {
-        content += 'wire ' + (output[o].range ? output[o].range + ' ': '') + output[o].name + ';\n';
+        content += 'wire ' + (output[o].range ? output[o].range + ' ' : '') + output[o].name + ';\n';
         _ports.push(' .' + output[o].id + '(' + output[o].name + ')');
       }
 
@@ -912,10 +974,10 @@ angular.module('icestudio')
       var output = io.output;
 
       for (var i in input) {
-        code += 'main_tb.' + input[i].name + (input[i].range ? input[i].range: '') + '\n';
+        code += 'main_tb.' + input[i].name + (input[i].range ? input[i].range : '') + '\n';
       }
       for (var o in output) {
-        code += 'main_tb.' + output[o].name + (output[o].range ? output[o].range: '') + '\n';
+        code += 'main_tb.' + output[o].name + (output[o].range ? output[o].range : '') + '\n';
       }
 
       return code;
@@ -936,24 +998,21 @@ angular.module('icestudio')
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
-          }
-          else {
+          } else {
             input.push({
               id: utils.digestId(block.id),
               name: inputUnnamed.toString(),
             });
             inputUnnamed += 1;
           }
-        }
-        else if (block.type === 'basic.output') {
+        } else if (block.type === 'basic.output') {
           if (block.data.name) {
             output.push({
               id: utils.digestId(block.id),
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
-          }
-          else {
+          } else {
             output.push({
               id: utils.digestId(block.id),
               name: outputUnnamed.toString()
@@ -983,8 +1042,7 @@ angular.module('icestudio')
                 name: 'constant_' + block.data.name.replace(/ /g, '_'),
                 value: block.data.value
               });
-            }
-            else {
+            } else {
               params.push({
                 id: utils.digestId(block.id),
                 name: 'constant_' + paramsUnnamed.toString(),

@@ -3,6 +3,7 @@
 angular.module('icestudio')
   .service('profile', function (utils,
     common,
+    _package,
     nodeFs) {
 
     this.data = {
@@ -24,6 +25,7 @@ angular.module('icestudio')
       var self = this;
       utils.readFile(common.PROFILE_PATH)
         .then(function (data) {
+          
           self.data = {
             'board': data.board || '',
             'boardRules': data.boardRules !== false,
@@ -32,7 +34,8 @@ angular.module('icestudio')
             'externalCollections': data.externalCollections || '',
             'remoteHostname': data.remoteHostname || '',
             'showFPGAResources': data.showFPGAResources || false,
-            'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes'
+            'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes',
+            'lastVersionReview':data.lastVersionReview || false
 
           };
           if (common.DARWIN) {

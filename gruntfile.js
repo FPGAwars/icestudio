@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+ module.exports = function(grunt) {
 
   const WIN32 = process.platform === 'win32';
   const DARWIN = process.platform === 'darwin';
@@ -8,15 +8,20 @@ module.exports = function(grunt) {
   var platforms, options, distCommands;
 
   if (DARWIN) {
-    platforms = ['osx32', 'osx64'];
+    platforms = ['osx64'];
     options = { scope: ['devDependencies', 'darwinDependencies'] };
-    distCommands = ['compress:osx32', 'compress:osx64', 'appdmg'];
+    distCommands = [ 'compress:osx64', 'appdmg'];
   }
   else {
     platforms = ['linux32', 'linux64', 'win32', 'win64'];
+
     options = { scope: ['devDependencies'] };
     distCommands = ['compress:linux32', 'compress:linux64', 'appimage:linux32', 'appimage:linux64',
                     'compress:win32', 'compress:win64', 'wget:python32', 'wget:python64', 'exec:nsis32', 'exec:nsis64'];
+
+
+
+
   }
 
   function all(dir) {
@@ -57,8 +62,8 @@ module.exports = function(grunt) {
     exec: {
       nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
-      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-2.7.13.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-2.7.13.amd64.msi" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
+      nsis32: 'makensis -DARCH=win32 -DPYTHON="python-3.8.2.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
@@ -107,12 +112,12 @@ module.exports = function(grunt) {
       }
     },
 
-    // Uglify configuration options:
-    uglify: {
-      options: {
-        mangle: false
-      }
-    },
+      // Uglify configuration options:
+      uglify: {
+        options: {
+          mangle: false
+        }
+      },
 
     // Rewrite based on filerev and the useminPrepare configuration
     usemin: {
@@ -122,13 +127,14 @@ module.exports = function(grunt) {
     // Execute nw-build packaging
     nwjs: {
       options: {
-        version: '0.12.3',
-        flavor: 'normal',
+        version: '0.35.5',
+        flavor: 'normal', // For stable branch
+      //  flavor: 'sdk',    // For development branch
         zip: false,
         buildDir: 'dist/',
         winIco: 'docs/resources/images/logo/icestudio-logo.ico',
-        macIcns: 'docs/resources/images/logo/icestudio-logo.icns',
-        macPlist: { 'CFBundleIconFile': 'nw.icns' },
+        macIcns: 'docs/resources/images/logo/nw.icns',
+        macPlist: { 'CFBundleIconFile': 'app' },
         platforms: platforms
       },
       src: ['dist/tmp/**']
@@ -192,7 +198,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+          src: ['**'].concat(appFiles)
         }]
       },
       linux64: {
@@ -207,7 +213,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles)
+          src: ['**'].concat(appFiles)
         }]
       },
     },
@@ -221,7 +227,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux32/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux32'
         }]
       },
@@ -232,7 +238,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/linux64/',
-          src: ['icestudio', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-linux64'
         }]
       },
@@ -243,7 +249,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win32/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win32'
         }]
       },
@@ -254,7 +260,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'dist/icestudio/win64/',
-          src: ['icestudio.exe', 'icudtl.dat', 'nw.pak', 'toolchain/*.*'].concat(appFiles),
+          src: ['**'].concat(appFiles),
           dest: '<%=pkg.name%>-<%=pkg.version%>-win64'
         }]
       },
@@ -321,15 +327,15 @@ module.exports = function(grunt) {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi',
-        dest: 'cache/python/python-2.7.13.msi'
+        src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2.exe',
+        dest: 'cache/python/python-3.8.2.exe'
       },
       python64: {
         options: {
           overwrite: false
         },
-        src: 'https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi',
-        dest: 'cache/python/python-2.7.13.amd64.msi'
+        src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2-amd64.exe',
+        dest: 'cache/python/python-3.8.2-amd64.exe'
       },
       collection: {
         options: {
@@ -443,9 +449,9 @@ module.exports = function(grunt) {
     'clean:tmp'
   ]));
   grunt.registerTask('checksettings', function() {
-    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
-      grunt.fail.fatal('Apio settings are in debug mode');
-    }
+//    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
+//      grunt.fail.fatal('Apio settings are in debug mode');
+ //   }
   });
 };
 

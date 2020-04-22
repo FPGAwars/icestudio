@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="bower_components/alertify-js/build/css/themes/default.min.css">
   <!-- endbower -->
   <!-- endbuild -->
+  <link rel="stylesheet" href="node_modules/jexcel/dist/jexcel.css" type="text/css" />
+  <link rel="stylesheet" href="node_modules/jsuites/dist/jsuites.css" type="text/css" />
+  <link rel="stylesheet" href="resources/fonts/Lato2OFLWeb/Lato/latofonts.css">
   <!-- build:css styles/main.css -->
 
   <link rel="stylesheet" href="styles/design.css">
@@ -22,6 +25,8 @@
   <link rel="stylesheet" href="resources/viewers/markdown/css/github-markdown.css">
 
   <!-- endbuild -->
+
+
 </head>
 
 <body ng-app="icestudio">
@@ -50,9 +55,23 @@
   <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
   <script src="bower_components/angular-gettext/dist/angular-gettext.min.js"></script>
   <script src="bower_components/alertify-js/build/alertify.js"></script>
+  <script src="bower_components/Snap.svg/dist/snap.svg-min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
+
+
+  <script src="node_modules/jsuites/dist/jsuites.js"></script>
+  <script src="node_modules/jexcel/dist/jexcel.js"></script>
+  
+    <script src="node_modules/mustache/mustache.min.js"></script>
+
   <!-- build:js scripts/main.js -->
+
+  <script src="scripts/libs/iceprofiler.js"></script>
+  <script src="scripts/libs/iceeventbus.js"></script>
+  <script src="scripts/libs/iceparametrichelper.js"></script>
+  <script src="scripts/libs/icetemplatesystem.js"></script>
+  <script src="scripts/libs/iceplugmanager.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers/design.js"></script>
   <script src="scripts/controllers/main.js"></script>
@@ -79,6 +98,7 @@
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
   <script src="scripts/services/utils.js"></script>
+
   <!-- endbuild -->
 </body>
 

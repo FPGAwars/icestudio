@@ -21,7 +21,6 @@ angular.module('icestudio')
                 $scope.backup = {};
                 $scope.toRestore = false;
                 // Intialization
-
                 graph.createPaper($('.paper'));
 
                 // Breadcrumbs

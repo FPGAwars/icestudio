@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('icestudio')
-  .service('common', function(nodePath,
-                              nodeTmp) {
+  .service('common', function (nodePath,
+    nodeTmp) {
 
     // Project version
     this.VERSION = '1.2';
@@ -34,6 +34,9 @@ angular.module('icestudio')
       brams: '-'
     };
 
+    // Debug mode (uncomment)
+    // this.DEBUGMODE = 1;
+
     // Command output
     this.commandOutput = '';
 
@@ -49,8 +52,11 @@ angular.module('icestudio')
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
+    this.DEFAULT_PLUGIN_DIR = nodePath.resolve(nodePath.join('resources', 'plugins'));
+
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
+    this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
@@ -58,7 +64,7 @@ angular.module('icestudio')
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
-    this.VENV = 'virtualenv-15.2.0';
+    this.VENV = 'virtualenv-16.7.10';
     this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
     this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
 
@@ -120,5 +126,5 @@ angular.module('icestudio')
     this.showDrivers = function () {
       return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || false;
     };
-    this.isEditingSubmodule=false;
+    this.isEditingSubmodule = false;
   });

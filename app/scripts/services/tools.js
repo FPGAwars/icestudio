@@ -28,7 +28,11 @@ angular.module('icestudio')
     var infoAlert = null;
     var resultAlert = null;
     var toolchainAlert = null;
-    var toolchain = { apio: '-', installed: false, disabled: false };
+    var toolchain = {
+      apio: '-',
+      installed: false,
+      disabled: false
+    };
 
     this.toolchain = toolchain;
 
@@ -36,7 +40,7 @@ angular.module('icestudio')
     nodeFse.removeSync(common.OLD_BUILD_DIR);
 
     this.verifyCode = function (startMessage, endMessage) {
-      return apioRun(['verify'], startMessage, endMessage);
+      return apioRun(['verify', '--board', common.selectedBoard.name], startMessage, endMessage);
     };
 
     this.buildCode = function (startMessage, endMessage) {
@@ -48,7 +52,6 @@ angular.module('icestudio')
     };
 
     function apioRun(commands, startMessage, endMessage) {
-
       return new Promise(function (resolve) {
         var sourceCode = '';
 
@@ -71,10 +74,12 @@ angular.module('icestudio')
               if (startMessage) {
                 startAlert = alertify.message(startMessage, 100000);
               }
+
               return generateCode(commands);
             })
             .then(function (output) {
               sourceCode = output.code;
+
               return syncResources(output.code, output.internalResources);
             })
             .then(function () {
@@ -82,13 +87,12 @@ angular.module('icestudio')
               var command = commands[0];
               if (command === 'build' || command === 'upload') {
                 if (profile.get('showFPGAResources')) {
-                  commands = commands.concat('--verbose-arachne');
+                  commands = commands.concat('--verbose-pnr');
                 }
               }
               if (hostname) {
                 return executeRemote(commands, hostname);
-              }
-              else {
+              } else {
                 return executeLocal(commands);
               }
             })
@@ -104,7 +108,7 @@ angular.module('icestudio')
               restoreTask();
               resolve();
             })
-            .catch(function (/* e */) {
+            .catch(function ( /* e */ ) {
               // Error
               utils.endBlockingTask();
               restoreTask();
@@ -127,8 +131,7 @@ angular.module('icestudio')
       return new Promise(function (resolve, reject) {
         if (toolchain.installed) {
           resolve();
-        }
-        else {
+        } else {
           toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain not installed'));
           reject();
         }
@@ -152,12 +155,20 @@ angular.module('icestudio')
         var verilogFile = compiler.generate('verilog', project.get(), opt)[0];
         nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, verilogFile.name), verilogFile.content, 'utf8');
 
-        if (cmd.indexOf('verify') > -1 && cmd.length === 1) {
+        if (cmd.indexOf('verify') > -1 && cmd.indexOf('--board') > -1 && cmd.length === 3) {
           //only verification
         } else {
-          // PCF file
-          var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
-          nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+
+          var archName = common.selectedBoard.info.arch;
+          if (archName === 'ecp5') {
+            // LPF file
+            var lpfFile = compiler.generate('lpf', project.get(), opt)[0];
+            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, lpfFile.name), lpfFile.content, 'utf8');
+          } else {
+            // PCF file
+            var pcfFile = compiler.generate('pcf', project.get(), opt)[0];
+            nodeFs.writeFileSync(nodePath.join(common.BUILD_DIR, pcfFile.name), pcfFile.content, 'utf8');
+          }
         }
         // List files
         var listFiles = compiler.generate('list', project.get());
@@ -170,7 +181,9 @@ angular.module('icestudio')
         project.restoreSnapshot();
         resolve({
           code: verilogFile.content,
-          internalResources: listFiles.map(function (res) { return res.name; })
+          internalResources: listFiles.map(function (res) {
+            return res.name;
+          })
         });
       });
     }
@@ -226,7 +239,9 @@ angular.module('icestudio')
         // Copy file
         var copySuccess = utils.copySync(origPath, destPath);
         if (!copySuccess) {
-          resultAlert = alertify.error(gettextCatalog.getString('File {{file}} does not exist', { file: file }), 30);
+          resultAlert = alertify.error(gettextCatalog.getString('File {{file}} does not exist', {
+            file: file
+          }), 30);
           reject();
         }
       });
@@ -236,7 +251,7 @@ angular.module('icestudio')
 
     function checkToolchain(callback) {
       var apio = utils.getApioExecutable();
-      nodeChildProcess.exec([apio, '--version'].join(' '), function (error, stdout/*, stderr*/) {
+      nodeChildProcess.exec([apio, '--version'].join(' '), function (error, stdout /*, stderr*/ ) {
         if (error) {
           toolchain.apio = '';
           toolchain.installed = false;
@@ -245,13 +260,12 @@ angular.module('icestudio')
           if (callback) {
             callback();
           }
-        }
-        else {
+        } else {
           toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
           toolchain.installed = toolchain.apio >= _package.apio.min &&
             toolchain.apio < _package.apio.max;
           if (toolchain.installed) {
-            nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function (error/*, stdout, stderr*/) {
+            nodeChildProcess.exec([apio, 'clean', '-p', common.SAMPLE_DIR].join(' '), function (error /*, stdout, stderr*/ ) {
               toolchain.installed = !error;
               if (error) {
                 toolchain.apio = '';
@@ -262,8 +276,7 @@ angular.module('icestudio')
                 callback();
               }
             });
-          }
-          else {
+          } else {
             // An old version is installed
             toolchainNotInstalledAlert(gettextCatalog.getString('Toolchain version does not match'));
             if (callback) {
@@ -296,18 +309,27 @@ angular.module('icestudio')
           ssh: true,
           recursive: true,
           delete: true,
-          include: ['*.v', '*.pcf', '*.list'],
-          exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin']
-        }, function (error, stdout, stderr/*, cmd*/) {
+          include: ['*.v', '*.pcf', '*.lpf', '*.list'],
+          exclude: ['.sconsign.dblite', '*.out', '*.blif', '*.asc', '*.bin', '*.config', '*.json']
+        }, function (error, stdout, stderr /*, cmd*/ ) {
           if (!error) {
-            startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', { label: '' }));
+            startAlert.setContent(gettextCatalog.getString('Execute remote {{label}} ...', {
+              label: ''
+            }));
             nodeSSHexec((['apio'].concat(commands).concat(['--project-dir', '.build'])).join(' '), hostname,
               function (error, stdout, stderr) {
-                resolve({ error: error, stdout: stdout, stderr: stderr });
+                resolve({
+                  error: error,
+                  stdout: stdout,
+                  stderr: stderr
+                });
               });
-          }
-          else {
-            resolve({ error: error, stdout: stdout, stderr: stderr });
+          } else {
+            resolve({
+              error: error,
+              stdout: stdout,
+              stderr: stderr
+            });
           }
         });
       });
@@ -320,8 +342,7 @@ angular.module('icestudio')
           drivers.preUpload(function () {
             _executeLocal();
           });
-        }
-        else {
+        } else {
           // Other !upload commands
           _executeLocal();
         }
@@ -329,8 +350,15 @@ angular.module('icestudio')
         function _executeLocal() {
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
-          nodeChildProcess.exec(command,
-            { maxBuffer: 5000 * 1024 },  // To avoid buffer overflow
+          if (typeof common.DEBUGMODE !== 'undefined' &&
+            common.DEBUGMODE === 1) {
+
+            const fs = require('fs');
+            fs.appendFileSync(common.LOGFILE, 'tools._executeLocal>' + command + "\n");
+          }
+          nodeChildProcess.exec(command, {
+              maxBuffer: 5000 * 1024
+            }, // To avoid buffer overflow
             function (error, stdout, stderr) {
               if (commands[0] === 'upload') {
                 // Upload command requires to restore the drivers (Mac OS)
@@ -338,7 +366,11 @@ angular.module('icestudio')
               }
               common.commandOutput = command + '\n\n' + stdout + stderr;
               $(document).trigger('commandOutputChanged', [common.commandOutput]);
-              resolve({ error: error, stdout: stdout, stderr: stderr });
+              resolve({
+                error: error,
+                stdout: stdout,
+                stderr: stderr
+              });
             });
         }
       });
@@ -354,7 +386,6 @@ angular.module('icestudio')
         if (_error || stderr) {
           // -- Process errors
           reject();
-
           if (stdout) {
             var boardName = common.selectedBoard.name;
             var boardLabel = common.selectedBoard.info.label;
@@ -362,7 +393,9 @@ angular.module('icestudio')
             if ((stdout.indexOf('Error: board ' + boardName + ' not connected') !== -1) ||
               (stdout.indexOf('USBError') !== -1) ||
               (stdout.indexOf('Activate bootloader') !== -1)) {
-              var errorMessage = gettextCatalog.getString('Board {{name}} not connected', { name: utils.bold(boardLabel) });
+              var errorMessage = gettextCatalog.getString('Board {{name}} not connected', {
+                name: utils.bold(boardLabel)
+              });
               if (stdout.indexOf('Activate bootloader') !== -1) {
                 if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
                   // TinyFPGA bootloader notification
@@ -370,15 +403,14 @@ angular.module('icestudio')
                 }
               }
               resultAlert = alertify.error(errorMessage, 30);
-            }
-            else if (stdout.indexOf('Error: board ' + boardName + ' not available') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);
+            } else if (stdout.indexOf('Error: board ' + boardName + ' not available') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', {
+                name: utils.bold(boardLabel)
+              }), 30);
               setupDriversAlert();
-            }
-            else if (stdout.indexOf('Error: unknown board') !== -1) {
+            } else if (stdout.indexOf('Error: unknown board') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Unknown board'), 30);
-            }
-            else if (stdout.indexOf('[upload] Error') !== -1) {
+            } else if (stdout.indexOf('[upload] Error') !== -1) {
               switch (common.selectedBoard.name) {
                 // TinyFPGA-B2 programmer errors
                 case 'TinyFPGA-B2':
@@ -386,15 +418,16 @@ angular.module('icestudio')
                   var match = stdout.match(/Bootloader\snot\sactive/g);
                   if (match && match.length === 3) {
                     resultAlert = alertify.error(gettextCatalog.getString('Bootloader not active'), 30);
-                  }
-                  else if (stdout.indexOf('Device or resource busy') !== -1) {
-                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', { name: utils.bold(boardLabel) }), 30);
+                  } else if (stdout.indexOf('Device or resource busy') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} not available', {
+                      name: utils.bold(boardLabel)
+                    }), 30);
                     setupDriversAlert();
-                  }
-                  else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
-                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', { name: utils.bold(boardLabel) }), 30);
-                  }
-                  else {
+                  } else if (stdout.indexOf('device disconnected or multiple access on port') !== -1) {
+                    resultAlert = alertify.error(gettextCatalog.getString('Board {{name}} disconnected', {
+                      name: utils.bold(boardLabel)
+                    }), 30);
+                  } else {
                     resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
                   }
                   break;
@@ -413,11 +446,9 @@ angular.module('icestudio')
             else if (stdout.indexOf('set_io: too few arguments') !== -1 ||
               stdout.indexOf('fatal error: unknown pin') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('FPGA I/O ports not defined'), 30);
-            }
-            else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
+            } else if (stdout.indexOf('fatal error: duplicate pin constraints') !== -1) {
               resultAlert = alertify.error(gettextCatalog.getString('Duplicated FPGA I/O ports'), 30);
-            }
-            else {
+            } else {
               var re, matchError, codeErrors = [];
 
               // - Iverilog errors & warnings
@@ -440,7 +471,6 @@ angular.module('icestudio')
                   type: 'error'
                 });
               }
-
               // - Yosys errors
               // ERROR: ... main.v:#...
               // Warning: ... main.v:#...
@@ -464,11 +494,9 @@ angular.module('icestudio')
                     postContent = 'Syntax error';
                   }
                   msg = postContent;
-                }
-                else if (preContent.endsWith(' in line ')) {
+                } else if (preContent.endsWith(' in line ')) {
                   msg = preContent.replace(/\sin\sline\s$/, ' ') + postContent;
-                }
-                else {
+                } else {
                   preContent = preContent.replace(/\sat\s$/, '');
                   preContent = preContent.replace(/\sin\s$/, '');
                   msg = preContent;
@@ -521,8 +549,7 @@ angular.module('icestudio')
 
               if (hasErrors) {
                 resultAlert = alertify.error(gettextCatalog.getString('Errors detected in the design'), 5);
-              }
-              else {
+              } else {
                 if (hasWarnings) {
                   resultAlert = alertify.warning(gettextCatalog.getString('Warnings detected in the design'), 5);
                 }
@@ -549,52 +576,111 @@ angular.module('icestudio')
                     error = matchError[2];
                   }
                   resultAlert = alertify.error(error, 30);
-                }
-                else {
+                } else {
                   resultAlert = alertify.error(stdout, 30);
                 }
               }
             }
-          }
-          else if (stderr) {
+          } else if (stderr) {
             // Remote hostname errors
             if (stderr.indexOf('Could not resolve hostname') !== -1 ||
               stderr.indexOf('Connection refused') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', { name: profile.get('remoteHostname') }), 30);
-            }
-            else if (stderr.indexOf('No route to host') !== -1) {
-              resultAlert = alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', { name: profile.get('remoteHostname') }), 30);
-            }
-            else {
+              resultAlert = alertify.error(gettextCatalog.getString('Wrong remote hostname {{name}}', {
+                name: profile.get('remoteHostname')
+              }), 30);
+            } else if (stderr.indexOf('No route to host') !== -1) {
+              resultAlert = alertify.error(gettextCatalog.getString('Remote host {{name}} not connected', {
+                name: profile.get('remoteHostname')
+              }), 30);
+            } else {
               resultAlert = alertify.error(stderr, 30);
             }
           }
-        }
-        else {
+        } else {
           //-- Process output
           resolve();
 
           if (stdout) {
             // Show used resources in the FPGA
-            common.FPGAResources.ffs = findValue(/DFF\s+([0-9]+)\s/g, stdout, common.FPGAResources.ffs);
-            common.FPGAResources.luts = findValue(/LCs\s+([0-9]+)\s/g, stdout, common.FPGAResources.luts);
-            common.FPGAResources.pios = findValue(/PIOs\s+([0-9]+)\s/g, stdout, common.FPGAResources.pios);
-            common.FPGAResources.plbs = findValue(/PLBs\s+([0-9]+)\s/g, stdout, common.FPGAResources.plbs);
-            common.FPGAResources.brams = findValue(/BRAMs\s+([0-9]+)\s/g, stdout, common.FPGAResources.brams);
+            if (typeof common.FPGAResources.nextpnr === 'undefined') {
+              common.FPGAResources.nextpnr = {
+                LC: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                RAM: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                IO: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                GB: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                PLL: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                WB: {
+                  used: '-',
+                  total: '-',
+                  percentage: '-'
+                },
+                MF: {
+                  value: 0
+                }
+              };
+
+            }
+            common.FPGAResources.nextpnr.LC = findValueNPNR(/_LC:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.LC);
+            common.FPGAResources.nextpnr.RAM = findValueNPNR(/_RAM:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.RAM);
+            common.FPGAResources.nextpnr.IO = findValueNPNR(/SB_IO:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.IO);
+            common.FPGAResources.nextpnr.GB = findValueNPNR(/SB_GB:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.GB);
+            common.FPGAResources.nextpnr.PLL = findValueNPNR(/_PLL:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.PLL);
+            common.FPGAResources.nextpnr.WB = findValueNPNR(/_WARMBOOT:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.WB);
+            common.FPGAResources.nextpnr.MF = findMaxFreq(/Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g, stdout, common.FPGAResources.nextpnr.MF);
             utils.rootScopeSafeApply();
           }
         }
       });
     }
 
-    function findValue(pattern, output, previousValue) {
+    function findValueNPNR(pattern, output, previousValue) {
       var match = pattern.exec(output);
-      return (match && match[1]) ? match[1] : previousValue;
+      return (match && match[1] && match[2] && match[3]) ? {
+        used: match[1],
+        total: match[2],
+        percentage: match[3]
+      } : previousValue;
     }
 
+    function findMaxFreq(pattern, output, previousValue) {
+      var match = pattern.exec(output);
+      return (match && match[1]) ? {
+        value: match[1]
+      } : previousValue;
+    }
+
+
+    /*    function findValue(pattern, output, previousValue) {
+          var match = pattern.exec(output);
+          return (match && match[1]) ? match[1] : previousValue;
+        }
+    */
     function mapCodeModules(code) {
       var codelines = code.split('\n');
-      var match, module = { params: [] }, modules = [];
+      var match, module = {
+          params: []
+        },
+        modules = [];
       // Find begin/end lines of the modules
       for (var i in codelines) {
         var codeline = codelines[i];
@@ -631,7 +717,9 @@ angular.module('icestudio')
           if (match) {
             module.end = parseInt(i) + 1;
             modules.push(module);
-            module = { params: [] };
+            module = {
+              params: []
+            };
           }
         }
       }
@@ -660,15 +748,14 @@ angular.module('icestudio')
               newCodeError.blockId = module.name.split('_')[1];
               newCodeError.blockType = 'code';
               newCodeError.line = codeError.line - module.begin - ((codeError.line === module.end) ? 1 : 0);
-            }
-            else {
+            } else {
               // Generic block
+
               newCodeError.blockId = module.name.split('_')[0];
               newCodeError.blockType = 'generic';
             }
             break;
-          }
-          else {
+          } else {
             if (module.name === 'main') {
               // Constant block
               for (var j in module.params) {
@@ -680,8 +767,7 @@ angular.module('icestudio')
                   break;
                 }
               }
-            }
-            else {
+            } else {
               // Generic block
               newCodeError.blockId = module.name;
               newCodeError.blockType = 'generic';
@@ -695,7 +781,7 @@ angular.module('icestudio')
 
     // Toolchain methods
 
-    $rootScope.$on('installToolchain', function (/*event*/) {
+    $rootScope.$on('installToolchain', function ( /*event*/ ) {
       this.installToolchain();
     }.bind(this));
 
@@ -706,8 +792,7 @@ angular.module('icestudio')
       if (utils.checkDefaultToolchain()) {
         utils.removeToolchain();
         installDefaultToolchain();
-      }
-      else {
+      } else {
         alertify.confirm(gettextCatalog.getString('Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'),
           function () {
             utils.removeToolchain();
@@ -736,9 +821,10 @@ angular.module('icestudio')
             utils.removeToolchain();
             installDefaultToolchain();
           });
-      }
-      else {
-        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', { dir: common.TOOLCHAIN_DIR }));
+      } else {
+        alertify.alert(gettextCatalog.getString('Error: default toolchain not found in \'{{dir}}\'', {
+          dir: common.TOOLCHAIN_DIR
+        }));
       }
     };
 
@@ -755,7 +841,7 @@ angular.module('icestudio')
         });
     };
 
-    $rootScope.$on('enableDrivers', function (/*event*/) {
+    $rootScope.$on('enableDrivers', function ( /*event*/ ) {
       this.enableDrivers();
     }.bind(this));
 
@@ -787,7 +873,8 @@ angular.module('icestudio')
         '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
         '    </div>',
         '  </div>',
-        '</div>'].join('\n');
+        '</div>'
+      ].join('\n');
       toolchainAlert = alertify.alert(content, function () {
         setTimeout(function () {
           initProgress();
@@ -824,7 +911,8 @@ angular.module('icestudio')
         '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
         '    </div>',
         '  </div>',
-        '</div>'].join('\n');
+        '</div>'
+      ].join('\n');
       toolchainAlert = alertify.alert(content, function () {
         setTimeout(function () {
           initProgress();
@@ -845,7 +933,9 @@ angular.module('icestudio')
         createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
-        apioInstallIcestorm,
+        apioInstallYosys,
+        apioInstallIce40,
+        apioInstallECP5,
         apioInstallIverilog,
         apioInstallDrivers,
         apioInstallScons,
@@ -867,11 +957,10 @@ angular.module('icestudio')
       updateProgress(gettextCatalog.getString('Check Python...'), 0);
       if (utils.getPythonExecutable()) {
         callback();
-      }
-      else {
+      } else {
         closeToolchainAlert();
         restoreStatus();
-        resultAlert = alertify.error(gettextCatalog.getString('Python 2.7 is required'), 30);
+        resultAlert = alertify.error(gettextCatalog.getString('At least Python 3.5 is required'), 30);
         callback(true);
       }
     }
@@ -908,6 +997,7 @@ angular.module('icestudio')
     function installOnlineApio(callback) {
       var extraPackages = _package.apio.extras || [];
       var apio = utils.getApioInstallable();
+
       updateProgress('pip install -U ' + apio + '[' + extraPackages.toString() + ']', 30);
       utils.installOnlineApio(callback);
     }
@@ -917,9 +1007,19 @@ angular.module('icestudio')
       utils.apioInstall('system', callback);
     }
 
-    function apioInstallIcestorm(callback) {
-      updateProgress('apio install icestorm', 50);
-      utils.apioInstall('icestorm', callback);
+    function apioInstallYosys(callback) {
+      updateProgress('apio install yosys', 50);
+      utils.apioInstall('yosys', callback);
+    }
+
+    function apioInstallIce40(callback) {
+      updateProgress('apio install ice40', 50);
+      utils.apioInstall('ice40', callback);
+    }
+
+    function apioInstallECP5(callback) {
+      updateProgress('apio install ecp5', 50);
+      utils.apioInstall('ecp5', callback);
     }
 
     function apioInstallIverilog(callback) {
@@ -931,8 +1031,7 @@ angular.module('icestudio')
       if (common.WIN32) {
         updateProgress('apio install drivers', 80);
         utils.apioInstall('drivers', callback);
-      }
-      else {
+      } else {
         callback();
       }
     }
@@ -976,9 +1075,9 @@ angular.module('icestudio')
     }
 
     function updateProgress(message, value) {
-      angular.element('#progress-message')
+      $('#progress-message')
         .text(message);
-      var bar = angular.element('#progress-bar');
+      var bar = $('#progress-bar');
       if (value === 100) {
         bar.removeClass('progress-bar-striped active');
       }
@@ -988,7 +1087,7 @@ angular.module('icestudio')
     }
 
     function initProgress() {
-      angular.element('#progress-bar')
+      $('#progress-bar')
         .addClass('notransition progress-bar-info progress-bar-striped active')
         .removeClass('progress-bar-danger')
         .text('0%')
@@ -1039,28 +1138,36 @@ angular.module('icestudio')
                   var destPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, name);
                   if (nodeFs.existsSync(destPath)) {
                     alertify.confirm(
-                      gettextCatalog.getString('The collection {{name}} already exists.', { name: utils.bold(name) }) + '<br>' +
+                      gettextCatalog.getString('The collection {{name}} already exists.', {
+                        name: utils.bold(name)
+                      }) + '<br>' +
                       gettextCatalog.getString('Do you want to replace it?'),
                       function () {
                         utils.deleteFolderRecursive(destPath);
                         installCollection(collection, zipData);
-                        alertify.success(gettextCatalog.getString('Collection {{name}} replaced', { name: utils.bold(name) }));
+                        alertify.success(gettextCatalog.getString('Collection {{name}} replaced', {
+                          name: utils.bold(name)
+                        }));
                         next(name);
                       },
                       function () {
-                        alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', { name: utils.bold(name) }));
+                        alertify.warning(gettextCatalog.getString('Collection {{name}} not replaced', {
+                          name: utils.bold(name)
+                        }));
                         next(name);
                       });
-                  }
-                  else {
+                  } else {
                     installCollection(collection, zipData);
-                    alertify.success(gettextCatalog.getString('Collection {{name}} added', { name: utils.bold(name) }));
+                    alertify.success(gettextCatalog.getString('Collection {{name}} added', {
+                      name: utils.bold(name)
+                    }));
                     next(name);
                   }
                 });
-            }
-            else {
-              alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', { name: utils.bold(name) }));
+            } else {
+              alertify.warning(gettextCatalog.getString('Invalid collection {{name}}', {
+                name: utils.bold(name)
+              }));
             }
           }, 0);
         }, function (name) {
@@ -1085,7 +1192,11 @@ angular.module('icestudio')
         data = zipEntry.entryName.match(/^([^\/]+)\/$/);
         if (data) {
           _collections[data[1]] = {
-            origName: data[1], blocks: [], examples: [], locale: [], package: ''
+            origName: data[1],
+            blocks: [],
+            examples: [],
+            locale: [],
+            package: ''
           };
         }
 
@@ -1134,7 +1245,9 @@ angular.module('icestudio')
         dest = collection.locale[i].replace(pattern, collection.name);
         safeExtract(collection.locale[i], dest, zip);
         // Generate locale JSON files
-        var compiler = new nodeGettext.Compiler({ format: 'json' });
+        var compiler = new nodeGettext.Compiler({
+          format: 'json'
+        });
         var sourcePath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
         var targetPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest.replace(/\.po$/, '.json'));
         var content = nodeFs.readFileSync(sourcePath).toString();
@@ -1156,15 +1269,16 @@ angular.module('icestudio')
     function safeExtract(entry, dest, zip) {
       try {
         var newPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
-        zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/false);
-      }
-      catch (e) { }
+        zip.extractEntryTo(entry, utils.dirname(newPath), /*maintainEntryPath*/ false);
+      } catch (e) {}
     }
 
     this.removeCollection = function (collection) {
       utils.deleteFolderRecursive(collection.path);
       collections.loadInternalCollections();
-      alertify.success(gettextCatalog.getString('Collection {{name}} removed', { name: utils.bold(collection.name) }));
+      alertify.success(gettextCatalog.getString('Collection {{name}} removed', {
+        name: utils.bold(collection.name)
+      }));
     };
 
     this.removeAllCollections = function () {
@@ -1188,11 +1302,11 @@ angular.module('icestudio')
               var msg = '';
               if (hasNewVersion === 'stable') {
                 msg = '<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
-                                          <div class="new-version-notifier-box--text">'+ gettextCatalog.getString('There is a new stable version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
+                                          <div class="new-version-notifier-box--text">' + gettextCatalog.getString('There is a new stable version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
 
               } else {
                 msg = '<div class="new-version-notifier-box"><div class="new-version-notifier-box--icon"><img src="resources/images/confetti.svg"></div>\
-                                          <div class="new-version-notifier-box--text">'+ gettextCatalog.getString('There is a new nightly version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
+                                          <div class="new-version-notifier-box--text">' + gettextCatalog.getString('There is a new nightly version available') + '<br/><a class="action-open-url-external-browser" href="https://icestudio.io" target="_blank">Click here to download it.</a></div></div>';
 
               }
               alertify.notify(msg, 'notify', 30);
@@ -1200,8 +1314,7 @@ angular.module('icestudio')
 
             }
           }
-        }
-        );
+        });
       }
     };
     this.ifDevelopmentMode = function () {
@@ -1210,6 +1323,42 @@ angular.module('icestudio')
         _package.development.mode === true
       ) {
         utils.openDevToolsUI();
+      }
+
+    };
+
+    this.initializePluginManager = function (callbackOnRun) {
+      if (typeof ICEpm !== 'undefined') {
+        console.log('ENV', common);
+        ICEpm.setPluginDir(common.DEFAULT_PLUGIN_DIR, function () {
+
+          let plist = ICEpm.getAll();
+          let uri = ICEpm.getBaseUri();
+          let t = $('.icm-icon-list');
+          t.empty();
+          let html = '';
+          for (let prop in plist) {
+            if (typeof plist[prop].manifest.type === 'undefined' ||
+              plist[prop].manifest.type === 'app') {
+              html += '<a href="#" data-action="icm-plugin-run" data-plugin="' + prop + '"><img class="icm-plugin-icon" src="' + uri + '/' + prop + '/' + plist[prop].manifest.icon + '"><span>' + plist[prop].manifest.name + '</span></a>';
+            }
+          }
+          t.append(html);
+
+          $('[data-action="icm-plugin-run"]').off();
+          $('[data-action="icm-plugin-run"]').on('click', function (e) {
+            e.preventDefault();
+            let ptarget = $(this).data('plugin');
+            if (typeof callbackOnRun !== 'undefined') {
+              callbackOnRun();
+            }
+            ICEpm.run(ptarget);
+            return false;
+          });
+
+        });
+
+
       }
 
     };

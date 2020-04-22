@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -101,7 +101,7 @@ msgstr "Auteur"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "Vérification automatique des nouvelles versions"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -116,6 +116,9 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"Parce que Icestudio est en développement actif, il est important de vérifier "
+"que votre Icestudio dans la dernière version. Maintenant, nous vous "
+"prévenons!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -205,11 +208,11 @@ msgstr "Chinois"
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "Choisir une couleur"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Outils Chrome Dev"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -235,7 +238,7 @@ msgstr "Horloge non autorisée pour les bus de données"
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "Cloner"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -307,12 +310,12 @@ msgstr "Copier"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "Copier-coller OU Copier-cloner les blocs"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "Corail"
 
 #: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
@@ -329,12 +332,12 @@ msgstr "Tchèque"
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "Vert foncé"
 
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "Orange foncé"
 
 #: app/views/menu.html:161
 msgid "Datasheet"
@@ -347,12 +350,12 @@ msgstr "Décimal"
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "Rose profond"
 
 #: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "Bleu ciel profond"
 
 #: app/views/menu.html:213
 msgid "Default"
@@ -393,7 +396,7 @@ msgstr "Documentation"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "Ne pas afficher"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -499,7 +502,7 @@ msgstr "Exporter"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "Exporter le sous-module"
 
 #: app/views/menu.html:135
 msgid "External collections"
@@ -564,7 +567,7 @@ msgstr "Français"
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "Fuchsia"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -572,7 +575,7 @@ msgstr "Galicien"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "Blocs génériques"
 
 #: app/views/languages.html:28
 msgid "German"
@@ -581,16 +584,16 @@ msgstr "Allemand"
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "Or"
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Grec"
 
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "Jaune-vert"
 
 #: app/views/menu.html:332
 msgid "Help"
@@ -602,13 +605,15 @@ msgstr "Hexadécimal"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
-msgstr ""
+msgstr "Icestudio Inception"
 
 #: app/views/version.html:21
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
+"Si vous cloner des blocs, il est très important de changer les informations "
+"des blocs pour identifier les nouvelles caractéristiques des blocs."
 
 #: app/views/version.html:25
 msgid ""
@@ -616,12 +621,18 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"Si vous développer une collection, vous pouvez faire des blocs qui "
+"fonctionnent comme des modèles. Quand vous insérez un bloc générique d'une "
+"collection, il fonctionne comme un clone qui peut être modifié rapidement "
+"sans faire une opération copier-cloner."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
+"Si vous avez des pins d'entrée/sortie vides, c'est qu'il n'y a pas "
+"d'équivalent pour cette carte"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -637,11 +648,14 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"En d'autres termes, si vous copiez-clonez un bloc, vous le rendez "
+"indépendant du type de bloc original et les modifications n'affecteront que "
+"le nouveau type de bloc"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "Rouge indien"
 
 #: app/views/menu.html:392
 msgid "Information"
@@ -653,7 +667,7 @@ msgstr "Entrée"
 
 #: app/views/menu.html:380
 msgid "Input label"
-msgstr ""
+msgstr "Label d'entrée"
 
 #: app/views/menu.html:254
 msgid "Install"
@@ -716,11 +730,11 @@ msgstr "Des ports <b>USB 2.0</b> sont recommandés"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italien"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "Labels"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -729,7 +743,7 @@ msgstr "Langue"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "Vert mer clair"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -747,7 +761,7 @@ msgstr "Taille maximale du bus : 96 bits"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "Rouge-violet moyen"
 
 #: app/views/menu.html:386
 msgid "Memory"
@@ -760,7 +774,7 @@ msgstr "Nom"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "Bleu marine"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -778,7 +792,7 @@ msgstr "OK"
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "Vert olive"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -791,7 +805,7 @@ msgstr "Ouvrir SVG"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "Rouge-orangé"
 
 #: app/scripts/services/project.js:527
 msgid "Original file {{file}} does not exist"
@@ -803,7 +817,7 @@ msgstr "Sortie"
 
 #: app/views/menu.html:377
 msgid "Output label"
-msgstr ""
+msgstr "Label de sortie"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -852,7 +866,7 @@ msgstr "Lecture seule"
 #: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
-msgstr ""
+msgstr "Rouge"
 
 #: app/views/menu.html:97
 msgid "Redo"
@@ -889,11 +903,11 @@ msgstr "Réinitialiser avec les paramètres par défaut"
 #: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "Bleu royal"
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Russe"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -909,7 +923,7 @@ msgstr "Sauvegarder sous"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "Sauvegarder le sous-module"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -930,7 +944,7 @@ msgstr "Montrer l'horloge"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "Bleu ardoise"
 
 #: app/views/menu.html:348
 msgid "Source code"
@@ -943,7 +957,7 @@ msgstr "Espagnol"
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "Vert printanier"
 
 #: app/scripts/controllers/menu.js:745
 msgid "Start build"
@@ -960,11 +974,11 @@ msgstr "Début de la vérification"
 #: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "Bleu métallisé"
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "Edition du sous-module"
 
 #: app/views/version.html:16
 msgid ""
@@ -972,6 +986,9 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"L'édition du sous-module affecte tous les blocs du même type. Par exemple, "
+"si vous avez six blocs ET, si vous modifiez l'un d'entre eux, vous les "
+"modifiez tous."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1014,20 +1031,24 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
+"L'utilisation de labels permet de clarifier les plus gros designs, en "
+"connectant des blocs sans fils."
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
 msgstr ""
+"Il y a plusieurs mises à jour dans cette version que vous devriez apprécier, "
+"dont notamment :"
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "Il y a une nouvelle version nightly disponible"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "Il y a une nouvelle version stable disponible"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1040,6 +1061,7 @@ msgstr ""
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
 msgstr ""
+"Il y a une option très performante pour gérer les designs de grande taille."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1050,21 +1072,27 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
+"Cette version améliore les capacités d'édition, en incluant la possibilité "
+"d'éditer le contenu des blocs."
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
 msgstr ""
+"Pour faire ça, vous devez juste rajouter le préfixe Generic- à l'identifiant "
+"de bloc"
 
 #: app/scripts/services/graph.js:410
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"Pour rentrer en \"mode édition\" du bloc de niveau inférieur, vous devez "
+"terminer le \"mode édition\" courant et verrouiller le cadenas."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr ""
+msgstr "Pour explorer le design, vous devez fermer le \"mode édition\"."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1072,6 +1100,9 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"Pour sauvegarder votre design, vous devez verrouiller le cadenas et aller au "
+"design de plus haut-niveau.<br/><br/>Si vous voulez exporter ce sous-module "
+"dans un fichier, exécutez la commande \"Sauvegarder sous\"."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1102,7 +1133,7 @@ msgstr "Outils"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "Turquoise"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1152,7 +1183,7 @@ msgstr "Version"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "Notes de version"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1169,6 +1200,8 @@ msgstr "Avertissements détectés dans le design"
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
 msgstr ""
+"Bienvenue dans Inception, la version d'Icestudio focalisée sur les sous-"
+"modules."
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
@@ -1202,7 +1235,7 @@ msgstr "Mauvais nom d'hôte distant {{name}}"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "Jaune"
 
 #: app/scripts/controllers/menu.js:235
 msgid ""
@@ -1210,6 +1243,10 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"Vous êtes en train d'éditer un sous-module, si vous le sauvegardez, vous "
+"sauvegardez uniquement le sous-module (dans ce cas, \"sauvegarder sous\" "
+"fonctionne comme la commande \"exporter le sous-module\"). Voulez-vous "
+"continuer ?"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1221,12 +1258,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
+"Vous pouvez uniquement construire sur le design de plus haut-niveau. Dans "
+"les sous-modules, vous pouvez uniquement <strong>Vérifier</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
+"Vous pouvez uniquement charger votre design au design de plus haut-niveau. "
+"Dans les sous-modules, vous pouvez uniquement <strong>Vérifier</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"

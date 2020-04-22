@@ -33,8 +33,18 @@
       "iCEBreaker-bitsy",
       "upduino",
       "upduino2",
+      "upduino21",
       "fpga101",
       "iCE40-UP5K"
+    ]
+  },
+  {
+    "type": "ECP5",
+    "boards": [
+      "ulx3s-12f",
+      "ulx3s-25f",
+      "ulx3s-45f",
+      "ulx3s-85f"
     ]
   }
 ]

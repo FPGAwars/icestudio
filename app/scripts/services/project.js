@@ -113,6 +113,7 @@ angular.module('icestudio')
         }
 
         var ret = graph.loadDesign(project.design, opt, function () {
+
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -143,6 +144,7 @@ angular.module('icestudio')
         case 'icezum alhambra': case 'icezum':
           switch (newBoard.toLowerCase()) {
             case 'alhambra-ii': pboard = 'icezum'; break;
+            default: pboard='icezum';
           }
           break;
       }
@@ -423,8 +425,9 @@ angular.module('icestudio')
             return;
           }
           var name = utils.basename(filepath);
+          
           var block = _safeLoad(data, name);
-          if (block) {
+           if (block) {
             var origPath = utils.dirname(filepath);
             var destPath = utils.dirname(self.path);
             // 1. Parse and find included files

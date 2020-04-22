@@ -119,8 +119,8 @@ angular.module('icestudio')
 
             paper = new joint.dia.Paper({
                 el: element,
-                width: 2000,
-                height: 1000,
+                width: 3000,
+                height: 3000,
                 model: graph,
                 gridSize: gridsize,
                 clickThreshold: 6,
@@ -130,7 +130,7 @@ angular.module('icestudio')
                 //markAvailable: true,
                 getState: this.getState,
                 defaultLink: new joint.shapes.ice.Wire(),
-                // guard: function(evt, view) {
+                // guard: function(evt, view) vg
                 //   // FALSE means the event isn't guarded.
                 //   return false;
                 // },
@@ -254,7 +254,7 @@ angular.module('icestudio')
 
             var targetElement = element[0];
 
-            this.panAndZoom = svgPanZoom(targetElement.childNodes[0],
+            this.panAndZoom = svgPanZoom(targetElement.childNodes[2],
                 {
                     fit: false,
                     center: false,
@@ -265,9 +265,7 @@ angular.module('icestudio')
                     minZoom: ZOOM_MIN,
                     maxZoom: ZOOM_MAX,
                     eventsListenerElement: targetElement,
-                    /*beforeZoom: function(oldzoom, newzoom) {
-        },*/
-                    onZoom: function (scale) {
+                   onZoom: function (scale) {
                         state.zoom = scale;
                         // Close expanded combo
                         if (document.activeElement.className === 'select2-search__field') {
@@ -275,9 +273,7 @@ angular.module('icestudio')
                         }
                         updateCellBoxes();
                     },
-                    /*beforePan: function(oldpan, newpan) {
-        },*/
-                    onPan: function (newPan) {
+                   onPan: function (newPan) {
                         state.pan = newPan;
                         graph.trigger('state', state);
                         updateCellBoxes();
@@ -287,16 +283,20 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                _.each(cells, function (cell) {
-                    if (!cell.isLink()) {
-                        cell.attributes.state = state;
-                        var elementView = paper.findViewByModel(cell);
+                
+                for (var i = 0, len = cells.length; i < len; i++) {
+ 
+                    if (!cells[i].isLink()) {
+                        cells[i].attributes.state = state;
+                        var elementView = paper.findViewByModel(cells[i]);
                         // Pan blocks
                         elementView.updateBox();
                         // Pan selection boxes
                         selectionView.updateBox(elementView.model);
+
                     }
-                });
+                }
+               
             }
             // Events
 
@@ -307,6 +307,9 @@ angular.module('icestudio')
                     shiftPressed = true;
                 }
             });
+
+
+
             $(document).on('keyup', function (evt) {
                 if (!utils.hasShift(evt)) {
                     shiftPressed = false;
@@ -366,6 +369,7 @@ angular.module('icestudio')
 
             paper.on('cell:pointerclick', function (cellView, evt, x, y) {
                 //M+
+
                 if (!checkInsideViewBox(cellView, x, y)) {
                     // Out of the view box
                     return;
@@ -384,6 +388,7 @@ angular.module('icestudio')
                         }
                     }
                 }
+
             });
 
             paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
@@ -394,14 +399,17 @@ angular.module('icestudio')
                 }
                 selectionView.cancelSelection();
                 if (!shiftPressed) {
+
                     // Allow dblClick if Shift is not pressed
                     var type = cellView.model.get('blockType');
                     var blockId = cellView.model.get('id');
+
 
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
                         if (paper.options.enabled) {
                             blocks.editBasic(type, cellView, addCell);
+
                         }
                     }
                     else if (common.allDependencies[type]) {
@@ -429,6 +437,7 @@ angular.module('icestudio')
                         }, 100);
                     }
                 }
+
             });
 
             function checkInsideViewBox(view, x, y) {
@@ -725,27 +734,29 @@ angular.module('icestudio')
             graph.trigger('state', state);
 
         };
-
+    
         function updateWiresOnObstacles() {
             var cells = graph.getCells();
-            _.each(cells, function (cell) {
-                if (cell.isLink()) {
-                    paper.findViewByModel(cell).update();
+
+            //_.each(cells, function (cell) {
+            for(var i=0, n=cells.length;i<n;i++){
+                if (cells[i].isLink()) {
+                    paper.findViewByModel(cells[i]).update();
                 }
-            });
+            }
         }
 
         this.setBoardRules = function (rules) {
             var cells = graph.getCells();
             profile.set('boardRules', rules);
 
-            _.each(cells, function (cell) {
-                if (!cell.isLink()) {
-                    cell.attributes.rules = rules;
-                    var cellView = paper.findViewByModel(cell);
+            for(var i=0, n=cells.length;i<n;i++){
+                if (!cells[i].isLink()) {
+                    cells[i].attributes.rules = rules;
+                    var cellView = paper.findViewByModel(cells[i]);
                     cellView.updateBox();
                 }
-            });
+            }
         };
 
         this.undo = function () {
@@ -772,23 +783,100 @@ angular.module('icestudio')
 
         this.appEnable = function (value) {
             paper.options.enabled = value;
+            var ael, i;
             if (value) {
+
+
+                /* In the new javascript context of nwjs, angular can't change classes over the dom in this way,
+                for this we need to update directly , but for the moment we maintain angular too to maintain model synced */
+
                 angular.element('#menu').removeClass('is-disabled');
                 angular.element('.paper').removeClass('looks-disabled');
                 angular.element('.board-container').removeClass('looks-disabled');
                 angular.element('.banner').addClass('hidden');
+
+                ael = document.getElementById('menu');
+                if (typeof ael !== 'undefined') {
+                    ael.classList.remove('is-disabled');
+                }
+                ael = document.getElementsByClassName('paper');
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.remove('looks-disabled');
+                    }
+                }
+
+                ael = document.getElementsByClassName('board-container');
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.remove('looks-disabled');
+                    }
+                }
+
+                ael = document.getElementsByClassName('banner');
+
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.add('hidden');
+                    }
+                }
                 if (!common.isEditingSubmodule) {
                     angular.element('.banner-submodule').addClass('hidden');
+                    ael = document.getElementsByClassName('banner-submodule');
+                    if (typeof ael !== 'undefined' && ael.length > 0) {
+                        for (i = 0; i < ael.length; i++) {
+                            ael[i].classList.add('hidden');
+                        }
+                    }
                 }
 
             }
             else {
+
+
                 angular.element('#menu').addClass('is-disabled');
                 angular.element('.paper').addClass('looks-disabled');
                 angular.element('.board-container').addClass('looks-disabled');
                 angular.element('.banner').removeClass('hidden');
                 angular.element('.banner-submodule').removeClass('hidden');
+
+                ael = document.getElementById('menu');
+
+                if (typeof ael !== 'undefined') {
+                    ael.classList.add('is-disabled');
+                }
+
+                ael = document.getElementsByClassName('paper');
+
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.add('looks-disabled');
+                    }
+                }
+
+                ael = document.getElementsByClassName('board-container');
+
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.add('looks-disabled');
+                    }
+                }
+                ael = document.getElementsByClassName('banner');
+
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.remove('hidden');
+                    }
+                }
+                ael = document.getElementsByClassName('banner-submodule');
+
+                if (typeof ael !== 'undefined' && ael.length > 0) {
+                    for (i = 0; i < ael.length; i++) {
+                        ael[i].classList.remove('hidden');
+                    }
+                }
             }
+
             var cells = graph.getCells();
             _.each(cells, function (cell) {
                 var cellView = paper.findViewByModel(cell.id);
@@ -1207,7 +1295,6 @@ angular.module('icestudio')
                 opt = opt || {};
 
                 $('body').addClass('waiting');
-
                 setTimeout(function () {
 
                     commandManager.stopListening();
@@ -1347,12 +1434,24 @@ angular.module('icestudio')
                         //   through hash tables with assigned pins previously
                         //   selected by icestudio developers
                         var replaced = false;
-
                         for (var i in pins) {
                             replaced = false;
                             if (typeof opt.designPinout !== 'undefined') {
                                 for (var opin = 0; opin < opt.designPinout.length; opin++) {
                                     if (String(opt.designPinout[opin].name) === String(pins[i].name)) {
+
+                                        replaced = true;
+                                    }else{
+                                        let prefix= String(pins[i].name).replace(/[0-9]/g, '');
+                                        if(String(opt.designPinout[opin].name) === prefix){
+
+                                            replaced=true;
+                                        }
+
+
+                                    }
+
+                                    if(replaced===true){
                                         pins[i].name = opt.designPinout[opin].name;
                                         pins[i].value = opt.designPinout[opin].value;
                                         opin = opt.designPinout.length;

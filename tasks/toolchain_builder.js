@@ -24,7 +24,7 @@ function ToolchainBuilder(options) {
     buildDir: './build',
     cacheDir: './cache',
     extraPackages: [],
-    platforms: ['linux32', 'linux64', 'win32', 'win64', 'osx32', 'osx64'],
+    platforms: ['linux32', 'linux64', 'win32', 'win64',  'osx64'],
   };
 
   // Assign options
@@ -34,7 +34,7 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-  var venvRelease = 'virtualenv-15.2.0';
+  var venvRelease = 'virtualenv-16.7.10';
 
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
@@ -70,7 +70,7 @@ ToolchainBuilder.prototype.build = function () {
 ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
   return new Promise(function(resolve, reject) {
     if (getPythonExecutable()) { resolve(); }
-    else { reject('Python 2.7 is not available'); }
+    else { reject('Python 3.5/3.6/3.7/3.8 is not available'); }
   });
 };
 
@@ -191,7 +191,7 @@ ToolchainBuilder.prototype.downloadApioPackages = function () {
   self.emit('log', '> Download apio packages');
   return new Promise(function(resolve, reject) {
     function command(dest, platform) {
-      var packages = ['system', 'icestorm', 'iverilog', (platform.startsWith('windows') ? 'drivers' : ''), 'scons'];
+      var packages = ['system', 'ice40', 'yosys', 'ecp5', 'verilator', 'iverilog', (platform.startsWith('windows') ? 'drivers' : ''), 'scons'];
       return [ (process.platform === 'win32' ? 'set' : 'export'),
       'APIO_HOME_DIR=' + dest + (process.platform === 'win32' ? '&' : ';'),
       self.options.venvApio, 'install', '--platform', platform ].concat(packages);
@@ -277,16 +277,42 @@ function getPythonExecutable() {
     const possibleExecutables = [];
 
     if (process.platform === 'win32') {
-      possibleExecutables.push('python.exe');
-      possibleExecutables.push('C:\\Python27\\python.exe');
-    } else {
-      possibleExecutables.push('python2.7');
-      possibleExecutables.push('python');
-    }
+          possibleExecutables.push('C:\\Python38\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
+          possibleExecutables.push('C:\\Python36\\python.exe');
+          possibleExecutables.push('C:\\Python35\\python.exe');
+          possibleExecutables.push('python.exe');
+        } else {
+          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
+          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
+
+          possibleExecutables.push('/usr/bin/python3.8');
+          possibleExecutables.push('/usr/bin/python3.7');
+          possibleExecutables.push('/usr/bin/python3.6');
+          possibleExecutables.push('/usr/bin/python3.5');
+          possibleExecutables.push('/usr/bin/python3');
+          possibleExecutables.push('/usr/bin/python');
+
+          possibleExecutables.push('/usr/local/bin/python3.8');
+          possibleExecutables.push('/usr/local/bin/python3.7');
+          possibleExecutables.push('/usr/local/bin/python3.6');
+          possibleExecutables.push('/usr/local/bin/python3.5');
+          possibleExecutables.push('/usr/local/bin/python3');
+          possibleExecutables.push('/usr/local/bin/python');
+ 
+          possibleExecutables.push('python3.8');
+          possibleExecutables.push('python3.7');
+          possibleExecutables.push('python3.6');
+          possibleExecutables.push('python3.5');
+          possibleExecutables.push('python3');
+          possibleExecutables.push('python');
+
+        }
+
 
     for (var i in possibleExecutables) {
       var executable = possibleExecutables[i];
-      if (isPython2(executable)) {
+      if (isPython3(executable)) {
         _pythonExecutableCached = executable;
         break;
       }
@@ -295,15 +321,18 @@ function getPythonExecutable() {
   return _pythonExecutableCached;
 }
 
-function isPython2(executable) {
-  const args = ['-c', 'import sys; print \'.\'.join(str(v) for v in sys.version_info[:2])'];
+ function isPython3(executable) {    
+  const args = ['-V'];
   try {
-    const result = childProcess.spawnSync(executable, args);
-    return 0 === result.status && result.stdout.toString().startsWith('2.7');
-  } catch(e) {
-    return false;
-  }
-}
+        const result = childProcess.spawnSync(executable, args);
+        return (result !== false && result !== null &&
+          (result.stdout.toString().indexOf('3.5') >= 0 || result.stdout.toString().indexOf('3.6') >= 0 ||
+            result.stdout.toString().indexOf('3.7') >= 0 || result.stdout.toString().indexOf('3.8') >= 0) );
+      } catch (e) {
+        return false;
+      }
+    }
+
 
 function getRealPlatform(platform) {
   switch(platform) {

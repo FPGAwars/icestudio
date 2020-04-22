@@ -202,6 +202,10 @@
                    <li ng-repeat="board in common.boards">
                      <menuboard type="'UP5K'" board="board"></menuboard>
                    </li>
+                   <li><a><b>ECP5</b></a></li>
+                   <li ng-repeat="board in common.boards">
+                     <menuboard type="'ECP5'" board="board"></menuboard>
+                   </li>
                  </ul>
               </li>
               <li class="dropdown-submenu" uib-dropdown>
@@ -320,10 +324,6 @@
                   </li>
                 </ul>
               </li>
-               <li class="divider"></li>
-              <li>
-                <a href ng-click="showChromeDevTools()">{{ 'Chrome Dev Tools' | translate }}</a>
-              </li>
 
             </ul>
           </li>
@@ -332,7 +332,7 @@
             <a href uib-dropdown-toggle>{{ 'Help' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu>
               <li disabled>
-                <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html')">{{ 'View license' | translate }}</a>
+                <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',$event)">{{ 'View license' | translate }}</a>
               </li>
               <li>
                 <a href ng-click="openVersionInfoWindow()">{{ 'Version notes' | translate }}</a>
@@ -342,14 +342,14 @@
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="openUrl('http://icestudio.readthedocs.io')">{{ 'Documentation' | translate }}</a>
+                <a href ng-click="openUrl('http://icestudio.readthedocs.io',$event)">{{ 'Documentation' | translate }}</a>
               </li>
               <li>
-                <a href ng-click="openUrl('https://github.com/FPGAwars/icestudio')">{{ 'Source code' | translate }}</a>
+                <a href ng-click="openUrl('https://github.com/FPGAwars/icestudio',$event)">{{ 'Source code' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li>
-                <a href ng-click="openUrl('https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre')">{{ 'Community forum' | translate }}</a>
+                <a href ng-click="openUrl('https://groups.google.com/forum/#!forum/fpga-wars-explorando-el-lado-libre',$event)">{{ 'Community forum' | translate }}</a>
               </li>
               <li class="divider"></li>
               <li>
