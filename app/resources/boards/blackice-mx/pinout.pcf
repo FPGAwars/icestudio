@@ -1,21 +1,4 @@
-###############################################################################
-#                                                                             #
-# Copyright 2017 myStorm Copyright and related                                #
-# rights are licensed under the Solderpad Hardware License, Version 0.51      #
-# (the “License”); you may not use this file except in compliance with        #
-# the License. You may obtain a copy of the License at                        #
-# http://solderpad.org/licenses/SHL-0.51. Unless required by applicable       #
-# law or agreed to in writing, software, hardware and materials               #
-# distributed under this License is distributed on an “AS IS” BASIS,          #
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or             #
-# implied. See the License for the specific language governing                #
-# permissions and limitations under the License.                              #
-#                                                                             #
-###############################################################################
-
-# User Constraint File for myStorm BlackIce Mx   - Alan Wood 30-04-2019
-
-# HDMI
+# - HDMI
 set_io TD2P 48 # B80 TD2+
 set_io TD2M 47 # B79 TD2-
 set_io TD1P 45 # B73 TD1+
@@ -25,79 +8,79 @@ set_io TD0M 42 # B64 TD0-
 set_io CKP 41 # B63 CK+
 set_io CKM 39 # B61 CK-
 
-#pmod 1
-set_io PMOD[0] 38 # P8, B57
-set_io PMOD[1] 37 # P9, B56
-set_io PMOD[2] 32 # P12, 24b
-set_io PMOD[3] 31 # P13, 24a
+# -pmod 1
+set_io --warn-no-port PMOD[0] 38 # - P8, B57
+set_io --warn-no-port PMOD[1] 37 # - P9, B56
+set_io --warn-no-port PMOD[2] 32 # - P12, 24b
+set_io --warn-no-port PMOD[3] 31 # - P13, 24a
 
-#pmod 2
-set_io PMOD[4] 34 # P10, 25b
-set_io PMOD[5] 33 # P11, 25a
-set_io PMOD[6] 29 # P14, 23b
-set_io PMOD[7] 28 # P15, 23a
+# -pmod 2
+set_io --warn-no-port PMOD[4] 34 # - P10, 25b
+set_io --warn-no-port PMOD[5] 33 # - P11, 25a
+set_io --warn-no-port PMOD[6] 29 # - P14, 23b
+set_io --warn-no-port PMOD[7] 28 # - P15, 23a
 
-#pmod 3
-set_io PMOD[8] 18 # P24, 12b
-set_io PMOD[9] 17 # P25, 12a
-set_io PMOD[10] 12 # P28, 8b
-set_io PMOD[11] 11 # P29 8a
+# -pmod 3
+set_io --warn-no-port PMOD[8] 18 # - P24, 12b
+set_io --warn-no-port PMOD[9] 17 # - P25, 12a
+set_io --warn-no-port PMOD[10] 12 # - P28, 8b
+set_io --warn-no-port PMOD[11] 11 # - P29 8a
 
-#pmod 4
-set_io PMOD[12] 16 # P26, 10b
-set_io PMOD[13] 15 # P27 10a
-set_io PMOD[14] 10 # P30, 5b
-set_io PMOD[15] 9 # P31, 5a
+# -pmod 4
+set_io --warn-no-port PMOD[12] 16 # - P26, 10b
+set_io --warn-no-port PMOD[13] 15 # - P27 10a
+set_io --warn-no-port PMOD[14] 10 # - P30, 5b
+set_io --warn-no-port PMOD[15] 9 # - P31, 5a
 
-#pmod 5
-set_io PMOD[16] 136 # P45, T214
-set_io PMOD[17] 137 # P44, T215
-set_io PMOD[18] 134 # P47, T212
-set_io PMOD[19] 135 # p46, T213
+# -pmod 5
+set_io --warn-no-port PMOD[16] 136 # - P45, T214
+set_io --warn-no-port PMOD[17] 137 # - P44, T215
+set_io --warn-no-port PMOD[18] 134 # - P47, T212
+set_io --warn-no-port PMOD[19] 135 # - P46, T213
 
-#pmod 6
-set_io PMOD[20] 141 # P41, T219
-set_io PMOD[21] 142 # P40, T220
-set_io PMOD[22] 138 # P43, T216
-set_io PMOD[23] 139 # P42, T217
+# -pmod 6
+set_io --warn-no-port PMOD[20] 141 # - P41, T219
+set_io --warn-no-port PMOD[21] 142 # - P40, T220
+set_io --warn-no-port PMOD[22] 138 # - P43, T216
+set_io --warn-no-port PMOD[23] 139 # - P42, T217
 
-#pmod 7
-set_io PMOD[24] 1 # P37, 2a
-set_io PMOD[25] 2 # P36, 2b
-set_io PMOD[26] 7 # P33, 4a
-set_io PMOD[27] 8 # P32, 4b
+# -pmod 7
+set_io --warn-no-port PMOD[24] 1 # - P37, 2a
+set_io --warn-no-port PMOD[25] 2 # - P36, 2b
+set_io --warn-no-port PMOD[26] 7 # - P33, 4a
+set_io --warn-no-port PMOD[27] 8 # - P32, 4b
 
-#pmod 8
-set_io PMOD[28] 143 # P39, T221
-set_io PMOD[29] 144 # P38, T222
-set_io PMOD[30] 3 # P35, 3a
-set_io PMOD[31] 4 # P34, 3b
+# -pmod 8
+set_io --warn-no-port PMOD[28] 143 # - P39, T221
+set_io --warn-no-port PMOD[29] 144 # - P38, T222
+set_io --warn-no-port PMOD[30] 3 # - P35, 3a
+set_io --warn-no-port PMOD[31] 4 # - P34, 3b
 
-#pmod 9
-set_io PMOD[32] 106 # P55, SD1
-set_io PMOD[33] 105 # P54, SD0
-set_io PMOD[34] 101 # P51, SD3
-set_io PMOD[35] 99 # p50, SD2
+# -pmod 9
+set_io --warn-no-port PMOD[32] 106 # - P55, SD1
+set_io --warn-no-port PMOD[33] 105 # - P54, SD0
+set_io --warn-no-port PMOD[34] 101 # - P51, SD3
+set_io --warn-no-port PMOD[35] 99 # - P50, SD2
 
-#pmod 10
-set_io PMOD[36] 104 # P53, SDCLK
-set_io PMOD[37] 102 # P52, SDCMD
-set_io PMOD[38] 49 # P49, L0, S2, Blue Led
-set_io PMOD[39] 52 # p48, L1, S1, Green led
+# -pmod 10
+set_io --warn-no-port PMOD[36] 104 # - P53, SDCLK
+set_io --warn-no-port PMOD[37] 102 # - P52, SDCMD
+set_io --warn-no-port PMOD[38] 49 # - P49, L0, S2, Blue Led
+set_io --warn-no-port PMOD[39] 52 # - P48, L1, S1, Green led
 
-#pmod 11
-set_io PMOD[40] 19 # P23, 13a
-set_io PMOD[41] 20 # P22, 13b/GBin7
-set_io PMOD[42] 23 # P19, 17a
-set_io PMOD[43] 24 # P18, 17b
+# -pmod 11
+set_io --warn-no-port PMOD[40] 19 # - P23, 13a
+set_io --warn-no-port PMOD[41] 20 # - P22, 13b/GBin7
+set_io --warn-no-port PMOD[42] 23 # - P19, 17a
+set_io --warn-no-port PMOD[43] 24 # - P18, 17b
 
-#pmod 12
-set_io PMOD[44] 21 # 14a/GBin6
-set_io PMOD[45] 22 # 14b
-set_io PMOD[46] 25 # 18a
-set_io PMOD[47] 26 # 18b
+# -pmod 12
+set_io --warn-no-port PMOD[44] 21 # 14a/GBin6
+set_io --warn-no-port PMOD[45] 22 # 14b
+set_io --warn-no-port PMOD[46] 25 # 18a
+set_io --warn-no-port PMOD[47] 26 # 18b
 
-# SRAM
+# - SRAM
 set_io A[0] 117
 set_io A[1] 119
 set_io A[2] 121
@@ -137,13 +120,13 @@ set_io DQ[13] 96
 set_io DQ[14] 97
 set_io DQ[15] 98
 
-# Dual SPI
+# -Dual SPI
 set_io io0 73
 set_io io1 74
 set_io dcs 75
 set_io dsck 76
 
-# QSpi
+# -QSpi
 set_io hold 63
 set_io wp 64
 set_io mosi 67
@@ -151,13 +134,16 @@ set_io miso 68
 set_io sck 70
 set_io ss 71
 
-# Uart
+# -Uart
 set_io tx 61
 set_io rx 62
 
+# -Led, buttons and CS
+set_io button2 49 # B81/GBin5 L0 Blue led / S2 button
+set_io button1 52 # B82/GBin4 L1 Green led / S1 button
 
 set_io yellow_led 55
 set_io red_led 56
 
-# Onboard 25Mhz oscillator
+# -Onboard 25Mhz oscillator
 set_io clk 60

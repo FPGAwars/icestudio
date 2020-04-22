@@ -55,5 +55,7 @@
   "darwinDependencies": {
     "grunt-appdmg": "^1.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "grunt-appdmg": "^1.0.0"
+  }
 }
