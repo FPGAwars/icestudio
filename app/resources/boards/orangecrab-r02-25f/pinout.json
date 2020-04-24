@@ -1,1 +1,1 @@
-[]
+[{"type": "input", "name": "clk", "value": "A9"}, {"type": "output", "name": "LED1", "value": "K4"}, {"type": "output", "name": "LED2", "value": "M3"}, {"type": "output", "name": "LED3", "value": "J3"}]
