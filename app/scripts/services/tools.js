@@ -575,6 +575,11 @@ angular.module('icestudio')
                   if (matchError = re.exec(stdoutError[0])) {
                     error = matchError[2];
                   }
+                  // ERROR: Cell xxx cannot be bound to ..... since it is already bound
+                  re = /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g
+                  if (matchError = re.exec(stdoutError[0])) {
+                    error = "Duplicated pins"
+                  }
                   resultAlert = alertify.error(error, 30);
                 } else {
                   resultAlert = alertify.error(stdout, 30);
