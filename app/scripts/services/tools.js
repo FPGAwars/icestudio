@@ -569,7 +569,7 @@ angular.module('icestudio')
                 // });
                 if (stdoutError.length > 0) {
                   // Show first error
-                  var error = '';
+                  var error = 'There are errors in the Design...';
                   // hardware.blif:#: fatal error: ...
                   re = /hardware\.blif:([0-9]+):\sfatal\serror:\s(.*)/g;
                   if (matchError = re.exec(stdoutError[0])) {
