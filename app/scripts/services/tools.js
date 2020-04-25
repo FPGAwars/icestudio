@@ -572,15 +572,16 @@ angular.module('icestudio')
                   var error = 'There are errors in the Design...';
                   // hardware.blif:#: fatal error: ...
                   re = /hardware\.blif:([0-9]+):\sfatal\serror:\s(.*)/g;
+                  // ERROR: Cell xxx cannot be bound to ..... since it is already bound
+                  var re2 = /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g;
                   if (matchError = re.exec(stdoutError[0])) {
                     error = matchError[2];
-                  }
-                  // ERROR: Cell xxx cannot be bound to ..... since it is already bound
-                  re = /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g
-                  if (matchError = re.exec(stdoutError[0])) {
+                  } else if (matchError = re2.exec(stdoutError[0])) {
                     error = "Duplicated pins"
+                  } else {
+                    error += "\n" + stdoutError[0];
                   }
-                  resultAlert = alertify.error(error, 30);
+                    resultAlert = alertify.error(error, 30);
                 } else {
                   resultAlert = alertify.error(stdout, 30);
                 }
