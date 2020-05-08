@@ -134,6 +134,8 @@ angular.module('icestudio')
       rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
       rules += '# Disable ModemManager for TinyFPGA BX\n';
       rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+      rules += '# Disable ModemManager for iceFUN\n';
+      rules += 'ATTRS{idVendor}==\\"04d8\\", ATTRS{idProduct}==\\"ffee\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
       configureLinuxDrivers([
         'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
       ].concat(reloadRules()), function () {

@@ -42,7 +42,8 @@
     "extras": [
       "blackiceprog",
       "tinyfpgab",
-      "tinyprog"
+      "tinyprog",
+      "icefunprog"
     ],
     "external": "",
     "branch": "develop"
