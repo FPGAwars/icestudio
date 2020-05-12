@@ -31,6 +31,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) | GPIO RPi |
 | [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | FTDI |
 | [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | FTDI |
+| [iceFUN](https://www.robot-electronics.co.uk/icefun.html) | Serial |
 
 #### LP8K
 
