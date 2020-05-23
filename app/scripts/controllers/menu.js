@@ -602,6 +602,9 @@ angular.module('icestudio')
     $scope.selectTheme = function (theme) {
       if (profile.get('uiTheme') !== theme) {
         profile.set('uiTheme', theme);
+      alertify.warning(gettextCatalog.getString('Icestudio needs to be restarted to switch the new UI Theme.'), 15);
+
+
       }
     };
 
