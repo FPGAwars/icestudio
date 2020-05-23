@@ -1,0 +1,132 @@
+.joint-paper-background {
+    background: #222;
+}
+
+.ice-bar {
+    color: white;
+    background: #444;
+    border-bottom: 1px solid #666;
+}
+
+.footer {
+    color: white;
+    background: #444;
+    border-top: 1px solid #666;
+}
+
+.dropdown a {
+    color: white !important;
+}
+
+.navbar-nav>.open>a {
+    background: #666 !important;
+}
+
+.dropdown-menu>li>a:hover {
+    background: #666 !important;
+}
+
+.dropdown:active {
+    background: #666;
+}
+
+.dropdown-menu {
+    background: #444 !important;
+}
+
+.dropdown-menu>li>a {
+    background: #444;
+}
+
+.dropdown-submenu {
+    background: #444;
+}
+
+.divider {
+    background: #999 !important;
+}
+
+.breadcrumbs-container {
+    padding-left: 5px;
+}
+
+.breadcrumb {
+    background-color: #222;
+}
+
+.breadcrumb>.active {
+    color: #333;
+}
+
+.breadcrumb span {
+    color: white;
+}
+
+.breadcrumb a {
+    color: skyblue;
+}
+
+.info {
+    color: white;
+    background: #444;
+}
+
+.read-only {
+    color: white;
+    background: #F00;
+}
+
+.back-button {
+    color: skyblue;
+    background: #444;
+}
+
+.edit-button {
+    background: #444;
+}
+
+.io-block .io-virtual-content {
+    background: #444;
+}
+
+.io-block .io-virtual-content .header label {
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.sk-cube-grid .sk-cube {
+    background-color: white;
+}
+
+.spinner-wrapper--bg {
+    background-color: #666;
+}
+
+.icm-menu-button::before {
+    background: linear-gradient(#999 20%, transparent 20%, transparent 40%, #999 40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
+}
+
+.ajs-dialog {
+    background: #444 !important;
+}
+
+.ajs-body {
+    color: white !important;
+}
+
+.ajs-footer {
+    background: #444 !important;
+}
+
+.ajs-button {
+    color: white !important;
+    background: #333 !important;
+    border-radius: 4px;
+}
+
+.ajs-input,
+.form-control {
+    color: white;
+    background: #333 !important;
+    border: 1px solid #666 !important;
+}
