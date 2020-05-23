@@ -71,6 +71,10 @@
     background: #444;
 }
 
+.info-block .info-render {
+  color: #6d573f;
+}
+
 .read-only {
     color: white;
     background: #F00;
