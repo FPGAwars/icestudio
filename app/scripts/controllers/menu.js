@@ -598,6 +598,14 @@ angular.module('icestudio')
       }
     };
 
+    // Theme support
+    $scope.selectTheme = function (theme) {
+      if (profile.get('uiTheme') !== theme) {
+        profile.set('uiTheme', theme);
+      }
+    };
+
+
 
     //-- View
 

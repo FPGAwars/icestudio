@@ -125,6 +125,12 @@
                     <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
                   </li>
                   <li class="divider"></li>
+                  <li class="dropdown-submenu" uib-dropdown>
+                    <a href uib-dropdown-toggle>{{ 'UI theme' | translate }}</a>
+                    <ul uib-dropdown-menu ng-include="'views/uithemes.html'"></ul>
+                  </li>
+                  <li class="divider"></li>
+                  
                   <li>
                     <a href ng-click="toggleBoardRules()">
                       {{ 'Board rules' | translate }}&ensp;

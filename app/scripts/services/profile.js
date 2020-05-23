@@ -12,6 +12,7 @@ angular.module('icestudio')
       'collection': '',
       'externalCollections': '',
       'language': '',
+      'uiTheme': 'light',
       'remoteHostname': '',
       'showFPGAResources': false,
       'displayVersionInfoWindow': 'yes'
@@ -31,6 +32,7 @@ angular.module('icestudio')
             'boardRules': data.boardRules !== false,
             'collection': data.collection || '',
             'language': data.language || '',
+            'uiTheme': data.uiTheme || 'light',
             'externalCollections': data.externalCollections || '',
             'remoteHostname': data.remoteHostname || '',
             'showFPGAResources': data.showFPGAResources || false,
@@ -38,6 +40,13 @@ angular.module('icestudio')
             'lastVersionReview':data.lastVersionReview || false
 
           };
+          //-- Custom Theme support
+          if(self.data.uiTheme !== 'light'){
+            let cssFile='<link  rel="stylesheet" href="styles/themes/dark/dark.css">';
+            let pHead = document.getElementsByTagName('head')[0];
+            pHead.innerHTML = pHead.innerHTML + cssFile;
+          }
+          //-- End Custom Theme support 
           if (common.DARWIN) {
             self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
           }

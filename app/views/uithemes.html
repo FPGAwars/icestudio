@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<li>
+  <a href ng-click="selectTheme('light')">
+    {{ 'Light (default)' | translate }}&ensp;
+    <span ng-show="profile.data.uiTheme == 'light'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectTheme('dark')">
+    {{ 'Dark' | translate }}&ensp;
+    <span ng-show="profile.data.uiTheme == 'dark'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
