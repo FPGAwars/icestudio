@@ -51,7 +51,7 @@
 }
 
 .breadcrumb {
-    background-color: #222;
+    background: #222;
 }
 
 .breadcrumb>.active {
@@ -72,7 +72,30 @@
 }
 
 .info-block .info-render {
-  color: #6d6d6d;
+    color: #6d6d6d;
+}
+
+.markdown-body {
+    color: white !important;
+}
+
+.markdown-body a {
+    color: cornflowerblue;
+}
+
+.markdown-body table th {
+    background: #444;
+    border-color: #777;
+}
+
+.markdown-body table td {
+    background: #333;
+    border-color: #777;
+}
+
+.markdown-body pre {
+    color: white;
+    background: #333;
 }
 
 .read-only {
