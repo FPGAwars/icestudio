@@ -20,6 +20,11 @@ function removeClass(el, className) {
     }
 }
 
+   let dummyUnplug = function() {
+
+
+    }
+
 
 var serialManager = function () {
 
@@ -33,7 +38,9 @@ var serialManager = function () {
     this.decoder = new TextDecoder();
     this.receiverUserF = false;
     this.registeredCallbacks = {};
-
+    this.version = function(){
+        return 'v1.0';
+    }
     this.refreshDevices = function (callback) {
         chrome.serial.getDevices(function (dev) {
             this.devices = dev;
@@ -41,12 +48,15 @@ var serialManager = function () {
 
         }.bind(this));
     }
-
     this.unplug = function (callback) {
+        
+        if(typeof callback === 'undefined') callback = dummyUnplug;
+        if(this.info.status !== false && this.info.dev !== -1 && this.info.conn !== false){
         chrome.serial.disconnect(this.info.conn.connectionId, callback);
         this.info.status = false;
         this.info.dev = -1;
         this.info.conn = false;
+        }
     }
 
     this.plug = function (id, userOptions, callback_onconnect, callback_onreceive) {
@@ -283,3 +293,13 @@ disconnectLe[0].addEventListener('click', function (e) {
     return false;
 
 }, false);
+
+
+
+function onClose(){
+
+    if(typeof sm !== 'undefined' && sm !== false && sm !== null){ 
+
+                sm.unplug();
+    }
+}

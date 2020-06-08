@@ -175,7 +175,7 @@ var IcePlugManager = function () {
             return false;
         }
 
-        nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
+         nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
 
             if (typeof plug.manifest.width !== 'undefined') {
                 newWin.width = plug.manifest.width;
@@ -184,8 +184,20 @@ var IcePlugManager = function () {
                 newWin.height = plug.manifest.height;
             }
             newWin.focus();
+            // Listen to main window's close event
+            newWin.on('close', function() {
+                if(typeof this.window.onClose !== 'undefined'){
+                    this.window.onClose();
+                }
+                
+                
+                this.close(true);
+
+          });
+
+            
         });
-    };
+                };
 
     this.init = function () {
         this.version();
