@@ -90,6 +90,7 @@ angular.module('icestudio')
                   commands = commands.concat('--verbose-pnr');
                 }
               }
+              console.log('APIO',commands);
               if (hostname) {
                 return executeRemote(commands, hostname);
               } else {
@@ -350,6 +351,7 @@ angular.module('icestudio')
         function _executeLocal() {
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
+          console.log('APIO COMMAND',command);
           if (typeof common.DEBUGMODE !== 'undefined' &&
             common.DEBUGMODE === 1) {
 

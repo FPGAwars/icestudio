@@ -486,6 +486,36 @@ angular.module('icestudio')
       graph.fitContent();
     };
 
+    $scope.setExternalPlugins = function () {
+      var externalPlugins = profile.get('externalPlugins');
+      var formSpecs = [{
+        type: 'text',
+        title: gettextCatalog.getString('Enter the external plugins path'),
+        value: externalPlugins || ''
+      }];
+      utils.renderForm(formSpecs, function (evt, values) {
+        var newExternalPlugins = values[0];
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        if (newExternalPlugins !== externalPlugins) {
+          if (newExternalPlugins === '' || nodeFs.existsSync(newExternalPlugins)) {
+            profile.set('externalPlugins', newExternalPlugins);
+            //collections.loadExternalCollections();
+            //collections.selectCollection(); // default
+            //utils.rootScopeSafeApply();
+            alertify.success(gettextCatalog.getString('External plugins updated'));
+          } else {
+            evt.cancel = true;
+            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', {
+              path: newExternalPlugins
+            }, 5));
+          }
+        }
+      });
+    };
+
+
     $scope.setExternalCollections = function () {
       var externalCollections = profile.get('externalCollections');
       var formSpecs = [{
@@ -935,7 +965,7 @@ angular.module('icestudio')
         '</li>',
         '</ul><br/>',
         '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio">contributors</a></p>',
-        '    <p style="margin-top:30px;text-align:right;"><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2019</p>',
+        '    <p style="margin-top:30px;text-align:right;"><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2020</p>',
         '  </div>',
         '</div>'
       ].join('\n');

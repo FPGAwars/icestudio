@@ -287,6 +287,7 @@ angular.module('icestudio')
         data: {},
         type: 'basic.inputLabel',
         position: { x: 0, y: 0 }
+
       };
       var formSpecs = [
         {
