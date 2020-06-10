@@ -579,14 +579,14 @@ angular.module('icestudio')
                   var re2 = /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g;
 
                   // ERROR: package does not have a pin named 'NULL' (on line 3)
-                  var re3 = /ERROR:\spackage\sdoes\snot\shave\sa\spin\snamed\s'NULL/g
+                  var re3 = /ERROR:\spackage\sdoes\snot\shave\sa\spin\snamed\s'NULL/g;
 
                   if (matchError = re.exec(stdoutError[0])) {
                     error = matchError[2];
                   } else if (matchError = re2.exec(stdoutError[0])) {
-                    error = "Duplicated pins"
+                    error = "Duplicated pins";
                   } else if (matchError = re3.exec(stdoutError[0])) {
-                    error = "Pin not assigned (NULL)"
+                    error = "Pin not assigned (NULL)";
                   } else {
                     error += "\n" + stdoutError[0];
                   }
