@@ -44,7 +44,7 @@ angular.module('icestudio')
           };
           //-- Custom Theme support
           if(self.data.uiTheme !== 'light'){
-            let cssFile='<link  rel="stylesheet" href="styles/themes/dark/dark.css">';
+            let cssFile='<link  rel="stylesheet" href="resources/uiThemes/dark/dark.css">';
             let pHead = document.getElementsByTagName('head')[0];
             pHead.innerHTML = pHead.innerHTML + cssFile;
           }

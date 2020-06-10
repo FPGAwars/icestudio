@@ -128,8 +128,8 @@
     nwjs: {
       options: {
         version: '0.35.5',
-        flavor: 'normal', // For stable branch
-      //  flavor: 'sdk',    // For development branch
+      //  flavor: 'normal', // For stable branch
+        flavor: 'sdk',    // For development branch
         zip: false,
         buildDir: 'dist/',
         winIco: 'docs/resources/images/logo/icestudio-logo.ico',
