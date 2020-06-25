@@ -60,7 +60,7 @@ function launchPulseView(env) {
     default:
       console.log('Pulseview en linux');
       spawn = require('child_process').spawn;
-      spawn('pulseview', args, {
+      spawn('/usr/bin/pulseview', args, {
         detached: true,
         shell: true
       });
