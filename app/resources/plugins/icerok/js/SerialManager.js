@@ -44,8 +44,8 @@ let SerialManager = function () {
 
     this.plug = function (id, userOptions, callback_onconnect, callback_onreceive) {
         let options = {
-            bitrate: 12000000,
-           // bitrate: 115200,
+            //bitrate: 12000000,
+            bitrate: 115200,
             dataBits: "eight",
             parityBit: "no",
             stopBits: "one"
