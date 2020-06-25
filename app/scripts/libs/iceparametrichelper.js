@@ -10,7 +10,7 @@ var IceParametricHelper = function () {
         for (let i = 0; i < A.length; i++) {
             paired.push({
                 source: {
-                    id: A[i].id,
+                    id: A[i].id, 
                     port: A[i].name
                 },
                 target: {
@@ -22,16 +22,37 @@ var IceParametricHelper = function () {
         return paired;
 
     };
+    this.place = function(block,x,y,x0,y0,w,h,padw,padh){
+        
+        if(typeof block.position === 'undefined') {
+            block.position={x:0,y:0};
+        }
+        w=w+padw;
+        h=h+padh;
+        block.position.x=x*w+x0;
+        block.position.y=y*h+y0;
+
+        return block;
+
+    };
+    this.newId = function(prefix){
+    
+        const nodeSha1 = require('sha1');
+      
+        if (typeof prefix === 'undefined') {
+            prefix='';
+        }
+        return nodeSha1(prefix + (new Date().getTime()) + Math.floor(Math.random() * 1000)).toString();
+    };
 
     this.pins = function (n, prefix) {
         if (typeof prefix === 'undefined') {
             prefix = 'pin';
         }
-        const nodeSha1 = require('sha1');
-        let group = [];
+       let group = [];
         for (let i = 0; i < n; i++) {
             group.push({
-                id: nodeSha1(i + (new Date().getTime()) + Math.floor(Math.random() * 1000)).toString(),
+                id: this.newId(i),
                 lastnode: false,
                 index: i,
                 name: prefix + i
@@ -77,6 +98,4 @@ var IceParametricHelper = function () {
         }
         return group;
     };
-
-
 };

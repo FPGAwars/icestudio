@@ -11,7 +11,7 @@
 
 *.swp
 *~
-
+app/icerok.capture.raw
 .tmp
 dist
 cache
