@@ -10,6 +10,7 @@
  * @link       https://github.com/FPGAwars/icestudio/
  **/
 const nodeFs = require('fs');
+const gui = require('nw.gui');
 
 function alertErrorConnection() {
   Swal.fire({
@@ -39,28 +40,28 @@ function UARTtoggleButtonState(elB) {
 function launchPulseView(env) {
 
   let spawn = false;
-  let args = ['-i '+ captureFile + ' -I binary:samplerate=12000000 -c -D'];
+  let args = ['-i ' + captureFile + ' -I binary:samplerate=12000000 -c -D'];
   switch (env) {
     case 'win32':
 
       spawn = require('child_process').spawn;
       spawn('pulseview.exe', args, {
         detached: true,
-        shell:true
+        shell: true
       });
       break;
     case 'darwin':
       spawn = require('child_process').spawn;
       spawn('Applications/PulseView.app/Contents/MacOS/pulseview', args, {
         detached: true,
-        shell:true
+        shell: true
       });
       break;
     default:
       spawn = require('child_process').spawn;
       spawn('pulseview', args, {
         detached: true,
-        shell:true
+        shell: true
       });
   }
 }
@@ -86,10 +87,10 @@ function getFilesizeInBytes(filename) {
 
 let server = false;
 let captureFileFD = false;
-let workingPath = process.cwd(); 
+let workingPath = process.cwd();
 let OS = require('os').platform();
-let slashOS =(OS==='win32')? '\\' :'/';
-const captureFile = workingPath+slashOS+'icerok.capture.raw';
+let slashOS = (OS === 'win32') ? '\\' : '/';
+const captureFile = workingPath + slashOS + 'icerok.capture.raw';
 
 function startCapture(button) {
 
@@ -103,10 +104,10 @@ function startCapture(button) {
       server.stopUART();
       nodeFs.close(captureFileFD);
       captureFileFD = false;
-      let size=getFilesizeInBytes(captureFile);
-      if(size !== false && size > 0){
+      let size = getFilesizeInBytes(captureFile);
+      if (size !== false && size > 0) {
         launchPulseView(OS);
-      }else{
+      } else {
         alert('No capture any data');
       }
     } else {
@@ -140,6 +141,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   server.getUARTs(renderUARTs);
 
+  let elinks = $('.external-link');
+
+  for (let n = 0; n < elinks.length; n++) {
+    elinks[n].addEventListener('click', function (e) {
+      let url = this.href;
+      gui.Shell.openExternal(url);
+      e.returnValue = false;
+      if (e.preventDefault) e.preventDefault();
+      return false;
+    });
+  }
 
   $('#serial-connect').addEventListener('click', function (e) {
 
@@ -179,7 +191,7 @@ function onClose() {
     nodeFs.close(captureFileFD);
   }
   try {
-    nodeFs.unlinkSync(captureFile );
+    nodeFs.unlinkSync(captureFile);
 
   } catch (err) {
     console.error(err);
