@@ -38,7 +38,7 @@ function UARTtoggleButtonState(elB) {
 }
 
 function launchPulseView(env) {
-
+  console.log('Lanzando Pulseview');
   let spawn = false;
   let args = ['-i ' + captureFile + ' -I binary:samplerate=12000000 -c -D'];
   switch (env) {
@@ -58,6 +58,7 @@ function launchPulseView(env) {
       });
       break;
     default:
+      console.log('Pulseview en linux');
       spawn = require('child_process').spawn;
       spawn('pulseview', args, {
         detached: true,
