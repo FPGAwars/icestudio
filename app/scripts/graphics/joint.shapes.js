@@ -1448,7 +1448,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     var self = this;
     var data = this.model.get('data');
-    var radix = data.format;
+    var radix = data.format || 16; // Handle bad data that could happen in a previous .ice file
     this.editor.session.gutterRenderer = {
       getWidth: function (session, lastLineNumber, config) {
         return lastLineNumber.toString().length * config.characterWidth;
