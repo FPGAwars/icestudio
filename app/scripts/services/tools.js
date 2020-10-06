@@ -951,6 +951,7 @@ angular.module('icestudio')
         apioInstallYosys,
         apioInstallIce40,
         apioInstallECP5,
+        apioInstallFujprog,
         apioInstallIverilog,
         apioInstallDrivers,
         apioInstallScons,
@@ -1035,6 +1036,11 @@ angular.module('icestudio')
     function apioInstallECP5(callback) {
       updateProgress('apio install ecp5', 50);
       utils.apioInstall('ecp5', callback);
+    }
+
+    function apioInstallFujprog(callback) {
+      updateProgress('apio install fujprog', 50);
+      utils.apioInstall('fujprog', callback);
     }
 
     function apioInstallIverilog(callback) {
