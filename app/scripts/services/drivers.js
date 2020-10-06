@@ -108,8 +108,26 @@ angular.module('icestudio')
       var rules = '';
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
       rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6014\\", ';
-      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"5af0\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"5bf0\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      //-- ulx3s board
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"666\\", GROUP=\\"dialout\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"664\\", GROUP=\\"dialout\\", SUBSYSTEM=="tty"\n';
+
       configureLinuxDrivers([
         'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
       ].concat(reloadRules()), function () {
