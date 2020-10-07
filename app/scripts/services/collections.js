@@ -149,14 +149,14 @@ angular.module('icestudio')
       var localeCompare;
 
       // For each part in the two split names, perform the following comparison:
-      for (var ia in ar) {
-        for (var ib in br) {
-          var ari = ar[ib];
-          if (ari == undefined) {
+      for (let ia in ar) {
+        for (let ib in br) {
+          var ari = ar[ia];
+          if (ari === undefined) {
             ari = "";
           }
           var bri = br[ib];
-          if (bri == undefined) {
+          if (bri === undefined) {
             bri = "";
           }
 
@@ -171,7 +171,7 @@ angular.module('icestudio')
               sensitivity: "base"
             });
           }
-          if (localeCompare != 0) {
+          if (localeCompare !== 0) {
             // If you run out of parts, the name with the fewest parts comes first
             return localeCompare;
           }
@@ -180,6 +180,6 @@ angular.module('icestudio')
         }
       }
       return localeCompare;
-    };
+    }
 
   });
