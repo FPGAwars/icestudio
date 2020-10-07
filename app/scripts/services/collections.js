@@ -126,23 +126,60 @@ angular.module('icestudio')
 
     function sortContent(items) {
       if (items) {
-        items.sort(byName);
+        items.sort(byNameAlphaNum);
         for (var i in items) {
           sortContent(items[i].children);
         }
       }
     }
 
-    function byName(a, b) {
+    function byNameAlphaNum(a, b) {
       a = gettextCatalog.getString(a.name);
       b = gettextCatalog.getString(b.name);
-      if (a > b) {
-        return 1;
-      }
-      if (a < b) {
-        return -1;
-      }
-      return 0;
+      return alphaNumSort(a, b);
     }
+
+    // Thanks: Gideon, https://ux.stackexchange.com/a/134765
+    function alphaNumSort(a, b) {
+      var regex = /[^\d]+|\d+/g;
+
+      // Split each name into alphabetical and numeric parts
+      var ar = a.match(regex);
+      var br = b.match(regex);
+      var localeCompare;
+
+      // For each part in the two split names, perform the following comparison:
+      for (var ia in ar) {
+        for (var ib in br) {
+          var ari = ar[ib];
+          if (ari == undefined) {
+            ari = "";
+          }
+          var bri = br[ib];
+          if (bri == undefined) {
+            bri = "";
+          }
+
+          // If both parts are strictly numeric, compare them as numbers 
+          if (!isNaN(ari) && !isNaN(bri)) {
+            localeCompare = ari.localeCompare(bri, {}, {
+              numeric: true
+            });
+          } else {
+            localeCompare = ari.localeCompare(bri, {}, {
+              ignorePunctuation: true,
+              sensitivity: "base"
+            });
+          }
+          if (localeCompare != 0) {
+            // If you run out of parts, the name with the fewest parts comes first
+            return localeCompare;
+          }
+
+          // If they're the same, move on to the next part
+        }
+      }
+      return localeCompare;
+    };
 
   });
