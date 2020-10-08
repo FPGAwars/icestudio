@@ -1,0 +1,12 @@
+{
+  "label": "Alchitry Cu iCE40-HX8K",
+  "datasheet": "https://alchitry.com/products/alchitry-cu-fpga-development-board",
+  "interface": "FTDI",
+  "FPGAResources": {
+    "ffs": 7680,
+    "luts": 7680,
+    "pios": 95,
+    "plbs": 960,
+    "brams": 32
+  }
+}
