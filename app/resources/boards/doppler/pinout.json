@@ -1,0 +1,194 @@
+[
+    {
+        "type": "inout",
+        "name": "pinbank1[0]",
+        "value": "11"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[1]",
+        "value": "12"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[2]",
+        "value": "13"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[3]",
+        "value": "18"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[4]",
+        "value": "19"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[5]",
+        "value": "20"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[6]",
+        "value": "21"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank1[7]",
+        "value": "23"
+    },
+    {
+        "type": "inout",
+        "name": "F25",
+        "value": "25"
+    },
+
+
+
+    {
+        "type": "inout",
+        "name": "pinbank2[0]",
+        "value": "25"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[1]",
+        "value": "41"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[2]",
+        "value": "40"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[3]",
+        "value": "39"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[4]",
+        "value": "38"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[5]",
+        "value": "37"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[6]",
+        "value": "36"
+    },
+    {
+        "type": "inout",
+        "name": "pinbank2[7]",
+        "value": "35"
+    },
+    {
+        "type": "inout",
+        "name": "F32",
+        "value": "32"
+    },
+
+
+
+    {
+        "type": "input",
+        "name": "button1",
+        "value": "2"
+    },
+    {
+        "type": "input",
+        "name": "button2",
+        "value": "3"
+    },
+
+
+    {
+        "type": "inout",
+        "name": "pa19",
+        "value": "6"
+    },
+    {
+        "type": "inout",
+        "name": "pa20",
+        "value": "4"
+    },
+    {
+        "type": "inout",
+        "name": "pa21",
+        "value": "9"
+    },
+    {
+        "type": "inout",
+        "name": "pa22",
+        "value": "10"
+    },
+
+
+    {
+        "type": "inout",
+        "name": "cfg_so",
+        "value": "14"
+    },
+    {
+        "type": "inout",
+        "name": "cfg_so",
+        "value": "15"
+    },
+    {
+        "type": "inout",
+        "name": "cfg_cs",
+        "value": "16"
+    },
+    {
+        "type": "inout",
+        "name": "cfg_si",
+        "value": "17"
+    },
+
+
+    {
+        "type": "output",
+        "name": "aled[0]",
+        "value": "26"
+    },
+    {
+        "type": "output",
+        "name": "aled[1]",
+        "value": "27"
+    },
+    {
+        "type": "output",
+        "name": "aled[2]",
+        "value": "28"
+    },
+    {
+        "type": "output",
+        "name": "aled[3]",
+        "value": "31"
+    },
+    {
+        "type": "output",
+        "name": "kled[0]",
+        "value": "42"
+    },
+    {
+        "type": "output",
+        "name": "kled[1]",
+        "value": "43"
+    },
+    {
+        "type": "output",
+        "name": "kled[2]",
+        "value": "44"
+    },
+    {
+        "type": "output",
+        "name": "kled[3]",
+        "value": "45"
+    }
+]
