@@ -10,6 +10,7 @@
   {
     "type": "HX8K",
     "boards": [
+	  "Alchitry-Cu",
       "alhambra-ii",
       "blackice",
       "blackice-ii",

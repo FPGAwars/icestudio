@@ -1,0 +1,136 @@
+﻿# -----------------------------------------------------------------------------
+#- Alchitry Cu iCE40-HX8K constraint file (.pcf)
+#- By Andrew Goodney
+#- October - 2020
+#- GPL license
+#- Board info: https://alchitry.com/products/alchitry-cu-fpga-development-board
+# -----------------------------------------------------------------------------
+
+
+# ------------ LEDs -----------------------------------------------------------
+set_io --warn-no-port LED0 J11  # output
+set_io --warn-no-port LED1 K11  # output
+set_io --warn-no-port LED2 K12  # output
+set_io --warn-no-port LED3 K14  # output
+set_io --warn-no-port LED4 L12  # output
+set_io --warn-no-port LED5 L14  # output
+set_io --warn-no-port LED6 M12  # output
+set_io --warn-no-port LED7 N14  # output
+
+
+# ------------ System 100 MHz clock --------------------------------------------
+set_io --warn-no-port CLK P7  # input
+
+
+# ------------ FTDI 0 ---------------------------------------------------------
+# SPI
+set_io --warn-no-port MISO P11  # input
+set_io --warn-no-port MOSI M11  # output
+set_io --warn-no-port SCK  P12  # output
+set_io --warn-no-port SS   P13  # output
+
+set_io --warn-no-port CRESET L10  # input
+set_io --warn-no-port CDONE  M10  # output
+
+
+# ------------ FTDI 1 ---------------------------------------------------------
+# UART
+set_io --warn-no-port TX  P14  # output
+set_io --warn-no-port RX  M9  # input
+
+# ------------ RESET BUTTON ---------------------------------------------------
+set_io --warn-no-port RESET P8 #input
+
+# ----------------------------- BANK-A ----------------------------------------
+set_io --warn-no-port A2 M1
+set_io --warn-no-port A3 L1
+set_io --warn-no-port A5 J1
+set_io --warn-no-port A6 J3
+set_io --warn-no-port A8 G1
+set_io --warn-no-port A9 G3
+set_io --warn-no-port A11 E1
+set_io --warn-no-port A12 D1
+set_io --warn-no-port A14 C1
+set_io --warn-no-port A15 B1
+set_io --warn-no-port A17 D3
+set_io --warn-no-port A18 C3
+set_io --warn-no-port A20 A1
+set_io --warn-no-port A21 A2
+set_io --warn-no-port A23 A3
+set_io --warn-no-port A24 A4
+set_io --warn-no-port A27 A5
+set_io --warn-no-port A28 C5
+set_io --warn-no-port A30 D5
+set_io --warn-no-port A31 C4
+set_io --warn-no-port A33 D4
+set_io --warn-no-port A34 E4
+set_io --warn-no-port A36 F4
+set_io --warn-no-port A37 F3
+set_io --warn-no-port A39 H4
+set_io --warn-no-port A40 G4
+set_io --warn-no-port A42 H1
+set_io --warn-no-port A43 H3
+set_io --warn-no-port A45 K3
+set_io --warn-no-port A46 K4
+set_io --warn-no-port A48 N1
+set_io --warn-no-port A49 P1
+
+# ----------------------------- BANK-B ----------------------------------------
+set_io --warn-no-port B2 A6
+set_io --warn-no-port B3 A7
+set_io --warn-no-port B5 A10
+set_io --warn-no-port B6 A11
+set_io --warn-no-port B8 c9
+set_io --warn-no-port B9 C10
+set_io --warn-no-port B11 A12
+set_io --warn-no-port B12 B14
+set_io --warn-no-port B14 C14
+set_io --warn-no-port B15 D14
+set_io --warn-no-port B17 E14
+set_io --warn-no-port B18 E12
+set_io --warn-no-port B20 F14
+set_io --warn-no-port B21 G14
+set_io --warn-no-port B23 H12
+set_io --warn-no-port B24 J12
+set_io --warn-no-port B27 H11
+set_io --warn-no-port B28 G11
+set_io --warn-no-port B30 G12
+set_io --warn-no-port B31 F12
+set_io --warn-no-port B33 F11
+set_io --warn-no-port B34 E11
+set_io --warn-no-port B36 D12
+set_io --warn-no-port B37 D11
+set_io --warn-no-port B39 C12
+set_io --warn-no-port B40 C11
+set_io --warn-no-port B42 D10
+set_io --warn-no-port B43 D9
+set_io --warn-no-port B45 D7
+set_io --warn-no-port B46 D6
+set_io --warn-no-port B48 C7
+set_io --warn-no-port B49 C6
+
+# ----------------------------- BANK-C ----------------------------------------
+set_io --warn-no-port C2 M3
+set_io --warn-no-port C3 M4
+set_io --warn-no-port C5 L4
+set_io --warn-no-port C6 L5
+set_io --warn-no-port C8 M6
+set_io --warn-no-port C9 M7
+set_io --warn-no-port C11 L9
+set_io --warn-no-port C39 P10
+set_io --warn-no-port C40 P9
+set_io --warn-no-port C42 L8
+set_io --warn-no-port C43 L6
+set_io --warn-no-port C45 P5
+set_io --warn-no-port C46 P4
+set_io --warn-no-port C48 P3
+set_io --warn-no-port C49 P2
+
+# ----------------------------- BANK-D ----------------------------------------
+# Bank D on this board has the LED, SPI, USB TX/RX, CLK, and RESET button
+# They are all configured above
+
+
+
+
+
