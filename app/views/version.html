@@ -87,25 +87,71 @@
                  <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/Alchitry_CU_FPGA.jpg">
             </p>
 
+            <h2>Initial support for the Fomu FPGA board</h2>
+
+            <p> {{ 'Preliminary support for the Fomu FPGA board, by ' | translate }} 
+                <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr"> Carlos Venegas (cavearr)</a>
+                {{ '. Thanks a lot! :-)' | translate }}
+                <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/fomu.jpg">
+            </p>
+
+            <h2>iceChip Collection</h2>
+            <p>
+                <a ng-click="openUrl('https://github.com/TimRudy/ice-chips-verilog', $event)" href="https://github.com/TimRudy/ice-chips-verilog"> Icechip</a>
+                {{ ' is a library of all common discrete logic devices: The 74LS, 74HC, 74HCT family of chips, created by ' | translate }}
+                <a ng-click="openUrl('https://github.com/TimRudy', $event)" href="https://github.com/TimRudy">Tim Rudy</a> 
+                {{ '. Thank you very much' | translate }}
+
+                <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/icechip-01.png">
+            </p>
+
+            <h2>Camera OV7670: Video and color filtering</h2>
+
+            <p>
+                
+                {{ 'The FPGA receives the video from the ov7670 camera, process it and sends it to the VGA. An 80x60 video image is displayed.
+                    Work done by ' | translate }}
+
+                    <a ng-click="openUrl('https://github.com/felipe-m', $event)" href="https://github.com/felipe-m">Felipe Machado</a>
+
+                    
+                    {{ '. You can find more information in ' | translate}} 
+                    
+                    <a ng-click="openUrl('https://github.com/JdeRobot/FPGA-robotics/tree/master/Projects/ComputerVision/ov7670_colorfilter', 
+                    $event)" href="https://github.com/JdeRobot/FPGA-robotics/tree/master/Projects/ComputerVision/ov7670_colorfilter">this github repo</a>
+            </p>
+            
+            
+            </p>
+
+                <div class="video-responsive">
+                    <a  ng-click="openUrl('https://www.youtube.com/watch?v=HEQOUGxpeGI',$event)"  href="https://www.youtube.com/watch?v=HEQOUGxpeGI">
+                    <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/ov7670-video-filtering.png"></a>
+                </div>
+
+            </p>
+
+                    
+        
+
             <!--  
 
                 <a ng-click="openUrl('', $event)" href=""> </a>
+                <img class="img-responsive" src="">
                                 
             -->
 
             <!-- TODO:
-              - Fomu
-              - icechip collection: https://github.com/TimRudy/ice-chips-verilog
+               
+              - Hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/6I1GDglxx6Y
+              - OLED for hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/ZlV8VO_5FTA  
               - Demócrito: Tutorial de i2C de solo lectura: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/tOaLizbF0RE
               -  Video: Como realizar circuito digital con FPGA y ICESTUDIO muy facil (Clase 15): https://www.youtube.com/watch?v=gROVNLvCQz0&
               - Controlador de Atari: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/AxOJZS5FH4g
-              - Video y filtro de color: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/oZo8G2XRCXU
               - Ejemplos serie multiplaca: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/aVSIkp30JWU
               - Test benches hardware: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/8ZAsVxEbBP0
               - Hat de prototipo para Alhambra II board: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/p1Pdp_Cllt8
               - Control de posición de motores paso a paso: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/v-gzvkIyNoI/m/7oGyU4R9AAAJ
-              - Hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/6I1GDglxx6Y
-              - OLED for hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/ZlV8VO_5FTA
               - Bloque para teclado matricial: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/hBNXZn3xMgc
               - Bloque codificador para mando IR (protocolo NEC): https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/H5Xg3e9mVbo
               - Paneles web: Cuaderno técnico 8: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/_BSf1ajwPpI
