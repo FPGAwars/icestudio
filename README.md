@@ -50,6 +50,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l) | FTDI |
 | [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge) | FTDI |
 | [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard) | FTDI |
+| [dadamachines doppler](https://dadamachines.com/product/doppler/) | samd51 on board |
 
 ## Installation
 
