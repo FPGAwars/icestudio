@@ -131,8 +131,46 @@
 
             </p>
 
-                    
-        
+            <h2>From Nand to Tetris: Hack CPU core</h2> 
+            
+            <p>
+                {{ 'The Hack CPU from the ' | translate }}
+                <a ng-click="openUrl('https://www.nand2tetris.org/', $event)" href="https://www.nand2tetris.org/">Nand2tetris project</a>
+                {{ 'and all its components are available in the '}}
+                <a ng-click="openUrl('https://github.com/Obijuan/nand2tetris-icestudio', $event)" 
+                href="https://github.com/Obijuan/nand2tetris-icestudio">nand2tetris-icestudio</a>
+                {{ ' collection ' }}
+                by <a  ng-click="openUrl('https://github.com/Obijuan',$event)" href="https://github.com/Obijuan">Obijuan</a>
+                <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/Nand2tetris.jpg">
+                <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/Nand2tetris.gif">
+
+                Thanks to <a ng-click="openUrl('https://github.com/cavearr',$event)" href="https://github.com/cavearr">Carlos Venegas</a>
+                for adding support to the OLED display
+                <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/Nand2tetris-OLED.png">
+
+            </p>
+
+            <h2>Video Tutorials</h2>
+            <p>
+                The youtube user ACADENAS has recorded 4 videos (in Spanish) to show how easy is to create digital circuits using Icestudio: 
+                <a ng-click="openUrl('https://www.youtube.com/watch?v=gROVNLvCQz0', $event)" href="https://www.youtube.com/watch?v=gROVNLvCQz0">Como realizar circuito digital con FPGA y ICESTUDIO muy facil (Clase 15)</a>
+                <div class="video-responsive">
+                    <a  ng-click="openUrl('https://www.youtube.com/watch?v=gROVNLvCQz0',$event)"  href="https://www.youtube.com/watch?v=gROVNLvCQz0">
+                    <img class="img-responsive" src="resources/images/version-notes/0.5.2n201009/tutorial-acadenas.png"></a>
+                </div>
+            </p>
+
+            <h2>...And much more!!</h2>
+
+            <p>The FPGAwars community has been very active these months. Check out these other awesome projects! 
+              <ul>
+                  <li>
+                    <a ng-click="openUrl('https://github.com/Democrito/I2C_only_write', $event)" href="https://github.com/Democrito/I2C_only_write">Tutorial on the use of I2C bus </a> 
+                    (read only mode), by <a ng-click="openUrl('https://github.com/Democrito', $event)" href="https://github.com/Democrito"> Demócrito</a>
+                    </li>
+
+              </ul>
+            </p>
 
             <!--  
 
@@ -142,11 +180,8 @@
             -->
 
             <!-- TODO:
-               
-              - Hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/6I1GDglxx6Y
-              - OLED for hack cpu: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/ZlV8VO_5FTA  
-              - Demócrito: Tutorial de i2C de solo lectura: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/tOaLizbF0RE
-              -  Video: Como realizar circuito digital con FPGA y ICESTUDIO muy facil (Clase 15): https://www.youtube.com/watch?v=gROVNLvCQz0&
+                
+              - Video: Como realizar circuito digital con FPGA y ICESTUDIO muy facil (Clase 15): https://www.youtube.com/watch?v=gROVNLvCQz0&
               - Controlador de Atari: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/AxOJZS5FH4g
               - Ejemplos serie multiplaca: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/aVSIkp30JWU
               - Test benches hardware: https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/8ZAsVxEbBP0
