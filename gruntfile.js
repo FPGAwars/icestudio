@@ -10,7 +10,7 @@
   if (DARWIN) {
     platforms = ['osx64'];
     options = { scope: ['devDependencies', 'darwinDependencies'] };
-    distCommands = [ 'compress:osx64', 'appdmg'];
+    distCommands = [ 'exec:repairOSX','compress:osx64', 'appdmg'];
   }
   else {
     platforms = ['linux32', 'linux64', 'win32', 'win64'];
@@ -63,7 +63,8 @@
       nw: 'nw app' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW: (WIN32 ? 'taskkill /F /IM nw.exe >NUL 2>&1' : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') + ' || (exit 0)',
       nsis32: 'makensis -DARCH=win32 -DPYTHON="python-3.8.2.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi'
+      nsis64: 'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+      repairOSX:'scripts/repairOSX.sh'
     },
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
