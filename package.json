@@ -1,6 +1,6 @@
 {
   "name": "icestudio",
-  "version": "0.5.1n200523",
+  "version": "0.5.1n201009",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {
@@ -55,5 +55,7 @@
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
   },
-  "dependencies": {}
+  "dependencies": {
+    "grunt-appdmg": "git+https://github.com/agoodney/grunt-appdmg.git"
+  }
 }
