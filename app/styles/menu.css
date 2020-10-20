@@ -38,6 +38,8 @@
   border-radius: 0;
   visibility: hidden;
   transition-delay: 0.3s;
+ /* max-height: calc(100vh - 120px);
+  overflow: auto*/
 }
 
 .dropdown-submenu:hover > .dropdown-menu {

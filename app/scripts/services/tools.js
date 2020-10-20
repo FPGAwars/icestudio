@@ -1351,6 +1351,7 @@ angular.module('icestudio')
     this.initializePluginManager = function (callbackOnRun) {
       if (typeof ICEpm !== 'undefined') {
         console.log('ENV', common);
+        ICEpm.setEnvironment(common);
         ICEpm.setPluginDir(common.DEFAULT_PLUGIN_DIR, function () {
 
           let plist = ICEpm.getAll();
