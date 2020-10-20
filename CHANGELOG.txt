@@ -1,6 +1,0 @@
-This changelog is starting at 0.5.1-n200403 version
-
-VERSION 0.5.1-n200403
-=====================
-
-- Thanks to Tim Rudy (https://github.com/TimRudy) for language corrections at version info page.

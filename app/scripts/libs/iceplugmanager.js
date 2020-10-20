@@ -5,6 +5,7 @@ var IcePlugManager = function () {
 
     this.pluginDir = false;
     this.pluginUri = false;
+    this.env = false;
     this.plugins = {};
 
     this.ebus = new IceEventBus();
@@ -18,6 +19,11 @@ var IcePlugManager = function () {
         console.log('Icestudio Plugin Manager v0.1');
 
     };
+
+    this.setEnvironment = function (common) {
+        this.env=common;
+    };
+
 
     this.setPluginDir = function (dir, callback) {
         this.pluginDir = dir;
@@ -174,7 +180,7 @@ var IcePlugManager = function () {
         if (plug === false) {
             return false;
         }
-
+        let _this=this;
          nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
 
             if (typeof plug.manifest.width !== 'undefined') {
@@ -195,9 +201,17 @@ var IcePlugManager = function () {
 
           });
 
+         newWin.on ('loaded', function(){
+             console.log('Mandando parámetros',_this.env);
+             let filter=['WIN32','LINUX','VERSION'];
+            this.window.postMessage({type:'ice-plugin-message'/*,env:_this.env*/});
+
+        });
+         
+
             
         });
-                };
+               };
 
     this.init = function () {
         this.version();
