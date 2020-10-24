@@ -298,6 +298,15 @@ angular.module('icestudio')
       return nodePath.dirname(filepath);
     };
 
+    this.filepath2buildpath=function(filepath){
+    
+      let b = nodePath.basename(filepath);
+      let localdir=filepath.substr(0,filepath.lastIndexOf(b)); 
+      let dirname = b.substr(0, b.lastIndexOf('.'));
+      let path = nodePath.join(localdir,'ice-build');
+      return nodePath.join(path,dirname).replace(/ /g, '_');
+    };
+
     this.readFile = function (filepath) {
       return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {

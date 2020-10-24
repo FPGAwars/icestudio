@@ -60,6 +60,8 @@ angular.module('icestudio')
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
+          self.filename=name;
+          self.dirname=utils.dirname(filepath);
           self.load(name, data);
         })
         .catch(function () {
@@ -123,6 +125,8 @@ angular.module('icestudio')
         if (ret) {
           profile.set('board', boards.selectBoard(project.design.board).name);
           self.updateTitle(name);
+          let bdir=utils.filepath2buildpath(self.filepath);
+          common.setBuildDir(bdir);
         }
         else {
           alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
@@ -379,13 +383,15 @@ angular.module('icestudio')
         this.path = filepath;
         this.filepath = filepath;
       }
-
+      let self=this;
       function doSaveProject() {
         utils.saveFile(filepath, pruneProject(project))
           .then(function () {
             if (callback) {
               callback();
             }
+            let bdir=utils.filepath2buildpath(self.filepath);
+            common.setBuildDir(bdir);
             alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
           })
           .catch(function (error) {
