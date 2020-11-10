@@ -411,7 +411,7 @@ angular.module('icestudio')
           });
         }
       } catch (e) {
-        console.warn(e);
+       // console.warn(e);
       }
       return collectionsPaths;
     };
@@ -427,7 +427,7 @@ angular.module('icestudio')
             (contains(content, 'examples') && isDirectory(nodePath.join(path, 'examples')))
           );
       } catch (e) {
-        console.warn(e);
+       // console.warn(e);
       }
       return result;
     }

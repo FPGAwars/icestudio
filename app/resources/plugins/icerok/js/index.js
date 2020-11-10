@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Icetudio > Sigrok > Pulseview integration
  *
@@ -134,17 +136,17 @@ function startCapture(button) {
   }
 }
 
-/*
+
 window.addEventListener("message", (event) => {
 
   if(typeof event.data !== 'undefined' && event.data !== null && event.data !== false ){
 
     console.log(event.data);
- 
+
 
   }
 
-}, false);*/
+}, false);
 
 
 document.addEventListener('DOMContentLoaded', function () {
