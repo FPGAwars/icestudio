@@ -203,16 +203,16 @@ var IcePlugManager = function () {
 
             newWin.on('loaded', function () {
                 let filter = ['WIN32', 'LINUX', 'DARWIN', 'VERSION', 'LOGFILE', 'BUILD_DIR'];
-                let env_filtered = {};
+                let envFiltered = {};
                 for (let prop in _this.env) {
                     if (filter.indexOf(prop) > -1) {
-                        env_filtered[prop] = _this.env[prop];
+                        envFiltered[prop] = _this.env[prop];
                     }
                 }
                 // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
 
                 if (typeof this.window.onLoad !== 'undefined') {
-                    this.window.onLoad(env_filtered);
+                    this.window.onLoad(envFiltered);
                 }
             });
 
