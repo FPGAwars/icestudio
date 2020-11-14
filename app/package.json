@@ -37,14 +37,15 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.5.0",
+    "min": "0.5.5",
     "max": "0.6.0",
     "extras": [
       "blackiceprog",
       "tinyfpgab",
       "tinyprog",
       "icefunprog",
-      "icesprog"
+      "icesprog",
+      "fujprog"
     ],
     "external": "",
     "branch": "develop"

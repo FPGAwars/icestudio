@@ -2,7 +2,7 @@
 
 angular.module('icestudio')
   .service('common', function (nodePath,
-    nodeTmp) {
+    nodeTmp,nodeFs) {
 
     // Project version
     this.VERSION = '1.2';
@@ -118,7 +118,14 @@ angular.module('icestudio')
       }
       return _dir;
     }
+    this.setBuildDir = function(buildpath){
+      if (!nodeFs.existsSync(buildpath)){
+        console.log('CREANDO',buildpath);
+        nodeFs.mkdirSync(buildpath, { recursive: true });
+      }
+      this.BUILD_DIR=buildpath;
 
+    };
     this.showToolchain = function () {
       return (this.selectedBoard && this.selectedBoard.info.interface !== 'GPIO') || false;
     };

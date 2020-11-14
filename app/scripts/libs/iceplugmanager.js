@@ -21,7 +21,7 @@ var IcePlugManager = function () {
     };
 
     this.setEnvironment = function (common) {
-        this.env=common;
+        this.env = common;
     };
 
 
@@ -180,8 +180,8 @@ var IcePlugManager = function () {
         if (plug === false) {
             return false;
         }
-        let _this=this;
-         nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
+        let _this = this;
+        nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
 
             if (typeof plug.manifest.width !== 'undefined') {
                 newWin.width = plug.manifest.width;
@@ -191,27 +191,35 @@ var IcePlugManager = function () {
             }
             newWin.focus();
             // Listen to main window's close event
-            newWin.on('close', function() {
-                if(typeof this.window.onClose !== 'undefined'){
+            newWin.on('close', function () {
+                if (typeof this.window.onClose !== 'undefined') {
                     this.window.onClose();
                 }
-                
-                
+
+
                 this.close(true);
 
-          });
+            });
 
-         newWin.on ('loaded', function(){
-             console.log('Mandando parámetros',_this.env);
-             let filter=['WIN32','LINUX','VERSION'];
-            this.window.postMessage({type:'ice-plugin-message'/*,env:_this.env*/});
+            newWin.on('loaded', function () {
+                let filter = ['WIN32', 'LINUX', 'DARWIN', 'VERSION', 'LOGFILE', 'BUILD_DIR'];
+                let env_filtered = {};
+                for (let prop in _this.env) {
+                    if (filter.indexOf(prop) > -1) {
+                        env_filtered[prop] = _this.env[prop];
+                    }
+                }
+                // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
+
+                if (typeof this.window.onLoad !== 'undefined') {
+                    this.window.onLoad(env_filtered);
+                }
+            });
+
+
 
         });
-         
-
-            
-        });
-               };
+    };
 
     this.init = function () {
         this.version();
