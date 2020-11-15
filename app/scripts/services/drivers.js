@@ -128,6 +128,10 @@ angular.module('icestudio')
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
       rules += 'MODE=\\"664\\", GROUP=\\"dialout\\", SUBSYSTEM=="tty"\n';
 
+      //-- Icesugar board
+      rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"602b\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
       configureLinuxDrivers([
         'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
       ].concat(reloadRules()), function () {
