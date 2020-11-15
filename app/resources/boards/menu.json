@@ -40,7 +40,8 @@
       "upduino3",
       "fpga101",
       "iCE40-UP5K",
-      "fomu"
+      "fomu",
+	  "iCESugar_1_5"
     ]
   },
   {

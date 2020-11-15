@@ -51,6 +51,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge) | FTDI |
 | [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard) | FTDI |
 | [dadamachines doppler](https://dadamachines.com/product/doppler/) | samd51 on board |
+| [iCESugar v1.5](https://github.com/wuxx/icesugar) | HID |
 
 ## Installation
 
