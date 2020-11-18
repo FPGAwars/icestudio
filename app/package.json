@@ -37,7 +37,7 @@
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.5.5",
+    "min": "0.5.4",
     "max": "0.6.0",
     "extras": [
       "blackiceprog",
