@@ -93,7 +93,8 @@ let captureFileFD = false;
 let workingPath = process.cwd();
 let OS = require('os').platform();
 let slashOS = (OS === 'win32') ? '\\' : '/';
-const captureFile = workingPath + slashOS + 'icerok.capture.raw';
+let captureFile = workingPath + slashOS + 'icerok.raw';
+
 
 function startCapture(button) {
 
@@ -196,6 +197,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function onLoad(params){
 
   console.log('Arrancando plugin',params);
+  if(typeof params.BUILD_DIR !== 'undefined' && params.BUILD_DIR.length > 0) captureFile=`${params.BUILD_DIR}${slashOS}icerok.raw`;
+
 }
 
 function onClose() {

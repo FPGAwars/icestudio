@@ -93,7 +93,7 @@ let iceRok = function (port) {
   }
 
   this.isUARTConnected = function () {
-
+    console.log('isUARTConnected', this.serial);
     return this.serial.connected;
   }
 
@@ -132,8 +132,9 @@ let iceRok = function (port) {
 
     }
     this.serial.sm.plug(id,options,connectUART,receiveFromUART);
-    this.serial.connected=true;
-
+    if(this.serial.sm.info.conn === true){
+      this.serial.connected=true;
+    }
   }
 
   this.sigrok = function (cmd){
