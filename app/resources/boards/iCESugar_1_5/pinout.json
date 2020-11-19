@@ -6,7 +6,7 @@
  {"name": "S1", "value": "18", "type": "input"}, 
  {"name": "S2", "value": "19", "type": "input"},
  {"name": "S3", "value": "20", "type": "input"}, 
- {"name": "S3", "value": "21", "type": "input"},
+ {"name": "S4", "value": "21", "type": "input"},
  
  {"name": "clk", "value": "35", "type": "input"},
  
