@@ -4,190 +4,116 @@
     <div class="version-info-tab--body">
         <div class="version-info-tab--body--content">
 
-            <h1>{{ 'Icestudio nightly build (v0.5.1n201009)' | translate }}</h1>
+            <h1>Icestudio nightly build (v0.5.1n201120)</h1>
             <hr>
-            <p>{{ 'Welcome to Icestudio!. This version adds the new iceRok plugin and several new boards:' | translate }}</p>
+            <p>Welcome to Icestudio!. This version adds new boards an improvements to the iceRok plugin:</p>
             <br/>
 
-            <h2>{{ 'Initial Sigrok plugin' | translate }}</h2>
-            <p>{{ 'Capture the signals in your designs and visualize them using ' | translate }}
-                <a ng-click="openUrl('https://sigrok.org/wiki/PulseView', $event)" href="https://sigrok.org/wiki/PulseView">PulseView</a>
-                {{ '. Thanks to ' | translate }}
-                <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas (cavearr)</a>
+            <h2>Support for the icesugar board</h2>
+            <p>The 
+
+                <a ng-click="openUrl('https://github.com/wuxx/icesugar', $event)"
+                    href="https://github.com/wuxx/icesugar">icesugar board</a>
+
+                is now supported in Icestudio for Linux and Windows thanks to 
+                
+                <a ng-click="openUrl('https://github.com/aalku', $event)" href="https://github.com/aalku">Alberto (aalku)</a>.
+
+                Support for MacOs is coming
+
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/iCESugar.jpg"></p>
             </p>
 
-            <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/sigrok-example.gif"></p>
+            <h2> New ice-build folder</h2>
+               
+            <p>
+                Everytime you upload or sinthesize a design the ice-build folder is created. It contains all the intermediate files generated: 
+                verilog files, constraint files (.pcf), bitstream and so on. Just enter into that folder and have a look!
 
-            <h2>{{ 'iceRok Collection' | translate }}</h2>
-            <p>{{ 'Find the probe blocks for capturing data and examples on how to use the Sigrok plugin in the ' | translate }}
-                <a ng-click="openUrl('https://github.com/FPGAwars/iceRok', $event)" href="https://github.com/FPGAwars/iceRok">iceRok collection</a>
-                {{ '. Thanks to ' | translate }}
-                <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas (cavearr)</a>
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/ice-build-folder.png"></p>
+            </p>
+        
+            <h2> Icerok data file (capture.raw) available in the ice-Build folder</h2>
+
+            <p> The samples captured by the icerok probes are now written into the capture.raw file available in the ice-build folder
+
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/icerok-capture-file.png"></p>
+
+                This file can be opened from
+                
+                <a ng-click="openUrl('https://sigrok.org/wiki/PulseView', $event)"
+                href="https://sigrok.org/wiki/PulseView">PulseView</a>
+                
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/icerok-pulseview.png"></p>
+
             </p>
 
-            <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/banner-icerok.png"></p>
- 
-            <h2>Support for the ULX3S Radiona board improved</h2>
-            <p>{{ 'Many people from the FPGAwars community have received their ' | translate }}
+            <h2>Icemem Collection</h2>
 
-                <a ng-click="openUrl('https://ulx3s.github.io/', $event)" href="https://ulx3s.github.io/">ULX3S board</a>
+            <p>
+                <a ng-click="openUrl('https://github.com/FPGAwars/iceMem', $event)"
+                href="https://github.com/FPGAwars/iceMem">Icemem</a>
 
-                {{ 'during these days. The support has been completed in Linux (both synthesis and upload).
-                    In Mac and Windows currently, only synthesis is supported. In ' | translate }}
+                Icestudio collection for working with Memories. Install it and checkout all the examples!
 
-                <a ng-click="openUrl('https://www.youtube.com/watch?v=JWnGnSOtm3I', $event)" href="https://www.youtube.com/watch?v=JWnGnSOtm3I">this video</a>
-
-                {{ 'the synthesis and upload of the Blinky example is shown. The improvements are based on the great work done by ' | translate }}
-
-                <a ng-click="openUrl('https://github.com/mmicko', $event)" href="https://github.com/mmicko">Miodrag Milanovic (mmicko)</a>
-
-                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/ulx3s.jpg"></p>
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/iceMem-logo.png"></p>
             </p>
 
-            </p>
+            <h2> Icestudio Block for the TM1637 4-digit Display driver </h2>
+
+            <p>
+                Developed by Alberto Nicas (altenife). All the information is locate on this repository: 
+
+                <a ng-click="openUrl('https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Display%204x7%20TM1637
+                ', $event)"
+                href="https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Display%204x7%20TM1637">Altenife/Things-cosas-icestudio</a>
+
+
+                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/TM1637-altenife.png"></p>
+
+                Check this vídeo to see how it works
+
                 <div class="video-responsive">
-                    <a ng-click="openUrl('https://www.youtube.com/watch?v=JWnGnSOtm3I', $event)" href="https://www.youtube.com/watch?v=JWnGnSOtm3I">
-                        <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/ulx3s-video.png"></a>
+                    <a ng-click="openUrl('https://www.youtube.com/watch?v=F9NfgoNkp7c', $event)" href="https://www.youtube.com/watch?v=F9NfgoNkp7c">
+                        <img class="img-responsive" src="resources/images/version-notes/0.5.1n201120/TM1637-altenife-2.png"></a>
                 </div>
-            </p>
-
-            <h2>Support for the EDU-CIAA-FPGA board</h2>
-            <p>{{ 'The ' | translate }}
-
-                <a ng-click="openUrl('http://www.proyecto-ciaa.com.ar/devwiki/doku.php?id=desarrollo:edu-fpga', $event)"
-                    href="http://www.proyecto-ciaa.com.ar/devwiki/doku.php?id=desarrollo:edu-fpga">EDU-CIAA-FPGA board</a>
-
-                {{ ' is fully supported. Many thanks to Roberto Dhios, Diego (vascodh), Facundo Larosa, Ramiro, Pablo V. and many others for their help in testing the board' | translate }}
-
-                <p><img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/EDU-CIAA-FPGA.jpeg"></p>
-            </p>
-
-            <h2>Initial support for the Alchitry Cu FPGA board</h2>
-            <p><a ng-click="openUrl('https://github.com/agoodney', $event)" href="https://github.com/agoodney">Andrew Goodney</a>
-                {{ ' has provided support for the ' | translate }}
-
-                <a ng-click="openUrl('https://alchitry.com/products/alchitry-cu-fpga-development-board', $event)"
-                    href="https://alchitry.com/products/alchitry-cu-fpga-development-board">Alchitry Cu board</a>
-                {{ '. You can see the blinking lights in action in' | translate }}
-                <a ng-click="openUrl('https://twitter.com/agoodney/status/1314080394573082625', $event)"
-                    href="https://twitter.com/agoodney/status/1314080394573082625">this tweet</a>
-                 {{ '. Thanks Andrew!' | translate }}
-
-                 <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/Alchitry_CU_FPGA.jpg">
-            </p>
-
-            <h2>Initial support for the Fomu FPGA board</h2>
-            <p>{{ 'Preliminary support for the Fomu FPGA board, by ' | translate }}
-
-                <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas (cavearr)</a>
-                {{ '. Thanks a lot! :-)' | translate }}
-
-                <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/fomu.jpg">
-            </p>
-
-            <h2>IceChips Collection</h2>
-            <p>
-                <a ng-click="openUrl('https://github.com/TimRudy/ice-chips-verilog', $event)" href="https://github.com/TimRudy/ice-chips-verilog">IceChips</a>
-                {{ ' is a library of all common discrete logic devices: The 74LS, 74HC, 74HCT family of chips, created by ' | translate }}
-                <a ng-click="openUrl('https://github.com/TimRudy', $event)" href="https://github.com/TimRudy">Tim Rudy</a>
-                {{ '. Thank you very much' | translate }}
-
-                <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/icechip-01.png">
-            </p>
-
-            <h2>Camera OV7670: Video and color filtering</h2>
-            <p>
-                {{ 'The FPGA receives the video from the OV7670 camera, processes it and sends it to VGA. An 80x60 video image is displayed.
-                    Work done by ' | translate }}
-
-                    <a ng-click="openUrl('https://github.com/felipe-m', $event)" href="https://github.com/felipe-m">Felipe Machado</a>
-
-                    {{ '. You can find more information in ' | translate }}
-
-                    <a ng-click="openUrl('https://github.com/JdeRobot/FPGA-robotics/tree/master/Projects/ComputerVision/ov7670_colorfilter', $event)"
-                        href="https://github.com/JdeRobot/FPGA-robotics/tree/master/Projects/ComputerVision/ov7670_colorfilter">this GitHub repo</a>
-            </p>
 
             </p>
-                <div class="video-responsive">
-                    <a ng-click="openUrl('https://www.youtube.com/watch?v=HEQOUGxpeGI', $event)" href="https://www.youtube.com/watch?v=HEQOUGxpeGI">
-                        <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/ov7670-video-filtering.png"></a>
-                </div>
-            </p>
 
-            <h2>From Nand to Tetris: Hack CPU core</h2>
-            <p>
-                {{ 'The Hack CPU from the ' | translate }}
 
-                <a ng-click="openUrl('https://www.nand2tetris.org/', $event)" href="https://www.nand2tetris.org/">Nand2tetris project</a>
 
-                {{ 'and all its components are available in the ' | translate }}
-
-                <a ng-click="openUrl('https://github.com/Obijuan/nand2tetris-icestudio', $event)"
-                    href="https://github.com/Obijuan/nand2tetris-icestudio">nand2tetris-icestudio</a>
-
-                {{ ' collection ' | translate }}
-
-                by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
-                <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/Nand2tetris.jpg">
-                <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/Nand2tetris.gif">
-
-                Thanks to <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas</a>
-                for adding support for the OLED display
-                <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/Nand2tetris-OLED.png">
-            </p>
-
-            <h2>Video Tutorials</h2>
-            <p>
-                The YouTube user ACADENAS has recorded 4 videos (in Spanish) to show how easy it is to create digital circuits using Icestudio:
-                <a ng-click="openUrl('https://www.youtube.com/watch?v=gROVNLvCQz0', $event)" href="https://www.youtube.com/watch?v=gROVNLvCQz0">Como realizar circuito digital con FPGA y ICESTUDIO muy facil (Clase 15)</a>
-                <div class="video-responsive">
-                    <a ng-click="openUrl('https://www.youtube.com/watch?v=gROVNLvCQz0', $event)" href="https://www.youtube.com/watch?v=gROVNLvCQz0">
-                    <img class="img-responsive" src="resources/images/version-notes/0.5.1n201009/tutorial-acadenas.png"></a>
-                </div>
-            </p>
-
-            <h2>...And much more!!</h2>
-            <p>The FPGAwars community has been very active these months. Check out these other awesome projects!
+            <h2>...From the FPGAwars community</h2>
+            <p>Projects and documentation generated by the FPGAwars community since the last nightly-build
               <ul>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/Democrito/I2C_only_write', $event)" href="https://github.com/Democrito/I2C_only_write">Tutorial on the use of I2C bus</a>
-                        (read only mode), by <a ng-click="openUrl('https://github.com/Democrito', $event)" href="https://github.com/Democrito">Demócrito</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/jcarolinares/ATARI-Joystick-FPGA-Driver', $event)"
-                            href="https://github.com/jcarolinares/ATARI-Joystick-FPGA-Driver">Controller for the Atari Joystick</a>, by
-                        <a ng-click="openUrl('https://github.com/jcarolinares', $event)" href="https://github.com/jcarolinares">Julian Caro Linares</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/FPGAwars/Collection-stdio/tree/master/examples/Multi-board', $event)"
-                            href="https://github.com/FPGAwars/Collection-stdio/tree/master/examples/Multi-board">Multiboard Hello world serial examples</a>
-                        by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Teclado%20Matricial%204x4', $event)" href="https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Teclado%20Matricial%204x4">Matrix keyboard controller</a>
-                        by <a ng-click="openUrl('https://github.com/altenife', $event)" href="https://github.com/altenife">Alberto Nicás</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Mando%20IR', $event)" href="https://github.com/altenife/Things-cosas-icestudio/tree/master/Bloques/Mando%20IR">NEC IR Remote controller</a>
-                        by <a ng-click="openUrl('https://github.com/altenife', $event)" href="https://github.com/altenife">Alberto Nicás</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/v-gzvkIyNoI/m/7oGyU4R9AAAJ', $event)" href="https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/v-gzvkIyNoI/m/7oGyU4R9AAAJ">Position control for stepper motors</a>
-                        by <a ng-click="openUrl('https://github.com/Democrito', $event)" href="https://github.com/Democrito">Demócrito</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/p1Pdp_Cllt8', $event)" href="https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/p1Pdp_Cllt8">Breadboard shield for the Alhambra II board</a>
-                        by <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/8ZAsVxEbBP0', $event)" href="https://groups.google.com/g/fpga-wars-explorando-el-lado-libre/c/8ZAsVxEbBP0">Hardware Test Benches</a>
-                        by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
-                    </li>
-                    <li>
-                        <a ng-click="openUrl('https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.8:-Entrada-y-Salida-de-bits-con-componentes-virtuales', $event)" href="https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.8:-Entrada-y-Salida-de-bits-con-componentes-virtuales">Technical notebook 8: Web panels</a>
-                        by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
-                    </li>
+                  
+                <li>
+                    16-bits RISC CPU in Verilog, by 
+                        <a ng-click="openUrl('http://www.ele.uva.es/~jesus/', $event)" href="http://www.ele.uva.es/~jesus/">
+                        Jesús Arias Alvarez</a>
+                    [
+                        <a ng-click="openUrl('http://www.ele.uva.es/~jesus/cpu_v2.pdf',$event)" href="http://www.ele.uva.es/~jesus/cpu_v2.pdf">
+                           Documentation</a>
+                    ] (PDF)(Spanish) [
+
+                    <a ng-click="openUrl('http://www.ele.uva.es/~jesus/cpu_v2.tgz',$event)" href="http://www.ele.uva.es/~jesus/cpu_v2.tgz">
+                    Project File</a>
+                    ]
+
+                </li>
+
+                <li>
+                    <a ng-click="openUrl('https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.9:-Memorias', $event)" 
+                    href="https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.9:-Memorias">
+                    Technical notebook 9: Memories</a> (In Spanish)
+                    by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
+                </li>
+                <li>Serie of
+                    
+                    <a ng-click="openUrl('https://www.youtube.com/watch?v=x2YvcWnVVhc&list=PLmnz0JqIMEzVo7w2pv6Q04QgRaBTkqR30&index=39%5D', $event)" 
+                    href="https://www.youtube.com/watch?v=x2YvcWnVVhc&list=PLmnz0JqIMEzVo7w2pv6Q04QgRaBTkqR30&index=39%5D">
+                    4 youtube videos teaching about memories </a> (in Spanish) 
+                    by <a ng-click="openUrl('https://github.com/Obijuan', $event)" href="https://github.com/Obijuan">Obijuan</a>
+                </li>
               </ul>
             </p>
 
@@ -195,7 +121,7 @@
             <p>This release has been possible thanks to the great work done by
                 <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas</a>
                 (Charliva at FPGAwars community and @cavearr at GitHub or Twitter). We all in the FPGAwars community appreciate it very much. You rock! Thank you very much!</p>
-            <p><strong>This is a nightly build and there can be some bugs. If you find one, please submit an issue at <a ng-click="openUrl('https://github.com/FPGAwars/icestudio/issues', $event)" href="https://github.com/FPGAwars/icestudio/issues">Icestudio repository</a>, indicating with a tag [nightly] in the issue subject</a></strong></p>
+            <p><strong>This is a nightly build and there can be some bugs. If you find one, please submit an issue at <a ng-click="openUrl('https://github.com/FPGAwars/icestudio/issues', $event)" href="https://github.com/FPGAwars/icestudio/issues">Icestudio repository</a>. Write the tag [nightly] in the issue subject</a></strong></p>
             <br>
             <p>Icestudio is part of <a ng-click="openUrl('http://fpgawars.github.io/')">FPGAwars</a> community</p>
         </div>
