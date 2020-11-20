@@ -80,7 +80,6 @@ angular.module('icestudio')
       if (data && data.name && data.ports) {
 
         // Header
-
         code += '\nmodule ' + data.name;
 
         //-- Parameters
@@ -671,13 +670,22 @@ angular.module('icestudio')
         }
 
         // Dependencies modules
-
+        if(typeof project.package !== 'undefined'){
+                   
+          code+='\n/*-------------------------------------------------*/\n';
+          code+='\n/*-- '+project.package.name+'  */\n';
+          code+='\n/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
+          code+='\n/*-- '+project.package.description+'\n';
+          code+='\n/*-------------------------------------------------*/\n';
+          
+          
+        }
         for (var d in dependencies) {
           code += verilogCompiler(utils.digestId(d), dependencies[d]);
         }
 
-        // Code modules
-
+        // Code modules 
+      
         for (i in blocks) {
           block = blocks[i];
           if (block) {
