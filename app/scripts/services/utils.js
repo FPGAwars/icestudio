@@ -26,9 +26,14 @@ angular.module('icestudio')
     // Get the system executable
     this.getPythonExecutable = function () {
       if (!_pythonExecutableCached) {
-        const possibleExecutables = [];
 
-        if (common.WIN32) {
+        const possibleExecutables = [];
+        if(typeof common.PYTHON_ENV !== 'undefined' &&
+        common.PYTHON_ENV .length>0){
+
+          possibleExecutables.push(common.PYTHON_ENV);
+
+        }else if (common.WIN32) {
           possibleExecutables.push('C:\\Python38\\python.exe');
           possibleExecutables.push('C:\\Python37\\python.exe');
           possibleExecutables.push('C:\\Python36\\python.exe');
@@ -60,7 +65,7 @@ angular.module('icestudio')
           possibleExecutables.push('python');
 
         }
-
+        console.log('possible python', possibleExecutables);
         for (var i in possibleExecutables) {
           var executable = possibleExecutables[i];
           if (isPython3(executable)) {
@@ -73,6 +78,7 @@ angular.module('icestudio')
     };
 
     function isPython3(executable) {
+
       console.log('Python test',executable);
       executable += ' -V';
       try {
@@ -171,6 +177,7 @@ angular.module('icestudio')
     };
 
     this.checkDefaultToolchain = function () {
+      console.log('Toolchain start',common.TOOLCHAIN_DIR);
       try {
         // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();

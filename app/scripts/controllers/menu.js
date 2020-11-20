@@ -501,9 +501,6 @@ angular.module('icestudio')
         if (newExternalPlugins !== externalPlugins) {
           if (newExternalPlugins === '' || nodeFs.existsSync(newExternalPlugins)) {
             profile.set('externalPlugins', newExternalPlugins);
-            //collections.loadExternalCollections();
-            //collections.selectCollection(); // default
-            //utils.rootScopeSafeApply();
             alertify.success(gettextCatalog.getString('External plugins updated'));
           } else {
             evt.cancel = true;
@@ -514,7 +511,49 @@ angular.module('icestudio')
         }
       });
     };
+    $scope.setPythonEnv = function () {
+      let pythonEnv = profile.get('pythonEnv');
+      let formSpecs = [{
+        type: 'text',
+        title: gettextCatalog.getString('Enter the python version > 3.8 path'),
+        value: pythonEnv.python || ''
+      },{
+        type: 'text',
+        title: gettextCatalog.getString('Enter the pip version > 3.8 path'),
+        value:  pythonEnv.pip || ''
+      
+      }
+    ];
+      utils.renderForm(formSpecs, function (evt, values) {
+        
+        let newPythonPath= values[0];
+        let newPipPath= values[1];
 
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        if (newPythonPath !== pythonEnv.python || newPipPath !== pythonEnv.pip) {
+          if (
+            (newPythonPath === '' || nodeFs.existsSync(newPythonPath) ) &&
+             (newPipPath === '' || nodeFs.existsSync(newPipPath) )
+             ){
+
+               let newPythonEnv ={python: newPythonPath, pip:newPipPath};
+            profile.set('pythonEnv', newPythonEnv);
+            
+            alertify.success(gettextCatalog.getString('Python Environment updated'));
+          } else {
+            evt.cancel = true;
+            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', {
+              path: 'of python or pip'
+            }, 5));
+          }
+        }
+      });
+    };
+
+
+ 
 
     $scope.setExternalCollections = function () {
       var externalCollections = profile.get('externalCollections');

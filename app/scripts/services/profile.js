@@ -16,7 +16,8 @@ angular.module('icestudio')
       'uiTheme': 'light',
       'remoteHostname': '',
       'showFPGAResources': false,
-      'displayVersionInfoWindow': 'yes'
+      'displayVersionInfoWindow': 'yes',
+      'pythonEnv':{'python':'','pip':''}
     };
 
     if (common.DARWIN) {
@@ -39,9 +40,16 @@ angular.module('icestudio')
             'remoteHostname': data.remoteHostname || '',
             'showFPGAResources': data.showFPGAResources || false,
             'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes',
-            'lastVersionReview':data.lastVersionReview || false
+            'lastVersionReview':data.lastVersionReview || false,
+            'pythonEnv':data.pythonEnv || {'python':'','pip':''}
 
           };
+          
+          if(self.data.pythonEnv.python.length>0){
+            common.PYTHON_ENV=self.data.pythonEnv.python;
+            console.log('PYTHON',common.PYTHON_ENV);
+          }
+
           //-- Custom Theme support
           if(self.data.uiTheme !== 'light'){
             let cssFile='<link  rel="stylesheet" href="resources/uiThemes/dark/dark.css">';
