@@ -1283,7 +1283,10 @@ angular.module('icestudio')
         };
 
         this.isEnabled = function () {
+            if(typeof paper !== 'undefined' && paper !==null && paper !== false){
             return paper.options.enabled;
+            }
+            return false;
         };
 
         this.loadDesign = function (design, opt, callback) {

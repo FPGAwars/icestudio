@@ -673,10 +673,10 @@ angular.module('icestudio')
         if(typeof project.package !== 'undefined'){
                    
           code+='\n/*-------------------------------------------------*/\n';
-          code+='\n/*-- '+project.package.name+'  */\n';
-          code+='\n/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
-          code+='\n/*-- '+project.package.description+'\n';
-          code+='\n/*-------------------------------------------------*/\n';
+          code+='/*-- '+project.package.name+'  */\n';
+          code+='/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
+          code+='/*-- '+project.package.description+'\n';
+          code+='/*-------------------------------------------------*/\n';
           
           
         }
