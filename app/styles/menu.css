@@ -42,6 +42,11 @@
   overflow: auto*/
 }
 
+.dropdown-overflow {
+  max-height: calc(100vh - 120px);
+  overflow: auto
+}
+
 .dropdown-submenu:hover > .dropdown-menu {
   visibility: visible;
   transition-delay: 0.3s;
