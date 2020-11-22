@@ -317,7 +317,8 @@ angular.module('icestudio')
       let localdir=filepath.substr(0,filepath.lastIndexOf(b)); 
       let dirname = b.substr(0, b.lastIndexOf('.'));
       let path = nodePath.join(localdir,'ice-build');
-      return nodePath.join(path,dirname).replace(/ /g, '_');
+     //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
+      return nodePath.join(path,dirname);
     };
 
     this.readFile = function (filepath) {

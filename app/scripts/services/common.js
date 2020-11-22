@@ -93,6 +93,7 @@ angular.module('icestudio')
       unsafeCleanup: true
     });
     this.BUILD_DIR = this.BUILD_DIR_OBJ.name;
+    this.BUILD_DIR_TMP = this.BUILD_DIR_OBJ.name;
 
     this.PATTERN_PORT_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
@@ -119,13 +120,21 @@ angular.module('icestudio')
       return _dir;
     }
     this.setBuildDir = function(buildpath){
+      let fserror=false;
       if (!nodeFs.existsSync(buildpath)){
-        console.log('CREANDO',buildpath);
-        nodeFs.mkdirSync(buildpath, { recursive: true });
+        try{
+          nodeFs.mkdirSync(buildpath, { recursive: true });
+        }catch (e) {
+          fserror=true;
+        }
       }
-      this.BUILD_DIR=buildpath;
-
+      if(!fserror){
+        this.BUILD_DIR=buildpath;
+      }else{
+        this.BUILD_DIR=this.BUILD_DIR_TMP;
+      }
     };
+    
     this.showToolchain = function () {
       return (this.selectedBoard && this.selectedBoard.info.interface !== 'GPIO') || false;
     };
