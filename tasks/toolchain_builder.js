@@ -331,7 +331,7 @@ function getPythonExecutable() {
         const result = childProcess.spawnSync(executable, args);
         return (result !== false && result !== null &&
           (result.stdout.toString().indexOf('3.5') >= 0 || result.stdout.toString().indexOf('3.6') >= 0 ||
-            result.stdout.toString().indexOf('3.7') >= 0 || result.stdout.toString().indexOf('3.8') >= 0) ||
+            result.stdout.toString().indexOf('3.7') >= 0 || result.stdout.toString().indexOf('3.8') >= 0 ||
             result.toString().indexOf('3.9') >= 0));
       } catch (e) {
         return false;
