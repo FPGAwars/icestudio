@@ -197,7 +197,7 @@
             <ul uib-dropdown-menu>
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Board' | translate }}</a>
-                <ul uib-dropdown-menu>
+                <ul uib-dropdown-menu class="dropdown-overflow">
                    <li><a><b>HX1K</b></a></li>
                    <li ng-repeat="board in common.boards">
                      <menuboard type="'HX1K'" board="board"></menuboard>
