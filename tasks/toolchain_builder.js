@@ -277,6 +277,7 @@ function getPythonExecutable() {
     const possibleExecutables = [];
 
     if (process.platform === 'win32') {
+          possibleExecutables.push('C:\\Python39\\python.exe');
           possibleExecutables.push('C:\\Python38\\python.exe');
           possibleExecutables.push('C:\\Python37\\python.exe');
           possibleExecutables.push('C:\\Python36\\python.exe');
@@ -286,6 +287,7 @@ function getPythonExecutable() {
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
+          possibleExecutables.push('/usr/bin/python3.9');
           possibleExecutables.push('/usr/bin/python3.8');
           possibleExecutables.push('/usr/bin/python3.7');
           possibleExecutables.push('/usr/bin/python3.6');
@@ -294,12 +296,14 @@ function getPythonExecutable() {
           possibleExecutables.push('/usr/bin/python');
 
           possibleExecutables.push('/usr/local/bin/python3.8');
+          possibleExecutables.push('/usr/local/bin/python3.9');
           possibleExecutables.push('/usr/local/bin/python3.7');
           possibleExecutables.push('/usr/local/bin/python3.6');
           possibleExecutables.push('/usr/local/bin/python3.5');
           possibleExecutables.push('/usr/local/bin/python3');
           possibleExecutables.push('/usr/local/bin/python');
  
+          possibleExecutables.push('python3.9');
           possibleExecutables.push('python3.8');
           possibleExecutables.push('python3.7');
           possibleExecutables.push('python3.6');
@@ -327,7 +331,8 @@ function getPythonExecutable() {
         const result = childProcess.spawnSync(executable, args);
         return (result !== false && result !== null &&
           (result.stdout.toString().indexOf('3.5') >= 0 || result.stdout.toString().indexOf('3.6') >= 0 ||
-            result.stdout.toString().indexOf('3.7') >= 0 || result.stdout.toString().indexOf('3.8') >= 0) );
+            result.stdout.toString().indexOf('3.7') >= 0 || result.stdout.toString().indexOf('3.8') >= 0) ||
+            result.toString().indexOf('3.9') >= 0));
       } catch (e) {
         return false;
       }
