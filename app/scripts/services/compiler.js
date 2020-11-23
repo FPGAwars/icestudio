@@ -796,6 +796,10 @@ angular.module('icestudio')
       var blocks = project.design.graph.blocks;
       opt = opt || {};
 
+      code += '# -- Board: '
+      code += common.selectedBoard.name
+      code += '\n\n'
+
       for (i in blocks) {
         block = blocks[i];
         if (block.type === 'basic.input' ||
@@ -819,14 +823,21 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'LOCATE COMP "';
-            code += utils.digestId(block.id);
+            code += utils.digestId(block.id);  //-- Future improvement: use pin.name. It should also be changed in the main module
             code += '" SITE "';
             code += value;
             code += '";\n';
 
-            code += 'IOBUF PORT "';
+            code += 'IOBUF  PORT "';
             code += utils.digestId(block.id);
-            code += '" PULLMODE=NONE IO_TYPE=LVCMOS33 DRIVE=4;\n';
+            code += '" ';
+
+            //-- Get the pullmode property of the physical pin (its id is pin.value)
+            let pullmode = common.selectedBoard.pinout.find(x => x.value == value).pullmode;
+            pullmode = (typeof pullmode == 'undefined') ? 'NONE' : pullmode;
+
+            code += 'PULLMODE=' + pullmode
+            code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
           }
         }
       }
