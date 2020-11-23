@@ -12,7 +12,7 @@ angular.module('icestudio')
       switch (target) {
         case 'verilog':
           content += header('//', opt);
-          content += '`default_nettype none\n';
+          content += '`default_nettype none\n\n';
           content += verilogCompiler('main', project, opt);
           files.push({
             name: 'main.v',
@@ -634,7 +634,16 @@ angular.module('icestudio')
           }
 
           var params = getParams(project);
+
+          //-- Future improvement: After reading the ports, get the names defined in the .pcf or .lpf file
+          //-- these are better names to use in the top module, instead of the current not-for-humans pin names
           var ports = getPorts(project);
+          
+          
+          //-- Debug
+          //console.log(ports)
+
+
           var content = getContent(name, project);
 
           // Initialize output pins
@@ -666,6 +675,8 @@ angular.module('icestudio')
             ports: ports,
             content: content
           };
+
+          code += '//---- Top entity'
           code += module(data);
         }
 
