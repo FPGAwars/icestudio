@@ -805,6 +805,10 @@ angular.module('icestudio')
         if (block.type === 'basic.input' ||
           block.type === 'basic.output') {
 
+            //-- Future improvement: Both cases: 1-pin or multiple pins in an array
+            //-- could be refactorized instead of repeating code
+            //-- (i usually name this as plural and singular cases)
+
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
               pin = block.data.pins[p];
