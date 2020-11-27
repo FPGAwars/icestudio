@@ -944,7 +944,6 @@ angular.module('icestudio')
       async.series([
         checkInternetConnection,
         ensurePythonIsAvailable,
-        extractVirtualenv,
         createVirtualenv,
         installOnlineApio,
         apioInstallSystem,
@@ -981,11 +980,6 @@ angular.module('icestudio')
         resultAlert = alertify.error(gettextCatalog.getString('At least Python 3.5 is required'), 30);
         callback(true);
       }
-    }
-
-    function extractVirtualenv(callback) {
-      updateProgress(gettextCatalog.getString('Extract virtualenv files...'), 5);
-      utils.extractVirtualenv(callback);
     }
 
     function createVirtualenv(callback) {

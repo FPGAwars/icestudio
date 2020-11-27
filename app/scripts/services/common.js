@@ -40,7 +40,7 @@ angular.module('icestudio')
     // Command output
     this.commandOutput = '';
 
-    // Apio URL
+    // Apio develop URL
     this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';
 
     // OS
@@ -64,10 +64,6 @@ angular.module('icestudio')
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
-    this.VENV = 'virtualenv-16.7.10';
-    this.VENV_DIR = nodePath.join(this.CACHE_DIR, this.VENV);
-    this.VENV_ZIP = nodePath.join('resources', 'virtualenv', this.VENV + '.zip');
-
     this.APP_DIR = nodePath.dirname(process.execPath);
     this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
 
@@ -82,7 +78,9 @@ angular.module('icestudio')
     this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
     this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
 
+    //-- Folder name for the virtual environment
     this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
+
     this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
     this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');

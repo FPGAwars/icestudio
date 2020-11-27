@@ -110,10 +110,6 @@ angular.module('icestudio')
       });
     };
 
-    this.extractVirtualenv = function (callback) {
-      this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
-    };
-
     function disableEvent(event) {
       event.stopPropagation();
       event.preventDefault();
@@ -163,21 +159,37 @@ angular.module('icestudio')
       );
     };
 
+    //------------------------------------------
+    //-- Create the python virtual environment
+    //-- with the command python -m venv venv
+    //------------------------------------------
     this.createVirtualenv = function (callback) {
+
+      //-- Check if the .icestudio folder exist
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
+
+        //-- Create the .icestudio folder
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
+
+      //-- Check if the venv folder exist
       if (!nodeFs.existsSync(common.ENV_DIR)) {
-        nodeFs.mkdirSync(common.ENV_DIR);
-        var command = [this.getPythonExecutable(),
-          coverPath(nodePath.join(common.VENV_DIR, 'virtualenv.py')),
-          coverPath(common.ENV_DIR)
-        ];
+
+        //-- Construct the command for creating the virtual env:
+        //-- python -m venv venv
+        var command = [this.getPythonExecutable(), '-m venv', coverPath(common.ENV_DIR)];
+
+        //-- Debug
+        console.log(command);
+
+        //-- Check if extra parameter is needed for windows...
         if (common.WIN32) {
-          command.push('--always-copy');
+          //command.push('--always-copy');
         }
         this.executeCommand(command, callback);
+
       } else {
+        //-- The virtual environmente already existed
         callback();
       }
     };
