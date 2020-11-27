@@ -952,10 +952,11 @@ angular.module('icestudio')
         apioInstallIce40,
         apioInstallECP5,
         apioInstallFujprog,
+        apioInstallIcesprog,
+        apioInstallDfu,
         apioInstallIverilog,
         apioInstallDrivers,
         apioInstallScons,
-        apioInstallIcesprog,
         installationCompleted
       ]);
     }
@@ -1052,6 +1053,11 @@ angular.module('icestudio')
     function apioInstallIcesprog(callback) {
       updateProgress('apio install icesprog', 50);
       utils.apioInstall('icesprog', callback);
+    }
+
+    function apioInstallDfu(callback) {
+      updateProgress('apio install dfu', 50);
+      utils.apioInstall('dfu', callback);
     }
 
     function apioInstallDrivers(callback) {
