@@ -120,7 +120,7 @@ npm start
 |:----------:|:----------------------------------------:|
 | English    | ![Progress](http://progress-bar.dev/100) |
 | Spanish    | ![Progress](http://progress-bar.dev/92)  |
-| Italian    | ![Progress](http://progress-bar.dev/89)  |
+| Italian    | ![Progress](http://progress-bar.dev/100) |
 | French     | ![Progress](http://progress-bar.dev/78)  |
 | Dutch      | ![Progress](http://progress-bar.dev/78)  |
 | Czech      | ![Progress](http://progress-bar.dev/78)  |
