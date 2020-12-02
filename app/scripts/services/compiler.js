@@ -676,7 +676,7 @@ angular.module('icestudio')
             content: content
           };
 
-          code += '//---- Top entity'
+          code += '//---- Top entity';
           code += module(data);
         }
 
@@ -807,9 +807,9 @@ angular.module('icestudio')
       var blocks = project.design.graph.blocks;
       opt = opt || {};
 
-      code += '# -- Board: '
-      code += common.selectedBoard.name
-      code += '\n\n'
+      code += '# -- Board: ';
+      code += common.selectedBoard.name;
+      code += '\n\n';
 
       for (i in blocks) {
         block = blocks[i];
@@ -832,13 +832,13 @@ angular.module('icestudio')
 
               code += 'IOBUF  PORT "';
               code += utils.digestId(block.id);
-              code += '[' + pin.index + ']" '
+              code += '[' + pin.index + ']" ';
 
               //-- Get the pullmode property of the physical pin (its id is pin.value)
-              let pullmode = common.selectedBoard.pinout.find(x => x.value == value).pullmode;
-              pullmode = (typeof pullmode == 'undefined') ? 'NONE' : pullmode;
+              let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
+              pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
 
-              code += 'PULLMODE=' + pullmode
+              code += 'PULLMODE=' + pullmode;
               code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
             }
           } else if (block.data.pins.length > 0) {
@@ -855,10 +855,10 @@ angular.module('icestudio')
             code += '" ';
 
             //-- Get the pullmode property of the physical pin (its id is pin.value)
-            let pullmode = common.selectedBoard.pinout.find(x => x.value == value).pullmode;
-            pullmode = (typeof pullmode == 'undefined') ? 'NONE' : pullmode;
+            let pullmode = common.selectedBoard.pinout.find(x => x.value === value).pullmode;
+            pullmode = (typeof pullmode === 'undefined') ? 'NONE' : pullmode;
 
-            code += 'PULLMODE=' + pullmode
+            code += 'PULLMODE=' + pullmode;
             code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
           }
         }
