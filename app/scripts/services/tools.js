@@ -905,7 +905,7 @@ angular.module('icestudio')
       // Reset toolchain
       async.series([
         ensurePythonIsAvailable,
-       /* extractVirtualenv,*/
+        /*extractVirtualenv,*/
         createVirtualenv,
         extractDefaultApio,
         installDefaultApio,

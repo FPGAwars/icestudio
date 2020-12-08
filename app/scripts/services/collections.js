@@ -1,3 +1,4 @@
+
 'use strict';
 
 angular.module('icestudio')
@@ -5,7 +6,16 @@ angular.module('icestudio')
     common,
     profile,
     gettextCatalog,
-    nodePath) {
+    nodePath,
+    $exceptionHandler) {
+    
+
+     let iceColl= new IceCollection({
+      location :{ default: common.DEFAULT_COLLECTION_DIR,
+                  internal: common.INTERNAL_COLLECTIONS_DIR,
+                  external: profile.get('externalCollections')
+                }
+    });
 
     const DEFAULT = '';
     const MAX_LEVEL_SEARCH = 20;
@@ -17,78 +27,31 @@ angular.module('icestudio')
     };
 
     this.loadDefaultCollection = function () {
-      common.defaultCollection = getCollection(
-        DEFAULT,
-        common.DEFAULT_COLLECTION_DIR,
-        utils.getFilesRecursive(common.DEFAULT_COLLECTION_DIR, MAX_LEVEL_SEARCH)
-      );
+      common.defaultCollection = iceColl.getDefault();
     };
 
     this.loadInternalCollections = function () {
-      var internalCollections = utils.findCollections(common.INTERNAL_COLLECTIONS_DIR);
+      var internalCollections = iceColl.find(common.INTERNAL_COLLECTIONS_DIR);
       common.internalCollections = loadCollections(internalCollections);
     };
 
     this.loadExternalCollections = function () {
+      try{
       var externalCollectionsPath = profile.get('externalCollections');
       if (externalCollectionsPath !== common.INTERNAL_COLLECTIONS_DIR) {
-        var externalCollections = utils.findCollections(externalCollectionsPath);
+        var externalCollections = iceColl.find(externalCollectionsPath);
         common.externalCollections = loadCollections(externalCollections);
       }
+
+      }  catch(e) { $exceptionHandler(e); }
     };
 
     function loadCollections(paths) {
-      var collections = [];
-      paths.forEach(function (path) {
-        collections.push(getCollection(
-          nodePath.basename(path),
-          path,
-          utils.getFilesRecursive(path, MAX_LEVEL_SEARCH)
-        ));
-      });
-      return collections;
+      return iceColl.getAll(paths);
     }
 
     function getCollection(name, path, children) {
-      var collection = {
-        name: name,
-        path: path,
-        content: {
-          blocks: [],
-          examples: [],
-          package: {},
-          readme: ''
-        }
-      };
-      for (var i in children) {
-        var child = children[i];
-        switch (child.name) {
-          case 'blocks':
-            if (child.children) {
-              collection.content.blocks = child.children;
-            }
-            break;
-          case 'examples':
-            if (child.children) {
-              collection.content.examples = child.children;
-            }
-            break;
-          case 'package':
-            if (!child.children) {
-              try {
-                collection.content.package = require(child.path);
-              }
-              catch (e) { }
-            }
-            break;
-          case 'README':
-            if (!child.children) {
-              collection.content.readme = child.path;
-            }
-            break;
-        }
-      }
-      return collection;
+      return iceColl.get(name,path,children);
     }
 
     this.selectCollection = function (path) {

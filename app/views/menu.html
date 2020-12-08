@@ -406,14 +406,14 @@
               </li>
             </ul>
           </li>
-
-          <li uib-dropdown
+          <!-- Components of the selected collection -->
+         <li uib-dropdown
               ng-repeat="block in common.selectedCollection.content.blocks" ng-if="block.children"
               ng-mouseover="showMenu(block.name)" ng-mouseleave="hideMenu()" ng-click="fixMenu(block.name)" is-open="status[block.name]">
             <a href uib-dropdown-toggle>{{ block.name | translate }} <span class="caret"></span></a>
             <menutree data="block.children" callback="project.addBlockFile(path)" right="true"></menutree>
           </li>
-
+          <!-- /End of Components of the selected collection -->
         </ul>
 
       </div>

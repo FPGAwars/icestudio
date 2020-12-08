@@ -318,7 +318,8 @@
         'gruntfile.js'
       ],
       options: {
-        jshintrc: '.jshintrc'
+        jshintrc: '.jshintrc',
+        esversion: 6,
       }
     },
 
