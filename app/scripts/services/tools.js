@@ -90,7 +90,6 @@ angular.module('icestudio')
                   commands = commands.concat('--verbose-pnr');
                 }
               }
-              console.log('APIO',commands);
               if (hostname) {
                 return executeRemote(commands, hostname);
               } else {
@@ -351,7 +350,6 @@ angular.module('icestudio')
         function _executeLocal() {
           var apio = utils.getApioExecutable();
           var command = ([apio].concat(commands).concat(['-p', utils.coverPath(common.BUILD_DIR)])).join(' ');
-          console.log('APIO COMMAND',command);
           if (typeof common.DEBUGMODE !== 'undefined' &&
             common.DEBUGMODE === 1) {
 
@@ -436,7 +434,6 @@ angular.module('icestudio')
                 default:
                   resultAlert = alertify.error(gettextCatalog.getString(stdout), 30);
               }
-              console.warn(stdout);
             }
             // Yosys error (Mac OS)
             else if (stdout.indexOf('Library not loaded:') !== -1 &&
@@ -1356,7 +1353,7 @@ angular.module('icestudio')
 
     this.initializePluginManager = function (callbackOnRun) {
       if (typeof ICEpm !== 'undefined') {
-        console.log('ENV', common);
+        //console.log('ENV', common);
         ICEpm.setEnvironment(common);
         ICEpm.setPluginDir(common.DEFAULT_PLUGIN_DIR, function () {
 
