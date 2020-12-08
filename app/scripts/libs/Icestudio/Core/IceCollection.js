@@ -84,7 +84,7 @@ class IceCollection {
             return _this.fs.joinPath(folder, name);
           })
           .filter(function (path) {
-            return (
+            return (_this.fs.isValidPath(path) &&
               (_this.fs.isDir(path) || _this.fs.isSymbolicLink(path)) &&
               _this.isCollectionPath(path)
             );
@@ -93,6 +93,7 @@ class IceCollection {
     } catch (e) {
       console.warn(e);
     }
+    console.log(collectionsPaths);
     return collectionsPaths;
   }
   contains(array, item) {
