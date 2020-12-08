@@ -70,7 +70,6 @@ angular.module('icestudio')
           possibleExecutables.push('python');
 
         }
-        console.log('possible python', possibleExecutables);
         for (var i in possibleExecutables) {
           var executable = possibleExecutables[i];
           if (isPython3(executable)) {
@@ -84,11 +83,9 @@ angular.module('icestudio')
 
     function isPython3(executable) {
 
-      console.log('Python test',executable);
       executable += ' -V';
       try {
         const result = nodeChildProcess.execSync(executable);
-        console.log('==>',result.toString());
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
@@ -179,9 +176,6 @@ angular.module('icestudio')
         //-- python -m venv venv
         var command = [this.getPythonExecutable(), '-m venv', coverPath(common.ENV_DIR)];
 
-        //-- Debug
-        console.log(command);
-
         //-- Check if extra parameter is needed for windows...
         if (common.WIN32) {
           //command.push('--always-copy');
@@ -195,7 +189,6 @@ angular.module('icestudio')
     };
 
     this.checkDefaultToolchain = function () {
-      console.log('Toolchain start',common.TOOLCHAIN_DIR);
       try {
         // TODO: use zip with sha1
         return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();

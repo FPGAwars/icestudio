@@ -42,7 +42,6 @@ class IceHD {
 
             content.forEach(function (name) {
                 let path = _this.joinPath(folder, name);
-               // console.log('getFilesRecursive',path);
                 if (_this.isDir(path)) {
                     fileTree.push({
                         name: name,
