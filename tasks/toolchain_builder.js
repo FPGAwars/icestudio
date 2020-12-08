@@ -34,16 +34,11 @@ function ToolchainBuilder(options) {
     throw new Error('No platform to build!');
   }
 
-  var venvRelease = 'virtualenv-16.7.10';
-
   // Prepare aux directories
   this.options.toolchainDir = path.join(this.options.cacheDir, 'toolchain');
   this.options.pythonPackagesDir = path.join(this.options.toolchainDir, 'default-python-packages');
   this.options.apioDir = path.join(this.options.toolchainDir, 'default-apio');
   this.options.apioPackagesDir = path.join(this.options.toolchainDir, 'default-apio-packages');
-
-  this.options.venvExtractDir = path.join(this.options.toolchainDir, venvRelease);
-  this.options.venvZipPath = path.join('app', 'resources', 'virtualenv', venvRelease + '.zip');
 
   this.options.venvDir = path.join(this.options.toolchainDir, 'venv');
   this.options.venvBinDir = path.join(this.options.venvDir, (process.platform === 'win32' ? 'Scripts' : 'bin'));
@@ -55,7 +50,6 @@ ToolchainBuilder.prototype.build = function () {
   this.emit('log', this.options.venvPip);
   // Let's create the standalone toolchains
   return this.ensurePythonIsAvailable()
-    .then(this.extractVirtualenv.bind(this))
     .then(this.createVirtualenv.bind(this))
     // .then(this.downloadPythonPackages.bind(this))
     // .then(this.packagePythonPackages.bind(this))
@@ -97,10 +91,9 @@ ToolchainBuilder.prototype.createVirtualenv = function () {
   self.emit('log', '> Create virtualenv');
   return new Promise(function(resolve, reject) {
     var command = [
-      getPythonExecutable(),
-      path.join(self.options.venvExtractDir, 'virtualenv.py'),
-      self.options.venvDir
+      getPythonExecutable(), '-m venv', self.options.venvDir
     ];
+
     childProcess.exec(command.join(' '),
       function(error/*, stdout, stderr*/) {
         if (error) { reject(error); }
