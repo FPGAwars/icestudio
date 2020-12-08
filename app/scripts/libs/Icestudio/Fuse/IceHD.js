@@ -5,9 +5,10 @@ class IceHD {
         this.fs = require('fs');
         this.path = require('path');
     }
+    
 
     isDir(path) {
-        return this.fs.lstatSync(path).isDirectory();
+        return this.fs.existsSync(path) && this.fs.lstatSync(path).isDirectory();
     }
     isFile(path) {
         return this.fs.lstatSync(path).isFile();
@@ -23,12 +24,16 @@ class IceHD {
 
     basename(filepath) {
         let b = this.path.basename(filepath);
-        return b.substr(0, b.lastIndexOf('.'));
+        return (b.indexOf('.')<0)? b : b.substr(0, b.lastIndexOf('.'));
     }
 
     readDir(folder){
-
-        return this.fs.readdirSync(folder);
+        let content=[];
+        if(this.isDir(folder)){
+            content=this.fs.readdirSync(folder);
+        }
+        return content;
+        
     }
 
     getFilesRecursive(folder, level) {
@@ -37,7 +42,6 @@ class IceHD {
         const validator = /.*\.(ice|json|md)$/;
         try {
             let content = this.fs.readdirSync(folder);
-
             level--;
 
             content.forEach(function (name) {
@@ -56,7 +60,8 @@ class IceHD {
                 }
             });
         } catch (e) {
-            console.warn(e);
+            //-- If dir not exists , hide exception on read
+            //-- D# console.warn(e);
         }
 
         return fileTree;
