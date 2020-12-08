@@ -638,11 +638,6 @@ angular.module('icestudio')
           //-- Future improvement: After reading the ports, get the names defined in the .pcf or .lpf file
           //-- these are better names to use in the top module, instead of the current not-for-humans pin names
           var ports = getPorts(project);
-          
-          
-          //-- Debug
-          //console.log(ports)
-
 
           var content = getContent(name, project);
 
