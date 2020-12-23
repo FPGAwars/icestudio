@@ -1,5 +1,6 @@
 
 'use strict';
+/*jshint unused:false*/
 
 angular.module('icestudio')
   .service('collections', function (utils,

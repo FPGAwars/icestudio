@@ -1,3 +1,6 @@
+'use strict';
+/*jshint unused:false*/
+
 class IceHD {
 
     constructor() {

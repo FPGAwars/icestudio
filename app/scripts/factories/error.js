@@ -1,3 +1,4 @@
+'use strict';
 angular.
   module('exceptionOverwrite', []).
   factory('$exceptionHandler', ['$log', 'logErrorsToBackend', function($log, logErrorsToBackend) {

@@ -47,6 +47,8 @@
     "gettext": false,
     "ace": false,
     "g": false,
-    "V": false
+    "V": false,
+    "IceCollection":false,
+    "IceHD": false
   }
 }
