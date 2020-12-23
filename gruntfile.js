@@ -293,7 +293,12 @@
     watch: {
       scripts: {
         files: [
-          'app/resources/**/*.*',
+          'app/resources/boards/**/*.*',
+          'app/resources/fonts/**/*.*',
+          'app/resources/images/**/*.*',
+          'app/resources/locale/**/*.*',
+          'app/resources/uiThemes/**/*.*',
+          'app/resources/viewers/**/*.*',
           'app/scripts/**/*.*',
           'app/styles/**/*.*',
           'app/views/**/*.*'
