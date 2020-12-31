@@ -15,9 +15,7 @@ var IcePlugManager = function () {
     this.onload = false;
 
     this.version = function () {
-
         console.log('Icestudio Plugin Manager v0.1');
-
     };
 
     this.setEnvironment = function (common) {
@@ -30,7 +28,6 @@ var IcePlugManager = function () {
         let tu = dir.indexOf('resources');
         this.pluginUri = dir.substr(tu);
         this.load(callback);
-
     };
 
     this.isFactory = function (name) {
@@ -49,11 +46,8 @@ var IcePlugManager = function () {
             callback(b);
 
         } else {
-
             callback(false);
         }
-
-
     };
 
 
@@ -83,7 +77,6 @@ var IcePlugManager = function () {
                 excel = jexcel(document.getElementById('icepm-params-table'), _currentFactory.params);
             }
         }).show();
-
     };
 
 
@@ -99,12 +92,9 @@ var IcePlugManager = function () {
                 //let code=ab2str(contents);
                 eval(contents);
                 this.promptFactory(name, str, callback);
-
-
             } else {
                 this.promptFactory(name, str, callback);
             }
-
         } else {
             callback(false);
         }
@@ -113,7 +103,6 @@ var IcePlugManager = function () {
         if (!this.isFactory(name)) {
             return false;
         }
-
         this.plugins[name].params = paramsDef;
     };
 
@@ -122,7 +111,6 @@ var IcePlugManager = function () {
         if (!this.isFactory(name)) {
             return false;
         }
-
         this.plugins[name].factory = callback;
     };
 
@@ -161,7 +149,6 @@ var IcePlugManager = function () {
         return this.plugins;
     };
     this.getBaseUri = function () {
-
         return this.pluginUri;
     };
 
@@ -169,7 +156,6 @@ var IcePlugManager = function () {
         if (typeof this.plugins[id] === 'undefined') {
             return false;
         }
-
         return this.plugins[id];
     };
 
@@ -195,10 +181,7 @@ var IcePlugManager = function () {
                 if (typeof this.window.onClose !== 'undefined') {
                     this.window.onClose();
                 }
-
-
                 this.close(true);
-
             });
 
             newWin.on('loaded', function () {
@@ -210,14 +193,10 @@ var IcePlugManager = function () {
                     }
                 }
                 // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
-
                 if (typeof this.window.onLoad !== 'undefined') {
                     this.window.onLoad(envFiltered);
                 }
             });
-
-
-
         });
     };
 
@@ -226,5 +205,4 @@ var IcePlugManager = function () {
     };
 
     this.init();
-
 };

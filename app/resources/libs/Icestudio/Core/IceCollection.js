@@ -1,6 +1,5 @@
 'use strict';
 /*jshint unused:false*/
-
 class IceCollection {
   constructor(opts) {
     this.constants = {
@@ -96,7 +95,6 @@ class IceCollection {
     } catch (e) {
       console.warn(e);
     }
-    console.log(collectionsPaths);
     return collectionsPaths;
   }
   contains(array, item) {
