@@ -13,6 +13,7 @@ var IcePlugManager = function () {
     this.parametric = new IceParametricHelper();
     this.toload = 0;
     this.onload = false;
+    this.embeds = [];
 
     this.version = function () {
         console.log('Icestudio Plugin Manager v0.1');
@@ -22,6 +23,41 @@ var IcePlugManager = function () {
         this.env = common;
     };
 
+    this.pluginsLoaded = function (callback) {
+        console.log('Plugins Loaded');
+        
+        /* Order plugins by key, because plugins loaded asyncronously and 
+           object hash maintain createion order and sorting this keys is not
+           standard */
+        
+           let ordered=[];
+        for(let prop in this.plugins){
+            ordered.push({
+                key:prop,
+                obj:this.plugins[prop]
+
+            });
+        }
+
+        ordered.sort(function(a,b){
+
+            if (a.key > b.key) {
+                return 1;
+              }
+              if (a.key < b.key) {
+                return -1;
+              }
+              return 0;            
+        });
+
+        let lordered = ordered.length;
+        this.plugins={};
+
+        for(let i=0;i<lordered;i++){
+            this.plugins[ordered[i].key]=ordered[i].obj;
+        }
+        if (typeof callback !== 'undefined') callback();
+    }
 
     this.setPluginDir = function (dir, callback) {
         this.pluginDir = dir;
@@ -49,8 +85,6 @@ var IcePlugManager = function () {
             callback(false);
         }
     };
-
-
 
     this.promptFactory = function (name, str, callback) {
 
@@ -121,7 +155,7 @@ var IcePlugManager = function () {
 
         this.onload = true;
         const fs = require('fs');
-
+        let _this = this;
         fs.readdir(this.pluginDir, function (err, files) {
             this.toload = files.length;
             files.forEach(function (file) {
@@ -136,9 +170,7 @@ var IcePlugManager = function () {
                     this.toload--;
                     if (this.toload === 0) {
                         this.onload = false;
-                        if (typeof callback !== 'undefined') {
-                            callback();
-                        }
+                        _this.pluginsLoaded(callback);
                     }
                 }.bind(this));
             }.bind(this));
@@ -159,14 +191,62 @@ var IcePlugManager = function () {
         return this.plugins[id];
     };
 
-    this.run = function (id) {
+    this.launchEmbedded = function (id, plug, env) {
 
-        let plug = this.getById(id);
+        plug.id = id;
+        plug.env = env;
+        plug.gui = new IceGUI();
+        plug.worker = new Worker(`${this.pluginUri}/${id}/plugin.js`);
+        plug.worker.addEventListener('message', function (e) {
+            let data = JSON.parse(e.data);
+            if (data) {
+                if (typeof data.type !== 'undefined') {
+                    if (data.type === 'eventBus') {
+                        console.log(`EVENT::${data.event}`, data.payload);
+                    } else if (data.type === 'guiBus') {
+                        console.log(`GUI::${data.event}`, data.payload);
+                    } else {
+                        console.log(`UNKNOWN BUS ${data.type}::${data.event}`, data.payload);
+                    }
+                }
+            }
+        }, false);
 
-        if (plug === false) {
-            return false;
-        }
-        let _this = this;
+        this.embeds.push(plug);
+
+        /* START-- TEST FOR EVENT AND GUI BUS, REMOVE LATER 
+ 
+        setTimeout(function(){
+            plug.worker.postMessage(JSON.stringify( {
+                type: "eventBus",
+                event: 'exit',
+                payload:{code:0}
+                })
+                );
+            },15000);
+
+        setTimeout(function(){
+        plug.worker.postMessage(JSON.stringify( {
+            type: "eventBus",
+            event: 'test-msg',
+            payload:{msg:'Mensaje de test'}
+            })
+            );
+        },15000);
+
+        setTimeout(function(){
+        plug.worker.postMessage(JSON.stringify( {
+            type: "guiBus",
+            event: 'gui-msg',
+            payload:{msg:'Mensaje de gui'}
+            })
+            );
+        },25000);
+        /END-- */
+    };
+
+    this.launchOnNewWindow = function (id, plug, env) {
+
         nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (newWin) {
 
             if (typeof plug.manifest.width !== 'undefined') {
@@ -187,17 +267,30 @@ var IcePlugManager = function () {
             newWin.on('loaded', function () {
                 let filter = ['WIN32', 'LINUX', 'DARWIN', 'VERSION', 'LOGFILE', 'BUILD_DIR'];
                 let envFiltered = {};
-                for (let prop in _this.env) {
+                for (let prop in env) {
                     if (filter.indexOf(prop) > -1) {
-                        envFiltered[prop] = _this.env[prop];
+                        envFiltered[prop] = env[prop];
                     }
                 }
-                // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
                 if (typeof this.window.onLoad !== 'undefined') {
                     this.window.onLoad(envFiltered);
                 }
             });
         });
+    };
+
+    this.run = function (id) {
+
+        let plug = this.getById(id);
+        if (plug === false) {
+            return false;
+        }
+        console.log('Plugin::run::', plug);
+        if (typeof plug.manifest.gui !== 'undefined' && plug.manifest.gui.type === 'embedded') {
+            this.launchEmbedded(id, plug, this.env);
+        } else {
+            this.launchOnNewWindow(id, plug, this.env);
+        }
     };
 
     this.init = function () {

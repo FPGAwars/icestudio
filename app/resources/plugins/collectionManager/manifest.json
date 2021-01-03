@@ -3,6 +3,16 @@
     "id":"collectionManager",
     "name": "Collection Manager",
     "icon": "assets/icon.svg",
-    "width": 840,
-    "height":375
+    "gui":{
+        "type":"embedded",
+        "size":{
+            "type":"fixed",
+            
+            "width":"100px",
+            "height":"100px"
+        },
+        "position":{
+           "alignment": "centered" 
+        }
+    }
 }
