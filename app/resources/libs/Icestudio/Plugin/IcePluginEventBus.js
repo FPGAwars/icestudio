@@ -8,12 +8,15 @@ class IcePluginEventBus {
        console.log('IcePluginEventBus::start');
        this.eventBus = new IceEventBus();
         //Capture messages from Icestudio 
+        let _this=this;
         self.addEventListener('message', function (e) {
             let  data = JSON.parse(e.data);
              if(typeof data.type !== 'undefined' && data.type==='eventBus'){
                 console.log('IcePluginEventBus::'+data.event,data.payload);
                 if(data.event === 'exit'){
                     self.close();
+                }else{
+                    _this.eventBus.fire(data.event,data.payload);
                 }
               }
             //self.close();

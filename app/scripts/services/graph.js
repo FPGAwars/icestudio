@@ -119,8 +119,8 @@ angular.module('icestudio')
 
             paper = new joint.dia.Paper({
                 el: element,
-                width: 3000,
-                height: 3000,
+                width: 10000,
+                height: 6000,
                 model: graph,
                 gridSize: gridsize,
                 clickThreshold: 6,
