@@ -15,7 +15,7 @@ function init(args){
     pConfig = args;
 
     console.log('Initialicing', pConfig);
-    let initialHtml='<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+    let initialHtml='<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="color:white;text-align:center;margin-top:20px;">Coming soon</div>';
 
     fetch('assets/css/style.css')
     .then(response => response.text())
