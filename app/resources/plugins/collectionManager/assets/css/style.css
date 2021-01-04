@@ -82,4 +82,17 @@
       opacity: 0.5;
     }
   }
-/* /Start_Spinner  
+/* /Start_Spinner  */
+
+.close-panel{
+  position: absolute;
+  top: 5px;
+  color: white;
+  cursor: pointer;
+  font-style: normal;
+  right: 7px;
+}
+.close-panel::after{
+  font-weight:600; 
+  content:'X';
+}

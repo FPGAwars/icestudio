@@ -2,7 +2,6 @@
 /*jshint evil:true */
 'use strict';
 
-const { Console } = require('console');
 
 var IcePlugManager = function () {
 
@@ -218,9 +217,8 @@ var IcePlugManager = function () {
         plug.id = pid;
         plug.key=id;
         plug.env = env;
-        plug.gui = new IceGUI();
         plug.worker = new Worker(`${this.pluginUri}/${plug.key}/plugin.js`);
-        
+        plug.gui = new IceGUI(plug.worker);
         plug.worker.addEventListener('message', function (e) {
 
             let data = JSON.parse(e.data);
@@ -230,6 +228,7 @@ var IcePlugManager = function () {
                     if (data.type === 'eventBus') {
                     
                         console.log(`EBUS::${data.event}`, data.payload);
+                        _this.ebus.fire(data.event,data.payload);
                     
                     } else if (data.type === 'guiBus') {
                        
@@ -268,38 +267,6 @@ var IcePlugManager = function () {
                                 }
                            ));
 
-
-     
-
-        /* START-- TEST FOR EVENT AND GUI BUS, REMOVE LATER 
- 
-        setTimeout(function(){
-            plug.worker.postMessage(JSON.stringify( {
-                type: "eventBus",
-                event: 'exit',
-                payload:{code:0}
-                })
-                );
-            },15000);
-
-        setTimeout(function(){
-        plug.worker.postMessage(JSON.stringify( {
-            type: "eventBus",
-            event: 'test-msg',
-            payload:{msg:'Mensaje de test'}
-            })
-            );
-        },15000);
-
-        setTimeout(function(){
-        plug.worker.postMessage(JSON.stringify( {
-            type: "guiBus",
-            event: 'gui-msg',
-            payload:{msg:'Mensaje de gui'}
-            })
-            );
-        },25000);
-        /END-- */
     };
 
     this.launchOnNewWindow = function (id, plug, env) {
@@ -358,8 +325,21 @@ var IcePlugManager = function () {
         }
     };
 
+    this.terminate = function(data){
+        for(let i=0;i<this.embeds.length;i++){
+
+            if(this.embeds[i].id===data.id){
+                console.log('===> localizado');
+                this.embeds[i].gui.terminate();
+                this.embeds.splice(i, 1);
+                return;
+            }
+        }
+    };
+
     this.init = function () {
         this.version();
+        this.ebus.subscribe('plugin.terminate','terminate',this);
     };
 
     this.init();
