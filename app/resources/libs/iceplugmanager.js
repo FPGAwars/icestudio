@@ -203,6 +203,14 @@ var IcePlugManager = function () {
         return this.plugins[id];
     };
 
+    this.isRunEmbedded = function(id){
+
+        for(let i=0;i<this.embeds.length;i++){
+            if(this.embeds[i].key===id) return true;
+        }        
+        return false;
+    };
+
     this.launchEmbedded = function (id, plug, env) {
         
         let pid=`${id}-${this.UUID()}`;
@@ -336,7 +344,15 @@ var IcePlugManager = function () {
         }
         console.log('Plugin::run::', plug);
         if (typeof plug.manifest.gui !== 'undefined' && plug.manifest.gui.type === 'embedded') {
-            this.launchEmbedded(id, plug, this.env);
+            let launch=true;
+            if(typeof plug.manifest.multipleInstances !=='undefined' && 
+            plug.manifest.multipleInstances === false &&
+            this.isRunEmbedded(id)){
+                 launch=false;
+            }
+            
+            if(launch) this.launchEmbedded(id, plug, this.env);
+            else console.log('Its running yet');
         } else {
             this.launchOnNewWindow(id, plug, this.env);
         }

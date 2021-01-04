@@ -20,7 +20,29 @@ class IceGUI {
                         (this.elHeight(this.dom.menu) + 
                         this.elHeight(this.dom.footer));
        this.dom.width=window.innerWidth;
+       
+       document.documentElement.style
+       .setProperty('--sandbox-height', `${this.dom.height}px`);
 
+       document.documentElement.style
+       .setProperty('--sandbox-footer-height', `${this.elHeight(this.dom.footer)}px`);
+       
+       document.documentElement.style
+       .setProperty('--sandbox-menu-height', `${this.elHeight(this.dom.menu)}px`);
+       
+       document.documentElement.style
+       .setProperty('--sandbox-menu-plus-footer-height', `${this.elHeight(this.dom.menu) + this.elHeight(this.dom.footer)}px`);
+
+       document.documentElement.style
+       .setProperty('--sandbox-width', `${this.dom.width}px`);
+
+      /* Only for debug purpouses, check if styles are correct */
+      let cssComp= getComputedStyle(document.documentElement);
+      let cssSandbox = { height: cssComp.getPropertyValue('--sandbox-height'),
+                         width:  cssComp.getPropertyValue('--sandbox-width')
+
+                        }; 
+      console.log('SANDBOX',cssSandbox);
     }
     registerEvents(){
         
@@ -35,15 +57,26 @@ class IceGUI {
     createRootNode(args) {
         let id = args.id;
         let conf = args.node;
-
-        console.log(`GUI::createNode::${id}`, conf);
-        this.vdom.push( {
+        let vnode = {
             key: id,
             initial: conf,
             parent: false,
             updated: false,
-            rendered:false
-        });
+            rendered:false,
+            stylesheet:false,
+            html:false
+        };
+
+       console.log(`GUI::createNode::${id}`, conf);
+       if(typeof args.stylesheet !== 'undefined'){
+           vnode.stylesheet = args.stylesheet;
+       }
+       if(typeof args.initialContent !== 'undefined'){
+           vnode.html = args.initialContent;
+       }
+ 
+       this.vdom.push( vnode);
+
         this.update();
     }
 
@@ -121,22 +154,33 @@ class IceGUI {
     
         let css={};
     
-        console.log('NODE',typeof node.position.right);
-    
-        css.color = node.color || '#ffffff';
-        css['background-color'] = node['background-color'] || '#ffffff';
-        css.position = node.size.position || 'absolute';
-        css.width = node.size.width || '100px';
-        css.height = node.size.height || '100px';
-        css.left = node.position.left || 'unset';
-        css.right = node.position.right || 'unset';
-        css.top = node.position.top || 'unset';
-        css.bottom = node.position.bottom || 'unset';
+        css.color = node.color || false;
+        css['background-color'] = node['background-color'] || false;
+        css.position = node.size.position || false;
+        css.width = node.size.width || false;
+        css.height = node.size.height || false;
+        css.left = node.position.left || false;
+        css.right = node.position.right || false;
+        css.top = node.position.top || false;
+        css.bottom = node.position.bottom || false;
         css['z-index'] = node.position['z-index'] || 555;
+
+        if(css.height){
+            css.height=`calc(${css.height} - var(--sandbox-menu-plus-footer-height))`;
+        }
+       
+        if(css.top){
+            css.top=`calc(${css.top} + var(--sandbox-menu-height))`;
+        }
+        
+        if(css.bottom){
+            css.bottom=`calc(${css.bottom} + var(--sandbox-footer-height))`;
+        }
+
 
         let cssTxt='';
         for(let prop in css){
-            cssTxt=`${cssTxt}${prop}:${css[prop]};`;
+            if( css[prop]) cssTxt=`${cssTxt}${prop}:${css[prop]};`;
         }
         return cssTxt;
     }
@@ -149,9 +193,25 @@ class IceGUI {
          let embededStyle=this.computeCss(node.initial);
          let html=`<div id="${id}" style="${embededStyle}"></div>`;        
          
-         console.log('Renderizando',embededStyle,html);
          this.vdom[index].rendered=true;
          this.dom.root.insertAdjacentHTML('beforeend',html);
+         this.dom[id]=this.el(`#${id}`);
+         let wrapper = document.createElement('div');
+         wrapper.setAttribute('class','wrapper');
+        
+         if(node.html){
+             console.log('HTML',node.html);
+             wrapper.innerHTML=node.html;
+         }
+
+         let shadow = this.dom[id].attachShadow({mode: 'open'});
+         if(node.stylesheet){
+            let style = document.createElement('style');
+
+            style.textContent = node.stylesheet;
+            shadow.appendChild(style);
+         }
+         shadow.appendChild(wrapper);
         }
     }
 

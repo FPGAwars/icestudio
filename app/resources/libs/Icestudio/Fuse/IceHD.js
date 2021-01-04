@@ -71,4 +71,13 @@ class IceHD {
 
         return fileTree;
     }
+
+    readFile(path, callback,callbackErr){
+        if(this.isValidPath(path)){
+            let content = nodeFs.readFileSync(path).toString();
+            callback(path,content);
+        }else{
+           if(typeof calbackErr !== 'undefined') callbackErr(path);
+        }
+    }
 }

@@ -3,11 +3,12 @@
     "id":"collectionManager",
     "name": "Collection Manager",
     "icon": "assets/icon.svg",
+    "multipleInstances": false,
     "gui":{
         "type":"embedded",
         "size":{
             "position":"fixed",
-            "width":"100px",
+            "width":"350px",
             "height":"100%"
         },
         "position":{

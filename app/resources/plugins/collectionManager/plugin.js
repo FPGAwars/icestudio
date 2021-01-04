@@ -15,10 +15,15 @@ function init(args){
     pConfig = args;
 
     console.log('Initialicing', pConfig);
+    let initialHtml='<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+
+    fetch('assets/css/style.css')
+    .then(response => response.text())
+    .then( cssText => {
+        console.log('CSS',cssText)
+        gui.publish('createRootNode',{id:pConfig.id, initialContent: initialHtml, stylesheet: cssText, node:args.manifest.gui});
+    });
     
-    if(typeof args.manifest.gui !== 'undefined'){
-        gui.publish('createRootNode',{id:pConfig.id, node:args.manifest.gui});
-    }
 
 }
 
