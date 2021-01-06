@@ -19,8 +19,8 @@ set_io -nowarn BTN_A 19
 set_io -nowarn BTN_B 18
 set_io -nowarn BTN_U 38
 set_io -nowarn BTN_D 34
-set_io -nowarn BTN_L 36
-set_io -nowarn BTN_R 32
+set_io -nowarn BTN_L 32
+set_io -nowarn BTN_R 36
 
 # UART (to FT2232H)
 set_io -nowarn RX 6
@@ -56,4 +56,3 @@ set_io -nowarn P6   47
 set_io -nowarn P7   48
 set_io -nowarn P8   2
 set_io -nowarn P9   3
-
