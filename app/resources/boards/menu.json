@@ -41,7 +41,8 @@
       "fpga101",
       "iCE40-UP5K",
       "fomu",
-	  "iCESugar_1_5"
+      "iCESugar_1_5",
+      "OK-iCE40Pro"
     ]
   },
   {

@@ -48,6 +48,12 @@
   </a>
 </li>
 <li>
+  <a href ng-click="selectLanguage('zh_TW')">
+    {{ 'Taiwan' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'zh_TW'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
   <a href ng-click="selectLanguage('zh_CN')">
     {{ 'Chinese' | translate }}&ensp;
     <span ng-show="profile.data.language == 'zh_CN'" class="glyphicon glyphicon-ok-circle"></span>
