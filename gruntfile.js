@@ -426,6 +426,9 @@
   grunt.registerTask('gettext', [
     'nggettext_extract'
   ]);
+  grunt.registerTask('compiletext', [
+    'nggettext_compile'
+  ]);
   grunt.registerTask('getcollection', [
     'clean:collection',
     'wget:collection',

@@ -235,7 +235,7 @@ msgstr "檢查Python..."
 
 #: app/views/languages.html:52
 msgid "Chinese"
-msgstr "中文"
+msgstr "中文(簡)"
 
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:301 app/scripts/services/blocks.js:71
@@ -326,7 +326,7 @@ msgstr "查看執行結果"
 #: app/views/version-5.1.html:27 app/views/version-5.1n200403.html:52
 #: app/views/version-5.1n200523.html:65
 msgid "Community News"
-msgstr "公開訊息"
+msgstr "社群新消息"
 
 #: app/views/menu.html:364
 msgid "Community forum"
@@ -355,7 +355,7 @@ msgstr "拷貝複製或拷貝Clone區塊"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr "Coral"
+msgstr "珊瑚色"
 
 #: app/scripts/services/tools.js:986
 msgid "Create virtualenv..."
@@ -439,7 +439,7 @@ msgstr "說明文件"
 #: app/views/version-5.1n200403.html:65 app/views/version-5.1n200523.html:78
 #: app/views/version-5.1n201009.html:204 app/views/version.html:164
 msgid "Don't display"
-msgstr "無顯示"
+msgstr "不再顯示"
 
 #: app/views/version-5.1.html:17
 msgid "Download or clone and use these SOCs as Icestudio blocks:"
@@ -650,7 +650,7 @@ msgstr "French"
 #: app/scripts/services/blocks.js:1135 app/scripts/services/blocks.js:1256
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr "Fuchsia"
+msgstr "洋紅色"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -940,7 +940,7 @@ msgstr "確定"
 #: app/scripts/services/blocks.js:1140 app/scripts/services/blocks.js:1261
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr "OliveDrab"
+msgstr "橄欖綠色"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -994,11 +994,11 @@ msgstr "初期支援 Fomu FPGA 開發板"
 
 #: app/views/menu.html:158
 msgid "Project information"
-msgstr "專案訊息"
+msgstr "專案資訊"
 
 #: app/scripts/controllers/menu.js:592 app/scripts/controllers/menu.js:610
 msgid "Project information updated"
-msgstr "專案訊息已更新"
+msgstr "專案資訊已更新"
 
 #: app/scripts/services/project.js:121
 msgid "Project {{name}} loaded"
@@ -1018,7 +1018,7 @@ msgstr "Python 環境"
 
 #: app/views/menu.html:85
 msgid "Quit"
-msgstr "退出"
+msgstr "結束程式"
 
 #: app/views/design.html:5
 msgid "Read only"
@@ -1313,7 +1313,7 @@ msgstr "工具鏈移除了"
 
 #: app/scripts/services/tools.js:282
 msgid "Toolchain version does not match"
-msgstr "工具鏈版本不吻合"
+msgstr "工具鏈版本不符合"
 
 #: app/views/menu.html:253
 msgid "Tools"
@@ -1322,7 +1322,7 @@ msgstr "工具"
 #: app/scripts/services/blocks.js:1142 app/scripts/services/blocks.js:1263
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr "Turquoise"
+msgstr "綠松色"
 
 #: app/views/version-5.1n200523.html:11
 msgid "UI Theme Support"
