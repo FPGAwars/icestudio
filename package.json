@@ -50,7 +50,7 @@
     "grunt-zip": "^0.17.1",
     "load-grunt-tasks": "^3.5.0",
     "npm-platform-dependencies": "0.0.12",
-    "nw": "^0.50.2"
+    "nw": "0.35.5-sdk"
   },
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
