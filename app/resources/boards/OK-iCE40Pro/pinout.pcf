@@ -1,0 +1,59 @@
+# OK-iCE40Pro constraint file (.pcf)
+# By Albert Lu
+# 06/20 - 2020
+
+# 12Mhz CLOCK
+set_io -nowarn CLK 35
+
+# LEDs
+set_io -nowarn LCD_BL 39
+set_io -nowarn LED_B  40
+set_io -nowarn LED_R  41
+
+# SPEAKER
+set_io -nowarn SPKR  10
+
+# Buttons
+set_io -nowarn BTN_M 20
+set_io -nowarn BTN_A 19
+set_io -nowarn BTN_B 18
+set_io -nowarn BTN_U 38
+set_io -nowarn BTN_D 34
+set_io -nowarn BTN_L 36
+set_io -nowarn BTN_R 32
+
+# UART (to FT2232H)
+set_io -nowarn RX 6
+set_io -nowarn TX 9
+
+# SPI LCD
+set_io -nowarn LCD_RST  27
+set_io -nowarn LCD_MOSI 25
+set_io -nowarn LCD_SCK  23
+set_io -nowarn LCD_DC   26
+set_io -nowarn LCD_CS   21
+
+# I2C LIS3DH
+set_io -nowarn 3D_SCL 28
+set_io -nowarn 3D_SDA 31  
+set_io -nowarn 3D_INT 37
+
+# SPI FLASH
+set_io -nowarn FLASH_SCK  15
+set_io -nowarn FLASH_SSB  16
+set_io -nowarn FLASH_MISO 14
+set_io -nowarn FLASH_MOSI 17
+set_io -nowarn FLASH_IO2  12
+set_io -nowarn FLASH_IO3  13
+
+# OK-PMOD
+set_io -nowarn P1   42
+set_io -nowarn P2   43
+set_io -nowarn P3   44
+set_io -nowarn P4   45
+set_io -nowarn P5   46
+set_io -nowarn P6   47
+set_io -nowarn P7   48
+set_io -nowarn P8   2
+set_io -nowarn P9   3
+
