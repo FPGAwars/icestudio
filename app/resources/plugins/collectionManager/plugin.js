@@ -20,7 +20,6 @@ function init(args){
     fetch('assets/css/style.css')
     .then(response => response.text())
     .then( cssText => {
-        console.log('CSS',cssText)
         gui.publish('createRootNode',{id:pConfig.id, initialContent: initialHtml, stylesheet: cssText, node:args.manifest.gui});
     });
     
@@ -29,12 +28,12 @@ function init(args){
 
 function guiUpdate(args){
 
-    console.log('actualizada la GUI',args)
+    console.log('GUI updated event example',args)
 }
 
 function closePlugin(){
 
-    console.log('Closing plugin');
+    console.log('Terminating plugin');
     ebus.publish('plugin.terminate',{id:pConfig.id});
     self.close();
 

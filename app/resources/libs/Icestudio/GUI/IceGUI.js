@@ -10,7 +10,6 @@ class IceGUI {
       footer: this.el(".footer.ice-bar")[0],
     };
 
-    console.log("DOM", this.dom);
     this.sandbox();
     this.registerEvents();
   }
@@ -63,6 +62,7 @@ class IceGUI {
       width: cssComp.getPropertyValue("--sandbox-width"),
     };
   }
+
   registerEvents() {
     let _this = this;
 
@@ -74,13 +74,13 @@ class IceGUI {
     window.addEventListener("resize", eventResize);
 
     function eventClick(e) {
-    
-      _this.publish(`gui.click.${e.target.dataset.handler}`,{});
+
+      _this.publish(`gui.click.${e.target.dataset.handler}`, {});
     }
 
     let clickel = false;
     for (let i = 0; i < this.vdom.length; i++) {
-      clickel = this.elShadow('[data-guievt="click"]', this.vdom[i].dom);
+      clickel = this.el('[data-guievt="click"]', this.vdom[i].dom);
       for (let j = 0; j < clickel.length; j++) {
         clickel[j].removeEventListener("click", eventClick);
         clickel[j].addEventListener("click", eventClick);
@@ -88,13 +88,13 @@ class IceGUI {
     }
   }
 
-  terminate(){
+  terminate() {
 
-        for(let i=0;i<this.vdom.length;i++){
-            if(this.vdom[i].parent === false){
-                this.vdom[i].dom.remove();
-            }
-        }
+    for (let i = 0; i < this.vdom.length; i++) {
+      if (this.vdom[i].parent === false) {
+        this.vdom[i].dom.remove();
+      }
+    }
 
   }
 
@@ -111,7 +111,6 @@ class IceGUI {
       html: false,
     };
 
-    console.log(`GUI::createNode::${id}`, conf);
     if (typeof args.stylesheet !== "undefined") {
       vnode.stylesheet = args.stylesheet;
     }
@@ -124,7 +123,7 @@ class IceGUI {
     this.update();
   }
 
-  elShadow(selector, root) {
+  el(selector,root) {
     let selectorType = "querySelectorAll";
     let multiple = true;
     if (selector.indexOf("#") === 0) {
@@ -132,21 +131,7 @@ class IceGUI {
       selector = selector.substr(1, selector.length);
       multiple = false;
     }
-    console.log("SHADOW", root);
-    let list = root.shadowRoot[selectorType](selector);
-    //if (multiple && list.length === 1) list = list[0];
-    return list;
-  }
-
-  el(selector) {
-    let selectorType = "querySelectorAll";
-    let multiple = true;
-    if (selector.indexOf("#") === 0) {
-      selectorType = "getElementById";
-      selector = selector.substr(1, selector.length);
-      multiple = false;
-    }
-    let list = document[selectorType](selector);
+    let list=(typeof root !== 'undefined')? root.shadowRoot[selectorType](selector) : document[selectorType](selector);
     //if (multiple && list.length === 1) list = list[0];
     return list;
   }
@@ -260,7 +245,6 @@ class IceGUI {
       wrapper.setAttribute("class", "wrapper");
 
       if (node.html) {
-        console.log("HTML", node.html);
         wrapper.innerHTML = node.html;
       }
 

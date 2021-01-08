@@ -35,7 +35,6 @@ var IcePlugManager = function () {
     };
 
     this.pluginsLoaded = function (callback) {
-        console.log('Plugins Loaded');
         
         /* Order plugins by key, because plugins loaded asyncronously and 
            object hash maintain createion order and sorting this keys is not
@@ -329,7 +328,6 @@ var IcePlugManager = function () {
         for(let i=0;i<this.embeds.length;i++){
 
             if(this.embeds[i].id===data.id){
-                console.log('===> localizado');
                 this.embeds[i].gui.terminate();
                 this.embeds.splice(i, 1);
                 return;
