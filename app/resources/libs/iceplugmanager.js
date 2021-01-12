@@ -216,7 +216,7 @@ var IcePlugManager = function () {
         plug.id = pid;
         plug.key=id;
         plug.env = env;
-        plug.worker = new Worker(`${this.pluginUri}/${plug.key}/plugin.js`);
+        plug.worker = new Worker(`${this.pluginUri}/${plug.key}/${plug.key}.js`);
         plug.gui = new IceGUI(plug.worker);
         plug.worker.addEventListener('message', function (e) {
 

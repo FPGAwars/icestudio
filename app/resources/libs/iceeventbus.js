@@ -34,11 +34,10 @@ var IceEventBus = function () {
     };
 
     this.version = function () {
-        console.log('Icestudio event bus');
+        console.log('Icestudio event bus 1.0');
     };
 
     this.init = function () {
-        this.version();
     };
 
     this.init();
