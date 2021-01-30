@@ -16,6 +16,8 @@ angular.module('icestudio')
       'uiTheme': 'light',
       'remoteHostname': '',
       'showFPGAResources': false,
+      'loggingEnabled': false,
+      'loggingFile':'',
       'displayVersionInfoWindow': 'yes',
       'pythonEnv':{'python':'','pip':''}
     };
@@ -41,13 +43,14 @@ angular.module('icestudio')
             'showFPGAResources': data.showFPGAResources || false,
             'displayVersionInfoWindow': data.displayVersionInfoWindow || 'yes',
             'lastVersionReview':data.lastVersionReview || false,
+            'loggingEnabled':data.loggingEnabled || false,
+            'loggingFile':data.loggingFile || '',
             'pythonEnv':data.pythonEnv || {'python':'','pip':''}
-
           };
           
           if(self.data.pythonEnv.python.length>0){
             common.PYTHON_ENV=self.data.pythonEnv.python;
-            console.log('PYTHON',common.PYTHON_ENV);
+            common.PYTHON_PIP_ENV=self.data.pythonEnv.pip;
           }
 
           //-- Custom Theme support

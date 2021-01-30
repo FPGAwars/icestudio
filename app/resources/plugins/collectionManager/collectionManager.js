@@ -19,6 +19,7 @@ function init(args){
     pConfig = args;
 
     console.log('Initialicing', pConfig);
+
     let initialHtml='<i class="close-panel" data-guievt="click" data-handler="closePanel"></i><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div style="color:white;text-align:center;margin-top:20px;">Coming soon</div>';
 
      plugin.styleSheet(['assets/css/style.css','assets/css/style2.css'])

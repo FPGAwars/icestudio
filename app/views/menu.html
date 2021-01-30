@@ -152,6 +152,16 @@
                       <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
+                  <li>
+                    <a href ng-click="toggleLoggingEnabled()">
+                      {{ 'Logging enabled' | translate }}&ensp;
+                      <span ng-show="profile.data.loggingEnabled" class="glyphicon glyphicon-ok-circle"></span>
+                    </a>
+                  </li>
+                   <li>
+                    <a href ng-click="setLoggingFile()">{{'Logging file' | translate }}</a>
+                  </li>
+                  
                 </ul>
               </li>
               <li>

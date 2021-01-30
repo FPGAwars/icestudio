@@ -35,7 +35,7 @@ angular.module('icestudio')
     };
 
     // Debug mode (uncomment)
-    // this.DEBUGMODE = 1;
+   this.DEBUGMODE = 1;
 
     // Command output
     this.commandOutput = '';
@@ -82,7 +82,7 @@ angular.module('icestudio')
     this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
 
     this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
-    this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip');
+    this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip3');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
 
@@ -100,7 +100,7 @@ angular.module('icestudio')
     this.PATTERN_GLOBAL_PARAM_LABEL = /^([^\[\]]+)?$/;
 
     function safeDir(_dir, self) {
-      if (self.WIN32) {
+     /* if (self.WIN32) {
         // Put the env directory to the root of the current local disk when
         // default path contains non-ASCII characters. Virtualenv will fail to
         for (var i in _dir) {
@@ -114,7 +114,7 @@ angular.module('icestudio')
             });
           }
         }
-      }
+      }*/
       return _dir;
     }
     this.setBuildDir = function(buildpath){
