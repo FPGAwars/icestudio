@@ -2,6 +2,10 @@
     "manifest_ver": "1.0",
     "id":"collectionManager",
     "name": "Collection Manager",
+    "author":{
+        "name":"Carlos Venegas",
+        "twitter": "@cavearr"
+    },
     "icon": "assets/icon.svg",
     "multipleInstances": false,
     "gui":{

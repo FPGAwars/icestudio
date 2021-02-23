@@ -74,7 +74,7 @@ class IceHD {
 
     readFile(path, callback,callbackErr){
         if(this.isValidPath(path)){
-            let content = nodeFs.readFileSync(path).toString();
+            let content = this.fs.readFileSync(path).toString();
             callback(path,content);
         }else{
            if(typeof calbackErr !== 'undefined') callbackErr(path);

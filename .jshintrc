@@ -27,6 +27,8 @@
     "subModuleActive":false,
     "ICEpm":false,
     "IcePlugManager":false,
+    "iceConsole":false,
+    "IceLogger":false,
     "IceEventBus":false,
     "IceTemplateSystem":false,
     "IceParametricHelper":false,

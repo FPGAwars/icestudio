@@ -1,5 +1,7 @@
 'use strict';
 
+/*jshint unused:false*/
+
 angular.module('icestudio')
   .service('common', function (nodePath,
     nodeTmp,nodeFs) {
