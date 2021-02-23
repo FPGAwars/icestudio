@@ -1020,7 +1020,7 @@ angular.module('icestudio')
         '</li>',
         '</ul><br/>',
         '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio">contributors</a></p>',
-        '    <p style="margin-top:30px;text-align:right;"><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2020</p>',
+        '    <p style="margin-top:30px;text-align:right;"><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2021</p>',
         '  </div>',
         '</div>'
       ].join('\n');
