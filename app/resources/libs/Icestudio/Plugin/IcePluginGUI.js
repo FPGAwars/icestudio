@@ -5,7 +5,9 @@ class IcePluginGUI {
 
     constructor() {
         this.eventBus = new IceEventBus();
+        this.components = {};
         let _this=this;
+
         //Capture messages from Icestudio 
         self.addEventListener('message', function (e) {
             let  data = JSON.parse(e.data);
@@ -26,5 +28,15 @@ class IcePluginGUI {
             payload: data
         };
         self.postMessage(JSON.stringify(message));
+    }
+
+    addWidget(name,wClass){
+        if(typeof wClass !== 'undefined'){
+
+            this.components[name] = new wClass();
+        }else{
+            return false;
+        }
+        return true;
     }
 }

@@ -63,6 +63,28 @@ class IceGUI {
     };
   }
 
+  eventClick(e) {
+    // e.preventDefault();
+    // e.stopPropagation();
+    let args = false;
+    if (typeof e.target.dataset.args !== 'undefined') {
+      args = JSON.parse(e.target.dataset.args);
+    }
+    this.publish(`gui.click.${e.target.dataset.handler}`, args);
+    // return false;
+  }
+  eventInput(e) {
+    let args = false;
+    if (typeof e.target.dataset.args !== 'undefined') {
+      args = JSON.parse(e.target.dataset.args);
+    }
+
+    args.checked = e.target.checked;
+    this.publish(`gui.checkbox.${e.target.dataset.handler}`, args);
+
+  }
+
+
   registerEvents() {
     let _this = this;
 
@@ -73,19 +95,26 @@ class IceGUI {
     window.removeEventListener("resize", eventResize);
     window.addEventListener("resize", eventResize);
 
-    function eventClick(e) {
-
-      _this.publish(`gui.click.${e.target.dataset.handler}`, {});
-    }
-
+    // save the click handler so it can be used in multiple places
+    this.clickHandler = this.eventClick.bind(this);
     let clickel = false;
     for (let i = 0; i < this.vdom.length; i++) {
       clickel = this.el('[data-guievt="click"]', this.vdom[i].dom);
       for (let j = 0; j < clickel.length; j++) {
-        clickel[j].removeEventListener("click", eventClick);
-        clickel[j].addEventListener("click", eventClick);
+        clickel[j].removeEventListener("click", this.clickHandler, true);
+        clickel[j].addEventListener("click", this.clickHandler, true);
       }
     }
+    // save the click handler so it can be used in multiple places
+    this.onInputHandler = this.eventInput.bind(this);
+    for (let k = 0; k < this.vdom.length; k++) {
+      clickel = this.el('[data-guievt="checkbox"]', this.vdom[k].dom);
+      for (let l = 0; l < clickel.length; l++) {
+        clickel[l].removeEventListener("change", this.onInputHandler, true);
+        clickel[l].addEventListener("change", this.onInputHandler, true);
+      }
+    }
+
   }
 
   terminate() {
@@ -96,6 +125,17 @@ class IceGUI {
       }
     }
 
+  }
+
+  updateEl(args) {
+    let aux = false;
+    for (let i = 0; i < this.vdom.length; i++) {
+      aux = this.el(args.el, this.vdom[i].dom);
+      for (let j = 0; j < aux.length; j++) {
+        aux[j].innerHTML = args.content;
+      }
+    }
+    this.update();
   }
 
   createRootNode(args) {
@@ -123,7 +163,58 @@ class IceGUI {
     this.update();
   }
 
-  el(selector,root) {
+  gbusToggleClass(args) {
+    let root = false;
+    for (let i = 0; i < this.vdom.length; i++) {
+      if (this.vdom[i].key === args.id) {
+        root = i;
+        i = this.vdom.length + 1;
+      }
+    }
+    let domNodes = this.el(args.el, this.vdom[root].dom);
+    for (let j = 0; j < domNodes.length; j++) {
+      this.elToggleClass(domNodes[j], args.elClass);
+    }
+  }
+
+  gbusAddClass(args) {
+    let root = false;
+    for (let i = 0; i < this.vdom.length; i++) {
+      if (this.vdom[i].key === args.id) {
+        root = i;
+        i = this.vdom.length + 1;
+      }
+    }
+    let domNodes = this.el(args.el, this.vdom[root].dom);
+    for (let j = 0; j < domNodes.length; j++) {
+      this.elAddClass(domNodes[j], args.elClass);
+    }
+  }
+
+  gbusAddClassToParents(args) {
+    let root = false;
+    for (let i = 0; i < this.vdom.length; i++) {
+      if (this.vdom[i].key === args.id) {
+        root = i;
+        i = this.vdom.length + 1;
+      }
+    }
+    let domNodes = this.el(args.el, this.vdom[root].dom);
+    let parents=false;
+    let parentRoot = this.el(args.parentRoot,this.vdom[root].dom);
+    for (let j = 0; j < domNodes.length; j++) {
+      parents=this.elGetParents(domNodes[j], parentRoot);
+      for(let k=0;k<parents.length;k++){
+        if(this.elHasClass(parents[k],args.parentClass)){
+          this.elAddClass(parents[k], args.elClass);
+        }
+      }
+      
+    }
+  }
+
+
+  el(selector, root) {
     let selectorType = "querySelectorAll";
     let multiple = true;
     if (selector.indexOf("#") === 0) {
@@ -131,19 +222,35 @@ class IceGUI {
       selector = selector.substr(1, selector.length);
       multiple = false;
     }
-    let list=(typeof root !== 'undefined')? root.shadowRoot[selectorType](selector) : document[selectorType](selector);
-    //if (multiple && list.length === 1) list = list[0];
+    let list = (typeof root !== 'undefined') ? root.shadowRoot[selectorType](selector) : document[selectorType](selector);
     return list;
   }
+
+  elGetParents(el, parentSelector) {
+
+  console.log(el,parentSelector)
+
+    var parents = [];
+    var p = el.parentNode;
+    
+    while (p !== parentSelector) {
+        var o = p;
+        parents.push(o);
+        p = o.parentNode;
+    }
+    parents.push(parentSelector); // Push that parentSelector you wanted to stop at
+    
+    return parents;
+}
 
   elToggleClass(el, classname) {
     if (el.classList) {
       el.classList.toggle(classname);
     } else {
-      if (elHasClass(el, classname)) {
-        elRemoveClass(el, classname);
+      if (this.elHasClass(el, classname)) {
+        this.elRemoveClass(el, classname);
       } else {
-        elAddClass(el, classname);
+        this.elAddClass(el, classname);
       }
     }
   }
@@ -157,7 +264,7 @@ class IceGUI {
   elAddClass(el, className) {
     if (el.classList) {
       el.classList.add(className);
-    } else if (!hasClass(el, className)) {
+    } else if (!this.elHasClass(el, className)) {
       el.className += " " + className;
     }
   }
@@ -165,7 +272,7 @@ class IceGUI {
   elRemoveClass(el, className) {
     if (el.classList) {
       el.classList.remove(className);
-    } else if (hasClass(el, className)) {
+    } else if (this.elHasClass(el, className)) {
       var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
       el.className = el.className.replace(reg, " ");
     }

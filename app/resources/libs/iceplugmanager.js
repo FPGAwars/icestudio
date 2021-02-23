@@ -12,6 +12,7 @@ var IcePlugManager = function () {
     this.ebus = new IceEventBus();
     this.tpl = new IceTemplateSystem();
     this.parametric = new IceParametricHelper();
+    this.blockManager = new IceBlock();
     this.toload = 0;
     this.onload = false;
     this.embeds = [];
@@ -25,46 +26,46 @@ var IcePlugManager = function () {
         window.crypto.getRandomValues(array)
         let str = ''
         for (let i = 0; i < array.length; i++) {
-          str += (i < 2 || i > 5 ? '' : '-') + array[i].toString(16).slice(-4)
+            str += (i < 2 || i > 5 ? '' : '-') + array[i].toString(16).slice(-4)
         }
         return str
-      };
+    };
 
     this.setEnvironment = function (common) {
         this.env = common;
     };
 
     this.pluginsLoaded = function (callback) {
-        
+
         /* Order plugins by key, because plugins loaded asyncronously and 
            object hash maintain createion order and sorting this keys is not
            standard */
-        
-           let ordered=[];
-        for(let prop in this.plugins){
+
+        let ordered = [];
+        for (let prop in this.plugins) {
             ordered.push({
-                key:prop,
-                obj:this.plugins[prop]
+                key: prop,
+                obj: this.plugins[prop]
 
             });
         }
 
-        ordered.sort(function(a,b){
+        ordered.sort(function (a, b) {
 
             if (a.key > b.key) {
                 return 1;
-              }
-              if (a.key < b.key) {
+            }
+            if (a.key < b.key) {
                 return -1;
-              }
-              return 0;            
+            }
+            return 0;
         });
 
         let lordered = ordered.length;
-        this.plugins={};
+        this.plugins = {};
 
-        for(let i=0;i<lordered;i++){
-            this.plugins[ordered[i].key]=ordered[i].obj;
+        for (let i = 0; i < lordered; i++) {
+            this.plugins[ordered[i].key] = ordered[i].obj;
         }
         if (typeof callback !== 'undefined') callback();
     }
@@ -201,20 +202,20 @@ var IcePlugManager = function () {
         return this.plugins[id];
     };
 
-    this.isRunEmbedded = function(id){
+    this.isRunEmbedded = function (id) {
 
-        for(let i=0;i<this.embeds.length;i++){
-            if(this.embeds[i].key===id) return true;
-        }        
+        for (let i = 0; i < this.embeds.length; i++) {
+            if (this.embeds[i].key === id) return true;
+        }
         return false;
     };
 
     this.launchEmbedded = function (id, plug, env) {
-        
-        let pid=`${id}-${this.UUID()}`;
-        let _this=this;
+
+        let pid = `${id}-${this.UUID()}`;
+        let _this = this;
         plug.id = pid;
-        plug.key=id;
+        plug.key = id;
         plug.env = env;
         plug.worker = new Worker(`${this.pluginUri}/${plug.key}/${plug.key}.js`);
         plug.gui = new IceGUI(plug.worker);
@@ -225,22 +226,22 @@ var IcePlugManager = function () {
             if (data) {
                 if (typeof data.type !== 'undefined') {
                     if (data.type === 'eventBus') {
-                    
-                        console.log(`EBUS::${data.event}`, data.payload);
-                        _this.ebus.fire(data.event,data.payload);
-                    
+
+                        // console.log(`EBUS::${data.event}`, data.payload);
+                        _this.ebus.fire(data.event, data.payload);
+
                     } else if (data.type === 'guiBus') {
-                       
-                        console.log(`GBUS::${data.event}`, data.payload);
-                    
+
+                        // console.log(`GBUS::${data.event}`, data.payload);
+
                         let nplugins = _this.embeds.length;
-                      
-                        for(let i=0;i<nplugins;i++){
-                            if(_this.embeds[i].id === data.payload.id){
-                                if(typeof _this.embeds[i].gui[data.event] !== 'undefined'){
+
+                        for (let i = 0; i < nplugins; i++) {
+                            if (_this.embeds[i].id === data.payload.id) {
+                                if (typeof _this.embeds[i].gui[data.event] !== 'undefined') {
                                     _this.embeds[i].gui[data.event](data.payload);
                                 }
-                                i=nplugins;
+                                i = nplugins;
                             }
                         }
                     } else {
@@ -249,24 +250,39 @@ var IcePlugManager = function () {
                 }
             }
         }, false);
-       
+
         this.embeds.push(plug);
-        
+
         /* Send config parameters */
 
         plug.worker.postMessage(JSON.stringify(
-                            {
-                                type: "eventBus",
-                                event: 'plugin.initialSetup',
-                                payload:{
-                                            env:plug.env,
-                                            id:plug.id,
-                                            manifest:plug.manifest       
-                                        }
-                                }
-                           ));
+            {
+                type: "eventBus",
+                event: 'plugin.initialSetup',
+                payload: {
+                    env: plug.env,
+                    id: plug.id,
+                    manifest: plug.manifest
+                }
+            }
+        ));
 
     };
+
+    this.publishAt = function (target, evt, payload) {
+
+        for (let i = 0; i < this.embeds.length; i++) {
+            if (this.embeds[i].id === target) {
+                this.embeds[i].worker.postMessage(JSON.stringify(
+                    {
+                        type: "eventBus",
+                        event: evt,
+                        payload: payload
+                    }
+                ));
+            }
+        }
+    }
 
     this.launchOnNewWindow = function (id, plug, env) {
 
@@ -308,26 +324,26 @@ var IcePlugManager = function () {
         if (plug === false) {
             return false;
         }
-        console.log('Plugin::run::', plug);
+        //console.log('Plugin::run::', plug);
         if (typeof plug.manifest.gui !== 'undefined' && plug.manifest.gui.type === 'embedded') {
-            let launch=true;
-            if(typeof plug.manifest.multipleInstances !=='undefined' && 
-            plug.manifest.multipleInstances === false &&
-            this.isRunEmbedded(id)){
-                 launch=false;
+            let launch = true;
+            if (typeof plug.manifest.multipleInstances !== 'undefined' &&
+                plug.manifest.multipleInstances === false &&
+                this.isRunEmbedded(id)) {
+                launch = false;
             }
-            
-            if(launch) this.launchEmbedded(id, plug, this.env);
+
+            if (launch) this.launchEmbedded(id, plug, this.env);
             else console.log('Its running yet');
         } else {
             this.launchOnNewWindow(id, plug, this.env);
         }
     };
 
-    this.terminate = function(data){
-        for(let i=0;i<this.embeds.length;i++){
+    this.terminate = function (data) {
+        for (let i = 0; i < this.embeds.length; i++) {
 
-            if(this.embeds[i].id===data.id){
+            if (this.embeds[i].id === data.id) {
                 this.embeds[i].gui.terminate();
                 this.embeds.splice(i, 1);
                 return;
@@ -337,7 +353,9 @@ var IcePlugManager = function () {
 
     this.init = function () {
         this.version();
-        this.ebus.subscribe('plugin.terminate','terminate',this);
+        this.ebus.subscribe('plugin.terminate', 'terminate', this);
+        this.blockManager
+        this.ebus.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
     };
 
     this.init();

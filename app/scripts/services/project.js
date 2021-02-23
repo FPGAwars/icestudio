@@ -38,6 +38,8 @@ angular.module('icestudio')
       };
     }
 
+    ICEpm.ebus.subscribe('block.addFromFile','addBlockFile',this);
+    
     this.get = function (key) {
       if (key in project) {
         return project[key];

@@ -2,7 +2,7 @@
 
 /* exported ICEpm */
 var ICEpm = new IcePlugManager();
-/* exported iceConsole */
+/* exported iceConsoler */
 var iceConsole = new IceLogger();
 
 angular
@@ -44,9 +44,9 @@ angular
         if (typeof profile.data.loggingFile !== 'undefined' &&
           profile.data.loggingFile !== '') {
 
-          const hd = new IceHD();
+         // const hd = new IceHD();
           const separator = (common.DARWIN === false && common.LINUX === false) ? '\\' : '/';
-          const posBasename = profile.data.loggingFile.lastIndexOf(separator) + 1
+          const posBasename = profile.data.loggingFile.lastIndexOf(separator) + 1;
           const dirLFile = profile.data.loggingFile.substring(0, posBasename);
           const basename = profile.data.loggingFile.substring(posBasename);
           iceConsole.setPath(dirLFile, basename);

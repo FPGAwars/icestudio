@@ -1198,4 +1198,25 @@ angular.module('icestudio')
         event.preventDefault();
       }
     });
+
+    function ebusCollection(args) {
+      console.log(args);
+      if (typeof args.status !== 'undefined') {
+        switch (args.status) {
+          case 'enable':
+            $('#menu .navbar-right>li').removeClass('hidden');
+            break;
+          case 'disable':
+            let first = true;
+            $('#menu .navbar-right>li').each(function () {
+              if (!first){
+                 $(this).addClass('hidden');
+              }
+                 first = false;
+            });
+            break;
+        }
+      }
+    }
+    ICEpm.ebus.subscribe('menu.collection', ebusCollection);
   });
