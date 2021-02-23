@@ -268,7 +268,9 @@ class IceGuiTree {
 
   indexBlock(id, obj) {
     let _this = this;
-    if (obj !== false && obj !== false &&
+    if (typeof obj !== 'undefined' &&
+        obj !== false && obj !== false &&
+        typeof obj.package !== 'undefined' &&
       typeof obj.package.image !== 'undefined' &&
       typeof obj.package.description !== 'undefined' &&
       typeof obj.package.name != 'undefined' &&
