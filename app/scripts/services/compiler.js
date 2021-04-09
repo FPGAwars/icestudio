@@ -154,7 +154,7 @@ angular.module('icestudio')
              id=`${id}__${block.data.name}`;
            }
          }
-        return id;
+         return id.replace(/(-)|(\s)/g,'');
     }
     function getParams(project) {
       var params = [];
@@ -165,12 +165,12 @@ angular.module('icestudio')
         
         if (block.type === 'basic.constant') {
           params.push({
-            name: digestNameBlock(block),
+            name: utils.digestId(block.id),
             value: block.data.value
           });
         } else if (block.type === 'basic.memory') {
+          let name =  utils.digestId(block.id);
         
-          var name = digestNameBlock(block);
           params.push({
             name: name,
             value: '"' + name + '.list"'
@@ -193,12 +193,12 @@ angular.module('icestudio')
         if (block.type === 'basic.input') {
         
           ports.in.push({
-            name: digestNameBlock(block),
+            name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
         } else if (block.type === 'basic.output') {
           ports.out.push({
-            name: digestNameBlock(block),
+            name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
         }
@@ -321,7 +321,7 @@ angular.module('icestudio')
           wire.source.port === 'memory-out') {
           // Local Parameters
           var constantBlock = findBlock(wire.source.block, graph);
-          var paramValue = digestNameBlock(constantBlock);
+          var paramValue = utils.digestId(constantBlock.id);
           if (paramValue) {
             connections.localparam.push('localparam p' + w + ' = ' + paramValue + ';');
           }
@@ -335,7 +335,7 @@ angular.module('icestudio')
           var block = graph.blocks[i];
           if (block.type === 'basic.input') {
             if (wire.source.block === block.id) {
-              connections.assign.push('assign w' + w + ' = ' + digestNameBlock(block) + ';');
+              connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id)+ ';');
             }
           } else if (block.type === 'basic.output') {
             if (wire.target.block === block.id) {
@@ -343,7 +343,7 @@ angular.module('icestudio')
                 wire.source.port === 'memory-out') {
                 // connections.assign.push('assign ' + digestId(block.id) + ' = p' + w + ';');
               } else {
-                connections.assign.push('assign ' + digestNameBlock(block) + ' = w' + w + ';');
+                connections.assign.push('assign ' + utils.digestId(block.id) + ' = w' + w + ';');
               }
             }
           }
@@ -444,7 +444,7 @@ angular.module('icestudio')
                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
-                paramName = digestNameBlock(paramName);
+                paramName =  utils.digestId(paramName) 
               }
               var param = '';
               param += ' .' + paramName;
@@ -459,7 +459,7 @@ angular.module('icestudio')
 
           //-- Instance name
 
-          instance += ' ' + digestNameBlock(block);
+          instance += ' ' +  utils.digestId(block.id) ;
 
           //-- Ports
 
@@ -489,7 +489,7 @@ angular.module('icestudio')
       function connectPort(portName, portsNames, ports, block) {
         if (portName) {
           if (block.type !== 'basic.code') {
-            portName = digestNameBlock(portName);
+            portName =  utils.digestId(portName);
           }
           if (portsNames.indexOf(portName) === -1) {
             portsNames.push(portName);
@@ -704,7 +704,7 @@ angular.module('icestudio')
           
         }
         for (var d in dependencies) {
-          code += verilogCompiler(digestNameBlock(d), dependencies[d]);
+          code += verilogCompiler( utils.digestId(d) , dependencies[d]);
         }
 
         // Code modules 
@@ -714,7 +714,7 @@ angular.module('icestudio')
           if (block) {
             if (block.type === 'basic.code') {
               data = {
-                name: name + '_' + digestNameBlock(block),
+                name: name + '_' +  utils.digestId(block.id) ,
                 params: block.data.params,
                 ports: block.data.ports,
                 content: block.data.code //.replace(/\n+/g, '\n').replace(/\n$/g, '')
@@ -743,7 +743,7 @@ angular.module('icestudio')
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'set_io ';
-              code += digestNameBlock(block);
+              code +=  utils.digestId(block.id) ;
               code += '[' + pin.index + '] ';
               code += value;
               code += '\n';
@@ -752,7 +752,7 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'set_io ';
-            code += digestNameBlock(block);
+            code +=  utils.digestId(block.id) ;
             code += ' ';
             code += value;
             code += '\n';
@@ -837,13 +837,13 @@ angular.module('icestudio')
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'LOCATE COMP "';
-              code += digestNameBlock(block);  //-- Future improvement: use pin.name. It should also be changed in the main module
+              code +=  utils.digestId(block.id) ;  //-- Future improvement: use pin.name. It should also be changed in the main module
               code += '[' + pin.index + ']" SITE "';
               code += value;
               code += '";\n';
 
               code += 'IOBUF  PORT "';
-              code += digestNameBlock(block);
+              code +=  utils.digestId(block.id) ;
               code += '[' + pin.index + ']" ';
 
               //-- Get the pullmode property of the physical pin (its id is pin.value)
@@ -857,13 +857,13 @@ angular.module('icestudio')
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'LOCATE COMP "';
-            code += digestNameBlock(block);  //-- Future improvement: use pin.name. It should also be changed in the main module
+            code +=  utils.digestId(block.id) ;  //-- Future improvement: use pin.name. It should also be changed in the main module
             code += '" SITE "';
             code += value;
             code += '";\n';
 
             code += 'IOBUF  PORT "';
-            code += digestNameBlock(block);
+            code +=  utils.digestId(block.id) ;
             code += '" ';
 
             //-- Get the pullmode property of the physical pin (its id is pin.value)
@@ -896,7 +896,7 @@ angular.module('icestudio')
           var block = blocks[i];
           if (block.type === 'basic.memory') {
             listFiles.push({
-              name: digestNameBlock(block) + '.list',
+              name: utils.digestId(block.id)  + '.list',
               content: block.data.list
             });
           }
@@ -1047,13 +1047,13 @@ angular.module('icestudio')
         if (block.type === 'basic.input') {
           if (block.data.name) {
             input.push({
-              id: digestNameBlock(block),
+              id: utils.digestId(block.id) ,
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
             input.push({
-              id: digestNameBlock(block),
+              id:  utils.digestId(block.id) ,
               name: inputUnnamed.toString(),
             });
             inputUnnamed += 1;
@@ -1061,13 +1061,13 @@ angular.module('icestudio')
         } else if (block.type === 'basic.output') {
           if (block.data.name) {
             output.push({
-              id: digestNameBlock(block),
+              id:  utils.digestId(block.id) ,
               name: block.data.name.replace(/ /g, '_'),
               range: block.data.range
             });
           } else {
             output.push({
-              id: digestNameBlock(block),
+              id:  utils.digestId(block.id) ,
               name: outputUnnamed.toString()
             });
             outputUnnamed += 1;
