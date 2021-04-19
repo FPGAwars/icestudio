@@ -42,7 +42,6 @@
     "grunt-exec": "^1.0.0",
     "grunt-json-minify": "^1.1.0",
     "grunt-nw-builder": "^3.1.0",
-    "nw-builder": "^3.5.7",
     "grunt-replace": "^1.0.1",
     "grunt-terser": "^1.0.0",
     "grunt-usemin": "^3.1.1",
@@ -51,7 +50,8 @@
     "grunt-zip": "^0.17.1",
     "load-grunt-tasks": "^3.5.0",
     "npm-platform-dependencies": "0.0.12",
-    "nw": "0.35.5-sdk"
+    "nw": "0.35.5-sdk",
+    "nw-builder": "^3.5.7"
   },
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
