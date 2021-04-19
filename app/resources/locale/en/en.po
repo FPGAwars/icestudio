@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -113,8 +113,8 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
-"Because Icestudio is in actively development it is important to stay your "
-"icestudio in the last version. Now we are notifying you!"
+"Because Icestudio is in actively development, it is important to keep your "
+"icestudio up to date. Now we are notifying you!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -363,7 +363,7 @@ msgid ""
 "requires Internet connection. Do you want to continue?"
 msgstr ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
-"requires Internet connection. Do you want to continue?"
+"requires internet connection. Do you want to continue?"
 
 #: app/scripts/services/utils.js:574
 msgid "Description"
@@ -606,7 +606,7 @@ msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
-"If you are clonning blocks, it is very important than you change block "
+"If you are cloning blocks, it is very important than you change block "
 "information to identify the new block features."
 
 #: app/views/version.html:25
@@ -624,7 +624,7 @@ msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
+"If you see blank IN/OUT pins, it is because there is no equivalent in this "
 "board"
 
 #: app/scripts/services/utils.js:588
@@ -641,9 +641,8 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
-"In other way, if you copy and clone a block, you make it independently of "
-"the original block type and  the modifications only affect at this new block "
-"type"
+"In another way, if you copy and clone a block, you make it independently of "
+"the original block type and the modifications only affect this new block type"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
@@ -978,7 +977,7 @@ msgid ""
 "of them."
 msgstr ""
 "Submodule edition affect at all of the same block types. For example if you "
-"have in you design six AND blocks, if you modify one of them, yo modify all "
+"have in you design six AND blocks, if you modify one of them, you modify all "
 "of them."
 
 #: app/scripts/services/tools.js:292
@@ -1022,8 +1021,8 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
-"The use of labels permits clarify larger designs, connecting blocks without "
-"wires."
+"The use of labels permits makes large designs easier to read by connecting "
+"blocks without wires."
 
 #: app/views/version.html:9
 msgid ""
@@ -1051,7 +1050,7 @@ msgstr ""
 
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
-msgstr "This is a very powerfull feature to maintain large designs."
+msgstr "This is a very powerful feature to maintain large designs."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1062,14 +1061,13 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
-"This version improve the edition capatabilities, including the possibility "
-"of editing block contents."
+"This version improves the editing capabilities, including the possibility of "
+"editing block contents."
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
-msgstr ""
-"To do it, only is necessary that prefix the block identifier with Generic-"
+msgstr "To do it, it is necessary to prefix the block identifier with Generic-"
 
 #: app/scripts/services/graph.js:410
 msgid ""
@@ -1077,11 +1075,11 @@ msgid ""
 "mode\", lock the keylock to do it."
 msgstr ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"mode\", lock the keylock to do so."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr "To navigate through design, you need to close \"edit mode\"."
+msgstr "To navigate through a design, you need to close \"edit mode\"."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1091,7 +1089,7 @@ msgid ""
 msgstr ""
 "To save your design you need to lock the keylock and go to top level design."
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
-"\" command to do it."
+"\" command."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1251,12 +1249,12 @@ msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
-"You can only upload  your design at top-level design. Inside submodules you "
+"You can only upload your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
-msgstr "Your changes will be lost if you don’t save them"
+msgstr "Your changes will be lost if you do not save them"
 
 #: app/views/design.html:6
 msgid "back"

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -31,7 +31,7 @@ msgstr ""
 "OK, wird das FTDI-Treiber-Installationsprogramm in einem neuen Fenster "
 "geöffnet</li><li>Ersetze beim Installationsprozess den <b>(Interface 0)</b> "
 "Treiber des Boards durch <b>libusbK</b></li><li>Trenne die Platine und "
-"stelle wieder eine Verbindung her</li></ol>"
+"verbinde sie anschließend erneut</li></ol>"
 
 #: app/scripts/services/drivers.js:312
 msgid ""
@@ -57,7 +57,7 @@ msgstr ""
 "li><li>Mit einem Klick auf OK, wird das Installationsprogramm für den "
 "seriellen Treiber in einem neuen Fenster geöffnet.</li><li>Befolge während "
 "dem Installationsprozess die Schritte zum Installieren des Treibers.</"
-"li><li>Trenne die Platine und stelle wieder eine Verbindung her</li></ol>"
+"li><li>Trenne die Platine und verbinde sie anschließend erneut</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
@@ -86,7 +86,7 @@ msgstr "Als Block hinzufügen"
 
 #: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:458
 msgid "Address format"
-msgstr "Adress-Format"
+msgstr "Adressformat"
 
 #: app/scripts/services/tools.js:1173
 msgid "All collections removed"
@@ -94,7 +94,7 @@ msgstr "Alle Sammlungen wurden entfernt"
 
 #: app/scripts/controllers/menu.js:817
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr "Alle gespeicherten Sammlungen gehen verloren. Fortfahren?"
+msgstr "Alle gespeicherten Sammlungen werden gelöscht. Fortfahren?"
 
 #: app/scripts/services/utils.js:575
 msgid "Author"
@@ -102,7 +102,7 @@ msgstr "Autor"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr "Automatisches Überprüfen auf Updates"
+msgstr "Automatisch nach Updates suchen"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -117,8 +117,9 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
-"Icestudio befindet sich aktuell in der Entwicklung. Wir benachrichtigen dich "
-"wenn es eine neue Version gibt!"
+"Icestudio wird kontinuierlich weiterentwickelt, daher sollte deine "
+"Installation regelmäßig werden. Wir benachrichtigen dich, sobald eine neue "
+"Version verfügbar ist!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -183,7 +184,7 @@ msgstr "Erstellen"
 
 #: app/scripts/controllers/menu.js:746
 msgid "Build done"
-msgstr "Erstellen beendet"
+msgstr "Erstellen abgeschlossen"
 
 #: app/scripts/controllers/main.js:15 app/scripts/services/project.js:132
 msgid "Cancel"
@@ -195,7 +196,7 @@ msgstr "Katalanisch"
 
 #: app/scripts/services/tools.js:857
 msgid "Check Internet connection..."
-msgstr "Überprüfe deine Internetverbindung..."
+msgstr "Prüfe Internetverbindung..."
 
 #: app/scripts/services/tools.js:867
 msgid "Check Python..."
@@ -230,7 +231,7 @@ msgstr "Zur Installation hier klicken"
 
 #: app/scripts/controllers/menu.js:487
 msgid "Click here to view"
-msgstr "Klicke hier, zum Ansehen"
+msgstr "Zum Ansehen hier klicken"
 
 #: app/scripts/services/blocks.js:1152 app/scripts/services/blocks.js:129
 #: app/scripts/services/blocks.js:1363 app/scripts/services/blocks.js:203
@@ -619,18 +620,18 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
-"Wenn Sie eine Sammlung entwickeln, können Sie generische Blöcke erstellen, "
-"die als Vorlagen funktionieren. Wenn Sie einen generischen Block aus einer "
-"Sammlung einfügen, fungiert er als Klon für schnelle Änderungen, ohne eine "
-"Kopier- und Klon-Operation durchzuführen."
+"Wenn Sie eine Sammlung entwickeln, können Sie generische Blöcke erstellen "
+"und diese als Vorlagen verwenden. Wenn Sie einen generischen Block aus einer "
+"Sammlung einfügen, fungiert er als Klon für schnelle Änderungen, ohne das "
+"eine Kopier- und Klon-Operation erforderlich ist."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
-"Wenn Sie leere IN/OUT-Pins haben, liegt das daran, dass es keine "
-"Entsprechung auf dem Board gibt"
+"Wenn Sie unbelegte IN/OUT-Pins haben, liegt das daran, dass es keine "
+"entsprechenden Pins auf dem Board gibt"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -646,7 +647,7 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
-"Anders ausgedrückt: Wenn Du einen Block kopierst und duplizierst, machst Du "
+"Mit anderen Worten: Wenn Du einen Block kopierst und duplizierst, machst Du "
 "ihn unabhängig vom ursprünglichen Blocktyp und die Änderungen wirken sich "
 "nur auf diesen neuen Blocktyp aus"
 
@@ -723,7 +724,7 @@ msgstr "Ungültiges Projektformat"
 
 #: app/scripts/services/drivers.js:305
 msgid "It is recommended to use <b>USB 2.0</b> ports"
-msgstr "Es is tempfehlenswert, <b>USB 2.0</b> Anschlüsse zu verwenden"
+msgstr "Es wird empfohlen, <b>USB 2.0</b> Anschlüsse zu verwenden"
 
 #: app/views/languages.html:22
 msgid "Italian"
@@ -983,6 +984,9 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"Das Editieren von Untermodulen wirkt sich auf alle Blöcke gleicher Art aus. "
+"Wenn beispielsweise sechs AND Blöcke in deinem Design existieren, werden "
+"alle sechs Blöcke modifiziert, sobald du einen dieser Blöcke veränderst."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1025,8 +1029,8 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
-"Die Verwendung von Beschriftungen ermöglicht die Verdeutlichung größerer "
-"Ausführungen, Anschlussblöcke ohne Verbindungen."
+"Die Verwendung von Beschriftungen ermöglicht die Verbindung von Blöcken ohne "
+"deren Verdrahtung, um die Lesbarkeit größerer Entwürfe zu verbessern."
 
 #: app/views/version.html:9
 msgid ""
@@ -1055,7 +1059,7 @@ msgstr ""
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
 msgstr ""
-"Dies ist eine sehr leistungsfähige Funktion, um große Designs zu bearbeiten."
+"Dies ist eine sehr leistungsfähige Funktion, um große Entwürfe zu bearbeiten."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1066,7 +1070,7 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
-"Diese Version verbessert die Editionsfähigkeiten, einschließlich der "
+"Diese Version verbessert die Editierfunktionen, einschließlich der "
 "Möglichkeit, Blockinhalte zu bearbeiten."
 
 #: app/views/version.html:26
@@ -1079,12 +1083,13 @@ msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
-"Um in den \"Bearbeitungsmodus\" des tieferen Blocks zu gelangen, müssen Sie "
-"den aktuellen \"Bearbeitungsmodus\" mit dem Schloss beenden."
+"Um in den \"Bearbeitungsmodus\" des darunterliegenden Blocks zu gelangen, "
+"müssen Sie den aktuellen \"Bearbeitungsmodus\" beenden bzw. mit dem Schloss "
+"sperren."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr "Um zu navigieren, beende bitte den \"Bearbeiten Modus\"."
+msgstr "Um zu navigieren, beende bitte den \"Bearbeitungsmodus\"."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1092,10 +1097,10 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
-"Um dein Design zu speichern, müsst du es mit dem Schloss sperren und zum "
-"Design der obersten Ebene wechseln. <br/> <br/> Wenn du dieses Submodul in "
-"eine Datei exportieren möchtest, führe bitte den Befehl \"Speichern unter\" "
-"aus."
+"Um deinen Hardware-Entwurf zu speichern, musst du es mit dem Schloss sperren "
+"und zum Entwurf der obersten Ebene wechseln. <br/> <br/> Wenn du dieses "
+"Untermodul in eine Datei exportieren möchtest, führe bitte den Befehl "
+"\"Speichern unter\" aus."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1142,7 +1147,7 @@ msgstr "Nicht unterstütztes Projektformat {{version}}"
 
 #: app/scripts/app.js:70
 msgid "Untitled"
-msgstr "Ohne Titel"
+msgstr "Unbenannt"
 
 #: app/views/menu.html:257
 msgid "Update"
@@ -1176,7 +1181,7 @@ msgstr "Version"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr "Versions-Notizen"
+msgstr "Versionshinweise"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1188,7 +1193,7 @@ msgstr "Lizenz anzeigen"
 
 #: app/scripts/services/tools.js:527
 msgid "Warnings detected in the design"
-msgstr "Warnungen im Design erkannt"
+msgstr "Warnungen im Entwurf erkannt"
 
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
@@ -1246,16 +1251,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
-"Du kannst nur ein \"Top-Level Design\" erstellen. Untermodule können nur "
-"<strong>Überprüft</strong> werden"
+"Du kannst nur auf höchster Ebene einen Entwurf erstellen. Untermodule können "
+"nur <strong>Überprüft</strong> werden"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
-"Du kannst nur ein \"Top-Level Design\" hochladen. Untermodule können nur "
-"<strong>Überprüft</strong> werden"
+"Du kannst nur auf höchster Ebene einen Entwurf hochladen. Untermodule können "
+"nur <strong>Überprüft</strong> werden"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
