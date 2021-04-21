@@ -24,9 +24,9 @@ angular
                 .isFile() &&
               nodeFs.statSync(nodePath.join(contentPath, "rules.json")).isFile()
             ) {
-              var info = readJSONFile(contentPath, "info.json");
-              var pinout = readJSONFile(contentPath, "pinout.json");
-              var rules = readJSONFile(contentPath, "rules.json");
+              let info = readJSONFile(contentPath, "info.json");
+              let pinout = readJSONFile(contentPath, "pinout.json");
+              let rules = readJSONFile(contentPath, "rules.json");
 
               boards.push({
                 name: name,
