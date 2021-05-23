@@ -1115,12 +1115,12 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: gettextCatalog.getString('Update the label name'),
           value: block.data.name + (block.data.range || '')
         },
         {
           type: 'combobox',
-          title: gettextCatalog.getString('Choose a color'),
+          label: gettextCatalog.getString('Choose a color'),
           value: (typeof block.data.blockColor !== 'undefined') ? block.data.blockColor : 'fuchsia',
           options: [
             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
@@ -1236,12 +1236,12 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: gettextCatalog.getString('Update the label name'),
           value: block.data.name + (block.data.range || '')
         },
         {
           type: 'combobox',
-          title: gettextCatalog.getString('Choose a color'),
+          label: gettextCatalog.getString('Choose a color'),
           value: (typeof block.data.blockColor !== 'undefined') ? block.data.blockColor : 'fuchsia',
           options: [
             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
