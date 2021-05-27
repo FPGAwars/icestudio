@@ -1,3 +1,5 @@
+/* jshint unused: false */
+
 'use strict';
 
 angular.module('icestudio')
@@ -156,6 +158,7 @@ angular.module('icestudio')
          }
          return id.replace(/(-)|(\s)/g,'');
     }
+
     function getParams(project) {
       var params = [];
       var graph = project.design.graph;
@@ -444,7 +447,7 @@ angular.module('icestudio')
                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
               if (block.type !== 'basic.code') {
-                paramName =  utils.digestId(paramName) 
+                paramName =  utils.digestId(paramName); 
               }
               var param = '';
               param += ' .' + paramName;
