@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -36,19 +36,12 @@ jobs:
       - name: Install dependencies to build Windows bundle
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt update
+          sudo apt-get update
           wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
-          sudo apt install software-properties-common
-          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-          wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
-          sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
-          sudo apt update
-          sudo apt-get install -y --install-recommends winehq-devel
-          sudo apt install dirmngr gnupg apt-transport-https ca-certificates
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-          sudo sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" > /etc/apt/sources.list.d/mono-official-stable.list'
-          sudo apt update
-          sudo apt install -y --install-recommends mono-complete
+          sudo apt-get install software-properties-common
+          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ xenial main'
+          sudo apt-get update
+          sudo apt-get install -y --install-recommends wine nsis
       - name: Build Linux & Microsoft Windows package
         run:  npm run build
   
