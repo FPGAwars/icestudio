@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -37,14 +37,14 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
+          sudo apt-get install -y --install-recommends gnupg2 rlwrap software-properties-common
           wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
-          sudo apt-get install software-properties-common
           sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
           wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
           sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
           sudo apt-get update
-          sudo apt-get install -y --install-recommends winehq-devel
-          sudo apt-get install -y --install-recommends winetricks
+          sudo apt-get install -y --install-recommends winehq-devel winetricks
+          winecfg
           wget http://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe
           wine NDP452-KB2901907-x86-x64-AllOS-ENU.exe /q
           winetricks list-installed
