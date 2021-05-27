@@ -27,10 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Install dependencies of Icestudio
+      - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
           node-version: '10.17'
+          
+      - name: Build linux package
         run: |
            npm install
            npm run build
