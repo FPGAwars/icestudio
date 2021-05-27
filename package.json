@@ -21,7 +21,7 @@
   "license": "GPL-2.0",
   "scripts": {
     "start": "grunt serve",
-    "dist": "grunt dist",
+    "build": "grunt dist",
     "gettext": "grunt gettext",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },
