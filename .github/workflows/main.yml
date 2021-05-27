@@ -44,7 +44,8 @@ jobs:
           sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
           sudo apt update
           sudo apt-get install -y --install-recommends winehq-devel
-      
+          sudo apt-get install -y --install-recommends winetricks
+          winetricks dotnet45
       - name: Build Linux & Microsoft Windows package
         run:  npm run build
   
