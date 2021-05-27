@@ -47,13 +47,11 @@ jobs:
           wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
           sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
           sudo apt-get update
-          sudo apt-get install -y --install-recommends winehq-devel winetricks
+          sudo apt-get install -y --install-recommends wine-devel winetricks
           export WINEARCH=win32 
-          winecfg
-          winetricks allfonts
-          wget http://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe
-          wine NDP452-KB2901907-x86-x64-AllOS-ENU.exe /q
-          winetricks list-installed
+          wet http://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe
+          wine NDP452-KB2901907-x86-x64-AllOS-ENU.exe /q /nogui
+        
       - name: Build Linux & Microsoft Windows package
         run:  npm run build
   
