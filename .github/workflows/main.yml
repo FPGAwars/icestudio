@@ -40,7 +40,6 @@ jobs:
           sudo apt-get install -y --install-recommends gnupg2 rlwrap software-properties-common
           sudo apt-get install -y --install-recommends binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386
           sudo apt-get install -y --install-recommends xvfb
-          Xvfb :0 -screen 0 1024x768x16 &
           export DISPLAY=:0.0 
           wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
           sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
@@ -49,11 +48,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --install-recommends winehq-devel winetricks nsis
           export WINEARCH=win32
-          
-        
+          cd /home/runner
+          rm -rf .wine
+          wget -q http://drive16.magnitude.es/wine.tgz
+          tar xzvf wine.tgz
+          ls -l .wine
       - name: Build Linux & Microsoft Windows package
         run: |
-          Xvfb :0 -screen 0 1024x768x16 &
           export DISPLAY=:0.0 
           npm run build
   
