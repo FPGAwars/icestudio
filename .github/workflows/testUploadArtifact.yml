@@ -19,9 +19,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Test creating dist files
         run: |
-          dd if=/dev/random of=test.dat  bs=32M  count=1
+          dd if=/dev/random of=test-generated.dat  bs=32M  count=1
 
        - name: 'Upload artifact'
         uses: actions/upload-artifact@master
         with:
-          path: test.dat
+          path: test-generated.dat
