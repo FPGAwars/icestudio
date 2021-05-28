@@ -150,7 +150,7 @@ firefox _build/html/index.html
 ### Package
 
 ```bash
-npm run dist
+npm run build
 ```
 
 | Target OS | Development OS | Output files |
