@@ -47,7 +47,7 @@ jobs:
           rm -rf .wine
           wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
           tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
-          chown -R runner:runner .wine
+      
       - name: Build Linux & Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
