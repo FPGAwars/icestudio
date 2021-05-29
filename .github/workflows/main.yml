@@ -48,7 +48,7 @@ jobs:
           cd /home/runner
           rm -rf .wine
           wget -q http://drive16.magnitude.es/wineconf.1804a.tbz
-          tar xjvf wine.tgz
+          tar xjvf wineconf.1804a.tbz
           ls -l .wine
       - name: Build Linux & Microsoft Windows package
         run: |
