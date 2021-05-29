@@ -34,22 +34,20 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -y  gnupg2 rlwrap software-properties-common
-          sudo apt-get install -y  binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386
-          sudo apt-get install -y  xvfb
+          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
           export DISPLAY=:0.0 
           wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
           sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
           wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
           sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
           sudo apt-get update
-          sudo apt-get install -y winehq-devel winetricks nsis
+          sudo apt-get install -y winehq-devel winetricks nsis 
           export WINEARCH=win32
           cd /home/runner
           rm -rf .wine
-          wget -q http://drive16.magnitude.es/wineconf.1804a.tbz
-          tar xjvf wineconf.1804a.tbz
-          ls -l .wine
+          wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
+          tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
+          chown -R runner:runner .wine
       - name: Build Linux & Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
