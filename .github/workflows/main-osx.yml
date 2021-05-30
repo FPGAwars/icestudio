@@ -50,21 +50,21 @@ jobs:
           npm run build
           ls dist/
         
-      - name: 'Upload DMG/OSX64'
+      - name: Upload DMG/OSX64
+        uses: actions/upload-artifact@v2
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{steps.build_date.outputs.date}}"
-        uses: 'actions/upload-artifact@v2'
         with:
           name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_DMG"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.dmg"
           if-no-files-found: error
           
-      - name: 'Upload ZIP/OSX64'
+      - name: Upload ZIP/OSX64
+        uses: actions/upload-artifact@v2
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{steps.build_date.outputs.date}}"
-        uses: 'actions/upload-artifact@v2'
         with:
           name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.zip"
