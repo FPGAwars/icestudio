@@ -27,10 +27,7 @@ jobs:
       # Loading vars from icestudio package.json
       - id: icestudio_bjson
         run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
+          content=`tr '\n' ' ' < package.json`
           echo "::set-output name=packageJson::$content"
     
       # Timestamp for the build
@@ -60,12 +57,12 @@ jobs:
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.dmg"
           if-no-files-found: error
           
-   #   - name: Upload ZIP/OSX64
-   #     env:
-   #       ICESTUDIO_VERSION: "${{fromJson(steps.icestudiob_json.outputs.packageJson).version}}"
-   #       TIMESTAMP: "${{steps.build_bdate.outputs.date}}"
-   #     uses: actions/upload-artifact@v2
-   #     with:
-   #       name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
-   #       path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.zip"
-    #      if-no-files-found: error
+      - name: Upload ZIP/OSX64
+        env:
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudiob_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{steps.build_bdate.outputs.date}}"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.zip"
+          if-no-files-found: error
