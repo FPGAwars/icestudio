@@ -25,13 +25,13 @@ jobs:
       - uses: actions/checkout@v2
  
       # Loading vars from icestudio package.json
-      - id: icestudio_bjson
+      - id: icestudio_json
         run: |
           content=`tr '\n' ' ' < package.json`
           echo "::set-output name=packageJson::$content"
     
       # Timestamp for the build
-      - id: build_bdate
+      - id: build_date
         run: |
           content=`date +'%Y%m%d'`
           echo "::set-output name=date::$content"
@@ -47,20 +47,20 @@ jobs:
           npm run build
           ls dist/
         
-      - name: Upload DMG/OSX64
+      - name: 'Upload DMG/OSX64'
         env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudiob_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_bdate.outputs.date}}"
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{steps.build_date.outputs.date}}"
         uses: actions/upload-artifact@v2
         with:
           name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_DMG"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.dmg"
           if-no-files-found: error
           
-      - name: Upload ZIP/OSX64
+      - name: 'Upload ZIP/OSX64'
         env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudiob_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_bdate.outputs.date}}"
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{steps.build_date.outputs.date}}"
         uses: actions/upload-artifact@v2
         with:
           name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
