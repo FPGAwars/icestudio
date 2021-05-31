@@ -36,7 +36,7 @@ jobs:
       # Timestamp for the build
       - id: build_date
         run: |
-          content=`date +'%Y%m%d'`
+          content=`date +'%Y%m%d%H%M'`
           echo "::set-output name=date::$content"
 
       - name: Setup Nodejs version
