@@ -13,6 +13,25 @@ module.exports = function (grunt) {
   
   var platforms, options, distCommands, distTasks;
   
+  // Common for all platforms
+  distTasks = [
+      "checksettings",
+      "jshint",
+      "clean:dist",
+      "clean:toolchain",
+      "nggettext_compile",
+      "useminPrepare",
+      "concat",
+      "copy:dist",
+      "json-minify",
+      "uglify",
+      "cssmin",
+      "usemin",
+      "nwjs",
+      "toolchain"
+    ];
+
+
   if (DARWIN) {
     platforms = ["osx64"];
     options = { scope: ["devDependencies", "darwinDependencies"] };
@@ -33,24 +52,7 @@ module.exports = function (grunt) {
       "exec:nsis32",
       "exec:nsis64"
     ];
-    distTasks = [
-      "checksettings",
-      "jshint",
-      "clean:dist",
-      "clean:toolchain",
-      "nggettext_compile",
-      "useminPrepare",
-      "concat",
-      "copy:dist",
-      "json-minify",
-      "uglify",
-      "cssmin",
-      "usemin",
-      "nwjs",
-      "toolchain"
-    ];
-
-    var onlyPlatform = grunt.option("platform") || "all";
+        var onlyPlatform = grunt.option("platform") || "all";
     if (onlyPlatform === "linux64") {
       distCommands = ["compress:linux64", "appimage:linux64"];
       platforms = ["linux64"];
@@ -499,27 +501,7 @@ module.exports = function (grunt) {
     "dist",
     distTasks.concat(distCommands).concat(["clean:tmp"])
   );
-  /*grunt.registerTask('dist_linux64', [
-    'checksettings',
-    'jshint',
-    'clean:dist',
-    'clean:toolchain',
-    'nggettext_compile',
-    'useminPrepare',
-    'concat',
-    'copy:dist',
-    'json-minify',
-    'uglify',
-    'cssmin',
-    'usemin',
-    'nwjsLinux64'
-  ]
-  .concat(distCommandsLinux64)
-  .concat([
-    'clean:tmp'
-  ]));
-*/
-  grunt.registerTask("checksettings", function () {
+   grunt.registerTask("checksettings", function () {
     //    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
     //      grunt.fail.fatal('Apio settings are in debug mode');
     //   }
