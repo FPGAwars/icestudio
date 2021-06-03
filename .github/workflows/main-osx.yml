@@ -33,8 +33,8 @@ jobs:
       # Timestamp for the build
       - id: build_date
         run: |
-          content=`date +'%Y%m%d%H%M'`
-          echo "::set-output name=date::$content"
+          content=`tr '\n' ' ' < app/buildinfo.json`
+          echo "::set-output name=packageJson::$content"
           
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
@@ -53,8 +53,8 @@ jobs:
           TIMESTAMP: "${{steps.build_date.outputs.date}}"
         uses: actions/upload-artifact@v2
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_DMG"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.dmg"
+          name: "osx64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.dmg"
           if-no-files-found: error
           
       - name: 'Upload ZIP/OSX64'
@@ -63,6 +63,6 @@ jobs:
           TIMESTAMP: "${{steps.build_date.outputs.date}}"
         uses: actions/upload-artifact@v2
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.zip"
+          name: "osx64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.zip"
           if-no-files-found: error
