@@ -12,6 +12,7 @@
 *.swp
 *~
 app/icerok.capture.raw
+app/buildinfo.json
 .tmp
 dist
 cache

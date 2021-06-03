@@ -1,6 +1,6 @@
 {
   "name": "icestudio",
-  "version": "0.5.1w210224",
+  "version": "0.5.1w",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {
@@ -22,6 +22,7 @@
   "scripts": {
     "start": "grunt serve",
     "build": "grunt dist",
+    "buildLinux64": "grunt dist --platform=linux64",
     "gettext": "grunt gettext",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },

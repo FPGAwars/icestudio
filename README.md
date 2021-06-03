@@ -149,15 +149,27 @@ firefox _build/html/index.html
 
 ### Package
 
+For building all platforms packages:
+
 ```bash
 npm run build
 ```
-
 | Target OS | Development OS | Output files |
 |:---:|:-------------:|:-----------------:|
 | GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
 | Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
 |  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
+
+
+For testing development build only linux 64 packages:
+
+```bash
+npm run buildLinux64
+```
+| Target OS | Development OS | Output files |
+|:---:|:-------------:|:-----------------:|
+| GNU/Linux | GNU/Linux | linux64.zip, linux64.AppImage |
+
 
 ### Apio configuration
 
