@@ -422,7 +422,9 @@ angular
 
       function shellEscape(arrayArgs) {
         return arrayArgs.map(function (c) {
-          if (c.indexOf("(") >= 0) c = '"'+c+'"';
+          if (c.indexOf("(") >= 0){
+             c = `"${c}"`;
+          }
           return c;
         });
       }
@@ -885,22 +887,18 @@ angular
 
       function findValueNPNR(pattern, output, previousValue) {
         var match = pattern.exec(output);
-        return match && match[1] && match[2] && match[3]
-          ? {
+        return match && match[1] && match[2] && match[3]? {
               used: match[1],
               total: match[2],
               percentage: match[3]
-            }
-          : previousValue;
+        } : previousValue;
       }
 
       function findMaxFreq(pattern, output, previousValue) {
         var match = pattern.exec(output);
-        return match && match[1]
-          ? {
+        return match && match[1] ? {
               value: match[1]
-            }
-          : previousValue;
+            } : previousValue;
       }
 
       /*    function findValue(pattern, output, previousValue) {
