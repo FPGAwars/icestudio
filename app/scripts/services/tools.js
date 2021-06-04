@@ -422,7 +422,7 @@ angular
 
       function shellEscape(arrayArgs) {
         return arrayArgs.map(function (c) {
-          if (c.indexOf("(") >= 0) c = `"${c}"`;
+          if (c.indexOf("(") >= 0) c = '"'+c+'"';
           return c;
         });
       }
