@@ -23,22 +23,7 @@ jobs:
      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-     
-      # Loading vars from icestudio package.json
-      - id: icestudio_json
-        run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
-    
-      # Timestamp for the build
-      - id: build_date
-        run: |
-          content=`date +'%Y%m%d%H%M'`
-          echo "::set-output name=date::$content"
-
+      
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
@@ -70,83 +55,98 @@ jobs:
           export DISPLAY=:0.0 
           npm run build
           
+        # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+    
+      # Timestamp for the build
+      - id: build_date
+        run: |
+          content=`tr '\n' ' ' < app/buildinfo.json`
+          echo "::set-output name=buildJson::$content"
+          
       - name: 'Upload AppImage/linux64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_linux64_AppImage"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-linux64.AppImage"
+          name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
           if-no-files-found: error
           
       - name: 'Upload ZIP/linux64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_linux64_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-linux64.zip"
+          name: "linux64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.zip"
           if-no-files-found: error
       
       - name: 'Upload AppImage/linux32'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_linux32_AppImage"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-linux32.AppImage"
+          name: "linux32_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux32.AppImage"
           if-no-files-found: error
           
       - name: 'Upload ZIP/linux32'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_linux32_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-linux32.zip"
+          name: "linux32_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux32.zip"
           if-no-files-found: error
           
       - name: 'Upload MSI/win64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_win64_MSI"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-win64.exe"
+          name: "win64_MSI_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.exe"
           if-no-files-found: error
           
       - name: 'Upload ZIP/win64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_winx64_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-win64.zip"
+          name: "win64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.zip"
           if-no-files-found: error
           
       - name: 'Upload MSI/win32'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_win32_MSI"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-win32.exe"
+          name: "win32_MSI_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win32.exe"
           if-no-files-found: error
           
       - name: 'Upload ZIP/win32'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_win32_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-win32.zip"
+          name: "win32_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win32.zip"
           if-no-files-found: error
   

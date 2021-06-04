@@ -23,19 +23,7 @@ jobs:
      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
- 
-      # Loading vars from icestudio package.json
-      - id: icestudio_json
-        run: |
-          content=`tr '\n' ' ' < package.json`
-          echo "::set-output name=packageJson::$content"
-    
-      # Timestamp for the build
-      - id: build_date
-        run: |
-          content=`date +'%Y%m%d%H%M'`
-          echo "::set-output name=date::$content"
-          
+      
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
@@ -46,23 +34,35 @@ jobs:
         run:  | 
           npm run build
           ls dist/
-        
+          
+       # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`tr '\n' ' ' < package.json`
+          echo "::set-output name=packageJson::$content"
+    
+      # Timestamp for the build
+      - id: build_date
+        run: |
+          content=`tr '\n' ' ' < app/buildinfo.json`
+          echo "::set-output name=buildJson::$content"
+          
       - name: 'Upload DMG/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: actions/upload-artifact@v2
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_DMG"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.dmg"
+          name: "osx64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.dmg"
           if-no-files-found: error
           
       - name: 'Upload ZIP/OSX64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{steps.build_date.outputs.date}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: actions/upload-artifact@v2
         with:
-          name: "${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}_osx64_ZIP"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}-osx64.zip"
+          name: "osx64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.zip"
           if-no-files-found: error
