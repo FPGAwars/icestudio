@@ -76,7 +76,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux64_AppImage_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
           if-no-files-found: error
           
@@ -86,7 +86,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux64_ZIP_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "linux64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.zip"
           if-no-files-found: error
       
@@ -96,7 +96,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux32_AppImage_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "linux32_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux32.AppImage"
           if-no-files-found: error
           
@@ -106,7 +106,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux32_ZIP_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "linux32_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux32.zip"
           if-no-files-found: error
           
@@ -116,7 +116,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "win64_MSI_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "win64_MSI_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.exe"
           if-no-files-found: error
           
@@ -126,7 +126,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "win64_ZIP_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "win64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.zip"
           if-no-files-found: error
           
@@ -136,7 +136,7 @@ jobs:
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "win32_MSI_${{env.TIMESTAMP}}_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          name: "win32_MSI_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win32.exe"
           if-no-files-found: error
           
