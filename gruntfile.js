@@ -27,8 +27,7 @@ module.exports = function (grunt) {
       "uglify",
       "cssmin",
       "usemin",
-      "nwjs",
-      "toolchain"
+      "nwjs"
     ];
 
 

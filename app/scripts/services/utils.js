@@ -162,20 +162,22 @@ angular.module('icestudio')
     this.executeCommandOld = function (command, callback) {
       var cmd = command.join(' ');
       //const fs = require('fs');
-      if (typeof common.DEBUGMODE !== 'undefined' &&
+    /*  if (typeof common.DEBUGMODE !== 'undefined' &&
         common.DEBUGMODE === 1) {
 
         nodeFs.appendFileSync(common.LOGFILE, 'utils.executeCommand=>' + cmd + "\n");
-      }
+      }*/
+
       nodeChildProcess.exec(cmd,
         function (error, stdout, stderr) {
-
-          if (typeof common.DEBUGMODE !== 'undefined' &&
+          iceConsole.log(`utils.executeCommand=> ${cmd}\n`);
+/*          if (typeof common.DEBUGMODE !== 'undefined' &&
             common.DEBUGMODE === 1) {
 
             nodeFs.appendFileSync(common.LOGFILE, `${stdout}\n${+stderr}\n`);
-          }
+          }*/
           common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
+
           $(document).trigger('commandOutputChanged', [common.commandOutput]);
           if (error) {
             this.enableKeyEvents();
@@ -205,12 +207,15 @@ angular.module('icestudio')
       proccess.stdout.on('data', function (data) {
         iceConsole.log(`${data}\n`);
         common.commandOutput = command.join(' ') + '\n\n' + data;
+      
+        iceConsole.log(`utils.executeCommand.stdout => ${common.commandOutput}\n`);
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
       proccess.stderr.on('data', function (data) {
         iceConsole.log(`${data}\n`);
         common.commandOutput = command.join(' ') + '\n\n' + data;
+        iceConsole.log(`utils.executeCommand.stderr => ${common.commandOutput}\n`);
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
