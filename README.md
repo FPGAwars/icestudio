@@ -1,19 +1,27 @@
-<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-github.svg)
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.5.0)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.5.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
-[![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
-Visual editor for open FPGA boards. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
+[![Build Status][build-image]][build-url]
+[![Build Mac][build-mac-image]][build-mac-url]  
 
-    Graphic design -> Verilog, PCF -> Bistream -> FPGA
+![Version][version-image]
+[![License][license-image]][license-url]  
 
-For more information visit our site [icestudio.io](https://icestudio.io)
+Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
 
-### Supported boards
+# Documentation
 
-#### HX1K
+Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestudio/wiki)
+
+# Introduction
+
+1. Draw your circuit
+2. Upload it to your board with an OpenSource FPGA
+3. Done!
+
+# Supported boards
+
+## HX1K
 
 | Board name | Interface |
 |:-|:-:|
@@ -21,7 +29,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | FTDI |
 | [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | FTDI |
 
-#### HX8K
+## HX8K
 
 | Board name | Interface |
 |:-|:-:|
@@ -33,14 +41,14 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | FTDI |
 | [iceFUN](https://www.robot-electronics.co.uk/icefun.html) | Serial |
 
-#### LP8K
+## LP8K
 
 | Board name | Interface |
 |:-|:-:|
 | [TinyFPGA B2](https://tinyfpga.com/b-series-guide.html) | Serial |
 | [TinyFPGA BX](https://tinyfpga.com/bx/guide.html) | Serial |
 
-#### UP5K
+## UP5K
 
 | Board name | Interface |
 |:-|:-:|
@@ -54,7 +62,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [iCESugar v1.5](https://github.com/wuxx/icesugar) | HID |
 | [OK:iCE40 Pro](https://github.com/WiFiBoy/OK-iCE40Pro) | FTDI |
 
-## Installation
+# Installation
 
 You can install **stable** or **nightly** Icestudio versions.
 
@@ -96,7 +104,7 @@ Install [Python >= 3.5](https://www.python.org/downloads/) and [Node.js](https:/
 
 If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
 
-### Download
+## Download
 
 ```bash
 git clone https://github.com/FPGAwars/icestudio.git
@@ -226,3 +234,24 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 ## License
 
 Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+--------
+[![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/fgpawars-banner.svg)](https://fpgawars.github.io/)
+
+
+<!-- Badges -->
+
+[version-image]: https://img.shields.io/badge/version-v0.5.1wip-orange.svg
+
+[license-image]: http://img.shields.io/:license-gpl-blue.svg
+
+[license-url]: http://opensource.org/licenses/GPL-2.0
+
+[build-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml/badge.svg
+
+[build-url]: https://github.com/FPGAwars/icm/actions/workflows/main.yml
+
+
+[build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
+
+[build-mac-url]: https://github.com/FPGAwars/icm/actions/workflows/main-osx.yml
