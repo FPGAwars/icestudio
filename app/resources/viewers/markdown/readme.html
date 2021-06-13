@@ -4,6 +4,9 @@
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="css/github-markdown.css">
   <style type="text/css">
+    body {
+      background-color: #eaebec;
+    }
     .markdown-body {
       box-sizing: border-box;
       min-width: 200px;
@@ -23,6 +26,7 @@
     'use strict';
     var marked = require('marked');
     var openurl = require('openurl');
+    const fs = require('fs');
 
     function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -40,12 +44,16 @@
     };
 
     window.onload = function() {
+     
       var options = { renderer: renderer };
-      var readme = getURLParameter('readme');
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('GET', readme, false);
-      xmlhttp.send();
-      var text = xmlhttp.responseText;
+
+      //-- Get the readme filename
+      var readme_filename = getURLParameter('readme');
+      
+      //-- Read the readme file
+      const text = fs.readFileSync(readme_filename,'utf8'); 
+
+      //-- Render de markdown file
       if (text) {
         document.getElementById('content').innerHTML = marked(text, options);
       }
