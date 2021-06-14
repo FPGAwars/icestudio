@@ -1,9 +1,15 @@
 'use strict';
 
+//-------- This is the main ENTRY Point
+
 /* exported ICEpm */
 var ICEpm = new IcePlugManager();
+
 /* exported iceConsoler */
+//-- The log file by default is "icestudio.log", located in the  
+//-- user home folder
 var iceConsole = new IceLogger();
+
 
 angular
   .module('icestudio', [
@@ -24,18 +30,24 @@ angular
     }
   ])
   .run(function (profile,
-    project,
-    common,
-    tools,
-    utils,
-    boards,
-    collections,
-    gettextCatalog,
-    $timeout) {
-    $timeout(function () {
-      $('body').addClass('waiting');
-    }, 0);
+                  project,
+                  common,
+                  tools,
+                  utils,
+                  boards,
+                  collections,
+                  gettextCatalog,
+                  $timeout) {
+
+      $timeout(function () {
+         $('body').addClass('waiting');
+      }, 0);
+    
+    //-- Load the boards infor form their .json files and
+    //-- create the GLOBAL Object common.boards
+    //-- Read more information about it in the file app/scripts/services/boards.js
     boards.loadBoards();
+    
     utils.loadProfile(profile, function () {
 
       if (typeof profile.data.loggingEnabled !== 'undefined' &&
