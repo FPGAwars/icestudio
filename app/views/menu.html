@@ -278,6 +278,7 @@
               <li class="dropdown-submenu" uib-dropdown ng-if="common.showToolchain()">
                 <a href uib-dropdown-toggle>{{ 'Toolchain' | translate }}</a>
                 <ul uib-dropdown-menu>
+
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
                     <a href ng-hide="toolchain.installed" ng-click="tools.installToolchain()">
                       {{ 'Install' | translate }}
@@ -286,16 +287,32 @@
                       {{ 'Update' | translate }}
                     </a>
                   </li>
+
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
                     <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.removeToolchain()">
                       {{ 'Remove' | translate }}
                     </a>
                   </li>
+
                   <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
                     <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.resetToolchain()">
                       {{ 'Reset default' | translate }}
                     </a>
                   </li>
+
+                  <li class="divider" ng-if="common.showToolchain()"></li>
+
+                  <!-- Testing -->
+                  <li>
+                    <a href ng-show="toolchain.installed" ng-click="tools.test()">
+                      {{ 'Test' | translate }}
+                    </a>
+
+                  </li>
+
+                  <!-- End testing -->
+
+
                   <li class="divider" ng-show="toolchain.apio"></li>
                   <li class="disabled" ng-show="toolchain.apio">
                     <a href>{{ 'Apio ' + toolchain.apio }}</a>

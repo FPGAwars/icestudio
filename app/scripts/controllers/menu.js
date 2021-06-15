@@ -769,6 +769,7 @@ angular.module('icestudio')
 
     $scope.showSystemInfo = function () {
       console.log("SYSTEM INFO!!!!!");
+      console.log("Profile: ",common.PROFILE_PATH);
       gui.Window.open('resources/viewers/system/system.html', {
         title: "System Info",
         focus: true,

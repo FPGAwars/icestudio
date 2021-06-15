@@ -43,11 +43,15 @@ angular
          $('body').addClass('waiting');
       }, 0);
     
-    //-- Load the boards infor form their .json files and
+    //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
     boards.loadBoards();
     
+    console.log("Profile path: " + common.PROFILE_PATH);
+    console.log("PROFILE: ");
+    console.log(profile);
+
     utils.loadProfile(profile, function () {
 
       if (typeof profile.data.loggingEnabled !== 'undefined' &&

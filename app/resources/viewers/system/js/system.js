@@ -7,3 +7,4 @@ disp_arch.innerHTML += process.arch;
 disp_platform.innerHTML += process.platform;
 disp_dir.innerHTML += process.cwd();
 
+console.log("Profile: " + common.PROFILE_PATH);
