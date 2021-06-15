@@ -1048,7 +1048,7 @@ angular
       //-- Test
       this.test = function () {
          console.log("TEST!!!!!!!!");
-      }
+      };
 
       this.updateToolchain = function () {
         if (resultAlert) {

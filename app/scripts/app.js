@@ -1,6 +1,6 @@
 'use strict';
 
-//-------- This is the main ENTRY Point
+//-------- This is the main APP ENTRY Point
 
 /* exported ICEpm */
 var ICEpm = new IcePlugManager();
