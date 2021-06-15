@@ -32,12 +32,14 @@ angular
       var infoAlert = null;
       var resultAlert = null;
       var toolchainAlert = null;
+
+
+      //-- tools.toolchain Global Object
       var toolchain = {
         apio: "-",
         installed: false,
         disabled: false
       };
-
       this.toolchain = toolchain;
 
       // Remove old build directory on start
@@ -1048,6 +1050,7 @@ angular
       //-- Test
       this.test = function () {
          console.log("TEST!!!!!!!!");
+         installOnlineToolchain();
       };
 
       this.updateToolchain = function () {
@@ -1173,9 +1176,11 @@ angular
       }
 
       function installOnlineToolchain() {
+
+        //-- Waiting state: Spinner on
         installationStatus();
 
-        var content = [
+        const content = [
           "<div>",
           '  <p id="progress-message">' +
             gettextCatalog.getString("Installing toolchain") +
@@ -1414,17 +1419,27 @@ angular
         toolchainAlert.close();
       }
 
+      //-- The interface is changed to the waiting state
+      //-- The spinner is activated
       function installationStatus() {
+
         // Disable user events
         utils.disableKeyEvents();
         utils.disableClickEvents();
+
+        //-- Spiner on!
         $("body").addClass("waiting");
       }
 
+      //-- The interface is changed to the normal state
+      //-- The spinner is stoped
       function restoreStatus() {
+
         // Enable user events
         utils.enableKeyEvents();
         utils.enableClickEvents();
+
+        //-- Spinner off!
         $("body").removeClass("waiting");
       }
 

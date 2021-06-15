@@ -43,7 +43,9 @@ angular.module('icestudio')
     this.commandOutput = '';
 
     // Apio develop URL
-    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@%BRANCH%#egg=apio';
+    // The apio develop is installed using this command:
+    // pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
+    this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@develop#egg=apio';
 
     // OS
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);

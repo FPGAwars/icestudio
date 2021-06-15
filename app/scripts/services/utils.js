@@ -26,9 +26,11 @@ angular.module('icestudio')
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
-    // Get the system executable
-    // Get the system executable
+   
+    // Get the system pip executable
+    // It is available in the common.ENV_PIP object
     this.getPythonPipExecutable = function () {
+      
       if (!_pythonPipExecutableCached) {
         _pythonPipExecutableCached = common.ENV_PIP;
       }
@@ -342,16 +344,26 @@ angular.module('icestudio')
       let versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
       let extraPackages = _package.apio.extras || [];
 
+      console.log("common.APIO_PIP_VCS: " + common.APIO_PIP_VCS);
+
+      //-- Get the apio package name
+      //-- Stable: 'apio'
+      //-- Development: 'git+https://github.com/FPGAwars/apio.git@develop#egg=apio'
       let apio = this.getApioInstallable();
+
 
       let pipExec = this.getPythonPipExecutable();
 
       this.executeCommand([coverPath(pipExec), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
     };
 
+    //-- Return the package name to pass to the pip command for installing apio
+    //-- It depends on the "apio.branch" property define in the package.json file
+    //-- If the value is not defined, the package is apio
+    //-- If any other value is defined (ex. develop), the package is git+https://github.com/FPGAwars/apio.git@develop#egg=apio
+    //-- (installed from the git repository, from the develop branch)
     this.getApioInstallable = function () {
-      return _package.apio.branch ?
-        common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch) : 'apio';
+      return _package.apio.branch ? common.APIO_PIP_VCS : 'apio';
     };
 
     this.apioInstall = function (pkg, callback) {

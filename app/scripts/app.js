@@ -39,6 +39,7 @@ angular
                   gettextCatalog,
                   $timeout) {
 
+      //-- The application is on the waiting state: spinner on
       $timeout(function () {
          $('body').addClass('waiting');
       }, 0);
@@ -81,7 +82,9 @@ angular
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
       iceConsole.log(`\n- ENVIRONMENT:\n`);
-      iceConsole.log(common);
+      iceConsole.log("common.APIO_PIP_VCS: Development Apio package:  " + common.APIO_PIP_VCS);
+      iceConsole.log("common.ENV_PIP: PIP executable:  " + common.ENV_PIP);
+      //iceConsole.log(common);
 
       collections.loadAllCollections();
       utils.loadLanguage(profile, function () {
