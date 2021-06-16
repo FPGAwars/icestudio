@@ -1,12 +1,28 @@
+<!-- HTML file for rendering the Edit/Preferences/UI theme menu 
+     It is included in the menu.html file 
+-->
+
+<!-- The theme selected by the user is located in the profile.data.uiTheme
+     Global property
+-->
+
+<!-- If you want to include new themes, you should edit this file -->
+
 <!DOCTYPE html>
+
 <li>
+  <!-- Edit/Preferencies/UI Theme/Dark -->
   <a href ng-click="selectTheme('dark')">
     {{ 'Dark (default)' | translate }}&ensp;
+
     <span ng-show="profile.data.uiTheme == 'dark'" class="glyphicon glyphicon-ok-circle"></span>
   </a>
 </li>
+
 <li>
+  <!-- Edit/Preferencies/UI Theme/light -->
   <a href ng-click="selectTheme('light')">
+
     {{ 'Light' | translate }}&ensp;
     <span ng-show="profile.data.uiTheme == 'light'" class="glyphicon glyphicon-ok-circle"></span>
   </a>

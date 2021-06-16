@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<!-- ICESTUDIO MENU. Located at the top bar -->
+
 <div ng-controller="MenuCtrl">
 
   <div id="menu" ondragstart="return false;" ondrop="return false;">
@@ -19,41 +22,74 @@
 
     <input id="input-add-collection" type="file" accept=".zip" class="hidden" multiple/>
 
+    <!-- Top navigation bar -->
     <nav class="navbar navbar-default navbar-static-top ice-bar" role="navigation">
 
       <div class="collapse navbar-collapse">
 
+        <!-- Menus in the left side of the Menu bar: FILE, Edit, View, Select, Tools and Help   -->
         <ul class="nav navbar-nav">
 
+
+          <!-- FILE Menu -->
           <li uib-dropdown ng-mouseover="showMenu('file')" ng-mouseleave="hideMenu('file')" ng-click="fixMenu('file')" is-open="status.file">
+
+            <!-- Text displayed. Default in English. If available, the translation to the current language is shown -->
             <a href uib-dropdown-toggle>{{ 'File' | translate }}<span class="caret"></span></a>
             <ul uib-dropdown-menu style="min-width: 230px">
+
+              <!-- File/New -->
               <li>
+                <!-- When the button is clicked, the function newProject() is called 
+                     It is located in the app/scripts/controllers/menu.js file-->
                 <a href ng-click="newProject()">{{ 'New' | translate }}<span class="shortcut">{{ 'newProject' | shortcut }}</span></a>
               </li>
+
+              <!-- File/Open -->
               <li>
                 <a href ng-click="openProjectDialog()">{{ 'Open' | translate }}...<span class="shortcut">{{ 'openProject' | shortcut }}</span></a>
               </li>
+
+              <!-- File/Blocks -->
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
+
+                <!-- It is a Sub-menu. The blocks from the current selected collection are shown -->
                 <menutree data="common.selectedCollection.content.blocks" callback="openProject(path)"></menutree>
               </li>
+
+              <!-- File/Examples -->
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Examples' | translate }}</a>
+
+                <!-- It is a Sub-menu. The examples form the current selected collection are shown -->
                 <menutree data="common.selectedCollection.content.examples" callback="openProject(path)"></menutree>
               </li>
+
+              <!-- File/Add as Block -->
               <li>
                 <a href ng-click="addAsBlock()">{{ 'Add as block' | translate }}...</a>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- File/Save -->
               <li>
                 <a href ng-click="saveProject()">{{ 'Save' | translate }}<span class="shortcut">{{ 'saveProject' | shortcut }}</span></a>
               </li>
+
+              <!-- File/Save as -->
               <li>
                 <a href ng-click="saveProjectAs()">{{ 'Save as' | translate }}...<span class="shortcut">{{ 'saveProjectAs' | shortcut }}</span></a>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- File/Export Sub-menu -->
               <li class="dropdown-submenu" uib-dropdown>
+
                 <a href uib-dropdown-toggle>{{ 'Export' | translate }}...</a>
                 <ul uib-dropdown-menu>
                   <li>
@@ -80,99 +116,160 @@
                   </li>
                 </ul>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- File/Quit -->
               <li>
                 <a href ng-click="quit()">{{ 'Quit' | translate }}<span class="shortcut">{{ 'quit' | shortcut }}</span></a>
               </li>
             </ul>
           </li>
 
+          <!-- EDIT Menu -->
           <li uib-dropdown ng-mouseover="showMenu('edit')" ng-mouseleave="hideMenu()" ng-click="fixMenu('edit')" is-open="status.edit">
             <a href uib-dropdown-toggle>{{ 'Edit' | translate }}<span class="caret"></span></a>
+
             <ul uib-dropdown-menu style="min-width: 200px">
+
+              <!-- Edit/Undo -->
               <li>
                 <a href ng-click="undoGraph()">{{ 'Undo' | translate }}<span class="shortcut">{{ 'undoGraph' | shortcut }}</span></a>
               </li>
+
+              <!-- Edit/Redo -->
               <li>
                 <a href ng-click="redoGraph()">{{ 'Redo' | translate }}<span class="shortcut">{{ 'redoGraph' | shortcut }}</span></a>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- Edit/Cut -->
               <li>
                 <a href ng-click="cutSelected()">{{ 'Cut' | translate }}<span class="shortcut">{{ 'cutSelected' | shortcut }}</span></a>
               </li>
+
+              <!-- Edit/Copy -->
               <li>
                 <a href ng-click="copySelected()">{{ 'Copy' | translate }}<span class="shortcut">{{ 'copySelected' | shortcut }}</span></a>
               </li>
+
+              <!-- Edit/Paste -->
               <li>
                 <a href ng-click="pasteSelected()">{{ 'Paste' | translate }}<span class="shortcut">{{ 'pasteSelected' | shortcut }}</span></a>
               </li>
+
+              <!-- Edit/Clone -->
               <li>
                 <a href ng-click="pasteAndCloneSelected()">{{ 'Clone' | translate }}<span class="shortcut">{{ 'pasteAndCloneSelected' | shortcut }}</span></a>
               </li>
+
+              <!-- Edit/Select all -->
               <li>
                 <a href ng-click="selectAll()">{{ 'Select all' | translate }}<span class="shortcut">{{ 'selectAll' | shortcut }}</span></a>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- Edit/Fit content -->
               <li>
                 <a href ng-click="fitContent()">{{ 'Fit content' | translate }}<span class="shortcut">{{ 'fitContent' | shortcut }}</span></a>
               </li>
+
+              <!-- Divisor line between sections of the menu -->
               <li class="divider"></li>
+
+              <!-- Edit/Preferences Sub-Menu -->
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Preferences' | translate }}</a>
+
                 <ul uib-dropdown-menu>
+
+                  <!-- Edit/Preferences/Language sub-menu -->
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'Language' | translate }}</a>
+
                     <ul uib-dropdown-menu ng-include="'views/languages.html'"></ul>
                   </li>
+
+                  <!-- Divisor line between sections of the menu -->
                   <li class="divider"></li>
+
+                  <!-- Edit/Preferences/UI theme sub-menu -->
                   <li class="dropdown-submenu" uib-dropdown>
                     <a href uib-dropdown-toggle>{{ 'UI theme' | translate }}</a>
+
                     <ul uib-dropdown-menu ng-include="'views/uithemes.html'"></ul>
                   </li>
+
+                  <!-- Divisor line between sections of the menu -->
                   <li class="divider"></li>
                   
+                  <!-- Edit/Preferences/Board rules -->
                   <li>
                     <a href ng-click="toggleBoardRules()">
                       {{ 'Board rules' | translate }}&ensp;
+
                       <span ng-show="profile.data.boardRules" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
+
+                  <!-- Edit/Preferences/External collections -->
                   <li>
                     <a href ng-click="setExternalCollections()">{{ 'External collections' | translate }}</a>
                   </li>
+
+                  <!-- Edit/Preferences/External plugins -->
                   <li>
                     <a href ng-click="setExternalPlugins()">{{ 'External plugins' | translate }}</a>
                   </li>
+
+                  <!-- Edit/Preferences/Python environment -->
                   <li>
                     <a href ng-click="setPythonEnv()">{{ 'Python environment' | translate }}</a>
                   </li>
+
+                  <!-- Edit/Preferences/Remote host -->
                   <li>
                     <a href ng-click="setRemoteHostname()">
                       {{ 'Remote hostname' | translate }}
                       <span ng-show="profile.data.remoteHostname" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
+
+                  <!-- Edit/Preferences/Logging enable -->
                   <li>
                     <a href ng-click="toggleLoggingEnabled()">
                       {{ 'Logging enabled' | translate }}&ensp;
                       <span ng-show="profile.data.loggingEnabled" class="glyphicon glyphicon-ok-circle"></span>
                     </a>
                   </li>
+
+                  <!-- Edit/Preferences/Logging file -->
                    <li>
                     <a href ng-click="setLoggingFile()">{{'Logging file' | translate }}</a>
                   </li>
                   
                 </ul>
               </li>
+
+              <!-- Edit/Preferences/Project information -->
               <li>
                 <a href ng-click="setProjectInformation()">{{ 'Project information' | translate }}</a>
               </li>
             </ul>
           </li>
 
+          <!-- VIEW Menu -->
           <li uib-dropdown ng-mouseover="showMenu('view')" ng-mouseleave="hideMenu()" ng-click="fixMenu('view')" is-open="status.view">
             <a href uib-dropdown-toggle>{{ 'View' | translate }}<span class="caret"></span></a>
+
             <ul uib-dropdown-menu>
+
+              <!-- View/PCF -->
               <li>
                 <a href ng-click="showPCF()">{{ 'PCF' }}</a>
               </li>
@@ -402,6 +499,7 @@
 
         </ul>
 
+        <!-- Menus in the right side of the Menu bar: Basic and the current colection options -->
         <ul class="nav navbar-nav navbar-right">
 
           <li uib-dropdown
