@@ -82,6 +82,11 @@ angular.module('icestudio')
     this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
     this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
 
+    //-- APIO version values
+    this.APIO_VERSION_STABLE = 0;         //-- Use the stable version
+    this.APIO_VERSION_LATEST_STABLE = 1;  //-- Use the latest stable (available in the pypi repo)
+    this.APIO_VERSION_DEV = 2;            //-- Use the development apio version (from the github repo)
+
     //-- Folder name for the virtual environment
     this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
 

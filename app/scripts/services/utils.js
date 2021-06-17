@@ -362,8 +362,16 @@ angular.module('icestudio')
     //-- If the value is not defined, the package is apio
     //-- If any other value is defined (ex. develop), the package is git+https://github.com/FPGAwars/apio.git@develop#egg=apio
     //-- (installed from the git repository, from the develop branch)
-    this.getApioInstallable = function () {
-      return _package.apio.branch ? common.APIO_PIP_VCS : 'apio';
+    //-- Apio stable: pip install -U apio==0.6.0
+    //-- Latest stable: pip install -U apio
+    //-- Dev Apio stable: pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
+    this.getApioInstallable = function (version = common.APIO_VERSION_LATEST_STABLE) {
+
+      //-- Strings with the different apio pip packages
+      const pip_package = [`apio==${_package.apio.min}`, "apio", common.APIO_PIP_VCS];
+
+      return pip_package[version];
+
     };
 
     this.apioInstall = function (pkg, callback) {

@@ -1028,6 +1028,7 @@ angular
       );
 
       this.installToolchain = function () {
+        console.log("INSTALL TOOLCHAIN!!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1054,6 +1055,7 @@ angular
       };
 
       this.updateToolchain = function () {
+        console.log("TESTUPDATE TOOLCHAIN!!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1179,6 +1181,8 @@ angular
 
         //-- Waiting state: Spinner on
         installationStatus();
+
+        console.log("INSTALLONLINETOOLCHAIN!!!!")
 
         const content = [
           "<div>",
