@@ -279,28 +279,6 @@ angular.module('icestudio')
     };
 
 
-    this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
-      var self = this;
-      nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
-        if (!error) {
-          files = files.map(function (item) {
-            return coverPath(item);
-          });
-
-          let pipExec = this.getPythonPipExecutable();
-          self.executeCommand([coverPath(pipExec), 'install', '-U', '--no-deps'].concat(files), callback);
-        }
-      });
-    };
-
-    this.extractDefaultPythonPackages = function (callback) {
-      this.extractZip(common.DEFAULT_PYTHON_PACKAGES_ZIP, common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
-    };
-
-    this.installDefaultPythonPackages = function (callback) {
-      this.installDefaultPythonPackagesDir(common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
-    };
-
     this.isOnline = function (callback, error) {
       nodeOnline({
         timeout: 5000

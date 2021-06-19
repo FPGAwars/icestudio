@@ -73,16 +73,6 @@ angular.module('icestudio')
 
     //-- Path were the executale is run
     this.APP_DIR = nodePath.dirname(process.execPath);
-    this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
-
-    this.DEFAULT_PYTHON_PACKAGES = 'default-python-packages';
-    this.DEFAULT_PYTHON_PACKAGES_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_PYTHON_PACKAGES);
-    this.DEFAULT_PYTHON_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_PYTHON_PACKAGES + '.zip');
-
-    this.DEFAULT_APIO = 'default-apio';
-
-    this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
-    this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
 
     //-- APIO version values
     this.APIO_VERSION_STABLE = 0;         //-- Use the stable version
