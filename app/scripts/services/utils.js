@@ -198,6 +198,7 @@ angular.module('icestudio')
       let _this = this;
 
       iceConsole.log(`utils.executeCommand => ${cmd}\n`);
+      console.log("EXECUTE: " + cmd);
 
       let args = [];
 
@@ -277,14 +278,6 @@ angular.module('icestudio')
       }
     };
 
-    this.checkDefaultToolchain = function () {
-      try {
-        // TODO: use zip with sha1
-        return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
-      } catch (err) {
-        return false;
-      }
-    };
 
     this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
       var self = this;
@@ -306,18 +299,6 @@ angular.module('icestudio')
 
     this.installDefaultPythonPackages = function (callback) {
       this.installDefaultPythonPackagesDir(common.DEFAULT_PYTHON_PACKAGES_DIR, callback);
-    };
-
-    this.extractDefaultApio = function (callback) {
-      this.extractZip(common.DEFAULT_APIO_ZIP, common.DEFAULT_APIO_DIR, callback);
-    };
-
-    this.installDefaultApio = function (callback) {
-      this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
-    };
-
-    this.extractDefaultApioPackages = function (callback) {
-      this.extractZip(common.DEFAULT_APIO_PACKAGES_ZIP, common.APIO_HOME_DIR, callback);
     };
 
     this.isOnline = function (callback, error) {
@@ -368,21 +349,32 @@ angular.module('icestudio')
     this.getApioInstallable = function (version = common.APIO_VERSION_LATEST_STABLE) {
 
       //-- Strings with the different apio pip packages
-      const pip_package = [`apio==${_package.apio.min}`, "apio", common.APIO_PIP_VCS];
+      const pipPackage = [`apio==${_package.apio.min}`, "apio", common.APIO_PIP_VCS];
 
-      return pip_package[version];
+      return pipPackage[version];
 
     };
 
     this.apioInstall = function (pkg, callback) {
+      console.log("APIO_CMD: " + common.APIO_CMD );
       this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
     };
 
     this.toolchainDisabled = false;
 
+    //---------------------------------------------------------------------------
+    //-- Get the command that should be used for executing the apio toolchain
+    //-- This command includes the full path to apio executable, as well as  
+    //-- the setting of the APIO_HOME_DIR environment variable
     this.getApioExecutable = function () {
+      
+      //-- Check if the ICESTUDIO_APIO env variable is set with the apio toolchain to use  or  
+      //-- if it has been set on the package.json file
       var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
+
+      //-- The is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
+
         if (!this.toolchainDisabled) {
           // Show message only on start
           alertify.message('Using external apio: ' + candidateApio, 5);
@@ -390,9 +382,15 @@ angular.module('icestudio')
         this.toolchainDisabled = true;
         return coverPath(candidateApio);
       }
+
+      //-- There are no external apio toolchain. Use the one installed by icestudio
       this.toolchainDisabled = false;
+      
+      //-- The apio command to execute is located in the common.APIO_CMD global object
       return common.APIO_CMD;
     };
+    //-----------------------------------------------------------------------------------------
+
 
     this.removeToolchain = function () {
       this.deleteFolderRecursive(common.ENV_DIR);
@@ -1030,8 +1028,10 @@ angular.module('icestudio')
 
     };
 
+    //-- Place the path inside quotes. It is important for managing filepaths
+    //-- that contains spaces in ther names
     this.coverPath = coverPath;
-
+    
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }

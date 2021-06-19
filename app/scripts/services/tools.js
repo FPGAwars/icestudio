@@ -26,7 +26,9 @@ angular
       _package,
       $rootScope
     ) {
+      //-- Flag that indicates if there is an apio command already running
       var taskRunning = false;
+
       var resources = [];
       var startAlert = null;
       var infoAlert = null;
@@ -35,6 +37,11 @@ angular
 
 
       //-- tools.toolchain Global Object
+      //-- tools.toolchain.apio -> Apio version
+      //-- tools.toolchain.installed -> Boolean. 
+      //--    True if the toolchains is installed
+      //-- tools.toolchain.disable -> Boolean.
+      //--    True if the toolchain is disabled
       var toolchain = {
         apio: "-",
         installed: false,
@@ -43,8 +50,12 @@ angular
       this.toolchain = toolchain;
 
       // Remove old build directory on start
+      //-- TODO: Check if it can be removed, as now another
+      //-- build dir is used
       nodeFse.removeSync(common.OLD_BUILD_DIR);
 
+      //-- Execute the apio verify command. It checks the syntax of the current
+      //-- circuit
       this.verifyCode = function (startMessage, endMessage) {
         return apioRun(
           ["verify", "--board", common.selectedBoard.name],
@@ -53,6 +64,7 @@ angular
         );
       };
 
+      //-- Execute the apio build command. It builds the current circuit
       this.buildCode = function (startMessage, endMessage) {
         return apioRun(
           ["build", "--board", common.selectedBoard.name],
@@ -61,6 +73,8 @@ angular
         );
       };
 
+      //-- Execute the apio upload command. It uploads the bitstream to the  
+      //-- current board
       this.uploadCode = function (startMessage, endMessage) {
         return apioRun(
           ["upload", "--board", common.selectedBoard.name],
@@ -69,11 +83,21 @@ angular
         );
       };
 
+
+      //----------------------------------------------------------------
+      //-- Execute an apio command: build, verify, upload
       function apioRun(commands, startMessage, endMessage) {
         return new Promise(function (resolve) {
-          var sourceCode = "";
 
+          //-- Variable for storing the verilog source code of 
+          //-- the current circuit
+          let sourceCode = "";
+
+          //-- The command can only be executed if there is no other
+          //-- command already running
           if (!taskRunning) {
+
+            //-- Flag that there is a command running
             taskRunning = true;
 
             if (infoAlert) {
@@ -83,6 +107,7 @@ angular
             if (resultAlert) {
               resultAlert.dismiss(false);
             }
+
             graph
               .resetCodeErrors()
               .then(function () {
@@ -137,6 +162,7 @@ angular
           }
         });
       }
+      //----------------------------------------------------------------------------
 
       function restoreTask() {
         setTimeout(function () {
@@ -148,11 +174,20 @@ angular
         }, 1000);
       }
 
+      //------------------------------------------------------------------------
+      //-- Check if the toolchain has been installed
+      //-- We know it it has been already installed by watching the   
+      //-- toolchain.installed flag.
+      //-- It it is not installed and Alert windows is shown
       function checkToolchainInstalled() {
         return new Promise(function (resolve, reject) {
+
+          //-- Check the installation flag
           if (toolchain.installed) {
             resolve();
-          } else {
+
+          } //-- Toolchain Not installed. Show an alert window
+          else {
             toolchainNotInstalledAlert(
               gettextCatalog.getString("Toolchain not installed")
             );
@@ -160,6 +195,8 @@ angular
           }
         });
       }
+      //-----------------------------------------------------------------------
+
 
       function generateCode(cmd) {
         return new Promise(function (resolve) {
@@ -297,12 +334,27 @@ angular
 
       this.checkToolchain = checkToolchain;
 
+      //----------------------------------------------------------------------------------
+      //-- Check if APIO is available. The apio version is read and stored in the
+      //-- toolchain.apio global object
+      //-- It is also checked if the version is correct (with the version given in the  
+      //-- package.json package)
       function checkToolchain(callback) {
+
+        //-- Get the apio cmd to execute
         var apio = utils.getApioExecutable();
+
+        //-- Execute the command apio --version
+        //-- It returns the apio version
+        //-- Ej:
+        //-- $ apio --version
+        //-- apio, version 0.7.dev1
         nodeChildProcess.exec([apio, "--version"].join(" "), function (
           error,
           stdout /*, stderr*/
         ) {
+
+          //-- Toolchain not installed (or error executing it)
           if (error) {
             toolchain.apio = "";
             toolchain.installed = false;
@@ -313,16 +365,36 @@ angular
             if (callback) {
               callback();
             }
-          } else {
+          }
+
+          //-- Toolchain installed  
+          else {
+
+            //-- Get the version number
             toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+
+            //-- Check if the apio version if the ok with the specification
+            //-- in the package.json file
             toolchain.installed =
               toolchain.apio >= _package.apio.min &&
               toolchain.apio < _package.apio.max;
+
+            //-- The correct version of apio is installed
             if (toolchain.installed) {
+
+              //-- Execute the command apio clean -p resource/sample
+              //-- just to test if apio is correctly installed
               nodeChildProcess.exec(
                 [apio, "clean", "-p", common.SAMPLE_DIR].join(" "),
+
+                //-- callback:
                 function (error /*, stdout, stderr*/) {
+
+                  //-- Update the toolchain.installed flag with the result
                   toolchain.installed = !error;
+
+                  //-- There was an error executing the test command
+                  //-- Something is wrong... apio not correctly executed
                   if (error) {
                     toolchain.apio = "";
                     // Toolchain not properly installed
@@ -335,8 +407,9 @@ angular
                   }
                 }
               );
-            } else {
-              // An old version is installed
+            } 
+            //-- An old version of apio is intalled
+            else {
               toolchainNotInstalledAlert(
                 gettextCatalog.getString("Toolchain version does not match")
               );
@@ -347,6 +420,8 @@ angular
           }
         });
       }
+      //----------------------------------------------------------------------------------
+
 
       function toolchainNotInstalledAlert(message) {
         if (resultAlert) {
@@ -1027,26 +1102,27 @@ angular
         }.bind(this)
       );
 
+      //----------------------------------------------------------------
+      //-- Install the toolchain
+      //-- It displays a messages and if the user click on ok it will
+      //-- download the toolchain
       this.installToolchain = function () {
-        console.log("INSTALL TOOLCHAIN!!!!");
+        
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        if (utils.checkDefaultToolchain()) {
-          utils.removeToolchain();
-          installDefaultToolchain();
-        } else {
-          alertify.confirm(
-            gettextCatalog.getString(
-              "Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
-            ),
-            function () {
-              utils.removeToolchain();
-              installOnlineToolchain();
-            }
-          );
-        }
+
+        alertify.confirm(
+          gettextCatalog.getString(
+            "Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
+          ),
+          function () {
+            utils.removeToolchain();
+            installOnlineToolchain();
+          }
+        );
       };
+      //--------------------------------------------------------------------
 
       //-- Test
       this.test = function () {
@@ -1072,26 +1148,6 @@ angular
       this.resetToolchain = function () {
         if (resultAlert) {
           resultAlert.dismiss(false);
-        }
-        if (utils.checkDefaultToolchain()) {
-          alertify.confirm(
-            gettextCatalog.getString(
-              "The toolchain will be restored to default. Do you want to continue?"
-            ),
-            function () {
-              utils.removeToolchain();
-              installDefaultToolchain();
-            }
-          );
-        } else {
-          alertify.alert(
-            gettextCatalog.getString(
-              "Error: default toolchain not found in '{{dir}}'",
-              {
-                dir: common.TOOLCHAIN_DIR
-              }
-            )
-          );
         }
       };
 
@@ -1135,54 +1191,12 @@ angular
         });
       };
 
-      function installDefaultToolchain() {
-        installationStatus();
-
-        var content = [
-          "<div>",
-          '  <p id="progress-message">' +
-            gettextCatalog.getString("Installing toolchain") +
-            "</p>",
-          "  </br>",
-          '  <div class="progress">',
-          '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-          '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-          "    </div>",
-          "  </div>",
-          "</div>"
-        ].join("\n");
-        toolchainAlert = alertify.alert(content, function () {
-          setTimeout(function () {
-            initProgress();
-            // Restore OK button
-            $(toolchainAlert.__internal.buttons[0].element).removeClass(
-              "hidden"
-            );
-          }, 200);
-        });
-        // Hide OK button
-        $(toolchainAlert.__internal.buttons[0].element).addClass("hidden");
-
-        toolchain.installed = false;
-
-        // Reset toolchain
-        async.series([
-          ensurePythonIsAvailable,
-          /*extractVirtualenv,*/
-          createVirtualenv,
-          extractDefaultApio,
-          installDefaultApio,
-          extractDefaultApioPackages,
-          installationCompleted
-        ]);
-      }
-
       function installOnlineToolchain() {
 
         //-- Waiting state: Spinner on
         installationStatus();
 
-        console.log("INSTALLONLINETOOLCHAIN!!!!")
+        console.log("INSTALLONLINETOOLCHAIN!!!!");
 
         const content = [
           "<div>",
@@ -1265,29 +1279,6 @@ angular
       function createVirtualenv(callback) {
         updateProgress(gettextCatalog.getString("Create virtualenv..."), 10);
         utils.createVirtualenv(callback);
-      }
-
-      // Local installation
-
-      function extractDefaultApio(callback) {
-        updateProgress(
-          gettextCatalog.getString("Extract default apio files..."),
-          30
-        );
-        utils.extractDefaultApio(callback);
-      }
-
-      function installDefaultApio(callback) {
-        updateProgress(gettextCatalog.getString("Install default apio..."), 50);
-        utils.installDefaultApio(callback);
-      }
-
-      function extractDefaultApioPackages(callback) {
-        updateProgress(
-          gettextCatalog.getString("Extract default apio packages..."),
-          70
-        );
-        utils.extractDefaultApioPackages(callback);
       }
 
       // Remote installation

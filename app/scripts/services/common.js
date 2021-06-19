@@ -52,9 +52,12 @@ angular.module('icestudio')
     this.WIN32 = Boolean(process.platform.indexOf('win32') > -1);
     this.DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
 
-    // Paths
+    //---------- Paths
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
+
+    //-- Sample DIR: just for testing apio
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
+    
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
     this.DEFAULT_PLUGIN_DIR = nodePath.resolve(nodePath.join('resources', 'plugins'));
 
@@ -68,6 +71,7 @@ angular.module('icestudio')
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
+    //-- Path were the executale is run
     this.APP_DIR = nodePath.dirname(process.execPath);
     this.TOOLCHAIN_DIR = nodePath.join(this.APP_DIR, 'toolchain');
 
@@ -76,8 +80,6 @@ angular.module('icestudio')
     this.DEFAULT_PYTHON_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_PYTHON_PACKAGES + '.zip');
 
     this.DEFAULT_APIO = 'default-apio';
-    this.DEFAULT_APIO_DIR = nodePath.join(this.CACHE_DIR, this.DEFAULT_APIO);
-    this.DEFAULT_APIO_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO + '.zip');
 
     this.DEFAULT_APIO_PACKAGES = 'default-apio-packages';
     this.DEFAULT_APIO_PACKAGES_ZIP = nodePath.join(this.TOOLCHAIN_DIR, this.DEFAULT_APIO_PACKAGES + '.zip');
@@ -93,7 +95,15 @@ angular.module('icestudio')
     this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
     this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip3');
     this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
-    this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? '& ' : '; ') + '"' + this.ENV_APIO + '"';
+
+    //-- Set the apio command. It consist of two parts. The first is for defining and  
+    //-- exporting the APIO_HOME_DIR environment variable. It is used by apio to know where  
+    //-- is located its installation. The second part is the apio executable itself
+    //-- Example of APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
+    //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
+    this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
+                    '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? '& ' : '; ') + 
+                    '"' + this.ENV_APIO + '"';
 
     this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
       prefix: 'icestudio-',
