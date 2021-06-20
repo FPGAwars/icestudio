@@ -49,10 +49,12 @@ angular
     //-- Read more information about it in the file app/scripts/services/boards.js
     boards.loadBoards();
     
-
-
+    //-----------------------------------
+    //-- Load the profile file
+    //-- 
     utils.loadProfile(profile, function () {
 
+      //-- Configure the iceConsole according to the profile values
       if (typeof profile.data.loggingEnabled !== 'undefined' &&
         profile.data.loggingEnabled === true) {
 
@@ -73,17 +75,25 @@ angular
         iceConsole.enable();
       }
 
+      //-- Show information in the log file (if enabled)
       const now = new Date();
+      iceConsole.log("\n\n\n");
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(` Icestudio session ${now.toString()}`);
       iceConsole.log(`=======================================================================================`);
       iceConsole.log('Profile file: ' + common.PROFILE_PATH); 
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
-      iceConsole.log(`\n- ENVIRONMENT:\n`);
-      iceConsole.log("common.APIO_PIP_VCS: Development Apio package:  " + common.APIO_PIP_VCS);
+
+      iceConsole.log(`\n- PATHs\n`);
+      iceConsole.log("common.BASE_DIR: Icestudio base dir: " + common.BASE_DIR);
+      iceConsole.log("common.ICESTUDIO_DIR: Icestudio folder: " + common.ICESTUDIO_DIR);
+      iceConsole.log("common.PROFILE_PATH: Profile path: " + common.PROFILE_PATH);
+      iceConsole.log("common.INTERNAL_COLLECTIONS_DIR: Internal collections: " + common.INTERNAL_COLLECTIONS_DIR);
+      iceConsole.log("common.APIO_HOME_DIR: APIO folder: " + common.APIO_HOME_DIR);
+      iceConsole.log("common.APP_DIR: Icestudio execution folder: " + common.APP_DIR); 
       iceConsole.log("common.ENV_PIP: PIP executable:  " + common.ENV_PIP);
-      //iceConsole.log(common);
+
 
       collections.loadAllCollections();
       utils.loadLanguage(profile, function () {
