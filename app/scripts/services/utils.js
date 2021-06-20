@@ -327,24 +327,41 @@ angular.module('icestudio')
     //-- Install the Apio toolchain. The version to install is taken
     //-- from the common.APIO_VERSION object
     //--
+    //-- Installing the apio stable:
+    //-- Ej.  pip install -U apio[extra packages]==0.6.0
+    //
+    //-- Installing the apio latest stable:
+    //-- Ej.  pip install -U apio[extra packages]
+    //
+    //-- Installing the apio dev:
+    //-- Ej.  pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
+    //
     this.installOnlineApio = function (callback) {
-
+      
       console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
-      let versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
+      //-- Get the extra python packages to install
       let extraPackages = _package.apio.extras || [];
 
-      console.log("common.APIO_PIP_VCS: " + common.APIO_PIP_VCS);
+      //-- Get the pip string with the version
+      //-- Stable: "==0.6.0"
+      //-- Latest stable and dev: ""
+      let versionString = "";
+      if (common.APIO_VERSION == common.APIO_VERSION_STABLE)
+        versionString = "==" + _package.apio.min;
 
-      //-- Get the apio package name
-      //-- Stable: 'apio'
-      //-- Development: 'git+https://github.com/FPGAwars/apio.git@develop#egg=apio'
-      let apio = this.getApioInstallable();
+      //-- Get the apio package name:
+      //-- Stable and latest stable: "apio"
+      //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
+      let apio = (common.APIO_VERSION == common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
 
-
+      //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
 
-      this.executeCommand([coverPath(pipExec), 'install', '-U', apio + '[' + extraPackages.toString() + ']' + versionRange], callback);
+      const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
+      const executable = coverPath(pipExec);
+
+      this.executeCommand([executable, params], callback)
     };
 
     //-- Return the package name to pass to the pip command for installing apio
