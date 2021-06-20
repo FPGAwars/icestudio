@@ -304,6 +304,9 @@ angular.module('icestudio')
     };
 
 
+    //-----------------------------------------------------------------
+    //-- Check if there is internet connection
+    //--
     this.isOnline = function (callback, error) {
       nodeOnline({
         timeout: 5000
@@ -442,12 +445,18 @@ angular.module('icestudio')
 
 
     //-------------------------------------------------------------------------
-    //-- Remove the toolchains and folder. There are three important folders:
-    //--   * 
+    //-- Remove the toolchains and related folders
+    //-- 
     this.removeToolchain = function () {
+
+      //-- Remove the Virtual environment
       this.deleteFolderRecursive(common.ENV_DIR);
-      this.deleteFolderRecursive(common.CACHE_DIR);
+
+      //-- Remove APIO
       this.deleteFolderRecursive(common.APIO_HOME_DIR);
+
+      //-- Remove the cache dir (temporal)
+      this.deleteFolderRecursive(common.CACHE_DIR);
     };
 
     this.removeCollections = function () {

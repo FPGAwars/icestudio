@@ -178,7 +178,7 @@ angular
       //-- Check if the toolchain has been installed
       //-- We know it it has been already installed by watching the   
       //-- toolchain.installed flag.
-      //-- It it is not installed and Alert windows is shown
+      //-- If it is not installed an Alert windows is shown
       function checkToolchainInstalled() {
         return new Promise(function (resolve, reject) {
 
@@ -1104,6 +1104,7 @@ angular
         }.bind(this)
       );
 
+
       //----------------------------------------------------------------
       //-- Install the STABLE toolchain
       //-- It displays a messages and if the user click on ok it will
@@ -1121,7 +1122,10 @@ angular
             "Install the STABLE Toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
           ),
           function () {
+            //-- Remove the toolchain for starting a fresh installation
             utils.removeToolchain();
+
+            //-- Install APIO STABLE version
             installOnlineToolchain(common.APIO_VERSION_STABLE);
           }
         );
@@ -1147,6 +1151,7 @@ angular
         );
       };
 
+
       //--------------------------------------------------------------
       //-- Install the LATEST STABLE toolchain
       //--
@@ -1166,6 +1171,9 @@ angular
       };
 
 
+      //---------------------------------------------------------
+      //-- Remove the Toolchain
+      //--
       this.removeToolchain = function () {
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1175,13 +1183,17 @@ angular
             "The toolchain will be removed. Do you want to continue?"
           ),
           function () {
+            //-- Remove the toolchain
             utils.removeToolchain();
+
+            //-- Init the related flags
             toolchain.apio = "";
             toolchain.installed = false;
             alertify.success(gettextCatalog.getString("Toolchain removed"));
           }
         );
       };
+
 
       $rootScope.$on(
         "enableDrivers",
@@ -1190,6 +1202,9 @@ angular
         }.bind(this)
       );
 
+      //--------------------------------------------
+      //-- Enable the drivers
+      //--
       this.enableDrivers = function () {
         checkToolchain(function () {
           if (toolchain.installed) {
@@ -1198,6 +1213,9 @@ angular
         });
       };
 
+      //---------------------------------------------
+      //-- Disable the drivers
+      //--
       this.disableDrivers = function () {
         checkToolchain(function () {
           if (toolchain.installed) {
@@ -1242,6 +1260,7 @@ angular
             );
           }, 200);
         });
+
         // Hide OK button
         $(toolchainAlert.__internal.buttons[0].element).addClass("hidden");
 
@@ -1254,6 +1273,8 @@ angular
 
         // Steps for installing the toolchains
         async.series([
+
+          //-- Internet connection is needed: check it
           checkInternetConnection,
           ensurePythonIsAvailable,
           createVirtualenv,
@@ -1272,14 +1293,30 @@ angular
         ]);
       }
 
+      //---------------------------------------------------------------
+      //-- Check if there are internet connection
+      //--
       function checkInternetConnection(callback) {
+
+        //-- Update the progress bar
         updateProgress(
           gettextCatalog.getString("Check Internet connection..."),
           0
         );
+
+        //-- Check the connection
         utils.isOnline(callback, function () {
+
+          //-- This code is executed if the internet connection
+          //-- has not been detected
+
+          //-- Close the window
           closeToolchainAlert();
+
+          //-- Stop the spinner
           restoreStatus();
+
+          //-- Show a notification
           resultAlert = alertify.error(
             gettextCatalog.getString("Internet connection required"),
             30
@@ -1288,6 +1325,7 @@ angular
         });
       }
 
+      
       function ensurePythonIsAvailable(callback) {
         updateProgress(gettextCatalog.getString("Check Python..."), 0);
         if (utils.getPythonExecutable()) {

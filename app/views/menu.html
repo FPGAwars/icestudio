@@ -447,18 +447,13 @@
                     </a>
                   </li>
 
-                  <!-- Divisor line between sections of the menu -->
-                  <li class="divider" ng-if="common.showToolchain()"></li>
-
-                  <!-- Testing -->
+                  <!-- Tools/Toolchain/Install development -->
                   <li>
                     <a href ng-show="toolchain.installed" ng-click="tools.installToolchainDev()">
                       {{ 'Install Development version' | translate }}
                     </a>
 
                   </li>
-
-                  <!-- End testing -->
 
                   <!-- Divisor line between sections of the menu -->
                   <li class="divider" ng-show="toolchain.apio"></li>
