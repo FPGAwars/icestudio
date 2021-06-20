@@ -1093,7 +1093,9 @@ angular
         return newCodeError;
       }
 
+      //-----------------------------------------------------------------------
       // Toolchain methods
+      //-----------------------------------------------------------------------
 
       $rootScope.$on(
         "installToolchain",
@@ -1103,18 +1105,19 @@ angular
       );
 
       //----------------------------------------------------------------
-      //-- Install the toolchain
+      //-- Install the STABLE toolchain
       //-- It displays a messages and if the user click on ok it will
       //-- download the toolchain
+      //--
       this.installToolchain = function () {
-        
+        console.log("Install toolchain-STABLE!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
 
         alertify.confirm(
           gettextCatalog.getString(
-            "Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
+            "Install the STABLE Toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
           ),
           function () {
             utils.removeToolchain();
@@ -1122,22 +1125,19 @@ angular
           }
         );
       };
+
+
       //--------------------------------------------------------------------
-
-      //-- Test
-      this.test = function () {
-         console.log("TEST!!!!!!!!");
-         installOnlineToolchain();
-      };
-
-      this.updateToolchain = function () {
-        console.log("TESTUPDATE TOOLCHAIN!!!!");
+      //-- Install the DEVELOPMENT toolchain
+      //--
+      this.installToolchainDev = function () {
+        console.log("Install toolchain-DEV!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
         alertify.confirm(
           gettextCatalog.getString(
-            "The toolchain will be updated. This operation requires Internet connection. Do you want to continue?"
+            "Install the DEVELOPMENT toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
           ),
           function () {
             installOnlineToolchain();
@@ -1145,6 +1145,25 @@ angular
         );
       };
 
+      //--------------------------------------------------------------
+      //-- Install the LATEST STABLE toolchain
+      //--
+      this.updateToolchain = function () {
+        console.log("Install toolchain LATEST STABLE!!");
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        alertify.confirm(
+          gettextCatalog.getString(
+            "Install the LATEST STABLE toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
+          ),
+          function () {
+            installOnlineToolchain();
+          }
+        );
+      };
+
+      
       this.resetToolchain = function () {
         if (resultAlert) {
           resultAlert.dismiss(false);
