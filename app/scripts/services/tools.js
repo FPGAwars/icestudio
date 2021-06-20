@@ -1315,7 +1315,7 @@ angular
 
       function installOnlineApio(callback) {
 
-        console.log("TOOLS: installOnlineApio: " + common.APIO_VERSION);
+        console.log("TOOLS: installOnlineApio: " + utils.printApioVersion(common.APIO_VERSION));
         var extraPackages = _package.apio.extras || [];
         var apio = utils.getApioInstallable();
 

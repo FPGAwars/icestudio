@@ -323,7 +323,13 @@ angular.module('icestudio')
       this.executeCommand([coverPath(pipExec), 'install', '-U'] + pythonPackages, callback);
     };
 
+    //-----------------------------------------------------
+    //-- Install the Apio toolchain. The version to install is taken
+    //-- from the common.APIO_VERSION object
+    //--
     this.installOnlineApio = function (callback) {
+
+      console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
       let versionRange = '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
       let extraPackages = _package.apio.extras || [];
