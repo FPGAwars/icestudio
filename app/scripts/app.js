@@ -49,9 +49,7 @@ angular
     //-- Read more information about it in the file app/scripts/services/boards.js
     boards.loadBoards();
     
-    console.log("Profile path: " + common.PROFILE_PATH);
-    console.log("PROFILE: ");
-    console.log(profile);
+
 
     utils.loadProfile(profile, function () {
 
@@ -79,6 +77,7 @@ angular
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(` Icestudio session ${now.toString()}`);
       iceConsole.log(`=======================================================================================`);
+      iceConsole.log('Profile file: ' + common.PROFILE_PATH); 
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
       iceConsole.log(`\n- ENVIRONMENT:\n`);

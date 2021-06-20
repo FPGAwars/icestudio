@@ -523,7 +523,12 @@ angular.module('icestudio')
       return nodePath.join(path, dirname);
     };
 
+
+    //----------------------------------------------------
+    //-- Read the profile file
+    //--
     this.readFile = function (filepath) {
+
       return new Promise(function (resolve, reject) {
         if (nodeFs.existsSync(common.PROFILE_PATH)) {
           nodeFs.readFile(filepath, "utf8",
@@ -546,9 +551,6 @@ angular.module('icestudio')
                     } else {
                       reject();
                     }
-
-
-
                   });
 
                 } else {
@@ -561,10 +563,7 @@ angular.module('icestudio')
                   } else {
                     reject();
                   }
-
-
                 }
-
               }
             });
         } else {
@@ -1352,6 +1351,8 @@ angular.module('icestudio')
       return evt.ctrlKey;
     };
 
+    //------------------------------------------------------
+    //-- Load the profile file
     this.loadProfile = function (profile, callback) {
       profile.load(function () {
         if (callback) {
