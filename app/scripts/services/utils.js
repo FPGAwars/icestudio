@@ -323,6 +323,7 @@ angular.module('icestudio')
       this.executeCommand([coverPath(pipExec), 'install', '-U'] + pythonPackages, callback);
     };
 
+
     //-----------------------------------------------------
     //-- Install the Apio toolchain. The version to install is taken
     //-- from the common.APIO_VERSION object
@@ -358,14 +359,24 @@ angular.module('icestudio')
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
 
-      const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
+      //-- Place the executable between quotes ("") just in case there
+      //-- is a path with spaces in their names
       const executable = coverPath(pipExec);
 
+      //-- Get the pip parameters needed for installing apio
+      const params = this.getApioParameters();
+
+      //-- Run the pip command!
       this.executeCommand([executable, params], callback)
     };
 
     
-    this.getApioInstallable = function () {
+    //------------------------------------------------
+    //-- Return the parameters needed for pip for installing  
+    //-- the apio toolchains. The version to install is read  
+    //-- from the common.APIO_VERSION global object
+    //--
+    this.getApioParameters = function () {
 
       //-- Get the extra python packages to install
       let extraPackages = _package.apio.extras || [];
@@ -389,6 +400,7 @@ angular.module('icestudio')
 
     };
 
+    
     this.apioInstall = function (pkg, callback) {
       console.log("APIO_CMD: " + common.APIO_CMD );
       this.executeCommand([common.APIO_CMD, 'install', pkg], callback);

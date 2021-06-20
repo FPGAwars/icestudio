@@ -1207,7 +1207,8 @@ angular
       };
 
       //---------------------------------------------------------
-      //-- Install the toolchain according to the giver version  
+      //-- Install the toolchain according to the given version  
+      //-- Values for the version parameter:
       //--  * common.APIO_VERSION_STABLE
       //--  * common.APIO_VERSION_LATEST_STABLE
       //--  * common.APIO_VERSION_DEV
@@ -1216,10 +1217,6 @@ angular
 
         //-- Waiting state: Spinner on
         installationStatus();
-
-        console.log("INSTALLONLINETOOLCHAIN!!!!");
-        const versionStr = utils.printApioVersion(version);
-        console.log(versionStr);
 
         //-- Progress bar
         const content = [
@@ -1311,16 +1308,19 @@ angular
         utils.createVirtualenv(callback);
       }
 
-      // Remote installation
 
+      //------------------------------------------
+      //-- Install the apio toolchain
+      //--
       function installOnlineApio(callback) {
 
-        console.log("TOOLS: installOnlineApio: " + utils.printApioVersion(common.APIO_VERSION));
-        var extraPackages = _package.apio.extras || [];
-        var apio = utils.getApioInstallable();
+        //-- Get the apio package with params
+        let apio = utils.getApioParameters();
 
-        updateProgress("Esto es una prueba..... " + apio, 30);
+        //-- Show the installing command in the progres bar windows
+        updateProgress("pip " + apio, 30);
 
+        //-- Perform the real installation
         utils.installOnlineApio(callback);
       }
 
