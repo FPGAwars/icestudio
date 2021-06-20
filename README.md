@@ -249,9 +249,9 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 [build-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml/badge.svg
 
-[build-url]: https://github.com/FPGAwars/icm/actions/workflows/main.yml
+[build-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml
 
 
 [build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
 
-[build-mac-url]: https://github.com/FPGAwars/icm/actions/workflows/main-osx.yml
+[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml
