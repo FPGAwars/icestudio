@@ -364,20 +364,28 @@ angular.module('icestudio')
       this.executeCommand([executable, params], callback)
     };
 
-    //-- Return the package name to pass to the pip command for installing apio
-    //-- It depends on the "apio.branch" property define in the package.json file
-    //-- If the value is not defined, the package is apio
-    //-- If any other value is defined (ex. develop), the package is git+https://github.com/FPGAwars/apio.git@develop#egg=apio
-    //-- (installed from the git repository, from the develop branch)
-    //-- Apio stable: pip install -U apio==0.6.0
-    //-- Latest stable: pip install -U apio
-    //-- Dev Apio stable: pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
-    this.getApioInstallable = function (version = common.APIO_VERSION_LATEST_STABLE) {
+    
+    this.getApioInstallable = function () {
 
-      //-- Strings with the different apio pip packages
-      const pipPackage = [`apio==${_package.apio.min}`, "apio", common.APIO_PIP_VCS];
+      //-- Get the extra python packages to install
+      let extraPackages = _package.apio.extras || [];
 
-      return pipPackage[version];
+      //-- Get the pip string with the version
+      //-- Stable: "==0.6.0"
+      //-- Latest stable and dev: ""
+      let versionString = "";
+      if (common.APIO_VERSION == common.APIO_VERSION_STABLE)
+        versionString = "==" + _package.apio.min;
+
+      //-- Get the apio package name:
+      //-- Stable and latest stable: "apio"
+      //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
+      let apio = (common.APIO_VERSION == common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
+
+      //-- Get the pip params for installing apio
+      const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
+
+      return params;
 
     };
 

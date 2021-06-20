@@ -1319,10 +1319,8 @@ angular
         var extraPackages = _package.apio.extras || [];
         var apio = utils.getApioInstallable();
 
-        updateProgress(
-          "pip install -U " + apio + "[" + extraPackages.toString() + "]",
-          30
-        );
+        updateProgress("Esto es una prueba..... " + apio, 30);
+
         utils.installOnlineApio(callback);
       }
 
