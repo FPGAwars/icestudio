@@ -1110,7 +1110,7 @@ angular
       //-- download the toolchain
       //--
       this.installToolchain = function () {
-        
+
         console.log("Install toolchain-STABLE!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1206,18 +1206,26 @@ angular
         });
       };
 
+      //---------------------------------------------------------
+      //-- Install the toolchain according to the giver version  
+      //--  * common.APIO_VERSION_STABLE
+      //--  * common.APIO_VERSION_LATEST_STABLE
+      //--  * common.APIO_VERSION_DEV
+      //--
       function installOnlineToolchain(version) {
 
         //-- Waiting state: Spinner on
         installationStatus();
 
         console.log("INSTALLONLINETOOLCHAIN!!!!");
-        console.log(utils.printApioVersion(version));
+        const versionStr = utils.printApioVersion(version);
+        console.log(versionStr);
 
+        //-- Progress bar
         const content = [
           "<div>",
           '  <p id="progress-message">' +
-            gettextCatalog.getString("Installing toolchain") +
+            gettextCatalog.getString("Installing " + versionStr) +
             "</p>",
           "  </br>",
           '  <div class="progress">',
@@ -1227,6 +1235,7 @@ angular
           "  </div>",
           "</div>"
         ].join("\n");
+
         toolchainAlert = alertify.alert(content, function () {
           setTimeout(function () {
             initProgress();
@@ -1239,14 +1248,19 @@ angular
         // Hide OK button
         $(toolchainAlert.__internal.buttons[0].element).addClass("hidden");
 
+        //-- Toolchain not yet installed
         toolchain.installed = false;
 
-        // Install toolchain
+        //-- Set the callback function for installing apio. It depends on the version
+        //-- The stable version is installed by default:
+        let installOnlineApioFunc = installOnlineApio;
+
+        // Steps for installing the toolchains
         async.series([
           checkInternetConnection,
           ensurePythonIsAvailable,
           createVirtualenv,
-          installOnlineApio,
+          installOnlineApioFunc,
           apioInstallSystem,
           apioInstallYosys,
           apioInstallIce40,
