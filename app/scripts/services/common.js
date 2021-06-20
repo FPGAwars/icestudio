@@ -47,45 +47,74 @@ angular.module('icestudio')
     // pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
     this.APIO_PIP_VCS = 'git+https://github.com/FPGAwars/apio.git@develop#egg=apio';
 
-    // OS
+    // Operating system: true/false
     this.LINUX = Boolean(process.platform.indexOf('linux') > -1);
     this.WIN32 = Boolean(process.platform.indexOf('win32') > -1);
     this.DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
 
-    //---------- Paths
+    //----------------------------------------
+    //--  Icestudio app folder
+    //--     |---> resources/locale: Translation files
+    //--     |---> resources/sample: Folder for testing
+    //--     |---> resources/collection: Default collection
+    //--     |---> resources/plugin:  Plugins
+    
+    //-- Locale DIR: Translation files
     this.LOCALE_DIR = nodePath.join('resources', 'locale');
 
     //-- Sample DIR: just for testing apio
     this.SAMPLE_DIR = nodePath.join('resources', 'sample');
     
+    //-- The default collection is stored in this Folder
     this.DEFAULT_COLLECTION_DIR = nodePath.resolve(nodePath.join('resources', 'collection'));
+
+    //-- Folder for the system plugins
     this.DEFAULT_PLUGIN_DIR = nodePath.resolve(nodePath.join('resources', 'plugins'));
 
+    //-- Path were the executale is run
+    this.APP_DIR = nodePath.dirname(process.execPath);
 
+    //----------------------------------------------------
+    //-- User/system Home folder (BASE_DIR)
+    //--   |---> icestudio.log : Log file (debugging)
+    //--   |---> .icestudio : Icestudio folder
+    //--   |---> .icestudio/collections: Installed collections
+    //--   |---> .icestudio/apio : Apio in installed in this folder
+    //--   |---> .icestudio/profile.json
+    //--   |---> .icestudio/venv: Python virtual environment
+    //--   |---> .icestudio/venv/bin : Executables (Linux, mac)
+    //--   |---> .icestudio/venv/Scripts: Executables (Windows)
+    //--   |---> .icestudio/venv/bin/pip3
+    //--   |---> .icestudio/venv/bin/apio
+    //--
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
+
+    //-- Python virtual environment
+    this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
+
+    //-- Folder for the executables in the python virtual environment
+    this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
+
+    //-- pip3 executable in the virtual environment
+    this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip3');
+
+    //-- apio executable in the virtual environment
+    this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
+
+    //-- TODO: These folders will not be used in future
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
-
-    //-- Path were the executale is run
-    this.APP_DIR = nodePath.dirname(process.execPath);
 
     //-- APIO version values
     this.APIO_VERSION_STABLE = 0;         //-- Use the stable version
     this.APIO_VERSION_LATEST_STABLE = 1;  //-- Use the latest stable (available in the pypi repo)
     this.APIO_VERSION_DEV = 2;            //-- Use the development apio version (from the github repo)
     this.APIO_VERSION = this.APIO_VERSION_STABLE;  //-- Default apio version: STABLE  
-
-    //-- Folder name for the virtual environment
-    this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
-
-    this.ENV_BIN_DIR = nodePath.join(this.ENV_DIR, this.WIN32 ? 'Scripts' : 'bin');
-    this.ENV_PIP = nodePath.join(this.ENV_BIN_DIR, 'pip3');
-    this.ENV_APIO = nodePath.join(this.ENV_BIN_DIR, this.WIN32 ? 'apio.exe' : 'apio');
 
     //-- Set the apio command. It consist of two parts. The first is for defining and  
     //-- exporting the APIO_HOME_DIR environment variable. It is used by apio to know where  
@@ -95,6 +124,8 @@ angular.module('icestudio')
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
                     '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? '& ' : '; ') + 
                     '"' + this.ENV_APIO + '"';
+
+
 
     this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
       prefix: 'icestudio-',
@@ -127,6 +158,8 @@ angular.module('icestudio')
       }*/
       return _dir;
     }
+
+
     this.setBuildDir = function(buildpath){
       let fserror=false;
       if (!nodeFs.existsSync(buildpath)){
@@ -150,5 +183,6 @@ angular.module('icestudio')
     this.showDrivers = function () {
       return (this.selectedBoard && (this.selectedBoard.info.interface === 'FTDI' || this.selectedBoard.info.interface === 'Serial')) || false;
     };
+    
     this.isEditingSubmodule = false;
   });

@@ -439,9 +439,11 @@ angular.module('icestudio')
       //-- The apio command to execute is located in the common.APIO_CMD global object
       return common.APIO_CMD;
     };
-    //-----------------------------------------------------------------------------------------
 
 
+    //-------------------------------------------------------------------------
+    //-- Remove the toolchains and folder. There are three important folders:
+    //--   * 
     this.removeToolchain = function () {
       this.deleteFolderRecursive(common.ENV_DIR);
       this.deleteFolderRecursive(common.CACHE_DIR);
