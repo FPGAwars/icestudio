@@ -1110,6 +1110,7 @@ angular
       //-- download the toolchain
       //--
       this.installToolchain = function () {
+        
         console.log("Install toolchain-STABLE!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1121,7 +1122,7 @@ angular
           ),
           function () {
             utils.removeToolchain();
-            installOnlineToolchain();
+            installOnlineToolchain(common.APIO_VERSION_STABLE);
           }
         );
       };
@@ -1131,6 +1132,7 @@ angular
       //-- Install the DEVELOPMENT toolchain
       //--
       this.installToolchainDev = function () {
+
         console.log("Install toolchain-DEV!!!");
         if (resultAlert) {
           resultAlert.dismiss(false);
@@ -1140,7 +1142,7 @@ angular
             "Install the DEVELOPMENT toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
           ),
           function () {
-            installOnlineToolchain();
+            installOnlineToolchain(common.APIO_VERSION_DEV);
           }
         );
       };
@@ -1149,9 +1151,7 @@ angular
       //-- Install the LATEST STABLE toolchain
       //--
       this.updateToolchain = function () {
-        let version = common.APIO_VERSION_LATEST_STABLE;
 
-        console.log("Install toolchain: " + utils.printApioVersion(version));
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1160,7 +1160,7 @@ angular
             "Install the LATEST STABLE toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
           ),
           function () {
-            installOnlineToolchain();
+            installOnlineToolchain(common.APIO_VERSION_LATEST_STABLE);
           }
         );
       };
@@ -1206,12 +1206,13 @@ angular
         });
       };
 
-      function installOnlineToolchain() {
+      function installOnlineToolchain(version) {
 
         //-- Waiting state: Spinner on
         installationStatus();
 
         console.log("INSTALLONLINETOOLCHAIN!!!!");
+        console.log(utils.printApioVersion(version));
 
         const content = [
           "<div>",
