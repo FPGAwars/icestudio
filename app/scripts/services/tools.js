@@ -1163,12 +1163,6 @@ angular
         );
       };
 
-      
-      this.resetToolchain = function () {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-      };
 
       this.removeToolchain = function () {
         if (resultAlert) {

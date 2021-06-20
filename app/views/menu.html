@@ -433,10 +433,10 @@
                   <!-- Tools/Toolchains/Install (update)-->
                   <li ng-class="toolchain.disabled ? 'disabled' : ''">
                     <a href ng-hide="toolchain.installed" ng-click="tools.installToolchain()">
-                      {{ 'Install' | translate }}
+                      {{ 'Install (Stable)' | translate }}
                     </a>
                     <a href ng-show="toolchain.installed" ng-click="tools.updateToolchain()">
-                      {{ 'Update' | translate }}
+                      {{ 'Update (Latest stable)' | translate }}
                     </a>
                   </li>
 
@@ -447,20 +447,13 @@
                     </a>
                   </li>
 
-                  <!-- Tools/Toolchain/Reset default -->
-                  <li ng-class="(toolchain.disabled || !toolchain.installed) ? 'disabled' : ''">
-                    <a href ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.resetToolchain()">
-                      {{ 'Reset default' | translate }}
-                    </a>
-                  </li>
-
                   <!-- Divisor line between sections of the menu -->
                   <li class="divider" ng-if="common.showToolchain()"></li>
 
                   <!-- Testing -->
                   <li>
                     <a href ng-show="toolchain.installed" ng-click="tools.installToolchainDev()">
-                      {{ 'Install latest stable' | translate }}
+                      {{ 'Install Development version' | translate }}
                     </a>
 
                   </li>
