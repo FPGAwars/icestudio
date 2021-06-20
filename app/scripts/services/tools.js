@@ -1272,13 +1272,24 @@ angular
         common.APIO_VERSION = version;
 
         // Steps for installing the toolchains
+        // These functions are called one by one, secuentially
+        // When one function is done, the next one is called
         async.series([
 
           //-- Internet connection is needed: check it
           checkInternetConnection,
+
+          //-- Python3 is needed: Check it
           ensurePythonIsAvailable,
+
+          //-- Create the virtual python environment
           createVirtualenv,
+
+          //-- Install apio through pip
           installOnlineApio,
+
+          //-- Install the apio packages
+          //-- apio install <pkg>
           apioInstallSystem,
           apioInstallYosys,
           apioInstallIce40,
@@ -1289,12 +1300,14 @@ angular
           apioInstallIverilog,
           apioInstallDrivers,
           apioInstallScons,
+
+          //-- Finish installation!
           installationCompleted
         ]);
       }
 
       //---------------------------------------------------------------
-      //-- Check if there are internet connection
+      //-- Check if there is internet connection
       //--
       function checkInternetConnection(callback) {
 
@@ -1325,24 +1338,44 @@ angular
         });
       }
 
-      
+
+      //-------------------------------------------------------
+      //-- Check if python is available
+      //--
       function ensurePythonIsAvailable(callback) {
+
+        //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Check Python..."), 0);
+
+        //-- Read the python executable (if it exists...)
         if (utils.getPythonExecutable()) {
           callback();
-        } else {
-          closeToolchainAlert();
-          restoreStatus();
-          resultAlert = alertify.error(
-            gettextCatalog.getString("At least Python 3.5 is required"),
-            30
-          );
-          callback(true);
+
+        } //-- No python3 detected
+          else {
+            closeToolchainAlert();
+            restoreStatus();
+            resultAlert = alertify.error(
+              gettextCatalog.getString("At least Python 3.5 is required"),
+              30
+            );
+            callback(true);
         }
       }
 
+
+      //---------------------------------------------------
+      //-- Create the Python virtual environment
+      //-- Apio and other python packages are installed in the virtual env
+      //-- so that they do not interfere with the rest of the packages  
+      //-- installed in your system
+      //--
       function createVirtualenv(callback) {
+
+        //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Create virtualenv..."), 10);
+
+        //-- Create the virtual env
         utils.createVirtualenv(callback);
       }
 
@@ -1362,46 +1395,76 @@ angular
         utils.installOnlineApio(callback);
       }
 
+
+      //-------------------------------------------
+      //-- Install the apio system package
+      //-- It contains the lsusb and lsftdi tools
+      //--
       function apioInstallSystem(callback) {
         updateProgress("apio install system", 40);
         utils.apioInstall("system", callback);
       }
 
+      //------------------------------------------------------------
+      //-- Install the apio Yosys package: 
+      //-- It contains the opensource hardware sinthesizer
+      //--
       function apioInstallYosys(callback) {
         updateProgress("apio install yosys", 50);
         utils.apioInstall("yosys", callback);
       }
 
+      //-------------------------------------------------------------
+      //-- Install the toolchains for the ice40 FPGA family
+      //--
       function apioInstallIce40(callback) {
         updateProgress("apio install ice40", 50);
         utils.apioInstall("ice40", callback);
       }
 
+      //--------------------------------------------------------------
+      //-- Install the toolchain for the ECP5 FPGA family
+      //--
       function apioInstallECP5(callback) {
         updateProgress("apio install ecp5", 50);
         utils.apioInstall("ecp5", callback);
       }
 
+      //------------------------------------------------------------
+      //--  Install the Fujprog programmer
+      //--
       function apioInstallFujprog(callback) {
         updateProgress("apio install fujprog", 50);
         utils.apioInstall("fujprog", callback);
       }
 
+      //-------------------------------------------------------------
+      //--  Install the iverilog tool
+      //--  It is used for checking the generated verilog
       function apioInstallIverilog(callback) {
         updateProgress("apio install iverilog", 70);
         utils.apioInstall("iverilog", callback);
       }
 
+      //--------------------------------------------------------------
+      //--  Install the Icesprog programer
+      //--
       function apioInstallIcesprog(callback) {
         updateProgress("apio install icesprog", 50);
         utils.apioInstall("icesprog", callback);
       }
 
+      //----------------------------------------------
+      //-- Install the DFU programmer
+      //--
       function apioInstallDfu(callback) {
         updateProgress("apio install dfu", 50);
         utils.apioInstall("dfu", callback);
       }
 
+      //---------------------------------------------
+      //-- Install the Drivers
+      //--
       function apioInstallDrivers(callback) {
         if (common.WIN32) {
           updateProgress("apio install drivers", 80);
@@ -1411,22 +1474,39 @@ angular
         }
       }
 
+      //----------------------------------------------
+      //-- Install Scons: a building tool, similar to
+      //-- make, but in python
+      //--
       function apioInstallScons(callback) {
         updateProgress("apio install scons", 90);
         utils.apioInstall("scons", callback);
       }
 
+      //---------------------------------------------------
+      //--
       function installationCompleted(callback) {
+
+        //-- Check that the toolchain has been installed
         checkToolchain(function () {
+
+          //-- It is installed!
           if (toolchain.installed) {
+
+            //-- Close the notification window
             closeToolchainAlert();
+
+            //-- Update the progress bar
             updateProgress(
               gettextCatalog.getString("Installation completed"),
               100
             );
+
+            //-- Notification: Installed!
             alertify.success(gettextCatalog.getString("Toolchain installed"));
             setupDriversAlert();
           }
+          
           restoreStatus();
           callback();
         });

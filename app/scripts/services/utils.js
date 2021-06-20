@@ -38,63 +38,77 @@ angular.module('icestudio')
       return _pythonPipExecutableCached;
     };
 
+    //------------------------------------------------
+    //-- Get the system python executable
+    //--
     this.getPythonExecutable = function () {
 
+      //-- If the executable was not obtained before...
       if (!_pythonExecutableCached) {
 
+        //-- The possible executables are stored in this Array
         const possibleExecutables = [];
+
         if (typeof common.PYTHON_ENV !== 'undefined' &&
           common.PYTHON_ENV.length > 0) {
 
           possibleExecutables.push(common.PYTHON_ENV);
 
-        } else if (common.WIN32) {
-          possibleExecutables.push('C:\\Python39\\python.exe');
-          possibleExecutables.push('C:\\Python38\\python.exe');
-          possibleExecutables.push('C:\\Python37\\python.exe');
-          possibleExecutables.push('C:\\Python36\\python.exe');
-          possibleExecutables.push('C:\\Python35\\python.exe');
-          possibleExecutables.push('py.exe -3');
-          possibleExecutables.push('python.exe');
-        } else {
-          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
-          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
+        } //-- Possible python executables in Windows
+          else if (common.WIN32) {
+            possibleExecutables.push('C:\\Python39\\python.exe');
+            possibleExecutables.push('C:\\Python38\\python.exe');
+            possibleExecutables.push('C:\\Python37\\python.exe');
+            possibleExecutables.push('C:\\Python36\\python.exe');
+            possibleExecutables.push('C:\\Python35\\python.exe');
+            possibleExecutables.push('py.exe -3');
+            possibleExecutables.push('python.exe');
 
-          possibleExecutables.push('/usr/bin/python3.9');
-          possibleExecutables.push('/usr/bin/python3.8');
-          possibleExecutables.push('/usr/bin/python3.7');
-          possibleExecutables.push('/usr/bin/python3.6');
-          possibleExecutables.push('/usr/bin/python3.5');
-          possibleExecutables.push('/usr/bin/python3');
-          possibleExecutables.push('/usr/bin/python');
+        } //-- Python executables in Linux/Mac
+          else {
+            possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
+            possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-          possibleExecutables.push('/usr/local/bin/python3.9');
-          possibleExecutables.push('/usr/local/bin/python3.8');
-          possibleExecutables.push('/usr/local/bin/python3.7');
-          possibleExecutables.push('/usr/local/bin/python3.6');
-          possibleExecutables.push('/usr/local/bin/python3.5');
-          possibleExecutables.push('/usr/local/bin/python3');
-          possibleExecutables.push('/usr/local/bin/python');
+            possibleExecutables.push('/usr/bin/python3.9');
+            possibleExecutables.push('/usr/bin/python3.8');
+            possibleExecutables.push('/usr/bin/python3.7');
+            possibleExecutables.push('/usr/bin/python3.6');
+            possibleExecutables.push('/usr/bin/python3.5');
+            possibleExecutables.push('/usr/bin/python3');
+            possibleExecutables.push('/usr/bin/python');
 
-          possibleExecutables.push('python3.9');
-          possibleExecutables.push('python3.8');
-          possibleExecutables.push('python3.7');
-          possibleExecutables.push('python3.6');
-          possibleExecutables.push('python3.5');
-          possibleExecutables.push('python3');
-          possibleExecutables.push('python');
+            possibleExecutables.push('/usr/local/bin/python3.9');
+            possibleExecutables.push('/usr/local/bin/python3.8');
+            possibleExecutables.push('/usr/local/bin/python3.7');
+            possibleExecutables.push('/usr/local/bin/python3.6');
+            possibleExecutables.push('/usr/local/bin/python3.5');
+            possibleExecutables.push('/usr/local/bin/python3');
+            possibleExecutables.push('/usr/local/bin/python');
 
+            possibleExecutables.push('python3.9');
+            possibleExecutables.push('python3.8');
+            possibleExecutables.push('python3.7');
+            possibleExecutables.push('python3.6');
+            possibleExecutables.push('python3.5');
+            possibleExecutables.push('python3');
+            possibleExecutables.push('python');
         }
-        for (let i in possibleExecutables) {
-          var executable = possibleExecutables[i];
+
+        //-- Move through all the possible executables
+        //-- checking if they are executable
+        for (let executable of possibleExecutables) {
+
           if (isPython3(executable)) {
             _pythonExecutableCached = executable;
+            console.log("Executable: " + executable);
             break;
           }
         }
       }
       return _pythonExecutableCached;
     };
+
+
     function isValidPip(executable) {
 
       executable += ' -V';
@@ -110,19 +124,30 @@ angular.module('icestudio')
     }
 
 
+    //---------------------------------------------------------
+    //-- Check if the given file is a python3 interpreter 
+    //--
     function isPython3(executable) {
 
+      //-- Add the '-V' flag for reading the python version
       executable += ' -V';
+
       try {
+
+        //-- Run the executable
         const result = nodeChildProcess.execSync(executable);
+
+        //-- Check the output. Return true if it is python3
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
             result.toString().indexOf('3.9') >= 0));
+
       } catch (e) {
         return false;
       }
     }
+
 
     this.extractZip = function (source, destination, callback) {
       nodeExtract(source, {
@@ -298,7 +323,7 @@ angular.module('icestudio')
         this.executeCommand(command, callback);
 
       } else {
-        //-- The virtual environmente already existed
+        //-- The virtual environment already existed
         callback();
       }
     };
@@ -318,12 +343,6 @@ angular.module('icestudio')
           callback(true);
         }
       });
-    };
-
-    this.installOnlinePythonPackages = function (callback) {
-      let pythonPackages = [];
-      let pipExec = this.getPythonPipExecutable();
-      this.executeCommand([coverPath(pipExec), 'install', '-U'] + pythonPackages, callback);
     };
 
 
@@ -404,15 +423,19 @@ angular.module('icestudio')
       const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
 
       return params;
-
     };
 
-    
+    //------------------------------------------------------------------
+    //-- Install an APIO package
+    //-- apio install <pkg>
+    //--
     this.apioInstall = function (pkg, callback) {
-      console.log("APIO_CMD: " + common.APIO_CMD );
+
+      //-- common.APIO_CMD contains the command for executing APIO
       this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
     };
 
+    //-- The toolchains are NOT disabled by default
     this.toolchainDisabled = false;
 
     //---------------------------------------------------------------------------
