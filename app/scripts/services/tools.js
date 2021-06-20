@@ -441,6 +441,7 @@ angular
         };
       }
 
+      //-- TODO: Think about removing this function in future versions....
       function executeRemote(commands, hostname) {
         return new Promise(function (resolve) {
           startAlert.setContent(
@@ -1506,7 +1507,7 @@ angular
             alertify.success(gettextCatalog.getString("Toolchain installed"));
             setupDriversAlert();
           }
-          
+
           restoreStatus();
           callback();
         });
