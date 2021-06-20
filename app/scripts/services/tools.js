@@ -1222,7 +1222,7 @@ angular
         const content = [
           "<div>",
           '  <p id="progress-message">' +
-            gettextCatalog.getString("Installing " + versionStr) +
+            gettextCatalog.getString("Installing " + utils.printApioVersion(version)) +
             "</p>",
           "  </br>",
           '  <div class="progress">',

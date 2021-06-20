@@ -271,7 +271,7 @@ angular.module('icestudio')
       }
 
       return msg;
-    }
+    };
 
     //------------------------------------------
     //-- Create the python virtual environment
@@ -348,13 +348,15 @@ angular.module('icestudio')
       //-- Stable: "==0.6.0"
       //-- Latest stable and dev: ""
       let versionString = "";
-      if (common.APIO_VERSION == common.APIO_VERSION_STABLE)
+
+      if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
         versionString = "==" + _package.apio.min;
+      }
 
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
       //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
-      let apio = (common.APIO_VERSION == common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
+      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
 
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
@@ -367,7 +369,7 @@ angular.module('icestudio')
       const params = this.getApioParameters();
 
       //-- Run the pip command!
-      this.executeCommand([executable, params], callback)
+      this.executeCommand([executable, params], callback);
     };
 
     
@@ -385,13 +387,15 @@ angular.module('icestudio')
       //-- Stable: "==0.6.0"
       //-- Latest stable and dev: ""
       let versionString = "";
-      if (common.APIO_VERSION == common.APIO_VERSION_STABLE)
+
+      if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
         versionString = "==" + _package.apio.min;
+      }  
 
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
       //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
-      let apio = (common.APIO_VERSION == common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
+      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
 
       //-- Get the pip params for installing apio
       const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
