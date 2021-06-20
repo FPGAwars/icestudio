@@ -1251,16 +1251,16 @@ angular
         //-- Toolchain not yet installed
         toolchain.installed = false;
 
-        //-- Set the callback function for installing apio. It depends on the version
-        //-- The stable version is installed by default:
-        let installOnlineApioFunc = installOnlineApio;
+        //-- Store the apio version to install in the global object common.APIO_VERSION
+        //-- The functions that need to know the apio version can read it from there
+        common.APIO_VERSION = version;
 
         // Steps for installing the toolchains
         async.series([
           checkInternetConnection,
           ensurePythonIsAvailable,
           createVirtualenv,
-          installOnlineApioFunc,
+          installOnlineApio,
           apioInstallSystem,
           apioInstallYosys,
           apioInstallIce40,
@@ -1314,6 +1314,8 @@ angular
       // Remote installation
 
       function installOnlineApio(callback) {
+
+        console.log("TOOLS: installOnlineApio: " + common.APIO_VERSION);
         var extraPackages = _package.apio.extras || [];
         var apio = utils.getApioInstallable();
 
