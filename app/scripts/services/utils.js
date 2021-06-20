@@ -246,7 +246,32 @@ angular.module('icestudio')
 
     };
 
+    //------------------------------------------
+    //-- Return a String with the Apio version
+    //
+    this.printApioVersion = function (version) {
+      let msg = "";
 
+      switch(version) {
+        case common.APIO_VERSION_LATEST_STABLE:
+          msg = "Apio LATEST STABLE version";
+          break;
+        
+        case common.APIO_VERSION_STABLE:
+          msg = "Apio STABLE version";
+          break;
+
+        case common.APIO_VERSION_DEV:
+          msg = "Apio DEVELOPMENT VERSION";
+          break;
+
+        default:
+          msg = "UNKNOWN apio Version (ERROR)";
+          break;
+      }
+
+      return msg;
+    }
 
     //------------------------------------------
     //-- Create the python virtual environment

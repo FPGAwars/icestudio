@@ -1149,7 +1149,9 @@ angular
       //-- Install the LATEST STABLE toolchain
       //--
       this.updateToolchain = function () {
-        console.log("Install toolchain LATEST STABLE!!");
+        let version = common.APIO_VERSION_LATEST_STABLE;
+
+        console.log("Install toolchain: " + utils.printApioVersion(version));
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
