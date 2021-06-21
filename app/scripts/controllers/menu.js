@@ -767,10 +767,14 @@ angular.module('icestudio')
       }
     };
 
+    //-----------------------------------------------------------------
+    // View/System Info Window
+    //--
     $scope.showSystemInfo = function () {
      
-      gui.Window.open(
-        `resources/viewers/system/system.html?base_dir=${common.BASE_DIR}` + 
+      //-- Build the URL with all the parameters to pass to the window
+      let URL = 
+        `resources/viewers/system/system.html?base_dir=${common.BASE_DIR}` +
         `&icestudio_dir=${common.ICESTUDIO_DIR}` + 
         `&profile_path=${common.PROFILE_PATH}` +
         `&apio_home_dir=${common.APIO_HOME_DIR}` +
@@ -779,16 +783,20 @@ angular.module('icestudio')
         `&env_pip=${common.ENV_PIP}` +
         `&apio_cmd=${common.APIO_CMD}` +
         `&app=${common.APP}` +
-        `&app_dir=${common.APP_DIR}`,
+        `&app_dir=${common.APP_DIR}`;
+
+      //-- Create the window
+      gui.Window.open(
+         URL,
         {
-        title: "System Info",
-        focus: true,
-        resizable: false,
-        width: 600,
-        height: 400,
-        'min_width': 300,
-        'min_height': 300,
-        icon: 'resources/images/icestudio-logo.png'
+          title: "System Info",
+          focus: true,
+          resizable: false,
+          width: 600,
+          height: 400,
+          'min_width': 300,
+          'min_height': 300,
+          icon: 'resources/images/icestudio-logo.png'
         }
       );
     };
