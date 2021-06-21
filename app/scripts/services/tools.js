@@ -1113,7 +1113,7 @@ angular
       //--
       this.installToolchain = function () {
 
-        console.log("Install toolchain-STABLE!!!");
+        iceConsole.log("------> MENU ENTRY POINT: Install Toolchain");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1158,6 +1158,9 @@ angular
       //--
       this.updateToolchain = function () {
 
+        iceConsole.log("------------------------------------------");
+        iceConsole.log("------> MENU ENTRY POINT: Update Toolchain");
+        iceConsole.log("------------------------------------------");
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1312,6 +1315,8 @@ angular
       //--
       function checkInternetConnection(callback) {
 
+        iceConsole.log("**** STEP: Check internet connection");
+
         //-- Update the progress bar
         updateProgress(
           gettextCatalog.getString("Check Internet connection..."),
@@ -1345,6 +1350,8 @@ angular
       //--
       function ensurePythonIsAvailable(callback) {
 
+        iceConsole.log("**** STEP: Check Python");
+
         //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Check Python..."), 0);
 
@@ -1373,6 +1380,8 @@ angular
       //--
       function createVirtualenv(callback) {
 
+        iceConsole.log("**** STEP: Create virtualenv");
+
         //-- Update the progress bar
         updateProgress(gettextCatalog.getString("Create virtualenv..."), 10);
 
@@ -1385,6 +1394,8 @@ angular
       //-- Install the apio toolchain
       //--
       function installOnlineApio(callback) {
+
+        iceConsole.log("**** STEP: Install APIO");
 
         //-- Get the apio package with params
         let apio = utils.getApioParameters();
@@ -1402,6 +1413,9 @@ angular
       //-- It contains the lsusb and lsftdi tools
       //--
       function apioInstallSystem(callback) {
+
+        iceConsole.log("**** STEP: APIO install system");
+
         updateProgress("apio install system", 40);
         utils.apioInstall("system", callback);
       }
@@ -1411,6 +1425,9 @@ angular
       //-- It contains the opensource hardware sinthesizer
       //--
       function apioInstallYosys(callback) {
+
+        iceConsole.log("**** STEP: APIO install yosys");
+
         updateProgress("apio install yosys", 50);
         utils.apioInstall("yosys", callback);
       }
@@ -1419,6 +1436,9 @@ angular
       //-- Install the toolchains for the ice40 FPGA family
       //--
       function apioInstallIce40(callback) {
+
+        iceConsole.log("**** STEP: APIO install ice40");
+
         updateProgress("apio install ice40", 50);
         utils.apioInstall("ice40", callback);
       }
@@ -1427,6 +1447,9 @@ angular
       //-- Install the toolchain for the ECP5 FPGA family
       //--
       function apioInstallECP5(callback) {
+
+        iceConsole.log("**** STEP: APIO install ecp5");
+
         updateProgress("apio install ecp5", 50);
         utils.apioInstall("ecp5", callback);
       }
@@ -1435,6 +1458,9 @@ angular
       //--  Install the Fujprog programmer
       //--
       function apioInstallFujprog(callback) {
+
+        iceConsole.log("**** STEP: APIO install fujprog");
+
         updateProgress("apio install fujprog", 50);
         utils.apioInstall("fujprog", callback);
       }
@@ -1443,6 +1469,9 @@ angular
       //--  Install the iverilog tool
       //--  It is used for checking the generated verilog
       function apioInstallIverilog(callback) {
+
+        iceConsole.log("**** STEP: APIO install iverilog");
+
         updateProgress("apio install iverilog", 70);
         utils.apioInstall("iverilog", callback);
       }
@@ -1451,6 +1480,9 @@ angular
       //--  Install the Icesprog programer
       //--
       function apioInstallIcesprog(callback) {
+
+        iceConsole.log("**** STEP: APIO install icesprog");
+
         updateProgress("apio install icesprog", 50);
         utils.apioInstall("icesprog", callback);
       }
@@ -1459,6 +1491,9 @@ angular
       //-- Install the DFU programmer
       //--
       function apioInstallDfu(callback) {
+
+        iceConsole.log("**** STEP: APIO install duf");
+
         updateProgress("apio install dfu", 50);
         utils.apioInstall("dfu", callback);
       }
@@ -1468,6 +1503,9 @@ angular
       //--
       function apioInstallDrivers(callback) {
         if (common.WIN32) {
+
+          iceConsole.log("**** STEP: APIO install drivers");
+
           updateProgress("apio install drivers", 80);
           utils.apioInstall("drivers", callback);
         } else {
@@ -1480,6 +1518,9 @@ angular
       //-- make, but in python
       //--
       function apioInstallScons(callback) {
+
+        iceConsole.log("**** STEP: APIO install scons");
+
         updateProgress("apio install scons", 90);
         utils.apioInstall("scons", callback);
       }
@@ -1487,6 +1528,9 @@ angular
       //---------------------------------------------------
       //--
       function installationCompleted(callback) {
+
+        iceConsole.log("****************** INSTALLATION COMPLETED! **************");
+        iceConsole.log("\n\n");
 
         //-- Check that the toolchain has been installed
         checkToolchain(function () {

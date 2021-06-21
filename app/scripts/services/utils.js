@@ -186,64 +186,48 @@ angular.module('icestudio')
       document.addEventListener('keypress', disableEvent, true);
     };
 
-    this.executeCommandOld = function (command, callback) {
-      var cmd = command.join(' ');
-      //const fs = require('fs');
-    /*  if (typeof common.DEBUGMODE !== 'undefined' &&
-        common.DEBUGMODE === 1) {
-
-        nodeFs.appendFileSync(common.LOGFILE, 'utils.executeCommand=>' + cmd + "\n");
-      }*/
-
-      nodeChildProcess.exec(cmd,
-        function (error, stdout, stderr) {
-          iceConsole.log(`utils.executeCommand=> ${cmd}\n`);
-/*          if (typeof common.DEBUGMODE !== 'undefined' &&
-            common.DEBUGMODE === 1) {
-
-            nodeFs.appendFileSync(common.LOGFILE, `${stdout}\n${+stderr}\n`);
-          }*/
-          common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
-
-          $(document).trigger('commandOutputChanged', [common.commandOutput]);
-          if (error) {
-            this.enableKeyEvents();
-            this.enableClickEvents();
-            callback(true);
-            alertify.error(error.message, 30);
-          } else {
-            callback();
-          }
-        }.bind(this)
-      );
-    };
-
+    //--------------------------------------------------------------
+    //-- Execute the given system command
+    //-- command is an array of string containing the commands to
+    //-- execute along with the arguments
+    //--
     this.executeCommand = function (command, callback) {
+
+      //-- Construct a string with the full command
       let cmd = command.join(' ');
       let _this = this;
 
-      iceConsole.log(`utils.executeCommand => ${cmd}\n`);
-      console.log("EXECUTE: " + cmd);
+      //-- Show the command in the DEBUG log
+      iceConsole.log(`>>>> utils.executeCommand => ${cmd}\n`);
 
+      //-- Array for storing the arguments
       let args = [];
 
+      //-- Get the arguments, if any
       if (command.length > 0) {
         args = command.slice(1);
       }
+
+      //-- Execute the command in background!!
       let proccess = nodeChildProcess.spawn(command[0], args, { shell: true });
 
+      //-- When there are outputs available from the command...
       proccess.stdout.on('data', function (data) {
-        iceConsole.log(`${data}\n`);
+
+        //-- Show the output in the log
+        iceConsole.log(`>>(OUTPUT): ${data}\n`);
+
         common.commandOutput = command.join(' ') + '\n\n' + data;
-      
-        iceConsole.log(`utils.executeCommand.stdout => ${common.commandOutput}\n`);
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
+      //-- If there are errors ...
       proccess.stderr.on('data', function (data) {
-        iceConsole.log(`${data}\n`);
+
+        //-- Show them in the log file
+        iceConsole.log(`>>(ERROR): ${data}\n`);
+        
         common.commandOutput = command.join(' ') + '\n\n' + data;
-        iceConsole.log(`utils.executeCommand.stderr => ${common.commandOutput}\n`);
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
@@ -251,6 +235,8 @@ angular.module('icestudio')
         if (code !== 0) {
           _this.enableKeyEvents();
           _this.enableClickEvents();
+          iceConsole.log("----!!!! ERROR !!!! -----");
+          iceConsole.log("CMD: " + command);
           callback(true);
           alertify.error('Error executting command ' + command, 30);
         } else {

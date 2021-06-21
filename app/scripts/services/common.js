@@ -74,6 +74,9 @@ angular.module('icestudio')
     //-- Path were the executale is run
     this.APP_DIR = nodePath.dirname(process.execPath);
 
+    //-- Icestudio APP dir
+    this.APP = process.cwd();
+
     //----------------------------------------------------
     //-- User/system Home folder (BASE_DIR)
     //--   |---> icestudio.log : Log file (debugging)

@@ -75,12 +75,22 @@ angular
         iceConsole.enable();
       }
 
+      //-- DEBUG: In the development version (wip) the log is ALWAYS active
+      //-- The log file is icestudio.log (located in the BASE_DIR folder)
+      iceConsole.setPath(common.BASE_DIR);
+      iceConsole.enable();
+
       //-- Show information in the log file (if enabled)
       const now = new Date();
       iceConsole.log("\n\n\n");
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(` Icestudio session ${now.toString()}`);
       iceConsole.log(`=======================================================================================`);
+      iceConsole.log(`Architecture: ${process.arch}`);
+      iceConsole.log(`Platform: ${process.platform}`);
+      const disp_arch = document.getElementById('disp_arch');
+      const disp_platform = document.getElementById('disp_platform');
+      const disp_dir = document.getElementById('disp_dir');
       iceConsole.log('Profile file: ' + common.PROFILE_PATH); 
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
@@ -91,8 +101,14 @@ angular
       iceConsole.log("common.PROFILE_PATH: Profile path: " + common.PROFILE_PATH);
       iceConsole.log("common.INTERNAL_COLLECTIONS_DIR: Internal collections: " + common.INTERNAL_COLLECTIONS_DIR);
       iceConsole.log("common.APIO_HOME_DIR: APIO folder: " + common.APIO_HOME_DIR);
-      iceConsole.log("common.APP_DIR: Icestudio execution folder: " + common.APP_DIR); 
+      iceConsole.log("common.ENV_DIR: PYthon virtual environment: " + common.ENV_DIR);
+      iceConsole.log("common.ENV_BIN_DIR: Executable files: " + common.ENV_BIN_DIR);
       iceConsole.log("common.ENV_PIP: PIP executable:  " + common.ENV_PIP);
+      iceConsole.log("common.APIO_CMD: Apio command: " + common.APIO_CMD);
+      iceConsole.log("Common.APP: Icestudio APP folder: " + common.APP);
+      iceConsole.log("common.APP_DIR: Icestudio execution folder: " + common.APP_DIR); 
+      iceConsole.log("\n\n");
+
 
 
       collections.loadAllCollections();
