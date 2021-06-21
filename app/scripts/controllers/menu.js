@@ -792,8 +792,8 @@ angular.module('icestudio')
           title: "System Info",
           focus: true,
           resizable: false,
-          width: 600,
-          height: 400,
+          width: 650,
+          height: 450,
           'min_width': 300,
           'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'
