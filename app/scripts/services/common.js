@@ -90,9 +90,10 @@ angular.module('icestudio')
     //--   |---> .icestudio/venv/bin/pip3
     //--   |---> .icestudio/venv/bin/apio
     //--
+    this.ICESTUDIO_HOME=(this.WIN32 )? 'icestudio_home ' : '.icestudio';
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');
-    this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR, '.icestudio'), this);
+    this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR,this.ICESTUDIO_HOME), this);
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(this.ICESTUDIO_DIR, 'collections');
     this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
     this.PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
@@ -125,7 +126,7 @@ angular.module('icestudio')
     //-- Example of APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
     this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
-                    '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? '& ' : '; ') + 
+                    '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? ' & ' : '; ') + 
                     '"' + this.ENV_APIO + '"';
 
 
