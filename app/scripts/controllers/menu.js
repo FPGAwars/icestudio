@@ -768,18 +768,29 @@ angular.module('icestudio')
     };
 
     $scope.showSystemInfo = function () {
-      console.log("SYSTEM INFO!!!!!");
-      console.log("Profile: ",common.PROFILE_PATH);
-      gui.Window.open('resources/viewers/system/system.html', {
+     
+      gui.Window.open(
+        `resources/viewers/system/system.html?base_dir=${common.BASE_DIR}` + 
+        `&icestudio_dir=${common.ICESTUDIO_DIR}` + 
+        `&profile_path=${common.PROFILE_PATH}` +
+        `&apio_home_dir=${common.APIO_HOME_DIR}` +
+        `&env_dir=${common.ENV_DIR}` +
+        `&env_bin_dir=${common.ENV_BIN_DIR}` +
+        `&env_pip=${common.ENV_PIP}` +
+        `&apio_cmd=${common.APIO_CMD}` +
+        `&app=${common.APP}` +
+        `&app_dir=${common.APP_DIR}`,
+        {
         title: "System Info",
         focus: true,
         resizable: false,
-        width: 500,
-        height: 500,
+        width: 600,
+        height: 400,
         'min_width': 300,
         'min_height': 300,
         icon: 'resources/images/icestudio-logo.png'
-      });
+        }
+      );
     };
 
     $scope.toggleFPGAResources = function () {
