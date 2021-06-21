@@ -88,9 +88,6 @@ angular
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(`Architecture: ${process.arch}`);
       iceConsole.log(`Platform: ${process.platform}`);
-      const disp_arch = document.getElementById('disp_arch');
-      const disp_platform = document.getElementById('disp_platform');
-      const disp_dir = document.getElementById('disp_dir');
       iceConsole.log('Profile file: ' + common.PROFILE_PATH); 
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
