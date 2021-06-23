@@ -128,22 +128,36 @@ angular.module('icestudio')
     //-- Set the apio command. It consist of two parts. The first is for defining and  
     //-- exporting the APIO_HOME_DIR environment variable. It is used by apio to know where  
     //-- is located its installation. The second part is the apio executable itself
-    //-- Example of APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
+    //-- 
+    //-- EXAMPLE FOR Linux/MAC:
+    //-- APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
 
+    //-- EXAMPLE FOR Windows:
+    //-- APIO_CMD = set APIO_HOME_DIR=c:\Users\Obijuan\.icestudio\apio& "c:\Users\Obijuan\.icestudio\venv\bin\apio"
+    //--
     //-- TEMP BUG FIX! The quotes for the APIO_HOME_DIR are temporaly removed, because in windows they are
     //-- part of the environment variable. If the path contains spaces in windows it will not work
     //-- IT SHOULD BE TESTED AND FIXED!!
-    
-    //-- IMPORTANT!!! THERE SHOULD BE NO SPACE between APIO_HOME_DIR and the '&' operator in Windows!!
-    //-- This a very difficult ERROR TO FIND:
-    //-- set APIO_HOME_DIR=c:\Users\Obijuan\.icestudio\apio & 
-    //-- It will set the APIO_HOME_DIR environment var to "c:\Users\Obijuan\.icestudio\apio " 
-    //-- (Notice the space in the end)
-    this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
-                     this.APIO_HOME_DIR + (this.WIN32 ? '& ' : '; ') + 
-                    '"' + this.ENV_APIO + '"';
 
+    if (this.WIN32) {
+      //-- Apio execution command for Windows machines
+      
+      this.APIO_CMD = 'set APIO_HOME_DIR=' + this.APIO_HOME_DIR + '& ' + 
+                      '"' + this.ENV_APIO + '"';
+
+      //-- IMPORTANT!!! THERE SHOULD BE NO SPACE between APIO_HOME_DIR and the '&' operator in Windows!!
+      //-- This a very difficult ERROR TO SPOT:
+      //-- set APIO_HOME_DIR=c:\Users\Obijuan\.icestudio\apio & 
+      //-- It will set the APIO_HOME_DIR environment var to "c:\Users\Obijuan\.icestudio\apio " 
+      //-- (Notice the space in the end)
+
+    } else {
+      //-- Apio execution command for Linux/MAC machines
+
+      this.APIO_CMD = 'export APIO_HOME_DIR="' + this.APIO_HOME_DIR + '"; ' + 
+                       '"' + this.ENV_APIO + '"';
+    }
 
     this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
       prefix: 'icestudio-',
