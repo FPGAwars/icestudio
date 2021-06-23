@@ -4,7 +4,9 @@
 
 angular.module('icestudio')
   .service('common', function (nodePath,
-    nodeTmp,nodeFs) {
+    nodeTmp,
+    nodeFs,
+    _package) {
 
     // Project version
     this.VERSION = '1.2';
@@ -115,10 +117,7 @@ angular.module('icestudio')
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
     //-- Get the Icestudio Version
-    const _package = require('./package.json');
-    const _buildinfo = require('./buildinfo.json');
-    this.ICESTUDIO_VERSION = _package.version + _buildinfo.ts;
-    console.log("COMMON: Icestudio version: " + this.ICESTUDIO_VERSION);
+    this.ICESTUDIO_VERSION = _package.version;
 
     //-- APIO version values
     this.APIO_VERSION_STABLE = 0;         //-- Use the stable version
