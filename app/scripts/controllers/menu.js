@@ -772,18 +772,37 @@ angular.module('icestudio')
     //--
     $scope.showSystemInfo = function () {
      
+      //-- Write the iformation to the log file:
+      iceConsole.log("---------------------");
+      iceConsole.log("  VIEW/System Info");
+      iceConsole.log("--------------------");
+      iceConsole.log("BASE_DIR: " + common.BASE_DIR + "---");
+      iceConsole.log("ICESTUDIO_DIR: " + common.ICESTUDIO_DIR + "---");
+      iceConsole.log("PROFILE_PATH: " + common.PROFILE_PATH + "---");
+      iceConsole.log("APIO_HOME_DIR: " + common.APIO_HOME_DIR + "---");
+      iceConsole.log("ENV_DIR: " + common.ENV_DIR + "---");
+      iceConsole.log("ENV_BIN_DIR: " + common.ENV_BIN_DIR + "---");
+      iceConsole.log("ENV_PIP: " + common.ENV_PIP + "---");
+      iceConsole.log("APIO_CMD: " + common.APIO_CMD + "---");
+      iceConsole.log("APP: " + common.APP + "---");
+      iceConsole.log("APP_DIR: " + common.APP_DIR + "---");
+      iceConsole.log("\n\n");
+
       //-- Build the URL with all the parameters to pass to the window
+      //-- The encodeURIComponent() function the characteres so that the spaces and
+      //-- other special characteres can be place on the original URL
       let URL = 
-        `resources/viewers/system/system.html?base_dir=${common.BASE_DIR}` +
-        `&icestudio_dir=${common.ICESTUDIO_DIR}` + 
-        `&profile_path=${common.PROFILE_PATH}` +
-        `&apio_home_dir=${common.APIO_HOME_DIR}` +
-        `&env_dir=${common.ENV_DIR}` +
-        `&env_bin_dir=${common.ENV_BIN_DIR}` +
-        `&env_pip=${common.ENV_PIP}` +
-        `&apio_cmd=${common.APIO_CMD}` +
-        `&app=${common.APP}` +
-        `&app_dir=${common.APP_DIR}`;
+        `resources/viewers/system/system.html?version=${common.ICESTUDIO_VERSION}`+
+        `&base_dir=${encodeURIComponent(common.BASE_DIR)}---` +
+        `&icestudio_dir=${encodeURIComponent(common.ICESTUDIO_DIR)}---` + 
+        `&profile_path=${encodeURIComponent(common.PROFILE_PATH)}---` +
+        `&apio_home_dir=${encodeURIComponent(common.APIO_HOME_DIR)}---` +
+        `&env_dir=${encodeURIComponent(common.ENV_DIR)}---` +
+        `&env_bin_dir=${encodeURIComponent(common.ENV_BIN_DIR)}---` +
+        `&env_pip=${encodeURIComponent(common.ENV_PIP)}---` +
+        `&apio_cmd=${encodeURIComponent(common.APIO_CMD)}---` +
+        `&app=${encodeURIComponent(common.APP)}---` +
+        `&app_dir=${encodeURIComponent(common.APP_DIR)}---`;
 
       //-- Create the window
       gui.Window.open(
@@ -792,8 +811,8 @@ angular.module('icestudio')
           title: "System Info",
           focus: true,
           resizable: false,
-          width: 650,
-          height: 450,
+          width: 700,
+          height: 500,
           'min_width': 300,
           'min_height': 300,
           icon: 'resources/images/icestudio-logo.png'

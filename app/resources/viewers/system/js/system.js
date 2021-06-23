@@ -7,6 +7,7 @@ window.onload = function() {
     console.log("System info window opened");
 
     //-- Get the parameters
+    const version = getURLParameter('version');
     const base_dir = getURLParameter('base_dir');
     const icestudio_dir = getURLParameter('icestudio_dir');
     const profile_path = getURLParameter('profile_path');
@@ -20,6 +21,7 @@ window.onload = function() {
     
     
     //-- Get the HTML elements for displaying the info
+    const disp_version = document.getElementById('disp_version');
     const disp_arch = document.getElementById('disp_arch');
     const disp_platform = document.getElementById('disp_platform');
 
@@ -36,6 +38,7 @@ window.onload = function() {
 
 
     //-- Display the information
+    disp_version.innerHTML += version;
     disp_arch.innerHTML += process.arch;
     disp_platform.innerHTML += process.platform;
 
@@ -52,15 +55,16 @@ window.onload = function() {
    
     
     //-- Debug
-    console.log("BASE_DIR: " + base_dir);
-    console.log("ICESTUDIO_DIR: " + icestudio_dir);
-    console.log("PROFILE_PATH: " + profile_path);
-    console.log("APIO_HOME_DIR: " + apio_home_dir);
-    console.log("ENV_DIR: " + env_dir);
-    console.log("ENV_BIN_DIR: " + env_bin_dir);
-    console.log("ENV_PIP: " + env_pip);
-    console.log("APIO_CMD: " + apio_cmd);
-    console.log("APP: " + app);
-    console.log("APP_DIR: " + app_dir);
+    console.log("Version: " + version + "---");
+    console.log("BASE_DIR: " + base_dir + "---");
+    console.log("ICESTUDIO_DIR: " + icestudio_dir + "---");
+    console.log("PROFILE_PATH: " + profile_path + "---");
+    console.log("APIO_HOME_DIR: " + apio_home_dir + "---");
+    console.log("ENV_DIR: " + env_dir + "---");
+    console.log("ENV_BIN_DIR: " + env_bin_dir + "---");
+    console.log("ENV_PIP: " + env_pip + "---");
+    console.log("APIO_CMD: " + apio_cmd + "---");
+    console.log("APP: " + app + "---");
+    console.log("APP_DIR: " + app_dir + "---");
 };
 
