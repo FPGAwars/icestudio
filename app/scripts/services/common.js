@@ -125,10 +125,13 @@ angular.module('icestudio')
     //-- is located its installation. The second part is the apio executable itself
     //-- Example of APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
-    this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
-                    '"' + this.APIO_HOME_DIR + '"' + (this.WIN32 ? ' & ' : '; ') + 
-                    '"' + this.ENV_APIO + '"';
 
+    //-- TEMP BUG FIX! The quotes for the APIO_HOME_DIR are temporaly removed, because in windows they are
+    //-- part of the environment variable. If the path contains spaces in windows it will not work
+    //-- IT SHOULD BE TESTED AND FIXED!!
+    this.APIO_CMD = (this.WIN32 ? 'set' : 'export') + ' APIO_HOME_DIR=' + 
+                     this.APIO_HOME_DIR + (this.WIN32 ? ' & ' : '; ') + 
+                    '"' + this.ENV_APIO + '"';
 
 
     this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
