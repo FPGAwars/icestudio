@@ -79,12 +79,13 @@ angular
       //-- The log file is icestudio.log (located in the BASE_DIR folder)
       iceConsole.setPath(common.BASE_DIR);
       iceConsole.enable();
-
+      
       //-- Show information in the log file (if enabled)
       const now = new Date();
       iceConsole.log("\n\n\n");
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(` Icestudio session ${now.toString()}`);
+      iceConsole.log(` Version: ${common.ICESTUDIO_VERSION}`);
       iceConsole.log(`=======================================================================================`);
       iceConsole.log(`Architecture: ${process.arch}`);
       iceConsole.log(`Platform: ${process.platform}`);

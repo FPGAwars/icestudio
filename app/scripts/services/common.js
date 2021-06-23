@@ -114,6 +114,12 @@ angular.module('icestudio')
     this.CACHE_DIR = nodePath.join(this.ICESTUDIO_DIR, '.cache');
     this.OLD_BUILD_DIR = nodePath.join(this.ICESTUDIO_DIR, '.build');
 
+    //-- Get the Icestudio Version
+    const _package = require('./package.json');
+    const _buildinfo = require('./buildinfo.json');
+    this.ICESTUDIO_VERSION = _package.version + _buildinfo.ts;
+    console.log("COMMON: Icestudio version: " + this.ICESTUDIO_VERSION);
+
     //-- APIO version values
     this.APIO_VERSION_STABLE = 0;         //-- Use the stable version
     this.APIO_VERSION_LATEST_STABLE = 1;  //-- Use the latest stable (available in the pypi repo)
