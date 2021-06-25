@@ -92,7 +92,7 @@ angular.module('icestudio')
     //--   |---> .icestudio/venv/bin/pip3
     //--   |---> .icestudio/venv/bin/apio
     //--
-    this.ICESTUDIO_HOME=(this.WIN32 && process.arch === 'ia32')? 'icestudio_home' : '.icestudio';
+    this.ICESTUDIO_HOME=(this.WIN32 && process.arch === 'ia32')? 'icestudio_home' : '.ice studio';
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');
     this.ICESTUDIO_DIR = safeDir(nodePath.join(this.BASE_DIR,this.ICESTUDIO_HOME), this);
