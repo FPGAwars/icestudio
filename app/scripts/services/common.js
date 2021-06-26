@@ -134,16 +134,12 @@ angular.module('icestudio')
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
 
     //-- EXAMPLE FOR Windows:
-    //-- APIO_CMD = set APIO_HOME_DIR=c:\Users\Obijuan\.icestudio\apio& "c:\Users\Obijuan\.icestudio\venv\bin\apio"
-    //--
-    //-- TEMP BUG FIX! The quotes for the APIO_HOME_DIR are temporaly removed, because in windows they are
-    //-- part of the environment variable. If the path contains spaces in windows it will not work
-    //-- IT SHOULD BE TESTED AND FIXED!!
+    //-- APIO_CMD = set APIO_HOME_DIR="c:\Users\Obijuan\.icestudio\apio"& "c:\Users\Obijuan\.icestudio\venv\bin\apio"
 
     if (this.WIN32) {
       //-- Apio execution command for Windows machines
       
-      this.APIO_CMD = 'set APIO_HOME_DIR=' + this.APIO_HOME_DIR + '& ' + 
+      this.APIO_CMD = 'set APIO_HOME_DIR=' + '"' + this.APIO_HOME_DIR + '"' + '& ' + 
                       '"' + this.ENV_APIO + '"';
 
       //-- IMPORTANT!!! THERE SHOULD BE NO SPACE between APIO_HOME_DIR and the '&' operator in Windows!!
