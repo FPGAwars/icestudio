@@ -1,34 +1,48 @@
 {
   "name": "icestudio",
-  "version": "0.5.0",
-  "nightly": "0.5.1-nightly",
+  "flavour": "develop",
+  "version": "0.5.1w",
   "description": "Visual editor for open FPGA boards",
-  "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
+  "contributors": [
+    {
+      "name": "Jesús Arroyo Torrens",
+      "email": "jesus.arroyo.torrens@gmail.com",
+      "url": "https://github.com/Jesus89"
+    },
+    {
+      "name": "Carlos Venegas Arrabe",
+      "url": "https://github.com/cavearr"
+    },
+    {
+      "name": "Juan González Gómez",
+      "url": "https://github.com/Obijuan"
+    }
+  ],
   "repository": "https://github.com/FPGAwars/icestudio",
-  "updatecheck":"https://raw.githubusercontent.com/FPGAwars/icestudio/develop/app/package.json",
+  "updatecheck": "https://raw.githubusercontent.com/FPGAwars/icestudio/develop/app/package.json",
   "license": "GPL-2.0",
   "main": "index.html",
-  "single-instance": false,
-  "development":{
-    "mode":false
+  "chromium-args": "--enable-experimental-web-platform-features",
+  "development": {
+    "mode": false
   },
   "window": {
     "width": 900,
     "height": 620,
     "min_width": 800,
     "min_height": 200,
-    "toolbar": false,
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.4.0",
-    "max": "0.5.0",
+    "min": "0.6.7",
+    "max": "1.0.0",
     "extras": [
       "blackiceprog",
       "tinyfpgab",
-      "tinyprog"
+      "tinyprog",
+      "icefunprog"
     ],
     "external": "",
     "branch": ""
@@ -42,13 +56,17 @@
     "angular-gettext-tools": "2.3.5",
     "copy-paste": "~1.3.0",
     "extract-zip": "~1.6.5",
+    "fast-copy": "^2.0.3",
     "fs-extra": "~1.0.0",
     "getos": "~3.0.1",
     "glob": "^7.1.4",
     "is-online": "~5.2.0",
-    "jquery": "~3.2.1",
+    "jexcel": "^3.9.1",
+    "jquery": "~3.0.0",
+    "jsuites": "^2.7.1",
     "lodash.debounce": "~4.0.8",
     "marked": "~0.3.19",
+    "mustache": "^4.0.0",
     "node-emoji": "~1.8.1",
     "node-lang-info": "~0.2.1",
     "openurl": "~1.1.1",

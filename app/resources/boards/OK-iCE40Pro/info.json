@@ -1,0 +1,13 @@
+{
+	"label": "OK-iCE40Pro", 
+	"device": "UP5K", 
+	"datasheet": "https://github.com/WiFiBoy/OK-iCE40Pro", 
+	"interface": "FTDI",
+	"FPGAResources": {
+		"ffs": 5280,
+    	"luts": 5280,
+    	"pios": 9,
+    	"plbs": 660,
+    	"brams": 120
+	}
+}

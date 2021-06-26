@@ -1,21 +1,21 @@
 'use strict';
 
 angular.module('icestudio')
-  .filter('shortcut', function(shortcuts) {
-    return function(action) {
+  .filter('shortcut', function (shortcuts) {
+    return function (action) {
       return shortcuts.label(action);
     };
   })
-  .service('shortcuts', function(common) {
+  .service('shortcuts', function (common) {
 
-    this.method = function(action, method) {
+    this.method = function (action, method) {
       // Configure shortcut method
       if (action in shortcuts) {
         shortcuts[action]['method'] = method;
       }
     };
 
-    this.execute = function(event, opt) {
+    this.execute = function (event, opt) {
       // Execute shortcut method
       // Options:
       // - opt.prompt: enable shortcut when a prompt is shown
@@ -29,12 +29,12 @@ angular.module('icestudio')
         var options = shortcuts[action].opt || {};
         var command = shortcuts[action][system];
         if (event.keyCode === command.key &&
-            event.altKey === (command.alt || false) &&
-            event.ctrlKey === (command.ctrl || false) &&
-            event.metaKey === (command.meta || false) &&
-            event.shiftKey === (command.shift || false) &&
-            (!opt.prompt || (options.prompt || false)) &&
-            (!opt.disabled || (options.disabled || false))) {
+          event.altKey === (command.alt || false) &&
+          event.ctrlKey === (command.ctrl || false) &&
+          event.metaKey === (command.meta || false) &&
+          event.shiftKey === (command.shift || false) &&
+          (!opt.prompt || (options.prompt || false)) &&
+          (!opt.disabled || (options.disabled || false))) {
 
           method = shortcuts[action].method;
           ret.preventDefault = options.preventDefault || false;
@@ -47,7 +47,7 @@ angular.module('icestudio')
       return ret;
     };
 
-    this.label = function(action) {
+    this.label = function (action) {
       // Return shortcut label
       var label = '';
       if (action in shortcuts) {
@@ -112,8 +112,8 @@ angular.module('icestudio')
         mac: { label: '⌘+V', meta: true, key: 86 }
       },
       pasteAndCloneSelected: {
-        linux: { label: 'Ctrl+Shift+V', ctrl: true,shift:true, key: 86 },
-        mac: { label: 'Shit+⌘+V', meta: true, shift:true,key: 86 }
+        linux: { label: 'Ctrl+Shift+V', ctrl: true, shift: true, key: 86 },
+        mac: { label: 'Shit+⌘+V', meta: true, shift: true, key: 86 }
       },
 
       selectAll: {

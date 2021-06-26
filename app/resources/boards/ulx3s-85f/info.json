@@ -1,0 +1,13 @@
+{
+  "label": "ULX3S-85F",
+  "datasheet": "https://github.com/emard/ulx3s",
+  "interface": "FTDI",
+  "arch" : "ecp5",
+  "FPGAResources": {
+    "ffs": 5280,
+    "luts": 5280,
+    "pios": 39,
+    "plbs": 660,
+    "brams": 30
+  }
+}

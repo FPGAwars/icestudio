@@ -1,97 +1,61 @@
+
 'use strict';
+/*jshint unused:false*/
 
 angular.module('icestudio')
-  .service('collections', function(utils,
-                                   common,
-                                   profile,
-                                   gettextCatalog,
-                                   nodePath) {
+  .service('collections', function (utils,
+    common,
+    profile,
+    gettextCatalog,
+    nodePath,
+    $exceptionHandler) {
+    
+
+     let iceColl= new IceCollection({
+      location :{ default: common.DEFAULT_COLLECTION_DIR,
+                  internal: common.INTERNAL_COLLECTIONS_DIR,
+                  external: profile.get('externalCollections')
+                }
+    });
 
     const DEFAULT = '';
     const MAX_LEVEL_SEARCH = 20;
 
-    this.loadAllCollections = function() {
+    this.loadAllCollections = function () {
       this.loadDefaultCollection();
       this.loadInternalCollections();
       this.loadExternalCollections();
     };
 
-    this.loadDefaultCollection = function() {
-      common.defaultCollection = getCollection(
-        DEFAULT,
-        common.DEFAULT_COLLECTION_DIR,
-        utils.getFilesRecursive(common.DEFAULT_COLLECTION_DIR, MAX_LEVEL_SEARCH)
-      );
+    this.loadDefaultCollection = function () {
+      common.defaultCollection = iceColl.getDefault();
     };
 
     this.loadInternalCollections = function () {
-      var internalCollections = utils.findCollections(common.INTERNAL_COLLECTIONS_DIR);
+      var internalCollections = iceColl.find(common.INTERNAL_COLLECTIONS_DIR);
       common.internalCollections = loadCollections(internalCollections);
     };
 
     this.loadExternalCollections = function () {
+      try{
       var externalCollectionsPath = profile.get('externalCollections');
       if (externalCollectionsPath !== common.INTERNAL_COLLECTIONS_DIR) {
-        var externalCollections = utils.findCollections(externalCollectionsPath);
+        var externalCollections = iceColl.find(externalCollectionsPath);
         common.externalCollections = loadCollections(externalCollections);
       }
+
+      }  catch(e) { $exceptionHandler(e); }
     };
 
     function loadCollections(paths) {
-      var collections = [];
-      paths.forEach(function(path) {
-        collections.push(getCollection(
-          nodePath.basename(path),
-          path,
-          utils.getFilesRecursive(path, MAX_LEVEL_SEARCH)
-        ));
-      });
-      return collections;
+      return iceColl.getAll(paths);
     }
 
     function getCollection(name, path, children) {
-      var collection = {
-        name: name,
-        path: path,
-        content: {
-          blocks: [],
-          examples: [],
-          package: {},
-          readme: ''
-        }
-      };
-      for (var i in children) {
-        var child = children[i];
-        switch (child.name) {
-          case 'blocks':
-            if (child.children) {
-              collection.content.blocks = child.children;
-            }
-            break;
-          case 'examples':
-            if (child.children) {
-              collection.content.examples = child.children;
-            }
-            break;
-          case 'package':
-            if (!child.children) {
-              try {
-                collection.content.package = require(child.path);
-              }
-              catch (e) {}
-            }
-            break;
-          case 'README':
-            if (!child.children) {
-              collection.content.readme = child.path;
-            }
-            break;
-        }
-      }
-      return collection;
+      return iceColl.get(name,path,children);
     }
 
-    this.selectCollection = function(path) {
+    this.selectCollection = function (path) {
       var selectedCollection = null;
       var collections = common.internalCollections.concat(common.externalCollections);
       for (var i in collections) {
@@ -108,7 +72,7 @@ angular.module('icestudio')
       return selectedCollection.path;
     };
 
-    this.sort = function() {
+    this.sort = function () {
       sortCollections([common.defaultCollection]);
       sortCollections(common.internalCollections);
       sortCollections(common.externalCollection);
@@ -126,23 +90,60 @@ angular.module('icestudio')
 
     function sortContent(items) {
       if (items) {
-        items.sort(byName);
+        items.sort(byNameAlphaNum);
         for (var i in items) {
           sortContent(items[i].children);
         }
       }
     }
 
-    function byName(a, b) {
+    function byNameAlphaNum(a, b) {
       a = gettextCatalog.getString(a.name);
       b = gettextCatalog.getString(b.name);
-      if (a > b) {
-        return 1;
+      return alphaNumSort(a, b);
+    }
+
+    // Thanks: Gideon, https://ux.stackexchange.com/a/134765
+    function alphaNumSort(a, b) {
+      var regex = /[^\d]+|\d+/g;
+
+      // Split each name into alphabetical and numeric parts
+      var ar = a.match(regex);
+      var br = b.match(regex);
+      var localeCompare;
+
+      // For each part in the two split names, perform the following comparison:
+      for (let ia in ar) {
+        for (let ib in br) {
+          var ari = ar[ia];
+          if (ari === undefined) {
+            ari = "";
+          }
+          var bri = br[ib];
+          if (bri === undefined) {
+            bri = "";
+          }
+
+          // If both parts are strictly numeric, compare them as numbers 
+          if (!isNaN(ari) && !isNaN(bri)) {
+            localeCompare = ari.localeCompare(bri, {}, {
+              numeric: true
+            });
+          } else {
+            localeCompare = ari.localeCompare(bri, {}, {
+              ignorePunctuation: true,
+              sensitivity: "base"
+            });
+          }
+          if (localeCompare !== 0) {
+            // If you run out of parts, the name with the fewest parts comes first
+            return localeCompare;
+          }
+
+          // If they're the same, move on to the next part
+        }
       }
-      if (a < b) {
-        return -1;
-      }
-      return 0;
+      return localeCompare;
     }
 
   });

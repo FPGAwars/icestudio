@@ -24,7 +24,8 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
       }
       window.onload = function() {
-        var rules = getURLParameter('rules');
+        var rules =  decodeURIComponent(getURLParameter('rules'));
+        
         rules = JSON.parse(rules);
         var i, text = '';
         text += '<h3>Input rules</h3>\n';

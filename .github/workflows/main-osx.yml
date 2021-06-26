@@ -1,0 +1,68 @@
+name: 'Icestudio OSX'
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the develop branch
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup Nodejs version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.17'
+      - name: Install npm dependencies
+        run:   npm install 
+      - name: Build OSX packages
+        run:  | 
+          npm run build
+          ls dist/
+          
+       # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`tr '\n' ' ' < package.json`
+          echo "::set-output name=packageJson::$content"
+    
+      # Timestamp for the build
+      - id: build_date
+        run: |
+          content=`tr '\n' ' ' < app/buildinfo.json`
+          echo "::set-output name=buildJson::$content"
+          
+      - name: 'Upload DMG/OSX64'
+        env:
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "osx64_DMG_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.dmg"
+          if-no-files-found: error
+          
+      - name: 'Upload ZIP/OSX64'
+        env:
+          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "osx64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-osx64.zip"
+          if-no-files-found: error

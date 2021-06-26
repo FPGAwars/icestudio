@@ -1,0 +1,189 @@
+.tree-view {
+  background-color: white;
+  padding: 20px 20px 20px 40px;
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: #313131;
+  color: #c0c0c0;
+}
+
+.tree-view--folder input[type="checkbox"] {
+  background: #c0c0c0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 14px;
+  width: 15px;
+  border: 1px solid #c0c0c0;
+  vertical-align: middle;
+  margin: 0px 5px 0px 7px;
+}
+
+.tree-view--folder input[type="checkbox"]:checked {
+  background-image: url(/resources/plugins/collectionManager/assets/img/check-solid.svg);
+}
+
+.tree-view--folder {
+  cursor: pointer;
+}
+
+.tree-view--folder > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder > .tree-view--folder > .tree-view-folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 20px;
+}
+
+.tree-view--folder-name {
+  position: relative;
+  margin-bottom: 5px;
+  display: block;
+  vertical-align: middle;
+}
+.tree-view--folder-name:hover {
+  color: white;
+}
+.tree-view--folder-name::before {
+  visibility: hidden;
+}
+/*.tree-view--folder.closed>.tree-view--folder-name.tree-view--folder-subfolders::before{*/
+.tree-view--folder.closed > .tree-view--folder-name::before {
+  content: url(/resources/plugins/collectionManager/assets/img/angle-right-solid.svg);
+  position: absolute;
+  z-index: 100000;
+  top: -1px;
+  width: 10px;
+  left: -12px;
+  visibility: visible;
+}
+
+/*.tree-view--folder-name.tree-view--folder-subfolders::before{*/
+.tree-view--folder-name::before {
+  content: url(/resources/plugins/collectionManager/assets/img/angle-down-solid.svg);
+  position: absolute;
+  z-index: 100000;
+  top: -1px;
+  width: 13px;
+  left: -16px;
+  visibility: visible;
+}
+
+/*.tree-view--folder.opened>.tree-view--folder-name::before{
+visibility: hidden;
+} */
+.tree-view--folder.closed > .tree-view--folder,
+.tree-view--folder.closed > .tree-view--leaf {
+  display: none;
+}
+
+.tree-view--folder.is-in-use>.tree-view--folder-name>.in-use{
+  display:none;
+  width:10px;
+  height:10px;
+  border-radius:50px;
+  background-color:green;
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+.tree-view--folder.is-in-use>.tree-view--folder-name>.in-use{
+  display:inline-block;
+}
+
+
+
+.tree-view--leaf {
+  display: block;
+  border-bottom: 1px solid #4a4a4a;
+  position: relative;
+  padding-left: 20px;
+}
+.tree-view--leaf:hover {
+  color: white;
+}
+
+.tree-view--leaf::before {
+  content: url(/resources/plugins/collectionManager/assets/img/chip.svg);
+  position: absolute;
+  z-index: 100000;
+  top: 2px;
+  width: 16px;
+  left: 0px;
+  visibility: visible;
+}
+
+.tree-view--leaf > input {
+  display: none;
+}
+
+.tree-view--leaf>.in-use{
+  display:none;
+  width:10px;
+  height:10px;
+  border-radius:50px;
+  background-color:green;
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+.tree-view--leaf.is-in-use>.in-use{
+  display:inline-block;
+}

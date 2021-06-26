@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>IceRok :: Icestudio => Sigrok pulseview</title>
+  <link rel="stylesheet" href="css/loading.min.css">
+  <link rel="stylesheet" href="css/ldbtn.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div id="logo">
+    <img src="assets/icon.svg" />
+  </div>
+
+  <div id="text-connections">
+    <p>1) Install <a class="external-link" href="https://sigrok.org/wiki/Downloads">Pulseview</a> (if you don't have installed).</p>
+    <p>2) Download probes from <a  class="external-link" href="https://github.com/FPGAwars/iceRok">icerok</a> and import as block in yout design.</p>
+    <p>3) Enjoy!</p>
+  </div>
+  <div id="connections">
+    <div id="connections-serial">
+      <p>Select your serial device:</p>
+      <select id="serial-devices" class="select-lg"></select>
+      <div id="serial-connect" class="btn ld-ext-right"><span id="serial-connect-label">Start Capture</span>
+        <div class="ld ld-ring ld-spin" style="color:#fff"></div>
+      </div>
+    </div>
+
+  </div>
+  <div id="logo-community">
+    <img src="assets/fpgawars.png" />
+  </div>
+
+  <div id="event-bus"></div>
+
+  <script src="js/vendor/sweetalert2.min.js"></script>
+  <script src="js/likeJQueryButFast.js"></script>
+  <script src="js/SerialManager.js"></script>
+  <script src="js/iceRok.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

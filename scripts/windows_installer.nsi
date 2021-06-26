@@ -9,7 +9,7 @@
 !define CACHE    "..\cache"
 !define APP      "${DIST}\icestudio\${ARCH}"
 !ifndef PYTHON
-  !define PYTHON     "python-2.7.13.amd64.msi"
+  !define PYTHON     "python-3.8.2-amd64.exe"
 !endif
 !define PYPATH   "${CACHE}\python\${PYTHON}"
 !define ICON     "${APP}\resources\images\icestudio-logo.ico"
@@ -37,9 +37,9 @@ RequestExecutionLevel admin
 !define MUI_DIRECTORYPAGE_VERIFYONLEAVE
 
 # run after installing
-!define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Start ${NAME} ${VERSION}"
-!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
+#!define MUI_FINISHPAGE_RUN
+#!define MUI_FINISHPAGE_RUN_TEXT "Start ${NAME} ${VERSION}"
+#!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 
 # installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -57,6 +57,7 @@ RequestExecutionLevel admin
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "TradChinese"
 !insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Basque"
@@ -115,7 +116,7 @@ Section "Install Python"
 
   ${If} $R0 != "0"
     MessageBox MB_YESNO \
-    "Python 2.7.13 will be installed. Do you want to continue?" \
+    "Python 3.8.2 will be installed. Do you want to continue?" \
     IDYES continue
     Quit
 
@@ -127,15 +128,18 @@ Section "Install Python"
       File ${PYPATH}
 
       # execute Python msi
-      ExecWait '"msiexec" /i "$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
+      # now there isn't MSI      ExecWait '"msiexec" /i "$INSTDIR\python\${PYTHON}" /passive /norestart ADDLOCAL=ALL'
+      # https://docs.python.org/3/using/windows.html#customization-via-ini-files
+      ExecWait '"$INSTDIR\python\${PYTHON}" /passive /norestart PrependPath=1'
 
   ${EndIf}
 
 SectionEnd
 
+
 Function "ValidatePythonVersion"
 
-  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(2,7)])"'
+  nsExec::ExecToStack '"python" "-c" "import sys; ver=sys.version_info[:2]; exit({True:0,False:1}[ver==(3,8)])"'
 
 FunctionEnd
 
@@ -148,19 +152,20 @@ Section "${NAME} ${VERSION}"
   SetOutPath "$INSTDIR"
 
   # install app files
-  File "${APP}\icestudio.exe"
-  File "${APP}\icudtl.dat"
-  File "${APP}\nw.pak"
-  File /r "${APP}\toolchain"
+  #File "${APP}\icestudio.exe"
+  #File "${APP}\icudtl.dat"
+  #File "${APP}\resources.pak"
+  #File /r "${APP}\toolchain"
 
-  File "${APP}\index.html"
-  File "${APP}\package.json"
-  File /r "${APP}\fonts"
-  File /r "${APP}\node_modules"
-  File /r "${APP}\resources"
-  File /r "${APP}\scripts"
-  File /r "${APP}\styles"
-  File /r "${APP}\views"
+#  File "${APP}\index.html"
+#  File "${APP}\package.json"
+#  File /r "${APP}\fonts"
+#  File /r "${APP}\node_modules"
+#  File /r "${APP}\resources"
+#  File /r "${APP}\scripts"
+#  File /r "${APP}\styles"
+#  File /r "${APP}\views"
+  File /r "${APP}\"
 
   # define uninstaller name
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}" "DisplayName" "${NAME}"
@@ -185,7 +190,9 @@ SectionEnd
 
 
 Function "LaunchLink"
-
+ ReadEnvStr $R0 "PATH"
+# SetEnv::SetEnvVar "PATH" $R0
+ System::Call 'Kernel32::SetEnvironmentVariable(t, t) i("PATH", R0).r0'
  Exec "$INSTDIR\icestudio.exe"
 
 FunctionEnd

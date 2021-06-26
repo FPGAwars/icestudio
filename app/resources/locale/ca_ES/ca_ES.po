@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -25,6 +25,12 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>Instruccions d'instal·lació del driver FTDI</h4><ol><li>Connecta la "
+"placa FPGA a l'USB i espera fins que Windows finalitze la instal·lació per "
+"defecte del driver</li><li>Quan el botó OK siga clicat, l'instal·lador del "
+"driver FTDI serà llançat en una nova finestra</li><li>A l'instal·lador, "
+"replaça el driver <b>(Interface 0)</b> de la placa per <b>libusbK</b></"
+"li><li>Desconnecta i reconnecta la placa</li></ol>"
 
 #: app/scripts/services/drivers.js:312
 msgid ""
@@ -44,6 +50,12 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>Instruccions d'instal·lació del driver Sèrie</h4><ol><li>Connecta la "
+"placa FPGA a l'USB i espera fins que Windows finalitze la instal·lació per "
+"defecte del driver</li><li>Quan el botó OK siga clicat, l'instal·lador del "
+"driver FTDI serà llançat en una nova finestra</li><li>A l'instal·lador, "
+"segueix els passos per a instal·lar el driver</li><li>Desconnecta i "
+"reconnecta la placa</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
@@ -72,7 +84,7 @@ msgstr "Afegeix com a bloc"
 
 #: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:458
 msgid "Address format"
-msgstr ""
+msgstr "Format d'adreça"
 
 #: app/scripts/services/tools.js:1173
 msgid "All collections removed"
@@ -88,7 +100,7 @@ msgstr "Autor"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "Comprovació automàtica de noves versions"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -103,10 +115,12 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"Com que Icestudio està en desenvolupament actiu és important mantenir el seu "
+"icestudio en l'última versió. Ara t'estem notificant!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
-msgstr ""
+msgstr "Binari"
 
 #: app/scripts/services/blocks.js:1183 app/scripts/services/blocks.js:1207
 #: app/scripts/services/blocks.js:1297 app/scripts/services/blocks.js:1319
@@ -192,15 +206,15 @@ msgstr "Xinès"
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "Selecciona un color"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Chrome Dev Tools"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr ""
+msgstr "Fes clic ací per a <b>descarregar una versió més nova</b> d'Icestudio"
 
 #: app/scripts/services/tools.js:960
 msgid "Click here to <b>setup the drivers</b>"
@@ -218,11 +232,11 @@ msgstr "Fes clic aquí per veure"
 #: app/scripts/services/blocks.js:1152 app/scripts/services/blocks.js:129
 #: app/scripts/services/blocks.js:1363 app/scripts/services/blocks.js:203
 msgid "Clock not allowed for data buses"
-msgstr ""
+msgstr "Rellotge no permès per a busos de dades"
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "Clona"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -270,7 +284,7 @@ msgstr "Col·leccions"
 
 #: app/scripts/controllers/menu.js:657 app/views/menu.html:171
 msgid "Command output"
-msgstr ""
+msgstr "Sortida d'ordres"
 
 #: app/views/menu.html:352
 msgid "Community forum"
@@ -294,7 +308,7 @@ msgstr "Copia"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "Copia i Enganxa O Copia i Clona blocs"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
@@ -329,7 +343,7 @@ msgstr "Datasheet"
 
 #: app/scripts/services/blocks.js:1565 app/scripts/services/blocks.js:462
 msgid "Decimal"
-msgstr ""
+msgstr "Decimal"
 
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
@@ -379,7 +393,7 @@ msgstr "Documentació"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "No mostres"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -429,7 +443,7 @@ msgstr "Introdueix els blocs constant"
 
 #: app/scripts/controllers/menu.js:456
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "Introdueix la ruta de les col·leccions externes"
 
 #: app/scripts/services/blocks.js:162 app/scripts/services/blocks.js:66
 msgid "Enter the input blocks"
@@ -441,7 +455,7 @@ msgstr "Introdueix els ports d'entrada"
 
 #: app/scripts/services/blocks.js:453
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "Introdueix els blocs de memòria"
 
 #: app/scripts/services/blocks.js:234 app/scripts/services/blocks.js:294
 msgid "Enter the output blocks"
@@ -485,15 +499,15 @@ msgstr "Exporta"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "Exporta submòdul"
 
 #: app/views/menu.html:135
 msgid "External collections"
-msgstr ""
+msgstr "Col·leccions externes"
 
 #: app/scripts/controllers/menu.js:473
 msgid "External collections updated"
-msgstr ""
+msgstr "Col·leccions externes actualitzades"
 
 #: app/scripts/services/tools.js:892
 msgid "Extract default apio files..."
@@ -558,7 +572,7 @@ msgstr "Gallec"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "Blocs genèrics"
 
 #: app/views/languages.html:28
 msgid "German"
@@ -571,7 +585,7 @@ msgstr ""
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Grec"
 
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
@@ -584,17 +598,19 @@ msgstr "Ajuda"
 
 #: app/scripts/services/blocks.js:1566 app/scripts/services/blocks.js:463
 msgid "Hexadecimal"
-msgstr ""
+msgstr "Hexadecimal"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
-msgstr ""
+msgstr "Icestudio Inception"
 
 #: app/views/version.html:21
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
+"Si estàs clonant blocs, és molt important que canvies la informació del bloc "
+"per a identificar les noves característiques del bloc."
 
 #: app/views/version.html:25
 msgid ""
@@ -602,12 +618,18 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"Si estàs desenvolupant una col·lecció, pots crear blocs Genèrics que "
+"funcionen com a plantilles. Quan insertes un bloc genèric d'una col·lecció, "
+"actua com a clon per a modificacions ràpides sense fer l'operació de copiar "
+"i clonar."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
+"Si apareixen pins d'ENTRADA/SORTIDA en blanc, és perquè no hi ha equivalent "
+"en aquesta placa"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -623,6 +645,8 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"D'altra manera, si còpies i clones un bloc, el fas independent del tipus de "
+"bloc original i les modificacions només afecten a aquest nou tipus de bloc"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
@@ -639,7 +663,7 @@ msgstr "Entrada"
 
 #: app/views/menu.html:380
 msgid "Input label"
-msgstr ""
+msgstr "Etiqueta d'entrada"
 
 #: app/views/menu.html:254
 msgid "Install"
@@ -702,11 +726,11 @@ msgstr "Es recomana utilitzar ports <b>USB 2.0</b>"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italià"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "Etiquetes"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -737,7 +761,7 @@ msgstr ""
 
 #: app/views/menu.html:386
 msgid "Memory"
-msgstr ""
+msgstr "Memòria"
 
 #: app/scripts/services/utils.js:572
 msgid "Name"
@@ -789,7 +813,7 @@ msgstr "Eixida"
 
 #: app/views/menu.html:377
 msgid "Output label"
-msgstr ""
+msgstr "Etiqueta d'eixida"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -797,7 +821,7 @@ msgstr "Enganxa"
 
 #: app/scripts/controllers/menu.js:477
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "La ruta {{path}} no existeix"
 
 #: app/scripts/services/utils.js:977
 msgid "Please run: {{cmd}}"
@@ -846,7 +870,7 @@ msgstr "Refés"
 
 #: app/views/menu.html:302
 msgid "Reload"
-msgstr ""
+msgstr "Recarrega"
 
 #: app/scripts/services/tools.js:566
 msgid "Remote host {{name}} not connected"
@@ -879,7 +903,7 @@ msgstr ""
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Rus"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -895,7 +919,7 @@ msgstr "Anomena i desa"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "Desa submòdul"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -907,7 +931,7 @@ msgstr "Selecciona tot"
 
 #: app/scripts/services/utils.js:712
 msgid "Select your board"
-msgstr ""
+msgstr "Selecciona la teua placa"
 
 #: app/scripts/services/blocks.js:1345 app/scripts/services/blocks.js:172
 msgid "Show clock"
@@ -950,7 +974,7 @@ msgstr ""
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "Edició de submòduls"
 
 #: app/views/version.html:16
 msgid ""
@@ -958,6 +982,9 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"L'edició de submòduls afecta a tots els blocs de mateix tipus. Per exemple, "
+"si tens en el teu disseny sis blocs AND, si modifiques un d'ells, modifiques "
+"tots ells."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1000,20 +1027,24 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
+"L'ús d'etiquetes permet aclarir dissenys més grans, connectant blocs sense "
+"fils."
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
 msgstr ""
+"Hi ha una sèrie d'actualitzacions en aquesta versió que esperem que "
+"t'agraden, alguns dels aspectes destacats inclouen:"
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "Hi ha una nova versió nightly disponible"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "Hi ha una nova versió estable disponible"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1026,6 +1057,7 @@ msgstr ""
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
 msgstr ""
+"Aquesta és una característica molt poderosa per mantenir grans dissenys."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1036,21 +1068,27 @@ msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
 msgstr ""
+"Aquesta versió millora les capacitats d'edició, inclosa la possibilitat "
+"d'editar els continguts del bloc."
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
 msgstr ""
+"Per a fer-ho, només és necessari que prefixes l'identificador de bloc amb "
+"Generic-"
 
 #: app/scripts/services/graph.js:410
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"Per entrar al \"mode d'edició\" del bloc més profund, has de finalitzar el "
+"\"mode d'edició\" actual, bloquejant el cadenat."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr ""
+msgstr "Per navegar pel disseny, cal tancar el \"mode d'edició\"."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1058,6 +1096,9 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"Per desar el teu disseny cal bloquejar el cadenat i anar al disseny de "
+"nivell superior.<br/><br/>Si vols exportar aquest submòdul a un fitxer, "
+"executeu l'ordre «Anomena i desa» per fer-ho."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1100,7 +1141,7 @@ msgstr "Placa desconeguda"
 
 #: app/scripts/services/project.js:155
 msgid "Unsupported project format {{version}}"
-msgstr ""
+msgstr "Format de projecte no admès {{version}}"
 
 #: app/scripts/app.js:70
 msgid "Untitled"
@@ -1138,7 +1179,7 @@ msgstr "Versió"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "Notes de la versió"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1154,7 +1195,7 @@ msgstr "Advertiments detectats en el disseny"
 
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
-msgstr ""
+msgstr "Benvingut a Incepció, versió d'Icestudio, enfocada en submòduls."
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
@@ -1196,6 +1237,9 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"Estàs editant un submòdul, si el deses, només es desarà el submòdul (en "
+"aquesta situació \"anomena i desa\" funciona com \"exporta mòdul\"), Vols "
+"continuar?"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1206,12 +1250,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
+"Només pots construir en el disseny de nivell superior. Dins dels submòduls "
+"només pots <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
+"Només pots carregar el teu disseny en el disseny de nivell superior. Dins "
+"dels submòduls només pots <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"

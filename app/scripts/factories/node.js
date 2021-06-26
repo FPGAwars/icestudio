@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('icestudio')
-  .factory('nodeFs', function() {
+  .factory('fastCopy', function() {
+    return require('fast-copy');
+  })
+
+.factory('nodeFs', function() {
     return require('fs');
   })
   .factory('nodeFse', function() {

@@ -1,43 +1,61 @@
 {
   "name": "icestudio",
-  "version": "0.5.0",
+  "version": "0.5.1w",
   "description": "Visual editor for open FPGA boards",
-  "author": "Jesús Arroyo Torrens <jesus.arroyo.torrens@gmail.com>",
+  "contributors": [
+    {
+      "name": "Jesús Arroyo Torrens",
+      "email": "jesus.arroyo.torrens@gmail.com",
+      "url": "https://github.com/Jesus89"
+    },
+    {
+      "name": "Carlos Venegas Arrabe",
+      "url": "https://github.com/cavearr"
+    },
+    {
+      "name": "Juan González Gómez",
+      "url": "https://github.com/Obijuan"
+    }
+  ],
   "repository": "https://github.com/FPGAwars/icestudio",
   "license": "GPL-2.0",
   "scripts": {
     "start": "grunt serve",
-    "dist": "grunt dist",
+    "build": "grunt dist",
+    "buildLinux64": "grunt dist --platform=linux64",
     "gettext": "grunt gettext",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },
   "devDependencies": {
     "bower": "^1.8.0",
     "grunt": "^1.0.4",
-    "grunt-angular-gettext": "^2.4.5",
+    "grunt-angular-gettext": "^2.5.0",
     "grunt-appimage": "^0.6.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-compress": "^1.5.0",
+    "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.1",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-uglify": "github:gruntjs/grunt-contrib-uglify#harmony",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-exec": "^1.0.0",
     "grunt-json-minify": "^1.1.0",
     "grunt-nw-builder": "^3.1.0",
     "grunt-replace": "^1.0.1",
+    "grunt-terser": "^1.0.0",
     "grunt-usemin": "^3.1.1",
     "grunt-wget": "^0.1.3",
     "grunt-wiredep": "^3.0.1",
     "grunt-zip": "^0.17.1",
     "load-grunt-tasks": "^3.5.0",
     "npm-platform-dependencies": "0.0.12",
-    "nw": "^0.12.3"
+    "nw": "0.35.5-sdk",
+    "nw-builder": "^3.5.7"
   },
   "darwinDependencies": {
-    "grunt-appdmg": "^0.4.0"
-  }
+    "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
+  },
+  "dependencies": {}
 }

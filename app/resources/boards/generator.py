@@ -32,7 +32,7 @@ if not os.path.isdir(name):
 print('Generating pinout...')
 
 # Regex pattern
-pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output))?'
+pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output|inout))?'
 
 # Open file
 with open(os.path.join(path, 'pinout.pcf')) as file:
@@ -40,7 +40,6 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
 
     # Build json
     pinout = re.findall(pattern, data)
-
     #Sorted in reverse order by name to avoid conflicting overlapping labels like D0 - LED0 - DD0
     pinout=sorted(pinout, key=lambda pinout: pinout[1],reverse=True)
 

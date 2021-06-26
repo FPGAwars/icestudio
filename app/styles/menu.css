@@ -38,6 +38,13 @@
   border-radius: 0;
   visibility: hidden;
   transition-delay: 0.3s;
+ /* max-height: calc(100vh - 120px);
+  overflow: auto*/
+}
+
+.dropdown-overflow {
+  max-height: calc(100vh - 120px);
+  overflow: auto
 }
 
 .dropdown-submenu:hover > .dropdown-menu {
@@ -108,7 +115,7 @@
 }
 
 .navbar-default .navbar-nav>li>a {
-  color: #333 !important;
+  color: #333;
 }
 
 .marker {
@@ -121,6 +128,9 @@
 }
 .marker-yellow {
   background-color: #f6f688;
+}
+.marker-fuchsia {
+  background-color: #d51dec
 }
 .marker-orange {
   background-color: #f8e5a0;

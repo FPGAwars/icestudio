@@ -1,0 +1,111 @@
+# For the iCESugar Board (iCE40UP5K-QFN48)
+
+set_io LED_G 41
+set_io LED_R 40
+set_io LED_B 39
+
+set_io SW[0] 18
+set_io SW[1] 19
+set_io SW[2] 20
+set_io SW[3] 21
+
+set_io clk   35
+
+set_io RX    4
+set_io TX    6
+
+set_io USB_DP       10
+set_io USB_DN       9
+set_io USB_PULLUP   11
+
+# PMOD 1
+set_io PMOD1_1     10
+set_io PMOD1_2     6
+set_io PMOD1_3     3
+set_io PMOD1_4     48
+set_io PMOD1_9     47
+set_io PMOD1_10    2
+set_io PMOD1_11    4
+set_io PMOD1_12    9
+
+# PMOD 2
+set_io PMOD2_1     46
+set_io PMOD2_2     44
+set_io PMOD2_3     42
+set_io PMOD2_4     37
+set_io PMOD2_9     36 
+set_io PMOD2_10    38
+set_io PMOD2_11    43
+set_io PMOD2_12    45
+
+# PMOD 3
+set_io PMOD3_1     34 
+set_io PMOD3_2     31
+set_io PMOD3_3     27
+set_io PMOD3_4     25
+set_io PMOD3_9     23
+set_io PMOD3_10    26
+set_io PMOD3_11    28
+set_io PMOD3_12    32
+
+# PMOD 4
+set_io PMOD4_1     21
+set_io PMOD4_2     20
+set_io PMOD4_3     19
+set_io PMOD4_4     18
+
+#spi
+set_io SPI_SS   16
+set_io SPI_SCK  15
+set_io SPI_MOSI 17
+set_io SPI_MISO 14
+
+#### FPGA pin names (silk-screened)
+
+set_io P41      41
+set_io P40      40
+set_io P39      39
+
+set_io P4        4
+set_io P6        6
+
+set_io P10      10
+set_io P9        9
+set_io P11      11
+			  
+# PMOD 1      
+set_io P10      10
+set_io P6        6
+set_io P3        3
+set_io P48      48
+set_io P47      47
+set_io P2        2
+set_io P4        4
+set_io P9        9
+
+# PMOD 2
+set_io P46      46
+set_io P44      44
+set_io P42      42
+set_io P37      37
+set_io P36      36 
+set_io P38      38
+set_io P43      43
+set_io P45      45
+
+# PMOD 3
+set_io P34      34 
+set_io P31      31
+set_io P27      27
+set_io P25      25
+set_io P23      23
+set_io P26      26
+set_io P28      28
+set_io P32      32
+
+# PMOD 4
+set_io P21      21
+set_io P20      20
+set_io P19      19
+set_io P18      18
+

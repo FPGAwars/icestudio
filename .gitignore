@@ -11,13 +11,15 @@
 
 *.swp
 *~
-
+app/icerok.capture.raw
+app/buildinfo.json
 .tmp
 dist
 cache
 docs/_build
 node_modules
 bower_components
-
+.vscode
 app/resources/collection
 app/resources/locale/**/*.json
+ice-build/

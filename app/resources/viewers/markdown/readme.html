@@ -1,55 +1,24 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <link rel="stylesheet" href="css/github-markdown.css">
-  <style type="text/css">
-    .markdown-body {
-      box-sizing: border-box;
-      min-width: 200px;
-      max-width: 980px;
-      margin: 0 auto;
-      padding-left: 40px;
-    }
-  </style>
-</head>
-<body>
-  <article class="markdown-body">
-    <div id="content">
-      <b>Sorry, README.md file does not exist</b>
-    </div>
-  </article>
-  <script>
-    'use strict';
-    var marked = require('marked');
-    var openurl = require('openurl');
 
-    function getURLParameter(name) {
-      return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-    }
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="css/github-markdown.css">
+    <link rel="stylesheet" href="css/readme.css">
+    <script src="js/readme.js"></script>
+  </head>
 
-    var renderer = new marked.Renderer();
-    renderer.link = function (href, title, text) {
-      var out = '<a href="javascript:void(0);"';
-      if (title) {
-        out += ' title="' + title + '"';
-      }
-      out += ' onclick="openurl.open(\'' + href + '\')"';
-      out += '>' + text + '</a>';
-      return out;
-    };
+  <body>
+    <article class="markdown-body">
 
-    window.onload = function() {
-      var options = { renderer: renderer };
-      var readme = getURLParameter('readme');
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('GET', readme, false);
-      xmlhttp.send();
-      var text = xmlhttp.responseText;
-      if (text) {
-        document.getElementById('content').innerHTML = marked(text, options);
-      }
-    };
-  </script>
-</body>
+      <!-- The markdown is displayed on this div block  
+           If there are no errors                       -->
+      <div id="content">
+        <b>Sorry, README.md file does not exist</b>
+      </div>
+
+    </article>
+  </body>
+
 </html>

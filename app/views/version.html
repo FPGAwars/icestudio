@@ -1,46 +1,33 @@
 <!DOCTYPE html>
-<div id="version-info-tab"  class="hidden">
+<div id="version-info-tab" class="hidden">
     <div class="version-info-tab--bg"></div>
     <div class="version-info-tab--body">
         <div class="version-info-tab--body--content">
 
-            <h1>{{ 'Icestudio Inception' | translate }}{{' (0.5.0)'}}</h1>
+            <h1>Icestudio stable ({{ version }})</h1>
             <hr>
-            <p>{{ 'Welcome to Inception, the Icestudio version focused on submodules.' | translate }}</p>
-            <p>{{ 'There are a number of updates in this version that we hope you will like, some of the key highlights include:' | translate }}</p>
+            <h2>Welcome to Icestudio!</h2>
+            <p>This is a Work in Progress version (WIP) which includes the latest commits</p>
 
-            <h2>{{'Submodule edition' | translate }}</h2>
-            <p>{{'This version improves submodule capabilities, including the possibility of editing block contents.' | translate }}</p>
-            <p style="padding:20px;"><img style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/block-edition.gif"></p>
+            <p>You can read the latest release notes on the
+                <a ng-click="openUrl('https://github.com/FPGAwars/icestudio/wiki/Release-history', $event)" 
+                href="https://github.com/FPGAwars/icestudio/wiki/Release-history">Release History WIKI</a>  
+            </p>
 
-            <h2>{{'Copy & Paste OR Copy & Clone blocks' | translate }}</h2>
-            <p>{{'This is a very powerful feature to maintain large designs.' | translate }}</p>
-
-            <p style="padding:20px;"><img  style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/copy-paste.gif"></p>
-            <p>{{'The Submodule edition brings two ways to edit and affect all the instances of a block type. For example with the normal method, if you have in your design six AND blocks, and you modify one of them, you modify all of them.' | translate }}</p>
-            <p>{{'With the other method, if you copy and clone a block, you make it independent of the original block type and the modifications only affect this new block type and any instances of it.' | translate }}</p>
-            <p>{{'If you are cloning a block, it is very important that you change block information to identify the new block which has new features or changed functionality.' | translate }}</p>
-
-            <p style="padding:20px;"><img  style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/copy-clone.gif"></p>
-            <h2>{{'Generic blocks' | translate }}</h2>
-            <p>{{'If you are developing a collection, you can make Generic blocks that work as templates. When you insert a Generic block from a collection, it will act as a clone for rapidly modifying without doing a copy and clone operation.' | translate }}</p>
-            <p>{{'To use the Generic feature, it is only necessary to prefix the block identifier with Generic-' | translate }}</p>
-
-            <p style="padding:20px;"><img  style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/generic.gif"></p>
-            <h2>{{'Labels' | translate }}</h2>
-            <p>{{'The use of labels permits you to clarify larger designs, connecting blocks without drawing wires.' | translate }}</p>
-
-            <p style="padding:20px;"><img  style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/labels.gif"></p>
-            <h2>{{'Automatic check for new versions' | translate }}</h2>
-            <p>{{'Because Icestudio is in active development, it is important to keep your Icestudio updated to the last version. Now we are notifying you!' | translate }}</p>
-
-            <p style="padding:20px;"><img  style="width:100%;max-width:927px;" src="resources/images/version-notes/0.5.0/checkforupdates.gif"></p>
-
+            <h2>{{ 'Acknowledgment' | translate }}</h2>
+            <p>This release has been possible thanks to the great work done by
+                <a ng-click="openUrl('https://github.com/cavearr', $event)" href="https://github.com/cavearr">Carlos Venegas</a>
+                (Charliva at FPGAwars community and @cavearr at GitHub or Twitter). We all in the FPGAwars community appreciate it very much. You rock! Thank you very much!</p>
+               
+                <p><strong>This is a WIP build and there can be some bugs. If you find one, please submit an issue at <a ng-click="openUrl('https://github.com/FPGAwars/icestudio/issues', $event)" href="https://github.com/FPGAwars/icestudio/issues">Icestudio repository</a>. Write the tag [WIP] in the issue subject</a></strong></p>
+            <br>
+            <p>Icestudio is part of <a ng-click="openUrl('http://fpgawars.github.io/')">FPGAwars</a> community</p>
         </div>
+
     <div class="version-info-tab--options">
         <div class="version-info-tab--options--group"><input type="checkbox" name="version-info-tab--no-display"><label for="version-info-tab--no-display">{{ 'Don\'t display' | translate }}</label></div>
         <div class="version-info-tab--options--group"></div>
-        <div class="version-info-tab--options--group util--text-align-right"><button ng-click="closeVersionInfoWindow()" >{{ 'Close' | translate }}</button></div>
+        <div class="version-info-tab--options--group util--text-align-right"><button ng-click="closeVersionInfoWindow()">{{ 'Close' | translate }}</button></div>
     </div>
 
     </div>

@@ -221,8 +221,16 @@ g {
 }
 
 .generic-block .generic-content img {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  max-width:100%;
+  height: auto;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  max-height:100%;
 }
 
 .generic-block .generic-content label {
@@ -793,3 +801,22 @@ right:-27px;
 
 }
            
+.ace_gutter-cell {
+  padding-left: 30px!important;
+}
+
+.ace_folding-enabled > .ace_gutter-cell {
+  padding-right: 15px!important;
+}
+.ace_gutter-layer{
+
+}
+
+.marker-vertex-remove-area {
+    fill: green;
+    stroke: darkgreen;
+}
+.marker-vertex-remove {
+    fill: white;
+    stroke: white;
+}

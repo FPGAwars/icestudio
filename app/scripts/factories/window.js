@@ -10,6 +10,8 @@ angular.module('icestudio')
     return gui.Window;
   })
   .factory('_package', function() {
-    var _package = require('./package.json');
+    let _package = require('./package.json');
+    const _buildinfo = require('./buildinfo.json');
+    _package.version=`${_package.version}${_buildinfo.ts}`;
     return _package;
   });

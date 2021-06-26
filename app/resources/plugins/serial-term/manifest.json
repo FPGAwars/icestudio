@@ -1,0 +1,8 @@
+{
+    "manifest_ver": "1.0",
+    "id":"serial-term",
+    "name": "Serial term",
+    "icon": "img/terminal.png",
+    "width": 840,
+    "height":550
+}

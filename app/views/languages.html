@@ -1,3 +1,13 @@
+<!-- HTML file for rendering the Edit/Preferences/Language menu 
+     It is included in the menu.html file 
+-->
+
+<!-- The language selected by the user is located in the profile.data.language
+     Global property
+-->
+
+<!-- If you want to include new languages, you should edit this file -->
+
 <!DOCTYPE html>
 <li>
   <a href ng-click="selectLanguage('en')">
@@ -48,6 +58,12 @@
   </a>
 </li>
 <li>
+  <a href ng-click="selectLanguage('zh_TW')">
+    {{ 'Taiwan' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'zh_TW'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
   <a href ng-click="selectLanguage('zh_CN')">
     {{ 'Chinese' | translate }}&ensp;
     <span ng-show="profile.data.language == 'zh_CN'" class="glyphicon glyphicon-ok-circle"></span>
@@ -75,5 +91,11 @@
   <a href ng-click="selectLanguage('ca_ES')">
     {{ 'Catalan' | translate }}&ensp;
     <span ng-show="profile.data.language == 'ca_ES'" class="glyphicon glyphicon-ok-circle"></span>
+  </a>
+</li>
+<li>
+  <a href ng-click="selectLanguage('ko_KR')">
+    {{ 'Korean' | translate }}&ensp;
+    <span ng-show="profile.data.language == 'ko_KR'" class="glyphicon glyphicon-ok-circle"></span>
   </a>
 </li>

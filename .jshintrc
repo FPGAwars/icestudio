@@ -11,7 +11,6 @@
   "latedef": false,
   "newcap": true,
   "noarg": true,
-  "quotmark": "single",
   "undef": true,
   "unused": true,
   "strict": true,
@@ -23,7 +22,21 @@
   "-W083": true,
   "-W084": true,
   "globals": {
+    "iprof":false,
+    "IceProfiler":false,
     "subModuleActive":false,
+    "ICEpm":false,
+    "IcePlugManager":false,
+    "iceConsole":false,
+    "IceLogger":false,
+    "IceEventBus":false,
+    "IceTemplateSystem":false,
+    "IceParametricHelper":false,
+    "Mustache":false,
+    "jexcel":false,
+    "nw":false,
+    "Snap":false,
+    "mina":false,
     "$": false,
     "angular": false,
     "console": false,
@@ -36,6 +49,8 @@
     "gettext": false,
     "ace": false,
     "g": false,
-    "V": false
+    "V": false,
+    "IceCollection":false,
+    "IceHD": false
   }
 }

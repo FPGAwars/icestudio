@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="bower_components/alertify-js/build/css/themes/default.min.css">
   <!-- endbower -->
   <!-- endbuild -->
+  <link rel="stylesheet" href="node_modules/jexcel/dist/jexcel.css" type="text/css" />
+  <link rel="stylesheet" href="node_modules/jsuites/dist/jsuites.css" type="text/css" />
+  <link rel="stylesheet" href="resources/fonts/Lato2OFLWeb/Lato/latofonts.css">
   <!-- build:css styles/main.css -->
 
   <link rel="stylesheet" href="styles/design.css">
@@ -22,6 +25,8 @@
   <link rel="stylesheet" href="resources/viewers/markdown/css/github-markdown.css">
 
   <!-- endbuild -->
+
+  <link rel="stylesheet" href="resources/fonts/fontawesome-free-5.15.1-web/css/all.min.css">
 </head>
 
 <body ng-app="icestudio">
@@ -50,10 +55,31 @@
   <script src="bower_components/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
   <script src="bower_components/angular-gettext/dist/angular-gettext.min.js"></script>
   <script src="bower_components/alertify-js/build/alertify.js"></script>
+  <script src="bower_components/Snap.svg/dist/snap.svg-min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
+
+
+  <script src="node_modules/jsuites/dist/jsuites.js"></script>
+  <script src="node_modules/jexcel/dist/jexcel.js"></script>
+  <script src="node_modules/mustache/mustache.min.js"></script>
+  <script src="resources/libs/Icestudio/Core/IceBlock.js"></script>
+  <script src="resources/libs/Icestudio/Core/IceCollection.js"></script>
+  <script src="resources/libs/Icestudio/Fuse/IceHD.js"></script>
+  <script src="resources/libs/Icestudio/GUI/IceGUI.js"></script>
+  <script src="resources/libs/Icestudio/Log/IceLogger.js"></script>
+  
   <!-- build:js scripts/main.js -->
+
+  <script src="resources/libs/iceprofiler.js"></script>
+  <script src="resources/libs/iceeventbus.js"></script>
+  <script src="resources/libs/iceparametrichelper.js"></script>
+  <script src="resources/libs/icetemplatesystem.js"></script>
+  <script src="resources/libs/iceplugmanager.js"></script>
+
+  <!-- Icestudio app ENTRY POINT  -->
   <script src="scripts/app.js"></script>
+
   <script src="scripts/controllers/design.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/menu.js"></script>
@@ -61,6 +87,7 @@
   <script src="scripts/directives/menutree.js"></script>
   <script src="scripts/factories/joint.js"></script>
   <script src="scripts/factories/node.js"></script>
+  <script src="scripts/factories/error.js"></script>
   <script src="scripts/factories/window.js"></script>
   <script src="scripts/graphics/joint.command.js"></script>
   <script src="scripts/graphics/joint.connectors.js"></script>
@@ -69,6 +96,7 @@
   <script src="scripts/graphics/joint.shapes.js"></script>
   <script src="scripts/services/blocks.js"></script>
   <script src="scripts/services/boards.js"></script>
+  <script src="scripts/services/utils.js"></script>
   <script src="scripts/services/common.js"></script>
   <script src="scripts/services/compiler.js"></script>
   <script src="scripts/services/drivers.js"></script>
@@ -78,7 +106,8 @@
   <script src="scripts/services/collections.js"></script>
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
-  <script src="scripts/services/utils.js"></script>
+  
+
   <!-- endbuild -->
 </body>
 

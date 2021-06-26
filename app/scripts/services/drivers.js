@@ -108,8 +108,30 @@ angular.module('icestudio')
       var rules = '';
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
       rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6014\\", ';
-      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"5af0\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"5bf0\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
+      //-- ulx3s board
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"666\\", GROUP=\\"dialout\\"\n';
+
+      rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6015\\", ';
+      rules += 'MODE=\\"664\\", GROUP=\\"dialout\\", SUBSYSTEM=="tty"\n';
+
+      //-- Icesugar board
+      rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"602b\\", ';
+      rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
+
       configureLinuxDrivers([
         'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
       ].concat(reloadRules()), function () {
@@ -134,6 +156,8 @@ angular.module('icestudio')
       rules += 'ATTRS{idVendor}==\\"1209\\", ATTRS{idProduct}==\\"2100\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
       rules += '# Disable ModemManager for TinyFPGA BX\n';
       rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
+      rules += '# Disable ModemManager for iceFUN\n';
+      rules += 'ATTRS{idVendor}==\\"04d8\\", ATTRS{idProduct}==\\"ffee\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
       configureLinuxDrivers([
         'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
       ].concat(reloadRules()), function () {
@@ -201,7 +225,20 @@ angular.module('icestudio')
         brewCommands = brewCommands.concat(brewInstall(brewPackages[i]));
       }
       utils.beginBlockingTask();
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
+
+        const fs = require('fs');
+        fs.appendFileSync(common.LOGFILE, 'drivers.enableDarwinDrivers' + "\n");
+      }
       nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
+        if (typeof common.DEBUGMODE !== 'undefined' &&
+          common.DEBUGMODE === 1) {
+          const fs = require('fs');
+          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stderr + "\n");
+
+          fs.appendFileSync(common.LOGFILE, 'STDERR ' + stdout + "\n");
+        }
         if (error) {
           if ((stderr.indexOf('brew: command not found') !== -1) ||
             (stderr.indexOf('brew: No such file or directory') !== -1)) {
@@ -228,6 +265,12 @@ angular.module('icestudio')
         }
         utils.endBlockingTask();
       });
+      if (typeof common.DEBUGMODE !== 'undefined' &&
+        common.DEBUGMODE === 1) {
+        const fs = require('fs');
+        fs.appendFileSync(common.LOGFILE, '/drivers.enableDarwinDrivers' + "\n");
+
+      }
     }
 
     function disableDarwinDrivers(profileSetting) {

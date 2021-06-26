@@ -22,20 +22,34 @@
     <div class="board-container">
       <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
         <span>
-          FFs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.ffs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.ffs }}
+          LC:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.LC.used+' / '+common.FPGAResources.nextpnr.LC.total+' ('+common.FPGAResources.nextpnr.LC.percentage+'%)') }}
         </span>
         <span>
-          LUTs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.luts }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.luts }}
+         RAM:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.RAM.used+' / '+common.FPGAResources.nextpnr.RAM.total+' ('+common.FPGAResources.nextpnr.RAM.percentage+'%)') }}
         </span>
         <span>
-          PIOs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.pios }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.pios }}
+          IO:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.IO.used+' / '+common.FPGAResources.nextpnr.IO.total+' ('+common.FPGAResources.nextpnr.IO.percentage+'%)') }}
         </span>
         <span>
-          PLBs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.plbs }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.plbs }}
+          GB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.GB.used+' / '+common.FPGAResources.nextpnr.GB.total+' ('+common.FPGAResources.nextpnr.GB.percentage+'%)') }}
         </span>
         <span>
-          BRAMs:&nbsp;&nbsp;{{ common.hasChangesSinceBuild ? '-' : common.FPGAResources.brams }}&nbsp;/&nbsp;{{ common.selectedBoard.info.FPGAResources.brams }}
+          PLL:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.PLL.used+' / '+common.FPGAResources.nextpnr.PLL.total+' ('+common.FPGAResources.nextpnr.PLL.percentage+'%)') }}
         </span>
+
+        <span>
+         WB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.WB.used+' / '+common.FPGAResources.nextpnr.WB.total+' ('+common.FPGAResources.nextpnr.WB.percentage+'%)') }}
+        </span>
+
+        <span>
+         MaxFreq.:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' : (common.FPGAResources.nextpnr.MF.value+'MHz') }}
+        </span>
+
+
+
+
+
+
       </div>
       {{ common.selectedBoard.info.label }}
     </div>

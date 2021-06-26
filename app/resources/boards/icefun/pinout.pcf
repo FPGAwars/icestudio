@@ -1,0 +1,91 @@
+# For iceFUN board
+
+set_io --warn-no-port led1	 	C10
+set_io --warn-no-port led2 		A10
+set_io --warn-no-port led3 		D7
+set_io --warn-no-port led4 		D6
+set_io --warn-no-port led5	 	A7
+set_io --warn-no-port led6	 	C7
+set_io --warn-no-port led7	 	A4
+set_io --warn-no-port led8	 	C4
+set_io --warn-no-port lcol1		A12
+set_io --warn-no-port lcol2	 	D10
+set_io --warn-no-port lcol3 	A6
+set_io --warn-no-port lcol4 	C5
+set_io --warn-no-port spkp  	M12
+set_io --warn-no-port spkm  	M6
+set_io --warn-no-port key1  	C11
+set_io --warn-no-port key2  	C6
+set_io --warn-no-port key3  	A11
+set_io --warn-no-port key4  	A5
+#set_io --warn-no-port red 		P14
+#set_io --warn-no-port green  	N14
+#set_io --warn-no-port blue  	L14
+
+set_io --warn-no-port clk12MHz	P7
+
+#Breakouts per https://www.robot-electronics.co.uk/files/iceFUNdoc.pdf
+# Buttons north, usb south
+# West pin bank
+set_io --warn-no-port PIN1 A3
+set_io --warn-no-port PIN2 A2
+set_io --warn-no-port PIN3 A1
+set_io --warn-no-port PIN4 C3
+set_io --warn-no-port PIN5 D3
+set_io --warn-no-port PIN6 B1
+set_io --warn-no-port PIN7 C1
+set_io --warn-no-port PIN8 D1
+set_io --warn-no-port PIN9 E1
+set_io --warn-no-port PIN10 F3
+set_io --warn-no-port PIN11 G3
+set_io --warn-no-port PIN12 H3
+set_io --warn-no-port PIN13 J3
+set_io --warn-no-port PIN14 K3
+set_io --warn-no-port PIN15 M3
+set_io --warn-no-port PIN16 G1
+set_io --warn-no-port PIN17 H1
+set_io --warn-no-port PIN18 J1
+set_io --warn-no-port PIN19 L1
+set_io --warn-no-port PIN20 M1
+set_io --warn-no-port PIN21 N1
+set_io --warn-no-port PIN22 P1
+set_io --warn-no-port PIN23 P2
+set_io --warn-no-port PIN24 P3
+#AD1 pic connected
+#AD2 pic connected
+#GND
+#3v3
+#PIC RST
+
+#East pin bank
+set_io --warn-no-port PIN58 B14
+set_io --warn-no-port PIN57 C12
+set_io --warn-no-port PIN56 C14
+set_io --warn-no-port PIN55 D12
+set_io --warn-no-port PIN54 D14
+set_io --warn-no-port PIN53 E12
+set_io --warn-no-port PIN52 E14
+set_io --warn-no-port PIN51 F12
+set_io --warn-no-port PIN50 F14
+set_io --warn-no-port PIN49 G12
+set_io --warn-no-port PIN48 G14
+set_io --warn-no-port PIN47 H12
+set_io --warn-no-port PIN46 J12
+set_io --warn-no-port PIN45 K12
+set_io --warn-no-port PIN44 K14
+set_io --warn-no-port PIN43 H11
+set_io --warn-no-port PIN42 L12
+set_io --warn-no-port PIN41 L14 #high current blue
+set_io --warn-no-port PIN40 N14 #high current green
+set_io --warn-no-port PIN39 GND
+set_io --warn-no-port PIN38 P14 #high current red
+set_io --warn-no-port PIN37 P10
+set_io --warn-no-port PIN36 M9
+set_io --warn-no-port PIN35 P9
+set_io --warn-no-port PIN34 P8
+#AD4 pic connected
+#AD3 pic connected
+#GND
+#5V
+
+

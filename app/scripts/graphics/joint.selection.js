@@ -24,14 +24,15 @@ joint.ui.SelectionView = Backbone.View.extend({
   showtooltip: true,
   $selectionArea: null,
 
-  initialize: function(options) {
+  initialize: function (options) {
 
     _.bindAll(this, 'click', 'startSelecting', 'stopSelecting', 'adjustSelection');
 
-    $(document.body).on('mouseup touchend', function(evt) {
+    $(document.body).on('mouseup touchend', function (evt) {
       if (evt.which === 1) {
         // Mouse left button
         this.stopSelecting(evt);
+
       }
     }.bind(this));
     $(document.body).on('mousemove touchmove', this.adjustSelection);
@@ -42,44 +43,44 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.$el.addClass('selected').show();
   },
 
-  click: function(evt) {
+  click: function (evt) {
 
     if (evt.which === 1) {
       // Mouse left button
-
       this.trigger('selection-box:pointerclick', evt);
     }
   },
 
-  dblclick: function(evt) {
+  dblclick: function (evt) {
+
 
     var id = evt.target.getAttribute('data-model');
     if (id) {
       var view = this.options.paper.findViewByModel(id);
       if (view) {
-
         // Trigger dblclick in selection to the Cell View
         view.notify('cell:pointerdblclick', evt);
       }
     }
   },
 
-  mouseover: function(evt) {
+
+  mouseover: function (evt) {
 
     this.mouseManager(evt, 'mouseovercard');
   },
 
-  mouseout: function(evt) {
+  mouseout: function (evt) {
 
     this.mouseManager(evt, 'mouseoutcard');
   },
 
-  mouseup: function(evt) {
+  mouseup: function (evt) {
 
     this.mouseManager(evt, 'mouseupcard');
   },
 
-  mousedown: function(evt) {
+  mousedown: function (evt) {
 
     if (!this.showtooltip && evt.which === 1) {
       // Mouse left button: block fixed
@@ -104,7 +105,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  startTranslatingSelection: function(evt) {
+  startTranslatingSelection: function (evt) {
 
     if (this._action !== 'adding' && evt.which === 1) {
       // Mouse left button
@@ -124,7 +125,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  startAddingSelection: function(evt) {
+  startAddingSelection: function (evt) {
 
     this._action = 'adding';
 
@@ -135,7 +136,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     this.trigger('selection-box:pointerdown', evt);
   },
 
-  startSelecting: function(evt/*, x, y*/) {
+  startSelecting: function (evt/*, x, y*/) {
 
     this.createSelectionArea();
 
@@ -161,7 +162,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     });
   },
 
-  adjustSelection: function(evt) {
+  adjustSelection: function (evt) {
 
     var dx;
     var dy;
@@ -199,7 +200,7 @@ joint.ui.SelectionView = Backbone.View.extend({
         // and outbound link of another at the same time.
         var processedLinks = {};
 
-        this.model.each(function(element) {
+        this.model.each(function (element) {
 
           // Translate the element itself.
           element.translate(dx, dy);
@@ -210,7 +211,7 @@ joint.ui.SelectionView = Backbone.View.extend({
           // Translate link vertices as well.
           var connectedLinks = this.options.graph.getConnectedLinks(element);
 
-          _.each(connectedLinks, function(link) {
+          _.each(connectedLinks, function (link) {
 
             if (processedLinks[link.id]) {
               return;
@@ -220,7 +221,7 @@ joint.ui.SelectionView = Backbone.View.extend({
             if (vertices && vertices.length) {
 
               var newVertices = [];
-              _.each(vertices, function(vertex) {
+              _.each(vertices, function (vertex) {
 
                 newVertices.push({ x: vertex.x + dx, y: vertex.y + dy });
               });
@@ -235,9 +236,9 @@ joint.ui.SelectionView = Backbone.View.extend({
 
         if (dx || dy) {
 
-      		this._snappedClientX = snappedClientX;
-      		this._snappedClientY = snappedClientY;
-      	}
+          this._snappedClientX = snappedClientX;
+          this._snappedClientY = snappedClientY;
+        }
 
         this.trigger('selection-box:pointermove', evt);
 
@@ -245,7 +246,7 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  stopSelecting: function(evt) {
+  stopSelecting: function (evt) {
 
     switch (this._action) {
 
@@ -294,67 +295,67 @@ joint.ui.SelectionView = Backbone.View.extend({
         // propagating to the `default` branch in this switch.
         break;
 
-    default:
+      default:
         break;
     }
 
     delete this._action;
   },
 
-  findBlocksInArea: function(rect, opt) {
+  findBlocksInArea: function (rect, opt) {
 
-      opt = _.defaults(opt || {}, { strict: false });
-      rect = g.rect(rect);
+    opt = _.defaults(opt || {}, { strict: false });
+    rect = g.rect(rect);
 
-      var paper = this.options.paper;
-      var views = _.map(paper.model.getElements(), paper.findViewByModel, paper);
-      var method = opt.strict ? 'containsRect' : 'intersect';
+    var paper = this.options.paper;
+    var views = _.map(paper.model.getElements(), paper.findViewByModel, paper);
+    var method = opt.strict ? 'containsRect' : 'intersect';
 
-      return _.filter(views, function(view) {
-          var $box = $(view.$box[0]);
-          var position = $box.position();
-          var rbox = g.rect(position.left, position.top, $box.width(), $box.height());
-          return view && rect[method](rbox);
-      }, this);
+    return _.filter(views, function (view) {
+      var $box = $(view.$box[0]);
+      var position = $box.position();
+      var rbox = g.rect(position.left, position.top, $box.width(), $box.height());
+      return view && rect[method](rbox);
+    }, this);
   },
 
-  cancelSelection: function() {
+  cancelSelection: function () {
 
     this.$('.selection-box').remove();
     this.model.reset([]);
   },
 
-  destroySelectionArea: function() {
+  destroySelectionArea: function () {
 
     this.$selectionArea.remove();
     this.$selectionArea = this.$('.selection-area');
     this.$el.addClass('selected');
   },
 
-  createSelectionArea: function() {
+  createSelectionArea: function () {
 
     var $selectionArea = $('<div/>', {
-        'class': 'selection-area'
+      'class': 'selection-area'
     });
     this.$el.append($selectionArea);
     this.$selectionArea = this.$('.selection-area');
     this.$el.removeClass('selected');
   },
 
-  destroySelectionBox: function(element) {
+  destroySelectionBox: function (element) {
 
     this.$('[data-model="' + element.get('id') + '"]').remove();
   },
 
-  createSelectionBox: function(element, opt) {
+  createSelectionBox: function (element, opt) {
 
     opt = opt || {};
 
     if (!element.isLink()) {
 
       var $selectionBox = $('<div/>', {
-          'class': 'selection-box',
-          'data-model': element.get('id')
+        'class': 'selection-box',
+        'data-model': element.get('id')
       });
       if (this.$('[data-model="' + element.get('id') + '"]').length === 0) {
         this.$el.append($selectionBox);
@@ -368,29 +369,44 @@ joint.ui.SelectionView = Backbone.View.extend({
     }
   },
 
-  updateBox: function(element) {
+  updateBox: function (element) {
 
-    var margin = 8;
 
     var bbox = element.getBBox();
     var state = this.options.state;
 
-    var view = this.options.paper.findViewByModel(element);
-    var el = view.$box.children().not('.hidden').first();
 
-    var position = el.position();
-    var width = el.outerWidth();
-    var height = el.outerHeight();
 
-    $('div[data-model=\'' + element.get('id') + '\']').css({
-      left: (bbox.x + position.left) * state.zoom + state.pan.x +
-            (width / 2 - position.left) * (state.zoom - 1) - margin,
-      top: (bbox.y + position.top) * state.zoom + state.pan.y +
-           (height / 2 - position.top) * (state.zoom - 1) - margin,
-      width: width + 2 * margin,
-      height: height + 2 * margin,
-      transform: 'scale(' + state.zoom + ')'
-    });
+    var i, pendingTasks = [];
+    var sels = document.querySelectorAll('div[data-model="' + element.get('id') + '"]');
+    for (i = 0; i < sels.length; i++) {
+      pendingTasks.push({
+        e: sels[i], property: 'left', value: Math.round(
+          ((bbox.x) * state.zoom + state.pan.x) +
+          (bbox.width / 2.0 * (state.zoom - 1))
+        ) + 'px'
+      });
+      pendingTasks.push({
+        e: sels[i], property: 'top', value: Math.round(
+          (bbox.y * state.zoom + state.pan.y) +
+          (bbox.height / 2.0 * (state.zoom - 1))
+
+        ) + 'px'
+      });
+      pendingTasks.push({ e: sels[i], property: 'width', value: Math.round(bbox.width) + 'px' });
+      pendingTasks.push({ e: sels[i], property: 'height', value: Math.round(bbox.height) + 'px' });
+      pendingTasks.push({ e: sels[i], property: 'transform', value: 'scale(' + state.zoom + ')' });
+
+
+    }
+    i = pendingTasks.length;
+    for (i = 0; i < pendingTasks.length; i++) {
+      if (pendingTasks[i].e !== null) {
+
+        pendingTasks[i].e.style[pendingTasks[i].property] = pendingTasks[i].value;
+      }
+    }
+
   }
 
 });

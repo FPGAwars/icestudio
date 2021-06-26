@@ -1,0 +1,58 @@
+[
+ {"name": "LED_R", "value": "40", "type": "output"}, 
+ {"name": "LED_G", "value": "41", "type": "output"}, 
+ {"name": "LED_B", "value": "39", "type": "output"},   
+ 
+ {"name": "S1", "value": "18", "type": "input"}, 
+ {"name": "S2", "value": "19", "type": "input"},
+ {"name": "S3", "value": "20", "type": "input"}, 
+ {"name": "S4", "value": "21", "type": "input"},
+ 
+ {"name": "clk", "value": "35", "type": "input"},
+ 
+ {"name": "RX", "value": "4", "type": "input"}, 
+ {"name": "TX", "value": "6", "type": "output"},
+
+ {"name": "USB_DP", "value": "10", "type": "inout"}, 
+ {"name": "USB_DN", "value": "9", "type": "inout"}, 
+ {"name": "USB_PULLUP", "value": "11", "type": "inout"}, 
+ 
+ {"name": "P10", "value": "10", "type": "inout"}, 
+ {"name": "P9", "value": "9", "type": "inout"}, 
+ {"name": "P6", "value": "6", "type": "inout"}, 
+ {"name": "P4", "value": "4", "type": "inout"}, 
+ {"name": "P3", "value": "3", "type": "inout"}, 
+ {"name": "P2", "value": "2", "type": "inout"}, 
+ {"name": "P48", "value": "48", "type": "inout"}, 
+ {"name": "P47", "value": "47", "type": "inout"}, 
+
+ {"name": "P46", "value": "46", "type": "inout"}, 
+ {"name": "P45", "value": "45", "type": "inout"}, 
+ {"name": "P44", "value": "44", "type": "inout"}, 
+ {"name": "P43", "value": "43", "type": "inout"}, 
+ {"name": "P42", "value": "42", "type": "inout"}, 
+ {"name": "P38", "value": "38", "type": "inout"}, 
+ {"name": "P37", "value": "37", "type": "inout"}, 
+ {"name": "P36", "value": "36", "type": "inout"}, 
+
+ {"name": "P34", "value": "34", "type": "inout"}, 
+ {"name": "P32", "value": "32", "type": "inout"}, 
+ {"name": "P31", "value": "31", "type": "inout"}, 
+ {"name": "P28", "value": "28", "type": "inout"}, 
+ {"name": "P27", "value": "27", "type": "inout"}, 
+ {"name": "P26", "value": "26", "type": "inout"}, 
+ {"name": "P25", "value": "25", "type": "inout"}, 
+ {"name": "P23", "value": "23", "type": "inout"}, 
+
+ {"name": "P21", "value": "21", "type": "inout"}, 
+ {"name": "P20", "value": "20", "type": "inout"}, 
+ {"name": "P19", "value": "19", "type": "inout"}, 
+ {"name": "P18", "value": "18", "type": "inout"}, 
+ 
+ {"name": "TMS", "value": "16", "type": "output"}, 
+ {"name": "TCK", "value": "15", "type": "output"}, 
+ {"name": "TDO", "value": "17", "type": "output"},
+ {"name": "TDI", "value": "14", "type": "input"}, 
+ 
+ {"name": "NULL", "value": "NULL", "type": "inout"}
+]

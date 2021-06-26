@@ -38,6 +38,8 @@ angular.module('icestudio')
       };
     }
 
+    ICEpm.ebus.subscribe('block.addFromFile','addBlockFile',this);
+    
     this.get = function (key) {
       if (key in project) {
         return project[key];
@@ -60,6 +62,8 @@ angular.module('icestudio')
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
+          self.filename=name;
+          self.dirname=utils.dirname(filepath);
           self.load(name, data);
         })
         .catch(function () {
@@ -113,6 +117,7 @@ angular.module('icestudio')
         }
 
         var ret = graph.loadDesign(project.design, opt, function () {
+
           graph.resetCommandStack();
           graph.fitContent();
           alertify.success(gettextCatalog.getString('Project {{name}} loaded', { name: utils.bold(name) }));
@@ -122,6 +127,8 @@ angular.module('icestudio')
         if (ret) {
           profile.set('board', boards.selectBoard(project.design.board).name);
           self.updateTitle(name);
+          let bdir=utils.filepath2buildpath(self.filepath);
+          common.setBuildDir(bdir);
         }
         else {
           alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
@@ -143,6 +150,7 @@ angular.module('icestudio')
         case 'icezum alhambra': case 'icezum':
           switch (newBoard.toLowerCase()) {
             case 'alhambra-ii': pboard = 'icezum'; break;
+            default: pboard='icezum';
           }
           break;
       }
@@ -377,13 +385,15 @@ angular.module('icestudio')
         this.path = filepath;
         this.filepath = filepath;
       }
-
+      let self=this;
       function doSaveProject() {
         utils.saveFile(filepath, pruneProject(project))
           .then(function () {
             if (callback) {
               callback();
             }
+            let bdir=utils.filepath2buildpath(self.filepath);
+            common.setBuildDir(bdir);
             alertify.success(gettextCatalog.getString('Project {{name}} saved', { name: utils.bold(name) }));
           })
           .catch(function (error) {
@@ -423,8 +433,9 @@ angular.module('icestudio')
             return;
           }
           var name = utils.basename(filepath);
+          
           var block = _safeLoad(data, name);
-          if (block) {
+           if (block) {
             var origPath = utils.dirname(filepath);
             var destPath = utils.dirname(self.path);
             // 1. Parse and find included files

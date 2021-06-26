@@ -1,19 +1,27 @@
-<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/logo/icestudio-logo-label.png" align="center">
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-github.svg)
 
-[![Build Status](https://travis-ci.org/FPGAwars/icestudio.svg?branch=v0.5.0)](https://travis-ci.org/FPGAwars/icestudio)
-[![Version](https://img.shields.io/badge/version-v0.5.0-orange.svg)](https://github.com/FPGAwars/icestudio/releases)
-[![License](http://img.shields.io/:license-gpl-blue.svg)](http://opensource.org/licenses/GPL-2.0)
-[![Documentation Status](https://readthedocs.org/projects/icestudio/badge/?version=latest)](http://icestudio.readthedocs.io/en/latest)
 
-Visual editor for open FPGA boards. Built on top of the [Icestorm project](http://www.clifford.at/icestorm/) using [Apio](https://github.com/FPGAwars/apio).
+[![Build Status][build-image]][build-url]
+[![Build Mac][build-mac-image]][build-mac-url]  
 
-    Graphic design -> Verilog, PCF -> Bistream -> FPGA
+![Version][version-image]
+[![License][license-image]][license-url]  
 
-For more information visit our site [icestudio.io](https://icestudio.io)
+Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
 
-### Supported boards
+# Documentation
 
-#### HX1K
+Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestudio/wiki)
+
+# Introduction
+
+1. Draw your circuit
+2. Upload it to your board with an OpenSource FPGA
+3. Done!
+
+# Supported boards
+
+## HX1K
 
 | Board name | Interface |
 |:-|:-:|
@@ -21,7 +29,7 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [Nandland Go board](https://www.nandland.com/goboard/introduction.html) | FTDI |
 | [iCEstick Evaluation Kit](http://www.latticesemi.com/icestick) | FTDI |
 
-#### HX8K
+## HX8K
 
 | Board name | Interface |
 |:-|:-:|
@@ -31,15 +39,16 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html) | GPIO RPi |
 | [Kéfir I iCE40-HX4K](http://fpgalibre.sourceforge.net/Kefir/) | FTDI |
 | [iCE40-HX8K Breakout Board](http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard) | FTDI |
+| [iceFUN](https://www.robot-electronics.co.uk/icefun.html) | Serial |
 
-#### LP8K
+## LP8K
 
 | Board name | Interface |
 |:-|:-:|
 | [TinyFPGA B2](https://tinyfpga.com/b-series-guide.html) | Serial |
 | [TinyFPGA BX](https://tinyfpga.com/bx/guide.html) | Serial |
 
-#### UP5K
+## UP5K
 
 | Board name | Interface |
 |:-|:-:|
@@ -49,8 +58,11 @@ For more information visit our site [icestudio.io](https://icestudio.io)
 | [UPDuino v2.0](http://gnarlygrey.atspace.cc/development-platform.html#upduino_v2l) | FTDI |
 | [FPGA 101 Workshop Badge Board](https://github.com/mmicko/workshop_badge) | FTDI |
 | [iCE40 UltraPlus Breakout Board](http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard) | FTDI |
+| [dadamachines doppler](https://dadamachines.com/product/doppler/) | samd51 on board |
+| [iCESugar v1.5](https://github.com/wuxx/icesugar) | HID |
+| [OK:iCE40 Pro](https://github.com/WiFiBoy/OK-iCE40Pro) | FTDI |
 
-## Installation
+# Installation
 
 You can install **stable** or **nightly** Icestudio versions.
 
@@ -59,7 +71,7 @@ Because Icestudio is in development proccess, until it rises to 1.0 version, we 
 
 * **GNU/Linux**
 
-  1. Install [Python 2.7](https://www.python.org) and **xclip**
+  1. Install [Python >= 3.5](https://www.python.org) and **xclip**
   2. For **stable** version, download and execute the [AppImage](https://github.com/FPGAwars/icestudio/releases)
   3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
 
@@ -73,7 +85,7 @@ Because Icestudio is in development proccess, until it rises to 1.0 version, we 
 
 * **Mac OS**
 
-  1. Install [Python 2.7](https://www.python.org) and [Homebrew](https://brew.sh)
+  1. Install [Python >=  3.5](https://www.python.org) and [Homebrew](https://brew.sh)
   2. For **stable** version, download and execute the [DMG package](https://github.com/FPGAwars/icestudio/releases)
   3. For **nightly** version, download it from [icestudio.io](https://icestudio.io)
   
@@ -85,13 +97,14 @@ Check the [Documentation](http://icestudio.readthedocs.io/en/latest) for more in
 
 ## Development
 
-Install [Python 2.7](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/).
+Install [Python >= 3.5](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/), for windows developers nodejs version should be 10.17.x
+
 
 [Atom](https://atom.io/) editor with [linter-jshint](https://atom.io/packages/linter-jshint) is recommended.
 
 If you want to add blocks or examples, please contribute to [icestudio-blocks](https://github.com/FPGAwars/icestudio-blocks), [icestudio-examples](https://github.com/FPGAwars/icestudio-examples) or [collection-default](https://github.com/FPGAwars/collection-default).
 
-### Download
+## Download
 
 ```bash
 git clone https://github.com/FPGAwars/icestudio.git
@@ -116,7 +129,7 @@ npm start
 |:----------:|:----------------------------------------:|
 | English    | ![Progress](http://progress-bar.dev/100) |
 | Spanish    | ![Progress](http://progress-bar.dev/92)  |
-| Italian    | ![Progress](http://progress-bar.dev/89)  |
+| Italian    | ![Progress](http://progress-bar.dev/100) |
 | French     | ![Progress](http://progress-bar.dev/78)  |
 | Dutch      | ![Progress](http://progress-bar.dev/78)  |
 | Czech      | ![Progress](http://progress-bar.dev/78)  |
@@ -144,15 +157,27 @@ firefox _build/html/index.html
 
 ### Package
 
-```bash
-npm run dist
-```
+For building all platforms packages:
 
+```bash
+npm run build
+```
 | Target OS | Development OS | Output files |
 |:---:|:-------------:|:-----------------:|
 | GNU/Linux | GNU/Linux | (linux32,linux64).zip, (linux32,linux64).AppImage |
 | Windows | GNU/Linux | (win32,win64).zip, (win32,win64).exe |
 |  Mac OS | Mac OS | (osx32,osx64).zip, osx64.dmg  |
+
+
+For testing development build only linux 64 packages:
+
+```bash
+npm run buildLinux64
+```
+| Target OS | Development OS | Output files |
+|:---:|:-------------:|:-----------------:|
+| GNU/Linux | GNU/Linux | linux64.zip, linux64.AppImage |
+
 
 ### Apio configuration
 
@@ -192,7 +217,7 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 
 |Version | Contributors |
 |:-:|:-:|
-| 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes) |
+| 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes), [Sam](https://github.com/sam210723) |
 | 0.4 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
 | 0.3 | [Luke Valenty](https://github.com/tinyfpga), [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
 | 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
@@ -209,3 +234,24 @@ There is a [Wishlist](https://github.com/FPGAwars/icestudio/wiki/Wishlist:-propo
 ## License
 
 Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+--------
+[![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/fgpawars-banner.svg)](https://fpgawars.github.io/)
+
+
+<!-- Badges -->
+
+[version-image]: https://img.shields.io/badge/version-v0.5.1wip-orange.svg
+
+[license-image]: http://img.shields.io/:license-gpl-blue.svg
+
+[license-url]: http://opensource.org/licenses/GPL-2.0
+
+[build-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml/badge.svg
+
+[build-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml
+
+
+[build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
+
+[build-mac-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml

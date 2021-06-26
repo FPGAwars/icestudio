@@ -1,12 +1,12 @@
 
-joint.routers.ice = (function(g, _, joint) {
+joint.routers.ice = (function (g, _, joint) {
 
   'use strict';
 
   var config = {
 
     // size of the step to find a route
-    step: 8,
+step: 8,
 
     // use of the perpendicular linkView option to connect center of element with first vertex
     perpendicular: true,
@@ -39,7 +39,7 @@ joint.routers.ice = (function(g, _, joint) {
     maxAllowedDirectionChange: 90,
 
     // padding applied on the element bounding boxes
-    paddingBox: function() {
+    paddingBox: function () {
 
       var step = 2;
 
@@ -52,20 +52,20 @@ joint.routers.ice = (function(g, _, joint) {
     },
 
     // an array of directions to find next points on the route
-    directions: function() {
+    directions: function () {
 
       var step = this.step;
 
       return [
-        { offsetX: step  , offsetY: 0     , cost: step },
-        { offsetX: 0     , offsetY: step  , cost: step },
-        { offsetX: -step , offsetY: 0     , cost: step },
-        { offsetX: 0     , offsetY: -step , cost: step }
+        { offsetX: step, offsetY: 0, cost: step },
+        { offsetX: 0, offsetY: step, cost: step },
+        { offsetX: -step, offsetY: 0, cost: step },
+        { offsetX: 0, offsetY: -step, cost: step }
       ];
     },
 
     // a penalty received for direction change
-    penalties: function() {
+    penalties: function () {
 
       return {
         0: 0,
@@ -104,15 +104,15 @@ joint.routers.ice = (function(g, _, joint) {
     this.mapGridSize = 100;
   }
 
-  ObstacleMap.prototype.build = function(graph, link) {
+  ObstacleMap.prototype.build = function (graph, link) {
 
     var opt = this.options;
 
     // source or target element could be excluded from set of obstacles
     var excludedEnds = _.chain(opt.excludeEnds)
-        .map(link.get, link)
-        .pluck('id')
-        .map(graph.getCell, graph).value();
+      .map(link.get, link)
+      .pluck('id')
+      .map(graph.getCell, graph).value();
 
     // Exclude any embedded elements from the source and the target element.
     var excludedAncestors = [];
@@ -135,20 +135,35 @@ joint.routers.ice = (function(g, _, joint) {
     var mapGridSize = this.mapGridSize;
 
     // Compute rectangles from all the blocks
-    var blockRectangles =_.chain(graph.getElements())
-    // remove source and target element if required
-    .difference(excludedEnds)
-    // remove all elements whose type is listed in excludedTypes array
-    .reject(function(element) {
-      // reject any element which is an ancestor of either source or target
-      return _.contains(opt.excludeTypes, element.get('type')) || _.contains(excludedAncestors, element.id);
-    })
-    // change elements (models) to their bounding boxes
-    .invoke('getBBox').value();
+    var blockRectangles = _.chain(graph.getElements())
+      // remove source and target element if required
+      .difference(excludedEnds)
+      // remove all elements whose type is listed in excludedTypes array
+      .reject(function (element) {
+        // reject any element which is an ancestor of either source or target
+        return _.contains(opt.excludeTypes, element.get('type')) || _.contains(excludedAncestors, element.id);
+      })
+      // change elements (models) to their bounding boxes
+      .invoke('getBBox').value();
 
     // Compute rectangles from all the port labels
     var state = this.paper.options.getState();
-    var labelRectangles = $('.port-label').map(function(index, node) {
+   var plabels=document.querySelectorAll('.port-label');
+    var labelRectangles=[];
+      var rect = false;
+    var i,npl;
+    for(i=0,npl=plabels.length;i<npl;i++){
+      rect = V(plabels[i]).bbox();
+      labelRectangles.push( g.rect({
+        x: (rect.x - state.pan.x) / state.zoom,
+        y: (rect.y - state.pan.y) / state.zoom,
+        width: rect.width / state.zoom,
+        height: rect.height / state.zoom
+      }));
+
+    }
+    
+   /* var labelRectangles = $('.port-label').map(function (index, node) {
       var rect = V(node).bbox();
       return g.rect({
         x: (rect.x - state.pan.x) / state.zoom,
@@ -156,40 +171,41 @@ joint.routers.ice = (function(g, _, joint) {
         width: rect.width / state.zoom,
         height: rect.height / state.zoom
       });
-    }).toArray();
+    }).toArray();*/
 
+    var x,y,origin,corner;
     // Add all rectangles to the map's grid
     _.chain(blockRectangles.concat(labelRectangles))
-    // expand their boxes by specific padding
-    .invoke('moveAndExpand', opt.paddingBox)
-    // build the map
-    .foldl(function(map, bbox) {
+      // expand their boxes by specific padding
+      .invoke('moveAndExpand', opt.paddingBox)
+      // build the map
+      .foldl(function (map, bbox) {
 
-      var origin = bbox.origin().snapToGrid(mapGridSize);
-      var corner = bbox.corner().snapToGrid(mapGridSize);
+        origin = bbox.origin().snapToGrid(mapGridSize);
+        corner = bbox.corner().snapToGrid(mapGridSize);
 
-      for (var x = origin.x; x <= corner.x; x += mapGridSize) {
-        for (var y = origin.y; y <= corner.y; y += mapGridSize) {
+        for ( x = origin.x; x <= corner.x; x += mapGridSize) {
+          for (y = origin.y; y <= corner.y; y += mapGridSize) {
 
-          var gridKey = x + '@' + y;
+            var gridKey = x + '@' + y;
 
-          map[gridKey] = map[gridKey] || [];
-          map[gridKey].push(bbox);
+            map[gridKey] = map[gridKey] || [];
+            map[gridKey].push(bbox);
+          }
         }
-      }
 
-      return map;
+        return map;
 
       }, this.map).value();
 
     return this;
   };
 
-  ObstacleMap.prototype.isPointAccessible = function(point) {
+  ObstacleMap.prototype.isPointAccessible = function (point) {
 
     var mapKey = point.clone().snapToGrid(this.mapGridSize).toString();
 
-    return _.every(this.map[mapKey], function(obstacle) {
+    return _.every(this.map[mapKey], function (obstacle) {
       return !obstacle.containsPoint(point);
     });
   };
@@ -204,7 +220,7 @@ joint.routers.ice = (function(g, _, joint) {
     this.CLOSE = 2;
   }
 
-  SortedSet.prototype.add = function(item, value) {
+  SortedSet.prototype.add = function (item, value) {
 
     if (this.hash[item]) {
       // item removal
@@ -215,31 +231,31 @@ joint.routers.ice = (function(g, _, joint) {
 
     this.values[item] = value;
 
-    var index = _.sortedIndex(this.items, item, function(i) {
+    var index = _.sortedIndex(this.items, item, function (i) {
       return this.values[i];
     }, this);
 
     this.items.splice(index, 0, item);
   };
 
-  SortedSet.prototype.remove = function(item) {
+  SortedSet.prototype.remove = function (item) {
     this.hash[item] = this.CLOSE;
   };
 
-  SortedSet.prototype.isOpen = function(item) {
+  SortedSet.prototype.isOpen = function (item) {
     return this.hash[item] === this.OPEN;
   };
 
-  SortedSet.prototype.isClose = function(item) {
+  SortedSet.prototype.isClose = function (item) {
     return this.hash[item] === this.CLOSE;
   };
 
-  SortedSet.prototype.isEmpty = function() {
+  SortedSet.prototype.isEmpty = function () {
     return this.items.length === 0;
   };
 
-  SortedSet.prototype.pop = function() {
-    var item =  this.items.shift();
+  SortedSet.prototype.pop = function () {
+    var item = this.items.shift();
     this.remove(item);
     return item;
   };
@@ -270,7 +286,7 @@ joint.routers.ice = (function(g, _, joint) {
 
       current = parent;
     }
-
+ 
     var startDiff = normalizePoint(g.point(current).difference(startCenter));
     if (!startDiff.equals(prevDiff)) {
       route.unshift(current);
@@ -284,7 +300,7 @@ joint.routers.ice = (function(g, _, joint) {
 
     var step = opt.step;
     var center = bbox.center();
-    var startPoints = _.chain(opt.directionMap).pick(directionList).map(function(direction) {
+    var startPoints = _.chain(opt.directionMap).pick(directionList).map(function (direction) {
 
       var x = direction.x * bbox.width / 2;
       var y = direction.y * bbox.height / 2;
@@ -359,9 +375,11 @@ joint.routers.ice = (function(g, _, joint) {
     startPoints = _.filter(startPoints, map.isPointAccessible, map);
     endPoints = _.filter(endPoints, map.isPointAccessible, map);
 
+
     // Check if there is a accessible end point.
     // We would have to use a fallback route otherwise.
-    if (startPoints.length > 0 && endPoints.length >  0) {
+    if (startPoints.length > 0 && endPoints.length > 0) {
+
 
       // The set of tentative points to be evaluated, initially containing the start points.
       var openSet = new SortedSet();
@@ -370,11 +388,12 @@ joint.routers.ice = (function(g, _, joint) {
       // Cost from start to a point along best known path.
       var costs = {};
 
-      _.each(startPoints, function(point) {
+      _.each(startPoints, function (point) {
         var key = point.toString();
         openSet.add(key, estimateCost(point, endPoints));
         costs[key] = 0;
       });
+
 
       // directions
       var dir, dirChange;
@@ -396,7 +415,7 @@ joint.routers.ice = (function(g, _, joint) {
         previousDirAngle = currentDirAngle;
         /* jshint -W116 */
         currentDirAngle = parents[currentKey] ? getDirectionAngle(parents[currentKey], currentPoint, dirLen)
-            : opt.previousDirAngle != null ? opt.previousDirAngle : getDirectionAngle(startCenter, currentPoint, dirLen);
+          : opt.previousDirAngle != null ? opt.previousDirAngle : getDirectionAngle(startCenter, currentPoint, dirLen);
         /* jshint +W116 */
 
         // Check if we reached any endpoint
@@ -442,6 +461,7 @@ joint.routers.ice = (function(g, _, joint) {
 
         loopsRemain--;
       }
+
     }
 
     // no route found ('to' point wasn't either accessible or finding route took
@@ -456,13 +476,14 @@ joint.routers.ice = (function(g, _, joint) {
     opt.penalties = _.result(opt, 'penalties');
     opt.paddingBox = _.result(opt, 'paddingBox');
 
-    _.each(opt.directions, function(direction) {
+    for(var i=0,no=opt.directions.length;i<no;i++){
+    //_.each(opt.directions, function (direction) {
 
       var point1 = g.point(0, 0);
-      var point2 = g.point(direction.offsetX, direction.offsetY);
+      var point2 = g.point(opt.directions[i].offsetX, opt.directions[i].offsetY);
 
-      direction.angle = g.normalizeAngle(point1.theta(point2));
-    });
+      opt.directions[i].angle = g.normalizeAngle(point1.theta(point2));
+    }
   }
 
   // initiation of the route finding
@@ -554,7 +575,7 @@ joint.routers.ice = (function(g, _, joint) {
   }
 
   // public function
-  return function(vertices, opt, linkView) {
+  return function (vertices, opt, linkView) {
 
     if (linkView.sourceMagnet) {
       opt.startDirections = [linkView.sourceMagnet.attributes.pos.value];
