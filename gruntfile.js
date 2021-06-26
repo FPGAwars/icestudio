@@ -7,9 +7,10 @@ module.exports = function (grunt) {
 
   var pkg = grunt.file.readJSON("app/package.json");
   var timestamp=grunt.template.today('yyyymmddhhmm');
-  
+
+  timestamp = "";  
   grunt.file.write('app/buildinfo.json',JSON.stringify({ts:timestamp}));
-  pkg.version=pkg.version.replace(/w/,'w'+timestamp );
+ // pkg.version=pkg.version.replace(/w/,'w'+timestamp );
   
   var platforms, options, distCommands, distTasks;
   
