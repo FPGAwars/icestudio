@@ -1,0 +1,85 @@
+# Release a stable version of icestudio
+# 1. The binaries are generated for all the platforms
+# 2. A new release is created
+# 3. The binaries are uploaded to the Release page
+
+name: Stable Release
+
+# Manual activation
+on: [workflow_dispatch]
+
+jobs:
+
+  #-- Build for Linux and windows
+  build-LinWin:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+
+      # Checks-out the repo
+      - name: Checkout!
+        uses: actions/checkout@v2
+
+      # Install Node 10.17
+      - name: Setup Nodejs version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.17'
+
+      - name: Install npm dependencies
+        run:   npm install 
+
+      - name: Install dependencies to build Windows bundle
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
+          export DISPLAY=:0.0 
+          wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+          wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
+          sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
+          sudo apt-get update
+          sudo apt-get install -y winehq-devel winetricks nsis 
+          export WINEARCH=win32
+          cd /home/runner
+          rm -rf .wine
+          wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
+          tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
+      
+      - name: Build Linux & Microsoft Windows package
+        run: |
+          export DISPLAY=:0.0 
+          npm run build
+
+      # TODO: Create release
+      # TODO: Upload the binaries to the release
+
+  # Build for macos
+  build-macos:
+    
+    runs-on: macos-latest
+    steps:
+     
+      - name: Checkout!
+        uses: actions/checkout@v2
+      
+      - name: Setup Nodejs version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.17'
+      - name: Install npm dependencies
+        run:   npm install 
+      - name: Build OSX packages
+        run:  | 
+          npm run build
+          ls dist/
+          
+       # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`tr '\n' ' ' < package.json`
+          echo "::set-output name=packageJson::$content"  
+
+    # TODO: Upload the binaries to the release    
