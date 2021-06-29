@@ -23,6 +23,23 @@ jobs:
         with:
           ref: master
 
+      #-- Read the package.json file
+      - name: Read the package.json file
+        id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+
+      # -- Debug: Print the icestudio version
+      - name: Get the Icestudio version
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        run: |
+          echo "VERSION: ${{ env.VERSION }}"
+
       # Install Node 10.17
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
@@ -50,19 +67,11 @@ jobs:
           wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
           tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
       
+      # -- Build!!
       - name: Build Linux & Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
           npm run build
-
-      #-- Read the package.json file
-      - id: icestudio_json
-        run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
 
       #-- Create the Release
       - name: Create the Stable Release
@@ -92,7 +101,76 @@ jobs:
           asset_path: "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
           asset_name: "linux64_AppImage_${{env.VERSION}}"
           asset_content_type: application/tar+gzip
-          if-no-files-found: error
+
+      - name: 'Upload ZIP/linux64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "linux64_ZIP_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.zip"
+          asset_content_type: application/tar+gzip
+
+      - name: 'Upload AppImage/linux32'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "linux32_AppImage_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux32.AppImage"
+          asset_content_type: application/tar+gzip
+
+      - name: 'Upload ZIP/linux32'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "linux32_ZIP_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux32.zip"
+          asset_content_type: application/tar+gzip
+          
+      - name: 'Upload MSI/win64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "win64_MSI_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-win64.exe"
+          asset_content_type: application/tar+gzip
+          
+      - name: 'Upload ZIP/win64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "win64_ZIP_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-win64.zip"
+          asset_content_type: application/tar+gzip
+
+      - name: 'Upload MSI/win32'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "win32_MSI_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-win32.exe"
+          asset_content_type: application/tar+gzip
+          
+      - name: 'Upload ZIP/win32'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "win32_ZIP_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-win32.zip"
+          asset_content_type: application/tar+gzip
 
   # Build for macos
   build-macos:
@@ -125,4 +203,23 @@ jobs:
           content=`tr '\n' ' ' < package.json`
           echo "::set-output name=packageJson::$content"  
 
-    # TODO: Upload the binaries to the release    
+      # Upload the binaries to the release 
+      - name: 'Upload DMG/OSX64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "osx64_DMG_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-osx64.dmg"
+          asset_content_type: application/tar+gzip
+
+      - name: 'Upload ZIP/OSX64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "osx64_ZIP_${{env.VERSION}}"
+          asset_path: "dist/icestudio-${{env.VERSION}}-osx64.zip"
+          asset_content_type: application/tar+gzip
