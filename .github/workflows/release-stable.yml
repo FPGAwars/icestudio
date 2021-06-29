@@ -106,6 +106,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "linux64_ZIP_${{env.VERSION}}"
@@ -116,6 +117,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "linux32_AppImage_${{env.VERSION}}"
@@ -126,6 +128,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "linux32_ZIP_${{env.VERSION}}"
@@ -136,6 +139,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "win64_MSI_${{env.VERSION}}"
@@ -146,6 +150,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "win64_ZIP_${{env.VERSION}}"
@@ -156,6 +161,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "win32_MSI_${{env.VERSION}}"
@@ -166,6 +172,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "win32_ZIP_${{env.VERSION}}"
@@ -208,6 +215,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "osx64_DMG_${{env.VERSION}}"
@@ -218,6 +226,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "osx64_ZIP_${{env.VERSION}}"
