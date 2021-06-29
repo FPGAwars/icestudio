@@ -14,7 +14,10 @@ jobs:
   build-LinWin:
 
     runs-on: ubuntu-18.04
-
+    outputs:
+      #-- URL to upload the binaries from 
+      #-- the jobs executed after build-LinWin
+      upload_url: ${{ steps.create_release.outputs.upload_url }} 
     steps:
 
       # Checkout the master repo branch
@@ -217,7 +220,8 @@ jobs:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ build-LinWin.steps.create_release.outputs.upload_url }}
+          # -- The upload url is read from the previous job: build-LinWin
+          upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
           asset_name: "icestudio-${{env.VERSION}}-osx64.dmg"
           asset_path: "dist/icestudio-${{env.VERSION}}-osx64.dmg"
           asset_content_type: application/tar+gzip
@@ -228,7 +232,7 @@ jobs:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ build-LinWin.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
           asset_name: "icestudio-${{env.VERSION}}-osx64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-osx64.zip"
           asset_content_type: application/tar+gzip
