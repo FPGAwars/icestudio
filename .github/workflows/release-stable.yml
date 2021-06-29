@@ -17,9 +17,11 @@ jobs:
 
     steps:
 
-      # Checks-out the repo
+      # Checkout the master repo branch
       - name: Checkout!
         uses: actions/checkout@v2
+        with:
+          ref: master
 
       # Install Node 10.17
       - name: Setup Nodejs version
@@ -62,8 +64,10 @@ jobs:
     runs-on: macos-latest
     steps:
      
-      - name: Checkout!
-        uses: actions/checkout@v2
+      - name: Checkout the master repo branch
+        uses: actions/checkout@
+        with:
+          ref: master
       
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
