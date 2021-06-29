@@ -61,6 +61,9 @@ jobs:
   # Build for macos
   build-macos:
     
+    # -- It is only run if the build for linux/win is ok, and  
+    # -- the release already created
+    needs: build-LinWin
     runs-on: macos-latest
     steps:
      
