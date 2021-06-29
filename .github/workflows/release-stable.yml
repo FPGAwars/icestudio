@@ -68,7 +68,7 @@ jobs:
     steps:
      
       - name: Checkout the master repo branch
-        uses: actions/checkout@
+        uses: actions/checkout@v2
         with:
           ref: master
       
