@@ -55,8 +55,44 @@ jobs:
           export DISPLAY=:0.0 
           npm run build
 
-      # TODO: Create release
-      # TODO: Upload the binaries to the release
+      #-- Read the package.json file
+      - id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+
+      #-- Create the Release
+      - name: Create the Stable Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          tag_name: v${{ env.VERSION }}
+          release_name: v${{ env.VERSION }}
+          body: |
+            A new stable release
+          draft: true
+          prerelease: false
+
+      # ---------------------------------------
+      # -- Upload the binaries to the release
+      # ---------------------------------------
+      - name: 'Upload AppImage/linux64'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
+          asset_name: "linux64_AppImage_${{env.VERSION}}"
+          asset_content_type: application/tar+gzip
+          if-no-files-found: error
 
   # Build for macos
   build-macos:
