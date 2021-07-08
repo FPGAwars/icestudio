@@ -8,6 +8,8 @@
 
 Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
 
+(Image: platforms: Linux, Mac, Windows)
+
 # Documentation
 
 Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestudio/wiki)
