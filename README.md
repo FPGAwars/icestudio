@@ -16,14 +16,23 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 # Introduction
 
-1. Draw your circuit
-2. Upload it to your board with an OpenSource FPGA
-3. Done!
+* **Step 1**: Draw your circuit
+
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.6.0-default-.gif)
 
 
+* **Step 2**: Upload it to your favorite OpenSource FPGA board 
 
 
-  
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/upload-two-leds-0.6.0-default-.gif)
+
+* **Step 3**: Done! 😀️
+
+
+# Screenshots
+
+(TODO) 
+
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
 
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main-1.png" width="700" align="center">
