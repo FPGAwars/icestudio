@@ -8,7 +8,7 @@
 
 Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-platforms.png)
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-platforms-small.png)
 
 # Documentation
 
