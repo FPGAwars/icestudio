@@ -107,7 +107,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 * [FPGAwars](http://fpgawars.github.io/) community has developed this project in a voluntary and altruistic way since 02/2017.
 
-  <img src="https://avatars3.githubusercontent.com/u/18257418?s=100">
+  ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/fpgawars-logo-small.png)
 
 * [BQ](https://www.bq.com) sponsored this project from 02/2016 to 02/2017. Thanks
 
