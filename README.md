@@ -2,6 +2,7 @@
 
 
 [![Build Status][build-image]][build-url]
+[![Build Mac][build-mac-image]][build-mac-url]  
 
 ![Version][version-image]
 [![License][license-image]][license-url]  
