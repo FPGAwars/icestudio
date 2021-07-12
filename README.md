@@ -135,15 +135,15 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.6.0-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.6.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
 [license-url]: http://opensource.org/licenses/GPL-2.0
 
-[build-image]: https://github.com/FPGAwars/icestudio/actions/workflows/release-stable.yml/badge.svg
+[build-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml/badge.svg
 
-[build-url]: https://github.com/FPGAwars/icestudio/actions/workflows/release-stable.yml
+[build-url]: https://github.com/FPGAwars/icestudio/actions/workflows/main.yml
 
 
 [build-mac-image]: https://github.com/FPGAwars/icestudio/actions/workflows/main-osx.yml/badge.svg
