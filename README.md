@@ -8,11 +8,16 @@
 
 Digital Design for OpenSource FPGAs made easy: [icestudio.io](https://icestudio.io/)
 
-![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-platforms-small.png)
+# Platforms
+
+Linux, Mac and Windows
+
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/icestudio-platforms-small.png)  
+
 
 # Documentation
 
-Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestudio/wiki)
+Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestudio/wiki)  
 
 # Introduction
 
@@ -31,7 +36,17 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 # Screenshots
 
-(TODO) 
+## Hello world example of the iceK collection
+
+### Alhambra II board
+
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-01-icek-Alhambra-II.png)
+
+### iceBreaker board
+
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-02-icek-icebreaker.png)
+
+### TODO
 
 <img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
 
