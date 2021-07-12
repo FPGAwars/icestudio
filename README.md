@@ -69,7 +69,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
-| 0.6rc2 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan) (more people... to-do) |
+| 0.6    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan) (more people... to-do) |
 | 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes), [Sam](https://github.com/sam210723) |
 | 0.4 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
 | 0.3 | [Luke Valenty](https://github.com/tinyfpga), [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
@@ -94,7 +94,7 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.6.0rc2-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.6.0-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
