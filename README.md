@@ -40,29 +40,43 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 ### Alhambra II board
 
+([Example repo](https://github.com/FPGAwars/iceK/tree/main/examples/02-Generic-constants/Alhambra-II))
+
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-01-icek-Alhambra-II.png)
 
 ### iceBreaker board
+
+([Example repo](https://github.com/FPGAwars/iceK/tree/main/examples/01-Turn-on-LEDs/iceBreaker))
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-02-icek-icebreaker.png)
 
 ## Icemem collection: exmple 23
 
+([Icemem exmple repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
+
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-03-icemem.png)
 
 ## SPI 7 segments 4 digits controller example
+
+([SPI Display Notes](https://github.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/wiki/CT.7:-Display-SPI-de-4-d%C3%ADgitos-de-7-segmentos)) (In spanish)
 
 ![](https://raw.githubusercontent.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/master/wiki/CT7-display-7seg-spi/controller-13.png)
 
 ## RISC-V CPU
 
+([Risc-V FPGA icestudio repo](https://github.com/Obijuan/RISC-V-FPGA))
+
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-04-RISC-V.png)
 
 ## Z80 CPU
 
+([Z80-FPGA icestudio repo](https://github.com/Obijuan/Z80-FPGA))  
+
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-05-Z80.png)
 
 ## Hack ZPU (Nand2tetris project)
+
+([Nand2tetris-icestudio repo](https://github.com/Obijuan/nand2tetris-icestudio))
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-06-Hack-Nand2tetris.png)
 
