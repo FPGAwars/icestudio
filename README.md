@@ -46,19 +46,25 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-02-icek-icebreaker.png)
 
-### Icemem collection: exmple 23
+## Icemem collection: exmple 23
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-03-icemem.png)
 
+## SPI 7 segments 4 digits controller example
 
+![](https://raw.githubusercontent.com/Obijuan/Cuadernos-tecnicos-FPGAs-libres/master/wiki/CT7-display-7seg-spi/controller-13.png)
 
-### TOPDO 
+## RISC-V CPU
 
-<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main.png" width="700" align="center">
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-04-RISC-V.png)
 
-<img src="https://raw.githubusercontent.com/FPGAwars/icestudio/develop/docs/resources/images/demo/main-1.png" width="700" align="center">
+## Z80 CPU
 
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-05-Z80.png)
 
+## Hack ZPU (Nand2tetris project)
+
+![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-06-Hack-Nand2tetris.png)
 
 
 ### Languages
