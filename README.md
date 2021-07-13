@@ -22,6 +22,8 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 # Introduction
 
+Icestudio is a design tool focused on new comers to the FPGA world
+
 * **Step 1**: Draw your circuit
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/draw-two-leds-0.6.0-default-.gif)
