@@ -1402,33 +1402,10 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
   applyValue: function (opt) {
     this.updating = true;
-
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
 
     opt = opt || {};
 
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [{
-            group: 'doc',
-            deltas: deltas
-          }];
-          if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
-          }
-          else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.list);
     }
@@ -1679,36 +1656,10 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
   applyValue: function (opt) {
     this.updating = true;
 
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
 
     opt = opt || {};
 
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [{
-            group: 'doc',
-            deltas: deltas
-          }];
-          if (opt.undo) {
-            console.log('----------',this.editor,changes,dontselect,'-------------');
-            //this.editor.session.undoChanges(changes, dontselect);
-         let umanager = this.editor.session.getUndoManager();
-         //   umanager.execute({args:changes});
-            //umanager.undo(dontselect);
-          }
-          else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.code);
     }
@@ -2049,34 +2000,10 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   applyValue: function (opt) {
     this.updating = true;
 
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
 
     opt = opt || {};
 
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [{
-            group: 'doc',
-            deltas: deltas
-          }];
-          if (opt.undo) {
-          //  this.editor.session.undoChanges(changes, dontselect);
-            let umanager = this.editor.session.getUndoManager();
-            umanager.undo();
-          }
-          else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.info);
     }
