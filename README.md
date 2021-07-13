@@ -51,7 +51,7 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-02-icek-icebreaker.png)
 
-## Icemem collection: exmple 23
+## Icemem collection: example 23
 
 ([Icemem exmple repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
 
@@ -75,7 +75,7 @@ Find all the information on this [WIKI PAGE](https://github.com/FPGAwars/icestud
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-05-Z80.png)
 
-## Hack ZPU (Nand2tetris project)
+## Hack CPU (Nand2tetris project)
 
 ([Nand2tetris-icestudio repo](https://github.com/Obijuan/nand2tetris-icestudio))
 
