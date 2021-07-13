@@ -1311,31 +1311,8 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
-    this.editor.session.on('change', function (delta) {
-      if (!self.updating) {
-        // Check consecutive-change interval
-        if (Date.now() - self.counter < undoGroupingInterval) {
-          clearTimeout(self.timer);
-        }
-        // Update deltas
-        self.deltas = self.deltas.concat([delta]);
-        // Launch timer
-        self.timer = setTimeout(function () {
-          var deltas = JSON.parse(JSON.stringify(self.deltas));
-          // Set deltas
-          self.model.set('deltas', deltas);
-          // Reset deltas
-          self.deltas = [];
-          // Set data.list
-          self.model.attributes.data.list = self.editor.session.getValue();
-        }, undoGroupingInterval);
-        // Reset counter
-        self.counter = Date.now();
-      }
-    });
+
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
@@ -1609,32 +1586,8 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
-    this.editor.session.on('change', function (delta) {
-      if (!self.updating) {
-        // Check consecutive-change interval
-        if (Date.now() - self.counter < undoGroupingInterval) {
-          clearTimeout(self.timer);
-        }
-        // Update deltas
-        self.deltas = self.deltas.concat([delta]);
-        // Launch timer
-        self.timer = setTimeout(function () {
-          var deltas = JSON.parse(JSON.stringify(self.deltas));
-          // Set deltas
-          self.model.set('deltas', deltas);
-          // Reset deltas
-          self.deltas = [];
-          // Set data.code
-          self.model.attributes.data.code = self.editor.session.getValue();
-
-        }, undoGroupingInterval);
-        // Reset counter
-        self.counter = Date.now();
-      }
-    });
+    
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
@@ -1695,7 +1648,11 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
             deltas: deltas
           }];
           if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
+            console.log('----------',this.editor,changes,dontselect,'-------------');
+            //this.editor.session.undoChanges(changes, dontselect);
+         let umanager = this.editor.session.getUndoManager();
+         //   umanager.execute({args:changes});
+            //umanager.undo(dontselect);
           }
           else {
             this.editor.session.redoChanges(changes, dontselect);
@@ -1980,31 +1937,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
-    this.editor.session.on('change', function (delta) {
-      if (!self.updating) {
-        // Check consecutive-change interval
-        if (Date.now() - self.counter < undoGroupingInterval) {
-          clearTimeout(self.timer);
-        }
-        // Update deltas
-        self.deltas = self.deltas.concat([delta]);
-        // Launch timer
-        self.timer = setTimeout(function () {
-          var deltas = JSON.parse(JSON.stringify(self.deltas));
-          // Set deltas
-          self.model.set('deltas', deltas);
-          // Reset deltas
-          self.deltas = [];
-          // Set data.code
-          self.model.attributes.data.info = self.editor.session.getValue();
-        }, undoGroupingInterval);
-        // Reset counter
-        self.counter = Date.now();
-      }
-    });
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
       $(document).trigger('disableSelected');
@@ -2063,7 +1996,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
             deltas: deltas
           }];
           if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
+          //  this.editor.session.undoChanges(changes, dontselect);
+            let umanager = this.editor.session.getUndoManager();
+            umanager.undo();
           }
           else {
             this.editor.session.redoChanges(changes, dontselect);
