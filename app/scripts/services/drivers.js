@@ -148,28 +148,47 @@ angular.module('icestudio')
       }
     }
 
-    
+    //-----------------------
+    //-- On MAC some actions should be done with the drivers
+    //-- before every upload
+    //--
     this.preUpload = function (callback) {
+
+      //-- Execut Preupload commands (only in Mac)
       if (common.DARWIN) {
         preUploadDarwin(callback);
       }
+
+      //-- For the oter platforms just call the callback
       else if (callback) {
         callback();
       }
     };
 
+    //------------------------------------
+    //-- Actions to be done on MAC after the upload
+    //--
     this.postUpload = function () {
+
+      //-- Only on mac
       if (common.DARWIN) {
         postUploadDarwin();
       }
     };
 
-    /*
-     * Linux drivers
-     */
+    /* ----------------------------------------------------------------------
+       Linux drivers
+    -----------------------------------------------------------------------*/
 
+    //------------------------------------
+    //-- Enable the FTDI Drivers
+    //-- The file /etc/udev/rules.d/80-fpga-ftdi.rules is created
+    //-- and the coomands for launching again the udev system executed
+    //--
     function enableLinuxDriversFTDI() {
-      var rules = '';
+
+      //-- Contents for the .rules file
+      let rules = '';
       rules += 'ATTRS{idVendor}==\\"0403\\", ATTRS{idProduct}==\\"6010\\", ';
       rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
 
@@ -196,24 +215,54 @@ angular.module('icestudio')
       rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"602b\\", ';
       rules += 'MODE=\\"0660\\", GROUP=\\"plugdev\\", TAG+=\\"uaccess\\"\n';
 
-      configureLinuxDrivers([
-        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'
-      ].concat(reloadRules()), function () {
+      //-- Command for creating the .fules file
+      //-- echo "rules..." > /etc/udev/rules.d/80-fpga-ftdi.rules
+      const cmd_list = ['echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-ftdi.rules'];
+
+      //-- Add the commands for reloading the udev rules
+      cmd_list.concat(reloadRules());
+
+      //-- Execute the comands in the cmd list!
+      //-- Show a notification message when finished
+      configureLinuxDrivers(cmd_list, () => {
+
+        //-- Notification message
         alertify.success(gettextCatalog.getString('Drivers enabled'));
       });
     }
 
+    //------------------------------------
+    //-- Disable the FTDI Drivers
+    //-- The corresponding .rules file is removed and the  
+    //-- command for relaunching the udev system executed
+    //--
     function disableLinuxDriversFTDI() {
-      configureLinuxDrivers([
-        'rm -f /etc/udev/rules.d/80-icestick.rules',
-        'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'
-      ].concat(reloadRules()), function () {
-        alertify.warning(gettextCatalog.getString('Drivers disabled'));
+
+      //-- Command for removing the .rules file
+      const cmd_list = ['rm -f /etc/udev/rules.d/80-fpga-ftdi.rules'];
+
+      //-- This file is old (used many versions ago)
+      cmd_list.concat(['rm -f /etc/udev/rules.d/80-fpga-ftdi.rules']);
+
+      //-- Execute the comands in the cmd list!
+      //-- Show a notification message when finished
+      configureLinuxDrivers(cmd_list, () => {
+
+        //-- Notification message
+        alertify.success(gettextCatalog.getString('Drivers disabled'));
       });
     }
 
+
+    //------------------------------------
+    //-- Enable the Serial Drivers
+    //-- The file /etc/udev/rules.d/80-fpga-serial.rules is created
+    //-- and the comands for launching again the udev system executed
+    //--
     function enableLinuxDriversSerial() {
-      var rules = '';
+
+      //-- Contents for the .rules file
+      let rules = '';
       rules += '# Disable ModemManager for BlackIce\n';
       rules += 'ATTRS{idVendor}==\\"0483\\", ATTRS{idProduct}==\\"5740\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"\n';
       rules += '# Disable ModemManager for TinyFPGA B2\n';
@@ -222,21 +271,48 @@ angular.module('icestudio')
       rules += 'ATTRS{idVendor}==\\"1d50\\", ATTRS{idProduct}==\\"6130\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
       rules += '# Disable ModemManager for iceFUN\n';
       rules += 'ATTRS{idVendor}==\\"04d8\\", ATTRS{idProduct}==\\"ffee\\", ENV{ID_MM_DEVICE_IGNORE}=\\"1\\"';
-      configureLinuxDrivers([
-        'echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'
-      ].concat(reloadRules()), function () {
+
+      //-- Command for creating the .fules file
+      //-- echo "rules..." > /etc/udev/rules.d/80-fpga-ftdi.rules
+      const cmd_list = ['echo \'' + rules + '\' > /etc/udev/rules.d/80-fpga-serial.rules'];
+
+      //-- Add the commands for reloading the udev rules
+      cmd_list.concat(reloadRules());
+
+      //-- Execute the comands in the cmd list!
+      //-- Show a notification message when finished
+      configureLinuxDrivers(cmd_list, () => {
+
+        //-- Notification message
         alertify.success(gettextCatalog.getString('Drivers enabled'));
       });
     }
 
+
+    //------------------------------------
+    //-- Disable the Serial Drivers
+    //-- The corresponding .rules file is removed and the  
+    //-- command for relaunching the udev system executed
+    //--
     function disableLinuxDriversSerial() {
-      configureLinuxDrivers([
-        'rm -f /etc/udev/rules.d/80-fpga-serial.rules'
-      ].concat(reloadRules()), function () {
-        alertify.warning(gettextCatalog.getString('Drivers disabled'));
+
+      //-- Command for removing the .rules file
+      const cmd_list = ['rm -f /etc/udev/rules.d/80-fpga-serial.rules'];
+
+      //-- Execute the comands in the cmd list!
+      //-- Show a notification message when finished
+      configureLinuxDrivers(cmd_list, () => {
+
+        //-- Notification message
+        alertify.success(gettextCatalog.getString('Drivers disabled'));
       });
     }
 
+    //--------------------------------------------------------
+    //-- Linux commands that should be executed once the
+    //-- rules udev file has been created
+    //-- (Drivers enabled)
+    //--
     function reloadRules() {
       return [
         'udevadm control --reload-rules',
@@ -245,16 +321,35 @@ angular.module('icestudio')
       ];
     }
 
+    //-----------------------------------------------------
+    //-- Execute a list of commands on hte Linux console
+    //-- The callback is called when finished
+    //--
     function configureLinuxDrivers(commands, callback) {
-      var command = 'sh -c "' + commands.join('; ') + '"';
+
+      //-- The final command is: sh -c "cmd1; cmd2;...."
+      const command = 'sh -c "' + commands.join('; ') + '"';
+
+      //-- Start the spinner
       utils.beginBlockingTask();
-      nodeSudo.exec(command, { name: 'Icestudio' }, function (error/*, stdout, stderr*/) {
+
+      //-- Execute the commands as root (with sudo)
+      nodeSudo.exec(command, { name: 'Icestudio' }, (error) => {
+
+        //--- The commands are done:
+        //-- Stop the spinner
         utils.endBlockingTask();
+
+        //-- If there is no error:
         if (!error) {
+
+          //-- Call the callback function
           if (callback) {
             callback();
           }
-          setTimeout(function () {
+
+          //-- Show a notification
+          setTimeout(() => {
             alertify.message(gettextCatalog.getString('<b>Unplug</b> and <b>reconnect</b> the board'), 5);
           }, 1000);
         }
