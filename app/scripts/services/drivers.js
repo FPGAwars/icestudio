@@ -11,80 +11,144 @@ angular.module('icestudio')
     nodeChildProcess,
     $rootScope) {
 
+    //--------------------------------------
+    //-- Enable de Drivers
+    //--
     this.enable = function () {
+
+      //-- The driver depends on the interface of the board
       switch (common.selectedBoard.info.interface) {
+
+        //-- FTDI Boards
         case 'FTDI':
           enableDriversFTDI();
           break;
+
+        //-- Serial boards  
         case 'Serial':
           enableDriversSerial();
           break;
+
+        //-- Board with no interface! (Error!)  
         default:
           console.warn('No valid selected board interface');
       }
     };
 
+
+    //----------------------------------------------
+    //-- Disable the Drivers
+    //--
     this.disable = function () {
+
+      //-- It depends on the type of interface of the board
       switch (common.selectedBoard.info.interface) {
+
+        //-- FTDI boards
         case 'FTDI':
           disableDriversFTDI();
           break;
+
+        //-- Serial Boards  
         case 'Serial':
           disableDriversSerial();
           break;
+
+        //-- Board wiht no interface! (Error!)  
         default:
           console.warn('No valid selected board interface');
       }
     };
 
+    //---------------------------------------------
+    //-- Enable the drivers for the FTDI boards
+    //-- It depends on the operating system
+    //--
     function enableDriversFTDI() {
+
+      //-- Enable FTDI on Windows platforms
       if (common.WIN32) {
         enableWindowsDriversFTDI();
       }
+
+      //-- Enable FTDI on MAC
       else if (common.DARWIN) {
         enableDarwinDriversFTDI();
       }
+
+      //-- Enable FTDI on Linux (Default option)
       else {
         enableLinuxDriversFTDI();
       }
     }
 
+    //-----------------------------------------------
+    //-- Disable the drivers for the FTDI boards
+    //-- It depends on the operating system
+    //--
     function disableDriversFTDI() {
+
+      //-- Disable FTDI on windows platforms
       if (common.WIN32) {
         disableWindowsDriversFTDI();
       }
+
+      //-- Disable FTDI on MAC
       else if (common.DARWIN) {
         disableDarwinDriversFTDI();
       }
+
+      //-- Disable FTDI on Linux (Default option)
       else {
         disableLinuxDriversFTDI();
       }
     }
 
+    //----------------------------------------
+    //-- Enable the drivers for the serial boards
+    //-- It depends on the operating system
+    //--
     function enableDriversSerial() {
+
+      //-- Enable the Serial boards on windows
       if (common.WIN32) {
         enableWindowsDriversSerial();
       }
+
+      //-- Enable de Serial boards on MAC
       else if (common.DARWIN) {
         enableDarwinDriversSerial();
       }
+
+      //-- Enable de Serial baords on Linux (Default option)
       else {
         enableLinuxDriversSerial();
       }
     }
 
+    //------------------------------------------------
+    //-- Disable the Drivers for the serial boards
+    //-- It depends on the operating system
+    //-- 
     function disableDriversSerial() {
+
+      //-- Disable the serial boards on windows
       if (common.WIN32) {
         disableWindowsDriversSerial();
       }
+
+      //-- Disable the serial boards on MAC
       else if (common.DARWIN) {
         disableDarwinDriversSerial();
       }
+
+      //-- Disable the serial boards on Linux (default option)
       else {
         disableLinuxDriversSerial();
       }
     }
 
+    
     this.preUpload = function (callback) {
       if (common.DARWIN) {
         preUploadDarwin(callback);

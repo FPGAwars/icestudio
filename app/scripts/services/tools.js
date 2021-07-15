@@ -1210,8 +1210,14 @@ angular
       //-- Enable the drivers
       //--
       this.enableDrivers = function () {
+
+        //-- It only works if the toolchain has been
+        //-- previoiusly installed
         checkToolchain(function () {
+
           if (toolchain.installed) {
+
+            //-- Enable the drivers!
             drivers.enable();
           }
         });
@@ -1221,8 +1227,14 @@ angular
       //-- Disable the drivers
       //--
       this.disableDrivers = function () {
+
+        //-- It only works if the toolchain has been
+        //-- Already installed
         checkToolchain(function () {
+
           if (toolchain.installed) {
+
+            //-- Disable de drivers!
             drivers.disable();
           }
         });
