@@ -900,39 +900,7 @@ angular
                     Field13: { name: "-", used: "-",total: "-",percentage: "-"},
                     BUILDT: { value: "-"},
                     MF: {  value: 0 }
-                  // LC: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // RAM: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // IO: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // GB: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // PLL: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // WB: {
-                    // used: "-",
-                    // total: "-",
-                    // percentage: "-"
-                  // },
-                  // MF: {
-                    // value: 0
-                  // }
+
                 };
               }
                 
