@@ -569,6 +569,8 @@ angular
         var stderr = result.stderr;
 
         return new Promise(function (resolve, reject) {
+            
+          var archName = common.selectedBoard.info.arch;
           if (_error || stderr) {
             // -- Process errors
             reject();
@@ -882,7 +884,7 @@ angular
           } else {
             //-- Process output
             resolve();
-            var archName = common.selectedBoard.info.arch;
+            
             if (stdout) {
                 // Show used resources in the FPGA
                 if (typeof common.FPGAResources.nextpnr === "undefined") {
