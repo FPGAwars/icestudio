@@ -1024,7 +1024,7 @@ angular
             total: match[3],
             percentage: match[4]
         }
-         : previousValue
+         : previousValue;
     }
 
       function findMaxFreq(pattern, output, previousValue) {
