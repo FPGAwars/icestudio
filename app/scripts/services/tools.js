@@ -882,7 +882,7 @@ angular
           } else {
             //-- Process output
             resolve();
-
+            var archName = common.selectedBoard.info.arch;
             if (stdout) {
                 // Show used resources in the FPGA
                 if (typeof common.FPGAResources.nextpnr === "undefined") {
@@ -933,7 +933,7 @@ angular
                   // }
                 };
               }
-                var archName = common.selectedBoard.info.arch;
+                
                 if ("ice40" === archName){
                     
                     common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
@@ -980,23 +980,18 @@ angular
               }              
                 if ("ecp5" === archName){
                   
-                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field0);
-                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field1); 
-                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field2); 
-                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field3); 
-                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field10); 
-                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,stdout,common.FPGAResources.nextpnr.Field11); 
-                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g,stdout,common.FPGAResources.nextpnr.Field12); 
-                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g,stdout,common.FPGAResources.nextpnr.Field13); 
-                   
-                    
+                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/(LUT4)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
+                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(SLICE):\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
+                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/Total D(FF)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
+                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/(DP16KD):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3);
+                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/TRELLIS_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10);
+                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/(MULT18X18)D:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11);
+                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/EHX(PLL)L:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field12);
+                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/DDR(DLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field13);
+                     
             }      
 
-            common.FPGAResources.nextpnr.MF = findMaxFreq(
-                    /Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g,
-                    stdout,
-                    common.FPGAResources.nextpnr.MF
-            );
+
             common.FPGAResources.nextpnr.MF = findMaxFreq(
                 /Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g,
                 stdout,
