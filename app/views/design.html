@@ -23,6 +23,7 @@
       <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
       
        <div>  
+        <!-- 3 next fields with percentage precision higher than the nextpnr one -->
         <span>
           {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
           : (common.FPGAResources.nextpnr.Field0.name+' : '+common.FPGAResources.nextpnr.Field0.used+' / '+common.FPGAResources.nextpnr.Field0.total+' ( '+(common.FPGAResources.nextpnr.Field0.used/common.FPGAResources.nextpnr.Field0.total*100).toFixed(1)+'%)') }}
@@ -38,7 +39,7 @@
           : (common.FPGAResources.nextpnr.Field2.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field2.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field2.total+'&nbsp;&nbsp;(&nbsp;'+(common.FPGAResources.nextpnr.Field2.used/common.FPGAResources.nextpnr.Field2.total*100).toFixed(1)+'%)') }}
         </span>
         
-          <!-- 3 next fields with less precise percentage -->
+          <!-- 3 next fields with percentage precision from nextpnr -->
         <span>
           {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
           : (common.FPGAResources.nextpnr.Field3.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field3.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field3.total+'&nbsp;&nbsp;(&nbsp;'+common.FPGAResources.nextpnr.Field3.percentage+'%)') }}

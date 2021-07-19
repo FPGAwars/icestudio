@@ -936,52 +936,8 @@ angular
                 };
               }
                 
-                if ("ice40" === archName){
-                    
-                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
-                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
-                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2); 
-                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3); 
-                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10); 
-                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11); 
-                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field12); 
-                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field13);
-              
-                  // common.FPGAResources.nextpnr.LC = findValueNPNR(
-                    // /_LC:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.LC
-                  // );
-                  // common.FPGAResources.nextpnr.RAM = findValueNPNR(
-                    // /_RAM:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.RAM
-                  // );
-                  // common.FPGAResources.nextpnr.IO = findValueNPNR(
-                    // /SB_IO:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.IO
-                  // );
-                  // common.FPGAResources.nextpnr.GB = findValueNPNR(
-                    // /SB_GB:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.GB
-                  // );
-                  // common.FPGAResources.nextpnr.PLL = findValueNPNR(
-                    // /_PLL:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.PLL
-                  // );
-                  // common.FPGAResources.nextpnr.WB = findValueNPNR(
-                    // /_WARMBOOT:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                    // stdout,
-                    // common.FPGAResources.nextpnr.WB
-                  // );
-
-              
-              }              
                 if ("ecp5" === archName){
-                  
+                   // ecp5  resources
                     common.FPGAResources.nextpnr.Field0 = findValueNPNR(/(LUT4)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
                     common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(SLICE):\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
                     common.FPGAResources.nextpnr.Field2 = findValueNPNR(/Total D(FF)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
@@ -991,7 +947,20 @@ angular
                     common.FPGAResources.nextpnr.Field12 = findValueNPNR(/EHX(PLL)L:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field12);
                     common.FPGAResources.nextpnr.Field13 = findValueNPNR(/DDR(DLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field13);
                      
-            }      
+                }   
+                else {
+                    // ice40  resources
+                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
+                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
+                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2); 
+                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3); 
+                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10); 
+                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11); 
+                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field12); 
+                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field13);
+                          
+                }              
+                
 
 
             common.FPGAResources.nextpnr.MF = findMaxFreq(
