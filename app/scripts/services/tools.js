@@ -569,6 +569,8 @@ angular
         var stderr = result.stderr;
 
         return new Promise(function (resolve, reject) {
+            
+          var archName = common.selectedBoard.info.arch;
           if (_error || stderr) {
             // -- Process errors
             reject();
@@ -882,81 +884,66 @@ angular
           } else {
             //-- Process output
             resolve();
-
+            
             if (stdout) {
-              // Show used resources in the FPGA
-              if (typeof common.FPGAResources.nextpnr === "undefined") {
+                // Show used resources in the FPGA
+                if (typeof common.FPGAResources.nextpnr === "undefined") {
                 common.FPGAResources.nextpnr = {
-                  LC: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  RAM: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  IO: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  GB: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  PLL: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  WB: {
-                    used: "-",
-                    total: "-",
-                    percentage: "-"
-                  },
-                  MF: {
-                    value: 0
-                  }
+                    Field0: { name: "-", used: "-",total: "-",percentage: "-"},                                                
+                    Field1: { name: "-", used: "-",total: "-",percentage: "-"},  
+                    Field2: { name: "-", used: "-",total: "-",percentage: "-"},                                                
+                    Field3: { name: "-", used: "-",total: "-",percentage: "-"},
+                  
+                    Field10: { name: "-", used: "-",total: "-",percentage: "-"},                                                
+                    Field11: { name: "-", used: "-",total: "-",percentage: "-"},  
+                    Field12: { name: "-", used: "-",total: "-",percentage: "-"},                                                
+                    Field13: { name: "-", used: "-",total: "-",percentage: "-"},
+                    BUILDT: { value: "-"},
+                    MF: {  value: 0 }
+
                 };
               }
-              common.FPGAResources.nextpnr.LC = findValueNPNR(
-                /_LC:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.LC
-              );
-              common.FPGAResources.nextpnr.RAM = findValueNPNR(
-                /_RAM:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.RAM
-              );
-              common.FPGAResources.nextpnr.IO = findValueNPNR(
-                /SB_IO:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.IO
-              );
-              common.FPGAResources.nextpnr.GB = findValueNPNR(
-                /SB_GB:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.GB
-              );
-              common.FPGAResources.nextpnr.PLL = findValueNPNR(
-                /_PLL:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.PLL
-              );
-              common.FPGAResources.nextpnr.WB = findValueNPNR(
-                /_WARMBOOT:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g,
-                stdout,
-                common.FPGAResources.nextpnr.WB
-              );
-              common.FPGAResources.nextpnr.MF = findMaxFreq(
+                
+                if ("ecp5" === archName){
+                   // ecp5  resources
+                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/(LUT4)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
+                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(SLICE):\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
+                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/Total D(FF)s:\s{1,}(\d+)\/(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2);
+                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/(DP16KD):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3);
+                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/TRELLIS_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10);
+                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/(MULT18X18)D:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11);
+                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/EHX(PLL)L:\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field12);
+                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/DDR(DLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field13);
+                     
+                }   
+                else {
+                    // ice40  resources
+                    common.FPGAResources.nextpnr.Field0 = findValueNPNR(/_(LC):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field0); 
+                    common.FPGAResources.nextpnr.Field1 = findValueNPNR(/_(RAM):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field1); 
+                    common.FPGAResources.nextpnr.Field2 = findValueNPNR(/SB_(IO):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field2); 
+                    common.FPGAResources.nextpnr.Field3 = findValueNPNR(/SB_(GB):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field3); 
+                    common.FPGAResources.nextpnr.Field10 = findValueNPNR(/_(PLL):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field10); 
+                    common.FPGAResources.nextpnr.Field11 = findValueNPNR(/_(WARMBOOT):\s{1,}(\d+)\/\s{1,}(\d+)\s{1,}(\d+)%/g, stdout, common.FPGAResources.nextpnr.Field11); 
+                    common.FPGAResources.nextpnr.Field12 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field12); 
+                    common.FPGAResources.nextpnr.Field13 = findValueNPNR(/(-)(-)(-)(-)/g, stdout, common.FPGAResources.nextpnr.Field13);
+                          
+                }              
+                
+
+
+            common.FPGAResources.nextpnr.MF = findMaxFreq(
                 /Max frequency for clock '[\w\W]+': ([\d\.]+) MHz/g,
                 stdout,
                 common.FPGAResources.nextpnr.MF
-              );
+            );
+                                
+            common.FPGAResources.nextpnr.BUILDT = findTime(
+                /==(?:=)+..SUCCESS. Took ([\d\.]+) ([secmin]{3})/g,
+                stdout,
+                common.FPGAResources.nextpnr.MF.BUILDT
+            );
+              
+                        
               utils.rootScopeSafeApply();
             }
           }
@@ -965,17 +952,27 @@ angular
 
       function findValueNPNR(pattern, output, previousValue) {
         var match = pattern.exec(output);
-        return match && match[1] && match[2] && match[3]? {
-              used: match[1],
-              total: match[2],
-              percentage: match[3]
-        } : previousValue;
-      }
+        return match && match[1] && match[2] && match[3] && match[4] ? { 
+            name: match[1],
+            used: match[2],
+            total: match[3],
+            percentage: match[4]
+        }
+         : previousValue;
+    }
 
       function findMaxFreq(pattern, output, previousValue) {
         var match = pattern.exec(output);
         return match && match[1] ? {
               value: match[1]
+            } : previousValue;
+      }
+      
+      function findTime(pattern, output, previousValue) {
+        var match = pattern.exec(output);
+        return match && match[1] && match[2] ? {
+                 value: match[1],
+                 unit: match[2]    
             } : previousValue;
       }
 

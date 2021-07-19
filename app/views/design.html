@@ -21,34 +21,67 @@
     </div>
     <div class="board-container">
       <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
+      
+       <div>  
+        <!-- 3 next fields with percentage precision higher than the nextpnr one -->
         <span>
-          LC:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.LC.used+' / '+common.FPGAResources.nextpnr.LC.total+' ('+common.FPGAResources.nextpnr.LC.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field0.name+' : '+common.FPGAResources.nextpnr.Field0.used+' / '+common.FPGAResources.nextpnr.Field0.total+' ( '+(common.FPGAResources.nextpnr.Field0.used/common.FPGAResources.nextpnr.Field0.total*100).toFixed(1)+'%)') }}
         </span>
+        
         <span>
-         RAM:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.RAM.used+' / '+common.FPGAResources.nextpnr.RAM.total+' ('+common.FPGAResources.nextpnr.RAM.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field1.name+' : '+common.FPGAResources.nextpnr.Field1.used+' / '+common.FPGAResources.nextpnr.Field1.total+' ( '+(common.FPGAResources.nextpnr.Field1.used/common.FPGAResources.nextpnr.Field1.total*100).toFixed(1)+'%)') }}
         </span>
+        
         <span>
-          IO:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.IO.used+' / '+common.FPGAResources.nextpnr.IO.total+' ('+common.FPGAResources.nextpnr.IO.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field2.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field2.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field2.total+'&nbsp;&nbsp;(&nbsp;'+(common.FPGAResources.nextpnr.Field2.used/common.FPGAResources.nextpnr.Field2.total*100).toFixed(1)+'%)') }}
         </span>
+        
+          <!-- 3 next fields with percentage precision from nextpnr -->
         <span>
-          GB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.GB.used+' / '+common.FPGAResources.nextpnr.GB.total+' ('+common.FPGAResources.nextpnr.GB.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field3.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field3.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field3.total+'&nbsp;&nbsp;(&nbsp;'+common.FPGAResources.nextpnr.Field3.percentage+'%)') }}
         </span>
+        </div>
+        
+        <div>         
         <span>
-          PLL:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.PLL.used+' / '+common.FPGAResources.nextpnr.PLL.total+' ('+common.FPGAResources.nextpnr.PLL.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field10.name+' : '+common.FPGAResources.nextpnr.Field10.used+' / '+common.FPGAResources.nextpnr.Field10.total+' ( '+common.FPGAResources.nextpnr.Field10.percentage+'%)') }}
         </span>
-
+        
         <span>
-         WB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '- / -' : (common.FPGAResources.nextpnr.WB.used+' / '+common.FPGAResources.nextpnr.WB.total+' ('+common.FPGAResources.nextpnr.WB.percentage+'%)') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field11.name+' : '+common.FPGAResources.nextpnr.Field11.used+' / '+common.FPGAResources.nextpnr.Field11.total+' ( '+common.FPGAResources.nextpnr.Field11.percentage+'%)') }}
         </span>
-
+        
+       <!-- 2 next fields with no percentage -->
+        
         <span>
-         MaxFreq.:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' : (common.FPGAResources.nextpnr.MF.value+'MHz') }}
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field12.name+' : '+common.FPGAResources.nextpnr.Field12.used+' / '+common.FPGAResources.nextpnr.Field12.total) }}
         </span>
-
-
-
-
-
+        
+        <span>
+          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
+          : (common.FPGAResources.nextpnr.Field13.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field13.used&nbsp;&nbsp;+'/'+&nbsp;&nbsp;common.FPGAResources.nextpnr.Field13.total) }}
+        </span>
+        
+        
+        <span>
+          MaxFreq.:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' 
+          : (common.FPGAResources.nextpnr.MF.value+'&nbsp;MHz') }}
+        </span>
+        
+        <span>
+          BuildTime&nbsp;:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' 
+          : (common.FPGAResources.nextpnr.BUILDT.value +'&nbsp;'+common.FPGAResources.nextpnr.BUILDT.unit ) }}
+        </span>
+        
+        </div>
+      
 
       </div>
       {{ common.selectedBoard.info.label }}
