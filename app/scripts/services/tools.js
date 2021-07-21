@@ -1303,14 +1303,15 @@ angular
 
           //-- Install the apio packages
           //-- apio install <pkg>
-          apioInstallSystem,
+          //apioInstallSystem,  //-- Obsolete package
+          apioInstallOssCadSuite,
           apioInstallYosys,
           apioInstallIce40,
           apioInstallECP5,
+          apioInstallIverilog,
           apioInstallFujprog,
           apioInstallIcesprog,
           apioInstallDfu,
-          apioInstallIverilog,
           apioInstallDrivers,
           apioInstallScons,
 
@@ -1410,7 +1411,7 @@ angular
         let apio = utils.getApioParameters();
 
         //-- Show the installing command in the progres bar windows
-        updateProgress("pip " + apio, 30);
+        updateProgress("pip " + apio, 20);
 
         //-- Perform the real installation
         utils.installOnlineApio(callback);
@@ -1420,13 +1421,48 @@ angular
       //-------------------------------------------
       //-- Install the apio system package
       //-- It contains the lsusb and lsftdi tools
-      //--
+      //-- (Obsolete package. Replaced by oss-cad-suite)
+      /*
       function apioInstallSystem(callback) {
 
         iceConsole.log("**** STEP: APIO install system");
 
-        updateProgress("apio install system", 40);
-        utils.apioInstall("system", callback);
+        //-- Package name to install
+        let pkgName = "system";
+
+        //-- When installing the stable version, specific stable
+        //-- versions of the toolchains are installed (not the latest)
+        //-- Ex. system@1.1.2 --> Install system package version 1.1.2
+        //-- Ex. system --> Install the latest available version
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_SYSTEM_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 25);
+        utils.apioInstall(pkgName, callback);
+      }*/
+
+      
+      //-------------------------------------------
+      //-- Install the apio oss-cad-suite package
+      //-- 
+      function apioInstallOssCadSuite(callback) {
+
+        iceConsole.log("**** STEP: APIO install oss-cad-suite");
+
+        //-- Package name to install
+        let pkgName = "oss-cad-suite";
+
+        //-- When installing the stable version, specific stable
+        //-- versions of the toolchains are installed (not the latest)
+        //-- Ex. system@1.1.2 --> Install system package version 1.1.2
+        //-- Ex. system --> Install the latest available version
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_OSS_CAD_SUITE_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 25);
+        utils.apioInstall(pkgName, callback);
       }
 
       //------------------------------------------------------------
@@ -1437,8 +1473,14 @@ angular
 
         iceConsole.log("**** STEP: APIO install yosys");
 
-        updateProgress("apio install yosys", 50);
-        utils.apioInstall("yosys", callback);
+        let pkgName = "yosys";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_YOSYS_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 30);
+        utils.apioInstall(pkgName, callback);
       }
 
       //-------------------------------------------------------------
@@ -1448,8 +1490,14 @@ angular
 
         iceConsole.log("**** STEP: APIO install ice40");
 
-        updateProgress("apio install ice40", 50);
-        utils.apioInstall("ice40", callback);
+        let pkgName = "ice40";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_ICE40_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 40);
+        utils.apioInstall(pkgName, callback);
       }
 
       //--------------------------------------------------------------
@@ -1459,19 +1507,14 @@ angular
 
         iceConsole.log("**** STEP: APIO install ecp5");
 
-        updateProgress("apio install ecp5", 50);
-        utils.apioInstall("ecp5", callback);
-      }
+        let pkgName = "ecp5";
 
-      //------------------------------------------------------------
-      //--  Install the Fujprog programmer
-      //--
-      function apioInstallFujprog(callback) {
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_ECP5_VERSION);
+        }
 
-        iceConsole.log("**** STEP: APIO install fujprog");
-
-        updateProgress("apio install fujprog", 50);
-        utils.apioInstall("fujprog", callback);
+        updateProgress("apio install " + pkgName, 50);
+        utils.apioInstall(pkgName, callback);
       }
 
       //-------------------------------------------------------------
@@ -1481,8 +1524,31 @@ angular
 
         iceConsole.log("**** STEP: APIO install iverilog");
 
-        updateProgress("apio install iverilog", 70);
-        utils.apioInstall("iverilog", callback);
+        let pkgName = "iverilog";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_IVERILOG_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 60);
+        utils.apioInstall(pkgName, callback);
+      }
+
+      //------------------------------------------------------------
+      //--  Install the Fujprog programmer
+      //--
+      function apioInstallFujprog(callback) {
+
+        iceConsole.log("**** STEP: APIO install fujprog");
+
+        let pkgName = "fujprog";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_FUJPROG_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 70);
+        utils.apioInstall(pkgName, callback);
       }
 
       //--------------------------------------------------------------
@@ -1492,8 +1558,14 @@ angular
 
         iceConsole.log("**** STEP: APIO install icesprog");
 
-        updateProgress("apio install icesprog", 50);
-        utils.apioInstall("icesprog", callback);
+        let pkgName = "icesprog";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_ICESPROG_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 75);
+        utils.apioInstall(pkgName, callback);
       }
 
       //----------------------------------------------
@@ -1503,8 +1575,14 @@ angular
 
         iceConsole.log("**** STEP: APIO install duf");
 
-        updateProgress("apio install dfu", 50);
-        utils.apioInstall("dfu", callback);
+        let pkgName = "dfu";
+
+        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+          pkgName += ("@" + common.APIO_PKG_DFU_VERSION);
+        }
+
+        updateProgress("apio install " + pkgName, 80);
+        utils.apioInstall(pkgName, callback);
       }
 
       //---------------------------------------------
@@ -1515,7 +1593,7 @@ angular
 
           iceConsole.log("**** STEP: APIO install drivers");
 
-          updateProgress("apio install drivers", 80);
+          updateProgress("apio install drivers", 85);
           utils.apioInstall("drivers", callback);
         } else {
           callback();

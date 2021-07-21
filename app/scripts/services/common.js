@@ -125,6 +125,24 @@ angular.module('icestudio')
     this.APIO_VERSION_DEV = 2;            //-- Use the development apio version (from the github repo)
     this.APIO_VERSION = this.APIO_VERSION_STABLE;  //-- Default apio version: STABLE  
 
+    //-- APIO PACKAGES VERSION to install for the Stable Version
+    this.APIO_PKG_OSS_CAD_SUITE_VERSION="0.0.3";
+    this.APIO_PKG_DFU_VERSION="2020.11.24";
+    this.APIO_PKG_ECP5_VERSION="2019.12.12";
+    this.APIO_PKG_FUJPROG_VERSION="2020.10.6";
+    this.APIO_PKG_ICE40_VERSION="2019.12.11";
+    this.APIO_PKG_ICESPROG_VERSION="1.0.0";
+    this.APIO_PKG_IVERILOG_VERSION="1.1.1";
+    this.APIO_PKG_SCONS_VERSION="3.0.1";
+    this.APIO_PKG_VERILATOR_VERSION="1.0.0";
+    this.APIO_PKG_YOSYS_VERSION="2019.12.11";
+
+    //-- Packages declared as obsoletes
+    this.APIO_PKG_SYSTEM_VERSION="1.1.2";
+    
+    
+    
+
     //-- Set the apio command. It consist of two parts. The first is for defining and  
     //-- exporting the APIO_HOME_DIR environment variable. It is used by apio to know where  
     //-- is located its installation. The second part is the apio executable itself

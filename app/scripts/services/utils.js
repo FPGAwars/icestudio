@@ -397,6 +397,9 @@ angular.module('icestudio')
       let versionString = "";
 
       if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
+
+        //-- The stable version to installed is read from the icestucio app/package.json:
+        //-- apio.min object!
         versionString = "==" + _package.apio.min;
       }  
 
