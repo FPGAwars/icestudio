@@ -45,7 +45,11 @@ module.exports = function (grunt) {
       //-- Validate js files: grunt-contrib-jshint
       //-- https://www.npmjs.com/package/grunt-contrib-jshint
       "jshint",  
+
+      //-- Clean the temporary folders: grunt-contrib-clean
+      //-- https://github.com/gruntjs/grunt-contrib-clean
       "clean:dist",
+      
       "nggettext_compile",
       "useminPrepare",
       "concat",
@@ -404,6 +408,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // TASK: Clean
     // Empty folders to start fresh
     clean: {
       tmp: [".tmp", "dist/tmp"],
