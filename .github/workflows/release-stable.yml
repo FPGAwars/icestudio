@@ -115,28 +115,6 @@ jobs:
           asset_name: "icestudio-${{env.VERSION}}-linux64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-linux64.zip"
           asset_content_type: application/tar+gzip
-
-      - name: 'Upload AppImage/linux32'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-linux32.AppImage"
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux32.AppImage"
-          asset_content_type: application/tar+gzip
-
-      - name: 'Upload ZIP/linux32'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-linux32.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux32.zip"
-          asset_content_type: application/tar+gzip
           
       - name: 'Upload MSI/win64'
         uses: actions/upload-release-asset@v1
@@ -158,28 +136,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "icestudio-${{env.VERSION}}-win64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-win64.zip"
-          asset_content_type: application/tar+gzip
-
-      - name: 'Upload MSI/win32'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-win32.exe"
-          asset_path: "dist/icestudio-${{env.VERSION}}-win32.exe"
-          asset_content_type: application/tar+gzip
-          
-      - name: 'Upload ZIP/win32'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-win32.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-win32.zip"
           asset_content_type: application/tar+gzip
 
   # Build for macos
