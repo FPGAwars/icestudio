@@ -72,7 +72,10 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-json-minification
       "json-minify",
 
+      //-- grunt-contrib-uglify
+      //-- Minify JavaScript files 
       "uglify",
+
       "cssmin",
       "usemin",
       "nwjs"
@@ -224,6 +227,7 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK: uglify
     // Uglify configuration options:
     uglify: {
       options: {
