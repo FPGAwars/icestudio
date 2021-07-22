@@ -50,7 +50,10 @@ module.exports = function (grunt) {
       //-- https://github.com/gruntjs/grunt-contrib-clean
       "clean:dist",
       
+      //-- Extract/compile the English gettext strings: grunt-angular-gettext
+      //-- https://www.npmjs.com/package/grunt-angular-gettext
       "nggettext_compile",
+
       "useminPrepare",
       "concat",
       "copy:dist",
@@ -299,7 +302,7 @@ module.exports = function (grunt) {
       }
     },
 
-    // Compress packages usin zip
+    // Compress packages using zip
     compress: {
       linux64: {
         options: {
@@ -434,8 +437,8 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK: nggettext_compile
     // Compile PO files into JSON
-    /*jshint camelcase: false */
     nggettext_compile: {
       all: {
         options: {

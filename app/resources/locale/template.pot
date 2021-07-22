@@ -4,24 +4,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: app/scripts/services/drivers.js:194
-#: app/scripts/services/drivers.js:389
+#: app/scripts/services/drivers.js:353
+#: app/scripts/services/drivers.js:548
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr ""
 
-#: app/scripts/services/drivers.js:348
+#: app/scripts/services/drivers.js:507
 msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:355
+#: app/scripts/services/drivers.js:514
 msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:362
+#: app/scripts/services/drivers.js:521
 msgid "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:369
+#: app/scripts/services/drivers.js:528
 msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr ""
 
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Address format"
 msgstr ""
 
-#: app/scripts/services/tools.js:1851
+#: app/scripts/services/tools.js:1938
 msgid "All collections removed"
 msgstr ""
 
@@ -58,11 +58,11 @@ msgstr ""
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1367
+#: app/scripts/services/tools.js:1377
 msgid "At least Python 3.5 is required"
 msgstr ""
 
-#: app/scripts/services/utils.js:757
+#: app/scripts/services/utils.js:760
 msgid "Author"
 msgstr ""
 
@@ -118,16 +118,16 @@ msgstr ""
 msgid "Board rules enabled"
 msgstr ""
 
-#: app/scripts/services/tools.js:649
+#: app/scripts/services/tools.js:651
 msgid "Board {{name}} disconnected"
 msgstr ""
 
-#: app/scripts/services/tools.js:608
-#: app/scripts/services/tools.js:634
+#: app/scripts/services/tools.js:610
+#: app/scripts/services/tools.js:636
 msgid "Board {{name}} not available"
 msgstr ""
 
-#: app/scripts/services/tools.js:586
+#: app/scripts/services/tools.js:588
 msgid "Board {{name}} not connected"
 msgstr ""
 
@@ -136,8 +136,8 @@ msgstr ""
 msgid "Board {{name}} selected"
 msgstr ""
 
-#: app/scripts/services/tools.js:597
-#: app/scripts/services/tools.js:627
+#: app/scripts/services/tools.js:599
+#: app/scripts/services/tools.js:629
 msgid "Bootloader not active"
 msgstr ""
 
@@ -159,11 +159,11 @@ msgstr ""
 msgid "Catalan"
 msgstr ""
 
-#: app/scripts/services/tools.js:1322
+#: app/scripts/services/tools.js:1332
 msgid "Check Internet connection..."
 msgstr ""
 
-#: app/scripts/services/tools.js:1356
+#: app/scripts/services/tools.js:1366
 msgid "Check Python..."
 msgstr ""
 
@@ -182,13 +182,13 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 
-#: app/scripts/services/tools.js:1562
+#: app/scripts/services/tools.js:1649
 msgid "Click here to <b>setup the drivers</b>"
 msgstr ""
 
-#: app/scripts/services/drivers.js:246
-#: app/scripts/services/drivers.js:381
-#: app/scripts/services/drivers.js:400
+#: app/scripts/services/drivers.js:405
+#: app/scripts/services/drivers.js:540
+#: app/scripts/services/drivers.js:559
 #: app/scripts/services/tools.js:433
 msgid "Click here to install it"
 msgstr ""
@@ -209,7 +209,7 @@ msgid "Clone"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:401
-#: app/views/version.html:40
+#: app/views/version.html:42
 msgid "Close"
 msgstr ""
 
@@ -233,19 +233,19 @@ msgstr ""
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
-#: app/scripts/services/tools.js:1704
+#: app/scripts/services/tools.js:1791
 msgid "Collection {{name}} added"
 msgstr ""
 
-#: app/scripts/services/tools.js:1691
+#: app/scripts/services/tools.js:1778
 msgid "Collection {{name}} not replaced"
 msgstr ""
 
-#: app/scripts/services/tools.js:1842
+#: app/scripts/services/tools.js:1929
 msgid "Collection {{name}} removed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1680
+#: app/scripts/services/tools.js:1767
 msgid "Collection {{name}} replaced"
 msgstr ""
 
@@ -266,7 +266,7 @@ msgstr ""
 msgid "Community forum"
 msgstr ""
 
-#: app/scripts/services/tools.js:677
+#: app/scripts/services/tools.js:679
 msgid "Configuration not completed"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Coral"
 msgstr ""
 
-#: app/scripts/services/tools.js:1386
+#: app/scripts/services/tools.js:1396
 msgid "Create virtualenv..."
 msgstr ""
 
@@ -346,7 +346,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: app/scripts/services/utils.js:756
+#: app/scripts/services/utils.js:759
 msgid "Description"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Do you want to remove the {{name}} collection?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1673
+#: app/scripts/services/tools.js:1760
 msgid "Do you want to replace it?"
 msgstr ""
 
@@ -370,7 +370,7 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: app/views/version.html:38
+#: app/views/version.html:40
 msgid "Don't display"
 msgstr ""
 
@@ -378,19 +378,19 @@ msgstr ""
 msgid "Drivers"
 msgstr ""
 
-#: app/scripts/services/drivers.js:147
-#: app/scripts/services/drivers.js:172
-#: app/scripts/services/drivers.js:280
+#: app/scripts/services/drivers.js:252
+#: app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:439
 msgid "Drivers disabled"
 msgstr ""
 
-#: app/scripts/services/drivers.js:138
-#: app/scripts/services/drivers.js:164
-#: app/scripts/services/drivers.js:264
+#: app/scripts/services/drivers.js:230
+#: app/scripts/services/drivers.js:287
+#: app/scripts/services/drivers.js:423
 msgid "Drivers enabled"
 msgstr ""
 
-#: app/scripts/services/tools.js:695
+#: app/scripts/services/tools.js:697
 msgid "Duplicated FPGA I/O ports"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/scripts/services/tools.js:1652
+#: app/scripts/services/tools.js:1739
 msgid "Edit the collection name"
 msgstr ""
 
@@ -472,11 +472,11 @@ msgstr ""
 msgid "Enter the remote hostname user@host"
 msgstr ""
 
-#: app/scripts/services/utils.js:931
+#: app/scripts/services/utils.js:934
 msgid "Error: {{error}}"
 msgstr ""
 
-#: app/scripts/services/tools.js:801
+#: app/scripts/services/tools.js:803
 msgid "Errors detected in the design"
 msgstr ""
 
@@ -512,7 +512,7 @@ msgstr ""
 msgid "External plugins updated"
 msgstr ""
 
-#: app/scripts/services/tools.js:688
+#: app/scripts/services/tools.js:690
 msgid "FPGA I/O ports not defined"
 msgstr ""
 
@@ -601,7 +601,7 @@ msgstr ""
 msgid "If you have blank IN/OUT pins, it's because there is no equivalent in this board"
 msgstr ""
 
-#: app/scripts/services/utils.js:770
+#: app/scripts/services/utils.js:773
 msgid "Image"
 msgstr ""
 
@@ -636,28 +636,28 @@ msgstr ""
 msgid "Install Development version"
 msgstr ""
 
-#: app/scripts/services/tools.js:1146
+#: app/scripts/services/tools.js:1143
 msgid "Install the DEVELOPMENT toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1168
+#: app/scripts/services/tools.js:1165
 msgid "Install the LATEST STABLE toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1122
+#: app/scripts/services/tools.js:1119
 msgid "Install the STABLE Toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1546
+#: app/scripts/services/tools.js:1633
 msgid "Installation completed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1247
+#: app/scripts/services/tools.js:1256
 msgid "Installing"
 msgstr ""
 
-#: app/scripts/services/drivers.js:254
-#: app/scripts/services/tools.js:1340
+#: app/scripts/services/drivers.js:413
+#: app/scripts/services/tools.js:1350
 msgid "Internet connection required"
 msgstr ""
 
@@ -673,7 +673,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 
-#: app/scripts/services/tools.js:1717
+#: app/scripts/services/tools.js:1804
 msgid "Invalid collection {{name}}"
 msgstr ""
 
@@ -696,7 +696,7 @@ msgstr ""
 msgid "Invalid project format"
 msgstr ""
 
-#: app/scripts/services/drivers.js:348
+#: app/scripts/services/drivers.js:507
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr ""
 
@@ -746,7 +746,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:1013
+#: app/scripts/services/utils.js:1016
 msgid "Maximum bus size: 96 bits"
 msgstr ""
 
@@ -761,7 +761,7 @@ msgstr ""
 msgid "Memory"
 msgstr ""
 
-#: app/scripts/services/utils.js:754
+#: app/scripts/services/utils.js:757
 msgid "Name"
 msgstr ""
 
@@ -797,7 +797,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: app/scripts/services/utils.js:777
+#: app/scripts/services/utils.js:780
 msgid "Open SVG"
 msgstr ""
 
@@ -831,7 +831,7 @@ msgstr ""
 msgid "Path {{path}} does not exist"
 msgstr ""
 
-#: app/scripts/services/utils.js:1163
+#: app/scripts/services/utils.js:1166
 msgid "Please run: {{cmd}}"
 msgstr ""
 
@@ -887,7 +887,7 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: app/scripts/services/tools.js:870
+#: app/scripts/services/tools.js:872
 msgid "Remote host {{name}} not connected"
 msgstr ""
 
@@ -904,7 +904,7 @@ msgstr ""
 msgid "Remove all"
 msgstr ""
 
-#: app/scripts/services/utils.js:779
+#: app/scripts/services/utils.js:782
 msgid "Reset SVG"
 msgstr ""
 
@@ -923,7 +923,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: app/scripts/services/utils.js:778
+#: app/scripts/services/utils.js:781
 msgid "Save SVG"
 msgstr ""
 
@@ -943,7 +943,7 @@ msgstr ""
 msgid "Select all"
 msgstr ""
 
-#: app/scripts/services/utils.js:892
+#: app/scripts/services/utils.js:895
 msgid "Select your board"
 msgstr ""
 
@@ -1009,7 +1009,7 @@ msgstr ""
 msgid "Testbench"
 msgstr ""
 
-#: app/scripts/services/tools.js:1666
+#: app/scripts/services/tools.js:1753
 msgid "The collection {{name}} already exists."
 msgstr ""
 
@@ -1017,15 +1017,15 @@ msgstr ""
 msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1186
+#: app/scripts/services/tools.js:1183
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1886
+#: app/scripts/services/tools.js:1973
 msgid "There is a new nightly version available"
 msgstr ""
 
-#: app/scripts/services/tools.js:1878
+#: app/scripts/services/tools.js:1965
 msgid "There is a new stable version available"
 msgstr ""
 
@@ -1053,19 +1053,19 @@ msgstr ""
 msgid "Toolchain"
 msgstr ""
 
-#: app/scripts/services/tools.js:1551
+#: app/scripts/services/tools.js:1638
 msgid "Toolchain installed"
 msgstr ""
 
-#: app/scripts/services/drivers.js:381
-#: app/scripts/services/drivers.js:400
+#: app/scripts/services/drivers.js:540
+#: app/scripts/services/drivers.js:559
 #: app/scripts/services/tools.js:192
 #: app/scripts/services/tools.js:363
 #: app/scripts/services/tools.js:402
 msgid "Toolchain not installed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1196
+#: app/scripts/services/tools.js:1193
 msgid "Toolchain removed"
 msgstr ""
 
@@ -1092,7 +1092,7 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: app/scripts/services/tools.js:616
+#: app/scripts/services/tools.js:618
 msgid "Unknown board"
 msgstr ""
 
@@ -1137,7 +1137,7 @@ msgstr ""
 msgid "Verify"
 msgstr ""
 
-#: app/scripts/services/utils.js:755
+#: app/scripts/services/utils.js:758
 #: app/views/menu.html:554
 msgid "Version"
 msgstr ""
@@ -1154,7 +1154,7 @@ msgstr ""
 msgid "View license"
 msgstr ""
 
-#: app/scripts/services/tools.js:807
+#: app/scripts/services/tools.js:809
 msgid "Warnings detected in the design"
 msgstr ""
 
@@ -1190,7 +1190,7 @@ msgstr ""
 msgid "Wrong project format: {{name}}"
 msgstr ""
 
-#: app/scripts/services/tools.js:863
+#: app/scripts/services/tools.js:865
 msgid "Wrong remote hostname {{name}}"
 msgstr ""
 
@@ -1225,8 +1225,8 @@ msgstr ""
 msgid "back"
 msgstr ""
 
-#: app/scripts/services/drivers.js:245
-#: app/scripts/services/utils.js:1143
+#: app/scripts/services/drivers.js:404
+#: app/scripts/services/utils.js:1146
 msgid "{{app}} is required."
 msgstr ""
 
