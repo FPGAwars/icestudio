@@ -1,23 +1,41 @@
 "use strict";
 
+//-- Grunt confiration file
+//-- https://gruntjs.com/
+//-- Grunt is a tool for Automating tasks
+
 module.exports = function (grunt) {
 
+  //-- Constants for the platformws
   const WIN32 = process.platform === "win32";
   const DARWIN = process.platform === "darwin";
 
-  var pkg = grunt.file.readJSON("app/package.json");
-  var timestamp=grunt.template.today('yyyymmddhhmm');
+  //-- Is this a WIP release (Work in Progress) or
+  //-- a stable release?
+  //-- WIP = True --> Work in progress
+  //-- WIP = False --> Stable release
+  const WIP = true;
 
-  //-- uncomment this for removing the timestanp in the version
-  //-- Used in the stable releases
-  //timestamp = "";  
+  //-- Read the Package json and the timestamp
+  let pkg = grunt.file.readJSON("app/package.json");
+  let timestamp=grunt.template.today('yyyymmddhhmm');
+
+  //-- In the Stables Releases there is NO timestamp
+  if (!WIP) {
+    timestamp = "";
+  }
+
+  //-- Write the timestamp information in the buildinfo.json
+  //-- It will be read by icestudio to add the timestamp to the version
   grunt.file.write('app/buildinfo.json',JSON.stringify({ts:timestamp}));
+
+  //-- Create the version
+  //-- Stable releases: No timestamp
+  //-- WIP: with timestamp
   pkg.version=pkg.version.replace(/w/,'w'+timestamp );
   
-  var platforms, options, distCommands, distTasks;
-  
-  // Common for all platforms
-  distTasks = [
+  //-- Tasks to perform. Common to ALL Platforms
+  let distTasks = [
       "checksettings",
       "jshint",
       "clean:dist",
@@ -32,75 +50,95 @@ module.exports = function (grunt) {
       "nwjs"
     ];
 
+  //-- Variables to define what commands execute depending
+  //-- in the platofm
+  let platforms;  //-- Define the platform
+  let options;    //-- Define options for that platform
+  let distCommands;  //-- Define the commands needed for building the package
 
+  //---------------------------------------------------------------
+  //-- Configure the platform variables for the current system
+  //--
+
+  //-- MAC
   if (DARWIN) {
     platforms = ["osx64"];
     options = { scope: ["devDependencies", "darwinDependencies"] };
     distCommands = ["exec:repairOSX", "compress:osx64", "appdmg"];
-  } else {
-    platforms = ["linux32", "linux64", "win32", "win64"];
 
+  //-- Linux and Windows (64-bits)
+  } else {
+
+    platforms = ["linux64", "win64"];
     options = { scope: ["devDependencies"] };
     distCommands = [
-      "compress:linux32",
       "compress:linux64",
-      "appimage:linux32",
       "appimage:linux64",
-      "compress:win32",
       "compress:win64",
-      "wget:python32",
       "wget:python64",
-      "exec:nsis32",
       "exec:nsis64"
     ];
-        var onlyPlatform = grunt.option("platform") || "all";
-    if (onlyPlatform === "linux64") {
-      distCommands = ["compress:linux64", "appimage:linux64"];
-      platforms = ["linux64"];
-      distTasks = [
-        "checksettings",
-        "jshint",
-        "clean:dist",
-        "nggettext_compile",
-        "useminPrepare",
-        "concat",
-        "copy:dist",
-        "json-minify",
-        "uglify",
-        "cssmin",
-        "usemin",
-        "nwjs"
-      ];
-
-      console.log("\n");
-      console.log("---------------------------");
-      console.log("| BUILDING ONLY LINUX 64  |");
-      console.log("---------------------------");
-      console.log("\n");
-    }
   }
+
+  //--- Building only for one platform
+  //--- Set with the `platform` argument when calling grunt
+
+  //--- Read if there is a platform argument set
+  let onlyPlatform = grunt.option("platform") || "all";
+
+  //-- Building only for Linux 64-bits
+  if (onlyPlatform === "linux64") {
+    distCommands = ["compress:linux64", "appimage:linux64"];
+    platforms = ["linux64"];
+    distTasks = [
+      "checksettings",
+      "jshint",
+      "clean:dist",
+      "nggettext_compile",
+      "useminPrepare",
+      "concat",
+      "copy:dist",
+      "json-minify",
+      "uglify",
+      "cssmin",
+      "usemin",
+      "nwjs"
+    ];
+    console.log("\n");
+    console.log("---------------------------");
+    console.log("| BUILDING ONLY LINUX 64  |");
+    console.log("---------------------------");
+    console.log("\n");
+  }
+
+  //-- Files to include in the Icestudio app
+  let appFiles = [
+    "index.html",      //-- app/index.html: Main HTML file
+    "package.json",    //-- Package file
+    all("resources"),  //-- Folder app/resources
+    all("scripts"),    //-- JS files
+    all("styles"),     //-- CSS files
+    all("views"),      //-- HTML files
+    all("fonts"),      //-- Fonts
+    all("node_modules")
+  ];
 
   function all(dir) {
     return dir + "/**/*.*";
   }
-  var appFiles = [
-    "index.html",
-    "package.json",
-    all("fonts"),
-    all("node_modules"),
-    all("resources"),
-    all("scripts"),
-    all("styles"),
-    all("views")
-  ];
+  
 
   require("load-grunt-tasks")(grunt, options);
 
   // Load custom tasks
   grunt.loadTasks("tasks");
 
-  // Project configuration
+  //-----------------------------------------------------------------------
+  //  PROJECT CONFIGURATION
+  //-----------------------------------------------------------------------
   grunt.initConfig({
+
+    //-- Information about the package (read the package.json file)
     pkg: pkg,
 
     // Automatically inject Bower components into the app
@@ -117,8 +155,6 @@ module.exports = function (grunt) {
       nw: "nw app" + (WIN32 ? "" : " 2>/dev/null"),
       stopNW:
         (WIN32 ? "taskkill /F /IM nw.exe >NUL 2>&1" : "killall nw 2>/dev/null || killall nwjs 2>/dev/null") + " || (exit 0)",
-      nsis32:
-        'makensis -DARCH=win32 -DPYTHON="python-3.8.2.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
       nsis64:
         'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
       repairOSX: "scripts/repairOSX.sh"
@@ -246,23 +282,6 @@ module.exports = function (grunt) {
 
     // ONLY LINUX: generate AppImage packages
     appimage: {
-      linux32: {
-        options: {
-          name: "Icestudio",
-          exec: "icestudio",
-          arch: "32bit",
-          icons: "docs/resources/icons",
-          comment: "Visual editor for open FPGA boards",
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linux32.AppImage"
-        },
-        files: [
-          {
-            expand: true,
-            cwd: "dist/icestudio/linux32/",
-            src: ["**"].concat(appFiles)
-          }
-        ]
-      },
       linux64: {
         options: {
           name: "Icestudio",
@@ -284,19 +303,6 @@ module.exports = function (grunt) {
 
     // Compress packages usin zip
     compress: {
-      linux32: {
-        options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linux32.zip"
-        },
-        files: [
-          {
-            expand: true,
-            cwd: "dist/icestudio/linux32/",
-            src: ["**"].concat(appFiles),
-            dest: "<%=pkg.name%>-<%=pkg.version%>-linux32"
-          }
-        ]
-      },
       linux64: {
         options: {
           archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linux64.zip"
@@ -310,19 +316,6 @@ module.exports = function (grunt) {
           }
         ]
       },
-      win32: {
-        options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-win32.zip"
-        },
-        files: [
-          {
-            expand: true,
-            cwd: "dist/icestudio/win32/",
-            src: ["**"].concat(appFiles),
-            dest: "<%=pkg.name%>-<%=pkg.version%>-win32"
-          }
-        ]
-      },
       win64: {
         options: {
           archive: "dist/<%=pkg.name%>-<%=pkg.version%>-win64.zip"
@@ -333,19 +326,6 @@ module.exports = function (grunt) {
             cwd: "dist/icestudio/win64/",
             src: ["**"].concat(appFiles),
             dest: "<%=pkg.name%>-<%=pkg.version%>-win64"
-          }
-        ]
-      },
-      osx32: {
-        options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-osx32.zip"
-        },
-        files: [
-          {
-            expand: true,
-            cwd: "dist/icestudio/osx32/",
-            src: ["icestudio.app/**"],
-            dest: "<%=pkg.name%>-<%=pkg.version%>-osx32"
           }
         ]
       },
@@ -397,13 +377,6 @@ module.exports = function (grunt) {
 
     // Wget: Python installer and Default collection
     wget: {
-      python32: {
-        options: {
-          overwrite: false
-        },
-        src: "https://www.python.org/ftp/python/3.8.2/python-3.8.2.exe",
-        dest: "cache/python/python-3.8.2.exe"
-      },
       python64: {
         options: {
           overwrite: false
