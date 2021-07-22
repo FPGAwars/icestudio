@@ -4,6 +4,11 @@
 //-- https://gruntjs.com/
 //-- Grunt is a tool for Automating tasks
 
+// Disable Deprecation Warnings
+// (node:18670) [DEP0022] DeprecationWarning: os.tmpDir() is deprecated. Use os.tmpdir() instead.
+let os = require("os");
+os.tmpDir = os.tmpdir;
+
 module.exports = function (grunt) {
 
   //-- Constants for the platformws
@@ -36,7 +41,6 @@ module.exports = function (grunt) {
   
   //-- Tasks to perform. Common to ALL Platforms
   let distTasks = [
-      "checksettings",
       "jshint",
       "clean:dist",
       "nggettext_compile",
@@ -91,7 +95,6 @@ module.exports = function (grunt) {
     distCommands = ["compress:linux64", "appimage:linux64"];
     platforms = ["linux64"];
     distTasks = [
-      "checksettings",
       "jshint",
       "clean:dist",
       "nggettext_compile",
@@ -127,10 +130,10 @@ module.exports = function (grunt) {
     return dir + "/**/*.*";
   }
   
-
+  //-- Load all grunt tasks
   require("load-grunt-tasks")(grunt, options);
 
-  // Load custom tasks
+  // Load custom tasks, from the tasks folder
   grunt.loadTasks("tasks");
 
   //-----------------------------------------------------------------------
@@ -457,6 +460,10 @@ module.exports = function (grunt) {
     }
   });
 
+  //------------------------------------------------------------------
+  //-- PROJECT CONFIGURATION: END
+  //---------------------------------------------------------------------
+
   // Default tasks.
   grunt.registerTask("default", function () {
     console.log("Icestudio");
@@ -474,13 +481,7 @@ module.exports = function (grunt) {
     "dist",
     distTasks.concat(distCommands).concat(["clean:tmp"])
   );
-   grunt.registerTask("checksettings", function () {
-    //    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
-    //      grunt.fail.fatal('Apio settings are in debug mode');
-    //   }
-  });
+  
 };
 
-// Disable Deprecation Warnings
-var os = require("os");
-os.tmpDir = os.tmpdir;
+
