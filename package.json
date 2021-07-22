@@ -26,7 +26,7 @@
     "gettext": "grunt gettext",
     "jshint": "grunt jshint",
     "clean": "grunt clean",
-    "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
+    "postinstall": "npmpd && cd app && npm install && bower install && cd .. && grunt getcollection"
   },
   "devDependencies": {
     "bower": "^1.8.0",
