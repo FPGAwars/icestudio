@@ -87,6 +87,7 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-usemin
       "usemin",
 
+      //-- TASK: Execute nw-build packaging
       "nwjs"
     ];
 
@@ -249,6 +250,7 @@ module.exports = function (grunt) {
       html: ["dist/tmp/index.html"]
     },
 
+    //-- TASK: NWJS
     // Execute nw-build packaging
     nwjs: {
       options: {
@@ -454,7 +456,6 @@ module.exports = function (grunt) {
     },
 
     // Generate POT file
-   /*jshint camelcase: false */
     nggettext_extract: {
       pot: {
         files: {
@@ -497,19 +498,28 @@ module.exports = function (grunt) {
   //-- PROJECT CONFIGURATION: END
   //---------------------------------------------------------------------
 
-  // Default tasks.
+  // Default task
   grunt.registerTask("default", function () {
     console.log("Icestudio");
   });
+
+  //-- Task: gettext
   grunt.registerTask("gettext", ["nggettext_extract"]);
+
+  //-- Task: compiletext
   grunt.registerTask("compiletext", ["nggettext_compile"]);
+
+  //-- Task: getcollection
   grunt.registerTask("getcollection", [
     "clean:collection",
     "wget:collection",
     "unzip"
   ]);
+
+  //-- Task: Serve (run the app)
   grunt.registerTask("serve", ["nggettext_compile", "watch:scripts"]);
 
+  //-- Task: dist: Create the app package
   grunt.registerTask(
     "dist",
     distTasks.concat(distCommands).concat(["clean:tmp"])
