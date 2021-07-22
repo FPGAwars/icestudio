@@ -76,7 +76,11 @@ module.exports = function (grunt) {
       //-- Minify JavaScript files 
       "uglify",
 
-      "cssmin",
+      //-- Minify CSS
+      //-- grunt-contrib-cssmin
+      //-- https://github.com/gruntjs/grunt-contrib-cssmin
+      //"cssmin",
+
       "usemin",
       "nwjs"
     ];
