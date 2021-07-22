@@ -59,8 +59,11 @@ module.exports = function (grunt) {
       //-- grunt-usemin
       //-- https://www.npmjs.com/package/grunt-usemin
       "useminPrepare",
-      
-      "concat",
+
+      //-- Concatenate files: grunt-contribu-concat
+      //-- https://github.com/gruntjs/grunt-contrib-concat
+      //"concat",
+
       "copy:dist",
       "json-minify",
       "uglify",
