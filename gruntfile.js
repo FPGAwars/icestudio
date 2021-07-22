@@ -139,27 +139,20 @@ module.exports = function (grunt) {
     console.log("\n");
   }
 
+  //-- Add the "clean:tmp" command to the list of commands to execute
+  distCommands = distCommands.concat(["clean:tmp"]);
+
   //-- Files to include in the Icestudio app
   let appFiles = [
-    "index.html",      //-- app/index.html: Main HTML file
-    "package.json",    //-- Package file
-    all("resources"),  //-- Folder app/resources
-    all("scripts"),    //-- JS files
-    all("styles"),     //-- CSS files
-    all("views"),      //-- HTML files
-    all("fonts"),      //-- Fonts
-    all("node_modules")
+    "index.html",        //-- app/index.html: Main HTML file
+    "package.json",      //-- Package file
+    "resources/**/*.*",  //-- Folder app/resources
+    "scripts/**/*.*",    //-- JS files
+    "styles/**/*.*",     //-- CSS files
+    "views/**/*.*",      //-- HTML files
+    "fonts/**/*.*",      //-- Fonts
+    "node_modules/**/*.*",
   ];
-
-  function all(dir) {
-    return dir + "/**/*.*";
-  }
-  
-  //-- Load all grunt tasks
-  require("load-grunt-tasks")(grunt, options);
-
-  // Load custom tasks, from the tasks folder
-  grunt.loadTasks("tasks");
 
   //-----------------------------------------------------------------------
   //  PROJECT CONFIGURATION
@@ -403,7 +396,7 @@ module.exports = function (grunt) {
     jshint: {
 
       //-- This are the js files to check
-      all: ["app/scripts/**/*.js", "tasks/*.js", "gruntfile.js"],
+      all: ["app/scripts/**/*.js", "gruntfile.js"],
       options: {
 
         //-- jshint configuration file
@@ -500,31 +493,54 @@ module.exports = function (grunt) {
   //-- PROJECT CONFIGURATION: END
   //---------------------------------------------------------------------
 
+  //-- Load all grunt tasks matching grunt-*
+  //-- https://www.npmjs.com/package/load-grunt-tasks
+  //-- 
+  // grunt-contrib-jshint
+  // grunt-contrib-clean
+  // grunt-angular-gettext
+  // grunt-usemin
+  // grunt-contrib-copy
+  // grunt-json-minification
+  // grunt-contrib-uglify
+  // grunt-contrib-cssmin
+  require("load-grunt-tasks")(grunt, options);
+
   // Default task
   grunt.registerTask("default", function () {
     console.log("Icestudio");
   });
 
-  //-- Task: gettext
+  //-- grunt gettext
   grunt.registerTask("gettext", ["nggettext_extract"]);
 
-  //-- Task: compiletext
+  //-- grunt compiletext
   grunt.registerTask("compiletext", ["nggettext_compile"]);
 
-  //-- Task: getcollection
+  //-- grunt getcollection
+  //-- Download the default collection and install it
+  //-- in the app/resources/collection folder
+  //-- This task is called in the npm postinstallation
+  //-- (after npm install is executed)
   grunt.registerTask("getcollection", [
     "clean:collection",
     "wget:collection",
     "unzip"
   ]);
 
-  //-- Task: Serve (run the app)
-  grunt.registerTask("serve", ["nggettext_compile", "watch:scripts"]);
+  //-- grunt server
+  //-- Start icestudio
+  grunt.registerTask("serve", [
+    "nggettext_compile", //-- Get the translation in json files
+    "watch:scripts"      //-- Watch the given files. When there is change
+                         //-- icestudio is restarted
+  ]);
 
-  //-- Task: dist: Create the app package
-  grunt.registerTask(
-    "dist",
-    distTasks.concat(distCommands).concat(["clean:tmp"])
+  // grunt dist: Create the app package
+  grunt.registerTask("dist",
+
+    //-- Execute the tasks given in the distTasks list + the commands
+    distTasks.concat(distCommands)
   );
   
 };
