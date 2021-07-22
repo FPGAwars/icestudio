@@ -60,11 +60,14 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-usemin
       "useminPrepare",
 
-      //-- Concatenate files: grunt-contribu-concat
+      //-- Concatenate files: grunt-contrib-concat
       //-- https://github.com/gruntjs/grunt-contrib-concat
       //"concat",
 
+      //-- Copy files and folders: grunt-contrib-copy
+      //-- https://github.com/gruntjs/grunt-contrib-copy
       "copy:dist",
+
       "json-minify",
       "uglify",
       "cssmin",
@@ -73,7 +76,7 @@ module.exports = function (grunt) {
     ];
 
   //-- Variables to define what commands execute depending
-  //-- in the platofm
+  //-- on the platofm
   let platforms;  //-- Define the platform
   let options;    //-- Define options for that platform
   let distCommands;  //-- Define the commands needed for building the package
@@ -179,6 +182,7 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK: Copy
     // Copy dist files
     copy: {
       dist: {
