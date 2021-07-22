@@ -50,7 +50,7 @@
     "grunt-wiredep": "^3.0.1",
     "grunt-zip": "^0.18.2",
     "load-grunt-tasks": "^5.1.0",
-    "npm-platform-dependencies": "0.0.12",
+    "npm-platform-dependencies": "0.1.0",
     "nw": "0.35.5-sdk",
     "nw-builder": "^3.5.7"
   },
