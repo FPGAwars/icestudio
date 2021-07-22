@@ -43,11 +43,11 @@ jobs:
         run: |
           echo "VERSION: ${{ env.VERSION }}"
 
-      # Install Node 10.17
+      # Install Node
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '10.17'
+          node-version: '12.13'
 
       - name: Install npm dependencies
         run:   npm install 
