@@ -24,6 +24,7 @@
     "build": "grunt dist",
     "buildLinux64": "grunt dist --platform=linux64",
     "gettext": "grunt gettext",
+    "jshint": "grunt jshint",
     "postinstall": "npmpd && cd app && npm install && bower install && cd ../tasks && npm install && cd .. && grunt getcollection"
   },
   "devDependencies": {

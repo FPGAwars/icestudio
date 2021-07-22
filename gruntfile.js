@@ -41,7 +41,10 @@ module.exports = function (grunt) {
   
   //-- Tasks to perform. Common to ALL Platforms
   let distTasks = [
-      "jshint",
+
+      //-- Validate js files: grunt-contrib-jshint
+      //-- https://www.npmjs.com/package/grunt-contrib-jshint
+      "jshint",  
       "clean:dist",
       "nggettext_compile",
       "useminPrepare",
@@ -94,19 +97,7 @@ module.exports = function (grunt) {
   if (onlyPlatform === "linux64") {
     distCommands = ["compress:linux64", "appimage:linux64"];
     platforms = ["linux64"];
-    distTasks = [
-      "jshint",
-      "clean:dist",
-      "nggettext_compile",
-      "useminPrepare",
-      "concat",
-      "copy:dist",
-      "json-minify",
-      "uglify",
-      "cssmin",
-      "usemin",
-      "nwjs"
-    ];
+
     console.log("\n");
     console.log("---------------------------");
     console.log("| BUILDING ONLY LINUX 64  |");
@@ -369,10 +360,15 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK: jshint
     // Check all js files
     jshint: {
+
+      //-- This are the js files to check
       all: ["app/scripts/**/*.js", "tasks/*.js", "gruntfile.js"],
       options: {
+
+        //-- jshint configuration file
         jshintrc: ".jshintrc",
         esversion: 6
       }
