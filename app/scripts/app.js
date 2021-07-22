@@ -87,8 +87,17 @@ angular
       iceConsole.log(` Icestudio session ${now.toString()}`);
       iceConsole.log(` Version: ${common.ICESTUDIO_VERSION}`);
       iceConsole.log(`=======================================================================================`);
-      iceConsole.log(`Architecture: ${process.arch}`);
-      iceConsole.log(`Platform: ${process.platform}`);
+      iceConsole.log("Node information:");
+      iceConsole.log(`  * Node version: ${process.version}`);
+      iceConsole.log(`  * lts: ${process.release.lts}`);
+      iceConsole.log(`  * SourceURL: ${process.release.sourceUrl}`);
+
+      iceConsole.log("");
+      iceConsole.log("System information:");
+      iceConsole.log(`  * Architecture: ${process.arch}`);
+      iceConsole.log(`  * Platform: ${process.platform}`);
+
+      iceConsole.log("");
       iceConsole.log('Profile file: ' + common.PROFILE_PATH); 
       iceConsole.log(`\n- PROFILE:\n`);
       iceConsole.log(profile);
@@ -107,7 +116,7 @@ angular
       iceConsole.log("common.APP_DIR: Icestudio execution folder: " + common.APP_DIR); 
       iceConsole.log("\n\n");
 
-
+      
 
       collections.loadAllCollections();
       utils.loadLanguage(profile, function () {
