@@ -54,7 +54,12 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-angular-gettext
       "nggettext_compile",
 
+      //-- Replaces references from non-optimized scripts, stylesheets and
+      //-- other assets to their optimized version within a set of HTML files
+      //-- grunt-usemin
+      //-- https://www.npmjs.com/package/grunt-usemin
       "useminPrepare",
+      
       "concat",
       "copy:dist",
       "json-minify",
