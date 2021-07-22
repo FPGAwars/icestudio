@@ -81,7 +81,12 @@ module.exports = function (grunt) {
       //-- https://github.com/gruntjs/grunt-contrib-cssmin
       //"cssmin",
 
+      //-- Replaces references from non-optimized scripts, stylesheets and
+      //-- other assets to their optimized version within a set of HTML files
+      //-- grunt-usemin
+      //-- https://www.npmjs.com/package/grunt-usemin
       "usemin",
+
       "nwjs"
     ];
 
