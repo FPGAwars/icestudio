@@ -33,7 +33,7 @@
     "grunt": "^1.4.1",
     "grunt-angular-gettext": "^2.5.3",
     "grunt-appimage": "^0.6.0",
-    "grunt-cli": "^1.2.0",
+    "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-copy": "^1.0.0",
