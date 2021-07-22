@@ -68,7 +68,10 @@ module.exports = function (grunt) {
       //-- https://github.com/gruntjs/grunt-contrib-copy
       "copy:dist",
 
+      //-- Minify JSON files in grunt: grunt-json-minification
+      //-- https://www.npmjs.com/package/grunt-json-minification
       "json-minify",
+
       "uglify",
       "cssmin",
       "usemin",
@@ -210,6 +213,7 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK: json-minify
     // JSON minification plugin without concatination
     "json-minify": {
       json: {
