@@ -456,6 +456,7 @@ module.exports = function (grunt) {
     },
 
     // Generate POT file
+    /* jshint camelcase: false */
     nggettext_extract: {
       pot: {
         files: {
@@ -469,6 +470,7 @@ module.exports = function (grunt) {
 
     //-- TASK: nggettext_compile
     // Compile PO files into JSON
+    /* jshint camelcase: false */
     nggettext_compile: {
       all: {
         options: {
