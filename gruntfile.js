@@ -58,7 +58,7 @@ module.exports = function (grunt) {
       //-- other assets to their optimized version within a set of HTML files
       //-- grunt-usemin
       //-- https://www.npmjs.com/package/grunt-usemin
-      "useminPrepare",
+      //"useminPrepare",
 
       //-- Concatenate files: grunt-contrib-concat
       //-- https://github.com/gruntjs/grunt-contrib-concat
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 
       //-- grunt-contrib-uglify
       //-- Minify JavaScript files 
-      "uglify",
+      //"uglify",
 
       //-- Minify CSS
       //-- grunt-contrib-cssmin
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
       //-- other assets to their optimized version within a set of HTML files
       //-- grunt-usemin
       //-- https://www.npmjs.com/package/grunt-usemin
-      "usemin",
+      //"usemin",
 
       //-- TASK: Execute nw-build packaging
       "nwjs"
@@ -206,6 +206,9 @@ module.exports = function (grunt) {
               "buildinfo.json",
               "resources/**",
               "node_modules/**",
+              "bower_components/**",
+              "styles/**",
+              "scripts/**",
               "views/*.html"
             ]
           },
