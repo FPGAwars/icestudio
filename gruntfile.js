@@ -1,6 +1,6 @@
 "use strict";
 
-//-- Grunt confiration file
+//-- Grunt configuration file
 //-- https://gruntjs.com/
 //-- Grunt is a tool for Automating tasks
 
@@ -61,11 +61,6 @@ module.exports = function (grunt) {
       //-- Minify JSON files in grunt: grunt-json-minification
       //-- https://www.npmjs.com/package/grunt-json-minification
       "json-minify",
-
-      //-- Minify CSS
-      //-- grunt-contrib-cssmin
-      //-- https://github.com/gruntjs/grunt-contrib-cssmin
-      //"cssmin",
 
       //-- TASK: Execute nw-build packaging
       "nwjs"
@@ -141,15 +136,6 @@ module.exports = function (grunt) {
 
     //-- Information about the package (read the package.json file)
     pkg: pkg,
-
-    // Automatically inject Bower components into the app
-    wiredep: {
-      task: {
-        directory: "app/bower_components",
-        bowerJson: grunt.file.readJSON("app/bower.json"),
-        src: ["index.html"]
-      }
-    },
 
     // Execute nw application
     exec: {
@@ -332,7 +318,7 @@ module.exports = function (grunt) {
           "app/styles/**/*.*",
           "app/views/**/*.*"
         ],
-        tasks: ["wiredep", "exec:stopNW", "exec:nw"],
+        tasks: ["exec:stopNW", "exec:nw"],
         options: {
           atBegin: true,
           interrupt: true
@@ -389,11 +375,6 @@ module.exports = function (grunt) {
     clean: {
       tmp: [".tmp", "dist/tmp"],
       dist: ["dist"],
-      toolchain: [
-        "cache/toolchain/default-python-packages",
-        "cache/toolchain/default-apio",
-        "cache/toolchain/*.zip"
-      ],
       collection: ["app/resources/collection"]
     },
 
@@ -450,7 +431,6 @@ module.exports = function (grunt) {
   // grunt-angular-gettext
   // grunt-contrib-copy
   // grunt-json-minification
-  // grunt-contrib-cssmin
   require("load-grunt-tasks")(grunt, options);
 
   // Default task
