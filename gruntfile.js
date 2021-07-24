@@ -62,10 +62,6 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-json-minification
       "json-minify",
 
-      //-- grunt-contrib-uglify
-      //-- Minify JavaScript files 
-      //"uglify",
-
       //-- Minify CSS
       //-- grunt-contrib-cssmin
       //-- https://github.com/gruntjs/grunt-contrib-cssmin
@@ -204,14 +200,6 @@ module.exports = function (grunt) {
       },
       ice: {
         files: "dist/tmp/resources/**/*.ice"
-      }
-    },
-
-    //-- TASK: uglify
-    // Uglify configuration options:
-    uglify: {
-      options: {
-        mangle: false
       }
     },
 
@@ -462,7 +450,6 @@ module.exports = function (grunt) {
   // grunt-angular-gettext
   // grunt-contrib-copy
   // grunt-json-minification
-  // grunt-contrib-uglify
   // grunt-contrib-cssmin
   require("load-grunt-tasks")(grunt, options);
 

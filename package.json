@@ -38,7 +38,6 @@
     "grunt-contrib-compress": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^3.0.0",
-    "grunt-contrib-uglify": "^5.0.1",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-exec": "^3.0.0",
     "grunt-json-minify": "^1.1.0",
