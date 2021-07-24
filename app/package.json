@@ -54,6 +54,7 @@
   "dependencies": {
     "angular-ui-bootstrap": "~1.3.3",
     "angular-gettext-tools": "2.3.5",
+    "jointjs": "~1.1.0",
     "adm-zip": "0.4.7",
     "copy-paste": "~1.3.0",
     "extract-zip": "~1.6.5",
