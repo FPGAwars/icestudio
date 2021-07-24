@@ -54,16 +54,6 @@ module.exports = function (grunt) {
       //-- https://www.npmjs.com/package/grunt-angular-gettext
       "nggettext_compile",
 
-      //-- Replaces references from non-optimized scripts, stylesheets and
-      //-- other assets to their optimized version within a set of HTML files
-      //-- grunt-usemin
-      //-- https://www.npmjs.com/package/grunt-usemin
-      //"useminPrepare",
-
-      //-- Concatenate files: grunt-contrib-concat
-      //-- https://github.com/gruntjs/grunt-contrib-concat
-      //"concat",
-
       //-- Copy files and folders: grunt-contrib-copy
       //-- https://github.com/gruntjs/grunt-contrib-copy
       "copy:dist",
@@ -80,12 +70,6 @@ module.exports = function (grunt) {
       //-- grunt-contrib-cssmin
       //-- https://github.com/gruntjs/grunt-contrib-cssmin
       //"cssmin",
-
-      //-- Replaces references from non-optimized scripts, stylesheets and
-      //-- other assets to their optimized version within a set of HTML files
-      //-- grunt-usemin
-      //-- https://www.npmjs.com/package/grunt-usemin
-      //"usemin",
 
       //-- TASK: Execute nw-build packaging
       "nwjs"
@@ -181,16 +165,6 @@ module.exports = function (grunt) {
       repairOSX: "scripts/repairOSX.sh"
     },
 
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
-    useminPrepare: {
-      html: "app/index.html",
-      options: {
-        dest: "dist/tmp"
-      }
-    },
-
     //-- TASK: Copy
     // Copy dist files
     copy: {
@@ -241,11 +215,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Rewrite based on filerev and the useminPrepare configuration
-    usemin: {
-      html: ["dist/tmp/index.html"]
-    },
-
     //-- TASK: NWJS
     // Execute nw-build packaging
     nwjs: {
@@ -261,17 +230,6 @@ module.exports = function (grunt) {
         platforms: platforms
       },
       src: ["dist/tmp/**"]
-    },
-
-    // Create standalone toolchains for each platform
-    toolchain: {
-      options: {
-        apioMin: "<%=pkg.apio.min%>",
-        apioMax: "<%=pkg.apio.max%>",
-        buildDir: "dist/",
-        extraPackages: "<%=pkg.apio.extras%>",
-        platforms: platforms
-      }
     },
 
     // ONLY MAC: generate a DMG package
@@ -502,7 +460,6 @@ module.exports = function (grunt) {
   // grunt-contrib-jshint
   // grunt-contrib-clean
   // grunt-angular-gettext
-  // grunt-usemin
   // grunt-contrib-copy
   // grunt-json-minification
   // grunt-contrib-uglify
