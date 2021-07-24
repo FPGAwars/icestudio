@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <!-- ************************************************************** -->
-  <!-- ******        Styles                                 ********* -->
+  <!-- ******      External Styles                          ********* -->
   <!-- ************************************************************** -->
 
   <!-- Jointjs: Visualize and interact with diagrams and graphs
@@ -31,23 +31,35 @@
        https://github.com/jspreadsheet/ce -->
   <link rel="stylesheet" href="node_modules/jexcel/dist/jexcel.css" type="text/css" />
 
-
-  <!--  SEGUIR POR AQUI!!!!!  -->
-
+  <!--  jsuites: jSuites is a collection of lightweight common required javascript
+      web components
+      https://github.com/jsuites/jsuites  -->
   <link rel="stylesheet" href="node_modules/jsuites/dist/jsuites.css" type="text/css" />
-  <link rel="stylesheet" href="resources/fonts/Lato2OFLWeb/Lato/latofonts.css">
-  <!-- build:css styles/main.css -->
 
-  <link rel="stylesheet" href="styles/design.css">
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/menu.css">
-  <link rel="stylesheet" href="styles/version.css">
+  <!-- *************************************************************** -->
+  <!-- ****    STYLES (Internal)                                  **** -->
+  <!-- *************************************************************** -->
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="resources/fonts/Lato2OFLWeb/Lato/latofonts.css">
+  <link rel="stylesheet" href="resources/fonts/fontawesome-free-5.15.1-web/css/all.min.css">
+
+  <!-- Style for the markdown -->
   <link rel="stylesheet" href="resources/viewers/markdown/css/github-markdown.css">
 
-  <!-- endbuild -->
+  <!-- FPGA resources stlye -->
+  <link rel="stylesheet" href="styles/design.css">
 
-  <link rel="stylesheet" href="resources/fonts/fontawesome-free-5.15.1-web/css/all.min.css">
+  <!-- Main UI -->
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Menu -->
+  <link rel="stylesheet" href="styles/menu.css">
+
+  <!-- Version window -->
+  <link rel="stylesheet" href="styles/version.css">
 </head>
+
 
 <body ng-app="icestudio">
 
@@ -55,9 +67,18 @@
   <script>
     window.$ = window.JQuery = window.jQuery = require('jquery');
   </script>
-  <!-- build:js scripts/vendors.js -->
-  <!-- bower:js -->
-  <script src="bower_components/angular/angular.js"></script>
+
+  <!-- ************************************************************** -->
+  <!-- ******      External Javascript modules              ********* -->
+  <!-- ************************************************************** -->
+
+  <!-- angularjs: AngularJS lets you extend HTML vocabulary for your 
+       application. The resulting environment is extraordinarily 
+       expressive, readable, and quick to develop
+       https://angularjs.org/ -->
+  <script src="node_modules/angular/angular.js"></script>
+
+
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 
