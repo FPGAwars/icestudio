@@ -87,6 +87,7 @@
     "sudo-prompt": "~8.2.0",
     "svgo": "~0.7.2",
     "svg-pan-zoom": "~3.4.1",
+    "snapsvg": "~0.5.1",
     "tmp": "0.0.33"
   },
   "readme": "../README.md",

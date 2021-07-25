@@ -24,7 +24,6 @@
   "dependencies": {
     "lodash": "~3.10.1",
     "ace-builds": "~1.4.12",
-    "async": "~1.5.2",
-    "Snap.svg":"~0.5.1"
+    "async": "~1.5.2"
   }
 }
