@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="node_modules/jsuites/dist/jsuites.css" type="text/css" />
 
   <!-- *************************************************************** -->
-  <!-- ****    STYLES (Internal)                                  **** -->
+  <!-- ****    ICESTUDIO STYLES (Internal)                        **** -->
   <!-- *************************************************************** -->
 
   <!-- Fonts -->
@@ -153,24 +153,36 @@
        http://snapsvg.io/ -->
   <script src="node_modules/snapsvg/dist/snap.svg-min.js"></script>
 
-
+  <!-- jsuites: jSuites is a collection of lightweight common required
+       javascript web components
+       https://www.npmjs.com/package/jsuites -->
   <script src="node_modules/jsuites/dist/jsuites.js"></script>
+
+
+  <!-- jexcel: Jspreadsheet CE is a lightweight Vanilla JavaScript plugin
+       to create amazing web-based interactive HTML tables and spreadsheets
+       compatible with other spreadsheet software
+       https://github.com/jspreadsheet/ce -->
   <script src="node_modules/jexcel/dist/jexcel.js"></script>
+
+  <!-- mustache: 
+       Mustache is a logic-less template syntax. It can be used for HTML, 
+       config files, source code - anything. It works by expanding tags in
+       a template using values provided in a hash or object. 
+       https://github.com/janl/mustache.js -->
   <script src="node_modules/mustache/mustache.min.js"></script>
 
  
+  <!-- ************************************************************** -->
+  <!-- ******      ICESTUDIO Javascript modules             ********* -->
+  <!-- ************************************************************** -->
 
-
-
-
+  <!-- New components (Refactored) -->
   <script src="resources/libs/Icestudio/Core/IceBlock.js"></script>
   <script src="resources/libs/Icestudio/Core/IceCollection.js"></script>
   <script src="resources/libs/Icestudio/Fuse/IceHD.js"></script>
   <script src="resources/libs/Icestudio/GUI/IceGUI.js"></script>
   <script src="resources/libs/Icestudio/Log/IceLogger.js"></script>
-  
-  <!-- build:js scripts/main.js -->
-
   <script src="resources/libs/iceprofiler.js"></script>
   <script src="resources/libs/iceeventbus.js"></script>
   <script src="resources/libs/iceparametrichelper.js"></script>
@@ -206,9 +218,6 @@
   <script src="scripts/services/collections.js"></script>
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
-  
-
-  <!-- endbuild -->
 </body>
 
 </html>
