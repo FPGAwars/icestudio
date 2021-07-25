@@ -58,6 +58,7 @@
     "angular-ui-bootstrap": "~1.3.3",
     "angular-gettext-tools": "2.3.5",
     "angular-gettext": "https://github.com/Jesus89/angular-gettext.git#master",
+    "async": "~1.5.2",
     "backbone": "~1.3.3",
     "jointjs": "~1.1.0",
     "select2": "~4.0.5",
