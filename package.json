@@ -26,10 +26,9 @@
     "gettext": "grunt gettext",
     "jshint": "grunt jshint",
     "clean": "grunt clean",
-    "postinstall": "npmpd && cd app && npm install && bower install && cd .. && grunt getcollection"
+    "postinstall": "npmpd && cd app && npm install && cd .. && grunt getcollection"
   },
   "devDependencies": {
-    "bower": "^1.8.12",
     "grunt": "^1.4.1",
     "grunt-angular-gettext": "^2.5.3",
     "grunt-appimage": "^0.6.0",

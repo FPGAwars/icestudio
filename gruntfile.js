@@ -162,7 +162,6 @@ module.exports = function (grunt) {
               "buildinfo.json",
               "resources/**",
               "node_modules/**",
-              "bower_components/**",
               "styles/**",
               "scripts/**",
               "views/*.html"
@@ -170,7 +169,7 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            cwd: "app/bower_components/bootstrap/fonts",
+            cwd: "app/node_modules/bootstrap/fonts",
             dest: "dist/tmp/fonts",
             src: "*.*"
           }
