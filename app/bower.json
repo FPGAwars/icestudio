@@ -23,7 +23,6 @@
   ],
   "dependencies": {
     "lodash": "~3.10.1",
-    "ace-builds": "~1.4.12",
     "async": "~1.5.2"
   }
 }
