@@ -503,29 +503,75 @@ angular.module('icestudio')
      * Windows drivers
      */
 
+    
+    /* -- Messages ----*/
+
+    const ENABLE_DRV_FTDI_MSG = `
+    <h4>FTDI driver installation instructions</h4>
+    <ol>
+      <li>Connect the FPGA board to the USB and wait until Windows
+          finishes the default installation of the driver</li>
+
+      <li>When the OK button is clicked, the FTDI driver 
+          installer will be launched in a new window</li>
+
+      <li>In the installer, replace the <b>(Interface 0)</b> 
+          driver of the board by <b>libusbK</b></li>
+      <li>Unplug and reconnect the board</li>
+    </ol> 
+    `;
+
+    const DISABLE_DRV_FTDI_MSG = `
+    <h4>FTDI driver uninstallation instructions</h4>
+    <ol>
+      <li>Find the FPGA USB Device</li>
+      <li>Select the board interface and uninstall the driver</li>
+    </ol>
+    `;
+
+    const ENABLE_DRV_SERIAL_MSG = `
+    <h4>Serial driver installation instructions</h4>
+    <ol>
+      <li>Connect the FPGA board to the USB and wait until Windows 
+          finishes the default installation of the driver</li>
+      <li>When the OK button is clicked, the Serial driver installer
+          will be launched in a new window</li><li>In the installer,
+          follow the steps to install the driver</li>
+      <li>Unplug and reconnect the board</li>
+    </ol>
+    `;
+
+    const DISABLE_DRV_SERIAL_MSG = `
+    <h4>Serial driver uninstallation instructions</h4>
+    <ol>
+      <li>Find the FPGA USB Device</li>
+      <li>Select the board interface and uninstall the driver</li>
+    </ol>
+    `;
+
     function enableWindowsDriversFTDI() {
-      var message = gettextCatalog.getString('<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>') + gettextCatalog.getString('It is recommended to use <b>USB 2.0</b> ports');
+      var message = gettextCatalog.getString(ENABLE_DRV_FTDI_MSG);
       alertify.confirm(message, function () {
         enableWindowsDrivers('ftdi');
       });
     }
 
     function disableWindowsDriversFTDI() {
-      var message = gettextCatalog.getString('<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
+      var message = gettextCatalog.getString(DISABLE_DRV_FTDI_MSG);
       alertify.confirm(message, function () {
         disableWindowsDrivers('ftdi');
       });
     }
 
     function enableWindowsDriversSerial() {
-      var message = gettextCatalog.getString('<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>');
+      var message = gettextCatalog.getString(ENABLE_DRV_SERIAL_MSG);
       alertify.confirm(message, function () {
         enableWindowsDrivers('serial');
       });
     }
 
     function disableWindowsDriversSerial() {
-      var message = gettextCatalog.getString('<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>');
+      var message = gettextCatalog.getString(DISABLE_DRV_SERIAL_MSG);
       alertify.confirm(message, function () {
         disableWindowsDrivers('serial');
       });
