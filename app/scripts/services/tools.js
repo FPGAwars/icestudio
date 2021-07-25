@@ -176,7 +176,7 @@ angular
 
       //------------------------------------------------------------------------
       //-- Check if the toolchain has been installed
-      //-- We know it it has been already installed by watching the   
+      //-- We know if it has been already installed by watching the   
       //-- toolchain.installed flag.
       //-- If it is not installed an Alert windows is shown
       function checkToolchainInstalled() {
@@ -341,81 +341,79 @@ angular
       //-- package.json package)
       function checkToolchain(callback) {
 
-        //-- Get the apio cmd to execute
-        var apio = utils.getApioExecutable();
+        iceConsole.log("===> tools.CHECKTOOLCHAIN");
+        console.log("===> tools.CHECKTOOLCHAIN");
 
-        //-- Execute the command apio --version
+       
+        //-- Comand to Execute: apio --version
         //-- It returns the apio version
         //-- Ej:
         //-- $ apio --version
         //-- apio, version 0.7.dev1
-        nodeChildProcess.exec([apio, "--version"].join(" "), function (
-          error,
-          stdout /*, stderr*/
-        ) {
+        //-- common.APIO_CMD contains the command for executing APIO
+        utils.executeCommand([common.APIO_CMD, '--version'], (error, output) => {
+          iceConsole.log("  Error flag: " + error);
+          console.log("  Error flag: " + error);
 
           //-- Toolchain not installed (or error executing it)
           if (error) {
+
+            iceConsole.log("  Error: " + error);
+            console.log("  Error: " + error);
+
+            //-- No apio version (blank)
             toolchain.apio = "";
+
+            //-- Flag apio is not installed
             toolchain.installed = false;
-            // Apio not installed
+
+            // Show an error notification
             toolchainNotInstalledAlert(
               gettextCatalog.getString("Toolchain not installed")
             );
+
+            //-- Execute the callback, if any
             if (callback) {
               callback();
             }
           }
 
-          //-- Toolchain installed  
+           //-- Toolchain installed  
           else {
 
-            //-- Get the version number
-            toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+            console.log("  No Errors. Toolchain installed----");
+            iceConsole.log("  No Errors. Toolchain installed--");
 
-            //-- Check if the apio version if the ok with the specification
+            //-- Convert the object received to a string
+            let msg = "" + output;
+
+            //-- Get the version number
+            toolchain.apio = msg.match(/apio,\sversion\s(.+)/)[1];
+
+            console.log("  Apio version: " + toolchain.apio);
+
+            //-- Check if the apio version is ok with the specification
             //-- in the package.json file
             toolchain.installed =
               toolchain.apio >= _package.apio.min &&
               toolchain.apio < _package.apio.max;
 
-            //-- The correct version of apio is installed
+            //-- Everything is ok: call the callback function
             if (toolchain.installed) {
 
-              //-- Execute the command apio clean -p resource/sample
-              //-- just to test if apio is correctly installed
-              nodeChildProcess.exec(
-                [apio, "clean", "-p", common.SAMPLE_DIR].join(" "),
-
-                //-- callback:
-                function (error /*, stdout, stderr*/) {
-
-                  //-- Update the toolchain.installed flag with the result
-                  toolchain.installed = !error;
-
-                  //-- There was an error executing the test command
-                  //-- Something is wrong... apio not correctly executed
-                  if (error) {
-                    toolchain.apio = "";
-                    // Toolchain not properly installed
-                    toolchainNotInstalledAlert(
-                      gettextCatalog.getString("Toolchain not installed")
-                    );
-                  }
-                  if (callback) {
-                    callback();
-                  }
-                }
-              );
-            } 
-            //-- An old version of apio is intalled
-            else {
-              toolchainNotInstalledAlert(
-                gettextCatalog.getString("Toolchain version does not match")
-              );
               if (callback) {
                 callback();
               }
+            }
+            //-- An old version of apio is installed
+            else {
+
+              console.log("Toolchain version does not match");
+              iceConsole.log("Toolchain version does not match");
+
+              toolchainNotInstalledAlert(
+                gettextCatalog.getString("Toolchain version does not match")
+              );
             }
           }
         });
@@ -1616,8 +1614,9 @@ angular
       //--
       function installationCompleted(callback) {
 
-        iceConsole.log("****************** INSTALLATION COMPLETED! **************");
-        iceConsole.log("\n\n");
+        iceConsole.log("**** FINAL STEP: Checking the installed apio");
+
+       
 
         //-- Check that the toolchain has been installed
         checkToolchain(function () {
@@ -1633,6 +1632,9 @@ angular
               gettextCatalog.getString("Installation completed"),
               100
             );
+
+            iceConsole.log("****************** INSTALLATION COMPLETED! **************");
+            iceConsole.log("\n\n");  
 
             //-- Notification: Installed!
             alertify.success(gettextCatalog.getString("Toolchain installed"));

@@ -211,6 +211,9 @@ angular.module('icestudio')
       //-- Execute the command in background!!
       let proccess = nodeChildProcess.spawn(command[0], args, { shell: true });
 
+      //-- String with the latest output to pass to the callback function
+      let output="";
+
       //-- When there are outputs available from the command...
       proccess.stdout.on('data', function (data) {
 
@@ -219,6 +222,10 @@ angular.module('icestudio')
 
         common.commandOutput = command.join(' ') + '\n\n' + data;
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
+
+        //-- Store the output string in the output variable
+        //-- to pass to the callback function
+        output = data;
       });
 
       //-- If there are errors ...
@@ -231,27 +238,22 @@ angular.module('icestudio')
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
-      proccess.on('close', function (code) {
+      proccess.on('exit', function (code) {
+        
         if (code !== 0) {
           _this.enableKeyEvents();
           _this.enableClickEvents();
+
           iceConsole.log("----!!!! ERROR !!!! -----");
           iceConsole.log("CMD: " + command);
-          callback(true);
-          alertify.error('Error executting command ' + command, 30);
-        } else {
-          callback();
-        }
-      });
 
-      proccess.on('exit', function (code) {
-        if (code !== 0) {
-          _this.enableKeyEvents();
-          _this.enableClickEvents();
-          callback(true);
-          alertify.error(common.commandOutput, 30);
+          //-- Error executing the command
+          alertify.error('Error executting command ' + command, 30);
+          callback(true, output);
+
         } else {
-          callback();
+          //-- No error
+          callback(false, output);
         }
       });
 
