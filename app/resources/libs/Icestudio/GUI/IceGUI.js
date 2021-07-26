@@ -88,7 +88,7 @@ class IceGUI {
   registerEvents() {
     let _this = this;
 
-    function eventResize(e) {
+    function eventResize() {
       _this.sandbox();
     }
 

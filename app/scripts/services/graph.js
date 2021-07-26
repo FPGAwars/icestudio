@@ -502,11 +502,11 @@ angular.module('icestudio')
             selectionView.on('selection-box:pointermove', function (/*evt*/) {
                 if (self.addingDraggableBlock && hasSelection()) {
                     debounceDisableReplacedBlock(selection.at(0));
+               
                 }
             });
 
             function processReplaceBlock(upperBlock) {
-                debounceDisableReplacedBlock.flush();
                 var lowerBlock = findLowerBlock(upperBlock);
                 replaceBlock(upperBlock, lowerBlock);
             }
@@ -678,7 +678,7 @@ angular.module('icestudio')
             }
 
             // Debounce `pointermove` handler to improve the performance
-            var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
+           var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
                 var lowerBlock = findLowerBlock(upperBlock);
                 disableReplacedBlock(lowerBlock);
             }, 100);
