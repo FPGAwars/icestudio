@@ -58,19 +58,20 @@
 
   <!-- Version window -->
   <link rel="stylesheet" href="styles/version.css">
+
 </head>
 
 
 <body ng-app="icestudio">
 
   <div ng-view></div>
-  <script>
-    window.$ = window.JQuery = window.jQuery = require('jquery');
-  </script>
 
   <!-- ************************************************************** -->
   <!-- ******      External Javascript modules              ********* -->
   <!-- ************************************************************** -->
+  <!-- jquery: jQuery is a fast, small, and feature-rich JavaScript library.
+       https://jquery.com/ -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
   <!-- angularjs: AngularJS lets you extend HTML vocabulary for your 
        application. The resulting environment is extraordinarily 
@@ -81,11 +82,7 @@
   <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
   <script src="node_modules/angular-gettext/dist/angular-gettext.min.js"></script>
 
-  <!-- jquery: jQuery is a fast, small, and feature-rich JavaScript library.
-       https://jquery.com/ -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-  <!-- jquery-resize: Resize elements easily
+   <!-- jquery-resize: Resize elements easily
        http://benalman.com/projects/jquery-resize-plugin/ -->
   <script src="node_modules/cos-jquery-resize/jquery.ba-resize.min.js"></script>
 
@@ -190,8 +187,8 @@
   <script src="resources/libs/iceplugmanager.js"></script>
 
   <!-- Icestudio app ENTRY POINT  -->
-  <script src="scripts/app.js"></script>
 
+  <script src="scripts/app.js"></script>
   <script src="scripts/controllers/design.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/menu.js"></script>
@@ -218,6 +215,7 @@
   <script src="scripts/services/collections.js"></script>
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
+
 </body>
 
 </html>
