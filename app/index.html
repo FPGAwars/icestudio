@@ -58,10 +58,6 @@
 
   <!-- Version window -->
   <link rel="stylesheet" href="styles/version.css">
- <!-- jquery: jQuery is a fast, small, and feature-rich JavaScript library.
-       https://jquery.com/ -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
 
 </head>
 
@@ -69,13 +65,13 @@
 <body ng-app="icestudio">
 
   <div ng-view></div>
-  <script>
-   <!----> window.$ = window.JQuery = window.jQuery = require('jquery');-->
-  </script>
 
   <!-- ************************************************************** -->
   <!-- ******      External Javascript modules              ********* -->
   <!-- ************************************************************** -->
+  <!-- jquery: jQuery is a fast, small, and feature-rich JavaScript library.
+       https://jquery.com/ -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
   <!-- angularjs: AngularJS lets you extend HTML vocabulary for your 
        application. The resulting environment is extraordinarily 
