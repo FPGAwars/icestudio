@@ -97,8 +97,10 @@ angular.module('icestudio')
         }
       }
       var argv = gui.App.argv;
-
-      if (window.opener.opener !== null) {
+      if (typeof window.opener !== 'undefined' &&
+          window.opener !== null &&
+          typeof window.opener.opener !== 'undefined' &&
+          window.opener.opener !== null) {
         argv = [];
       }
 
