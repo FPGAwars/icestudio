@@ -232,6 +232,19 @@ g {
   position: absolute;
   max-height:100%;
 }
+.generic-block .generic-content .img-container svg {
+  width: auto;
+  max-width:100%;
+  height: auto;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  max-height:100%;
+}
+
 
 .generic-block .generic-content label {
   display: block;
