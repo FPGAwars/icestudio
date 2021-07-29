@@ -1,12 +1,11 @@
 {
   "name": "icestudio",
   "flavour": "develop",
-  "version": "0.7.1w",
+  "version": "0.6.1w",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {
       "name": "Jesús Arroyo Torrens",
-      "email": "jesus.arroyo.torrens@gmail.com",
       "url": "https://github.com/Jesus89"
     },
     {
@@ -49,8 +48,8 @@
   },
   "collection": "0.3.3",
   "engines": {
-    "node": ">= 0.10.0"
   },
+  "node": ">= 0.10.0"
   "dependencies": {
     "ace-builds": "~1.4.12",
     "adm-zip": "0.4.7",
