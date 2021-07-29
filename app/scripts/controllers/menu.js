@@ -140,18 +140,9 @@ angular.module('icestudio')
 
     function processArg(arg) {
       if (nodeFs.existsSync(arg)) {
-        // Open filepath
         var filepath = arg;
         project.open(filepath);
-      } else {
-        // Move window
-        var data = arg.split('x');
-        var offset = {
-          x: parseInt(data[0]),
-          y: parseInt(data[1])
-        };
-        win.moveTo(offset.x, offset.y);
-      }
+      }  
     }
 
     /*

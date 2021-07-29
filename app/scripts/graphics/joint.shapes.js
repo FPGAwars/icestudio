@@ -523,9 +523,9 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     var labelSelector = this.$box.find('label');
 
     if (image) {
-     // let imgHeader=(image.indexOf('!DOCTYPE svg')>=0)? '' :encodeURI('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">');
+      let imgHeader=(image.indexOf('!DOCTYPE svg')>=0)? '' :encodeURI('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">');
     
-      //imageSelector.attr('src', `data:image/svg+xml,${imgHeader}${image}`);
+    //  imageSelector.attr('src', `data:image/svg+xml,${imgHeader}${image}`);
       let parent=imageSelector.parent();
       parent.html(decodeURI(image));  
       //imageSelector.removeClass('hidden');

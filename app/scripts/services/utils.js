@@ -1061,8 +1061,6 @@ angular.module('icestudio')
 
     this.newWindow = function (filepath, local) {
 
-
-
       var params = false;
 
       if (typeof filepath !== 'undefined') {
@@ -1091,8 +1089,7 @@ angular.module('icestudio')
       //url='index.html?icestudio_argv=fsdfsfa';
 
       gui.Window.open(url, {
-        // new_instance: true,  //Deprecated for new nwjs versios
-        //      'new_instance': true,  //Deprecated for new nwjs versios
+           'new_instance': true,  //Deprecated for new nwjs versios
         'position': 'center',
         //        'toolbar': false,   //Deprecated for new nwjs versios
         'width': 900,

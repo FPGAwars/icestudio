@@ -56,19 +56,27 @@ angular.module('icestudio')
     };
 
     this.open = function (filepath, emptyPath) {
+
+      
+      $("body").addClass("waiting");
       var self = this;
-      this.path = emptyPath ? '' : filepath;
-      this.filepath = filepath;
+      setTimeout(function(){
+        
+      self.path = emptyPath ? '' : filepath;
+      self.filepath = filepath;
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
           self.filename=name;
           self.dirname=utils.dirname(filepath);
+
+        $("body").removeClass("waiting");
           self.load(name, data);
         })
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
+      },2000);
     };
 
     this.load = function (name, data) {

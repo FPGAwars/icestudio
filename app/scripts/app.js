@@ -1,14 +1,25 @@
 "use strict";
 
-//-------- This is the main APP ENTRY Point
-
 /* exported ICEpm */
-var ICEpm = new IcePlugManager();
+var ICEpm =false;
 
 /* exported iceConsoler */
 //-- The log file by default is "icestudio.log", located in the
 //-- user home folder
-var iceConsole = new IceLogger();
+var iceConsole = false;
+
+
+//-------- This is the main APP ENTRY Point
+
+/* exported ICEpm */
+ICEpm = new IcePlugManager();
+
+/* exported iceConsoler */
+//-- The log file by default is "icestudio.log", located in the
+//-- user home folder
+iceConsole = new IceLogger();
+
+
 
 angular
   .module("icestudio", ["ui.bootstrap", "ngRoute", "gettext"])
@@ -164,3 +175,4 @@ angular
       }, 1000);
     });
   });
+

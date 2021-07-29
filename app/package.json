@@ -72,7 +72,7 @@
     "glob": "^7.1.4",
     "is-online": "~5.2.0",
     "jexcel": "^3.9.1",
-    "jointjs": "~1.1.0",
+    "jointjs": "~2.0.1",
     "jquery": "~3.0.0",
     "jsuites": "^2.7.1",
     "lodash": "~3.10.1",
