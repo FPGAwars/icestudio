@@ -776,7 +776,22 @@ angular.module('icestudio')
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
       content.push('  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">');
       content.push('  <div>');
-      content.push('  <img id="preview-svg" class="ajs-input" src="' + (image ? ('data:image/svg+xml,' + image) : blankImage) + '" height="68" style="pointer-events:none">');
+     if(image){
+        let embeded='<div id="preview-svg-wrapper">';
+      if (image.startsWith('%3Csvg')) {
+          embeded += decodeURI(image);
+        }
+        else if (image.startsWith('<svg')) {
+          embeded+= image;
+        }
+
+        embeded+='</div">';
+      content.push(embeded);
+      
+     }else{
+
+      content.push('  <div id="preview-svg-wrapper"><img id="preview-svg" class="ajs-input" src="'+ blankImage + '" height="68" style="pointer-events:none"></div>');
+     }
       content.push('  </div>');
       content.push('  <div>');
       content.push('    <label for="input-open-svg" class="btn">' + gettextCatalog.getString('Open SVG') + '</label>');
@@ -787,11 +802,6 @@ angular.module('icestudio')
       // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i).val(values[i]);
-      }
-      if (image) {
-        $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
-      } else {
-        $('#preview-svg').attr('src', blankImage);
       }
 
       var prevOnshow = alertify.confirm().get('onshow') || function () { };
@@ -818,7 +828,8 @@ angular.module('icestudio')
             optimizeSVG(data, function (result) {
               image = encodeURI(result.data);
               registerSave();
-              $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+              
+              $('#preview-svg-wrapper').html(result.data);
             });
           });
           $(this).val('');
@@ -863,7 +874,7 @@ angular.module('icestudio')
         reset.click(function ( /*evt*/) {
           image = '';
           registerSave();
-          $('#preview-svg').attr('src', blankImage);
+          $('#preview-svg-wrapper').empty();
         });
       }
 
