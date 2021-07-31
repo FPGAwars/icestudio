@@ -28,8 +28,6 @@
   "window": {
     "width": 900,
     "height": 620,
-    "min_width": 800,
-    "min_height": 200,
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
