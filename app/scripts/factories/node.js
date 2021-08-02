@@ -4,8 +4,11 @@ angular.module('icestudio')
   .factory('fastCopy', function() {
     return require('fast-copy');
   })
-
-.factory('nodeFs', function() {
+.factory('sparkMD5', function() {
+    return require('spark-md5');
+  })
+ 
+  .factory('nodeFs', function() {
     return require('fs');
   })
   .factory('nodeFse', function() {

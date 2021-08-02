@@ -41,6 +41,18 @@ class IceHD {
         return content;
         
     }
+    mkDir(folder){
+
+
+  //-- Check if the .icestudio folder exist
+      if (!this.fs.existsSync(folder)) {
+
+        //-- Create the .icestudio folder
+        this.fs.mkdirSync(folder);
+      }
+
+
+    }
 
     getFilesRecursive(folder, level) {
         let _this=this;
@@ -77,7 +89,17 @@ class IceHD {
             let content = this.fs.readFileSync(path).toString();
             callback(path,content);
         }else{
-           if(typeof calbackErr !== 'undefined') callbackErr(path);
+           if(typeof callbackErr !== 'undefined') callbackErr(path);
         }
     }
+    writeFile(path, content,callback){
+        try {
+            this.fs.writeFileSync(path, content);
+    
+            if(typeof callback !== 'undefined') callback(path,content);
+          } catch (err) {
+            console.error(err)
+          }
+    }
+
 }

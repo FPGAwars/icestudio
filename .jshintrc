@@ -24,6 +24,7 @@
   "globals": {
     "iprof":false,
     "IceProfiler":false,
+    "IceBlock":false,
     "subModuleActive":false,
     "ICEpm":false,
     "IcePlugManager":false,

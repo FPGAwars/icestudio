@@ -45,8 +45,7 @@
     "branch": ""
   },
   "collection": "0.3.3",
-  "engines": {
-  },
+  "engines": {},
   "node": ">= 0.10.0",
   "dependencies": {
     "ace-builds": "~1.4.12",
@@ -84,6 +83,7 @@
     "select2": "~4.0.5",
     "sha1": "~1.1.1",
     "snapsvg": "~0.5.1",
+    "spark-md5": "^3.0.1",
     "ssh-exec": "~2.0.0",
     "sudo-prompt": "~8.2.0",
     "svg-pan-zoom": "~3.4.1",

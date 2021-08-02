@@ -4,7 +4,8 @@ angular.module('icestudio')
   .service('blocks', function (joint,
     utils,
     common,
-    gettextCatalog) {
+    gettextCatalog,
+    sparkMD5) {
     var gridsize = 8;
     var resultAlert = null;
 
@@ -954,7 +955,7 @@ angular.module('icestudio')
       var rightPorts = [];
       var topPorts = [];
       var bottomPorts = [];
-
+      let virtualBlock= new IceBlock({cacheDirImg:common.IMAGE_CACHE_DIR});
       instance.data = { ports: { in: [] } };
 
       for (i in block.design.graph.blocks) {
@@ -1008,12 +1009,18 @@ angular.module('icestudio')
 
       var blockLabel = block.package.name;
       var blockImage = '';
+      let blockImageSrc='';
+      let hash='';
       if (block.package.image) {
         if (block.package.image.startsWith('%3Csvg')) {
-          blockImage = block.package.image;
+          blockImage = decodeURI(block.package.image);
         }
         else if (block.package.image.startsWith('<svg')) {
-          blockImage = encodeURI(block.package.image);
+          blockImage = block.package.image;
+        }
+        if(blockImage.length>0){
+          hash=sparkMD5.hash(blockImage);
+          blockImageSrc=virtualBlock.svgFile(hash,blockImage);
         }
       }
 
@@ -1023,7 +1030,7 @@ angular.module('icestudio')
         data: instance.data,
         config: block.design.config,
         pullup: block.design.pullup,
-        image: blockImage,
+        image: blockImageSrc,
         label: blockLabel,
         tooltip: gettextCatalog.getString(block.package.description),
         position: instance.position,

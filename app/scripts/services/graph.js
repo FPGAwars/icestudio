@@ -55,7 +55,6 @@ angular.module('icestudio')
         };
 
         this.fitContent = function () {
-            console.log('FIT:',window.get(),paper);
             if (!this.isEmpty()) {
                 // Target box
                 var margin = 40;

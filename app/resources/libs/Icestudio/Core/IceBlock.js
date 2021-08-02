@@ -17,6 +17,16 @@ class IceBlock {
     },onLoadERROR); 
   }
 
+  svgFile(hash,svg){
+    let path= this.fs.joinPath(this.config.cacheDirImg,`${hash}.svg`);
+    if(!this.fs.isValidPath( path )){
+      this.fs.writeFile(path,svg);
+    }
+
+    return path;
+
+  }
+
   busLoadFromFile(args){
 
     //console.log('BLOCK LOAD FILE FROM BUS',args);
