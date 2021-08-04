@@ -22,7 +22,8 @@ angular.module('icestudio')
     nodeLangInfo,
     gui,
     SVGO,
-    fastCopy) {
+    fastCopy,
+    sparkMD5) {
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
@@ -778,14 +779,33 @@ angular.module('icestudio')
       content.push('  <div>');
      if(image){
         let embeded='<div id="preview-svg-wrapper">';
-      if (image.startsWith('%3Csvg')) {
+      /*  if (image.startsWith('%3Csvg')) {
           embeded += decodeURI(image);
         }
         else if (image.startsWith('<svg')) {
           embeded+= image;
+        }*/
+        let virtualBlock= new IceBlock({cacheDirImg:common.IMAGE_CACHE_DIR});
+      
+        let tmpImage='';
+        let tmpImageSrc='';
+        let hash='';
+        if (image.startsWith('%3Csvg')) {
+          tmpImage = decodeURI(image);
         }
+        else if (image.startsWith('<svg')) {
+          tmpImage = image;
+        }
+        if(tmpImage.length>0){
+          hash=sparkMD5.hash(tmpImage);
+          tmpImageSrc=virtualBlock.svgFile(hash,tmpImage);
+          embeded=`${embeded}<img src="file://${tmpImageSrc}"/>`;
+        }
+     
 
         embeded+='</div">';
+
+
       content.push(embeded);
       
      }else{

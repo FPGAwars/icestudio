@@ -99,7 +99,16 @@ body {
    max-width:100%;
    
  }
-.ajs-header {
+ #preview-svg-wrapper {
+ padding:10px;
+ border:1px solid #ccc;
+ border-radius:3px;
+ }
+   #preview-svg-wrapper img{
+   height:86px;
+ }
+
+ .ajs-header {
   display: none;
 }
 

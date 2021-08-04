@@ -736,6 +736,7 @@ angular.module('icestudio')
         };
     
         function updateWiresOnObstacles() {
+           
             var cells = graph.getCells();
 
             //_.each(cells, function (cell) {
