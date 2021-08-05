@@ -65,7 +65,10 @@
       "ColorLight-i5-v7.0_(USB-Blaster)",
       "iCESugar-Pro_(FT2232H)",
       "iCESugar-Pro_(FT232H)",
-      "iCESugar-Pro_(USB-Blaster)" 
+      "iCESugar-Pro_(USB-Blaster)",
+      "FleaFPGA-Ohm_(FT2232H)",
+      "FleaFPGA-Ohm_(FT232H)",
+      "FleaFPGA-Ohm_(USB-Blaster)" 
     ]
   }
 ]
