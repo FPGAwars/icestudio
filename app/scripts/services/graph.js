@@ -283,9 +283,9 @@ angular.module('icestudio')
             function updateCellBoxes() {
                 var cells = graph.getCells();
                 selectionView.options.state = state;
-                
+
                 for (var i = 0, len = cells.length; i < len; i++) {
- 
+
                     if (!cells[i].isLink()) {
                         cells[i].attributes.state = state;
                         var elementView = paper.findViewByModel(cells[i]);
@@ -296,7 +296,7 @@ angular.module('icestudio')
 
                     }
                 }
-               
+
             }
             // Events
 
@@ -354,7 +354,7 @@ angular.module('icestudio')
                 }
                 else {
                     // Toggle selected cell
-                    if (shiftPressed) {
+                    if (utils.hasShift(evt)) {
                         var cell = selection.get($(evt.target).data('model'));
                         selection.reset(selection.without(cell));
                         selectionView.destroySelectionBox(cell);
@@ -374,21 +374,23 @@ angular.module('icestudio')
                     // Out of the view box
                     return;
                 }
-                if (shiftPressed) {
-                    // If Shift is pressed process the click (no Shift+dblClick allowed)
-                    if (paper.options.enabled) {
-                        if (!cellView.model.isLink()) {
-                            // Disable current focus
-                            document.activeElement.blur();
-                            if (utils.hasLeftButton(evt)) {
-                                // Add cell to selection
-                                selection.add(cellView.model);
-                                selectionView.createSelectionBox(cellView.model);
-                            }
+
+                // If Shift is pressed, we are updating the selection. Else new selection.
+                if (!utils.hasShift(evt)) {
+                    selectionView.cancelSelection();
+                }
+
+                if (paper.options.enabled) {
+                    if (!cellView.model.isLink()) {
+                        // Disable current focus
+                        document.activeElement.blur();
+                        if (utils.hasLeftButton(evt)) {
+                            // Add cell to selection
+                            selection.add(cellView.model);
+                            selectionView.createSelectionBox(cellView.model);
                         }
                     }
                 }
-
             });
 
             paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
@@ -398,7 +400,7 @@ angular.module('icestudio')
                     return;
                 }
                 selectionView.cancelSelection();
-                if (!shiftPressed) {
+                if (!utils.hasShift(evt)) {
 
                     // Allow dblClick if Shift is not pressed
                     var type = cellView.model.get('blockType');
@@ -502,7 +504,7 @@ angular.module('icestudio')
             selectionView.on('selection-box:pointermove', function (/*evt*/) {
                 if (self.addingDraggableBlock && hasSelection()) {
                     debounceDisableReplacedBlock(selection.at(0));
-               
+
                 }
             });
 
@@ -734,9 +736,9 @@ angular.module('icestudio')
             graph.trigger('state', state);
 
         };
-    
+
         function updateWiresOnObstacles() {
-           
+
             var cells = graph.getCells();
 
             //_.each(cells, function (cell) {
