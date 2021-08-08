@@ -163,7 +163,7 @@ angular
        *                                                                 */
       $scope.closeVersionInfoWindow = function () {
         $("#version-info-tab").addClass("hidden");
-        var nodisplay = $('input[name="version-info-tab--no-display"]').is(
+        var nodisplay = $('#version-info-tab--no-display').is(
           ":checked"
         );
         if (nodisplay) {
@@ -186,7 +186,7 @@ angular
           noShowVersion = false;
         }
 
-        $('input[name="version-info-tab--no-display"]').prop(
+        $('#version-info-tab--no-display').prop(
           "checked",
           noShowVersion
         );
