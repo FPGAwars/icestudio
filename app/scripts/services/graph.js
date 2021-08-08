@@ -1,7 +1,5 @@
 'use strict';
 
-const { clone } = require("lodash");
-
 angular.module('icestudio')
     .service('graph', function ($rootScope,
         joint,
