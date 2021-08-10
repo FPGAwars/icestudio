@@ -21,7 +21,8 @@
   "-W069": true,
   "-W083": true,
   "-W084": true,
-  "globals": {
+  "globals": { 
+    "domCache":false,
     "iprof":false,
     "IceProfiler":false,
     "IceBlock":false,

@@ -5,7 +5,7 @@ var sha1 = require("sha1");
 var marked = require("marked");
 var openurl = require("openurl");
 var emoji = require("node-emoji");
-
+var domCache ={};
 const WIRE_WIDTH = 1.5;
 const DARWIN = Boolean(os.platform().indexOf("darwin") > -1);
 
@@ -152,9 +152,14 @@ function placementCssTasks(selector,bbox, state, queue) {
       property: "top",
       value: 0,
     });
+    let gcontent=domCache[this.id+this.cid+selector];
+    if(!gcontent){
+      gcontent = this.$box[0].querySelectorAll(selector);
+      domCache[this.id+this.cid+selector]=gcontent;
+    }
+   // gcontent= this.$box[0].querySelectorAll(selector);
 
-    let gcontent = this.$box[0].querySelectorAll(selector);
-    for (i = 0; i < gcontent.length; i++) {
+      for (i = 0; i < gcontent.length; i++) {
       queue.push({ e: gcontent[i], property: "left", value: 0 });
       queue.push({ e: gcontent[i], property: "top", value: 0 });
 
@@ -740,14 +745,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
 
+  cache:{dom:{}},
   initialize: function () {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
-
+    
     this.tooltip = this.model.get("tooltip");
     this.tooltiptext = this.$box.find(".tooltiptext");
-
     this.tooltiptext.text(this.tooltip);
 
+    
     if (this.tooltip.length > 13) {
       this.tooltiptext.addClass("tooltip-medium");
       this.tooltiptext.removeClass("tooltip-large");
@@ -879,8 +885,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
             property: "display",
             value: "inline",
           });
+  
+          paths=domCache[tokId+port.name+"path"];
+          if(!paths){
 
-          paths = portDefault.querySelectorAll("path");
+            paths = portDefault.querySelectorAll("path");
+           domCache[tokId+port.name+"path"]=paths;
+          }
+
+
           for (j = 0; j < paths.length; j++) {
             pendingTasks.push({
               e: paths[j],
@@ -888,8 +901,14 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
               value: width + "px",
             });
           }
+       rects=domCache[tokId+port.name+"rect"];
+          if(!rects){
 
-          rects = portDefault.querySelectorAll("rect");
+            rects = portDefault.querySelectorAll("rect");
+           domCache[tokId+port.name+"rect"]=rects;
+          }
+
+
           for (j = 0; j < rects.length; j++) {
             pendingTasks.push({
               e: rects[j],
@@ -1078,12 +1097,25 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.virtualContentSelector = this.$box.find(".io-virtual-content");
     this.fpgaContentSelector = this.$box.find(".io-fpga-content");
     this.headerSelector = this.$box.find(".header");
+
+    let vcs=domCache[this.id+this.cid+".io-virtual-content"];
+    if(!vcs){
+      vcs = this.$box[0].querySelectorAll(".io-virtual-content");
+      domCache[this.id+this.cid+".io-virtual-content"]=vcs;
+    }
+
+    let fcs=domCache[this.id+this.cid+".io-fpga-content"];
+    if(!fcs){
+      fcs = this.$box[0].querySelectorAll(".io-fpga-content");
+      domCache[this.id+this.cid+".io-fpga-content"]=fcs;
+    }
+
+
+
     this.nativeDom = {
       box: this.$box[0],
-      virtualContentSelector: this.$box[0].querySelectorAll(
-        ".io-virtual-content"
-      ),
-      fpgaContentSelector: this.$box[0].querySelectorAll(".io-fpga-content"),
+      virtualContentSelector: vcs,
+      fpgaContentSelector: fcs,
     };
 
     this.model.on("change", this.updateBox, this);
@@ -1367,6 +1399,8 @@ joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
 });
 
 joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
+
+  cache:{dom:{}},
   initialize: function () {
     _.bindAll(this, "updateBox");
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
@@ -1478,80 +1512,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
         value: width + "px",
       });
     }
-    // Render content
-    //var topOffset = data.name || data.local ? 0 : 24;
-   
-    /*var contentSel = this.$box[0].querySelectorAll(".constant-content");
-    for (i = 0; i < contentSel.length; i++) {
-      pendingTasks.push({
-        e: contentSel[i],
-        property: "left",
-        value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + "px",
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: "top",
-        value:
-          Math.round(
-            ((bbox.height + topOffset) / 2.0) * (state.zoom - 1) + topOffset
-          ) + "px",
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: "width",
-        value: Math.round(bbox.width) + "px",
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: "height",
-        value: Math.round(bbox.height - topOffset) + "px",
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: "transform",
-        value: "scale(" + state.zoom + ")",
-      });
-    }
-    if (data.name || data.local) {
-      this.headerSelector.removeClass("hidden");
-    } else {
-      this.headerSelector.addClass("hidden");
-    }
-
-    // Render block
-    pendingTasks.push({
-      e: this.$box[0],
-      property: "left",
-      value: Math.round(bbox.x * state.zoom + state.pan.x) + "px",
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: "top",
-      value: Math.round(bbox.y * state.zoom + state.pan.y) + "px",
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: "width",
-      value: Math.round(bbox.width * state.zoom) + "px",
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: "height",
-      value: Math.round(bbox.height * state.zoom) + "px",
-    });
-
-    i = pendingTasks.length;
-    //  pendingTasks= pendingTasks.reverse();
-    for (i = 0; i < pendingTasks.length; i++) {
-      if (pendingTasks[i].e !== null) {
-        pendingTasks[i].e.style[pendingTasks[i].property] =
-          pendingTasks[i].value;
-      }
-    }
-    return pendingTasks;
-    */
-
-    return this.place(".constant-content", bbox, state, pendingTasks);
+      return this.place(".constant-content", bbox, state, pendingTasks);
   },
 });
 

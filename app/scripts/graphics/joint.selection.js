@@ -372,13 +372,21 @@ joint.ui.SelectionView = Backbone.View.extend({
   updateBox: function (element) {
 
 
-    var bbox = element.getBBox();
-    var state = this.options.state;
+    let bbox = element.getBBox();
+    let state = this.options.state;
 
 
 
-    var i, pendingTasks = [];
-    var sels = document.querySelectorAll('div[data-model="' + element.get('id') + '"]');
+    let i, pendingTasks = [];
+
+  
+      let sels =domCache['div[data-model="' + element.get('id') + '"]'];
+          if(!sels){
+
+            sels = document.querySelectorAll('div[data-model="' + element.get('id') + '"]');
+          domCache['div[data-model="' + element.get('id') + '"]']= sels;
+          }
+
     for (i = 0; i < sels.length; i++) {
       pendingTasks.push({
         e: sels[i], property: 'left', value: Math.round(
