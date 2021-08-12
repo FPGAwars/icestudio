@@ -60,7 +60,6 @@ angular.module('icestudio')
       
       $("body").addClass("waiting");
       var self = this;
-      setTimeout(function(){
         
       self.path = emptyPath ? '' : filepath;
       self.filepath = filepath;
@@ -76,7 +75,6 @@ angular.module('icestudio')
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
-      },2000);
     };
 
     this.load = function (name, data) {
@@ -141,12 +139,10 @@ angular.module('icestudio')
         else {
           alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
         }
-        setTimeout(function () {
           alertify.set('confirm', 'labels', {
             'ok': gettextCatalog.getString('OK'),
             'cancel': gettextCatalog.getString('Cancel')
           });
-        }, 100);
       }
     };
 
@@ -468,7 +464,6 @@ angular.module('icestudio')
                 alertify.confirm(gettextCatalog.getString('This import operation requires a project path. You need to save the current project. Do you want to continue?'),
                   function () {
                     $rootScope.$emit('saveProjectAs', function () {
-                      setTimeout(function () {
                         // 3. Copy the included files
                         copyIncludedFiles(files, origPath, destPath, function (success) {
                           if (success) {
@@ -476,7 +471,6 @@ angular.module('icestudio')
                             doImportBlock();
                           }
                         });
-                      }, 500);
                     });
                   });
               }
@@ -503,7 +497,6 @@ angular.module('icestudio')
     function copyIncludedFiles(files, origPath, destPath, callback) {
       var success = true;
       async.eachSeries(files, function (filename, next) {
-        setTimeout(function () {
           if (origPath !== destPath) {
             if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
               alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
@@ -529,7 +522,6 @@ angular.module('icestudio')
           else {
             return next(); // break
           }
-        }, 0);
       }, function (/*result*/) {
         return callback(success);
       });

@@ -427,7 +427,6 @@ angular.module('icestudio')
                         var breadcrumbsLength = self.breadcrumbs.length;
 
                         $('body').addClass('waiting');
-                        setTimeout(function () {
                             $rootScope.$broadcast('navigateProject', {
                                 update: breadcrumbsLength === 1,
                                 project: project,
@@ -436,7 +435,6 @@ angular.module('icestudio')
                             });
                             self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                             utils.rootScopeSafeApply();
-                        }, 100);
                     }
                 }
 
@@ -1326,7 +1324,7 @@ angular.module('icestudio')
 
                     $('body').removeClass('waiting');
 
-                }, 100);
+                }, 0);
 
                 return true;
             }
