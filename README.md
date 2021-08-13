@@ -95,13 +95,13 @@ Icestudio is a design tool focused on new comers to the FPGA world
 | Basque (eu_ES)    | ![Progress](http://progress-bar.dev/100) |
 | Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/100) |
 | Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/100) |
+| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/100) |
 | Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/100) |
 | German (de_DE)    | ![Progress](http://progress-bar.dev/99)  |
 | Russian (ru_RU)   | ![Progress](http://progress-bar.dev/98)  |
 | Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/92)  |
 | Greek (el_GR)     | ![Progress](http://progress-bar.dev/79)  |
 | Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/78)  |
-| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/78)  |
 | Galician (gl_ES)  | ![Progress](http://progress-bar.dev/78)  |
 | Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/72)  |
 

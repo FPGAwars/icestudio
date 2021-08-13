@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -97,7 +97,7 @@ msgstr "Autor"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "Automaticky hledat nové verze"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -105,13 +105,15 @@ msgstr "Základní prvky"
 
 #: app/views/languages.html:70
 msgid "Basque"
-msgstr "baskičtina"
+msgstr "Baskičtina"
 
 #: app/views/version.html:34
 msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"Icestudio je v aktivním vývoji, a proto je nutné využívat nejnovější verzi. "
+"Nyní vás informujeme!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
@@ -184,7 +186,7 @@ msgstr "Zrušit"
 
 #: app/views/languages.html:76
 msgid "Catalan"
-msgstr "katalánština"
+msgstr "Katalánština"
 
 #: app/scripts/services/tools.js:857
 msgid "Check Internet connection..."
@@ -196,16 +198,16 @@ msgstr "Kontrola Pythonu..."
 
 #: app/views/languages.html:52
 msgid "Chinese"
-msgstr "čínština"
+msgstr "Čínština"
 
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "Zvolte barvu"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Vývojové nástroje Chrome"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -231,7 +233,7 @@ msgstr "Hodiny nejsou povoleny pro datové sběrnice"
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "Klonovat"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -303,12 +305,12 @@ msgstr "Kopírovat"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "Kopírovat a Vložit NEBO Kopírovat a Klonovat bloky"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "Korálový"
 
 #: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
@@ -320,17 +322,17 @@ msgstr "Vyjmout"
 
 #: app/views/languages.html:40
 msgid "Czech"
-msgstr "čeština"
+msgstr "Čeština"
 
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "Tmavě zelená"
 
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "Tmavě oranžová"
 
 #: app/views/menu.html:161
 msgid "Datasheet"
@@ -343,12 +345,12 @@ msgstr "Desítkové"
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "Tmavě růžová"
 
 #: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "Tmavě modrá"
 
 #: app/views/menu.html:213
 msgid "Default"
@@ -388,7 +390,7 @@ msgstr "Dokumentace"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "Nezobrazovat"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -414,7 +416,7 @@ msgstr "Duplikované blokové atributy"
 
 #: app/views/languages.html:34
 msgid "Dutch"
-msgstr "holandský"
+msgstr "Holandština"
 
 #: app/views/menu.html:91
 msgid "Edit"
@@ -430,7 +432,7 @@ msgstr "Povolit"
 
 #: app/views/languages.html:4
 msgid "English"
-msgstr "angličtina"
+msgstr "Angličtina"
 
 #: app/scripts/services/blocks.js:395
 msgid "Enter the constant blocks"
@@ -494,7 +496,7 @@ msgstr "Exportovat"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "Exportovat submodul"
 
 #: app/views/menu.html:135
 msgid "External collections"
@@ -552,38 +554,38 @@ msgstr "Přizpůsbit obsah"
 
 #: app/views/languages.html:16
 msgid "French"
-msgstr "francouzština"
+msgstr "Francouzština"
 
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "Fuchsie"
 
 #: app/views/languages.html:64
 msgid "Galician"
-msgstr "galicijština"
+msgstr "Galicijština"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "Obecný blok"
 
 #: app/views/languages.html:28
 msgid "German"
-msgstr "němčina"
+msgstr "Němčina"
 
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "Zlatá"
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Řečtina"
 
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "Žluto zelená"
 
 #: app/views/menu.html:332
 msgid "Help"
@@ -595,13 +597,15 @@ msgstr "Šestnáctkové"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
-msgstr ""
+msgstr "Vznik Icestudia"
 
 #: app/views/version.html:21
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
 msgstr ""
+"Pokud klonujete bloky, je velmi důležité změnit informace k učení jejich "
+"funkce."
 
 #: app/views/version.html:25
 msgid ""
@@ -609,12 +613,17 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"Pokud vytváříte kolekci, můžete vytvořit obecné bloky, které slouží jako "
+"šablony. Pokud vložíte obecný blok z kolekce, chová se jako klon pro "
+"rychlejší úpravy, bez věčného kopírování a klonování."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
+"Pokud máte nepřiřazené vstupně/výstupní piny, je to proto, že na desce není "
+"žádný vhodný ekvivalent"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -630,11 +639,13 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"Jinak, pokud kopírujete a klonujete blok, vytvoříte jej nezávislý na "
+"původním typu bloku a úpravy ovlivní pouze nový typ bloku"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "Indická červená"
 
 #: app/views/menu.html:392
 msgid "Information"
@@ -646,7 +657,7 @@ msgstr "Vstup"
 
 #: app/views/menu.html:380
 msgid "Input label"
-msgstr ""
+msgstr "Popisek vstupu"
 
 #: app/views/menu.html:254
 msgid "Install"
@@ -709,11 +720,11 @@ msgstr "Do doporučeno využívat <b>USB 2.0</b> porty"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italština"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "Popisky"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -722,7 +733,7 @@ msgstr "Jazyk"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "Světle mořská zelená"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -740,7 +751,7 @@ msgstr "Maximální šířka sběrnice: 96 bitů"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "Středně fialově červená"
 
 #: app/views/menu.html:386
 msgid "Memory"
@@ -753,7 +764,7 @@ msgstr "Jméno"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "Námořnická"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -771,7 +782,7 @@ msgstr "Budiž"
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "Olivová"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -784,7 +795,7 @@ msgstr "Otevřít SVG"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "Oranžovo červená"
 
 #: app/scripts/services/project.js:527
 msgid "Original file {{file}} does not exist"
@@ -796,7 +807,7 @@ msgstr "Výstup"
 
 #: app/views/menu.html:377
 msgid "Output label"
-msgstr ""
+msgstr "Popisek výstupu"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -845,7 +856,7 @@ msgstr "Pouze pro čtení"
 #: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
-msgstr ""
+msgstr "Červená"
 
 #: app/views/menu.html:97
 msgid "Redo"
@@ -882,11 +893,11 @@ msgstr "Obnovit výchozí"
 #: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "Pruská modř"
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Ruština"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -902,7 +913,7 @@ msgstr "Uložit jako"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "Uložit submodul"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -923,7 +934,7 @@ msgstr "Zobrazit hodiny"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "Břidlicově modrá"
 
 #: app/views/menu.html:348
 msgid "Source code"
@@ -931,12 +942,12 @@ msgstr "Zdrojový kód"
 
 #: app/views/languages.html:10
 msgid "Spanish"
-msgstr "španělština"
+msgstr "Španělština"
 
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "Jarní zelená"
 
 #: app/scripts/controllers/menu.js:745
 msgid "Start build"
@@ -953,11 +964,11 @@ msgstr "Začínám kontrolovat"
 #: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "Ocelová modř"
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "Vydání submodulu"
 
 #: app/views/version.html:16
 msgid ""
@@ -965,6 +976,8 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"Vydání submodulu ovlivňuje všechny stejné typy bloků. Například pokud máte v "
+"návrhu šest bloků AND a upravíte jeden z nich, změníte tím všechny."
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -1007,20 +1020,23 @@ msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
 msgstr ""
+"Použití popisků zpřehlední velké návrhy, spojuje bloky bez použití drátů."
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
 msgstr ""
+"V této verzi je několik aktualit, které doufáme, že se vám budou líbit. "
+"Některé z nejdůležitějších změn zahrnuje:"
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "Nové noční sestavení je k dispozici"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "Nová stabilní verze k dispozici"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1032,7 +1048,7 @@ msgstr ""
 
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
-msgstr ""
+msgstr "Toto je velmi mocná vychytávka pro údržbu velkých návrhů."
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1042,22 +1058,24 @@ msgstr "Tento projekt je navržen pro desku {{name}}."
 msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
-msgstr ""
+msgstr "Tato verze zdokonaluje možnosti, včetně možnosti úprav obsahu bloků."
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
-msgstr ""
+msgstr "K tomu je zapotřebí pouze, aby název bloku začínal na Generic-"
 
 #: app/scripts/services/graph.js:410
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"Ke vstupu do úpravy vnitřního bloku potřebujete dokončit současnou úpravu, "
+"uzamkněte zámek."
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr ""
+msgstr "Pro procházení návrhu musíte uzavřít režim úprav."
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1065,6 +1083,9 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"K uložení návrhu potřebujete uzamknout zámek a vrátit se do nejvyššího "
+"návrhu.<br/></br>Pokud chcete exportovat tento submodul do souboru, použijte "
+"\"Uložit jako\"."
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1095,7 +1116,7 @@ msgstr "Nástroje"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "Tyrkysová"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1145,11 +1166,11 @@ msgstr "Verze"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "Poznámky k verzi"
 
 #: app/views/menu.html:152
 msgid "View"
-msgstr "Zaobrazit"
+msgstr "Zobrazit"
 
 #: app/views/menu.html:335
 msgid "View license"
@@ -1161,7 +1182,7 @@ msgstr "V návrhu byla zjištěna varování"
 
 #: app/views/version.html:8
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
-msgstr ""
+msgstr "Vítejte na počátku, verze Icestudia, zaměřené na submoduly."
 
 #: app/scripts/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
@@ -1195,7 +1216,7 @@ msgstr "Špatný název vzdáleného hostitele {{name}}"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "Žlutá"
 
 #: app/scripts/controllers/menu.js:235
 msgid ""
@@ -1203,6 +1224,9 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"Upravujete submodul, pokud bude ukládat, uložíte pouze submodul (v této "
+"situaci \"uložit jako\" funguje jako \"exportovat modul\"), chcete "
+"pokračovat?"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1213,12 +1237,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
+"Sestavovat můžete pouze na nejvyšší úrovni návrhu. Uvnitř submodulů můžete "
+"pouze <strong>Verifikovat</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr ""
+"Nahrávat můžete pouze na nejvyšší úrovni návrhu. Uvnitř submodulů můžete "
+"pouze <strong>Verifikovat</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
