@@ -88,19 +88,23 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 |  Language  | Translated strings                       |
 |:----------:|:----------------------------------------:|
-| English    | ![Progress](http://progress-bar.dev/100) |
-| Spanish    | ![Progress](http://progress-bar.dev/92)  |
-| Italian    | ![Progress](http://progress-bar.dev/100) |
-| French     | ![Progress](http://progress-bar.dev/78)  |
-| Dutch      | ![Progress](http://progress-bar.dev/78)  |
-| Czech      | ![Progress](http://progress-bar.dev/78)  |
-| Greek      | ![Progress](http://progress-bar.dev/79)  |
-| German     | ![Progress](http://progress-bar.dev/77)  |
-| Russian    | ![Progress](http://progress-bar.dev/77)  |
-| Chinese    | ![Progress](http://progress-bar.dev/72)  |
-| Galician   | ![Progress](http://progress-bar.dev/78)  |
-| Basque     | ![Progress](http://progress-bar.dev/77)  |
-| Catalan    | ![Progress](http://progress-bar.dev/72)  |
+| English (en)   | ![Progress](http://progress-bar.dev/100) |
+| Spanish (en_ES)   | ![Progress](http://progress-bar.dev/100) |
+| Italian (it_IT)   | ![Progress](http://progress-bar.dev/100) |
+| French (fr_FR)    | ![Progress](http://progress-bar.dev/100) |
+| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/100) |
+| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/100) |
+| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/100) |
+| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/100) |
+| German (de_DE)    | ![Progress](http://progress-bar.dev/99)  |
+| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/98)  |
+| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/92)  |
+| Greek (el_GR)     | ![Progress](http://progress-bar.dev/79)  |
+| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/78)  |
+| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/78)  |
+| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/78)  |
+| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/72)  |
+
 
 **Contribute!**
 
@@ -113,6 +117,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
+| 0.7    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Joaquim (jojo535275)](https://github.com/jojo535275) |
 | 0.6    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Miodrag Milanovic](https://github.com/mmicko), [Pascal Cotret](https://github.com/pcotret), [aalku](https://github.com/aalku),, [Lorea Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [TimRudy](https://github.com/TimRudy), [Sam](https://github.com/sam210723), [Kyle Lomem](https://github.com/KyleLomen), [pitrz](https://github.com/pitrz), [Francisco Sayas](https://github.com/fsayas), [jojo535275](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), Derek Lai,  [wifasoi](https://github.com/wifasoi),   Carls, [Datanoise](https://github.com/DatanoiseTV), Andrew Goodney,  [Jose Miguel Sánchez García](https://github.com/jmi2k), [Alejomejia](https://github.com/alejomejia1),  [reclaimed](https://github.com/reclaimed), [Marcel Ochsendorf](https://github.com/RBEGamer), [HwaGyeong](https://github.com/HwaGyeong)  |
 | 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes), [Sam](https://github.com/sam210723) |
 | 0.4 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
@@ -138,7 +143,7 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.6.1w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.7.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 

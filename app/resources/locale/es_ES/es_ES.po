@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -314,7 +314,7 @@ msgstr "Copiar y pegar O Copiar y clonar bloques"
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "Coral"
 
 #: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
@@ -331,12 +331,12 @@ msgstr "Checo"
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "DarkGreen"
 
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "DarkOrange"
 
 #: app/views/menu.html:161
 msgid "Datasheet"
@@ -349,12 +349,12 @@ msgstr "Decimal"
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "DeepPink"
 
 #: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "DeepSkyBlue"
 
 #: app/views/menu.html:213
 msgid "Default"
@@ -520,7 +520,7 @@ msgstr "Extraer paquetes de apio..."
 
 #: app/scripts/services/tools.js:880
 msgid "Extract virtualenv files..."
-msgstr "Extraer ficheros del virtualenv"
+msgstr "Extraer ficheros del virtualenv..."
 
 #: app/scripts/services/tools.js:415
 msgid "FPGA I/O ports not defined"
@@ -565,7 +565,7 @@ msgstr "Francés"
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "Fuchsia"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -582,7 +582,7 @@ msgstr "Alemán"
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "Gold"
 
 #: app/views/languages.html:46
 msgid "Greek"
@@ -591,7 +591,7 @@ msgstr "Griego"
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "GreenYellow"
 
 #: app/views/menu.html:332
 msgid "Help"
@@ -622,7 +622,7 @@ msgstr ""
 "Si estás desarrollando una colección, puedes crear bloques genéricos que "
 "funcionen como plantillas. Cuando insertas un bloque genérico de una "
 "colección, actúa como un clon para modificaciones rápidas sin hacer una "
-"operación de copia y clonación"
+"operación de copia y clonación."
 
 #: app/scripts/services/graph.js:1395
 msgid ""
@@ -653,7 +653,7 @@ msgstr ""
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "IndianRed"
 
 #: app/views/menu.html:392
 msgid "Information"
@@ -741,7 +741,7 @@ msgstr "Idioma"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "IndianRed"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -759,7 +759,7 @@ msgstr "Tamaño máximo del bus: 96 bits"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "IndianRed"
 
 #: app/views/menu.html:386
 msgid "Memory"
@@ -772,7 +772,7 @@ msgstr "Nombre"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "Navy"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -790,7 +790,7 @@ msgstr "OK"
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "OliveDrab"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -803,7 +803,7 @@ msgstr "Abrir SVG"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "OrangeRed"
 
 #: app/scripts/services/project.js:527
 msgid "Original file {{file}} does not exist"
@@ -901,7 +901,7 @@ msgstr "Reset default"
 #: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "RoyalBlue"
 
 #: app/views/languages.html:58
 msgid "Russian"
@@ -942,7 +942,7 @@ msgstr "Mostrar reloj"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "SlateBlue"
 
 #: app/views/menu.html:348
 msgid "Source code"
@@ -955,7 +955,7 @@ msgstr "Español"
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "SpringGreen"
 
 #: app/scripts/controllers/menu.js:745
 msgid "Start build"
@@ -972,7 +972,7 @@ msgstr "Comenzar verificación"
 #: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "SteelBlue"
 
 #: app/views/version.html:11
 msgid "Submodule edition"
@@ -1131,7 +1131,7 @@ msgstr "Herramientas"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "Turquoise"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1231,7 +1231,7 @@ msgstr "Nombre del host remoto incorrecto {{name}}"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "Yellow"
 
 #: app/scripts/controllers/menu.js:235
 msgid ""
