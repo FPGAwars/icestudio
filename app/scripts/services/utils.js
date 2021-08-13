@@ -1381,7 +1381,6 @@ angular.module('icestudio')
     };
 
     this.loadLanguage = function (profile, callback) {
-      console.log("LOAD LANGUAGE!!!")
       var lang = profile.get('language');
       if (lang) {
         this.setLocale(lang, callback);
