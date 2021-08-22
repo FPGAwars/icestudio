@@ -1,6 +1,6 @@
 .tree-view {
   background-color: white;
-  padding: 20px 20px 20px 40px;
+  padding: 10px 10px 10px 20px;
   position: relative;
   display: block;
   height: 100%;
@@ -12,8 +12,8 @@
   background: #c0c0c0;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 14px;
-  width: 15px;
+  height: 7px;
+  width: 7px;
   border: 1px solid #c0c0c0;
   vertical-align: middle;
   margin: 0px 5px 0px 7px;
@@ -28,18 +28,18 @@
 }
 
 .tree-view--folder > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder > .tree-view--folder > .tree-view-folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder
@@ -47,16 +47,7 @@
   > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder {
-  margin-left: 20px;
-}
-
-.tree-view--folder
-  > .tree-view--folder
-  > .tree-view--folder
-  > .tree-view--folder
-  > .tree-view--folder
-  > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder
@@ -64,9 +55,8 @@
   > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder
-  > .tree-view--folder
   > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder
@@ -75,9 +65,8 @@
   > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder
-  > .tree-view--folder
   > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder
@@ -87,9 +76,20 @@
   > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
   > .tree-view--folder
   > .tree-view--folder {
-  margin-left: 20px;
+  margin-left: 6%;
 }
 
 .tree-view--folder-name {
