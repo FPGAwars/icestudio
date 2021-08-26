@@ -1178,9 +1178,8 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var value = data.pins[i].value;
       var name = data.pins[i].name;
       var comboId = "#combo" + this.id + index;
-      var comboSelector = this.$box.find(
-        comboId + " option:contains(" + name + ")"
-      );
+      var comboSelector = this.$box.filter(function () { return $(this).text() === name; }).val();
+      
       if (comboSelector) {
         // Select by pin name
         comboSelector.attr("selected", true);
