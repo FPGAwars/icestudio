@@ -12,8 +12,8 @@
         "type":"embedded",
         "size":{
             "position":"fixed",
-            "width":"350px",
-            "height":"100%"
+            "width":"calc(7% + 150px)",
+            "height":"110%"
         },
         "position":{
            "right":"0px",
