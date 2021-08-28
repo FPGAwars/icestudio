@@ -63,6 +63,7 @@ angular.module('icestudio')
         
       self.path = emptyPath ? '' : filepath;
       self.filepath = filepath;
+      setTimeout(function(){
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
@@ -75,6 +76,7 @@ angular.module('icestudio')
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
+      },2000);
       };
 
     this.load = function (name, data) {
