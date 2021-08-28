@@ -75,7 +75,7 @@ angular.module('icestudio')
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
-    };
+      };
 
     this.load = function (name, data) {
       var self = this;

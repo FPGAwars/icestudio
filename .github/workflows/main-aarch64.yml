@@ -1,4 +1,4 @@
-name: 'Icestudio fot Linux'
+name: 'Icestudio fot Linux ARM 64'
 
 # Controls when the action will run. 
 on:
@@ -45,7 +45,7 @@ jobs:
       - name: Build Linux
         run: |
           export DISPLAY=:0.0 
-          npm run buildLinux64
+          npm run buildAarch64
           
         # Loading vars from icestudio package.json
       - id: icestudio_json
@@ -61,16 +61,6 @@ jobs:
         run: |
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "::set-output name=buildJson::$content"
-          
-      - name: 'Upload AppImage/linux64'
-        env:
-          ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
-        uses: 'actions/upload-artifact@v2'
-        with:
-          name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
-          if-no-files-found: error
           
       - name: 'Upload ZIP/linux64'
         env:

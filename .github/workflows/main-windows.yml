@@ -1,4 +1,4 @@
-name: 'Icestudio fot Linux'
+name: 'Icestudio for Windows'
 
 # Controls when the action will run. 
 on:
@@ -40,12 +40,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
           export DISPLAY=:0.0 
+          wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+          wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
+          sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
+          sudo apt-get update
+          sudo apt-get install -y winehq-devel winetricks nsis 
+          export WINEARCH=win32
           cd /home/runner
+          rm -rf .wine
+          wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
+          tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
       
-      - name: Build Linux
+      - name: Build Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
-          npm run buildLinux64
+          npm run buildWindows
           
         # Loading vars from icestudio package.json
       - id: icestudio_json
@@ -62,22 +72,23 @@ jobs:
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "::set-output name=buildJson::$content"
           
-      - name: 'Upload AppImage/linux64'
+      - name: 'Upload MSI/win64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux64_AppImage_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.AppImage"
+          name: "win64_MSI_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.exe"
           if-no-files-found: error
           
-      - name: 'Upload ZIP/linux64'
+      - name: 'Upload ZIP/win64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linux64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linux64.zip"
+          name: "win64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.zip"
           if-no-files-found: error
+
