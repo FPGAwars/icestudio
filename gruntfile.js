@@ -323,7 +323,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/linuxaarch64/",
+            cwd: "dist/icestudio/aarch64/",
             src: ["**"].concat(appFiles),
             dest: "<%=pkg.name%>-<%=pkg.version%>-linux64",
           },
