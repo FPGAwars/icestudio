@@ -141,7 +141,7 @@ angular.module('icestudio')
         else {
           alertify.error(gettextCatalog.getString('Wrong project format: {{name}}', { name: utils.bold(name) }), 30);
         }
-          alertify.set('confirm', 'labels', {
+        alertify.set('confirm', 'labels', {
             'ok': gettextCatalog.getString('OK'),
             'cancel': gettextCatalog.getString('Cancel')
           });
@@ -335,6 +335,7 @@ angular.module('icestudio')
     this.save = function (filepath, callback) {
       var backupProject = false;
       var name = utils.basename(filepath);
+     
       if (subModuleActive) {
         backupProject = utils.clone(project);
 
@@ -466,7 +467,9 @@ angular.module('icestudio')
                 alertify.confirm(gettextCatalog.getString('This import operation requires a project path. You need to save the current project. Do you want to continue?'),
                   function () {
                     $rootScope.$emit('saveProjectAs', function () {
-                        // 3. Copy the included files
+                      
+                      // 3. Copy the included files
+                      
                         copyIncludedFiles(files, origPath, destPath, function (success) {
                           if (success) {
                             // 4. Success: import block
@@ -499,7 +502,7 @@ angular.module('icestudio')
     function copyIncludedFiles(files, origPath, destPath, callback) {
       var success = true;
       async.eachSeries(files, function (filename, next) {
-          if (origPath !== destPath) {
+        if (origPath !== destPath) {
             if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
               alertify.confirm(gettextCatalog.getString('File {{file}} already exists in the project path. Do you want to replace it?', { file: utils.bold(filename) }),
                 function () {

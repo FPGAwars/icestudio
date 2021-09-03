@@ -198,7 +198,7 @@ module.exports = function (grunt) {
               mode: true,
             },
             cwd: "dist/icestudio/linux64",
-            dest: "dist/icestudio/linuxaarch64",
+            dest: "dist/icestudio/aarch64",
             src: ["**"],
           },
         ],
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
               mode: true,
             },
             cwd: "cache/nwjsAarch64/nwjs-v0.54.2-linux-arm64",
-            dest: "dist/icestudio/linuxaarch64",
+            dest: "dist/icestudio/aarch64",
             src: ["**"],
           },
         ],
@@ -318,7 +318,7 @@ module.exports = function (grunt) {
       },
         Aarch64: {
         options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linuxAarch64.zip",
+          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-Aarch64.zip",
         },
         files: [
           {

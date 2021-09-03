@@ -427,7 +427,7 @@ angular.module('icestudio')
                         var breadcrumbsLength = self.breadcrumbs.length;
 
                         $('body').addClass('waiting');
-                            $rootScope.$broadcast('navigateProject', {
+                        $rootScope.$broadcast('navigateProject', {
                                 update: breadcrumbsLength === 1,
                                 project: project,
                                 submodule: type,
@@ -435,7 +435,7 @@ angular.module('icestudio')
                             });
                             self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                             utils.rootScopeSafeApply();
-                    }
+                        }
                 }
 
             });

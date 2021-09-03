@@ -1,4 +1,4 @@
-name: 'Icestudio fot Linux ARM 64'
+name: 'Icestudio for ARM 64'
 
 # Controls when the action will run. 
 on:
@@ -62,12 +62,12 @@ jobs:
           content=`tr '\n' ' ' < app/buildinfo.json`
           echo "::set-output name=buildJson::$content"h
           
-      - name: 'Upload ZIP/linuxAarch64'
+      - name: 'Upload ZIP/Aarch64'
         env:
           ICESTUDIO_VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
           TIMESTAMP: "${{fromJson(steps.build_date.outputs.buildJson).ts}}"
         uses: 'actions/upload-artifact@v2'
         with:
-          name: "linuxAarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-linuxAarch64.zip"
+          name: "Aarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-Aarch64.zip"
           if-no-files-found: error

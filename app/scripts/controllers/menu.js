@@ -247,6 +247,7 @@ angular
 
           return;
         }
+      
         var filepath = project.path;
         if (filepath) {
           project.save(filepath, function () {
@@ -261,6 +262,8 @@ angular
       $scope.doSaveProjectAs = function (localCallback) {
         utils.saveDialog("#input-save-project", ".ice", function (filepath) {
           updateWorkingdir(filepath);
+          
+         
           project.save(filepath, function () {
             reloadCollectionsIfRequired(filepath);
           });
@@ -270,6 +273,7 @@ angular
           }
         });
       };
+
 
       $scope.saveProjectAs = function (localCallback) {
         if (
@@ -1398,6 +1402,7 @@ angular
         utils.rootScopeSafeApply();
       });
 
+     
       $scope.showMenu = function (newMenu) {
         cancelTimeouts();
         if (

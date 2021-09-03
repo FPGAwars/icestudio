@@ -10,7 +10,7 @@ brandingDir="$binaryBundleDir/nwjs-v0.54.2-linux-arm64"
 distBundle="cache/nwjsAarch64/usr/docker/dist/nwjs-chromium-ffmpeg-branding/nwjs-v0.54.2-linux-arm64.tar.gz"
 binaryBundleDirDocker="cache/nwjsAarch64/usr"
 binaryBundle="cache/nwjsAarch64/nwjs.tar.gz"
-icestudioBundle="dist/icestudio/linuxaarch64/"
+icestudioBundle="dist/icestudio/aarch64/"
 #-- Start repairing
 if [ -d "$binaryBundleDirDocker" ]; then
   echo "${RED}Clean old bundle dir... ${NC}"
