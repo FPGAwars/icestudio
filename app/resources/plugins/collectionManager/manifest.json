@@ -13,12 +13,11 @@
         "size":{
             "position":"fixed",
             "width":"calc(7% + 150px)",
-            "height":"110%"
+            "height":"114%"
         },
         "position":{
-           "right":"0px",
-            "top": "0px"
+            "right":"0px",
+            "top": "-91px"
         }
-        
     }
 }

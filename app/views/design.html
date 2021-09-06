@@ -2,11 +2,23 @@
 <div ng-controller="DesignCtrl">
   <div class="banner hidden">
     <div class="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
-    <div class="read-only">&nbsp;{{ 'Read only' | translate }}&nbsp;</div>
-    <a class="back-button" ng-click="breadcrumbsBack()">&nbsp;&lt;&nbsp;{{ 'back' | translate }}&nbsp;</a>
+    <div class="read-only">
+        <div class="leftColumn">
+        </div>
+        <div class="rightColumn">
+            <b>{{'Read only' | translate }}</b> {{': '}} {{'Unlock to edit block !' | translate }}
+        </div>   
+    </div>
+    <a class="back-button" ng-click="breadcrumbsBack()">&larr;&nbsp;{{'back' | translate }}&nbsp;</a>
   </div>
+  
   <div class="banner-submodule hidden">
-      <a class="edit-button" ng-click="editModeToggle($event)"><img src="resources/images/lock.png" data-lock="resources/images/lock.png" data-unlock="resources/images/unlock.png"></a>
+        <a class="edit-button" ng-click="editModeToggle($event)"><img src="resources/images/lock.png" data-lock="resources/images/lock.png" data-unlock="resources/images/unlock.png">
+            <span class="tooltiptext">{{'CAUTION ! : Changes will also be applied in all the copied' | translate }}
+                <b>{{ information.name }}</b>
+                {{'blocks of the current .ice design. If you do not want a propagation of a change, make it inside a cloned block (instead of copied one)' | translate }} &nbsp;
+            </span>
+        </a>
   </div>
 
   <div class="paper"></div>
