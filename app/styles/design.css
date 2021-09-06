@@ -72,8 +72,8 @@
 
 .info {
   position: absolute;
-  top: 10px;
-  left: 15px;
+  top: 5px;
+  left: 10px;
   font-size: 15px;
   color: #656565;
   background-color: white;
@@ -84,20 +84,32 @@
 
 .read-only {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 14px;
-  color: #f05c5c;
-  background-color: white;
+  top: 4px;
+  right: calc(7% - 30px);
+  font-size: 15px;
+  color: white;
+  background: #8A08085F;
   border-radius: 5px;
   cursor: default;
   z-index: 1501;
 }
 
+.leftColumn {
+    float:left;
+    width: 42px;
+    height: 42px;
+}
+
+.rightColumn {
+   text-align: center;
+   width: 230px;
+   height: max-content;
+}
+
 .edit-button {
   position: absolute;
-  top: 40px;
-  right: 100px;
+  top: 5px;
+  right: calc(7% + 157px);  
   font-size: 14px;
   color: #63afcf;
   background-color: white;
@@ -110,12 +122,32 @@
   text-decoration: none;
 }
 
+.edit-button .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -100px; /* Use half of the width (200/2 = 100), to center the tooltip */
+}
+
+.edit-button:hover .tooltiptext {
+  visibility: visible;
+}
+
 
 .back-button {
   position: absolute;
-  top: 40px;
-  right: 15px;
-  font-size: 14px;
+  top: 30px;
+  left: 10px;
+  font-size: 18px;
   color: #63afcf;
   background-color: white;
   border-radius: 5px;
