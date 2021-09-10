@@ -94,7 +94,7 @@ msgid ""
 msgstr ""
 "présentes dans le design .ice actuel. Si vous ne souhaiter pas la "
 "propagation d'un changement, faites-le à l'intérieur d'un bloc cloné (au "
-"lieu d'un copié)\""
+"lieu d'un copié)"
 
 #: app/views/menu.html:340
 msgid "Board"

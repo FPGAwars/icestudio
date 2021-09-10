@@ -91,7 +91,7 @@ msgid ""
 "change, make it inside a cloned block (instead of copied one)"
 msgstr ""
 "presentes en el diseño .ice actual. Si no desea que se propague un cambio, "
-"hágalo dentro de un bloque clonado (en lugar de uno copiado) \""
+"hágalo dentro de un bloque clonado (en lugar de uno copiado)"
 
 #: app/views/menu.html:340
 msgid "Board"
