@@ -85,6 +85,10 @@ msgstr ""
 msgid "Blocks"
 msgstr ""
 
+#: app/views/design.html:19
+msgid "blocks of the current .ice design. If you do not want a propagation of a change, make it inside a cloned block (instead of copied one)"
+msgstr ""
+
 #: app/views/menu.html:340
 msgid "Board"
 msgstr ""
@@ -141,6 +145,10 @@ msgstr ""
 
 #: app/views/languages.html:92
 msgid "Catalan"
+msgstr ""
+
+#: app/views/design.html:17
+msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
 #: app/scripts/services/tools.js:1330
@@ -848,7 +856,7 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: app/views/design.html:5
+#: app/views/design.html:9
 msgid "Read only"
 msgstr ""
 
@@ -1075,6 +1083,10 @@ msgstr ""
 msgid "Unknown board"
 msgstr ""
 
+#: app/views/design.html:9
+msgid "Unlock to edit block !"
+msgstr ""
+
 #: app/scripts/services/project.js:167
 msgid "Unsupported project format {{version}}"
 msgstr ""
@@ -1200,7 +1212,7 @@ msgstr ""
 msgid "Your changes will be lost if you don’t save them"
 msgstr ""
 
-#: app/views/design.html:6
+#: app/views/design.html:12
 msgid "back"
 msgstr ""
 
