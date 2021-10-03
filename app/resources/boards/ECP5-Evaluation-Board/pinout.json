@@ -1,5 +1,5 @@
 [
-{"type":"input","name":"CLK_12","value":"A10"},
+{"type":"input","name":"CLK","value":"A10"},
 {"type":"input","name":"CLK_200","value":"Y19"},
 {"type":"input","name":"CLK_200_n","value":"W20"},
 {"type":"input","name":"CLK_50","value":"B11"},
