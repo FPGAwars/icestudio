@@ -68,7 +68,8 @@
       "iCESugar-Pro_(USB-Blaster)",
       "FleaFPGA-Ohm_(FT2232H)",
       "FleaFPGA-Ohm_(FT232H)",
-      "FleaFPGA-Ohm_(USB-Blaster)" 
+      "FleaFPGA-Ohm_(USB-Blaster)",
+      "ECP5-Evaluation-Board" 
     ]
   }
 ]
