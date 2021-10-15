@@ -1,5 +1,5 @@
 {
-  "label": "iCEBreaker bitsy",
+  "label": "iCEBreaker bitsy v1",
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
   "interface": "FTDI",
   "FPGAResources": {
