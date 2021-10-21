@@ -33,7 +33,8 @@
     "type": "UP5K",
     "boards": [
       "iCEBreaker",
-      "iCEBreaker-bitsy",
+      "iCEBreaker-bitsy0",
+      "iCEBreaker-bitsy1",
       "upduino",
       "upduino2",
       "upduino21",

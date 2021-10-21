@@ -1,11 +1,11 @@
 {
-  "label": "iCEBreaker bitsy",
+  "label": "iCEBreaker bitsy v1",
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
   "interface": "FTDI",
   "FPGAResources": {
     "ffs": 5280,
     "luts": 5280,
-    "pios": 39,
+    "pios": 24,
     "plbs": 660,
     "brams": 30
   }
