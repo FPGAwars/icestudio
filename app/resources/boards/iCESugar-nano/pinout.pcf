@@ -1,0 +1,68 @@
+#   BOARD PINS
+
+#   FPGA pins:
+
+set_io LED B6
+
+set_io CLK D1
+
+#set_io RX  A3
+#set_io TX  B3
+
+#   PMOD FULL (PMOD3)
+
+#   FPGA pins:
+#
+#     ----------
+#    | B4    C6 | <
+#    | B5    E3 |
+#    | E1    C2 |
+#    | B1    A1 |
+#    | GND  GND |
+#    | 3V3  3V3 |
+#     ----------
+#
+set_io --warn-no-port PMOD1 B4
+set_io --warn-no-port PMOD2 C6
+set_io --warn-no-port PMOD3 B5
+set_io --warn-no-port PMOD4 E3
+set_io --warn-no-port PMOD5 E1
+set_io --warn-no-port PMOD6 C2
+set_io --warn-no-port PMOD7 B1
+set_io --warn-no-port PMOD8 A1
+
+#   PMOD LEFT (PMOD2)
+
+#   FPGA pins:
+#
+#     -----
+#    | B3  | <
+#    | A3  |
+#    | B6  |
+#    | C5  |
+#    | GND |
+#    | 3V3 | 
+#     -----
+#
+set_io --warn-no-port PMODL1 B3
+set_io --warn-no-port PMODL2 A3
+#set_io --warn-no-port PMODL3 B6
+set_io --warn-no-port PMODL4 C5
+
+#   PMOD RIGHT (PMOD1)
+
+#   FPGA pins:
+#
+#     -----
+#    | 3V3 | <
+#    | GND |
+#    | A1  |
+#    | B1  |
+#    | D1  |
+#    | E2  | 
+#     -----
+#
+#set_io --warn-no-port PMODR1 A1
+#set_io --warn-no-port PMODR2 B1
+#set_io --warn-no-port PMODR3 D1
+set_io --warn-no-port PMODR4 E2

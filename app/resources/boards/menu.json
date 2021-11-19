@@ -30,6 +30,12 @@
     ]
   },
   {
+	  "type":"LP1K",
+	  "boards": [
+	  "iCESugar-nano"
+	  ]
+  },
+  {
     "type": "UP5K",
     "boards": [
       "iCEBreaker",
