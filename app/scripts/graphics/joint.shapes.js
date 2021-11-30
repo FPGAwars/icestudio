@@ -1537,6 +1537,16 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editor_theme;
+    if (global.uiTheme == "dark") // DARK -> theme monokai
+      editor_theme = "monokai";
+    else
+      editor_theme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+
+
     this.$box = $(
       joint.util.template(
         '\
@@ -1558,7 +1568,7 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           '");\
           ' +
           editorLabel +
-          '.setTheme("ace/theme/chrome");\
+          '.setTheme("ace/theme/' + editor_theme + '");\
           ' +
           editorLabel +
           ".setHighlightActiveLine(false);\
@@ -1849,6 +1859,16 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editor_theme;
+    if (global.uiTheme == "dark") // DARK -> theme monokai
+      editor_theme = "monokai";
+    else
+      editor_theme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+    
+
     this.$box = $(
       joint.util.template(
         '\
@@ -1865,7 +1885,7 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
           '");\
           ' +
           editorLabel +
-          '.setTheme("ace/theme/chrome");\
+          '.setTheme("ace/theme/' + editor_theme + '");\
           ' +
           editorLabel +
           ".setHighlightActiveLine(false);\
@@ -2316,6 +2336,16 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
     var readonly = this.model.get("data").readonly;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editor_theme;
+    if (global.uiTheme == "dark") // DARK -> theme monokai
+      editor_theme = "monokai";
+    else
+      editor_theme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+
+
     this.$box = $(
       joint.util.template(
         '\
@@ -2339,7 +2369,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
           '");\
           ' +
           editorLabel +
-          '.setTheme("ace/theme/chrome");\
+          '.setTheme("ace/theme/' + editor_theme + '");\
           ' +
           editorLabel +
           ".setHighlightActiveLine(false);\

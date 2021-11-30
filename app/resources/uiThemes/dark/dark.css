@@ -199,7 +199,7 @@
 }
 
 .memory-block .memory-content {
-    background: #ffcd00;
+    background: #ffcd00; 
     border: 0px solid #777;
 }
 
@@ -212,16 +212,18 @@
     background: #6effc6 !important;
 }
 
-
-
 .code-block .code-content {
-    background: #ffffff;
-    border: 0px solid #777;
+    background: #4a4a4a;
+    border: 0px solid #777; 
 }
 
 .info-block .info-content {
-    background: #fff;
+    background: #4a4a4a;
     border: 1px solid #777;
+}
+
+.memory-block .memory-editor .ace_gutter {
+    background: #4a4a4a !important;
 }
 
 .io-block .io-virtual-content {

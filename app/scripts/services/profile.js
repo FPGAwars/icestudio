@@ -64,6 +64,9 @@ angular.module('icestudio')
             common.PYTHON_PIP_ENV=self.data.pythonEnv.pip;
           }
 
+          // Make variable uiTheme as global for use in "joint.shapes.js"
+          global.uiTheme = self.data.uiTheme;
+
           //-- Custom Theme support
           //-- Select the dark theme by adding it to the HTML main file
           if(self.data.uiTheme !== 'light'){
