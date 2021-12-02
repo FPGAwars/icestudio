@@ -22,7 +22,7 @@ jobs:
 
       # Debug: It is for testing if the `certificate has expired`
       # Error is solved
-      - name: Debug: No SSL verification
+      - name: 'Debug: No SSL verification'
         run: |
           git config --global http.sslVerify false
 
