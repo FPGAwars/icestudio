@@ -26,16 +26,6 @@ jobs:
         with:
           ref: master
 
-      #-- Read the package.json file
-      - name: Read the package.json file
-        id: icestudio_json
-        run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
-
       # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
         env:
@@ -71,10 +61,25 @@ jobs:
           tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
       
       # -- Build!!
-      - name: Build Linux & Microsoft Windows package
+      - name: Build Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
-          npm run build
+          npm run buildWindows
+
+      - name: Build Linux
+        run: |
+          export DISPLAY=:0.0 
+          npm run buildLinux64
+
+      #-- Read the package.json file
+      - name: Read the package.json file
+        id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
 
       #-- Create the Release
       - name: Create the Stable Release
