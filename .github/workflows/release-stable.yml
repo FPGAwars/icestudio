@@ -75,11 +75,15 @@ jobs:
         run: |
           export DISPLAY=:0.0 
           npm run buildWindows
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
 
       - name: Build Linux
         run: |
           export DISPLAY=:0.0 
           npm run buildLinux64
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
 
       #-- Create the Release
       - name: Create the Stable Release
