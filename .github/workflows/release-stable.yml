@@ -20,6 +20,12 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }} 
     steps:
 
+      # Debug: It is for testing if the `certificate has expired`
+      # Error is solved
+      - name: Debug: No SSL verification
+        run: |
+          git config --global http.sslVerify false
+
       # Checkout the master repo branch
       - name: Checkout!
         uses: actions/checkout@v2
@@ -50,7 +56,8 @@ jobs:
           node-version: '12.13'
 
       - name: Install npm dependencies
-        run:   npm install 
+        run: |  
+          npm install 
 
       - name: Install dependencies to build Windows bundle
         run: |
