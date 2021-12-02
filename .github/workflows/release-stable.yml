@@ -231,8 +231,8 @@ jobs:
           run: |
             export DISPLAY=:0.0 
             npm run buildAarch64
-        
-          # Loading vars from icestudio package.json
+
+        # Loading vars from icestudio package.json
         - id: icestudio_json
           run: |
             content=`cat package.json`
@@ -240,13 +240,16 @@ jobs:
             content="${content//$'\n'/'%0A'}"
             content="${content//$'\r'/'%0D'}"
             echo "::set-output name=packageJson::$content"
-         
+
+          # ---------------------------------------
+          # -- Upload the binaries to the release
+          # ---------------------------------------
         - name: 'Upload ZIP/Aarch64'
-            uses: actions/upload-release-asset@v1
-            env:
+          uses: actions/upload-release-asset@v1
+          env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-            with:
+          with:
               upload_url: ${{ steps.create_release.outputs.upload_url }}
               asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
               asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
