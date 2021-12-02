@@ -90,7 +90,7 @@ jobs:
           release_name: v${{ env.VERSION }}
           body: |
             A new stable release
-          draft: false
+          draft: true
           prerelease: false
 
       # ---------------------------------------
