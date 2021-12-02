@@ -264,7 +264,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
         with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
             asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
             asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
             asset_content_type: application/tar+gzip
