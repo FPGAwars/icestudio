@@ -244,7 +244,6 @@ jobs:
         # ---------------------------------------
         # -- Upload the binaries to the release
         # ---------------------------------------
-
         - name: 'Upload ZIP/Aarch64'
             uses: actions/upload-release-asset@v1
             env:
