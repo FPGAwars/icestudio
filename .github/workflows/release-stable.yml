@@ -245,8 +245,10 @@ jobs:
         run: |
           export DISPLAY=:0.0 
           npm run buildAarch64
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
 
-      # Loading vars from icestudio package.json
+        # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
           content=`cat package.json`
@@ -254,6 +256,14 @@ jobs:
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           echo "::set-output name=packageJson::$content"
+         
+
+        # -- Debug: Print the icestudio version
+      - name: Get the Icestudio version
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        run: |
+          echo "VERSION: ${{ env.VERSION }}"
 
         # ---------------------------------------
         # -- Upload the binaries to the release
