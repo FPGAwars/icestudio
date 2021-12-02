@@ -223,7 +223,7 @@ jobs:
       # Checkout the develop branch
       - uses: actions/checkout@v2
         with:
-          ref: develop
+          ref: master
       
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
