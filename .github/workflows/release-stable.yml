@@ -192,3 +192,66 @@ jobs:
           asset_name: "icestudio-${{env.VERSION}}-osx64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-osx64.zip"
           asset_content_type: application/tar+gzip
+
+  # Build for ARM 64
+    build-arm:
+
+      # -- It is only run if the build for linux/win is ok, and  
+      # -- the release already created
+      needs: build-LinWin
+
+      # The type of runner that the job will run on
+      runs-on: ubuntu-18.04
+
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+      
+        # Checkout the develop branch
+        - uses: actions/checkout@v2
+          with:
+            ref: develop
+        
+        - name: Setup Nodejs version
+          uses: actions/setup-node@v1
+          with:
+            node-version: '12.13'
+        
+        - name: Install npm dependencies
+          run:   npm install 
+        
+        - name: Install dependencies
+          run: |
+            sudo dpkg --add-architecture i386
+            sudo apt-get update
+            sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
+            export DISPLAY=:0.0 
+            cd /home/runner
+
+        - name: Build ARM
+          run: |
+            export DISPLAY=:0.0 
+            npm run buildAarch64
+        
+          # Loading vars from icestudio package.json
+        - id: icestudio_json
+          run: |
+            content=`cat package.json`
+            content="${content//'%'/'%25'}"
+            content="${content//$'\n'/'%0A'}"
+            content="${content//$'\r'/'%0D'}"
+            echo "::set-output name=packageJson::$content"
+
+        # ---------------------------------------
+        # -- Upload the binaries to the release
+        # ---------------------------------------
+
+        - name: 'Upload ZIP/Aarch64'
+            uses: actions/upload-release-asset@v1
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+            with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }}
+              asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
+              asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
+              asset_content_type: application/tar+gzip
