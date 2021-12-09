@@ -16,7 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,18 +29,10 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '12.13'
+          node-version: '16.4.0'
       
       - name: Install npm dependencies
         run:   npm install 
-      
-      - name: Install dependencies to build Windows bundle
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
-          export DISPLAY=:0.0 
-          cd /home/runner
       
       - name: Build Linux
         run: |
