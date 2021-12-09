@@ -55,7 +55,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ## Icemem collection: example 23
 
-([Icemem exmple repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
+([Icemem example repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-03-icemem.png)
 
