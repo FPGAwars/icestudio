@@ -692,7 +692,7 @@ angular.module('icestudio')
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" id="form' + i + '"/>\
+              <input class="ajs-input" type="text" id="form' + i + '" autocomplete="off"/>\
             ');
             break;
           case 'checkbox':

@@ -1221,7 +1221,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       if (data.pins) {
 
         this.model.attributes.size.height = 32 + 32 * data.pins.length;
-        console.log('SELECT', this.model.attributes.size.height);
+        //console.log('SELECT', this.model.attributes.size.height);
       }
     }
   },
@@ -1588,9 +1588,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
         editorLabel +
         ".renderer.$cursorLayer.element.style.opacity = 0;\
           " +
-        editorLabel +
-        '.renderer.$gutter.style.background = "#F0F0F0";\
-          ' +
         editorLabel +
         '.session.setMode("ace/mode/verilog");\
         </script>\
