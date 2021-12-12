@@ -68,9 +68,15 @@ angular.module('icestudio')
           global.uiTheme = self.data.uiTheme;
 
           //-- Custom Theme support
-          //-- Select the dark theme by adding it to the HTML main file
-          if(self.data.uiTheme !== 'light'){
+          //-- Dark Theme:
+          if(self.data.uiTheme === 'dark'){
             let cssFile='<link  rel="stylesheet" href="resources/uiThemes/dark/dark.css">';
+            let pHead = document.getElementsByTagName('head')[0];
+            pHead.innerHTML = pHead.innerHTML + cssFile;
+          }
+          //-- Light Theme: same as the original!
+          if(self.data.uiTheme === 'light'){
+            let cssFile='<link  rel="stylesheet" href="resources/uiThemes/light/light.css">';
             let pHead = document.getElementsByTagName('head')[0];
             pHead.innerHTML = pHead.innerHTML + cssFile;
           }

@@ -1,49 +1,49 @@
 .joint-paper-background {
-    background: #222;
+    background: #FFFFFF;
 }
 
 .ice-bar {
-    color: white;
-    background: #444;
-    border-bottom: 1px solid #666;
+    color: #333;
+    background: #f5f6f7;
+    border-bottom: 1px solid #e7e7e7;
 }
 
 .footer {
-    color: white;
-    background: #444;
-    border-top: 1px solid #666;
+    color: #333;
+    background: #f5f6f7;
+    border-top: 1px solid #d5dadd;
 }
 
 .dropdown a {
-    color: white !important;
+    color: #333 !important;
 }
 
 .navbar-nav>.open>a {
-    background: #666 !important;
+    background: #e7e7e7 !important;
 }
 
 .dropdown-menu>li>a:hover {
-    background: #666 !important;
+    background: #eee !important;
 }
 
 .dropdown:active {
-    background: #666;
+    background: #eee;
 }
 
 .dropdown-menu {
-    background: #444 !important;
+    background: #f5f6f7 !important;
 }
 
 .dropdown-menu>li>a {
-    background: #444;
+    background: #f5f6f7;
 }
 
 .dropdown-submenu {
-    background: #444;
+    background: #f5f6f7;
 }
 
 .divider {
-    background: #999 !important;
+    background: #e5e5e5 !important;
 }
 
 .breadcrumbs-container {
@@ -51,7 +51,7 @@
 }
 
 .breadcrumb {
-    background: #222;
+    background: #f5f6f7;
 }
 
 .breadcrumb>.active {
@@ -59,53 +59,54 @@
 }
 
 .breadcrumb span {
-    color: white;
+    color: #333;
 }
 
 .breadcrumb a {
-    color: skyblue;
+    color: #007aff;
 }
 
 .info {
-    color: white;
-    background: #444;
+    color: #656565;
+    background: #fff;
 }
 
 .info-block .info-render {
-    color: #6d6d6d;
+    color: #656565;;
 }
 
 .markdown-body {
-    color: white !important;
+    color: #24292e !important;
 }
 
 .markdown-body a {
-    color: cornflowerblue;
+    color: #0366d6;
+    text-decoration: none;
 }
 
 .markdown-body table th {
-    background: #444;
-    border-color: #777;
+    background: #efefef;
+    border: 1px solid #aaa;
 }
 
 .markdown-body table td {
-    background: #333;
-    border-color: #777;
+    background: #fff;
+    border: 1px solid #aaa;
 }
 
 .markdown-body pre {
-    color: white;
-    background: #333;
+    color: #24292e;
+    background: #f6f8fa;
 }
 
 .read-only {
-    color: white;
-    background: #8A0808af; 
+    color: #444;
+    background: #fb959e; 
 }
 
 .back-button {
-    color: skyblue;
-    background: #444;
+    color: #007aff;
+    background: #f6f8fa;
 }
 
 .edit-button {
@@ -113,67 +114,70 @@
 }
 
 .io-block .io-virtual-content {
-    background: #444;
+    background: #E2FBC9;
 }
 
 .io-block .io-virtual-content .header label {
-    color: white !important;
+    color: #333 !important;
     font-weight: bold !important;
 }
 
 .sk-cube-grid .sk-cube {
-    background-color: white;
+    background-color: #333;
 }
 
 .spinner-wrapper--bg {
-    background-color: #666;
+    background-color: #7ccff4;
 }
 
 .icm-menu-button::before {
-    background: linear-gradient(#999 20%, transparent 20%, transparent 40%, #999 40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
+    background: linear-gradient(#7ccff4 20%, transparent 20%, transparent 40%, #7ccff4 40%, #7ccff4 60%, transparent 60%, transparent 80%, #7ccff4 80%)
 }
 
 .ajs-dialog {
-    background: #444 !important;
+    background: #fff !important;
 }
 
 .ajs-body {
-    color: white !important;
+    color: #000 !important;
 }
 
 .ajs-footer {
-    background: #444 !important;
+    background: #fff !important;
 }
 
 .ajs-button {
-    color: white !important;
-    background: #333 !important;
+    color: #333 !important;
+    background: #fff !important;
     border-radius: 4px;
+}
+.ajs-ok{
+   color: #3593d2 !important;
 }
 
 .ajs-input,
 .form-control {
-    color: white;
-    background-color: #333 !important;
-    border: 1px solid #666 !important;
+    color: #333;
+    background: #fff !important;
+    border: 1px solid rgb(118, 118, 118) !important;
 }
-
+/*NOK*/
 .generic-block .generic-content {
-    background: #e4e4e4;
-    border: 0px solid #777;
+    background: #C0DFEB;
+    border: 1px solid #777;
 }
 
 .io-block .io-fpga-content {
-    background:#52b3ff;
-    border: 0px solid #777 !important; 
+    background: #FBFBC9;
+    border: 1px solid #777 !important; 
 
 }
 
 .select2-container--default .select2-selection--single {
 
-     border: 0px solid #aaa; 
+    border: 1px solid #aaa; 
     border-radius: 4px;
-    background-color: #7bc5ff;
+    background-color: #fff;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -181,17 +185,17 @@
 }
 
 .select2-selection__clear {
-    color: #333;
+    color: #777;
 }
-
+/*NOK*/
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #333 transparent transparent transparent;
+    border-color: #777 transparent transparent transparent;
 }
 
 
 .constant-block .constant-content input {
-   border: 0px solid #AAA;
-    background-color: #ffefae;
+    border: 1px solid #777;
+    background-color: #fff;
 }
 
 .io-block .io-fpga-content .header label{
@@ -199,44 +203,44 @@
 }
 
 .memory-block .memory-content {
-    background: #ffcd00; 
-    border: 0px solid #777;
+    background: #FBFBC9; 
+    border: 1px solid #777;
 }
 
 .constant-block .constant-content{
-    background: #ffcd00;
-    border: 0px solid #777;
+    background: #FBFBC9;
+    border: 1px solid #777;
 }
-
+/*NOK*/
 .config-block {
-    background: #6effc6 !important;
+    background: #FBFBC9 !important;
 }
 
 .code-block .code-content {
-    background: #4a4a4a;
-    border: 0px solid #777; 
+    background: #C0DFEB;
+    border: 1px solid #777; 
 }
 
 .info-block .info-content {
-    background: #4a4a4a;
+    background: #DDD;
     border: 1px solid #777;
 }
 
 .io-block .io-virtual-content {
-     border: 0px solid #777; 
+     border: 1px solid #777; 
 }
 
 
-   .io-block .io-virtual-content {
- border: 0px solid #fff !important;
+.io-block .io-virtual-content {
+  border: 1px solid #777 !important;
   background-size: cover !important;
-  border-radius:120px !important;
-    mix-blend-mode: screen;
-   }
- .io-block .io-virtual-content .header {
+  border-radius:5px !important;
+  mix-blend-mode: screen;
+}
+
+.io-block .io-virtual-content .header {
     margin-top: 12px;
 }
-
 
 
 /* Colors */
@@ -312,13 +316,12 @@
 
 }
 
-
 .markdown-body pre>code {
     color:#2ecc71;
 }
 
 .markdown-body pre{
-    background:#222;
-    border-color:white;
+    background:#444;
+    border-color:#333;
     border-radius:5px;
 }

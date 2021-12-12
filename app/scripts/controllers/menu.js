@@ -804,11 +804,20 @@ angular
       $scope.selectTheme = function (theme) {
         if (profile.get("uiTheme") !== theme) {
           profile.set("uiTheme", theme);
-          alertify.warning(
-            gettextCatalog.getString(
-              "Icestudio needs to be restarted to switch the new UI Theme."
-            ),
-            15
+          //-- Shared variable for ace-editor blocks in "profile.js"
+          global.uiTheme = theme; 
+          //-- Load selected profile
+          utils.loadProfile(profile);
+          //-- Update actual opened project and/or blocks
+          project.update(
+            {
+              deps: false,
+            },
+            function () {
+              graph.loadDesign(project.get("design"), {
+                disabled: false,
+              });
+            }
           );
         }
       };
