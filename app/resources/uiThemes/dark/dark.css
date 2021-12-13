@@ -129,9 +129,20 @@
     background-color: #666;
 }
 
+/*ICM*/
 .icm-menu-button::before {
     background: linear-gradient(#999 20%, transparent 20%, transparent 40%, #999 40%, #999 60%, transparent 60%, transparent 80%, #999 80%)
 }
+.icm-menu {
+    background-color: #444;
+}
+.icm-morph-shape {
+    fill: #444;
+}
+.icm-icon-list span{
+    color: #b8b7ad;
+}
+/*END_ICM*/
 
 .ajs-dialog {
     background: #444 !important;
