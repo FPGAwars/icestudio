@@ -1,0 +1,529 @@
+[
+  {
+    "type": "input",
+    "name": "CLK",
+    "value": "B9",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "input",
+    "name": "btn_usr",
+    "value": "T6",
+    "pullmode": "UP"
+  },
+  {
+    "type": "input",
+    "name": "programn",
+    "value": "R8",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led_usr",
+    "value": "B1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led_act",
+    "value": "B2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led_r",
+    "value": "R12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led_g",
+    "value": "P12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led_b",
+    "value": "N12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[0]",
+    "value": "R14",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[1]",
+    "value": "T14",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[2]",
+    "value": "T13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[3]",
+    "value": "R13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[4]",
+    "value": "M6",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[5]",
+    "value": "M5",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[6]",
+    "value": "R5",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "led[7]",
+    "value": "T4",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[0]",
+    "value": "R15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[1]",
+    "value": "P16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[2]",
+    "value": "M13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[3]",
+    "value": "L13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[4]",
+    "value": "T15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[5]",
+    "value": "R16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[6]",
+    "value": "N14",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_a[7]",
+    "value": "L12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[0]",
+    "value": "L16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[1]",
+    "value": "H12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[2]",
+    "value": "G12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[3]",
+    "value": "J16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[4]",
+    "value": "L15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[5]",
+    "value": "H13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[6]",
+    "value": "G13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_b[7]",
+    "value": "J15",
+    "pullmode": "NONE"
+  },  
+  {
+    "type": "inout",
+    "name": "pm_c[0]",
+    "value": "G16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[1]",
+    "value": "F16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[2]",
+    "value": "D16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[3]",
+    "value": "C16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[4]",
+    "value": "H15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[5]",
+    "value": "G15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[6]",
+    "value": "E15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_c[7]",
+    "value": "C15",
+    "pullmode": "NONE"
+  },  
+    
+  {
+    "type": "inout",
+    "name": "pm_d[0]",
+    "value": "F15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[1]",
+    "value": "B16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[2]",
+    "value": "D13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[3]",
+    "value": "B12",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[4]",
+    "value": "E16",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[5]",
+    "value": "B15",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[6]",
+    "value": "E13",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_d[7]",
+    "value": "C12",
+    "pullmode": "NONE"
+  },  
+
+  {
+    "type": "inout",
+    "name": "pm_e[0]",
+    "value": "F2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[1]",
+    "value": "C1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[2]",
+    "value": "C3",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[3]",
+    "value": "E3",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[4]",
+    "value": "E1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[5]",
+    "value": "C2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[6]",
+    "value": "D3",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_e[7]",
+    "value": "F3",
+    "pullmode": "NONE"
+  },  
+
+  {
+    "type": "inout",
+    "name": "pm_f[0]",
+    "value": "J1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[1]",
+    "value": "G1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[2]",
+    "value": "F1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[3]",
+    "value": "G5",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[4]",
+    "value": "J2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[5]",
+    "value": "H2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[6]",
+    "value": "G2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_f[7]",
+    "value": "G4",
+    "pullmode": "NONE"
+  },  
+
+  {
+    "type": "inout",
+    "name": "pm_g[0]",
+    "value": "N1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[1]",
+    "value": "K4",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[2]",
+    "value": "L1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[3]",
+    "value": "H5",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[4]",
+    "value": "P2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[5]",
+    "value": "K5",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[6]",
+    "value": "L2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_g[7]",
+    "value": "H4",
+    "pullmode": "NONE"
+  },  
+
+  {
+    "type": "inout",
+    "name": "pm_h[0]",
+    "value": "R4",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[1]",
+    "value": "P4",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[2]",
+    "value": "R2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[3]",
+    "value": "P1",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[4]",
+    "value": "T3",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[5]",
+    "value": "R3",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[6]",
+    "value": "T2",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "pm_h[7]",
+    "value": "R1",
+    "pullmode": "NONE"
+  },  
+  {
+    "type": "input",
+    "name": "sd_miso",
+    "value": "B10",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "sd_dat[1]",
+    "value": "A10",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "inout",
+    "name": "sd_dat[2]",
+    "value": "B11",
+    "pullmode": "NONE"
+  }, 
+  {
+    "type": "output",
+    "name": "sd_cs",
+    "value": "A11",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "sd_clk",
+    "value": "C10",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "output",
+    "name": "sd_mosi",
+    "value": "D10",
+    "pullmode": "NONE"
+  },
+  {
+    "type": "input",
+    "name": "sd_det",
+    "value": "A12",
+    "pullmode": "NONE"
+  }
+]

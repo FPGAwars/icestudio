@@ -10,7 +10,7 @@
   {
     "type": "HX8K",
     "boards": [
-	  "Alchitry-Cu",
+      "Alchitry-Cu",
       "alhambra-ii",
       "blackice",
       "blackice-ii",
@@ -30,10 +30,10 @@
     ]
   },
   {
-	  "type":"LP1K",
-	  "boards": [
-	  "iCESugar-nano"
-	  ]
+    "type": "LP1K",
+    "boards": [
+      "iCESugar-nano"
+    ]
   },
   {
     "type": "UP5K",
@@ -76,7 +76,9 @@
       "FleaFPGA-Ohm_(FT2232H)",
       "FleaFPGA-Ohm_(FT232H)",
       "FleaFPGA-Ohm_(USB-Blaster)",
-      "ECP5-Evaluation-Board" 
+	  "ECP5-Evaluation-Board",
+      "ECP5-Mini-12_(FT2232H)",
+	  "ECP5-Mini-25_(FT2232H)"
     ]
   }
 ]
