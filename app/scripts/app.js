@@ -2,15 +2,11 @@
 
 /* exported ICEpm */
 var ICEpm =false;
-
 /* exported iceConsoler */
 //-- The log file by default is "icestudio.log", located in the
 //-- user home folder
 var iceConsole = false;
-
-
 //-------- This is the main APP ENTRY Point
-
 /* exported ICEpm */
 ICEpm = new IcePlugManager();
 

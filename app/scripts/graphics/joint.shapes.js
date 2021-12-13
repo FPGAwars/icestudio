@@ -5,7 +5,7 @@ var sha1 = require("sha1");
 var marked = require("marked");
 var openurl = require("openurl");
 var emoji = require("node-emoji");
-var domCache ={};
+var domCache = {};
 const WIRE_WIDTH = 1.5;
 const DARWIN = Boolean(os.platform().indexOf("darwin") > -1);
 
@@ -21,12 +21,12 @@ function placementCssIOTasks(data, bbox, state, queue) {
   let i = 0;
   let bx = Math.round(bbox.x * state.zoom + state.pan.x);
   let by = Math.round(bbox.y * state.zoom + state.pan.y);
-  let bx0=bx;
-  let by0=by;
+  let bx0 = bx;
+  let by0 = by;
   let bw = bbox.width;
   let bh = bbox.height;
   let fpgaTopOffset = data.name || data.range || data.clock ? 0 : 24;
-  
+
   if (typeof this.nativeDom.box.dataset.osize === "undefined") {
     this.nativeDom.box.dataset.osize = `w:${bw}|h:${bh}`;
     // Render block
@@ -58,7 +58,7 @@ function placementCssIOTasks(data, bbox, state, queue) {
     bx = Math.round((bbox.width / 2.0) * (state.zoom - 1));
     by = Math.round(
       ((bbox.height - virtualtopOffset) / 2.0) * (state.zoom - 1) +
-        (virtualtopOffset / 2.0) * state.zoom
+      (virtualtopOffset / 2.0) * state.zoom
     );
     bw = bbox.width;
     bh = Math.round(bbox.height - virtualtopOffset);
@@ -86,8 +86,8 @@ function placementCssIOTasks(data, bbox, state, queue) {
       });
     }
   }
-  
-  bh=Math.round(bbox.height - fpgaTopOffset); 
+
+  bh = Math.round(bbox.height - fpgaTopOffset);
   // Render io FPGA content
   for (i = 0; i < this.nativeDom.fpgaContentSelector.length; i++) {
     queue.push({
@@ -98,7 +98,7 @@ function placementCssIOTasks(data, bbox, state, queue) {
     queue.push({
       e: this.nativeDom.fpgaContentSelector[i],
       property: "top",
-      value:0
+      value: 0
     });
     queue.push({
       e: this.nativeDom.fpgaContentSelector[i],
@@ -110,7 +110,7 @@ function placementCssIOTasks(data, bbox, state, queue) {
       property: "height",
       value: bh + "px",
     });
- }
+  }
 
 
   queue.push({
@@ -119,7 +119,7 @@ function placementCssIOTasks(data, bbox, state, queue) {
     value: `translate3d(${bx0}px,${by0}px,0) scale( ${state.zoom})`,
   });
 
-    if (data.name || data.range || data.clock) {
+  if (data.name || data.range || data.clock) {
     this.headerSelector.removeClass("hidden");
   } else {
     this.headerSelector.addClass("hidden");
@@ -133,7 +133,7 @@ function placementCssIOTasks(data, bbox, state, queue) {
   return queue;
 }
 
-function placementCssTasks(selector,bbox, state, queue) {
+function placementCssTasks(selector, bbox, state, queue) {
   /* jshint validthis: true */
   let i = 0;
   let bw = Math.round(bbox.width);
@@ -152,14 +152,14 @@ function placementCssTasks(selector,bbox, state, queue) {
       property: "top",
       value: 0,
     });
-    let gcontent=domCache[this.id+this.cid+selector];
-    if(!gcontent){
+    let gcontent = domCache[this.id + this.cid + selector];
+    if (!gcontent) {
       gcontent = this.$box[0].querySelectorAll(selector);
-      domCache[this.id+this.cid+selector]=gcontent;
+      domCache[this.id + this.cid + selector] = gcontent;
     }
-   // gcontent= this.$box[0].querySelectorAll(selector);
+    // gcontent= this.$box[0].querySelectorAll(selector);
 
-      for (i = 0; i < gcontent.length; i++) {
+    for (i = 0; i < gcontent.length; i++) {
       queue.push({ e: gcontent[i], property: "left", value: 0 });
       queue.push({ e: gcontent[i], property: "top", value: 0 });
 
@@ -398,7 +398,7 @@ joint.shapes.ice.Model = joint.shapes.basic.Generic.extend({
     var portBodySelector = portSelector + ">.port-body";
     var portDefaultSelector = portSelector + ">.port-default";
 
-    var portColor = (typeof this.attributes.data.blockColor !== "undefined")? this.attributes.data.blockColor :"lime";
+    var portColor = (typeof this.attributes.data.blockColor !== "undefined") ? this.attributes.data.blockColor : "lime";
 
     attrs[portSelector] = {
       ref: ".body",
@@ -518,7 +518,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     }
   },
 
-  apply: function () {},
+  apply: function () { },
 
   startResizing: function (event) {
     var self = event.data.self;
@@ -534,7 +534,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
   },
 
   performResizing: function (event) {
-  
+
     var self = event.data.self;
 
     if (!self.resizing || self.resizerDisabled) {
@@ -650,7 +650,7 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
-  updateBox: function () {},
+  updateBox: function () { },
 
   removeBox: function (/*event*/) {
     this.$box.remove();
@@ -658,8 +658,8 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   updateScrollStatus: function (status) {
     if (this.editor) {
-      this.editor.renderer.scrollBarV.element.style.visibility = (status)? "" : "hidden";
-      this.editor.renderer.scrollBarH.element.style.visibility = (status)? "" : "hidden";
+      this.editor.renderer.scrollBarV.element.style.visibility = (status) ? "" : "hidden";
+      this.editor.renderer.scrollBarH.element.style.visibility = (status) ? "" : "hidden";
       this.editor.renderer.scroller.style.right = 0;
       this.editor.renderer.scroller.style.bottom = 0;
     }
@@ -716,7 +716,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     this.hideTooltip();
   },
 
-  mouseupcard: function (/*event, x, y*/) {},
+  mouseupcard: function (/*event, x, y*/) { },
 
   mousedowncard: function (/*event, x, y*/) {
     this.hideTooltip();
@@ -745,15 +745,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     }
   },
 
-  cache:{dom:{}},
+  cache: { dom: {} },
   initialize: function () {
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
-    
+
     this.tooltip = this.model.get("tooltip");
     this.tooltiptext = this.$box.find(".tooltiptext");
     this.tooltiptext.text(this.tooltip);
 
-    
+
     if (this.tooltip.length > 13) {
       this.tooltiptext.addClass("tooltip-medium");
       this.tooltiptext.removeClass("tooltip-large");
@@ -807,8 +807,8 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         contentSelector.append(
           '\
           <div class="clock" style="top: ' +
-            top +
-            'px;">\
+          top +
+          'px;">\
             <svg width="12" height="18"><path d="M-1 0 l10 8-10 8" fill="none" stroke="#555" stroke-width="1.2" stroke-linejoin="round"/>\
           </div>'
         );
@@ -885,12 +885,12 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
             property: "display",
             value: "inline",
           });
-  
-          paths=domCache[tokId+port.name+"path"];
-          if(!paths){
+
+          paths = domCache[tokId + port.name + "path"];
+          if (!paths) {
 
             paths = portDefault.querySelectorAll("path");
-           domCache[tokId+port.name+"path"]=paths;
+            domCache[tokId + port.name + "path"] = paths;
           }
 
 
@@ -901,11 +901,11 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
               value: width + "px",
             });
           }
-       rects=domCache[tokId+port.name+"rect"];
-          if(!rects){
+          rects = domCache[tokId + port.name + "rect"];
+          if (!rects) {
 
             rects = portDefault.querySelectorAll("rect");
-           domCache[tokId+port.name+"rect"]=rects;
+            domCache[tokId + port.name + "rect"] = rects;
           }
 
 
@@ -1064,30 +1064,30 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
         '\
       <div class="io-block">\
         <div class="io-virtual-content' +
-          (virtual ? "" : " hidden") +
-          '">\
+        (virtual ? "" : " hidden") +
+        '">\
           <div class="header">\
             <label>' +
-          name +
-          '</label>\
+        name +
+        '</label>\
             <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
           </div>\
         </div>\
         <div class="io-fpga-content' +
-          (virtual ? " hidden" : "") +
-          '">\
+        (virtual ? " hidden" : "") +
+        '">\
           <div class="header">\
             <label>' +
-          name +
-          '</label>\
+        name +
+        '</label>\
             <svg viewBox="0 0 12 18"><path d="M-1 0 l10 8-10 8" fill="none" stroke-width="2" stroke-linejoin="round"/>\
           </div>\
           <div>' +
-          selectCode +
-          "</div>\
+        selectCode +
+        "</div>\
           <script>" +
-          selectScript +
-          "</script>\
+        selectScript +
+        "</script>\
         </div>\
       </div>\
       "
@@ -1098,16 +1098,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.fpgaContentSelector = this.$box.find(".io-fpga-content");
     this.headerSelector = this.$box.find(".header");
 
-    let vcs=domCache[this.id+this.cid+".io-virtual-content"];
-    if(!vcs){
+    let vcs = domCache[this.id + this.cid + ".io-virtual-content"];
+    if (!vcs) {
       vcs = this.$box[0].querySelectorAll(".io-virtual-content");
-      domCache[this.id+this.cid+".io-virtual-content"]=vcs;
+      domCache[this.id + this.cid + ".io-virtual-content"] = vcs;
     }
 
-    let fcs=domCache[this.id+this.cid+".io-fpga-content"];
-    if(!fcs){
+    let fcs = domCache[this.id + this.cid + ".io-fpga-content"];
+    if (!fcs) {
       fcs = this.$box[0].querySelectorAll(".io-fpga-content");
-      domCache[this.id+this.cid+".io-fpga-content"]=fcs;
+      domCache[this.id + this.cid + ".io-fpga-content"] = fcs;
     }
 
 
@@ -1179,7 +1179,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       var name = data.pins[i].name;
       var comboId = "#combo" + this.id + index;
       var comboSelector = this.$box.filter(function () { return $(this).text() === name; }).val();
-      
+
       if (comboSelector) {
         // Select by pin name
         comboSelector.attr("selected", true);
@@ -1219,9 +1219,9 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
       this.virtualContentSelector.addClass("hidden");
       this.fpgaContentSelector.removeClass("hidden");
       if (data.pins) {
-        
+
         this.model.attributes.size.height = 32 + 32 * data.pins.length;
-        console.log('SELECT',this.model.attributes.size.height);
+        //console.log('SELECT', this.model.attributes.size.height);
       }
     }
   },
@@ -1399,7 +1399,7 @@ joint.shapes.ice.Constant = joint.shapes.ice.Model.extend({
 
 joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
-  cache:{dom:{}},
+  cache: { dom: {} },
   initialize: function () {
     _.bindAll(this, "updateBox");
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
@@ -1511,7 +1511,7 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
         value: width + "px",
       });
     }
-      return this.place(".constant-content", bbox, state, pendingTasks);
+    return this.place(".constant-content", bbox, state, pendingTasks);
   },
 });
 
@@ -1537,6 +1537,16 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editorTheme;
+    if (global.uiTheme === "dark") { // DARK -> theme monokai
+      editorTheme = "monokai";
+    } else {
+      editorTheme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+    }
+
     this.$box = $(
       joint.util.template(
         '\
@@ -1548,41 +1558,38 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
           </div>\
         </div>\
         <div class="memory-editor" id="' +
-          editorLabel +
-          '"></div>\
+        editorLabel +
+        '"></div>\
         <script>\
           var ' +
-          editorLabel +
-          ' = ace.edit("' +
-          editorLabel +
-          '");\
+        editorLabel +
+        ' = ace.edit("' +
+        editorLabel +
+        '");\
           ' +
-          editorLabel +
-          '.setTheme("ace/theme/chrome");\
+        editorLabel +
+        '.setTheme("ace/theme/' + editorTheme + '");\
           ' +
-          editorLabel +
-          ".setHighlightActiveLine(false);\
+        editorLabel +
+        ".setHighlightActiveLine(false);\
           " +
-          editorLabel +
-          ".setHighlightGutterLine(false);\
+        editorLabel +
+        ".setHighlightGutterLine(false);\
           " +
-          editorLabel +
-          '.setOption("firstLineNumber", 0);\
+        editorLabel +
+        '.setOption("firstLineNumber", 0);\
           ' +
-          editorLabel +
-          ".setAutoScrollEditorIntoView(true);\
+        editorLabel +
+        ".setAutoScrollEditorIntoView(true);\
           " +
-          editorLabel +
-          ".renderer.setShowGutter(true);\
+        editorLabel +
+        ".renderer.setShowGutter(true);\
           " +
-          editorLabel +
-          ".renderer.$cursorLayer.element.style.opacity = 0;\
+        editorLabel +
+        ".renderer.$cursorLayer.element.style.opacity = 0;\
           " +
-          editorLabel +
-          '.renderer.$gutter.style.background = "#F0F0F0";\
-          ' +
-          editorLabel +
-          '.session.setMode("ace/mode/verilog");\
+        editorLabel +
+        '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -1849,41 +1856,51 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editorTheme;
+    if (global.uiTheme === "dark") { // DARK -> theme monokai
+      editorTheme = "monokai";
+    } else {
+      editorTheme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+    }
+
     this.$box = $(
       joint.util.template(
         '\
       <div class="code-block">\
         <div class="code-content"></div>\
         <div class="code-editor" id="' +
-          editorLabel +
-          '"></div>\
+        editorLabel +
+        '"></div>\
         <script>\
           var ' +
-          editorLabel +
-          ' = ace.edit("' +
-          editorLabel +
-          '");\
+        editorLabel +
+        ' = ace.edit("' +
+        editorLabel +
+        '");\
           ' +
-          editorLabel +
-          '.setTheme("ace/theme/chrome");\
+        editorLabel +
+        '.setTheme("ace/theme/' + editorTheme + '");\
           ' +
-          editorLabel +
-          ".setHighlightActiveLine(false);\
+        editorLabel +
+        ".setHighlightActiveLine(false);\
           " +
-          editorLabel +
-          ".setHighlightGutterLine(false);\
+        editorLabel +
+        ".setHighlightGutterLine(false);\
           " +
-          editorLabel +
-          ".setAutoScrollEditorIntoView(true);\
+        editorLabel +
+        ".setAutoScrollEditorIntoView(true);\
           " +
-          editorLabel +
-          ".renderer.setShowGutter(true);\
+        editorLabel +
+        ".renderer.setShowGutter(true);\
           " +
-          editorLabel +
-          ".renderer.$cursorLayer.element.style.opacity = 0;\
+        editorLabel +
+        ".renderer.$cursorLayer.element.style.opacity = 0;\
           " +
-          editorLabel +
-          '.session.setMode("ace/mode/verilog");\
+        editorLabel +
+        '.session.setMode("ace/mode/verilog");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -2316,48 +2333,58 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     var id = sha1(this.model.get("id")).toString().substring(0, 6);
     var editorLabel = "editor" + id;
     var readonly = this.model.get("data").readonly;
+
+
+    // Select "ace-editor" theme depending on "uiTheme" profile variable
+    var editorTheme;
+    if (global.uiTheme === "dark") { // DARK -> theme monokai
+      editorTheme = "monokai";
+    } else {
+      editorTheme = "chrome"; // DEFAULT or LIGHT -> theme chrome
+    }
+
     this.$box = $(
       joint.util.template(
         '\
       <div class="info-block">\
         <div class="info-render markdown-body' +
-          (readonly ? "" : " hidden") +
-          '"></div>\
+        (readonly ? "" : " hidden") +
+        '"></div>\
         <div class="info-content' +
-          (readonly ? " hidden" : "") +
-          '"></div>\
+        (readonly ? " hidden" : "") +
+        '"></div>\
         <div class="info-editor' +
-          (readonly ? " hidden" : "") +
-          '" id="' +
-          editorLabel +
-          '"></div>\
+        (readonly ? " hidden" : "") +
+        '" id="' +
+        editorLabel +
+        '"></div>\
         <script>\
           var ' +
-          editorLabel +
-          ' = ace.edit("' +
-          editorLabel +
-          '");\
+        editorLabel +
+        ' = ace.edit("' +
+        editorLabel +
+        '");\
           ' +
-          editorLabel +
-          '.setTheme("ace/theme/chrome");\
+        editorLabel +
+        '.setTheme("ace/theme/' + editorTheme + '");\
           ' +
-          editorLabel +
-          ".setHighlightActiveLine(false);\
+        editorLabel +
+        ".setHighlightActiveLine(false);\
           " +
-          editorLabel +
-          ".setShowPrintMargin(false);\
+        editorLabel +
+        ".setShowPrintMargin(false);\
           " +
-          editorLabel +
-          ".setAutoScrollEditorIntoView(true);\
+        editorLabel +
+        ".setAutoScrollEditorIntoView(true);\
           " +
-          editorLabel +
-          ".renderer.setShowGutter(false);\
+        editorLabel +
+        ".renderer.setShowGutter(false);\
           " +
-          editorLabel +
-          ".renderer.$cursorLayer.element.style.opacity = 0;\
+        editorLabel +
+        ".renderer.$cursorLayer.element.style.opacity = 0;\
           " +
-          editorLabel +
-          '.session.setMode("ace/mode/markdown");\
+        editorLabel +
+        '.session.setMode("ace/mode/markdown");\
         </script>\
         <div class="resizer"/></div>\
       </div>\
@@ -2583,7 +2610,7 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   },
 
 
-updateBox: function () {
+  updateBox: function () {
     var bbox = this.model.getBBox();
     var state = this.model.get("state");
     var data = this.model.get("data");

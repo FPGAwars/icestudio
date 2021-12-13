@@ -55,7 +55,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ## Icemem collection: example 23
 
-([Icemem exmple repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
+([Icemem example repo](https://github.com/FPGAwars/iceMem/tree/master/examples))
 
 ![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Readme/screenshot-03-icemem.png)
 
@@ -117,15 +117,20 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
+| 0.8    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), [Ümit Solmaz](https://github.com/usnotv), [TinLethax](https://github.com/TiNredmc), [seanybaggins](https://github.com/seanybaggins), [mslider](https://github.com/mSlider), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.7    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Joaquim (jojo535275)](https://github.com/jojo535275) |
 | 0.6    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Miodrag Milanovic](https://github.com/mmicko), [Pascal Cotret](https://github.com/pcotret), [aalku](https://github.com/aalku),, [Lorea Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [TimRudy](https://github.com/TimRudy), [Sam](https://github.com/sam210723), [Kyle Lomem](https://github.com/KyleLomen), [pitrz](https://github.com/pitrz), [Francisco Sayas](https://github.com/fsayas), [jojo535275](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), Derek Lai,  [wifasoi](https://github.com/wifasoi),   Carls, [Datanoise](https://github.com/DatanoiseTV), Andrew Goodney,  [Jose Miguel Sánchez García](https://github.com/jmi2k), [Alejomejia](https://github.com/alejomejia1),  [reclaimed](https://github.com/reclaimed), [Marcel Ochsendorf](https://github.com/RBEGamer), [HwaGyeong](https://github.com/HwaGyeong)  |
 | 0.5 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Zakary Kamal Ismail](https://github.com/ZakCodes), [Sam](https://github.com/sam210723) |
-| 0.4 | [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
-| 0.3 | [Luke Valenty](https://github.com/tinyfpga), [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
-| 0.2 | [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
-| 0.1 | [Miguel Sánchez de León Peque](https://github.com/Peque) |
+| 0.4 | [Jesus Arroyo](https://github.com/Jesus89), [Carlos Venegas Arrabé](https://github.com/cavearr), [Elektor.Labs](https://github.com/elektor-labs), [Piotr Esden-Tempski](https://github.com/esden), [Miodrag Milanović](https://github.com/mmicko), [raTmole](https://github.com/ratmole), [Luca Cristaldi](https://github.com/wifasoi) |
+| 0.3 | [Jesus Arroyo](https://github.com/Jesus89), [Luke Valenty](https://github.com/tinyfpga), [Lorea-Aldabaldetreku](https://github.com/Lorea-Aldabaldetreku), [Carlos Díaz](https://github.com/C47D), [Martoni](https://github.com/Martoni), [Xoan Sampaiño](https://github.com/xoan), [Unai](https://github.com/1138-4EB), [Francisco Sayas](https://github.com/fsayas), [Pascal Cotret](https://github.com/pcotret), [Juan Jose Luna Espinosa](https://github.com/yomboprime), [Salvador E. Tropea](https://github.com/set-soft), [redbeard](https://github.com/brianredbeard), [Eladio Delgado](https://github.com/EladioDM), [Philipp van Kempen](https://github.com/PhilippvK) |
+| 0.2 | [Jesus Arroyo](https://github.com/Jesus89), [Tomás Calvo](https://github.com/tocalvo), [Juan González (Obijuan)](https://github.com/Obijuan), [Carlos Díaz](https://github.com/C47D), [Xoan Sampaiño](https://github.com/xoan), [Salvador E. Tropea](https://github.com/set-soft), [Democrito](https://github.com/Democrito), [Martoni](https://github.com/Martoni), [Pascal Cotret](https://github.com/pcotret) |
+| 0.1 | [Jesus Arroyo](https://github.com/Jesus89), [Miguel Sánchez de León Peque](https://github.com/Peque) |
 
 ## Credits
+
+* [Carlos Venegas Arrabé](https://github.com/cavearr) is the main developer since 2019/Oct
+
+* [Jesus Arroyo](https://github.com/Jesus89) started this project on 2016/Jan/28. He was the main developer from 2016/Jan to 2019/Oct
 
 * [FPGAwars](http://fpgawars.github.io/) community has developed this project in a voluntary and altruistic way since 02/2017.
 
@@ -143,7 +148,7 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.7.1w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.8.1w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 

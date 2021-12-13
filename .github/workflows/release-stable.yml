@@ -20,6 +20,12 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }} 
     steps:
 
+      # Debug: It is for testing if the `certificate has expired`
+      # Error is solved
+      - name: 'Debug: No SSL verification'
+        run: |
+          git config --global http.sslVerify false
+
       # Checkout the master repo branch
       - name: Checkout!
         uses: actions/checkout@v2
@@ -47,10 +53,11 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '12.13'
+          node-version: '16.4'
 
       - name: Install npm dependencies
-        run:   npm install 
+        run: |  
+          npm install 
 
       - name: Install dependencies to build Windows bundle
         run: |
@@ -70,11 +77,13 @@ jobs:
           wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
           tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
       
-      # -- Build!!
-      - name: Build Linux & Microsoft Windows package
+      # -- Build For windows!!
+      - name: Build Microsoft Windows package
         run: |
           export DISPLAY=:0.0 
-          npm run build
+          npm run buildWindows
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
 
       #-- Create the Release
       - name: Create the Stable Release
@@ -88,34 +97,12 @@ jobs:
           release_name: v${{ env.VERSION }}
           body: |
             A new stable release
-          draft: false
+          draft: true
           prerelease: false
 
       # ---------------------------------------
-      # -- Upload the binaries to the release
+      # -- Upload the Windows binaries to the release
       # ---------------------------------------
-      - name: 'Upload AppImage/linux64'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
-          asset_name: "icestudio-${{env.VERSION}}-linux64.AppImage"
-          asset_content_type: application/tar+gzip
-
-      - name: 'Upload ZIP/linux64'
-        uses: actions/upload-release-asset@v1
-        env:
-          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: "icestudio-${{env.VERSION}}-linux64.zip"
-          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.zip"
-          asset_content_type: application/tar+gzip
-          
       - name: 'Upload MSI/win64'
         uses: actions/upload-release-asset@v1
         env:
@@ -136,6 +123,40 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "icestudio-${{env.VERSION}}-win64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-win64.zip"
+          asset_content_type: application/tar+gzip
+
+
+       #-- Build for linux
+      - name: Build Linux
+        run: |
+          export DISPLAY=:0.0 
+          npm run buildLinux64
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
+
+        # ---------------------------------------
+        # -- Upload the Linux binaries to the release
+        # ---------------------------------------
+      - name: 'Upload AppImage/linux64'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.AppImage"
+          asset_name: "icestudio-${{env.VERSION}}-linux64.AppImage"
+          asset_content_type: application/tar+gzip
+
+      - name: 'Upload ZIP/linux64'
+        uses: actions/upload-release-asset@v1
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: "icestudio-${{env.VERSION}}-linux64.zip"
+          asset_path: "dist/icestudio-${{env.VERSION}}-linux64.zip"
           asset_content_type: application/tar+gzip
 
   # Build for macos
@@ -192,3 +213,75 @@ jobs:
           asset_name: "icestudio-${{env.VERSION}}-osx64.zip"
           asset_path: "dist/icestudio-${{env.VERSION}}-osx64.zip"
           asset_content_type: application/tar+gzip
+
+  # Build for ARM 64
+  build-arm:
+
+    # -- It is only run if the build for linux/win is ok, and  
+    # -- the release already created
+    needs: build-LinWin
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-18.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    
+      # Checkout the develop branch
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      
+      - name: Setup Nodejs version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.13'
+      
+      - name: Install npm dependencies
+        run:   npm install 
+      
+      - name: Install dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
+          export DISPLAY=:0.0 
+          cd /home/runner
+
+      - name: Build ARM
+        run: |
+          export DISPLAY=:0.0 
+          npm run buildAarch64
+          echo "====> DEBUG: Contents of the dist folder..."
+          ls -l dist
+
+        # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+         
+
+        # -- Debug: Print the icestudio version
+      - name: Get the Icestudio version
+        env:
+          VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        run: |
+          echo "VERSION: ${{ env.VERSION }}"
+
+        # ---------------------------------------
+        # -- Upload the binaries to the release
+        # ---------------------------------------
+      - name: 'Upload ZIP/Aarch64'
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+            upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
+            asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
+            asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
+            asset_content_type: application/tar+gzip
