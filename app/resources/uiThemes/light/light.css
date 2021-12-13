@@ -130,9 +130,20 @@
     background-color: #7ccff4;
 }
 
+/*ICM*/
 .icm-menu-button::before {
     background: linear-gradient(#7ccff4 20%, transparent 20%, transparent 40%, #7ccff4 40%, #7ccff4 60%, transparent 60%, transparent 80%, #7ccff4 80%)
 }
+.icm-menu {
+	background-color: #f5f6f7;
+}
+.icm-morph-shape {
+	fill: #f5f6f7;
+}
+.icm-icon-list span{
+	color: #333;
+}
+/*END_ICM*/
 
 .ajs-dialog {
     background: #fff !important;
