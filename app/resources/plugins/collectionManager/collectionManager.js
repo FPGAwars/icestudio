@@ -18,6 +18,8 @@ let tpl = new IceTemplateSystem();
 let plugin = new IcePluginHelper();
 let pConfig = false;
 let state = 0;
+let uiTheme = 'dark';
+let isOpen = false;
 
 function init(args) {
 
@@ -25,11 +27,20 @@ function init(args) {
 
     let initialHtml = '<i class="close-panel" data-guievt="click" data-handler="closePanel"></i><div class="playground"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="cm-loader--status" >Indexing Database</div></div>';
 
-    plugin.styleSheet(['assets/css/style.css', 'assets/css/treeView.css'])
+    if (pConfig.uiTheme === 'dark'){
+        plugin.styleSheet(['assets/css/dark/dark.css'])
         .then(css => {
             gui.publish('createRootNode', { id: pConfig.id, initialContent: initialHtml, stylesheet: css, node: args.manifest.gui });
-            ebus.publish('menu.collection', { id: pConfig.id ,status:'disable'});
+            ebus.publish('menu.collection', { id: pConfig.id ,uiTheme: pConfig.uiTheme, isopen: pConfig.isOpen, status:'disable'});
         });
+    }
+    else {
+        plugin.styleSheet(['assets/css/light/light.css'])
+        .then(css => {
+            gui.publish('createRootNode', { id: pConfig.id, initialContent: initialHtml, stylesheet: css, node: args.manifest.gui });
+            ebus.publish('menu.collection', { id: pConfig.id ,uiTheme: pConfig.uiTheme, isopen: pConfig.isOpen, status:'disable'});
+        });
+    }
 }
 
 function guiUpdate(args) {
@@ -53,10 +64,10 @@ function guiUpdate(args) {
     }
 }
 
-
 function closePlugin() {
-    ebus.publish('plugin.terminate', { id: pConfig.id });
-    ebus.publish('menu.collection', { id: pConfig.id ,status:'enable'});
+    pConfig.isOpen = false;
+    ebus.publish('plugin.terminate', { id: pConfig.id, isOpen: pConfig.isOpen});
+    ebus.publish('menu.collection', { id: pConfig.id , uiTheme: pConfig.uiTheme, isOpen: pConfig.isOpen, status:'enable'});
     self.close();
 }
 
