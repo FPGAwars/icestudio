@@ -242,12 +242,12 @@ angular
             gettextCatalog.getString(
               'To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'
             ),
-            function () {}
+            function () { }
           );
 
           return;
         }
-      
+
         var filepath = project.path;
         if (filepath) {
           project.save(filepath, function () {
@@ -262,8 +262,8 @@ angular
       $scope.doSaveProjectAs = function (localCallback) {
         utils.saveDialog("#input-save-project", ".ice", function (filepath) {
           updateWorkingdir(filepath);
-          
-         
+
+
           project.save(filepath, function () {
             reloadCollectionsIfRequired(filepath);
           });
@@ -288,7 +288,7 @@ angular
             function () {
               $scope.doSaveProjectAs(localCallback);
             },
-            function () {}
+            function () { }
           );
         } else {
           $scope.doSaveProjectAs(localCallback);
@@ -380,7 +380,7 @@ angular
               updateWorkingdir(filepath);
             });
           })
-          .catch(function () {});
+          .catch(function () { });
       }
 
       function exportFromBuilder(id, name, ext) {
@@ -410,7 +410,7 @@ angular
               updateWorkingdir(filepath);
             });
           })
-          .catch(function () {});
+          .catch(function () { });
       }
 
       function updateWorkingdir(filepath) {
@@ -435,10 +435,10 @@ angular
             utils.bold(
               gettextCatalog.getString("Do you want to close the application?")
             ) +
-              "<br>" +
-              gettextCatalog.getString(
-                "Your changes will be lost if you don’t save them"
-              ),
+            "<br>" +
+            gettextCatalog.getString(
+              "Your changes will be lost if you don’t save them"
+            ),
             function () {
               // Close
               _exit();
@@ -508,7 +508,7 @@ angular
           .then(function () {
             graph.selectAll();
           })
-          .catch(function () {});
+          .catch(function () { });
       };
 
       function removeSelected() {
@@ -711,8 +711,8 @@ angular
           graph.setInfo(values, newValues, project);
           alertify.message(
             gettextCatalog.getString("Project information updated") +
-              ".<br>" +
-              gettextCatalog.getString("Click here to view"),
+            ".<br>" +
+            gettextCatalog.getString("Click here to view"),
             5
           ).callback = function (isClicked) {
             if (isClicked) {
@@ -805,7 +805,7 @@ angular
         if (profile.get("uiTheme") !== theme) {
           profile.set("uiTheme", theme);
           //-- Shared variable for ace-editor blocks in "profile.js"
-          global.uiTheme = theme; 
+          global.uiTheme = theme;
           //-- Load selected profile
           utils.loadProfile(profile);
           //-- Update actual opened project and/or blocks
@@ -819,15 +819,7 @@ angular
               });
             }
           );
-
-          //-- Update Embedded plugins. (ex: collectionManager)
-          let cmUiTheme = ICEpm.plugins.collectionManager.uiTheme;
-          let cmIsOpen = ICEpm.plugins.collectionManager.isOpen;
-
-          if (cmIsOpen && cmUiTheme !== global.uiTheme) {
-            ICEpm.ebus.fire("plugin.terminate", ICEpm.plugins.collectionManager);
-            ICEpm.run("collectionManager");
-          }
+          ICEpm.publishAt('all', 'ui.updateTheme', { uiTheme: theme });
         }
       };
 
@@ -1008,7 +1000,7 @@ angular
       $scope.showCommandOutput = function () {
         winCommandOutput = gui.Window.open(
           "resources/viewers/plain/output.html?content=" +
-            encodeURIComponent(common.commandOutput),
+          encodeURIComponent(common.commandOutput),
           {
             title: gettextCatalog.getString("Command output"),
             focus: true,
@@ -1099,7 +1091,7 @@ angular
           .then(function () {
             return tools.verifyCode(startMessage, endMessage);
           })
-          .catch(function () {});
+          .catch(function () { });
       };
 
       $scope.buildCode = function () {
@@ -1112,7 +1104,7 @@ angular
             gettextCatalog.getString(
               "You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>"
             ),
-            function () {}
+            function () { }
           );
           return;
         }
@@ -1126,7 +1118,7 @@ angular
           .then(function () {
             resetBuildStack();
           })
-          .catch(function () {});
+          .catch(function () { });
       };
 
       $scope.uploadCode = function () {
@@ -1139,7 +1131,7 @@ angular
             gettextCatalog.getString(
               "You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>"
             ),
-            function () {}
+            function () { }
           );
 
           return;
@@ -1154,7 +1146,7 @@ angular
           .then(function () {
             resetBuildStack();
           })
-          .catch(function () {});
+          .catch(function () { });
       };
 
       function checkGraph() {
@@ -1420,7 +1412,7 @@ angular
         utils.rootScopeSafeApply();
       });
 
-     
+
       $scope.showMenu = function (newMenu) {
         cancelTimeouts();
         if (

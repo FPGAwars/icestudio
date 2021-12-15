@@ -86,6 +86,7 @@ class IceGUI {
 
 
   registerEvents() {
+    console.log('registerEvents!');
     let _this = this;
 
     function eventResize() {
@@ -138,27 +139,41 @@ class IceGUI {
     this.update();
   }
 
+  indexOf(id){
+
+      for(let i=0;i<this.vdom.length;i++){
+        if(this.vdom[i].key === id) return i;
+      }
+      return -1;
+  }
+
   createRootNode(args) {
-    let id = args.id;
-    let conf = args.node;
-    let vnode = {
-      key: id,
-      initial: conf,
+    let vnode=false;
+    let nodeIndex=this.indexOf(args.id);
+    if(nodeIndex<0){
+     vnode = {
+      key: args.id,
+      initial: args.node,
       parent: false,
       updated: false,
       rendered: false,
       stylesheet: false,
-      html: false,
+      html: false
     };
 
+     this.vdom.push(vnode);
+     nodeIndex=this.vdom.length-1;
+  }else{
+
+    this.vdom[nodeIndex].rendered=false;    
+    this.vdom[nodeIndex].updated=false;    
+  }
     if (typeof args.stylesheet !== "undefined") {
-      vnode.stylesheet = args.stylesheet;
+      this.vdom[nodeIndex].stylesheet = args.stylesheet;
     }
     if (typeof args.initialContent !== "undefined") {
-      vnode.html = args.initialContent;
+      this.vdom[nodeIndex].html = args.initialContent;
     }
-
-    this.vdom.push(vnode);
 
     this.update();
   }
@@ -339,9 +354,14 @@ class IceGUI {
   render(index) {
     let node = this.vdom[index];
     let id = this.vdom[index].key;
-
+    
     if (node.rendered === false) {
+      console.log(this.dom);
+      let oldNode=this.el(`#${id}`);
+      console.log('NODE',oldNode);
+      if(oldNode !== null) oldNode.remove();
       let embededStyle = this.computeCss(node.initial);
+      
       let html = `<div id="${id}" style="${embededStyle}"></div>`;
 
       this.vdom[index].rendered = true;
@@ -354,15 +374,18 @@ class IceGUI {
       if (node.html) {
         wrapper.innerHTML = node.html;
       }
-
-      let shadow = this.vdom[index].dom.attachShadow({ mode: "open" });
+      console.log(this.vdom[index]);
+      let shadow = (typeof this.vdom[index].dom.shadowRoot === 'undefined' ||
+                    this.vdom[index].dom.shadowRoot === null)? this.vdom[index].dom.attachShadow({ mode: "open" }) 
+                                                                            : this.vdom[index].dom.shadowRoot;
+      shadow.innerHTML='';
       if (node.stylesheet) {
         let style = document.createElement("style");
 
         style.textContent = node.stylesheet;
-        shadow.appendChild(style);
+       shadow.appendChild(style);
       }
-      shadow.appendChild(wrapper);
+        shadow.appendChild(wrapper);
     }
   }
 }

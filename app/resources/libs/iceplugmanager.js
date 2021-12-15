@@ -220,7 +220,6 @@ var IcePlugManager = function () {
         plug.worker = new Worker(`${this.pluginUri}/${plug.key}/${plug.key}.js`);
         plug.gui = new IceGUI(plug.worker);
         plug.uiTheme = global.uiTheme;
-        plug.isOpen = true;
 
         plug.worker.addEventListener('message', function (e) {
 
@@ -266,8 +265,7 @@ var IcePlugManager = function () {
                     env: plug.env,
                     id: plug.id,
                     manifest: plug.manifest,
-                    uiTheme: plug.uiTheme,
-                    isOpen: plug.isOpen 
+                    uiTheme: plug.uiTheme
 
                 }
             }
@@ -278,7 +276,7 @@ var IcePlugManager = function () {
     this.publishAt = function (target, evt, payload) {
 
         for (let i = 0; i < this.embeds.length; i++) {
-            if (this.embeds[i].id === target) {
+            if (this.embeds[i].id === target || target==='all') {
                 this.embeds[i].worker.postMessage(JSON.stringify(
                     {
                         type: "eventBus",
@@ -351,7 +349,6 @@ var IcePlugManager = function () {
         for (let i = 0; i < this.embeds.length; i++) {
 
             if (this.embeds[i].id === data.id) {
-                this.embeds[i].isOpen = false;
                 this.embeds[i].gui.terminate();
                 this.embeds.splice(i, 1);
                 return;
