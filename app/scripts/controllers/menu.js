@@ -819,6 +819,15 @@ angular
               });
             }
           );
+
+          //-- Update Embedded plugins. (ex: collectionManager)
+          let cmUiTheme = ICEpm.plugins.collectionManager.uiTheme;
+          let cmIsOpen = ICEpm.plugins.collectionManager.isOpen;
+
+          if (cmIsOpen && cmUiTheme !== global.uiTheme) {
+            ICEpm.ebus.fire("plugin.terminate", ICEpm.plugins.collectionManager);
+            ICEpm.run("collectionManager");
+          }
         }
       };
 
@@ -1451,7 +1460,7 @@ angular
       });
 
       function ebusCollection(args) {
-        console.log(args);
+        //console.log(args);
         if (typeof args.status !== "undefined") {
           switch (args.status) {
             case "enable":

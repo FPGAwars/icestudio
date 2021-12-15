@@ -219,6 +219,9 @@ var IcePlugManager = function () {
         plug.env = env;
         plug.worker = new Worker(`${this.pluginUri}/${plug.key}/${plug.key}.js`);
         plug.gui = new IceGUI(plug.worker);
+        plug.uiTheme = global.uiTheme;
+        plug.isOpen = true;
+
         plug.worker.addEventListener('message', function (e) {
 
             let data = JSON.parse(e.data);
@@ -262,7 +265,10 @@ var IcePlugManager = function () {
                 payload: {
                     env: plug.env,
                     id: plug.id,
-                    manifest: plug.manifest
+                    manifest: plug.manifest,
+                    uiTheme: plug.uiTheme,
+                    isOpen: plug.isOpen 
+
                 }
             }
         ));
@@ -324,6 +330,7 @@ var IcePlugManager = function () {
         if (plug === false) {
             return false;
         }
+
         //console.log('Plugin::run::', plug);
         if (typeof plug.manifest.gui !== 'undefined' && plug.manifest.gui.type === 'embedded') {
             let launch = true;
@@ -344,6 +351,7 @@ var IcePlugManager = function () {
         for (let i = 0; i < this.embeds.length; i++) {
 
             if (this.embeds[i].id === data.id) {
+                this.embeds[i].isOpen = false;
                 this.embeds[i].gui.terminate();
                 this.embeds.splice(i, 1);
                 return;
@@ -356,7 +364,7 @@ var IcePlugManager = function () {
         this.ebus.subscribe('plugin.terminate', 'terminate', this);
         this.blockManager
         this.ebus.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
-    };
+    }; 
 
     this.init();
 };

@@ -228,7 +228,7 @@ class IceGUI {
 
   elGetParents(el, parentSelector) {
 
-  console.log(el,parentSelector)
+  //console.log(el,parentSelector)
 
     var parents = [];
     var p = el.parentNode;
