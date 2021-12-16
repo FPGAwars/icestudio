@@ -278,11 +278,11 @@ class IceGuiTree {
       typeof obj.package.description !== "undefined" &&
       typeof obj.package.name != "undefined" &&
       obj.package.description !== null &&
-      obj.package.description.length > 0 &&
+      obj.package.description !== '' &&
       obj.package.name !== null &&
       obj.package.name.length > 0 &&
       obj.package.image !== null &&
-      obj.package.image.length > 0
+			obj.package.image !== ''
     ) {
       let transaction = this.assetsDB.db.transaction(
         ["blockAssets"],
