@@ -13,7 +13,7 @@
         "size":{
             "position":"fixed",
             "width":"calc(7% + 150px)",
-            "height":"114%"
+            "height":"100%"
         },
         "position":{
             "right":"0px",
