@@ -4,14 +4,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* height: calc(100% - 90px);*/
   background: #444;
-  border: 1px solid #666;
+  border: 1px solid #666;  
 }
 .playground {
   max-height: calc(100% - 30px);
   overflow: auto;
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
 /* Start_spinner */
@@ -134,7 +133,7 @@
   position: relative;
   display: block;
   height: 100%;
-  background-color: #444;
+  background: #444;
   color: #ccc;
 }
 
