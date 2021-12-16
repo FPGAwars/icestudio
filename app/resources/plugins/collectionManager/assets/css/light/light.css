@@ -10,7 +10,7 @@
 .playground {
   max-height: calc(100% - 30px);
   overflow: auto;
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
 /* Start_spinner */
@@ -30,8 +30,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #ccc;
-  
+  background: #ccc; 
   animation: lds-grid 1.2s linear infinite;
 }
 .lds-grid div:nth-child(1) {
