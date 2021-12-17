@@ -46,7 +46,7 @@ class IceGuiTree {
     let tpl = `<div id="tree-view-root" class="tree-view">
               {{#tree}}
                 {{#isFolder}}
-                  <div class="tree-view--folder closed" data-nodeid="{{{id}}}">
+                  <div class="tree-view-main--folder tree-view--folder closed" data-nodeid="{{{id}}}">
                     <span class="tree-view--folder-name {{#hasSubFolders}}tree-view--folder-subfolders{{/hasSubFolders}}"  data-guievt="click" data-handler="treeView.toggleFolder" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                     {{#items}}
                       {{#isFolder}}
@@ -252,7 +252,7 @@ class IceGuiTree {
       let _this = this;
       setTimeout(function () {
         _this.blockContentLoaded(args);
-      }, 1000);
+      }, 100); // 1000
     }
   }
 
@@ -263,7 +263,8 @@ class IceGuiTree {
       let _this = this;
       setTimeout(function () {
         _this.afterIndexingDB(callback);
-      }, 1000);
+      }, 100); // 1000
+      
     }
   }
 
@@ -278,11 +279,11 @@ class IceGuiTree {
       typeof obj.package.description !== "undefined" &&
       typeof obj.package.name != "undefined" &&
       obj.package.description !== null &&
-      obj.package.description !== '' &&
+      obj.package.description !== "" &&
       obj.package.name !== null &&
       obj.package.name.length > 0 &&
       obj.package.image !== null &&
-			obj.package.image !== ''
+      obj.package.name !== ""
     ) {
       let transaction = this.assetsDB.db.transaction(
         ["blockAssets"],

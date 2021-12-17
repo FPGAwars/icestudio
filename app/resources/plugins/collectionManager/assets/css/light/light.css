@@ -316,3 +316,7 @@ visibility: hidden;
 .tree-view--leaf.is-in-use>.in-use{
   display:inline-block;
 }
+
+.tree-view-main--folder > .tree-view--leaf{
+  display: none;
+}
