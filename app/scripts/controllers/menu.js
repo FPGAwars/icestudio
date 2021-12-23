@@ -1390,7 +1390,7 @@ angular
 
       $(document).on("keypress", ".search-field", function (e) {
         console.log(e);
-        if (e.which == 13){
+        if (e.which === 13){
           console.log("Enter key");
           $scope.fitContent(); // Fit content before search
           searchItems();
