@@ -117,7 +117,7 @@
 }
 
 .io-block .io-virtual-content .header label {
-    color: white !important;
+    color: white; /* !important;*/
     font-weight: bold !important;
 }
 
@@ -237,17 +237,116 @@
      border: 0px solid #777; 
 }
 
-
-   .io-block .io-virtual-content {
- border: 0px solid #fff !important;
-  background-size: cover !important;
-  border-radius:120px !important;
+.io-block .io-virtual-content {
+    border: 0px solid #fff !important;
+    background-size: cover !important;
+    border-radius:120px !important;
     mix-blend-mode: screen;
    }
  .io-block .io-virtual-content .header {
     margin-top: 12px;
 }
 
+.highlight{
+    scale: 2 !important;
+    color: #000 !important;
+    background: #ffff00 !important;
+}
+.popup-search{
+  display: block;
+  opacity: 1;
+  position: fixed;
+  width: 201px;
+  height: 40px;
+  background: rgba(80,80,80,1);
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border-radius: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.lifted{
+  opacity: 1;
+  top: -100px;
+  animation: fadeOut 0.2s ease;
+ }
+@keyframes fadeIn{
+  0%    {opacity: 0;
+         top: -100px;}
+  100%  {opacity: 1;
+         top: 70px;  }
+}
+@keyframes fadeOut{
+  0%    {opacity: 1;
+         top: 70px;}
+  100%  {opacity: 0;
+         top: -100px;  }
+}
+
+.search-field{
+  position: absolute;
+  width: 155px;
+  height: 30px;
+  top: 5px;
+  left: 5px;
+  background: rgba(35,35,35,1);
+  border: 0px solid rgba(0,0,0,0.1);
+  border-radius: 15px;
+  color: rgba(255,255,255,0.75);
+  padding-left: 8px;
+  line-height: 30px;
+}
+.search-field:focus{
+  border-radius: 15px;
+  outline: none;
+}
+.search-field::placeholder{
+  color: rgba(255,255,255,0.25);
+}
+.search-button{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 7px;
+  content: url(/resources/uiThemes/dark/search.svg);
+  top: 5px;
+  text-align: center;
+  line-height: 30px;
+}
+/*
+.popup-search .l-arrow{
+  position: absolute;
+  color: white;
+  height: 30px;
+  background: rgba(255,255,255,0);
+  width: 10px;
+  top: 5px;
+  line-height: 30px;
+  left: 95px;
+}
+.popup-search .num{
+  position: absolute;
+  color: white;
+  height: 30px;
+  background: rgba(255,255,255,0);
+  width: 35px;
+  top: 5px;
+  line-height: 30px;
+  left: 108px;
+  text-align: center;
+}
+.popup-search .r-arrow{
+  position: absolute;
+  color: white;
+  height: 30px;
+  background: rgba(255,255,255,0);
+  width: 10px;
+  top: 5px;
+  line-height: 30px;
+  left: 145px;
+}
+*/
 
 
 /* Colors */

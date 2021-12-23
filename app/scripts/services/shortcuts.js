@@ -62,6 +62,12 @@ angular.module('icestudio')
     };
 
     var shortcuts = {
+
+      showPopupSearch: {
+        linux: { label: 'Ctrl+F', ctrl: true, key: 70 },
+        mac: { label: '⌘+F', meta: true, key: 70 }
+      },
+
       newProject: {
         linux: { label: 'Ctrl+N', ctrl: true, key: 78 },
         mac: { label: '⌘+N', meta: true, key: 78 }
