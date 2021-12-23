@@ -253,6 +253,72 @@
     margin-top: 12px;
 }
 
+.highlight{
+    scale: 2 !important;
+    background: #ffff00 !important;
+}
+.popup-search{
+  display: block;
+  opacity: 1;
+  position: fixed;
+  width: 201px;
+  height: 40px;
+  background: rgba(124,207,244,1);
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border-radius: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.lifted{
+  opacity: 1;
+  top: -100px;
+  animation: fadeOut 0.2s ease;
+ }
+@keyframes fadeIn{
+  0%    {opacity: 0;
+         top: -100px;}
+  100%  {opacity: 1;
+         top: 70px;  }
+}
+@keyframes fadeOut{
+  0%    {opacity: 1;
+         top: 70px;}
+  100%  {opacity: 0;
+         top: -100px;  }
+}
+
+.search-field{
+  position: absolute;
+  width: 155px;
+  height: 30px;
+  top: 5px;
+  left: 5px;
+  background: rgba(250,250,250,1);
+  border: 0px solid rgba(0,0,0,0.1);
+  border-radius: 15px;
+  color: rgba(0,0,0,0.75);
+  padding-left: 8px;
+  line-height: 30px;
+}
+.search-field:focus{
+  border-radius: 15px;
+  outline: none;
+}
+.search-field::placeholder{
+  color: rgba(0,0,0,0.3);
+}
+.search-button{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 7px;
+  content: url(/resources/uiThemes/light/search.svg);
+  top: 5px;
+  text-align: center;
+  line-height: 30px;
+}
 
 /* Colors */
 .color-indianred        {

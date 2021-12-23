@@ -1340,6 +1340,9 @@ angular
       shortcuts.method("stepLeft", graph.stepLeft);
       shortcuts.method("stepRight", graph.stepRight);
 
+      // -- Search Pop-up
+      shortcuts.method("showPopupSearch", showPopupSearch);
+
       shortcuts.method("removeSelected", removeSelected);
       shortcuts.method("back", function () {
         if (graph.isEnabled()) {
@@ -1362,6 +1365,56 @@ angular
           event.preventDefault();
         }
       });
+
+      function showPopupSearch() {
+        console.log("CTRL+F pressed");
+        if ($('.popup-search').hasClass('lifted')){
+          $('.popup-search').removeClass('lifted');
+          $('.search-field').focus();
+        }
+        else {
+          $('.popup-search').addClass('lifted');
+        }
+      }
+
+      $(document).on("mouseup", function () {
+        mousedown = false;
+      });
+
+      $(document).on("mousedown", ".search-button", function () {
+        mousedown = true;
+        console.log("search clicked");
+        $scope.fitContent(); // Fit content before search
+        searchItems();
+      });
+
+      $(document).on("keypress", ".search-field", function (e) {
+        console.log(e);
+        if (e.which == 13){
+          console.log("Enter key");
+          $scope.fitContent(); // Fit content before search
+          searchItems();
+        } 
+      });
+
+      function searchItems() {  
+        let _sWord = $('.search-field').val(); // OK
+        let _cell = $('.io-virtual-content .header label');
+        let _len = _cell.length;
+
+        if (_sWord.length > 0) {
+          if (_len > 0) {
+            for (let i=0; i<_len; i++) {
+              if (_cell[i].innerText.includes(_sWord)) {
+                _cell[i].classList.add('highlight');
+                setTimeout(function(){
+                  _cell[i].classList.remove('highlight');
+                }, 1000);
+              }
+            }
+          } 
+        } 
+      } 
 
       function takeSnapshot() {
         win.capturePage(function (img) {

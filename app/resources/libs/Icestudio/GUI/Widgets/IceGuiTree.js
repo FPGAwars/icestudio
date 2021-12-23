@@ -275,15 +275,18 @@ class IceGuiTree {
       obj !== false &&
       obj !== false &&
       typeof obj.package !== "undefined" &&
-      typeof obj.package.image !== "undefined" &&
-      typeof obj.package.description !== "undefined" &&
-      typeof obj.package.name != "undefined" &&
-      obj.package.description !== null &&
-      obj.package.description !== "" &&
-      obj.package.name !== null &&
-      obj.package.name.length > 0 &&
-      obj.package.image !== null &&
-      obj.package.name !== ""
+      typeof obj.package.description !== "undefined" && // typoeof undefined
+      typeof obj.package.name !== "undefined" &&        // typoeof undefined
+      typeof obj.package.image !== "undefined" &&       // typoeof undefined
+      
+      obj.package.description !== null &&     // null
+      obj.package.name !== null &&            // null
+      obj.package.image !== null &&           // null
+      
+      // PERMISSIVE WITH EMPTY FIELDS like ""
+      obj.package.description.length >= 0 &&  // empty
+      obj.package.name.length >= 0 &&         // empty
+      obj.package.image.length >= 0           // empty
     ) {
       let transaction = this.assetsDB.db.transaction(
         ["blockAssets"],
