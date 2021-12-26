@@ -156,7 +156,7 @@ angular
     this.APIO_PKG_SYSTEM_VERSION = "1.1.2";
 
     //-- Get the System PATH
-    this.PATH = process.env.PATH
+    this.PATH = process.env.PATH;
 
     //-- Set the apio command. It consist of two parts. The first is for defining two
     //-- environment variables: APIO_HOME_DIR and PATH
