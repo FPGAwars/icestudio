@@ -165,27 +165,25 @@ angular
     //--
     //-- The second part is the apio executable itself
     //--
-    //-- EXAMPLE FOR Linux/MAC:
-    //-- APIO_CMD = APIO_HOME_DIR="/home/obijuan/.icestudio/apio" PATH="/home/obijuan/.icestudio/venv/bin:$PATH" "/home/obijuan/.icestudio/venv/bin/apio"
+    //-- EXAMPLE FOR Linux/MAC: (split in several lines)
+    //-- APIO_CMD = APIO_HOME_DIR="/home/obijuan/.icestudio/apio" 
+    //              PATH="/home/obijuan/.icestudio/venv/bin:$PATH" 
+    //              "/home/obijuan/.icestudio/venv/bin/apio"
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
 
-    //-- EXAMPLE FOR Windows:
-    //-- TODO: Change it to include the PATH (like Linux/Mac)
-    //-- APIO_CMD = set APIO_HOME_DIR="c:\Users\Obijuan\.icestudio\apio"& "c:\Users\Obijuan\.icestudio\venv\bin\apio"
+    //-- EXAMPLE FOR Windows: (split in several lines)
+    //-- APIO_CMD = set APIO_HOME_DIR="c:\Users\Obijuan\.icestudio\apio"& 
+    //              set PATH=c:\Users\Obijuan\.icestudio\venv\bin\apio;%PATH%&
+    //              "C:\Users\Obijuan\.icestudio\venv\Scripts\apio.exe"
 
     if (this.WIN32) {
       //-- Apio execution command for Windows machines
 
-      //-- TODO: it should be change to include the PATH (as in Linux/Mac)
+      //-- APIO_HOME_DIR env variable
       this.APIO_CMD =
-        "set APIO_HOME_DIR=" +
-        '"' +
-        this.APIO_HOME_DIR +
-        '"' +
-        "& " +
-        '"' +
-        this.ENV_APIO +
-        '"';
+        'set APIO_HOME_DIR="' + this.APIO_HOME_DIR + '"& ' +
+        'set PATH=' + this.ENV_BIN_DIR + ';' + this.PATH + '& ' +
+        '"' + this.ENV_APIO + '"';
 
       //-- IMPORTANT!!! THERE SHOULD BE NO SPACE between APIO_HOME_DIR and the '&' operator in Windows!!
       //-- This a very difficult ERROR TO SPOT:
@@ -197,10 +195,10 @@ angular
 
       this.APIO_CMD =
         //-- APIO_HOME_DIR env variable
-        'APIO_HOME_DIR="' + this.APIO_HOME_DIR + '"' +
+        'APIO_HOME_DIR="' + this.APIO_HOME_DIR + '" ' +
 
         //-- Add the virtual env PATH in the begining of the PATH env. variable
-        ' PATH="' + this.ENV_BIN_DIR + ':' + this.PATH  + '" ' +
+        'PATH="' + this.ENV_BIN_DIR + ':' + this.PATH  + '" ' +
 
         //-- APIO executable
         '"' + this.ENV_APIO + '"';
