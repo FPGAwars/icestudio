@@ -442,7 +442,7 @@ angular.module('icestudio')
       
       //-- Check if the ICESTUDIO_APIO env variable is set with the apio toolchain to use  or  
       //-- if it has been set on the package.json file
-      var candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
+      let candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
 
       //-- The is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
