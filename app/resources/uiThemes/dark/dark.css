@@ -252,17 +252,23 @@
     color: #000 !important;
     background: #ffff00 !important;
 }
-.popup-search{
+.highlight-border{
+  scale: 2 !important;
+  color: #fff;
+  background: rgba(255,255,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.lFinder-popup{
   display: block;
   opacity: 1;
   position: fixed;
-  width: 201px;
+  width: 255px;
   height: 40px;
   background: rgba(80,80,80,1);
-  top: 70px;
+  top: 40px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
+  z-index: 999;
   border-radius: 20px;
   animation: fadeIn 0.2s ease;
 }
@@ -275,16 +281,15 @@
   0%    {opacity: 0;
          top: -100px;}
   100%  {opacity: 1;
-         top: 70px;  }
+         top: 40px;  }
 }
 @keyframes fadeOut{
   0%    {opacity: 1;
-         top: 70px;}
+         top: 40px;}
   100%  {opacity: 0;
          top: -100px;  }
 }
-
-.search-field{
+.lFinder-field{
   position: absolute;
   width: 155px;
   height: 30px;
@@ -297,57 +302,46 @@
   padding-left: 8px;
   line-height: 30px;
 }
-.search-field:focus{
+.lFinder-field:focus{
   border-radius: 15px;
   outline: none;
 }
-.search-field::placeholder{
+.lFinder-field::placeholder{
   color: rgba(255,255,255,0.25);
 }
-.search-button{
+.items-found{
+  position: absolute;
+  line-height: 30px;
+  top: 5px;
+  left: 125px;
+  color: rgba(255,255,255,0.75);
+}
+.lFind-button{
   position: absolute;
   width: 30px;
   height: 30px;
-  right: 7px;
-  content: url(/resources/uiThemes/dark/search.svg);
+  right: 5px;
+  content: url(/resources/images/icons/dark_find.svg);
   top: 5px;
   text-align: center;
   line-height: 30px;
 }
-/*
-.popup-search .l-arrow{
+.lFind-prev{
   position: absolute;
-  color: white;
+  width: 30px;
   height: 30px;
-  background: rgba(255,255,255,0);
-  width: 10px;
   top: 5px;
-  line-height: 30px;
-  left: 95px;
+  right: 65px;
+  content: url(/resources/images/icons/dark_left-arrow.svg);
 }
-.popup-search .num{
+.lFind-next{
   position: absolute;
-  color: white;
+  width: 30px;
   height: 30px;
-  background: rgba(255,255,255,0);
-  width: 35px;
   top: 5px;
-  line-height: 30px;
-  left: 108px;
-  text-align: center;
+  right: 35px;
+  content: url(/resources/images/icons/dark_right-arrow.svg);
 }
-.popup-search .r-arrow{
-  position: absolute;
-  color: white;
-  height: 30px;
-  background: rgba(255,255,255,0);
-  width: 10px;
-  top: 5px;
-  line-height: 30px;
-  left: 145px;
-}
-*/
-
 
 /* Colors */
 .color-indianred        {

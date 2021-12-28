@@ -195,7 +195,7 @@
   z-index: 999;
 }
 #iceToolbox.opened .dropdown-menu li>a{
-color:white;
+color: #333;
 }
 
 #iceToolbox.opened .dropdown-menu>li>a:focus, #iceToolbox.opened .dropdown-menu>li>a:hover {
