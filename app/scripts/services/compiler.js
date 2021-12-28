@@ -698,11 +698,12 @@ angular.module('icestudio')
         // Dependencies modules
         if(typeof project.package !== 'undefined'){
                    
-          code+='\n/*-------------------------------------------------*/\n';
-          code+='/*-- '+project.package.name+'  */\n';
-          code+='/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
-          code+='/*-- '+project.package.description+'\n';
-          code+='/*-------------------------------------------------*/\n';
+          code +='\n';
+          code +='//---------------------------------------------------\n';
+          code +='//-- ' + project.package.name + '\n';
+          code +='//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
+          code +='//-- ' + project.package.description + '\n';
+          code +='//---------------------------------------------------\n';
           
           
         }
