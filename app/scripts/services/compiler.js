@@ -696,14 +696,21 @@ angular.module('icestudio')
         }
 
         // Dependencies modules
+        //-- Generate the comments heather for the module
         if(typeof project.package !== 'undefined'){
-                   
+          
+          //-- Sepation from the previous verilog block
           code +='\n';
-          code +='//---------------------------------------------------\n';
-          code +='//-- ' + project.package.name + '\n';
-          code +='//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
-          code +='//-- ' + project.package.description + '\n';
-          code +='//---------------------------------------------------\n';
+
+          //-- It is only generate if the project/block has a name
+          //-- Usually the top entity do not have a main
+          if (project.package.name) {
+            code +='//---------------------------------------------------\n';
+            code +='//-- ' + project.package.name + '\n';
+            code +='//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
+            code +='//-- ' + project.package.description + '\n';
+            code +='//---------------------------------------------------\n';
+          }
           
           
         }
