@@ -582,6 +582,12 @@ angular.module('icestudio')
       return initPins;
     }
 
+    //-------------------------------------------------------------------
+    //-- Generate the verilog code for the given circuit
+    //-- name: String. Name of the current module (top module: 'main')
+    //-- project: Project module
+    //-- opt: Options
+    //--------------------------------------------------------------------
     function verilogCompiler(name, project, opt) {
       var i, data, block, code = '';
       opt = opt || {};
@@ -696,16 +702,23 @@ angular.module('icestudio')
         }
 
         // Dependencies modules
+        //-- Generate the comments heather for the module
         if(typeof project.package !== 'undefined'){
-                   
-          code+='\n/*-------------------------------------------------*/\n';
-          code+='/*-- '+project.package.name+'  */\n';
-          code+='/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
-          code+='/*-- '+project.package.description+'\n';
-          code+='/*-------------------------------------------------*/\n';
           
-          
+          //-- Sepation from the previous verilog block
+          code +='\n';
+
+          //-- It is only generate if the project/block has a name
+          //-- Usually the top entity do not have a main
+          if (project.package.name) {
+            code +='//---------------------------------------------------\n';
+            code +='//-- ' + project.package.name + '\n';
+            code +='//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
+            code +='//-- ' + project.package.description + '\n';
+            code +='//---------------------------------------------------\n';
+          }
         }
+
         for (var d in dependencies) {
           code += verilogCompiler( utils.digestId(d) , dependencies[d]);
         }
