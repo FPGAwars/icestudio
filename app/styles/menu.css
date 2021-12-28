@@ -194,13 +194,7 @@
   visibility: visible;
   z-index: 999;
 }
-#iceToolbox.opened .dropdown-menu li>a{
-color: #333;
-}
 
-#iceToolbox.opened .dropdown-menu>li>a:focus, #iceToolbox.opened .dropdown-menu>li>a:hover {
-    color: #262626;
-}
 #iceToolbox.opened .dropdown-menu{
   display:block;
   top:0;
