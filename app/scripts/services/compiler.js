@@ -582,6 +582,12 @@ angular.module('icestudio')
       return initPins;
     }
 
+    //-------------------------------------------------------------------
+    //-- Generate the verilog code for the given circuit
+    //-- name: String. Name of the current module (top module: 'main')
+    //-- project: Project module
+    //-- opt: Options
+    //--------------------------------------------------------------------
     function verilogCompiler(name, project, opt) {
       var i, data, block, code = '';
       opt = opt || {};
@@ -711,9 +717,8 @@ angular.module('icestudio')
             code +='//-- ' + project.package.description + '\n';
             code +='//---------------------------------------------------\n';
           }
-          
-          
         }
+
         for (var d in dependencies) {
           code += verilogCompiler( utils.digestId(d) , dependencies[d]);
         }
