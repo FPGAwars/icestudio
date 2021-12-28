@@ -24,6 +24,12 @@
 
 .dropdown-menu>li>a:hover {
     background: #666 !important;
+    color: #fff;
+}
+
+.dropdown-menu>li>a:focus {
+    background: #666 !important;
+    color: #fff;
 }
 
 .dropdown:active {
@@ -36,6 +42,7 @@
 
 .dropdown-menu>li>a {
     background: #444;
+    color: #fff;
 }
 
 .dropdown-submenu {
