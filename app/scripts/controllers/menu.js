@@ -1340,9 +1340,8 @@ angular
       shortcuts.method("stepLeft", graph.stepLeft);
       shortcuts.method("stepRight", graph.stepRight);
 
-      // -- Search Pop-up
-      shortcuts.method("showPopupSearch", showPopupSearch);
-
+      // -- Label-Finder Pop-up
+      shortcuts.method("showLabelFinder", showLabelFinder);
 
       // -- Show Floating toolbox
       shortcuts.method("showToolBox", showToolBox);
@@ -1371,53 +1370,119 @@ angular
         }
       });
 
-      function showPopupSearch() {
-        if ($('.popup-search').hasClass('lifted')) {
-          $('.popup-search').removeClass('lifted');
-          $('.search-field').focus();
+      //-- LABEL-FINDER POPUP
+      $(document).on("mousedown", ".lFind-button", function () {
+        mousedown = true;
+        $scope.fitContent(); // Fit content before search
+        findItems();
+      });
+
+      $(document).on("keypress", ".lFinder-field", function (e) {
+        if (e.which === 13 && !$('.popup-lFinder').hasClass('lifted')){
+          $scope.fitContent(); // Fit content before search
+          findItems();
+        } 
+      });
+
+      $(document).on("mousedown", ".lFind-prev", function () {
+        mousedown = true;
+        prevItem();
+      });
+
+      $(document).on("mousedown", ".lFind-next", function () {
+        mousedown = true;
+        nextItem();
+      });
+
+      //-- Global LABEL-FINDER vars
+      let foundItems = 0;
+      let actualItem = 0;
+      let itemList = [];
+      let itemHtmlList = [];
+
+      //-- LABEL-FINDER functions
+      function showLabelFinder() {
+        //console.log("CTRL+F pressed");
+        if ($('.lFinder-popup').hasClass('lifted')){
+          $('.lFinder-popup').removeClass('lifted');
+          $('.lFinder-field').focus();
         }
-        else {
-          $('.popup-search').addClass('lifted');
+        else { // Hide PopUp
+          $('.lFinder-popup').addClass('lifted');
+          $('.lFinder-field').focusout();
+          $('.highlight').removeClass('highlight');
+          $('.highlight-border').removeClass('highlight-border');
         }
       }
 
-      $(document).on("mouseup", function () {
-        mousedown = false;
-      });
+      function findItems() {
+        $('.highlight').removeClass('highlight');
+        $('.highlight-border').removeClass('highlight-border');
 
-      $(document).on("mousedown", ".search-button", function () {
-        mousedown = true;
-        $scope.fitContent(); // Fit content before search
-        searchItems();
-      });
+        let searchName = $('.lFinder-field').val();
+        foundItems = 0;
+        actualItem = 0;
+        itemList = [];
+        itemHtmlList = [];
+        let graphCells = graph.getCells();
+        let htmlCells = $('.io-virtual-content');
+        //console.log("graphCells: ", graphCells, "htmlCells: ", htmlCells);
 
-      $(document).on("keypress", ".search-field", function (e) {
-        console.log(e);
-        if (e.which === 13) {
-          console.log("Enter key");
-          $scope.fitContent(); // Fit content before search
-          searchItems();
-        }
-      });
-
-      function searchItems() {
-        let _sWord = $('.search-field').val(); // OK
-        let _cell = $('.io-virtual-content .header label');
-        let _len = _cell.length;
-
-        if (_sWord.length > 0) {
-          if (_len > 0) {
-            for (let i = 0; i < _len; i++) {
-              if (_cell[i].innerText.includes(_sWord)) {
-                _cell[i].classList.add('highlight');
-                setTimeout(function () {
-                  _cell[i].classList.remove('highlight');
-                }, 1000);
-              }
+        //-- label filter
+        for (let i=0; i<graphCells.length; i++){
+          //console.log("graphCells["+i+"]: ", graphCells[i].attributes.blockType);
+          if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
+              graphCells[i].attributes.blockType === 'basic.outputLabel'){
+            if (searchName.length > 0 && graphCells[i].attributes.data.name.includes(searchName)) {
+              itemList.push(graphCells[i]);
+              itemHtmlList.push(htmlCells[i]);
             }
           }
         }
+        foundItems = itemHtmlList.length;
+        if (foundItems > 0){
+          for (let n=0; n<foundItems; n++){
+            itemHtmlList[n].childNodes[1].childNodes[1].classList.add('highlight-border');
+          }
+        }
+        $('.items-found').html(actualItem + "/" + foundItems);
+        nextItem();
       }
+
+      function prevItem() {
+        $('.highlight').removeClass('highlight');
+        actualItem--;
+        if (foundItems === 0) {
+          actualItem = 0;
+        } 
+        else {
+          if (actualItem < 1) {
+            actualItem = foundItems;
+          }
+          showMatchedItem();
+        }
+        $('.items-found').html(actualItem + "/" + foundItems);
+      }
+
+      function nextItem() {
+        $('.highlight').removeClass('highlight');
+        actualItem++;
+        if (foundItems === 0) {
+          actualItem = 0;
+        } 
+        else {
+          if (actualItem > foundItems) {
+            actualItem = 1;
+          }
+          showMatchedItem();
+        }
+        $('.items-found').html(actualItem + "/" + foundItems);
+      }
+
+      function showMatchedItem() {
+        itemHtmlList[actualItem -1].childNodes[1].childNodes[1].classList.add('highlight');
+      }
+      //-- END LABEL-FINDER functions
 
       /* Global mousePosition */
       let mousePosition = { x: 0, y: 0 };
