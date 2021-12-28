@@ -155,29 +155,35 @@ angular
     //-- Packages declared as obsoletes
     this.APIO_PKG_SYSTEM_VERSION = "1.1.2";
 
-    //-- Set the apio command. It consist of two parts. The first is for defining and
-    //-- exporting the APIO_HOME_DIR environment variable. It is used by apio to know where
-    //-- is located its installation. The second part is the apio executable itself
+    //-- Get the System PATH
+    this.PATH = process.env.PATH;
+
+    //-- Set the apio command. It consist of two parts. The first is for defining two
+    //-- environment variables: APIO_HOME_DIR and PATH
+    //--    * APIO_HOME_DIR: It is used by apio to know where is located its installation.
+    //--    * PATH: The PATH env variable (The virtuan env path is added in the begining) 
     //--
-    //-- EXAMPLE FOR Linux/MAC:
-    //-- APIO_CMD = export APIO_HOME_DIR="/home/obijuan/.icestudio/apio"; "/home/obijuan/.icestudio/venv/bin/apio"
+    //-- The second part is the apio executable itself
+    //--
+    //-- EXAMPLE FOR Linux/MAC: (split in several lines)
+    //-- APIO_CMD = APIO_HOME_DIR="/home/obijuan/.icestudio/apio" 
+    //              PATH="/home/obijuan/.icestudio/venv/bin:$PATH" 
+    //              "/home/obijuan/.icestudio/venv/bin/apio"
     //-- NOTICE THE paths are quoted! This is needed because there can be path with spaces in their folder names
 
-    //-- EXAMPLE FOR Windows:
-    //-- APIO_CMD = set APIO_HOME_DIR="c:\Users\Obijuan\.icestudio\apio"& "c:\Users\Obijuan\.icestudio\venv\bin\apio"
+    //-- EXAMPLE FOR Windows: (split in several lines)
+    //-- APIO_CMD = set APIO_HOME_DIR="c:\Users\Obijuan\.icestudio\apio"& 
+    //              set PATH=c:\Users\Obijuan\.icestudio\venv\bin\apio;%PATH%&
+    //              "C:\Users\Obijuan\.icestudio\venv\Scripts\apio.exe"
 
     if (this.WIN32) {
       //-- Apio execution command for Windows machines
 
+      //-- APIO_HOME_DIR env variable
       this.APIO_CMD =
-        "set APIO_HOME_DIR=" +
-        '"' +
-        this.APIO_HOME_DIR +
-        '"' +
-        "& " +
-        '"' +
-        this.ENV_APIO +
-        '"';
+        'set APIO_HOME_DIR="' + this.APIO_HOME_DIR + '"& ' +
+        'set PATH=' + this.ENV_BIN_DIR + ';' + this.PATH + '& ' +
+        '"' + this.ENV_APIO + '"';
 
       //-- IMPORTANT!!! THERE SHOULD BE NO SPACE between APIO_HOME_DIR and the '&' operator in Windows!!
       //-- This a very difficult ERROR TO SPOT:
@@ -188,12 +194,15 @@ angular
       //-- Apio execution command for Linux/MAC machines
 
       this.APIO_CMD =
-        'export APIO_HOME_DIR="' +
-        this.APIO_HOME_DIR +
-        '"; ' +
-        '"' +
-        this.ENV_APIO +
-        '"';
+        //-- APIO_HOME_DIR env variable
+        'APIO_HOME_DIR="' + this.APIO_HOME_DIR + '" ' +
+
+        //-- Add the virtual env PATH in the begining of the PATH env. variable
+        'PATH="' + this.ENV_BIN_DIR + ':' + this.PATH  + '" ' +
+
+        //-- APIO executable
+        '"' + this.ENV_APIO + '"';
+        
     }
 
     this.BUILD_DIR_OBJ = new nodeTmp.dirSync({
