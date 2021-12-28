@@ -61,13 +61,18 @@ angular.module('icestudio')
       return label;
     };
 
+    /* For easy keycode identification: https://keycode.info/ */
+
     var shortcuts = {
 
+      showToolBox: {
+        linux: { label: 'Ctrl+Space', ctrl: true, key: 32 },
+        mac: { label: '⌘+A', meta: true, key: 32 }
+      },
       showPopupSearch: {
         linux: { label: 'Ctrl+F', ctrl: true, key: 70 },
         mac: { label: '⌘+F', meta: true, key: 70 }
       },
-
       newProject: {
         linux: { label: 'Ctrl+N', ctrl: true, key: 78 },
         mac: { label: '⌘+N', meta: true, key: 78 }

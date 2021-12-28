@@ -167,8 +167,8 @@ angular
         setTimeout(function () {
           $("#main-icestudio-load-wrapper").addClass("loaded");
           $("#main-icestudio-load-wrapper").removeClass("fade-loaded");
-        }, 1000);
-      }, 1000);
+        }, 3000);
+      }, 4000);
     });
   });
 

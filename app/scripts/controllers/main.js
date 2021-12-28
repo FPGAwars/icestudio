@@ -84,12 +84,5 @@ angular
     tools.initializePluginManager(icmToggleMenu);
 
     /***************************** */
-const sandbox = document.querySelectorAll("joint-paper");
-console.log(sandbox);
-   /* sandbox.addEventListener("dblclick", event => {
-  console.log("Double-click detected")
-  // Double-click detected
-});*/
-
   });
 

@@ -1343,6 +1343,11 @@ angular
       // -- Search Pop-up
       shortcuts.method("showPopupSearch", showPopupSearch);
 
+
+      // -- Show Floating toolbox
+      shortcuts.method("showToolBox", showToolBox);
+
+
       shortcuts.method("removeSelected", removeSelected);
       shortcuts.method("back", function () {
         if (graph.isEnabled()) {
@@ -1367,8 +1372,7 @@ angular
       });
 
       function showPopupSearch() {
-        console.log("CTRL+F pressed");
-        if ($('.popup-search').hasClass('lifted')){
+        if ($('.popup-search').hasClass('lifted')) {
           $('.popup-search').removeClass('lifted');
           $('.search-field').focus();
         }
@@ -1383,38 +1387,113 @@ angular
 
       $(document).on("mousedown", ".search-button", function () {
         mousedown = true;
-        console.log("search clicked");
         $scope.fitContent(); // Fit content before search
         searchItems();
       });
 
       $(document).on("keypress", ".search-field", function (e) {
         console.log(e);
-        if (e.which === 13){
+        if (e.which === 13) {
           console.log("Enter key");
           $scope.fitContent(); // Fit content before search
           searchItems();
-        } 
+        }
       });
 
-      function searchItems() {  
+      function searchItems() {
         let _sWord = $('.search-field').val(); // OK
         let _cell = $('.io-virtual-content .header label');
         let _len = _cell.length;
 
         if (_sWord.length > 0) {
           if (_len > 0) {
-            for (let i=0; i<_len; i++) {
+            for (let i = 0; i < _len; i++) {
               if (_cell[i].innerText.includes(_sWord)) {
                 _cell[i].classList.add('highlight');
-                setTimeout(function(){
+                setTimeout(function () {
                   _cell[i].classList.remove('highlight');
                 }, 1000);
               }
             }
-          } 
-        } 
-      } 
+          }
+        }
+      }
+
+      /* Global mousePosition */
+      let mousePosition = { x: 0, y: 0 };
+      $(document).on("mousemove", function (e) {
+        mousePosition.x = e.pageX;
+        mousePosition.y = e.pageY;
+      });
+
+      /* START -- toolbox functions */
+      let toolbox = {
+        dom: false,
+        isOpen: false,
+        icons: false
+      };
+
+      function showToolBox() {
+        if (toolbox.dom === false) {
+          toolbox.dom = $('#iceToolbox');
+          toolbox.icons = $('.iceToolbox--item');
+
+
+        }
+        if (toolbox.isOpen) {
+          toolbox.isOpen = false;
+          toolbox.dom.removeClass('opened');
+
+        } else {
+          toolbox.isOpen = true;
+          let posY = mousePosition.y - 110;
+          let posX = mousePosition.x - 80;
+          const winW = window.innerWidth;
+          const winH = window.innerHeight;
+          const topMenuH = $('#menu').height();
+          const bottomMenuH = $('.footer.ice-bar').height();
+          const offsetY = winH - (bottomMenuH + 220);
+          const offsetX = winW - 160;
+          if (posX < 0) {
+            posX = 0;
+          } else if (posX > offsetX) {
+            posX = offsetX - 1;
+          }
+          if (posY < topMenuH) {
+            posY = topMenuH + 1;
+          } else if (posY > offsetY) {
+            console.log('Limite Y');
+            posY = offsetY - 1;
+          }
+
+          toolbox.dom.css('top', `${posY}px`);
+          toolbox.dom.css('left', `${posX}px`);
+
+          toolbox.dom.addClass('opened');
+        }
+      }
+      $(document).delegate('.js-shortcut--action', 'click', function (e) {
+        e.preventDefault();
+
+        let target = $(this).data('item');
+        switch (target) {
+          case 'input': project.addBasicBlock('basic.input'); break;
+          case 'output': project.addBasicBlock('basic.output'); break;
+          case 'labelInput': project.addBasicBlock('basic.inputLabel'); break;
+          case 'labelOutput': project.addBasicBlock('basic.outputLabel'); break;
+          case 'memory': project.addBasicBlock('basic.memory'); break;
+          case 'code': project.addBasicBlock('basic.code'); break;
+          case 'information': project.addBasicBlock('basic.info'); break;
+          case 'constant': project.addBasicBlock('basic.constant'); break;
+          case 'verify': $scope.verifyCode(); break;
+          case 'build': $scope.buildCode(); break;
+          case 'upload': $scope.uploadCode(); break;
+        }
+        return false;
+      });
+
+
+      /* END -- toolbox functions */
 
       function takeSnapshot() {
         win.capturePage(function (img) {

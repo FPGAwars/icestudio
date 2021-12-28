@@ -265,7 +265,7 @@ angular.module('icestudio')
                     minZoom: ZOOM_MIN,
                     maxZoom: ZOOM_MAX,
                     eventsListenerElement: targetElement,
-                   onZoom: function (scale) {
+                    onZoom: function (scale) {
                         state.zoom = scale;
                         // Close expanded combo
                         if (document.activeElement.className === 'select2-search__field') {
@@ -273,7 +273,7 @@ angular.module('icestudio')
                         }
                         updateCellBoxes();
                     },
-                   onPan: function (newPan) {
+                    onPan: function (newPan) {
                         state.pan = newPan;
                         graph.trigger('state', state);
                         updateCellBoxes();
@@ -328,7 +328,7 @@ angular.module('icestudio')
                     y: event.pageY
                 };
             });
-
+        
             selectionView.on('selection-box:pointerdown', function (/*evt*/) {
                 // Move selection to top view
                 if (hasSelection()) {
@@ -392,7 +392,6 @@ angular.module('icestudio')
                     }
                 }
             });
-
             paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
 
                 if (x && y && !checkInsideViewBox(cellView, x, y)) {
@@ -428,14 +427,14 @@ angular.module('icestudio')
 
                         $('body').addClass('waiting');
                         $rootScope.$broadcast('navigateProject', {
-                                update: breadcrumbsLength === 1,
-                                project: project,
-                                submodule: type,
-                                submoduleId: blockId
-                            });
-                            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-                            utils.rootScopeSafeApply();
-                        }
+                            update: breadcrumbsLength === 1,
+                            project: project,
+                            submodule: type,
+                            submoduleId: blockId
+                        });
+                        self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+                        utils.rootScopeSafeApply();
+                    }
                 }
 
             });
@@ -449,7 +448,7 @@ angular.module('icestudio')
                     y: y * state.zoom + state.pan.y
                 });
             }
-
+            
             paper.on('blank:pointerdown', function (evt, x, y) {
                 // Disable current focus
                 document.activeElement.blur();
@@ -473,6 +472,7 @@ angular.module('icestudio')
 
             paper.on('blank:pointerup', function (/*cellView, evt*/) {
                 self.panAndZoom.disablePan();
+               
             });
 
             paper.on('cell:mouseover', function (cellView, evt) {
@@ -678,7 +678,7 @@ angular.module('icestudio')
             }
 
             // Debounce `pointermove` handler to improve the performance
-           var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
+            var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {
                 var lowerBlock = findLowerBlock(upperBlock);
                 disableReplacedBlock(lowerBlock);
             }, 100);
@@ -740,7 +740,7 @@ angular.module('icestudio')
             var cells = graph.getCells();
 
             //_.each(cells, function (cell) {
-            for(var i=0, n=cells.length;i<n;i++){
+            for (var i = 0, n = cells.length; i < n; i++) {
                 if (cells[i].isLink()) {
                     paper.findViewByModel(cells[i]).update();
                 }
@@ -751,7 +751,7 @@ angular.module('icestudio')
             var cells = graph.getCells();
             profile.set('boardRules', rules);
 
-            for(var i=0, n=cells.length;i<n;i++){
+            for (var i = 0, n = cells.length; i < n; i++) {
                 if (!cells[i].isLink()) {
                     cells[i].attributes.rules = rules;
                     var cellView = paper.findViewByModel(cells[i]);
@@ -1284,8 +1284,8 @@ angular.module('icestudio')
         };
 
         this.isEnabled = function () {
-            if(typeof paper !== 'undefined' && paper !==null && paper !== false){
-            return paper.options.enabled;
+            if (typeof paper !== 'undefined' && paper !== null && paper !== false) {
+                return paper.options.enabled;
             }
             return false;
         };
@@ -1445,17 +1445,17 @@ angular.module('icestudio')
                                     if (String(opt.designPinout[opin].name) === String(pins[i].name)) {
 
                                         replaced = true;
-                                    }else{
-                                        let prefix= String(pins[i].name).replace(/[0-9]/g, '');
-                                        if(String(opt.designPinout[opin].name) === prefix){
+                                    } else {
+                                        let prefix = String(pins[i].name).replace(/[0-9]/g, '');
+                                        if (String(opt.designPinout[opin].name) === prefix) {
 
-                                            replaced=true;
+                                            replaced = true;
                                         }
 
 
                                     }
 
-                                    if(replaced===true){
+                                    if (replaced === true) {
                                         pins[i].name = opt.designPinout[opin].name;
                                         pins[i].value = opt.designPinout[opin].value;
                                         opin = opt.designPinout.length;
