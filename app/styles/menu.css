@@ -225,3 +225,22 @@ margin-left:15px;
 .shortcut-toolbox--item:last-child{
 margin-right:0;
 }
+.navbar{
+
+    min-height: 28px;
+}
+
+
+
+.navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 0px;
+}
+@media (min-width: 768px){
+.navbar-nav>li>a {
+    padding-top: 13px;
+    padding-bottom: 10px;
+    line-height:0;
+}
+}
