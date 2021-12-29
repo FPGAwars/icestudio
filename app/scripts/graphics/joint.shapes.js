@@ -1030,15 +1030,15 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
   initialize: function () {
     _.bindAll(this, "updateBox");
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+    let modelId=this.model.get('id');
+    this.id = sha1(modelId).toString().substring(0, 6);
+    let comboId = "combo" + this.id;
+    let virtual = this.model.get("data").virtual || this.model.get("disabled");
 
-    this.id = sha1(this.model.get("id")).toString().substring(0, 6);
-    var comboId = "combo" + this.id;
-    var virtual = this.model.get("data").virtual || this.model.get("disabled");
-
-    var selectCode = "";
-    var selectScript = "";
-    var data = this.model.get("data");
-    var name = data.name + (data.range || "");
+    let selectCode = "";
+    let selectScript = "";
+    let data = this.model.get("data");
+    let name = data.name + (data.range || "");
 
     if (data.pins) {
       for (var i in data.pins) {
@@ -1062,7 +1062,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     this.$box = $(
       joint.util.template(
         '\
-      <div class="io-block">\
+      <div class="io-block" data-blkid="'+modelId+'">\
         <div class="io-virtual-content' +
         (virtual ? "" : " hidden") +
         '">\

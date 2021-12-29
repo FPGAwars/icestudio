@@ -1426,7 +1426,7 @@ angular
         itemHtmlList = [];
         let graphCells = graph.getCells();
         let htmlCells = $('.io-virtual-content');
-        //console.log("graphCells: ", graphCells, "htmlCells: ", htmlCells);
+        console.log("graphCells: ", graphCells, "htmlCells: ", htmlCells);
 
         //-- label filter
         for (let i=0; i<graphCells.length; i++){
