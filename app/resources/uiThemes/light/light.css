@@ -261,14 +261,19 @@
 }
 
 .highlight{
-    scale: 2 !important;
-    background: #ffff00 !important;
+  border: 6px solid rgba(255,0,0,1) !important;
+  border-radius: 13px;
+  width: 120px;
+  height: 64px !important;
+  position: relative;
+  top: -25px;
+  padding-top: 19px !important;
+  left: -13px
 }
-.highlight-border{
-  scale: 2 !important;
-  background: rgba(255,255,0,0.2);
-  border: 1px solid rgba(0,0,0,0.6);
+.greyedout{
+  opacity: 0.2;
 }
+
 .lFinder-popup{
   display: block;
   opacity: 1;

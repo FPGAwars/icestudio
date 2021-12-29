@@ -255,16 +255,19 @@
 }
 
 .highlight{
-    scale: 2 !important;
-    color: #000 !important;
-    background: #ffff00 !important;
+  border: 4px solid rgba(255,255,0,1) !important;
+  border-radius: 60px;
+  width: 120px;
+  height: 60px !important;
+  position: relative;
+  top: -22px;
+  padding-top: 18px !important;
+  left: -12px;
 }
-.highlight-border{
-  scale: 2 !important;
-  color: #fff;
-  background: rgba(255,255,0,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+.greyedout{
+  opacity: 0.2;
 }
+
 .lFinder-popup{
   display: block;
   opacity: 1;

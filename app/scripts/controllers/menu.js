@@ -1378,7 +1378,7 @@ angular
       });
 
       $(document).on("keypress", ".lFinder-field", function (e) {
-        if (e.which === 13 && !$('.popup-lFinder').hasClass('lifted')){
+        if (e.which === 13 && !$('.popup-lFinder').hasClass('lifted')) {
           $scope.fitContent(); // Fit content before search
           findItems();
         } 
@@ -1402,49 +1402,53 @@ angular
 
       //-- LABEL-FINDER functions
       function showLabelFinder() {
-        //console.log("CTRL+F pressed");
-        if ($('.lFinder-popup').hasClass('lifted')){
+        if ($('.lFinder-popup').hasClass('lifted')) { // Show Label-Finder
           $('.lFinder-popup').removeClass('lifted');
           $('.lFinder-field').focus();
-        }
-        else { // Hide PopUp
+        } else { // Hide Label-Finder
           $('.lFinder-popup').addClass('lifted');
           $('.lFinder-field').focusout();
           $('.highlight').removeClass('highlight');
-          $('.highlight-border').removeClass('highlight-border');
+          $('.greyedout').removeClass('greyedout');
         }
       }
 
       function findItems() {
         $('.highlight').removeClass('highlight');
-        $('.highlight-border').removeClass('highlight-border');
+        $('.greyedout').removeClass('greyedout');
 
         let searchName = $('.lFinder-field').val();
         foundItems = 0;
         actualItem = 0;
-        itemList = [];
-        itemHtmlList = [];
+        itemList = []; // List with "json" elements of blocks
+        itemHtmlList = []; // List with "html" elemnts of blocks
         let graphCells = graph.getCells();
         let htmlCells = $('.io-virtual-content');
-        console.log("graphCells: ", graphCells, "htmlCells: ", htmlCells);
+        let htmlIoBlocks = $('.io-block'); // htmlCells parent with "blkid"
 
-        //-- label filter
-        for (let i=0; i<graphCells.length; i++){
-          //console.log("graphCells["+i+"]: ", graphCells[i].attributes.blockType);
+        //-- label filter + indexing
+        for (let i = 0; i < graphCells.length; i++) {
           if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
-              graphCells[i].attributes.blockType === 'basic.outputLabel'){
+              graphCells[i].attributes.blockType === 'basic.outputLabel') {
             if (searchName.length > 0 && graphCells[i].attributes.data.name.includes(searchName)) {
-              itemList.push(graphCells[i]);
-              itemHtmlList.push(htmlCells[i]);
+              for (let j = 0; j < htmlIoBlocks.length; j++) {
+                if (htmlIoBlocks[j].dataset.blkid === graphCells[i].attributes.id) {
+                  itemList.push(graphCells[i]);
+                  itemHtmlList.push(htmlCells[j]);
+                }
+              }
             }
           }
         }
         foundItems = itemHtmlList.length;
-        if (foundItems > 0){
-          for (let n=0; n<foundItems; n++){
-            itemHtmlList[n].childNodes[1].childNodes[1].classList.add('highlight-border');
+        if (foundItems > 0) {
+          for (let k = 0; k < htmlCells.length; k++) {
+            htmlCells[k].classList.add('greyedout');
           }
-        }
+          for (let n = 0; n < foundItems; n++) {
+            itemHtmlList[n].classList.remove('greyedout'); // OK
+          }
+        } 
         $('.items-found').html(actualItem + "/" + foundItems);
         nextItem();
       }
@@ -1480,7 +1484,7 @@ angular
       }
 
       function showMatchedItem() {
-        itemHtmlList[actualItem -1].childNodes[1].childNodes[1].classList.add('highlight');
+        itemHtmlList[actualItem -1].querySelector('.header').classList.add('highlight');
       }
       //-- END LABEL-FINDER functions
 
