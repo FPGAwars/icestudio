@@ -1369,6 +1369,12 @@ angular
           event.preventDefault();
         }
       });
+      
+      //-- close floating toolbox with x button
+      $(document).on("mousedown", ".closeToolbox-button", function () {
+        mousedown = true;                         
+        showToolBox();  // close toolbox 
+      });   
 
       //-- LABEL-FINDER POPUP
       $(document).on("mousedown", ".lFind-button", function () {

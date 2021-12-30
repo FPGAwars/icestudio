@@ -32,7 +32,8 @@
   </div>
 
   <div id="iceToolbox">
-    <ul  class="dropdown-menu">
+    <ul  class="dropdown-menu">    
+      <div class="closeToolbox-button"></div>
       <li>
         <a href=""  class="iceToolbox--item js-shortcut--action" data-item="input">
           <div class="marker marker-blue"></div>{{ 'Input' | translate }}
@@ -138,9 +139,9 @@
       </div>
       {{ common.selectedBoard.info.label }}
       <div class="shortcut-toolbox">
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" data-item="verify" ><i class="icon--verify"></i></a>
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" data-item="build"><i class="icon--build"></i></a>
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" data-item="upload"><i class="icon--upload"></i></a>  
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Verify' | translate }}" tooltip-append-to-body="true" data-item="verify" ><i class="icon--verify"></i></a>
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Build' | translate }}" tooltip-append-to-body="true" data-item="build"><i class="icon--build"></i></a>
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Upload' | translate }}" tooltip-append-to-body="true" data-item="upload"><i class="icon--upload"></i></a>  
     </div>
     </div>
   </div>

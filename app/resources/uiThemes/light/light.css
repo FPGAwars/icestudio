@@ -359,6 +359,18 @@
   content: url(/resources/images/icons/light_right-arrow.svg);
 }
 
+/* toolbox */
+.closeToolbox-button{
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 5px;
+  content: url(/resources/images/icons/dark_close.svg);
+  top: 5px;
+  text-align: center;
+  line-height: 30px;
+}
+
 /* Colors */
 .color-indianred        {
  background: rgba(205,92,92,0.6)  !important;
