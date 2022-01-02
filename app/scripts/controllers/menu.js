@@ -1432,9 +1432,9 @@ angular
 
       // option -> case sensitive
       $(document).on("mousedown", ".lFinder-case--option", function (){
-        //console.log("option_case: " + option_case);
-        option_case = !option_case;
-        if (option_case === true) {
+        //console.log("optionCase: " + optionCase);
+        optionCase = !optionCase;
+        if (optionCase === true) {
           $('.lFinder-case--option').addClass('on');
         } else {
           $('.lFinder-case--option').removeClass('on');
@@ -1443,9 +1443,9 @@ angular
 
       // option -> exact
       $(document).on("mousedown", ".lFinder-exact--option", function (){
-        //console.log("option_exact: " + option_exact);
-        option_exact = !option_exact;
-        if (option_exact === true) {
+        //console.log("optionExact: " + optionExact);
+        optionExact = !optionExact;
+        if (optionExact === true) {
           $('.lFinder-exact--option').addClass('on');
         } else {
           $('.lFinder-exact--option').removeClass('on');
@@ -1478,8 +1478,8 @@ angular
       let actualItem = 0;
       let itemList = [];
       let itemHtmlList = [];
-      let option_case = false;
-      let option_exact = false;
+      let optionCase = false;
+      let optionExact = false;
       let advanced = false;
 
       //-- LABEL-FINDER functions
@@ -1508,14 +1508,14 @@ angular
         $('.greyedout').removeClass('greyedout');
 
         let searchName = $('.lFinder-field').val();
-        let re_name = new RegExp(searchName, 'i'); // contains + case insensitive (less restrictive)
+        let reName = new RegExp(searchName, 'i'); // contains + case insensitive (less restrictive)
         
-        if (option_case === true && option_exact === false) { // contains + case sensitive
-          re_name = new RegExp (searchName);
-        } else if (option_case === false && option_exact === true){ // exact + case insensitive
-          re_name = new RegExp ("\\b"+searchName+"\\b", 'i');
-        } else if (option_case === true && option_exact === true){ // exact + case sensitive (most restrictive)
-          re_name = new RegExp ("\\b"+searchName+"\\b");
+        if (optionCase === true && optionExact === false) { // contains + case sensitive
+          reName = new RegExp (searchName);
+        } else if (optionCase === false && optionExact === true){ // exact + case insensitive
+          reName = new RegExp ("\\b"+searchName+"\\b", 'i');
+        } else if (optionCase === true && optionExact === true){ // exact + case sensitive (most restrictive)
+          reName = new RegExp ("\\b"+searchName+"\\b");
         }
         
         foundItems = 0;
@@ -1531,7 +1531,7 @@ angular
           if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
               graphCells[i].attributes.blockType === 'basic.outputLabel') {
             if (searchName.length > 0 &&
-                  graphCells[i].attributes.data.name.match(re_name) !== null) {           
+                  graphCells[i].attributes.data.name.match(reName) !== null) {           
               for (let j = 0; j < htmlIoBlocks.length; j++) {
                 if (htmlIoBlocks[j].dataset.blkid === graphCells[i].attributes.id) {
                   itemList.push(graphCells[i]);
@@ -1614,18 +1614,18 @@ angular
 
       //-- dragabble toolbox 
       $(document).on("mousedown", "#iceToolbox .title-bar", function () {
-        mousedown_tb = true;
+        mouseDownTB = true;
       });
 
       $(document).on("mouseup", function () {
-        mousedown_tb = false;
+        mouseDownTB = false;
       });
 
       $(document).on("mousemove", function (e) {
         mousePosition.x = e.pageX;
         mousePosition.y = e.pageY;
 
-        if (mousedown_tb === true){
+        if (mouseDownTB === true){
           let posY = mousePosition.y - 40;
           let posX = mousePosition.x - 80;
           const winW = window.innerWidth;
@@ -1651,7 +1651,7 @@ angular
       });
 
       //-- Global mousePosition & drag vars
-      let mousedown_tb = false;
+      let mouseDownTB = false;
       let mousePosition = { x: 0, y: 0 };
       let toolbox = {
         dom: false,
