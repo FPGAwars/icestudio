@@ -274,18 +274,21 @@
   opacity: 0.2;
 }
 
+/* Label-Finder */
 .lFinder-popup{
   display: block;
   opacity: 1;
   position: fixed;
-  width: 255px;
-  height: 40px;
-  background: rgba(124,207,244,1);
+  width: 470px;
+  height: 42px;
+  background: #f5f6f7;
   top: 40px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
-  border-radius: 20px;
+  border: 1px solid rgba(220,220,220,1);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
   animation: fadeIn 0.2s ease;
 }
 .lifted{
@@ -297,78 +300,315 @@
   0%    {opacity: 0;
          top: -100px;}
   100%  {opacity: 1;
-         top: 40px;  }
+         top: 42px;  }
 }
 @keyframes fadeOut{
   0%    {opacity: 1;
-         top: 40px;}
+         top: 42px;}
   100%  {opacity: 0;
          top: -100px;  }
 }
-.lFinder-field{
+.lFinder-advanced--toggle {
+  position: absolute;
+  width: 8px;
+  height: 30px;
+  top: 5px;
+  left: 10px;
+  content: url(/resources/images/icons/light_chevron-right.svg);
+  opacity: 0.3;
+}
+.lFinder-advanced--toggle:hover{
+  opacity: 1;
+}
+.lFinder-advanced--toggle.on{
+  transform: rotate(90deg);
+}
+.lFinder-case--option {
+  position: absolute;
+  width: 20px;
+  height: 30px;
+  top: 5px;
+  left: 40px;
+  content: url(/resources/images/icons/light_case-sensitive.svg);
+  opacity: 0.3;
+}
+.lFinder-case--option.on {
+  opacity: 1;
+}
+.lFinder-exact--option {
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  top: 5px;
+  left: 75px;
+  content: url(/resources/images/icons/light_exact-match.svg);
+  opacity: 0.3;
+}
+.lFinder-exact--option.on {
+  opacity: 1;
+}
+.lFinder-field {
   position: absolute;
   width: 155px;
   height: 30px;
   top: 5px;
-  left: 5px;
-  background: rgba(250,250,250,1);
-  border: 0px solid rgba(0,0,0,0.1);
-  border-radius: 15px;
+  left: 105px;
+  background: rgba(255,255,255,1);
+  border: 1px solid #eee;
+  border-radius: 4px;
   color: rgba(0,0,0,0.75);
   padding-left: 8px;
   line-height: 30px;
 }
 .lFinder-field:focus{
-  border-radius: 15px;
+  border-radius: 4px;
   outline: none;
 }
 .lFinder-field::placeholder{
-  color: rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.25);
 }
-.items-found{
+.items-found {
   position: absolute;
   line-height: 30px;
   top: 5px;
-  left: 125px;
-  color: rgba(0,0,0,0.75);
+  left: 230px;
+  color: rgba(30,30,30,0.75);
 }
-.lFind-button{
+.lFinder-find {
   position: absolute;
-  width: 30px;
+  width: 80px;
   height: 30px;
-  right: 5px;
-  content: url(/resources/images/icons/light_find.svg);
+  left: 360px;
   top: 5px;
   text-align: center;
   line-height: 30px;
+  color: #333;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  opacity: 1;
+  background: #eee0;
 }
-.lFind-prev{
+.lFinder-find:hover {
+  opacity: 1;
+  background: #eeef;
+}
+.lFinder-prev {
   position: absolute;
   width: 30px;
   height: 30px;
   top: 5px;
-  right: 65px;
+  left: 265px;
+  color: #fff;
+  line-height: 30px;
+  border: 0px solid #fff;
+  border-radius: 4px;
+  text-align: center;
+  opacity: 0.3;
+  background: rgba(220,220,220,0);
   content: url(/resources/images/icons/light_left-arrow.svg);
 }
-.lFind-next{
+.lFinder-prev:hover {
+  opacity: 1;
+}
+.lFinder-next {
   position: absolute;
   width: 30px;
   height: 30px;
   top: 5px;
-  right: 35px;
+  left: 300px;
+  color: #fff;
+  line-height: 30px;
+  border: 0px solid #fff;
+  border-radius: 4px;
+  text-align: center;
+  opacity: 0.3;
+  background: rgba(220,220,220,0);
   content: url(/resources/images/icons/light_right-arrow.svg);
+}
+.lFinder-next:hover {
+  opacity: 1;
+}
+.lFinder-close {
+  position: absolute;
+  width: 10px;
+  height: 30px;
+  top: 0px;
+  right: 10px;
+  content: url(/resources/images/icons/light_cross.svg);
+  opacity: 0.3;
+}
+.lFinder-close:hover {
+  opacity: 1;
+}
+.lFinder-advanced {
+  position: relative;
+  overflow: hidden;
+  width: 470px;
+  height: 0px;
+  top: 45px;
+  left: -1px;
+  background: #f5f6f7;
+  border: 1px solid rgba(220,220,220,1);
+  border-radius: 4px;
+  opacity: 0;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+  animation: fadeOut_adv 0.2s ease;
+}
+.lFinder-advanced.show{
+  height: 77px;
+  opacity: 1;
+  animation: fadeIn_adv 0.2s ease;
+}
+@keyframes fadeIn_adv{
+  0%    {opacity: 0;
+         height: 0px;}
+  100%  {opacity: 1;
+         height: 75px;  }
+}
+@keyframes fadeOut_adv{
+  0%    {opacity: 1;
+         height: 75px;}
+  100%  {opacity: 0;
+         height: 0px;  }
+}
+.lFinder-name {
+  position: absolute;
+  width: 75px;
+  height: 30px;
+  left: 10px;
+  top: 5px;
+  color: rgba(30,30,30,0.5);
+  text-align: right;
+  line-height: 30px;
+}
+.lFinder-name--field {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  top: 5px;
+  left: 90px;
+  background: rgba(255,255,255,1);
+  border: 1px solid #eee;
+  border-radius: 4px;
+  color: rgba(0,0,0,0.75);
+  padding-left: 8px;
+  line-height: 30px;
+}
+.lFinder-name--field:focus{
+  border-radius: 4px;
+  outline: none;
+}
+.lFinder-name--field::placeholder{
+  color: rgba(0,0,0,0.25);
+}
+.lFinder-color {
+  position: absolute;
+  width: 75px;
+  height: 30px;
+  top: 40px;
+  left: 10px;
+  text-align: right;
+  color: rgba(30,30,30,0.5);
+  line-height: 30px;
+}
+.lFinder-color--dropdown {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  left: 90px;
+  top: 40px;
+  line-height: 30px;
+  border: 1px solid #eee !important;
+  background: rgba(255,255,255,1) !important;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+.lFinder-color--dropdown:focus {
+  outline: none;
+  box-shadow: none;
+}
+.lFinder-replace--name {
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  background: rgba(220,220,220,0);
+  opacity: 1;
+  color: #333;
+  line-height: 30px;
+  text-align: center;
+  left: 245px;
+  top: 5px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.lFinder-replace--name:hover{
+  opacity: 1;
+  background: #eeef;
+}
+.lFinder-replace--color {
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  background: rgba(220,220,220,0);
+  opacity: 1;
+  color: #333;
+  line-height: 30px;
+  text-align: center;
+  left: 245px;
+  top: 40px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.lFinder-replace--color:hover {
+  opacity: 1;
+  background: #eeef;
+}
+.lFinder-replace--both {
+  position: absolute;
+  width: 80px;
+  height: 65px;
+  right: 20px;
+  top: 5px;
+  text-align: center;
+  line-height: 20px;
+  color: #333;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: rgba(220,220,220,0);
+  opacity: 1;
+  padding-top: 12px;
+}
+.lFinder-replace--both:hover {
+  opacity: 1;
+  background: #eeef;
 }
 
 /* toolbox */
+#iceToolbox .title-bar{
+  position: relative;
+  width: 100%;
+  height: 30px;
+  border-radius: 4px;
+  color: #333;
+  line-height: 26px;
+  padding-left: 10px;
+}
 .closeToolbox-button{
   position: absolute;
-  width: 16px;
-  height: 16px;
-  right: 5px;
-  content: url(/resources/images/icons/dark_close.svg);
-  top: 5px;
+  width: 10px;
+  height: 10px;
+  right: 8px;
+  content: url(/resources/images/icons/light_cross.svg);
+  top: 8px;
   text-align: center;
   line-height: 30px;
+  opacity: 0.3;
+}
+.closeToolbox-button:hover{
+  opacity: 1;
+}
+#iceToolbox.opened .dropdown-menu{
+  margin-top: 25px;
 }
 
 /* Colors */
