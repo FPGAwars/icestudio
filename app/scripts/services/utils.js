@@ -356,23 +356,6 @@ angular.module('icestudio')
       
       console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
-      //-- Get the extra python packages to install
-      let extraPackages = _package.apio.extras || [];
-
-      //-- Get the pip string with the version
-      //-- Stable: "==0.6.0"
-      //-- Latest stable and dev: ""
-      let versionString = "";
-
-      if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-        versionString = "==" + _package.apio.min;
-      }
-
-      //-- Get the apio package name:
-      //-- Stable and latest stable: "apio"
-      //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
-      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
-
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
 
@@ -381,6 +364,7 @@ angular.module('icestudio')
       const executable = coverPath(pipExec);
 
       //-- Get the pip parameters needed for installing apio
+      //-- The needed apio vesion is also added
       const params = this.getApioParameters();
 
       //-- Run the pip command!
@@ -409,6 +393,12 @@ angular.module('icestudio')
         //-- apio.min object!
         versionString = "==" + _package.apio.min;
       }  
+
+      //---- WARNING! It is just for testing in the current WIP
+      //-- TEMP FIX: Just for testing. Add a version to the "latest apio version"
+      if (common.APIO_VERSION === common.APIO_VERSION_LATEST_STABLE) {
+        versionString = "==" + "0.8.0";  //-- This version is WIRED! JUST FOR TESTING
+      }
 
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
