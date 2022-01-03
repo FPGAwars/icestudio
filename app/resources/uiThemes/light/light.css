@@ -359,6 +359,7 @@
   color: rgba(0,0,0,0.75);
   padding-left: 8px;
   line-height: 30px;
+  padding-right: 50px;
 }
 .lFinder-field:focus{
   border-radius: 4px;
@@ -529,7 +530,7 @@
 }
 .lFinder-replace--name {
   position: absolute;
-  width: 120px;
+  width: 100px;
   height: 30px;
   background: rgba(220,220,220,0);
   opacity: 1;
@@ -545,9 +546,9 @@
   opacity: 1;
   background: #eeef;
 }
-.lFinder-replace--color {
+.lFinder-change--color {
   position: absolute;
-  width: 120px;
+  width: 100px;
   height: 30px;
   background: rgba(220,220,220,0);
   opacity: 1;
@@ -559,26 +560,25 @@
   border-radius: 4px;
   border: 1px solid #eee;
 }
-.lFinder-replace--color:hover {
+.lFinder-change--color:hover {
   opacity: 1;
   background: #eeef;
 }
-.lFinder-replace--both {
+.lFinder-replace--all {
   position: absolute;
-  width: 80px;
-  height: 65px;
-  right: 20px;
+  width: 100px;
+  height: 30px;
+  right: 10px;
   top: 5px;
   text-align: center;
-  line-height: 20px;
+  line-height: 30px;
   color: #333;
   border: 1px solid #eee;
   border-radius: 4px;
   background: rgba(220,220,220,0);
   opacity: 1;
-  padding-top: 12px;
 }
-.lFinder-replace--both:hover {
+.lFinder-replace--all:hover {
   opacity: 1;
   background: #eeef;
 }
