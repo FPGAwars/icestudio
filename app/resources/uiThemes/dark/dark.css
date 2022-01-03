@@ -352,6 +352,7 @@
   color: rgba(255,255,255,0.75);
   padding-left: 8px;
   line-height: 30px;
+  padding-right: 50px;
 }
 .lFinder-field:focus{
   border-radius: 4px;
@@ -512,8 +513,7 @@
   border: 0px !important;
   background: rgba(35,35,35,1) !important;
   border-radius: 4px;
-  padding-left: 5px;
-  color: 
+  padding-left: 5px; 
 }
 .lFinder-color--dropdown:focus {
   outline: none;
@@ -521,7 +521,7 @@
 }
 .lFinder-replace--name {
   position: absolute;
-  width: 120px;
+  width: 100px;
   height: 30px;
   background: rgba(31,31,31,1);
   opacity: 0.5;
@@ -535,9 +535,9 @@
 .lFinder-replace--name:hover{
   opacity: 1;
 }
-.lFinder-replace--color {
+.lFinder-change--color {
   position: absolute;
-  width: 120px;
+  width: 100px;
   height: 30px;
   background: rgba(31,31,31,1);
   opacity: 0.5;
@@ -548,25 +548,24 @@
   top: 40px;
   border-radius: 4px;
 }
-.lFinder-replace--color:hover {
+.lFinder-change--color:hover {
   opacity: 1;
 }
-.lFinder-replace--both {
+.lFinder-replace--all {
   position: absolute;
-  width: 80px;
-  height: 65px;
-  right: 20px;
+  width: 100px;
+  height: 30px;
+  right: 10px;
   top: 5px;
   text-align: center;
-  line-height: 20px;
+  line-height: 30px;
   color: #fff;
   border: 0px solid #fff;
   border-radius: 4px;
   background: rgba(35,35,35,1);
   opacity: 0.5;
-  padding-top: 12px;
 }
-.lFinder-replace--both:hover {
+.lFinder-replace--all:hover {
   opacity: 1;
 }
 
