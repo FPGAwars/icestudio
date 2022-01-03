@@ -1463,12 +1463,12 @@ angular
         findItems();
       });
 
-      // Replace Color
+      // Change Color
       $(document).on("mousedown", ".lFinder-change--color", function (){
         changeLabelColor();
       });
 
-      // Replace both
+      // Replace All
       $(document).on("mousedown", ".lFinder-replace--all", function (){
         for (let i = 1; i <= foundItems; i++){
           actualItem = i;
@@ -1594,15 +1594,12 @@ angular
       function replaceLabelName() {
         let newName = $('.lFinder-name--field').val();
         if (actualItem > 0 && newName.length > 0) {
-
-// MOD_0
           let matchName = $('.lFinder-field').val();
           if (optionCase === false) {
             matchName = new RegExp (matchName, 'i'); // case insensitive
           }
           let actualName = itemHtmlList[actualItem -1].querySelector('.header label').innerHTML;
           newName = actualName.replace(matchName, newName);
-
           itemHtmlList[actualItem -1].querySelector('.header label').innerHTML = newName; // change visual "name"
           itemList[actualItem -1].attributes.data.name = newName; // change json "name"
         }
