@@ -1102,6 +1102,8 @@ angular
 
 
       //----------------------------------------------------------------
+      //-- MENU ENTRY: Tools/Toolchain/INstall (stable)
+      //----------------------------------------------------------------
       //-- Install the STABLE toolchain
       //-- It displays a messages and if the user click on ok it will
       //-- download the toolchain
@@ -1301,7 +1303,6 @@ angular
 
           //-- Install the apio packages
           //-- apio install <pkg>
-          //apioInstallSystem,  //-- Obsolete package
           apioInstallOssCadSuite,
           apioInstallYosys,
           apioInstallIce40,
@@ -1311,7 +1312,8 @@ angular
           apioInstallIcesprog,
           apioInstallDfu,
           apioInstallDrivers,
-          apioInstallScons,
+          //apioInstallSystem,  //-- Obsolete package
+          //apioInstallScons, //-- Obsolete package
 
           //-- Finish installation!
           installationCompleted

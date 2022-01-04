@@ -141,19 +141,19 @@ angular
     this.APIO_VERSION = this.APIO_VERSION_STABLE; //-- Default apio version: STABLE
 
     //-- APIO PACKAGES VERSION to install for the Stable Version
-    this.APIO_PKG_OSS_CAD_SUITE_VERSION = "0.0.3";
+    this.APIO_PKG_OSS_CAD_SUITE_VERSION = "0.0.7";
     this.APIO_PKG_DFU_VERSION = "2020.11.24";
     this.APIO_PKG_ECP5_VERSION = "2019.12.12";
     this.APIO_PKG_FUJPROG_VERSION = "2020.10.6";
-    this.APIO_PKG_ICE40_VERSION = "2019.12.11";
     this.APIO_PKG_ICESPROG_VERSION = "1.0.0";
+    this.APIO_PKG_ICE40_VERSION = "2019.12.11";
     this.APIO_PKG_IVERILOG_VERSION = "1.1.1";
-    this.APIO_PKG_SCONS_VERSION = "3.0.1";
     this.APIO_PKG_VERILATOR_VERSION = "1.0.0";
     this.APIO_PKG_YOSYS_VERSION = "2019.12.11";
 
     //-- Packages declared as obsoletes
     this.APIO_PKG_SYSTEM_VERSION = "1.1.2";
+    this.APIO_PKG_SCONS_VERSION = "3.0.1";
 
     //-- Get the System PATH
     this.PATH = process.env.PATH;
