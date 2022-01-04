@@ -1416,32 +1416,6 @@ angular
         //-- Perform the real installation
         utils.installOnlineApio(callback);
       }
-
-
-      //-------------------------------------------
-      //-- Install the apio system package
-      //-- It contains the lsusb and lsftdi tools
-      //-- (Obsolete package. Replaced by oss-cad-suite)
-      /*
-      function apioInstallSystem(callback) {
-
-        iceConsole.log("**** STEP: APIO install system");
-
-        //-- Package name to install
-        let pkgName = "system";
-
-        //-- When installing the stable version, specific stable
-        //-- versions of the toolchains are installed (not the latest)
-        //-- Ex. system@1.1.2 --> Install system package version 1.1.2
-        //-- Ex. system --> Install the latest available version
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_SYSTEM_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 25);
-        utils.apioInstall(pkgName, callback);
-      }*/
-
       
       //-------------------------------------------
       //-- Install the apio oss-cad-suite package
@@ -1462,41 +1436,6 @@ angular
         }
 
         updateProgress("apio install " + pkgName, 25);
-        utils.apioInstall(pkgName, callback);
-      }
-
-      //------------------------------------------------------------
-      //-- Install the apio Yosys package: 
-      //-- It contains the opensource hardware sinthesizer
-      //--
-      function apioInstallYosys(callback) {
-
-        iceConsole.log("**** STEP: APIO install yosys");
-
-        let pkgName = "yosys";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_YOSYS_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 30);
-        utils.apioInstall(pkgName, callback);
-      }
-
-      //-------------------------------------------------------------
-      //-- Install the toolchains for the ice40 FPGA family
-      //--
-      function apioInstallIce40(callback) {
-
-        iceConsole.log("**** STEP: APIO install ice40");
-
-        let pkgName = "ice40";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_ICE40_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 40);
         utils.apioInstall(pkgName, callback);
       }
 
@@ -1598,18 +1537,6 @@ angular
         } else {
           callback();
         }
-      }
-
-      //----------------------------------------------
-      //-- Install Scons: a building tool, similar to
-      //-- make, but in python
-      //--
-      function apioInstallScons(callback) {
-
-        iceConsole.log("**** STEP: APIO install scons");
-
-        updateProgress("apio install scons", 90);
-        utils.apioInstall("scons", callback);
       }
 
       //---------------------------------------------------
