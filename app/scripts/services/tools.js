@@ -1304,14 +1304,14 @@ angular
           //-- Install the apio packages
           //-- apio install <pkg>
           apioInstallOssCadSuite,
-          apioInstallYosys,
-          apioInstallIce40,
           apioInstallECP5,
           apioInstallIverilog,
           apioInstallFujprog,
           apioInstallIcesprog,
           apioInstallDfu,
           apioInstallDrivers,
+          //apioInstallYosys, //-- Obsolete package
+          //apioInstallIce40,  //-- Obsolete package
           //apioInstallSystem,  //-- Obsolete package
           //apioInstallScons, //-- Obsolete package
 
