@@ -1305,11 +1305,11 @@ angular
           //-- apio install <pkg>
           apioInstallOssCadSuite,
           apioInstallECP5,
-          apioInstallIverilog,
           apioInstallFujprog,
           apioInstallIcesprog,
           apioInstallDfu,
           apioInstallDrivers,
+          //apioInstallIverilog, //-- Obsolete package
           //apioInstallYosys, //-- Obsolete package
           //apioInstallIce40,  //-- Obsolete package
           //apioInstallSystem,  //-- Obsolete package
@@ -1453,23 +1453,6 @@ angular
         }
 
         updateProgress("apio install " + pkgName, 50);
-        utils.apioInstall(pkgName, callback);
-      }
-
-      //-------------------------------------------------------------
-      //--  Install the iverilog tool
-      //--  It is used for checking the generated verilog
-      function apioInstallIverilog(callback) {
-
-        iceConsole.log("**** STEP: APIO install iverilog");
-
-        let pkgName = "iverilog";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_IVERILOG_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 60);
         utils.apioInstall(pkgName, callback);
       }
 
