@@ -16,8 +16,8 @@ angular.module('icestudio')
     this.loadGeneric = loadGeneric;
     this.loadWire = loadWire;
 
-    this.editBasic = editBasic;
-
+    this.editBasic = editBasic; // this is double clicking
+    this.editBasicLabel = editBasicLabel; // this is from "label-Finder"
 
     //-- New
 
@@ -75,7 +75,7 @@ angular.module('icestudio')
             { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
             { value: 'red', label: gettextCatalog.getString('Red') },
             { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-            { value: 'mediumVioletRed', label: gettextCatalog.getString('MediumVioletRed') },
+            { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
             { value: 'coral', label: gettextCatalog.getString('Coral') },
             { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
             { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
@@ -740,7 +740,6 @@ angular.module('icestudio')
           return loadBasicOutputLabel(instance, disabled);
         case 'basic.inputLabel':
           return loadBasicInputLabel(instance, disabled);
-
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':
@@ -773,8 +772,6 @@ angular.module('icestudio')
         choices: common.pinoutInputHTML
       });
 
-
-
       return cell;
     }
 
@@ -789,6 +786,7 @@ angular.module('icestudio')
 
       var cell = new joint.shapes.ice.OutputLabel({
         id: instance.id,
+        blockColor: instance.blockColor,
         blockType: instance.type,
         data: instance.data,
         position: instance.position,
@@ -1096,8 +1094,6 @@ angular.module('icestudio')
         case 'basic.inputLabel':
           editBasicInputLabel(cellView, callback);
           break;
-
-
         case 'basic.constant':
           editBasicConstant(cellView);
           break;
@@ -1115,6 +1111,20 @@ angular.module('icestudio')
       }
     }
 
+    function editBasicLabel(cellView, newName, newColor){
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+
+      // Edit block
+      graph.startBatch('change');
+      var data = utils.clone(block.data);
+      data.name = newName;
+      data.blockColor = newColor;
+      cellView.model.set('data', data);
+      graph.stopBatch('change');
+      cellView.apply();
+      resultAlert = alertify.success(gettextCatalog.getString('Label updated'));
+    }
 
     function editBasicOutputLabel(cellView, callback) {
       var graph = cellView.paper.model;
@@ -1219,7 +1229,7 @@ angular.module('icestudio')
             graph.startBatch('change');
             var data = utils.clone(block.data);
             data.name = portInfo.name;
-            data.oldBlockColor = data.blockColor;
+            //data.oldBlockColor = data.blockColor;
             data.blockColor = color;
             data.virtual = virtual;
             data.clock = clock;
@@ -1332,7 +1342,7 @@ angular.module('icestudio')
             graph.startBatch('change');
             var data = utils.clone(block.data);
             data.name = portInfo.name;
-            data.oldBlockColor = data.blockColor;
+            //data.oldBlockColor = data.blockColor;
             data.blockColor = color;
             data.virtual = virtual;
             cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
