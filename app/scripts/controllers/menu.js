@@ -1378,34 +1378,28 @@ angular
       // key functions
       $('body').keydown(function(e){
         if (e.which === 13 && 
-            $('.lFinder-popup').hasClass('lifted') === false) { // enter key
-          //console.log("enter key");
+            $('.lFinder-popup').hasClass('lifted') === false) { // enter key -> Find items
           $scope.fitContent(); // Fit content before search
           findItems();
         }
         if (e.which === 37 && 
-            $('.lFinder-popup').hasClass('lifted') === false){ // left key
-          //console.log("left key");
+            $('.lFinder-popup').hasClass('lifted') === false){ // left key -> previous item selection
           prevItem();
         }
         if (e.which === 39 && 
-            $('.lFinder-popup').hasClass('lifted') === false){ // right key
-          //console.log("right key");
+            $('.lFinder-popup').hasClass('lifted') === false){ // right key -> next item selection
           nextItem();
+        }
+        if (e.which === 9 &&
+            $('.lFinder-popup').hasClass('lifted') === false){ // tab key -> show/hide advanced tab
+          toggleAdvancedTab();
         }
       });
       
       // advanced retractable button
       $(document).on("mousedown", ".lFinder-advanced--toggle", function (){
-        advanced = !advanced;
-        if (advanced === true) {
-          $('.lFinder-advanced--toggle').addClass('on');
-          $('.lFinder-advanced').addClass('show');
-        } else {
-          $('.lFinder-advanced--toggle').removeClass('on');
-          $('.lFinder-advanced').removeClass('show');
-        }
-      });
+        toggleAdvancedTab();
+      }); 
 
       // input finder
       $(document).on("input", ".lFinder-field", function () {
@@ -1421,7 +1415,6 @@ angular
 
       // find prev button
       $(document).on("mousedown", ".lFinder-prev", function () {
-        mousedown = true;
         prevItem();
       });
 
@@ -1432,7 +1425,6 @@ angular
 
       // option -> case sensitive
       $(document).on("mousedown", ".lFinder-case--option", function (){
-        //console.log("optionCase: " + optionCase);
         optionCase = !optionCase;
         if (optionCase === true) {
           $('.lFinder-case--option').addClass('on');
@@ -1443,7 +1435,6 @@ angular
 
       // option -> exact
       $(document).on("mousedown", ".lFinder-exact--option", function (){
-        //console.log("optionExact: " + optionExact);
         optionExact = !optionExact;
         if (optionExact === true) {
           $('.lFinder-exact--option').addClass('on');
@@ -1486,8 +1477,7 @@ angular
       let advanced = false;
 
       //-- LABEL-FINDER functions
-      function showLabelFinder () {
-
+      function showLabelFinder() {
         if ($('.lFinder-popup').hasClass('lifted')) { // Show Label-Finder
           $('.lFinder-popup').removeClass('lifted');
           $('.lFinder-field').focus();
@@ -1506,6 +1496,17 @@ angular
         }
       }
 
+      function toggleAdvancedTab() {
+        advanced = !advanced;
+        if (advanced === true) {
+          $('.lFinder-advanced--toggle').addClass('on');
+          $('.lFinder-advanced').addClass('show');
+        } else {
+          $('.lFinder-advanced--toggle').removeClass('on');
+          $('.lFinder-advanced').removeClass('show');
+        }
+      }
+
       function findItems() {
         $('.highlight').removeClass('highlight');
         $('.greyedout').removeClass('greyedout');
@@ -1515,9 +1516,9 @@ angular
         
         if (optionCase === true && optionExact === false) { // contains + case sensitive
           reName = new RegExp (searchName);
-        } else if (optionCase === false && optionExact === true){ // exact + case insensitive
+        } else if (optionCase === false && optionExact === true) { // exact + case insensitive
           reName = new RegExp ("\\b"+searchName+"\\b", 'i');
-        } else if (optionCase === true && optionExact === true){ // exact + case sensitive (most restrictive)
+        } else if (optionCase === true && optionExact === true) { // exact + case sensitive (most restrictive)
           reName = new RegExp ("\\b"+searchName+"\\b");
         }
         
@@ -1600,16 +1601,14 @@ angular
           }
           let actualName = itemHtmlList[actualItem -1].querySelector('.header label').innerHTML;
           newName = actualName.replace(matchName, newName);
-          itemHtmlList[actualItem -1].querySelector('.header label').innerHTML = newName; // change visual "name"
-          itemList[actualItem -1].attributes.data.name = newName; // change json "name"
+          graph.editLabelBlock(itemList[actualItem -1].attributes.id, newName, itemList[actualItem -1].attributes.data.blockColor);
         }
       }
 
       function changeLabelColor() {
         let newColor = $('.lFinder-color--dropdown').val();
         if (actualItem > 0 && newColor.length > 0) {
-          itemHtmlList[actualItem -1].classList.replace(itemHtmlList[actualItem -1].classList[1], 'color-'+newColor); // change visual "name"
-          itemList[actualItem -1].attributes.data.blockColor = newColor;
+          graph.editLabelBlock(itemList[actualItem -1].attributes.id, itemList[actualItem -1].attributes.data.name, newColor);
         }
       }
       //-- END LABEL-FINDER functions
@@ -1709,9 +1708,9 @@ angular
         let target = $(this).data('item');
         switch (target) {
           case 'input': project.addBasicBlock('basic.input'); break;
-          case 'output': project.addBasicBlock('basic.output'); break;
-          case 'labelInput': project.addBasicBlock('basic.inputLabel'); break;
-          case 'labelOutput': project.addBasicBlock('basic.outputLabel'); break;
+          case 'output': project.addBasicBlock('basic.output'); break;         
+          case 'labelInput': project.addBasicBlock('basic.outputLabel'); break;
+          case 'labelOutput': project.addBasicBlock('basic.inputLabel'); break;
           case 'memory': project.addBasicBlock('basic.memory'); break;
           case 'code': project.addBasicBlock('basic.code'); break;
           case 'information': project.addBasicBlock('basic.info'); break;

@@ -1203,16 +1203,20 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     if (virtual) {
       // Virtual port (green)
       this.fpgaContentSelector.addClass("hidden");
-
       this.virtualContentSelector.removeClass("hidden");
+
       if (typeof data.blockColor !== "undefined") {
-        if (typeof data.oldBlockColor !== "undefined") {
-          this.virtualContentSelector.removeClass(
-            "color-" + data.oldBlockColor
-          );
+
+        // remove all previous "color-*" classes (ok with undo/redo commands)
+        for (let i = 0; i < this.virtualContentSelector[0].classList.length; i++){
+          let colorClass = this.virtualContentSelector[0].classList[i];
+          if (colorClass.startsWith('color-')){
+            this.virtualContentSelector[0].classList.remove(colorClass);
+          }
         }
         this.virtualContentSelector.addClass("color-" + data.blockColor);
       }
+
       this.model.attributes.size.height = 64;
     } else {
       // FPGA I/O port (yellow)
