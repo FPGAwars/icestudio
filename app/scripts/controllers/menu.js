@@ -513,7 +513,11 @@ angular
 
       $scope.showLabelFinder = function() {
         showLabelFinder();
-      };      
+      };  
+      
+      $scope.showToolBox = function() {
+        showToolBox();
+      };  
 
       function removeSelected() {
         project.removeSelected();
@@ -1348,7 +1352,9 @@ angular
       shortcuts.method("showLabelFinder", $scope.showLabelFinder);
 
       // -- Show Floating toolbox
-      shortcuts.method("showToolBox", showToolBox);
+
+//MOD_0
+      shortcuts.method("showToolBox", $scope.showToolBox);
 
 
       shortcuts.method("removeSelected", removeSelected);
@@ -1431,6 +1437,10 @@ angular
         } else {
           $('.lFinder-case--option').removeClass('on');
         }
+
+//MOD_0
+        findItems();
+      
       });
 
       // option -> exact
@@ -1441,6 +1451,10 @@ angular
         } else {
           $('.lFinder-exact--option').removeClass('on');
         }
+
+//MOD_0
+        findItems();
+      
       });
 
       // close button
@@ -1511,15 +1525,24 @@ angular
         $('.highlight').removeClass('highlight');
         $('.greyedout').removeClass('greyedout');
 
+//MOD_0
         let searchName = $('.lFinder-field').val();
-        let reName = new RegExp(searchName, 'i'); // contains + case insensitive (less restrictive)
-        
-        if (optionCase === true && optionExact === false) { // contains + case sensitive
-          reName = new RegExp (searchName);
-        } else if (optionCase === false && optionExact === true) { // exact + case insensitive
-          reName = new RegExp ("\\b"+searchName+"\\b", 'i');
-        } else if (optionCase === true && optionExact === true) { // exact + case sensitive (most restrictive)
-          reName = new RegExp ("\\b"+searchName+"\\b");
+        let parsedSearch = utils.parsePortLabel(searchName, common.PATTERN_PORT_LABEL); // parse search label name
+
+        let reName = null; // regex search Name
+        if (parsedSearch && parsedSearch.name){
+          reName = new RegExp(parsedSearch.name, 'i'); // contains + case insensitive (less restrictive)
+          if (optionCase === true && optionExact === false) { // contains + case sensitive
+            reName = new RegExp (parsedSearch.name);
+          } else if (optionCase === false && optionExact === true) { // exact + case insensitive
+            reName = new RegExp ("\\b"+parsedSearch.name+"\\b", 'i');
+          } else if (optionCase === true && optionExact === true) { // exact + case sensitive (most restrictive)
+            reName = new RegExp ("\\b"+parsedSearch.name+"\\b");
+          }
+        } else {
+          if (searchName.length > 0){
+            alertify.warning(gettextCatalog.getString('Wrong search name!'));
+          }
         }
         
         foundItems = 0;
@@ -1534,7 +1557,7 @@ angular
         for (let i = 0; i < graphCells.length; i++) {
           if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
               graphCells[i].attributes.blockType === 'basic.outputLabel') {
-            if (searchName.length > 0 &&
+            if (parsedSearch && parsedSearch.name.length > 0 &&
                   graphCells[i].attributes.data.name.match(reName) !== null) {           
               for (let j = 0; j < htmlIoBlocks.length; j++) {
                 if (htmlIoBlocks[j].dataset.blkid === graphCells[i].attributes.id) {
@@ -1594,14 +1617,28 @@ angular
 
       function replaceLabelName() {
         let newName = $('.lFinder-name--field').val();
-        if (actualItem > 0 && newName.length > 0) {
-          let matchName = $('.lFinder-field').val();
-          if (optionCase === false) {
-            matchName = new RegExp (matchName, 'i'); // case insensitive
+        let parsedNewName = utils.parsePortLabel(newName, common.PATTERN_PORT_LABEL); // parse search label name
+
+        if (parsedNewName && parsedNewName.name){
+          if (actualItem > 0 && newName.length > 0) {
+            let matchName = $('.lFinder-field').val();
+            if (optionCase === false) {
+              matchName = new RegExp (matchName, 'i'); // case insensitive
+            }
+            let actualName = itemHtmlList[actualItem -1].querySelector('.header label').innerHTML;
+
+            let iBus = actualName.indexOf("["); // slice vector part of label buses
+            if (iBus > 0){
+              actualName = actualName.slice(0, iBus);
+            }
+  
+            newName = actualName.replace(matchName, newName);
+            graph.editLabelBlock(itemList[actualItem -1].attributes.id, newName, itemList[actualItem -1].attributes.data.blockColor);
           }
-          let actualName = itemHtmlList[actualItem -1].querySelector('.header label').innerHTML;
-          newName = actualName.replace(matchName, newName);
-          graph.editLabelBlock(itemList[actualItem -1].attributes.id, newName, itemList[actualItem -1].attributes.data.blockColor);
+        } else {
+          if (newName.length > 0){
+            alertify.warning(gettextCatalog.getString('Wrong new name!'));
+          }
         }
       }
 
