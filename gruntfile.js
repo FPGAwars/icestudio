@@ -157,7 +157,7 @@ module.exports = function (grunt) {
           : "killall nw 2>/dev/null || killall nwjs 2>/dev/null") +
         " || (exit 0)",
       nsis64:
-        'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+        'makensis -DARCH=win64 -DPYTHON="python-3.9.9-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
       repairOSX: "scripts/repairOSX.sh",
       mergeAarch64: "scripts/mergeAarch64.sh"
     },
@@ -405,8 +405,8 @@ module.exports = function (grunt) {
         options: {
           overwrite: false,
         },
-        src: "https://www.python.org/ftp/python/3.8.2/python-3.8.2-amd64.exe",
-        dest: "cache/python/python-3.8.2-amd64.exe",
+        src: "https://www.python.org/ftp/python/3.9.9/python-3.9.9-amd64.exe",
+        dest: "cache/python/python-3.9.9-amd64.exe",
       },
       collection: {
         options: {

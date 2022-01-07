@@ -32,6 +32,9 @@ angular.module('icestudio')
     // It is available in the common.ENV_PIP object
     this.getPythonPipExecutable = function () {
       
+      if(!_pythonExecutableCached) {
+        this.getPythonExecutable();
+      }
       if (!_pythonPipExecutableCached) {
         _pythonPipExecutableCached = common.ENV_PIP;
       }
@@ -57,7 +60,6 @@ angular.module('icestudio')
 
         } //-- Possible python executables in Windows
           else if (common.WIN32) {
-            possibleExecutables.push('C:\\Python310\\python.exe');
             possibleExecutables.push('C:\\Python39\\python.exe');
             possibleExecutables.push('C:\\Python38\\python.exe');
             possibleExecutables.push('C:\\Python37\\python.exe');
@@ -71,7 +73,6 @@ angular.module('icestudio')
             possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
             possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-            possibleExecutables.push('/usr/bin/python3.10');
             possibleExecutables.push('/usr/bin/python3.9');
             possibleExecutables.push('/usr/bin/python3.8');
             possibleExecutables.push('/usr/bin/python3.7');
@@ -80,7 +81,6 @@ angular.module('icestudio')
             possibleExecutables.push('/usr/bin/python3');
             possibleExecutables.push('/usr/bin/python');
 
-            possibleExecutables.push('/usr/local/bin/python3.10');
             possibleExecutables.push('/usr/local/bin/python3.9');
             possibleExecutables.push('/usr/local/bin/python3.8');
             possibleExecutables.push('/usr/local/bin/python3.7');
@@ -89,7 +89,6 @@ angular.module('icestudio')
             possibleExecutables.push('/usr/local/bin/python3');
             possibleExecutables.push('/usr/local/bin/python');
 
-            possibleExecutables.push('python3.10');
             possibleExecutables.push('python3.9');
             possibleExecutables.push('python3.8');
             possibleExecutables.push('python3.7');
@@ -122,7 +121,7 @@ angular.module('icestudio')
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0 || result.toString().indexOf('3.10') >= 0  ));
+            result.toString().indexOf('3.9') >= 0  ));
       } catch (e) {
         return false;
       }
@@ -146,7 +145,7 @@ angular.module('icestudio')
         return (result !== false && result !== null &&
           (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
             result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0 ||  result.toString().indexOf('3.10') >= 0) );
+            result.toString().indexOf('3.9') >= 0 ) );
 
       } catch (e) {
         return false;
@@ -358,7 +357,6 @@ angular.module('icestudio')
 
       //-- Get the pip executable
       let pipExec = this.getPythonPipExecutable();
-
       //-- Place the executable between quotes ("") just in case there
       //-- is a path with spaces in their names
       const executable = coverPath(pipExec);
@@ -366,7 +364,7 @@ angular.module('icestudio')
       //-- Get the pip parameters needed for installing apio
       //-- The needed apio vesion is also added
       const params = this.getApioParameters();
-
+      console.log(pipExec,executable,params);
       //-- Run the pip command!
       this.executeCommand([executable, params], callback);
     };
