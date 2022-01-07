@@ -1374,7 +1374,7 @@ angular
             closeToolchainAlert();
             restoreStatus();
             resultAlert = alertify.error(
-              gettextCatalog.getString("At least Python 3.5 is required"),
+              gettextCatalog.getString("At least Python 3.7 is required"),
               30
             );
             callback(true);
