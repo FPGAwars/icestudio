@@ -66,8 +66,8 @@ angular.module('icestudio')
     var shortcuts = {
 
       showToolBox: {
-        linux: { label: 'Ctrl+Space', ctrl: true, key: 32 },
-        mac: { label: '⌘+A', meta: true, key: 32 }
+        linux: { label: 'Ctrl+T', ctrl: true, key: 84 },
+        mac: { label: '⌘+T', meta: true, key: 84 }
       },
       showLabelFinder: {
         linux: { label: 'Ctrl+F', ctrl: true, key: 70 },

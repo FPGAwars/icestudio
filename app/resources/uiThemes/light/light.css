@@ -494,6 +494,7 @@
   color: rgba(0,0,0,0.75);
   padding-left: 8px;
   line-height: 30px;
+  padding-right: 8px;
 }
 .lFinder-name--field:focus{
   border-radius: 4px;
