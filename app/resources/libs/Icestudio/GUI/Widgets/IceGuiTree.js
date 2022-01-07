@@ -128,9 +128,13 @@ class IceGuiTree {
               </div>
               <div class="blocks-db"></div>
               </div>`;
+
+    const tree = (typeof opts.vtree !== 'undefined') ? opts.vtree : this.vtree;
+    
     this.guiOpts.content = this.renderer.render("tree", tpl, {
-      tree: this.vtree,
+      tree: tree,
     });
+    
     gui.publish("updateEl", this.guiOpts);
   }
 
@@ -143,11 +147,11 @@ class IceGuiTree {
     transaction.onerror = function (event) {
       console.log(
         "There has been an error with retrieving your data: " +
-          transaction.error
+        transaction.error
       );
     };
 
-    transaction.oncomplete = function (event) {};
+    transaction.oncomplete = function (event) { };
     let store = transaction.objectStore("blockAssets");
 
     var request = store.get(args.id);
@@ -258,13 +262,13 @@ class IceGuiTree {
 
   afterIndexingDB(callback) {
     if (this.indexQ.length === 0 && this.indexing === false) {
-      callback();
+      callback(this.vtree);
     } else {
       let _this = this;
       setTimeout(function () {
         _this.afterIndexingDB(callback);
       }, 100); // 1000
-      
+
     }
   }
 
@@ -278,11 +282,11 @@ class IceGuiTree {
       typeof obj.package.description !== "undefined" && // typoeof undefined
       typeof obj.package.name !== "undefined" &&        // typoeof undefined
       typeof obj.package.image !== "undefined" &&       // typoeof undefined
-      
+
       obj.package.description !== null &&     // null
       obj.package.name !== null &&            // null
       obj.package.image !== null &&           // null
-      
+
       // PERMISSIVE WITH EMPTY FIELDS like ""
       obj.package.description.length >= 0 &&  // empty
       obj.package.name.length >= 0 &&         // empty
@@ -296,11 +300,11 @@ class IceGuiTree {
       transaction.onerror = function (event) {
         console.log(
           "There has been an error with retrieving your data: " +
-            transaction.error
+          transaction.error
         );
       };
 
-      transaction.oncomplete = function (event) {};
+      transaction.oncomplete = function (event) { };
       let store = transaction.objectStore("blockAssets");
       let item = {
         id: id,

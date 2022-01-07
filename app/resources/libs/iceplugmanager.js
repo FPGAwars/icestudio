@@ -16,6 +16,7 @@ var IcePlugManager = function () {
     this.toload = 0;
     this.onload = false;
     this.embeds = [];
+    this.cacheBackend = window.localStorage;
 
     this.version = function () {
         console.log('Icestudio Plugin Manager v0.1');
@@ -38,7 +39,7 @@ var IcePlugManager = function () {
     this.pluginsLoaded = function (callback) {
 
         /* Order plugins by key, because plugins loaded asyncronously and 
-           object hash maintain createion order and sorting this keys is not
+           object hash maintain creation order and sorting this keys is not
            standard */
 
         let ordered = [];
@@ -63,10 +64,20 @@ var IcePlugManager = function () {
 
         let lordered = ordered.length;
         this.plugins = {};
-
-        for (let i = 0; i < lordered; i++) {
+        let i = 0;
+        for (i = 0; i < lordered; i++) {
             this.plugins[ordered[i].key] = ordered[i].obj;
         }
+        let _this = this;
+        setTimeout(function () {
+            for (let key in _this.plugins) {
+                if (typeof _this.plugins[key].manifest.launchAtStartup !== 'undefined' &&
+                    _this.plugins[key].manifest.launchAtStartup === true) {
+                    _this.run(_this.plugins[key].manifest.id);
+                }
+            }
+
+        }, 2000);
         if (typeof callback !== 'undefined') callback();
     }
 
@@ -276,7 +287,7 @@ var IcePlugManager = function () {
     this.publishAt = function (target, evt, payload) {
 
         for (let i = 0; i < this.embeds.length; i++) {
-            if (this.embeds[i].id === target || target==='all') {
+            if (this.embeds[i].id === target || target === 'all') {
                 this.embeds[i].worker.postMessage(JSON.stringify(
                     {
                         type: "eventBus",
@@ -355,13 +366,32 @@ var IcePlugManager = function () {
             }
         }
     };
+    this.cache = function (item) {
+        this.cacheBackend.setItem(item.key, JSON.stringify(item.data));
+    };
+
+    this.cached = function (item) {
+        let data = this.cacheBackend.getItem(item.key);
+        if (data !== null) {
+            data = JSON.parse(data);
+        } else {
+            data = false;
+        }
+        console.log('CACHED', data);
+        this.publishAt('all', `cached.${item.key}`, { cache: data });
+        return data;
+    };
+
 
     this.init = function () {
         this.version();
         this.ebus.subscribe('plugin.terminate', 'terminate', this);
+        this.ebus.subscribe('plugin.cache', 'cache', this);
+        this.ebus.subscribe('plugin.cached', 'cached', this);
+
         this.blockManager
         this.ebus.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
-    }; 
+    };
 
     this.init();
 };
