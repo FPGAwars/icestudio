@@ -13,9 +13,7 @@ angular.module('icestudio')
     nodePath,
     nodeChildProcess,
     nodeExtract,
-    nodeZlib,
     nodeOnline,
-    nodeGlob,
     nodeSha1,
     nodeCP,
     nodeGetOS,
@@ -63,8 +61,6 @@ angular.module('icestudio')
             possibleExecutables.push('C:\\Python39\\python.exe');
             possibleExecutables.push('C:\\Python38\\python.exe');
             possibleExecutables.push('C:\\Python37\\python.exe');
-            possibleExecutables.push('C:\\Python36\\python.exe');
-            possibleExecutables.push('C:\\Python35\\python.exe');
             possibleExecutables.push('py.exe -3');
             possibleExecutables.push('python.exe');
 
@@ -76,24 +72,18 @@ angular.module('icestudio')
             possibleExecutables.push('/usr/bin/python3.9');
             possibleExecutables.push('/usr/bin/python3.8');
             possibleExecutables.push('/usr/bin/python3.7');
-            possibleExecutables.push('/usr/bin/python3.6');
-            possibleExecutables.push('/usr/bin/python3.5');
             possibleExecutables.push('/usr/bin/python3');
             possibleExecutables.push('/usr/bin/python');
 
             possibleExecutables.push('/usr/local/bin/python3.9');
             possibleExecutables.push('/usr/local/bin/python3.8');
             possibleExecutables.push('/usr/local/bin/python3.7');
-            possibleExecutables.push('/usr/local/bin/python3.6');
-            possibleExecutables.push('/usr/local/bin/python3.5');
             possibleExecutables.push('/usr/local/bin/python3');
             possibleExecutables.push('/usr/local/bin/python');
 
             possibleExecutables.push('python3.9');
             possibleExecutables.push('python3.8');
             possibleExecutables.push('python3.7');
-            possibleExecutables.push('python3.6');
-            possibleExecutables.push('python3.5');
             possibleExecutables.push('python3');
             possibleExecutables.push('python');
         }
@@ -112,22 +102,6 @@ angular.module('icestudio')
       return _pythonExecutableCached;
     };
 
-
-    function isValidPip(executable) {
-
-      executable += ' -V';
-      try {
-        const result = nodeChildProcess.execSync(executable);
-        return (result !== false && result !== null &&
-          (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
-            result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0  ));
-      } catch (e) {
-        return false;
-      }
-    }
-
-
     //---------------------------------------------------------
     //-- Check if the given file is a python3 interpreter 
     //--
@@ -143,8 +117,7 @@ angular.module('icestudio')
 
         //-- Check the output. Return true if it is python3
         return (result !== false && result !== null &&
-          (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
-            result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
+          ( result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
             result.toString().indexOf('3.9') >= 0 ) );
 
       } catch (e) {
@@ -572,24 +545,6 @@ angular.module('icestudio')
           });
       });
     };
-
-    /*function compressJSON(data, callback) {
-      var content = JSON.stringify(data);
-      nodeZlib.gzip(content, function (_, compressed) {
-        if (callback) {
-          callback(compressed);
-        }
-      });
-    }*/
-
-    /*function decompressJSON(content, callback) {
-      nodeZlib.gunzip(content, function(_, uncompressed) {
-        var data = JSON.parse(uncompressed);
-        if (callback) {
-          callback(data);
-        }
-      });
-    }*/
 
     function isJSON(content) {
       try {
