@@ -965,6 +965,11 @@ angular.module('icestudio')
             return graph.getCells();
         };
 
+        this.editLabelBlock = function(itemId, newName, newColor) {
+            var cellView = paper.findViewByModel(itemId);
+            blocks.editBasicLabel(cellView, newName, newColor);
+        };
+
         this.setCells = function (cells) {
             graph.attributes.cells.models = cells;
         };
