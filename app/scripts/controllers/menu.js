@@ -314,6 +314,7 @@ angular
         ) {
           collections.selectCollection(common.selectedCollection.path);
         }
+        
       }
 
       $rootScope.$on("saveProjectAs", function (event, callback) {
@@ -1184,6 +1185,7 @@ angular
       $scope.reloadCollections = function () {
         collections.loadAllCollections();
         collections.selectCollection(common.selectedCollection.path);
+        ICEpm.setEnvironment(common);
       };
 
       $scope.removeCollection = function (collection) {

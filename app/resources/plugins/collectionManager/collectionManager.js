@@ -83,9 +83,29 @@ function preloadTree(data) {
     gui.components.blockTree.render({ id: pConfig.id, el: '.playground', vtree: data.cache });
 }
 
+function refresh(env) {
+    
+            pConfig.env=env;    
+            let tmp = pConfig.env.defaultCollection;
+            tmp.name = 'Default collection';
+
+            gui.components.blockTree.collectionsToTree(
+                [tmp]
+                    .concat(pConfig.env.externalCollections)
+                    .concat(pConfig.env.internalCollections),
+                { id: pConfig.id, el: '.cm-loader--status', content: 'Indexing collections' });
+
+            gui.components.blockTree.afterIndexingDB(function (data) {
+                ebus.publish('plugin.cache', { key: 'collectionManager.vtree', data: data });
+                gui.components.blockTree.render({ id: pConfig.id, el: '.playground' });
+            });
+ 
+}
+
 ebus.subscribe('ui.updateTheme', updateTheme);
 ebus.subscribe('plugin.initialSetup', init);
 ebus.subscribe('cached.collectionManager.vtree', preloadTree);
+ebus.subscribe('config.update', refresh);
 gui.subscribe('gui.update', guiUpdate);
 gui.subscribe('gui.click.closePanel', closePlugin);
 gui.subscribe('gui.click.treeView.toggleFolder', treeViewToggleFolder);

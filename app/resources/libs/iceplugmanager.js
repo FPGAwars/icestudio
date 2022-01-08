@@ -34,6 +34,7 @@ var IcePlugManager = function () {
 
     this.setEnvironment = function (common) {
         this.env = common;
+        this.publishAt('all','config.update',common);
     };
 
     this.pluginsLoaded = function (callback) {
@@ -377,7 +378,6 @@ var IcePlugManager = function () {
         } else {
             data = false;
         }
-        console.log('CACHED', data);
         this.publishAt('all', `cached.${item.key}`, { cache: data });
         return data;
     };
