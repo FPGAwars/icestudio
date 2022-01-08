@@ -1265,9 +1265,9 @@ angular
           "    <p>Highlighted contributors:</p>",
           '    <ul  class="credits-developers-list">',
          
-          "           <li><strong>Alex</strong>&nbsp;&nbsp;&nbsp;",
+          "           <li><strong>Alex Gutierrez Tomas</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/mslider"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
-          '<a class="action-open-url-external-browser" href="https://twitter.com/mslider"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
+          '<a class="action-open-url-external-browser" href="https://twitter.com/microslider"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
           "</li>",
           "           <li><strong>Joaquim</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/jojo535275"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
