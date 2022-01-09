@@ -751,11 +751,11 @@ msgstr "Nuevo"
 
 #: app/views/design.html:40
 msgid "New Color:"
-msgstr "New Color:"
+msgstr "Nuevo Color:"
 
 #: app/views/design.html:37
 msgid "New Name:"
-msgstr "New Name:"
+msgstr "Nuevo nombre:"
 
 #: app/scripts/controllers/menu.js:1197
 msgid "No collections stored"
