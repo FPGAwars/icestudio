@@ -637,6 +637,91 @@
   opacity: 1;
 }
 
+/*MOD_0*/
+/* color-dropdown in forms panel */
+.lb-color--dropdown{
+  position: relative;
+  width: 510px;
+  height: 40px;
+  top: 0px;
+  left: 5px;
+  text-align: right;
+  color: rgba(255,255,255,0.5);
+  line-height: 30px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+}
+.lb-dropdown-title{
+  position: relative;
+  width: 100%;
+  height: 38px;
+  background: rgba(0,0,0,0);
+  border-radius: 4px;
+  line-height: 38px;
+  padding-left: 30px;
+  color: rgba(255,255,255,1);
+  left: 0px;
+  text-align: left;
+}
+.lb-selected-color{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 10px;
+  top: 14px;
+  border-radius: 5px;
+  border: none !important;
+}
+.lb-dropdown-icon{
+  content: url(/resources/images/icons/dark_chevron-right.svg);
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  right: 10px;
+  top: 14px;
+  transform: rotate(90deg);
+}
+.lb-dropdown-menu{
+  width: 100%;
+  height: 0px; /* change to 0px */
+  position: relative;
+  top: 0px;
+  border-radius: 0 0 4px 4px;
+  background: #232323;
+  overflow-y: auto;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+  animation: fadeOut_dropdown 0.2s ease;
+}
+.lb-dropdown-menu.show{
+  height: 300px;
+  animation: fadeIn_dropdown 0.2s ease;
+}
+.lb-dropdown-option{
+  position: relative;
+  width: 100%;
+  height: 30px;
+  color: rgba(255,255,255,0.5);
+  line-height: 30px;
+  padding-left: 30px;
+  border-radius: 4px;
+  text-align: left;
+}
+.lb-dropdown-option:hover{
+  color: rgba(255,255,255,1);
+  background: #333;
+}
+.lb-option-color{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 10px;
+  top: 10px;
+  border-radius: 5px;
+  border: none !important;
+}
+/*END MOD_0*/
+
 /* toolbox */
 #iceToolbox .title-bar{
   position: relative;

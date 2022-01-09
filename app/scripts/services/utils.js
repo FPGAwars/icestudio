@@ -659,9 +659,44 @@ angular.module('icestudio')
               </div>\
             ');
             break;
+          case 'color-dropdown':
+            content.push('\
+              <div class="form-group">\
+                <label style ="font-weight:normal">' + spec.label + '</label>\
+                <div class="lb-color--dropdown">\
+                  <div class="lb-dropdown-title"><span class="lb-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lb-dropdown-icon"></span></div>\
+                  <div class="lb-dropdown-menu">\
+                    <div class="lb-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lb-option-color color-indianred"></span>IndianRed</div>\
+                    <div class="lb-dropdown-option" data-color="red" data-name="Red"><span class="lb-option-color color-red"></span>Red</div>\
+                    <div class="lb-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lb-option-color color-deeppink"></span>DeepPink</div>\
+                    <div class="lb-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lb-option-color color-mediumvioletred"></span>MediumVioletRed</div>\
+                    <div class="lb-dropdown-option" data-color="coral"data-name="Coral"><span class="lb-option-color color-coral"></span>Coral</div>\
+                    <div class="lb-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lb-option-color color-orangered"></span>OrangeRed</div>\
+                    <div class="lb-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lb-option-color color-darkorange"></span>DarkOrange</div>\
+                    <div class="lb-dropdown-option" data-color="gold"data-name="Gold"><span class="lb-option-color color-gold"></span>Gold</div>\
+                    <div class="lb-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lb-option-color color-yellow"></span>Yellow</div>\
+                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>Fuchsia</div>\
+                    <div class="lb-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lb-option-color color-slateblue"></span>SlateBlue</div>\
+                    <div class="lb-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lb-option-color color-greenyellow"></span>GreenYellow</div>\
+                    <div class="lb-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lb-option-color color-springgreen"></span>SpringGreen</div>\
+                    <div class="lb-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lb-option-color color-darkgreen"></span>DarkGreen</div>\
+                    <div class="lb-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lb-option-color color-olivedrab"></span>OliveDrab</div>\
+                    <div class="lb-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lb-option-color color-lightseagreen"></span>LightSeaGreen</div>\
+                    <div class="lb-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lb-option-color color-turquoise"></span>Turquoise</div>\
+                    <div class="lb-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lb-option-color color-steelblue"></span>SteelBlue</div>\
+                    <div class="lb-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lb-option-color color-deepskyblue"></span>DeepSkyBlue</div>\
+                    <div class="lb-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lb-option-color color-royalblue"></span>RoyalBlue</div>\
+                    <div class="lb-dropdown-option" data-color="navy"data-name="Navy"><span class="lb-option-color color-navy"></span>Navy</div>\
+                    <div class="lb-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lb-option-color color-lightgray"></span>LightGray</div>\
+                  </div>\
+                </div>\
+              </div>\
+            ');
+            break;
         }
       }
       content.push('</div>');
+      
       alertify.confirm(content.join('\n'))
         .set('onok', function (evt) {
           var values = [];
@@ -676,12 +711,16 @@ angular.module('icestudio')
                 case 'checkbox':
                   values.push($('#form' + i).prop('checked'));
                   break;
+                case 'color-dropdown':
+                  values.push($('.lb-selected-color').data('color'));
+                  break;
               }
             }
             callback(evt, values);
           }
         })
         .set('oncancel', function ( /*evt*/) { });
+
       // Restore input values
       setTimeout(function () {
         $('#form0').select();
@@ -694,6 +733,9 @@ angular.module('icestudio')
               break;
             case 'checkbox':
               $('#form' + i).prop('checked', spec.value);
+              break;
+            case 'color-dropdown':
+              $('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>Fuchsia<span class=\"lb-dropdown-icon\"></span>");
               break;
           }
         }
@@ -1370,5 +1412,34 @@ angular.module('icestudio')
       gui.Shell.openExternal(url);
       //require('nw.gui').Shell.openExternal( url);
     };
+
+    // RENDERFORM "color-dropdown" functions
+    // show/hide dropdown list
+    $(document).on("mousedown", ".lb-dropdown-title", function () {
+      if ($('.lb-dropdown-menu').hasClass('show')){
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+    $(document).on("mouseleave", ".lb-dropdown-menu", function () {
+      closeDropdown();
+    });
+    $(document).on("mouseenter", ".ajs-button", function () {
+      closeDropdown();
+    });
+    // get selected option
+    $(document).on("mousedown", ".lb-dropdown-option", function () {
+      let selected = this;
+      $('.lb-dropdown-title').html("<span class=\"lb-selected-color color-" + selected.dataset.color + "\" data-color=\"" + selected.dataset.color + "\"></span>" + selected.dataset.name + "<span class=\"lb-dropdown-icon\"></span>");
+      closeDropdown();
+    });
+
+    function openDropdown () {
+      $('.lb-dropdown-menu').addClass('show');
+    }
+    function closeDropdown () {
+      $('.lb-dropdown-menu').removeClass('show');
+    }
 
   });
