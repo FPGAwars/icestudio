@@ -484,7 +484,7 @@
 }
 .lFinder-name--field {
   position: absolute;
-  width: 150px;
+  width: 160px;
   height: 30px;
   top: 5px;
   left: 90px;
@@ -605,7 +605,7 @@
   color: #333;
   line-height: 30px;
   text-align: center;
-  left: 245px;
+  left: 255px;
   top: 5px;
   border-radius: 4px;
   border: 1px solid #eee;
@@ -623,7 +623,7 @@
   color: #333;
   line-height: 30px;
   text-align: center;
-  left: 245px;
+  left: 255px;
   top: 40px;
   border-radius: 4px;
   border: 1px solid #eee;
