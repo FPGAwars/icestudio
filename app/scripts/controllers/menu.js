@@ -314,7 +314,6 @@ angular
         ) {
           collections.selectCollection(common.selectedCollection.path);
         }
-        
       }
 
       $rootScope.$on("saveProjectAs", function (event, callback) {
@@ -1373,10 +1372,7 @@ angular
       shortcuts.method("showLabelFinder", $scope.showLabelFinder);
 
       // -- Show Floating toolbox
-
-//MOD_0
       shortcuts.method("showToolBox", $scope.showToolBox);
-
 
       shortcuts.method("removeSelected", removeSelected);
       shortcuts.method("back", function () {
@@ -1458,10 +1454,7 @@ angular
         } else {
           $('.lFinder-case--option').removeClass('on');
         }
-
-//MOD_0
-        findItems();
-      
+        findItems();    
       });
 
       // option -> exact
@@ -1472,10 +1465,7 @@ angular
         } else {
           $('.lFinder-exact--option').removeClass('on');
         }
-
-//MOD_0
         findItems();
-      
       });
 
       // close button
@@ -1502,6 +1492,23 @@ angular
         }
       });
 
+      // Color dropdown menu
+      $(document).on("mousedown", ".lf-dropdown-title", function (){
+        toggleColorDropdown();
+      });
+      $(document).on("mouseleave", ".lf-dropdown-menu", function (){
+        if (colorDropdown === true){
+          toggleColorDropdown();
+        }
+      });
+
+      // color get option
+      $(document).on("mousedown", ".lf-dropdown-option", function(){
+        let selected = this;
+        $('.lf-dropdown-title').html("<span class=\"lf-selected-color color-" + selected.dataset.color + "\" data-color=\"" + selected.dataset.color + "\"></span>" + selected.dataset.name + "<span class=\"lf-dropdown-icon\"></span>");
+        toggleColorDropdown();
+      });
+
       //-- Global LABEL-FINDER vars
       let foundItems = 0;
       let actualItem = 0;
@@ -1510,6 +1517,7 @@ angular
       let optionCase = false;
       let optionExact = false;
       let advanced = false;
+      let colorDropdown = false;
 
       //-- LABEL-FINDER functions
       function showLabelFinder() {
@@ -1539,14 +1547,25 @@ angular
         } else {
           $('.lFinder-advanced--toggle').removeClass('on');
           $('.lFinder-advanced').removeClass('show');
+          if (colorDropdown === true){
+            toggleColorDropdown();
+          }
+        }
+      }
+
+      function toggleColorDropdown(){
+        if (colorDropdown === true){
+          colorDropdown = false;
+          $('.lf-dropdown-menu').removeClass('show');
+        } else {
+          colorDropdown = true;
+          $('.lf-dropdown-menu').addClass('show');
         }
       }
 
       function findItems() {
         $('.highlight').removeClass('highlight');
         $('.greyedout').removeClass('greyedout');
-
-//MOD_0
         let searchName = $('.lFinder-field').val();
         let parsedSearch = utils.parsePortLabel(searchName, common.PATTERN_PORT_LABEL); // parse search label name
 
@@ -1664,7 +1683,7 @@ angular
       }
 
       function changeLabelColor() {
-        let newColor = $('.lFinder-color--dropdown').val();
+        let newColor = $('.lf-selected-color').data('color');
         if (actualItem > 0 && newColor.length > 0) {
           graph.editLabelBlock(itemList[actualItem -1].attributes.id, itemList[actualItem -1].attributes.data.name, newColor);
         }

@@ -92,7 +92,8 @@ angular.module('icestudio')
             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
+            { value: 'navy', label: gettextCatalog.getString('Navy') },
+            { value: 'lightgray', label: gettextCatalog.getString('LightGray') }
 
           ]
 
@@ -322,7 +323,8 @@ angular.module('icestudio')
             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
+            { value: 'navy', label: gettextCatalog.getString('Navy') },
+            { value: 'lightgray', label: gettextCatalog.getString('LightGray') }
 
           ]
 
@@ -1160,7 +1162,8 @@ angular.module('icestudio')
             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
+            { value: 'navy', label: gettextCatalog.getString('Navy') },
+            { value: 'lightgray', label: gettextCatalog.getString('LightGray') }
 
           ]
 
@@ -1281,7 +1284,8 @@ angular.module('icestudio')
             { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
             { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
             { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
+            { value: 'navy', label: gettextCatalog.getString('Navy') },
+            { value: 'lightgray', label: gettextCatalog.getString('LightGray') }
 
           ]
 
