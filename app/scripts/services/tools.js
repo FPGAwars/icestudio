@@ -1185,6 +1185,7 @@ angular
           ),
           function () {
 
+            //-- Start the spinner
             installationStatus();
 
             //-- Remove the toolchain
@@ -1194,8 +1195,17 @@ angular
             toolchain.apio = "";
             toolchain.installed = false;
 
-            alertify.success(gettextCatalog.getString("Toolchain removed"));
-            restoreStatus();
+            //-- Wait for it to finish, with a success notification
+            alertify.success(
+              gettextCatalog.getString("Toolchain removed"),
+              2, //-- Notification removed after 2 seconds
+
+              function() {
+                //-- Stop the spinner
+                restoreStatus();
+                iceConsole.log("===> Toolchains removed");
+              });
+            
           }
         );
       };
