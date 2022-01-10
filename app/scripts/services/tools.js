@@ -1301,19 +1301,13 @@ angular
           //-- Install apio through pip
           installOnlineApio,
 
-          //-- Install the apio packages
-          //-- apio install <pkg>
+          //--------- Install the apio packages
+          //--------- apio install <pkg>
+          //-- oss-cad-suite: Main toolchain: Yosys, nextpnr, programmers...
           apioInstallOssCadSuite,
+
+          //-- Drivers
           apioInstallDrivers,
-          //apioInstallECP5, //-- Obsolete package
-          //apioInstallFujprog, //-- Obsolete package
-          //apioInstallIcesprog, //-- Obsolete package
-          //apioInstallDfu, //-- Obsolete package
-          //apioInstallIverilog, //-- Obsolete package
-          //apioInstallYosys, //-- Obsolete package
-          //apioInstallIce40,  //-- Obsolete package
-          //apioInstallSystem,  //-- Obsolete package
-          //apioInstallScons, //-- Obsolete package
 
           //-- Finish installation!
           installationCompleted
@@ -1438,82 +1432,6 @@ angular
         updateProgress("apio install " + pkgName, 60);
         utils.apioInstall(pkgName, callback);
       }
-
-      //--------------------------------------------------------------
-      //-- Install the toolchain for the ECP5 FPGA family
-      //--
-      /*
-      function apioInstallECP5(callback) {
-
-        iceConsole.log("**** STEP: APIO install ecp5");
-
-        let pkgName = "ecp5";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_ECP5_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 50);
-        utils.apioInstall(pkgName, callback);
-      }
-      */
-
-      //------------------------------------------------------------
-      //--  Install the Fujprog programmer
-      //--
-      /*
-      function apioInstallFujprog(callback) {
-
-        iceConsole.log("**** STEP: APIO install fujprog");
-
-        let pkgName = "fujprog";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_FUJPROG_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 70);
-        utils.apioInstall(pkgName, callback);
-      }
-      */
-
-      //--------------------------------------------------------------
-      //--  Install the Icesprog programer
-      //--
-      /*
-      function apioInstallIcesprog(callback) {
-
-        iceConsole.log("**** STEP: APIO install icesprog");
-
-        let pkgName = "icesprog";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_ICESPROG_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 75);
-        utils.apioInstall(pkgName, callback);
-      }
-      */
-
-      //----------------------------------------------
-      //-- Install the DFU programmer
-      //--
-      /*
-      function apioInstallDfu(callback) {
-
-        iceConsole.log("**** STEP: APIO install duf");
-
-        let pkgName = "dfu";
-
-        if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
-          pkgName += ("@" + common.APIO_PKG_DFU_VERSION);
-        }
-
-        updateProgress("apio install " + pkgName, 80);
-        utils.apioInstall(pkgName, callback);
-      }
-      */
 
       //---------------------------------------------
       //-- Install the Drivers
