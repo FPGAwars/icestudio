@@ -1188,23 +1188,25 @@ angular
             //-- Start the spinner
             installationStatus();
 
-            //-- Remove the toolchain
-            utils.removeToolchain();
+            setTimeout(function () {
+              //-- Remove the toolchain
+              utils.removeToolchain();
 
-            //-- Init the related flags
-            toolchain.apio = "";
-            toolchain.installed = false;
+              //-- Init the related flags
+              toolchain.apio = "";
+              toolchain.installed = false;
 
-            //-- Wait for it to finish, with a success notification
-            alertify.success(
-              gettextCatalog.getString("Toolchain removed"),
-              2, //-- Notification removed after 2 seconds
+              //-- Wait for it to finish, with a success notification
+              alertify.success(
+                gettextCatalog.getString("Toolchain removed"),
+                2, //-- Notification removed after 2 seconds
 
-              function() {
-                //-- Stop the spinner
-                restoreStatus();
-                iceConsole.log("===> Toolchains removed");
-              });
+                function() {
+                  //-- Stop the spinner
+                  restoreStatus();
+                  iceConsole.log("===> Toolchains removed");
+                });
+            }, 100);
             
           }
         );
