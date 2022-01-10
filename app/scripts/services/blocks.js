@@ -64,7 +64,7 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
+          title: gettextCatalog.getString('Enter the input label'),
           value: ''
         },
         {
@@ -267,7 +267,7 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the output blocks'),
+          title: gettextCatalog.getString('Enter the output label'),
           value: ''
 
         },
