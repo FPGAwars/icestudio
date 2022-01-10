@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:594
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -46,11 +46,9 @@ msgstr "Toutes les collections ont été supprimées"
 
 #: app/scripts/controllers/menu.js:1186
 msgid "All stored collections will be lost. Do you want to continue?"
-msgstr ""
-"Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
+msgstr "Toutes les collections enregistrées seront perdues. Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1375
-#| msgid "Python 2.7 is required"
 msgid "At least Python 3.5 is required"
 msgstr ""
 
@@ -154,6 +152,10 @@ msgstr ""
 "ATTENTION ! : Les modifications seront également appliquées dans toutes les "
 "copies du bloc"
 
+#: app/views/design.html:64
+msgid "Change Color"
+msgstr "Recolorer"
+
 #: app/scripts/services/tools.js:1330
 msgid "Check Internet connection..."
 msgstr "Vérifier la connexion Internet..."
@@ -207,7 +209,7 @@ msgstr "Code"
 
 #: app/scripts/services/blocks.js:621
 msgid "Code block needs at least one input or one output"
-msgstr ""
+msgstr "Le bloc Code nécessite au moins une entrée ou une sortie"
 
 #: app/views/menu.html:368
 msgid "Collection"
@@ -247,7 +249,7 @@ msgstr "Collections"
 
 #: app/scripts/controllers/menu.js:991 app/views/menu.html:310
 msgid "Command output"
-msgstr "Commande de sortie"
+msgstr "Sortie de Commandes"
 
 #: app/views/menu.html:575
 msgid "Community forum"
@@ -287,7 +289,6 @@ msgid "Czech"
 msgstr "Tchèque"
 
 #: app/views/uithemes.html:16
-#| msgid "Default"
 msgid "Dark (default)"
 msgstr "Sombre (default)"
 
@@ -402,14 +403,12 @@ msgid "Enter the external collections path"
 msgstr "Entrer le chemin pour les collections externes"
 
 #: app/scripts/controllers/menu.js:568
-#| msgid "Enter the external collections path"
 msgid "Enter the external plugins path"
-msgstr ""
+msgstr "Entrer le chemin pour les plugins externes"
 
 #: app/scripts/controllers/menu.js:522
-#| msgid "Enter the output blocks"
 msgid "Enter the file to output logging info"
-msgstr ""
+msgstr "Entrer le fichier de sortie pour les info logging"
 
 #: app/scripts/services/blocks.js:163 app/scripts/services/blocks.js:67
 msgid "Enter the input blocks"
@@ -436,12 +435,10 @@ msgid "Enter the parameters"
 msgstr "Entrer les paramètres"
 
 #: app/scripts/controllers/menu.js:613
-#| msgid "Enter the project's image path"
 msgid "Enter the pip version > 3.8 path"
 msgstr ""
 
 #: app/scripts/controllers/menu.js:606
-#| msgid "Enter the external collections path"
 msgid "Enter the python version > 3.8 path"
 msgstr ""
 
@@ -482,14 +479,16 @@ msgid "External collections updated"
 msgstr "Collections externes mises à jour"
 
 #: app/views/menu.html:237
-#| msgid "External collections"
 msgid "External plugins"
-msgstr ""
+msgstr "Plugins externes"
 
 #: app/scripts/controllers/menu.js:584
-#| msgid "External collections updated"
 msgid "External plugins updated"
-msgstr ""
+msgstr "Plugins externes mis a jour"
+
+#: app/views/design.html:32
+msgid "Find"
+msgstr "Chercher"
 
 #: app/scripts/services/tools.js:688
 msgid "FPGA I/O ports not defined"
@@ -604,7 +603,6 @@ msgid "Input label"
 msgstr "Label d'entrée"
 
 #: app/views/menu.html:436
-#| msgid "Install"
 msgid "Install (Stable)"
 msgstr ""
 
@@ -621,22 +619,18 @@ msgstr ""
 "Internet.Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1163
-#| msgid ""
-#| "The toolchain will be updated. This operation requires Internet "
-#| "connection. Do you want to continue?"
 msgid ""
 "Install the LATEST STABLE toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
-msgstr ""
+msgstr "Installer la derniere toolchain stable. Cette opération a besoin d'une connexion "
+"Internet.Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1117
-#| msgid ""
-#| "The toolchain will be updated. This operation requires Internet "
-#| "connection. Do you want to continue?"
 msgid ""
 "Install the STABLE Toolchain. It will be downloaded. This operation requires "
 "Internet connection. Do you want to continue?"
-msgstr ""
+msgstr "Installer la toolchain stable. Cette opération a besoin d'une connexion "
+"Internet.Voulez-vous continuer ?"
 
 #: app/scripts/services/tools.js:1632
 msgid "Installation completed"
@@ -693,6 +687,10 @@ msgstr "Italien"
 msgid "Korean"
 msgstr ""
 
+#: app/views/menu.html:194
+msgid "Label Finder"
+msgstr "Chercher Label"
+
 #: app/views/menu.html:203
 msgid "Language"
 msgstr "Langue"
@@ -716,7 +714,6 @@ msgid "Local parameter"
 msgstr "Paramètre local"
 
 #: app/views/menu.html:256
-#| msgid "Drivers enabled"
 msgid "Logging enabled"
 msgstr ""
 
@@ -753,6 +750,14 @@ msgstr "Bleu marine"
 #: app/views/menu.html:55
 msgid "New"
 msgstr "Nouveau"
+
+#: app/views/design.html:40
+msgid "New Color:"
+msgstr "New Couleur:"
+
+#: app/views/design.html:37
+msgid "New Name:"
+msgstr "Nouveau Nom:"
 
 #: app/scripts/controllers/menu.js:1197
 msgid "No collections stored"
@@ -870,6 +875,14 @@ msgstr "Supprimer"
 #: app/views/menu.html:529
 msgid "Remove all"
 msgstr "Supprimer tout"
+
+#: app/views/design.html:65
+msgid "Replace All"
+msgstr "Remplacer tous"
+
+#: app/views/design.html:39
+msgid "Replace One"
+msgstr "Remplacer un"
 
 #: app/scripts/services/utils.js:819
 msgid "Reset SVG"
@@ -1025,6 +1038,10 @@ msgstr ""
 "design de plus haut-niveau.<br/><br/>Si vous voulez exporter ce sous-module "
 "dans un fichier, exécutez la commande \"Sauvegarder sous\"."
 
+#: app/views/menu.html:199
+msgid "Toolbox"
+msgstr "Boite a Outils"
+
 #: app/views/menu.html:428
 msgid "Toolchain"
 msgstr "Toolchain"
@@ -1080,7 +1097,6 @@ msgid "Untitled"
 msgstr "Sans titre"
 
 #: app/views/menu.html:439
-#| msgid "Update the block name"
 msgid "Update (Latest stable)"
 msgstr ""
 

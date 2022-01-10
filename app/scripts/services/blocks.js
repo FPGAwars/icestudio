@@ -64,38 +64,12 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
+          title: gettextCatalog.getString('Enter the input label'),
           value: ''
         },
         {
-          type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
-          value: 'fuchsia',
-          options: [
-            { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
-            { value: 'red', label: gettextCatalog.getString('Red') },
-            { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-            { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
-            { value: 'coral', label: gettextCatalog.getString('Coral') },
-            { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
-            { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
-            { value: 'gold', label: gettextCatalog.getString('Gold') },
-            { value: 'yellow', label: gettextCatalog.getString('Yellow') },
-            { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
-            { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
-            { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
-            { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
-            { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
-            { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
-            { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
-            { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
-            { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
-            { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
-            { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
-
-          ]
-
+          type: 'color-dropdown',
+          label: gettextCatalog.getString('Choose a color')
         }
 
       ];
@@ -293,40 +267,15 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the output blocks'),
+          title: gettextCatalog.getString('Enter the output label'),
           value: ''
 
         },
         {
-          type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
-          value: 'fuchsia',
-          options: [
-            { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
-            { value: 'red', label: gettextCatalog.getString('Red') },
-            { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-            { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
-            { value: 'coral', label: gettextCatalog.getString('Coral') },
-            { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
-            { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
-            { value: 'gold', label: gettextCatalog.getString('Gold') },
-            { value: 'yellow', label: gettextCatalog.getString('Yellow') },
-            { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
-            { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
-            { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
-            { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
-            { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
-            { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
-            { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
-            { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
-            { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
-            { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
-            { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
-
-          ]
-
+          type: 'color-dropdown',
+          label: gettextCatalog.getString('Choose a color')
         }
+
       ];
       utils.renderForm(formSpecs, function (evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
@@ -1136,34 +1085,8 @@ angular.module('icestudio')
           value: block.data.name + (block.data.range || '')
         },
         {
-          type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
-          value: (typeof block.data.blockColor !== 'undefined') ? block.data.blockColor : 'fuchsia',
-          options: [
-            { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
-            { value: 'red', label: gettextCatalog.getString('Red') },
-            { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-            { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
-            { value: 'coral', label: gettextCatalog.getString('Coral') },
-            { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
-            { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
-            { value: 'gold', label: gettextCatalog.getString('Gold') },
-            { value: 'yellow', label: gettextCatalog.getString('Yellow') },
-            { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
-            { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
-            { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
-            { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
-            { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
-            { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
-            { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
-            { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
-            { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
-            { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
-            { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
-
-          ]
-
+          type: 'color-dropdown',
+          label: gettextCatalog.getString('Choose a color')
         }
 
       ];
@@ -1257,34 +1180,8 @@ angular.module('icestudio')
           value: block.data.name + (block.data.range || '')
         },
         {
-          type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
-          value: (typeof block.data.blockColor !== 'undefined') ? block.data.blockColor : 'fuchsia',
-          options: [
-            { value: 'indianred', label: gettextCatalog.getString('IndianRed') },
-            { value: 'red', label: gettextCatalog.getString('Red') },
-            { value: 'deeppink', label: gettextCatalog.getString('DeepPink') },
-            { value: 'mediumvioletred', label: gettextCatalog.getString('MediumVioletRed') },
-            { value: 'coral', label: gettextCatalog.getString('Coral') },
-            { value: 'orangered', label: gettextCatalog.getString('OrangeRed') },
-            { value: 'darkorange', label: gettextCatalog.getString('DarkOrange') },
-            { value: 'gold', label: gettextCatalog.getString('Gold') },
-            { value: 'yellow', label: gettextCatalog.getString('Yellow') },
-            { value: 'fuchsia', label: gettextCatalog.getString('Fuchsia') },
-            { value: 'slateblue', label: gettextCatalog.getString('SlateBlue') },
-            { value: 'greenyellow', label: gettextCatalog.getString('GreenYellow') },
-            { value: 'springgreen', label: gettextCatalog.getString('SpringGreen') },
-            { value: 'darkgreen', label: gettextCatalog.getString('DarkGreen') },
-            { value: 'olivedrab', label: gettextCatalog.getString('OliveDrab') },
-            { value: 'lightseagreen', label: gettextCatalog.getString('LightSeaGreen') },
-            { value: 'turquoise', label: gettextCatalog.getString('Turquoise') },
-            { value: 'steelblue', label: gettextCatalog.getString('SteelBlue') },
-            { value: 'deepskyblue', label: gettextCatalog.getString('DeepSkyBlue') },
-            { value: 'royalblue', label: gettextCatalog.getString('RoyalBlue') },
-            { value: 'navy', label: gettextCatalog.getString('Navy') }
-
-          ]
-
+          type: 'color-dropdown',
+          label: gettextCatalog.getString('Choose a color')
         }
 
       ];

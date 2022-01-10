@@ -1184,6 +1184,7 @@ angular
       $scope.reloadCollections = function () {
         collections.loadAllCollections();
         collections.selectCollection(common.selectedCollection.path);
+        ICEpm.setEnvironment(common);
       };
 
       $scope.removeCollection = function (collection) {
@@ -1250,23 +1251,42 @@ angular
           '<div class="row" style="margin-top:30px;">',
           '  <div class="col-sm-12">',
 
-          "    <p>Development Team:</p>",
+          "    <p>Core Team:</p>",
           '    <ul  class="credits-developers-list">',
-          "<li><strong>Jesús Arroyo Torrens</strong>, creator&nbsp;&nbsp;&nbsp;",
-          '<a class="action-open-url-external-browser" href="https://github.com/Jesus89"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
-          '<a class="action-open-url-external-browser" href="https://twitter.com/JesusArroyo89"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
-          "</li>",
-          "           <li><strong>Carlos Venegas Arrabé</strong>, concepts and development&nbsp;&nbsp;&nbsp;",
+         
+          "           <li><strong>Carlos Venegas Arrabé</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/cavearr"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
           "</li>",
-          "           <li><strong>Juan González Gómez</strong>, concepts and testing&nbsp;&nbsp;&nbsp;",
+          "           <li><strong>Juan González Gómez</strong>&nbsp;&nbsp;&nbsp;",
           '<a class="action-open-url-external-browser" href="https://github.com/Obijuan"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
           '<a class="action-open-url-external-browser" href="https://twitter.com/Obijuan_cube"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
           "</li>",
           "</ul>",
+          "    <p>Highlighted contributors:</p>",
+          '    <ul  class="credits-developers-list">',
+         
+          "           <li><strong>Alex Gutierrez Tomas</strong>&nbsp;&nbsp;&nbsp;",
+          '<a class="action-open-url-external-browser" href="https://github.com/mslider"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
+          '<a class="action-open-url-external-browser" href="https://twitter.com/microslider"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
+          "</li>",
+          "           <li><strong>Joaquim</strong>&nbsp;&nbsp;&nbsp;",
+          '<a class="action-open-url-external-browser" href="https://github.com/jojo535275"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
+          "</li>",
+          "           <li><strong>Democrito</strong>&nbsp;&nbsp;&nbsp;",
+          '<a class="action-open-url-external-browser" href="https://github.com/Democrito"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
+          "</li>",
+          '<li><strong>Fernando Mosquera</strong>&nbsp;&nbsp;&nbsp;',
+          '<a class="action-open-url-external-browser" href="https://github.com/benitoss"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
+          "</li>",
+          "</ul>",
+          "    <p>Thanks to <strong>Jesús Arroyo Torrens</strong>, ",
+          '<a class="action-open-url-external-browser" href="https://github.com/Jesus89"><img class="credits-rss-icon" src="resources/images/icon-github.svg"></a>&nbsp;&nbsp;',
+          '<a class="action-open-url-external-browser" href="https://twitter.com/JesusArroyo89"><img class="credits-rss-icon" src="resources/images/icon-twitter.svg"></a>',
+          'who start this project and was the main developer from 2016/Jan/28 to 2019/Oct',
+          "</p>",
           '    <p>Thanks to the rest of <a class="action-open-url-external-browser" href="https://github.com/FPGAwars/icestudio">contributors</a></p>',
-          '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2021</p>',
+          '    <p><span class="copyleft">&copy;</span> <a class="action-open-url-external-browser" href="http://fpgawars.github.io">FPGAwars</a> 2016-2022</p>',
           '<img src="resources/images/fpgawars-logo.png">',
           "  </div>",
           "</div>",
@@ -1352,10 +1372,7 @@ angular
       shortcuts.method("showLabelFinder", $scope.showLabelFinder);
 
       // -- Show Floating toolbox
-
-//MOD_0
       shortcuts.method("showToolBox", $scope.showToolBox);
-
 
       shortcuts.method("removeSelected", removeSelected);
       shortcuts.method("back", function () {
@@ -1437,10 +1454,7 @@ angular
         } else {
           $('.lFinder-case--option').removeClass('on');
         }
-
-//MOD_0
-        findItems();
-      
+        findItems();    
       });
 
       // option -> exact
@@ -1451,10 +1465,7 @@ angular
         } else {
           $('.lFinder-exact--option').removeClass('on');
         }
-
-//MOD_0
         findItems();
-      
       });
 
       // close button
@@ -1481,6 +1492,23 @@ angular
         }
       });
 
+      // Color dropdown menu
+      $(document).on("mousedown", ".lf-dropdown-title", function (){
+        toggleColorDropdown();
+      });
+      $(document).on("mouseleave", ".lf-dropdown-menu", function (){
+        if (colorDropdown === true){
+          toggleColorDropdown();
+        }
+      });
+
+      // color get option
+      $(document).on("mousedown", ".lf-dropdown-option", function(){
+        let selected = this;
+        $('.lf-dropdown-title').html("<span class=\"lf-selected-color color-" + selected.dataset.color + "\" data-color=\"" + selected.dataset.color + "\"></span>" + selected.dataset.name + "<span class=\"lf-dropdown-icon\"></span>");
+        toggleColorDropdown();
+      });
+
       //-- Global LABEL-FINDER vars
       let foundItems = 0;
       let actualItem = 0;
@@ -1489,6 +1517,7 @@ angular
       let optionCase = false;
       let optionExact = false;
       let advanced = false;
+      let colorDropdown = false;
 
       //-- LABEL-FINDER functions
       function showLabelFinder() {
@@ -1518,14 +1547,25 @@ angular
         } else {
           $('.lFinder-advanced--toggle').removeClass('on');
           $('.lFinder-advanced').removeClass('show');
+          if (colorDropdown === true){
+            toggleColorDropdown();
+          }
+        }
+      }
+
+      function toggleColorDropdown(){
+        if (colorDropdown === true){
+          colorDropdown = false;
+          $('.lf-dropdown-menu').removeClass('show');
+        } else {
+          colorDropdown = true;
+          $('.lf-dropdown-menu').addClass('show');
         }
       }
 
       function findItems() {
         $('.highlight').removeClass('highlight');
         $('.greyedout').removeClass('greyedout');
-
-//MOD_0
         let searchName = $('.lFinder-field').val();
         let parsedSearch = utils.parsePortLabel(searchName, common.PATTERN_PORT_LABEL); // parse search label name
 
@@ -1643,7 +1683,7 @@ angular
       }
 
       function changeLabelColor() {
-        let newColor = $('.lFinder-color--dropdown').val();
+        let newColor = $('.lf-selected-color').data('color');
         if (actualItem > 0 && newColor.length > 0) {
           graph.editLabelBlock(itemList[actualItem -1].attributes.id, itemList[actualItem -1].attributes.data.name, newColor);
         }

@@ -29,40 +29,44 @@
     <input type="text" class="lFinder-field">
       <span class="items-found">0/0</span>
     </input>
-    <div class="lFinder-find">Find</div>
+    <div class="lFinder-find">{{'Find'| translate}}</div>
     <div class="lFinder-prev">Prev</div>
     <div class="lFinder-next">Next</div> 
     <div class="lFinder-close"></div> 
     <div class="lFinder-advanced">
-      <span class="lFinder-name">new name:</span>
+      <span class="lFinder-name">{{'New Name:'| translate}}</span>
       <input class="lFinder-name--field"></input>
-      <div class="lFinder-replace--name">Replace one</div>
-      <span class="lFinder-color">new color:</span>
-      <select class="form-control lFinder-color--dropdown">
-        <option value="indianred">IndianRed</option>
-        <option value="red">Red</option>
-        <option value="deeppink">DeepPink</option>
-        <option value="mediumvioletred">MediumVioletRed</option>
-        <option value="coral">Coral</option>
-        <option value="orangered">OrangeRed</option>
-        <option value="darkorange">DarkOrange</option>
-        <option value="gold">Gold</option>
-        <option value="yellow">Yellow</option>
-        <option value="fuchsia" selected="">Fuchsia</option>
-        <option value="slateblue">SlateBlue</option>
-        <option value="greenyellow">GreenYellow</option>
-        <option value="springgreen">SpringGreen</option>
-        <option value="darkgreen">DarkGreen</option>
-        <option value="olivedrab">OliveDrab</option>
-        <option value="lightseagreen">LightSeaGreen</option>
-        <option value="turquoise">Turquoise</option>
-        <option value="steelblue">SteelBlue</option>
-        <option value="deepskyblue">DeepSkyBlue</option>
-        <option value="royalblue">RoyalBlue</option>
-        <option value="navy">Navy</option>
-      </select>
-      <div class="lFinder-change--color">Change Color</div>
-      <div class="lFinder-replace--all">Replace All</div>
+      <div class="lFinder-replace--name">{{'Replace One'| translate}}</div>
+      <span class="lFinder-color">{{'New Color:'| translate}}</span>
+      <div class="lFinder-color--dropdown">
+        <div class="lf-dropdown-title"><span class="lf-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lf-dropdown-icon"></span></div>
+        <div class="lf-dropdown-menu">
+          <div class="lf-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lf-option-color color-indianred"></span>IndianRed</div>
+          <div class="lf-dropdown-option" data-color="red" data-name="Red"><span class="lf-option-color color-red"></span>Red</div>
+          <div class="lf-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lf-option-color color-deeppink"></span>DeepPink</div>
+          <div class="lf-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lf-option-color color-mediumvioletred"></span>MediumVioletRed</div>
+          <div class="lf-dropdown-option" data-color="coral"data-name="Coral"><span class="lf-option-color color-coral"></span>Coral</div>
+          <div class="lf-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lf-option-color color-orangered"></span>OrangeRed</div>
+          <div class="lf-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lf-option-color color-darkorange"></span>DarkOrange</div>
+          <div class="lf-dropdown-option" data-color="gold"data-name="Gold"><span class="lf-option-color color-gold"></span>Gold</div>
+          <div class="lf-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lf-option-color color-yellow"></span>Yellow</div>
+          <div class="lf-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lf-option-color color-fuchsia"></span>Fuchsia</div>
+          <div class="lf-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lf-option-color color-slateblue"></span>SlateBlue</div>
+          <div class="lf-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lf-option-color color-greenyellow"></span>GreenYellow</div>
+          <div class="lf-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lf-option-color color-springgreen"></span>SpringGreen</div>
+          <div class="lf-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lf-option-color color-darkgreen"></span>DarkGreen</div>
+          <div class="lf-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lf-option-color color-olivedrab"></span>OliveDrab</div>
+          <div class="lf-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lf-option-color color-lightseagreen"></span>LightSeaGreen</div>
+          <div class="lf-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lf-option-color color-turquoise"></span>Turquoise</div>
+          <div class="lf-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lf-option-color color-steelblue"></span>SteelBlue</div>
+          <div class="lf-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lf-option-color color-deepskyblue"></span>DeepSkyBlue</div>
+          <div class="lf-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lf-option-color color-royalblue"></span>RoyalBlue</div>
+          <div class="lf-dropdown-option" data-color="navy"data-name="Navy"><span class="lf-option-color color-navy"></span>Navy</div>
+          <div class="lf-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lf-option-color color-lightgray"></span>LightGray</div>
+        </div>
+      </div>
+      <div class="lFinder-change--color">{{'Change Color'| translate}}</div>
+      <div class="lFinder-replace--all">{{'Replace All'| translate}}</div>
     </div>
   </div>
 

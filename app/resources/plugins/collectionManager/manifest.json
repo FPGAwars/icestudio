@@ -6,6 +6,8 @@
         "name":"Carlos Venegas",
         "twitter": "@cavearr"
     },
+    "version":"1.0",
+    "launchAtStartup":true,
     "icon": "assets/icon.svg",
     "multipleInstances": false,
     "gui":{

@@ -86,7 +86,6 @@ class IceGUI {
 
 
   registerEvents() {
-    console.log('registerEvents!');
     let _this = this;
 
     function eventResize() {
@@ -243,7 +242,6 @@ class IceGUI {
 
   elGetParents(el, parentSelector) {
 
-  //console.log(el,parentSelector)
 
     var parents = [];
     var p = el.parentNode;
@@ -356,9 +354,7 @@ class IceGUI {
     let id = this.vdom[index].key;
     
     if (node.rendered === false) {
-      console.log(this.dom);
       let oldNode=this.el(`#${id}`);
-      console.log('NODE',oldNode);
       if(oldNode !== null) oldNode.remove();
       let embededStyle = this.computeCss(node.initial);
       
@@ -374,7 +370,6 @@ class IceGUI {
       if (node.html) {
         wrapper.innerHTML = node.html;
       }
-      console.log(this.vdom[index]);
       let shadow = (typeof this.vdom[index].dom.shadowRoot === 'undefined' ||
                     this.vdom[index].dom.shadowRoot === null)? this.vdom[index].dom.attachShadow({ mode: "open" }) 
                                                                             : this.vdom[index].dom.shadowRoot;

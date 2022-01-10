@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:594
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -151,6 +151,10 @@ msgstr ""
 "ATENCIÓN ! : Las modificaciones también se aplicarán en todas las copias del "
 "bloque"
 
+#: app/views/design.html:64
+msgid "Change Color"
+msgstr "Cambiar Color"
+
 #: app/scripts/services/tools.js:1330
 msgid "Check Internet connection..."
 msgstr "Comprobando conexión a Internet..."
@@ -170,8 +174,7 @@ msgstr "Selecciona un color"
 
 #: app/scripts/services/project.js:168
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr ""
-"Haz clic aquí para <b>descargar una versión más nueva</ b> de Icestudio"
+msgstr "Haz clic aquí para <b>descargar una versión más nueva</ b> de Icestudio"
 
 #: app/scripts/services/tools.js:1651
 msgid "Click here to <b>setup the drivers</b>"
@@ -205,7 +208,7 @@ msgstr "Código"
 
 #: app/scripts/services/blocks.js:621
 msgid "Code block needs at least one input or one output"
-msgstr ""
+msgstr "El bloque de código necesita al menos una entrada o una salida"
 
 #: app/views/menu.html:368
 msgid "Collection"
@@ -482,6 +485,10 @@ msgstr "Plugins externos"
 msgid "External plugins updated"
 msgstr "Plugins externos actualizados"
 
+#: app/views/design.html:32
+msgid "Find"
+msgstr "Buscar"
+
 #: app/scripts/services/tools.js:688
 msgid "FPGA I/O ports not defined"
 msgstr "Puertos E/S de la FPGA no definidos"
@@ -606,19 +613,22 @@ msgstr ""
 msgid ""
 "Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
-msgstr ""
+msgstr "Instale la cadena de herramientas de DESARROLLO. Se descargará. Esta operación"
+"Requiere conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1163
 msgid ""
 "Install the LATEST STABLE toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
-msgstr ""
+msgstr "Instale la ÚLTIMA cadena de herramientas ESTABLE. Se descargará. Esta operación"
+"Requiere conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1117
 msgid ""
 "Install the STABLE Toolchain. It will be downloaded. This operation requires "
 "Internet connection. Do you want to continue?"
-msgstr ""
+msgstr "Instale la cadena de herramientas ESTABLE. Se descargará. Esta operación"
+"Requiere conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1632
 msgid "Installation completed"
@@ -675,6 +685,10 @@ msgstr "Italiano"
 msgid "Korean"
 msgstr ""
 
+#: app/views/menu.html:194
+msgid "Label Finder"
+msgstr "Buscar etiqueta"
+
 #: app/views/menu.html:203
 msgid "Language"
 msgstr "Idioma"
@@ -686,7 +700,7 @@ msgstr ""
 #: app/scripts/services/blocks.js:1148 app/scripts/services/blocks.js:1269
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:90
 msgid "LightSeaGreen"
-msgstr "IndianRed"
+msgstr "LightSeaGreen"
 
 #: app/scripts/services/project.js:89
 msgid "Load"
@@ -716,7 +730,7 @@ msgstr "Tamaño máximo del bus: 96 bits"
 #: app/scripts/services/blocks.js:1136 app/scripts/services/blocks.js:1257
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:78
 msgid "MediumVioletRed"
-msgstr "IndianRed"
+msgstr "MediumVioletRed"
 
 #: app/views/menu.html:614
 msgid "Memory"
@@ -734,6 +748,14 @@ msgstr "Navy"
 #: app/views/menu.html:55
 msgid "New"
 msgstr "Nuevo"
+
+#: app/views/design.html:40
+msgid "New Color:"
+msgstr "Nuevo Color:"
+
+#: app/views/design.html:37
+msgid "New Name:"
+msgstr "Nuevo nombre:"
 
 #: app/scripts/controllers/menu.js:1197
 msgid "No collections stored"
@@ -851,6 +873,14 @@ msgstr "Eliminar"
 #: app/views/menu.html:529
 msgid "Remove all"
 msgstr "Eliminar todo"
+
+#: app/views/design.html:65
+msgid "Replace All"
+msgstr "Cambiar todos"
+
+#: app/views/design.html:39
+msgid "Replace One"
+msgstr "Cambiar uno"
 
 #: app/scripts/services/utils.js:819
 msgid "Reset SVG"
@@ -1005,6 +1035,10 @@ msgstr ""
 "Para guardar tu diseño, debes bloquear el candado e ir al diseño de nivel "
 "superior. <br/> <br/> Si deseas exportar este submódulo a un archivo, "
 "ejecuta el comando \"Guardar como\" para hacerlo."
+
+#: app/views/menu.html:199
+msgid "Toolbox"
+msgstr "Herramientas"
 
 #: app/views/menu.html:428
 msgid "Toolchain"

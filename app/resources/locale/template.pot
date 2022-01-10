@@ -151,6 +151,10 @@ msgstr ""
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
+#: app/views/design.html:64
+msgid "Change Color"
+msgstr ""
+
 #: app/scripts/services/tools.js:1330
 msgid "Check Internet connection..."
 msgstr ""
@@ -504,6 +508,10 @@ msgstr ""
 msgid "External plugins updated"
 msgstr ""
 
+#: app/views/design.html:32
+msgid "Find"
+msgstr ""
+
 #: app/scripts/services/tools.js:688
 msgid "FPGA I/O ports not defined"
 msgstr ""
@@ -696,6 +704,10 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
+#: app/views/menu.html:194
+msgid "Label Finder"
+msgstr ""
+
 #: app/views/menu.html:203
 msgid "Language"
 msgstr ""
@@ -763,6 +775,15 @@ msgstr ""
 #: app/views/menu.html:55
 msgid "New"
 msgstr ""
+
+#: app/views/design.html:40
+msgid "New Color:"
+msgstr ""
+
+#: app/views/design.html:37
+msgid "New Name:"
+msgstr ""
+
 
 #: app/scripts/controllers/menu.js:1197
 msgid "No collections stored"
@@ -890,6 +911,14 @@ msgstr ""
 
 #: app/views/menu.html:529
 msgid "Remove all"
+msgstr ""
+
+#: app/views/design.html:65
+msgid "Replace All"
+msgstr ""
+
+#: app/views/design.html:39
+msgid "Replace One"
 msgstr ""
 
 #: app/scripts/services/utils.js:819
@@ -1035,6 +1064,10 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:242
 msgid "To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute \"Save as\" command to do it."
+msgstr ""
+
+#: app/views/menu.html:199
+msgid "Toolbox'"
 msgstr ""
 
 #: app/views/menu.html:428

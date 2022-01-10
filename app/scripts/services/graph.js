@@ -1304,6 +1304,10 @@ angular.module('icestudio')
                 opt = opt || {};
 
                 $('body').addClass('waiting');
+                
+                //-- This timeout is necesary for the moment to
+                //-- do consistent the correct design rendered across different
+                //-- operating systems, don't reduce the time of 2 seconds
                 setTimeout(function () {
 
                     commandManager.stopListening();
@@ -1329,7 +1333,7 @@ angular.module('icestudio')
 
                     $('body').removeClass('waiting');
 
-                }, 0);
+                }, 2000);
 
                 return true;
             }

@@ -2,5 +2,4 @@
     "manifest_ver": "1.0",
     "id":"example-plugin",
     "name": "Plugin example",
-    "icon": "img/icestudio-logo.png"
-}
+    "icon": "img/icestudio-logo.png"}
