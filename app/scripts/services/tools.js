@@ -1184,13 +1184,18 @@ angular
             "The toolchain will be removed. Do you want to continue?"
           ),
           function () {
+
+            installationStatus();
+
             //-- Remove the toolchain
             utils.removeToolchain();
 
             //-- Init the related flags
             toolchain.apio = "";
             toolchain.installed = false;
+
             alertify.success(gettextCatalog.getString("Toolchain removed"));
+            restoreStatus();
           }
         );
       };
