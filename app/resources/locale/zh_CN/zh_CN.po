@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
@@ -25,6 +25,10 @@ msgid ""
 "<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
 "and reconnect the board</li></ol>"
 msgstr ""
+"<h4>FTDI 驱动安装说明</h4><ol><li>将FPGA板连接到USB，等待Windows完成驱动的默"
+"认安装</li><li>点击确定按钮后， FTDI 驱动安装程序将在新窗口中启动</li><li>在"
+"安装程序中，将开发板的 <b>(Interface 0)</b> 驱动程序替换为 <b>libusbK</b></"
+"li ><li>拔下电路板并重新连接</li></ol>"
 
 #: app/scripts/services/drivers.js:312
 msgid ""
@@ -43,6 +47,9 @@ msgid ""
 "the steps to install the driver</li><li>Unplug and reconnect the board</li></"
 "ol>"
 msgstr ""
+"<h4>串口驱动安装说明</h4><ol><li>将FPGA开发板连接到USB，等待Windows完成驱动的"
+"默认安装</li><li>点击确定按钮后， 串口驱动安装程序将在新窗口中启动</li><li>在"
+"安装程序中，按照步骤安装驱动程序</li><li>拔下并重新连接开发板</li></ol>"
 
 #: app/scripts/services/drivers.js:326
 msgid ""
@@ -70,7 +77,7 @@ msgstr "添加为图块"
 
 #: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:458
 msgid "Address format"
-msgstr ""
+msgstr "地址格式"
 
 #: app/scripts/services/tools.js:1173
 msgid "All collections removed"
@@ -86,7 +93,7 @@ msgstr "作者"
 
 #: app/views/version.html:33
 msgid "Automatic check for new versions"
-msgstr ""
+msgstr "自动检查新版本"
 
 #: app/views/menu.html:367
 msgid "Basic"
@@ -101,10 +108,12 @@ msgid ""
 "Because Icestudio is in actively development it is important to stay your "
 "icestudio in the last version. Now we are notifying you!"
 msgstr ""
+"由于 Icestudio 正在积极开发和迭代中, 所以保持最新的版本是非常必要的。现在我们"
+"通知您!"
 
 #: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
 msgid "Binary"
-msgstr ""
+msgstr "二进制"
 
 #: app/scripts/services/blocks.js:1183 app/scripts/services/blocks.js:1207
 #: app/scripts/services/blocks.js:1297 app/scripts/services/blocks.js:1319
@@ -190,15 +199,15 @@ msgstr "中文"
 #: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
 #: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
 msgid "Choose a color"
-msgstr ""
+msgstr "选择一个颜色"
 
 #: app/views/menu.html:325
 msgid "Chrome Dev Tools"
-msgstr ""
+msgstr "Chrome 开发者工具"
 
 #: app/scripts/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr ""
+msgstr "点击此处 <b>下载 Icestudio 的新版本</b>"
 
 #: app/scripts/services/tools.js:960
 msgid "Click here to <b>setup the drivers</b>"
@@ -216,11 +225,11 @@ msgstr "点击此处浏览"
 #: app/scripts/services/blocks.js:1152 app/scripts/services/blocks.js:129
 #: app/scripts/services/blocks.js:1363 app/scripts/services/blocks.js:203
 msgid "Clock not allowed for data buses"
-msgstr ""
+msgstr "数据总线上不可以使用时钟"
 
 #: app/views/menu.html:110
 msgid "Clone"
-msgstr ""
+msgstr "克隆"
 
 #: app/scripts/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
@@ -244,7 +253,7 @@ msgstr "集合 {{collection}} 的信息未定义"
 
 #: app/scripts/services/tools.js:1057
 msgid "Collection {{name}} added"
-msgstr "已添加集合 {{name}} "
+msgstr "已添加集合 {{name}}"
 
 #: app/scripts/services/tools.js:1051
 msgid "Collection {{name}} not replaced"
@@ -252,15 +261,15 @@ msgstr "集合 {{name}} 未被替换"
 
 #: app/scripts/services/tools.js:1167
 msgid "Collection {{name}} removed"
-msgstr "已移除集合 {{name}} "
+msgstr "已移除集合 {{name}}"
 
 #: app/scripts/services/tools.js:1047
 msgid "Collection {{name}} replaced"
-msgstr "已替换集合 {{name}} "
+msgstr "已替换集合 {{name}}"
 
 #: app/scripts/controllers/menu.js:684
 msgid "Collection {{name}} selected"
-msgstr "已选中集合 {{name}} "
+msgstr "已选中集合 {{name}}"
 
 #: app/views/menu.html:293
 msgid "Collections"
@@ -268,7 +277,7 @@ msgstr "集合"
 
 #: app/scripts/controllers/menu.js:657 app/views/menu.html:171
 msgid "Command output"
-msgstr ""
+msgstr "命令输出"
 
 #: app/views/menu.html:352
 msgid "Community forum"
@@ -292,12 +301,12 @@ msgstr "复制"
 
 #: app/views/version.html:15
 msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr ""
+msgstr "复制 & 粘贴或复制 & 克隆图块"
 
 #: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
 #: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
 msgid "Coral"
-msgstr ""
+msgstr "珊瑚红"
 
 #: app/scripts/services/tools.js:885
 msgid "Create virtualenv..."
@@ -314,12 +323,12 @@ msgstr "Czech"
 #: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
 #: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
 msgid "DarkGreen"
-msgstr ""
+msgstr "深绿"
 
 #: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
 #: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
 msgid "DarkOrange"
-msgstr ""
+msgstr "深橙"
 
 #: app/views/menu.html:161
 msgid "Datasheet"
@@ -327,17 +336,17 @@ msgstr "数据表"
 
 #: app/scripts/services/blocks.js:1565 app/scripts/services/blocks.js:462
 msgid "Decimal"
-msgstr ""
+msgstr "十进制"
 
 #: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
 #: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
 msgid "DeepPink"
-msgstr ""
+msgstr "深粉"
 
 #: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
 #: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
 msgid "DeepSkyBlue"
-msgstr ""
+msgstr "深蓝"
 
 #: app/views/menu.html:213
 msgid "Default"
@@ -347,7 +356,7 @@ msgstr "默认"
 msgid ""
 "Default toolchain not found. Toolchain will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
-msgstr "未找到默认工具链，将使用网络下载。这个操作需要Internet连接，是否继续？"
+msgstr "未找到默认工具链，将使用网络下载。这个操作需要网络连接，是否继续？"
 
 #: app/scripts/services/utils.js:574
 msgid "Description"
@@ -375,7 +384,7 @@ msgstr "文档"
 
 #: app/views/version.html:41
 msgid "Don't display"
-msgstr ""
+msgstr "不再显示"
 
 #: app/views/menu.html:277
 msgid "Drivers"
@@ -425,7 +434,7 @@ msgstr "输入常量图块名称"
 
 #: app/scripts/controllers/menu.js:456
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "输入新集合路径"
 
 #: app/scripts/services/blocks.js:162 app/scripts/services/blocks.js:66
 msgid "Enter the input blocks"
@@ -437,7 +446,7 @@ msgstr "输入输入端口名称"
 
 #: app/scripts/services/blocks.js:453
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "输入内存图块名称"
 
 #: app/scripts/services/blocks.js:234 app/scripts/services/blocks.js:294
 msgid "Enter the output blocks"
@@ -481,15 +490,15 @@ msgstr "导出"
 
 #: app/scripts/controllers/menu.js:235
 msgid "Export submodule"
-msgstr ""
+msgstr "导出子模块"
 
 #: app/views/menu.html:135
 msgid "External collections"
-msgstr ""
+msgstr "外部集合"
 
 #: app/scripts/controllers/menu.js:473
 msgid "External collections updated"
-msgstr ""
+msgstr "外部集合已更新"
 
 #: app/scripts/services/tools.js:892
 msgid "Extract default apio files..."
@@ -531,7 +540,7 @@ msgstr "文件 {{file}} 不存在"
 
 #: app/scripts/services/project.js:524
 msgid "File {{file}} imported"
-msgstr "已导入文件 {{file}} "
+msgstr "已导入文件 {{file}}"
 
 #: app/views/menu.html:117
 msgid "Fit content"
@@ -544,7 +553,7 @@ msgstr "French"
 #: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
 #: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
 msgid "Fuchsia"
-msgstr ""
+msgstr "紫红"
 
 #: app/views/languages.html:64
 msgid "Galician"
@@ -552,7 +561,7 @@ msgstr "Galician"
 
 #: app/views/version.html:24
 msgid "Generic blocks"
-msgstr ""
+msgstr "标准图块"
 
 #: app/views/languages.html:28
 msgid "German"
@@ -561,16 +570,16 @@ msgstr "German"
 #: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
 #: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
 msgid "Gold"
-msgstr ""
+msgstr "金黄"
 
 #: app/views/languages.html:46
 msgid "Greek"
-msgstr ""
+msgstr "Greek"
 
 #: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
 #: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
 msgid "GreenYellow"
-msgstr ""
+msgstr "黄绿"
 
 #: app/views/menu.html:332
 msgid "Help"
@@ -578,7 +587,7 @@ msgstr "帮助"
 
 #: app/scripts/services/blocks.js:1566 app/scripts/services/blocks.js:463
 msgid "Hexadecimal"
-msgstr ""
+msgstr "十六进制"
 
 #: app/views/version.html:6
 msgid "Icestudio Inception"
@@ -588,7 +597,7 @@ msgstr ""
 msgid ""
 "If you are clonning blocks, it is very important than you change block "
 "information to identify the new block features."
-msgstr ""
+msgstr "如果您正在克隆块，则更改块信息以识别新块特征非常重要。"
 
 #: app/views/version.html:25
 msgid ""
@@ -596,12 +605,14 @@ msgid ""
 "as templates. When you insert a generic block from a collection, acts as a "
 "clone for rapidly modifications without do a copy and clone operation."
 msgstr ""
+"如果您正在开发一个集合，您可以制作用作模板的通用块。 当您从集合中插入通用块"
+"时，充当快速修改的克隆，而无需执行复制和克隆操作。"
 
 #: app/scripts/services/graph.js:1395
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
-msgstr ""
+msgstr "如果你有空白的 IN/OUT 引脚，那是因为这块开发板上没有这些引脚"
 
 #: app/scripts/services/utils.js:588
 msgid "Image"
@@ -617,11 +628,13 @@ msgid ""
 "the original block type and  the modifications only affect at this new block "
 "type"
 msgstr ""
+"换句话说，如果你复制和克隆一个块，你使它独立于原始块类型，并且修改只影响这个"
+"新的块类型"
 
 #: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
 #: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
 msgid "IndianRed"
-msgstr ""
+msgstr "印度红"
 
 #: app/views/menu.html:392
 msgid "Information"
@@ -633,7 +646,7 @@ msgstr "输入"
 
 #: app/views/menu.html:380
 msgid "Input label"
-msgstr ""
+msgstr "输入标签"
 
 #: app/views/menu.html:254
 msgid "Install"
@@ -653,7 +666,7 @@ msgstr "安装工具链"
 
 #: app/scripts/services/drivers.js:217 app/scripts/services/tools.js:861
 msgid "Internet connection required"
-msgstr "需要 Internet 连接"
+msgstr "需要网络连接"
 
 #: app/scripts/services/graph.js:183
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
@@ -694,11 +707,11 @@ msgstr "建议使用 <b>USB 2.0</b> 接口"
 
 #: app/views/languages.html:22
 msgid "Italian"
-msgstr ""
+msgstr "Italian"
 
 #: app/views/version.html:29
 msgid "Labels"
-msgstr ""
+msgstr "标签"
 
 #: app/views/menu.html:124
 msgid "Language"
@@ -707,7 +720,7 @@ msgstr "语言"
 #: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
 #: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
 msgid "LightSeaGreen"
-msgstr ""
+msgstr "亮海绿"
 
 #: app/scripts/services/project.js:79
 msgid "Load"
@@ -725,11 +738,11 @@ msgstr "最大总线宽度：96 bits"
 #: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
 #: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
 msgid "MediumVioletRed"
-msgstr ""
+msgstr "紫红"
 
 #: app/views/menu.html:386
 msgid "Memory"
-msgstr ""
+msgstr "内存"
 
 #: app/scripts/services/utils.js:572
 msgid "Name"
@@ -738,7 +751,7 @@ msgstr "名称"
 #: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
 #: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
 msgid "Navy"
-msgstr ""
+msgstr "海军蓝"
 
 #: app/views/menu.html:32
 msgid "New"
@@ -756,7 +769,7 @@ msgstr "确定"
 #: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
 #: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
 msgid "OliveDrab"
-msgstr ""
+msgstr "橄榄绿"
 
 #: app/views/menu.html:35
 msgid "Open"
@@ -769,7 +782,7 @@ msgstr "打开 SVG"
 #: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
 #: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
 msgid "OrangeRed"
-msgstr ""
+msgstr "橙红"
 
 #: app/scripts/services/project.js:527
 msgid "Original file {{file}} does not exist"
@@ -781,7 +794,7 @@ msgstr "输出"
 
 #: app/views/menu.html:377
 msgid "Output label"
-msgstr ""
+msgstr "输出标签"
 
 #: app/views/menu.html:107
 msgid "Paste"
@@ -789,7 +802,7 @@ msgstr "粘贴"
 
 #: app/scripts/controllers/menu.js:477
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "路径 {{path}} 不存在"
 
 #: app/scripts/services/utils.js:977
 msgid "Please run: {{cmd}}"
@@ -830,7 +843,7 @@ msgstr "只读"
 #: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
 #: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
 msgid "Red"
-msgstr ""
+msgstr "红"
 
 #: app/views/menu.html:97
 msgid "Redo"
@@ -838,7 +851,7 @@ msgstr "重做"
 
 #: app/views/menu.html:302
 msgid "Reload"
-msgstr ""
+msgstr "重载"
 
 #: app/scripts/services/tools.js:566
 msgid "Remote host {{name}} not connected"
@@ -867,11 +880,11 @@ msgstr "重置默认"
 #: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
 #: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
 msgid "RoyalBlue"
-msgstr ""
+msgstr "宝石蓝"
 
 #: app/views/languages.html:58
 msgid "Russian"
-msgstr ""
+msgstr "Russian"
 
 #: app/views/menu.html:50
 msgid "Save"
@@ -887,7 +900,7 @@ msgstr "另存为"
 
 #: app/scripts/controllers/menu.js:197
 msgid "Save submodule"
-msgstr ""
+msgstr "保存子模块"
 
 #: app/views/menu.html:184
 msgid "Select"
@@ -899,7 +912,7 @@ msgstr "全选"
 
 #: app/scripts/services/utils.js:712
 msgid "Select your board"
-msgstr ""
+msgstr "选择开发板"
 
 #: app/scripts/services/blocks.js:1345 app/scripts/services/blocks.js:172
 msgid "Show clock"
@@ -908,7 +921,7 @@ msgstr "显示时钟"
 #: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
 #: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
 msgid "SlateBlue"
-msgstr ""
+msgstr "板岩蓝"
 
 #: app/views/menu.html:348
 msgid "Source code"
@@ -921,7 +934,7 @@ msgstr "Spanish"
 #: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
 #: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
 msgid "SpringGreen"
-msgstr ""
+msgstr "春绿"
 
 #: app/scripts/controllers/menu.js:745
 msgid "Start build"
@@ -938,11 +951,11 @@ msgstr "开始验证"
 #: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
 msgid "SteelBlue"
-msgstr ""
+msgstr "钢蓝"
 
 #: app/views/version.html:11
 msgid "Submodule edition"
-msgstr ""
+msgstr "子模块编辑"
 
 #: app/views/version.html:16
 msgid ""
@@ -950,6 +963,8 @@ msgid ""
 "have in you design six AND blocks, if you modify one of them, yo modify all "
 "of them."
 msgstr ""
+"编辑子模块将会影响所有相同的图块。例如您设计了六个 AND 图块，假设您编辑其中一"
+"个将导致所有块都被更新。"
 
 #: app/scripts/services/tools.js:292
 msgid "Synchronize remote files ..."
@@ -987,21 +1002,21 @@ msgstr "工具链将被更新，这个操作需要Internet连接，是否继续�
 msgid ""
 "The use of labels permits clarify larger designs, connecting blocks without "
 "wires."
-msgstr ""
+msgstr "使用标签可以明确更大的设计，无需电线连接块。"
 
 #: app/views/version.html:9
 msgid ""
 "There are a number of updates in this version that we hope you will like, "
 "some of the key highlights include:"
-msgstr ""
+msgstr "我们希望您会喜欢此版本中的许多更新，其中一些主要亮点包括："
 
 #: app/scripts/services/tools.js:1195
 msgid "There is a new nightly version available"
-msgstr ""
+msgstr "有新的每日构建版本"
 
 #: app/scripts/services/tools.js:1191
 msgid "There is a new stable version available"
-msgstr ""
+msgstr "有新的稳定版本"
 
 #: app/scripts/services/project.js:449
 msgid ""
@@ -1011,7 +1026,7 @@ msgstr "本次导入操作需要项目路径，您必须保存当前项目，是
 
 #: app/views/version.html:17
 msgid "This is a very powerfull feature to maintain large designs."
-msgstr ""
+msgstr "这是维护大型设计的一个非常强大的功能。"
 
 #: app/scripts/services/project.js:83
 msgid "This project is designed for the {{name}} board."
@@ -1021,22 +1036,24 @@ msgstr "该项目为开发板 {{name}} 设计使用。"
 msgid ""
 "This version improve the edition capatabilities, including the possibility "
 "of editing block contents."
-msgstr ""
+msgstr "这个版本改进了编辑功能，为编辑块内容的提供更多可能性。"
 
 #: app/views/version.html:26
 msgid ""
 "To do it, only is necessary that prefix the block identifier with Generic-"
-msgstr ""
+msgstr "为此，只需在块标识符前面加上标准"
 
 #: app/scripts/services/graph.js:410
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
+"要为更深层次的图块使用 \"编辑模式\"，您需要完成当前的\"编辑模式\"，然后锁定键"
+"锁即可。"
 
 #: app/scripts/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
-msgstr ""
+msgstr "要浏览设计，您需要退出 \"编辑模式\"。"
 
 #: app/scripts/controllers/menu.js:198
 msgid ""
@@ -1044,6 +1061,8 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"要保存您的设计，您需要锁定键锁并且切换到顶层设计<br/><br/>如果您想将子模块导"
+"出到文件，请点击\"另存为\"。"
 
 #: app/views/menu.html:250
 msgid "Toolchain"
@@ -1074,7 +1093,7 @@ msgstr "工具"
 #: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
 #: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
 msgid "Turquoise"
-msgstr ""
+msgstr "松石绿"
 
 #: app/views/menu.html:94
 msgid "Undo"
@@ -1086,7 +1105,7 @@ msgstr "未知的开发板"
 
 #: app/scripts/services/project.js:155
 msgid "Unsupported project format {{version}}"
-msgstr ""
+msgstr "不支持的项目格式 {{version}}"
 
 #: app/scripts/app.js:70
 msgid "Untitled"
@@ -1124,7 +1143,7 @@ msgstr "版本"
 
 #: app/views/menu.html:338
 msgid "Version notes"
-msgstr ""
+msgstr "版本说明"
 
 #: app/views/menu.html:152
 msgid "View"
@@ -1174,7 +1193,7 @@ msgstr "远程主机名错误 {{name}}"
 #: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
 #: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
 msgid "Yellow"
-msgstr ""
+msgstr "橙黄"
 
 #: app/scripts/controllers/menu.js:235
 msgid ""
@@ -1182,6 +1201,8 @@ msgid ""
 "this situation \"save as\" works like \"export module\"), Do you like to "
 "continue?"
 msgstr ""
+"您正在编辑一个子模块。如果您保存，您将只会保存子模块 (在此情况下 \"另存为\" "
+"和 \"导出子模块\" 效果相同)，是否继续？"
 
 #: app/scripts/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1191,13 +1212,13 @@ msgstr "您可以载入原始项目，或转换以适应开发板 {{name}}。"
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
-msgstr ""
+msgstr "您只能在顶层设计中编译。在子模块中您将只能 <strong>验证</strong>"
 
 #: app/scripts/controllers/menu.js:761
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
-msgstr ""
+msgstr "您只能在顶层设计中上传。在子模块中您将只能 <strong>验证</strong>"
 
 #: app/scripts/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
