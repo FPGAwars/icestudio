@@ -136,6 +136,7 @@ angular
       iceConsole.log("\n\n");
 
       collections.loadAllCollections();
+      
       utils.loadLanguage(profile, function () {
         if (profile.get("board") === "") {
           utils.selectBoardPrompt(function (selectedBoard) {
@@ -146,11 +147,15 @@ angular
                 name: utils.bold(newBoard.info.label),
               })
             );
-            tools.checkToolchain();
+
+            tools.checkToolchain( () => {}, //-- No callback 
+                                  false); //-- No error notifications
+
           });
         } else {
           profile.set("board", boards.selectBoard(profile.get("board")).name);
-          tools.checkToolchain();
+          tools.checkToolchain( () => {}, //-- No callback 
+                                false); //-- No error notifications
         }
 
         $("html").attr("lang", profile.get("language"));

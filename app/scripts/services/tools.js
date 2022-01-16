@@ -339,7 +339,7 @@ angular
       //-- toolchain.apio global object
       //-- It is also checked if the version is correct (with the version given in the  
       //-- package.json package)
-      function checkToolchain(callback) {
+      function checkToolchain(callback, notifyerror=true) {
 
         iceConsole.log("===> tools.CHECKTOOLCHAIN");
         console.log("===> tools.CHECKTOOLCHAIN");
@@ -416,7 +416,7 @@ angular
               );
             }
           }
-        });
+        }, notifyerror);
       }
       //----------------------------------------------------------------------------------
 
