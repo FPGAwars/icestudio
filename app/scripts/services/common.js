@@ -2,21 +2,29 @@
 
 /*jshint unused:false*/
 
+//------------------------------------------------------------------------------
+//-- This module defines the global data structures used in Icestudio
+//-- The different Icestudio modules get that information and store it
+//-- in the common module, so that is always available to the rest of modules
+//-----------------------------------------------------------------------------
+
 angular
   .module("icestudio")
   .service("common", function (nodePath, nodeTmp, nodeFs, _package) {
-    // Project version
+
+    // Project version. It defines the current structure for the 
+    // icestudio projects (Both in memory and on the .ice files)
     this.VERSION = "1.2";
 
-    // Project status
+    // Project status: Has it change from the previous build or not?
     this.hasChangesSinceBuild = false;
 
     // All project dependencies
     this.allDependencies = {};
 
     // Selected board
-    this.boards = [];
-    this.selectedBoard = null;
+    this.boards = []; //-- Array with the board objects. Initialized with the boards.loadBoards() function
+    this.selectedBoard = null;  //-- Board object. Current board used
     this.pinoutInputHTML = "";
     this.pinoutOutputHTML = "";
 

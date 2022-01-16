@@ -48,17 +48,17 @@ angular
     //-- Read all the boards FILES and store all the information  
     //-- in the GLOBAL OBJECT: common.boards
     //-----------------------------------------------------------------
-    //-- Only the board located in the menu.json FILE are READ
+    //-- Only the boards located in the menu.json FILE are READ
     //-----------------------------------------------------------------
     this.loadBoards = function () {
 
-      var boards = [];
+      let boards = [];
 
       //-- Construct the Boards path: "resources/boards"
-      var path = nodePath.join("resources", "boards");
+      let path = nodePath.join("resources", "boards");
 
       //-- Read the board menu json file and convert into an object
-      var menu = nodeFs.readFileSync(nodePath.join(path, "menu.json"));
+      let menu = nodeFs.readFileSync(nodePath.join(path, "menu.json"));
       menu = JSON.parse(menu);
       
       //-- The menu is divided in big sections: The FPGA family: ICE40HX8k, ICE40HX4k, 
