@@ -1,20 +1,17 @@
 "use strict";
 
-/* exported ICEpm */
-var ICEpm =false;
-/* exported iceConsoler */
+//-- Disable the jshint Warning: "xxxx defined but never used"
+/*jshint unused:false*/
+
+//-- Global Plugin Manager
+//-- It controlls all the plugins
+//-- Global object declaration
+var ICEpm = new IcePlugManager();
+
+//-- Global CONSOLE. Used for Debugging
 //-- The log file by default is "icestudio.log", located in the
 //-- user home folder
-var iceConsole = false;
-//-------- This is the main APP ENTRY Point
-/* exported ICEpm */
-ICEpm = new IcePlugManager();
-
-/* exported iceConsoler */
-//-- The log file by default is "icestudio.log", located in the
-//-- user home folder
-iceConsole = new IceLogger();
-
+var iceConsole = new IceLogger();
 
 
 angular
@@ -45,7 +42,7 @@ angular
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
-    boards.loadBoards();
+    boards.loadBoards();  //-- Init common.boards
 
     //-----------------------------------
     //-- Load the profile file
@@ -136,6 +133,7 @@ angular
       iceConsole.log("\n\n");
 
       collections.loadAllCollections();
+
       utils.loadLanguage(profile, function () {
         if (profile.get("board") === "") {
           utils.selectBoardPrompt(function (selectedBoard) {
@@ -146,11 +144,15 @@ angular
                 name: utils.bold(newBoard.info.label),
               })
             );
-            tools.checkToolchain();
+
+            tools.checkToolchain( () => {}, //-- No callback 
+                                  false); //-- No error notifications
+
           });
         } else {
           profile.set("board", boards.selectBoard(profile.get("board")).name);
-          tools.checkToolchain();
+          tools.checkToolchain( () => {}, //-- No callback 
+                                false); //-- No error notifications
         }
 
         $("html").attr("lang", profile.get("language"));

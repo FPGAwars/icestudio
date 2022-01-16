@@ -165,10 +165,15 @@ angular.module('icestudio')
 
     //--------------------------------------------------------------
     //-- Execute the given system command
-    //-- command is an array of string containing the commands to
-    //-- execute along with the arguments
-    //--
-    this.executeCommand = function (command, callback) {
+    //-- INPUTS:
+    //--   -command: array of string containing the commands to
+    //--    execute along with the arguments
+    //--   -callback: Function called when the command executed is done
+    //--   -notifyerror: Show a GUI notification if there is an error
+    //-------------------------------------------------------------------
+    this.executeCommand = function (command, 
+                                    callback, 
+                                    notifyerror=true) {
 
       //-- Construct a string with the full command
       let cmd = command.join(' ');
@@ -225,11 +230,16 @@ angular.module('icestudio')
           iceConsole.log("CMD: " + command);
 
           //-- Error executing the command
-          alertify.error('Error executting command ' + command, 30);
+          //-- Show the error notification
+          if (notifyerror) {
+            alertify.error('Error executting command ' + command, 30);
+          }
+
+          //-- Comand finished with errors. Call the callback function
           callback(true, output);
 
         } else {
-          //-- No error
+          //-- Command finished with NO errors. Cal lthe callback function
           callback(false, output);
         }
       });

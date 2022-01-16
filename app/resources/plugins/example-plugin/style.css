@@ -1,0 +1,14 @@
+
+
+body {
+    padding:30px;
+    text-align:center;
+    overflow:hidden;
+    background-color: #222222;
+    color: lightgray;
+}
+
+img {
+      max-width:47%;
+      margin:10px;
+}
