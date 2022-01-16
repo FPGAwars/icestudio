@@ -254,20 +254,21 @@ class IceGuiTree {
       this.indexBlock(args.blockId, args.obj);
     } else {
       let _this = this;
-      setTimeout(function () {
+     setTimeout(function () {
         _this.blockContentLoaded(args);
-      }, 100); // 1000
+     }, 1000); 
     }
   }
 
   afterIndexingDB(callback) {
+    console.log(this.indexQ, this.indexing);
     if (this.indexQ.length === 0 && this.indexing === false) {
       callback(this.vtree);
     } else {
       let _this = this;
-      setTimeout(function () {
+     setTimeout(function () {
         _this.afterIndexingDB(callback);
-      }, 100); // 1000
+     }, 1000);
 
     }
   }

@@ -53,5 +53,8 @@
   },
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
+  },
+  "dependencies": {
+    "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
 }

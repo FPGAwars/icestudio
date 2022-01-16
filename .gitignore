@@ -8,7 +8,7 @@
 *.log
 *.vcd
 *.mo
-
+*.code-workspace
 *.swp
 *~
 app/icerok.capture.raw
