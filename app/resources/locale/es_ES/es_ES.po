@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:594
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
@@ -22,7 +22,7 @@ msgstr "Sobre Icestudio"
 
 #: app/views/version.html:22
 msgid "Acknowledgment"
-msgstr ""
+msgstr "Agradecimientos"
 
 #: app/views/menu.html:502
 msgid "Add"
@@ -87,11 +87,11 @@ msgstr "Bloques"
 
 #: app/views/design.html:19
 msgid ""
-"blocks of the current .ice design. If you do not want a propagation of a "
-"change, make it inside a cloned block (instead of copied one)"
+"blocks of the current .ice design. If you do not want a propagation of a change, make "
+"it inside a cloned block (instead of copied one)"
 msgstr ""
-"presentes en el diseño .ice actual. Si no desea que se propague un cambio, "
-"hágalo dentro de un bloque clonado (en lugar de uno copiado)"
+"presentes en el diseño .ice actual. Si no desea que se propague un cambio, hágalo "
+"dentro de un bloque clonado (en lugar de uno copiado)"
 
 #: app/views/menu.html:340
 msgid "Board"
@@ -148,8 +148,7 @@ msgstr "Catalán"
 #: app/views/design.html:17
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
-"ATENCIÓN ! : Las modificaciones también se aplicarán en todas las copias del "
-"bloque"
+"ATENCIÓN ! : Las modificaciones también se aplicarán en todas las copias del bloque"
 
 #: app/views/design.html:64
 msgid "Change Color"
@@ -507,11 +506,9 @@ msgid "File"
 msgstr "Archivo"
 
 #: app/scripts/services/project.js:502
-msgid ""
-"File {{file}} already exists in the project path. Do you want to replace it?"
+msgid "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
-"El archivo {{file}} ya existe en el directorio del proyecto. ¿Deseas "
-"reemplazarlo?"
+"El archivo {{file}} ya existe en el directorio del proyecto. ¿Deseas reemplazarlo?"
 
 #: app/scripts/services/tools.js:325
 msgid "File {{file}} does not exist"
@@ -566,15 +563,13 @@ msgstr "Hexadecimal"
 
 #: app/scripts/controllers/menu.js:804
 msgid "Icestudio needs to be restarted to switch the new UI Theme."
-msgstr ""
+msgstr "Se necesita reiniciar Icestudio para cambiar al nuevo tema."
 
 #: app/scripts/services/graph.js:1498
-msgid ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
-"board"
+msgid "If you have blank IN/OUT pins, it's because there is no equivalent in this board"
 msgstr ""
-"Si aparecen pins de ENTRADA/SALIDA vacíos, es porque no existe una "
-"equivalencia para tu tarjeta"
+"Si aparecen pins de ENTRADA/SALIDA vacíos, es porque no existe una equivalencia para "
+"tu tarjeta"
 
 #: app/scripts/services/utils.js:776
 msgid "Image"
@@ -607,28 +602,31 @@ msgstr "Instalar (Estable)"
 
 #: app/views/menu.html:453
 msgid "Install Development version"
-msgstr ""
+msgstr "Instalar la versión de desarrollo"
 
 #: app/scripts/services/tools.js:1141
 msgid ""
-"Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
-"requires Internet connection. Do you want to continue?"
-msgstr "Instale la cadena de herramientas de DESARROLLO. Se descargará. Esta operación"
-"Requiere conexión a Internet. ¿Quieres continuar?"
+"Install the DEVELOPMENT toolchain. It will be downloaded. This operation requires "
+"Internet connection. Do you want to continue?"
+msgstr ""
+"Instale la cadena de herramientas de DESARROLLO. Se descargará. Esta "
+"operaciónRequiere conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1163
 msgid ""
-"Install the LATEST STABLE toolchain. It will be downloaded. This operation "
-"requires Internet connection. Do you want to continue?"
-msgstr "Instale la ÚLTIMA cadena de herramientas ESTABLE. Se descargará. Esta operación"
-"Requiere conexión a Internet. ¿Quieres continuar?"
+"Install the LATEST STABLE toolchain. It will be downloaded. This operation requires "
+"Internet connection. Do you want to continue?"
+msgstr ""
+"Instale la ÚLTIMA cadena de herramientas ESTABLE. Se descargará. Esta "
+"operaciónRequiere conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1117
 msgid ""
-"Install the STABLE Toolchain. It will be downloaded. This operation requires "
-"Internet connection. Do you want to continue?"
-msgstr "Instale la cadena de herramientas ESTABLE. Se descargará. Esta operación"
-"Requiere conexión a Internet. ¿Quieres continuar?"
+"Install the STABLE Toolchain. It will be downloaded. This operation requires Internet "
+"connection. Do you want to continue?"
+msgstr ""
+"Instale la cadena de herramientas ESTABLE. Se descargará. Esta operaciónRequiere "
+"conexión a Internet. ¿Quieres continuar?"
 
 #: app/scripts/services/tools.js:1632
 msgid "Installation completed"
@@ -649,8 +647,7 @@ msgstr "Conexión de <i>Pull up</i> no válida:<br>hay un bloque conectado"
 #: app/scripts/services/graph.js:197
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
-"Conexión de <i>Pull up</i> no válida:<br>sólo se permiten bloques "
-"<i>Entrada</i>"
+"Conexión de <i>Pull up</i> no válida:<br>sólo se permiten bloques <i>Entrada</i>"
 
 #: app/scripts/services/graph.js:189
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
@@ -683,7 +680,7 @@ msgstr "Italiano"
 
 #: app/views/languages.html:98
 msgid "Korean"
-msgstr ""
+msgstr "Koreano"
 
 #: app/views/menu.html:194
 msgid "Label Finder"
@@ -695,7 +692,7 @@ msgstr "Idioma"
 
 #: app/views/uithemes.html:26
 msgid "Light"
-msgstr ""
+msgstr "Luminoso"
 
 #: app/scripts/services/blocks.js:1148 app/scripts/services/blocks.js:1269
 #: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:90
@@ -717,11 +714,11 @@ msgstr "Logging avtivado"
 
 #: app/views/menu.html:263
 msgid "Logging file"
-msgstr ""
+msgstr "Archivo de registro (log)"
 
 #: app/scripts/controllers/menu.js:546
 msgid "Logging file updated"
-msgstr ""
+msgstr "Archivo de registro actualizado"
 
 #: app/scripts/services/utils.js:1049
 msgid "Maximum bus size: 96 bits"
@@ -831,11 +828,11 @@ msgstr "Proyecto {{name}} guardado"
 
 #: app/scripts/controllers/menu.js:636
 msgid "Python Environment updated"
-msgstr ""
+msgstr "Entorno de python actualizado"
 
 #: app/views/menu.html:242
 msgid "Python environment"
-msgstr ""
+msgstr "Entorno de Python"
 
 #: app/views/menu.html:135
 msgid "Quit"
@@ -968,11 +965,11 @@ msgstr "Sincronizando ficheros remotos ..."
 
 #: app/views/menu.html:315
 msgid "System Info"
-msgstr ""
+msgstr "Información del sistema"
 
 #: app/views/languages.html:62
 msgid "Taiwan"
-msgstr ""
+msgstr "Taiwan"
 
 #: app/views/menu.html:112
 msgid "Testbench"
@@ -984,11 +981,11 @@ msgstr "La colección {{name}} ya existe."
 
 #: app/scripts/controllers/menu.js:1046
 msgid ""
-"The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"The current FPGA I/O configuration will be lost. Do you want to change to {{name}} "
+"board?"
 msgstr ""
-"La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la "
-"placa {{name}}?"
+"La configuración actual de E/S de la FPGA se perderá. ¿Deseas cambiar a la placa "
+"{{name}}?"
 
 #: app/scripts/services/tools.js:1181
 msgid "The toolchain will be removed. Do you want to continue?"
@@ -1004,11 +1001,11 @@ msgstr "Hay una nueva versión estable disponible"
 
 #: app/scripts/services/project.js:464
 msgid ""
-"This import operation requires a project path. You need to save the current "
-"project. Do you want to continue?"
+"This import operation requires a project path. You need to save the current project. "
+"Do you want to continue?"
 msgstr ""
-"Esta operación de importación requiere una ruta del proyecto. Debes guardar "
-"el proyecto actual. ¿Deseas continuar?"
+"Esta operación de importación requiere una ruta del proyecto. Debes guardar el "
+"proyecto actual. ¿Deseas continuar?"
 
 #: app/scripts/services/project.js:93
 msgid "This project is designed for the {{name}} board."
@@ -1016,11 +1013,11 @@ msgstr "Este proyecto está diseñado para la placa {{name}}."
 
 #: app/scripts/services/graph.js:420
 msgid ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"To enter on \"edit mode\" of deeper block, you need to finish current \"edit mode\", "
+"lock the keylock to do it."
 msgstr ""
-"Para entrar al \"modo de edición\" del bloque más profundo, debes finalizar "
-"el \"modo de edición\" actual, bloqueando el candado."
+"Para entrar al \"modo de edición\" del bloque más profundo, debes finalizar el \"modo "
+"de edición\" actual, bloqueando el candado."
 
 #: app/scripts/controllers/design.js:31
 msgid "To navigate through design, you need to close \"edit mode\"."
@@ -1028,13 +1025,12 @@ msgstr "Para navegar por el diseño, debes cerrar el \"modo de edición\"."
 
 #: app/scripts/controllers/menu.js:242
 msgid ""
-"To save your design you need to lock the keylock and go to top level design."
-"<br/><br/>If you want to export this submodule to a file, execute \"Save as"
-"\" command to do it."
+"To save your design you need to lock the keylock and go to top level design.<br/><br/"
+">If you want to export this submodule to a file, execute \"Save as\" command to do it."
 msgstr ""
-"Para guardar tu diseño, debes bloquear el candado e ir al diseño de nivel "
-"superior. <br/> <br/> Si deseas exportar este submódulo a un archivo, "
-"ejecuta el comando \"Guardar como\" para hacerlo."
+"Para guardar tu diseño, debes bloquear el candado e ir al diseño de nivel superior. "
+"<br/> <br/> Si deseas exportar este submódulo a un archivo, ejecuta el comando "
+"\"Guardar como\" para hacerlo."
 
 #: app/views/menu.html:199
 msgid "Toolbox"
@@ -1072,7 +1068,7 @@ msgstr "Turquoise"
 
 #: app/views/menu.html:213
 msgid "UI theme"
-msgstr ""
+msgstr "Tema de la interfaz"
 
 #: app/views/menu.html:148
 msgid "Undo"
@@ -1179,13 +1175,12 @@ msgstr "Yellow"
 
 #: app/scripts/controllers/menu.js:281
 msgid ""
-"You are editing a submodule, if you save it, you save only the submodule (in "
-"this situation \"save as\" works like \"export module\"), Do you like to "
-"continue?"
+"You are editing a submodule, if you save it, you save only the submodule (in this "
+"situation \"save as\" works like \"export module\"), Do you like to continue?"
 msgstr ""
-"Estás editando un submódulo, si lo guardas, guardas solo el submódulo (en "
-"esta situación \"guardar como\" funciona como \"módulo de exportación\"), "
-"¿Te gustaría continuar?"
+"Estás editando un submódulo, si lo guardas, guardas solo el submódulo (en esta "
+"situación \"guardar como\" funciona como \"módulo de exportación\"), ¿Te gustaría "
+"continuar?"
 
 #: app/scripts/services/project.js:94
 msgid "You can load it as it is or convert it for the {{name}} board."
@@ -1196,16 +1191,16 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
-"Solo puedes construir en el diseño de nivel superior. Dentro de los "
-"submódulos solo puedes <strong>Verificar</strong>"
+"Solo puedes construir en el diseño de nivel superior. Dentro de los submódulos solo "
+"puedes <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:1117
 msgid ""
-"You can only upload  your design at top-level design. Inside submodules you "
-"only can <strong>Verify</strong>"
+"You can only upload  your design at top-level design. Inside submodules you only can "
+"<strong>Verify</strong>"
 msgstr ""
-"Solo puedes cargar su diseño en el diseño de nivel superior. Dentro de los "
-"submódulos solo puedes <strong>Verificar</strong>"
+"Solo puedes cargar su diseño en el diseño de nivel superior. Dentro de los submódulos "
+"solo puedes <strong>Verificar</strong>"
 
 #: app/scripts/controllers/menu.js:435
 msgid "Your changes will be lost if you don’t save them"
@@ -1236,54 +1231,48 @@ msgid "{{name}} exported"
 msgstr "{{name}} exportado"
 
 #~ msgid ""
-#~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
-#~ "board to the USB and wait until Windows finishes the default installation "
-#~ "of the driver</li><li>When the OK button is clicked, the FTDI driver "
-#~ "installer will be launched in a new window</li><li>In the installer, "
-#~ "replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></"
+#~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to "
+#~ "the USB and wait until Windows finishes the default installation of the driver</"
+#~ "li><li>When the OK button is clicked, the FTDI driver installer will be launched "
+#~ "in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver "
+#~ "of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
+#~ msgstr ""
+#~ "<h4>Instrucciones de instalación del controlador FTDI</h4><ol><li>Conecta la placa "
+#~ "FPGA al USB y espera hasta que Windows finalice la instalación predeterminada del "
+#~ "controlador</li><li>Al hacer clic en el botón Aceptar, el instalador del "
+#~ "controlador FTDI se iniciará en una nueva ventana</li><li>En el instalador, "
+#~ "reemplaza el controlador <b>(Interfaz 0)</b> de la placa por <b>libusbK</b></"
+#~ "li><li>Desconecta y vuelve a conectar la placa</li></ol>"
+
+#~ msgid ""
+#~ "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</"
+#~ "li><li>Select the board interface and uninstall the driver</li></ol>"
+#~ msgstr ""
+#~ "<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra el "
+#~ "dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala el "
+#~ "driver</li></ol>"
+
+#~ msgid ""
+#~ "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to "
+#~ "the USB and wait until Windows finishes the default installation of the driver</"
+#~ "li><li>When the OK button is clicked, the Serial driver installer will be launched "
+#~ "in a new window</li><li>In the installer, follow the steps to install the driver</"
 #~ "li><li>Unplug and reconnect the board</li></ol>"
 #~ msgstr ""
-#~ "<h4>Instrucciones de instalación del controlador FTDI</h4><ol><li>Conecta "
-#~ "la placa FPGA al USB y espera hasta que Windows finalice la instalación "
-#~ "predeterminada del controlador</li><li>Al hacer clic en el botón Aceptar, "
-#~ "el instalador del controlador FTDI se iniciará en una nueva ventana</"
-#~ "li><li>En el instalador, reemplaza el controlador <b>(Interfaz 0)</b> de "
-#~ "la placa por <b>libusbK</b></li><li>Desconecta y vuelve a conectar la "
-#~ "placa</li></ol>"
+#~ "<h4>Instrucciones de instalación del controlador Serie</h4><ol><li>Conecta la "
+#~ "placa FPGA al USB y espera hasta que Windows finalice la instalación "
+#~ "predeterminada del controlador</li><li>Al hacer clic en el botón Aceptar, el "
+#~ "instalador del controlador Serie se iniciará en una nueva ventana<li><li>En el "
+#~ "instalador, sigue los pasos para instalar el controlador</li><li>Desconecta y "
+#~ "vuelve a conectar la placa</li></ol>"
 
 #~ msgid ""
-#~ "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-#~ "Device</li><li>Select the board interface and uninstall the driver</li></"
-#~ "ol>"
+#~ "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+#~ "Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 #~ msgstr ""
-#~ "<h4>Instrucciones de desinstalación del driver FTDI</h4><ol><li>Encuentra "
-#~ "el dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y "
-#~ "desinstala el driver</li></ol>"
-
-#~ msgid ""
-#~ "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
-#~ "board to the USB and wait until Windows finishes the default installation "
-#~ "of the driver</li><li>When the OK button is clicked, the Serial driver "
-#~ "installer will be launched in a new window</li><li>In the installer, "
-#~ "follow the steps to install the driver</li><li>Unplug and reconnect the "
-#~ "board</li></ol>"
-#~ msgstr ""
-#~ "<h4>Instrucciones de instalación del controlador Serie</"
-#~ "h4><ol><li>Conecta la placa FPGA al USB y espera hasta que Windows "
-#~ "finalice la instalación predeterminada del controlador</li><li>Al hacer "
-#~ "clic en el botón Aceptar, el instalador del controlador Serie se iniciará "
-#~ "en una nueva ventana<li><li>En el instalador, sigue los pasos para "
-#~ "instalar el controlador</li><li>Desconecta y vuelve a conectar la placa</"
-#~ "li></ol>"
-
-#~ msgid ""
-#~ "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA "
-#~ "USB Device</li><li>Select the board interface and uninstall the driver</"
-#~ "li></ol>"
-#~ msgstr ""
-#~ "<h4>Instrucciones de desinstalación del driver Serie</"
-#~ "h4><ol><li>Encuentra el dispositivo USB FPGA</li><li>Selecciona la "
-#~ "interfaz de la placa y desinstala el driver</li></ol>"
+#~ "<h4>Instrucciones de desinstalación del driver Serie</h4><ol><li>Encuentra el "
+#~ "dispositivo USB FPGA</li><li>Selecciona la interfaz de la placa y desinstala el "
+#~ "driver</li></ol>"
 
 #~ msgid "Automatic check for new versions"
 #~ msgstr "Comprobación automática de nuevas versiones"
@@ -1292,8 +1281,8 @@ msgstr "{{name}} exportado"
 #~ "Because Icestudio is in actively development it is important to stay your "
 #~ "icestudio in the last version. Now we are notifying you!"
 #~ msgstr ""
-#~ "Debido a que Icestudio está en desarrollo activo, es importante mantener "
-#~ "tu icestudio en la última versión. Ahora te estamos notificando!"
+#~ "Debido a que Icestudio está en desarrollo activo, es importante mantener tu "
+#~ "icestudio en la última versión. Ahora te estamos notificando!"
 
 #~ msgid "Chrome Dev Tools"
 #~ msgstr "Chrome Dev Tools"
@@ -1302,11 +1291,11 @@ msgstr "{{name}} exportado"
 #~ msgstr "Copiar y pegar O Copiar y clonar bloques"
 
 #~ msgid ""
-#~ "Default toolchain not found. Toolchain will be downloaded. This operation "
-#~ "requires Internet connection. Do you want to continue?"
+#~ "Default toolchain not found. Toolchain will be downloaded. This operation requires "
+#~ "Internet connection. Do you want to continue?"
 #~ msgstr ""
-#~ "No se encuentra la toolchain por defecto, por lo que será descargada. "
-#~ "Esta operación requiere conexión a Internet. ¿Deseas continuar?"
+#~ "No se encuentra la toolchain por defecto, por lo que será descargada. Esta "
+#~ "operación requiere conexión a Internet. ¿Deseas continuar?"
 
 #~ msgid "Error: default toolchain not found in '{{dir}}'"
 #~ msgstr "Error: toolchain por defecto no encontrada en '{{dir}}'"
@@ -1327,31 +1316,27 @@ msgstr "{{name}} exportado"
 #~ msgstr "Icestudio Inception"
 
 #~ msgid ""
-#~ "If you are clonning blocks, it is very important than you change block "
-#~ "information to identify the new block features."
+#~ "If you are clonning blocks, it is very important than you change block information "
+#~ "to identify the new block features."
 #~ msgstr ""
-#~ "Si estás clonando bloques, es muy importante que cambies la información "
-#~ "del bloque para identificar las nuevas características del bloque."
+#~ "Si estás clonando bloques, es muy importante que cambies la información del bloque "
+#~ "para identificar las nuevas características del bloque."
 
 #~ msgid ""
-#~ "If you are developing a collection, you can make Generic blocks that "
-#~ "works as templates. When you insert a generic block from a collection, "
-#~ "acts as a clone for rapidly modifications without do a copy and clone "
-#~ "operation."
+#~ "If you are developing a collection, you can make Generic blocks that works as "
+#~ "templates. When you insert a generic block from a collection, acts as a clone for "
+#~ "rapidly modifications without do a copy and clone operation."
 #~ msgstr ""
-#~ "Si estás desarrollando una colección, puedes crear bloques genéricos que "
-#~ "funcionen como plantillas. Cuando insertas un bloque genérico de una "
-#~ "colección, actúa como un clon para modificaciones rápidas sin hacer una "
-#~ "operación de copia y clonación."
+#~ "Si estás desarrollando una colección, puedes crear bloques genéricos que funcionen "
+#~ "como plantillas. Cuando insertas un bloque genérico de una colección, actúa como "
+#~ "un clon para modificaciones rápidas sin hacer una operación de copia y clonación."
 
 #~ msgid ""
-#~ "In other way, if you copy and clone a block, you make it independently of "
-#~ "the original block type and  the modifications only affect at this new "
-#~ "block type"
+#~ "In other way, if you copy and clone a block, you make it independently of the "
+#~ "original block type and  the modifications only affect at this new block type"
 #~ msgstr ""
-#~ "De otra manera, si copias y clonas un bloque, lo haces independientemente "
-#~ "del tipo de bloque original y las modificaciones solo afectan a este "
-#~ "nuevo tipo de bloque"
+#~ "De otra manera, si copias y clonas un bloque, lo haces independientemente del tipo "
+#~ "de bloque original y las modificaciones solo afectan a este nuevo tipo de bloque"
 
 #~ msgid "Install default apio..."
 #~ msgstr "Instalar apio..."
@@ -1372,73 +1357,65 @@ msgstr "{{name}} exportado"
 #~ msgstr "Edición de submódulo"
 
 #~ msgid ""
-#~ "Submodule edition affect at all of the same block types. For example if "
-#~ "you have in you design six AND blocks, if you modify one of them, yo "
-#~ "modify all of them."
+#~ "Submodule edition affect at all of the same block types. For example if you have "
+#~ "in you design six AND blocks, if you modify one of them, yo modify all of them."
 #~ msgstr ""
-#~ "La edición de submódulos afecta a todos los mismos tipos de bloque. Por "
-#~ "ejemplo, si tienes en tu diseño seis bloques AND, si modifica uno de "
-#~ "ellos, modificas todos ellos."
+#~ "La edición de submódulos afecta a todos los mismos tipos de bloque. Por ejemplo, "
+#~ "si tienes en tu diseño seis bloques AND, si modifica uno de ellos, modificas todos "
+#~ "ellos."
 
 #~ msgid "The toolchain will be restored to default. Do you want to continue?"
-#~ msgstr ""
-#~ "La toolchain será restaurada a los valores por defecto: ¿Deseas continuar?"
+#~ msgstr "La toolchain será restaurada a los valores por defecto: ¿Deseas continuar?"
 
 #~ msgid ""
-#~ "The use of labels permits clarify larger designs, connecting blocks "
-#~ "without wires."
+#~ "The use of labels permits clarify larger designs, connecting blocks without wires."
 #~ msgstr ""
-#~ "El uso de etiquetas permite aclarar diseños más grandes, conectando "
-#~ "bloques sin cables."
+#~ "El uso de etiquetas permite aclarar diseños más grandes, conectando bloques sin "
+#~ "cables."
 
 #~ msgid ""
-#~ "There are a number of updates in this version that we hope you will like, "
-#~ "some of the key highlights include:"
+#~ "There are a number of updates in this version that we hope you will like, some of "
+#~ "the key highlights include:"
 #~ msgstr ""
-#~ "Hay una serie de actualizaciones en esta versión que esperamos te gusten, "
-#~ "algunos de los aspectos más destacados incluyen:"
+#~ "Hay una serie de actualizaciones en esta versión que esperamos te gusten, algunos "
+#~ "de los aspectos más destacados incluyen:"
 
 #~ msgid "This is a very powerfull feature to maintain large designs."
-#~ msgstr ""
-#~ "Esta es una característica muy poderosa para mantener grandes diseños."
+#~ msgstr "Esta es una característica muy poderosa para mantener grandes diseños."
 
 #~ msgid ""
-#~ "This version improve the edition capatabilities, including the "
-#~ "possibility of editing block contents."
+#~ "This version improve the edition capatabilities, including the possibility of "
+#~ "editing block contents."
 #~ msgstr ""
-#~ "Esta versión mejora las capacidades de edición, incluida la posibilidad "
-#~ "de editar contenidos de bloque."
+#~ "Esta versión mejora las capacidades de edición, incluida la posibilidad de editar "
+#~ "contenidos de bloque."
 
-#~ msgid ""
-#~ "To do it, only is necessary that prefix the block identifier with Generic-"
+#~ msgid "To do it, only is necessary that prefix the block identifier with Generic-"
 #~ msgstr ""
-#~ "Para hacerlo, solo es necesario que prefijes el identificador de bloque "
-#~ "con Generic-"
+#~ "Para hacerlo, solo es necesario que prefijes el identificador de bloque con "
+#~ "Generic-"
 
 #~ msgid "Update"
 #~ msgstr "Actualizar"
 
 #~ msgid "Wellcome to Inception, Icestudio version, focused on submodules."
-#~ msgstr ""
-#~ "Bienvenido a Inception, versión de Icestudio, enfocada en submódulos."
+#~ msgstr "Bienvenido a Inception, versión de Icestudio, enfocada en submódulos."
 
 #~ msgid ""
-#~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
-#~ "board</li><li>Replace the <b>(Interface 0)</b> driver of the board by "
-#~ "<b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
+#~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board</"
+#~ "li><li>Replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></"
+#~ "li><li>Unplug and reconnect the board</li></ol>"
 #~ msgstr ""
-#~ "<h4>Instrucciones de instalación del driver FTDI</h4><ol><li>Conecta la "
-#~ "placa FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la "
-#~ "placa por <b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol>"
+#~ "<h4>Instrucciones de instalación del driver FTDI</h4><ol><li>Conecta la placa "
+#~ "FPGA</li><li>Reemplaza el driver de la <b>(Interface 0)</b> de la placa por "
+#~ "<b>libusbK</b></li><li>Desconecta y conecta la placa</li></ol>"
 
 #~ msgid ""
-#~ "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
-#~ "board</li><li>Install the driver</li><li>Unplug and reconnect the board</"
-#~ "li></ol>"
+#~ "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board</"
+#~ "li><li>Install the driver</li><li>Unplug and reconnect the board</li></ol>"
 #~ msgstr ""
-#~ "<h4>Instrucciones de instalación del driver Serie</h4><ol><li>Conecta la "
-#~ "placa FPGA</li><li>Instala el driver</li><li>Desconecta y conecta la "
-#~ "placa</li></ol>"
+#~ "<h4>Instrucciones de instalación del driver Serie</h4><ol><li>Conecta la placa "
+#~ "FPGA</li><li>Instala el driver</li><li>Desconecta y conecta la placa</li></ol>"
 
 #~ msgid "New project {{name}} created"
 #~ msgstr "Nuevo proyecto {{name}} creado"
@@ -1642,10 +1619,8 @@ msgstr "{{name}} exportado"
 #~ msgstr "Eliminar seleccionado"
 
 #~ msgid ""
-#~ "The current project will be removed. Do you want to continue loading the "
-#~ "project?"
-#~ msgstr ""
-#~ "El actual proyecto se borrará. ¿Deseas continuar abriendo el proyecto?"
+#~ "The current project will be removed. Do you want to continue loading the project?"
+#~ msgstr "El actual proyecto se borrará. ¿Deseas continuar abriendo el proyecto?"
 
 #~ msgid "Virtual port"
 #~ msgstr "Puerto virtual"
@@ -1681,8 +1656,8 @@ msgstr "{{name}} exportado"
 #~ msgstr "Sec"
 
 #~ msgid ""
-#~ "This import operation requires a project path. Yo need to save the "
-#~ "current project. Do you want to continue?"
+#~ "This import operation requires a project path. Yo need to save the current "
+#~ "project. Do you want to continue?"
 #~ msgstr "Esta operación de importación requiere un directorio de proyecto. "
 
 #~ msgid "Enter the block's label"
