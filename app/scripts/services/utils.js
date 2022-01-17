@@ -1,7 +1,5 @@
 'use strict';
 
-
-/*jshint unused:false*/
 angular.module('icestudio')
   .service('utils', function ($rootScope,
     gettextCatalog,
@@ -377,9 +375,9 @@ angular.module('icestudio')
 
       //---- WARNING! It is just for testing in the current WIP
       //-- TEMP FIX: Just for testing. Add a version to the "latest apio version"
-      if (common.APIO_VERSION === common.APIO_VERSION_LATEST_STABLE) {
-        versionString = "==" + "0.8.0";  //-- This version is WIRED! JUST FOR TESTING
-      }
+      //if (common.APIO_VERSION === common.APIO_VERSION_LATEST_STABLE) {
+      //  versionString = "==" + "0.8.0";  //-- This version is WIRED! JUST FOR TESTING
+      //}
 
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
