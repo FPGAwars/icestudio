@@ -23,12 +23,12 @@ angular.module('icestudio')
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
-   
+
     // Get the system pip executable
     // It is available in the common.ENV_PIP object
     this.getPythonPipExecutable = function () {
-      
-      if(!_pythonExecutableCached) {
+
+      if (!_pythonExecutableCached) {
         this.getPythonExecutable();
       }
       if (!_pythonPipExecutableCached) {
@@ -55,35 +55,39 @@ angular.module('icestudio')
           possibleExecutables.push(common.PYTHON_ENV);
 
         } //-- Possible python executables in Windows
-          else if (common.WIN32) {
-            possibleExecutables.push('C:\\Python39\\python.exe');
-            possibleExecutables.push('C:\\Python38\\python.exe');
-            possibleExecutables.push('C:\\Python37\\python.exe');
-            possibleExecutables.push('py.exe -3');
-            possibleExecutables.push('python.exe');
+        else if (common.WIN32) {
+          possibleExecutables.push('C:\\Python310\\python.exe');
+          possibleExecutables.push('C:\\Python39\\python.exe');
+          possibleExecutables.push('C:\\Python38\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
+          possibleExecutables.push('py.exe -3');
+          possibleExecutables.push('python.exe');
 
         } //-- Python executables in Linux/Mac
-          else {
-            possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
-            possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
+        else {
+          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
+          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-            possibleExecutables.push('/usr/bin/python3.9');
-            possibleExecutables.push('/usr/bin/python3.8');
-            possibleExecutables.push('/usr/bin/python3.7');
-            possibleExecutables.push('/usr/bin/python3');
-            possibleExecutables.push('/usr/bin/python');
+          possibleExecutables.push('/usr/bin/python3.10');
+          possibleExecutables.push('/usr/bin/python3.9');
+          possibleExecutables.push('/usr/bin/python3.8');
+          possibleExecutables.push('/usr/bin/python3.7');
+          possibleExecutables.push('/usr/bin/python3');
+          possibleExecutables.push('/usr/bin/python');
 
-            possibleExecutables.push('/usr/local/bin/python3.9');
-            possibleExecutables.push('/usr/local/bin/python3.8');
-            possibleExecutables.push('/usr/local/bin/python3.7');
-            possibleExecutables.push('/usr/local/bin/python3');
-            possibleExecutables.push('/usr/local/bin/python');
+          possibleExecutables.push('/usr/local/bin/python3.10');
+          possibleExecutables.push('/usr/local/bin/python3.9');
+          possibleExecutables.push('/usr/local/bin/python3.8');
+          possibleExecutables.push('/usr/local/bin/python3.7');
+          possibleExecutables.push('/usr/local/bin/python3');
+          possibleExecutables.push('/usr/local/bin/python');
 
-            possibleExecutables.push('python3.9');
-            possibleExecutables.push('python3.8');
-            possibleExecutables.push('python3.7');
-            possibleExecutables.push('python3');
-            possibleExecutables.push('python');
+          possibleExecutables.push('python3.10');
+          possibleExecutables.push('python3.9');
+          possibleExecutables.push('python3.8');
+          possibleExecutables.push('python3.7');
+          possibleExecutables.push('python3');
+          possibleExecutables.push('python');
         }
 
         //-- Move through all the possible executables
@@ -115,8 +119,10 @@ angular.module('icestudio')
 
         //-- Check the output. Return true if it is python3
         return (result !== false && result !== null &&
-          ( result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0 ) );
+          (result.toString().indexOf('3.7') >= 0 ||
+            result.toString().indexOf('3.8') >= 0 ||
+            result.toString().indexOf('3.9') >= 0 ||
+            result.toString().indexOf('3.10') >= 0));
 
       } catch (e) {
         return false;
@@ -169,9 +175,9 @@ angular.module('icestudio')
     //--   -callback: Function called when the command executed is done
     //--   -notifyerror: Show a GUI notification if there is an error
     //-------------------------------------------------------------------
-    this.executeCommand = function (command, 
-                                    callback, 
-                                    notifyerror=true) {
+    this.executeCommand = function (command,
+      callback,
+      notifyerror = true) {
 
       //-- Construct a string with the full command
       let cmd = command.join(' ');
@@ -192,7 +198,7 @@ angular.module('icestudio')
       let proccess = nodeChildProcess.spawn(command[0], args, { shell: true });
 
       //-- String with the latest output to pass to the callback function
-      let output="";
+      let output = "";
 
       //-- When there are outputs available from the command...
       proccess.stdout.on('data', function (data) {
@@ -213,13 +219,13 @@ angular.module('icestudio')
 
         //-- Show them in the log file
         iceConsole.log(`>>(ERROR): ${data}\n`);
-        
+
         common.commandOutput = command.join(' ') + '\n\n' + data;
         $(document).trigger('commandOutputChanged', [common.commandOutput]);
       });
 
       proccess.on('exit', function (code) {
-        
+
         if (code !== 0) {
           _this.enableKeyEvents();
           _this.enableClickEvents();
@@ -250,11 +256,11 @@ angular.module('icestudio')
     this.printApioVersion = function (version) {
       let msg = "";
 
-      switch(version) {
+      switch (version) {
         case common.APIO_VERSION_LATEST_STABLE:
           msg = "Apio LATEST STABLE version";
           break;
-        
+
         case common.APIO_VERSION_STABLE:
           msg = "Apio STABLE version";
           break;
@@ -333,7 +339,7 @@ angular.module('icestudio')
     //-- Ej.  pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
     //
     this.installOnlineApio = function (callback) {
-      
+
       console.log("UTILS: InstallOnlineApio: " + this.printApioVersion(common.APIO_VERSION));
 
       //-- Get the pip executable
@@ -345,12 +351,12 @@ angular.module('icestudio')
       //-- Get the pip parameters needed for installing apio
       //-- The needed apio vesion is also added
       const params = this.getApioParameters();
-      console.log(pipExec,executable,params);
+      console.log(pipExec, executable, params);
       //-- Run the pip command!
       this.executeCommand([executable, params], callback);
     };
 
-    
+
     //------------------------------------------------
     //-- Return the parameters needed for pip for installing  
     //-- the apio toolchains. The version to install is read  
@@ -371,7 +377,7 @@ angular.module('icestudio')
         //-- The stable version to installed is read from the icestucio app/package.json:
         //-- apio.min object!
         versionString = "==" + _package.apio.min;
-      }  
+      }
 
       //---- WARNING! It is just for testing in the current WIP
       //-- TEMP FIX: Just for testing. Add a version to the "latest apio version"
@@ -408,7 +414,7 @@ angular.module('icestudio')
     //-- This command includes the full path to apio executable, as well as  
     //-- the setting of the APIO_HOME_DIR environment variable
     this.getApioExecutable = function () {
-      
+
       //-- Check if the ICESTUDIO_APIO env variable is set with the apio toolchain to use  or  
       //-- if it has been set on the package.json file
       let candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
@@ -426,7 +432,7 @@ angular.module('icestudio')
 
       //-- There are no external apio toolchain. Use the one installed by icestudio
       this.toolchainDisabled = false;
-      
+
       //-- The apio command to execute is located in the common.APIO_CMD global object
       return common.APIO_CMD;
     };
@@ -704,7 +710,7 @@ angular.module('icestudio')
         }
       }
       content.push('</div>');
-      
+
       alertify.confirm(content.join('\n'))
         .set('onok', function (evt) {
           var values = [];
@@ -774,41 +780,41 @@ angular.module('icestudio')
       content.push('  <input id="input-open-svg" type="file" accept=".svg" class="hidden">');
       content.push('  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">');
       content.push('  <div>');
-     if(image){
-        let embeded='<div id="preview-svg-wrapper">';
-      /*  if (image.startsWith('%3Csvg')) {
-          embeded += decodeURI(image);
-        }
-        else if (image.startsWith('<svg')) {
-          embeded+= image;
-        }*/
-        let virtualBlock= new IceBlock({cacheDirImg:common.IMAGE_CACHE_DIR});
-      
-        let tmpImage='';
-        let tmpImageSrc='';
-        let hash='';
+      if (image) {
+        let embeded = '<div id="preview-svg-wrapper">';
+        /*  if (image.startsWith('%3Csvg')) {
+            embeded += decodeURI(image);
+          }
+          else if (image.startsWith('<svg')) {
+            embeded+= image;
+          }*/
+        let virtualBlock = new IceBlock({ cacheDirImg: common.IMAGE_CACHE_DIR });
+
+        let tmpImage = '';
+        let tmpImageSrc = '';
+        let hash = '';
         if (image.startsWith('%3Csvg')) {
           tmpImage = decodeURI(image);
         }
         else if (image.startsWith('<svg')) {
           tmpImage = image;
         }
-        if(tmpImage.length>0){
-          hash=sparkMD5.hash(tmpImage);
-          tmpImageSrc=virtualBlock.svgFile(hash,tmpImage);
-          embeded=`${embeded}<img src="file://${tmpImageSrc}"/>`;
+        if (tmpImage.length > 0) {
+          hash = sparkMD5.hash(tmpImage);
+          tmpImageSrc = virtualBlock.svgFile(hash, tmpImage);
+          embeded = `${embeded}<img src="file://${tmpImageSrc}"/>`;
         }
-     
-
-        embeded+='</div">';
 
 
-      content.push(embeded);
-      
-     }else{
+        embeded += '</div">';
 
-      content.push('  <div id="preview-svg-wrapper"><img id="preview-svg" class="ajs-input" src="'+ blankImage + '" height="68" style="pointer-events:none"></div>');
-     }
+
+        content.push(embeded);
+
+      } else {
+
+        content.push('  <div id="preview-svg-wrapper"><img id="preview-svg" class="ajs-input" src="' + blankImage + '" height="68" style="pointer-events:none"></div>');
+      }
       content.push('  </div>');
       content.push('  <div>');
       content.push('    <label for="input-open-svg" class="btn">' + gettextCatalog.getString('Open SVG') + '</label>');
@@ -845,7 +851,7 @@ angular.module('icestudio')
             optimizeSVG(data, function (result) {
               image = encodeURI(result.data);
               registerSave();
-              
+
               $('#preview-svg-wrapper').html(result.data);
             });
           });
@@ -1117,7 +1123,7 @@ angular.module('icestudio')
       //url='index.html?icestudio_argv=fsdfsfa';
 
       gui.Window.open(url, {
-           'new_instance': true,  //Deprecated for new nwjs versios
+        'new_instance': true,  //Deprecated for new nwjs versios
         'position': 'center',
         //        'toolbar': false,   //Deprecated for new nwjs versios
         'width': 900,
@@ -1130,7 +1136,7 @@ angular.module('icestudio')
     //-- Place the path inside quotes. It is important for managing filepaths
     //-- that contains spaces in ther names
     this.coverPath = coverPath;
-    
+
     function coverPath(filepath) {
       return '"' + filepath + '"';
     }
@@ -1424,7 +1430,7 @@ angular.module('icestudio')
     // RENDERFORM "color-dropdown" functions
     // show/hide dropdown list
     $(document).on("mousedown", ".lb-dropdown-title", function () {
-      if ($('.lb-dropdown-menu').hasClass('show')){
+      if ($('.lb-dropdown-menu').hasClass('show')) {
         closeDropdown();
       } else {
         openDropdown();
@@ -1443,10 +1449,10 @@ angular.module('icestudio')
       closeDropdown();
     });
 
-    function openDropdown () {
+    function openDropdown() {
       $('.lb-dropdown-menu').addClass('show');
     }
-    function closeDropdown () {
+    function closeDropdown() {
       $('.lb-dropdown-menu').removeClass('show');
     }
 
