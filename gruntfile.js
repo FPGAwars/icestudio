@@ -21,7 +21,7 @@ module.exports = function (grunt) {
   //-- a stable release?
   //-- WIP = true --> Work in progress
   //-- WIP = false --> Stable release
-  const WIP = false;
+  const WIP = true;
 
   //-- Read the Package json and the timestamp
   let pkg = grunt.file.readJSON("app/package.json");
