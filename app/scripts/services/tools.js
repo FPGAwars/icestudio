@@ -1117,7 +1117,9 @@ angular
 
         alertify.confirm(
           gettextCatalog.getString(
-            "Install the STABLE Toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
+            "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection <br>" + 
+            "<p><b>NOTE:</b> You need to disconnect your VPN (if any) to allow the toolchain installation</p> " + 
+            "<p>Do you want to continue?</p>" 
           ),
           function () {
             //-- Remove the toolchain for starting a fresh installation
