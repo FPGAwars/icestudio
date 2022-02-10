@@ -5,7 +5,7 @@
 //------------------------------------------------------
 
 //------------------------------------------------------
-//-- HOW to invoke the task defined:
+//-- HOW to invoke the tasks defined in Grunt:
 //--
 //--  $ grunt serve -->   Start icestudio
 //--  $ grunt dist  -->   Create the Icestudio package for all
@@ -17,6 +17,20 @@
 //--       write them in the  app/resources/locale/template.pot
 //--       for being translated into other languajes later
 //--------------------------------------------------------------
+
+//--------------------------------------------------------------------
+//-- How the translation process works
+//--
+//-- * The texts in the .js Javascript files are in English
+//-- * When 'grunt gettext' is invoked, the English texts are extracted  
+//--   to the app/resources/locale/template.pot file
+//-- * The human translator import the template.pot file (in PoEdit) and
+//--   write the translation into their language, in the corresponding
+//--   .po file
+//-- * When 'grunt serve' is invoked, the .po files are converted into
+//--   .json
+//-- * When icestudio starts, the .json files are read
+//--------------------------------------------------------------------
 
 
 "use strict";
@@ -30,6 +44,46 @@ os.tmpDir = os.tmpdir;
 //-- This is for debuging...
 console.log("Executing gruntfile.js...");
 
+//----------------------------------------------------------
+//-- GLOBAL constants used
+//----------------------------------------------------------
+
+//-- Is this a WIP release (Work in Progress) or
+//-- a stable release?
+//-- WIP = true --> Work in progress
+//-- WIP = false --> Stable release
+const WIP = true;
+
+//-- ICestudio App dir
+const APPDIR = "app";
+
+//-- Icestudio package.json
+const PACKAGE_JSON = "package.json";
+
+//-- Icestudio package.json with PATH
+const APP_PACKAGE_JSON = APPDIR + '/' + PACKAGE_JSON;
+
+//-- Timestamp file
+const APP_TIMESTAMP_FILE = APPDIR + '/' + "buildinfo.json";
+
+//-- Grunt configuration file
+const GRUNT_FILE = "Gruntfile.js";
+
+//-- jshint configuration file
+const JSHINT_CONFIG_FILE = ".jshintrc";
+
+//-- Constants for the host architecture (Where grunt is run)
+const WIN32 = process.platform === "win32";
+const DARWIN = process.platform === "darwin";
+
+//-- Constant for the TARGET architectures
+const TARGET_OSX64 = "osx64";
+const TARGET_LINUX64 = "linux64";
+const TARGET_WIN64 = "win64";
+const TARGET_AARCH64 ="aarch64";
+const TARGET_ALL = "all";
+
+
 //-- Wrapper function. This function is called when the 'grunt' command is
 //-- executed. Grunt exposes all of its methods and properties on the 
 //-- grunt object passed as an argument
@@ -39,18 +93,8 @@ module.exports = function (grunt) {
   //-- Debug
   console.log("-> Grunt Entry point");
 
-  //-- Constants for the platformws
-  const WIN32 = process.platform === "win32";
-  const DARWIN = process.platform === "darwin";
-
-  //-- Is this a WIP release (Work in Progress) or
-  //-- a stable release?
-  //-- WIP = true --> Work in progress
-  //-- WIP = false --> Stable release
-  const WIP = true;
-
   //-- Read the Package json and the timestamp
-  let pkg = grunt.file.readJSON("app/package.json");
+  let pkg = grunt.file.readJSON(APP_PACKAGE_JSON);
   let timestamp = grunt.template.today("yyyymmddhhmm");
 
   //-- In the Stables Releases there is NO timestamp
@@ -58,9 +102,9 @@ module.exports = function (grunt) {
     timestamp = "";
   }
 
-  //-- Write the timestamp information in the buildinfo.json
+  //-- Write the timestamp information in a file
   //-- It will be read by icestudio to add the timestamp to the version
-  grunt.file.write("app/buildinfo.json", JSON.stringify({ ts: timestamp }));
+  grunt.file.write(APP_TIMESTAMP_FILE, JSON.stringify({ ts: timestamp }));
 
   //-- Create the version
   //-- Stable releases: No timestamp
@@ -104,18 +148,18 @@ module.exports = function (grunt) {
   //--- Set with the `platform` argument when calling grunt
 
   //--- Read if there is a platform argument set
-  let onlyPlatform = grunt.option("platform") || "all";
+  let onlyPlatform = grunt.option("platform") || TARGET_ALL;
 
   //-- MAC
   if (DARWIN) {
-    platforms = ["osx64"];
+    platforms = [TARGET_OSX64];
     options = { scope: ["devDependencies", "darwinDependencies"] };
     distCommands = ["nwjs", "exec:repairOSX", "compress:osx64", "appdmg"];
 
     //-- Linux 64bits, linux ARM 64bits and Windows (64-bits)
   } else {
-    if (onlyPlatform === "linux64" || onlyPlatform === "all") {
-      platforms.push("linux64");
+    if (onlyPlatform === TARGET_LINUX64 || onlyPlatform === TARGET_ALL) {
+      platforms.push(TARGET_LINUX64);
       options = { scope: ["devDependencies"] };
       distCommands = distCommands.concat([
         "nwjs",
@@ -124,8 +168,8 @@ module.exports = function (grunt) {
       ]);
     }
 
-    if (onlyPlatform === "win64" || onlyPlatform === "all") {
-      platforms.push("win64");
+    if (onlyPlatform === TARGET_WIN64 || onlyPlatform === TARGET_ALL) {
+      platforms.push(TARGET_WIN64);
       options = { scope: ["devDependencies"] };
       distCommands = distCommands.concat([
         "nwjs",
@@ -135,9 +179,9 @@ module.exports = function (grunt) {
       ]);
     }
 
-    if (onlyPlatform === "aarch64" || onlyPlatform === "all") {
-      if (platforms.indexOf("linux64") < 0) {
-        platforms.push("linux64");
+    if (onlyPlatform === TARGET_AARCH64 || onlyPlatform === TARGET_ALL) {
+      if (platforms.indexOf(TARGET_LINUX64) < 0) {
+        platforms.push(TARGET_LINUX64);
       }
       options = { scope: ["devDependencies"] };
       if (distCommands.indexOf("nwjs") < 0) {
@@ -158,7 +202,7 @@ module.exports = function (grunt) {
   //-- Files to include in the Icestudio app
   let appFiles = [
     "index.html", //-- app/index.html: Main HTML file
-    "package.json", //-- Package file
+    PACKAGE_JSON, //-- Package file
     "resources/**/*.*", //-- Folder app/resources
     "scripts/**/*.*", //-- JS files
     "styles/**/*.*", //-- CSS files
@@ -169,12 +213,31 @@ module.exports = function (grunt) {
 
   //-----------------------------------------------------------------------
   //  PROJECT CONFIGURATION
-  //  All the TASK used are defined here
+  //  All the TASKs used are defined here
   //-----------------------------------------------------------------------
   grunt.initConfig({
 
     //-- Information about the package (read the app/package.json file)
     pkg: pkg,
+
+    //-- TASK: jshint: Check the .js files
+    //-- More information: https://www.npmjs.com/package/grunt-contrib-jshint
+    jshint: {
+
+      //-- These are the js files to check
+      all: ["app/scripts/**/*.js", GRUNT_FILE],
+
+      options: {
+        
+        //-- jshint configuration file
+        //-- See: https://jshint.com/docs/
+        jshintrc: JSHINT_CONFIG_FILE,
+
+        //-- Javascript version to check
+        //-- See: https://jshint.com/docs/options/#esversion
+        esversion: 11,
+      },
+    },
 
     // EXEC TASK: Define the Commands and scripts that can be executed/invoked
     exec: {
@@ -204,7 +267,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: "app",
+            cwd: APPDIR,
             dest: "dist/tmp",
             src: [
               "index.html",
@@ -274,7 +337,7 @@ module.exports = function (grunt) {
         zip: false,
         buildDir: "dist/",
         winIco: "docs/resources/images/logo/icestudio-logo.ico",
-        macIcns: "docs/resources/images/logo/nw.icns",
+        macIcns: "docs/resources/images/logo/icestudio-logo.icns",
         macPlist: { CFBundleIconFile: "app" },
         platforms: platforms,
       },
@@ -414,18 +477,6 @@ module.exports = function (grunt) {
       },
     },
 
-    //-- TASK: jshint
-    // Check all js files
-    jshint: {
-      //-- This are the js files to check
-      all: ["app/scripts/**/*.js", "gruntfile.js"],
-      options: {
-        //-- jshint configuration file
-        jshintrc: ".jshintrc",
-        esversion: 6,
-      },
-    },
-
     // TASK Wget: Download packages from internet
     // NWjs for ARM, Python installer, Default collection
     // More information: https://github.com/shootaroo/grunt-wget
@@ -543,10 +594,6 @@ module.exports = function (grunt) {
   // grunt-json-minification
   require("load-grunt-tasks")(grunt, options);
 
-  // Default task
-  grunt.registerTask("default", function () {
-    console.log("Icestudio");
-  });
   //-- grunt gettext
   grunt.registerTask("gettext", ["nggettext_extract"]);
 
