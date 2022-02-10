@@ -391,8 +391,11 @@ module.exports = function (grunt) {
       },
     },
 
-    // Wget: Python installer and Default collection
+    // Wget: NWjs for ARM, Python installer, Default collection
     wget: {
+
+      //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
+      //-- It is downloaded during the ARM build process
       nwjsAarch64: {
         options: {
           overwrite: false,
