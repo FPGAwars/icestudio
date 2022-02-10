@@ -409,19 +409,31 @@ module.exports = function (grunt) {
       },
     },
 
-    // Wget: NWjs for ARM, Python installer, Default collection
+    // TASK Wget: Download packages from internet
+    // NWjs for ARM, Python installer, Default collection
+    // More information: https://github.com/shootaroo/grunt-wget
     wget: {
 
       //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
       //-- It is downloaded during the ARM build process
+      //-- Only ARM
       nwjsAarch64: {
+
         options: {
+
+          //-- If the destination file already exists, it is not downloaded again
           overwrite: false,
         },
+
+        //-- Download from
         src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
+
+        //-- Local destination file
         dest: "cache/nwjsAarch64/nwjs.tar.gz",
       },
 
+      //-- Download the python executable. It is used for generating the Windows installer
+      //-- ONLY WINDOWS
       python64: {
         options: {
           overwrite: false,
@@ -429,6 +441,8 @@ module.exports = function (grunt) {
         src: "https://www.python.org/ftp/python/3.9.9/python-3.9.9-amd64.exe",
         dest: "cache/python/python-3.9.9-amd64.exe",
       },
+
+      //-- Download the Default collection from its github repo
       collection: {
         options: {
           overwrite: false,
