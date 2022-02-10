@@ -1,6 +1,23 @@
+//------------------------------------------------------
 //-- Grunt configuration file
 //-- Grunt is a tool for Automating tasks
 //-- More information: https://gruntjs.com/
+//------------------------------------------------------
+
+//------------------------------------------------------
+//-- HOW to invoke the task defined:
+//--
+//--  $ grunt serve -->   Start icestudio
+//--  $ grunt dist  -->   Create the Icestudio package for all
+//--                      the architectures
+//--  $ grunt jshint -->  Validate the Javascript files
+//--  $ grunt clean  -->  Clean all the generated files during
+//--                      the dist TASK (building packages)
+//--  $ grunt gettext-->  Extract all the English strings and  
+//--       write them in the  app/resources/locale/template.pot
+//--       for being translated into other languajes later
+//--------------------------------------------------------------
+
 
 "use strict";
 
