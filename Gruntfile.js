@@ -1,17 +1,26 @@
-/* jshint laxbreak: true */
+//-- Grunt configuration file
+//-- Grunt is a tool for Automating tasks
+//-- More information: https://gruntjs.com/
 
 "use strict";
-//-- Grunt configuration file
-//-- https://gruntjs.com/
-//-- Grunt is a tool for Automating tasks
 
 // Disable Deprecation Warnings
-// (node:18670) [DEP0022] DeprecationWarning: os.tmpDir() is deprecated. Use os.tmpdir() instead.
+// (node:18670) [DEP0022] DeprecationWarning: os.tmpDir() is deprecated. 
+// Use os.tmpdir() instead.
 let os = require("os");
 os.tmpDir = os.tmpdir;
 
+//-- This is for debuging...
+console.log("Executing gruntfile.js...");
 
+//-- Wrapper function. This function is called when the 'grunt' command is
+//-- executed. Grunt exposes all of its methods and properties on the 
+//-- grunt object passed as an argument
+//-- Check the API here: https://gruntjs.com/api/grunt
 module.exports = function (grunt) {
+
+  //-- Debug
+  console.log("-> Grunt Entry point");
 
   //-- Constants for the platformws
   const WIN32 = process.platform === "win32";
@@ -143,21 +152,30 @@ module.exports = function (grunt) {
 
   //-----------------------------------------------------------------------
   //  PROJECT CONFIGURATION
+  //  All the TASK used are defined here
   //-----------------------------------------------------------------------
   grunt.initConfig({
-    //-- Information about the package (read the package.json file)
+
+    //-- Information about the package (read the app/package.json file)
     pkg: pkg,
 
-    // Execute nw application
+    // EXEC TASK: Define the Commands and scripts that can be executed/invoked
     exec: {
+
+      //-- Launch NWjs
       nw: "nw app" + (WIN32 ? "" : " 2>/dev/null"),
+
+      //-- Stop NWjs. The command depends on the platform (Win or the others)
       stopNW:
-        (WIN32
-          ? "taskkill /F /IM nw.exe >NUL 2>&1"
-          : "killall nw 2>/dev/null || killall nwjs 2>/dev/null") +
-        " || (exit 0)",
+        (WIN32 ? "taskkill /F /IM nw.exe >NUL 2>&1"
+               : "killall nw 2>/dev/null || killall nwjs 2>/dev/null") +
+                 " || (exit 0)",
+
+      //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
+      //-- The installation script is located in scripts/windows_installer.nsi          
       nsis64:
         'makensis -DARCH=win64 -DPYTHON="python-3.9.9-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+
       repairOSX: "scripts/repairOSX.sh",
       mergeAarch64: "scripts/mergeAarch64.sh"
     },
