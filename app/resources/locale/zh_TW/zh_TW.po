@@ -1,797 +1,610 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 2.4.2\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Team: \n"
 "Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: app/views/version-5.1n201009.html:93
-msgid ". Thank you very much"
-msgstr ". 非常感謝"
+#: app/views/design.html:9
+msgid ": '}} {{'Unlock to edit block !"
+msgstr ""
 
-#: app/views/version-5.1n201009.html:74
-msgid ". Thanks Andrew!"
-msgstr ". 感謝 Andrew!"
-
-#: app/views/version-5.1n201009.html:83
-msgid ". Thanks a lot! :-)"
-msgstr ". 感謝！:-)"
-
-#: app/views/version-5.1n201009.html:15 app/views/version-5.1n201009.html:24
-msgid ". Thanks to"
-msgstr ". 感謝"
-
-#: app/views/version-5.1n201009.html:105
-msgid ". You can find more information in"
-msgstr ". 您可以找到更多資訊在"
-
-#: app/views/version-5.1n201009.html:71
-msgid ". You can see the blinking lights in action in"
-msgstr ". 您可以看到閃動的燈在"
-
-#: app/scripts/services/drivers.js:194 app/scripts/services/drivers.js:389
+#: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:594
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>拔出</b>並<b>重新連接</b>開發板"
 
-#: app/scripts/services/drivers.js:348
-msgid ""
-"<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board "
-"to the USB and wait until Windows finishes the default installation of the "
-"driver</li><li>When the OK button is clicked, the FTDI driver installer will "
-"be launched in a new window</li><li>In the installer, replace the "
-"<b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug "
-"and reconnect the board</li></ol>"
-msgstr ""
-"<h4>FTDI 驅動程式安裝指引</h4><ol><li>以USB線接上FPGA開發板，等到Windows結束"
-"預設驅動程式的安裝</li><li>按下OK鍵後，FTDI驅動安裝程式會在新的視窗開啟</"
-"li><li>在安裝程式中把 <b>(Interface 0)</b> 驅動程式替換成 <b>libusbK</b></"
-"li><li>拔出重新連接開發板</li></ol>"
-
-#: app/scripts/services/drivers.js:355
-msgid ""
-"<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
-msgstr ""
-"<h4>FTDI 驅動程序卸載說明</h4><ol><li>找到 FPGA USB 設備</li><li>選擇開發板介"
-"面並卸載驅動程式</li></ol>"
-
-#: app/scripts/services/drivers.js:362
-msgid ""
-"<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
-"board to the USB and wait until Windows finishes the default installation of "
-"the driver</li><li>When the OK button is clicked, the Serial driver "
-"installer will be launched in a new window</li><li>In the installer, follow "
-"the steps to install the driver</li><li>Unplug and reconnect the board</li></"
-"ol>"
-msgstr ""
-"<h4>序列驅動程式安裝指引</h4><ol><li>以USB線接上FPGA開發板，等到Windows結束預"
-"設驅動程式的安裝</li><li>按下OK鍵後，序列驅動安裝程式會在新的視窗開啟</"
-"li><li>跟著安裝程序步驟做</li><li>拔出重新連接開發板</li></ol>"
-
-#: app/scripts/services/drivers.js:369
-msgid ""
-"<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
-msgstr ""
-"<h4>序列驅動程式卸載指引</h4><ol><li>找到 FPGA USB 設備</li><li>選擇開發板介"
-"面並卸載驅動程式</li></ol>"
-
-#: app/views/version-5.1n200403.html:30 app/views/version-5.1n200523.html:44
-msgid ""
-"A collection is a group of blocks ready to use. There are a lot of powerful "
-"blocks!:"
-msgstr "選集裡有一些立即可用的區塊，有許多強大的區塊！:"
-
-#: app/views/menu.html:368
+#: app/views/menu.html:598
 msgid "About Icestudio"
 msgstr "關於 Icestudio"
 
-#: app/views/version-5.1n200403.html:55 app/views/version-5.1n200523.html:68
-#: app/views/version-5.1n201009.html:194 app/views/version.html:154
+#: app/views/version.html:22
 msgid "Acknowledgment"
 msgstr "致謝"
 
-#: app/views/menu.html:313
+#: app/views/menu.html:517
 msgid "Add"
 msgstr "新增"
 
-#: app/scripts/controllers/menu.js:918
+#: app/scripts/controllers/menu.js:1169
 msgid "Add a block to start"
 msgstr "新增區塊並開始"
 
-#: app/views/menu.html:46
+#: app/views/menu.html:81
 msgid "Add as block"
 msgstr "新增為區塊"
 
-#: app/scripts/services/blocks.js:1577 app/scripts/services/blocks.js:459
+#: app/scripts/services/blocks.js:1491 app/scripts/services/blocks.js:409
 msgid "Address format"
 msgstr "地址格式"
 
-#: app/scripts/services/tools.js:1314
+#: app/scripts/services/tools.js:1797
 msgid "All collections removed"
 msgstr "已刪除全部選集"
 
-#: app/scripts/controllers/menu.js:949
+#: app/scripts/controllers/menu.js:1209
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "儲存的選集會全部消失，是否要繼續?"
 
-#: app/scripts/services/tools.js:980
-msgid "At least Python 3.5 is required"
+#: app/scripts/services/tools.js:1390
+#, fuzzy
+#| msgid "At least Python 3.5 is required"
+msgid "At least Python 3.7 is required"
 msgstr "至少需要 Python3.5版"
 
-#: app/scripts/services/utils.js:664
+#: app/scripts/services/utils.js:766
 msgid "Author"
 msgstr "作者"
 
-#: app/views/version-5.0.html:33
-msgid "Automatic check for new versions"
-msgstr "自動檢查新版"
-
-#: app/views/menu.html:379
-msgid "Basic"
-msgstr "基本區塊"
-
-#: app/views/languages.html:70
+#: app/views/languages.html:86
 msgid "Basque"
 msgstr "Basque"
 
-#: app/views/version-5.0.html:34
-msgid ""
-"Because Icestudio is in actively development it is important to stay your "
-"icestudio in the last version. Now we are notifying you!"
-msgstr "因為 Icestudio 正積極開發中，請盡量選用最新的版本。我們會即時通知您！"
-
-#: app/scripts/services/blocks.js:1580 app/scripts/services/blocks.js:462
+#: app/scripts/services/blocks.js:1494 app/scripts/services/blocks.js:412
 msgid "Binary"
 msgstr "Binary"
 
-#: app/scripts/services/blocks.js:1199 app/scripts/services/blocks.js:1223
-#: app/scripts/services/blocks.js:1313 app/scripts/services/blocks.js:1335
-#: app/scripts/services/blocks.js:1410 app/scripts/services/blocks.js:1431
-#: app/scripts/services/blocks.js:1494 app/scripts/services/blocks.js:1513
-#: app/scripts/services/blocks.js:1556 app/scripts/services/blocks.js:1613
-#: app/scripts/services/blocks.js:1658
+#: app/scripts/services/blocks.js:1139 app/scripts/services/blocks.js:1163
+#: app/scripts/services/blocks.js:1227 app/scripts/services/blocks.js:1249
+#: app/scripts/services/blocks.js:1324 app/scripts/services/blocks.js:1345
+#: app/scripts/services/blocks.js:1408 app/scripts/services/blocks.js:1427
+#: app/scripts/services/blocks.js:1470 app/scripts/services/blocks.js:1527
+#: app/scripts/services/blocks.js:1572
 msgid "Block updated"
 msgstr "區塊已更新"
 
-#: app/scripts/services/project.js:484
+#: app/scripts/services/project.js:493
 msgid "Block {{name}} imported"
 msgstr "區塊 {{name}}已導入"
 
-#: app/views/menu.html:38
+#: app/views/menu.html:65
 msgid "Blocks"
 msgstr "區塊"
 
-#: app/views/menu.html:199
+#: app/views/menu.html:351
 msgid "Board"
 msgstr "開發板"
 
-#: app/views/menu.html:136 app/views/menu.html:176
+#: app/views/menu.html:235 app/views/menu.html:310
 msgid "Board rules"
 msgstr "開發板規則"
 
-#: app/scripts/controllers/menu.js:645
+#: app/scripts/controllers/menu.js:783
 msgid "Board rules disabled"
 msgstr "開發板規則停用"
 
-#: app/scripts/controllers/menu.js:643
+#: app/scripts/controllers/menu.js:781
 msgid "Board rules enabled"
 msgstr "開發板規則啟用"
 
-#: app/scripts/services/tools.js:429
+#: app/scripts/services/tools.js:649
 msgid "Board {{name}} disconnected"
 msgstr "開發板 {{name}}斷線"
 
-#: app/scripts/services/tools.js:409 app/scripts/services/tools.js:424
+#: app/scripts/services/tools.js:608 app/scripts/services/tools.js:634
 msgid "Board {{name}} not available"
 msgstr "開發板 {{name}}無法使用"
 
-#: app/scripts/services/tools.js:398
+#: app/scripts/services/tools.js:586
 msgid "Board {{name}} not connected"
 msgstr "開發板 {{name}} 未連線"
 
-#: app/scripts/app.js:55 app/scripts/controllers/menu.js:845
+#: app/scripts/app.js:143 app/scripts/controllers/menu.js:1088
 msgid "Board {{name}} selected"
 msgstr "開發板{{name}} 已選中"
 
-#: app/scripts/services/tools.js:404 app/scripts/services/tools.js:422
+#: app/scripts/services/tools.js:597 app/scripts/services/tools.js:627
 msgid "Bootloader not active"
 msgstr "Bootloader 未啟動"
 
-#: app/scripts/controllers/menu.js:869 app/views/menu.html:259
+#: app/scripts/controllers/menu.js:1111 app/views/design.html:184
+#: app/views/menu.html:430
 msgid "Build"
 msgstr "建構"
 
-#: app/scripts/controllers/menu.js:876
+#: app/scripts/controllers/menu.js:1121
 msgid "Build done"
 msgstr "建構完成"
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:137
+#: app/views/design.html:17
+msgid "CAUTION ! : Changes will also be applied in all the copied"
+msgstr ""
+
+#: app/scripts/controllers/main.js:14 app/scripts/services/project.js:146
 msgid "Cancel"
 msgstr "取消"
 
-#: app/views/version-5.1n201009.html:13
-msgid "Capture the signals in your designs and visualize them using"
-msgstr "在你的設計中擷取信號而且視覺化呈現，使用"
-
-#: app/views/languages.html:76
+#: app/views/languages.html:92
 msgid "Catalan"
 msgstr "Catalan"
 
-#: app/scripts/services/tools.js:964
+#: app/views/design.html:68
+#, fuzzy
+#| msgid "Choose a color"
+msgid "Change Color"
+msgstr "選擇顏色"
+
+#: app/scripts/services/tools.js:1345
 msgid "Check Internet connection..."
 msgstr "檢查網路連接..."
 
-#: app/scripts/services/tools.js:974
+#: app/scripts/services/tools.js:1379
 msgid "Check Python..."
 msgstr "檢查Python..."
 
-#: app/views/languages.html:52
+#: app/views/languages.html:68
 msgid "Chinese"
 msgstr "中文(簡)"
 
-#: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
-#: app/scripts/services/blocks.js:301 app/scripts/services/blocks.js:71
+#: app/scripts/services/blocks.js:1089 app/scripts/services/blocks.js:1184
+#: app/scripts/services/blocks.js:276 app/scripts/services/blocks.js:72
 msgid "Choose a color"
 msgstr "選擇顏色"
 
-#: app/scripts/services/project.js:162
+#: app/scripts/services/project.js:170
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "點按這裡<b>下載新版本</b> 的 Icestudio"
 
-#: app/scripts/services/tools.js:1086
+#: app/scripts/services/tools.js:1508
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "點按這裡 <b>安裝驅動程式</b>"
 
-#: app/scripts/services/drivers.js:246 app/scripts/services/drivers.js:381
-#: app/scripts/services/drivers.js:400 app/scripts/services/tools.js:295
+#: app/scripts/services/drivers.js:405 app/scripts/services/drivers.js:586
+#: app/scripts/services/drivers.js:605 app/scripts/services/tools.js:431
 msgid "Click here to install it"
 msgstr "點按這裡安裝"
 
-#: app/scripts/controllers/menu.js:592
+#: app/scripts/controllers/menu.js:723
 msgid "Click here to view"
 msgstr "點按這裡瀏覽"
 
-#: app/scripts/services/blocks.js:1168 app/scripts/services/blocks.js:129
-#: app/scripts/services/blocks.js:1379 app/scripts/services/blocks.js:203
+#: app/scripts/services/blocks.js:104 app/scripts/services/blocks.js:1108
+#: app/scripts/services/blocks.js:1293 app/scripts/services/blocks.js:178
 msgid "Clock not allowed for data buses"
 msgstr "時脈不合於資料匯流排線"
 
-#: app/views/menu.html:110
+#: app/views/menu.html:176
 msgid "Clone"
 msgstr "Clone"
 
-#: app/scripts/controllers/menu.js:401 app/views/version-5.0.html:43
-#: app/views/version-5.1.html:37 app/views/version-5.1n200403.html:67
-#: app/views/version-5.1n200523.html:80 app/views/version-5.1n201009.html:206
-#: app/views/version.html:166
+#: app/scripts/controllers/menu.js:431 app/views/version.html:38
 msgid "Close"
 msgstr "關閉"
 
-#: app/views/menu.html:401
+#: app/views/design.html:98
 msgid "Code"
 msgstr "程式碼區塊"
 
-#: app/scripts/services/blocks.js:620
+#: app/scripts/services/blocks.js:570
 msgid "Code block needs at least one input or one output"
 msgstr "程式碼區塊需要至少一個輸入或一個輸出"
 
-#: app/views/menu.html:224
+#: app/views/menu.html:383
 msgid "Collection"
 msgstr "選集"
 
-#: app/views/menu.html:180
+#: app/views/menu.html:316
 msgid "Collection info"
 msgstr "選集資訊"
 
-#: app/scripts/controllers/menu.js:773
+#: app/scripts/controllers/menu.js:997
 msgid "Collection {{collection}} info not defined"
 msgstr "選集 {{collection}} 資訊未定義"
 
-#: app/scripts/services/tools.js:1188
+#: app/scripts/services/tools.js:1650
 msgid "Collection {{name}} added"
 msgstr "已新增 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1181
+#: app/scripts/services/tools.js:1637
 msgid "Collection {{name}} not replaced"
 msgstr "沒替換 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1306
+#: app/scripts/services/tools.js:1788
 msgid "Collection {{name}} removed"
 msgstr "已移除 {{name}} 選集"
 
-#: app/scripts/services/tools.js:1175
+#: app/scripts/services/tools.js:1626
 msgid "Collection {{name}} replaced"
 msgstr "已替換 {{name}} 選集"
 
-#: app/scripts/controllers/menu.js:807
+#: app/scripts/controllers/menu.js:1043
 msgid "Collection {{name}} selected"
 msgstr "選中 {{name}} 選集"
 
-#: app/views/menu.html:309
+#: app/views/menu.html:509
 msgid "Collections"
 msgstr "範例選集組"
 
-#: app/scripts/controllers/menu.js:781 app/views/menu.html:183
+#: app/scripts/controllers/menu.js:1013 app/views/menu.html:321
 msgid "Command output"
 msgstr "查看執行結果"
 
-#: app/views/version-5.1.html:27 app/views/version-5.1n200403.html:52
-#: app/views/version-5.1n200523.html:65
-msgid "Community News"
-msgstr "社群新消息"
-
-#: app/views/menu.html:364
+#: app/views/menu.html:590
 msgid "Community forum"
 msgstr "社群論壇"
 
-#: app/scripts/services/tools.js:444
+#: app/scripts/services/tools.js:677
 msgid "Configuration not completed"
 msgstr "設定未完成"
 
-#: app/views/menu.html:395
+#: app/views/design.html:92
 msgid "Constant"
 msgstr "常數"
 
-#: app/scripts/services/project.js:82
+#: app/scripts/services/project.js:92
 msgid "Convert"
 msgstr "轉換"
 
-#: app/views/menu.html:104
+#: app/views/menu.html:166
 msgid "Copy"
 msgstr "複製"
 
-#: app/views/version-5.0.html:15
-msgid "Copy & Paste OR Copy & Clone blocks"
-msgstr "拷貝複製或拷貝Clone區塊"
-
-#: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
-#: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:78
-msgid "Coral"
-msgstr "珊瑚色"
-
-#: app/scripts/services/tools.js:986
+#: app/scripts/services/tools.js:1409
 msgid "Create virtualenv..."
 msgstr "編譯 virtualenv..."
 
-#: app/views/menu.html:101
+#: app/views/menu.html:161
 msgid "Cut"
 msgstr "剪切"
 
-#: app/views/languages.html:40
+#: app/views/languages.html:50
 msgid "Czech"
 msgstr "Czech"
 
-#: app/views/uithemes.html:4
+#: app/views/uithemes.html:16
 msgid "Dark (default)"
 msgstr "深色模式(預設)"
 
-#: app/scripts/services/blocks.js:1139 app/scripts/services/blocks.js:1260
-#: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:87
-msgid "DarkGreen"
-msgstr "深綠色"
-
-#: app/scripts/services/blocks.js:1132 app/scripts/services/blocks.js:1253
-#: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:80
-msgid "DarkOrange"
-msgstr "深橘色"
-
-#: app/views/menu.html:173
+#: app/views/menu.html:305
 msgid "Datasheet"
 msgstr "規格書"
 
-#: app/scripts/services/blocks.js:1581 app/scripts/services/blocks.js:463
+#: app/scripts/services/blocks.js:1495 app/scripts/services/blocks.js:413
 msgid "Decimal"
 msgstr "十進位"
 
-#: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
-#: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:76
-msgid "DeepPink"
-msgstr "暗粉紅色"
-
-#: app/scripts/services/blocks.js:1144 app/scripts/services/blocks.js:1265
-#: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:92
-msgid "DeepSkyBlue"
-msgstr "深天空藍色"
-
-#: app/views/menu.html:229
+#: app/views/menu.html:391
 msgid "Default"
 msgstr "預設"
 
-#: app/scripts/services/tools.js:811
-msgid ""
-"Default toolchain not found. Toolchain will be downloaded. This operation "
-"requires Internet connection. Do you want to continue?"
-msgstr "未找到任何工具鏈，將使用網路下載。這個操作需要Internet連接，是否繼續？"
-
-#: app/scripts/services/utils.js:663
+#: app/scripts/services/utils.js:765
 msgid "Description"
 msgstr "說明"
 
-#: app/views/menu.html:302
+#: app/views/menu.html:498
 msgid "Disable"
 msgstr "取消"
 
-#: app/scripts/controllers/menu.js:405
+#: app/scripts/controllers/menu.js:436
 msgid "Do you want to close the application?"
 msgstr "您是否關閉應用程式?"
 
-#: app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:1192
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是是否要移除這 {{name}} 選集?"
 
-#: app/scripts/services/tools.js:1171
+#: app/scripts/services/tools.js:1619
 msgid "Do you want to replace it?"
 msgstr "您是否要替換?"
 
-#: app/views/menu.html:357
+#: app/views/menu.html:577
 msgid "Documentation"
 msgstr "說明文件"
 
-#: app/views/version-5.0.html:41 app/views/version-5.1.html:35
-#: app/views/version-5.1n200403.html:65 app/views/version-5.1n200523.html:78
-#: app/views/version-5.1n201009.html:204 app/views/version.html:164
+#: app/views/version.html:36
 msgid "Don't display"
 msgstr "不再顯示"
 
-#: app/views/version-5.1.html:17
-msgid "Download or clone and use these SOCs as Icestudio blocks:"
-msgstr "Download or clone and use these SOCs as Icestudio blocks:"
-
-#: app/views/version-5.1n200403.html:23 app/views/version-5.1n200523.html:37
-msgid "Download or clone repositories and use these SOCs as Icestudio blocks:"
-msgstr "Download or clone repositories and use these SOCs as Icestudio blocks:"
-
-#: app/views/menu.html:293
+#: app/views/menu.html:485
 msgid "Drivers"
 msgstr "驅動程式"
 
-#: app/scripts/services/drivers.js:147 app/scripts/services/drivers.js:172
-#: app/scripts/services/drivers.js:280
+#: app/scripts/services/drivers.js:252 app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:439
 msgid "Drivers disabled"
 msgstr "停用驅動程式"
 
-#: app/scripts/services/drivers.js:138 app/scripts/services/drivers.js:164
-#: app/scripts/services/drivers.js:264
+#: app/scripts/services/drivers.js:230 app/scripts/services/drivers.js:287
+#: app/scripts/services/drivers.js:423
 msgid "Drivers enabled"
 msgstr "啟用驅動程式"
 
-#: app/scripts/services/tools.js:452
+#: app/scripts/services/tools.js:695
 msgid "Duplicated FPGA I/O ports"
 msgstr "重複的 FPGA I/O 接腳"
 
-#: app/scripts/services/blocks.js:687
+#: app/scripts/services/blocks.js:637
 msgid "Duplicated block attributes"
 msgstr "區塊屬性重復了"
 
-#: app/views/languages.html:34
+#: app/views/languages.html:44
 msgid "Dutch"
 msgstr "Dutch"
 
-#: app/views/menu.html:91
+#: app/views/menu.html:142
 msgid "Edit"
 msgstr "編輯"
 
-#: app/scripts/services/tools.js:1158
+#: app/scripts/services/tools.js:1598
 msgid "Edit the collection name"
 msgstr "編輯選集名稱"
 
-#: app/views/menu.html:297
+#: app/views/menu.html:491
 msgid "Enable"
 msgstr "開啟"
 
-#: app/views/languages.html:4
+#: app/views/languages.html:14
 msgid "English"
 msgstr "英文"
 
-#: app/scripts/services/blocks.js:396
+#: app/scripts/services/blocks.js:346
 msgid "Enter the constant blocks"
 msgstr "輸入常數區塊名稱"
 
-#: app/scripts/controllers/menu.js:562
+#: app/scripts/controllers/menu.js:671
 msgid "Enter the external collections path"
 msgstr "輸入外部選集的路徑"
 
-#: app/scripts/controllers/menu.js:493
+#: app/scripts/controllers/menu.js:580
 msgid "Enter the external plugins path"
 msgstr "輸入外掛路徑"
 
-#: app/scripts/services/blocks.js:162 app/scripts/services/blocks.js:66
+#: app/scripts/controllers/menu.js:534
+#, fuzzy
+#| msgid "Enter the output blocks"
+msgid "Enter the file to output logging info"
+msgstr "填寫輸出區塊名稱"
+
+#: app/scripts/services/blocks.js:137
 msgid "Enter the input blocks"
 msgstr "填寫輸入區塊名稱"
 
-#: app/scripts/services/blocks.js:558
+#: app/scripts/services/blocks.js:67
+#, fuzzy
+#| msgid "Enter the input blocks"
+msgid "Enter the input label"
+msgstr "填寫輸入區塊名稱"
+
+#: app/scripts/services/blocks.js:508
 msgid "Enter the input ports"
 msgstr "填寫輸入埠名稱"
 
-#: app/scripts/services/blocks.js:454
+#: app/scripts/services/blocks.js:404
 msgid "Enter the memory blocks"
 msgstr "輸入記憶體區塊"
 
-#: app/scripts/services/blocks.js:234 app/scripts/services/blocks.js:295
+#: app/scripts/services/blocks.js:209
 msgid "Enter the output blocks"
 msgstr "填寫輸出區塊名稱"
 
-#: app/scripts/services/blocks.js:563
+#: app/scripts/services/blocks.js:270
+#, fuzzy
+#| msgid "Enter the output blocks"
+msgid "Enter the output label"
+msgstr "填寫輸出區塊名稱"
+
+#: app/scripts/services/blocks.js:513
 msgid "Enter the output ports"
 msgstr "填寫輸出埠名稱"
 
-#: app/scripts/services/blocks.js:568
+#: app/scripts/services/blocks.js:518
 msgid "Enter the parameters"
 msgstr "輸入參數"
 
-#: app/scripts/controllers/menu.js:522
+#: app/scripts/controllers/menu.js:625
 msgid "Enter the pip version > 3.8 path"
 msgstr "輸入 pip 版本 > 3.8 的路徑"
 
-#: app/scripts/controllers/menu.js:518
+#: app/scripts/controllers/menu.js:618
 msgid "Enter the python version > 3.8 path"
 msgstr "輸入 python 版本 > 3.8 的路徑"
 
-#: app/scripts/controllers/menu.js:634
+#: app/scripts/controllers/menu.js:770
 msgid "Enter the remote hostname user@host"
 msgstr "輸入遠端主機 用戶名@主機名"
 
-#: app/scripts/services/tools.js:840
-msgid "Error: default toolchain not found in '{{dir}}'"
-msgstr "錯誤:預設工具鏈在'{{dir}}' 找不到"
-
-#: app/scripts/services/utils.js:838
+#: app/scripts/services/utils.js:970
 msgid "Error: {{error}}"
 msgstr "錯誤: {{error}}"
 
-#: app/scripts/services/tools.js:553
+#: app/scripts/services/tools.js:801
 msgid "Errors detected in the design"
 msgstr "設計中檢測到錯誤"
 
-#: app/views/menu.html:42
+#: app/views/menu.html:73
 msgid "Examples"
 msgstr "範例"
 
-#: app/scripts/services/tools.js:317
+#: app/scripts/services/tools.js:469
 msgid "Execute remote {{label}} ..."
 msgstr "遠端執行 {{label}} ..."
 
-#: app/views/menu.html:57
+#: app/views/menu.html:103
 msgid "Export"
 msgstr "導出"
 
-#: app/scripts/controllers/menu.js:268
+#: app/scripts/controllers/menu.js:284
 msgid "Export submodule"
 msgstr "輸出子模組"
 
-#: app/views/menu.html:141
+#: app/views/menu.html:243
 msgid "External collections"
 msgstr "外部選集"
 
-#: app/scripts/controllers/menu.js:577
+#: app/scripts/controllers/menu.js:698
 msgid "External collections updated"
 msgstr "外部選集已更新"
 
-#: app/views/menu.html:144
+#: app/views/menu.html:248
 msgid "External plugins"
 msgstr "外部外掛"
 
-#: app/scripts/controllers/menu.js:504
+#: app/scripts/controllers/menu.js:596
 msgid "External plugins updated"
 msgstr "外部外掛已更新"
 
-#: app/scripts/services/tools.js:993
-msgid "Extract default apio files..."
-msgstr "解壓縮預設apio檔案..."
-
-#: app/scripts/services/tools.js:1003
-msgid "Extract default apio packages..."
-msgstr "解壓縮預設apio套件..."
-
-#: app/scripts/services/tools.js:450
+#: app/scripts/services/tools.js:688
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O 埠未定義"
 
-#: app/scripts/services/blocks.js:1356 app/scripts/services/blocks.js:1452
-#: app/scripts/services/blocks.js:167 app/scripts/services/blocks.js:239
+#: app/scripts/services/blocks.js:1270 app/scripts/services/blocks.js:1366
+#: app/scripts/services/blocks.js:142 app/scripts/services/blocks.js:214
 msgid "FPGA pin"
 msgstr "FPGA 接腳"
 
-#: app/views/menu.html:188
+#: app/views/menu.html:335
 msgid "FPGA resources"
 msgstr "FPGA 資源"
 
-#: app/views/menu.html:29
+#: app/views/menu.html:48
 msgid "File"
 msgstr "檔案"
 
-#: app/scripts/services/project.js:499
+#: app/scripts/services/project.js:507
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "檔案 {{file}} 在目錄中已存在. 是否要覆寫?"
 
-#: app/scripts/services/tools.js:243
+#: app/scripts/services/tools.js:325
 msgid "File {{file}} does not exist"
 msgstr "檔案 {{file}} 不存在"
 
-#: app/scripts/services/project.js:533
+#: app/scripts/services/project.js:540
 msgid "File {{file}} imported"
 msgstr "檔案 {{file}} 導入了"
 
-#: app/views/version-5.1n201009.html:22
-msgid ""
-"Find the probe blocks for capturing data and examples on how to use the "
-"Sigrok plugin in the"
-msgstr "找到探測區塊以擷取資料與樣本在如何使用 Sigrok 外掛於"
+#: app/views/design.html:32
+msgid "Find"
+msgstr ""
 
-#: app/views/menu.html:117
+#: app/views/menu.html:189
 msgid "Fit content"
 msgstr "縮放以適應視窗"
 
-#: app/views/version-5.1n200523.html:13
-msgid ""
-"For the moment,  we have only two themes. Light and Dark mode (like modern "
-"apps)."
-msgstr "此刻我們只有兩種主題風格，淺色與深色(最近流行的）"
-
-#: app/views/version-5.1n200403.html:13
-msgid ""
-"For the moment, plugins developed help us to define the public API and "
-"specifications, providing, along the way, amazing functionalities for users."
-msgstr "現在外掛開發能幫助我們定義開放的API介面與規格，給大家提供精彩的功能。"
-
-#: app/views/languages.html:16
+#: app/views/languages.html:26
 msgid "French"
 msgstr "French"
 
-#: app/scripts/services/blocks.js:1135 app/scripts/services/blocks.js:1256
-#: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:83
-msgid "Fuchsia"
-msgstr "洋紅色"
-
-#: app/views/languages.html:64
+#: app/views/languages.html:80
 msgid "Galician"
 msgstr "Galician"
 
-#: app/views/version-5.0.html:24
-msgid "Generic blocks"
-msgstr "通用區塊"
-
-#: app/views/languages.html:28
+#: app/views/languages.html:38
 msgid "German"
 msgstr "German"
 
-#: app/scripts/services/blocks.js:1133 app/scripts/services/blocks.js:1254
-#: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:81
-msgid "Gold"
-msgstr "金色"
-
-#: app/views/languages.html:46
+#: app/views/languages.html:56
 msgid "Greek"
 msgstr "Greek"
 
-#: app/scripts/services/blocks.js:1137 app/scripts/services/blocks.js:1258
-#: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:85
-msgid "GreenYellow"
-msgstr "黃綠色"
-
-#: app/views/menu.html:344
+#: app/views/menu.html:554
 msgid "Help"
 msgstr "輔助說明"
 
-#: app/scripts/services/blocks.js:1582 app/scripts/services/blocks.js:464
+#: app/scripts/services/blocks.js:1496 app/scripts/services/blocks.js:414
 msgid "Hexadecimal"
 msgstr "十六進位"
 
-#: app/views/version-5.1.html:7
-msgid "Icestudio  (v0.5.1)"
-msgstr "Icestudio  (v0.5.1)"
-
-#: app/views/version-5.0.html:6
-msgid "Icestudio Fast & Furious (v0.5.1-nightly)"
-msgstr "Icestudio Fast & Furious (v0.5.1-nightly)"
-
-#: app/scripts/controllers/menu.js:674
-msgid "Icestudio needs to be restarted to switch the new UI Theme."
-msgstr "Icestudio 需要重新啟動來切換新的主題風格樣式."
-
-#: app/views/version-5.1n200403.html:7
-msgid "Icestudio nightly build (v0.5.1n200403)"
-msgstr "Icestudio nightly build (v0.5.1n200403)"
-
-#: app/views/version-5.1n200523.html:7
-msgid "Icestudio nightly build (v0.5.1n200523)"
-msgstr "Icestudio nightly build (v0.5.1n200523)"
-
-#: app/views/version-5.1n201009.html:7
-msgid "Icestudio nightly build (v0.5.1n201009)"
-msgstr "Icestudio nightly build (v0.5.1n201009)"
-
-#: app/views/version-5.0.html:21
-msgid ""
-"If you are clonning blocks, it is very important than you change block "
-"information to identify the new block features."
-msgstr "若能Clone區塊是很重要的，不只是改變區塊資訊來標示新功能."
-
-#: app/views/version-5.0.html:25
-msgid ""
-"If you are developing a collection, you can make Generic blocks that works "
-"as templates. When you insert a generic block from a collection, acts as a "
-"clone for rapidly modifications without do a copy and clone operation."
-msgstr ""
-"若您正在開發選集，您可做些通用區塊來作為模板。當你插入一個通用區塊，就像個複"
-"製品可以快速修改，不需要做複製的動作。"
-
-#: app/scripts/services/graph.js:1497
+#: app/scripts/services/graph.js:1507
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr "若您看到空的輸入輸出接腳，這是因為這塊開發板上沒有對應的腳位"
 
-#: app/scripts/services/utils.js:677
+#: app/scripts/services/utils.js:779
 msgid "Image"
 msgstr "圖像"
 
-#: app/scripts/controllers/menu.js:1128
+#: app/scripts/controllers/menu.js:1820
 msgid "Image {{name}} saved"
 msgstr "圖像 {{name}} 已儲存"
 
-#: app/views/version-5.0.html:20
-msgid ""
-"In other way, if you copy and clone a block, you make it independently of "
-"the original block type and  the modifications only affect at this new block "
-"type"
-msgstr ""
-"換句話說，若您複製一個區塊，使它有別於原來的區塊型別，這個修改只會影響新的區"
-"塊型別"
-
-#: app/views/version-5.1n200403.html:14
-msgid ""
-"In this release you can play with a serial terminal embedded in Icestudio - "
-"very powerful for testing purposes."
-msgstr "這個版本您能使用內建的序列埠管理員，對測試是非常好用的。"
-
-#: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
-#: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:74
-msgid "IndianRed"
-msgstr "印地安紅色"
-
-#: app/views/menu.html:404
+#: app/views/design.html:101
 msgid "Information"
 msgstr "資訊"
 
-#: app/views/version-5.1n201009.html:12
-msgid "Initial Sigrok plugin"
-msgstr "啟動Sigrok 外掛"
-
-#: app/views/menu.html:383
+#: app/views/design.html:80
 msgid "Input"
 msgstr "輸入"
 
-#: app/views/menu.html:392
+#: app/views/design.html:86
 msgid "Input label"
 msgstr "輸入標籤"
 
-#: app/views/menu.html:270
-msgid "Install"
+#: app/views/menu.html:451
+#, fuzzy
+#| msgid "Install"
+msgid "Install (Stable)"
 msgstr "安裝"
 
-#: app/scripts/services/tools.js:998
-msgid "Install default apio..."
-msgstr "安裝預設 apio..."
+#: app/views/menu.html:468
+msgid "Install Development version"
+msgstr ""
 
-#: app/scripts/services/tools.js:1075
+#: app/scripts/services/tools.js:1119
+msgid ""
+"Install the <b>STABLE Toolchain</b>. This operation requires Internet "
+"connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
+"allow the toolchain installation</p> <p>Do you want to continue?</p>"
+msgstr ""
+
+#: app/scripts/services/tools.js:1145
+#, fuzzy
+#| msgid ""
+#| "The toolchain will be updated. This operation requires Internet "
+#| "connection. Do you want to continue?"
+msgid ""
+"Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr "工具鏈將被更新，這需要連上 Internet , 是否繼續?"
+
+#: app/scripts/services/tools.js:1167
+#, fuzzy
+#| msgid ""
+#| "The toolchain will be updated. This operation requires Internet "
+#| "connection. Do you want to continue?"
+msgid ""
+"Install the LATEST STABLE toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr "工具鏈將被更新，這需要連上 Internet , 是否繼續?"
+
+#: app/scripts/services/tools.js:1489
 msgid "Installation completed"
 msgstr "安裝完成"
 
-#: app/scripts/services/tools.js:884 app/scripts/services/tools.js:922
-msgid "Installing toolchain"
-msgstr "安裝工具鏈"
+#: app/scripts/services/tools.js:1275
+#, fuzzy
+#| msgid "Install"
+msgid "Installing"
+msgstr "安裝"
 
-#: app/scripts/services/drivers.js:254 app/scripts/services/tools.js:968
+#: app/scripts/services/drivers.js:413 app/scripts/services/tools.js:1363
 msgid "Internet connection required"
 msgstr "需要連接 Internet"
 
@@ -807,7 +620,7 @@ msgstr "無效的 <i>上拉</i> 連接:<br>只有 <i>輸入</i> 區塊才能被�
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "無效的區塊連接:<br><i>上拉</i> 已經使用"
 
-#: app/scripts/services/tools.js:1195
+#: app/scripts/services/tools.js:1663
 msgid "Invalid collection {{name}}"
 msgstr "無效的選集 {{name}}"
 
@@ -824,457 +637,304 @@ msgstr "無效的連接: {{a}} → {{b}}"
 msgid "Invalid multiple input connections"
 msgstr "無效的多輸入連接"
 
-#: app/scripts/services/project.js:489 app/scripts/services/project.js:68
+#: app/scripts/services/project.js:498 app/scripts/services/project.js:77
 msgid "Invalid project format"
 msgstr "無效的專案格式"
 
-#: app/views/version-5.1n200403.html:22 app/views/version-5.1n200523.html:36
-msgid ""
-"It has never been so easy to implement a SOC in an FPGA. Drag and Drop your "
-"cores!"
-msgstr "從來不曾看過這麼簡單就能在 FPGA 上做個 SOC，只要簡單拖放核心就可以了！"
-
-#: app/views/version-5.1.html:16
-msgid ""
-"It has never been so easy to implement a SOC in an FPGA. Introducing the "
-"first two blocks to implement RISC-V and Z80 processors!"
-msgstr ""
-"從來不曾看過這麼簡單就能在 FPGA 上做個 SOC。介紹兩個區塊來製作 RISC-V 與 Z80 "
-"處理器！"
-
-#: app/scripts/services/drivers.js:348
-msgid "It is recommended to use <b>USB 2.0</b> ports"
-msgstr "建議使用 <b>USB 2.0</b> 埠"
-
-#: app/views/languages.html:22
+#: app/views/languages.html:32
 msgid "Italian"
 msgstr "Italian"
 
-#: app/views/languages.html:82
+#: app/views/languages.html:98
 msgid "Korean"
 msgstr "Korean"
 
-#: app/views/version-5.1n200523.html:27
-msgid "LOVE-FPGA"
-msgstr "LOVE-FPGA"
+#: app/views/menu.html:194
+msgid "Label Finder"
+msgstr ""
 
-#: app/views/version-5.0.html:29
-msgid "Labels"
-msgstr "標籤"
+#: app/scripts/services/blocks.js:1075
+#, fuzzy
+#| msgid "Block updated"
+msgid "Label updated"
+msgstr "區塊已更新"
 
-#: app/views/menu.html:124
+#: app/views/menu.html:214
 msgid "Language"
 msgstr "語言"
 
-#: app/views/uithemes.html:10
+#: app/views/uithemes.html:26
 msgid "Light"
 msgstr "淺色模式"
 
-#: app/scripts/services/blocks.js:1141 app/scripts/services/blocks.js:1262
-#: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:89
-msgid "LightSeaGreen"
-msgstr "淺海藍色"
-
-#: app/scripts/services/project.js:81
+#: app/scripts/services/project.js:91
 msgid "Load"
 msgstr "載入"
 
-#: app/scripts/services/blocks.js:1533 app/scripts/services/blocks.js:1587
-#: app/scripts/services/blocks.js:401 app/scripts/services/blocks.js:469
+#: app/scripts/services/blocks.js:1447 app/scripts/services/blocks.js:1501
+#: app/scripts/services/blocks.js:351 app/scripts/services/blocks.js:419
 msgid "Local parameter"
 msgstr "本地參數"
 
-#: app/views/version-5.1n201009.html:31
-msgid "Many people from the FPGAwars community have received their"
-msgstr "很多在FPGAwars社群的朋友們都收到過他們的"
+#: app/views/menu.html:267
+#, fuzzy
+#| msgid "Drivers enabled"
+msgid "Logging enabled"
+msgstr "啟用驅動程式"
 
-#: app/scripts/services/utils.js:920
+#: app/views/menu.html:274
+msgid "Logging file"
+msgstr ""
+
+#: app/scripts/controllers/menu.js:558
+msgid "Logging file updated"
+msgstr ""
+
+#: app/scripts/services/utils.js:1052
 msgid "Maximum bus size: 96 bits"
 msgstr "最大的匯流排大小：96位元"
 
-#: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
-#: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:77
-msgid "MediumVioletRed"
-msgstr "中度紫紅色"
-
-#: app/views/menu.html:398
+#: app/views/design.html:95
 msgid "Memory"
 msgstr "記憶體"
 
-#: app/scripts/services/utils.js:661
+#: app/scripts/services/utils.js:763
 msgid "Name"
 msgstr "名稱"
 
-#: app/scripts/services/blocks.js:1146 app/scripts/services/blocks.js:1267
-#: app/scripts/services/blocks.js:324 app/scripts/services/blocks.js:94
-msgid "Navy"
-msgstr "海軍藍色"
-
-#: app/views/menu.html:32
+#: app/views/menu.html:55
 msgid "New"
 msgstr "新建"
 
-#: app/views/version-5.1.html:15 app/views/version-5.1n200403.html:21
-#: app/views/version-5.1n200523.html:35
-msgid "New SOCs"
-msgstr "新的 SOCs"
+#: app/views/design.html:40
+msgid "New Color:"
+msgstr ""
 
-#: app/views/version-5.1n200403.html:29 app/views/version-5.1n200523.html:43
-msgid "New collections"
-msgstr "新建選集"
+#: app/views/design.html:37
+#, fuzzy
+#| msgid "Name"
+msgid "New Name:"
+msgstr "名稱"
 
-#: app/views/version-5.1.html:21 app/views/version-5.1n200403.html:40
-#: app/views/version-5.1n200523.html:53
-msgid "New community blocks"
-msgstr "新的社群區塊"
-
-#: app/scripts/controllers/menu.js:956
+#: app/scripts/controllers/menu.js:1220
 msgid "No collections stored"
 msgstr "沒有儲存的選集"
 
-#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:415
-#: app/scripts/services/project.js:136
+#: app/scripts/controllers/main.js:13 app/scripts/controllers/menu.js:450
+#: app/scripts/services/project.js:145
 msgid "OK"
 msgstr "確定"
 
-#: app/scripts/services/blocks.js:1140 app/scripts/services/blocks.js:1261
-#: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:88
-msgid "OliveDrab"
-msgstr "橄欖綠色"
-
-#: app/views/menu.html:35
+#: app/views/menu.html:60
 msgid "Open"
 msgstr "開啟"
 
-#: app/scripts/services/utils.js:684
+#: app/scripts/services/utils.js:820
 msgid "Open SVG"
 msgstr "開啟 SVG"
 
-#: app/scripts/services/blocks.js:1131 app/scripts/services/blocks.js:1252
-#: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:79
-msgid "OrangeRed"
-msgstr "橘紅色"
-
-#: app/scripts/services/project.js:536
+#: app/scripts/services/project.js:543
 msgid "Original file {{file}} does not exist"
 msgstr "原始檔案 {{file}} 不存在"
 
-#: app/views/menu.html:386
+#: app/views/design.html:83
 msgid "Output"
 msgstr "輸出"
 
-#: app/views/menu.html:389
+#: app/views/design.html:89
 msgid "Output label"
 msgstr "輸出標籤"
 
-#: app/views/menu.html:107
+#: app/views/menu.html:171
 msgid "Paste"
 msgstr "貼上"
 
-#: app/scripts/controllers/menu.js:507 app/scripts/controllers/menu.js:547
-#: app/scripts/controllers/menu.js:580
+#: app/scripts/controllers/menu.js:563 app/scripts/controllers/menu.js:601
+#: app/scripts/controllers/menu.js:653 app/scripts/controllers/menu.js:703
 msgid "Path {{path}} does not exist"
 msgstr "路徑 {{path}} 不存在"
 
-#: app/scripts/services/utils.js:1068
+#: app/scripts/services/utils.js:1199
 msgid "Please run: {{cmd}}"
 msgstr "請執行: {{cmd}}"
 
-#: app/views/version-5.1n200403.html:11
-msgid "Plugin system in progress"
-msgstr "外掛系統運行中"
-
-#: app/views/menu.html:121
+#: app/views/menu.html:208
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: app/views/version-5.1n201009.html:80
-msgid "Preliminary support for the Fomu FPGA board, by"
-msgstr "初期支援 Fomu FPGA 開發板"
-
-#: app/views/menu.html:158
+#: app/views/menu.html:282
 msgid "Project information"
 msgstr "專案資訊"
 
-#: app/scripts/controllers/menu.js:592 app/scripts/controllers/menu.js:610
+#: app/scripts/controllers/menu.js:721 app/scripts/controllers/menu.js:747
 msgid "Project information updated"
 msgstr "專案資訊已更新"
 
-#: app/scripts/services/project.js:121
+#: app/scripts/services/project.js:131
 msgid "Project {{name}} loaded"
 msgstr "專案 {{name}} 已載入"
 
-#: app/scripts/services/project.js:395
+#: app/scripts/services/project.js:404
 msgid "Project {{name}} saved"
 msgstr "專案 {{name}} 已儲存"
 
-#: app/scripts/controllers/menu.js:544
+#: app/scripts/controllers/menu.js:648
 msgid "Python Environment updated"
 msgstr "Python 環境已更新"
 
-#: app/views/menu.html:147
+#: app/views/menu.html:253
 msgid "Python environment"
 msgstr "Python 環境"
 
-#: app/views/menu.html:85
+#: app/views/menu.html:135
 msgid "Quit"
 msgstr "結束程式"
 
-#: app/views/design.html:5
+#: app/views/design.html:9
 msgid "Read only"
 msgstr "唯讀"
 
-#: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
-#: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:75
-msgid "Red"
-msgstr "紅色"
-
-#: app/views/menu.html:97
+#: app/views/menu.html:153
 msgid "Redo"
 msgstr "重做"
 
-#: app/views/menu.html:318
+#: app/views/menu.html:524
 msgid "Reload"
 msgstr "重載"
 
-#: app/scripts/services/tools.js:607
+#: app/scripts/services/tools.js:870
 msgid "Remote host {{name}} not connected"
 msgstr "遠端主機 {{name}} 未連接"
 
-#: app/views/menu.html:151
+#: app/views/menu.html:259
 msgid "Remote hostname"
 msgstr "遠端主機名"
 
-#: app/views/menu.html:278 app/views/menu.html:322
+#: app/views/menu.html:461 app/views/menu.html:530
 msgid "Remove"
 msgstr "移除"
 
-#: app/views/menu.html:334
+#: app/views/menu.html:544
 msgid "Remove all"
 msgstr "全部移除"
 
-#: app/scripts/services/utils.js:686
+#: app/views/design.html:69
+msgid "Replace All"
+msgstr ""
+
+#: app/views/design.html:39
+msgid "Replace One"
+msgstr ""
+
+#: app/scripts/services/utils.js:822
 msgid "Reset SVG"
 msgstr "重載SVG"
 
-#: app/views/menu.html:283
-msgid "Reset default"
-msgstr "重置為預設"
-
-#: app/scripts/services/blocks.js:1145 app/scripts/services/blocks.js:1266
-#: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:93
-msgid "RoyalBlue"
-msgstr "皇家藍色"
-
-#: app/views/languages.html:58
+#: app/views/languages.html:74
 msgid "Russian"
 msgstr "Russian"
 
-#: app/views/version-5.1n200523.html:20
-msgid "STDIO collection"
-msgstr "STDIO 選集"
-
-#: app/views/menu.html:50
+#: app/views/menu.html:89
 msgid "Save"
 msgstr "儲存"
 
-#: app/scripts/services/utils.js:685
+#: app/scripts/services/utils.js:821
 msgid "Save SVG"
 msgstr "儲存SVG"
 
-#: app/views/menu.html:53
+#: app/views/menu.html:94
 msgid "Save as"
 msgstr "另存為"
 
-#: app/scripts/controllers/menu.js:230
+#: app/scripts/controllers/menu.js:241
 msgid "Save submodule"
 msgstr "儲存子模組"
 
-#: app/views/menu.html:196
+#: app/views/menu.html:345
 msgid "Select"
 msgstr "選擇"
 
-#: app/views/menu.html:113
+#: app/views/menu.html:181
 msgid "Select all"
 msgstr "全選"
 
-#: app/scripts/services/utils.js:799
+#: app/scripts/services/utils.js:931
 msgid "Select your board"
 msgstr "選定開發板"
 
-#: app/scripts/services/blocks.js:1361 app/scripts/services/blocks.js:172
+#: app/scripts/services/blocks.js:1275 app/scripts/services/blocks.js:147
 msgid "Show clock"
 msgstr "顯示時脈"
 
-#: app/scripts/services/blocks.js:1136 app/scripts/services/blocks.js:1257
-#: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:84
-msgid "SlateBlue"
-msgstr "板藍色"
-
-#: app/views/menu.html:360
+#: app/views/menu.html:582
 msgid "Source code"
 msgstr "原始程式"
 
-#: app/views/languages.html:10
+#: app/views/languages.html:20
 msgid "Spanish"
 msgstr "Spanish"
 
-#: app/scripts/services/blocks.js:1138 app/scripts/services/blocks.js:1259
-#: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:86
-msgid "SpringGreen"
-msgstr "春天綠色"
-
-#: app/scripts/controllers/menu.js:875
+#: app/scripts/controllers/menu.js:1120
 msgid "Start build"
 msgstr "開始編譯"
 
-#: app/scripts/controllers/menu.js:898
+#: app/scripts/controllers/menu.js:1148
 msgid "Start upload"
 msgstr "開始上傳"
 
-#: app/scripts/controllers/menu.js:855
+#: app/scripts/controllers/menu.js:1096
 msgid "Start verification"
 msgstr "開始驗證"
 
-#: app/scripts/services/blocks.js:1143 app/scripts/services/blocks.js:1264
-#: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:91
-msgid "SteelBlue"
-msgstr "鋼鐵藍色"
-
-#: app/views/version-5.1n200523.html:21
-msgid ""
-"Still in development. Blocks for Standad Input and Output. Let your circuits "
-"communicate easily with the PC though the serial port"
-msgstr "標準的輸入與輸出區塊還在開發中，讓您的電路可以簡單地與電腦的序列埠通訊"
-
-#: app/views/version-5.1n200523.html:28
-msgid ""
-"Still in development. Linking Of Virtual Electronics to FPGAs "
-"slightly_smiling_face. Use virtual components with real hardware for "
-"debugging without simulation"
-msgstr ""
-"連結虛擬電路到FPGA還在開發中（微笑），使用虛擬元件與真實硬體來共同偵錯，不使"
-"用純模擬的方式"
-
-#: app/views/version-5.0.html:11
-msgid "Submodule edition"
-msgstr "子模組版本"
-
-#: app/views/version-5.0.html:16
-msgid ""
-"Submodule edition affect at all of the same block types. For example if you "
-"have in you design six AND blocks, if you modify one of them, yo modify all "
-"of them."
-msgstr ""
-"子模組版本會影響完全一樣的區塊型別。舉例若您的設計有六個 AND 區塊，您改了一個"
-"就會全部改動。"
-
-#: app/scripts/services/tools.js:306
+#: app/scripts/services/tools.js:446
 msgid "Synchronize remote files ..."
 msgstr "遠端檔案同步..."
 
-#: app/views/menu.html:66
+#: app/views/menu.html:326
+msgid "System Info"
+msgstr ""
+
+#: app/views/languages.html:62
+msgid "Taiwan"
+msgstr ""
+
+#: app/views/menu.html:112
 msgid "Testbench"
 msgstr "測試平台"
 
-#: app/views/version-5.1n200523.html:22 app/views/version-5.1n200523.html:29
-msgid "Thanks to Obijuan!"
-msgstr "感謝 Obijuan!"
-
-#: app/views/version-5.1n200523.html:14
-msgid "Thanks to Sam!"
-msgstr "感謝 Sam!"
-
-#: app/views/version-5.1n201009.html:55
-msgid "The"
-msgstr "The"
-
-#: app/views/version-5.1n201009.html:120
-msgid "The Hack CPU from the"
-msgstr "The Hack CPU from the"
-
-#: app/scripts/services/tools.js:1168
+#: app/scripts/services/tools.js:1612
 msgid "The collection {{name}} already exists."
 msgstr "選集 {{name}} 已存在."
 
-#: app/scripts/controllers/menu.js:830
+#: app/scripts/controllers/menu.js:1068
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
 msgstr "目前 FPGA 的 I/O 設定將丟失. 您是否確定換用 {{name}} 開發板?"
 
-#: app/scripts/services/tools.js:850
+#: app/scripts/services/tools.js:1185
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "工具鏈將會移除，是否繼續?"
 
-#: app/scripts/services/tools.js:834
-msgid "The toolchain will be restored to default. Do you want to continue?"
-msgstr "工具鏈將被重置為預設，是否繼續?"
-
-#: app/scripts/services/tools.js:823
-msgid ""
-"The toolchain will be updated. This operation requires Internet connection. "
-"Do you want to continue?"
-msgstr "工具鏈將被更新，這需要連上 Internet , 是否繼續?"
-
-#: app/views/version-5.0.html:30
-msgid ""
-"The use of labels permits clarify larger designs, connecting blocks without "
-"wires."
-msgstr "標籤的使用可以讓大型設計不需要連接線。"
-
-#: app/views/version-5.0.html:9
-msgid ""
-"There are a number of updates in this version that we hope you will like, "
-"some of the key highlights include:"
-msgstr "這版有些新的更新，希望您會喜歡，包含有："
-
-#: app/scripts/services/tools.js:1336
+#: app/scripts/services/tools.js:1832
 msgid "There is a new nightly version available"
 msgstr "有新的測試版了"
 
-#: app/scripts/services/tools.js:1332
+#: app/scripts/services/tools.js:1824
 msgid "There is a new stable version available"
 msgstr "有新的穩定版本了"
 
-#: app/scripts/services/project.js:458
+#: app/scripts/services/project.js:467
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr "這導入操作需要專案路徑，您必須保存目前專案，是否繼續?"
 
-#: app/views/version-5.0.html:17
-msgid "This is a very powerfull feature to maintain large designs."
-msgstr "這是維護大型設計很重要的功能。"
-
-#: app/scripts/services/project.js:85
+#: app/scripts/services/project.js:95
 msgid "This project is designed for the {{name}} board."
 msgstr "此專案為開發板 {{name}} 所設計."
 
-#: app/views/version-5.0.html:12
-msgid ""
-"This version improve the edition capatabilities, including the possibility "
-"of editing block contents."
-msgstr "這個版本改進了編輯功能，包括編輯區塊內容的可能性。"
-
-#: app/views/version-5.1n200403.html:12
-msgid ""
-"This version includes the first plugin system core. The developer's API is "
-"coming, and soon you can develop plugins to extend Icestudio functionality."
-msgstr ""
-"這個版本包含了第一個系統核心外掛，開發者的API即將到來，很快您就能使用外掛來擴"
-"展Icestudio的功能。"
-
-#: app/views/version-5.1n200523.html:12
-msgid "This version includes the first user interface Theme Support."
-msgstr "這個版本包含了第一個用戶界面的主題風格支援。"
-
-#: app/views/version-5.0.html:26
-msgid ""
-"To do it, only is necessary that prefix the block identifier with Generic-"
-msgstr "只要在區塊標示註明「通用」Gerneric-"
-
-#: app/scripts/services/graph.js:418
+#: app/scripts/services/graph.js:419
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1284,7 +944,7 @@ msgstr "要進入深層區塊的編輯模式，您必須先結束現在的編輯
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "要在設計中遊走瀏覽，您需要先關閉編輯模式。"
 
-#: app/scripts/controllers/menu.js:231
+#: app/scripts/controllers/menu.js:242
 msgid ""
 "To save your design you need to lock the keylock and go to top level design."
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
@@ -1293,194 +953,155 @@ msgstr ""
 "要鎖住並回到最上層才能儲存您的設計。<br/><br/>若您要輸出子模組到檔案，請用"
 "Save as另存為功能。"
 
-#: app/views/menu.html:266
+#: app/views/menu.html:199
+#, fuzzy
+#| msgid "Tools"
+msgid "Toolbox"
+msgstr "工具"
+
+#: app/views/menu.html:443
 msgid "Toolchain"
 msgstr "工具鏈"
 
-#: app/scripts/services/tools.js:1076
+#: app/scripts/services/tools.js:1497
 msgid "Toolchain installed"
 msgstr "工具鏈已安裝"
 
-#: app/scripts/services/drivers.js:381 app/scripts/services/drivers.js:400
-#: app/scripts/services/tools.js:136 app/scripts/services/tools.js:260
-#: app/scripts/services/tools.js:274
+#: app/scripts/services/drivers.js:586 app/scripts/services/drivers.js:605
+#: app/scripts/services/tools.js:192 app/scripts/services/tools.js:372
 msgid "Toolchain not installed"
 msgstr "工具鏈未安裝"
 
-#: app/scripts/services/tools.js:855
+#: app/scripts/services/tools.js:1203
 msgid "Toolchain removed"
 msgstr "工具鏈移除了"
 
-#: app/scripts/services/tools.js:282
+#: app/scripts/services/tools.js:415
 msgid "Toolchain version does not match"
 msgstr "工具鏈版本不符合"
 
-#: app/views/menu.html:253
+#: app/views/menu.html:420
 msgid "Tools"
 msgstr "工具"
 
-#: app/scripts/services/blocks.js:1142 app/scripts/services/blocks.js:1263
-#: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:90
-msgid "Turquoise"
-msgstr "綠松色"
+#: app/views/languages.html:104
+msgid "Turkish"
+msgstr ""
 
-#: app/views/version-5.1n200523.html:11
-msgid "UI Theme Support"
-msgstr "主題風格支援"
-
-#: app/views/menu.html:129
+#: app/views/menu.html:224
 msgid "UI theme"
 msgstr "介面主題風格"
 
-#: app/views/menu.html:94
+#: app/views/menu.html:148
 msgid "Undo"
 msgstr "還原"
 
-#: app/scripts/services/tools.js:414
+#: app/scripts/services/tools.js:616
 msgid "Unknown board"
 msgstr "未知的開發板"
 
-#: app/scripts/services/project.js:161
+#: app/scripts/services/project.js:169
 msgid "Unsupported project format {{version}}"
 msgstr "不支援的專案格式  {{version}}"
 
-#: app/scripts/app.js:74
+#: app/scripts/app.js:164
 msgid "Untitled"
 msgstr "未命名"
 
-#: app/views/menu.html:273
-msgid "Update"
-msgstr "更新"
+#: app/views/menu.html:454
+#, fuzzy
+#| msgid "Update the block name"
+msgid "Update (Latest stable)"
+msgstr "更新區塊名稱"
 
-#: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
-#: app/scripts/services/blocks.js:1351 app/scripts/services/blocks.js:1447
-#: app/scripts/services/blocks.js:1528 app/scripts/services/blocks.js:1572
+#: app/scripts/services/blocks.js:1265 app/scripts/services/blocks.js:1361
+#: app/scripts/services/blocks.js:1442 app/scripts/services/blocks.js:1486
 msgid "Update the block name"
 msgstr "更新區塊名稱"
 
-#: app/scripts/controllers/menu.js:890 app/views/menu.html:262
+#: app/scripts/services/blocks.js:1084 app/scripts/services/blocks.js:1179
+#, fuzzy
+#| msgid "Update the block name"
+msgid "Update the label name"
+msgstr "更新區塊名稱"
+
+#: app/scripts/controllers/menu.js:1138 app/views/design.html:185
+#: app/views/menu.html:435
 msgid "Upload"
 msgstr "上傳"
 
-#: app/scripts/controllers/menu.js:899
+#: app/scripts/controllers/menu.js:1149
 msgid "Upload done"
 msgstr "上傳完成"
 
-#: app/scripts/controllers/menu.js:856
+#: app/scripts/controllers/menu.js:1097
 msgid "Verification done"
 msgstr "驗證完成"
 
-#: app/views/menu.html:256
+#: app/views/design.html:183 app/views/menu.html:425
 msgid "Verify"
 msgstr "驗證"
 
-#: app/scripts/services/utils.js:662 app/views/menu.html:353
+#: app/scripts/services/utils.js:764 app/views/menu.html:569
 msgid "Version"
 msgstr "版本"
 
-#: app/views/menu.html:350
+#: app/views/menu.html:564
 msgid "Version notes"
 msgstr "版本通知"
 
-#: app/views/menu.html:164
+#: app/views/menu.html:289
 msgid "View"
 msgstr "查看"
 
-#: app/views/menu.html:347
+#: app/views/menu.html:559
 msgid "View license"
 msgstr "查看版權說明"
 
-#: app/scripts/services/tools.js:556
+#: app/scripts/services/tools.js:807
 msgid "Warnings detected in the design"
 msgstr "設計中發現警告"
 
-#: app/views/version-5.1.html:10
-msgid ""
-"We hope you enjoy this new version, if you want to know the new features "
-"included you can view this video recorded by"
-msgstr "希望您滿意這個新版本，若您想知道新功能，您可以看看這個影片"
-
-#: app/views/version-5.1n200403.html:47 app/views/version-5.1n200523.html:60
-msgid ""
-"We remind you of this video that explains the new feature of copy-paste or "
-"copy-clone block, recorded by"
-msgstr "提醒您這個影片說明了拷貝複製的新功能"
-
-#: app/views/version-5.1n201009.html:9
-msgid ""
-"Welcome to Icestudio!. This version adds the new iceRok plugin and several "
-"new boards:"
-msgstr "歡迎使用 Icestudio! 這個版本增加了新的 iceRok 外掛與一些新板子："
-
-#: app/views/version-5.1n200523.html:9
-msgid ""
-"Welcome to Icestudio!. This version fix some bugs, improve velocity and "
-"includes the next new features:"
-msgstr ""
-"歡迎使用 Icestudio! 這個版本修改了一些錯誤，改進了速度並包含了幾個新功能："
-
-#: app/views/version-5.1.html:9
-msgid ""
-"Welcome to Icestudio, this version is focused on upgrading core components, "
-"fixing bugs, and some optimizations, oriented to better handle large designs."
-msgstr ""
-"歡迎使用 Icestudio! 這個版本關注於升級核心元件，修改錯誤，還有一些利於處理大"
-"型設計的優化。"
-
-#: app/views/version-5.1n200403.html:9
-msgid ""
-"Welcome to Icestudio: This version is focused on upgrading core components, "
-"fixing bugs, compatibility with OSX Mojave and Catalina and some "
-"optimizations, oriented to better handle large designs. To highlight, this "
-"version works with nextpnr and supports the ECP5 FPGA family, and it "
-"includes the first attempt at a plugin system, including a working serial "
-"terminal."
-msgstr ""
-"歡迎使用 Icestudio! 這個版本專注於升級核心元件，修改錯誤，OSX Mojave 的相容"
-"性，還有一些處理大型設計的優化。特別之處，這個版本使用 nextpnr 且支援 ECP5 "
-"FPGA 系列，還有第一次使用外掛系統，包括一個好用的序列埠終端機。"
-
-#: app/views/version-5.0.html:8
-msgid ""
-"Wellcome to Fast & Furious, Icestudio version, focused on upgrading its core "
-"components, fix bugs, and optimizacion"
-msgstr "歡迎使用 Icestudio! 這個版本關注於升級核心元件，修改錯誤，還有一些優化"
-
-#: app/scripts/services/blocks.js:725
+#: app/scripts/services/blocks.js:675
 msgid "Wrong block format: {{type}}"
 msgstr "區塊格式錯誤: {{type}}"
 
-#: app/scripts/services/blocks.js:119 app/scripts/services/blocks.js:1228
-#: app/scripts/services/blocks.js:1340 app/scripts/services/blocks.js:1436
-#: app/scripts/services/blocks.js:1518 app/scripts/services/blocks.js:1561
-#: app/scripts/services/blocks.js:1618 app/scripts/services/blocks.js:193
-#: app/scripts/services/blocks.js:259 app/scripts/services/blocks.js:347
-#: app/scripts/services/blocks.js:421 app/scripts/services/blocks.js:490
+#: app/scripts/services/blocks.js:1168 app/scripts/services/blocks.js:1254
+#: app/scripts/services/blocks.js:1350 app/scripts/services/blocks.js:1432
+#: app/scripts/services/blocks.js:1475 app/scripts/services/blocks.js:1532
+#: app/scripts/services/blocks.js:168 app/scripts/services/blocks.js:234
+#: app/scripts/services/blocks.js:297 app/scripts/services/blocks.js:371
+#: app/scripts/services/blocks.js:440 app/scripts/services/blocks.js:94
 msgid "Wrong block name {{name}}"
 msgstr "區塊名稱錯誤 {{name}}"
 
-#: app/scripts/services/blocks.js:636
+#: app/scripts/controllers/menu.js:1680
+#, fuzzy
+#| msgid "Wrong port name {{name}}"
+msgid "Wrong new name!"
+msgstr "埠名稱錯誤 {{name}}"
+
+#: app/scripts/services/blocks.js:586
 msgid "Wrong parameter name {{name}}"
 msgstr "參數名稱錯誤 {{name}}"
 
-#: app/scripts/services/blocks.js:593 app/scripts/services/blocks.js:611
+#: app/scripts/services/blocks.js:543 app/scripts/services/blocks.js:561
 msgid "Wrong port name {{name}}"
 msgstr "埠名稱錯誤 {{name}}"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:142
 msgid "Wrong project format: {{name}}"
 msgstr "專案格式錯誤: {{name}}"
 
-#: app/scripts/services/tools.js:603
+#: app/scripts/services/tools.js:863
 msgid "Wrong remote hostname {{name}}"
 msgstr "遠端主機名稱錯誤 {{name}}"
 
-#: app/scripts/services/blocks.js:1134 app/scripts/services/blocks.js:1255
-#: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:82
-msgid "Yellow"
-msgstr "黃色"
+#: app/scripts/controllers/menu.js:1584
+msgid "Wrong search name!"
+msgstr ""
 
-#: app/scripts/controllers/menu.js:268
+#: app/scripts/controllers/menu.js:285
 msgid ""
 "You are editing a submodule, if you save it, you save only the submodule (in "
 "this situation \"save as\" works like \"export module\"), Do you like to "
@@ -1489,92 +1110,507 @@ msgstr ""
 "您正在編輯子模組，如果您儲存它，只有子模組會儲存，用「另存為」可以導出模組，"
 "請問還要繼續嗎？"
 
-#: app/scripts/services/project.js:86
+#: app/scripts/services/project.js:96
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "您可以載入原始專案，或轉換成適合開發板 {{name}} ."
 
-#: app/scripts/controllers/menu.js:870
+#: app/scripts/controllers/menu.js:1112
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr "您可以只建構最上層的設計，子模組內只要 <strong>驗證。</strong>"
 
-#: app/scripts/controllers/menu.js:891
+#: app/scripts/controllers/menu.js:1139
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
 msgstr "您可以只要上傳最上層的設計，子模組內只要 <strong>驗證。</strong>"
 
-#: app/scripts/controllers/menu.js:406
+#: app/scripts/controllers/menu.js:439
 msgid "Your changes will be lost if you don’t save them"
 msgstr "如果不儲存，更改內容將消失"
 
-#: app/views/version-5.1n201009.html:124
-msgid "and all its components are available in the"
-msgstr "and all its components are available in the"
-
-#: app/views/design.html:6
+#: app/views/design.html:12
 msgid "back"
 msgstr "後退"
 
-#: app/views/version-5.1n201009.html:129
-msgid "collection"
-msgstr "範例選集"
-
-#: app/views/version-5.1.html:22
+#: app/views/design.html:19
 msgid ""
-"community has been very active and there are interesting new blocks for "
-"Icestudio:"
-msgstr "社群已經非常活躍，Icestudio有很多有趣的新區塊:"
-
-#: app/views/version-5.1n200523.html:14
-msgid "for the impressive CSS Dark Mode base."
-msgstr "for the impressive CSS Dark Mode base."
-
-#: app/views/version-5.1n201009.html:67
-msgid "has provided support for the"
-msgstr "已經支援"
-
-#: app/views/version-5.1n201009.html:21
-msgid "iceRok Collection"
-msgstr "iceRok 選集"
-
-#: app/views/version-5.1n201009.html:91
-msgid ""
-"is a library of all common discrete logic devices: The 74LS, 74HC, 74HCT "
-"family of chips, created by"
-msgstr "是全系列分散邏輯元件 74LS, 74Hc, 74HCT 系列的晶片程式庫，創造者"
-
-#: app/views/version-5.1n201009.html:60
-msgid ""
-"is fully supported. Many thanks to Roberto Dhios, Diego (vascodh), Facundo "
-"Larosa, Ramiro, Pablo V. and many others for their help in testing the board"
+"blocks of the current .ice design. If you do not want a propagation of a "
+"change, make it inside a cloned block (instead of copied one)"
 msgstr ""
-"全力支援，感謝Roberto Dhios, Diego (vascodh), Facundo Larosa, Ramiro, Pablo "
-"V. 與其他人的幫助與測試這塊開發板"
 
-#: app/views/version-5.1n201009.html:40
-msgid ""
-"the synthesis and upload of the Blinky example is shown. The improvements "
-"are based on the great work done by"
-msgstr "合成並上傳 Blinky 範例展示，這個改進是基於很棒的工作，完成者是"
-
-#: app/scripts/services/drivers.js:245 app/scripts/services/utils.js:1048
+#: app/scripts/services/drivers.js:404 app/scripts/services/utils.js:1179
 msgid "{{app}} is required."
 msgstr "需要{{app}}"
 
-#: app/scripts/controllers/menu.js:724
+#: app/scripts/controllers/menu.js:883
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} 數據表未定義"
 
-#: app/scripts/controllers/menu.js:713
+#: app/scripts/controllers/menu.js:869
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} 接腳未定義"
 
-#: app/scripts/controllers/menu.js:747
+#: app/scripts/controllers/menu.js:909
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 規則未定義"
 
-#: app/scripts/controllers/menu.js:349 app/scripts/controllers/menu.js:375
+#: app/scripts/controllers/menu.js:371 app/scripts/controllers/menu.js:404
 msgid "{{name}} exported"
 msgstr "{{name}} 已導出"
+
+#~ msgid ". Thank you very much"
+#~ msgstr ". 非常感謝"
+
+#~ msgid ". Thanks Andrew!"
+#~ msgstr ". 感謝 Andrew!"
+
+#~ msgid ". Thanks a lot! :-)"
+#~ msgstr ". 感謝！:-)"
+
+#~ msgid ". Thanks to"
+#~ msgstr ". 感謝"
+
+#~ msgid ". You can find more information in"
+#~ msgstr ". 您可以找到更多資訊在"
+
+#~ msgid ". You can see the blinking lights in action in"
+#~ msgstr ". 您可以看到閃動的燈在"
+
+#~ msgid ""
+#~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
+#~ "board to the USB and wait until Windows finishes the default installation "
+#~ "of the driver</li><li>When the OK button is clicked, the FTDI driver "
+#~ "installer will be launched in a new window</li><li>In the installer, "
+#~ "replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></"
+#~ "li><li>Unplug and reconnect the board</li></ol>"
+#~ msgstr ""
+#~ "<h4>FTDI 驅動程式安裝指引</h4><ol><li>以USB線接上FPGA開發板，等到Windows結"
+#~ "束預設驅動程式的安裝</li><li>按下OK鍵後，FTDI驅動安裝程式會在新的視窗開啟"
+#~ "</li><li>在安裝程式中把 <b>(Interface 0)</b> 驅動程式替換成 <b>libusbK</"
+#~ "b></li><li>拔出重新連接開發板</li></ol>"
+
+#~ msgid ""
+#~ "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
+#~ "Device</li><li>Select the board interface and uninstall the driver</li></"
+#~ "ol>"
+#~ msgstr ""
+#~ "<h4>FTDI 驅動程序卸載說明</h4><ol><li>找到 FPGA USB 設備</li><li>選擇開發"
+#~ "板介面並卸載驅動程式</li></ol>"
+
+#~ msgid ""
+#~ "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA "
+#~ "board to the USB and wait until Windows finishes the default installation "
+#~ "of the driver</li><li>When the OK button is clicked, the Serial driver "
+#~ "installer will be launched in a new window</li><li>In the installer, "
+#~ "follow the steps to install the driver</li><li>Unplug and reconnect the "
+#~ "board</li></ol>"
+#~ msgstr ""
+#~ "<h4>序列驅動程式安裝指引</h4><ol><li>以USB線接上FPGA開發板，等到Windows結"
+#~ "束預設驅動程式的安裝</li><li>按下OK鍵後，序列驅動安裝程式會在新的視窗開啟"
+#~ "</li><li>跟著安裝程序步驟做</li><li>拔出重新連接開發板</li></ol>"
+
+#~ msgid ""
+#~ "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA "
+#~ "USB Device</li><li>Select the board interface and uninstall the driver</"
+#~ "li></ol>"
+#~ msgstr ""
+#~ "<h4>序列驅動程式卸載指引</h4><ol><li>找到 FPGA USB 設備</li><li>選擇開發板"
+#~ "介面並卸載驅動程式</li></ol>"
+
+#~ msgid ""
+#~ "A collection is a group of blocks ready to use. There are a lot of "
+#~ "powerful blocks!:"
+#~ msgstr "選集裡有一些立即可用的區塊，有許多強大的區塊！:"
+
+#~ msgid "Automatic check for new versions"
+#~ msgstr "自動檢查新版"
+
+#~ msgid "Basic"
+#~ msgstr "基本區塊"
+
+#~ msgid ""
+#~ "Because Icestudio is in actively development it is important to stay your "
+#~ "icestudio in the last version. Now we are notifying you!"
+#~ msgstr ""
+#~ "因為 Icestudio 正積極開發中，請盡量選用最新的版本。我們會即時通知您！"
+
+#~ msgid "Capture the signals in your designs and visualize them using"
+#~ msgstr "在你的設計中擷取信號而且視覺化呈現，使用"
+
+#~ msgid "Community News"
+#~ msgstr "社群新消息"
+
+#~ msgid "Copy & Paste OR Copy & Clone blocks"
+#~ msgstr "拷貝複製或拷貝Clone區塊"
+
+#~ msgid "Coral"
+#~ msgstr "珊瑚色"
+
+#~ msgid "DarkGreen"
+#~ msgstr "深綠色"
+
+#~ msgid "DarkOrange"
+#~ msgstr "深橘色"
+
+#~ msgid "DeepPink"
+#~ msgstr "暗粉紅色"
+
+#~ msgid "DeepSkyBlue"
+#~ msgstr "深天空藍色"
+
+#~ msgid ""
+#~ "Default toolchain not found. Toolchain will be downloaded. This operation "
+#~ "requires Internet connection. Do you want to continue?"
+#~ msgstr ""
+#~ "未找到任何工具鏈，將使用網路下載。這個操作需要Internet連接，是否繼續？"
+
+#~ msgid "Download or clone and use these SOCs as Icestudio blocks:"
+#~ msgstr "Download or clone and use these SOCs as Icestudio blocks:"
+
+#~ msgid ""
+#~ "Download or clone repositories and use these SOCs as Icestudio blocks:"
+#~ msgstr ""
+#~ "Download or clone repositories and use these SOCs as Icestudio blocks:"
+
+#~ msgid "Error: default toolchain not found in '{{dir}}'"
+#~ msgstr "錯誤:預設工具鏈在'{{dir}}' 找不到"
+
+#~ msgid "Extract default apio files..."
+#~ msgstr "解壓縮預設apio檔案..."
+
+#~ msgid "Extract default apio packages..."
+#~ msgstr "解壓縮預設apio套件..."
+
+#~ msgid ""
+#~ "Find the probe blocks for capturing data and examples on how to use the "
+#~ "Sigrok plugin in the"
+#~ msgstr "找到探測區塊以擷取資料與樣本在如何使用 Sigrok 外掛於"
+
+#~ msgid ""
+#~ "For the moment,  we have only two themes. Light and Dark mode (like "
+#~ "modern apps)."
+#~ msgstr "此刻我們只有兩種主題風格，淺色與深色(最近流行的）"
+
+#~ msgid ""
+#~ "For the moment, plugins developed help us to define the public API and "
+#~ "specifications, providing, along the way, amazing functionalities for "
+#~ "users."
+#~ msgstr ""
+#~ "現在外掛開發能幫助我們定義開放的API介面與規格，給大家提供精彩的功能。"
+
+#~ msgid "Fuchsia"
+#~ msgstr "洋紅色"
+
+#~ msgid "Generic blocks"
+#~ msgstr "通用區塊"
+
+#~ msgid "Gold"
+#~ msgstr "金色"
+
+#~ msgid "GreenYellow"
+#~ msgstr "黃綠色"
+
+#~ msgid "Icestudio  (v0.5.1)"
+#~ msgstr "Icestudio  (v0.5.1)"
+
+#~ msgid "Icestudio Fast & Furious (v0.5.1-nightly)"
+#~ msgstr "Icestudio Fast & Furious (v0.5.1-nightly)"
+
+#~ msgid "Icestudio needs to be restarted to switch the new UI Theme."
+#~ msgstr "Icestudio 需要重新啟動來切換新的主題風格樣式."
+
+#~ msgid "Icestudio nightly build (v0.5.1n200403)"
+#~ msgstr "Icestudio nightly build (v0.5.1n200403)"
+
+#~ msgid "Icestudio nightly build (v0.5.1n200523)"
+#~ msgstr "Icestudio nightly build (v0.5.1n200523)"
+
+#~ msgid "Icestudio nightly build (v0.5.1n201009)"
+#~ msgstr "Icestudio nightly build (v0.5.1n201009)"
+
+#~ msgid ""
+#~ "If you are clonning blocks, it is very important than you change block "
+#~ "information to identify the new block features."
+#~ msgstr "若能Clone區塊是很重要的，不只是改變區塊資訊來標示新功能."
+
+#~ msgid ""
+#~ "If you are developing a collection, you can make Generic blocks that "
+#~ "works as templates. When you insert a generic block from a collection, "
+#~ "acts as a clone for rapidly modifications without do a copy and clone "
+#~ "operation."
+#~ msgstr ""
+#~ "若您正在開發選集，您可做些通用區塊來作為模板。當你插入一個通用區塊，就像個"
+#~ "複製品可以快速修改，不需要做複製的動作。"
+
+#~ msgid ""
+#~ "In other way, if you copy and clone a block, you make it independently of "
+#~ "the original block type and  the modifications only affect at this new "
+#~ "block type"
+#~ msgstr ""
+#~ "換句話說，若您複製一個區塊，使它有別於原來的區塊型別，這個修改只會影響新的"
+#~ "區塊型別"
+
+#~ msgid ""
+#~ "In this release you can play with a serial terminal embedded in Icestudio "
+#~ "- very powerful for testing purposes."
+#~ msgstr "這個版本您能使用內建的序列埠管理員，對測試是非常好用的。"
+
+#~ msgid "IndianRed"
+#~ msgstr "印地安紅色"
+
+#~ msgid "Initial Sigrok plugin"
+#~ msgstr "啟動Sigrok 外掛"
+
+#~ msgid "Install default apio..."
+#~ msgstr "安裝預設 apio..."
+
+#~ msgid "Installing toolchain"
+#~ msgstr "安裝工具鏈"
+
+#~ msgid ""
+#~ "It has never been so easy to implement a SOC in an FPGA. Drag and Drop "
+#~ "your cores!"
+#~ msgstr ""
+#~ "從來不曾看過這麼簡單就能在 FPGA 上做個 SOC，只要簡單拖放核心就可以了！"
+
+#~ msgid ""
+#~ "It has never been so easy to implement a SOC in an FPGA. Introducing the "
+#~ "first two blocks to implement RISC-V and Z80 processors!"
+#~ msgstr ""
+#~ "從來不曾看過這麼簡單就能在 FPGA 上做個 SOC。介紹兩個區塊來製作 RISC-V 與 "
+#~ "Z80 處理器！"
+
+#~ msgid "It is recommended to use <b>USB 2.0</b> ports"
+#~ msgstr "建議使用 <b>USB 2.0</b> 埠"
+
+#~ msgid "LOVE-FPGA"
+#~ msgstr "LOVE-FPGA"
+
+#~ msgid "Labels"
+#~ msgstr "標籤"
+
+#~ msgid "LightSeaGreen"
+#~ msgstr "淺海藍色"
+
+#~ msgid "Many people from the FPGAwars community have received their"
+#~ msgstr "很多在FPGAwars社群的朋友們都收到過他們的"
+
+#~ msgid "MediumVioletRed"
+#~ msgstr "中度紫紅色"
+
+#~ msgid "Navy"
+#~ msgstr "海軍藍色"
+
+#~ msgid "New SOCs"
+#~ msgstr "新的 SOCs"
+
+#~ msgid "New collections"
+#~ msgstr "新建選集"
+
+#~ msgid "New community blocks"
+#~ msgstr "新的社群區塊"
+
+#~ msgid "OliveDrab"
+#~ msgstr "橄欖綠色"
+
+#~ msgid "OrangeRed"
+#~ msgstr "橘紅色"
+
+#~ msgid "Plugin system in progress"
+#~ msgstr "外掛系統運行中"
+
+#~ msgid "Preliminary support for the Fomu FPGA board, by"
+#~ msgstr "初期支援 Fomu FPGA 開發板"
+
+#~ msgid "Red"
+#~ msgstr "紅色"
+
+#~ msgid "Reset default"
+#~ msgstr "重置為預設"
+
+#~ msgid "RoyalBlue"
+#~ msgstr "皇家藍色"
+
+#~ msgid "STDIO collection"
+#~ msgstr "STDIO 選集"
+
+#~ msgid "SlateBlue"
+#~ msgstr "板藍色"
+
+#~ msgid "SpringGreen"
+#~ msgstr "春天綠色"
+
+#~ msgid "SteelBlue"
+#~ msgstr "鋼鐵藍色"
+
+#~ msgid ""
+#~ "Still in development. Blocks for Standad Input and Output. Let your "
+#~ "circuits communicate easily with the PC though the serial port"
+#~ msgstr ""
+#~ "標準的輸入與輸出區塊還在開發中，讓您的電路可以簡單地與電腦的序列埠通訊"
+
+#~ msgid ""
+#~ "Still in development. Linking Of Virtual Electronics to FPGAs "
+#~ "slightly_smiling_face. Use virtual components with real hardware for "
+#~ "debugging without simulation"
+#~ msgstr ""
+#~ "連結虛擬電路到FPGA還在開發中（微笑），使用虛擬元件與真實硬體來共同偵錯，不"
+#~ "使用純模擬的方式"
+
+#~ msgid "Submodule edition"
+#~ msgstr "子模組版本"
+
+#~ msgid ""
+#~ "Submodule edition affect at all of the same block types. For example if "
+#~ "you have in you design six AND blocks, if you modify one of them, yo "
+#~ "modify all of them."
+#~ msgstr ""
+#~ "子模組版本會影響完全一樣的區塊型別。舉例若您的設計有六個 AND 區塊，您改了"
+#~ "一個就會全部改動。"
+
+#~ msgid "Thanks to Obijuan!"
+#~ msgstr "感謝 Obijuan!"
+
+#~ msgid "Thanks to Sam!"
+#~ msgstr "感謝 Sam!"
+
+#~ msgid "The"
+#~ msgstr "The"
+
+#~ msgid "The Hack CPU from the"
+#~ msgstr "The Hack CPU from the"
+
+#~ msgid "The toolchain will be restored to default. Do you want to continue?"
+#~ msgstr "工具鏈將被重置為預設，是否繼續?"
+
+#~ msgid ""
+#~ "The use of labels permits clarify larger designs, connecting blocks "
+#~ "without wires."
+#~ msgstr "標籤的使用可以讓大型設計不需要連接線。"
+
+#~ msgid ""
+#~ "There are a number of updates in this version that we hope you will like, "
+#~ "some of the key highlights include:"
+#~ msgstr "這版有些新的更新，希望您會喜歡，包含有："
+
+#~ msgid "This is a very powerfull feature to maintain large designs."
+#~ msgstr "這是維護大型設計很重要的功能。"
+
+#~ msgid ""
+#~ "This version improve the edition capatabilities, including the "
+#~ "possibility of editing block contents."
+#~ msgstr "這個版本改進了編輯功能，包括編輯區塊內容的可能性。"
+
+#~ msgid ""
+#~ "This version includes the first plugin system core. The developer's API "
+#~ "is coming, and soon you can develop plugins to extend Icestudio "
+#~ "functionality."
+#~ msgstr ""
+#~ "這個版本包含了第一個系統核心外掛，開發者的API即將到來，很快您就能使用外掛"
+#~ "來擴展Icestudio的功能。"
+
+#~ msgid "This version includes the first user interface Theme Support."
+#~ msgstr "這個版本包含了第一個用戶界面的主題風格支援。"
+
+#~ msgid ""
+#~ "To do it, only is necessary that prefix the block identifier with Generic-"
+#~ msgstr "只要在區塊標示註明「通用」Gerneric-"
+
+#~ msgid "Turquoise"
+#~ msgstr "綠松色"
+
+#~ msgid "UI Theme Support"
+#~ msgstr "主題風格支援"
+
+#~ msgid "Update"
+#~ msgstr "更新"
+
+#~ msgid ""
+#~ "We hope you enjoy this new version, if you want to know the new features "
+#~ "included you can view this video recorded by"
+#~ msgstr "希望您滿意這個新版本，若您想知道新功能，您可以看看這個影片"
+
+#~ msgid ""
+#~ "We remind you of this video that explains the new feature of copy-paste "
+#~ "or copy-clone block, recorded by"
+#~ msgstr "提醒您這個影片說明了拷貝複製的新功能"
+
+#~ msgid ""
+#~ "Welcome to Icestudio!. This version adds the new iceRok plugin and "
+#~ "several new boards:"
+#~ msgstr "歡迎使用 Icestudio! 這個版本增加了新的 iceRok 外掛與一些新板子："
+
+#~ msgid ""
+#~ "Welcome to Icestudio!. This version fix some bugs, improve velocity and "
+#~ "includes the next new features:"
+#~ msgstr ""
+#~ "歡迎使用 Icestudio! 這個版本修改了一些錯誤，改進了速度並包含了幾個新功能："
+
+#~ msgid ""
+#~ "Welcome to Icestudio, this version is focused on upgrading core "
+#~ "components, fixing bugs, and some optimizations, oriented to better "
+#~ "handle large designs."
+#~ msgstr ""
+#~ "歡迎使用 Icestudio! 這個版本關注於升級核心元件，修改錯誤，還有一些利於處理"
+#~ "大型設計的優化。"
+
+#~ msgid ""
+#~ "Welcome to Icestudio: This version is focused on upgrading core "
+#~ "components, fixing bugs, compatibility with OSX Mojave and Catalina and "
+#~ "some optimizations, oriented to better handle large designs. To "
+#~ "highlight, this version works with nextpnr and supports the ECP5 FPGA "
+#~ "family, and it includes the first attempt at a plugin system, including a "
+#~ "working serial terminal."
+#~ msgstr ""
+#~ "歡迎使用 Icestudio! 這個版本專注於升級核心元件，修改錯誤，OSX Mojave 的相"
+#~ "容性，還有一些處理大型設計的優化。特別之處，這個版本使用 nextpnr 且支援 "
+#~ "ECP5 FPGA 系列，還有第一次使用外掛系統，包括一個好用的序列埠終端機。"
+
+#~ msgid ""
+#~ "Wellcome to Fast & Furious, Icestudio version, focused on upgrading its "
+#~ "core components, fix bugs, and optimizacion"
+#~ msgstr ""
+#~ "歡迎使用 Icestudio! 這個版本關注於升級核心元件，修改錯誤，還有一些優化"
+
+#~ msgid "Yellow"
+#~ msgstr "黃色"
+
+#~ msgid "and all its components are available in the"
+#~ msgstr "and all its components are available in the"
+
+#~ msgid "collection"
+#~ msgstr "範例選集"
+
+#~ msgid ""
+#~ "community has been very active and there are interesting new blocks for "
+#~ "Icestudio:"
+#~ msgstr "社群已經非常活躍，Icestudio有很多有趣的新區塊:"
+
+#~ msgid "for the impressive CSS Dark Mode base."
+#~ msgstr "for the impressive CSS Dark Mode base."
+
+#~ msgid "has provided support for the"
+#~ msgstr "已經支援"
+
+#~ msgid "iceRok Collection"
+#~ msgstr "iceRok 選集"
+
+#~ msgid ""
+#~ "is a library of all common discrete logic devices: The 74LS, 74HC, 74HCT "
+#~ "family of chips, created by"
+#~ msgstr "是全系列分散邏輯元件 74LS, 74Hc, 74HCT 系列的晶片程式庫，創造者"
+
+#~ msgid ""
+#~ "is fully supported. Many thanks to Roberto Dhios, Diego (vascodh), "
+#~ "Facundo Larosa, Ramiro, Pablo V. and many others for their help in "
+#~ "testing the board"
+#~ msgstr ""
+#~ "全力支援，感謝Roberto Dhios, Diego (vascodh), Facundo Larosa, Ramiro, "
+#~ "Pablo V. 與其他人的幫助與測試這塊開發板"
+
+#~ msgid ""
+#~ "the synthesis and upload of the Blinky example is shown. The improvements "
+#~ "are based on the great work done by"
+#~ msgstr "合成並上傳 Blinky 範例展示，這個改進是基於很棒的工作，完成者是"
