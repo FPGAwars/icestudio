@@ -210,7 +210,7 @@ module.exports = function (grunt) {
             options: {
               mode: true,
             },
-            cwd: "cache/nwjsAarch64/nwjs-v0.54.2-linux-arm64",
+            cwd: "cache/nwjsAarch64/nwjs-v0.58.1-linux-arm64",
             dest: "dist/icestudio/aarch64",
             src: ["**"],
           },
@@ -233,7 +233,7 @@ module.exports = function (grunt) {
     // Execute nw-build packaging
     nwjs: {
       options: {
-        version: "0.54.1",
+        version: "0.58.0",
         //  flavor: 'normal', // For stable branch
         flavor: "sdk", // For development branch
         zip: false,
@@ -397,7 +397,7 @@ module.exports = function (grunt) {
         options: {
           overwrite: false,
         },
-        src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw54-arm64_2021-07-10/nw54-arm64_2021-07-10.tar.gz",
+        src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
         dest: "cache/nwjsAarch64/nwjs.tar.gz",
       },
 
