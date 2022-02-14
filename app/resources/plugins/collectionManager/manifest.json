@@ -11,7 +11,8 @@
     "icon": "assets/icon.svg",
     "multipleInstances": false,
     "gui":{
-        "type":"embedded",
+        "type":"embedded-none",
+        "windowed":true,
         "size":{
             "position":"fixed",
             "width":"calc(7% + 150px)",

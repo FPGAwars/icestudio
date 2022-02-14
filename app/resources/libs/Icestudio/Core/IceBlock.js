@@ -33,7 +33,7 @@ class IceBlock {
     //console.log('BLOCK LOAD FILE FROM BUS',args);
     this.fs.readFile(args.path, function (path, content) {
       args.obj = JSON.parse(content);
-      ICEpm.publishAt(args.id, "block.loadedFromFile", args);
+      //--  ICEpm.publishAt(args.id, "block.loadedFromFile", args);
     });
   }
 

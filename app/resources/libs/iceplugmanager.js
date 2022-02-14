@@ -9,7 +9,7 @@ var IcePlugManager = function () {
     this.pluginUri = false;
     this.env = false;
     this.plugins = {};
-    this.ebus = new IceEventBus();
+    //this.ebus = new IceEventBus();
     this.tpl = new IceTemplateSystem();
     this.parametric = new IceParametricHelper();
     this.blockManager = new IceBlock();
@@ -242,8 +242,8 @@ var IcePlugManager = function () {
                     if (data.type === 'eventBus') {
 
                         // console.log(`EBUS::${data.event}`, data.payload);
-                        _this.ebus.fire(data.event, data.payload);
-
+                        //_this.ebus.fire(data.event, data.payload);
+                        iceStudio.bus.events.publish(data.event, data.payload);
                     } else if (data.type === 'guiBus') {
 
                         // console.log(`GBUS::${data.event}`, data.payload);
@@ -385,12 +385,17 @@ var IcePlugManager = function () {
 
     this.init = function () {
         this.version();
+        /*
         this.ebus.subscribe('plugin.terminate', 'terminate', this);
         this.ebus.subscribe('plugin.cache', 'cache', this);
         this.ebus.subscribe('plugin.cached', 'cached', this);
-
-        this.blockManager
         this.ebus.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
+  */
+        iceStudio.bus.events.subscribe('plugin.terminate', 'terminate', this);
+        iceStudio.bus.events.subscribe('plugin.cache', 'cache', this);
+        iceStudio.bus.events.subscribe('plugin.cached', 'cached', this);
+        iceStudio.bus.events.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
+
     };
 
     this.init();

@@ -10,7 +10,7 @@ class IceGUI {
       footer: this.el(".footer.ice-bar")[0],
     };
 
-    this.sandbox();
+   // this.sandbox();
     this.registerEvents();
   }
 
@@ -89,7 +89,7 @@ class IceGUI {
     let _this = this;
 
     function eventResize() {
-      _this.sandbox();
+   //   _this.sandbox();
     }
 
     window.removeEventListener("resize", eventResize);

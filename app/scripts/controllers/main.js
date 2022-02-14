@@ -2,7 +2,7 @@
 
 angular
   .module("icestudio")
-  .controller("MainCtrl", function ($scope, gettextCatalog, tools, utils) {
+  .controller("MainCtrl", function ($scope, gettextCatalog, tools, utils,common) {
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;
     alertify.defaults.transition = "fade";
@@ -33,7 +33,7 @@ angular
     );
 
     /* Plugin menu*/
-
+/*
     let icmBodyEl = $("body"),
       icmOpenbtn = document.getElementById("icm-open-button"),
       icmClosebtn = document.getElementById("icm-close-button"),
@@ -80,9 +80,9 @@ angular
     if (icmClosebtn) {
       icmClosebtn.addEventListener("click", icmToggleMenu);
     }
-
-    tools.initializePluginManager(icmToggleMenu);
-
+*/
+    iceStudio.init(common);
+  //tools.initializePluginManager(icmToggleMenu);
     /***************************** */
   });
 

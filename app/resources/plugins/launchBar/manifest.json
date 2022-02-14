@@ -1,0 +1,16 @@
+{
+    "manifest_ver": "1.0",
+    "id":"launchBar",
+    "name": "Launch bar for plugins",
+    "icon": "img/icestudio-logo.png",
+    "launchAtStartup":true,
+    "gui":{
+        "type":"embedded",
+        "layout":"mainBar.html",
+        "style":"css/style.css",
+        "styleHost":"css/host.css",
+        "scripts":["js/render.js","js/events.js","launchBar.js"],
+        "views":["views/plugin-list.html"]
+    },
+    "capability":["core"]
+}

@@ -22,6 +22,7 @@
   "-W083": true,
   "-W084": true,
   "globals": { 
+    "iceStudio":false,
     "domCache":false,
     "iprof":false,
     "IceProfiler":false,

@@ -3,5 +3,9 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"editor.find.cursorMoveOnType": false,
+		"debug.console.fontSize": 11
+	}
 }

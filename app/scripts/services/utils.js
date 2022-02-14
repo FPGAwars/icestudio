@@ -511,29 +511,12 @@ angular.module('icestudio')
                 var data = false;
 
                 let name = basename(filepath);
-                let test = true;
-                if (test && typeof ICEpm !== 'undefined' &&
-                  ICEpm.isFactory(name)) {
+                data = isJSON(content);
 
-                  ICEpm.factory(name, content, function (data) {
-                    if (data) {
-                      // JSON data
-                      resolve(data);
-                    } else {
-                      reject();
-                    }
-                  });
-
+                if (data) {
+                  resolve(data);
                 } else {
-
-                  data = isJSON(content);
-
-                  if (data) {
-                    // JSON data
-                    resolve(data);
-                  } else {
-                    reject();
-                  }
+                  reject();
                 }
               }
             });
