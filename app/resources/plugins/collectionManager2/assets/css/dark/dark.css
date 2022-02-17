@@ -1,0 +1,324 @@
+.wrapper {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #444;
+  border: 1px solid #666;  
+}
+.playground {
+  max-height: calc(100% - 30px);
+  overflow: auto;
+  margin-top: 35px;
+}
+
+/* Start_spinner */
+.lds-grid {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 80px;
+  height: 80px;
+}
+.lds-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #666;
+  animation: lds-grid 1.2s linear infinite;
+}
+.lds-grid div:nth-child(1) {
+  top: 8px;
+  left: 8px;
+  animation-delay: 0s;
+}
+.lds-grid div:nth-child(2) {
+  top: 8px;
+  left: 32px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(3) {
+  top: 8px;
+  left: 56px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(4) {
+  top: 32px;
+  left: 8px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(5) {
+  top: 32px;
+  left: 32px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(6) {
+  top: 32px;
+  left: 56px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(7) {
+  top: 56px;
+  left: 8px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(8) {
+  top: 56px;
+  left: 32px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(9) {
+  top: 56px;
+  left: 56px;
+  animation-delay: -1.6s;
+}
+@keyframes lds-grid {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Close Button */
+.close-panel {
+	cursor: pointer;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 1em;
+  top: 10px;
+  overflow: hidden;
+  text-indent: 16px;
+  border: none;
+  z-index: 1001;
+  background: transparent;
+  color: transparent;
+}
+.close-panel::before,
+.close-panel::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  background: #95a5a6;
+}
+.close-panel::before {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.close-panel::after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.cm-loader--status{
+  text-align:center;
+  color: #ccc
+}
+
+/* iceCM Tree-view styles */
+.tree-view {
+  padding: 10px 10px 10px 20px;
+  position: relative;
+  display: block;
+  height: 100%;
+  background: #444;
+  color: #ccc;
+}
+
+.tree-view--folder input[type="checkbox"] {
+  background: #444;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 7px;
+  width: 7px;
+  border: 1px solid #444;
+  vertical-align: middle;
+  margin: 0px 5px 0px 7px;
+}
+
+.tree-view--folder input[type="checkbox"]:checked {
+  background-image: url(/resources/plugins/collectionManager/assets/img/check-solid.svg);
+}
+
+.tree-view--folder {
+  cursor: pointer;
+}
+
+.tree-view--folder > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder > .tree-view--folder > .tree-view-folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder
+  > .tree-view--folder {
+  margin-left: 6%;
+}
+
+.tree-view--folder-name {
+  position: relative;
+  margin-bottom: 5px;
+  display: block;
+  vertical-align: middle;
+}
+.tree-view--folder-name:hover {
+  color: #fff;
+}
+.tree-view--folder-name::before {
+  visibility: hidden;
+}
+
+/*.tree-view--folder.closed>.tree-view--folder-name.tree-view--folder-subfolders::before{*/
+.tree-view--folder.closed > .tree-view--folder-name::before {
+  content: url(/resources/plugins/collectionManager/assets/img/angle-right-solid.svg);
+  position: absolute;
+  z-index: 100000;
+  top: -1px;
+  width: 10px;
+  left: -12px;
+  visibility: visible;
+}
+
+/*.tree-view--folder-name.tree-view--folder-subfolders::before{*/
+.tree-view--folder-name::before {
+  content: url(/resources/plugins/collectionManager/assets/img/angle-down-solid.svg);
+  position: absolute;
+  z-index: 100000;
+  top: -1px;
+  width: 13px;
+  left: -16px;
+  visibility: visible;
+}
+
+/*.tree-view--folder.opened>.tree-view--folder-name::before{
+visibility: hidden;
+} */
+.tree-view--folder.closed > .tree-view--folder,
+.tree-view--folder.closed > .tree-view--leaf {
+  display: none;
+}
+
+.tree-view--folder.is-in-use>.tree-view--folder-name>.in-use{
+  display:none;
+  width:10px;
+  height:10px;
+  border-radius:50px;
+  border: 1px solid rgb(100,200,100);
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+.tree-view--folder.is-in-use>.tree-view--folder-name>.in-use{
+  display:inline-block;
+}
+
+
+
+.tree-view--leaf {
+  display: block;
+  border-bottom: 0px solid #ccc;
+  position: relative;
+  padding-left: 20px;
+}
+.tree-view--leaf:hover {
+  color: #fff;
+}
+
+.tree-view--leaf::before {
+  content: url(/resources/plugins/collectionManager/assets/img/chip.svg);
+  position: absolute;
+  z-index: 100000;
+  top: 2px;
+  width: 16px;
+  left: 0px;
+  visibility: visible;
+}
+
+.tree-view--leaf > input {
+  display: none;
+}
+
+.tree-view--leaf>.in-use{
+  display:none;
+  width:10px;
+  height:10px;
+  border-radius: 50px;
+  background-color: rgb(100,200,100);
+  border: 1px solid rgb(100,200,100);
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+.tree-view--leaf.is-in-use>.in-use{
+  display:inline-block;
+}
+
+.tree-view-main--folder > .tree-view--leaf{
+  display: none;
+}

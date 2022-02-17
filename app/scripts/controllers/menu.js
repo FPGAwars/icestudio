@@ -1709,7 +1709,6 @@ angular
       $(document).on("mousemove", function (e) {
         mousePosition.x = e.pageX;
         mousePosition.y = e.pageY;
-
         if (mouseDownTB === true){
           let posY = mousePosition.y - 40;
           let posX = mousePosition.x - 80;

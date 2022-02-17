@@ -13,6 +13,7 @@ class WafleGUI {
     };
 
     this.template = new WafleTemplate();
+    this.wm = new WafleWindowManager();
     this.onLoad = (typeof onLoad === 'undefined') ? this.dummy : onLoad;
     this.init();
   }
