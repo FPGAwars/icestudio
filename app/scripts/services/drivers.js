@@ -376,40 +376,28 @@ angular.module('icestudio')
       disableDarwinDrivers();
     }
     function returnBrewPath(){
-
-      let result = require('child_process').execSync('which brew').toString().trim();
-      if (typeof common.DEBUGMODE !== 'undefined' &&
-      common.DEBUGMODE === 1) {
-
-      const fs = require('fs');
-      fs.appendFileSync(common.LOGFILE, 'BREW PATH:'+result + "\n");
-    }
-      if(result.indexOf('not found')>0) {
-        result='brew';
-      }
-        return result
+      const result = require('child_process').execSync('uname -a').toString().trim().toLowerCase();
+      return (result.indexOf('arm64')>0) ? 'arch -arm64 brew' : 'brew';
     }
 
     function enableDarwinDrivers(brewPackages, profileSetting) {
-      let brewExec= returnBrewPath();
-      brewExec='arch -arm64 brew';
+      const brewExec= returnBrewPath();
       let brewCommands = [
         `${brewExec} update`
       ];
-
-
       for (var i in brewPackages) {
         brewCommands = brewCommands.concat(brewInstall(brewExec,brewPackages[i]));
       }
       utils.beginBlockingTask();
+      
       if (typeof common.DEBUGMODE !== 'undefined' &&
         common.DEBUGMODE === 1) {
-
         const fs = require('fs');
         fs.appendFileSync(common.LOGFILE, 'drivers.enableDarwinDrivers' + "\n");
         fs.appendFileSync(common.LOGFILE, 'BREW COMMANDS:::' + "\n");
         fs.appendFileSync(common.LOGFILE, JSON.stringify(brewCommands));
       }
+      
       nodeChildProcess.exec(brewCommands.join('; '), function (error, stdout, stderr) {
         if (typeof common.DEBUGMODE !== 'undefined' &&
           common.DEBUGMODE === 1) {
