@@ -1,0 +1,12 @@
+{
+    "manifest_ver": "1.0",
+    "id":"localDatabase",
+    "name": "Database service in local sandbox",
+    "icon": "img/icestudio-logo.png",
+    "launchAtStartup":true,
+    "gui":{
+        "type":"service",
+        "provider": "localDatabase.js"
+    },
+    "capability":["core"]
+}

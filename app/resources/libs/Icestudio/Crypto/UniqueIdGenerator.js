@@ -2,7 +2,7 @@
 
 class UniqueIdGenerator
 {
-    UUID() 
+    static UUID() 
     {
         let array = new Uint32Array(8)
         window.crypto.getRandomValues(array)

@@ -5,6 +5,7 @@ class WaflePluginExtWindow extends WaflePlugin {
         super(args);
         this.window = false;
     }
+
     run() {
         if (this.isRunning()) {
 
@@ -28,12 +29,12 @@ class WaflePluginExtWindow extends WaflePlugin {
                         this.window.onClose();
                     }
                     this.close(true);
-                    _this.running=false;
+                    _this.terminate();
                 });
 
                 newWin.on('loaded', function () {
                     let JSfileNames = ['/resources/libs/Icestudio/Plugin/Api/Window/BindingWafleEventBus.js',
-                        '/resources/libs/Icestudio/Plugin/Api/Window/IcestudioPlugin.js'
+                        '/resources/libs/Icestudio/Plugin/Api/IcestudioPlugin.js'
 
                     ];
                     this.window.pluginID = _this.id();

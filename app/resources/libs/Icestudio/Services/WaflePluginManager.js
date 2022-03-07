@@ -10,7 +10,7 @@ class WaflePluginManager {
         this.plugins = {};
         this.toload = 0;
         this.onload = false;
-        
+
 
         // We suppose that iceStudio global object exists and it is initialized
         // iceStudio.bus.events.subscribe('plugin.terminate', 'terminate', this);
@@ -18,70 +18,62 @@ class WaflePluginManager {
         //  iceStudio.bus.events.subscribe('plugin.cached', 'cached', this); 
     }
 
-    init()
-    {
-        iceStudio.bus.events.subscribe('pluginManager.getEnvironment', 'getEnvironmentBus', this); 
-        iceStudio.bus.events.subscribe('pluginManager.getPluginList', 'getPluginListBus', this); 
-        iceStudio.bus.events.subscribe('pluginManager.launch', 'launch', this); 
+    init() {
+        iceStudio.bus.events.subscribe('pluginManager.getEnvironment', 'getEnvironmentBus', this);
+        iceStudio.bus.events.subscribe('pluginManager.getPluginList', 'getPluginListBus', this);
+        iceStudio.bus.events.subscribe('pluginManager.launch', 'launch', this);
     }
-    
-    version()
-    {
+
+    version() {
         return this.ver;
     }
-    
-    getEnvironmentBus()
-    {
+
+    getEnvironmentBus() {
         iceStudio.bus.events.publish('pluginManager.env', this.env);
     }
 
-    getEnvironment()
-    {
+    getEnvironment() {
         return this.env;
     }
 
 
-    setEnvironment(env)
-    {
+    setEnvironment(env) {
         this.env = env;
         iceStudio.bus.events.publish('pluginManager.updateEnv', this.env);
     }
 
-    setPluginDir(dir, callback)
-    {
+    setPluginDir(dir, callback) {
         this.pluginDir = dir;
         let tu = dir.indexOf('resources');
         this.pluginUri = dir.substr(tu);
         this.load(callback);
     }
 
-    getPluginListBus(){
+    getPluginListBus() {
         iceStudio.bus.events.publish('pluginManager.pluginList', this.getPluginList());
     }
 
-    getPluginList()
-    {
-        let plist=[];
-        let tmp={};
-        
-        for(let pluginId in this.plugins){
-            tmp={};
-            tmp.id=this.plugins[pluginId].manifest.id;
-            tmp.name=this.plugins[pluginId].manifest.name;
-            tmp.author=this.plugins[pluginId].manifest.author;
-            tmp.version=this.plugins[pluginId].manifest.version;
-            tmp.uri=`/${this.plugins[pluginId].pluginUri}/${this.plugins[pluginId].dir}/`;
-            tmp.icon=`${tmp.uri}${this.plugins[pluginId].manifest.icon}`;
-            tmp.running=this.plugins[pluginId].running;
-            tmp.capability=(typeof this.plugins[pluginId].manifest.capability !== 'undefined')?  this.plugins[pluginId].manifest.capability : [];
+    getPluginList() {
+        let plist = [];
+        let tmp = {};
+
+        for (let pluginId in this.plugins) {
+            tmp = {};
+            tmp.id = this.plugins[pluginId].manifest.id;
+            tmp.name = this.plugins[pluginId].manifest.name;
+            tmp.author = this.plugins[pluginId].manifest.author;
+            tmp.version = this.plugins[pluginId].manifest.version;
+            tmp.uri = `/${this.plugins[pluginId].pluginUri}/${this.plugins[pluginId].dir}/`;
+            tmp.icon = `${tmp.uri}${this.plugins[pluginId].manifest.icon}`;
+            tmp.running = this.plugins[pluginId].running;
+            tmp.capability = (typeof this.plugins[pluginId].manifest.capability !== 'undefined') ? this.plugins[pluginId].manifest.capability : [];
             plist.push(tmp);
         }
-        
+
         return plist;
     }
 
-    load(callback, ownerCallback) 
-    {
+    load(callback, ownerCallback) {
         if (this.pluginDir === false) {
             return false;
         }
@@ -92,10 +84,9 @@ class WaflePluginManager {
         fs.readdir(this.pluginDir, function (err, files) {
             _this.toload = files.length;
             files.forEach(function (file) {
-                fs.readFile(_this.pluginDir + '/' + file + '/manifest.json', 'utf8', function (err, contents)
-                {
+                fs.readFile(_this.pluginDir + '/' + file + '/manifest.json', 'utf8', function (err, contents) {
                     let mf = JSON.parse(contents);
-                
+
                     if (mf !== false) {
 
                         let args = {
@@ -103,7 +94,7 @@ class WaflePluginManager {
                             'manifest': mf,
                             'pluginUri': _this.pluginUri
                         }
-                        
+
                         if ((typeof args.manifest.gui !== 'undefined' &&
                             typeof args.manifest.gui.type !== 'undefined' &&
                             args.manifest.gui.type === 'window') ||
@@ -114,16 +105,20 @@ class WaflePluginManager {
                         } else if (typeof args.manifest.gui !== 'undefined' &&
                             typeof args.manifest.gui.type !== 'undefined' &&
                             args.manifest.gui.type === 'embedded') {
-                           
-                                if (typeof args.manifest.gui.windowed === 'undefined' ||
-                                    args.manifest.gui.windowed === false) {
 
-                                    _this.plugins[file] = new WaflePluginExtEmbedded(args);
-                            
-                                } else {
-                                    _this.plugins[file] = new WaflePluginExtEmbeddedWindowed(args);
-                                }
-                        } else {
+                            if (typeof args.manifest.gui.windowed === 'undefined' ||
+                                args.manifest.gui.windowed === false) {
+
+                                _this.plugins[file] = new WaflePluginExtEmbedded(args);
+
+                            } else {
+                                _this.plugins[file] = new WaflePluginExtEmbeddedWindowed(args);
+                            }
+                        } else if(typeof args.manifest.gui !== 'undefined' &&
+                                typeof args.manifest.gui.type !== 'undefined' &&
+                                args.manifest.gui.type === 'service'){
+                                _this.plugins[file] = new WaflePluginExtService(args);
+                        }else {
                             _this.plugins[file] = new WaflePlugin(args);
                         }
                     }
@@ -187,11 +182,9 @@ class WaflePluginManager {
         }
     } //--END pluginsLoaded
 
-    launch (pluginId){
-            if (typeof this.plugins[pluginId] !== 'undefined') {
-                this.plugins[pluginId].run();
-            }
- 
-
+    launch(pluginId) {
+        if (typeof this.plugins[pluginId] !== 'undefined') {
+            this.plugins[pluginId].run();
+        }
     }
 }

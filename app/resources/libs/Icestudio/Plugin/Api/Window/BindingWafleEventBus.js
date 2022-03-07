@@ -6,9 +6,9 @@ class BindingWafleEventBus {
         this.ver = '2.0';
     }
 
-    subscribe(eventId, handler, owner) {
+    subscribe(eventId, handler, owner,uuid) {
 
-        window.opener.iceStudio.bus.events.subscribe(eventId,handler, owner);
+        window.opener.iceStudio.bus.events.subscribe(eventId,handler, owner,uuid);
      }
 
     publish(eventId, eventArgs, ownerId) {

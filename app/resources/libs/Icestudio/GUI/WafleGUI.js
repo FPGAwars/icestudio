@@ -75,6 +75,10 @@ class WafleGUI {
     return shadow;
   }
 
+  removeNode(elNode){
+    elNode.parentNode.removeChild(elNode);
+  }
+
   setNodeContent(shadow, html)
   {
     shadow.innerHTML = html;
@@ -87,16 +91,17 @@ class WafleGUI {
     shadow.appendChild(style);
   }
   
-  setNodeScript(rootId,shadow, scripts,views) 
+  setNodeScript(rootId,uuid,shadow, scripts,views) 
   {
     if(typeof views === 'undefined' ){
         views={};
     } 
 
     let scriptnode = document.createElement('script')
-    scriptnode.textContent = `(function(win, doc, $) {
+    scriptnode.textContent = `(function(win, doc, $,_self) {
                               let pluginViews=${JSON.stringify(views)};
                               let pluginRoot=$('#${rootId}')[0].shadowRoot;
+                              let pluginUUID='${uuid}';
                               ${scripts.join(';')}
                               })(window, document, jQuery);`
     shadow.appendChild(scriptnode)
@@ -222,12 +227,12 @@ class WafleGUI {
     );
 
     /* Only for debug purpouses, check if styles are correct */
-    let cssComp = getComputedStyle(document.documentElement);
-    let cssSandbox = {
-      height: cssComp.getPropertyValue("--sandbox-height"),
-      width: cssComp.getPropertyValue("--sandbox-width"),
-    };
-    return cssSandbox;
+    //let cssComp = getComputedStyle(document.documentElement);
+   // let cssSandbox = {
+   //   height: cssComp.getPropertyValue("--sandbox-height"),
+    //  width: cssComp.getPropertyValue("--sandbox-width"),
+    //};
+    //return cssSandbox;
   }
 
   eventResize()

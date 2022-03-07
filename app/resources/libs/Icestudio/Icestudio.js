@@ -5,12 +5,15 @@ class Icestudio {
             events: new WafleEventBus()
 
         };
+        this.initialized=false;
         this.pluginManager = false;
         this.gui = false;
         this.env={};
 
     }
-
+    isInitialized(){
+        return this.initialized;
+    }
     initAfterGUI(env){
         this.pluginManager = new WaflePluginManager();
         this.pluginManager.init();
@@ -24,11 +27,19 @@ class Icestudio {
     }
     init(env){
         let _this=this;
-        let _env=env;
+        this.env=env;
         function _initAfterGUI(){
-            _this.initAfterGUI(_env);
+            _this.initAfterGUI(_this.env);
         }
         this.gui = new WafleGUI(_initAfterGUI);
+        this.initialized=true;
+    }
+    updateEnv(env){
+        this.env=env;
+        if(this.pluginManager !== false &&
+            typeof this.pluginManager.setEnvironment !== 'undefined'){
+            this.pluginManager.setEnvironment(env);
+        }
     }
 
 }

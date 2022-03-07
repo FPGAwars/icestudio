@@ -476,6 +476,13 @@ opacity:0.4;
 .plugin-wrapper{
   z-index:777;
 }
+.winbox{
+  z-index:776!important;
+}
+
+.plugin-windowed{
+  display:none;
+}
 /* END embedded plugin global css */
 
 

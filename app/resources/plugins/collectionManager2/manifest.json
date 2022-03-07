@@ -8,7 +8,7 @@
     },
     "version":"1.0",
     "launchAtStartup":false,
-    "icon": "assets/icon.svg",
+    "icon": "icon.svg",
     "multipleInstances": false,
     "gui2":{
         "type":"embedded-none",
@@ -28,10 +28,13 @@
     "gui":{
         "type":"embedded",
         "windowed":"true",
-        "layout":"collectionManager.html",
-        "style":"assets/css/dark/dark.css",
-        "styleHost":"assets/css/host.css",
-        "scripts":[],
+        "layout":["collectionManager.html"],
+        "style":["css/style.css"],
+        "styleThemed":{"dark":["css/dark/dark.css"],
+                        "light":["css/light/light.css"]
+        },
+        "styleHost":["css/host.css"],
+        "scripts":["js/events.js","js/collectionManager.js"],
         "views":[]
     }
 }

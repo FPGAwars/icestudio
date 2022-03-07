@@ -93,6 +93,11 @@ angular.module('icestudio')
           if (callback) {
             callback();
           }
+         let env=common;
+          env.profile=self.data;
+          if(!iceStudio.isInitialized()){
+            iceStudio.init(env);
+          }
         })
         .catch(function (error) {
           console.warn(error);
@@ -130,11 +135,13 @@ angular.module('icestudio')
       if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
         nodeFs.mkdirSync(common.ICESTUDIO_DIR);
       }
-
+      let _selfcommon=common;
+          _selfcommon.profile=this.data;
       //-- Save the data to the profile file
       utils.saveFile(common.PROFILE_PATH, this.data)
         .then(function () {
-          // Success
+          iceStudio.updateEnv(_selfcommon);
+     
         })
         .catch(function (error) {
           alertify.error(error, 30);

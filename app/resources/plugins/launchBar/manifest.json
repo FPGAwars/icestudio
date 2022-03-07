@@ -6,9 +6,9 @@
     "launchAtStartup":true,
     "gui":{
         "type":"embedded",
-        "layout":"mainBar.html",
-        "style":"css/style.css",
-        "styleHost":"css/host.css",
+        "layout":["mainBar.html"],
+        "style":["css/style.css"],
+        "styleHost":["css/host.css"],
         "scripts":["js/render.js","js/events.js","launchBar.js"],
         "views":["views/plugin-list.html"]
     },

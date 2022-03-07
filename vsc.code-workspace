@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../remotes/work/pys/widget"
+		},
+		{
+			"path": "../cofares"
 		}
 	],
 	"settings": {

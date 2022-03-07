@@ -1,5 +1,4 @@
 'use strict';
-
 class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
     constructor(args) {
         super(args);
@@ -7,59 +6,97 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
             host: false,
             shadow: false
         };
-        this.windowId=false;
-    }
     
-    baseUrl() {
-        return `/resources/plugins/${this.manifest.id}/`;
+        iceStudio.bus.events.subscribe(`${this.uuid}::Terminate`,'terminate',this,this.uuid);
     }
 
-    run() {
+      run() {
         if (this.isRunning()) {
 
             console.log('Plugin is running');
         } else {
+
             this.running = true;
             let _this = this;
-            this.windowId=this.manifest.id;
             this.dom.shadow = iceStudio.gui.addNode(this.manifest.id, 'plugin-wrapper plugin-windowed');
             this.dom.host = iceStudio.gui.getNode(this.manifest.id);
-            
 
             let assets = new WafleRemoteFile();
-            if(this.manifest.gui.scripts === 'undefined') this.manifest.gui.scripts=[];
-            if(this.manifest.gui.views === 'undefined') this.manifest.gui.views=[];
+            if (this.manifest.gui.scripts === 'undefined') this.manifest.gui.scripts = [];
+            if (this.manifest.gui.views === 'undefined') this.manifest.gui.views = [];
 
-            assets.get(`${this.baseUrl()}${this.manifest.gui.layout}`).then(html => {
-                assets.get(`${_this.baseUrl()}${_this.manifest.gui.style}`).then(css => {
-                    assets.get(`${_this.baseUrl()}${_this.manifest.gui.styleHost}`).then(css2 => {
-                        
-                        iceStudio.gui.addGlobalStyle(_this.manifest.id,css2);
-                        iceStudio.gui.setNodeContent(_this.dom.shadow, html);
-                        iceStudio.gui.setNodeStyle(_this.dom.shadow, css);
-                        
-                        const jsfiles=_this.manifest.gui.scripts.map(file=> `${this.baseUrl()}${file}`);
-                        assets.getAll(jsfiles).then(pluginScripts=>{
-                                    const viewfiles=_this.manifest.gui.views.map(view=> `${this.baseUrl()}${view}`);
-                                    assets.getAll(viewfiles).then(pluginViews=>{
-                                            let oviews={};
-                                            let vid='';
-                                            for(let i=0;i<viewfiles.length;i++){
-                                                vid=viewfiles[i].replace('.html','').split('/');
-                                                
-                                                oviews[vid[vid.length-1]]={id: vid[vid.length-1],
-                                                                           tpl:pluginViews[i]};
-                                            }
+            const htmlFiles=_this.manifest.gui.layout.map(file=> `${this.baseUrl()}${file}`);
+            const styleHostFiles=_this.manifest.gui.styleHost.map(file=> `${this.baseUrl()}${file}`);
+            assets.getAll(htmlFiles).then(html => {
+                let csslist = _this.manifest.gui.style;
 
-                                            iceStudio.gui.setNodeScript(_this.manifest.id,_this.dom.shadow,pluginScripts,oviews);
-                                            iceStudio.gui.wm.addWindow(_this.manifest.name,_this.windowId,_this.dom.host);
-                                    });                                   
+                if (typeof _this.manifest.gui.styleThemed !== 'undefined') {
+                    if (typeof iceStudio.env.profile !== 'undefined' &&
+                        typeof iceStudio.env.profile.uiTheme !== 'undefined'
+                    ) {
 
+                        if (iceStudio.env.profile.uiTheme === 'dark' &&
+                            typeof _this.manifest.gui.styleThemed.dark !== 'undefined') {
+                                csslist= csslist.concat(_this.manifest.gui.styleThemed.dark);
+                            
+                            } else if (typeof _this.manifest.gui.styleThemed.light !== 'undefined') {
+
+                                csslist= csslist.concat(_this.manifest.gui.styleThemed.light);
+                        }
+                    }
+                }
+            
+                const styleFiles=csslist.map(file=> `${_this.baseUrl()}${file}`);
+                assets.getAll(styleFiles).then(css => {
+                    assets.getAll(styleHostFiles).then(css2 => {
+ 
+                        let mcss2 ='';
+                        let i=0;
+                        for(i=0;i<css2.length;i++){
+                            mcss2+="\n"+css2[i];
+                        }
+                        let mcss ='';
+                        for(i=0;i<css.length;i++){
+                            mcss+="\n"+css[i];
+                        }       
+                        let mhtml ='';
+                        for(let i=0;i<html.length;i++){
+                            mhtml+="\n"+html[i];
+                        }
+                        iceStudio.gui.addGlobalStyle(_this.manifest.id, mcss2);
+                        iceStudio.gui.setNodeContent(_this.dom.shadow, mhtml);
+                        iceStudio.gui.setNodeStyle(_this.dom.shadow, mcss);
+
+                        const jsfiles = _this.manifest.gui.scripts.map(file => `${this.baseUrl()}${file}`);
+                        assets.getAll(jsfiles).then(pluginScripts => {
+                            const viewfiles = _this.manifest.gui.views.map(view => `${this.baseUrl()}${view}`);
+                            assets.getAll(viewfiles).then(pluginViews => {
+                                let oviews = {};
+                                let vid = '';
+                                for (let i = 0; i < viewfiles.length; i++) {
+                                    vid = viewfiles[i].replace('.html', '').split('/');
+
+                                    oviews[vid[vid.length - 1]] = {
+                                        id: vid[vid.length - 1],
+                                        tpl: pluginViews[i]
+                                    };
+                                }
+
+                                iceStudio.gui.setNodeScript(_this.manifest.id, _this.uuid, _this.dom.shadow, pluginScripts, oviews);
+                                iceStudio.gui.wm.addWindow(_this.manifest.name, _this.uuid, _this.dom.shadow);
+                            });
                         });
-
                     });
                 });
             });
         }
     }//--END run
+
+    terminate(){
+        console.log('TERMINATE');
+        iceStudio.gui.removeNode(this.dom.host);
+        this.dom.shadow=false;
+        this.dom.host=false;
+        this.running=false;
+    }
 }

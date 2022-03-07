@@ -81,7 +81,6 @@ angular
       icmClosebtn.addEventListener("click", icmToggleMenu);
     }
 */
-    iceStudio.init(common);
   //tools.initializePluginManager(icmToggleMenu);
     /***************************** */
   });
