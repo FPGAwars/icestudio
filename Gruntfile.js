@@ -24,7 +24,7 @@
 //-- * The texts in the .js Javascript files are in English
 //-- * When 'grunt gettext' is invoked, the English texts are extracted  
 //--   to the app/resources/locale/template.pot file
-//-- * The human translator import the template.pot file (in PoEdit) and
+//-- * The human translator imports the template.pot file (in PoEdit) and
 //--   write the translation into their language, in the corresponding
 //--   .po file
 //-- * When 'grunt serve' is invoked, the .po files are converted into
@@ -42,7 +42,7 @@ let os = require("os");
 os.tmpDir = os.tmpdir;
 
 //-- This is for debuging...
-console.log("Executing gruntfile.js...");
+console.log("Executing Gruntfile.js...");
 
 //----------------------------------------------------------
 //-- GLOBAL constants used
@@ -63,8 +63,30 @@ const PACKAGE_JSON = "package.json";
 //-- Icestudio package.json with PATH
 const APP_PACKAGE_JSON = APPDIR + '/' + PACKAGE_JSON;
 
-//-- Timestamp file
-const APP_TIMESTAMP_FILE = APPDIR + '/' + "buildinfo.json";
+//-- Timestamp JSON file
+const BUILDINFO_JSON = "buildinfo.json";
+
+//-- Timestamp file. This file is created everytime grunt
+//-- is executed. Icestudio reads this file
+const APP_TIMESTAMP_FILE = APPDIR + '/' + BUILDINFO_JSON;
+
+//-- Source folder with the Fonts
+const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
+
+//-- Folder with the Icestudio Javascript files
+const APP_SCRIPTS = APPDIR + "/scripts";
+
+//-- Folder with the Icestudio resources
+const APP_RESOURCES = APPDIR + "/resources";
+
+//-- Folder with the Translations
+const APP_LOCALE = APP_RESOURCES + "/locale";
+
+//-- Cache folder for downloading NW
+const CACHE = "cache";
+
+//-- Icestudio HTML mail file
+const INDEX_HTML = "index.html";
 
 //-- Grunt configuration file
 const GRUNT_FILE = "Gruntfile.js";
@@ -83,7 +105,35 @@ const TARGET_WIN64 = "win64";
 const TARGET_AARCH64 ="aarch64";
 const TARGET_ALL = "all";
 
+//----------------------------------------------------------------
+//-- BUILD DIR. Folder where all the packages for the different
+//-- platforms are stored
+//------------------------------------------------------------------
+const DIST = "dist";
 
+//-- Temp folder for building the packages
+const DIST_TMP = DIST + "/tmp";
+
+//-- Temp folder for storing the fonts
+const DIST_TMP_FONTS = DIST_TMP + "/fonts";
+
+//-- Icestudio Build dir: Final files for the given architecture are placed
+//-- here before building the package
+const DIST_ICESTUDIO = DIST + "/icestudio";
+
+//-- Folder for the AARCH build package
+const DIST_ICESTUDIO_AARCH64 = DIST_ICESTUDIO + "/" + TARGET_AARCH64;
+
+//-- Folder for the LINUX64 build package
+const DIST_ICESTUDIO_LINUX64 = DIST_ICESTUDIO + "/" + TARGET_LINUX64;
+
+//-- Folder for the Win64 build package
+const DIST_ICESTUDIO_WIN64 = DIST_ICESTUDIO + "/" + TARGET_WIN64;
+
+//-- Folder for the OSX64 build package
+const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
+
+//---------------------------------------------------------------------------
 //-- Wrapper function. This function is called when the 'grunt' command is
 //-- executed. Grunt exposes all of its methods and properties on the 
 //-- grunt object passed as an argument
@@ -111,7 +161,8 @@ module.exports = function (grunt) {
   //-- WIP: with timestamp
   pkg.version = pkg.version.replace(/w/, "w" + timestamp);
 
-  //-- Tasks to perform. Common to ALL Platforms
+  //-- Tasks to perform for the grunt dist task: Create the final packages
+  //-- Task common to ALL Platforms
   let distTasks = [
     //-- Validate js files: grunt-contrib-jshint
     //-- https://www.npmjs.com/package/grunt-contrib-jshint
@@ -154,6 +205,8 @@ module.exports = function (grunt) {
   if (DARWIN) {
     platforms = [TARGET_OSX64];
     options = { scope: ["devDependencies", "darwinDependencies"] };
+
+    //-- Aditional tasks for building the MAC packages
     distCommands = ["nwjs", "exec:repairOSX", "compress:osx64", "appdmg"];
 
     //-- Linux 64bits, linux ARM 64bits and Windows (64-bits)
@@ -161,6 +214,8 @@ module.exports = function (grunt) {
     if (onlyPlatform === TARGET_LINUX64 || onlyPlatform === TARGET_ALL) {
       platforms.push(TARGET_LINUX64);
       options = { scope: ["devDependencies"] };
+
+      //-- Aditional tasks for building the Linux64 packages
       distCommands = distCommands.concat([
         "nwjs",
         "compress:linux64",
@@ -171,6 +226,8 @@ module.exports = function (grunt) {
     if (onlyPlatform === TARGET_WIN64 || onlyPlatform === TARGET_ALL) {
       platforms.push(TARGET_WIN64);
       options = { scope: ["devDependencies"] };
+
+      //-- Aditional commands for building the Windows packages
       distCommands = distCommands.concat([
         "nwjs",
         "compress:win64",
@@ -184,9 +241,14 @@ module.exports = function (grunt) {
         platforms.push(TARGET_LINUX64);
       }
       options = { scope: ["devDependencies"] };
+
+      //-- Aditional packages for building the AArch64 packages
+      //-- Add "nwjs" if it was not added previously
       if (distCommands.indexOf("nwjs") < 0) {
         distCommands = distCommands.concat(["nwjs"]);
       }
+
+      //-- Add more additional tasks
       distCommands = distCommands.concat([
         "wget:nwjsAarch64",
         "copy:aarch64",
@@ -201,9 +263,9 @@ module.exports = function (grunt) {
 
   //-- Files to include in the Icestudio app
   let appFiles = [
-    "index.html", //-- app/index.html: Main HTML file
+    INDEX_HTML, //-- app/index.html: Main HTML file
     PACKAGE_JSON, //-- Package file
-    "resources/**/*.*", //-- Folder app/resources
+    "resources/**/*.*", //-- Folder APP_RESOURCES
     "scripts/**/*.*", //-- JS files
     "styles/**/*.*", //-- CSS files
     "views/**/*.*", //-- HTML files
@@ -217,7 +279,7 @@ module.exports = function (grunt) {
   //-----------------------------------------------------------------------
   grunt.initConfig({
 
-    //-- Information about the package (read the app/package.json file)
+    //-- Information about the package (read from the app/package.json file)
     pkg: pkg,
 
     //-- TASK: jshint: Check the .js files
@@ -225,7 +287,7 @@ module.exports = function (grunt) {
     jshint: {
 
       //-- These are the js files to check
-      all: ["app/scripts/**/*.js", GRUNT_FILE],
+      all: [APP_SCRIPTS + "/**/*.js", GRUNT_FILE],
 
       options: {
         
@@ -268,11 +330,11 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: APPDIR,
-            dest: "dist/tmp",
+            dest: DIST_TMP,
             src: [
-              "index.html",
-              "package.json",
-              "buildinfo.json",
+              INDEX_HTML,
+              PACKAGE_JSON,
+              BUILDINFO_JSON,
               "resources/**",
               "node_modules/**",
               "styles/**",
@@ -282,8 +344,8 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            cwd: "app/node_modules/bootstrap/fonts",
-            dest: "dist/tmp/fonts",
+            cwd: APP_FONTS,
+            dest: DIST_TMP_FONTS,
             src: "*.*",
           },
         ],
@@ -295,8 +357,8 @@ module.exports = function (grunt) {
             options: {
               mode: true,
             },
-            cwd: "dist/icestudio/linux64",
-            dest: "dist/icestudio/aarch64",
+            cwd: DIST_ICESTUDIO_LINUX64,
+            dest: DIST_ICESTUDIO_AARCH64,
             src: ["**"],
           },
         ],
@@ -308,8 +370,8 @@ module.exports = function (grunt) {
             options: {
               mode: true,
             },
-            cwd: "cache/nwjsAarch64/nwjs-v0.58.1-linux-arm64",
-            dest: "dist/icestudio/aarch64",
+            cwd: CACHE + "/nwjsAarch64/nwjs-v0.58.1-linux-arm64",
+            dest: DIST_ICESTUDIO_AARCH64,
             src: ["**"],
           },
         ],
@@ -320,10 +382,10 @@ module.exports = function (grunt) {
     // JSON minification plugin without concatination
     "json-minify": {
       json: {
-        files: "dist/tmp/resources/**/*.json",
+        files: DIST_TMP + "/resources/**/*.json",
       },
       ice: {
-        files: "dist/tmp/resources/**/*.ice",
+        files: DIST_TMP + "/resources/**/*.ice",
       },
     },
 
@@ -335,13 +397,13 @@ module.exports = function (grunt) {
         //  flavor: 'normal', // For stable branch
         flavor: "sdk", // For development branch
         zip: false,
-        buildDir: "dist/",
+        buildDir: DIST + "/",
         winIco: "docs/resources/images/logo/icestudio-logo.ico",
         macIcns: "docs/resources/images/logo/icestudio-logo.icns",
         macPlist: { CFBundleIconFile: "app" },
         platforms: platforms,
       },
-      src: ["dist/tmp/**"],
+      src: [DIST_TMP + "/**"],
     },
 
     // ONLY MAC: generate a DMG package
@@ -369,12 +431,12 @@ module.exports = function (grunt) {
             x: 170,
             y: 250,
             type: "file",
-            path: "dist/icestudio/osx64/icestudio.app",
+            path: DIST_ICESTUDIO_OSX64 + "/icestudio.app",
           },
         ],
       },
       target: {
-        dest: "dist/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg",
+        dest: DIST + "/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg",
       },
     },
 
@@ -387,12 +449,12 @@ module.exports = function (grunt) {
           arch: "64bit",
           icons: "docs/resources/icons",
           comment: "Visual editor for open FPGA boards",
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage",
+          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage",
         },
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/linux64/",
+            cwd: DIST_ICESTUDIO_LINUX64,
             src: ["**"].concat(appFiles),
           },
         ],
@@ -403,12 +465,12 @@ module.exports = function (grunt) {
     compress: {
       linux64: {
         options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-linux64.zip",
+          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-linux64.zip",
         },
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/linux64/",
+            cwd: DIST_ICESTUDIO_LINUX64,
             src: ["**"].concat(appFiles),
             dest: "<%=pkg.name%>-<%=pkg.version%>-linux64",
           },
@@ -416,12 +478,12 @@ module.exports = function (grunt) {
       },
         Aarch64: {
         options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-Aarch64.zip",
+          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-Aarch64.zip",
         },
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/aarch64/",
+            cwd: DIST_ICESTUDIO_AARCH64,
             src: ["**"].concat(appFiles),
             dest: "<%=pkg.name%>-<%=pkg.version%>-linux64",
           },
@@ -429,12 +491,12 @@ module.exports = function (grunt) {
       },
       win64: {
         options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-win64.zip",
+          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-win64.zip",
         },
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/win64/",
+            cwd: DIST_ICESTUDIO_WIN64,
             src: ["**"].concat(appFiles),
             dest: "<%=pkg.name%>-<%=pkg.version%>-win64",
           },
@@ -442,12 +504,12 @@ module.exports = function (grunt) {
       },
       osx64: {
         options: {
-          archive: "dist/<%=pkg.name%>-<%=pkg.version%>-osx64.zip",
+          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-osx64.zip",
         },
         files: [
           {
             expand: true,
-            cwd: "dist/icestudio/osx64/",
+            cwd: DIST_ICESTUDIO + "/osx64/",
             src: ["icestudio.app/**"],
             dest: "<%=pkg.name%>-<%=pkg.version%>-osx64",
           },
@@ -459,13 +521,13 @@ module.exports = function (grunt) {
     watch: {
       scripts: {
         files: [
-          "app/resources/boards/**/*.*",
-          "app/resources/fonts/**/*.*",
-          "app/resources/images/**/*.*",
-          "app/resources/locale/**/*.*",
-          "app/resources/uiThemes/**/*.*",
-          "app/resources/viewers/**/*.*",
-          "app/scripts/**/*.*",
+          APP_RESOURCES + "/boards/**/*.*",
+          APP_RESOURCES + "/fonts/**/*.*",
+          APP_RESOURCES + "/images/**/*.*",
+          APP_LOCALE + "/locale/**/*.*",
+          APP_RESOURCES + "/uiThemes/**/*.*",
+          APP_RESOURCES + "/viewers/**/*.*",
+          APP_SCRIPTS + "/**/*.*",
           "app/styles/**/*.*",
           "app/views/**/*.*",
         ],
@@ -497,7 +559,7 @@ module.exports = function (grunt) {
         src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
 
         //-- Local destination file
-        dest: "cache/nwjsAarch64/nwjs.tar.gz",
+        dest: CACHE + "/nwjsAarch64/nwjs.tar.gz",
       },
 
       //-- Download the python executable. It is used for generating the Windows installer
@@ -507,7 +569,7 @@ module.exports = function (grunt) {
           overwrite: false,
         },
         src: "https://www.python.org/ftp/python/3.9.9/python-3.9.9-amd64.exe",
-        dest: "cache/python/python-3.9.9-amd64.exe",
+        dest: CACHE + "/python/python-3.9.9-amd64.exe",
       },
 
       //-- Download the Default collection from its github repo
@@ -516,7 +578,7 @@ module.exports = function (grunt) {
           overwrite: false,
         },
         src: "https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip",
-        dest: "cache/collection/collection-default-v<%=pkg.collection%>.zip",
+        dest: CACHE + "/collection/collection-default-v<%=pkg.collection%>.zip",
       },
     },
 
@@ -526,17 +588,17 @@ module.exports = function (grunt) {
         router: function (filepath) {
           return filepath.replace(/^collection-default-.*?\//g, "collection/");
         },
-        src: "cache/collection/collection-default-v<%=pkg.collection%>.zip",
-        dest: "app/resources/",
+        src: CACHE + "/collection/collection-default-v<%=pkg.collection%>.zip",
+        dest: APP_RESOURCES,
       },
     },
 
     // TASK: Clean
     // Empty folders to start fresh
     clean: {
-      tmp: [".tmp", "dist/tmp"],
-      dist: ["dist"],
-      collection: ["app/resources/collection"],
+      tmp: [".tmp", DIST_TMP],
+      dist: [DIST],
+      collection: [APP_RESOURCES + "/collection"],
     },
 
     // Generate POT file
@@ -546,7 +608,7 @@ module.exports = function (grunt) {
         files: {
           "app/resources/locale/template.pot": [
             "app/views/*.html",
-            "app/scripts/**/*.js",
+            APP_SCRIPTS + "/**/*.js",
           ],
         },
       },
@@ -563,15 +625,15 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: "app/resources/locale",
-            dest: "app/resources/locale",
+            cwd: APP_LOCALE,
+            dest: APP_LOCALE,
             src: ["**/*.po"],
             ext: ".json",
           },
           {
             expand: true,
-            cwd: "app/resources/collection/locale",
-            dest: "app/resources/collection/locale",
+            cwd: APP_RESOURCES + "/collection/locale",
+            dest: APP_RESOURCES + "/collection/locale",
             src: ["**/*.po"],
             ext: ".json",
           },
