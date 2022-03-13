@@ -44,95 +44,6 @@ os.tmpDir = os.tmpdir;
 //-- This is for debuging...
 console.log("Executing Gruntfile.js...");
 
-//----------------------------------------------------------
-//-- GLOBAL constants used
-//----------------------------------------------------------
-
-//-- Is this a WIP release (Work in Progress) or
-//-- a stable release?
-//-- WIP = true --> Work in progress
-//-- WIP = false --> Stable release
-const WIP = true;
-
-//-- ICestudio App dir
-const APPDIR = "app";
-
-//-- Icestudio package.json
-const PACKAGE_JSON = "package.json";
-
-//-- Icestudio package.json with PATH
-const APP_PACKAGE_JSON = APPDIR + '/' + PACKAGE_JSON;
-
-//-- Timestamp JSON file
-const BUILDINFO_JSON = "buildinfo.json";
-
-//-- Timestamp file. This file is created everytime grunt
-//-- is executed. Icestudio reads this file
-const APP_TIMESTAMP_FILE = APPDIR + '/' + BUILDINFO_JSON;
-
-//-- Source folder with the Fonts
-const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
-
-//-- Folder with the Icestudio Javascript files
-const APP_SCRIPTS = APPDIR + "/scripts";
-
-//-- Folder with the Icestudio resources
-const APP_RESOURCES = APPDIR + "/resources";
-
-//-- Folder with the Translations
-const APP_LOCALE = APP_RESOURCES + "/locale";
-
-//-- Cache folder for downloading NW
-const CACHE = "cache";
-
-//-- Icestudio HTML mail file
-const INDEX_HTML = "index.html";
-
-//-- Grunt configuration file
-const GRUNT_FILE = "Gruntfile.js";
-
-//-- jshint configuration file
-const JSHINT_CONFIG_FILE = ".jshintrc";
-
-//-- Constants for the host architecture (Where grunt is run)
-const WIN32 = process.platform === "win32";
-const DARWIN = process.platform === "darwin";
-
-//-- Constant for the TARGET architectures
-const TARGET_OSX64 = "osx64";
-const TARGET_LINUX64 = "linux64";
-const TARGET_WIN64 = "win64";
-const TARGET_AARCH64 ="aarch64";
-const TARGET_ALL = "all";
-
-//----------------------------------------------------------------
-//-- BUILD DIR. Folder where all the packages for the different
-//-- platforms are stored
-//------------------------------------------------------------------
-const DIST = "dist";
-
-//-- Temp folder for building the packages
-const DIST_TMP = DIST + "/tmp";
-
-//-- Temp folder for storing the fonts
-const DIST_TMP_FONTS = DIST_TMP + "/fonts";
-
-//-- Icestudio Build dir: Final files for the given architecture are placed
-//-- here before building the package
-const DIST_ICESTUDIO = DIST + "/icestudio";
-
-//-- Folder for the AARCH build package
-const DIST_ICESTUDIO_AARCH64 = DIST_ICESTUDIO + "/" + TARGET_AARCH64;
-
-//-- Folder for the LINUX64 build package
-const DIST_ICESTUDIO_LINUX64 = DIST_ICESTUDIO + "/" + TARGET_LINUX64;
-
-//-- Folder for the Win64 build package
-const DIST_ICESTUDIO_WIN64 = DIST_ICESTUDIO + "/" + TARGET_WIN64;
-
-//-- Folder for the OSX64 build package
-const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
-
 //---------------------------------------------------------------------------
 //-- Wrapper function. This function is called when the 'grunt' command is
 //-- executed. Grunt exposes all of its methods and properties on the 
@@ -140,11 +51,113 @@ const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
 //-- Check the API here: https://gruntjs.com/api/grunt
 module.exports = function (grunt) {
 
-  //-- Debug
-  console.log("-> Grunt Entry point");
+  //----------------------------------------------------------
+  //-- GLOBAL constants used
+  //----------------------------------------------------------
+  
+  //-- Is this a WIP release (Work in Progress) or
+  //-- a stable release?
+  //-- WIP = true --> Work in progress
+  //-- WIP = false --> Stable release
+  const WIP = true;
+  
+  //-- ICestudio App dir
+  const APPDIR = "app";
+  
+  //-- Icestudio package.json
+  const PACKAGE_JSON = "package.json";
+  
+  //-- Icestudio package.json with PATH
+  const APP_PACKAGE_JSON = APPDIR + '/' + PACKAGE_JSON;
+  
+  //-- Timestamp JSON file
+  const BUILDINFO_JSON = "buildinfo.json";
+  
+  //-- Timestamp file. This file is created everytime grunt
+  //-- is executed. Icestudio reads this file
+  const APP_TIMESTAMP_FILE = APPDIR + '/' + BUILDINFO_JSON;
+  
+  //-- Source folder with the Fonts
+  const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
+  
+  //-- Folder with the Icestudio Javascript files
+  const APP_SCRIPTS = APPDIR + "/scripts";
+  
+  //-- Folder with the Icestudio resources
+  const APP_RESOURCES = APPDIR + "/resources";
+  
+  //-- Folder with the Translations
+  const APP_LOCALE = APP_RESOURCES + "/locale";
+  
+  //-- Cache folder for downloading NW
+  const CACHE = "cache";
+  
+  //-- Icestudio HTML mail file
+  const INDEX_HTML = "index.html";
+  
+  //-- Grunt configuration file
+  const GRUNT_FILE = "Gruntfile.js";
+  
+  //-- jshint configuration file
+  const JSHINT_CONFIG_FILE = ".jshintrc";
+  
+  //-- Constants for the host architecture (Where grunt is run)
+  const WIN32 = process.platform === "win32";
+  const DARWIN = process.platform === "darwin";
+  
+  //-- Constant for the TARGET architectures
+  const TARGET_OSX64 = "osx64";
+  const TARGET_LINUX64 = "linux64";
+  const TARGET_WIN64 = "win64";
+  const TARGET_AARCH64 ="aarch64";
+  const TARGET_ALL = "all";
 
-  //-- Read the Package json and the timestamp
+  //-- Command for executing the NW. You should add the folder where
+  //-- your app (index.html) is placed
+  //-- Ej. nw app
+  const NWJS_EXEC_CMD =  ["nw", APPDIR].join(" ");
+
+  //-- Arguments for redirecting the standar output
+  //-- On Linux-like platform the output is discarted
+  //const NWJS_ARGS = "2>/dev/null"; //-- (WIN32 ? "" : " 2>/dev/null")
+  
+  //----------------------------------------------------------------
+  //-- BUILD DIR. Folder where all the packages for the different
+  //-- platforms are stored
+  //------------------------------------------------------------------
+  const DIST = "dist";
+  
+  //-- Temp folder for building the packages
+  const DIST_TMP = DIST + "/tmp";
+  
+  //-- Temp folder for storing the fonts
+  const DIST_TMP_FONTS = DIST_TMP + "/fonts";
+  
+  //-- Icestudio Build dir: Final files for the given architecture are placed
+  //-- here before building the package
+  const DIST_ICESTUDIO = DIST + "/icestudio";
+  
+  //-- Folder for the AARCH build package
+  const DIST_ICESTUDIO_AARCH64 = DIST_ICESTUDIO + "/" + TARGET_AARCH64;
+  
+  //-- Folder for the LINUX64 build package
+  const DIST_ICESTUDIO_LINUX64 = DIST_ICESTUDIO + "/" + TARGET_LINUX64;
+  
+  //-- Folder for the Win64 build package
+  const DIST_ICESTUDIO_WIN64 = DIST_ICESTUDIO + "/" + TARGET_WIN64;
+  
+  //-- Folder for the OSX64 build package
+  const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
+  
+  //---------------------------------------------------------------
+  //-- Define the ICETUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
+  //-- is created as target
+  //---------------------------------------------------------------
+
+  //-- Read the icestudio json package 
   let pkg = grunt.file.readJSON(APP_PACKAGE_JSON);
+
+  //-- Read the timestamp. It is added to the icestudio package version
   let timestamp = grunt.template.today("yyyymmddhhmm");
 
   //-- In the Stables Releases there is NO timestamp
@@ -152,14 +165,22 @@ module.exports = function (grunt) {
     timestamp = "";
   }
 
-  //-- Write the timestamp information in a file
-  //-- It will be read by icestudio to add the timestamp to the version
-  grunt.file.write(APP_TIMESTAMP_FILE, JSON.stringify({ ts: timestamp }));
-
   //-- Create the version
   //-- Stable releases: No timestamp
   //-- WIP: with timestamp
   pkg.version = pkg.version.replace(/w/, "w" + timestamp);
+
+  //-- Icestudio package name:
+  const ICESTUDIO_PKG_NAME = `${pkg.name}-${pkg.version}`;
+
+  //-- DEBUG
+  console.log("Icestudio package name: " + ICESTUDIO_PKG_NAME);
+
+  //----------------------------------------------------------------------
+
+  //-- Write the timestamp information in a file
+  //-- It will be read by icestudio to add the timestamp to the version
+  grunt.file.write(APP_TIMESTAMP_FILE, JSON.stringify({ ts: timestamp }));
 
   //-- Tasks to perform for the grunt dist task: Create the final packages
   //-- Task common to ALL Platforms
@@ -301,11 +322,17 @@ module.exports = function (grunt) {
       },
     },
 
-    // EXEC TASK: Define the Commands and scripts that can be executed/invoked
+    //-- TASK EXEC: Define the Commands and scripts that can be executed
+    //-- /invoked
+    //  * nw: Launch NWjs
+    //  * stopNW: Stop NWjs 
+    //  * nsis64: Create the icestudio install script
+    //  * repairOSX: Shell script for MAC
+    //  * mergeAarch64: Shell script for ARM
     exec: {
 
       //-- Launch NWjs
-      nw: "nw app" + (WIN32 ? "" : " 2>/dev/null"),
+      nw: NWJS_EXEC_CMD,
 
       //-- Stop NWjs. The command depends on the platform (Win or the others)
       stopNW:
@@ -316,7 +343,7 @@ module.exports = function (grunt) {
       //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
       //-- The installation script is located in scripts/windows_installer.nsi          
       nsis64:
-        'makensis -DARCH=win64 -DPYTHON="python-3.9.9-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
+        `makensis -DARCH=win64 -DPYTHON="python-3.9.9-amd64.exe" -DVERSION=${pkg.version} -V3 scripts/windows_installer.nsi`,
 
       repairOSX: "scripts/repairOSX.sh",
       mergeAarch64: "scripts/mergeAarch64.sh"
@@ -436,7 +463,7 @@ module.exports = function (grunt) {
         ],
       },
       target: {
-        dest: DIST + "/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg",
+        dest: DIST + "/" + ICESTUDIO_PKG_NAME + "-osx64.dmg",
       },
     },
 
@@ -449,7 +476,7 @@ module.exports = function (grunt) {
           arch: "64bit",
           icons: "docs/resources/icons",
           comment: "Visual editor for open FPGA boards",
-          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-linux64.AppImage",
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-linux64.AppImage",
         },
         files: [
           {
@@ -465,53 +492,53 @@ module.exports = function (grunt) {
     compress: {
       linux64: {
         options: {
-          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-linux64.zip",
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-linux64.zip",
         },
         files: [
           {
             expand: true,
             cwd: DIST_ICESTUDIO_LINUX64,
             src: ["**"].concat(appFiles),
-            dest: "<%=pkg.name%>-<%=pkg.version%>-linux64",
+            dest: ICESTUDIO_PKG_NAME + "-linux64",
           },
         ],
       },
         Aarch64: {
         options: {
-          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-Aarch64.zip",
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-Aarch64.zip",
         },
         files: [
           {
             expand: true,
             cwd: DIST_ICESTUDIO_AARCH64,
             src: ["**"].concat(appFiles),
-            dest: "<%=pkg.name%>-<%=pkg.version%>-linux64",
+            dest: ICESTUDIO_PKG_NAME + "-linux64",
           },
         ],
       },
       win64: {
         options: {
-          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-win64.zip",
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-win64.zip",
         },
         files: [
           {
             expand: true,
             cwd: DIST_ICESTUDIO_WIN64,
             src: ["**"].concat(appFiles),
-            dest: "<%=pkg.name%>-<%=pkg.version%>-win64",
+            dest: ICESTUDIO_PKG_NAME + "-win64",
           },
         ],
       },
       osx64: {
         options: {
-          archive: DIST + "/<%=pkg.name%>-<%=pkg.version%>-osx64.zip",
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-osx64.zip",
         },
         files: [
           {
             expand: true,
             cwd: DIST_ICESTUDIO + "/osx64/",
             src: ["icestudio.app/**"],
-            dest: "<%=pkg.name%>-<%=pkg.version%>-osx64",
+            dest: ICESTUDIO_PKG_NAME + "-osx64",
           },
         ],
       },
