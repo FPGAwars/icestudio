@@ -112,14 +112,25 @@ module.exports = function (grunt) {
   const TARGET_WIN64 = "win64";
   const TARGET_AARCH64 ="aarch64";
 
+  //-------------------------------------------------------------
+  //-- Constant for the exec TASK
+  //-------------------------------------------------------------
+
   //-- Command for executing the NW. You should add the folder where
   //-- your app (index.html) is placed
   //-- Ej. nw app
   const NWJS_EXEC_CMD =  ["nw", APPDIR].join(" ");
 
-  //-- Arguments for redirecting the standar output
-  //-- On Linux-like platform the output is discarted
-  //const NWJS_ARGS = "2>/dev/null"; //-- (WIN32 ? "" : " 2>/dev/null")
+  //-- Command for stoping NWjs on Windows
+  const NWJS_WIN_STOP = "taskkill /F /IM nw.exe >NUL 2>&1";
+
+  //-- command for stoping NWjs on Unix like systems (Linux, Mac)
+  const NWJS_UNIX_STOP =  "killall nw 2>/dev/null || killall nwjs 2>/dev/null" + 
+                          " || (exit 0)";
+
+  //-- Final command for stoping NWjs
+  const NWJS_STOP = WIN32 ? NWJS_WIN_STOP : NWJS_UNIX_STOP;
+  
   
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
@@ -149,6 +160,9 @@ module.exports = function (grunt) {
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
   
+  //---------------------------------------------------------------------
+  
+
   //---------------------------------------------------------------
   //-- Define the ICETUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
   //-- is created as target, for the dist TASK
@@ -191,9 +205,7 @@ module.exports = function (grunt) {
   //-- Tasks to perform for the grunt dist task: Create the final packages
   //-- Task common to ALL Platforms
   let DIST_COMMON_TASKS = [
-    //-- Validate js files: grunt-contrib-jshint
-    //-- https://www.npmjs.com/package/grunt-contrib-jshint
-    "jshint",
+    "jshint", //-- Check the js files
 
     //-- Clean the temporary folders: grunt-contrib-clean
     //-- https://github.com/gruntjs/grunt-contrib-clean
@@ -214,13 +226,6 @@ module.exports = function (grunt) {
     "nwjs",
   ];
 
-  //-- Variables to define what commands execute depending
-  //-- on the platofm
-  let platforms = []; //-- Define the platform
-
-  //-- Task specific to platform
-  let distPlatformTasks = []; 
-
   //---------------------------------------------------------------
   //-- Configure the platform variables for the current system
   //--
@@ -230,15 +235,15 @@ module.exports = function (grunt) {
 
   //--- Read if there is a platform argument set
   //--- If not, the default target is Linux64
-  let onlyPlatform = grunt.option("platform") || TARGET_LINUX64;
+  let platform = grunt.option("platform") || TARGET_LINUX64;
 
-   //-- Aditional options for the platforms
-   let options = { scope: ["devDependencies"] };
+  //-- Aditional options for the platforms
+  let options = { scope: ["devDependencies"] };
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
-  if (DARWIN  || onlyPlatform === "darwin") {
-    onlyPlatform = TARGET_OSX64;
+  if (DARWIN  || platform === "darwin") {
+    platform = TARGET_OSX64;
     options["scope"].push("darwinDependencies");
   }
 
@@ -274,15 +279,12 @@ module.exports = function (grunt) {
     ]
   };
 
-  //-- Current platform
-  platforms = [ onlyPlatform ];
-
   //-- Get the specific task to perform for the current platform
-  distPlatformTasks = DIST_PLATFORM_TASKS[onlyPlatform];
+  let distPlatformTasks = DIST_PLATFORM_TASKS[platform];
 
   //-- Special case: For the AARCH64, the platform is set to Linux64
-  if (onlyPlatform === TARGET_AARCH64) {
-    platforms = [TARGET_LINUX64];
+  if (platform === TARGET_AARCH64) {
+    platform = TARGET_LINUX64;
   }
  
   //-- Add the "clean:tmp" command to the list of commands to execute
@@ -297,7 +299,7 @@ module.exports = function (grunt) {
  
   //-- DEBUG
   console.log("Dist tasks: " + DIST_TASKS);
-  console.log("Platforms: " + platforms);
+  console.log("Platform: " + platform);
 
   //-- DEBUG
   console.table(DIST_TASKS);
@@ -352,15 +354,9 @@ module.exports = function (grunt) {
     //  * mergeAarch64: Shell script for ARM
     exec: {
 
-      //-- Launch NWjs
-      nw: NWJS_EXEC_CMD,
-
-      //-- Stop NWjs. The command depends on the platform (Win or the others)
-      stopNW:
-        (WIN32 ? "taskkill /F /IM nw.exe >NUL 2>&1"
-               : "killall nw 2>/dev/null || killall nwjs 2>/dev/null") +
-                 " || (exit 0)",
-
+      nw: NWJS_EXEC_CMD,  //-- Launch NWjs
+      stopNW: NWJS_STOP,  //-- Stop NWjs
+          
       //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
       //-- The installation script is located in scripts/windows_installer.nsi          
       nsis64:
@@ -445,11 +441,11 @@ module.exports = function (grunt) {
         //  flavor: 'normal', // For stable branch
         flavor: "sdk", // For development branch
         zip: false,
-        buildDir: DIST + "/",
+        buildDir: DIST,
         winIco: "docs/resources/images/logo/icestudio-logo.ico",
         macIcns: "docs/resources/images/logo/icestudio-logo.icns",
         macPlist: { CFBundleIconFile: "app" },
-        platforms: platforms,
+        platforms: [platform],
       },
       src: [DIST_TMP + "/**"],
     },
@@ -703,9 +699,6 @@ module.exports = function (grunt) {
   // grunt-contrib-copy
   // grunt-json-minification
   require("load-grunt-tasks")(grunt, options);
-
-  //-- DEBUG
-  console.table(options);
 
   //-- grunt gettext
   grunt.registerTask("gettext", ["nggettext_extract"]);
