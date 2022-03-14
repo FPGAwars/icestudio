@@ -237,7 +237,7 @@ module.exports = function (grunt) {
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
-  if (DARWIN) {
+  if (DARWIN  || onlyPlatform == "darwin") {
     onlyPlatform = TARGET_OSX64;
     options["scope"].push("darwinDependencies");
   }
@@ -247,7 +247,7 @@ module.exports = function (grunt) {
   const DIST_PLATFORM_TASKS = {
 
     //-- TARGET_OSX64
-    "osx_64": [ 
+    "osx64": [ 
       "exec:repairOSX", 
       "compress:osx64", 
       "appdmg"],
@@ -276,6 +276,9 @@ module.exports = function (grunt) {
 
   //-- Current platform
   platforms = [ onlyPlatform ];
+
+  //-- DEBUG
+  console.log("")
 
   //-- Get the specific task to perform for the current platform
   distPlatformTasks = DIST_PLATFORM_TASKS[onlyPlatform];
