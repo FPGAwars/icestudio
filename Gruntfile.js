@@ -237,7 +237,7 @@ module.exports = function (grunt) {
 
   //-- If it is run from MACOS, the target is set to OSX64
   //-- Aditional options are needed
-  if (DARWIN  || onlyPlatform == "darwin") {
+  if (DARWIN  || onlyPlatform === "darwin") {
     onlyPlatform = TARGET_OSX64;
     options["scope"].push("darwinDependencies");
   }
@@ -276,9 +276,6 @@ module.exports = function (grunt) {
 
   //-- Current platform
   platforms = [ onlyPlatform ];
-
-  //-- DEBUG
-  console.log("")
 
   //-- Get the specific task to perform for the current platform
   distPlatformTasks = DIST_PLATFORM_TASKS[onlyPlatform];
