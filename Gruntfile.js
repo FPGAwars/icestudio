@@ -131,6 +131,16 @@ module.exports = function (grunt) {
   //-- Final command for stoping NWjs
   const NWJS_STOP = WIN32 ? NWJS_WIN_STOP : NWJS_UNIX_STOP;
   
+  //--------------------------------------------------------------------------
+  //-- Python executable. Used for generating the Windows installer
+  //--------------------------------------------------------------------------
+  const PYTHON_EXE = "python-3.9.9-amd64.exe";
+  const PYTHON_URL = "https://www.python.org/ftp/python/3.9.9/" + PYTHON_EXE;
+  
+  //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
+  //-- before creating the MAC package
+  const SCRIPT_OSX = "scripts/repairOSX.sh";
+  const SCRIPT_ARM = "scripts/mergeAarch64.sh";
   
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
@@ -189,6 +199,19 @@ module.exports = function (grunt) {
 
   //-- DEBUG
   console.log("Icestudio package name: " + ICESTUDIO_PKG_NAME);
+
+  //-------------------------------------------------------------------------
+  //-- EXEC TASK: 
+  //-------------------------------------------------------------------------
+  //-- Command for making the Windows installer
+  //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
+  //-- The installation script is located in scripts/windows_installer.nsi   
+  const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
+    -DVERSION=${pkg.version} \
+    -V3 scripts/windows_installer.nsi`;
+
+  //-- DEBUG
+  console.log(MAKE_INSTALLER);
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -345,25 +368,22 @@ module.exports = function (grunt) {
       },
     },
 
+    // TASK: Clean
+    // Empty folders to start fresh
+    clean: {
+      tmp: [".tmp", DIST_TMP],
+      dist: [DIST],
+      collection: [APP_RESOURCES + "/collection"],
+    },
+
     //-- TASK EXEC: Define the Commands and scripts that can be executed
     //-- /invoked
-    //  * nw: Launch NWjs
-    //  * stopNW: Stop NWjs 
-    //  * nsis64: Create the icestudio install script
-    //  * repairOSX: Shell script for MAC
-    //  * mergeAarch64: Shell script for ARM
     exec: {
-
-      nw: NWJS_EXEC_CMD,  //-- Launch NWjs
-      stopNW: NWJS_STOP,  //-- Stop NWjs
-          
-      //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
-      //-- The installation script is located in scripts/windows_installer.nsi          
-      nsis64:
-        `makensis -DARCH=win64 -DPYTHON="python-3.9.9-amd64.exe" -DVERSION=${pkg.version} -V3 scripts/windows_installer.nsi`,
-
-      repairOSX: "scripts/repairOSX.sh",
-      mergeAarch64: "scripts/mergeAarch64.sh"
+      nw: NWJS_EXEC_CMD,        //-- Launch NWjs
+      stopNW: NWJS_STOP,        //-- Stop NWjs       
+      nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
+      repairOSX: SCRIPT_OSX,    //-- Shell script for mac
+      mergeAarch64: SCRIPT_ARM, //-- Shell script for ARM
     },
 
     //-- TASK: Copy
@@ -612,8 +632,8 @@ module.exports = function (grunt) {
         options: {
           overwrite: false,
         },
-        src: "https://www.python.org/ftp/python/3.9.9/python-3.9.9-amd64.exe",
-        dest: CACHE + "/python/python-3.9.9-amd64.exe",
+        src:  PYTHON_URL,
+        dest: CACHE + "/python/" + PYTHON_EXE,
       },
 
       //-- Download the Default collection from its github repo
@@ -635,14 +655,6 @@ module.exports = function (grunt) {
         src: CACHE + "/collection/collection-default-v<%=pkg.collection%>.zip",
         dest: APP_RESOURCES,
       },
-    },
-
-    // TASK: Clean
-    // Empty folders to start fresh
-    clean: {
-      tmp: [".tmp", DIST_TMP],
-      dist: [DIST],
-      collection: [APP_RESOURCES + "/collection"],
     },
 
     // Generate POT file
