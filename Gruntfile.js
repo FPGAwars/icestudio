@@ -49,6 +49,7 @@ console.log("Executing Gruntfile.js...");
 //-- executed. Grunt exposes all of its methods and properties on the 
 //-- grunt object passed as an argument
 //-- Check the API here: https://gruntjs.com/api/grunt
+//----------------------------------------------------------------------------
 module.exports = function (grunt) {
 
   //----------------------------------------------------------
@@ -110,7 +111,6 @@ module.exports = function (grunt) {
   const TARGET_LINUX64 = "linux64";
   const TARGET_WIN64 = "win64";
   const TARGET_AARCH64 ="aarch64";
-  const TARGET_ALL = "all";
 
   //-- Command for executing the NW. You should add the folder where
   //-- your app (index.html) is placed
@@ -151,7 +151,7 @@ module.exports = function (grunt) {
   
   //---------------------------------------------------------------
   //-- Define the ICETUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
-  //-- is created as target
+  //-- is created as target, for the dist TASK
   //---------------------------------------------------------------
 
   //-- Read the icestudio json package 
@@ -177,14 +177,20 @@ module.exports = function (grunt) {
   console.log("Icestudio package name: " + ICESTUDIO_PKG_NAME);
 
   //----------------------------------------------------------------------
-
+  //-- Create the TIMESTAMP FILE
+  //----------------------------------------------------------------------
   //-- Write the timestamp information in a file
   //-- It will be read by icestudio to add the timestamp to the version
   grunt.file.write(APP_TIMESTAMP_FILE, JSON.stringify({ ts: timestamp }));
 
+  //-----------------------------------------------------------------------
+  //-- TASK DIST: Define the task to execute for creating the executable  
+  //--   final package for all the platforms
+  //-----------------------------------------------------------------------
+
   //-- Tasks to perform for the grunt dist task: Create the final packages
   //-- Task common to ALL Platforms
-  let distTasks = [
+  let DIST_COMMON_TASKS = [
     //-- Validate js files: grunt-contrib-jshint
     //-- https://www.npmjs.com/package/grunt-contrib-jshint
     "jshint",
@@ -204,13 +210,16 @@ module.exports = function (grunt) {
     //-- Minify JSON files in grunt: grunt-json-minification
     //-- https://www.npmjs.com/package/grunt-json-minification
     "json-minify",
+
+    "nwjs",
   ];
 
   //-- Variables to define what commands execute depending
   //-- on the platofm
   let platforms = []; //-- Define the platform
-  let options; //-- Define options for that platform
-  let distCommands = []; //-- Define the commands needed for building the package
+
+  //-- Task specific to platform
+  let distPlatformTasks = []; 
 
   //---------------------------------------------------------------
   //-- Configure the platform variables for the current system
@@ -220,68 +229,80 @@ module.exports = function (grunt) {
   //--- Set with the `platform` argument when calling grunt
 
   //--- Read if there is a platform argument set
-  let onlyPlatform = grunt.option("platform") || TARGET_ALL;
+  //--- If not, the default target is Linux64
+  let onlyPlatform = grunt.option("platform") || TARGET_LINUX64;
 
-  //-- MAC
+   //-- Aditional options for the platforms
+   let options = { scope: ["devDependencies"] };
+
+  //-- If it is run from MACOS, the target is set to OSX64
+  //-- Aditional options are needed
   if (DARWIN) {
-    platforms = [TARGET_OSX64];
-    options = { scope: ["devDependencies", "darwinDependencies"] };
-
-    //-- Aditional tasks for building the MAC packages
-    distCommands = ["nwjs", "exec:repairOSX", "compress:osx64", "appdmg"];
-
-    //-- Linux 64bits, linux ARM 64bits and Windows (64-bits)
-  } else {
-    if (onlyPlatform === TARGET_LINUX64 || onlyPlatform === TARGET_ALL) {
-      platforms.push(TARGET_LINUX64);
-      options = { scope: ["devDependencies"] };
-
-      //-- Aditional tasks for building the Linux64 packages
-      distCommands = distCommands.concat([
-        "nwjs",
-        "compress:linux64",
-        "appimage:linux64",
-      ]);
-    }
-
-    if (onlyPlatform === TARGET_WIN64 || onlyPlatform === TARGET_ALL) {
-      platforms.push(TARGET_WIN64);
-      options = { scope: ["devDependencies"] };
-
-      //-- Aditional commands for building the Windows packages
-      distCommands = distCommands.concat([
-        "nwjs",
-        "compress:win64",
-        "wget:python64",
-        "exec:nsis64",
-      ]);
-    }
-
-    if (onlyPlatform === TARGET_AARCH64 || onlyPlatform === TARGET_ALL) {
-      if (platforms.indexOf(TARGET_LINUX64) < 0) {
-        platforms.push(TARGET_LINUX64);
-      }
-      options = { scope: ["devDependencies"] };
-
-      //-- Aditional packages for building the AArch64 packages
-      //-- Add "nwjs" if it was not added previously
-      if (distCommands.indexOf("nwjs") < 0) {
-        distCommands = distCommands.concat(["nwjs"]);
-      }
-
-      //-- Add more additional tasks
-      distCommands = distCommands.concat([
-        "wget:nwjsAarch64",
-        "copy:aarch64",
-        "exec:mergeAarch64",
-        "compress:Aarch64"
-      ]);
-    }
+    onlyPlatform = TARGET_OSX64;
+    options["scope"].push("darwinDependencies");
   }
 
-  //-- Add the "clean:tmp" command to the list of commands to execute
-  distCommands = distCommands.concat(["clean:tmp"]);
+  //-- Specific tasks to be executed depending on the target architecture
+  //-- They are exectuted after the COMMON tasks
+  const DIST_PLATFORM_TASKS = {
 
+    //-- TARGET_OSX64
+    "osx_64": [ 
+      "exec:repairOSX", 
+      "compress:osx64", 
+      "appdmg"],
+
+    //-- TARGET_LINUX64
+    "linux64": [
+      "compress:linux64",
+      "appimage:linux64",
+    ],
+
+    //-- TARGET_WIN64
+    "win64": [
+      "compress:win64",
+      "wget:python64",
+      "exec:nsis64",
+    ],
+
+    //-- TARGET_AARCH64
+    "aarch64": [
+      "wget:nwjsAarch64",
+      "copy:aarch64",
+      "exec:mergeAarch64",
+      "compress:Aarch64"
+    ]
+  };
+
+  //-- Current platform
+  platforms = [ onlyPlatform ];
+
+  //-- Get the specific task to perform for the current platform
+  distPlatformTasks = DIST_PLATFORM_TASKS[onlyPlatform];
+
+  //-- Special case: For the AARCH64, the platform is set to Linux64
+  if (onlyPlatform === TARGET_AARCH64) {
+    platforms = [TARGET_LINUX64];
+  }
+ 
+  //-- Add the "clean:tmp" command to the list of commands to execute
+  //-- It will be the last taks
+  distPlatformTasks = distPlatformTasks.concat(["clean:tmp"]);
+ 
+  //-- Task to perform for the DIST target
+  //-- There are common task that should be
+  //-- executed for ALL the platforms, and tasks specific for 
+  //-- every platform
+  const DIST_TASKS = DIST_COMMON_TASKS.concat(distPlatformTasks);
+ 
+  //-- DEBUG
+  console.log("Dist tasks: " + DIST_TASKS);
+  console.log("Platforms: " + platforms);
+
+  //-- DEBUG
+  console.table(DIST_TASKS);
+
+  //------------------------------------------------------------------------------
   //-- Files to include in the Icestudio app
   let appFiles = [
     INDEX_HTML, //-- app/index.html: Main HTML file
@@ -683,6 +704,9 @@ module.exports = function (grunt) {
   // grunt-json-minification
   require("load-grunt-tasks")(grunt, options);
 
+  //-- DEBUG
+  console.table(options);
+
   //-- grunt gettext
   grunt.registerTask("gettext", ["nggettext_extract"]);
 
@@ -711,8 +735,6 @@ module.exports = function (grunt) {
   // grunt dist: Create the app package
   grunt.registerTask(
     "dist",
-
-    //-- Execute the tasks given in the distTasks list + the commands
-    distTasks.concat(distCommands)
+    DIST_TASKS  //-- Tasks to perform
   );
 };

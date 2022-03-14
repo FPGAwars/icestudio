@@ -21,7 +21,6 @@
   "license": "GPL-2.0",
   "scripts": {
     "start": "grunt serve",
-    "build": "grunt dist",
     "buildLinux64": "grunt dist --platform=linux64",
     "buildAarch64": "grunt dist --platform=aarch64",
     "buildWindows": "grunt dist --platform=win64",

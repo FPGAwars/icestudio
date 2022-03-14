@@ -34,7 +34,7 @@ jobs:
         run:   npm install 
       - name: Build OSX packages
         run:  | 
-          npm run build
+          npm run buildOSX
           ls dist/
           
        # Loading vars from icestudio package.json
