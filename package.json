@@ -28,7 +28,8 @@
     "gettext": "grunt gettext",
     "jshint": "grunt jshint",
     "clean": "grunt clean",
-    "postinstall": "npmpd && cd app && npm install && cd .. && grunt getcollection"
+    "getcollection": "grunt getcollection",
+    "postinstall": "grunt getcollection && cd app && npm install"
   },
   "devDependencies": {
     "grunt": "^1.4.1",

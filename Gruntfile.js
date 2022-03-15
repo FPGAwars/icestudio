@@ -86,6 +86,9 @@ module.exports = function (grunt) {
   
   //-- Folder with the Icestudio resources
   const APP_RESOURCES = APPDIR + "/resources";
+
+  //-- Folder to store the default collection
+  const DEFAULT_COLLECTION_FOLDER = APP_RESOURCES + "/collection";
   
   //-- Folder with the Translations
   const APP_LOCALE = APP_RESOURCES + "/locale";
@@ -228,11 +231,8 @@ module.exports = function (grunt) {
   //-- Tasks to perform for the grunt dist task: Create the final packages
   //-- Task common to ALL Platforms
   let DIST_COMMON_TASKS = [
-    "jshint", //-- Check the js files
-
-    //-- Clean the temporary folders: grunt-contrib-clean
-    //-- https://github.com/gruntjs/grunt-contrib-clean
-    "clean:dist",
+    "jshint",     //-- Check the js files
+    "clean:dist", //-- Delete the DIST folder, with all the generated packages 
 
     //-- Extract/compile the English gettext strings: grunt-angular-gettext
     //-- https://www.npmjs.com/package/grunt-angular-gettext
@@ -247,28 +247,11 @@ module.exports = function (grunt) {
     "json-minify",
 
     "nwjs",
+
+    //-- The clean:tmp task is also a common task, but it is
+    //-- executed after the specific platform task
+    //-- So it is added later
   ];
-
-  //---------------------------------------------------------------
-  //-- Configure the platform variables for the current system
-  //--
-
-  //--- Building only for one platform
-  //--- Set with the `platform` argument when calling grunt
-
-  //--- Read if there is a platform argument set
-  //--- If not, the default target is Linux64
-  let platform = grunt.option("platform") || TARGET_LINUX64;
-
-  //-- Aditional options for the platforms
-  let options = { scope: ["devDependencies"] };
-
-  //-- If it is run from MACOS, the target is set to OSX64
-  //-- Aditional options are needed
-  if (DARWIN  || platform === "darwin") {
-    platform = TARGET_OSX64;
-    options["scope"].push("darwinDependencies");
-  }
 
   //-- Specific tasks to be executed depending on the target architecture
   //-- They are exectuted after the COMMON tasks
@@ -302,6 +285,27 @@ module.exports = function (grunt) {
     ]
   };
 
+  //---------------------------------------------------------------
+  //-- Configure the platform variables for the current system
+  //--
+
+  //--- Building only for one platform
+  //--- Set with the `platform` argument when calling grunt
+
+  //--- Read if there is a platform argument set
+  //--- If not, the default target is Linux64
+  let platform = grunt.option("platform") || TARGET_LINUX64;
+
+  //-- Aditional options for the platforms
+  let options = { scope: ["devDependencies"] };
+
+  //-- If it is run from MACOS, the target is set to OSX64
+  //-- Aditional options are needed
+  if (DARWIN  || platform === "darwin") {
+    platform = TARGET_OSX64;
+    options["scope"].push("darwinDependencies");
+  }
+
   //-- Get the specific task to perform for the current platform
   let distPlatformTasks = DIST_PLATFORM_TASKS[platform];
 
@@ -310,14 +314,19 @@ module.exports = function (grunt) {
     platform = TARGET_LINUX64;
   }
  
+  //------------------------------------------------------------------
+  //-- CLEAN:tmp
   //-- Add the "clean:tmp" command to the list of commands to execute
   //-- It will be the last taks
+  //------------------------------------------------------------------
   distPlatformTasks = distPlatformTasks.concat(["clean:tmp"]);
  
+  //------------------------------------------------------------------
   //-- Task to perform for the DIST target
   //-- There are common task that should be
   //-- executed for ALL the platforms, and tasks specific for 
   //-- every platform
+  //------------------------------------------------------------------
   const DIST_TASKS = DIST_COMMON_TASKS.concat(distPlatformTasks);
  
   //-- DEBUG
@@ -368,12 +377,19 @@ module.exports = function (grunt) {
       },
     },
 
-    // TASK: Clean
-    // Empty folders to start fresh
+    // TASK: Clean 
+    //-- Clean the temporary folders: grunt-contrib-clean
+    //-- https://github.com/gruntjs/grunt-contrib-clean
     clean: {
+      //-- Remove temporary folder
       tmp: [".tmp", DIST_TMP],
+
+      //-- Remove folder with generated executable packages
       dist: [DIST],
-      collection: [APP_RESOURCES + "/collection"],
+
+      //-- Remove the default collection (which is installed when 
+      //-- npm install is executed initially
+      collection: [DEFAULT_COLLECTION_FOLDER],
     },
 
     //-- TASK EXEC: Define the Commands and scripts that can be executed
