@@ -149,7 +149,7 @@ module.exports = function (grunt) {
   const PYTHON_URL = "https://www.python.org/ftp/python/3.9.9/" + PYTHON_EXE;
 
   //-- Destination folder where to download the python executable
-  const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE
+  const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE;
   
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
   //-- before creating the MAC package
