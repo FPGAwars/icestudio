@@ -147,6 +147,9 @@ module.exports = function (grunt) {
   //--------------------------------------------------------------------------
   const PYTHON_EXE = "python-3.9.9-amd64.exe";
   const PYTHON_URL = "https://www.python.org/ftp/python/3.9.9/" + PYTHON_EXE;
+
+  //-- Destination folder where to download the python executable
+  const CACHE_PYTHON_EXE = CACHE + "/python/" + PYTHON_EXE
   
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
   //-- before creating the MAC package
@@ -185,7 +188,7 @@ module.exports = function (grunt) {
   
 
   //---------------------------------------------------------------
-  //-- Define the ICETUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
+  //-- Define the ICESTUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
   //-- is created as target, for the dist TASK
   //---------------------------------------------------------------
 
@@ -210,6 +213,29 @@ module.exports = function (grunt) {
 
   //-- DEBUG
   console.log("Icestudio package name: " + ICESTUDIO_PKG_NAME);
+
+  //-------------------------------------------------------------
+  //-- Constants for the WGET TASK
+  //-------------------------------------------------------------
+
+  //-- Default collection source zip filename (Ej. v0.3.3.zip)
+  const DEFAULT_COLLECTION_ZIP_FILE = `v${pkg.collection}.zip`;
+
+  //-- The collection .zip file contains all the files in 
+  //-- this folder name:
+  const DEFAULT_COLLECTION_SRC_DIR = `collection-default-${pkg.collection}`;
+
+  //-- Destination folder and filename for the default collection
+  //-- The collection version is removed from the .zip file
+  const CACHE_DEFAULT_COLLECTION_FILE = 
+    CACHE + "/collection/collection-default.zip";
+
+  //-- URL for downloading the .zip file of the Default collection
+  const DEFAULT_COLLECTION_URL_FILE = 
+    "https://github.com/FPGAwars/collection-default/archive/" + 
+     DEFAULT_COLLECTION_ZIP_FILE; 
+
+
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -432,6 +458,79 @@ module.exports = function (grunt) {
           },
         ],
       },
+    },
+
+    // TASK Wget: Download packages from internet
+    // NWjs for ARM, Python installer, Default collection
+    // More information: https://github.com/shootaroo/grunt-wget
+    wget: {
+
+      //-- Download the Default collection from its github repo
+      collection: {
+        options: {
+          overwrite: false,
+        },
+
+        //-- URL where the src file is located
+        src: DEFAULT_COLLECTION_URL_FILE,
+
+        //-- Write to this new folder with a new name
+        dest: CACHE_DEFAULT_COLLECTION_FILE,
+      },
+
+      //-- Download the python executable. It is used for generating the Windows installer
+      //-- ONLY WINDOWS
+      python64: {
+        options: {
+          overwrite: false,
+        },
+
+        //-- URL where the file is localted
+        src:  PYTHON_URL,
+
+        //-- Write the file to this folder
+        dest: CACHE_PYTHON_EXE,
+      },
+
+      //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
+      //-- It is downloaded during the ARM build process
+      //-- Only ARM
+      nwjsAarch64: {
+
+        options: {
+
+          //-- If the destination file already exists, it is not downloaded again
+          overwrite: false,
+        },
+
+        //-- Download from
+        src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
+
+        //-- Local destination file
+        dest: CACHE + "/nwjsAarch64/nwjs.tar.gz",
+      },
+    },
+
+    //-- Install the Default collection
+    //-- The .zip file is unzip in the destination folder
+    //-  https://www.npmjs.com/package/grunt-zip
+    unzip: {
+      
+      'using-router': {
+        router : function (filepath) {
+          //-- Change the folder name of the compress files to 'collection'
+          //-- (The original name contains a folder with the version. We want
+          //--  it to be removed)
+          return filepath.replace(DEFAULT_COLLECTION_SRC_DIR, "collection");
+        },
+
+        //-- Original .zip file, previously downloaded
+        src: CACHE_DEFAULT_COLLECTION_FILE,
+
+        //-- Destination folder for its installation
+        //-- The collection is unzip on the folder APP_RESOURCES/collection
+        dest: APP_RESOURCES
+      }
     },
 
     //-- TASK: jshint: Check the .js files
@@ -682,59 +781,7 @@ module.exports = function (grunt) {
       },
     },
 
-    // TASK Wget: Download packages from internet
-    // NWjs for ARM, Python installer, Default collection
-    // More information: https://github.com/shootaroo/grunt-wget
-    wget: {
-
-      //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
-      //-- It is downloaded during the ARM build process
-      //-- Only ARM
-      nwjsAarch64: {
-
-        options: {
-
-          //-- If the destination file already exists, it is not downloaded again
-          overwrite: false,
-        },
-
-        //-- Download from
-        src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
-
-        //-- Local destination file
-        dest: CACHE + "/nwjsAarch64/nwjs.tar.gz",
-      },
-
-      //-- Download the python executable. It is used for generating the Windows installer
-      //-- ONLY WINDOWS
-      python64: {
-        options: {
-          overwrite: false,
-        },
-        src:  PYTHON_URL,
-        dest: CACHE + "/python/" + PYTHON_EXE,
-      },
-
-      //-- Download the Default collection from its github repo
-      collection: {
-        options: {
-          overwrite: false,
-        },
-        src: "https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip",
-        dest: CACHE + "/collection/collection-default-v<%=pkg.collection%>.zip",
-      },
-    },
-
-    // Unzip Default collection
-    unzip: {
-        "using-router": {
-        router: function (filepath) {
-          return filepath.replace(/^collection-default-.*?\//g, "collection/");
-        },
-        src: CACHE + "/collection/collection-default-v<%=pkg.collection%>.zip",
-        dest: APP_RESOURCES,
-      },
-    },
+    
 
     
   });
@@ -751,15 +798,21 @@ module.exports = function (grunt) {
   // grunt-angular-gettext
   // grunt-contrib-copy
   // grunt-json-minification
+  // grunt-wget
+  // grunt-zip
   require("load-grunt-tasks")(grunt, options);
 
   //-- grunt gettext
   //-- Extract the English text and write them into the
   //-- template file (app/resources/localte/template.pot)
-  grunt.registerTask("gettext", ["nggettext_extract"]);
+  grunt.registerTask("gettext", [
+    "nggettext_extract"
+  ]);
 
   //-- grunt compiletext
-  grunt.registerTask("compiletext", ["nggettext_compile"]);
+  grunt.registerTask("compiletext", [
+    "nggettext_compile"
+  ]);
 
   //-- grunt getcollection
   //-- Download the default collection and install it
@@ -767,11 +820,11 @@ module.exports = function (grunt) {
   //-- This task is called in the npm postinstallation
   //-- (after npm install is executed)
   grunt.registerTask("getcollection", [
-    "clean:collection",
-    "wget:collection",
-    "unzip"
+    "clean:collection",  //-- Remove previous collection downloaded
+    "wget:collection",   //-- Download the collection
+    "unzip"              //-- Unzip the collection (install it)
   ]);
-
+ 
   //-- grunt server
   //-- Start icestudio
   grunt.registerTask("serve", [
