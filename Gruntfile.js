@@ -267,14 +267,8 @@ module.exports = function (grunt) {
   let DIST_COMMON_TASKS = [
     "jshint",     //-- Check the js files
     "clean:dist", //-- Delete the DIST folder, with all the generated packages 
-
-    //-- Extract/compile the English gettext strings: grunt-angular-gettext
-    //-- https://www.npmjs.com/package/grunt-angular-gettext
-    "nggettext_compile",
-
-    //-- Copy files and folders: grunt-contrib-copy
-    //-- https://github.com/gruntjs/grunt-contrib-copy
-    "copy:dist",
+    "nggettext_compile",  //-- Extract English texts to the template file
+    "copy:dist",    //-- Copy the files to be included in the build package
 
     //-- Minify JSON files in grunt: grunt-json-minification
     //-- https://www.npmjs.com/package/grunt-json-minification
@@ -370,7 +364,7 @@ module.exports = function (grunt) {
   //-- DEBUG
   console.table(DIST_TASKS);
 
-  //------------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
   //-- Files to include in the Icestudio app
   let appFiles = [
     INDEX_HTML, //-- app/index.html: Main HTML file
@@ -382,6 +376,62 @@ module.exports = function (grunt) {
     "fonts/**/*.*", //-- Fonts
     "node_modules/**/*.*",
   ];
+
+  //--------------------------------------------------------------------------
+  //-- Configure the grunt TASK
+  //--------------------------------------------------------------------------
+
+  //-- Load all grunt tasks matching grunt-*
+  //-- https://www.npmjs.com/package/load-grunt-tasks
+  //--
+  // grunt-contrib-jshint
+  // grunt-contrib-clean
+  // grunt-angular-gettext
+  // grunt-contrib-copy
+  // grunt-json-minification
+  // grunt-wget
+  // grunt-zip
+  // grunt-exec
+  require("load-grunt-tasks")(grunt, options);
+
+  //-- grunt gettext
+  //-- Extract the English text and write them into the
+  //-- template file (app/resources/localte/template.pot)
+  //-- Moreinformation: https://www.npmjs.com/package/grunt-angular-gettext
+  grunt.registerTask("gettext", [
+    "nggettext_extract"
+  ]);
+
+  //-- grunt compiletext
+ 
+  grunt.registerTask("compiletext", [
+    "nggettext_compile"
+  ]);
+
+  //-- grunt getcollection
+  //-- Download the default collection and install it
+  //-- in the app/resources/collection folder
+  //-- This task is called in the npm postinstallation
+  //-- (after npm install is executed)
+  grunt.registerTask("getcollection", [
+    "clean:collection",  //-- Remove previous collection downloaded
+    "wget:collection",   //-- Download the collection
+    "unzip"              //-- Unzip the collection (install it)
+  ]);
+ 
+  //-- grunt server
+  //-- Start icestudio
+  grunt.registerTask("serve", [
+    "nggettext_compile", //-- Get the translation in json files
+    "watch:scripts", //-- Watch the given files. When there is change
+                     //-- icestudio is restarted
+  ]);
+
+  // grunt dist: Create the app package
+  grunt.registerTask(
+    "dist",
+    DIST_TASKS  //-- Tasks to perform
+  );
 
   //-----------------------------------------------------------------------
   //  PROJECT CONFIGURATION
@@ -533,6 +583,16 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- TASK EXEC: Define the Commands and scripts that can be executed
+    //-- More information: https://www.npmjs.com/package/grunt-exec
+    exec: {
+      nw: NWJS_EXEC_CMD,        //-- Launch NWjs
+      stopNW: NWJS_STOP,        //-- Stop NWjs       
+      nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
+      repairOSX: SCRIPT_OSX,    //-- Shell script for mac
+      mergeAarch64: SCRIPT_ARM, //-- Shell script for ARM
+    },
+
     //-- TASK: jshint: Check the .js files
     //-- More information: https://www.npmjs.com/package/grunt-contrib-jshint
     jshint: {
@@ -552,27 +612,22 @@ module.exports = function (grunt) {
       },
     },
 
-   
-
-    //-- TASK EXEC: Define the Commands and scripts that can be executed
-    //-- /invoked
-    exec: {
-      nw: NWJS_EXEC_CMD,        //-- Launch NWjs
-      stopNW: NWJS_STOP,        //-- Stop NWjs       
-      nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
-      repairOSX: SCRIPT_OSX,    //-- Shell script for mac
-      mergeAarch64: SCRIPT_ARM, //-- Shell script for ARM
-    },
-
-    //-- TASK: Copy
-    // Copy dist files
+    //-- TASK: Copy. Copy the Icestudio files needed for building
+    //-- the executable package
+    //-- More information: https://www.npmjs.com/package/grunt-contrib-copy
     copy: {
+
+      //-- Copy files to the DIST folder for building the executable package
       dist: {
         files: [
+
+          //-- Copy the Icestudio files
           {
-            expand: true,
-            cwd: APPDIR,
-            dest: DIST_TMP,
+            expand: true, 
+            cwd: APPDIR,     //-- working folder
+            dest: DIST_TMP,  //-- Target folder
+
+            //-- Source files to copy
             src: [
               INDEX_HTML,
               PACKAGE_JSON,
@@ -582,16 +637,19 @@ module.exports = function (grunt) {
               "styles/**",
               "scripts/**",
               "views/*.html",
-            ],
+            ]
           },
+
+          //-- Copy the Fonts
           {
             expand: true,
-            cwd: APP_FONTS,
-            dest: DIST_TMP_FONTS,
-            src: "*.*",
+            cwd: APP_FONTS,        //-- Working folder
+            dest: DIST_TMP_FONTS,  //-- Target folder
+            src: "*.*",            //-- Source files to copy
           },
         ],
       },
+
       aarch64: {
         files: [
           {
@@ -621,7 +679,8 @@ module.exports = function (grunt) {
     },
 
     //-- TASK: json-minify
-    // JSON minification plugin without concatination
+    //-- Minify JSON files in grunt: grunt-json-minification
+    //-- More information: https://www.npmjs.com/package/grunt-json-minification
     "json-minify": {
       json: {
         files: DIST_TMP + "/resources/**/*.json",
@@ -632,7 +691,8 @@ module.exports = function (grunt) {
     },
 
     //-- TASK: NWJS
-    // Execute nw-build packaging
+    //-- Build the icestudio NWjs app (Executable) for different platforms
+    //-- More information: https://www.npmjs.com/package/grunt-nw-builder
     nwjs: {
       options: {
         version: "0.58.0",
@@ -790,52 +850,5 @@ module.exports = function (grunt) {
   //-- PROJECT CONFIGURATION: END
   //---------------------------------------------------------------------
 
-  //-- Load all grunt tasks matching grunt-*
-  //-- https://www.npmjs.com/package/load-grunt-tasks
-  //--
-  // grunt-contrib-jshint
-  // grunt-contrib-clean
-  // grunt-angular-gettext
-  // grunt-contrib-copy
-  // grunt-json-minification
-  // grunt-wget
-  // grunt-zip
-  require("load-grunt-tasks")(grunt, options);
-
-  //-- grunt gettext
-  //-- Extract the English text and write them into the
-  //-- template file (app/resources/localte/template.pot)
-  grunt.registerTask("gettext", [
-    "nggettext_extract"
-  ]);
-
-  //-- grunt compiletext
-  grunt.registerTask("compiletext", [
-    "nggettext_compile"
-  ]);
-
-  //-- grunt getcollection
-  //-- Download the default collection and install it
-  //-- in the app/resources/collection folder
-  //-- This task is called in the npm postinstallation
-  //-- (after npm install is executed)
-  grunt.registerTask("getcollection", [
-    "clean:collection",  //-- Remove previous collection downloaded
-    "wget:collection",   //-- Download the collection
-    "unzip"              //-- Unzip the collection (install it)
-  ]);
- 
-  //-- grunt server
-  //-- Start icestudio
-  grunt.registerTask("serve", [
-    "nggettext_compile", //-- Get the translation in json files
-    "watch:scripts", //-- Watch the given files. When there is change
-                     //-- icestudio is restarted
-  ]);
-
-  // grunt dist: Create the app package
-  grunt.registerTask(
-    "dist",
-    DIST_TASKS  //-- Tasks to perform
-  );
+  
 };
