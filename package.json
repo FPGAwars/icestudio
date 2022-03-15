@@ -26,6 +26,7 @@
     "buildWindows": "grunt dist --platform=win64",
     "buildOSX": "grunt dist --platform=darwin",
     "gettext": "grunt gettext",
+    "compiletext": "grunt compiletext",
     "jshint": "grunt jshint",
     "clean": "grunt clean",
     "getcollection": "grunt getcollection",

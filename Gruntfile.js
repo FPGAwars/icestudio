@@ -89,10 +89,18 @@ module.exports = function (grunt) {
 
   //-- Folder to store the default collection
   const DEFAULT_COLLECTION_FOLDER = APP_RESOURCES + "/collection";
+
+  //-- Folder with the Default collection translations
+  const DEFAULT_COLLECTION_LOCALE = DEFAULT_COLLECTION_FOLDER + "/locale";
   
   //-- Folder with the Translations
   const APP_LOCALE = APP_RESOURCES + "/locale";
+
+  //-- Folder for the HTML files
+  const APP_HTML = APPDIR + "/views";
   
+  
+
   //-- Cache folder for downloading NW
   const CACHE = "cache";
   
@@ -358,6 +366,74 @@ module.exports = function (grunt) {
     //-- Information about the package (read from the app/package.json file)
     pkg: pkg,
 
+    // TASK: Clean 
+    //-- Clean the temporary folders: grunt-contrib-clean
+    //-- https://github.com/gruntjs/grunt-contrib-clean
+    clean: {
+      //-- Remove temporary folder
+      tmp: [".tmp", DIST_TMP],
+
+      //-- Remove folder with generated executable packages
+      dist: [DIST],
+
+      //-- Remove the default collection (which is installed when 
+      //-- npm install is executed initially
+      collection: [DEFAULT_COLLECTION_FOLDER],
+    },
+
+    //-- Get the English texts from the .js and .html files
+    //-- and write them in the template (.pot) file
+    //-- https://www.npmjs.com/package/grunt-angular-gettext
+    //-- Disable jshint warning: 
+    /* jshint camelcase: false */
+    nggettext_extract: {
+      pot: {
+        files: {
+          //-- Target template file
+          "app/resources/locale/template.pot": [
+
+            //-- Src files
+            APP_HTML + "/*.html",
+            APP_SCRIPTS + "/**/*.js",
+          ],
+        },
+      },
+    },
+
+    //-- TASK: nggettext_compile
+    // Convert all the .po files (with the translations)
+    // to JSON format. The json file is the one read by Icestudio when
+    // it is started
+    //-- Disable jshint Warning:
+    /* jshint camelcase: false */
+    nggettext_compile: {
+      all: {
+        options: {
+          format: "json",
+        },
+        files: [
+
+          //-- Icestudio .po files to be converted to json
+          {
+            expand: true,
+            cwd: APP_LOCALE,
+            dest: APP_LOCALE,
+            src: ["**/*.po"],
+            ext: ".json",
+          },
+
+          //-- Default collection .po files to be converted to json
+          {
+            expand: true,
+            cwd: DEFAULT_COLLECTION_LOCALE,
+            dest: DEFAULT_COLLECTION_LOCALE,
+            src: ["**/*.po"],
+            ext: ".json",
+          },
+        ],
+      },
+    },
+
     //-- TASK: jshint: Check the .js files
     //-- More information: https://www.npmjs.com/package/grunt-contrib-jshint
     jshint: {
@@ -377,20 +453,7 @@ module.exports = function (grunt) {
       },
     },
 
-    // TASK: Clean 
-    //-- Clean the temporary folders: grunt-contrib-clean
-    //-- https://github.com/gruntjs/grunt-contrib-clean
-    clean: {
-      //-- Remove temporary folder
-      tmp: [".tmp", DIST_TMP],
-
-      //-- Remove folder with generated executable packages
-      dist: [DIST],
-
-      //-- Remove the default collection (which is installed when 
-      //-- npm install is executed initially
-      collection: [DEFAULT_COLLECTION_FOLDER],
-    },
+   
 
     //-- TASK EXEC: Define the Commands and scripts that can be executed
     //-- /invoked
@@ -673,45 +736,7 @@ module.exports = function (grunt) {
       },
     },
 
-    // Generate POT file
-    /* jshint camelcase: false */
-    nggettext_extract: {
-      pot: {
-        files: {
-          "app/resources/locale/template.pot": [
-            "app/views/*.html",
-            APP_SCRIPTS + "/**/*.js",
-          ],
-        },
-      },
-    },
-
-    //-- TASK: nggettext_compile
-    // Compile PO files into JSON
-    /* jshint camelcase: false */
-    nggettext_compile: {
-      all: {
-        options: {
-          format: "json",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: APP_LOCALE,
-            dest: APP_LOCALE,
-            src: ["**/*.po"],
-            ext: ".json",
-          },
-          {
-            expand: true,
-            cwd: APP_RESOURCES + "/collection/locale",
-            dest: APP_RESOURCES + "/collection/locale",
-            src: ["**/*.po"],
-            ext: ".json",
-          },
-        ],
-      },
-    },
+    
   });
 
   //------------------------------------------------------------------
@@ -729,6 +754,8 @@ module.exports = function (grunt) {
   require("load-grunt-tasks")(grunt, options);
 
   //-- grunt gettext
+  //-- Extract the English text and write them into the
+  //-- template file (app/resources/localte/template.pot)
   grunt.registerTask("gettext", ["nggettext_extract"]);
 
   //-- grunt compiletext
@@ -750,7 +777,7 @@ module.exports = function (grunt) {
   grunt.registerTask("serve", [
     "nggettext_compile", //-- Get the translation in json files
     "watch:scripts", //-- Watch the given files. When there is change
-    //-- icestudio is restarted
+                     //-- icestudio is restarted
   ]);
 
   // grunt dist: Create the app package
