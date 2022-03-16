@@ -98,8 +98,6 @@ module.exports = function (grunt) {
 
   //-- Folder for the HTML files
   const APP_HTML = APPDIR + "/views";
-  
-  
 
   //-- Cache folder for downloading NW
   const CACHE = "cache";
@@ -124,7 +122,7 @@ module.exports = function (grunt) {
   const TARGET_AARCH64 ="aarch64";
 
   //-------------------------------------------------------------
-  //-- Constant for the exec TASK
+  //-- Constants for the EXEC TASK
   //-------------------------------------------------------------
 
   //-- Command for executing the NW. You should add the folder where
@@ -184,12 +182,29 @@ module.exports = function (grunt) {
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
   
-  //---------------------------------------------------------------------
+
+  //---------------------------------------------------------------
+  //-- NW TASK: Build the app
+  //---------------------------------------------------------------
+  //-- They have been previsouly copied from APPDIR to DIST_TMP
+  //-- SRC files used for building the app
+  const DIST_SRC_FILES = DIST_TMP + "/**";
+  const NW_VERSION = "0.58.0";
+
+  //-- Select the NW build flavor
+  //-- For the develpment (WIP) the flavor is set to "sdk"
+  //-- For the stable the flavor is set to "normal"
+  const NW_FLAVOR = (WIP) ? "sdk" : "nomal";
+
+  //-- Path to the Windows ICO icon file for Icestudio
+  const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
   
+  //-- Path to the MAC ICNS icon file for Icestudio
+  const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
   //---------------------------------------------------------------
   //-- Define the ICESTUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
-  //-- is created as target, for the dist TASK
+  //-- is created as target, for the DIST TASK
   //---------------------------------------------------------------
 
   //-- Read the icestudio json package 
@@ -235,8 +250,6 @@ module.exports = function (grunt) {
     "https://github.com/FPGAwars/collection-default/archive/" + 
      DEFAULT_COLLECTION_ZIP_FILE; 
 
-
-
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
   //-------------------------------------------------------------------------
@@ -246,9 +259,6 @@ module.exports = function (grunt) {
   const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
     -DVERSION=${pkg.version} \
     -V3 scripts/windows_installer.nsi`;
-
-  //-- DEBUG
-  console.log(MAKE_INSTALLER);
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -269,10 +279,7 @@ module.exports = function (grunt) {
     "clean:dist", //-- Delete the DIST folder, with all the generated packages 
     "nggettext_compile",  //-- Extract English texts to the template file
     "copy:dist",    //-- Copy the files to be included in the build package
-
-    //-- Minify JSON files in grunt: grunt-json-minification
-    //-- https://www.npmjs.com/package/grunt-json-minification
-    "json-minify",
+    "json-minify",  //-- Minify JSON files
 
     "nwjs",
 
@@ -692,20 +699,39 @@ module.exports = function (grunt) {
 
     //-- TASK: NWJS
     //-- Build the icestudio NWjs app (Executable) for different platforms
+    //-- It will download the pre-build binaries and create a release folder
     //-- More information: https://www.npmjs.com/package/grunt-nw-builder
+    //--                   https://www.npmjs.com/package/nw-builder
     nwjs: {
       options: {
-        version: "0.58.0",
-        //  flavor: 'normal', // For stable branch
-        flavor: "sdk", // For development branch
-        zip: false,
-        buildDir: DIST,
-        winIco: "docs/resources/images/logo/icestudio-logo.ico",
-        macIcns: "docs/resources/images/logo/icestudio-logo.icns",
-        macPlist: { CFBundleIconFile: "app" },
+        version: NW_VERSION,
+
+        //-- Only one platform at a time (defined by the argument  
+        //-- passed to grunt when invoked)
         platforms: [platform],
+
+        //-- Use "sdk" for development and "normal" for stable release
+        flavor: NW_FLAVOR,
+
+        //-- Do not zip the application
+        zip: false,
+
+        //-- Release folder where to place the final target release
+        buildDir: DIST,
+
+        //-- Only windows Path to the ICO icon file
+        //-- (It needs wine installed if building from Linux)
+        winIco: WIN_ICON,
+
+        //-- Only MAC: Path to the ICNS icon file
+        macIcns: MAC_ICON,
+        macPlist: { CFBundleIconFile: "app" },
+
       },
-      src: [DIST_TMP + "/**"],
+
+      //-- Where the Icestudio NW app is located
+      //-- It was previously copied from APPDIR
+      src: [DIST_SRC_FILES],
     },
 
     // ONLY MAC: generate a DMG package
