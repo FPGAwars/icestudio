@@ -314,15 +314,41 @@ module.exports = function (grunt) {
   const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + 
         ".zip";
 
-
-  //-- DEBUG
-  console.log("Package name: " + DIST_TARGET_OSX64_ZIP);
-
   //-- Files to include in the Icestudio app release file
   //-- Source files plus the fonts folder plus all the files in the 
   //-- release folder
   const RELEASE_FILES = [...APP_SRC_FILES, "**", "fonts/**"];
   
+
+  //----------------------------------------------------------------------
+  //-- APPIMAGE TASK: Build the appimage Linux executable. Constants
+  //----------------------------------------------------------------------
+  //-- Path to the Linux icon files
+  const LINUX_ICONS = "docs/resources/icons";
+
+  //-- Linux Executable filename
+  const LINUX_EXEC_FILE = pkg.name;
+
+  //-- Linux final APPIMAGE_FILENAME
+  const LINUX_APPIMAGE_FILE = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
+        ".AppImage";
+
+  console.log("* APPIMAGE: " + LINUX_APPIMAGE_FILE);
+
+  //----------------------------------------------------------------------
+  //-- APPDMG TASK: Build the dmg MAC executable. Constants
+  //----------------------------------------------------------------------
+
+  //-- Background image for the installer
+  const MAC_DMG_BACKGROUND_IMAGE =  
+    "docs/resources/images/installation/installer-background.png";
+
+  //-- MAC executable filename (inside the DMG image folder)
+  const MAC_EXEC_FILE = DIST_ICESTUDIO_OSX64 + "/icestudio.app";
+
+  //-- MAC final DMG image
+  const MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + ".dmg";
+  console.log("* DMGIMAGE: " + MAC_DMG_IMAGE);
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -344,8 +370,7 @@ module.exports = function (grunt) {
     "nggettext_compile",  //-- Extract English texts to the template file
     "copy:dist",    //-- Copy the files to be included in the build package
     "json-minify",  //-- Minify JSON files
-
-    "nwjs",
+    "nwjs",         //-- Build the executable package
 
     //-- The clean:tmp task is also a common task, but it is
     //-- executed after the specific platform task
@@ -605,6 +630,7 @@ module.exports = function (grunt) {
       //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
       //-- It is downloaded during the ARM build process
       //-- Only ARM
+      //-- TODO
       nwjsAarch64: {
 
         options: {
@@ -694,11 +720,15 @@ module.exports = function (grunt) {
             expand: true,
             cwd: APP_FONTS,        //-- Working folder
             dest: DIST_TMP_FONTS,  //-- Target folder
+
+            //-- TODO: Can it be changed to "**"?
             src: "*.*",            //-- Source files to copy
           },
         ],
       },
 
+
+      //-- TODO
       aarch64: {
         files: [
           {
@@ -712,6 +742,8 @@ module.exports = function (grunt) {
           },
         ],
       },
+
+      //-- TODO
       aarch64ToLinux: {
         files: [
           {
@@ -866,7 +898,7 @@ module.exports = function (grunt) {
         ],
       },
 
-
+      //-- TODO
       Aarch64: {
         options: {
           archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-Aarch64.zip",
@@ -883,16 +915,54 @@ module.exports = function (grunt) {
 
     },
 
+    //-- TASK: APPIMAGE
+    //-- ONLY LINUX: generate AppImage package
+    //-- More information: https://www.npmjs.com/package/grunt-appimage
+    appimage: {
+      linux64: {
+
+        //-- Information to be included in the appimage
+        options: {
+          name: "Icestudio",
+
+          //-- Executable file
+          exec: LINUX_EXEC_FILE,
+          arch: "64bit",
+          icons: LINUX_ICONS,
+          comment: "Visual editor for open FPGA boards",
+
+          //-- Final APPIMAGE filename
+          archive: LINUX_APPIMAGE_FILE,
+        },
+
+        //-- Files to include in the appimage
+        files: [
+          {
+            expand: true,
+
+            //-- Working directory
+            cwd: DIST_ICESTUDIO_LINUX64,
+
+            //-- Include all the files and folder from the
+            //-- working directory
+            src: ["**"],
+          },
+        ],
+      },
+    },
 
 
-    // ONLY MAC: generate a DMG package
+    //-- TASK: APPIMAGE
+    //-- ONLY MAC: generate a DMG package
+    //-- More information: https://www.npmjs.com/package/grunt-appdmg
     appdmg: {
+
+      //-- Information to be included in the DMG image
       options: {
         basepath: ".",
         title: "Icestudio Installer",
-        icon: "docs/resources/images/logo/icestudio-logo.icns",
-        background:
-          "docs/resources/images/installation/installer-background.png",
+        icon: MAC_ICON,
+        background: MAC_DMG_BACKGROUND_IMAGE,
         window: {
           size: {
             width: 512,
@@ -909,34 +979,17 @@ module.exports = function (grunt) {
           {
             x: 170,
             y: 250,
-            type: "file",
-            path: DIST_ICESTUDIO_OSX64 + "/icestudio.app",
-          },
-        ],
-      },
-      target: {
-        dest: DIST + "/" + ICESTUDIO_PKG_NAME + "-osx64.dmg",
-      },
-    },
 
-    // ONLY LINUX: generate AppImage packages
-    appimage: {
-      linux64: {
-        options: {
-          name: "Icestudio",
-          exec: "icestudio",
-          arch: "64bit",
-          icons: "docs/resources/icons",
-          comment: "Visual editor for open FPGA boards",
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-linux64.AppImage",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: DIST_ICESTUDIO_LINUX64,
-            src: ["**"].concat(RELEASE_FILES),
+            //-- Executable file
+            type: "file",
+            path: MAC_EXEC_FILE,
           },
         ],
+      },
+
+      //-- Final DMG image
+      target: {
+        dest: MAC_DMG_IMAGE
       },
     },
 
