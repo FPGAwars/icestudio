@@ -78,9 +78,6 @@ module.exports = function (grunt) {
   //-- is executed. Icestudio reads this file
   const APP_TIMESTAMP_FILE = APPDIR + '/' + BUILDINFO_JSON;
   
-  //-- Source folder with the Fonts
-  const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
-  
   //-- Folder with the Icestudio Javascript files
   const APP_SCRIPTS = APPDIR + "/scripts";
   
@@ -272,6 +269,62 @@ module.exports = function (grunt) {
   const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
   //----------------------------------------------------------------------
+  //-- COPY TASK
+  //----------------------------------------------------------------------
+  //-- SRC files to include in the Release
+  //-- They are copied to the TMP folder, were more files are added before
+  //-- compressing into the final .zip file
+  const APP_SRC_FILES = [ 
+    INDEX_HTML,          //-- Main html file
+    PACKAGE_JSON,        //-- Package.json file
+    BUILDINFO_JSON,      //-- Timestamp
+    "resources/**",      //-- APP_RESOURCES folder
+    "scripts/**",        //-- JS Files
+    "styles/**",         //-- CSS files
+    "views/*.html",      //-- HTML files
+    "node_modules/**",   //-- Node modules files
+  ];
+
+   //-- Source folder with the Fonts
+   const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
+
+  //----------------------------------------------------------------------
+  //-- COMPRESS TASK: Build the release package. Constants
+  //----------------------------------------------------------------------
+
+  //-- Package name for linux:  icestudio-{version}-{platform}
+  const ICESTUDIO_PKG_NAME_LINUX64 =  ICESTUDIO_PKG_NAME + "-" + 
+        TARGET_LINUX64;
+
+  //-- Package name for windows
+  const ICESTUDIO_PKG_NAME_WIN64 = ICESTUDIO_PKG_NAME + "-" +  
+        TARGET_WIN64;
+        
+  //-- Package name for MAC
+  const ICESTUDIO_PKG_NAME_OSX64 = ICESTUDIO_PKG_NAME + "-" +  
+        TARGET_OSX64;
+
+  //-- Name + path to the Linux release package
+  const DIST_TARGET_LINUX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
+        ".zip";
+
+  const DIST_TARGET_WIN64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_WIN64 + 
+        ".zip";
+
+  const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + 
+        ".zip";
+
+
+  //-- DEBUG
+  console.log("Package name: " + DIST_TARGET_OSX64_ZIP);
+
+  //-- Files to include in the Icestudio app release file
+  //-- Source files plus the fonts folder plus all the files in the 
+  //-- release folder
+  const RELEASE_FILES = [...APP_SRC_FILES, "**", "fonts/**"];
+  
+
+  //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
   //----------------------------------------------------------------------
   //-- Write the timestamp information in a file
@@ -382,18 +435,7 @@ module.exports = function (grunt) {
   //-- DEBUG
   console.table(DIST_TASKS);
 
-  //--------------------------------------------------------------------------
-  //-- Files to include in the Icestudio app
-  let appFiles = [
-    INDEX_HTML, //-- app/index.html: Main HTML file
-    PACKAGE_JSON, //-- Package file
-    "resources/**/*.*", //-- Folder APP_RESOURCES
-    "scripts/**/*.*", //-- JS files
-    "styles/**/*.*", //-- CSS files
-    "views/**/*.*", //-- HTML files
-    "fonts/**/*.*", //-- Fonts
-    "node_modules/**/*.*",
-  ];
+  
 
   //--------------------------------------------------------------------------
   //-- Configure the grunt TASK
@@ -642,20 +684,9 @@ module.exports = function (grunt) {
           //-- Copy the Icestudio files
           {
             expand: true, 
-            cwd: APPDIR,     //-- working folder
-            dest: DIST_TMP,  //-- Target folder
-
-            //-- Source files to copy
-            src: [
-              INDEX_HTML,
-              PACKAGE_JSON,
-              BUILDINFO_JSON,
-              "resources/**",
-              "node_modules/**",
-              "styles/**",
-              "scripts/**",
-              "views/*.html",
-            ]
+            cwd: APPDIR,        //-- working folder
+            dest: DIST_TMP,     //-- Target folder
+            src: APP_SRC_FILES  //-- Src files to copy
           },
 
           //-- Copy the Fonts
@@ -752,7 +783,105 @@ module.exports = function (grunt) {
       src: [DIST_SRC_FILES],
     },
 
+    //-- TASK: COMPRESS. Compress the Release dir into a .zip file
+    //-- It will create the file DIST/icestudio-{version}-{platform}.zip
+    //-- More information: https://www.npmjs.com/package/grunt-contrib-compress
+    compress: {
 
+      //-- TARGET: LINUX64
+      linux64: {
+
+        options: {
+          //-- Target .zip file
+          archive: DIST_TARGET_LINUX64_ZIP,
+        },
+
+        //-- Files and folder to include in the ZIP file
+        files: [
+          {
+            expand: true,
+
+            //-- Working directory. Path relative to this folder
+            cwd: DIST_ICESTUDIO_LINUX64,
+
+            //-- Files to include in the ZIP file
+            //-- All the files and folder from the cwd directory
+            src: ["**"],
+
+            //-- Folder name inside the ZIP archive
+            dest: ICESTUDIO_PKG_NAME_LINUX64,
+          },
+        ],
+      },
+
+      //-- TARGET: WIN64
+      win64: {
+
+        options: {
+          //-- Target .zip file
+          archive: DIST_TARGET_WIN64_ZIP,
+        },
+
+        //-- Files and folder to include in the ZIP file
+        files: [
+          {
+            expand: true,
+
+            //-- Working directory. Path relative to this folder
+            cwd: DIST_ICESTUDIO_WIN64,
+
+            //-- Files to include in the ZIP file
+            //-- All the files and folder from the cwd directory
+            src: ["**"],
+
+            //-- Folder name inside the ZIP archive
+            dest:  ICESTUDIO_PKG_NAME_WIN64,
+          },
+        ],
+      },
+
+      //-- TARGET OSX64:
+      osx64: {
+
+        options: {
+          //-- Target .zip file
+          archive: DIST_TARGET_OSX64_ZIP,
+        },
+
+        //-- Files and folder to include in the ZIP file
+        files: [
+          {
+            expand: true,
+
+            //-- Working directory. Path relative to this folder
+            cwd: DIST_ICESTUDIO_OSX64,
+
+            //-- Files to include in the ZIP file
+            //-- All the files and folders inside icestudio.app
+            src: ["icestudio.app/**"],
+
+            //-- Folder name inside the ZIP archive
+            dest: ICESTUDIO_PKG_NAME_OSX64,
+          },
+        ],
+      },
+
+
+      Aarch64: {
+        options: {
+          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-Aarch64.zip",
+        },
+        files: [
+          {
+            expand: true,
+            cwd: DIST_ICESTUDIO_AARCH64,
+            src: ["**"].concat(RELEASE_FILES),
+            dest: ICESTUDIO_PKG_NAME + "-linux64",
+          },
+        ],
+      },
+
+    },
 
 
 
@@ -805,69 +934,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: DIST_ICESTUDIO_LINUX64,
-            src: ["**"].concat(appFiles),
-          },
-        ],
-      },
-    },
-
-    //-- TASK COMPRESS. Compress the Release dir into a .zip file
-    //-- It will create the file DIST/icestudio-{version}-{platform}.zip
-    //-- More information: https://www.npmjs.com/package/grunt-contrib-compress
-    compress: {
-
-      //-- TARGET: LINUX64
-      linux64: {
-        options: {
-
-          //-- Target .zip file
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-linux64.zip",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: DIST_ICESTUDIO_LINUX64,
-            src: ["**"].concat(appFiles),
-            dest: ICESTUDIO_PKG_NAME + "-linux64",
-          },
-        ],
-      },
-        Aarch64: {
-        options: {
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-Aarch64.zip",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: DIST_ICESTUDIO_AARCH64,
-            src: ["**"].concat(appFiles),
-            dest: ICESTUDIO_PKG_NAME + "-linux64",
-          },
-        ],
-      },
-      win64: {
-        options: {
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-win64.zip",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: DIST_ICESTUDIO_WIN64,
-            src: ["**"].concat(appFiles),
-            dest: ICESTUDIO_PKG_NAME + "-win64",
-          },
-        ],
-      },
-      osx64: {
-        options: {
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-osx64.zip",
-        },
-        files: [
-          {
-            expand: true,
-            cwd: DIST_ICESTUDIO + "/osx64/",
-            src: ["icestudio.app/**"],
-            dest: ICESTUDIO_PKG_NAME + "-osx64",
+            src: ["**"].concat(RELEASE_FILES),
           },
         ],
       },
