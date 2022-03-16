@@ -181,26 +181,6 @@ module.exports = function (grunt) {
   
   //-- Folder for the OSX64 build package
   const DIST_ICESTUDIO_OSX64 = DIST_ICESTUDIO + "/" + TARGET_OSX64;
-  
-
-  //---------------------------------------------------------------
-  //-- NW TASK: Build the app
-  //---------------------------------------------------------------
-  //-- They have been previsouly copied from APPDIR to DIST_TMP
-  //-- SRC files used for building the app
-  const DIST_SRC_FILES = DIST_TMP + "/**";
-  const NW_VERSION = "0.58.0";
-
-  //-- Select the NW build flavor
-  //-- For the develpment (WIP) the flavor is set to "sdk"
-  //-- For the stable the flavor is set to "normal"
-  const NW_FLAVOR = (WIP) ? "sdk" : "nomal";
-
-  //-- Path to the Windows ICO icon file for Icestudio
-  const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
-  
-  //-- Path to the MAC ICNS icon file for Icestudio
-  const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
   //---------------------------------------------------------------
   //-- Define the ICESTUDIO_PKG_NAME: ICESTUDIO PACKAGE NAME that
@@ -223,7 +203,8 @@ module.exports = function (grunt) {
   //-- WIP: with timestamp
   pkg.version = pkg.version.replace(/w/, "w" + timestamp);
 
-  //-- Icestudio package name:
+  //-- Icestudio package name: (with version)
+  //-- Ex. icestudio-0.9.1w202203161003
   const ICESTUDIO_PKG_NAME = `${pkg.name}-${pkg.version}`;
 
   //-- DEBUG
@@ -259,6 +240,36 @@ module.exports = function (grunt) {
   const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
     -DVERSION=${pkg.version} \
     -V3 scripts/windows_installer.nsi`;
+
+  //---------------------------------------------------------------
+  //-- NW TASK: Build the app
+  //---------------------------------------------------------------
+
+  //-- Read the top level package.json 
+  //-- (**not** the icestudio package, but the one in the top level)
+  let topPkg = grunt.file.readJSON(PACKAGE_JSON);
+
+  //-- Get the NW version from the package (the one that is installed)
+  const NW_VERSION = topPkg.devDependencies["nw"];
+
+  //-- DEBUG
+  console.log("* NW Version: " + NW_VERSION);
+
+
+  //-- They have been previsouly copied from APPDIR to DIST_TMP
+  //-- SRC files used for building the app
+  const DIST_SRC_FILES = DIST_TMP + "/**";
+  
+  //-- Select the NW build flavor
+  //-- For the develpment (WIP) the flavor is set to "sdk"
+  //-- For the stable the flavor is set to "normal"
+  const NW_FLAVOR = (WIP) ? "sdk" : "nomal";
+
+  //-- Path to the Windows ICO icon file for Icestudio
+  const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
+  
+  //-- Path to the MAC ICNS icon file for Icestudio
+  const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -700,6 +711,9 @@ module.exports = function (grunt) {
     //-- TASK: NWJS
     //-- Build the icestudio NWjs app (Executable) for different platforms
     //-- It will download the pre-build binaries and create a release folder
+    //-- The downloaded binaries are stored in the 'icestudio/cache' folder
+    //-- The release folder is DIST/icestudio/{platform} 
+    //-- where platform could be "linux64", "win64", "osx64"...
     //-- More information: https://www.npmjs.com/package/grunt-nw-builder
     //--                   https://www.npmjs.com/package/nw-builder
     nwjs: {
@@ -726,13 +740,16 @@ module.exports = function (grunt) {
         //-- Only MAC: Path to the ICNS icon file
         macIcns: MAC_ICON,
         macPlist: { CFBundleIconFile: "app" },
-
       },
 
       //-- Where the Icestudio NW app is located
       //-- It was previously copied from APPDIR
       src: [DIST_SRC_FILES],
     },
+
+
+
+
 
     // ONLY MAC: generate a DMG package
     appdmg: {
@@ -789,10 +806,16 @@ module.exports = function (grunt) {
       },
     },
 
-       // Compress packages using zip
+    //-- TASK COMPRESS. Compress the Release dir into a .zip file
+    //-- It will create the file DIST/icestudio-{version}-{platform}.zip
+    //-- More information: https://www.npmjs.com/package/grunt-contrib-compress
     compress: {
+
+      //-- TARGET: LINUX64
       linux64: {
         options: {
+
+          //-- Target .zip file
           archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-linux64.zip",
         },
         files: [
