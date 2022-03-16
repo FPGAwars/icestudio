@@ -53,7 +53,7 @@
     "nw-builder": "^3.5.7"
   },
   "darwinDependencies": {
-    "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
+    "grunt-appdmg": "^1.0.0"
   },
   "dependencies": {}
 }

@@ -993,9 +993,13 @@ module.exports = function (grunt) {
       },
     },
 
-    // Watch files for changes and runs tasks based on the changed files
+    //-- TASK: WATCH
+    //-- Watch files for changes and run tasks based on the changed files
+    //-- More info: https://www.npmjs.com/package/grunt-contrib-watch
     watch: {
       scripts: {
+
+        //-- Watch these files for changes...
         files: [
           APP_RESOURCES + "/boards/**/*.*",
           APP_RESOURCES + "/fonts/**/*.*",
@@ -1007,22 +1011,22 @@ module.exports = function (grunt) {
           "app/styles/**/*.*",
           "app/views/**/*.*",
         ],
+
+        //-- Task to execute: Stop nw and restart it
         tasks: ["exec:stopNW", "exec:nw"],
+
+
         options: {
+          //-- Run the tasks at startup
           atBegin: true,
+
+          //-- Stop the current process and start a new one when
+          //-- there is a change on the files
           interrupt: true,
         },
       },
     },
-
-    
-
-    
   });
-
-  //------------------------------------------------------------------
-  //-- PROJECT CONFIGURATION: END
-  //---------------------------------------------------------------------
 
   
 };
