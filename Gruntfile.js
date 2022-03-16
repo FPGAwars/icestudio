@@ -715,7 +715,12 @@ module.exports = function (grunt) {
     //-- The release folder is DIST/icestudio/{platform} 
     //-- where platform could be "linux64", "win64", "osx64"...
     //-- More information: https://www.npmjs.com/package/grunt-nw-builder
-    //--                   https://www.npmjs.com/package/nw-builder
+    //--                   https://www.npmjs.com/package/nw-builder 
+    //--------------------------------------------------------------------
+    //-- WARNING! It only builds the target for LINUX, MAC or WINDOWS
+    //--   NOT for AARCH64. Building for ARM is done "Manually"
+    //--   in other grunt TASKs 
+    //--------------------------------------------------------------------
     nwjs: {
       options: {
         version: NW_VERSION,
