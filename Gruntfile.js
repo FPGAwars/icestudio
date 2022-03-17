@@ -245,9 +245,6 @@ module.exports = function (grunt) {
   //-- Ex. icestudio-0.9.1w202203161003
   const ICESTUDIO_PKG_NAME = `${pkg.name}-${pkg.version}`;
 
-  //-- DEBUG
-  console.log("Icestudio package name: " + ICESTUDIO_PKG_NAME);
-
   //-------------------------------------------------------------
   //-- Constants for the WGET TASK
   //-------------------------------------------------------------
@@ -311,9 +308,7 @@ module.exports = function (grunt) {
   //-- Get the NW version from the package (the one that is installed)
   const NW_VERSION = topPkg.devDependencies["nw"];
 
-  //-- DEBUG
-  console.log("* NW Version: " + NW_VERSION);
-
+ 
 
   //-- They have been previsouly copied from APPDIR to DIST_TMP
   //-- SRC files used for building the app
@@ -409,8 +404,6 @@ module.exports = function (grunt) {
   const LINUX_APPIMAGE_FILE = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
         ".AppImage";
 
-  console.log("* APPIMAGE: " + LINUX_APPIMAGE_FILE);
-
   //----------------------------------------------------------------------
   //-- APPDMG TASK: Build the dmg MAC executable. Constants
   //----------------------------------------------------------------------
@@ -424,7 +417,6 @@ module.exports = function (grunt) {
 
   //-- MAC final DMG image
   const MAC_DMG_IMAGE = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + ".dmg";
-  console.log("* DMGIMAGE: " + MAC_DMG_IMAGE);
 
   //----------------------------------------------------------------------
   //-- Create the TIMESTAMP FILE
@@ -528,15 +520,23 @@ module.exports = function (grunt) {
   //-- every platform
   //------------------------------------------------------------------
   const DIST_TASKS = DIST_COMMON_TASKS.concat(distPlatformTasks);
- 
-  //-- DEBUG
-  console.log("Dist tasks: " + DIST_TASKS);
-  console.log("Platform: " + platform);
 
+  //------------------------------------------------------------
   //-- DEBUG
+  //-- Display information on the console, for debuging 
+  //-- purposes
+  //------------------------------------------------------------
+  console.log();
+  console.log("------------ INFORMATION FOR DEBUGING -------------------");
+  console.log("* Package name: " + ICESTUDIO_PKG_NAME);
+  console.log("* NW Version: " + NW_VERSION);
+  console.log("* APPIMAGE: " + LINUX_APPIMAGE_FILE);
+  console.log("* DMGIMAGE: " + MAC_DMG_IMAGE);
+  console.log("* Target platform: " + platform);
+  console.log("* SubTASK for the DIST task:");
   console.table(DIST_TASKS);
+  console.log("---------------------------------------------------------");
 
-  
 
   //--------------------------------------------------------------------------
   //-- Configure the grunt TASK
