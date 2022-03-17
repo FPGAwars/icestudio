@@ -39,7 +39,8 @@
 //-- only implemented for Linux64, Win64 and OXS64, but NOT for ARM
 //-- So it has to be done "manually"
 //
-//-- 1. Set the new NW version in the package.json file:
+//-- 1. Set the new NW version in the package.json and package-lock.json
+//--    files:
 //--    Ex.
 //--    [...]
 //--      "nw": "0.58.0",
@@ -289,8 +290,6 @@ module.exports = function (grunt) {
    //-- NW for ARM. Local destination file
    const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
 
-
-
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
   //-------------------------------------------------------------------------
@@ -351,37 +350,51 @@ module.exports = function (grunt) {
    //-- Source folder with the Fonts
    const APP_FONTS = APPDIR + "/node_modules/bootstrap/fonts";
 
+   //-- ALL files and directories
+   const ALL = ["**"];
+
   //----------------------------------------------------------------------
   //-- COMPRESS TASK: Build the release package. Constants
   //----------------------------------------------------------------------
 
-  //-- Package name for linux:  icestudio-{version}-{platform}
+  //-- Package name for the different platforms
+  //-- Sintax:  icestudio-{version}-{platform}
+
+  //-- Linux
   const ICESTUDIO_PKG_NAME_LINUX64 =  ICESTUDIO_PKG_NAME + "-" + 
         TARGET_LINUX64;
 
-  //-- Package name for windows
+  //-- windows
   const ICESTUDIO_PKG_NAME_WIN64 = ICESTUDIO_PKG_NAME + "-" +  
         TARGET_WIN64;
         
-  //-- Package name for MAC
+  //-- MAC
   const ICESTUDIO_PKG_NAME_OSX64 = ICESTUDIO_PKG_NAME + "-" +  
         TARGET_OSX64;
 
-  //-- Name + path to the Linux release package
+  //-- ARM
+  const ICESTUDIO_PKG_NAME_AARCH64 = ICESTUDIO_PKG_NAME + "-" +  
+        TARGET_AARCH64;
+
+
+  //-- Full Packages names (with the local path + .zip) for the  
+  //-- diferent platforms
+
+  //-- Linux
   const DIST_TARGET_LINUX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_LINUX64 + 
         ".zip";
 
+  //-- Windows
   const DIST_TARGET_WIN64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_WIN64 + 
         ".zip";
 
+  //-- MAC
   const DIST_TARGET_OSX64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_OSX64 + 
         ".zip";
 
-  //-- Files to include in the Icestudio app release file
-  //-- Source files plus the fonts folder plus all the files in the 
-  //-- release folder
-  const RELEASE_FILES = [...APP_SRC_FILES, "**", "fonts/**"];
-  
+  //-- MAC
+  const DIST_TARGET_AARCH64_ZIP = DIST + "/" + ICESTUDIO_PKG_NAME_AARCH64 + 
+        ".zip";  
 
   //----------------------------------------------------------------------
   //-- APPIMAGE TASK: Build the appimage Linux executable. Constants
@@ -695,7 +708,6 @@ module.exports = function (grunt) {
       //-- oficial NWjs project
       //-- It is downloaded during the ARM build process
       //-- Only ARM
-      //-- TODO
       nwjsAarch64: {
 
         options: {
@@ -785,40 +797,34 @@ module.exports = function (grunt) {
             expand: true,
             cwd: APP_FONTS,        //-- Working folder
             dest: DIST_TMP_FONTS,  //-- Target folder
-
-            //-- TODO: Can it be changed to "**"?
-            src: "*.*",            //-- Source files to copy
+            src: ALL,           //-- Src files to copy
           },
         ],
       },
 
 
-      //-- TODO
+      //-- Copy the Linux Dist folder (with the build for Linux64)
+      //-- to the a new one for ARM. It will be its base build
+      //-- Then, the binaries for NW ARM will be downloaded and
+      //-- copied there
       aarch64: {
         files: [
           {
             expand: true,
             options: {
-              mode: true,
-            },
-            cwd: DIST_ICESTUDIO_LINUX64,
-            dest: DIST_ICESTUDIO_AARCH64,
-            src: ["**"],
-          },
-        ],
-      },
 
-      //-- TODO
-      aarch64ToLinux: {
-        files: [
-          {
-            expand: true,
-            options: {
+              //-- Copy the files and directory permissions
               mode: true,
             },
-            cwd: CACHE + "/nwjsAarch64/nwjs-v0.58.1-linux-arm64",
+
+            //-- Current working directory (Linux)
+            cwd: DIST_ICESTUDIO_LINUX64,
+
+            //-- Set the destination folder (Arm64)
             dest: DIST_ICESTUDIO_AARCH64,
-            src: ["**"],
+
+            //-- Copy all the files in the working directory
+            src: ALL,
           },
         ],
       },
@@ -893,7 +899,7 @@ module.exports = function (grunt) {
           archive: DIST_TARGET_LINUX64_ZIP,
         },
 
-        //-- Files and folder to include in the ZIP file
+        //-- Files and folders to include in the ZIP file
         files: [
           {
             expand: true,
@@ -903,7 +909,7 @@ module.exports = function (grunt) {
 
             //-- Files to include in the ZIP file
             //-- All the files and folder from the cwd directory
-            src: ["**"],
+            src: ALL,
 
             //-- Folder name inside the ZIP archive
             dest: ICESTUDIO_PKG_NAME_LINUX64,
@@ -919,7 +925,7 @@ module.exports = function (grunt) {
           archive: DIST_TARGET_WIN64_ZIP,
         },
 
-        //-- Files and folder to include in the ZIP file
+        //-- Files and folders to include in the ZIP file
         files: [
           {
             expand: true,
@@ -929,7 +935,7 @@ module.exports = function (grunt) {
 
             //-- Files to include in the ZIP file
             //-- All the files and folder from the cwd directory
-            src: ["**"],
+            src: ALL,
 
             //-- Folder name inside the ZIP archive
             dest:  ICESTUDIO_PKG_NAME_WIN64,
@@ -945,7 +951,7 @@ module.exports = function (grunt) {
           archive: DIST_TARGET_OSX64_ZIP,
         },
 
-        //-- Files and folder to include in the ZIP file
+        //-- Files and folders to include in the ZIP file
         files: [
           {
             expand: true,
@@ -963,17 +969,27 @@ module.exports = function (grunt) {
         ],
       },
 
-      //-- TODO
+      //-- TARGET AARCH64 (ARM64)
       Aarch64: {
         options: {
-          archive: DIST + "/" + ICESTUDIO_PKG_NAME + "-Aarch64.zip",
+          //-- Target .zip file
+          archive: DIST_TARGET_AARCH64_ZIP,
         },
+
+        //-- Files and folders to include in the ZIP file
         files: [
           {
             expand: true,
+
+            //-- Working directory. Path relative to this folder
             cwd: DIST_ICESTUDIO_AARCH64,
-            src: ["**"].concat(RELEASE_FILES),
-            dest: ICESTUDIO_PKG_NAME + "-linux64",
+
+            //-- Files to include in the ZIP file
+            //-- All the files and folder from the cwd directory
+            src: ALL,
+
+            //-- Folder name inside the ZIP archive
+            dest:  ICESTUDIO_PKG_NAME_AARCH64 
           },
         ],
       },
@@ -1010,7 +1026,7 @@ module.exports = function (grunt) {
 
             //-- Include all the files and folder from the
             //-- working directory
-            src: ["**"],
+            src: ALL,
           },
         ],
       },
