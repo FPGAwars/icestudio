@@ -719,7 +719,7 @@ module.exports = function (grunt) {
         //-- Download the NW ARM binary from the github repo
         src: NWJS_ARM_BINARY,
 
-        //-- Local destination file
+        //-- Local destination file. It is stored in the cache folder
         dest: NWJS_ARM_PACKAGE,
       },
     },
