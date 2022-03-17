@@ -61,5 +61,5 @@ jobs:
         uses: 'actions/upload-artifact@v2'
         with:
           name: "Aarch64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
-          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-Aarch64.zip"
+          path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-aarch64.zip"
           if-no-files-found: error
