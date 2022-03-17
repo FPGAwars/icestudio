@@ -32,6 +32,45 @@
 //-- * When icestudio starts, the .json files are read
 //--------------------------------------------------------------------
 
+//--------------------------------------------------------------------
+//-- How to upgrade to a new version of NW
+//--
+//-- NOTE: The building process is done by the nw-builder. But it is
+//-- only implemented for Linux64, Win64 and OXS64, but NOT for ARM
+//-- So it has to be done "manually"
+//
+//-- 1. Set the new NW version in the package.json file:
+//--    Ex.
+//--    [...]
+//--      "nw": "0.58.0",
+//--    [...]
+//--
+//--  2. Execute the command "npm install" for installing the updated
+//--     version
+//--
+//--  3. It is enough for building for Linux, Win and Mac.. 
+//       You can test it by generating the packages for these platformas
+//--      Ex. npm run buildLinux64
+//--
+//--  4. More steps are needed for ARM:
+//--     -Open this link and check the name of the NW ARM release
+//--       It will be something like: "nw60-arm64_2022-01-08"
+//--     -https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases
+//--
+//--  5. Copy that name and place it on the NWJS_ARM_RELEASE_NAME
+//--      constant
+//--   
+//--  6. Edit the file "scripts/mergeAarch64.sh". Change the brandingDir
+//--      and distBundle variables so that it have valid names with the
+//--      correct NW version
+//--       Ex: brandingDir="$binaryBundleDir/nwjs-v0.58.1-linux-arm64"
+//--           distBundle="cache/nwjsAarch64/usr/docker/dist/nwjs-chromium-
+//--                       ffmpeg-branding/nwjs-v0.58.1-linux-arm64.tar.gz"
+//--  
+//--  7. Check that it works ok: "npm run buildAarch64"
+//--
+//-------------------------------------------------------------------------
+
 
 "use strict";
 
@@ -131,8 +170,9 @@ module.exports = function (grunt) {
   const NWJS_WIN_STOP = "taskkill /F /IM nw.exe >NUL 2>&1";
 
   //-- command for stoping NWjs on Unix like systems (Linux, Mac)
-  const NWJS_UNIX_STOP =  "killall nw 2>/dev/null || killall nwjs 2>/dev/null" + 
-                          " || (exit 0)";
+  const NWJS_UNIX_STOP =  "killall nw   2>/dev/null || " + 
+                          "killall nwjs 2>/dev/null ||" + 
+                          "(exit 0)";
 
   //-- Final command for stoping NWjs
   const NWJS_STOP = WIN32 ? NWJS_WIN_STOP : NWJS_UNIX_STOP;
@@ -227,6 +267,29 @@ module.exports = function (grunt) {
   const DEFAULT_COLLECTION_URL_FILE = 
     "https://github.com/FPGAwars/collection-default/archive/" + 
      DEFAULT_COLLECTION_ZIP_FILE; 
+
+  //-- The NW for ARM is not included in the nw-build, so all the prrocess
+  //-- of generating the target binary should de done manually
+  //-- NWJS URL FOR downloading NW for ARM
+  const NWJS_ARM_BASE_URL = 
+    "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/";
+
+  //-- You should copy & paste the release ID from Github:
+  //-- https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases
+  //-- Ej: nw60-arm64_2022-01-08 
+  const NWJS_ARM_RELEASE_NAME = "nw58-arm64_2021-12-10";
+
+  //-- Folder and filename for the NW ARM
+  const NWJS_ARM_FILENAME = 
+    NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
+
+  //-- NW FOR ARM. Final binary to download
+  const NWJS_ARM_BINARY = NWJS_ARM_BASE_URL + NWJS_ARM_FILENAME;
+
+   //-- NW for ARM. Local destination file
+   const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
+
+
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -613,7 +676,8 @@ module.exports = function (grunt) {
         dest: CACHE_DEFAULT_COLLECTION_FILE,
       },
 
-      //-- Download the python executable. It is used for generating the Windows installer
+      //-- Download the python executable. It is used for generating 
+      //-- the Windows installer
       //-- ONLY WINDOWS
       python64: {
         options: {
@@ -627,7 +691,8 @@ module.exports = function (grunt) {
         dest: CACHE_PYTHON_EXE,
       },
 
-      //-- Download NWjs for ARM arquitecture, as it is not part of the oficial NWjs project
+      //-- Download NWjs for ARM arquitecture, as it is not part of the
+      //-- oficial NWjs project
       //-- It is downloaded during the ARM build process
       //-- Only ARM
       //-- TODO
@@ -635,15 +700,15 @@ module.exports = function (grunt) {
 
         options: {
 
-          //-- If the destination file already exists, it is not downloaded again
+          //-- If the destination file already exists,it is not downloaded
           overwrite: false,
         },
 
-        //-- Download from
-        src: "https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/nw58-arm64_2021-12-10/nw58-arm64_2021-12-10.tar.gz",
+        //-- Download the NW ARM binary from the github repo
+        src: NWJS_ARM_BINARY,
 
         //-- Local destination file
-        dest: CACHE + "/nwjsAarch64/nwjs.tar.gz",
+        dest: NWJS_ARM_PACKAGE,
       },
     },
 
@@ -761,7 +826,7 @@ module.exports = function (grunt) {
 
     //-- TASK: json-minify
     //-- Minify JSON files in grunt: grunt-json-minification
-    //-- More information: https://www.npmjs.com/package/grunt-json-minification
+    //-- More info: https://www.npmjs.com/package/grunt-json-minification
     "json-minify": {
       json: {
         files: DIST_TMP + "/resources/**/*.json",
