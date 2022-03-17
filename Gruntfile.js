@@ -449,28 +449,30 @@ module.exports = function (grunt) {
   //-- They are exectuted after the COMMON tasks
   const DIST_PLATFORM_TASKS = {
 
-    //-- TARGET_OSX64
-    "osx64": [ 
-      "exec:repairOSX", 
-      "compress:osx64", 
-      "appdmg"],
-
     //-- TARGET_LINUX64
     "linux64": [
-      "compress:linux64",
-      "appimage:linux64",
+      "compress:linux64",  //-- Create the Icestudio zip package
+      "appimage:linux64",  //-- Create the Icestudio appimage package
     ],
 
     //-- TARGET_WIN64
     "win64": [
-      "compress:win64",
-      "wget:python64",
-      "exec:nsis64",
+      "compress:win64",  //-- Create the Icestudio zip package
+      "wget:python64",   //-- Download the python package for windows
+      "exec:nsis64",     //-- Build the Windows installer
     ],
+
+    //-- TARGET_OSX64
+    "osx64": [ 
+      "exec:repairOSX",  //-- Execute a script for MAC
+      "compress:osx64",  //-- Create the Icestudio .zip package
+      "appdmg"           //-- Build the Icestudio appmdg package
+    ],  
+
 
     //-- TARGET_AARCH64
     "aarch64": [
-      "wget:nwjsAarch64",
+      "wget:nwjsAarch64",  //-- Download the ARM NW dist Tarball
       "copy:aarch64",
       "exec:mergeAarch64",
       "compress:Aarch64"
