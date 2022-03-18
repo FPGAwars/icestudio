@@ -9,7 +9,10 @@ GREEN="\033[1;32m"
 #-- The NWjs binary for ARM is a tarball (tar.gz) that should be 
 #-- uncompressed and copied to the icestudio/aarch64 (DESTINATION) folder
 
-NW_NAME=nwjs-v0.58.1-linux-arm64  # <-- CHANGE THIS if NW is UPGRADED! <----
+echo "* ARGUMENTS: $1"
+
+#-- The NW tarball name (not extension) is received as an argument
+NW_NAME=$1     #nwjs-v0.58.1-linux-arm64  # <-- CHANGE THIS if NW is UPGRADED! <----
 NW_NAME_TAR_GZ="$NW_NAME.tar.gz"
 
 #-- Folder where to uncompress the NW dist tarball

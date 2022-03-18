@@ -190,7 +190,6 @@ module.exports = function (grunt) {
   //-- Script for cleaning the dist/icestudio/osx64 folder in MAC
   //-- before creating the MAC package
   const SCRIPT_OSX = "scripts/repairOSX.sh";
-  const SCRIPT_ARM = "scripts/mergeAarch64.sh";
   
   //----------------------------------------------------------------
   //-- BUILD DIR. Folder where all the packages for the different
@@ -277,6 +276,10 @@ module.exports = function (grunt) {
   //-- Ej: nw60-arm64_2022-01-08 
   const NWJS_ARM_RELEASE_NAME = "nw58-arm64_2021-12-10";
 
+  //-- Name of the NW tarball. It should be passed to the
+  //-- exec:mergeAarch64 script
+  const NWJS_ARM_NAME = "nwjs-v0.58.1-linux-arm64";
+
   //-- Folder and filename for the NW ARM
   const NWJS_ARM_FILENAME = 
     NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
@@ -297,6 +300,9 @@ module.exports = function (grunt) {
     -DVERSION=${pkg.version} \
     -V3 scripts/windows_installer.nsi`;
 
+   //-- Script for installing the nw for ARM
+   const SCRIPT_ARM = `scripts/mergeAarch64.sh ${NWJS_ARM_NAME}`;
+   
   //---------------------------------------------------------------
   //-- NW TASK: Build the app
   //---------------------------------------------------------------
