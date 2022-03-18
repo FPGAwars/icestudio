@@ -277,7 +277,7 @@ module.exports = function (grunt) {
 
   //-- Folder and filename for the NW ARM
   const NWJS_ARM_FILENAME = 
-    NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
+        NWJS_ARM_RELEASE_NAME + "/" + NWJS_ARM_RELEASE_NAME + ".tar.gz";
 
   //-- NW FOR ARM. Final binary to download
   const NWJS_ARM_BINARY = NWJS_ARM_BASE_URL + NWJS_ARM_FILENAME;
@@ -287,6 +287,16 @@ module.exports = function (grunt) {
 
   //-- NW-dist ARM destination folder when uncompressed
   const DIST_TMP_ARM = DIST_TMP + "/nwjsAarch64"; 
+
+  //-- NW tarball name
+  const NW_NAME_TAR_GZ = NWJS_ARM_NAME + ".tar.gz";
+
+  //-- NW Path 
+  const NW_PATH = DIST_TMP_ARM + 
+        "/usr/docker/dist/nwjs-chromium-ffmpeg-branding";  
+
+  //-- NW TARBALL with path
+  const NW_TARBALL = NW_PATH + "/" + NW_NAME_TAR_GZ;
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -479,7 +489,6 @@ module.exports = function (grunt) {
       "wget:nwjsAarch64",  //-- Download the ARM NW dist Tarball
       "copy:aarch64",      //-- Copy the Linux build dir to ARM build dir
       "shell:test",
-      "shell:test2",
       "exec:mergeAarch64",
       "compress:Aarch64"
     ]
@@ -754,20 +763,33 @@ module.exports = function (grunt) {
       }
     },
 
+    //-- Execute shell commands
     //-- More info: https://github.com/sindresorhus/grunt-shell#readme
-    //-- NW_CACHE="cache/nwjsAarch64"
-    //-- NW_DIST_TAR_GZ="cache/nwjsAarch64/nwjs.tar.gz"
-    //-- const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
-
     shell: {
       test: {
-        command: `mkdir -p ${DIST_TMP_ARM}`
-        //command: 'ls --color'
-        //command: `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`
+        command: [
+
+          //-- Just a test
+          'ls --color',    
+
+          //-- Create a temp DIR
+          `mkdir -p ${DIST_TMP_ARM}`,  
+
+          //-- Uncompress the NW-dist package
+          `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`,
+
+          //-- Uncompress the NW tarball (inside the NW-dist)
+          `tar xzf ${NW_TARBALL} -C ${DIST_TMP_ARM}`
+
+        ].join(' && ')
+
+      // 
+      // #-- Unzip the NW tarball into the cache folder
+      // echo "${BLUE}unzipping the NW tarball: $NW_NAME_TAR_GZ${NC}"
+      // tar xzf "$NW_TARBALL" -C $DIST_TMP
+      // 
       },
-      test2: {
-        command: `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`
-      }
+     
     },
 
     //-- TASK EXEC: Define the Commands and scripts that can be executed

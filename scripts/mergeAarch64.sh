@@ -33,8 +33,8 @@ NW_TARBALL="$NW_PATH/$NW_NAME_TAR_GZ"
 
 
 #-- Unzip the NW tarball into the cache folder
-echo "${BLUE}unzipping the NW tarball: $NW_NAME_TAR_GZ${NC}"
-tar xzf "$NW_TARBALL" -C $DIST_TMP
+#echo "${BLUE}unzipping the NW tarball: $NW_NAME_TAR_GZ${NC}"
+#tar xzf "$NW_TARBALL" -C $DIST_TMP
 
 #-- Copy the NW files to the DESTINATION folder
 
