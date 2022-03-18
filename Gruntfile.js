@@ -282,8 +282,11 @@ module.exports = function (grunt) {
   //-- NW FOR ARM. Final binary to download
   const NWJS_ARM_BINARY = NWJS_ARM_BASE_URL + NWJS_ARM_FILENAME;
 
-   //-- NW for ARM. Local destination file
-   const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
+  //-- NW for ARM. Local destination file
+  const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
+
+  //-- NW-dist ARM destination folder when uncompressed
+  const DIST_TMP_ARM = DIST_TMP + "/nwjsAarch64"; 
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -474,7 +477,9 @@ module.exports = function (grunt) {
     //-- TARGET_AARCH64
     "aarch64": [
       "wget:nwjsAarch64",  //-- Download the ARM NW dist Tarball
-      "copy:aarch64",
+      "copy:aarch64",      //-- Copy the Linux build dir to ARM build dir
+      "shell:test",
+      "shell:test2",
       "exec:mergeAarch64",
       "compress:Aarch64"
     ]
@@ -746,6 +751,22 @@ module.exports = function (grunt) {
         //-- Destination folder for its installation
         //-- The collection is unzip on the folder APP_RESOURCES/collection
         dest: APP_RESOURCES
+      }
+    },
+
+    //-- More info: https://github.com/sindresorhus/grunt-shell#readme
+    //-- NW_CACHE="cache/nwjsAarch64"
+    //-- NW_DIST_TAR_GZ="cache/nwjsAarch64/nwjs.tar.gz"
+    //-- const NWJS_ARM_PACKAGE = CACHE + "/nwjsAarch64/nwjs.tar.gz";
+
+    shell: {
+      test: {
+        command: `mkdir -p ${DIST_TMP_ARM}`
+        //command: 'ls --color'
+        //command: `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`
+      },
+      test2: {
+        command: `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`
       }
     },
 
