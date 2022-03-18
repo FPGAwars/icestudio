@@ -61,12 +61,7 @@
 //--  5. Copy that name and place it on the NWJS_ARM_RELEASE_NAME
 //--      constant
 //--   
-//--  6. Edit the file "scripts/mergeAarch64.sh". Change the brandingDir
-//--      and distBundle variables so that it have valid names with the
-//--      correct NW version
-//--       Ex: brandingDir="$binaryBundleDir/nwjs-v0.58.1-linux-arm64"
-//--           distBundle="cache/nwjsAarch64/usr/docker/dist/nwjs-chromium-
-//--                       ffmpeg-branding/nwjs-v0.58.1-linux-arm64.tar.gz"
+//--  6. Modify the constant: NWJS_ARM_NAME with the correct name
 //--  
 //--  7. Check that it works ok: "npm run buildAarch64"
 //--
