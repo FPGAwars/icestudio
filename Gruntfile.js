@@ -60,11 +60,12 @@
 //--
 //--  5. Copy that name and place it on the NWJS_ARM_RELEASE_NAME
 //--      constant
-//--   
-//--  6. Modify the constant: NWJS_ARM_NAME with the correct name
 //--  
-//--  7. Check that it works ok: "npm run buildAarch64"
+//--  6. Check that it works ok: "npm run buildAarch64"
 //--
+//-- 
+//--  NOTE: In case of error, check the constant: NWJS_ARM_NAME for the 
+//--        the correct name
 //-------------------------------------------------------------------------
 
 
@@ -260,7 +261,43 @@ module.exports = function (grunt) {
     "https://github.com/FPGAwars/collection-default/archive/" + 
      DEFAULT_COLLECTION_ZIP_FILE; 
 
-  //-- The NW for ARM is not included in the nw-build, so all the prrocess
+  //-------------------------------------------------------------------------
+  //-- EXEC TASK: 
+  //-------------------------------------------------------------------------
+  //-- Command for making the Windows installer
+  //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
+  //-- The installation script is located in scripts/windows_installer.nsi   
+  const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
+    -DVERSION=${pkg.version} \
+    -V3 scripts/windows_installer.nsi`;
+   
+  //---------------------------------------------------------------
+  //-- NW TASK: Build the app
+  //---------------------------------------------------------------
+
+  //-- Read the top level package.json 
+  //-- (**not** the icestudio package, but the one in the top level)
+  let topPkg = grunt.file.readJSON(PACKAGE_JSON);
+
+  //-- Get the NW version from the package (the one that is installed)
+  const NW_VERSION = topPkg.devDependencies["nw"];
+
+  //-- They have been previsouly copied from APPDIR to DIST_TMP
+  //-- SRC files used for building the app
+  const DIST_SRC_FILES = DIST_TMP + "/**";
+  
+  //-- Select the NW build flavor
+  //-- For the develpment (WIP) the flavor is set to "sdk"
+  //-- For the stable the flavor is set to "normal"
+  const NW_FLAVOR = (WIP) ? "sdk" : "nomal";
+
+  //-- Path to the Windows ICO icon file for Icestudio
+  const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
+  
+  //-- Path to the MAC ICNS icon file for Icestudio
+  const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
+
+    //-- The NW for ARM is not included in the nw-build, so all the prrocess
   //-- of generating the target binary should de done manually
   //-- NWJS URL FOR downloading NW for ARM
   const NWJS_ARM_BASE_URL = 
@@ -271,9 +308,13 @@ module.exports = function (grunt) {
   //-- Ej: nw60-arm64_2022-01-08 
   const NWJS_ARM_RELEASE_NAME = "nw58-arm64_2021-12-10";
 
-  //-- Name of the NW tarball. It should be passed to the
-  //-- exec:mergeAarch64 script
-  const NWJS_ARM_NAME = "nwjs-v0.58.1-linux-arm64";
+  //-- Name of the NW tarball. It is created from the NW_VERSION, BUT...
+  //-- its name change between releases....so CHECK IT!!!!!
+  //-- unpack the seconf number of the version: Ex "0.58.0" --> v2 = 58
+  let [ ,v2, ] = NW_VERSION.split('.');
+  
+  //-- Filename for the NW ARM
+  const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm64`;
 
   //-- Folder and filename for the NW ARM
   const NWJS_ARM_FILENAME = 
@@ -300,44 +341,6 @@ module.exports = function (grunt) {
   
   //-- SRC path where the NW files (for ARM) are locted
   const NW_SRC_PATH = DIST_TMP_ARM + "/" + NWJS_ARM_NAME;
-
-  //-------------------------------------------------------------------------
-  //-- EXEC TASK: 
-  //-------------------------------------------------------------------------
-  //-- Command for making the Windows installer
-  //-- Execute NSIS, for creating the Icestudio Window installer (.exe)
-  //-- The installation script is located in scripts/windows_installer.nsi   
-  const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
-    -DVERSION=${pkg.version} \
-    -V3 scripts/windows_installer.nsi`;
-   
-  //---------------------------------------------------------------
-  //-- NW TASK: Build the app
-  //---------------------------------------------------------------
-
-  //-- Read the top level package.json 
-  //-- (**not** the icestudio package, but the one in the top level)
-  let topPkg = grunt.file.readJSON(PACKAGE_JSON);
-
-  //-- Get the NW version from the package (the one that is installed)
-  const NW_VERSION = topPkg.devDependencies["nw"];
-
- 
-
-  //-- They have been previsouly copied from APPDIR to DIST_TMP
-  //-- SRC files used for building the app
-  const DIST_SRC_FILES = DIST_TMP + "/**";
-  
-  //-- Select the NW build flavor
-  //-- For the develpment (WIP) the flavor is set to "sdk"
-  //-- For the stable the flavor is set to "normal"
-  const NW_FLAVOR = (WIP) ? "sdk" : "nomal";
-
-  //-- Path to the Windows ICO icon file for Icestudio
-  const WIN_ICON = "docs/resources/images/logo/icestudio-logo.ico";
-  
-  //-- Path to the MAC ICNS icon file for Icestudio
-  const MAC_ICON = "docs/resources/images/logo/icestudio-logo.icns";
 
   //----------------------------------------------------------------------
   //-- COPY TASK
