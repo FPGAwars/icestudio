@@ -310,9 +310,6 @@ module.exports = function (grunt) {
   const MAKE_INSTALLER = `makensis -DARCH=win64 -DPYTHON=${PYTHON_EXE} \
     -DVERSION=${pkg.version} \
     -V3 scripts/windows_installer.nsi`;
-
-   //-- Script for installing the nw for ARM
-   const SCRIPT_ARM = `scripts/mergeAarch64.sh ${NWJS_ARM_NAME}`;
    
   //---------------------------------------------------------------
   //-- NW TASK: Build the app
@@ -491,8 +488,7 @@ module.exports = function (grunt) {
     "aarch64": [
       "wget:nwjsAarch64",  //-- Download the ARM NW dist Tarball
       "copy:aarch64",      //-- Copy the Linux build dir to ARM build dir
-      "shell:test",
-      "exec:mergeAarch64",
+      "shell:mergeAarch64",
       "compress:Aarch64"
     ]
   };
@@ -769,7 +765,10 @@ module.exports = function (grunt) {
     //-- Execute shell commands
     //-- More info: https://github.com/sindresorhus/grunt-shell#readme
     shell: {
-      test: {
+
+      //-- Uncompress the NW for arm, and merge the files
+      //-- with the linux build
+      mergeAarch64: {
         command: [   
 
           //-- Create a temp DIR
@@ -782,7 +781,14 @@ module.exports = function (grunt) {
           `tar xzf ${NW_TARBALL} -C ${DIST_TMP_ARM}`,
 
           //-- Copy the ARM NW files to the Icestudio dist folder
-          `cp -R ${NW_SRC_PATH}/* ${DIST_ICESTUDIO_AARCH64}/`
+          `cp -R ${NW_SRC_PATH}/* ${DIST_ICESTUDIO_AARCH64}/`,
+
+          //-- Rename the binary file to icestudio
+          `mv ${DIST_ICESTUDIO_AARCH64}/nw ` +
+             `${DIST_ICESTUDIO_AARCH64}/icestudio`,
+
+          //-- Give execution permissions to icestudio file
+          `chmod +x ${DIST_ICESTUDIO_AARCH64}/icestudio`
 
         ].join(' && ')
       
@@ -797,7 +803,6 @@ module.exports = function (grunt) {
       stopNW: NWJS_STOP,        //-- Stop NWjs       
       nsis64: MAKE_INSTALLER,   //-- Create the Icestudio Windows installer
       repairOSX: SCRIPT_OSX,    //-- Shell script for mac
-      mergeAarch64: SCRIPT_ARM, //-- Shell script for ARM
     },
 
     //-- TASK: jshint: Check the .js files
