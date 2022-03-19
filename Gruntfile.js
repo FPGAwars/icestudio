@@ -297,6 +297,9 @@ module.exports = function (grunt) {
 
   //-- NW TARBALL with path
   const NW_TARBALL = NW_PATH + "/" + NW_NAME_TAR_GZ;
+  
+  //-- SRC path where the NW files (for ARM) are locted
+  const NW_SRC_PATH = DIST_TMP_ARM + "/" + NWJS_ARM_NAME;
 
   //-------------------------------------------------------------------------
   //-- EXEC TASK: 
@@ -767,10 +770,7 @@ module.exports = function (grunt) {
     //-- More info: https://github.com/sindresorhus/grunt-shell#readme
     shell: {
       test: {
-        command: [
-
-          //-- Just a test
-          'ls --color',    
+        command: [   
 
           //-- Create a temp DIR
           `mkdir -p ${DIST_TMP_ARM}`,  
@@ -779,15 +779,13 @@ module.exports = function (grunt) {
           `tar xzf ${NWJS_ARM_PACKAGE} -C ${DIST_TMP_ARM}`,
 
           //-- Uncompress the NW tarball (inside the NW-dist)
-          `tar xzf ${NW_TARBALL} -C ${DIST_TMP_ARM}`
+          `tar xzf ${NW_TARBALL} -C ${DIST_TMP_ARM}`,
+
+          //-- Copy the ARM NW files to the Icestudio dist folder
+          `cp -R ${NW_SRC_PATH}/* ${DIST_ICESTUDIO_AARCH64}/`
 
         ].join(' && ')
-
-      // 
-      // #-- Unzip the NW tarball into the cache folder
-      // echo "${BLUE}unzipping the NW tarball: $NW_NAME_TAR_GZ${NC}"
-      // tar xzf "$NW_TARBALL" -C $DIST_TMP
-      // 
+      
       },
      
     },
