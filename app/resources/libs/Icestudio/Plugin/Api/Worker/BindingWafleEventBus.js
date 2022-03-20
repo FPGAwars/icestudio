@@ -8,14 +8,25 @@ class BindingWafleEventBus {
         let _this=this;
         self.addEventListener('message', function (e) {
            if(typeof e.data.endpoint !== 'undefined'){
+            let data=false;
             switch(e.data.endpoint){
                 case 'bus.publish':
-                let data=JSON.parse(e.data.data);
-                _this.publish(e.data.eventId,data);    
+                     data=JSON.parse(e.data.data);
+                    _this.bus.publish(e.data.eventId,data);    
+                break;
+                case 'worker.API':
+
+                    data=JSON.parse(e.data.data);
+                    switch(e.data.eventId){
+                    case 'getUUID': onPluginGetUUID(data); break;
+                    }  
                 break;
             }
            }
         }, false);
+        if(typeof onPluginGetUUID !== 'undefined'){
+            self.postMessage({endpoint:'worker.API',eventId:'getUUID'});
+        }
     }
 
     subscribe(eventId, handler, owner,uuid) {
@@ -24,7 +35,8 @@ class BindingWafleEventBus {
      }
 
     publish(eventId, eventArgs, ownerId) {
-      this.bus.publish(eventId,eventArgs,ownerId);
+    //  this.bus.publish(eventId,eventArgs,ownerId);
+      self.postMessage({endpoint:'bus.publish',eventId:eventId, eventArgs:eventArgs, ownerId:ownerId});
     }
 
     version() {

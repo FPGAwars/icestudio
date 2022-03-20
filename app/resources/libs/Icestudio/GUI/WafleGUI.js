@@ -97,14 +97,29 @@ class WafleGUI {
         views={};
     } 
 
-    let scriptnode = document.createElement('script')
-    scriptnode.textContent = `(function(win, doc, $,_self) {
-                              let pluginViews=${JSON.stringify(views)};
-                              let pluginRoot=$('#${rootId}')[0].shadowRoot;
-                              let pluginUUID='${uuid}';
-                              ${scripts.join(';')}
-                              })(window, document, jQuery);`
-    shadow.appendChild(scriptnode)
+    let scriptnode = document.createElement('script');
+    scriptnode.setAttribute("id", `scriptnode-${uuid}`);
+    let code = `(function(win, doc, $,_self) {`;
+    if (typeof views !== 'undefined' && views !== false){
+         code=`${code}                     
+               let pluginViews=${JSON.stringify(views)};`;
+    }    
+    if (typeof shadow !== 'undefined' && shadow !== false){
+        code =`${code}
+               let pluginRoot=$('#${rootId}')[0].shadowRoot;`;
+    }
+    code=`${code}
+         let pluginUUID='${uuid}';
+         ${scripts.join(';')}
+         })(window, document, jQuery);`
+    
+    scriptnode.textContent = code;
+    
+    if(typeof shadow !== 'undefined' && shadow !== false){
+      shadow.appendChild(scriptnode);
+    }else{
+      this.dom.root.appendChild(scriptnode);
+    }
   }
 
   addGlobalStyle( id, css ) 

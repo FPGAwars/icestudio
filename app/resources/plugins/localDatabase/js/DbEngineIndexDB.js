@@ -1,19 +1,21 @@
 class DbEngineIndexDB {
 
-    constructor(config) {
-        this.config = (typeof config === 'undefined')? {dbVersion:1} : config;
-        this.assetsDB = { db: false };
-        this.indexQ = [];
-        this.indexing = false;
-        this.openAssetsDatabase();
+  constructor(config) {
+    this.config = (typeof config === 'undefined') ? { dbVersion: 1 } : config;
+    if (typeof this.config.dbVersion === 'undefined') {
+      this.config.dbVersion = 1;
     }
+    this.assetsDB = { db: false };
+    this.openAssetsDatabase();
+  }
 
-    openAssetsDatabase() {
+  openAssetsDatabase() {
     let _this = this;
     this.assetsDB.openRequest = indexedDB.open(
       "Collections",
       this.config.dbVersion
     );
+    
     this.assetsDB.openRequest.onupgradeneeded = function (e) {
       var db = e.target.result;
 

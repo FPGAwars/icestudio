@@ -38,7 +38,7 @@ msgstr ""
 msgid "Address format"
 msgstr ""
 
-#: app/scripts/services/tools.js:1795
+#: app/scripts/services/tools.js:1797
 msgid "All collections removed"
 msgstr ""
 
@@ -46,11 +46,11 @@ msgstr ""
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1388
+#: app/scripts/services/tools.js:1390
 msgid "At least Python 3.7 is required"
 msgstr ""
 
-#: app/scripts/services/utils.js:760
+#: app/scripts/services/utils.js:766
 msgid "Author"
 msgstr ""
 
@@ -152,11 +152,11 @@ msgstr ""
 msgid "Change Color"
 msgstr ""
 
-#: app/scripts/services/tools.js:1343
+#: app/scripts/services/tools.js:1345
 msgid "Check Internet connection..."
 msgstr ""
 
-#: app/scripts/services/tools.js:1377
+#: app/scripts/services/tools.js:1379
 msgid "Check Python..."
 msgstr ""
 
@@ -175,7 +175,7 @@ msgstr ""
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 
-#: app/scripts/services/tools.js:1506
+#: app/scripts/services/tools.js:1508
 msgid "Click here to <b>setup the drivers</b>"
 msgstr ""
 
@@ -226,19 +226,19 @@ msgstr ""
 msgid "Collection {{collection}} info not defined"
 msgstr ""
 
-#: app/scripts/services/tools.js:1648
+#: app/scripts/services/tools.js:1650
 msgid "Collection {{name}} added"
 msgstr ""
 
-#: app/scripts/services/tools.js:1635
+#: app/scripts/services/tools.js:1637
 msgid "Collection {{name}} not replaced"
 msgstr ""
 
-#: app/scripts/services/tools.js:1786
+#: app/scripts/services/tools.js:1788
 msgid "Collection {{name}} removed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1624
+#: app/scripts/services/tools.js:1626
 msgid "Collection {{name}} replaced"
 msgstr ""
 
@@ -275,7 +275,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: app/scripts/services/tools.js:1407
+#: app/scripts/services/tools.js:1409
 msgid "Create virtualenv..."
 msgstr ""
 
@@ -304,7 +304,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: app/scripts/services/utils.js:759
+#: app/scripts/services/utils.js:765
 msgid "Description"
 msgstr ""
 
@@ -320,7 +320,7 @@ msgstr ""
 msgid "Do you want to remove the {{name}} collection?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1617
+#: app/scripts/services/tools.js:1619
 msgid "Do you want to replace it?"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/scripts/services/tools.js:1596
+#: app/scripts/services/tools.js:1598
 msgid "Edit the collection name"
 msgstr ""
 
@@ -436,7 +436,7 @@ msgstr ""
 msgid "Enter the remote hostname user@host"
 msgstr ""
 
-#: app/scripts/services/utils.js:964
+#: app/scripts/services/utils.js:970
 msgid "Error: {{error}}"
 msgstr ""
 
@@ -544,7 +544,7 @@ msgstr ""
 msgid "If you have blank IN/OUT pins, it's because there is no equivalent in this board"
 msgstr ""
 
-#: app/scripts/services/utils.js:773
+#: app/scripts/services/utils.js:779
 msgid "Image"
 msgstr ""
 
@@ -572,28 +572,28 @@ msgstr ""
 msgid "Install Development version"
 msgstr ""
 
-#: app/scripts/services/tools.js:1143
+#: app/scripts/services/tools.js:1119
+msgid "Install the <b>STABLE Toolchain</b>. This operation requires Internet connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to allow the toolchain installation</p> <p>Do you want to continue?</p>"
+msgstr ""
+
+#: app/scripts/services/tools.js:1145
 msgid "Install the DEVELOPMENT toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1165
+#: app/scripts/services/tools.js:1167
 msgid "Install the LATEST STABLE toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1119
-msgid "Install the STABLE Toolchain. It will be downloaded. This operation requires Internet connection. Do you want to continue?"
-msgstr ""
-
-#: app/scripts/services/tools.js:1487
+#: app/scripts/services/tools.js:1489
 msgid "Installation completed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1273
+#: app/scripts/services/tools.js:1275
 msgid "Installing"
 msgstr ""
 
 #: app/scripts/services/drivers.js:413
-#: app/scripts/services/tools.js:1361
+#: app/scripts/services/tools.js:1363
 msgid "Internet connection required"
 msgstr ""
 
@@ -609,7 +609,7 @@ msgstr ""
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 
-#: app/scripts/services/tools.js:1661
+#: app/scripts/services/tools.js:1663
 msgid "Invalid collection {{name}}"
 msgstr ""
 
@@ -679,7 +679,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:1046
+#: app/scripts/services/utils.js:1052
 msgid "Maximum bus size: 96 bits"
 msgstr ""
 
@@ -687,7 +687,7 @@ msgstr ""
 msgid "Memory"
 msgstr ""
 
-#: app/scripts/services/utils.js:757
+#: app/scripts/services/utils.js:763
 msgid "Name"
 msgstr ""
 
@@ -717,7 +717,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: app/scripts/services/utils.js:814
+#: app/scripts/services/utils.js:820
 msgid "Open SVG"
 msgstr ""
 
@@ -744,7 +744,7 @@ msgstr ""
 msgid "Path {{path}} does not exist"
 msgstr ""
 
-#: app/scripts/services/utils.js:1193
+#: app/scripts/services/utils.js:1199
 msgid "Please run: {{cmd}}"
 msgstr ""
 
@@ -818,7 +818,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:816
+#: app/scripts/services/utils.js:822
 msgid "Reset SVG"
 msgstr ""
 
@@ -830,7 +830,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: app/scripts/services/utils.js:815
+#: app/scripts/services/utils.js:821
 msgid "Save SVG"
 msgstr ""
 
@@ -850,7 +850,7 @@ msgstr ""
 msgid "Select all"
 msgstr ""
 
-#: app/scripts/services/utils.js:925
+#: app/scripts/services/utils.js:931
 msgid "Select your board"
 msgstr ""
 
@@ -895,7 +895,7 @@ msgstr ""
 msgid "Testbench"
 msgstr ""
 
-#: app/scripts/services/tools.js:1610
+#: app/scripts/services/tools.js:1612
 msgid "The collection {{name}} already exists."
 msgstr ""
 
@@ -903,15 +903,15 @@ msgstr ""
 msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1183
+#: app/scripts/services/tools.js:1185
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr ""
 
-#: app/scripts/services/tools.js:1830
+#: app/scripts/services/tools.js:1832
 msgid "There is a new nightly version available"
 msgstr ""
 
-#: app/scripts/services/tools.js:1822
+#: app/scripts/services/tools.js:1824
 msgid "There is a new stable version available"
 msgstr ""
 
@@ -943,7 +943,7 @@ msgstr ""
 msgid "Toolchain"
 msgstr ""
 
-#: app/scripts/services/tools.js:1495
+#: app/scripts/services/tools.js:1497
 msgid "Toolchain installed"
 msgstr ""
 
@@ -954,7 +954,7 @@ msgstr ""
 msgid "Toolchain not installed"
 msgstr ""
 
-#: app/scripts/services/tools.js:1201
+#: app/scripts/services/tools.js:1203
 msgid "Toolchain removed"
 msgstr ""
 
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "Verify"
 msgstr ""
 
-#: app/scripts/services/utils.js:758
+#: app/scripts/services/utils.js:764
 #: app/views/menu.html:569
 msgid "Version"
 msgstr ""
@@ -1119,7 +1119,7 @@ msgid "blocks of the current .ice design. If you do not want a propagation of a 
 msgstr ""
 
 #: app/scripts/services/drivers.js:404
-#: app/scripts/services/utils.js:1173
+#: app/scripts/services/utils.js:1179
 msgid "{{app}} is required."
 msgstr ""
 

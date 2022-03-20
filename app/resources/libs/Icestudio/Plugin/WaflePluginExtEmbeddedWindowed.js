@@ -81,7 +81,6 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
                                         tpl: pluginViews[i]
                                     };
                                 }
-
                                 iceStudio.gui.setNodeScript(_this.manifest.id, _this.uuid, _this.dom.shadow, pluginScripts, oviews);
                                 iceStudio.gui.wm.addWindow(_this.manifest.name, _this.uuid, _this.dom.shadow);
                             });
@@ -93,7 +92,6 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
     }//--END run
 
     terminate(){
-        console.log('TERMINATE');
         iceStudio.gui.removeNode(this.dom.host);
         this.dom.shadow=false;
         this.dom.host=false;

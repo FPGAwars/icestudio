@@ -6,11 +6,9 @@ class WaflePluginExtService extends WaflePlugin {
         super(args);
         this.providerUri = `${this.baseUrl()}${args.manifest.gui.provider}`;
         this.worker = false;
-        console.log('SERVICE::', this);
-        this.subscriptions={};
+        this.subscriptions = {};
     }
-
-
+    
     run() {
         if (this.isRunning()) {
 
@@ -19,31 +17,52 @@ class WaflePluginExtService extends WaflePlugin {
 
             this.running = true;
 
+            let assets = new WafleRemoteFile();
+            let _this = this;
+            if (typeof this.manifest.gui.providerMainThread !== 'undefined') {
+                const jsfiles = _this.manifest.gui.providerMainThread.map(file => `${this.baseUrl()}${file}`);
+                assets.getAll(jsfiles).then(pluginScripts => {
+                    iceStudio.gui.setNodeScript(_this.manifest.id, _this.uuid, false, pluginScripts);
+                });
+            }
             this.worker = new Worker(this.providerUri);
-            let _this=this;
             this.worker.onmessage = function (event) {
-                console.log('WORKER RECIBIDO', event);
-                if(typeof event.data.endpoint !== 'undefined'){
-                    switch(event.data.endpoint){
+                if (typeof event.data.endpoint !== 'undefined') {
+                    switch (event.data.endpoint) {
                         case 'bus.subscribe':
-                            _this.subscriptions['handler_'+event.data.eventId] = {
+                            _this.subscriptions['handler_' + event.data.eventId] = {
                                 id: event.data.eventId,
-                                handler: function (data){
-                                    console.log('EVENT::'+this.id,data);
-                                    if(typeof data === 'undefined'){
-                                        data={};
+                                handler: function (data) {
+                                    if (typeof data === 'undefined') {
+                                        data = {};
                                     }
                                     _this.worker.postMessage({
-                                        endpoint:'bus.publish',
-                                        eventId:this.id,
-                                        data:JSON.stringify(data)
+                                        endpoint: 'bus.publish',
+                                        eventId: this.id,
+                                        data: JSON.stringify(data)
                                     });
-                                    }
+                                }
                             };
-                            iceStudio.bus.events.subscribe(event.data.eventId,'handler',
-                            _this.subscriptions['handler_'+event.data.eventId],
-                            this.uuid);
+                            iceStudio.bus.events.subscribe(event.data.eventId, 'handler',
+                                _this.subscriptions['handler_' + event.data.eventId],
+                                this.uuid);
+                            break;
+                        case 'bus.publish':
+                            iceStudio.bus.events.publish(event.data.eventId, event.data.eventArgs, event.data.ownerId);
                         break;
+                        case 'worker.API':
+                            switch(event.data.eventId){
+                                case 'getUUID':
+                                    _this.worker.postMessage({
+                                        endpoint: 'worker.API',
+                                        eventId: 'getUUID',
+                                        data: JSON.stringify({uuid:_this.uuid})
+                                    }); 
+                                break;
+                            }
+
+                        
+
                     }
                 }
             }

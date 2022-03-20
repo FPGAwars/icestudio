@@ -30,10 +30,11 @@ class IceBlock {
   }
 
   busLoadFromFile(args) {
-    //console.log('BLOCK LOAD FILE FROM BUS',args);
+    console.log('BLOCK LOAD FILE FROM BUS',args);
     this.fs.readFile(args.path, function (path, content) {
       args.obj = JSON.parse(content);
       //--  ICEpm.publishAt(args.id, "block.loadedFromFile", args);
+      iceStudio.bus.events.publish('block.loadedFromFile',args);
     });
   }
 
