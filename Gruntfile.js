@@ -306,7 +306,7 @@ module.exports = function (grunt) {
   //-- You should copy & paste the release ID from Github:
   //-- https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases
   //-- Ej: nw60-arm64_2022-01-08 
-  const NWJS_ARM_RELEASE_NAME = "nw58-arm64_2021-12-10";
+  const NWJS_ARM_RELEASE_NAME = "nw60_2022-01-07";
 
   //-- Name of the NW tarball. It is created from the NW_VERSION, BUT...
   //-- its name change between releases....so CHECK IT!!!!!
@@ -314,7 +314,7 @@ module.exports = function (grunt) {
   let [ ,v2, ] = NW_VERSION.split('.');
   
   //-- Filename for the NW ARM
-  const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm64`;
+  const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm`;
 
   //-- Folder and filename for the NW ARM
   const NWJS_ARM_FILENAME = 
