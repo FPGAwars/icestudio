@@ -576,6 +576,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-zip');
 
+  //-- Load an additional task for MAC
+  if (platform === TARGET_OSX64) {
+    grunt.loadNpmTasks('grunt-appdmg');
+  }
+
   //-- grunt gettext
   //-- Extract the English text and write them into the
   //-- template file (app/resources/localte/template.pot)
