@@ -29,7 +29,7 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '16.10.0'
+          node-version: '17.3.0'
       
       - name: Install npm dependencies
         run:   npm install 

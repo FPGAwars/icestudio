@@ -46,11 +46,11 @@
 //--      "nw": "0.58.0",
 //--    [...]
 //--
-//--  2. Execute the command "npm install" for installing the updated
-//--     version
+//--  2. Remove the cache and dist folders and Execute the command 
+//--     "npm install" for installing the updated version
 //--
 //--  3. It is enough for building for Linux, Win and Mac.. 
-//       You can test it by generating the packages for these platformas
+//--      You can test it by generating the packages for these platformas
 //--      Ex. npm run buildLinux64
 //--
 //--  4. More steps are needed for ARM:
