@@ -561,18 +561,20 @@ module.exports = function (grunt) {
   //-- Configure the grunt TASK
   //--------------------------------------------------------------------------
 
-  //-- Load all grunt tasks matching grunt-*
-  //-- https://www.npmjs.com/package/load-grunt-tasks
-  //--
-  // grunt-contrib-jshint
-  // grunt-contrib-clean
-  // grunt-angular-gettext
-  // grunt-contrib-copy
-  // grunt-json-minification
-  // grunt-wget
-  // grunt-zip
-  // grunt-exec
-  require("load-grunt-tasks")(grunt, options);
+  //-- Load all grunt tasks 
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-angular-gettext');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-wget');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-json-minify');
+  grunt.loadNpmTasks('grunt-nw-builder');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-appimage');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-zip');
 
   //-- grunt gettext
   //-- Extract the English text and write them into the
@@ -583,7 +585,6 @@ module.exports = function (grunt) {
   ]);
 
   //-- grunt compiletext
- 
   grunt.registerTask("compiletext", [
     "nggettext_compile"
   ]);
