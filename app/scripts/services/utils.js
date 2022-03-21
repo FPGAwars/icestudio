@@ -697,57 +697,189 @@ angular.module('icestudio')
             spec.color = spec.color || "fuchsia";
 
             //-- Get the color with the first letter as capital
-            let color = spec.color.charAt(0).toUpperCase() + spec.color.slice(1);
+            let color = spec.color.charAt(0).toUpperCase() + 
+                        spec.color.slice(1);
 
             //-- Generate the HTML form with the current values
-            content.push('\
-              <div class="form-group">\
-                <label style ="font-weight:normal">' + spec.label + '</label>\
-                \
-                <div class="lb-color--dropdown">\
-                  \
-                  <div class="lb-dropdown-title">\
-                    <!-- The current color is the one found in spec.color -->\
-                    <span class="lb-selected-color color-' + spec.color + '"\
-                      data-color="' + spec.color + '" \
-                      data-name="' + color + '">\
-                    </span> ' + color + 
-                    '\
-                    <span class="lb-dropdown-icon"></span>\
-                  </div>\
-                  \
-                  <div class="lb-dropdown-menu">\
-                    <div class="lb-dropdown-option" \
-                      data-color="indianred" data-name="IndianRed">\
-                        <span class="lb-option-color color-indianred">\
-                        </span>IndianRed\
-                    </div>\
-                    \
-                    <div class="lb-dropdown-option" data-color="red" data-name="Red"><span class="lb-option-color color-red"></span>Red</div>\
-                    <div class="lb-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lb-option-color color-deeppink"></span>DeepPink</div>\
-                    <div class="lb-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lb-option-color color-mediumvioletred"></span>MediumVioletRed</div>\
-                    <div class="lb-dropdown-option" data-color="coral"data-name="Coral"><span class="lb-option-color color-coral"></span>Coral</div>\
-                    <div class="lb-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lb-option-color color-orangered"></span>OrangeRed</div>\
-                    <div class="lb-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lb-option-color color-darkorange"></span>DarkOrange</div>\
-                    <div class="lb-dropdown-option" data-color="gold"data-name="Gold"><span class="lb-option-color color-gold"></span>Gold</div>\
-                    <div class="lb-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lb-option-color color-yellow"></span>Yellow</div>\
-                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>Fuchsia</div>\
-                    <div class="lb-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lb-option-color color-slateblue"></span>SlateBlue</div>\
-                    <div class="lb-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lb-option-color color-greenyellow"></span>GreenYellow</div>\
-                    <div class="lb-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lb-option-color color-springgreen"></span>SpringGreen</div>\
-                    <div class="lb-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lb-option-color color-darkgreen"></span>DarkGreen</div>\
-                    <div class="lb-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lb-option-color color-olivedrab"></span>OliveDrab</div>\
-                    <div class="lb-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lb-option-color color-lightseagreen"></span>LightSeaGreen</div>\
-                    <div class="lb-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lb-option-color color-turquoise"></span>Turquoise</div>\
-                    <div class="lb-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lb-option-color color-steelblue"></span>SteelBlue</div>\
-                    <div class="lb-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lb-option-color color-deepskyblue"></span>DeepSkyBlue</div>\
-                    <div class="lb-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lb-option-color color-royalblue"></span>RoyalBlue</div>\
-                    <div class="lb-dropdown-option" data-color="navy"data-name="Navy"><span class="lb-option-color color-navy"></span>Navy</div>\
-                    <div class="lb-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lb-option-color color-lightgray"></span>LightGray</div>\
-                  </div>\
-                </div>\
-              </div>\
-            ');
+            content.push(`
+              <div class="form-group">
+                <label style ="font-weight:normal"> ${spec.label} </label>
+                <div class="lb-color--dropdown">
+                  <div class="lb-dropdown-title">
+
+                    <!-- The current color is the one found in spec.color -->
+                    <span class="lb-selected-color color-${spec.color}"
+                      data-color="${spec.color}"
+                      data-name="${color}"> 
+                    </span> 
+                    ${color}
+                    <span class="lb-dropdown-icon"></span>
+                  </div>
+                  
+                  <div class="lb-dropdown-menu">
+
+                    <div class="lb-dropdown-option" 
+                      data-color="indianred" 
+                      data-name="IndianRed">
+                        <span class="lb-option-color color-indianred">
+                        </span>
+                        IndianRed
+                    </div>
+                    
+                    <div class="lb-dropdown-option" 
+                      data-color="red" 
+                      data-name="Red">
+                        <span class="lb-option-color color-red">
+                        </span>
+                        Red
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="deeppink" 
+                      data-name="DeepPink">
+                        <span class="lb-option-color color-deeppink">
+                        </span>
+                        DeepPink
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="mediumvioletred"
+                      data-name="MediumVioletRed">
+                        <span class="lb-option-color color-mediumvioletred">
+                        </span>
+                        MediumVioletRed
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="coral"
+                      data-name="Coral">
+                        <span class="lb-option-color color-coral"></span>
+                        Coral
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="orangered"
+                      data-name="OrangeRed">
+                        <span class="lb-option-color color-orangered"></span>
+                        OrangeRed
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="darkorange"
+                      data-name="DarkOrange">
+                        <span class="lb-option-color color-darkorange"></span>
+                        DarkOrange
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="gold"
+                      data-name="Gold">
+                        <span class="lb-option-color color-gold"></span>
+                      Gold
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="yellow"
+                      data-name="Yellow">
+                        <span class="lb-option-color color-yellow"></span>
+                        Yellow
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="fuchsia"
+                      data-name="Fuchsia">
+                        <span class="lb-option-color color-fuchsia"></span>
+                        Fuchsia
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="slateblue"
+                      data-name="SlateBlue">
+                        <span class="lb-option-color color-slateblue"></span>
+                        SlateBlue
+                    </div>
+                    <div class="lb-dropdown-option" 
+                      data-color="greenyellow"
+                      data-name="GreenYellow">
+                        <span class="lb-option-color color-greenyellow"></span>
+                        GreenYellow
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="springgreen"
+                      data-name="SpringGreen">
+                        <span class="lb-option-color color-springgreen"></span>
+                        SpringGreen
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="darkgreen"
+                      data-name="DarkGreen">
+                        <span class="lb-option-color color-darkgreen"></span>
+                        DarkGreen
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="olivedrab"
+                      data-name="OliveDrab">
+                        <span class="lb-option-color color-olivedrab">
+                        </span>
+                        OliveDrab
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="lightseagreen" 
+                      data-name="LightSeaGreen">
+                        <span class="lb-option-color color-lightseagreen"></span>
+                        LightSeaGreen
+                    </div> 
+
+                    <div class="lb-dropdown-option" 
+                      data-color="turquoise"
+                      data-name="Turquoise">
+                        <span class="lb-option-color color-turquoise"></span>
+                        Turquoise
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="steelblue"
+                      data-name="SteelBlue">
+                        <span class="lb-option-color color-steelblue"></span>
+                        SteelBlue
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="deepskyblue"
+                      data-name="DeepSkyBlue">
+                        <span class="lb-option-color color-deepskyblue"></span>
+                        DeepSkyBlue
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="royalblue"
+                      data-name="RoyalBlue">
+                        <span class="lb-option-color color-royalblue"></span>
+                        RoyalBlue
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="navy"
+                      data-name="Navy">
+                        <span class="lb-option-color color-navy"></span>
+                        Navy
+                    </div>
+
+                    <div class="lb-dropdown-option" 
+                      data-color="lightgray"
+                      data-name="LightGray">
+                        <span class="lb-option-color color-lightgray"></span>
+                       LightGray
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            `);
             break;
         }
       }
