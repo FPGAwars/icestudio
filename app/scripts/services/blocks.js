@@ -1227,7 +1227,8 @@ angular.module('icestudio')
                 name: portInfo.name,
                 range: portInfo.rangestr,
                 pins: pins,
-                virtual: virtual
+                virtual: virtual,
+                blockColor: color,
               },
               type: block.blockType,
               position: {
