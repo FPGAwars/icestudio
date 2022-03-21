@@ -1106,6 +1106,8 @@ angular.module('icestudio')
         var color = values[1];
         var virtual = !values[2];
         var clock = values[2];
+        console.log("Label: " + label);
+        console.log("Blocks: Color: " + color);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1133,7 +1135,8 @@ angular.module('icestudio')
                 range: portInfo.rangestr,
                 pins: pins,
                 virtual: virtual,
-                clock: clock
+                clock: clock,
+                blockColor: color,
               },
               type: block.blockType,
               position: {
