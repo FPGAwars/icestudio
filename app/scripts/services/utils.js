@@ -640,29 +640,45 @@ angular.module('icestudio')
       return 'en';
     }
 
+    //-----------------------------------------------------------------------
+    //-- Display a Form
+    //-- Input: specs. Form specifications for rendering
+    //--    * specs is an array of objects.They all have the property:
+    //--      -type: Which kind of information should be displayed:
+    //--          -Text, checkbox, combobox, color-dropdown
+    //-- The callback is executed when the users click on OK
+    //-----------------------------------------------------------------------
     this.renderForm = function (specs, callback) {
       var content = [];
       content.push('<div>');
       for (var i in specs) {
         var spec = specs[i];
+
+        //-- Text input
         switch (spec.type) {
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" id="form' + i + '" autocomplete="off"/>\
+              <input class="ajs-input" type="text" id="form' + 
+              i + '" autocomplete="off"/>\
             ');
             break;
+
           case 'checkbox':
             content.push('\
               <div class="checkbox">\
-                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
+                <label><input type="checkbox" ' + 
+                (spec.value ? 'checked' : '') + 
+                ' id="form' + i + '"/>' + spec.label + '</label>\
               </div>\
             ');
             break;
+
           case 'combobox':
             var options = spec.options.map(function (option) {
               var selected = spec.value === option.value ? ' selected' : '';
-              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
+              return '<option value="' + option.value + '"' + selected + '>' + 
+                      option.label + '</option>';
             }).join('');
             content.push('\
               <div class="form-group">\
@@ -673,14 +689,40 @@ angular.module('icestudio')
               </div>\
             ');
             break;
+
           case 'color-dropdown':
+            
+
+            //-- Set the default color if not previously defined
+            spec.color = spec.color || "fuchsia";
+
+            //-- Get the color with the first letter as capital
+            let color = spec.color.charAt(0).toUpperCase() + spec.color.slice(1);
+
+            //-- Generate the HTML form with the current values
             content.push('\
               <div class="form-group">\
                 <label style ="font-weight:normal">' + spec.label + '</label>\
+                \
                 <div class="lb-color--dropdown">\
-                  <div class="lb-dropdown-title"><span class="lb-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lb-dropdown-icon"></span></div>\
+                  \
+                  <div class="lb-dropdown-title">\
+                    <!-- The current color is the one found in spec.color -->\
+                    <span class="lb-selected-color color-' + spec.color + '"\
+                      data-color="' + spec.color + '" \
+                      data-name="' + color + '">\
+                    </span> ' + color + 
+                    '\
+                    <span class="lb-dropdown-icon"></span>\
+                  </div>\
+                  \
                   <div class="lb-dropdown-menu">\
-                    <div class="lb-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lb-option-color color-indianred"></span>IndianRed</div>\
+                    <div class="lb-dropdown-option" \
+                      data-color="indianred" data-name="IndianRed">\
+                        <span class="lb-option-color color-indianred">\
+                        </span>IndianRed\
+                    </div>\
+                    \
                     <div class="lb-dropdown-option" data-color="red" data-name="Red"><span class="lb-option-color color-red"></span>Red</div>\
                     <div class="lb-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lb-option-color color-deeppink"></span>DeepPink</div>\
                     <div class="lb-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lb-option-color color-mediumvioletred"></span>MediumVioletRed</div>\
@@ -689,7 +731,7 @@ angular.module('icestudio')
                     <div class="lb-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lb-option-color color-darkorange"></span>DarkOrange</div>\
                     <div class="lb-dropdown-option" data-color="gold"data-name="Gold"><span class="lb-option-color color-gold"></span>Gold</div>\
                     <div class="lb-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lb-option-color color-yellow"></span>Yellow</div>\
-                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>Fuchsia</div>\
+                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>FuchsiaWWWW</div>\
                     <div class="lb-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lb-option-color color-slateblue"></span>SlateBlue</div>\
                     <div class="lb-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lb-option-color color-greenyellow"></span>GreenYellow</div>\
                     <div class="lb-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lb-option-color color-springgreen"></span>SpringGreen</div>\
@@ -749,7 +791,8 @@ angular.module('icestudio')
               $('#form' + i).prop('checked', spec.value);
               break;
             case 'color-dropdown':
-              $('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>Fuchsia<span class=\"lb-dropdown-icon\"></span>");
+              //-- Not 100% sure, but this line can be removed
+              //$('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>FuchsiaOOOOOOO<span class=\"lb-dropdown-icon\"></span>");
               break;
           }
         }
