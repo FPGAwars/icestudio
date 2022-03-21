@@ -49,7 +49,7 @@
     "grunt-wget": "^0.1.3",
     "grunt-zip": "^0.18.2",
     "npm-platform-dependencies": "0.1.0",
-    "nw": "^0.60.0-sdk",
+    "nw": "0.60.0",
     "nw-builder": "^3.5.7"
   },
   "darwinDependencies": {
