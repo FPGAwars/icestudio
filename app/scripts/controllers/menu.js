@@ -1,5 +1,7 @@
 "use strict";
 
+//-- MENU callback functions
+
 angular
   .module("icestudio")
   .controller(
@@ -44,20 +46,35 @@ angular
       var changedUndoStack = [];
       var currentUndoStack = [];
 
-      // Window events
-      var win = gui.Window.get();
+      //-----------------------------------
+      // MAIN WINDOW events
+      //-----------------------------------
+
+      //-- Get the Window object
+      let win = gui.Window.get();
+
+      //-- Close the Main window
       win.on("close", function () {
+
+        //-- Call the exit function
         exit();
       });
-      win.on("resize", function () {
-        graph.fitContent();
-      });
 
-      win.on("restore", function () {
-        graph.fitContent();
+      //-- The user wants to resize the windows
+      win.on("resize", function () {
+
+        //-- When working with big designs it is better not to fit 
+        //-- the contents (Leave it commented)
+        //graph.fitContent();
       });
 
       win.on("move", function () {
+        //-- When working with big designs it is better not to fit
+        //-- the contents (leave it commented)
+        //graph.fitContent();
+      });
+
+      win.on("restore", function () {
         graph.fitContent();
       });
 
@@ -72,6 +89,7 @@ angular
 
       // New window, get the focus
       win.focus();
+
       // Load app arguments
 
       setTimeout(function () {
@@ -192,8 +210,11 @@ angular
         );
       };
 
-      //-- File
+      //---------------------------------------------------------------------
+      //-- CALLBACK FUNCIONTS for the File MENU
+      //---------------------------------------------------------------------
 
+      //-- FILE/New
       $scope.newProject = function () {
         utils.newWindow();
       };
@@ -240,7 +261,9 @@ angular
           alertify.alert(
             gettextCatalog.getString("Save submodule"),
             gettextCatalog.getString(
-              'To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'
+              'To save your design you need to lock the keylock and \
+              go to top level design.<br/><br/>If you want to export \
+              this submodule to a file, execute "Save as" command to do it.'
             ),
             function () { }
           );
@@ -283,7 +306,9 @@ angular
           alertify.confirm(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-              'You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'
+              'You are editing a submodule, if you save it, you save only \
+              the submodule (in this situation "save as" works like \
+              "export module"), Do you like to continue?'
             ),
             function () {
               $scope.doSaveProjectAs(localCallback);
@@ -322,12 +347,13 @@ angular
 
       $scope.addAsBlock = function () {
         var notification = true;
-        utils.openDialog("#input-add-as-block", ".ice", function (filepaths) {
-          filepaths = filepaths.split(";");
-          for (var i in filepaths) {
-            project.addBlockFile(filepaths[i], notification);
-          }
-        });
+        utils.openDialog("#input-add-as-block", ".ice", 
+          function (filepaths) {
+            filepaths = filepaths.split(";");
+            for (var i in filepaths) {
+              project.addBlockFile(filepaths[i], notification);
+            }
+          });
       };
 
       $scope.exportVerilog = function () {
@@ -433,7 +459,8 @@ angular
           alertify.set("confirm", "defaultFocus", "cancel");
           alertify.confirm(
             utils.bold(
-              gettextCatalog.getString("Do you want to close the application?")
+              gettextCatalog.getString("Do you want to close " + 
+                                       "the application?")
             ) +
             "<br>" +
             gettextCatalog.getString(
@@ -463,8 +490,9 @@ angular
         }
       }
 
-      //-- Edit
-
+      //---------------------------------------------------------------------
+      //-- CALLBACK FUNCIONTS for the EDIT MENU
+      //---------------------------------------------------------------------
       $scope.undoGraph = function () {
         graph.undo();
       };
@@ -800,7 +828,9 @@ angular
               graph.loadDesign(project.get("design"), {
                 disabled: false,
               });
-              //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
+              //alertify.success(
+              //  gettextCatalog.getString('Language {{name}} selected',
+              //  { name: utils.bold(language) }));
             }
           );
           // Rearrange the collections content
@@ -1743,6 +1773,9 @@ angular
         icons: false
       };
 
+      //----------------------------------------------------
+      //-- Callback function for the EDIT/TOOLBOX option
+      //----------------------------------------------------
       function showToolBox() {
         if (toolbox.dom === false) {
           toolbox.dom = $('#iceToolbox');

@@ -602,7 +602,10 @@ angular.module('icestudio')
       if (subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined') {
         project.package = common.allDependencies[common.submoduleId].package;
       }
-      var state = graph.getState();
+
+      //-- Get a copy of the current viewstate
+      let state = graph.getState();
+
       project.design.state = {
         pan: {
           x: parseFloat(state.pan.x.toFixed(4)),

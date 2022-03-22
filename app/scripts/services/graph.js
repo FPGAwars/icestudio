@@ -1,113 +1,214 @@
+//----------------------------------------------------------------------------
+//-- GRAPH: Circuit drawing
+//----------------------------------------------------------------------------
+
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', function ($rootScope,
-        joint,
-        boards,
-        blocks,
-        profile,
-        utils,
-        common,
-        gettextCatalog,
-        nodeDebounce,
-        window) {
+  .service('graph', 
+    function (
+      $rootScope,
+
+      //-- Access to the JointJS API
+      //-- More infor: https://www.npmjs.com/package/jointjs
+      //-- Tutorial: https://resources.jointjs.com/tutorial/
+      joint,
+
+      boards,
+      blocks,
+      profile,
+      utils,
+      common,
+      gettextCatalog,
+      nodeDebounce,
+
+      //-- NWjs: Main window object
+      //-- More info: https://docs.nwjs.io/en/latest/References/Window/
+      window   
+    )      
+{
+
+    //-- ZOOM constants
+    const ZOOM_MAX = 2.1;
+    const ZOOM_MIN = 0.3;
+    const ZOOM_SENS = 0.3;
+    const ZOOM_INI = 1.0;  //-- Initial zoom
+
+    //-----------------------------------------------------------------------
+    //-- Circuit constants
+    //-----------------------------------------------------------------------
+
+    //-- Default Margin between the circuit and the window edges
+    //-- top,botton, left and right 
+    const CIRCUIT_MARGIN = 10;
+
+    //-- Height of the bottom menu
+    const MENU_FOOTER_HEIGHT = 93;
+
+    //-- View State object: structure and initial values
+    const VIEWSTATE_INIT = {
+        pan: {   //-- Position
+          x: 0,
+          y: 0 
+        },
+        zoom: ZOOM_INI  
+    };
+
+    //-- Current view state: Position and Zoom
+    //-- It is initialized from VIEWSTATE_INIT
+    let state = utils.clone(VIEWSTATE_INIT);
+
+    //-- Diagram data structure. All the graphics start here
+    //-- It is created by the joint.dia.Graph constructor
+    //-- Documentation: https://resources.jointjs.com/mmap/joint.html
+    //-- It contains cells: Elements + links
+    let graph = null;
+
+    //-- Paper data structure
+    //-- The diagrams are place on a Paper
+    //-- It is created by the joint.dia.Paper constructor
+    let paper = null;
 
         var z = { index: 100 };
-        var graph = null;
-        var paper = null;
         var selection = null;
         var selectionView = null;
         var commandManager = null;
         var mousePosition = { x: 0, y: 0 };
         var gridsize = 8;
-        var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
+        
 
         var self = this;
-
-        const ZOOM_MAX = 2.1;
-        const ZOOM_MIN = 0.3;
-        const ZOOM_SENS = 0.3;
 
         this.breadcrumbs = [{ name: '', type: '' }];
         this.addingDraggableBlock = false;
 
-        this.getState = function () {
-            // Clone state
-            return utils.clone(state);
+    //-----------------------------------------------------------------------
+    //-- Returns a deep copy of the View state
+    //-----------------------------------------------------------------------
+    this.getState = function () {
+        // Deep copy
+        return utils.clone(state);
+    };
+
+    //-----------------------------------------------------------------------
+    //-- Set the current view state
+    //-- Input: 
+    //--    _state: new view state
+    //--
+    //-- It set the pan and zoom on the current circuit 
+    //-----------------------------------------------------------------------
+    this.setState = function (_state) {
+
+        //-- No argument given: Use the initial value
+        if (!_state) {
+            _state = utils.clone(VIEWSTATE_INIT);
+        }
+        
+        //-- Set the new pan and zoom
+        this.panAndZoom.zoom(_state.zoom);
+        this.panAndZoom.pan(_state.pan);
+    };
+
+    //-----------------------------------------------------------------------
+    //-- Reset the current view (Pan and zoom)
+    //-----------------------------------------------------------------------
+    this.resetView = function () {
+        this.setState(null);
+    };
+
+    //-----------------------------------------------------------------------
+    //-- Check if there are any cell on the circuit
+    //-- Returs:
+    //--   * true: The design contains no elements
+    //--   * false: The design contains al least one element
+    //-----------------------------------------------------------------------
+    this.isEmpty = function () {
+
+        //-- API: joint.dia.Graph.getCells()
+        //-- Get all the elements and links in the graph
+
+        //-- If there are no cell, return true
+        return (graph.getCells().length === 0);
+    };
+
+
+    //-----------------------------------------------------------------------
+    //-- Fit the Circuit to the Windows, so that the whole design is
+    //-- displayed
+    //-----------------------------------------------------------------------
+    this.fitContent = function () {
+      
+      //-- The circuit contains at least one element
+      if (!this.isEmpty()) {
+
+        //-- Get the current window from NW
+        let win = window.get();
+
+        //-- DEBUG
+        console.log("Windows: " + win.with + "x" + win.height);
+
+        //-- TODO
+        //-- The target box width depends on the collection manager
+        //-- panel. If it is active, it is necesary to substract its
+        //-- width (214)
+
+        // Target box: The circuit is fit inside this target box
+        let tbox = {
+            x: CIRCUIT_MARGIN,
+            y: CIRCUIT_MARGIN,
+            width: win.width - 2 * CIRCUIT_MARGIN, //-- -214 
+            height: win.height - MENU_FOOTER_HEIGHT - 2 * CIRCUIT_MARGIN
         };
 
-        this.setState = function (_state) {
-            if (!_state) {
-                _state = {
-                    pan: {
-                        x: 0,
-                        y: 0
-                    },
-                    zoom: 1.0
-                };
-            }
-            this.panAndZoom.zoom(_state.zoom);
-            this.panAndZoom.pan(_state.pan);
+        // Source box
+        var sbox = V(paper.viewport).bbox(true, paper.svg);
+        sbox = {
+            x: sbox.x * state.zoom,
+            y: sbox.y * state.zoom,
+            width: sbox.width * state.zoom,
+            height: sbox.height * state.zoom
         };
-
-        this.resetView = function () {
-            this.setState(null);
+        var scale;
+        if (tbox.width / sbox.width > tbox.height / sbox.height) {
+            scale = tbox.height / sbox.height;
+        }
+        else {
+            scale = tbox.width / sbox.width;
+        }
+        if (state.zoom * scale > 1) {
+            scale = 1 / state.zoom;
+        }
+        var target = {
+            x: tbox.x + tbox.width / 2,
+            y: tbox.y + tbox.height / 2
         };
-
-        this.fitContent = function () {
-            if (!this.isEmpty()) {
-                // Target box
-                var margin = 40;
-                var menuFooterHeight = 93;
-                var winWidth = window.get().width;
-                var winHeight = window.get().height;
-
-                var tbox = {
-                    x: margin,
-                    y: margin,
-                    width: winWidth - 2 * margin,
-                    height: winHeight - menuFooterHeight - 2 * margin
-                };
-                // Source box
-                var sbox = V(paper.viewport).bbox(true, paper.svg);
-                sbox = {
-                    x: sbox.x * state.zoom,
-                    y: sbox.y * state.zoom,
-                    width: sbox.width * state.zoom,
-                    height: sbox.height * state.zoom
-                };
-                var scale;
-                if (tbox.width / sbox.width > tbox.height / sbox.height) {
-                    scale = tbox.height / sbox.height;
-                }
-                else {
-                    scale = tbox.width / sbox.width;
-                }
-                if (state.zoom * scale > 1) {
-                    scale = 1 / state.zoom;
-                }
-                var target = {
-                    x: tbox.x + tbox.width / 2,
-                    y: tbox.y + tbox.height / 2
-                };
-                var source = {
-                    x: sbox.x + sbox.width / 2,
-                    y: sbox.y + sbox.height / 2
-                };
-                this.setState({
-                    pan: {
-                        x: target.x - source.x * scale,
-                        y: target.y - source.y * scale
-                    },
-                    zoom: state.zoom * scale
-                });
-                $('.joint-paper.joint-theme-default>svg').attr('height', winHeight);
-                $('.joint-paper.joint-theme-default>svg').attr('width', winWidth);
-            }
-            else {
-                this.resetView();
-            }
+        var source = {
+            x: sbox.x + sbox.width / 2,
+            y: sbox.y + sbox.height / 2
         };
+        this.setState({
+            pan: {
+                x: target.x - source.x * scale,
+                y: target.y - source.y * scale
+            },
+            zoom: state.zoom * scale
+        });
+        $('.joint-paper.joint-theme-default>svg').attr('height', win.height);
+        $('.joint-paper.joint-theme-default>svg').attr('width', win.width);
+      }
+
+      //-- The circuit is blank: No elements
+      else {
+        //-- Reset the current view
+        //-- Nothing to fit
+        this.resetView();
+      }
+    };
+
+
+
+    //-----------------------------------------------------------------------
+
 
         this.resetBreadcrumbs = function (name) {
             this.breadcrumbs = [{ name: name, type: '' }];
@@ -1284,9 +1385,7 @@ angular.module('icestudio')
             });
         }
 
-        this.isEmpty = function () {
-            return (graph.getCells().length === 0);
-        };
+       
 
         this.isEnabled = function () {
             if (typeof paper !== 'undefined' && paper !== null && paper !== false) {
@@ -1693,4 +1792,4 @@ angular.module('icestudio')
             });
         });
 
-    });
+});

@@ -31,6 +31,7 @@ angular.module('icestudio')
           break;
         case 'basic.outputLabel':
           newBasicOutputLabel(callback);
+          console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
           break;
         case 'basic.inputLabel':
           newBasicInputLabel(callback);
@@ -743,6 +744,7 @@ angular.module('icestudio')
         rightPorts: rightPorts,
         choices: common.pinoutInputHTML
       });
+      console.log("DEBUG! ETIQUETA SALIDA CREADA!!!");
       return cell;
     }
 
@@ -1076,6 +1078,8 @@ angular.module('icestudio')
     }
 
     function editBasicOutputLabel(cellView, callback) {
+      console.log("DEBUG! EditBasicOutputLabel....");
+      console.log("DEBUG: Label color: " + cellView.model.attributes.data.blockColor);
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       var formSpecs = [
@@ -1086,16 +1090,24 @@ angular.module('icestudio')
         },
         {
           type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
+          label: gettextCatalog.getString('Choose a color'),
+
+          //-- Read the current Label color
+          color: cellView.model.attributes.data.blockColor
         }
 
       ];
+
+      //-- Render the form. When user press the OK button the
+      //-- callback function is executed
       utils.renderForm(formSpecs, function (evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
         var color = values[1];
         var virtual = !values[2];
         var clock = values[2];
+        console.log("Label: " + label);
+        console.log("Blocks: Color: " + color);
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -1123,7 +1135,8 @@ angular.module('icestudio')
                 range: portInfo.rangestr,
                 pins: pins,
                 virtual: virtual,
-                clock: clock
+                clock: clock,
+                blockColor: color,
               },
               type: block.blockType,
               position: {
@@ -1181,7 +1194,10 @@ angular.module('icestudio')
         },
         {
           type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
+          label: gettextCatalog.getString('Choose a color'),
+
+          //-- Read the current Label color
+          color: cellView.model.attributes.data.blockColor
         }
 
       ];
@@ -1211,7 +1227,8 @@ angular.module('icestudio')
                 name: portInfo.name,
                 range: portInfo.rangestr,
                 pins: pins,
-                virtual: virtual
+                virtual: virtual,
+                blockColor: color,
               },
               type: block.blockType,
               position: {
@@ -1313,7 +1330,7 @@ angular.module('icestudio')
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y + offset
+                y: block.position.y
               }
             };
             if (callback) {
@@ -1397,7 +1414,7 @@ angular.module('icestudio')
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y + offset
+                y: block.position.y
               }
             };
             if (callback) {
