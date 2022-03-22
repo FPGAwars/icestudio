@@ -45,6 +45,10 @@ angular
     utils,
     boards,
     collections,
+
+    //-- Angular-gettext package
+    //-- More info: 
+    //-- https://angular-gettext.rocketeer.be/dev-guide/api/angular-gettext/
     gettextCatalog
     )
   {
@@ -148,10 +152,15 @@ angular
           utils.selectBoardPrompt(function (selectedBoard) {
             var newBoard = boards.selectBoard(selectedBoard);
             profile.set("board", newBoard.name);
+
+            //-- Display a Dialog with the board selected
             alertify.success(
-              gettextCatalog.getString("Board {{name}} selected", {
-                name: utils.bold(newBoard.info.label),
-              })
+
+              //-- Message to show. Board name in Bold
+              gettextCatalog.getString(
+                "Board {{name}} selected", 
+                { name: utils.bold(newBoard.info.label) }
+              )
             );
 
             tools.checkToolchain( () => {}, //-- No callback 
