@@ -38,7 +38,7 @@ angular
     },
   ])
   .run(function (
-    profile,
+    profile,  //-- Icestudio profile file managment
     project,
     common,
     tools,
