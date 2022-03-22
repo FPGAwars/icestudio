@@ -24,7 +24,8 @@ angular
       _package,
       nodeFs,
       nodePath
-    ) {
+    ) 
+  {
       //-- Initialize scope
 
       $scope.profile = profile;
@@ -1415,6 +1416,9 @@ angular
 
       shortcuts.method("takeSnapshot", takeSnapshot);
 
+      //-- Shortcut for Testing and Debugging
+      shortcuts.method("testing", testing);
+
       $(document).on("keydown", function (event) {
         var opt = {
           prompt: promptShown,
@@ -1832,6 +1836,14 @@ angular
         return false;
       });
       //-- END BASIC TOOLBOX
+
+      //---------------------------------------------------------------------
+      //-- testing. Function for Debugging
+      //---------------------------------------------------------------------
+      function testing() {
+        console.log("--> TESTING!!!!! ");
+        alertify.alert('<b>Ready!</b> ' + process.platform);
+      }
 
       function takeSnapshot() {
         win.capturePage(function (img) {

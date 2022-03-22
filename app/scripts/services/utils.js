@@ -19,7 +19,8 @@ angular.module('icestudio')
     gui,
     SVGO,
     fastCopy,
-    sparkMD5) {
+    sparkMD5) 
+{
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
@@ -646,9 +647,12 @@ angular.module('icestudio')
     //--    * specs is an array of objects.They all have the property:
     //--      -type: Which kind of information should be displayed:
     //--          -Text, checkbox, combobox, color-dropdown
-    //-- The callback is executed when the users click on OK
+    //-- 
+    //--    * callback(evt, values); The callback is executed when 
+    //--          the users click on OK
     //-----------------------------------------------------------------------
     this.renderForm = function (specs, callback) {
+
       var content = [];
       content.push('<div>');
       for (var i in specs) {
@@ -1168,8 +1172,15 @@ angular.module('icestudio')
       return ret;
     };
 
+    //-----------------------------------------------------------------------
+    //-- Return a text in bold HTML
+    //-- Input:
+    //--    * text: String to converto to Bold
+    //-- Returns:
+    //--    * The HTML text in bold
+    //-----------------------------------------------------------------------
     this.bold = function (text) {
-      return '<b>' + text + '</b>';
+      return `<b>${text}</b>`;
     };
 
     this.openDialog = function (inputID, ext, callback) {
@@ -1639,4 +1650,4 @@ angular.module('icestudio')
       $('.lb-dropdown-menu').removeClass('show');
     }
 
-  });
+});

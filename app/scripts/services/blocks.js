@@ -1,11 +1,51 @@
+//---------------------------------------------------------------------------
+//-- BLOCKS
+//--
+//-- Functions, constants, and data structures for managing Icestudio blocks
+//---------------------------------------------------------------------------
 'use strict';
 
 angular.module('icestudio')
-  .service('blocks', function (joint,
-    utils,
-    common,
-    gettextCatalog,
-    sparkMD5) {
+  .service('blocks', 
+    function (
+
+      //-- Access to the JointJS API
+      //-- More infor: https://www.npmjs.com/package/jointjs
+      //-- Tutorial: https://resources.jointjs.com/tutorial/
+      joint, 
+      
+      
+      utils,
+      common,
+      gettextCatalog,
+      sparkMD5
+    )
+{
+
+//---------------------------------------------------------------------------
+//-- CONSTANTS for the blocks
+//---------------------------------------------------------------------------
+const BLOCK_BASIC_INPUT = 'basic.input';  //-- Input ports
+
+//-- Block structure
+const BLOCK_TEMPLATE = {
+
+  //-- Type of block: BLOCK_BASIC_INPUT, ...
+  type: null,
+
+  //-- Block identifier
+  id: null,
+
+  //-- Block data. It depends on the block type
+  data: {},
+  
+  //-- Block position
+  position: { 
+    x: 0, 
+    y: 0
+  }
+};
+
     var gridsize = 8;
     var resultAlert = null;
 
@@ -19,41 +59,61 @@ angular.module('icestudio')
     this.editBasic = editBasic; // this is double clicking
     this.editBasicLabel = editBasicLabel; // this is from "label-Finder"
 
-    //-- New
 
-    function newBasic(type, callback) {
-      switch (type) {
-        case 'basic.input':
-          newBasicInput(callback);
-          break;
-        case 'basic.output':
-          newBasicOutput(callback);
-          break;
-        case 'basic.outputLabel':
-          newBasicOutputLabel(callback);
-          console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
-          break;
-        case 'basic.inputLabel':
-          newBasicInputLabel(callback);
-          break;
+  //-------------------------------------------------------------------------
+  //-- Create a new Basic Block
+  //-- Inputs:
+  //--   * type: Type of Basic block:
+  //--     -BLOCK_BASIC_INPUT
+  //--     -'basic.output' --> Output port
+  //--     -'basic.outputLabel'
+  //--     -'basic.inputLabel'
+  //--     -'basic.constant'
+  //--     -'basic.memory'
+  //--     -'basic.code'
+  //--     -'basic.info'
+  //--
+  //--   * callback(cell): The function is called when the new block
+  //--        is ready. It is passed as the cell parameter
+  //-------------------------------------------------------------------------
+  function newBasic(type, callback) {
+
+    //-- Create the block calling the corresponding function
+    //-- according to the given type
+    switch (type) {
+
+      case BLOCK_BASIC_INPUT:
+        newBasicInput(callback);
+        break;
+
+      case 'basic.output':
+        newBasicOutput(callback);
+        break;
+      case 'basic.outputLabel':
+        newBasicOutputLabel(callback);
+        console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
+        break;
+      case 'basic.inputLabel':
+        newBasicInputLabel(callback);
+        break;
 
 
-        case 'basic.constant':
-          newBasicConstant(callback);
-          break;
-        case 'basic.memory':
-          newBasicMemory(callback);
-          break;
-        case 'basic.code':
-          newBasicCode(callback);
-          break;
-        case 'basic.info':
-          newBasicInfo(callback);
-          break;
-        default:
-          break;
-      }
+      case 'basic.constant':
+        newBasicConstant(callback);
+        break;
+      case 'basic.memory':
+        newBasicMemory(callback);
+        break;
+      case 'basic.code':
+        newBasicCode(callback);
+        break;
+      case 'basic.info':
+        newBasicInfo(callback);
+        break;
+      default:
+        break;
     }
+  }
 
     function newBasicOutputLabel(callback) {
       var blockInstance = {
@@ -124,78 +184,85 @@ angular.module('icestudio')
       });
     }
 
+  //-------------------------------------------------------------------------
+  //-- New Basic Input block
+  //--
+  //-- Inputs:
+  //--   * callback(cells):  Call the function when the block is read. The
+  //--      cells are passed as a parameter
+  //-------------------------------------------------------------------------
+  function newBasicInput(callback) {
 
-    function newBasicInput(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.input',
-        position: { x: 0, y: 0 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
-          value: ''
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: true
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: false
+    //-- Creat a new generic block (blank)
+    let blockInstance = utils.clone(BLOCK_TEMPLATE);
+
+    //-- ...of type BLOCK_BASIC_INPUT
+    blockInstance.type = BLOCK_BASIC_INPUT;
+
+    var formSpecs = [
+      {
+        type: 'text',
+        title: gettextCatalog.getString('Enter the input blocks'),
+        value: ''
+      },
+      {
+        type: 'checkbox',
+        label: gettextCatalog.getString('FPGA pin'),
+        value: true
+      },
+      {
+        type: 'checkbox',
+        label: gettextCatalog.getString('Show clock'),
+        value: false
+      }
+    ];
+    utils.renderForm(formSpecs, function (evt, values) {
+      var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+      var virtual = !values[1];
+      var clock = values[2];
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
+      // Validate values
+      var portInfo, portInfos = [];
+      for (var l in labels) {
+        portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+        if (portInfo) {
+          evt.cancel = false;
+          portInfos.push(portInfo);
         }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var virtual = !values[1];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
+        else {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+          return;
         }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
+      }
+      // Create blocks
+      var cells = [];
+      for (var p in portInfos) {
+        portInfo = portInfos[p];
+        if (portInfo.rangestr && clock) {
+          evt.cancel = true;
+          resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
+          return;
         }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual,
-            clock: clock
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
+        var pins = getPins(portInfo);
+        blockInstance.data = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          pins: pins,
+          virtual: virtual,
+          clock: clock
+        };
+        cells.push(loadBasic(blockInstance));
+        // Next block position
+        blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+      }
+      if (callback) {
+        callback(cells);
+      }
+    });
+  }
 
     function newBasicOutput(callback) {
       var blockInstance = {

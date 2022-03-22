@@ -1,3 +1,11 @@
+//---------------------------------------------------------------------------
+//-- ICESTUDIO Main entry point
+//---------------------------------------------------------------------------
+//-- External packages used:
+//--
+//--  * Alertify: https://www.npmjs.com/package/alertifyjs
+//--     Developing pretty browser dialogs and notifications
+//---------------------------------------------------------------------------
 "use strict";
 
 //-- Disable the jshint Warning: "xxxx defined but never used"
@@ -38,7 +46,8 @@ angular
     boards,
     collections,
     gettextCatalog
-  ) {
+    )
+  {
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
