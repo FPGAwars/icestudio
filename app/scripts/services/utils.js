@@ -1251,14 +1251,22 @@ angular.module('icestudio')
       return null;
     };
 
+    //-----------------------------------------------------------------------
+    //-- clone. Return a deep copy of the given input object data
+    //--  * data: Input object to copy
+    //--  * Returns: A copy of the input object
+    //-----------------------------------------------------------------------
     this.clone = function (data) {
+      
+      //-- Implementation using the fast-copy npm package:
+      //-- More info: https://www.npmjs.com/package/fast-copy
+      return fastCopy(data);
+
+      //-- Alternative implementation:
       // Very slow in comparison but more stable for all types
       // of objects, if fails, rollback to JSON method or try strict
       // on fast-copy module
       //return  JSON.parse(JSON.stringify(data));
-      return fastCopy(data);
-
-
     };
 
     this.dependencyID = function (dependency) {

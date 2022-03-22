@@ -1,16 +1,41 @@
+//----------------------------------------------------------------------------
+//-- GRAPH: Circuit drawing
+//----------------------------------------------------------------------------
+
 'use strict';
 
 angular.module('icestudio')
-    .service('graph', function ($rootScope,
-        joint,
-        boards,
-        blocks,
-        profile,
-        utils,
-        common,
-        gettextCatalog,
-        nodeDebounce,
-        window) {
+  .service('graph', function (
+      $rootScope,
+      joint,
+      boards,
+      blocks,
+      profile,
+      utils,
+      common,
+      gettextCatalog,
+      nodeDebounce,
+      window) 
+{
+
+    //-- ZOOM constants
+    const ZOOM_MAX = 2.1;
+    const ZOOM_MIN = 0.3;
+    const ZOOM_SENS = 0.3;
+    const ZOOM_INI = 1.0;  //-- Initial zoom
+
+    //-- View State object: structure and initial values
+    const VIEWSTATE_INIT = {
+        pan: {   //-- Position
+          x: 0,
+          y: 0 
+        },
+        zoom: ZOOM_INI  
+    };
+
+    //-- Current view state: Position and Zoom
+    //-- It is initialized from VIEWSTATE_INIT
+    let state = utils.clone(VIEWSTATE_INIT);
 
         var z = { index: 100 };
         var graph = null;
@@ -20,39 +45,48 @@ angular.module('icestudio')
         var commandManager = null;
         var mousePosition = { x: 0, y: 0 };
         var gridsize = 8;
-        var state = { pan: { x: 0, y: 0 }, zoom: 1.0 };
+        
 
         var self = this;
-
-        const ZOOM_MAX = 2.1;
-        const ZOOM_MIN = 0.3;
-        const ZOOM_SENS = 0.3;
 
         this.breadcrumbs = [{ name: '', type: '' }];
         this.addingDraggableBlock = false;
 
-        this.getState = function () {
-            // Clone state
-            return utils.clone(state);
-        };
+    //-------------------------------------------------------------------
+    //-- Returns a deep copy of the View state
+    //-------------------------------------------------------------------
+    this.getState = function () {
+        // Deep copy
+        return utils.clone(state);
+    };
 
-        this.setState = function (_state) {
-            if (!_state) {
-                _state = {
-                    pan: {
-                        x: 0,
-                        y: 0
-                    },
-                    zoom: 1.0
-                };
-            }
-            this.panAndZoom.zoom(_state.zoom);
-            this.panAndZoom.pan(_state.pan);
-        };
+    //-------------------------------------------------------------------
+    //-- Set the current view state
+    //-- Input: 
+    //--    _state: new view state
+    //--
+    //-- It set the pan and zoom on the current circuit 
+    //-------------------------------------------------------------------
+    this.setState = function (_state) {
 
-        this.resetView = function () {
-            this.setState(null);
-        };
+        //-- No argument given: Use the initial value
+        if (!_state) {
+            _state = utils.clone(VIEWSTATE_INIT);
+        }
+        
+        //-- Set the new pan and zoom
+        this.panAndZoom.zoom(_state.zoom);
+        this.panAndZoom.pan(_state.pan);
+    };
+
+    //-----------------------------------------------------------------------
+    //-- Reset the current view (Pan and zoom)
+    //-----------------------------------------------------------------------
+    this.resetView = function () {
+        this.setState(null);
+    };
+
+
 
         this.fitContent = function () {
             if (!this.isEmpty()) {
@@ -1693,4 +1727,4 @@ angular.module('icestudio')
             });
         });
 
-    });
+});
