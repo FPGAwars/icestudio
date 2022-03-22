@@ -1330,7 +1330,7 @@ angular.module('icestudio')
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y + offset
+                y: block.position.y
               }
             };
             if (callback) {
@@ -1414,7 +1414,7 @@ angular.module('icestudio')
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y + offset
+                y: block.position.y
               }
             };
             if (callback) {
