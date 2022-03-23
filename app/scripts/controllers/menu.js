@@ -1417,7 +1417,15 @@ angular
         if (graph.isEnabled()) {
           removeSelected();
         } else {
-          $rootScope.$broadcast("breadcrumbsBack");
+          console.log("--------> BACK!!!!");
+          //-- When inside a block in non-edit mode
+          //-- the back key causes it to return to 
+          //-- the top-main module
+
+          //-- Changed: The Back key is disabled by default
+          //--  (asked by joaquim) 
+          //-- (Uncomment the next sentence  for enabling it)
+          //$rootScope.$broadcast("breadcrumbsBack");
         }
       });
 

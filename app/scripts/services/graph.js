@@ -1311,6 +1311,7 @@ angular.module('icestudio')
         }
 
         this.removeSelected = function () {
+            console.log("BACKSPACE!!!!!!");
             if (hasSelection()) {
                 graph.removeCells(selection.models);
                 selectionView.cancelSelection();
