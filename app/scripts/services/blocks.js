@@ -74,11 +74,11 @@ const BLOCK_TEMPLATE = {
   //--     -'basic.info'
   //--
   //--   * callback(cell): The function is called when the new block
-  //--        is ready. It is passed as the cell parameter
+  //--        is ready. It is passed the cell parameter
   //-------------------------------------------------------------------------
   function newBasic(type, callback) {
 
-    //-- Create the block calling the corresponding function
+    //-- Create the block by calling the corresponding function
     //-- according to the given type
     switch (type) {
 
@@ -193,7 +193,7 @@ const BLOCK_TEMPLATE = {
   //-------------------------------------------------------------------------
   function newBasicInput(callback) {
 
-    //-- Creat a new generic block (blank)
+    //-- Create a new generic block (blank)
     let blockInstance = utils.clone(BLOCK_TEMPLATE);
 
     //-- ...of type BLOCK_BASIC_INPUT

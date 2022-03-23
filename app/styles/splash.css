@@ -1,0 +1,77 @@
+
+
+/* -- Splash screen  */
+#main-icestudio-load-wrapper--bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 24px;
+    animation: progres 3s infinite linear;
+    background-color: white;
+  }
+  
+  @keyframes progres {
+    0% {
+         width: 0%;
+    }
+  
+    25% {
+         width: 50%;
+    }
+  
+    50% {
+         width: 75%;
+    }
+  
+    75% {
+         width: 85%;
+    }
+  
+    100% {
+         width: 100%;
+    }
+  }
+
+  #main-icestudio-load-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999999999999;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #305eac;
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+
+  #main-icestudio-load-wrapper.fade-loaded {
+    opacity: 0;
+  
+  }
+
+  #main-icestudio-load-wrapper.loaded {
+    display: none;
+  }
+
+  #main-icestudio-load-wrapper svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  #main-icestudio-wrapper {
+    position: relative;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #main-icestudio-wrapper.loaded {
+    display: block;
+  }
