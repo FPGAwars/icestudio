@@ -75,3 +75,24 @@
   #main-icestudio-wrapper.loaded {
     display: block;
   }
+
+
+/*  Splash screen iaage: Classes used for centering 
+    vertically and horizontally*/
+.splash-img-container {
+  height: 500px;
+  position: relative;
+}
+
+.splash-img-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+  
+  
+  
+  
