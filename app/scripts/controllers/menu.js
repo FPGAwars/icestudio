@@ -61,11 +61,18 @@ angular
         exit();
       });
 
+      //-- The window is miximized
+      win.on("maximize", function () {
+        console.log("MAXIMIZE!!!!");
+        graph.fitPaper();
+      });
+
       //-- The user wants to resize the windows
       win.on("resize", function () {
 
         //-- When working with big designs it is better not to fit 
         //-- the contents (Leave it commented)
+        graph.fitPaper();
         //graph.fitContent();
       });
 
