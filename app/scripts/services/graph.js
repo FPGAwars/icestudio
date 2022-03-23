@@ -1149,6 +1149,9 @@ angular.module('icestudio')
         };
 
         this.selectLanguage = function (language) {
+
+            //-- DEBUG
+            console.log("LANGUAGE: " + language);
             graph.startBatch('change');
             // Trigger lang event
             var data = {

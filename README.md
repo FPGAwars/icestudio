@@ -104,6 +104,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 | Greek (el_GR)     | ![Progress](http://progress-bar.dev/75)  |
 | Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/75)  |
 | Galician (gl_ES)  | ![Progress](http://progress-bar.dev/75)  |
+| Japanese (ja_JA)  | ![Progress](http://progress-bar.dev/70)  |
 
 
 
