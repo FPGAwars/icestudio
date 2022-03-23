@@ -115,75 +115,6 @@ const BLOCK_TEMPLATE = {
     }
   }
 
-    function newBasicOutputLabel(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.outputLabel',
-        position: { x: 0, y: 0 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input label'),
-          value: ''
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
-        }
-
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var color = values[1];
-        var virtual = !values[2];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            blockColor: color,
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual,
-            clock: clock
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
-
   //-------------------------------------------------------------------------
   //-- New Basic Input block
   //--
@@ -199,16 +130,22 @@ const BLOCK_TEMPLATE = {
     //-- ...of type BLOCK_BASIC_INPUT
     blockInstance.type = BLOCK_BASIC_INPUT;
 
-    var formSpecs = [
+    //-- Define the Form for the Input block parameters
+    let form = [
+
+      //-- Field 0: Text
       {
         type: 'text',
         title: gettextCatalog.getString('Enter the input blocks'),
-        value: ''
+        value: ''  //-- Names of the input blocks
       },
+
+      //-- Field 1: Checkbox for selecting if the input block
+      //-- is an FPGA pin or an internal port
       {
         type: 'checkbox',
         label: gettextCatalog.getString('FPGA pin'),
-        value: true
+        value: true    //-- Checkbox value
       },
       {
         type: 'checkbox',
@@ -216,9 +153,147 @@ const BLOCK_TEMPLATE = {
         value: false
       }
     ];
+
+    //-- Display the Form and execute the callback
+    //-- function when the user press OK
+    utils.renderForm(form, (evt, values) => {
+
+      //-- Debug
+      console.log("EVT: " + evt);
+      console.log("Values: " + values);
+
+      //------ Parse the receive values
+
+      //-- values[0]: label or labels separated by commas (,)
+      //-- First: remove the initial and ending spaces, if any
+      let text = values[0].trim();
+
+      //-- Second: Remove the spaces around the commas (,)
+      text = text.replace(/\s*,\s*/g, ',');
+
+      //-- Third: Get the Input block names as a list of strings
+      let labels = text.split(',');
+
+      //-- Values[1] indicates if it is a virtual pin or not
+      let virtual = !values[1];
+
+      //-- values[2] indicates if this is a clock input
+      let clock = values[2];
+
+      //-- If there was a previous notification, dismiss it
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
+
+      //--------- Validate the values
+
+      //-- Variables for storing the port information
+      let portInfo, portInfos = [];
+
+      //-- Analize all the labels...
+      labels.forEach( name => {
+        
+        //-- Get the port Info
+        portInfo = utils.parsePortLabel(
+                      name, 
+                      common.PATTERN_GLOBAL_PORT_LABEL);
+
+        //-- The port was created ok
+        //-- Insert it into the portInfos array
+        if (portInfo) {
+
+          //-- Close the form when finish
+          evt.cancel = false;
+          portInfos.push(portInfo);
+        }
+
+        //-- There was an error parsing the label
+        else {
+
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                       { name: name }));
+          return;
+        }
+      });
+
+      //--------- Everything is ok so far... Let's create the block!
+
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Crear all the ports...
+      portInfos.forEach( portInfo => {
+        
+        //-- Error: Buses cannot be clocks...
+        if (portInfo.rangestr && clock) {
+          evt.cancel = true;
+          resultAlert = alertify.warning(
+             gettextCatalog.getString('Clock not allowed for data buses'));
+          return;
+        }
+
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
+        //-- Create the bock data
+        blockInstance.data = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          pins: pins,
+          virtual: virtual,
+          clock: clock
+        };
+
+        //-- Build the block
+        let block = loadBasic(blockInstance);
+
+        //-- Insert the block into the array
+        cells.push(block);
+
+        //-- Calculate the Next block position
+        //-- The position is different for virtual and real pins
+        blockInstance.position.y += 
+          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+      });
+
+      //-- We are done! Execute the callback function if it was
+      //-- passed as an argument
+      if (callback) {
+        callback(cells);
+      }
+    });
+  }
+
+
+  function newBasicOutputLabel(callback) {
+    var blockInstance = {
+      id: null,
+      data: {},
+      type: 'basic.outputLabel',
+      position: { x: 0, y: 0 }
+    };
+    var formSpecs = [
+      {
+        type: 'text',
+        title: gettextCatalog.getString('Enter the input label'),
+        value: ''
+      },
+      {
+        type: 'color-dropdown',
+        label: gettextCatalog.getString('Choose a color')
+      }
+
+    ];
     utils.renderForm(formSpecs, function (evt, values) {
       var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-      var virtual = !values[1];
+      var color = values[1];
+      var virtual = !values[2];
       var clock = values[2];
       if (resultAlert) {
         resultAlert.dismiss(false);
@@ -248,6 +323,7 @@ const BLOCK_TEMPLATE = {
         }
         var pins = getPins(portInfo);
         blockInstance.data = {
+          blockColor: color,
           name: portInfo.name,
           range: portInfo.rangestr,
           pins: pins,
@@ -388,18 +464,42 @@ const BLOCK_TEMPLATE = {
       });
     }
 
+    //-----------------------------------------------------------------------
+    //-- Return an array with empty pins
+    //-- Empty pins have both name and value properties set to "NULL"
+    //-- * INPUT:
+    //--    -portInfo: Port information structure
+    //-- * Returns:
+    //--    -An array of pins
+    //-----------------------------------------------------------------------
     function getPins(portInfo) {
-      var pins = [];
+
+      //-- The output array of pins. Initially empty
+      let pins = [];
+
+      //-- Is the port a Bus?
       if (portInfo.range) {
-        for (var r in portInfo.range) {
-          pins.push({ index: portInfo.range[r].toString(), name: '', value: '' });
+
+        for (let i in portInfo.range) {
+          pins.push(
+            { index: portInfo.range[i].toString(),  //-- Pin number
+              name: 'NULL',   //-- Pin name 
+              value: 'NULL'   //-- Pin value
+            });
         }
       }
+      //-- The port is a wire
       else {
-        pins.push({ index: '0', name: 'NULL', value: 'NULL' });
+        pins.push({ 
+          index: '0', 
+          name: 'NULL', 
+          value: 'NULL' 
+        });
       }
+
       return pins;
     }
+
 
     function newBasicConstant(callback) {
       var blockInstance = {

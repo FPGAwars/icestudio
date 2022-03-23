@@ -660,6 +660,7 @@ angular.module('icestudio')
 
         //-- Text input
         switch (spec.type) {
+          
           case 'text':
             content.push('\
               <p>' + spec.title + '</p>\
