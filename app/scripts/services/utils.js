@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('utils', function ($rootScope,
     gettextCatalog,
     common,
+    forms,
     _package,
     window,
     nodeFs,
@@ -641,6 +642,7 @@ angular.module('icestudio')
       return 'en';
     }
 
+   
     //-----------------------------------------------------------------------
     //-- Display a Form
     //-- Input: specs. Form specifications for rendering
@@ -653,47 +655,53 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     this.renderForm = function (specs, callback) {
 
+      forms.test();
+
+     
+
       var content = [];
+      let html;
       content.push('<div>');
       for (var i in specs) {
         var spec = specs[i];
 
-        //-- Text input
+        //-- Process all the form fields
         switch (spec.type) {
           
+          //-- Text input field
           case 'text':
-            content.push('\
-              <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" id="form' + 
-              i + '" autocomplete="off"/>\
-            ');
+
+            //-- Create the html code
+            html = forms.htmlInputText(spec.title, i);
+
+            //-- Store the html for this Form
+            content.push(html);
             break;
 
+          //-- Checkbox input field
           case 'checkbox':
-            content.push('\
-              <div class="checkbox">\
-                <label><input type="checkbox" ' + 
-                (spec.value ? 'checked' : '') + 
-                ' id="form' + i + '"/>' + spec.label + '</label>\
-              </div>\
-            ');
+
+            //-- Create the html code for an input checkbos field
+            html = forms.htmlInputCheckbox(
+              spec.label, 
+              spec.value,
+              i);
+
+            //-- Store the html for this Field
+            content.push(html);
             break;
 
+          //-- Combobox input field
           case 'combobox':
-            var options = spec.options.map(function (option) {
-              var selected = spec.value === option.value ? ' selected' : '';
-              return '<option value="' + option.value + '"' + selected + '>' + 
-                      option.label + '</option>';
-            }).join('');
-            content.push('\
-              <div class="form-group">\
-                <label style="font-weight:normal">' + spec.label + '</label>\
-                <select class="form-control" id="form' + i + '">\
-                  ' + options + '\
-                </select>\
-              </div>\
-            ');
-            break;
+
+            html = forms.htmlInputCombobox(
+              spec.options,
+              spec.label,
+              spec.value,
+              i);
+              
+            content.push(html);
+             break;
 
           case 'color-dropdown':
             
