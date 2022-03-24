@@ -28,6 +28,8 @@ angular.module('icestudio')
   const PARAM_LABEL = "%LABEL%";
   const PARAM_OPTIONS = "%OPTIONS%";
   const PARAM_SELECTED = "%SELECTED%";
+  const PARAM_COLOR = "%COLOR%";
+  const PARAM_COLOR_NAME = "%COLOR_NAME%";
 
   //-------------------------------------------------------------------------
   //--- Input text field
@@ -109,8 +111,11 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   //--- Input combobox field
   //-------------------------------------------------------------------------
-  /*
-         ASCII art... TODO
+   /*
+         Label
+        +-----------------+
+        | Option        v |
+        +-----------------+  
   */
 
   //-- HTML code template
@@ -193,11 +198,219 @@ angular.module('icestudio')
     return(html);
   };
 
+  //-------------------------------------------------------------------------
+  //--- Input color dropdown field
+  //-------------------------------------------------------------------------
+  /*
+        Label
+        +-----------------+
+        | o Color       v |
+        +-----------------+  
+  */
 
+  //-- HTML template for the combobox input
+  const FORM_COLOR_INPUT_TEMPLATE = `
+    <div class="form-group">
+       <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
+       <div class="lb-color--dropdown">
+         <div class="lb-dropdown-title">
+  
+           <!-- The current color is the one found in spec.color -->
+           <span class="lb-selected-color color-${PARAM_COLOR}"
+             data-color="${PARAM_COLOR}"
+             data-name="${PARAM_COLOR_NAME}"> 
+           </span> 
+           ${PARAM_COLOR_NAME}
+           <span class="lb-dropdown-icon"></span>
+         </div>
+       
+         <div class="lb-dropdown-menu">
+  
+         <div class="lb-dropdown-option" 
+           data-color="indianred" 
+           data-name="IndianRed">
+             <span class="lb-option-color color-indianred">
+             </span>
+             IndianRed
+         </div>
+         
+         <div class="lb-dropdown-option" 
+           data-color="red" 
+           data-name="Red">
+             <span class="lb-option-color color-red">
+             </span>
+             Red
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="deeppink" 
+           data-name="DeepPink">
+             <span class="lb-option-color color-deeppink">
+             </span>
+             DeepPink
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="mediumvioletred"
+           data-name="MediumVioletRed">
+             <span class="lb-option-color color-mediumvioletred">
+             </span>
+             MediumVioletRed
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="coral"
+           data-name="Coral">
+             <span class="lb-option-color color-coral"></span>
+             Coral
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="orangered"
+           data-name="OrangeRed">
+             <span class="lb-option-color color-orangered"></span>
+             OrangeRed
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="darkorange"
+           data-name="DarkOrange">
+             <span class="lb-option-color color-darkorange"></span>
+             DarkOrange
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="gold"
+           data-name="Gold">
+             <span class="lb-option-color color-gold"></span>
+           Gold
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="yellow"
+           data-name="Yellow">
+             <span class="lb-option-color color-yellow"></span>
+             Yellow
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="fuchsia"
+           data-name="Fuchsia">
+             <span class="lb-option-color color-fuchsia"></span>
+             Fuchsia
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="slateblue"
+           data-name="SlateBlue">
+             <span class="lb-option-color color-slateblue"></span>
+             SlateBlue
+         </div>
+         <div class="lb-dropdown-option" 
+           data-color="greenyellow"
+           data-name="GreenYellow">
+             <span class="lb-option-color color-greenyellow"></span>
+             GreenYellow
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="springgreen"
+           data-name="SpringGreen">
+             <span class="lb-option-color color-springgreen"></span>
+             SpringGreen
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="darkgreen"
+           data-name="DarkGreen">
+             <span class="lb-option-color color-darkgreen"></span>
+             DarkGreen
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="olivedrab"
+           data-name="OliveDrab">
+             <span class="lb-option-color color-olivedrab">
+             </span>
+             OliveDrab
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="lightseagreen" 
+           data-name="LightSeaGreen">
+             <span class="lb-option-color color-lightseagreen"></span>
+             LightSeaGreen
+         </div> 
+  
+         <div class="lb-dropdown-option" 
+           data-color="turquoise"
+           data-name="Turquoise">
+             <span class="lb-option-color color-turquoise"></span>
+             Turquoise
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="steelblue"
+           data-name="SteelBlue">
+             <span class="lb-option-color color-steelblue"></span>
+             SteelBlue
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="deepskyblue"
+           data-name="DeepSkyBlue">
+             <span class="lb-option-color color-deepskyblue"></span>
+             DeepSkyBlue
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="royalblue"
+           data-name="RoyalBlue">
+             <span class="lb-option-color color-royalblue"></span>
+             RoyalBlue
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="navy"
+           data-name="Navy">
+             <span class="lb-option-color color-navy"></span>
+             Navy
+         </div>
+  
+         <div class="lb-dropdown-option" 
+           data-color="lightgray"
+           data-name="LightGray">
+             <span class="lb-option-color color-lightgray"></span>
+            LightGray
+         </div>
+         
+        </div>
+      </div>
+    </div>
+  `;
 
+  //-----------------------------------------------------------
+  //-- Create the html code for an input color dropdown field
+  //-- INPUTS:
+  //--   * label: Text message to shown as a title
+  //--   * color: Color value
+  //--   * colorName: Color name
+  //--
+  //-- Returns:
+  //--   -A string with the HTML code for that Field
+  //-----------------------------------------------------------
+  this.htmlInputColor = function(label, color, colorName) {
 
+    //-- Insert the parameters in the html code template
+    let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+                  PARAM_LABEL,
+                  label);
 
+    html = html.replaceAll(PARAM_COLOR, color);
+    html = html.replaceAll(PARAM_COLOR_NAME, colorName);
 
+    return html;
+  };
 
 
 
