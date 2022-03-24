@@ -646,49 +646,53 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     //-- Display a Form
     //-- Input: specs. Form specifications for rendering
-    //--    * specs is an array of objects.They all have the property:
-    //--      -type: Which kind of information should be displayed:
+    //--    * form: Form structure. It is an array of fields.They all have 
+    //--       the property type: Which kind of information should be 
+    //--         displayed. The field available are:
     //--          -Text, checkbox, combobox, color-dropdown
     //-- 
     //--    * callback(evt, values); The callback is executed when 
     //--          the users click on OK
     //-----------------------------------------------------------------------
-    this.renderForm = function (specs, callback) {
+    this.renderForm = function (form, callback) {
 
-      forms.test();
+      //-- Variable for storing the html code of all the fields
+      let formHtml = [];
 
-     
-
-      var content = [];
+      //-- Variable for storing temporal html code
       let html;
-      content.push('<div>');
-      for (var i in specs) {
-        var spec = specs[i];
+
+      //-- Initial tag for the Form
+      formHtml.push('<div>');
+
+      //-- Generate the html code for all the fields in the form
+      for (let i in form) {
+        var field = form[i];
 
         //-- Process all the form fields
-        switch (spec.type) {
+        switch (field.type) {
           
           //-- Text input field
           case 'text':
 
             //-- Create the html code
-            html = forms.htmlInputText(spec.title, i);
+            html = forms.htmlInputText(field.title, field.value, i);
 
             //-- Store the html for this Form
-            content.push(html);
+            formHtml.push(html);
             break;
 
           //-- Checkbox input field
           case 'checkbox':
 
-            //-- Create the html code for an input checkbos field
+            //-- Create the html code for an input checkbox field
             html = forms.htmlInputCheckbox(
-              spec.label, 
-              spec.value,
+              field.label, 
+              field.value,
               i);
 
             //-- Store the html for this Field
-            content.push(html);
+            formHtml.push(html);
             break;
 
           //-- Combobox input field
@@ -696,13 +700,13 @@ angular.module('icestudio')
 
             //-- Create the html code for an input Combobox field
             html = forms.htmlInputCombobox(
-              spec.options,
-              spec.label,
-              spec.value,
+              field.options,
+              field.label,
+              field.value,
               i);
               
             //-- Store the html for this Field
-            content.push(html);
+            formHtml.push(html);
             break;
 
           //-- Color-Dropdown input Field
@@ -710,71 +714,98 @@ angular.module('icestudio')
             
 
             //-- Set the default color if not previously defined
-            spec.color = spec.color || "fuchsia";
+            field.color = field.color || "fuchsia";
 
             //-- Get the color with the first letter as capital
-            let colorName = spec.color.charAt(0).toUpperCase() + 
-                            spec.color.slice(1);
+            let colorName = field.color.charAt(0).toUpperCase() + 
+                            field.color.slice(1);
 
             //-- Create the html code for an input Color field
             html = forms.htmlInputColor(
-              spec.label, 
-              spec.color,
+              field.label, 
+              field.color,
               colorName);
 
             //-- Store the html for this Field
-            content.push(html);
+            formHtml.push(html);
             break;
         }
       }
 
-      content.push('</div>');
+      //-- Closing tag for the Form
+      formHtml.push('</div>');
 
-      alertify.confirm(content.join('\n'))
+      //-- Generate a string with the HTML by joining
+      //-- all the html of the fields
+      formHtml = formHtml.join('');
+
+      //-- Display the Form
+      alertify.confirm(formHtml)
+
+         //-- If the user has pressed the OK button...
         .set('onok', function (evt) {
-          var values = [];
+
+          //-- Initialize the values for calling the
+          //-- callback function
+          let values = [];
+
+          //-- Temporal variable for storing a field value
+          let value;
+
+          //-- If there is a callback function as argument
           if (callback) {
-            for (var i in specs) {
-              var spec = specs[i];
-              switch (spec.type) {
+
+            //-- Read the values from the Form fields
+            //-- and insert them into the values array
+            for (let i in form) {
+
+              let field = form[i];
+
+              //-- Read the value depending on the field type
+              switch (field.type) {
+
+                //-- Input text and input combobox
                 case 'text':
                 case 'combobox':
-                  values.push($('#form' + i).val());
+
+                  //-- Read the value from the form i
+                  value = $('#form' + i).val();
+
+                  //-- Add the value to the array
+                  values.push(value);
                   break;
+
+                //-- Input checkbox
                 case 'checkbox':
-                  values.push($('#form' + i).prop('checked'));
+
+                  //-- Read the value from the form i
+                  value = $($('#form' + i).prop('checked'));
+                  value = value[0];
+
+                  //-- Add the value to the array
+                  values.push(value);
                   break;
+
+                //-- Input color dropdown menu
                 case 'color-dropdown':
-                  values.push($('.lb-selected-color').data('color'));
+
+                  //-- Read the value
+                  value = $('.lb-selected-color').data('color');
+
+                  //-- Add the value to the array
+                  values.push(value);
                   break;
               }
             }
+            //-- Now we can call the callback function passing
+            //-- all the values as arguments
             callback(evt, values);
           }
         })
-        .set('oncancel', function ( /*evt*/) { });
 
-      // Restore input values
-      
-      setTimeout(function () {
-        $('#form0').select();
-        for (var i in specs) {
-          var spec = specs[i];
-          switch (spec.type) {
-            case 'text':
-            case 'combobox':
-              $('#form' + i).val(spec.value);
-              break;
-            case 'checkbox':
-              $('#form' + i).prop('checked', spec.value);
-              break;
-            case 'color-dropdown':
-              //-- Not 100% sure, but this line can be removed
-              //$('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>FuchsiaOOOOOOO<span class=\"lb-dropdown-icon\"></span>");
-              break;
-          }
-        }
-      }, 50);
+        //-- The button cancel is pressed:
+        //--   Do nothing... 
+        .set('oncancel', function ( /*evt*/) { });
     };
 
     this.projectinfoprompt = function (values, callback) {

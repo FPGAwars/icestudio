@@ -14,7 +14,7 @@ angular.module('icestudio')
       //-- Tutorial: https://resources.jointjs.com/tutorial/
       joint, 
       
-      
+      forms,
       utils,
       common,
       gettextCatalog,
@@ -156,7 +156,7 @@ const BLOCK_TEMPLATE = {
 
     //-- Display the Form and execute the callback
     //-- function when the user press OK
-    utils.renderForm(form, (evt, values) => {
+    forms.displayForm(form, (evt, values) => {
 
       //-- Debug
       console.log("EVT: " + evt);
