@@ -22,32 +22,39 @@ angular.module('icestudio')
     )
 {
 
-//---------------------------------------------------------------------------
-//-- CONSTANTS for the blocks
-//---------------------------------------------------------------------------
-const BLOCK_BASIC_INPUT = 'basic.input';  //-- Input ports
-
-//-- Block structure
-const BLOCK_TEMPLATE = {
-
-  //-- Type of block: BLOCK_BASIC_INPUT, ...
-  type: null,
-
-  //-- Block identifier
-  id: null,
-
-  //-- Block data. It depends on the block type
-  data: {},
+  //---------------------------------------------------------------------------
+  //-- CONSTANTS for the blocks
+  //---------------------------------------------------------------------------
+  const BASIC_INPUT = 'basic.input';  //-- Input ports
   
-  //-- Block position
-  position: { 
-    x: 0, 
-    y: 0
-  }
-};
+  //-- Block structure
+  const BLOCK_TEMPLATE = {
+  
+    //-- Type of block: BLOCK_BASIC_INPUT, ...
+    type: null,
+  
+    //-- Block identifier
+    id: null,
+  
+    //-- Block data. It depends on the block type
+    data: {},
+    
+    //-- Block position
+    position: { 
+      x: 0, 
+      y: 0
+    }
+  };
+
+  //-- Exported constans 
+  this.BASIC_INPUT = BASIC_INPUT;
+
+
 
     var gridsize = 8;
     var resultAlert = null;
+ 
+    
 
     this.newBasic = newBasic;
     this.newGeneric = newGeneric;
@@ -61,10 +68,12 @@ const BLOCK_TEMPLATE = {
 
 
   //-------------------------------------------------------------------------
-  //-- Create a new Basic Block
+  //-- Create a new Basic Block. A form is displayed for the user to
+  //-- enter the data of the block
+  //--
   //-- Inputs:
   //--   * type: Type of Basic block:
-  //--     -BLOCK_BASIC_INPUT
+  //--     -BASIC_INPUT
   //--     -'basic.output' --> Output port
   //--     -'basic.outputLabel'
   //--     -'basic.inputLabel'
@@ -73,8 +82,9 @@ const BLOCK_TEMPLATE = {
   //--     -'basic.code'
   //--     -'basic.info'
   //--
-  //--   * callback(cell): The function is called when the new block
-  //--        is ready. It is passed the cell parameter
+  //--   * callback(cells): The function is called when the user clic on
+  //--      the OK button and all the data is ok.
+  //--      -cells: Array of blocks passed as arguments
   //-------------------------------------------------------------------------
   function newBasic(type, callback) {
 
@@ -82,41 +92,48 @@ const BLOCK_TEMPLATE = {
     //-- according to the given type
     switch (type) {
 
-      case BLOCK_BASIC_INPUT:
+      //-- Input port
+      case BASIC_INPUT:
         newBasicInput(callback);
         break;
 
       case 'basic.output':
         newBasicOutput(callback);
         break;
+
       case 'basic.outputLabel':
         newBasicOutputLabel(callback);
         console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
         break;
+
       case 'basic.inputLabel':
         newBasicInputLabel(callback);
         break;
 
-
       case 'basic.constant':
         newBasicConstant(callback);
         break;
+
       case 'basic.memory':
         newBasicMemory(callback);
         break;
+
       case 'basic.code':
         newBasicCode(callback);
         break;
+
       case 'basic.info':
         newBasicInfo(callback);
         break;
+
       default:
         break;
     }
   }
 
   //-------------------------------------------------------------------------
-  //-- New Basic Input block
+  //-- Create one or more New Basic Input block. A form is displayed first 
+  //-- for the user to enter the block data: name, pin type and clock pin
   //--
   //-- Inputs:
   //--   * callback(cells):  Call the function when the block is read. The
@@ -127,10 +144,19 @@ const BLOCK_TEMPLATE = {
     //-- Create a new generic block (blank)
     let blockInstance = utils.clone(BLOCK_TEMPLATE);
 
-    //-- ...of type BLOCK_BASIC_INPUT
-    blockInstance.type = BLOCK_BASIC_INPUT;
+    //-- ...of type BASIC_INPUT
+    blockInstance.type = BASIC_INPUT;
 
     //-- Define the Form for the Input block parameters
+    //---------------------------------------------------------
+    //--    Enter the input blocks
+    //--    +--------------------------+
+    //--    | Pin name                 |
+    //--    +--------------------------+
+    //--
+    //--    [✅️] FPGA pin
+    //--    [  ] Show clock 
+    //---------------------------------------------------------
     let form = [
 
       //-- Field 0: Text
@@ -145,7 +171,7 @@ const BLOCK_TEMPLATE = {
       {
         type: 'checkbox',
         label: gettextCatalog.getString('FPGA pin'),
-        value: true    //-- Checkbox value
+        value: true    //-- Checkbox value by default
       },
       {
         type: 'checkbox',
@@ -232,6 +258,8 @@ const BLOCK_TEMPLATE = {
         //-- Error: Buses cannot be clocks...
         if (portInfo.rangestr && clock) {
           evt.cancel = true;
+
+          //-- Show a notification with the warning
           resultAlert = alertify.warning(
              gettextCatalog.getString('Clock not allowed for data buses'));
           return;
@@ -241,7 +269,7 @@ const BLOCK_TEMPLATE = {
         //-- set to 'NULL')
         let pins = getPins(portInfo);
 
-        //-- Create the bock data
+        //-- Create the block data
         blockInstance.data = {
           name: portInfo.name,
           range: portInfo.rangestr,
@@ -290,7 +318,7 @@ const BLOCK_TEMPLATE = {
       }
 
     ];
-    utils.renderForm(formSpecs, function (evt, values) {
+    forms.displayForm(formSpecs, function (evt, values) {
       var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
       var color = values[1];
       var virtual = !values[2];
@@ -359,7 +387,7 @@ const BLOCK_TEMPLATE = {
           value: true
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
         var virtual = !values[1];
         if (resultAlert) {
@@ -421,7 +449,7 @@ const BLOCK_TEMPLATE = {
         }
 
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
         var color = values[1];
         var virtual = !values[2];
@@ -520,7 +548,7 @@ const BLOCK_TEMPLATE = {
           value: false
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
         var local = values[1];
         if (resultAlert) {
@@ -588,7 +616,7 @@ const BLOCK_TEMPLATE = {
           value: false
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
         var local = values[2];
         var format = parseInt(values[1]);
@@ -687,7 +715,7 @@ const BLOCK_TEMPLATE = {
           value: defaultValues[2]
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
         var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
         var params = values[2].replace(/\s*,\s*/g, ',').split(',');
@@ -1267,7 +1295,7 @@ const BLOCK_TEMPLATE = {
 
       //-- Render the form. When user press the OK button the
       //-- callback function is executed
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
         var color = values[1];
@@ -1368,7 +1396,7 @@ const BLOCK_TEMPLATE = {
         }
 
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
         var color = values[1];
@@ -1460,7 +1488,7 @@ const BLOCK_TEMPLATE = {
           value: block.data.clock
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
         var virtual = !values[1];
@@ -1551,7 +1579,7 @@ const BLOCK_TEMPLATE = {
           value: !block.data.virtual
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var oldSize, newSize, offset = 0;
         var label = values[0];
         var virtual = !values[1];
@@ -1632,7 +1660,7 @@ const BLOCK_TEMPLATE = {
           value: block.data.local
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var label = values[0];
         var local = values[1];
         if (resultAlert) {
@@ -1686,7 +1714,7 @@ const BLOCK_TEMPLATE = {
           value: block.data.local
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var label = values[0];
         var local = values[2];
         var format = parseInt(values[1]);
