@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: app/views/design.html:9
 msgid ": '}} {{'Unlock to edit block !"
@@ -62,7 +62,7 @@ msgstr "作者"
 
 #: app/views/languages.html:86
 msgid "Basque"
-msgstr ""
+msgstr "バスク語"
 
 #: app/scripts/services/blocks.js:1494 app/scripts/services/blocks.js:412
 msgid "Binary"
@@ -106,7 +106,6 @@ msgid "Board {{name}} disconnected"
 msgstr "ボード {{name}} が切断されました"
 
 #: app/scripts/services/tools.js:608 app/scripts/services/tools.js:634
-#, fuzzy
 msgid "Board {{name}} not available"
 msgstr "ボード {{name}} は使えません"
 
@@ -119,7 +118,6 @@ msgid "Board {{name}} selected"
 msgstr "ボード {{name}} が選択されました"
 
 #: app/scripts/services/tools.js:597 app/scripts/services/tools.js:627
-#, fuzzy
 msgid "Bootloader not active"
 msgstr "ブートローダがアクティブでない"
 
@@ -142,7 +140,7 @@ msgstr "キャンセル"
 
 #: app/views/languages.html:92
 msgid "Catalan"
-msgstr ""
+msgstr "カタロニア語"
 
 #: app/views/design.html:68
 msgid "Change Color"
@@ -170,7 +168,6 @@ msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "ここをクリックして Icestudio の <b> 新バージョン </b> をダウンロード"
 
 #: app/scripts/services/tools.js:1508
-#, fuzzy
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "ここをクリックして<b>ドライバをセットアップ</b>"
 
@@ -222,7 +219,7 @@ msgstr "コレクション {{name}} が追加されました"
 
 #: app/scripts/services/tools.js:1637
 msgid "Collection {{name}} not replaced"
-msgstr ""
+msgstr "コレクション {{name}} が置き換えられませんでした"
 
 #: app/scripts/services/tools.js:1788
 msgid "Collection {{name}} removed"
@@ -298,7 +295,7 @@ msgstr "説明"
 
 #: app/views/menu.html:498
 msgid "Disable"
-msgstr ""
+msgstr "無効化"
 
 #: app/scripts/controllers/menu.js:436
 msgid "Do you want to close the application?"
@@ -368,63 +365,63 @@ msgstr "定数ブロックを入力"
 
 #: app/scripts/controllers/menu.js:671
 msgid "Enter the external collections path"
-msgstr ""
+msgstr "外部コレクションのパスを入力"
 
 #: app/scripts/controllers/menu.js:580
 msgid "Enter the external plugins path"
-msgstr ""
+msgstr "外部プラグインのパスを入力"
 
 #: app/scripts/controllers/menu.js:534
 msgid "Enter the file to output logging info"
-msgstr ""
+msgstr "ログを出力するファイルを入力"
 
 #: app/scripts/services/blocks.js:137
 msgid "Enter the input blocks"
-msgstr ""
+msgstr "入力ブロックを入力"
 
 #: app/scripts/services/blocks.js:67
 msgid "Enter the input label"
-msgstr ""
+msgstr "入力ラベルを入力"
 
 #: app/scripts/services/blocks.js:508
 msgid "Enter the input ports"
-msgstr ""
+msgstr "入力ポートを入力"
 
 #: app/scripts/services/blocks.js:404
 msgid "Enter the memory blocks"
-msgstr ""
+msgstr "メモリブロックの入力"
 
 #: app/scripts/services/blocks.js:209
 msgid "Enter the output blocks"
-msgstr ""
+msgstr "出力ブロックを入力"
 
 #: app/scripts/services/blocks.js:270
 msgid "Enter the output label"
-msgstr ""
+msgstr "出力ラベルを入力"
 
 #: app/scripts/services/blocks.js:513
 msgid "Enter the output ports"
-msgstr ""
+msgstr "出力ポートを入力"
 
 #: app/scripts/services/blocks.js:518
 msgid "Enter the parameters"
-msgstr ""
+msgstr "パラメタを入力"
 
 #: app/scripts/controllers/menu.js:625
 msgid "Enter the pip version > 3.8 path"
-msgstr ""
+msgstr "バージョン3.8以上のpipのパスを入力"
 
 #: app/scripts/controllers/menu.js:618
 msgid "Enter the python version > 3.8 path"
-msgstr ""
+msgstr "バージョン3.8以上のpythonのパスを入力"
 
 #: app/scripts/controllers/menu.js:770
 msgid "Enter the remote hostname user@host"
-msgstr ""
+msgstr "リモートホスト名を入力 user@host"
 
 #: app/scripts/services/utils.js:970
 msgid "Error: {{error}}"
-msgstr "エラー: {{error}}"
+msgstr "エラー：{{error}}"
 
 #: app/scripts/services/tools.js:801
 msgid "Errors detected in the design"
@@ -436,7 +433,7 @@ msgstr "例"
 
 #: app/scripts/services/tools.js:469
 msgid "Execute remote {{label}} ..."
-msgstr ""
+msgstr "リモート {{label}} で実行…"
 
 #: app/views/menu.html:103
 msgid "Export"
@@ -503,19 +500,19 @@ msgstr ""
 
 #: app/views/languages.html:26
 msgid "French"
-msgstr ""
+msgstr "フランス語"
 
 #: app/views/languages.html:80
 msgid "Galician"
-msgstr ""
+msgstr "ガリシア語"
 
 #: app/views/languages.html:38
 msgid "German"
-msgstr ""
+msgstr "ドイツ語"
 
 #: app/views/languages.html:56
 msgid "Greek"
-msgstr ""
+msgstr "ギリシャ語"
 
 #: app/views/menu.html:554
 msgid "Help"
@@ -553,11 +550,11 @@ msgstr "入力ラベル"
 
 #: app/views/menu.html:451
 msgid "Install (Stable)"
-msgstr "安定版をインストール"
+msgstr "インストール（安定版）"
 
 #: app/views/menu.html:468
 msgid "Install Development version"
-msgstr "開発版をインストール"
+msgstr "インストール（開発版）"
 
 #: app/scripts/services/tools.js:1119
 msgid ""
@@ -633,11 +630,11 @@ msgstr "無効なプロジェクトフォーマット"
 
 #: app/views/languages.html:32
 msgid "Italian"
-msgstr ""
+msgstr "イタリア語"
 
 #: app/views/languages.html:98
 msgid "Korean"
-msgstr ""
+msgstr "韓国語"
 
 #: app/views/menu.html:194
 msgid "Label Finder"
@@ -649,7 +646,7 @@ msgstr "ラベルが更新されました"
 
 #: app/views/menu.html:214
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #: app/views/uithemes.html:26
 msgid "Light"
@@ -657,7 +654,7 @@ msgstr "ライト"
 
 #: app/scripts/services/project.js:91
 msgid "Load"
-msgstr ""
+msgstr "ロード"
 
 #: app/scripts/services/blocks.js:1447 app/scripts/services/blocks.js:1501
 #: app/scripts/services/blocks.js:351 app/scripts/services/blocks.js:419
@@ -666,15 +663,15 @@ msgstr "ローカルパラメタ"
 
 #: app/views/menu.html:267
 msgid "Logging enabled"
-msgstr ""
+msgstr "ログ記録を有効化"
 
 #: app/views/menu.html:274
 msgid "Logging file"
-msgstr ""
+msgstr "ログファイル"
 
 #: app/scripts/controllers/menu.js:558
 msgid "Logging file updated"
-msgstr ""
+msgstr "ログファイルが更新されました"
 
 #: app/scripts/services/utils.js:1052
 msgid "Maximum bus size: 96 bits"
@@ -690,7 +687,7 @@ msgstr "名前"
 
 #: app/views/menu.html:55
 msgid "New"
-msgstr ""
+msgstr "新規"
 
 #: app/views/design.html:40
 msgid "New Color:"
@@ -719,15 +716,15 @@ msgstr "SVG を開く"
 
 #: app/scripts/services/project.js:543
 msgid "Original file {{file}} does not exist"
-msgstr ""
+msgstr "オリジナルのファイル{{file}}が存在しない"
 
 #: app/views/design.html:83
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: app/views/design.html:89
 msgid "Output label"
-msgstr ""
+msgstr "出力ラベル"
 
 #: app/views/menu.html:171
 msgid "Paste"
@@ -736,7 +733,7 @@ msgstr "ペースト"
 #: app/scripts/controllers/menu.js:563 app/scripts/controllers/menu.js:601
 #: app/scripts/controllers/menu.js:653 app/scripts/controllers/menu.js:703
 msgid "Path {{path}} does not exist"
-msgstr ""
+msgstr "パス {{path}} が存在しません"
 
 #: app/scripts/services/utils.js:1199
 msgid "Please run: {{cmd}}"
@@ -744,7 +741,7 @@ msgstr "実行してください： {{cmd}}"
 
 #: app/views/menu.html:208
 msgid "Preferences"
-msgstr ""
+msgstr "環境設定"
 
 #: app/views/menu.html:282
 msgid "Project information"
@@ -772,11 +769,11 @@ msgstr "Python 環境"
 
 #: app/views/menu.html:135
 msgid "Quit"
-msgstr ""
+msgstr "やめる"
 
 #: app/views/design.html:9
 msgid "Read only"
-msgstr ""
+msgstr "読み取り専用"
 
 #: app/views/menu.html:153
 msgid "Redo"
@@ -812,11 +809,11 @@ msgstr "置き換える"
 
 #: app/scripts/services/utils.js:822
 msgid "Reset SVG"
-msgstr ""
+msgstr "SVGをリセット"
 
 #: app/views/languages.html:74
 msgid "Russian"
-msgstr ""
+msgstr "ロシア語"
 
 #: app/views/menu.html:89
 msgid "Save"
@@ -848,7 +845,7 @@ msgstr "ボードを選択"
 
 #: app/scripts/services/blocks.js:1275 app/scripts/services/blocks.js:147
 msgid "Show clock"
-msgstr ""
+msgstr "クロックを確認"
 
 #: app/views/menu.html:582
 msgid "Source code"
@@ -856,7 +853,7 @@ msgstr "ソースコード"
 
 #: app/views/languages.html:20
 msgid "Spanish"
-msgstr ""
+msgstr "スペイン語"
 
 #: app/scripts/controllers/menu.js:1120
 msgid "Start build"
@@ -872,7 +869,7 @@ msgstr "検証を開始"
 
 #: app/scripts/services/tools.js:446
 msgid "Synchronize remote files ..."
-msgstr ""
+msgstr "リモートのファイルを同期…"
 
 #: app/views/menu.html:326
 msgid "System Info"
@@ -880,11 +877,11 @@ msgstr "システム情報"
 
 #: app/views/languages.html:62
 msgid "Taiwan"
-msgstr ""
+msgstr "台湾語"
 
 #: app/views/menu.html:112
 msgid "Testbench"
-msgstr ""
+msgstr "テストベンチ"
 
 #: app/scripts/services/tools.js:1612
 msgid "The collection {{name}} already exists."
@@ -898,7 +895,7 @@ msgstr "現在の FPGA I/O 設定が失われます。 ボードを {{name}} に
 
 #: app/scripts/services/tools.js:1185
 msgid "The toolchain will be removed. Do you want to continue?"
-msgstr ""
+msgstr "ツールチェーンが削除されます。続けますか？"
 
 #: app/scripts/services/tools.js:1832
 msgid "There is a new nightly version available"
@@ -921,7 +918,6 @@ msgid "This project is designed for the {{name}} board."
 msgstr "このプロジェクトはボード {{name}} 向けです。"
 
 #: app/scripts/services/graph.js:419
-#, fuzzy
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -939,6 +935,9 @@ msgid ""
 "<br/><br/>If you want to export this submodule to a file, execute \"Save as"
 "\" command to do it."
 msgstr ""
+"デザインを保存するには、キーロックをかけてトップレベルのデザインに移動する必"
+"要があります。<br/><br/>このサブモジュールをファイルに書き出したい場合は、"
+"「名前を付けて保存」を実行してください。"
 
 #: app/views/menu.html:199
 msgid "Toolbox"
@@ -971,7 +970,7 @@ msgstr "ツール"
 
 #: app/views/languages.html:104
 msgid "Turkish"
-msgstr ""
+msgstr "トルコ語"
 
 #: app/views/menu.html:224
 msgid "UI theme"
@@ -983,11 +982,11 @@ msgstr "戻す"
 
 #: app/scripts/services/tools.js:616
 msgid "Unknown board"
-msgstr ""
+msgstr "不明なボード"
 
 #: app/scripts/services/project.js:169
 msgid "Unsupported project format {{version}}"
-msgstr ""
+msgstr "非対応のプロジェクトフォーマット {{version}}"
 
 #: app/scripts/app.js:164
 msgid "Untitled"
@@ -1021,7 +1020,7 @@ msgstr "検証完了"
 
 #: app/views/design.html:183 app/views/menu.html:425
 msgid "Verify"
-msgstr ""
+msgstr "検証"
 
 #: app/scripts/services/utils.js:764 app/views/menu.html:569
 msgid "Version"
@@ -1033,7 +1032,7 @@ msgstr "バージョン情報"
 
 #: app/views/menu.html:289
 msgid "View"
-msgstr ""
+msgstr "表示"
 
 #: app/views/menu.html:559
 msgid "View license"
@@ -1041,11 +1040,11 @@ msgstr "ライセンスを確認"
 
 #: app/scripts/services/tools.js:807
 msgid "Warnings detected in the design"
-msgstr ""
+msgstr "デザインで検出された警告"
 
 #: app/scripts/services/blocks.js:675
 msgid "Wrong block format: {{type}}"
-msgstr ""
+msgstr "誤ったブロックフォーマット：{{type}}"
 
 #: app/scripts/services/blocks.js:1168 app/scripts/services/blocks.js:1254
 #: app/scripts/services/blocks.js:1350 app/scripts/services/blocks.js:1432
@@ -1054,31 +1053,31 @@ msgstr ""
 #: app/scripts/services/blocks.js:297 app/scripts/services/blocks.js:371
 #: app/scripts/services/blocks.js:440 app/scripts/services/blocks.js:94
 msgid "Wrong block name {{name}}"
-msgstr ""
+msgstr "誤ったブロック名：{{name}}"
 
 #: app/scripts/controllers/menu.js:1680
 msgid "Wrong new name!"
-msgstr ""
+msgstr "誤った名前！"
 
 #: app/scripts/services/blocks.js:586
 msgid "Wrong parameter name {{name}}"
-msgstr ""
+msgstr "誤ったパラメタ名 {{name}}"
 
 #: app/scripts/services/blocks.js:543 app/scripts/services/blocks.js:561
 msgid "Wrong port name {{name}}"
-msgstr ""
+msgstr "誤ったポート名 {{name}}"
 
 #: app/scripts/services/project.js:142
 msgid "Wrong project format: {{name}}"
-msgstr ""
+msgstr "誤ったプロジェクトフォーマット：{{name}}"
 
 #: app/scripts/services/tools.js:863
 msgid "Wrong remote hostname {{name}}"
-msgstr ""
+msgstr "誤ったリモートホスト名 {{name}}"
 
 #: app/scripts/controllers/menu.js:1584
 msgid "Wrong search name!"
-msgstr ""
+msgstr "誤った検索名！"
 
 #: app/scripts/controllers/menu.js:285
 msgid ""
@@ -1092,7 +1091,7 @@ msgstr ""
 
 #: app/scripts/services/project.js:96
 msgid "You can load it as it is or convert it for the {{name}} board."
-msgstr ""
+msgstr "そのまま読み込むか、ボード {{name}} 用に変換することができます。"
 
 #: app/scripts/controllers/menu.js:1112
 msgid ""
