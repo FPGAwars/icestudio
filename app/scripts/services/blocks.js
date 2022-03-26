@@ -14,7 +14,8 @@ angular.module('icestudio')
       //-- Tutorial: https://resources.jointjs.com/tutorial/
       joint, 
       
-      forms,
+      forms,  //-- Create and display forms for user inputs
+
       utils,
       common,
       gettextCatalog,
@@ -25,29 +26,48 @@ angular.module('icestudio')
   //---------------------------------------------------------------------------
   //-- CONSTANTS for the blocks
   //---------------------------------------------------------------------------
-  const BASIC_INPUT = 'basic.input';  //-- Input ports
+  //-- TYPE of blocks
+  const BASIC_INPUT = 'basic.input';   //-- Input ports
+  const BASIC_OUTPUT = 'basic.output'; //-- Output ports
   
-  //-- Block structure
-  const BLOCK_TEMPLATE = {
-  
-    //-- Type of block: BLOCK_BASIC_INPUT, ...
-    type: null,
-  
-    //-- Block identifier
-    id: null,
-  
-    //-- Block data. It depends on the block type
-    data: {},
-    
-    //-- Block position
-    position: { 
-      x: 0, 
-      y: 0
-    }
-  };
+  //-------------------------------------------------------------------------
+  //-- Class: Block Object. It represent any graphical object in the
+  //--        circuit
+  //-- 
+  //-------------------------------------------------------------------------
+  class Block {
 
-  //-- Exported constans 
+    //-- type: Type of block:
+    //--    -BASIC_INPUT: Input port
+    //--    -[..]
+    constructor(type)  {
+
+      //------- Object structure
+      //-- Type of block
+      this.type = type;
+
+      //-- Block identifier
+      this.id = null;
+
+      //-- Block data. Each block has its own data type
+      this.data = {};
+
+      //-- Block position
+      this.position = {
+        x: 0,
+        y: 0  
+      };
+    }
+  }
+
+  //-- Public classes
+  this.Block = Block;
+
+  //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
+  this.BASIC_OUTPUT = BASIC_OUTPUT;
+
+  
 
 
 
@@ -73,8 +93,8 @@ angular.module('icestudio')
   //--
   //-- Inputs:
   //--   * type: Type of Basic block:
-  //--     -BASIC_INPUT
-  //--     -'basic.output' --> Output port
+  //--     -BASIC_INPUT --> Input port
+  //--     -BASIC_OUTPUT --> Output port
   //--     -'basic.outputLabel'
   //--     -'basic.inputLabel'
   //--     -'basic.constant'
@@ -97,7 +117,7 @@ angular.module('icestudio')
         newBasicInput(callback);
         break;
 
-      case 'basic.output':
+      case BASIC_OUTPUT:
         newBasicOutput(callback);
         break;
 
@@ -141,11 +161,8 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   function newBasicInput(callback) {
 
-    //-- Create a new generic block (blank)
-    let blockInstance = utils.clone(BLOCK_TEMPLATE);
-
-    //-- ...of type BASIC_INPUT
-    blockInstance.type = BASIC_INPUT;
+    //-- Create a new blank Input port block
+    let blockInstance = new Block(BASIC_INPUT);
 
     //-- Define the Form for the Input block parameters
     //---------------------------------------------------------
@@ -298,14 +315,19 @@ angular.module('icestudio')
     });
   }
 
-
+  //-------------------------------------------------------------------------
+  //-- Create one or more New Basic Output blocks. A form is displayed first 
+  //-- for the user to enter the block data: name and pin type 
+  //--
+  //-- Inputs:
+  //--   * callback(cells):  Call the function when the block is read. The
+  //--      cells are passed as a parameter
+  //-------------------------------------------------------------------------
   function newBasicOutputLabel(callback) {
-    var blockInstance = {
-      id: null,
-      data: {},
-      type: 'basic.outputLabel',
-      position: { x: 0, y: 0 }
-    };
+
+    //-- Create a new blank Input port block
+    let blockInstance = new Block(BASIC_OUTPUT);
+
     var formSpecs = [
       {
         type: 'text',
