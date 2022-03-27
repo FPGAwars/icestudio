@@ -714,15 +714,45 @@ angular.module('icestudio')
     return form;
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create the form for the INPUT Labels
+  //-- Returns:
+  //--   * The object Form
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the output blocks           |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //----------------------------------------+
+  function basicInputLabelForm() {
+    console.log("HOLI????");
+  }
 
-
+  /*
+  var formSpecs = [
+    {
+      type: 'text',
+      title: gettextCatalog.getString('Enter the input label'),
+      value: ''
+    },
+    {
+      type: 'color-dropdown',
+      label: gettextCatalog.getString('Choose a color')
+    }
+*/
 
   //-- Public classes
   this.Form = Form;
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
+
   this.basicInputForm = basicInputForm;
   this.basicOutputForm = basicOutputForm;
+  this.basicInputLabelForm = basicInputLabelForm;
 
 
   //-----------------------------------------------------------------------

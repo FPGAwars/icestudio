@@ -1853,9 +1853,21 @@ angular
             project.addBasicBlock(blocks.BASIC_INPUT); 
             break;
 
-          case 'output': project.addBasicBlock('basic.output'); break;         
-          case 'labelInput': project.addBasicBlock('basic.outputLabel'); break;
-          case 'labelOutput': project.addBasicBlock('basic.inputLabel'); break;
+          //-- Output: Place an output port
+          case 'output': 
+            project.addBasicBlock(blocks.BASIC_OUTPUT); 
+            break;
+
+          //-- Input label
+          case 'labelInput': 
+            project.addBasicBlock(blocks.BASIC_INPUT_LABEL); 
+            break;
+
+          //-- Output label
+          case 'labelOutput': 
+            project.addBasicBlock(blocks.BASIC_OUTPUT_LABEL);
+            break;
+
           case 'memory': project.addBasicBlock('basic.memory'); break;
           case 'code': project.addBasicBlock('basic.code'); break;
           case 'information': project.addBasicBlock('basic.info'); break;

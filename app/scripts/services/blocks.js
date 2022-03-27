@@ -27,8 +27,14 @@ angular.module('icestudio')
   //-- CONSTANTS for the blocks
   //---------------------------------------------------------------------------
   //-- TYPE of blocks
-  const BASIC_INPUT = 'basic.input';   //-- Input ports
-  const BASIC_OUTPUT = 'basic.output'; //-- Output ports
+
+  //-- Ports
+  const BASIC_INPUT = 'basic.input';   
+  const BASIC_OUTPUT = 'basic.output';
+  
+  //-- Labels
+  const BASIC_INPUT_LABEL = "basic.inputLabel";
+  const BASIC_OUTPUT_LABEL = "basic.outputLabel";
   
   //-------------------------------------------------------------------------
   //-- Class: Block Object. It represent any graphical object in the
@@ -67,6 +73,8 @@ angular.module('icestudio')
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
   this.BASIC_OUTPUT = BASIC_OUTPUT;
+  this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
+  this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
 
   
 
@@ -286,7 +294,7 @@ angular.module('icestudio')
   }
 
   //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Output block. A form is displayed first 
+  //-- Create one or more New Basic Output blocks. A form is displayed first 
   //-- for the user to enter the block data: name and pin type 
   //--
   //-- Inputs:
@@ -393,7 +401,6 @@ angular.module('icestudio')
         positionY += 
           (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
 
-
         });
 
       //-- We are done! Execute the callback function if it was
@@ -407,17 +414,24 @@ angular.module('icestudio')
 
 
   //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Output blocks. A form is displayed first 
-  //-- for the user to enter the block data: name and pin type 
+  //-- Create one or more New Basic Input label blocks. A form is displayed 
+  //-- first for the user to enter the block data: label name and color 
   //--
   //-- Inputs:
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
   //-------------------------------------------------------------------------
-  function newBasicOutputLabel(callback) {
+  function newBasicInputLabel(callback) {
+
+    //-- Build the form
+    //let form = 
+    forms.basicInputLabelForm();
+
+
+
 
     //-- Create a new blank Input port block
-    let blockInstance = new Block(BASIC_OUTPUT);
+    let blockInstance = new Block(BASIC_INPUT_LABEL);
 
     var formSpecs = [
       {
@@ -483,11 +497,11 @@ angular.module('icestudio')
 
 
 
-    function newBasicInputLabel(callback) {
+    function newBasicOutputLabel(callback) {
       var blockInstance = {
         id: null,
         data: {},
-        type: 'basic.inputLabel',
+        type: BASIC_OUTPUT_LABEL,
         position: { x: 0, y: 0 }
 
       };
@@ -934,12 +948,16 @@ angular.module('icestudio')
       switch (instance.type) {
         case 'basic.input':
           return loadBasicInput(instance, disabled);
+
         case 'basic.output':
           return loadBasicOutput(instance, disabled);
-        case 'basic.outputLabel':
-          return loadBasicOutputLabel(instance, disabled);
+
         case 'basic.inputLabel':
           return loadBasicInputLabel(instance, disabled);
+
+        case 'basic.outputLabel':
+          return loadBasicOutputLabel(instance, disabled);
+
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':
@@ -975,10 +993,33 @@ angular.module('icestudio')
       return cell;
     }
 
-    function loadBasicOutputLabel(instance, disabled) {
+    function loadBasicInputLabel(instance, disabled) {
       var data = instance.data;
       var rightPorts = [{
         id: 'outlabel',
+        name: '',
+        label: '',
+        size: data.pins ? data.pins.length : (data.size || 1)
+      }];
+
+      //var cell = new joint.shapes.ice.Output({
+      var cell = new joint.shapes.ice.InputLabel({
+        id: instance.id,
+        blockColor: instance.blockColor,
+        blockType: instance.type,
+        data: instance.data,
+        position: instance.position,
+        disabled: disabled,
+        rightPorts: rightPorts,
+        choices: common.pinoutInputHTML
+      });
+      return cell;
+    }
+
+    function loadBasicOutputLabel(instance, disabled) {
+      var data = instance.data;
+      var leftPorts = [{
+        id: 'inlabel',
         name: '',
         label: '',
         size: data.pins ? data.pins.length : (data.size || 1)
@@ -991,8 +1032,8 @@ angular.module('icestudio')
         data: instance.data,
         position: instance.position,
         disabled: disabled,
-        rightPorts: rightPorts,
-        choices: common.pinoutInputHTML
+        leftPorts: leftPorts,
+        choices: common.pinoutOutputHTML
       });
       console.log("DEBUG! ETIQUETA SALIDA CREADA!!!");
       return cell;
@@ -1018,28 +1059,7 @@ angular.module('icestudio')
       });
       return cell;
     }
-    function loadBasicInputLabel(instance, disabled) {
-      var data = instance.data;
-      var leftPorts = [{
-        id: 'inlabel',
-        name: '',
-        label: '',
-        size: data.pins ? data.pins.length : (data.size || 1)
-      }];
-
-      //var cell = new joint.shapes.ice.Output({
-      var cell = new joint.shapes.ice.InputLabel({
-        id: instance.id,
-        blockColor: instance.blockColor,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        choices: common.pinoutOutputHTML
-      });
-      return cell;
-    }
+    
 
 
     function loadBasicConstant(instance, disabled) {
