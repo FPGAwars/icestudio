@@ -49,252 +49,7 @@ angular.module('icestudio')
    </div>
  `;
 
-  //---------------------------------------------------------
-  //-- TEXTFIELD. It represents a Form Input text field
-  //---------------------------------------------------------
-  //-- This is how it is rendered in the Form
-  /*
-         text message
-        +-----------------+
-        | Input text      |
-        +-----------------+ 
-   
-  */
-  class TextField {
-
-    //-----------------------------------------------------------------------
-    //-- Input parameters:
-    //--   * Label: Text place above the input box
-    //--   * value: Default value
-    //--   * formId: Form identification number
-    //-----------------------------------------------------------------------
-    constructor(label, value, formId) {
-
-      this.type = FIELD_TEXT;
-      this.label = label;
-      this.value = value;
-      this.formId = formId;
-    }
-
-    //---------------------------------------------------------
-    //-- Return a string whith the HTML code for this field
-    //---------------------------------------------------------
-    html() {
-
-      //-- Generate the HTML code
-
-      //-- Insert the parameters in the html code template
-      let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, this.label);
-      html = html.replace(PARAM_VALUE, this.value);
-      html = html.replace(PARAM_ID, this.formId);
-
-      return html;
-    }
-
-  }
-
-  //-------------------------------------------------------------------------
-  //--- CHECKBOX FIELD. Input checkbox field
-  //-------------------------------------------------------------------------
-    //-- This is how it is rendered in the Form
-  /*
-         [ ] Label
-  */
-  class CheckboxField {
-
-    //-----------------------------------------------------------------------
-    //-- Input parameters:
-    //--   * Label: Text place to the right of the checkbox
-    //--   * value: Default value
-    //--   * formId: Form identification number
-    //-----------------------------------------------------------------------
-    constructor(label, value, formId) {
-
-      this.type = FIELD_CHECKBOX;
-      this.label = label;
-      this.value = value;
-      this.formId = formId;
-    }
-
-    //---------------------------------------------------------
-    //-- Return a string whith the HTML code for this field
-    //---------------------------------------------------------
-    html() {
-      //-- Generate the HTML code
-
-      //-- Insert the parameters in the html code template
-      let html = FORM_CHECKBOX_TEMPLATE.replace(
-        PARAM_VALUE,
-        (this.value ? 'checked' : ''));
-
-      html = html.replace(PARAM_ID, this.formId);
-      html = html.replace(PARAM_LABEL, this.label);
-
-      return html;
-    }
-
-  }
-
-
-
-
-
-  //-------------------------------------------------------------------------
-  //-- Constant for working with HTML FORMS
-  //-------------------------------------------------------------------------
-  //-- Each input Form has diffefrent Fields:
-  //--  * Text : For entering texts (Ex. port names)
-  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
-  //--  * Combobox. Multiple selection. (Ex. Address format )
-  //--  * Color selection dropmenu
-
-  //-----------------------------------------------------------
-  //-- Create the html code for an input Text field
-  //-- INPUTS:
-  //--   * msg: Text message to shown as a title
-  //--   * value: Current value (if any)
-  //--   * formID: Form identifier number
-  //--
-  //-- Returns:
-  //--   -A string with the HTML code for that Field
-  //-----------------------------------------------------------
-  this.htmlInputText = function(msg, value, formId) {
-
-    //-- Insert the parameters in the html code template
-    let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, msg);
-    html = html.replace(PARAM_VALUE, value);
-    html = html.replace(PARAM_ID, formId);
-
-    return html;
-  };
-  
- 
-  
- 
-
-  //-----------------------------------------------------------
-  //-- Create the html code for an input checkbox field
-  //-- INPUTS:
-  //--   * msg: Text message to shown as a title
-  //--   * formID: Form identifier number
-  //--
-  //-- Returns:
-  //--   -A string with the HTML code for that Field
-  //-----------------------------------------------------------
-  this.htmlInputCheckbox = function(label, value, formId) {
-
-    //-- Insert the parameters in the html code template
-    let html = FORM_CHECKBOX_TEMPLATE.replace(
-                  PARAM_VALUE,
-                  (value ? 'checked' : ''));
-
-    html = html.replace(PARAM_ID, formId);
-    html = html.replace(PARAM_LABEL, label);
-
-    return html;
-  };
-
-  //-------------------------------------------------------------------------
-  //--- Input combobox field
-  //-------------------------------------------------------------------------
-   /*
-         Label
-        +-----------------+
-        | Option        v |
-        +-----------------+  
-  */
-
-  //-- HTML code template
-  //-- Ex. <option value="10" selected>Decimal</option>
-  const COMBOBOX_OPTION_TEMPLATE=`
-    <option value="${PARAM_VALUE}" ${PARAM_SELECTED}>
-      ${PARAM_LABEL}
-    </option>
-  `;
-
-  //-- HTML template for the combobox input
-  const FORM_COMBOBOX_TEMPLATE = `
-  <div class="form-group">
-    <label style="font-weight:normal">${PARAM_LABEL}</label>
-    <select class="form-control" id="form${PARAM_ID}">
-      ${PARAM_OPTIONS}
-    </select>
-  </div>
-`;
-
-  //----------------------------------------------------
-  //-- create the html code for the option tag
-  //-- INPUTS:
-  //--   * value: Value for the option
-  //--   * selected: If this option is de default
-  //--   * label: Text assigned to the option
-  //--
-  //--  Returns:
-  //--    -A string with the HTML code
-  //----------------------------------------------------
-  this.htmlComboboxOption = function(value, selected, label) {
-
-    //-- Insert the parameters in the html TEMPLATE
-    let html = COMBOBOX_OPTION_TEMPLATE.replace(PARAM_VALUE, value);
-    html = html.replace(PARAM_SELECTED, selected);
-    html = html.replace(PARAM_LABEL, label);
-
-    return html;
-  };
-
-  //-------------------------------------------------------------------------
-  //-- create the html code for a Combobox input Field
-  //-- INPUTS:
-  //--   * options: Array of options. Each option have the attributes:
-  //--        -value
-  //--        -label
-  //--   * value: Default Value for the option
-  //--   * selected: If this option is the default
-  //--   * label: Text assigned to the option
-  //--
-  //--  Returns:
-  //--    -A string with the HTML code
-  //-------------------------------------------------------------------------
-  this.htmlInputCombobox = function(options, label, value, formId) {
-
-    //-- Array with the html code generated by the options
-    let opts = [];
-
-    //-- Apply to every option in the combobox
-    options.forEach( (op) => {
-  
-      //-- Is this option selected by default?
-      let selected = (value === op.value) ? 'selected' : '';
-  
-      //-- Generate the html code for that option
-      let html = this.htmlComboboxOption(op.value, selected, op.label);
-  
-      //-- Store in the array
-      opts.push(html);
-    });
-
-    //-- Join all the option into a single string
-    opts = opts.join('');
-
-    //-- Insert the parameters in the Combox HTML template
-    let html = FORM_COMBOBOX_TEMPLATE.replace(PARAM_LABEL, label);
-    html = html.replace(PARAM_ID, formId);
-    html = html.replace(PARAM_OPTIONS, opts);
-    
-    return(html);
-  };
-
-  //-------------------------------------------------------------------------
-  //--- Input color dropdown field
-  //-------------------------------------------------------------------------
-  /*
-        Label
-        +-----------------+
-        | o Color       v |
-        +-----------------+  
-  */
-
-  //-- HTML template for the combobox input
+  //-- HTML template for the color dropdown input
   const FORM_COLOR_INPUT_TEMPLATE = `
     <div class="form-group">
        <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
@@ -474,6 +229,270 @@ angular.module('icestudio')
       </div>
     </div>
   `;
+
+  //---------------------------------------------------------
+  //-- TEXTFIELD. It represents a Form Input text field
+  //---------------------------------------------------------
+  //-- This is how it is rendered in the Form
+  /*
+         text message
+        +-----------------+
+        | Input text      |
+        +-----------------+ 
+   
+  */
+  class TextField {
+
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place above the input box
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_TEXT;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, this.label);
+      html = html.replace(PARAM_VALUE, this.value);
+      html = html.replace(PARAM_ID, this.formId);
+
+      return html;
+    }
+
+  }
+
+  //-------------------------------------------------------------------------
+  //--- CHECKBOX FIELD. Input checkbox field
+  //-------------------------------------------------------------------------
+    //-- This is how it is rendered in the Form
+  /*
+         [ ] Label
+  */
+  class CheckboxField {
+
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place to the right of the checkbox
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_CHECKBOX;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_CHECKBOX_TEMPLATE.replace(
+        PARAM_VALUE,
+        (this.value ? 'checked' : ''));
+
+      html = html.replace(PARAM_ID, this.formId);
+      html = html.replace(PARAM_LABEL, this.label);
+
+      return html;
+    }
+
+  }
+
+  //-------------------------------------------------------------------------
+  //--- COLOR FIELD. Input color dropdown field
+  //-------------------------------------------------------------------------
+  /*
+        Label
+        +-----------------+
+        | o Color       v |
+        +-----------------+  
+  */
+
+  class ColorField {
+    //-----------------------------------------------------------------------
+    //-- Create the html code for an input color dropdown field
+    //-- INPUTS:
+    //--   * Label: Text place above the color input box
+    //--   * color: Color value (String)
+    //--   * colorName: Color name (String)
+    //--
+    //-- Returns:
+    //--   -A string with the HTML code for that Field
+    //-----------------------------------------------------------------------
+
+    //TODO
+
+  }
+
+
+
+
+  //-------------------------------------------------------------------------
+  //-- Constant for working with HTML FORMS
+  //-------------------------------------------------------------------------
+  //-- Each input Form has diffefrent Fields:
+  //--  * Text : For entering texts (Ex. port names)
+  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
+  //--  * Combobox. Multiple selection. (Ex. Address format )
+  //--  * Color selection dropmenu
+
+  //-----------------------------------------------------------
+  //-- Create the html code for an input Text field
+  //-- INPUTS:
+  //--   * msg: Text message to shown as a title
+  //--   * value: Current value (if any)
+  //--   * formID: Form identifier number
+  //--
+  //-- Returns:
+  //--   -A string with the HTML code for that Field
+  //-----------------------------------------------------------
+  this.htmlInputText = function(msg, value, formId) {
+
+    //-- Insert the parameters in the html code template
+    let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, msg);
+    html = html.replace(PARAM_VALUE, value);
+    html = html.replace(PARAM_ID, formId);
+
+    return html;
+  };
+  
+ 
+  
+ 
+
+  //-----------------------------------------------------------
+  //-- Create the html code for an input checkbox field
+  //-- INPUTS:
+  //--   * msg: Text message to shown as a title
+  //--   * formID: Form identifier number
+  //--
+  //-- Returns:
+  //--   -A string with the HTML code for that Field
+  //-----------------------------------------------------------
+  this.htmlInputCheckbox = function(label, value, formId) {
+
+    //-- Insert the parameters in the html code template
+    let html = FORM_CHECKBOX_TEMPLATE.replace(
+                  PARAM_VALUE,
+                  (value ? 'checked' : ''));
+
+    html = html.replace(PARAM_ID, formId);
+    html = html.replace(PARAM_LABEL, label);
+
+    return html;
+  };
+
+  //-------------------------------------------------------------------------
+  //--- Input combobox field
+  //-------------------------------------------------------------------------
+   /*
+         Label
+        +-----------------+
+        | Option        v |
+        +-----------------+  
+  */
+
+  //-- HTML code template
+  //-- Ex. <option value="10" selected>Decimal</option>
+  const COMBOBOX_OPTION_TEMPLATE=`
+    <option value="${PARAM_VALUE}" ${PARAM_SELECTED}>
+      ${PARAM_LABEL}
+    </option>
+  `;
+
+  //-- HTML template for the combobox input
+  const FORM_COMBOBOX_TEMPLATE = `
+  <div class="form-group">
+    <label style="font-weight:normal">${PARAM_LABEL}</label>
+    <select class="form-control" id="form${PARAM_ID}">
+      ${PARAM_OPTIONS}
+    </select>
+  </div>
+`;
+
+  //----------------------------------------------------
+  //-- create the html code for the option tag
+  //-- INPUTS:
+  //--   * value: Value for the option
+  //--   * selected: If this option is de default
+  //--   * label: Text assigned to the option
+  //--
+  //--  Returns:
+  //--    -A string with the HTML code
+  //----------------------------------------------------
+  this.htmlComboboxOption = function(value, selected, label) {
+
+    //-- Insert the parameters in the html TEMPLATE
+    let html = COMBOBOX_OPTION_TEMPLATE.replace(PARAM_VALUE, value);
+    html = html.replace(PARAM_SELECTED, selected);
+    html = html.replace(PARAM_LABEL, label);
+
+    return html;
+  };
+
+  //-------------------------------------------------------------------------
+  //-- create the html code for a Combobox input Field
+  //-- INPUTS:
+  //--   * options: Array of options. Each option have the attributes:
+  //--        -value
+  //--        -label
+  //--   * value: Default Value for the option
+  //--   * selected: If this option is the default
+  //--   * label: Text assigned to the option
+  //--
+  //--  Returns:
+  //--    -A string with the HTML code
+  //-------------------------------------------------------------------------
+  this.htmlInputCombobox = function(options, label, value, formId) {
+
+    //-- Array with the html code generated by the options
+    let opts = [];
+
+    //-- Apply to every option in the combobox
+    options.forEach( (op) => {
+  
+      //-- Is this option selected by default?
+      let selected = (value === op.value) ? 'selected' : '';
+  
+      //-- Generate the html code for that option
+      let html = this.htmlComboboxOption(op.value, selected, op.label);
+  
+      //-- Store in the array
+      opts.push(html);
+    });
+
+    //-- Join all the option into a single string
+    opts = opts.join('');
+
+    //-- Insert the parameters in the Combox HTML template
+    let html = FORM_COMBOBOX_TEMPLATE.replace(PARAM_LABEL, label);
+    html = html.replace(PARAM_ID, formId);
+    html = html.replace(PARAM_OPTIONS, opts);
+    
+    return(html);
+  };
+
+  
+
+ 
 
   //-----------------------------------------------------------
   //-- Create the html code for an input color dropdown field
@@ -721,29 +740,44 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   //-- Form:
   //----------------------------------------+
-  //--    Enter the output blocks           |
+  //--    Enter the input label             |
   //--    +--------------------------+      |
-  //--    | Pin names                |      |
+  //--    | Label names              |      |
   //--    +--------------------------+      |
   //--                                      |
-  //--    [✅️] FPGA pin                     |
+  //--    Chose a color                     |
+  //--    +--------------------------+      |
+  //--    | o Fucshia                |      |
+  //--    +--------------------------+      |
+  //--                                      |
   //----------------------------------------+
   function basicInputLabelForm() {
-    console.log("HOLI????");
-  }
 
-  /*
-  var formSpecs = [
-    {
-      type: 'text',
-      title: gettextCatalog.getString('Enter the input label'),
-      value: ''
-    },
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the input label'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- TODO: Create the field 1 with the Colorselector...
+    /*
     {
       type: 'color-dropdown',
       label: gettextCatalog.getString('Choose a color')
-    }
-*/
+    }*/
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    //form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
 
   //-- Public classes
   this.Form = Form;

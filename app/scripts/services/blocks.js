@@ -104,8 +104,8 @@ angular.module('icestudio')
   //--   * type: Type of Basic block:
   //--     -BASIC_INPUT --> Input port
   //--     -BASIC_OUTPUT --> Output port
-  //--     -'basic.outputLabel'
-  //--     -'basic.inputLabel'
+  //--     -BASIC_INPUT_LABEL --> Input label
+  //--     -BASIC_OUTPUT_LABEL --> Output label
   //--     -'basic.constant'
   //--     -'basic.memory'
   //--     -'basic.code'
@@ -130,12 +130,12 @@ angular.module('icestudio')
         newBasicOutput(callback);
         break;
 
-      case 'basic.outputLabel':
+      case BASIC_OUTPUT_LABEL:
         newBasicOutputLabel(callback);
         console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
         break;
 
-      case 'basic.inputLabel':
+      case BASIC_INPUT_LABEL:
         newBasicInputLabel(callback);
         break;
 
@@ -424,12 +424,14 @@ angular.module('icestudio')
   function newBasicInputLabel(callback) {
 
     //-- Build the form
-    //let form = 
-    forms.basicInputLabelForm();
+    let form = forms.basicInputLabelForm();
 
+     //-- Display the form
+     form.display((evt) => {
 
+     });
 
-
+/*
     //-- Create a new blank Input port block
     let blockInstance = new Block(BASIC_INPUT_LABEL);
 
@@ -445,9 +447,9 @@ angular.module('icestudio')
       }
 
     ];
-    forms.displayForm(formSpecs, function (evt, values) {
-      var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-      var color = values[1];
+    forms.displayForm(formSpecs, function (evt, values) {*/
+     // var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
+    /*  var color = values[1];
       var virtual = !values[2];
       var clock = values[2];
       if (resultAlert) {
@@ -492,7 +494,7 @@ angular.module('icestudio')
       if (callback) {
         callback(cells);
       }
-    });
+    });*/
   }
 
 
