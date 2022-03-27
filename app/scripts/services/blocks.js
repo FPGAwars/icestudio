@@ -39,6 +39,7 @@ angular.module('icestudio')
 
     //-- type: Type of block:
     //--    -BASIC_INPUT: Input port
+    //--    -BASIC_OUTPUT: Output port
     //--    -[..]
     constructor(type)  {
 
@@ -161,9 +162,6 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   function newBasicInput(callback) {
 
-    //-- Create a new blank Input port block
-    let blockInstance = new Block(BASIC_INPUT);
-
     //-- Define the Form for the Input block parameters
     //---------------------------------------------------------
     //--    Enter the input blocks
@@ -174,14 +172,162 @@ angular.module('icestudio')
     //--    [✅️] FPGA pin
     //--    [  ] Show clock 
     //---------------------------------------------------------
-    let form = [
 
-      //-- Field 0: Text
-      {
-        type: 'text',
-        title: gettextCatalog.getString('Enter the input blocks'),
-        value: ''  //-- Names of the input blocks
-      },
+    //-- Create a blank Form
+    let form = new forms.Form();
+
+    //-- Field 0: Text input
+    let field0 = new forms.TextField(
+       gettextCatalog.getString('Enter the input blocks'),
+       '',   //-- Default value
+       0     //-- Field id
+    );
+
+    //-- Field 1: Checkbox for selecting if the input block
+    //-- is an FPGA pin or an internal port
+    let field1 = new forms.CheckboxField(
+      gettextCatalog.getString('FPGA pin'),
+      true,  //-- Default value
+      1      //-- Field id
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+    
+
+
+
+
+    //-- Display the form
+    form.display((evt) => {
+
+      //-- This is only executed when the user has pressed the OK button
+
+      //-- Read the values from the form
+      let values = form.readFields();
+
+      //-- Debug
+      console.log("EVT: " + evt);
+      console.log("Values: " + values);
+
+      //------ Parse the receive values
+
+      //-- values[0]: label or labels separated by commas (,)
+      //-- First: remove the initial and ending spaces, if any
+      let text = values[0].trim();
+
+      //-- Second: Remove the spaces around the commas (,) 
+      text = text.replace(/\s*,\s*/g, ',');
+
+      //-- Third: Get the Input block names as a list of strings
+      let labels = text.split(',');
+
+      //-- Values[1] indicates if it is a virtual pin or not
+      let virtual = !values[1];
+
+      //-- values[2] indicates if this is a clock input
+      let clock = values[2];
+
+      //-- If there was a previous notification, dismiss it
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
+
+      //--------- Validate the values
+
+      //-- Variables for storing the port information
+      let portInfo, portInfos = [];
+
+      //-- Analize all the labels...
+      labels.forEach( name => {
+        
+        //-- Get the port Info
+        portInfo = utils.parsePortLabel(
+                      name, 
+                      common.PATTERN_GLOBAL_PORT_LABEL);
+
+        //-- The port was created ok
+        //-- Insert it into the portInfos array
+        if (portInfo) {
+
+          //-- Close the form when finish
+          evt.cancel = false;
+          portInfos.push(portInfo);
+        }
+
+        //-- There was an error parsing the label
+        else {
+
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                       { name: name }));
+          return;
+        }
+      });
+
+      //--------- Everything is ok so far... Let's create the block!
+
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Crear all the ports...
+      portInfos.forEach( portInfo => {
+        
+        //-- Error: Buses cannot be clocks...
+        if (portInfo.rangestr && clock) {
+          evt.cancel = true;
+
+          //-- Show a notification with the warning
+          resultAlert = alertify.warning(
+             gettextCatalog.getString('Clock not allowed for data buses'));
+          return;
+        }
+
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
+        //-- Create a new blank Input port block
+        let blockInstance = new Block(BASIC_INPUT);
+
+        //-- Create the block data
+        blockInstance.data = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          pins: pins,
+          virtual: virtual,
+          clock: clock
+        };
+
+        //-- Build the block
+        let block = loadBasic(blockInstance);
+
+        //-- Insert the block into the array
+        cells.push(block);
+
+        //-- Calculate the Next block position
+        //-- The position is different for virtual and real pins
+        blockInstance.position.y += 
+          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+      });
+
+      //-- We are done! Execute the callback function if it was
+      //-- passed as an argument
+      if (callback) {
+        callback(cells);
+      }
+
+    });
+
+  }
+
+ /*  
+    let form = [
 
       //-- Field 1: Checkbox for selecting if the input block
       //-- is an FPGA pin or an internal port
@@ -196,9 +342,11 @@ angular.module('icestudio')
         value: false
       }
     ];
+    */
 
     //-- Display the Form and execute the callback
     //-- function when the user press OK
+    /*
     forms.displayForm(form, (evt, values) => {
 
       //-- Debug
@@ -211,9 +359,9 @@ angular.module('icestudio')
       //-- First: remove the initial and ending spaces, if any
       let text = values[0].trim();
 
-      //-- Second: Remove the spaces around the commas (,)
-      text = text.replace(/\s*,\s*/g, ',');
-
+      //-- Second: Remove the spaces around the commas (,) */
+      //text = text.replace(/\s*,\s*/g, ','); 
+/*
       //-- Third: Get the Input block names as a list of strings
       let labels = text.split(',');
 
@@ -312,8 +460,7 @@ angular.module('icestudio')
       if (callback) {
         callback(cells);
       }
-    });
-  }
+    });*/
 
   //-------------------------------------------------------------------------
   //-- Create one or more New Basic Output blocks. A form is displayed first 

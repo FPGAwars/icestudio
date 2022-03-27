@@ -1,25 +1,19 @@
 //---------------------------------------------------------------------------
 //-- Forms managment
 //---------------------------------------------------------------------------
-
 'use strict';
+
+//-- Disable the jshint Warning: "xxxx defined but never used"
+/* jshint unused:false */
 
 angular.module('icestudio')
   .service('forms', 
-    function (
-
-    ) 
+    function () 
 {
 
-  //-------------------------------------------------------------------------
-  //-- Constant for working with HTML FORMS
-  //-------------------------------------------------------------------------
-  //-- Each input Form has diffefrent Fields:
-  //--  * Text : For entering texts (Ex. port names)
-  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
-  //--  * Combobox. Multiple selection. (Ex. Address format )
-  //--  * Color selection dropmenu
-  
+  //-- Constant for the Field Clases
+  const FIELD_TEXT = 'text';
+  const FIELD_CHECKBOX = 'checkbox';
 
   //-- Constants for the Field Parameters
   const PARAM_TEXT = "%TEXT%";
@@ -31,25 +25,126 @@ angular.module('icestudio')
   const PARAM_COLOR = "%COLOR%";
   const PARAM_COLOR_NAME = "%COLOR_NAME%";
 
-  //-------------------------------------------------------------------------
-  //--- Input text field
-  //-------------------------------------------------------------------------
+  //------------------------ HTML TEMPLATES for the Fields
+
+  //-- Input text
+  const FORM_TEXT_TEMPLATE = `
+  <p> ${PARAM_TEXT} </p>
+  <input class="ajs-input" 
+         type="text" 
+         id="form${PARAM_ID}" 
+         value="${PARAM_VALUE}"
+         autocomplete="off"/>
+  `;
+
+   //-- Checkbox
+   const FORM_CHECKBOX_TEMPLATE = `
+   <div class="checkbox">
+     <label>
+       <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
+       ${PARAM_LABEL}
+     </label>
+   </div>
+ `;
+
+  //---------------------------------------------------------
+  //-- TEXTFIELD. It represents a Form Input text field
+  //---------------------------------------------------------
+  //-- This is how it is rendered in the Form
   /*
          text message
         +-----------------+
         | Input text      |
-        +-----------------+  
+        +-----------------+ 
+   
   */
+  class TextField {
 
-  //-- HTLM code template
-  const FORM_TEXT_TEMPLATE = `
-    <p> ${PARAM_TEXT} </p>
-    <input class="ajs-input" 
-           type="text" 
-           id="form${PARAM_ID}" 
-           value="${PARAM_VALUE}"
-           autocomplete="off"/>
-    `;
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place above the input box
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_TEXT;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, this.label);
+      html = html.replace(PARAM_VALUE, this.value);
+      html = html.replace(PARAM_ID, this.formId);
+
+      return html;
+    }
+
+  }
+
+  //-------------------------------------------------------------------------
+  //--- CHECKBOX FIELD. Input checkbox field
+  //-------------------------------------------------------------------------
+    //-- This is how it is rendered in the Form
+  /*
+         [ ] Label
+  */
+  class CheckboxField {
+
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place to the right of the checkbox
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_CHECKBOX;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_CHECKBOX_TEMPLATE.replace(
+        PARAM_VALUE,
+        (this.value ? 'checked' : ''));
+
+      html = html.replace(PARAM_ID, this.formId);
+      html = html.replace(PARAM_LABEL, this.label);
+
+      return html;
+    }
+
+  }
+
+
+
+
+
+  //-------------------------------------------------------------------------
+  //-- Constant for working with HTML FORMS
+  //-------------------------------------------------------------------------
+  //-- Each input Form has diffefrent Fields:
+  //--  * Text : For entering texts (Ex. port names)
+  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
+  //--  * Combobox. Multiple selection. (Ex. Address format )
+  //--  * Color selection dropmenu
 
   //-----------------------------------------------------------
   //-- Create the html code for an input Text field
@@ -72,22 +167,8 @@ angular.module('icestudio')
   };
   
  
-  //-------------------------------------------------------------------------
-  //--- Input checkbox field
-  //-------------------------------------------------------------------------
-  /*
-         [ ] Label
-  */
-
-  //-- HTLM code template
-  const FORM_CHECKBOX_TEMPLATE = `
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-        ${PARAM_LABEL}
-      </label>
-    </div>
-  `;
+  
+ 
 
   //-----------------------------------------------------------
   //-- Create the html code for an input checkbox field
@@ -416,6 +497,132 @@ angular.module('icestudio')
   };
 
 
+  class Form {
+
+    //-- Build a blank form
+    constructor() {
+
+      //-- Array of fields
+      this.fields = [];
+    }
+
+    //------------------------------------
+    //-- Add a field to the form
+    //------------------------------------
+    addField(field) {
+      this.fields.push(field);
+    }
+
+    //------------------------------------------------------------------
+    //-- Read all the inputs from the fields introduced by the user
+    //-- Returns: An array of values
+    //------------------------------------------------------------------
+    readFields() {
+
+      //-- Array were the values will be stored 
+      let values = [];
+
+      //-- Temporal variable for storing a field value
+      let value;
+
+      //-- Read the values from the Form fields
+      //-- and insert them into the values array
+      this.fields.forEach( field => {
+
+        //-- Read the value depending on the field type
+        switch (field.type) {
+
+          //-- Input text
+          case FIELD_TEXT:
+
+            //-- Read the value from the form i
+            value = $('#form' + field.formId).val();
+            break;
+
+          //-- Checkbox
+          case FIELD_CHECKBOX:
+
+            //-- Read the value from the form i
+            value = $($('#form' + field.formId).prop('checked'));
+            value = value[0];
+            break;
+        }
+
+        //-- Add the value to the array
+        values.push(value);
+
+      });
+
+      //-- Return all the values
+      return values;
+    }
+
+
+    //-------------------------------------
+    //-- Generate the HTML of the form
+    //-------------------------------------
+    html() {
+
+      //-- Variable for storing the html code
+      let formHtml = [];
+
+      //-- Variable for storing the field HTML code
+      let fieldHtml;
+
+      //-- Initial tag for the Form
+      formHtml.push('<div>');
+
+      //-- Generate the html for all the fields in the form
+      this.fields.forEach( field => {
+
+        //-- Create the html code
+        fieldHtml = field.html();
+
+        //-- Store the html for this Field
+        formHtml.push(fieldHtml);
+
+      });
+
+      //-- Closing tag for the Form
+      formHtml.push('</div>');
+
+      //-- Create the string
+      let html = formHtml.join('\n');
+
+      //-- return the HTML code
+      return html;
+
+    }
+
+    //-----------------------------------------------------------------
+    //-- Display the Form
+    //-- INPUT:
+    //--   * callback: Function called when the OK button is pressed
+    //-----------------------------------------------------------------
+    display(callback) {
+
+      //-- Create the HTML
+      let html = this.html();
+
+      //-- Display the Form
+      alertify.confirm(html)
+
+        //-- Set the callback for the OK button
+        .set('onok', callback )
+
+        //-- Set the callback for the Candel button:
+        //--   Do nothing... 
+        .set('oncancel', function ( /*evt*/) { });
+
+    }
+  }
+
+  //-- Public classes
+  this.Form = Form;
+  this.TextField = TextField;
+  this.CheckboxField = CheckboxField;
+
+
   //-----------------------------------------------------------------------
   //-- Display a Form
   //-- Input: specs. Form specifications for rendering
@@ -446,10 +653,15 @@ angular.module('icestudio')
       switch (field.type) {
         
         //-- Text input field
-        case 'text':
+        case FIELD_TEXT:
+
+          //-- TEMP CODE. REMOVE IT WHEN REFACTORED
+          let f = new TextField(field.title, field.value, i);
 
           //-- Create the html code
-          html = this.htmlInputText(field.title, field.value, i);
+          //-- label, value, formId
+          html = f.html();
+          //html = this.htmlInputText(field.title, field.value, i);
 
           //-- Store the html for this Form
           formHtml.push(html);
