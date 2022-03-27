@@ -671,7 +671,50 @@ angular.module('icestudio')
     return form;
   }
 
-  
+
+  //-------------------------------------------------------------------------
+  //-- Create the form for the OUTPUT PORTS
+  //-- Returns:
+  //--   * The object Form for the Output ports
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the output blocks           |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //----------------------------------------+
+  function basicOutputForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the output blocks'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Checkbox for selecting if the output block
+    //-- is an FPGA pin or an internal port
+    let field1 = new CheckboxField(
+      gettextCatalog.getString('FPGA pin'),
+      true,  //-- Default value
+      1      //-- Field id
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
+
 
 
   //-- Public classes
@@ -679,6 +722,7 @@ angular.module('icestudio')
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
   this.basicInputForm = basicInputForm;
+  this.basicOutputForm = basicOutputForm;
 
 
   //-----------------------------------------------------------------------

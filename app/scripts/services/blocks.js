@@ -175,7 +175,7 @@ angular.module('icestudio')
 
       //-- Values[0]: Input pin names
       //-- Parse the input names
-      let names = parseNames(values[0]);
+      let names = utils.parseNames(values[0]);
 
       //-- Values[1] indicates if it is a virtual pin or not
       let virtual = !values[1];
@@ -193,7 +193,7 @@ angular.module('icestudio')
       //-- Variables for storing the port information
       let portInfo, portInfos = [];
 
-      //-- Analize all the labels...
+      //-- Analize all the port names...
       names.forEach( name => {
         
         //-- Get the port Info
@@ -282,70 +282,129 @@ angular.module('icestudio')
       if (callback) {
         callback(cells);
       }
-
     });
-
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create one or more New Basic Output block. A form is displayed first 
+  //-- for the user to enter the block data: name and pin type 
+  //--
+  //-- Inputs:
+  //--   * callback(cells):  Call the function when the block is read. The
+  //--      cells are passed as a parameter
+  //-------------------------------------------------------------------------
   function newBasicOutput(callback) {
-    var blockInstance = {
-      id: null,
-      data: {},
-      type: 'basic.output',
-      position: { x: 0, y: 0 }
-    };
-    var formSpecs = [
-      {
-        type: 'text',
-        title: gettextCatalog.getString('Enter the output blocks'),
-        value: ''
-      },
-      {
-        type: 'checkbox',
-        label: gettextCatalog.getString('FPGA pin'),
-        value: true
-      }
-    ];
-    forms.displayForm(formSpecs, function (evt, values) {
-      var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-      var virtual = !values[1];
+
+    //-- Build the form
+    let form = forms.basicOutputForm();
+
+    //-- Display the form
+    form.display((evt) => {
+
+      //-- The callback is executed when the user has pressed the OK button
+
+      //-- Read the values from the form
+      let values = form.readFields();
+
+      //-- Values[0]: Output pin names
+      //-- Parse the port names
+      let names = utils.parseNames(values[0]);
+
+      //-- Values[1] indicates if it is a virtual pin or not
+      let virtual = !values[1];
+
+      //-- If there was a previous notification, dismiss it
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      // Validate values
-      var portInfo, portInfos = [];
-      for (var l in labels) {
-        portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+
+      //--------- Validate the values
+
+      //-- Variables for storing the port information
+      let portInfo, portInfos = [];
+
+      //-- Analize all the port names...
+      names.forEach( name => {
+        
+        //-- Get the port Info
+        portInfo = utils.parsePortLabel(
+                      name, 
+                      common.PATTERN_GLOBAL_PORT_LABEL);
+
+        //-- The port was created ok
+        //-- Insert it into the portInfos array
         if (portInfo) {
+
+          //-- Close the form when finish
           evt.cancel = false;
           portInfos.push(portInfo);
         }
+
+        //-- There was an error parsing the label
         else {
+
+          //-- Do not close the form
           evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                        { name: name }));
           return;
         }
-      }
-      // Create blocks
-      var cells = [];
-      for (var p in portInfos) {
-        portInfo = portInfos[p];
-        var pins = getPins(portInfo);
+      });
+
+      //--------- Everything is ok so far... Let's create the block!
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Store the acumulate y position
+      let positionY = 0;
+
+      //-- Crear all the ports...
+      portInfos.forEach( portInfo => {
+
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
+        //-- Create a new blank Input port block
+        let blockInstance = new Block(BASIC_OUTPUT);
+
+        //-- Create the block data
         blockInstance.data = {
           name: portInfo.name,
           range: portInfo.rangestr,
           pins: pins,
-          virtual: virtual
+          virtual: virtual,
         };
-        cells.push(loadBasic(blockInstance));
-        // Next block position
-        blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-      }
+
+        //-- update the block position
+        blockInstance.position.y = positionY;
+
+        //-- Build the block
+        let block = loadBasic(blockInstance);
+
+        //-- Insert the block into the array
+        cells.push(block);
+
+        //-- Calculate the Next block position
+        //-- The position is different for virtual and real pins
+        positionY += 
+          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+
+
+        });
+
+      //-- We are done! Execute the callback function if it was
+      //-- passed as an argument
       if (callback) {
         callback(cells);
       }
+
     });
   }
+
 
   //-------------------------------------------------------------------------
   //-- Create one or more New Basic Output blocks. A form is displayed first 
