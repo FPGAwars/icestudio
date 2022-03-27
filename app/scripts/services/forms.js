@@ -8,7 +8,9 @@
 
 angular.module('icestudio')
   .service('forms', 
-    function () 
+    function (
+      gettextCatalog
+    ) 
 {
 
   //-- Constant for the Field Clases
@@ -617,10 +619,66 @@ angular.module('icestudio')
     }
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create the form for the INPUT PORTS
+  //-- Returns:
+  //--   * The object Form for the Input ports
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the input blocks            |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //--    [  ] Show clock                   |
+  //----------------------------------------+
+  function basicInputForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the input blocks'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Checkbox for selecting if the input block
+    //-- is an FPGA pin or an internal port
+    let field1 = new CheckboxField(
+      gettextCatalog.getString('FPGA pin'),
+      true,  //-- Default value
+      1      //-- Field id
+    );
+
+    //-- Field 2: Checkbox for configuring the input pin
+    //--          as a clock
+    let field2 = new CheckboxField(
+      gettextCatalog.getString('Show clock'),
+      false,  //-- Default value
+      2       //-- Field id
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+    form.addField(field2);
+
+    //-- Return the form
+    return form;
+  }
+
+  
+
+
   //-- Public classes
   this.Form = Form;
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
+  this.basicInputForm = basicInputForm;
 
 
   //-----------------------------------------------------------------------
