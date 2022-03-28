@@ -23,6 +23,10 @@ angular.module('icestudio')
     sparkMD5) 
 {
 
+    //-- Funtions exported
+    this.parseNames = parseNames;
+    
+
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
 
@@ -931,6 +935,29 @@ angular.module('icestudio')
         $rootScope.$apply();
       }
     };
+
+    //------------------------------------------------------
+    //-- Parse the input pin names
+    //-- INPUT: 
+    //--   * value: String introduced by the user
+    //-- Returns:
+    //--   An array of string with the names of the ports
+    //------------------------------------------------------
+    function parseNames(names) {
+  
+      //-- First: remove the initial and ending spaces, if any
+      let text = names.trim();
+  
+      //-- Second: Remove the spaces around the commas (,) 
+      text = text.replace(/\s*,\s*/g, ',');
+  
+      //-- Third: Get the Input block names as a list of strings
+      let finalNames = text.split(',');
+  
+      //-- Return an array with the names
+      return finalNames;
+    }   
+
 
     this.parsePortLabel = function (data, pattern) {
       // e.g: name[x:y]
