@@ -7,32 +7,32 @@ class CollectionService {
   init() {
 
     iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this);
+    iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this);
   }
   setId(id) {
     this.id = id;
   }
-  blockContentLoaded(args) {
-    console.log('BLOCK CARGADO', args);
-    return;
+  blockInQueue(blkid) {
+    let qlength = this.indexQ.length - 1;
+    while (qlength > -1) {
+      if (this.indexQ[qlength].blockId === blkid) {
+        return true;
+      }
+      qlength--;
+    }
+    return false;
+  }
 
-    if (
-      typeof this.assetsDB.db !== "boolean" &&
-      this.assetsDB.db !== false &&
-      this.assetsDB.db !== null
-    ) {
+  blockContentLoaded(args) {
+
+    if (this.blockInQueue(args.blockId)) {
       args.obj.path = args.path;
       this.indexBlock(args.blockId, args.obj);
-    } else {
-      let _this = this;
-      setTimeout(function () {
-        _this.blockContentLoaded(args);
-      }, 1000);
     }
   }
-  indexBlock(id, obj) {
-    let _this = this;
-    if (
-      typeof obj !== "undefined" &&
+
+  isBlockValidForIndex(obj) {
+    return (typeof obj !== "undefined" &&
       obj !== false &&
       obj !== false &&
       typeof obj.package !== "undefined" &&
@@ -48,54 +48,50 @@ class CollectionService {
       obj.package.description.length >= 0 &&  // empty
       obj.package.name.length >= 0 &&         // empty
       obj.package.image.length >= 0           // empty
-    ) {
-      let transaction = this.assetsDB.db.transaction(
-        ["blockAssets"],
-        "readwrite"
-      );
+    );
+  }
 
-      transaction.onerror = function (event) {
-        console.log(
-          "There has been an error with retrieving your data: " +
-          transaction.error
-        );
-      };
+  indexBlock(id, obj) {
 
-      transaction.oncomplete = function (event) { };
-      let store = transaction.objectStore("blockAssets");
+    console.log('BLOCK INDEXANDO', id, obj);
+
+    let _this = this;
+    if (this.isBlockValidForIndex(obj)) {
+
       let item = {
         id: id,
         description: obj.package.description,
         name: obj.package.name,
         icon: obj.package.image,
         path: obj.path,
+        store:'blockAssets'
       };
 
-      let request = store.put(item);
-
-      request.onerror = function (event) {
-        if (request.error.name == "ConstraintError") {
-          event.preventDefault(); // don't abort the transaction
-        } else {
-          // unexpected error, can't handle it
-          // the transaction will abort
-        }
+      let transaction = {
+        database: {dbId:'Collections',
+        storages:['blockAssets','tests'],'version':1},
+        data: item
       };
 
-      request.onsuccess = function (e) {
-        _this.indexQ.splice(0, 1);
-        if (_this.indexQ.length > 0) {
-          _this.indexDB(true);
-        } else {
-          _this.indexing = false;
-        }
-      };
+      iceStudio.bus.events.publish("localDatabase.store", transaction);
     } else {
-      _this.indexQ.splice(0, 1);
-      if (_this.indexQ.length > 0) {
-        _this.indexDB(true);
+      this.indexNext();
+    }
+  }
+  blockIndexedOK(item){
+    if(item.database.dbId==='Collections' &&
+       item.data.store==='blockAssets' &&
+    this.blockInQueue(item.data.id)){
+      this.indexNext();
+    }
+  }
+  indexNext() {
+    if (this.indexing) {
+      this.indexQ.splice(0, 1);
+      if (this.indexQ.length > 0) {
+        this.indexDB(true);
       } else {
-        _this.indexing = false;
+        this.indexing = false;
       }
     }
   }
