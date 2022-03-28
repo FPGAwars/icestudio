@@ -16,6 +16,7 @@ angular.module('icestudio')
   //-- Constant for the Field Clases
   const FIELD_TEXT = 'text';
   const FIELD_CHECKBOX = 'checkbox';
+  const FIELD_COLOR = 'color-dropdown';
 
   //-- Constants for the Field Parameters
   const PARAM_TEXT = "%TEXT%";
@@ -337,9 +338,30 @@ angular.module('icestudio')
     //-- Returns:
     //--   -A string with the HTML code for that Field
     //-----------------------------------------------------------------------
+    constructor(label, color, colorName) {
 
-    //TODO
+      this.type = FIELD_COLOR;
+      this.label = label;
+      this.color = color;
+      this.colorName = colorName;
+    }
 
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+        PARAM_LABEL,
+        this.label);
+
+      html = html.replaceAll(PARAM_COLOR, this.color);
+      html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
+
+      return html;
+    }
   }
 
 
@@ -567,6 +589,13 @@ angular.module('icestudio')
             value = $($('#form' + field.formId).prop('checked'));
             value = value[0];
             break;
+
+          //-- Color input
+          case FIELD_COLOR:
+
+            //-- Read the value 
+            value = $('.lb-selected-color').data('color');            
+            break;
         }
 
         //-- Add the value to the array
@@ -763,16 +792,16 @@ angular.module('icestudio')
       0     //-- Field id
     );
 
-    //-- TODO: Create the field 1 with the Colorselector...
-    /*
-    {
-      type: 'color-dropdown',
-      label: gettextCatalog.getString('Choose a color')
-    }*/
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
 
     //-- Add the fields to the form
     form.addField(field0);
-    //form.addField(field1);
+    form.addField(field1);
 
     //-- Return the form
     return form;

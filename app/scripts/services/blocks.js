@@ -401,7 +401,7 @@ angular.module('icestudio')
         positionY += 
           (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
 
-        });
+      });
 
       //-- We are done! Execute the callback function if it was
       //-- passed as an argument
@@ -429,74 +429,103 @@ angular.module('icestudio')
      //-- Display the form
      form.display((evt) => {
 
-     });
+      //-- The callback is executed when the user has pressed the OK button
 
-/*
-    //-- Create a new blank Input port block
-    let blockInstance = new Block(BASIC_INPUT_LABEL);
+      //-- Read the values from the form
+      let values = form.readFields();
 
-    var formSpecs = [
-      {
-        type: 'text',
-        title: gettextCatalog.getString('Enter the input label'),
-        value: ''
-      },
-      {
-        type: 'color-dropdown',
-        label: gettextCatalog.getString('Choose a color')
-      }
+      //-- Values[0]: input label names
+      //-- Parse the port names
+      let names = utils.parseNames(values[0]);
 
-    ];
-    forms.displayForm(formSpecs, function (evt, values) {*/
-     // var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-    /*  var color = values[1];
-      var virtual = !values[2];
-      var clock = values[2];
+      //-- Values[1]: Color
+      let color = values[1];
+
+      //-- If there was a previous notification, dismiss it
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      // Validate values
-      var portInfo, portInfos = [];
-      for (var l in labels) {
-        portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
+
+      //--------- Validate the values
+
+      //-- Variables for storing the port information
+      let portInfo, portInfos = [];
+
+      //-- Analize all the port names...
+      names.forEach( name => {
+
+        //-- Get the port Info
+        portInfo = utils.parsePortLabel(
+          name, 
+          common.PATTERN_GLOBAL_PORT_LABEL);
+        
+        //-- The port was created ok
+        //-- Insert it into the portInfos array
         if (portInfo) {
+        
+          //-- Close the form when finish
           evt.cancel = false;
           portInfos.push(portInfo);
         }
+
+        //-- There was an error parsing the label
         else {
+        
+          //-- Do not close the form
           evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
+        
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+          gettextCatalog.getString('Wrong block name {{name}}', 
+                                   { name: name }));
           return;
         }
-      }
-      // Create blocks
-      var cells = [];
-      for (var p in portInfos) {
-        portInfo = portInfos[p];
-        if (portInfo.rangestr && clock) {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-          return;
-        }
-        var pins = getPins(portInfo);
+      });
+
+      //--------- Everything is ok so far... Let's create the block!
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Store the acumulate y position
+      let positionY = 0;
+
+      //-- Crear all the ports...
+      portInfos.forEach( portInfo => {
+
+        //-- Create a new blank basic input label
+        let blockInstance = new Block(BASIC_INPUT_LABEL);
+
+        //-- Create the block data
         blockInstance.data = {
-          blockColor: color,
           name: portInfo.name,
           range: portInfo.rangestr,
-          pins: pins,
-          virtual: virtual,
-          clock: clock
+          blockColor: color,
+          virtual: true
         };
-        cells.push(loadBasic(blockInstance));
-        // Next block position
-        blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-      }
+
+        //-- update the block position
+        blockInstance.position.y = positionY;
+
+        //-- Build the block
+        let block = loadBasic(blockInstance);
+
+        //-- Insert the block into the array
+        cells.push(block);
+
+        //-- Calculate the Next block position
+        //-- The position is different for virtual and real pins
+        positionY += 10 * gridsize;
+        
+      });
+
+      //-- We are done! Execute the callback function if it was
+      //-- passed as an argument
       if (callback) {
         callback(cells);
       }
-    });*/
-  }
 
+     });
+  }
 
 
     function newBasicOutputLabel(callback) {
