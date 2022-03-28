@@ -807,6 +807,52 @@ angular.module('icestudio')
     return form;
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create the form for the OUTPUT Labels
+  //-- Returns:
+  //--   * The object Form
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the output label            |
+  //--    +--------------------------+      |
+  //--    | Label names              |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    Chose a color                     |
+  //--    +--------------------------+      |
+  //--    | o Fucshia                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //----------------------------------------+
+  function basicOutputLabelForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the output label'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
+
 
   //-- Public classes
   this.Form = Form;
@@ -816,6 +862,7 @@ angular.module('icestudio')
   this.basicInputForm = basicInputForm;
   this.basicOutputForm = basicOutputForm;
   this.basicInputLabelForm = basicInputLabelForm;
+  this.basicOutputLabelForm = basicOutputLabelForm;
 
 
   //-----------------------------------------------------------------------
