@@ -35,6 +35,7 @@ angular.module('icestudio')
   //-- Labels
   const BASIC_INPUT_LABEL = "basic.inputLabel";
   const BASIC_OUTPUT_LABEL = "basic.outputLabel";
+  const BASIC_PAIRED_LABELS = "basic.pairedLabel";
   
   //-------------------------------------------------------------------------
   //-- Class: Block Object. It represent any graphical object in the
@@ -75,6 +76,7 @@ angular.module('icestudio')
   this.BASIC_OUTPUT = BASIC_OUTPUT;
   this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
   this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
+  this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
 
   
 
@@ -137,6 +139,10 @@ angular.module('icestudio')
 
       case BASIC_INPUT_LABEL:
         newBasicInputLabel(callback);
+        break;
+
+      case BASIC_PAIRED_LABELS:
+        newBasicPairedLabels(callback);
         break;
 
       case 'basic.constant':
@@ -495,11 +501,16 @@ angular.module('icestudio')
         //-- Create a new blank basic input label
         let blockInstance = new Block(BASIC_INPUT_LABEL);
 
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
         //-- Create the block data
         blockInstance.data = {
           name: portInfo.name,
           range: portInfo.rangestr,
           blockColor: color,
+          pins:pins,
           virtual: true
         };
 
@@ -571,6 +582,8 @@ angular.module('icestudio')
         portInfo = utils.parsePortLabel(
           name, 
           common.PATTERN_GLOBAL_PORT_LABEL);
+
+
         
         //-- The port was created ok
         //-- Insert it into the portInfos array
@@ -608,11 +621,17 @@ angular.module('icestudio')
         //-- Create a new blank basic input label
         let blockInstance = new Block(BASIC_OUTPUT_LABEL);
 
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
+
         //-- Create the block data
         blockInstance.data = {
           name: portInfo.name,
           range: portInfo.rangestr,
           blockColor: color,
+          pins: pins,
           virtual: true
         };
 
@@ -639,6 +658,136 @@ angular.module('icestudio')
 
     });
   } 
+
+  //-------------------------------------------------------------------------
+  //-- Create two paired labels: An input and output labels with the
+  //-- same name 
+  //--
+  //-- Inputs:
+  //--   * callback(cells):  Call the function when the block is read. The
+  //--      cells are passed as a parameter
+  //-------------------------------------------------------------------------
+  function newBasicPairedLabels(callback) {
+
+    //-- Build the form
+    let form = forms.basicPairedLabelForm();
+
+    //-- Display the form
+    form.display((evt) => {
+
+      //-- The callback is executed when the user has pressed the OK button
+
+      //-- Read the values from the form
+      let values = form.readFields();
+
+      //-- Values[0]: input label names
+      //-- Parse the port names
+      let names = utils.parseNames(values[0]);
+
+      //-- Values[1]: Color
+      let color = values[1];
+
+      //-- If there was a previous notification, dismiss it
+      if (resultAlert) {
+        resultAlert.dismiss(false);
+      }
+
+      //--------- Validate the values
+      //-- Variables for storing the port information
+      let portInfo, portInfos = [];
+
+      //-- Analize all the port names...
+      names.forEach( name => {
+
+        //-- Get the port Info
+        portInfo = utils.parsePortLabel(
+          name, 
+          common.PATTERN_GLOBAL_PORT_LABEL);
+        
+        //-- The port was created ok
+        //-- Insert it into the portInfos array
+        if (portInfo) {
+        
+          //-- Close the form when finish
+          evt.cancel = false;
+          portInfos.push(portInfo);
+        }
+
+        //-- There was an error parsing the label
+        else {
+        
+          //-- Do not close the form
+          evt.cancel = true;
+        
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+          gettextCatalog.getString('Wrong block name {{name}}', 
+                                   { name: name }));
+          return;
+        }
+      });
+
+      //--------- Everything is ok so far... Let's create the block!
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Store the acumulate y position
+      let positionY = 0;
+
+      //-- Crear all the ports...
+      portInfos.forEach( portInfo => {
+
+        //-- Create a new blank basic input label
+        let labelOut = new Block(BASIC_OUTPUT_LABEL);
+        let labelIn = new Block(BASIC_INPUT_LABEL);
+
+        //-- Create the block data
+        labelOut.data = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          blockColor: color,
+          virtual: true
+        };
+
+        //-- Create the block data
+        labelIn.data = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          blockColor: color,
+          virtual: true
+        };
+
+        //-- update the block position
+        labelOut.position.y = positionY;
+        labelOut.position.x = 0;
+
+        labelIn.position.y = positionY;
+        labelIn.position.x = 100;
+
+        //-- Build the block
+        let block1 = loadBasic(labelOut);
+        let block2 = loadBasic(labelIn);
+
+        //-- Insert the block into the array
+        cells.push(block1);
+        cells.push(block2);
+
+        //-- Calculate the Next block position
+        //-- The position is different for virtual and real pins
+        positionY += 10 * gridsize;
+        
+      });
+
+      //-- We are done! Execute the callback function if it was
+      //-- passed as an argument
+      if (callback) {
+        callback(cells);
+      }
+
+    });
+  } 
+
+
 
     //-----------------------------------------------------------------------
     //-- Return an array with empty pins

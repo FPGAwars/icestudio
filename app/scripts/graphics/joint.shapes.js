@@ -948,7 +948,7 @@ joint.shapes.ice.Input = joint.shapes.ice.Model.extend({
 joint.shapes.ice.Output = joint.shapes.ice.Model.extend({
   defaults: joint.util.deepSupplement(
     {
-      type: "ice.Output",
+      type: "ice.Input",
       size: {
         width: 96,
         height: 64,
@@ -1024,7 +1024,7 @@ joint.shapes.ice.OutputLabel = joint.shapes.ice.Model.extend({
   //<polygon  class="input-virtual-terminator" points="0 -5,0 34,20 16" style="fill:white;stroke:<%= port.fill %>;stroke-width:3" transform="translate(100 -15)"/>\
   defaults: joint.util.deepSupplement(
     {
-      type: "ice.Output",
+      type: "ice.Input",
       size: {
         width: 96,
         height: 64,
