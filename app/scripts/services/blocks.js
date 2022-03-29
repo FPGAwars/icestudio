@@ -1814,49 +1814,107 @@ angular.module('icestudio')
     function editBasicInput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: block.data.clock
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
-        var clock = values[2];
+
+      let name = block.data.name + (block.data.range || '');
+      let value = !block.data.virtual;
+      let clock = block.data.clock;
+
+      let form = forms.basicInputForm(name, value, clock);
+
+    
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Read the values from the form
+        let values = form.readFields();
+
+        let name = values[0];
+        let virtual = !values[1];
+        let clock = values[2];
+
+        //-- If there was a previous notification, dismiss it
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+
+        //--------- Validate the value
+        let portInfo;
+
+        //-- Get the port Info: port name, size...
+        portInfo = Block.parsePortName(name);
+
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                      { name: name }));
+          return;
+        }
+
+        //-- TODO: Check sizes
+
+        //-- Check particular errors
+        //-- Error: Buses cannot be clocks...
+          
+          
+        if (portInfo.rangestr && clock) {
+          evt.cancel = true;
+
+          //-- Show a notification with the warning
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Clock not allowed for data buses'));
+          return;
+        }
+
+        //-- Close the form when finish
+        evt.cancel = false;
+       
+        console.log(block.data.range);
+        console.log(portInfo.rangestr);
+
+        //-- The following actions are only done if they was a change on the
+        //-- pin
+        
+        let size;
+        let oldSize;
+        let newSize;
+        let offset;
+
+        //-- The pin is a bus, and there is a change:
+        if ((block.data.range || '') !==
+          (portInfo.rangestr || '')) {
+
+            let pins = getPins(portInfo);
+
+            //-- Copy the previous pins to the new one
+            //-- We need to calculate the initial or final minimum
+            //-- number of pins
+            let tlen = pins.length;
+            let slen = block.data.pins.length;
+            let min = Math.min(tlen, slen);
+            for (let i = 0; i<min; i++) {
+              pins[tlen-1-i].name = block.data.pins[slen-1-i].name;
+              pins[tlen-1-i].value = block.data.pins[slen-1-i].value;
+            }
+
+            oldSize = block.data.virtual ? 1 : 
+                     (block.data.pins ? block.data.pins.length : 1);
+
             newSize = virtual ? 1 : (pins ? pins.length : 1);
+
             // Update block position when size changes
+            // (So that the middle point remains in the same position)
             offset = 16 * (oldSize - newSize);
+
             // Create new block
-            var blockInstance = {
+            let blockInstance = {
               id: null,
               data: {
                 name: portInfo.name,
@@ -1868,43 +1926,66 @@ angular.module('icestudio')
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y
+                y: block.position.y + offset
               }
             };
+
             if (callback) {
+
               graph.startBatch('change');
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+
+              resultAlert = alertify.success(
+                  gettextCatalog.getString('Block updated2'));
             }
-          }
-          else if (block.data.name !== portInfo.name ||
+
+          return;
+        }
+
+        //-- The pin is a wire, and there is a change:
+        if (block.data.name !== portInfo.name ||
             block.data.virtual !== virtual ||
             block.data.clock !== clock) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            data.virtual = virtual;
-            data.clock = clock;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
+
+          //-- Get the current bus size
+          size = block.data.pins ? block.data.pins.length : 1;
+
+          //-- Previous size
+          oldSize = block.data.virtual ? 1 : size;
+
+          //-- New size
+          newSize = virtual ? 1 : size;
+
+          // Update block position when size changes
+          offset = 16 * (oldSize - newSize);
+
+          //-- Edit block
+          graph.startBatch('change');
+
+          //-- Copy the block data
+          let data = utils.clone(block.data);
+          data.name = portInfo.name;
+          data.virtual = virtual;
+          data.clock = clock;
+          cellView.model.set('data', data, { 
+                              translateBy: cellView.model.id, 
+                              tx: 0, 
+                              ty: -offset
+                            });
+
+          cellView.model.translate(0, offset);
+          graph.stopBatch('change');
+          cellView.apply();
+
+          resultAlert = alertify.success(
+              gettextCatalog.getString('Block updated'));
         }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
+
       });
+     
+        //  title: gettextCatalog.getString('Update the block name'),
     }
 
     function editBasicOutput(cellView, callback) {
@@ -1913,7 +1994,7 @@ angular.module('icestudio')
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: gettextCatalog.getString('Update the block name2'),
           value: block.data.name + (block.data.range || '')
         },
         {

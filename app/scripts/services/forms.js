@@ -584,6 +584,10 @@ angular.module('icestudio')
           //-- Input text
           case FIELD_TEXT:
 
+
+            //-- TODO: Include the value reading of the field on
+            //-- each field class (insted of here with switch)
+
             //-- Read the value from the form i
             value = $('#form' + field.formId).val();
             break;
@@ -672,6 +676,11 @@ angular.module('icestudio')
         .set('oncancel', function ( /*evt*/) { });
 
     }
+
+    //-- Evaluate the Form
+    evaluate() {
+      //-- TODO.....
+    }
   }
 
   //-------------------------------------------------------------------------
@@ -689,7 +698,7 @@ angular.module('icestudio')
   //--    [✅️] FPGA pin                     |
   //--    [  ] Show clock                   |
   //----------------------------------------+
-  function basicInputForm() {
+  function basicInputForm(label = '', virtual=true, clock=false) {
 
     //-- Create a blank Form
     let form = new Form();
@@ -697,23 +706,23 @@ angular.module('icestudio')
     //-- Field 0: Text input
     let field0 = new TextField(
       gettextCatalog.getString('Enter the input blocks'),
-      '',   //-- Default value
-      0     //-- Field id
+      label,   //-- Default value
+      0        //-- Field id
     );
 
     //-- Field 1: Checkbox for selecting if the input block
     //-- is an FPGA pin or an internal port
     let field1 = new CheckboxField(
       gettextCatalog.getString('FPGA pin'),
-      true,  //-- Default value
-      1      //-- Field id
+      virtual,  //-- Default value
+      1         //-- Field id
     );
 
     //-- Field 2: Checkbox for configuring the input pin
     //--          as a clock
     let field2 = new CheckboxField(
       gettextCatalog.getString('Show clock'),
-      false,  //-- Default value
+      clock,  //-- Default value
       2       //-- Field id
     );
 
