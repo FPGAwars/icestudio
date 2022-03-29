@@ -68,8 +68,8 @@ angular.module('icestudio')
   }
 
   //-------------------------------------------------------------------------
-  //-- Class: Input port. The information comes from the outside and
-  //--   get inside the FPGA
+  //-- Class: Port. Virtual class for representing both input and output  
+  //--              ports. 
   //--
   //--   * Particular information:
   //--      -name (String): Port name 
@@ -77,23 +77,73 @@ angular.module('icestudio')
   //--          * true: It is a virtual port, inside the FPGA
   //--          * false: It is a pin, whichs connects the FPGA with the 
   //--                   the experior
-  //--      -pins: Only for if the port is a pin. Array of objects
+  //--      -range: A String indicating the bus range (it is is a bus)
+  //--              Ex: "[1:0]"
+  //--      -pins: Array of objects. Available Only if the port is a pin
   //--          -index: Position of the pin in the array (default 0)
+  //--          -name: "" : Pin name (From the resources/boards/{board}
+  //--                               /pinout.json) (Which comes from .pcf)
+  //--          -value: "": Pin value (physical pin assigned by .pcf)
   //-------------------------------------------------------------------------
-  class InputPortBlock extends Block {
-    constructor() {
+  class PortBlock extends Block {
+
+    //-- Parameters:
+    //-- type: Select the type of PortBlock:
+    //--   -BASIC_INPUT
+    //--   -BASIC_OUTPUT
+    constructor(type, name, virtual, range, pins) {
 
       //-- Build the block common fields
-      super(BASIC_INPUT);
+      super(type);
 
       //-- Particular information
-      this.data.name = "";        //-- Port name. A String
-      this.data.virtual = true;   //-- Type of port: Real or 
-      this.data.range = "";       //-- If the port is single or bus. Ej. "[1:0]"     
-      this.data.pins = [];        //-- Only if the port is a pin 
-      this.data.clock = false;    //-- Optional. Is the port a clock input?
+      this.data.name = name;         //-- Port name. A String
+      this.data.virtual = virtual;   //-- Type of port: Real or virtual
+      this.data.range = range;       //-- If the port is single or bus. 
+                                     //--  Ej. "[1:0]"     
+      this.data.pins = pins;         //-- Only if the port is a pin 
     }
   }
+
+
+  //-------------------------------------------------------------------------
+  //-- Class: Input port. The information comes from the outside and
+  //--   get inside the FPGA
+  //--
+  //--   * Particular information:
+  //--      -clock: (bool). If the port is a clock or not
+  //--         * true: It is a clock signal
+  //--         * False: Normal signal
+  //-------------------------------------------------------------------------
+  class InputPortBlock extends PortBlock {
+    constructor(name, virtual, range, pins, clock) {
+
+      //-- Build the port common fields
+      super(BASIC_INPUT, name, virtual, range, pins);
+
+      //-- Particular information
+      this.data.clock = clock;    //-- Optional. Is the port a clock input?
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class: Output port. The information goes from the FPGA to the 
+  //--        outside. Or from one block to another the upper level
+  //--
+  //--   NO particular information
+  //-------------------------------------------------------------------------
+  class OutputPortBlock extends PortBlock {
+    constructor(name, virtual, range, pins) {
+
+      //-- Build the port common fields
+      super(BASIC_OUTPUT, name, virtual, range, pins);
+
+      //-- No particular information
+    }
+  }
+
+
+  
 
   //-- Public classes
   this.Block = Block;
@@ -287,26 +337,14 @@ angular.module('icestudio')
         //-- set to 'NULL')
         let pins = getPins(portInfo);
 
-        //-- Create a new blank Input port block
-        let blockInstance = new InputPortBlock();
-
-        let port = blockInstance.data;
-
-        //-- Create the block data
-        port.name = portInfo.name;
-        port.range = portInfo.rangestr;
-        port.pins = pins;
-        port.virtual = virtual;
-        port.clock = clock;
-        
-        /*
-        blockInstance.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          pins: pins,
-          virtual: virtual,
-          clock: clock
-        };*/
+        //-- Create a new Input port block
+        let blockInstance = new InputPortBlock(
+          portInfo.name,
+          virtual,
+          portInfo.rangestr,
+          pins,
+          clock
+        );
 
         //-- update the block position
         blockInstance.position.y = positionY;
@@ -415,16 +453,13 @@ angular.module('icestudio')
         //-- set to 'NULL')
         let pins = getPins(portInfo);
 
-        //-- Create a new blank Input port block
-        let blockInstance = new Block(BASIC_OUTPUT);
-
-        //-- Create the block data
-        blockInstance.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          pins: pins,
-          virtual: virtual,
-        };
+        //-- Create a new Output Port block
+        let blockInstance = new OutputPortBlock(
+          portInfo.name,
+          virtual,
+          portInfo.rangestr,
+          pins
+        );
 
         //-- update the block position
         blockInstance.position.y = positionY;
