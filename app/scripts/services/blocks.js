@@ -264,17 +264,30 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   function newBasic(type, callback) {
 
+    let form;
+
     //-- Create the block by calling the corresponding function
     //-- according to the given type
     switch (type) {
 
       //-- Input port
       case BASIC_INPUT:
-        newBasicInput(callback);
+
+        form = forms.basicInputForm();
+
+        /*
+        form.display(evt, form => {
+          form.evaluate();  //-- Get the values and do the parsing
+          cells = form.get_blocks();
+          callback(cells);   
+        })
+        */
+        newBasicPort(type, form, callback);
         break;
 
       case BASIC_OUTPUT:
-        newBasicOutput(callback);
+        form = forms.basicOutputForm();
+        newBasicPort(type, form, callback);
         break;
 
       case 'basic.outputLabel':
@@ -312,17 +325,16 @@ angular.module('icestudio')
   }
 
   //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Input block. A form is displayed first 
-  //-- for the user to enter the block data: name, pin type and clock pin
+  //-- Create one or more New Basic Ports. A form is displayed first 
+  //-- for the user to enter the block data: (name, pin type and clock pin..)
   //--
   //-- Inputs:
+  //--   * type: Type of block
+  //--   * form: Form for that block...
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
   //-------------------------------------------------------------------------
-  function newBasicInput(callback) {
-
-    //-- Build the form
-    let form = forms.basicInputForm();
+  function newBasicPort(type, form, callback) {
 
     //-- Display the form
     form.display((evt) => {
@@ -351,43 +363,48 @@ angular.module('icestudio')
 
       //-- Variables for storing the port information
       let portInfos = [];
+      let portInfo;
 
       //-- Analyze all the port names...
-      names.forEach( name => {
+      for (let name of names) {
         
         //-- Get the port Info: port name, size...
-        let portInfo = Block.parsePortName(name);
+        portInfo = Block.parsePortName(name);
 
         //-- No portInfo... The was a syntax error
         if (!portInfo) {
-           //-- Do not close the form
-           evt.cancel = true;
+            //-- Do not close the form
+            evt.cancel = true;
 
-           //-- Show a warning notification
-           resultAlert = alertify.warning(
-               gettextCatalog.getString('Wrong block name {{name}}', 
+            //-- Show a warning notification
+            resultAlert = alertify.warning(
+                gettextCatalog.getString('Wrong block name {{name}}', 
                                         { name: name }));
-           return;
+            return;
         }
 
         //-- TODO: Check sizes
 
         //-- Check particular errors
         //-- Error: Buses cannot be clocks...
-        if (portInfo.rangestr && clock) {
-          evt.cancel = true;
+        if (type === BASIC_INPUT) {
+          if (portInfo.rangestr && clock) {
+            evt.cancel = true;
 
-          //-- Show a notification with the warning
-          resultAlert = alertify.warning(
-             gettextCatalog.getString('Clock not allowed for data buses'));
-          return;
+            //-- Show a notification with the warning
+            resultAlert = alertify.warning(
+                gettextCatalog.getString('Clock not allowed for data buses'));
+            return;
+          }
         }
 
         //-- Close the form when finish
         evt.cancel = false;
         portInfos.push(portInfo);
-       
-      });
+        
+      }
+
+     
 
       //--------- Everything is ok so far... Let's create the block!
 
@@ -404,14 +421,28 @@ angular.module('icestudio')
         //-- set to 'NULL')
         let pins = getPins(portInfo);
 
-        //-- Create a new Input port block
-        let blockInstance = new InputPortBlock(
-          portInfo.name,
-          virtual,
-          portInfo.rangestr,
-          pins,
-          clock
-        );
+        let blockInstance;
+
+        if (type === BASIC_INPUT) {
+          //-- Create a new Input port block
+          blockInstance = new InputPortBlock(
+            portInfo.name,
+            virtual,
+            portInfo.rangestr,
+            pins,
+            clock
+          );
+        } 
+        else {
+          //-- Create a new Output Port block
+          blockInstance = new OutputPortBlock(
+            portInfo.name,
+            virtual,
+            portInfo.rangestr,
+            pins
+          );
+
+        }
 
         //-- update the block position
         blockInstance.position.y = positionY;
@@ -434,123 +465,6 @@ angular.module('icestudio')
       if (callback) {
         callback(cells);
       }
-    });
-  }
-
-  //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Output blocks. A form is displayed first 
-  //-- for the user to enter the block data: name and pin type 
-  //--
-  //-- Inputs:
-  //--   * callback(cells):  Call the function when the block is read. The
-  //--      cells are passed as a parameter
-  //-------------------------------------------------------------------------
-  function newBasicOutput(callback) {
-
-    //-- Build the form
-    let form = forms.basicOutputForm();
-
-    //-- Display the form
-    form.display((evt) => {
-
-      //-- The callback is executed when the user has pressed the OK button
-
-      //-- Read the values from the form
-      let values = form.readFields();
-
-      //-- Values[0]: Output pin names
-      //-- Parse the port names
-      let names = utils.parseNames(values[0]);
-
-      //-- Values[1] indicates if it is a virtual pin or not
-      let virtual = !values[1];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-
-      //--------- Validate the values
-
-      //-- Variables for storing the port information
-      let portInfo, portInfos = [];
-
-      //-- Analize all the port names...
-      names.forEach( name => {
-        
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-                      name, 
-                      common.PATTERN_GLOBAL_PORT_LABEL);
-
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
-
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
-        }
-
-        //-- There was an error parsing the label
-        else {
-
-          //-- Do not close the form
-          evt.cancel = true;
-
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                        { name: name }));
-          return;
-        }
-      });
-
-      //--------- Everything is ok so far... Let's create the block!
-      //-- Array for storing the blocks
-      let cells = [];
-
-      //-- Store the acumulate y position
-      let positionY = 0;
-
-      //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
-
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = getPins(portInfo);
-
-        //-- Create a new Output Port block
-        let blockInstance = new OutputPortBlock(
-          portInfo.name,
-          virtual,
-          portInfo.rangestr,
-          pins
-        );
-
-        //-- update the block position
-        blockInstance.position.y = positionY;
-
-        //-- Build the block
-        let block = loadBasic(blockInstance);
-
-        //-- Insert the block into the array
-        cells.push(block);
-
-        //-- Calculate the Next block position
-        //-- The position is different for virtual and real pins
-        positionY += 
-          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-
-
-      });
-
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
-
     });
   }
 
