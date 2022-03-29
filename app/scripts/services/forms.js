@@ -861,6 +861,36 @@ angular.module('icestudio')
   
   }
 
+  function basicPairedLabelForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the paired labels name'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
+
+
+
   //-- Public classes
   this.Form = Form;
   this.TextField = TextField;
@@ -869,7 +899,7 @@ angular.module('icestudio')
   this.basicOutputForm = basicOutputForm;
   this.basicInputLabelForm = basicInputLabelForm;
   this.basicOutputLabelForm = basicOutputLabelForm;
-
+  this.basicPairedLabelForm = basicPairedLabelForm;
 
   //-----------------------------------------------------------------------
   //-- Display a Form

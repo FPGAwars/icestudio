@@ -1836,7 +1836,7 @@ angular
 
       //-----------------------------------------------------------------
       //-- Callback function for the ToolBox menu. Whenever an option
-      //-- is selected, this función is execute
+      //-- is selected, this function is executed
       //-----------------------------------------------------------------
       $(document).delegate('.js-shortcut--action', 'click', function (e) {
 
@@ -1865,8 +1865,14 @@ angular
 
           //-- Output label
           case 'labelOutput': 
-            project.addBasicBlock('basic.inputLabel'); 
+            project.addBasicBlock('basic.inputLabel');
             break;
+
+          //-- Paired labels
+          case 'labelPaired':
+            project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
+            break;
+
 
 
           case 'memory': project.addBasicBlock('basic.memory'); break;
