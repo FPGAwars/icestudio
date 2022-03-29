@@ -39,10 +39,14 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   class Block {
 
-    //-- type: Type of block:
-    //--    -BASIC_INPUT: Input port
-    //--    -BASIC_OUTPUT: Output port
-    //--    -[..]
+    //-- Information common to all blocks:
+    //-- * type: Type of block:
+    //--         -BASIC_INPUT: Input port
+    //--         -BASIC_OUTPUT: Output port
+    //--         -[..]
+    //-- * id: unique block identifier
+    //-- * position: Position in the grid (x,y)
+    //-- * data: Information specific of every block
     constructor(type)  {
 
       //------- Object structure
@@ -60,6 +64,34 @@ angular.module('icestudio')
         x: 0,
         y: 0  
       };
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class: Input port. The information comes from the outside and
+  //--   get inside the FPGA
+  //--
+  //--   * Particular information:
+  //--      -name (String): Port name 
+  //--      -virtual (Bool): Type of pin. Real or Virtual
+  //--          * true: It is a virtual port, inside the FPGA
+  //--          * false: It is a pin, whichs connects the FPGA with the 
+  //--                   the experior
+  //--      -pins: Only for if the port is a pin. Array of objects
+  //--          -index: Position of the pin in the array (default 0)
+  //-------------------------------------------------------------------------
+  class InputPortBlock extends Block {
+    constructor() {
+
+      //-- Build the block common fields
+      super(BASIC_INPUT);
+
+      //-- Particular information
+      this.data.name = "";        //-- Port name. A String
+      this.data.virtual = true;   //-- Type of port: Real or 
+      this.data.range = "";       //-- If the port is single or bus. Ej. "[1:0]"     
+      this.data.pins = [];        //-- Only if the port is a pin 
+      this.data.clock = false;    //-- Optional. Is the port a clock input?
     }
   }
 
@@ -256,16 +288,25 @@ angular.module('icestudio')
         let pins = getPins(portInfo);
 
         //-- Create a new blank Input port block
-        let blockInstance = new Block(BASIC_INPUT);
+        let blockInstance = new InputPortBlock();
+
+        let port = blockInstance.data;
 
         //-- Create the block data
+        port.name = portInfo.name;
+        port.range = portInfo.rangestr;
+        port.pins = pins;
+        port.virtual = virtual;
+        port.clock = clock;
+        
+        /*
         blockInstance.data = {
           name: portInfo.name,
           range: portInfo.rangestr,
           pins: pins,
           virtual: virtual,
           clock: clock
-        };
+        };*/
 
         //-- update the block position
         blockInstance.position.y = positionY;
