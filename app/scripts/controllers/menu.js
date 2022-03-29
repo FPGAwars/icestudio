@@ -17,6 +17,8 @@ angular
       graph,
       tools,
       utils,
+      forms,
+      blocks,
       common,
       shortcuts,
       gettextCatalog,
@@ -24,7 +26,8 @@ angular
       _package,
       nodeFs,
       nodePath
-    ) {
+    ) 
+  {
       //-- Initialize scope
 
       $scope.profile = profile;
@@ -60,11 +63,18 @@ angular
         exit();
       });
 
+      //-- The window is miximized
+      win.on("maximize", function () {
+        console.log("MAXIMIZE!!!!");
+        graph.fitPaper();
+      });
+
       //-- The user wants to resize the windows
       win.on("resize", function () {
 
         //-- When working with big designs it is better not to fit 
         //-- the contents (Leave it commented)
+        graph.fitPaper();
         //graph.fitContent();
       });
 
@@ -565,7 +575,7 @@ angular
             value: lFile || "",
           },
         ];
-        utils.renderForm(formSpecs, function (evt, values) {
+        forms.displayForm(formSpecs, function (evt, values) {
           var newLFile = values[0];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -609,7 +619,7 @@ angular
             value: externalPlugins || "",
           },
         ];
-        utils.renderForm(formSpecs, function (evt, values) {
+        forms.displayForm(formSpecs, function (evt, values) {
           var newExternalPlugins = values[0];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -654,7 +664,7 @@ angular
             value: pythonEnv.pip || "",
           },
         ];
-        utils.renderForm(formSpecs, function (evt, values) {
+        forms.displayForm(formSpecs, function (evt, values) {
           let newPythonPath = values[0];
           let newPipPath = values[1];
 
@@ -702,7 +712,7 @@ angular
             value: externalCollections || "",
           },
         ];
-        utils.renderForm(formSpecs, function (evt, values) {
+        forms.displayForm(formSpecs, function (evt, values) {
           var newExternalCollections = values[0];
           if (resultAlert) {
             resultAlert.dismiss(false);
@@ -1409,11 +1419,22 @@ angular
         if (graph.isEnabled()) {
           removeSelected();
         } else {
-          $rootScope.$broadcast("breadcrumbsBack");
+          console.log("--------> BACK!!!!");
+          //-- When inside a block in non-edit mode
+          //-- the back key causes it to return to 
+          //-- the top-main module
+
+          //-- Changed: The Back key is disabled by default
+          //--  (asked by joaquim) 
+          //-- (Uncomment the next sentence  for enabling it)
+          //$rootScope.$broadcast("breadcrumbsBack");
         }
       });
 
       shortcuts.method("takeSnapshot", takeSnapshot);
+
+      //-- Shortcut for Testing and Debugging
+      shortcuts.method("testing", testing);
 
       $(document).on("keydown", function (event) {
         var opt = {
@@ -1811,12 +1832,26 @@ angular
           toolbox.dom.addClass('opened');
         }
       }
+
+      //-----------------------------------------------------------------
+      //-- Callback function for the ToolBox menu. Whenever an option
+      //-- is selected, this función is execute
+      //-----------------------------------------------------------------
       $(document).delegate('.js-shortcut--action', 'click', function (e) {
+
         e.preventDefault();
 
-        let target = $(this).data('item');
-        switch (target) {
-          case 'input': project.addBasicBlock('basic.input'); break;
+        //-- Read the item selected
+        let menuOption = $(this).data('item');
+
+        //-- Call the callback function for every menu option
+        switch (menuOption) {
+
+          //-- Input: Place an input port
+          case 'input': 
+            project.addBasicBlock(blocks.BASIC_INPUT); 
+            break;
+
           case 'output': project.addBasicBlock('basic.output'); break;         
           case 'labelInput': project.addBasicBlock('basic.outputLabel'); break;
           case 'labelOutput': project.addBasicBlock('basic.inputLabel'); break;
@@ -1831,6 +1866,14 @@ angular
         return false;
       });
       //-- END BASIC TOOLBOX
+
+      //---------------------------------------------------------------------
+      //-- testing. Function for Debugging
+      //---------------------------------------------------------------------
+      function testing() {
+        console.log("--> TESTING!!!!! ");
+        alertify.alert('<b>Ready!</b> ' + process.platform);
+      }
 
       function takeSnapshot() {
         win.capturePage(function (img) {

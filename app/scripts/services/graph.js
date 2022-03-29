@@ -133,6 +133,22 @@ angular.module('icestudio')
 
 
     //-----------------------------------------------------------------------
+    //-- fit the paper to the new Window size
+    //-----------------------------------------------------------------------
+    this.fitPaper = function () {
+
+        //-- Get the window
+        let win = window.get();
+
+        //-- Set the paper height and width attributes
+        $('.joint-paper.joint-theme-default>svg').attr('height', win.height);
+        $('.joint-paper.joint-theme-default>svg').attr('width', win.width);
+
+        //-- DEBUG
+        console.log("RESIZE!!!");
+    };
+
+    //-----------------------------------------------------------------------
     //-- Fit the Circuit to the Windows, so that the whole design is
     //-- displayed
     //-----------------------------------------------------------------------
@@ -193,8 +209,7 @@ angular.module('icestudio')
             },
             zoom: state.zoom * scale
         });
-        $('.joint-paper.joint-theme-default>svg').attr('height', win.height);
-        $('.joint-paper.joint-theme-default>svg').attr('width', win.width);
+        this.fitPaper();
       }
 
       //-- The circuit is blank: No elements
@@ -1134,6 +1149,9 @@ angular.module('icestudio')
         };
 
         this.selectLanguage = function (language) {
+
+            //-- DEBUG
+            console.log("LANGUAGE: " + language);
             graph.startBatch('change');
             // Trigger lang event
             var data = {
@@ -1296,6 +1314,7 @@ angular.module('icestudio')
         }
 
         this.removeSelected = function () {
+            console.log("BACKSPACE!!!!!!");
             if (hasSelection()) {
                 graph.removeCells(selection.models);
                 selectionView.cancelSelection();

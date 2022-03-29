@@ -12,9 +12,6 @@ let queue = [];
 let retryingStorage = false;
 
 function setEnvironment(data) {
-  if (db === false) {
-    console.log('setEnvironment::localDatabase', data);
-  }
 }
 
 function onStore(item) {

@@ -3,15 +3,19 @@ class CollectionService {
     this.indexQ = [];
     this.indexing = false;
     this.id = -1;
+    this.collections=false;
   }
   init() {
 
     iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this);
     iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this);
+    iceStudio.bus.events.subscribe("collectionService.isIndexing", "isIndexing", this);
+    iceStudio.bus.events.subscribe("collectionService.getCollections", "publishCollections", this);
   }
   setId(id) {
     this.id = id;
   }
+
   blockInQueue(blkid) {
     let qlength = this.indexQ.length - 1;
     while (qlength > -1) {
@@ -21,6 +25,14 @@ class CollectionService {
       qlength--;
     }
     return false;
+  }
+
+  getCollections(){
+    return this.collections;
+  }
+
+  publishCollections(){
+    iceStudio.bus.events.publish("collectionService.collections", this.collections);
   }
 
   blockContentLoaded(args) {
@@ -52,9 +64,6 @@ class CollectionService {
   }
 
   indexBlock(id, obj) {
-
-    console.log('BLOCK INDEXANDO', id, obj);
-
     let _this = this;
     if (this.isBlockValidForIndex(obj)) {
 
@@ -69,7 +78,7 @@ class CollectionService {
 
       let transaction = {
         database: {dbId:'Collections',
-        storages:['blockAssets','tests'],'version':1},
+        storages:['blockAssets'],'version':1},
         data: item
       };
 
@@ -92,20 +101,24 @@ class CollectionService {
         this.indexDB(true);
       } else {
         this.indexing = false;
+        iceStudio.bus.events.publish("collectionService.indexingEnd");
       }
     }
+  }
+  isIndexing(){
+    
+    iceStudio.bus.events.publish("collectionService.indexStatus",{indexing: this.indexing, queue:this.indexQ.length});
+    return this.indexing;
   }
 
   indexDB(force) {
     force = force || false;
     if ((this.indexing === false && this.indexQ.length > 0) || force) {
       this.indexing = true;
-      console.log('INDEXDB::BLOCK', this.indexQ[0]);
-      iceStudio.bus.events.publish("block.loadFromFile", this.indexQ[0]);
+      iceStudio.bus.events.publish("collectionService.block.loadFromFile", this.indexQ[0]);
     }
   }
   queueIndexDB(params) {
-    console.log('queueIndexDB', params);
     params.dispatch = false;
     this.indexQ.push(params);
     this.indexDB();
@@ -191,6 +204,8 @@ class CollectionService {
   }
 
   collectionsToTree(collArray) {
+
+    iceStudio.bus.events.publish("collectionService.indexingStart");
     this.guiOpts = false;
     collArray.sort(function compare(a, b) {
       if (a.name.toLowerCase() < b.name.toLowerCase()) {
@@ -201,8 +216,7 @@ class CollectionService {
       }
       return 0;
     });
-
-    return this.buildTreeFromCollection(collArray);
+    this.collections = this.buildTreeFromCollection(collArray);
   }
 
   nodeHash(text) {

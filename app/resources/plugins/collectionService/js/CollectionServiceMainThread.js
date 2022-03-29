@@ -3,7 +3,7 @@ class CollectionServiceMainThread
     constructor() {
         this.version = '1.0';
         this.blockManager = new IceBlock();
-        iceStudio.bus.events.subscribe('block.loadFromFile', 'busLoadFromFile', this.blockManager);
+        iceStudio.bus.events.subscribe('collectionService.block.loadFromFile', 'busLoadFromFile', this.blockManager);
     }
 }
 

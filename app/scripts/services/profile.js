@@ -1,10 +1,19 @@
+//---------------------------------------------------------------------------
+//-- Profile managment
+//--
+//-- Methods, data and constants for managing the Icestudio profile file
+//---------------------------------------------------------------------------
 'use strict';
 
 angular.module('icestudio')
-  .service('profile', function (utils,
-    common,
-    _package,
-    nodeFs) {
+  .service('profile', 
+    function (
+      utils,
+      common,
+      _package,
+      nodeFs
+    ) 
+  {
 
     //-- Information stored in the profile file
     this.data = {
@@ -148,4 +157,5 @@ angular.module('icestudio')
         });
     };
 
-  });
+  }
+);

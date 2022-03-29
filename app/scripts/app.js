@@ -1,3 +1,11 @@
+//---------------------------------------------------------------------------
+//-- ICESTUDIO Main entry point
+//---------------------------------------------------------------------------
+//-- External packages used:
+//--
+//--  * Alertify: https://www.npmjs.com/package/alertifyjs
+//--     Developing pretty browser dialogs and notifications
+//---------------------------------------------------------------------------
 "use strict";
 
 //-- Disable the jshint Warning: "xxxx defined but never used"
@@ -37,15 +45,20 @@ angular
     },
   ])
   .run(function (
-    profile,
+    profile,  //-- Icestudio profile file managment
     project,
     common,
     tools,
     utils,
     boards,
     collections,
+
+    //-- Angular-gettext package
+    //-- More info: 
+    //-- https://angular-gettext.rocketeer.be/dev-guide/api/angular-gettext/
     gettextCatalog
-  ) {
+    )
+  {
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
@@ -146,10 +159,15 @@ angular
           utils.selectBoardPrompt(function (selectedBoard) {
             var newBoard = boards.selectBoard(selectedBoard);
             profile.set("board", newBoard.name);
+
+            //-- Display a Dialog with the board selected
             alertify.success(
-              gettextCatalog.getString("Board {{name}} selected", {
-                name: utils.bold(newBoard.info.label),
-              })
+
+              //-- Message to show. Board name in Bold
+              gettextCatalog.getString(
+                "Board {{name}} selected", 
+                { name: utils.bold(newBoard.info.label) }
+              )
             );
 
             tools.checkToolchain( () => {}, //-- No callback 

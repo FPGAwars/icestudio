@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('utils', function ($rootScope,
     gettextCatalog,
     common,
+    forms,
     _package,
     window,
     nodeFs,
@@ -19,7 +20,8 @@ angular.module('icestudio')
     gui,
     SVGO,
     fastCopy,
-    sparkMD5) {
+    sparkMD5) 
+{
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
@@ -623,296 +625,6 @@ angular.module('icestudio')
       return 'en';
     }
 
-    //-----------------------------------------------------------------------
-    //-- Display a Form
-    //-- Input: specs. Form specifications for rendering
-    //--    * specs is an array of objects.They all have the property:
-    //--      -type: Which kind of information should be displayed:
-    //--          -Text, checkbox, combobox, color-dropdown
-    //-- The callback is executed when the users click on OK
-    //-----------------------------------------------------------------------
-    this.renderForm = function (specs, callback) {
-      var content = [];
-      content.push('<div>');
-      for (var i in specs) {
-        var spec = specs[i];
-
-        //-- Text input
-        switch (spec.type) {
-          case 'text':
-            content.push('\
-              <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" id="form' + 
-              i + '" autocomplete="off"/>\
-            ');
-            break;
-
-          case 'checkbox':
-            content.push('\
-              <div class="checkbox">\
-                <label><input type="checkbox" ' + 
-                (spec.value ? 'checked' : '') + 
-                ' id="form' + i + '"/>' + spec.label + '</label>\
-              </div>\
-            ');
-            break;
-
-          case 'combobox':
-            var options = spec.options.map(function (option) {
-              var selected = spec.value === option.value ? ' selected' : '';
-              return '<option value="' + option.value + '"' + selected + '>' + 
-                      option.label + '</option>';
-            }).join('');
-            content.push('\
-              <div class="form-group">\
-                <label style="font-weight:normal">' + spec.label + '</label>\
-                <select class="form-control" id="form' + i + '">\
-                  ' + options + '\
-                </select>\
-              </div>\
-            ');
-            break;
-
-          case 'color-dropdown':
-            
-
-            //-- Set the default color if not previously defined
-            spec.color = spec.color || "fuchsia";
-
-            //-- Get the color with the first letter as capital
-            let color = spec.color.charAt(0).toUpperCase() + 
-                        spec.color.slice(1);
-
-            //-- Generate the HTML form with the current values
-            content.push(`
-              <div class="form-group">
-                <label style ="font-weight:normal"> ${spec.label} </label>
-                <div class="lb-color--dropdown">
-                  <div class="lb-dropdown-title">
-
-                    <!-- The current color is the one found in spec.color -->
-                    <span class="lb-selected-color color-${spec.color}"
-                      data-color="${spec.color}"
-                      data-name="${color}"> 
-                    </span> 
-                    ${color}
-                    <span class="lb-dropdown-icon"></span>
-                  </div>
-                  
-                  <div class="lb-dropdown-menu">
-
-                    <div class="lb-dropdown-option" 
-                      data-color="indianred" 
-                      data-name="IndianRed">
-                        <span class="lb-option-color color-indianred">
-                        </span>
-                        IndianRed
-                    </div>
-                    
-                    <div class="lb-dropdown-option" 
-                      data-color="red" 
-                      data-name="Red">
-                        <span class="lb-option-color color-red">
-                        </span>
-                        Red
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="deeppink" 
-                      data-name="DeepPink">
-                        <span class="lb-option-color color-deeppink">
-                        </span>
-                        DeepPink
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="mediumvioletred"
-                      data-name="MediumVioletRed">
-                        <span class="lb-option-color color-mediumvioletred">
-                        </span>
-                        MediumVioletRed
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="coral"
-                      data-name="Coral">
-                        <span class="lb-option-color color-coral"></span>
-                        Coral
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="orangered"
-                      data-name="OrangeRed">
-                        <span class="lb-option-color color-orangered"></span>
-                        OrangeRed
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="darkorange"
-                      data-name="DarkOrange">
-                        <span class="lb-option-color color-darkorange"></span>
-                        DarkOrange
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="gold"
-                      data-name="Gold">
-                        <span class="lb-option-color color-gold"></span>
-                      Gold
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="yellow"
-                      data-name="Yellow">
-                        <span class="lb-option-color color-yellow"></span>
-                        Yellow
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="fuchsia"
-                      data-name="Fuchsia">
-                        <span class="lb-option-color color-fuchsia"></span>
-                        Fuchsia
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="slateblue"
-                      data-name="SlateBlue">
-                        <span class="lb-option-color color-slateblue"></span>
-                        SlateBlue
-                    </div>
-                    <div class="lb-dropdown-option" 
-                      data-color="greenyellow"
-                      data-name="GreenYellow">
-                        <span class="lb-option-color color-greenyellow"></span>
-                        GreenYellow
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="springgreen"
-                      data-name="SpringGreen">
-                        <span class="lb-option-color color-springgreen"></span>
-                        SpringGreen
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="darkgreen"
-                      data-name="DarkGreen">
-                        <span class="lb-option-color color-darkgreen"></span>
-                        DarkGreen
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="olivedrab"
-                      data-name="OliveDrab">
-                        <span class="lb-option-color color-olivedrab">
-                        </span>
-                        OliveDrab
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="lightseagreen" 
-                      data-name="LightSeaGreen">
-                        <span class="lb-option-color color-lightseagreen"></span>
-                        LightSeaGreen
-                    </div> 
-
-                    <div class="lb-dropdown-option" 
-                      data-color="turquoise"
-                      data-name="Turquoise">
-                        <span class="lb-option-color color-turquoise"></span>
-                        Turquoise
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="steelblue"
-                      data-name="SteelBlue">
-                        <span class="lb-option-color color-steelblue"></span>
-                        SteelBlue
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="deepskyblue"
-                      data-name="DeepSkyBlue">
-                        <span class="lb-option-color color-deepskyblue"></span>
-                        DeepSkyBlue
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="royalblue"
-                      data-name="RoyalBlue">
-                        <span class="lb-option-color color-royalblue"></span>
-                        RoyalBlue
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="navy"
-                      data-name="Navy">
-                        <span class="lb-option-color color-navy"></span>
-                        Navy
-                    </div>
-
-                    <div class="lb-dropdown-option" 
-                      data-color="lightgray"
-                      data-name="LightGray">
-                        <span class="lb-option-color color-lightgray"></span>
-                       LightGray
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
-            `);
-            break;
-        }
-      }
-      content.push('</div>');
-
-      alertify.confirm(content.join('\n'))
-        .set('onok', function (evt) {
-          var values = [];
-          if (callback) {
-            for (var i in specs) {
-              var spec = specs[i];
-              switch (spec.type) {
-                case 'text':
-                case 'combobox':
-                  values.push($('#form' + i).val());
-                  break;
-                case 'checkbox':
-                  values.push($('#form' + i).prop('checked'));
-                  break;
-                case 'color-dropdown':
-                  values.push($('.lb-selected-color').data('color'));
-                  break;
-              }
-            }
-            callback(evt, values);
-          }
-        })
-        .set('oncancel', function ( /*evt*/) { });
-
-      // Restore input values
-      setTimeout(function () {
-        $('#form0').select();
-        for (var i in specs) {
-          var spec = specs[i];
-          switch (spec.type) {
-            case 'text':
-            case 'combobox':
-              $('#form' + i).val(spec.value);
-              break;
-            case 'checkbox':
-              $('#form' + i).prop('checked', spec.value);
-              break;
-            case 'color-dropdown':
-              //-- Not 100% sure, but this line can be removed
-              //$('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>FuchsiaOOOOOOO<span class=\"lb-dropdown-icon\"></span>");
-              break;
-          }
-        }
-      }, 50);
-    };
 
     this.projectinfoprompt = function (values, callback) {
       var i;
@@ -1096,7 +808,7 @@ angular.module('icestudio')
         })
       }];
 
-      this.renderForm(formSpecs, function (evt, values) {
+      forms.displayForm(formSpecs, function (evt, values) {
         var selectedBoard = values[0];
         if (selectedBoard) {
           evt.cancel = false;
@@ -1151,8 +863,15 @@ angular.module('icestudio')
       return ret;
     };
 
+    //-----------------------------------------------------------------------
+    //-- Return a text in bold HTML
+    //-- Input:
+    //--    * text: String to converto to Bold
+    //-- Returns:
+    //--    * The HTML text in bold
+    //-----------------------------------------------------------------------
     this.bold = function (text) {
-      return '<b>' + text + '</b>';
+      return `<b>${text}</b>`;
     };
 
     this.openDialog = function (inputID, ext, callback) {
@@ -1622,4 +1341,4 @@ angular.module('icestudio')
       $('.lb-dropdown-menu').removeClass('show');
     }
 
-  });
+});

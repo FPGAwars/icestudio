@@ -50,7 +50,7 @@
   "dependencies": {
     "ace-builds": "~1.4.12",
     "adm-zip": "0.4.7",
-    "alertifyjs": "~1.11.1",
+    "alertifyjs": "~1.13.1",
     "angular": "~1.6.9",
     "angular-gettext": "2.4.2",
     "angular-gettext-tools": "2.3.5",

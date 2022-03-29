@@ -1,16 +1,29 @@
-"use strict";
-
-/*jshint unused:false*/
-
 //------------------------------------------------------------------------------
 //-- This module defines the global data structures used in Icestudio
 //-- The different Icestudio modules get that information and store it
 //-- in the common module, so that is always available to the rest of modules
 //-----------------------------------------------------------------------------
+"use strict";
+
+//-- Disable the jshint Warning: "xxxx defined but never used"
+/* jshint unused:false */
 
 angular
   .module("icestudio")
-  .service("common", function (nodePath, nodeTmp, nodeFs, _package) {
+  .service("common", 
+    function (
+
+      //-- node Path module
+      //-- More info: https://nodejs.org/docs/latest-v17.x/api/path.html
+      nodePath,  
+
+      //-- Create temporary files and directories
+      //-- More info: https://www.npmjs.com/package/tmp
+      nodeTmp, 
+      nodeFs, 
+      _package
+    )
+  {
 
     // Project version. It defines the current structure for the 
     // icestudio projects (Both in memory and on the .ice files)
@@ -292,4 +305,5 @@ angular
     if (!storage.isValidPath(this.IMAGE_CACHE_DIR)) {
       storage.mkDir(this.IMAGE_CACHE_DIR);
     }
-  });
+  }
+);

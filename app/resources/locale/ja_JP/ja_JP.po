@@ -1,0 +1,1147 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: app/views/design.html:9
+msgid ": '}} {{'Unlock to edit block !"
+msgstr ": '}} {{'ブロックを編集するにはロックを解除してください！"
+
+#: app/scripts/services/drivers.js:353 app/scripts/services/drivers.js:594
+msgid "<b>Unplug</b> and <b>reconnect</b> the board"
+msgstr "ボードの<b>ケーブルを抜き</b>、<b>再接続</b>してください"
+
+#: app/views/menu.html:598
+msgid "About Icestudio"
+msgstr "Icestudio について"
+
+#: app/views/version.html:22
+msgid "Acknowledgment"
+msgstr "謝辞"
+
+#: app/views/menu.html:517
+msgid "Add"
+msgstr "追加"
+
+#: app/scripts/controllers/menu.js:1169
+msgid "Add a block to start"
+msgstr "ブロックを追加して始める"
+
+#: app/views/menu.html:81
+msgid "Add as block"
+msgstr "ブロックとして追加"
+
+#: app/scripts/services/blocks.js:1491 app/scripts/services/blocks.js:409
+msgid "Address format"
+msgstr "アドレスフォーマット"
+
+#: app/scripts/services/tools.js:1797
+msgid "All collections removed"
+msgstr "すべてのコレクションが削除されました"
+
+#: app/scripts/controllers/menu.js:1209
+msgid "All stored collections will be lost. Do you want to continue?"
+msgstr "保存されているコレクションはすべて失われます。継続しますか？"
+
+#: app/scripts/services/tools.js:1390
+msgid "At least Python 3.7 is required"
+msgstr "Python 3.7 以上が必要です"
+
+#: app/scripts/services/utils.js:766
+msgid "Author"
+msgstr "作者"
+
+#: app/views/languages.html:86
+msgid "Basque"
+msgstr "バスク語"
+
+#: app/scripts/services/blocks.js:1494 app/scripts/services/blocks.js:412
+msgid "Binary"
+msgstr "2進数"
+
+#: app/scripts/services/blocks.js:1139 app/scripts/services/blocks.js:1163
+#: app/scripts/services/blocks.js:1227 app/scripts/services/blocks.js:1249
+#: app/scripts/services/blocks.js:1324 app/scripts/services/blocks.js:1345
+#: app/scripts/services/blocks.js:1408 app/scripts/services/blocks.js:1427
+#: app/scripts/services/blocks.js:1470 app/scripts/services/blocks.js:1527
+#: app/scripts/services/blocks.js:1572
+msgid "Block updated"
+msgstr "ブロックが更新されました"
+
+#: app/scripts/services/project.js:493
+msgid "Block {{name}} imported"
+msgstr "ブロック {{name}} がインポートされました"
+
+#: app/views/menu.html:65
+msgid "Blocks"
+msgstr "ブロック"
+
+#: app/views/menu.html:351
+msgid "Board"
+msgstr "ボード"
+
+#: app/views/menu.html:235 app/views/menu.html:310
+msgid "Board rules"
+msgstr "ボードルール"
+
+#: app/scripts/controllers/menu.js:783
+msgid "Board rules disabled"
+msgstr "ボードルールが無効です"
+
+#: app/scripts/controllers/menu.js:781
+msgid "Board rules enabled"
+msgstr "ボードルールが有効です"
+
+#: app/scripts/services/tools.js:649
+msgid "Board {{name}} disconnected"
+msgstr "ボード {{name}} が切断されました"
+
+#: app/scripts/services/tools.js:608 app/scripts/services/tools.js:634
+msgid "Board {{name}} not available"
+msgstr "ボード {{name}} は使えません"
+
+#: app/scripts/services/tools.js:586
+msgid "Board {{name}} not connected"
+msgstr "ボード {{name}} が接続されていません"
+
+#: app/scripts/app.js:143 app/scripts/controllers/menu.js:1088
+msgid "Board {{name}} selected"
+msgstr "ボード {{name}} が選択されました"
+
+#: app/scripts/services/tools.js:597 app/scripts/services/tools.js:627
+msgid "Bootloader not active"
+msgstr "ブートローダがアクティブでない"
+
+#: app/scripts/controllers/menu.js:1111 app/views/design.html:184
+#: app/views/menu.html:430
+msgid "Build"
+msgstr "ビルド"
+
+#: app/scripts/controllers/menu.js:1121
+msgid "Build done"
+msgstr "ビルド完了"
+
+#: app/views/design.html:17
+msgid "CAUTION ! : Changes will also be applied in all the copied"
+msgstr "注意！変更内容はコピーしたものすべてに適用されます"
+
+#: app/scripts/controllers/main.js:14 app/scripts/services/project.js:146
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: app/views/languages.html:92
+msgid "Catalan"
+msgstr "カタロニア語"
+
+#: app/views/design.html:68
+msgid "Change Color"
+msgstr "色を変更"
+
+#: app/scripts/services/tools.js:1345
+msgid "Check Internet connection..."
+msgstr "インターネット接続を確認中…"
+
+#: app/scripts/services/tools.js:1379
+msgid "Check Python..."
+msgstr "Python を確認中…"
+
+#: app/views/languages.html:68
+msgid "Chinese"
+msgstr "中国語"
+
+#: app/scripts/services/blocks.js:1089 app/scripts/services/blocks.js:1184
+#: app/scripts/services/blocks.js:276 app/scripts/services/blocks.js:72
+msgid "Choose a color"
+msgstr "色を選択"
+
+#: app/scripts/services/project.js:170
+msgid "Click here to <b>download a newer version</b> of Icestudio"
+msgstr "ここをクリックして Icestudio の <b> 新バージョン </b> をダウンロード"
+
+#: app/scripts/services/tools.js:1508
+msgid "Click here to <b>setup the drivers</b>"
+msgstr "ここをクリックして<b>ドライバをセットアップ</b>"
+
+#: app/scripts/services/drivers.js:405 app/scripts/services/drivers.js:586
+#: app/scripts/services/drivers.js:605 app/scripts/services/tools.js:431
+msgid "Click here to install it"
+msgstr "ここをクリックしてインストール"
+
+#: app/scripts/controllers/menu.js:723
+msgid "Click here to view"
+msgstr "ここをクリックして閲覧"
+
+#: app/scripts/services/blocks.js:104 app/scripts/services/blocks.js:1108
+#: app/scripts/services/blocks.js:1293 app/scripts/services/blocks.js:178
+msgid "Clock not allowed for data buses"
+msgstr "データバスにクロックを使用不可"
+
+#: app/views/menu.html:176
+msgid "Clone"
+msgstr "クローン"
+
+#: app/scripts/controllers/menu.js:431 app/views/version.html:38
+msgid "Close"
+msgstr "閉じる"
+
+#: app/views/design.html:98
+msgid "Code"
+msgstr "コード"
+
+#: app/scripts/services/blocks.js:570
+msgid "Code block needs at least one input or one output"
+msgstr "コードブロックには少なくとも1つの入力か出力が必要です"
+
+#: app/views/menu.html:383
+msgid "Collection"
+msgstr "コレクション"
+
+#: app/views/menu.html:316
+msgid "Collection info"
+msgstr "コレクションの詳細"
+
+#: app/scripts/controllers/menu.js:997
+msgid "Collection {{collection}} info not defined"
+msgstr "コレクション {{collection}} の詳細が見つかりません"
+
+#: app/scripts/services/tools.js:1650
+msgid "Collection {{name}} added"
+msgstr "コレクション {{name}} が追加されました"
+
+#: app/scripts/services/tools.js:1637
+msgid "Collection {{name}} not replaced"
+msgstr "コレクション {{name}} が置き換えられませんでした"
+
+#: app/scripts/services/tools.js:1788
+msgid "Collection {{name}} removed"
+msgstr "コレクション {{name}} が削除されました"
+
+#: app/scripts/services/tools.js:1626
+msgid "Collection {{name}} replaced"
+msgstr "コレクション {{name}} が置き換えられました"
+
+#: app/scripts/controllers/menu.js:1043
+msgid "Collection {{name}} selected"
+msgstr "コレクション {{name}} が選択されました"
+
+#: app/views/menu.html:509
+msgid "Collections"
+msgstr "コレクション"
+
+#: app/scripts/controllers/menu.js:1013 app/views/menu.html:321
+msgid "Command output"
+msgstr "コマンド出力"
+
+#: app/views/menu.html:590
+msgid "Community forum"
+msgstr "コミュニティフォーラム"
+
+#: app/scripts/services/tools.js:677
+msgid "Configuration not completed"
+msgstr "設定が完了していません"
+
+#: app/views/design.html:92
+msgid "Constant"
+msgstr "定数"
+
+#: app/scripts/services/project.js:92
+msgid "Convert"
+msgstr "変換"
+
+#: app/views/menu.html:166
+msgid "Copy"
+msgstr "コピー"
+
+#: app/scripts/services/tools.js:1409
+msgid "Create virtualenv..."
+msgstr "仮想環境を生成…"
+
+#: app/views/menu.html:161
+msgid "Cut"
+msgstr "カット"
+
+#: app/views/languages.html:50
+msgid "Czech"
+msgstr "チェコ語"
+
+#: app/views/uithemes.html:16
+msgid "Dark (default)"
+msgstr "ダーク（既定）"
+
+#: app/views/menu.html:305
+msgid "Datasheet"
+msgstr "データシート"
+
+#: app/scripts/services/blocks.js:1495 app/scripts/services/blocks.js:413
+msgid "Decimal"
+msgstr "10進数"
+
+#: app/views/menu.html:391
+msgid "Default"
+msgstr "デフォルト"
+
+#: app/scripts/services/utils.js:765
+msgid "Description"
+msgstr "説明"
+
+#: app/views/menu.html:498
+msgid "Disable"
+msgstr "無効化"
+
+#: app/scripts/controllers/menu.js:436
+msgid "Do you want to close the application?"
+msgstr "アプリケーションを終了しますか？"
+
+#: app/scripts/controllers/menu.js:1192
+msgid "Do you want to remove the {{name}} collection?"
+msgstr "コレクション {{name}} を削除しますか？"
+
+#: app/scripts/services/tools.js:1619
+msgid "Do you want to replace it?"
+msgstr "置き換えますか？"
+
+#: app/views/menu.html:577
+msgid "Documentation"
+msgstr "ドキュメント"
+
+#: app/views/version.html:36
+msgid "Don't display"
+msgstr "表示しない"
+
+#: app/views/menu.html:485
+msgid "Drivers"
+msgstr "ドライバ"
+
+#: app/scripts/services/drivers.js:252 app/scripts/services/drivers.js:307
+#: app/scripts/services/drivers.js:439
+msgid "Drivers disabled"
+msgstr "ドライバが無効です"
+
+#: app/scripts/services/drivers.js:230 app/scripts/services/drivers.js:287
+#: app/scripts/services/drivers.js:423
+msgid "Drivers enabled"
+msgstr "ドライバが有効です"
+
+#: app/scripts/services/tools.js:695
+msgid "Duplicated FPGA I/O ports"
+msgstr "FPGA の I/O ポートが重複しています"
+
+#: app/scripts/services/blocks.js:637
+msgid "Duplicated block attributes"
+msgstr "ブロックの属性が重複しています"
+
+#: app/views/languages.html:44
+msgid "Dutch"
+msgstr "オランダ語"
+
+#: app/views/menu.html:142
+msgid "Edit"
+msgstr "編集"
+
+#: app/scripts/services/tools.js:1598
+msgid "Edit the collection name"
+msgstr "コレクションの名前を編集"
+
+#: app/views/menu.html:491
+msgid "Enable"
+msgstr "有効化"
+
+#: app/views/languages.html:14
+msgid "English"
+msgstr "英語"
+
+#: app/scripts/services/blocks.js:346
+msgid "Enter the constant blocks"
+msgstr "定数ブロックを入力"
+
+#: app/scripts/controllers/menu.js:671
+msgid "Enter the external collections path"
+msgstr "外部コレクションのパスを入力"
+
+#: app/scripts/controllers/menu.js:580
+msgid "Enter the external plugins path"
+msgstr "外部プラグインのパスを入力"
+
+#: app/scripts/controllers/menu.js:534
+msgid "Enter the file to output logging info"
+msgstr "ログを出力するファイルを入力"
+
+#: app/scripts/services/blocks.js:137
+msgid "Enter the input blocks"
+msgstr "入力ブロックを入力"
+
+#: app/scripts/services/blocks.js:67
+msgid "Enter the input label"
+msgstr "入力ラベルを入力"
+
+#: app/scripts/services/blocks.js:508
+msgid "Enter the input ports"
+msgstr "入力ポートを入力"
+
+#: app/scripts/services/blocks.js:404
+msgid "Enter the memory blocks"
+msgstr "メモリブロックの入力"
+
+#: app/scripts/services/blocks.js:209
+msgid "Enter the output blocks"
+msgstr "出力ブロックを入力"
+
+#: app/scripts/services/blocks.js:270
+msgid "Enter the output label"
+msgstr "出力ラベルを入力"
+
+#: app/scripts/services/blocks.js:513
+msgid "Enter the output ports"
+msgstr "出力ポートを入力"
+
+#: app/scripts/services/blocks.js:518
+msgid "Enter the parameters"
+msgstr "パラメタを入力"
+
+#: app/scripts/controllers/menu.js:625
+msgid "Enter the pip version > 3.8 path"
+msgstr "バージョン3.8以上のpipのパスを入力"
+
+#: app/scripts/controllers/menu.js:618
+msgid "Enter the python version > 3.8 path"
+msgstr "バージョン3.8以上のpythonのパスを入力"
+
+#: app/scripts/controllers/menu.js:770
+msgid "Enter the remote hostname user@host"
+msgstr "リモートホスト名を入力 user@host"
+
+#: app/scripts/services/utils.js:970
+msgid "Error: {{error}}"
+msgstr "エラー：{{error}}"
+
+#: app/scripts/services/tools.js:801
+msgid "Errors detected in the design"
+msgstr "設計にエラーが発見されました"
+
+#: app/views/menu.html:73
+msgid "Examples"
+msgstr "例"
+
+#: app/scripts/services/tools.js:469
+msgid "Execute remote {{label}} ..."
+msgstr "リモート {{label}} で実行…"
+
+#: app/views/menu.html:103
+msgid "Export"
+msgstr "エクスポート"
+
+#: app/scripts/controllers/menu.js:284
+msgid "Export submodule"
+msgstr "サブモジュールをエクスポート"
+
+#: app/views/menu.html:243
+msgid "External collections"
+msgstr "外部接続"
+
+#: app/scripts/controllers/menu.js:698
+msgid "External collections updated"
+msgstr "外部接続が更新されました"
+
+#: app/views/menu.html:248
+msgid "External plugins"
+msgstr "外部プラグイン"
+
+#: app/scripts/controllers/menu.js:596
+msgid "External plugins updated"
+msgstr "外部プラグインが更新されました"
+
+#: app/scripts/services/tools.js:688
+msgid "FPGA I/O ports not defined"
+msgstr "FPGA !/O ポートが未定義"
+
+#: app/scripts/services/blocks.js:1270 app/scripts/services/blocks.js:1366
+#: app/scripts/services/blocks.js:142 app/scripts/services/blocks.js:214
+msgid "FPGA pin"
+msgstr "FPGA ピン"
+
+#: app/views/menu.html:335
+msgid "FPGA resources"
+msgstr "FPGA リソース"
+
+#: app/views/menu.html:48
+msgid "File"
+msgstr "ファイル"
+
+#: app/scripts/services/project.js:507
+msgid ""
+"File {{file}} already exists in the project path. Do you want to replace it?"
+msgstr ""
+"ファイル {{file}} はプロジェクトパスに既に存在しています。置き換えますか？"
+
+#: app/scripts/services/tools.js:325
+msgid "File {{file}} does not exist"
+msgstr "ファイル {{file}} が存在しません"
+
+#: app/scripts/services/project.js:540
+msgid "File {{file}} imported"
+msgstr "ファイル {{file}} がインポートされました"
+
+#: app/views/design.html:32
+msgid "Find"
+msgstr "探す"
+
+#: app/views/menu.html:189
+msgid "Fit content"
+msgstr ""
+
+#: app/views/languages.html:26
+msgid "French"
+msgstr "フランス語"
+
+#: app/views/languages.html:80
+msgid "Galician"
+msgstr "ガリシア語"
+
+#: app/views/languages.html:38
+msgid "German"
+msgstr "ドイツ語"
+
+#: app/views/languages.html:56
+msgid "Greek"
+msgstr "ギリシャ語"
+
+#: app/views/menu.html:554
+msgid "Help"
+msgstr "ヘルプ"
+
+#: app/scripts/services/blocks.js:1496 app/scripts/services/blocks.js:414
+msgid "Hexadecimal"
+msgstr "16進数"
+
+#: app/scripts/services/graph.js:1507
+msgid ""
+"If you have blank IN/OUT pins, it's because there is no equivalent in this "
+"board"
+msgstr "IN/OUTピンが空白であるのは、このボードに該当するピンがないためです"
+
+#: app/scripts/services/utils.js:779
+msgid "Image"
+msgstr "画像"
+
+#: app/scripts/controllers/menu.js:1820
+msgid "Image {{name}} saved"
+msgstr "画像 {{name}} が保存されました"
+
+#: app/views/design.html:101
+msgid "Information"
+msgstr "情報"
+
+#: app/views/design.html:80
+msgid "Input"
+msgstr "入力"
+
+#: app/views/design.html:86
+msgid "Input label"
+msgstr "入力ラベル"
+
+#: app/views/menu.html:451
+msgid "Install (Stable)"
+msgstr "インストール（安定版）"
+
+#: app/views/menu.html:468
+msgid "Install Development version"
+msgstr "インストール（開発版）"
+
+#: app/scripts/services/tools.js:1119
+msgid ""
+"Install the <b>STABLE Toolchain</b>. This operation requires Internet "
+"connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
+"allow the toolchain installation</p> <p>Do you want to continue?</p>"
+msgstr ""
+"<b> 安定版のツールチェーン </b> をインストールします。この操作にはインター"
+"ネット接続が必要です <br> <p> <b> 注： <b> ツールチェインのインストールを許可"
+"するために、VPNがあれば切断する必要があります </p> <p>\n"
+"このまま続けますか？</p>"
+
+#: app/scripts/services/tools.js:1145
+msgid ""
+"Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"「開発版の」ツールチェインをインストールします。ダウンロードされます。この操"
+"作にはインターネット接続が必要です。続行しますか？"
+
+#: app/scripts/services/tools.js:1167
+msgid ""
+"Install the LATEST STABLE toolchain. It will be downloaded. This operation "
+"requires Internet connection. Do you want to continue?"
+msgstr ""
+"「安定版の」ツールチェインをインストールします。ダウンロードされます。この操"
+"作にはインターネット接続が必要です。続行しますか？"
+
+#: app/scripts/services/tools.js:1489
+msgid "Installation completed"
+msgstr "インストールが完了しました"
+
+#: app/scripts/services/tools.js:1275
+msgid "Installing"
+msgstr "インストール中"
+
+#: app/scripts/services/drivers.js:413 app/scripts/services/tools.js:1363
+msgid "Internet connection required"
+msgstr "インターネット接続が必要"
+
+#: app/scripts/services/graph.js:183
+msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+msgstr "無効な <I>プルアップ</i> 接続：<br>ブロックが既に接続されています"
+
+#: app/scripts/services/graph.js:197
+msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+msgstr "無効な <I>プルアップ</i> 接続：<br>入力ブロックのみ可能です"
+
+#: app/scripts/services/graph.js:189
+msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+msgstr "無効なブロック接続：<br><I>プルアップ</i> が既に接続されています"
+
+#: app/scripts/services/tools.js:1663
+msgid "Invalid collection {{name}}"
+msgstr "無効な接続 {{name}}"
+
+#: app/scripts/services/graph.js:147 app/scripts/services/graph.js:154
+#: app/scripts/services/graph.js:161
+msgid "Invalid connection"
+msgstr "無効な接続"
+
+#: app/scripts/services/graph.js:216
+msgid "Invalid connection: {{a}} → {{b}}"
+msgstr "無効な接続：{{a}} → {{b}}"
+
+#: app/scripts/services/graph.js:177
+msgid "Invalid multiple input connections"
+msgstr "無効な複数の入力接続"
+
+#: app/scripts/services/project.js:498 app/scripts/services/project.js:77
+msgid "Invalid project format"
+msgstr "無効なプロジェクトフォーマット"
+
+#: app/views/languages.html:32
+msgid "Italian"
+msgstr "イタリア語"
+
+#: app/views/languages.html:98
+msgid "Korean"
+msgstr "韓国語"
+
+#: app/views/menu.html:194
+msgid "Label Finder"
+msgstr "ラベル検索"
+
+#: app/scripts/services/blocks.js:1075
+msgid "Label updated"
+msgstr "ラベルが更新されました"
+
+#: app/views/menu.html:214
+msgid "Language"
+msgstr "言語"
+
+#: app/views/uithemes.html:26
+msgid "Light"
+msgstr "ライト"
+
+#: app/scripts/services/project.js:91
+msgid "Load"
+msgstr "ロード"
+
+#: app/scripts/services/blocks.js:1447 app/scripts/services/blocks.js:1501
+#: app/scripts/services/blocks.js:351 app/scripts/services/blocks.js:419
+msgid "Local parameter"
+msgstr "ローカルパラメタ"
+
+#: app/views/menu.html:267
+msgid "Logging enabled"
+msgstr "ログ記録を有効化"
+
+#: app/views/menu.html:274
+msgid "Logging file"
+msgstr "ログファイル"
+
+#: app/scripts/controllers/menu.js:558
+msgid "Logging file updated"
+msgstr "ログファイルが更新されました"
+
+#: app/scripts/services/utils.js:1052
+msgid "Maximum bus size: 96 bits"
+msgstr "最大のバス幅：96 ビット"
+
+#: app/views/design.html:95
+msgid "Memory"
+msgstr "メモリ"
+
+#: app/scripts/services/utils.js:763
+msgid "Name"
+msgstr "名前"
+
+#: app/views/menu.html:55
+msgid "New"
+msgstr "新規"
+
+#: app/views/design.html:40
+msgid "New Color:"
+msgstr "新しい色："
+
+#: app/views/design.html:37
+msgid "New Name:"
+msgstr "新しい名前："
+
+#: app/scripts/controllers/menu.js:1220
+msgid "No collections stored"
+msgstr ""
+
+#: app/scripts/controllers/main.js:13 app/scripts/controllers/menu.js:450
+#: app/scripts/services/project.js:145
+msgid "OK"
+msgstr ""
+
+#: app/views/menu.html:60
+msgid "Open"
+msgstr "開く"
+
+#: app/scripts/services/utils.js:820
+msgid "Open SVG"
+msgstr "SVG を開く"
+
+#: app/scripts/services/project.js:543
+msgid "Original file {{file}} does not exist"
+msgstr "オリジナルのファイル{{file}}が存在しない"
+
+#: app/views/design.html:83
+msgid "Output"
+msgstr "出力"
+
+#: app/views/design.html:89
+msgid "Output label"
+msgstr "出力ラベル"
+
+#: app/views/menu.html:171
+msgid "Paste"
+msgstr "ペースト"
+
+#: app/scripts/controllers/menu.js:563 app/scripts/controllers/menu.js:601
+#: app/scripts/controllers/menu.js:653 app/scripts/controllers/menu.js:703
+msgid "Path {{path}} does not exist"
+msgstr "パス {{path}} が存在しません"
+
+#: app/scripts/services/utils.js:1199
+msgid "Please run: {{cmd}}"
+msgstr "実行してください： {{cmd}}"
+
+#: app/views/menu.html:208
+msgid "Preferences"
+msgstr "環境設定"
+
+#: app/views/menu.html:282
+msgid "Project information"
+msgstr "プロジェクトの情報"
+
+#: app/scripts/controllers/menu.js:721 app/scripts/controllers/menu.js:747
+msgid "Project information updated"
+msgstr "プロジェクトの情報が更新されました"
+
+#: app/scripts/services/project.js:131
+msgid "Project {{name}} loaded"
+msgstr "プロジェクト {{name}} がロードされました"
+
+#: app/scripts/services/project.js:404
+msgid "Project {{name}} saved"
+msgstr "プロジェクト {{name}} が保存されました"
+
+#: app/scripts/controllers/menu.js:648
+msgid "Python Environment updated"
+msgstr "Python 環境がアップデートされました"
+
+#: app/views/menu.html:253
+msgid "Python environment"
+msgstr "Python 環境"
+
+#: app/views/menu.html:135
+msgid "Quit"
+msgstr "やめる"
+
+#: app/views/design.html:9
+msgid "Read only"
+msgstr "読み取り専用"
+
+#: app/views/menu.html:153
+msgid "Redo"
+msgstr "やり直す"
+
+#: app/views/menu.html:524
+msgid "Reload"
+msgstr "リロード"
+
+#: app/scripts/services/tools.js:870
+msgid "Remote host {{name}} not connected"
+msgstr "リモートホスト {{name}} は接続されていません"
+
+#: app/views/menu.html:259
+msgid "Remote hostname"
+msgstr "ホスト名を削除"
+
+#: app/views/menu.html:461 app/views/menu.html:530
+msgid "Remove"
+msgstr "削除"
+
+#: app/views/menu.html:544
+msgid "Remove all"
+msgstr "全て削除"
+
+#: app/views/design.html:69
+msgid "Replace All"
+msgstr "全て置き換える"
+
+#: app/views/design.html:39
+msgid "Replace One"
+msgstr "置き換える"
+
+#: app/scripts/services/utils.js:822
+msgid "Reset SVG"
+msgstr "SVGをリセット"
+
+#: app/views/languages.html:74
+msgid "Russian"
+msgstr "ロシア語"
+
+#: app/views/menu.html:89
+msgid "Save"
+msgstr "保存"
+
+#: app/scripts/services/utils.js:821
+msgid "Save SVG"
+msgstr "SVG を保存"
+
+#: app/views/menu.html:94
+msgid "Save as"
+msgstr "名前を付けて保存"
+
+#: app/scripts/controllers/menu.js:241
+msgid "Save submodule"
+msgstr "サブモジュールを保存"
+
+#: app/views/menu.html:345
+msgid "Select"
+msgstr "選択"
+
+#: app/views/menu.html:181
+msgid "Select all"
+msgstr "全て選択"
+
+#: app/scripts/services/utils.js:931
+msgid "Select your board"
+msgstr "ボードを選択"
+
+#: app/scripts/services/blocks.js:1275 app/scripts/services/blocks.js:147
+msgid "Show clock"
+msgstr "クロックを確認"
+
+#: app/views/menu.html:582
+msgid "Source code"
+msgstr "ソースコード"
+
+#: app/views/languages.html:20
+msgid "Spanish"
+msgstr "スペイン語"
+
+#: app/scripts/controllers/menu.js:1120
+msgid "Start build"
+msgstr "ビルド開始"
+
+#: app/scripts/controllers/menu.js:1148
+msgid "Start upload"
+msgstr "アップロード開始"
+
+#: app/scripts/controllers/menu.js:1096
+msgid "Start verification"
+msgstr "検証を開始"
+
+#: app/scripts/services/tools.js:446
+msgid "Synchronize remote files ..."
+msgstr "リモートのファイルを同期…"
+
+#: app/views/menu.html:326
+msgid "System Info"
+msgstr "システム情報"
+
+#: app/views/languages.html:62
+msgid "Taiwan"
+msgstr "台湾語"
+
+#: app/views/menu.html:112
+msgid "Testbench"
+msgstr "テストベンチ"
+
+#: app/scripts/services/tools.js:1612
+msgid "The collection {{name}} already exists."
+msgstr "コレクション {{name}} は既に存在します。"
+
+#: app/scripts/controllers/menu.js:1068
+msgid ""
+"The current FPGA I/O configuration will be lost. Do you want to change to "
+"{{name}} board?"
+msgstr "現在の FPGA I/O 設定が失われます。 ボードを {{name}} に変更しますか？"
+
+#: app/scripts/services/tools.js:1185
+msgid "The toolchain will be removed. Do you want to continue?"
+msgstr "ツールチェーンが削除されます。続けますか？"
+
+#: app/scripts/services/tools.js:1832
+msgid "There is a new nightly version available"
+msgstr "新しいナイトリー版が利用可能です"
+
+#: app/scripts/services/tools.js:1824
+msgid "There is a new stable version available"
+msgstr "新しい安定版が利用可能です"
+
+#: app/scripts/services/project.js:467
+msgid ""
+"This import operation requires a project path. You need to save the current "
+"project. Do you want to continue?"
+msgstr ""
+"このインポート操作には、プロジェクトのパスが必要です。現在のプロジェクトを保"
+"存する必要があります。続行しますか？"
+
+#: app/scripts/services/project.js:95
+msgid "This project is designed for the {{name}} board."
+msgstr "このプロジェクトはボード {{name}} 向けです。"
+
+#: app/scripts/services/graph.js:419
+msgid ""
+"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
+"mode\", lock the keylock to do it."
+msgstr ""
+"内側のブロックの「編集モード」に入るには、現在の「編集モード」を終了させ、"
+"キーロックをかけて行う必要があります。"
+
+#: app/scripts/controllers/design.js:31
+msgid "To navigate through design, you need to close \"edit mode\"."
+msgstr "デザインを操作するには、「編集モード」を終了する必要があります。"
+
+#: app/scripts/controllers/menu.js:242
+msgid ""
+"To save your design you need to lock the keylock and go to top level design."
+"<br/><br/>If you want to export this submodule to a file, execute \"Save as"
+"\" command to do it."
+msgstr ""
+"デザインを保存するには、キーロックをかけてトップレベルのデザインに移動する必"
+"要があります。<br/><br/>このサブモジュールをファイルに書き出したい場合は、"
+"「名前を付けて保存」を実行してください。"
+
+#: app/views/menu.html:199
+msgid "Toolbox"
+msgstr "ツールボックス"
+
+#: app/views/menu.html:443
+msgid "Toolchain"
+msgstr "ツールチェーン"
+
+#: app/scripts/services/tools.js:1497
+msgid "Toolchain installed"
+msgstr "ツールチェーンがインストールされました"
+
+#: app/scripts/services/drivers.js:586 app/scripts/services/drivers.js:605
+#: app/scripts/services/tools.js:192 app/scripts/services/tools.js:372
+msgid "Toolchain not installed"
+msgstr "ツールチェーンがインストールされていません"
+
+#: app/scripts/services/tools.js:1203
+msgid "Toolchain removed"
+msgstr "ツールチェーンが削除されました"
+
+#: app/scripts/services/tools.js:415
+msgid "Toolchain version does not match"
+msgstr "ツールチェーンのバージョンが適合しません"
+
+#: app/views/menu.html:420
+msgid "Tools"
+msgstr "ツール"
+
+#: app/views/languages.html:104
+msgid "Turkish"
+msgstr "トルコ語"
+
+#: app/views/menu.html:224
+msgid "UI theme"
+msgstr "UI テーマ"
+
+#: app/views/menu.html:148
+msgid "Undo"
+msgstr "戻す"
+
+#: app/scripts/services/tools.js:616
+msgid "Unknown board"
+msgstr "不明なボード"
+
+#: app/scripts/services/project.js:169
+msgid "Unsupported project format {{version}}"
+msgstr "非対応のプロジェクトフォーマット {{version}}"
+
+#: app/scripts/app.js:164
+msgid "Untitled"
+msgstr "無名"
+
+#: app/views/menu.html:454
+msgid "Update (Latest stable)"
+msgstr "アップデート（最新の安定版）"
+
+#: app/scripts/services/blocks.js:1265 app/scripts/services/blocks.js:1361
+#: app/scripts/services/blocks.js:1442 app/scripts/services/blocks.js:1486
+msgid "Update the block name"
+msgstr "ブロック名を変更"
+
+#: app/scripts/services/blocks.js:1084 app/scripts/services/blocks.js:1179
+msgid "Update the label name"
+msgstr "ラベル名を変更"
+
+#: app/scripts/controllers/menu.js:1138 app/views/design.html:185
+#: app/views/menu.html:435
+msgid "Upload"
+msgstr "アップロード"
+
+#: app/scripts/controllers/menu.js:1149
+msgid "Upload done"
+msgstr "アップロード完了"
+
+#: app/scripts/controllers/menu.js:1097
+msgid "Verification done"
+msgstr "検証完了"
+
+#: app/views/design.html:183 app/views/menu.html:425
+msgid "Verify"
+msgstr "検証"
+
+#: app/scripts/services/utils.js:764 app/views/menu.html:569
+msgid "Version"
+msgstr "バージョン"
+
+#: app/views/menu.html:564
+msgid "Version notes"
+msgstr "バージョン情報"
+
+#: app/views/menu.html:289
+msgid "View"
+msgstr "表示"
+
+#: app/views/menu.html:559
+msgid "View license"
+msgstr "ライセンスを確認"
+
+#: app/scripts/services/tools.js:807
+msgid "Warnings detected in the design"
+msgstr "デザインで検出された警告"
+
+#: app/scripts/services/blocks.js:675
+msgid "Wrong block format: {{type}}"
+msgstr "誤ったブロックフォーマット：{{type}}"
+
+#: app/scripts/services/blocks.js:1168 app/scripts/services/blocks.js:1254
+#: app/scripts/services/blocks.js:1350 app/scripts/services/blocks.js:1432
+#: app/scripts/services/blocks.js:1475 app/scripts/services/blocks.js:1532
+#: app/scripts/services/blocks.js:168 app/scripts/services/blocks.js:234
+#: app/scripts/services/blocks.js:297 app/scripts/services/blocks.js:371
+#: app/scripts/services/blocks.js:440 app/scripts/services/blocks.js:94
+msgid "Wrong block name {{name}}"
+msgstr "誤ったブロック名：{{name}}"
+
+#: app/scripts/controllers/menu.js:1680
+msgid "Wrong new name!"
+msgstr "誤った名前！"
+
+#: app/scripts/services/blocks.js:586
+msgid "Wrong parameter name {{name}}"
+msgstr "誤ったパラメタ名 {{name}}"
+
+#: app/scripts/services/blocks.js:543 app/scripts/services/blocks.js:561
+msgid "Wrong port name {{name}}"
+msgstr "誤ったポート名 {{name}}"
+
+#: app/scripts/services/project.js:142
+msgid "Wrong project format: {{name}}"
+msgstr "誤ったプロジェクトフォーマット：{{name}}"
+
+#: app/scripts/services/tools.js:863
+msgid "Wrong remote hostname {{name}}"
+msgstr "誤ったリモートホスト名 {{name}}"
+
+#: app/scripts/controllers/menu.js:1584
+msgid "Wrong search name!"
+msgstr "誤った検索名！"
+
+#: app/scripts/controllers/menu.js:285
+msgid ""
+"You are editing a submodule, if you save it, you save only the submodule (in "
+"this situation \"save as\" works like \"export module\"), Do you like to "
+"continue?"
+msgstr ""
+"サブモジュールを編集している場合、保存するとサブモジュールだけが保存されます"
+"（この場合、「名前を付けて保存」は「モジュールのエクスポート」のように機能し"
+"ます）。続けますか？"
+
+#: app/scripts/services/project.js:96
+msgid "You can load it as it is or convert it for the {{name}} board."
+msgstr "そのまま読み込むか、ボード {{name}} 用に変換することができます。"
+
+#: app/scripts/controllers/menu.js:1112
+msgid ""
+"You can only build at top-level design. Inside submodules you only can "
+"<strong>Verify</strong>"
+msgstr ""
+"ビルドはトップレベルでのみ可能です。サブモジュールでは<strong>検証</strong>の"
+"み可能です"
+
+#: app/scripts/controllers/menu.js:1139
+msgid ""
+"You can only upload  your design at top-level design. Inside submodules you "
+"only can <strong>Verify</strong>"
+msgstr ""
+"アップロードはトップレベルでのみ可能です。サブモジュールでは<strong>検証</"
+"strong>のみ可能です"
+
+#: app/scripts/controllers/menu.js:439
+msgid "Your changes will be lost if you don’t save them"
+msgstr "保存しないと変更内容が失われます"
+
+#: app/views/design.html:12
+msgid "back"
+msgstr "戻る"
+
+#: app/views/design.html:19
+#, fuzzy
+msgid ""
+"blocks of the current .ice design. If you do not want a propagation of a "
+"change, make it inside a cloned block (instead of copied one)"
+msgstr ""
+"現在の.iceデザインのブロックです。変更の伝搬が必要ない場合は、（コピーされた"
+"ブロックではなく）クローンされたブロックの中に作ってください。"
+
+#: app/scripts/services/drivers.js:404 app/scripts/services/utils.js:1179
+msgid "{{app}} is required."
+msgstr "{{app}} が必要です。"
+
+#: app/scripts/controllers/menu.js:883
+msgid "{{board}} datasheet not defined"
+msgstr "{{board}} のデータシートが未定義"
+
+#: app/scripts/controllers/menu.js:869
+msgid "{{board}} pinout not defined"
+msgstr "{{board}} のピンアウトが未定義"
+
+#: app/scripts/controllers/menu.js:909
+msgid "{{board}} rules not defined"
+msgstr "{{board}} のルールが未定義"
+
+#: app/scripts/controllers/menu.js:371 app/scripts/controllers/menu.js:404
+msgid "{{name}} exported"
+msgstr "{{name}} がエクスポートされました"
