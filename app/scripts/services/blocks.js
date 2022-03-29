@@ -286,7 +286,7 @@ angular.module('icestudio')
   }
 
   //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Output block. A form is displayed first 
+  //-- Create one or more New Basic Output blocks. A form is displayed first 
   //-- for the user to enter the block data: name and pin type 
   //--
   //-- Inputs:

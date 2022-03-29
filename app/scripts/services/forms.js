@@ -714,6 +714,23 @@ angular.module('icestudio')
     return form;
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create the form for the INPUT Labels
+  //-- Returns:
+  //--   * The object Form
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the input blocks            |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //----------------------------------------+
+  function basicInputLabelForm() {
+    console.log("HOLI????");
+  }
 
 
 
@@ -723,6 +740,7 @@ angular.module('icestudio')
   this.CheckboxField = CheckboxField;
   this.basicInputForm = basicInputForm;
   this.basicOutputForm = basicOutputForm;
+  this.basicInputLabelForm = basicInputLabelForm;
 
 
   //-----------------------------------------------------------------------
