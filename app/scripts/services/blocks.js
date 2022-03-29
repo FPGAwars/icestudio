@@ -32,6 +32,9 @@ angular.module('icestudio')
 
   const BASIC_PAIRED_LABELS = "basic.pairedLabel";
   
+  //-- Maximum length for the BUSES in ports
+  //const MAX_SIZE = 96;
+
   //-------------------------------------------------------------------------
   //-- Class: Block Object. It represent any graphical object in the
   //--        circuit
@@ -65,7 +68,75 @@ angular.module('icestudio')
         y: 0  
       };
     }
+
+    //---------------------------------------------------
+    //-- Parse the Port names
+    //-- 
+    //-- INPUT:
+    //--   * name: String (Ex: "a[7:0]")
+    //--
+    //-- Returns:
+    //--   * null: No match (Syntax error)
+    //--   * PortInfo structure:
+    //--      -name: Port name (Ex. "a")
+    //--      -rangstr: Range string (Ex. "[7:0]")
+    //--      -size: Port size
+    //----------------------------------------------------
+    static parsePortName(portName) {
+
+      //-- Pattern for partsin the port names
+      let pattern = common.PATTERN_PORT_LABEL;
+
+      //-- Parse the name
+      let match = pattern.exec(portName);
+
+      //-- match[0]: global match
+      //-- match[1]: Initial word: name
+      //-- match[2]: Range (Ex. [7:0])
+      //-- match[3]: Most significant byte in the range (Ex. 7)
+      //-- match[4]: Less significant byte in the range (Ex. 0)
+
+      if (match) {
+
+        //--There is a full match
+        if (match[0] === match.input) {
+
+          //-- Return object
+          let portInfo = {};
+
+          //-- Get the name and rangestr
+          portInfo.name = match[1] || '';
+          portInfo.rangestr = match[2];
+
+          //-- Let's calculate the size
+
+          //-- If it is a bus...
+          if (portInfo.rangestr) {
+
+            //-- Get the range left and right numbers
+            let left = parseInt(match[3]);
+            let right = parseInt(match[4]);
+
+            portInfo.size = Math.abs(left - right) + 1;
+          }
+          //-- It is an isolated wire
+          else {
+            portInfo.size = 1;
+          }
+
+          //-- No more checkings....
+          //-- TODO: Size checking
+          return portInfo;
+        }
+
+      }
+      //-- No match
+      return null;
+
+    } 
+
   }
+
 
   //-------------------------------------------------------------------------
   //-- Class: Port. Virtual class for representing both input and output  
@@ -279,37 +350,43 @@ angular.module('icestudio')
       //--------- Validate the values
 
       //-- Variables for storing the port information
-      let portInfo, portInfos = [];
+      let portInfos = [];
 
-      //-- Analize all the port names...
+      //-- Analyze all the port names...
       names.forEach( name => {
         
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-                      name, 
-                      common.PATTERN_GLOBAL_PORT_LABEL);
+        //-- Get the port Info: port name, size...
+        let portInfo = Block.parsePortName(name);
 
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+           //-- Do not close the form
+           evt.cancel = true;
 
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
+           //-- Show a warning notification
+           resultAlert = alertify.warning(
+               gettextCatalog.getString('Wrong block name {{name}}', 
+                                        { name: name }));
+           return;
         }
 
-        //-- There was an error parsing the label
-        else {
+        //-- TODO: Check sizes
 
-          //-- Do not close the form
+        //-- Check particular errors
+        //-- Error: Buses cannot be clocks...
+        if (portInfo.rangestr && clock) {
           evt.cancel = true;
 
-          //-- Show a warning notification
+          //-- Show a notification with the warning
           resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                       { name: name }));
+             gettextCatalog.getString('Clock not allowed for data buses'));
           return;
         }
+
+        //-- Close the form when finish
+        evt.cancel = false;
+        portInfos.push(portInfo);
+       
       });
 
       //--------- Everything is ok so far... Let's create the block!
@@ -322,16 +399,6 @@ angular.module('icestudio')
 
       //-- Crear all the ports...
       portInfos.forEach( portInfo => {
-        
-        //-- Error: Buses cannot be clocks...
-        if (portInfo.rangestr && clock) {
-          evt.cancel = true;
-
-          //-- Show a notification with the warning
-          resultAlert = alertify.warning(
-             gettextCatalog.getString('Clock not allowed for data buses'));
-          return;
-        }
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
@@ -879,24 +946,12 @@ angular.module('icestudio')
       //-- The output array of pins. Initially empty
       let pins = [];
 
-      //-- Is the port a Bus?
-      if (portInfo.range) {
-
-        for (let i in portInfo.range) {
-          pins.push(
-            { index: portInfo.range[i].toString(),  //-- Pin number
-              name: 'NULL',   //-- Pin name 
-              value: 'NULL'   //-- Pin value
-            });
-        }
-      }
-      //-- The port is a wire
-      else {
-        pins.push({ 
-          index: '0', 
-          name: 'NULL', 
-          value: 'NULL' 
-        });
+      for (let i = 0; i < portInfo.size; i++) {
+        pins.push(
+          { index: i.toString(),  //-- Pin number
+            name: 'NULL',   //-- Pin name 
+            value: 'NULL'   //-- Pin value
+          });
       }
 
       return pins;

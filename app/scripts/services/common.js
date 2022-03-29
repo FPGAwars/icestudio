@@ -237,6 +237,7 @@ angular
       /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
 
+    //-- Check the port names. Ex. a[1:0], b
     this.PATTERN_GLOBAL_PORT_LABEL = /^([^\[\]]+)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_GLOBAL_PARAM_LABEL = /^([^\[\]]+)?$/;
 
