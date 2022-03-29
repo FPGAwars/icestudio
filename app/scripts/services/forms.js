@@ -1,25 +1,22 @@
 //---------------------------------------------------------------------------
 //-- Forms managment
 //---------------------------------------------------------------------------
-
 'use strict';
+
+//-- Disable the jshint Warning: "xxxx defined but never used"
+/* jshint unused:false */
 
 angular.module('icestudio')
   .service('forms', 
     function (
-
+      gettextCatalog
     ) 
 {
 
-  //-------------------------------------------------------------------------
-  //-- Constant for working with HTML FORMS
-  //-------------------------------------------------------------------------
-  //-- Each input Form has diffefrent Fields:
-  //--  * Text : For entering texts (Ex. port names)
-  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
-  //--  * Combobox. Multiple selection. (Ex. Address format )
-  //--  * Color selection dropmenu
-  
+  //-- Constant for the Field Clases
+  const FIELD_TEXT = 'text';
+  const FIELD_CHECKBOX = 'checkbox';
+  const FIELD_COLOR = 'color-dropdown';
 
   //-- Constants for the Field Parameters
   const PARAM_TEXT = "%TEXT%";
@@ -31,25 +28,352 @@ angular.module('icestudio')
   const PARAM_COLOR = "%COLOR%";
   const PARAM_COLOR_NAME = "%COLOR_NAME%";
 
-  //-------------------------------------------------------------------------
-  //--- Input text field
-  //-------------------------------------------------------------------------
+  //------------------------ HTML TEMPLATES for the Fields
+
+  //-- Input text
+  const FORM_TEXT_TEMPLATE = `
+  <p> ${PARAM_TEXT} </p>
+  <input class="ajs-input" 
+         type="text" 
+         id="form${PARAM_ID}" 
+         value="${PARAM_VALUE}"
+         autocomplete="off"/>
+  `;
+
+   //-- Checkbox
+   const FORM_CHECKBOX_TEMPLATE = `
+   <div class="checkbox">
+     <label>
+       <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
+       ${PARAM_LABEL}
+     </label>
+   </div>
+ `;
+
+   //-- HTML template for the color dropdown input
+   const FORM_COLOR_INPUT_TEMPLATE = `
+   <div class="form-group">
+      <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
+      <div class="lb-color--dropdown">
+        <div class="lb-dropdown-title">
+ 
+          <!-- The current color is the one found in spec.color -->
+          <span class="lb-selected-color color-${PARAM_COLOR}"
+            data-color="${PARAM_COLOR}"
+            data-name="${PARAM_COLOR_NAME}"> 
+          </span> 
+          ${PARAM_COLOR_NAME}
+          <span class="lb-dropdown-icon"></span>
+        </div>
+      
+        <div class="lb-dropdown-menu">
+ 
+        <div class="lb-dropdown-option" 
+          data-color="indianred" 
+          data-name="IndianRed">
+            <span class="lb-option-color color-indianred">
+            </span>
+            IndianRed
+        </div>
+        
+        <div class="lb-dropdown-option" 
+          data-color="red" 
+          data-name="Red">
+            <span class="lb-option-color color-red">
+            </span>
+            Red
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="deeppink" 
+          data-name="DeepPink">
+            <span class="lb-option-color color-deeppink">
+            </span>
+            DeepPink
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="mediumvioletred"
+          data-name="MediumVioletRed">
+            <span class="lb-option-color color-mediumvioletred">
+            </span>
+            MediumVioletRed
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="coral"
+          data-name="Coral">
+            <span class="lb-option-color color-coral"></span>
+            Coral
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="orangered"
+          data-name="OrangeRed">
+            <span class="lb-option-color color-orangered"></span>
+            OrangeRed
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="darkorange"
+          data-name="DarkOrange">
+            <span class="lb-option-color color-darkorange"></span>
+            DarkOrange
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="gold"
+          data-name="Gold">
+            <span class="lb-option-color color-gold"></span>
+          Gold
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="yellow"
+          data-name="Yellow">
+            <span class="lb-option-color color-yellow"></span>
+            Yellow
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="fuchsia"
+          data-name="Fuchsia">
+            <span class="lb-option-color color-fuchsia"></span>
+            Fuchsia
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="slateblue"
+          data-name="SlateBlue">
+            <span class="lb-option-color color-slateblue"></span>
+            SlateBlue
+        </div>
+        <div class="lb-dropdown-option" 
+          data-color="greenyellow"
+          data-name="GreenYellow">
+            <span class="lb-option-color color-greenyellow"></span>
+            GreenYellow
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="springgreen"
+          data-name="SpringGreen">
+            <span class="lb-option-color color-springgreen"></span>
+            SpringGreen
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="darkgreen"
+          data-name="DarkGreen">
+            <span class="lb-option-color color-darkgreen"></span>
+            DarkGreen
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="olivedrab"
+          data-name="OliveDrab">
+            <span class="lb-option-color color-olivedrab">
+            </span>
+            OliveDrab
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="lightseagreen" 
+          data-name="LightSeaGreen">
+            <span class="lb-option-color color-lightseagreen"></span>
+            LightSeaGreen
+        </div> 
+ 
+        <div class="lb-dropdown-option" 
+          data-color="turquoise"
+          data-name="Turquoise">
+            <span class="lb-option-color color-turquoise"></span>
+            Turquoise
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="steelblue"
+          data-name="SteelBlue">
+            <span class="lb-option-color color-steelblue"></span>
+            SteelBlue
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="deepskyblue"
+          data-name="DeepSkyBlue">
+            <span class="lb-option-color color-deepskyblue"></span>
+            DeepSkyBlue
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="royalblue"
+          data-name="RoyalBlue">
+            <span class="lb-option-color color-royalblue"></span>
+            RoyalBlue
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="navy"
+          data-name="Navy">
+            <span class="lb-option-color color-navy"></span>
+            Navy
+        </div>
+ 
+        <div class="lb-dropdown-option" 
+          data-color="lightgray"
+          data-name="LightGray">
+            <span class="lb-option-color color-lightgray"></span>
+           LightGray
+        </div>
+        
+       </div>
+     </div>
+   </div>
+ `;
+
+  //---------------------------------------------------------
+  //-- TEXTFIELD. It represents a Form Input text field
+  //---------------------------------------------------------
+  //-- This is how it is rendered in the Form
   /*
          text message
         +-----------------+
         | Input text      |
+        +-----------------+ 
+   
+  */
+  class TextField {
+
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place above the input box
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_TEXT;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, this.label);
+      html = html.replace(PARAM_VALUE, this.value);
+      html = html.replace(PARAM_ID, this.formId);
+
+      return html;
+    }
+
+  }
+
+  //-------------------------------------------------------------------------
+  //--- CHECKBOX FIELD. Input checkbox field
+  //-------------------------------------------------------------------------
+    //-- This is how it is rendered in the Form
+  /*
+         [ ] Label
+  */
+  class CheckboxField {
+
+    //-----------------------------------------------------------------------
+    //-- Input parameters:
+    //--   * Label: Text place to the right of the checkbox
+    //--   * value: Default value
+    //--   * formId: Form identification number
+    //-----------------------------------------------------------------------
+    constructor(label, value, formId) {
+
+      this.type = FIELD_CHECKBOX;
+      this.label = label;
+      this.value = value;
+      this.formId = formId;
+    }
+
+    //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_CHECKBOX_TEMPLATE.replace(
+        PARAM_VALUE,
+        (this.value ? 'checked' : ''));
+
+      html = html.replace(PARAM_ID, this.formId);
+      html = html.replace(PARAM_LABEL, this.label);
+
+      return html;
+    }
+
+  }
+
+  //-------------------------------------------------------------------------
+  //--- COLOR FIELD. Input color dropdown field
+  //-------------------------------------------------------------------------
+  /*
+        Label
+        +-----------------+
+        | o Color       v |
         +-----------------+  
   */
 
-  //-- HTLM code template
-  const FORM_TEXT_TEMPLATE = `
-    <p> ${PARAM_TEXT} </p>
-    <input class="ajs-input" 
-           type="text" 
-           id="form${PARAM_ID}" 
-           value="${PARAM_VALUE}"
-           autocomplete="off"/>
-    `;
+  class ColorField {
+    //-----------------------------------------------------------------------
+    //-- Create the html code for an input color dropdown field
+    //-- INPUTS:
+    //--   * Label: Text place above the color input box
+    //--   * color: Color value (String)
+    //--   * colorName: Color name (String)
+    //--
+    //-- Returns:
+    //--   -A string with the HTML code for that Field
+    //-----------------------------------------------------------------------
+    constructor(label, color, colorName) {
+      this.type = FIELD_COLOR;
+      this.label = label;
+      this.color = color;
+      this.colorName = colorName;
+    }
+    
+     //---------------------------------------------------------
+    //-- Return a string whith the HTML code for this field
+    //---------------------------------------------------------
+    html() {
+      //-- Generate the HTML code
+
+      //-- Insert the parameters in the html code template
+      let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+        PARAM_LABEL,
+        this.label);
+
+      html = html.replaceAll(PARAM_COLOR, this.color);
+      html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
+
+      return html;
+    }
+
+  }
+
+
+
+  //-------------------------------------------------------------------------
+  //-- Constant for working with HTML FORMS
+  //-------------------------------------------------------------------------
+  //-- Each input Form has diffefrent Fields:
+  //--  * Text : For entering texts (Ex. port names)
+  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
+  //--  * Combobox. Multiple selection. (Ex. Address format )
+  //--  * Color selection dropmenu
 
   //-----------------------------------------------------------
   //-- Create the html code for an input Text field
@@ -72,22 +396,8 @@ angular.module('icestudio')
   };
   
  
-  //-------------------------------------------------------------------------
-  //--- Input checkbox field
-  //-------------------------------------------------------------------------
-  /*
-         [ ] Label
-  */
-
-  //-- HTLM code template
-  const FORM_CHECKBOX_TEMPLATE = `
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-        ${PARAM_LABEL}
-      </label>
-    </div>
-  `;
+  
+ 
 
   //-----------------------------------------------------------
   //-- Create the html code for an input checkbox field
@@ -211,186 +521,6 @@ angular.module('icestudio')
         +-----------------+  
   */
 
-  //-- HTML template for the combobox input
-  const FORM_COLOR_INPUT_TEMPLATE = `
-    <div class="form-group">
-       <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
-       <div class="lb-color--dropdown">
-         <div class="lb-dropdown-title">
-  
-           <!-- The current color is the one found in spec.color -->
-           <span class="lb-selected-color color-${PARAM_COLOR}"
-             data-color="${PARAM_COLOR}"
-             data-name="${PARAM_COLOR_NAME}"> 
-           </span> 
-           ${PARAM_COLOR_NAME}
-           <span class="lb-dropdown-icon"></span>
-         </div>
-       
-         <div class="lb-dropdown-menu">
-  
-         <div class="lb-dropdown-option" 
-           data-color="indianred" 
-           data-name="IndianRed">
-             <span class="lb-option-color color-indianred">
-             </span>
-             IndianRed
-         </div>
-         
-         <div class="lb-dropdown-option" 
-           data-color="red" 
-           data-name="Red">
-             <span class="lb-option-color color-red">
-             </span>
-             Red
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="deeppink" 
-           data-name="DeepPink">
-             <span class="lb-option-color color-deeppink">
-             </span>
-             DeepPink
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="mediumvioletred"
-           data-name="MediumVioletRed">
-             <span class="lb-option-color color-mediumvioletred">
-             </span>
-             MediumVioletRed
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="coral"
-           data-name="Coral">
-             <span class="lb-option-color color-coral"></span>
-             Coral
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="orangered"
-           data-name="OrangeRed">
-             <span class="lb-option-color color-orangered"></span>
-             OrangeRed
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="darkorange"
-           data-name="DarkOrange">
-             <span class="lb-option-color color-darkorange"></span>
-             DarkOrange
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="gold"
-           data-name="Gold">
-             <span class="lb-option-color color-gold"></span>
-           Gold
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="yellow"
-           data-name="Yellow">
-             <span class="lb-option-color color-yellow"></span>
-             Yellow
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="fuchsia"
-           data-name="Fuchsia">
-             <span class="lb-option-color color-fuchsia"></span>
-             Fuchsia
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="slateblue"
-           data-name="SlateBlue">
-             <span class="lb-option-color color-slateblue"></span>
-             SlateBlue
-         </div>
-         <div class="lb-dropdown-option" 
-           data-color="greenyellow"
-           data-name="GreenYellow">
-             <span class="lb-option-color color-greenyellow"></span>
-             GreenYellow
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="springgreen"
-           data-name="SpringGreen">
-             <span class="lb-option-color color-springgreen"></span>
-             SpringGreen
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="darkgreen"
-           data-name="DarkGreen">
-             <span class="lb-option-color color-darkgreen"></span>
-             DarkGreen
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="olivedrab"
-           data-name="OliveDrab">
-             <span class="lb-option-color color-olivedrab">
-             </span>
-             OliveDrab
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="lightseagreen" 
-           data-name="LightSeaGreen">
-             <span class="lb-option-color color-lightseagreen"></span>
-             LightSeaGreen
-         </div> 
-  
-         <div class="lb-dropdown-option" 
-           data-color="turquoise"
-           data-name="Turquoise">
-             <span class="lb-option-color color-turquoise"></span>
-             Turquoise
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="steelblue"
-           data-name="SteelBlue">
-             <span class="lb-option-color color-steelblue"></span>
-             SteelBlue
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="deepskyblue"
-           data-name="DeepSkyBlue">
-             <span class="lb-option-color color-deepskyblue"></span>
-             DeepSkyBlue
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="royalblue"
-           data-name="RoyalBlue">
-             <span class="lb-option-color color-royalblue"></span>
-             RoyalBlue
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="navy"
-           data-name="Navy">
-             <span class="lb-option-color color-navy"></span>
-             Navy
-         </div>
-  
-         <div class="lb-dropdown-option" 
-           data-color="lightgray"
-           data-name="LightGray">
-             <span class="lb-option-color color-lightgray"></span>
-            LightGray
-         </div>
-         
-        </div>
-      </div>
-    </div>
-  `;
 
   //-----------------------------------------------------------
   //-- Create the html code for an input color dropdown field
@@ -415,6 +545,361 @@ angular.module('icestudio')
     return html;
   };
 
+
+  class Form {
+
+    //-- Build a blank form
+    constructor() {
+
+      //-- Array of fields
+      this.fields = [];
+    }
+
+    //------------------------------------
+    //-- Add a field to the form
+    //------------------------------------
+    addField(field) {
+      this.fields.push(field);
+    }
+
+    //------------------------------------------------------------------
+    //-- Read all the inputs from the fields introduced by the user
+    //-- Returns: An array of values
+    //------------------------------------------------------------------
+    readFields() {
+
+      //-- Array were the values will be stored 
+      let values = [];
+
+      //-- Temporal variable for storing a field value
+      let value;
+
+      //-- Read the values from the Form fields
+      //-- and insert them into the values array
+      this.fields.forEach( field => {
+
+        //-- Read the value depending on the field type
+        switch (field.type) {
+
+          //-- Input text
+          case FIELD_TEXT:
+
+            //-- Read the value from the form i
+            value = $('#form' + field.formId).val();
+            break;
+
+          //-- Checkbox
+          case FIELD_CHECKBOX:
+
+            //-- Read the value from the form i
+            value = $($('#form' + field.formId).prop('checked'));
+            value = value[0];
+            break;
+
+          //-- Color input
+          case FIELD_COLOR:
+
+            //-- Read the value 
+            value = $('.lb-selected-color').data('color');            
+            break;
+
+        }
+
+        //-- Add the value to the array
+        values.push(value);
+
+      });
+
+      //-- Return all the values
+      return values;
+    }
+
+
+    //-------------------------------------
+    //-- Generate the HTML of the form
+    //-------------------------------------
+    html() {
+
+      //-- Variable for storing the html code
+      let formHtml = [];
+
+      //-- Variable for storing the field HTML code
+      let fieldHtml;
+
+      //-- Initial tag for the Form
+      formHtml.push('<div>');
+
+      //-- Generate the html for all the fields in the form
+      this.fields.forEach( field => {
+
+        //-- Create the html code
+        fieldHtml = field.html();
+
+        //-- Store the html for this Field
+        formHtml.push(fieldHtml);
+
+      });
+
+      //-- Closing tag for the Form
+      formHtml.push('</div>');
+
+      //-- Create the string
+      let html = formHtml.join('\n');
+
+      //-- return the HTML code
+      return html;
+
+    }
+
+    //-----------------------------------------------------------------
+    //-- Display the Form
+    //-- INPUT:
+    //--   * callback: Function called when the OK button is pressed
+    //-----------------------------------------------------------------
+    display(callback) {
+
+      //-- Create the HTML
+      let html = this.html();
+
+      //-- Display the Form
+      alertify.confirm(html)
+
+        //-- Set the callback for the OK button
+        .set('onok', callback )
+
+        //-- Set the callback for the Candel button:
+        //--   Do nothing... 
+        .set('oncancel', function ( /*evt*/) { });
+
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Create the form for the INPUT PORTS
+  //-- Returns:
+  //--   * The object Form for the Input ports
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the input blocks            |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //--    [  ] Show clock                   |
+  //----------------------------------------+
+  function basicInputForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the input blocks'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Checkbox for selecting if the input block
+    //-- is an FPGA pin or an internal port
+    let field1 = new CheckboxField(
+      gettextCatalog.getString('FPGA pin'),
+      true,  //-- Default value
+      1      //-- Field id
+    );
+
+    //-- Field 2: Checkbox for configuring the input pin
+    //--          as a clock
+    let field2 = new CheckboxField(
+      gettextCatalog.getString('Show clock'),
+      false,  //-- Default value
+      2       //-- Field id
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+    form.addField(field2);
+
+    //-- Return the form
+    return form;
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Create the form for the OUTPUT PORTS
+  //-- Returns:
+  //--   * The object Form for the Output ports
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the output blocks           |
+  //--    +--------------------------+      |
+  //--    | Pin names                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    [✅️] FPGA pin                     |
+  //----------------------------------------+
+  function basicOutputForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the output blocks'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Checkbox for selecting if the output block
+    //-- is an FPGA pin or an internal port
+    let field1 = new CheckboxField(
+      gettextCatalog.getString('FPGA pin'),
+      true,  //-- Default value
+      1      //-- Field id
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Create the form for the INPUT Labels
+  //-- Returns:
+  //--   * The object Form
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the input label             |
+  //--    +--------------------------+      |
+  //--    | Label names              |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    Chose a color                     |
+  //--    +--------------------------+      |
+  //--    | o Fucshia                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //----------------------------------------+
+  function basicInputLabelForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the input label'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  
+  }
+
+//-------------------------------------------------------------------------
+  //-- Create the form for the OUTPUT Labels
+  //-- Returns:
+  //--   * The object Form
+  //-------------------------------------------------------------------------
+  //-- Form:
+  //----------------------------------------+
+  //--    Enter the input label             |
+  //--    +--------------------------+      |
+  //--    | Label names              |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //--    Chose a color                     |
+  //--    +--------------------------+      |
+  //--    | o Fucshia                |      |
+  //--    +--------------------------+      |
+  //--                                      |
+  //----------------------------------------+
+  function basicOutputLabelForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the output label'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  
+  }
+
+  function basicPairedLabelForm() {
+
+    //-- Create a blank Form
+    let form = new Form();
+
+    //-- Field 0: Text input
+    let field0 = new TextField(
+      gettextCatalog.getString('Enter the paired labels name'),
+      '',   //-- Default value
+      0     //-- Field id
+    );
+
+    //-- Field 1: Color dropdown
+    let field1 = new ColorField(
+      gettextCatalog.getString('Choose a color'),
+      "fuchsia",
+      "Fuchsia"
+    );
+
+    //-- Add the fields to the form
+    form.addField(field0);
+    form.addField(field1);
+
+    //-- Return the form
+    return form;
+  }
+
+
+
+
+  //-- Public classes
+  this.Form = Form;
+  this.TextField = TextField;
+  this.CheckboxField = CheckboxField;
+  this.basicInputForm = basicInputForm;
+  this.basicOutputForm = basicOutputForm;
+  this.basicInputLabelForm = basicInputLabelForm;
+  this.basicOutputLabelForm = basicOutputLabelForm;
+  this.basicPairedLabelForm = basicPairedLabelForm;
 
   //-----------------------------------------------------------------------
   //-- Display a Form
@@ -446,10 +931,15 @@ angular.module('icestudio')
       switch (field.type) {
         
         //-- Text input field
-        case 'text':
+        case FIELD_TEXT:
+
+          //-- TEMP CODE. REMOVE IT WHEN REFACTORED
+          let f = new TextField(field.title, field.value, i);
 
           //-- Create the html code
-          html = this.htmlInputText(field.title, field.value, i);
+          //-- label, value, formId
+          html = f.html();
+          //html = this.htmlInputText(field.title, field.value, i);
 
           //-- Store the html for this Form
           formHtml.push(html);
