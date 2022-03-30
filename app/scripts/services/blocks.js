@@ -273,7 +273,8 @@ angular.module('icestudio')
       //-- Input port
       case BASIC_INPUT:
 
-        form = forms.basicInputForm();
+        //form = forms.basicInputForm();
+        form = new forms.FormBasicInput();
 
         /*
         form.display(evt, form => {
@@ -1811,6 +1812,15 @@ angular.module('icestudio')
       });
     }
 
+    //-------------------------------------------------------------------------
+    //-- Edit an Input Port block. The Form is displayed, and the user
+    //-- can edit the information
+    //--
+    //-- Inputs:
+    //--   * cellView: 
+    //--   * callback(cells):  Call the function when the user has  
+    //--     edited the data and pressed the OK button
+    //-------------------------------------------------------------------------
     function editBasicInput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;

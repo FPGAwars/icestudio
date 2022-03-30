@@ -683,10 +683,12 @@ angular.module('icestudio')
     }
   }
 
+
+
+  class FormBasicInput extends Form {
+
   //-------------------------------------------------------------------------
   //-- Create the form for the INPUT PORTS
-  //-- Returns:
-  //--   * The object Form for the Input ports
   //-------------------------------------------------------------------------
   //-- Form:
   //----------------------------------------+
@@ -698,41 +700,43 @@ angular.module('icestudio')
   //--    [✅️] FPGA pin                     |
   //--    [  ] Show clock                   |
   //----------------------------------------+
-  function basicInputForm(label = '', virtual=true, clock=false) {
+    constructor(label = '', virtual=true, clock=false) {
 
-    //-- Create a blank Form
-    let form = new Form();
+      //-- Create a blank Form (calling the upper Class)
+      super();
 
-    //-- Field 0: Text input
-    let field0 = new TextField(
-      gettextCatalog.getString('Enter the input blocks'),
-      label,   //-- Default value
-      0        //-- Field id
-    );
+      //-------- Add the diffent Fields:
 
-    //-- Field 1: Checkbox for selecting if the input block
-    //-- is an FPGA pin or an internal port
-    let field1 = new CheckboxField(
-      gettextCatalog.getString('FPGA pin'),
-      virtual,  //-- Default value
-      1         //-- Field id
-    );
+      //-- Field 0: Text input
+      let field0 = new TextField(
+        gettextCatalog.getString('Enter the input blocks'),
+        label,   //-- Default value
+        0        //-- Field id
+      );
 
-    //-- Field 2: Checkbox for configuring the input pin
-    //--          as a clock
-    let field2 = new CheckboxField(
-      gettextCatalog.getString('Show clock'),
-      clock,  //-- Default value
-      2       //-- Field id
-    );
+      //-- Field 1: Checkbox for selecting if the input block
+      //-- is an FPGA pin or an internal port
+      let field1 = new CheckboxField(
+        gettextCatalog.getString('FPGA pin'),
+        virtual,  //-- Default value
+        1         //-- Field id
+      );
+      
+      //-- Field 2: Checkbox for configuring the input pin
+      //--          as a clock
+      let field2 = new CheckboxField(
+        gettextCatalog.getString('Show clock'),
+        clock,  //-- Default value
+        2       //-- Field id
+      );
 
-    //-- Add the fields to the form
-    form.addField(field0);
-    form.addField(field1);
-    form.addField(field2);
+      //-- Add the fields to the form
+      super.addField(field0);
+      super.addField(field1);
+      super.addField(field2);
 
-    //-- Return the form
-    return form;
+    }
+
   }
 
 
@@ -904,11 +908,12 @@ angular.module('icestudio')
   this.Form = Form;
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
-  this.basicInputForm = basicInputForm;
   this.basicOutputForm = basicOutputForm;
   this.basicInputLabelForm = basicInputLabelForm;
   this.basicOutputLabelForm = basicOutputLabelForm;
   this.basicPairedLabelForm = basicPairedLabelForm;
+
+  this.FormBasicInput = FormBasicInput;
 
   //-----------------------------------------------------------------------
   //-- Display a Form
