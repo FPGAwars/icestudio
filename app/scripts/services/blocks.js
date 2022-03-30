@@ -69,72 +69,6 @@ angular.module('icestudio')
       };
     }
 
-    //---------------------------------------------------
-    //-- Parse the Port names
-    //-- 
-    //-- INPUT:
-    //--   * name: String (Ex: "a[7:0]")
-    //--
-    //-- Returns:
-    //--   * null: No match (Syntax error)
-    //--   * PortInfo structure:
-    //--      -name: Port name (Ex. "a")
-    //--      -rangstr: Range string (Ex. "[7:0]")
-    //--      -size: Port size
-    //----------------------------------------------------
-    static parsePortName(portName) {
-
-      //-- Pattern for partsin the port names
-      let pattern = common.PATTERN_PORT_LABEL;
-
-      //-- Parse the name
-      let match = pattern.exec(portName);
-
-      //-- match[0]: global match
-      //-- match[1]: Initial word: name
-      //-- match[2]: Range (Ex. [7:0])
-      //-- match[3]: Most significant byte in the range (Ex. 7)
-      //-- match[4]: Less significant byte in the range (Ex. 0)
-
-      if (match) {
-
-        //--There is a full match
-        if (match[0] === match.input) {
-
-          //-- Return object
-          let portInfo = {};
-
-          //-- Get the name and rangestr
-          portInfo.name = match[1] || '';
-          portInfo.rangestr = match[2];
-
-          //-- Let's calculate the size
-
-          //-- If it is a bus...
-          if (portInfo.rangestr) {
-
-            //-- Get the range left and right numbers
-            let left = parseInt(match[3]);
-            let right = parseInt(match[4]);
-
-            portInfo.size = Math.abs(left - right) + 1;
-          }
-          //-- It is an isolated wire
-          else {
-            portInfo.size = 1;
-          }
-
-          //-- No more checkings....
-          //-- TODO: Size checking
-          return portInfo;
-        }
-
-      }
-      //-- No match
-      return null;
-
-    } 
-
   }
 
 
@@ -273,7 +207,6 @@ angular.module('icestudio')
       //-- Input port
       case BASIC_INPUT:
 
-        //form = forms.basicInputForm();
         form = new forms.FormBasicInput();
 
         /*
@@ -342,72 +275,12 @@ angular.module('icestudio')
 
       //-- The callback is executed when the user has pressed the OK button
 
-      //-- Read the values from the form
-      let values = form.readFields();
+      //-- Process the inforation in the form
+      //-- The results are stored inside the form
+      //-- In case of error the corresponding notifications are raised
+      form.process(evt);
 
-      //-- Values[0]: Input pin names
-      //-- Parse the input names
-      let names = utils.parseNames(values[0]);
-
-      //-- Values[1] indicates if it is a virtual pin or not
-      let virtual = !values[1];
-
-      //-- values[2] indicates if this is a clock input
-      let clock = values[2];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-
-      //--------- Validate the values
-
-      //-- Variables for storing the port information
-      let portInfos = [];
-      let portInfo;
-
-      //-- Analyze all the port names...
-      for (let name of names) {
-        
-        //-- Get the port Info: port name, size...
-        portInfo = Block.parsePortName(name);
-
-        //-- No portInfo... The was a syntax error
-        if (!portInfo) {
-            //-- Do not close the form
-            evt.cancel = true;
-
-            //-- Show a warning notification
-            resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong block name {{name}}', 
-                                        { name: name }));
-            return;
-        }
-
-        //-- TODO: Check sizes
-
-        //-- Check particular errors
-        //-- Error: Buses cannot be clocks...
-        if (type === BASIC_INPUT) {
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-
-            //-- Show a notification with the warning
-            resultAlert = alertify.warning(
-                gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-        }
-
-        //-- Close the form when finish
-        evt.cancel = false;
-        portInfos.push(portInfo);
-        
-      }
-
-     
-
-      //--------- Everything is ok so far... Let's create the block!
+      //--------- Everything is ok so far... Let's create the blocks!
 
       //-- Array for storing the blocks
       let cells = [];
@@ -416,7 +289,7 @@ angular.module('icestudio')
       let positionY = 0;
 
       //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
+      form.portInfos.forEach( portInfo => {
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
@@ -428,17 +301,17 @@ angular.module('icestudio')
           //-- Create a new Input port block
           blockInstance = new InputPortBlock(
             portInfo.name,
-            virtual,
+            form.virtual,
             portInfo.rangestr,
             pins,
-            clock
+            form.clock
           );
         } 
         else {
           //-- Create a new Output Port block
           blockInstance = new OutputPortBlock(
             portInfo.name,
-            virtual,
+            form.virtual,
             portInfo.rangestr,
             pins
           );
@@ -457,15 +330,13 @@ angular.module('icestudio')
         //-- Calculate the Next block position
         //-- The position is different for virtual and real pins
         positionY += 
-          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          (form.virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
           
       });
 
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
+      //-- We are done! Execute the callback function 
+      callback(cells);
+      
     });
   }
 
@@ -1829,7 +1700,7 @@ angular.module('icestudio')
       let value = !block.data.virtual;
       let clock = block.data.clock;
 
-      let form = forms.basicInputForm(name, value, clock);
+      let form = new forms.FormBasicInput(name, value, clock);
 
     
       //-- Display the form
