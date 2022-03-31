@@ -1680,6 +1680,184 @@ angular.module('icestudio')
         //  title: gettextCatalog.getString('Update the block name'),
     }
 
+
+ //-------------------------------------------------------------------------
+    //-- Edit an Output Port block. The Form is displayed, and the user
+    //-- can edit the information
+    //--
+    //-- Inputs:
+    //--   * cellView: 
+    //--   * callback(cells):  Call the function when the user has  
+    //--     edited the data and pressed the OK button
+    //-------------------------------------------------------------------------
+    function editBasicOutput(cellView, callback) {
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+
+      let name = block.data.name + (block.data.range || '');
+      let value = !block.data.virtual;
+     
+
+      let form = new forms.FormBasicOutput(name, value);
+
+    
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Read the values from the form
+        let values = form.readFields();
+
+        let name = values[0];
+        let virtual = !values[1];
+
+        //-- If there was a previous notification, dismiss it
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+
+        //--------- Validate the value
+        let portInfo;
+
+        //-- Get the port Info: port name, size...
+        portInfo = forms.Form.parsePortName(name);
+
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                      { name: name }));
+          return;
+        }
+
+        //-- TODO: Check sizes
+
+        //-- Check particular errors
+        //-- Error: Buses cannot be clocks...
+          
+
+        //-- Close the form when finish
+        evt.cancel = false;
+       
+        console.log(block.data.range);
+        console.log(portInfo.rangestr);
+
+        //-- The following actions are only done if they was a change on the
+        //-- pin
+        
+        let size;
+        let oldSize;
+        let newSize;
+        let offset;
+
+        //-- The pin is a bus, and there is a change:
+        if ((block.data.range || '') !==
+          (portInfo.rangestr || '')) {
+
+            let pins = forms.getPins(portInfo);
+
+            //-- Copy the previous pins to the new one
+            //-- We need to calculate the initial or final minimum
+            //-- number of pins
+            let tlen = pins.length;
+            let slen = block.data.pins.length;
+            let min = Math.min(tlen, slen);
+            for (let i = 0; i<min; i++) {
+              pins[tlen-1-i].name = block.data.pins[slen-1-i].name;
+              pins[tlen-1-i].value = block.data.pins[slen-1-i].value;
+            }
+
+            oldSize = block.data.virtual ? 1 : 
+                     (block.data.pins ? block.data.pins.length : 1);
+
+            newSize = virtual ? 1 : (pins ? pins.length : 1);
+
+            // Update block position when size changes
+            // (So that the middle point remains in the same position)
+            offset = 16 * (oldSize - newSize);
+
+            // Create new block
+            let blockInstance = {
+              id: null,
+              data: {
+                name: portInfo.name,
+                range: portInfo.rangestr,
+                pins: pins,
+                virtual: virtual,
+              },
+              type: block.blockType,
+              position: {
+                x: block.position.x,
+                y: block.position.y + offset
+              }
+            };
+
+            if (callback) {
+
+              graph.startBatch('change');
+              callback(loadBasic(blockInstance));
+              cellView.model.remove();
+              graph.stopBatch('change');
+
+              resultAlert = alertify.success(
+                  gettextCatalog.getString('Block updated2'));
+            }
+
+          return;
+        }
+
+        //-- The pin is a wire, and there is a change:
+        if (block.data.name !== portInfo.name ||
+            block.data.virtual !== virtual ) {
+
+          //-- Get the current bus size
+          size = block.data.pins ? block.data.pins.length : 1;
+
+          //-- Previous size
+          oldSize = block.data.virtual ? 1 : size;
+
+          //-- New size
+          newSize = virtual ? 1 : size;
+
+          // Update block position when size changes
+          offset = 16 * (oldSize - newSize);
+
+          //-- Edit block
+          graph.startBatch('change');
+
+          //-- Copy the block data
+          let data = utils.clone(block.data);
+          data.name = portInfo.name;
+          data.virtual = virtual;
+          
+          cellView.model.set('data', data, { 
+                              translateBy: cellView.model.id, 
+                              tx: 0, 
+                              ty: -offset
+                            });
+
+          cellView.model.translate(0, offset);
+          graph.stopBatch('change');
+          cellView.apply();
+
+          resultAlert = alertify.success(
+              gettextCatalog.getString('Block updated'));
+        }
+
+      });
+     
+        //  title: gettextCatalog.getString('Update the block name'),
+    }
+
+
+
+/*
     function editBasicOutput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
@@ -1761,6 +1939,19 @@ angular.module('icestudio')
         }
       });
     }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
     function editBasicConstant(cellView) {
       var block = cellView.model.attributes;

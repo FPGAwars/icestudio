@@ -1046,7 +1046,7 @@ angular.module('icestudio')
     //--   * msg: Message above the text box
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
-    constructor(msg, name = '', virtual=true) {
+    constructor(name = '', virtual=true) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Output port name'), 
