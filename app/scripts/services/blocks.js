@@ -259,7 +259,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
+        let pins = forms.getPins(portInfo);
 
         //-- Create a new blank basic output label
         let blockInstance = new utils2.Block('basic.outputLabel');
@@ -380,7 +380,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
+        let pins = forms.getPins(portInfo);
 
         //-- Create a new blank basic output label
         let blockInstance = new utils2.Block('basic.inputLabel');
@@ -500,7 +500,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
+        let pins = forms.getPins(portInfo);
 
         //-- Create a new blank basic input label
         let labelOut = new utils2.Block('basic.inputLabel');
@@ -815,7 +815,7 @@ angular.module('icestudio')
         blockInstance.data.ports.in = [];
         for (i in inPortInfos) {
           if (inPortInfos[i]) {
-            pins = utils2.getPins(inPortInfos[i]);
+            pins = forms.getPins(inPortInfos[i]);
             blockInstance.data.ports.in.push({
               name: inPortInfos[i].name,
               range: inPortInfos[i].rangestr,
@@ -827,7 +827,7 @@ angular.module('icestudio')
         blockInstance.data.ports.out = [];
         for (o in outPortInfos) {
           if (outPortInfos[o]) {
-            pins = utils2.getPins(outPortInfos[o]);
+            pins = forms.getPins(outPortInfos[o]);
             blockInstance.data.ports.out.push({
               name: outPortInfos[o].name,
               range: outPortInfos[o].rangestr,
@@ -1343,7 +1343,7 @@ angular.module('icestudio')
           }
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
+            var pins = forms.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1436,7 +1436,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
+            var pins = forms.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1535,7 +1535,7 @@ angular.module('icestudio')
         let portInfo;
 
         //-- Get the port Info: port name, size...
-        portInfo = utils2.Block.parsePortName(name);
+        portInfo = forms.Form.parsePortName(name);
 
         //-- No portInfo... The was a syntax error
         if (!portInfo) {
@@ -1583,7 +1583,7 @@ angular.module('icestudio')
         if ((block.data.range || '') !==
           (portInfo.rangestr || '')) {
 
-            let pins = utils2.getPins(portInfo);
+            let pins = forms.getPins(portInfo);
 
             //-- Copy the previous pins to the new one
             //-- We need to calculate the initial or final minimum
@@ -1708,7 +1708,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
+            var pins = forms.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
