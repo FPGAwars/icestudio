@@ -1606,12 +1606,25 @@ angular.module('icestudio')
           return;
         }
 
-        //-- The pin is a wire, and there is a change:
+        //-- There was a change on the portname, pin checkbox or
+        //-- clock checkbox
         if (block.data.name !== portInfo.name ||
             block.data.virtual !== virtual ||
             block.data.clock !== clock) {
 
-          //-- Get the current bus size
+          //-- Get an array with the pins used
+          let pins = utils2.getPins(portInfo);
+
+          // Create new block
+          let newblock = new utils2.InputPortBlock(
+            portInfo.name,
+            virtual,
+            portInfo.rangestr,
+            pins,
+            clock
+          );
+
+          //-- Size in pins of the initial block
           let size = block.data.pins ? block.data.pins.length : 1;
 
           //-- Previous size
@@ -1622,16 +1635,11 @@ angular.module('icestudio')
 
           // Update block position when size changes
           let offset = 16 * (oldSize - newSize);
-
+         
           //-- Edit block
           graph.startBatch('change');
 
-          //-- Copy the block data
-          let data = utils.clone(block.data);
-          data.name = portInfo.name;
-          data.virtual = virtual;
-          data.clock = clock;
-          cellView.model.set('data', data, { 
+          cellView.model.set('data', newblock.data, { 
                               translateBy: cellView.model.id, 
                               tx: 0, 
                               ty: -offset
@@ -1647,7 +1655,6 @@ angular.module('icestudio')
 
       });
      
-        //  title: gettextCatalog.getString('Update the block name'),
     }
 
 

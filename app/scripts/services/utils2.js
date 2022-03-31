@@ -193,7 +193,6 @@ angular.module('icestudio')
   
   //-------------------------------------------------------------------------
   //-- Get the number of poin of the given port block (input or output)
-  //-- Virtual pins always have a size of 0
   //--
   //-- INPUTS:
   //--   * portBlock: Input or output port block
@@ -204,7 +203,7 @@ angular.module('icestudio')
   function getSize(portBlock) {
 
     //-- Size by default
-    let size = 0;
+    let size = 1;
 
     //-- If there exist pins, the size is the number of pins
     if (portBlock.data.pins) {
