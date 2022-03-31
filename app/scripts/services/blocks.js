@@ -153,21 +153,21 @@ angular.module('icestudio')
       let blocks = form.newBlocks();
 
       //-- Create an array with the final blocks!
-      blocks.forEach( blockData => {
+      blocks.forEach( block => {
 
         //-- update the block position
-        blockData.position.y = positionY;
+        block.position.y = positionY;
 
-        //-- Build the block
-        let block = loadBasic(blockData);
+        //-- Build the cell
+        let cell = loadBasic(block);
 
         //-- Insert the block into the array
-        cells.push(block);
+        cells.push(cell);
 
         //-- Calculate the Next block position
         //-- The position is different for virtual and real pins
         positionY += 
-          (form.virtual ? 10 : (6 + 4 * blockData.data.pins.length)) * gridsize;
+          (form.virtual ? 10 : (6 + 4 * block.data.pins.length)) * gridsize;
           
       });
 
@@ -1504,69 +1504,42 @@ angular.module('icestudio')
     //--     edited the data and pressed the OK button
     //-------------------------------------------------------------------------
     function editBasicInput(cellView, callback) {
+
+      //-- Get information from the joint graphics library
+      //-- TODO
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
 
+      //-- Get the input port data
       let name = block.data.name + (block.data.range || '');
-      let value = !block.data.virtual;
+      let virtual = !block.data.virtual;
       let clock = block.data.clock;
 
-      let form = new forms.FormBasicInput(name, value, clock);
+      //-- Build the form, and pass the actual block data
+      let form = new forms.FormBasicInput(name, virtual, clock);
 
     
-      //-- Display the form
+      //-- Display the form. It will show the current block name
+      //-- and the state of the virtual and clock checkboxes
       form.display((evt) => {
 
         //-- The callback is executed when the user has pressed the OK button
 
-        //-- Read the values from the form
-        let values = form.readFields();
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
 
-        let name = values[0];
-        let virtual = !values[1];
-        let clock = values[2];
-
-        //-- If there was a previous notification, dismiss it
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-
-        //--------- Validate the value
-        let portInfo;
-
-        //-- Get the port Info: port name, size...
-        portInfo = forms.Form.parsePortName(name);
-
-        //-- No portInfo... The was a syntax error
-        if (!portInfo) {
-
-          //-- Do not close the form
-          evt.cancel = true;
-
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                      { name: name }));
+        //-- If there wew error, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
           return;
         }
 
-        //-- TODO: Check sizes
 
-        //-- Check particular errors
-        //-- Error: Buses cannot be clocks...
-          
-          
-        if (portInfo.rangestr && clock) {
-          evt.cancel = true;
-
-          //-- Show a notification with the warning
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Clock not allowed for data buses'));
-          return;
-        }
-
-        //-- Close the form when finish
-        evt.cancel = false;
+        let virtual = form.virtual;
+        let clock = form.clock;
+        let portInfo = form.portInfos[0];
        
         console.log(block.data.range);
         console.log(portInfo.rangestr);
@@ -1681,7 +1654,7 @@ angular.module('icestudio')
     }
 
 
- //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     //-- Edit an Output Port block. The Form is displayed, and the user
     //-- can edit the information
     //--
