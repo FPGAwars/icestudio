@@ -10,7 +10,8 @@ angular.module('icestudio')
   .service('forms', 
     function (
       gettextCatalog,
-      common
+      common,
+      utils2
     ) 
 {
 
@@ -779,10 +780,6 @@ angular.module('icestudio')
 
     }
 
-    //-- Evaluate the Form
-    evaluate() {
-      //-- TODO.....
-    }
   }
 
   //-------------------------------------------------------------
@@ -902,6 +899,53 @@ angular.module('icestudio')
       this.getPortInfo(evt);
     }
 
+    //-- Create the blocks defined in the form
+    //-- Call this methods only when the form has been processed!
+    newBlocks() {
+
+      //-- Array for storing all the blocks created
+      let blocks = [];
+
+      //-- Create all the blocks defined
+      this.portInfos.forEach( portInfo => {
+
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = getPins(portInfo);
+
+        //-- Store the current block
+        let block;
+
+        //-- Construct the block depending on its type
+        if (this.type === utils2.BASIC_INPUT) {
+            block = new utils2.InputPortBlock(
+              portInfo.name,
+              this.virtual,
+              portInfo.rangestr,
+              pins,
+              this.clock
+            );
+        }
+        //-- OUTPUT BLOCK
+        else {
+          block = new utils2.OutputPortBlock(
+            portInfo.name,
+            this.virtual,
+            portInfo.rangestr,
+            pins
+          );
+        }
+
+        //-- Store this block in the array
+        blocks.push(block);
+
+      });
+
+      //-- Return an array of Blocks
+      return blocks;
+      
+    }
+
   }
 
   class FormBasicInput extends FormBasicPort {
@@ -931,6 +975,9 @@ angular.module('icestudio')
             name,
              virtual);
 
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_INPUT;
+
       //-------- Add the particular fields
 
       //-- Field 2: Checkbox for configuring the input pin
@@ -946,7 +993,7 @@ angular.module('icestudio')
     }
 
     //------------------------------------------------
-    //-- Process the information enter by the user
+    //-- Process the information entered by the user
     //------------------------------------------------
     process(evt) {
 
@@ -972,8 +1019,7 @@ angular.module('icestudio')
           this.resultAlert = alertify.warning(
               gettextCatalog.getString('Clock not allowed for data buses'));
 
-          //-- Process not yet finished
-          this.processed = false;
+          //-- Processing not yet finished
           return;
         }
       }
@@ -1007,48 +1053,18 @@ angular.module('icestudio')
             name, 
             virtual);
 
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_OUTPUT;
+
       //-------- Output port do not have particular fields
     }
 
     process(evt) {
 
-      super.process();
+      //-- Process the form as an BasicPort
+      super.process(evt);
       
-      //--------- Validate the values
-      //-- Variables for storing the port information
-      let portInfos = [];
-      let portInfo;
-
-      //-- Analyze all the port names...
-      for (let name of this.names) {
-
-        //-- Get the port Info: port name, size...
-        portInfo = Form.parsePortName(name);
-
-        //-- No portInfo... The was a syntax error
-        if (!portInfo) {
-            //-- Do not close the form
-            evt.cancel = true;
-
-            //-- Show a warning notification
-            this.resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong block name {{name}}', 
-                                        { name: name }));
-            return;
-        }
-
-        //-- TODO: Check sizes
-
-        //-- Close the form when finish
-        evt.cancel = false;
-        portInfos.push(portInfo);
-      }
-
-        //-- The processing is done
-        //-- Store the results
-        this.portInfos = portInfos;
-        this.processed = true;
-      
+      //-- No particular processing for Output ports
     }
 
   }
@@ -1362,7 +1378,30 @@ angular.module('icestudio')
       .set('oncancel', function ( /*evt*/) { });
   };
 
+    //-----------------------------------------------------------------------
+    //-- Return an array with empty pins
+    //-- Empty pins have both name and value properties set to "NULL"
+    //-- * INPUT:
+    //--    -portInfo: Port information structure
+    //-- * Returns:
+    //--    -An array of pins
+    //-----------------------------------------------------------------------
+    function getPins(portInfo) {
 
+      //-- The output array of pins. Initially empty
+      let pins = [];
+
+      for (let i = 0; i < portInfo.size; i++) {
+        pins.push(
+          {
+            index: i.toString(),
+            name: 'NULL',
+            value: 'NULL' //-- Pin value
+          });
+      }
+
+      return pins;
+    }
 
 
 //---------------------------------------------------------------------------
@@ -1372,6 +1411,6 @@ angular.module('icestudio')
     console.log("holi...");
   };
 
-
+  this.getPins = getPins;
 
 });

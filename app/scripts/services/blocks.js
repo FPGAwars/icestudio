@@ -17,155 +17,16 @@ angular.module('icestudio')
       forms,  //-- Create and display forms for user inputs
 
       utils,
+      utils2,
       common,
       gettextCatalog,
       sparkMD5
     )
 {
 
-  //---------------------------------------------------------------------------
-  //-- CONSTANTS for the blocks
-  //---------------------------------------------------------------------------
-  //-- TYPE of blocks
-  const BASIC_INPUT = 'basic.input';   //-- Input ports
-  const BASIC_OUTPUT = 'basic.output'; //-- Output ports
-
-  const BASIC_PAIRED_LABELS = "basic.pairedLabel";
-  
-  //-- Maximum length for the BUSES in ports
-  //const MAX_SIZE = 96;
-
-  //-------------------------------------------------------------------------
-  //-- Class: Block Object. It represent any graphical object in the
-  //--        circuit
-  //-- 
-  //-------------------------------------------------------------------------
-  class Block {
-
-    //-- Information common to all blocks:
-    //-- * type: Type of block:
-    //--         -BASIC_INPUT: Input port
-    //--         -BASIC_OUTPUT: Output port
-    //--         -[..]
-    //-- * id: unique block identifier
-    //-- * position: Position in the grid (x,y)
-    //-- * data: Information specific of every block
-    constructor(type)  {
-
-      //------- Object structure
-      //-- Type of block
-      this.type = type;
-
-      //-- Block identifier
-      this.id = null;
-
-      //-- Block data. Each block has its own data type
-      this.data = {};
-
-      //-- Block position
-      this.position = {
-        x: 0,
-        y: 0  
-      };
-    }
-
-  }
-
-
-  //-------------------------------------------------------------------------
-  //-- Class: Port. Virtual class for representing both input and output  
-  //--              ports. 
-  //--
-  //--   * Particular information:
-  //--      -name (String): Port name 
-  //--      -virtual (Bool): Type of pin. Real or Virtual
-  //--          * true: It is a virtual port, inside the FPGA
-  //--          * false: It is a pin, whichs connects the FPGA with the 
-  //--                   the experior
-  //--      -range: A String indicating the bus range (it is is a bus)
-  //--              Ex: "[1:0]"
-  //--      -pins: Array of objects. Available Only if the port is a pin
-  //--          -index: Position of the pin in the array (default 0)
-  //--          -name: "" : Pin name (From the resources/boards/{board}
-  //--                               /pinout.json) (Which comes from .pcf)
-  //--          -value: "": Pin value (physical pin assigned by .pcf)
-  //-------------------------------------------------------------------------
-  class PortBlock extends Block {
-
-    //-- Parameters:
-    //-- type: Select the type of PortBlock:
-    //--   -BASIC_INPUT
-    //--   -BASIC_OUTPUT
-    constructor(type, name, virtual, range, pins) {
-
-      //-- Build the block common fields
-      super(type);
-
-      //-- Particular information
-      this.data.name = name;         //-- Port name. A String
-      this.data.virtual = virtual;   //-- Type of port: Real or virtual
-      this.data.range = range;       //-- If the port is single or bus. 
-                                     //--  Ej. "[1:0]"     
-      this.data.pins = pins;         //-- Only if the port is a pin 
-    }
-  }
-
-
-  //-------------------------------------------------------------------------
-  //-- Class: Input port. The information comes from the outside and
-  //--   get inside the FPGA
-  //--
-  //--   * Particular information:
-  //--      -clock: (bool). If the port is a clock or not
-  //--         * true: It is a clock signal
-  //--         * False: Normal signal
-  //-------------------------------------------------------------------------
-  class InputPortBlock extends PortBlock {
-    constructor(name, virtual, range, pins, clock) {
-
-      //-- Build the port common fields
-      super(BASIC_INPUT, name, virtual, range, pins);
-
-      //-- Particular information
-      this.data.clock = clock;    //-- Optional. Is the port a clock input?
-    }
-  }
-
-  //-------------------------------------------------------------------------
-  //-- Class: Output port. The information goes from the FPGA to the 
-  //--        outside. Or from one block to another the upper level
-  //--
-  //--   NO particular information
-  //-------------------------------------------------------------------------
-  class OutputPortBlock extends PortBlock {
-    constructor(name, virtual, range, pins) {
-
-      //-- Build the port common fields
-      super(BASIC_OUTPUT, name, virtual, range, pins);
-
-      //-- No particular information
-    }
-  }
-
-
-  
-
-  //-- Public classes
-  this.Block = Block;
-
-  //-- Public constants 
-  this.BASIC_INPUT = BASIC_INPUT;
-  this.BASIC_OUTPUT = BASIC_OUTPUT;
-
-  this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
-
-
-
     var gridsize = 8;
     var resultAlert = null;
  
-    
-
     this.newBasic = newBasic;
     this.newGeneric = newGeneric;
 
@@ -205,23 +66,16 @@ angular.module('icestudio')
     switch (type) {
 
       //-- Input port
-      case BASIC_INPUT:
+      case utils2.BASIC_INPUT:
 
         form = new forms.FormBasicInput();
-
-        /*
-        form.display(evt, form => {
-          form.evaluate();  //-- Get the values and do the parsing
-          cells = form.get_blocks();
-          callback(cells);   
-        })
-        */
-        newBasicPort(type, form, callback);
+        newBasicPort(form, callback);
         break;
 
-      case BASIC_OUTPUT:
+      //-- Output port
+      case utils2.BASIC_OUTPUT:
         form = new forms.FormBasicOutput();
-        newBasicPort(type, form, callback);
+        newBasicPort(form, callback);
         break;
 
       case 'basic.outputLabel':
@@ -233,7 +87,7 @@ angular.module('icestudio')
         newBasicInputLabel(callback);
         break;
 
-      case BASIC_PAIRED_LABELS:
+      case utils2.BASIC_PAIRED_LABELS:
         newBasicPairedLabels(callback);
         break;
 
@@ -268,7 +122,7 @@ angular.module('icestudio')
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
   //-------------------------------------------------------------------------
-  function newBasicPort(type, form, callback) {
+  function newBasicPort(form, callback) {
 
     //-- Display the form
     form.display((evt) => {
@@ -280,6 +134,12 @@ angular.module('icestudio')
       //-- In case of error the corresponding notifications are raised
       form.process(evt);
 
+      //-- If there wew error, the form is not closed
+      //-- Return without clossing
+      if (evt.cancel) {
+        return;
+      }
+
       //--------- Everything is ok so far... Let's create the blocks!
 
       //-- Array for storing the blocks
@@ -288,41 +148,18 @@ angular.module('icestudio')
       //-- Store the acumulate y position
       let positionY = 0;
 
-      //-- Crear all the ports...
-      form.portInfos.forEach( portInfo => {
+      //-- Get all the blocks created from the form
+      //-- Only the block data, not the final block
+      let blocks = form.newBlocks();
 
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = getPins(portInfo);
-
-        let blockInstance;
-
-        if (type === BASIC_INPUT) {
-          //-- Create a new Input port block
-          blockInstance = new InputPortBlock(
-            portInfo.name,
-            form.virtual,
-            portInfo.rangestr,
-            pins,
-            form.clock
-          );
-        } 
-        else {
-          //-- Create a new Output Port block
-          blockInstance = new OutputPortBlock(
-            portInfo.name,
-            form.virtual,
-            portInfo.rangestr,
-            pins
-          );
-
-        }
+      //-- Create an array with the final blocks!
+      blocks.forEach( blockData => {
 
         //-- update the block position
-        blockInstance.position.y = positionY;
+        blockData.position.y = positionY;
 
         //-- Build the block
-        let block = loadBasic(blockInstance);
+        let block = loadBasic(blockData);
 
         //-- Insert the block into the array
         cells.push(block);
@@ -330,7 +167,7 @@ angular.module('icestudio')
         //-- Calculate the Next block position
         //-- The position is different for virtual and real pins
         positionY += 
-          (form.virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          (form.virtual ? 10 : (6 + 4 * blockData.data.pins.length)) * gridsize;
           
       });
 
@@ -422,10 +259,10 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
-        let blockInstance = new Block('basic.outputLabel');
+        let blockInstance = new utils2.Block('basic.outputLabel');
 
         //-- Create the block data
         blockInstance.data = {
@@ -543,10 +380,10 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
-        let blockInstance = new Block('basic.inputLabel');
+        let blockInstance = new utils2.Block('basic.inputLabel');
 
         //-- Create the block data
         blockInstance.data = {
@@ -663,11 +500,11 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic input label
-        let labelOut = new Block('basic.inputLabel');
-        let labelIn = new Block('basic.outputLabel');
+        let labelOut = new utils2.Block('basic.inputLabel');
+        let labelIn = new utils2.Block('basic.outputLabel');
 
         //-- Create the block data
         labelOut.data = {
@@ -716,32 +553,6 @@ angular.module('icestudio')
 
     });
   } 
-
-
-
-    //-----------------------------------------------------------------------
-    //-- Return an array with empty pins
-    //-- Empty pins have both name and value properties set to "NULL"
-    //-- * INPUT:
-    //--    -portInfo: Port information structure
-    //-- * Returns:
-    //--    -An array of pins
-    //-----------------------------------------------------------------------
-    function getPins(portInfo) {
-
-      //-- The output array of pins. Initially empty
-      let pins = [];
-
-      for (let i = 0; i < portInfo.size; i++) {
-        pins.push(
-          { index: i.toString(),  //-- Pin number
-            name: 'NULL',   //-- Pin name 
-            value: 'NULL'   //-- Pin value
-          });
-      }
-
-      return pins;
-    }
 
 
     function newBasicConstant(callback) {
@@ -1004,7 +815,7 @@ angular.module('icestudio')
         blockInstance.data.ports.in = [];
         for (i in inPortInfos) {
           if (inPortInfos[i]) {
-            pins = getPins(inPortInfos[i]);
+            pins = utils2.getPins(inPortInfos[i]);
             blockInstance.data.ports.in.push({
               name: inPortInfos[i].name,
               range: inPortInfos[i].rangestr,
@@ -1016,7 +827,7 @@ angular.module('icestudio')
         blockInstance.data.ports.out = [];
         for (o in outPortInfos) {
           if (outPortInfos[o]) {
-            pins = getPins(outPortInfos[o]);
+            pins = utils2.getPins(outPortInfos[o]);
             blockInstance.data.ports.out.push({
               name: outPortInfos[o].name,
               range: outPortInfos[o].rangestr,
@@ -1532,7 +1343,7 @@ angular.module('icestudio')
           }
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1625,7 +1436,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1724,7 +1535,7 @@ angular.module('icestudio')
         let portInfo;
 
         //-- Get the port Info: port name, size...
-        portInfo = Block.parsePortName(name);
+        portInfo = utils2.Block.parsePortName(name);
 
         //-- No portInfo... The was a syntax error
         if (!portInfo) {
@@ -1772,7 +1583,7 @@ angular.module('icestudio')
         if ((block.data.range || '') !==
           (portInfo.rangestr || '')) {
 
-            let pins = getPins(portInfo);
+            let pins = utils2.getPins(portInfo);
 
             //-- Copy the previous pins to the new one
             //-- We need to calculate the initial or final minimum
@@ -1897,7 +1708,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
