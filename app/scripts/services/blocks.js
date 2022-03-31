@@ -220,7 +220,7 @@ angular.module('icestudio')
         break;
 
       case BASIC_OUTPUT:
-        form = forms.basicOutputForm();
+        form = new forms.FormBasicOutput();
         newBasicPort(type, form, callback);
         break;
 
