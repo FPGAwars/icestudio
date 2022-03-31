@@ -1540,20 +1540,13 @@ angular.module('icestudio')
         //--   The initial one: block.data
         //--   The new one entered by the user: portInfo
 
+        //-- Get the data for the new block from the Form
         let virtual = form.virtual;
         let clock = form.clock;
         let portInfo = form.portInfos[0];
-       
-        console.log(`block.data.range: ${block.data.range}`);
-        console.log(`portInfo.rangestr: ${portInfo.rangestr}`);
 
         //-- The following actions are only done if they was a change on the
         //-- pin
-        
-        let size;
-        let oldSize;
-        let newSize;
-        let offset;
 
         //-- There was a change in size
         if (block.data.range !== portInfo.rangestr) {
@@ -1565,37 +1558,45 @@ angular.module('icestudio')
             //-- block to the new one
             utils2.copyPins(block.data.pins, pins);
 
-            oldSize = block.data.virtual ? 1 : 
-                     (block.data.pins ? block.data.pins.length : 1);
-
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-
-            // Update block position when size changes
-            // (So that the middle point remains in the same position)
-            offset = 16 * (oldSize - newSize);
-
             // Create new block
-            let blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-                clock: clock
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
+            let newblock = new utils2.InputPortBlock(
+              portInfo.name,
+              virtual,
+              portInfo.rangestr,
+              pins,
+              clock
+            );
+
+            //-- Set the same position than the original block
+             newblock.position.x = block.position.x;
+             newblock.position.y = block.position.y;
+
+            //-- Calculate the new position so that the output
+            //-- wire remains in the same place (the port expands or 
+            //-- shrink), but the output port is in the same place  
+
+            //-- Size in pins of the initial block
+            let oldSize = utils2.getSize(block);
+
+            //-- Size in pins of the new block
+            let newSize = utils2.getSize(newblock);
+
+            //-- Offset to applied to the vertical position
+            let offset = 16 * (oldSize - newSize);
+
+            //-- Appy the offset 
+            newblock.position.y = block.position.y + offset; 
+            
 
             if (callback) {
 
+              //-- Update the block!
               graph.startBatch('change');
-              callback(loadBasic(blockInstance));
+
+              let cell = loadBasic(newblock);
+              callback(cell);
               cellView.model.remove();
+
               graph.stopBatch('change');
 
               resultAlert = alertify.success(
@@ -1611,16 +1612,16 @@ angular.module('icestudio')
             block.data.clock !== clock) {
 
           //-- Get the current bus size
-          size = block.data.pins ? block.data.pins.length : 1;
+          let size = block.data.pins ? block.data.pins.length : 1;
 
           //-- Previous size
-          oldSize = block.data.virtual ? 1 : size;
+          let oldSize = block.data.virtual ? 1 : size;
 
           //-- New size
-          newSize = virtual ? 1 : size;
+          let newSize = virtual ? 1 : size;
 
           // Update block position when size changes
-          offset = 16 * (oldSize - newSize);
+          let offset = 16 * (oldSize - newSize);
 
           //-- Edit block
           graph.startBatch('change');
