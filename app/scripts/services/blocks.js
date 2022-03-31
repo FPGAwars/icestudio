@@ -259,7 +259,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = forms.getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
         let blockInstance = new utils2.Block('basic.outputLabel');
@@ -380,7 +380,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = forms.getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
         let blockInstance = new utils2.Block('basic.inputLabel');
@@ -500,7 +500,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = forms.getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic input label
         let labelOut = new utils2.Block('basic.inputLabel');
@@ -815,7 +815,7 @@ angular.module('icestudio')
         blockInstance.data.ports.in = [];
         for (i in inPortInfos) {
           if (inPortInfos[i]) {
-            pins = forms.getPins(inPortInfos[i]);
+            pins = utils2.getPins(inPortInfos[i]);
             blockInstance.data.ports.in.push({
               name: inPortInfos[i].name,
               range: inPortInfos[i].rangestr,
@@ -827,7 +827,7 @@ angular.module('icestudio')
         blockInstance.data.ports.out = [];
         for (o in outPortInfos) {
           if (outPortInfos[o]) {
-            pins = forms.getPins(outPortInfos[o]);
+            pins = utils2.getPins(outPortInfos[o]);
             blockInstance.data.ports.out.push({
               name: outPortInfos[o].name,
               range: outPortInfos[o].rangestr,
@@ -1343,7 +1343,7 @@ angular.module('icestudio')
           }
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = forms.getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1436,7 +1436,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = forms.getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1536,13 +1536,16 @@ angular.module('icestudio')
           return;
         }
 
+        //-- Now we have two bloks:
+        //--   The initial one: block.data
+        //--   The new one entered by the user: portInfo
 
         let virtual = form.virtual;
         let clock = form.clock;
         let portInfo = form.portInfos[0];
        
-        console.log(block.data.range);
-        console.log(portInfo.rangestr);
+        console.log(`block.data.range: ${block.data.range}`);
+        console.log(`portInfo.rangestr: ${portInfo.rangestr}`);
 
         //-- The following actions are only done if they was a change on the
         //-- pin
@@ -1552,22 +1555,15 @@ angular.module('icestudio')
         let newSize;
         let offset;
 
-        //-- The pin is a bus, and there is a change:
-        if ((block.data.range || '') !==
-          (portInfo.rangestr || '')) {
+        //-- There was a change in size
+        if (block.data.range !== portInfo.rangestr) {
 
-            let pins = forms.getPins(portInfo);
+            //-- Get an array with the pins used
+            let pins = utils2.getPins(portInfo);
 
-            //-- Copy the previous pins to the new one
-            //-- We need to calculate the initial or final minimum
-            //-- number of pins
-            let tlen = pins.length;
-            let slen = block.data.pins.length;
-            let min = Math.min(tlen, slen);
-            for (let i = 0; i<min; i++) {
-              pins[tlen-1-i].name = block.data.pins[slen-1-i].name;
-              pins[tlen-1-i].value = block.data.pins[slen-1-i].value;
-            }
+            //-- Copy the pins from the original
+            //-- block to the new one
+            utils2.copyPins(block.data.pins, pins);
 
             oldSize = block.data.virtual ? 1 : 
                      (block.data.pins ? block.data.pins.length : 1);
@@ -1733,7 +1729,7 @@ angular.module('icestudio')
         if ((block.data.range || '') !==
           (portInfo.rangestr || '')) {
 
-            let pins = forms.getPins(portInfo);
+            let pins = utils2.getPins(portInfo);
 
             //-- Copy the previous pins to the new one
             //-- We need to calculate the initial or final minimum
@@ -1859,7 +1855,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = forms.getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -2092,3 +2088,5 @@ angular.module('icestudio')
     }
 
   });
+
+

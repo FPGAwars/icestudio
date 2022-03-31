@@ -911,7 +911,7 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Store the current block
         let block;
@@ -1378,31 +1378,6 @@ angular.module('icestudio')
       .set('oncancel', function ( /*evt*/) { });
   };
 
-    //-----------------------------------------------------------------------
-    //-- Return an array with empty pins
-    //-- Empty pins have both name and value properties set to "NULL"
-    //-- * INPUT:
-    //--    -portInfo: Port information structure
-    //-- * Returns:
-    //--    -An array of pins
-    //-----------------------------------------------------------------------
-    function getPins(portInfo) {
-
-      //-- The output array of pins. Initially empty
-      let pins = [];
-
-      for (let i = 0; i < portInfo.size; i++) {
-        pins.push(
-          {
-            index: i.toString(),
-            name: 'NULL',
-            value: 'NULL' //-- Pin value
-          });
-      }
-
-      return pins;
-    }
-
 
 //---------------------------------------------------------------------------
 
@@ -1411,6 +1386,6 @@ angular.module('icestudio')
     console.log("holi...");
   };
 
-  this.getPins = getPins;
+  //this.getPins = getPins;
 
 });

@@ -137,13 +137,69 @@ angular.module('icestudio')
     }
   }
 
+  //-----------------------------------------------------------------------
+  //-- Return an array with empty pins
+  //-- Empty pins have both name and value properties set to "NULL"
+  //-- * INPUT:
+  //--    -portInfo: Port information structure
+  //-- * Returns:
+  //--    -An array of pins
+  //-----------------------------------------------------------------------
+  function getPins(portInfo) {
 
+    //-- The output array of pins. Initially empty
+    let pins = [];
+
+    for (let i = 0; i < portInfo.size; i++) {
+      pins.push(
+        {
+          index: i.toString(),
+          name: 'NULL',
+          value: 'NULL' //-- Pin value
+        });
+    }
+
+    return pins;
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Copy the pins from the source object to the target object
+  //--
+  //-- INPUTS:
+  //--   * pinsSrc: Array of source pins
+  //--   * pinsDst: Array of destination pins
+  //--
+  //-- Both arrays can have different sizes
+  //-- The numer of pins to copy is, therefore the minimal length
+  //-- of the arrays
+  //-------------------------------------------------------------------------
+  function copyPins(pinsSrc, pinsDest) {
+
+    //-- Get the target and destination lengths
+    let dlen = pinsDest.length;
+    let slen = pinsSrc.length;
+
+    //-- Calculate the minimum size
+    let min = Math.min(dlen, slen);
+
+    //-- Copy the pins (only min pins are copied)
+    //-- The copy starts from the highest pins to the lowest 
+    for (let i = 0; i < min; i++) {
+      pinsDest[dlen - 1 - i].name = pinsSrc[slen - 1 - i].name;
+      pinsDest[dlen - 1 - i].value = pinsSrc[slen - 1 - i].value;
+    }
+  }
   
 
   //-- Public classes
   this.Block = Block;
   this.InputPortBlock = InputPortBlock;
   this.OutputPortBlock = OutputPortBlock;
+
+  //-- Public functions
+  this.getPins = getPins;
+  this.copyPins = copyPins;
 
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
