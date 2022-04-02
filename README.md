@@ -118,6 +118,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
+| 0.9-1  | [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.9    | [Carlos Venegas Arrabé](https://github.com/cavearr), [mslider](https://github.com/mSlider), [Joaquim (jojo535275)](https://github.com/jojo535275),[Fernando Mosquera](https://github.com/benitoss), [TheSnowfield](https://github.com/TheSnowfield), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.8    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), [Ümit Solmaz](https://github.com/usnotv), [TinLethax](https://github.com/TiNredmc), [seanybaggins](https://github.com/seanybaggins), [mslider](https://github.com/mSlider), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.7    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Joaquim (jojo535275)](https://github.com/jojo535275) |
@@ -150,7 +151,7 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.8.1w-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.9.0-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 
