@@ -16,7 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -34,23 +34,18 @@ jobs:
       - name: Install npm dependencies
         run:   npm install 
       
-      - name: Install dependencies to build Windows bundle
+      # It is necesarry to install wine for building the package for
+      # windows. Also it is necesary to download the wine-mono windows
+      # installer and install it with wine
+      - name: Install dependencies
         run: |
+          sudo add-apt-repository universe
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
-          export DISPLAY=:0.0 
-          wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
-          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-          wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
-          sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
-          sudo apt-get update
-          sudo apt-get install -y winehq-devel winetricks nsis 
-          export WINEARCH=win32
-          cd /home/runner
-          rm -rf .wine
-          wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
-          tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
+          sudo apt-get install wine nsis 
+          wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
+          export DISPLAY=:0.0
+          wine msiexec /i wine-mono-5.0.0-x86.msi
       
       - name: Build Microsoft Windows package
         run: |
