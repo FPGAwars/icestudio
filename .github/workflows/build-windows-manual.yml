@@ -1,0 +1,44 @@
+name: 'Icestudio for Windows'
+
+# Manual activation
+on: [workflow_dispatch]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     
+      # Checkout the develop branch
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      
+      - name: Setup Nodejs version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '17.3.0'
+      
+      - name: Install npm dependencies
+        run:   npm install 
+      
+      # It is necesarry to install wine for building the package for
+      # windows. Also it is necesary to download the wine-mono windows
+      # installer and install it with wine
+      - name: Install dependencies
+        run: |
+          sudo apt install wine nsis winetricks wine-development
+          wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
+          export DISPLAY=:0.0
+          wine msiexec /i wine-mono-5.0.0-x86.msi
+      
+      - name: Build Microsoft Windows package
+        run: |
+          export DISPLAY=:0.0 
+          npm run buildWindows
+
+
