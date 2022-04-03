@@ -1,4 +1,4 @@
-name: 'Icestudio for Windows'
+name: 'Icestudio for Windows (TEST)'
 
 # Manual activation
 on: [workflow_dispatch]
