@@ -1,4 +1,4 @@
-name: 'Icestudio for Windows (TEST)'
+name: 'Manual Build Icestudio for Windows'
 
 # Manual activation
 on: [workflow_dispatch]
@@ -29,9 +29,12 @@ jobs:
       # It is necesarry to install wine for building the package for
       # windows. Also it is necesary to download the wine-mono windows
       # installer and install it with wine
+      # nsis winetricks wine-development
       - name: Install dependencies
         run: |
-          sudo apt-get install wine nsis winetricks wine-development
+          sudo add-apt-repository universe
+          sudo apt update
+          sudo apt-get install wine 
           wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
           export DISPLAY=:0.0
           wine msiexec /i wine-mono-5.0.0-x86.msi
