@@ -29,13 +29,12 @@ jobs:
       # It is necesarry to install wine for building the package for
       # windows. Also it is necesary to download the wine-mono windows
       # installer and install it with wine
-      # TODO: winetricks wine-development
       - name: Install dependencies
         run: |
           sudo add-apt-repository universe
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install wine wine32 nsis 
+          sudo apt-get install wine nsis 
           wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
           export DISPLAY=:0.0
           wine msiexec /i wine-mono-5.0.0-x86.msi
