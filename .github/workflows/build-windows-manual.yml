@@ -31,7 +31,7 @@ jobs:
       # installer and install it with wine
       - name: Install dependencies
         run: |
-          sudo apt install wine nsis winetricks wine-development
+          sudo apt-get install wine nsis winetricks wine-development
           wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
           export DISPLAY=:0.0
           wine msiexec /i wine-mono-5.0.0-x86.msi
