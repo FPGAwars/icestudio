@@ -1,9 +1,10 @@
+//-- When some change in the configuration or in the environment, launch it
 function setupEnvironment(env){
     console.log('CollectionManager::ENV::',env);
     iceStudio.bus.events.publish('collectionService.isIndexing');
 }
 
-
+//-- When index event in the collection service fired
 function collectionsIndexStatus(status){
 
     console.log('Chequeando el indexado',status,collectionsTree);
@@ -12,14 +13,16 @@ function collectionsIndexStatus(status){
     }
 }
 
+
 function collectionsRender(tree){
-    collectionsTree = tree;
-    console.log(collectionsTree);
+    collectionsTree = new WafleUITree();
+    collectionsTree.setTree(tree);
+    console.log('DOM');
+    console.log(pluginRoot);
+    $(pluginRoot).empty().append(collectionsTree.render());
 }
 
 function registerEvents(){
-
-    console.log('Registradando eventos desde plugin embebido',pluginUUID);
 
     iceStudio.bus.events.subscribe('pluginManager.getEnvironment', setupEnvironment,false, pluginUUID); 
     iceStudio.bus.events.subscribe('pluginManager.updateEnv', setupEnvironment,false,pluginUUID); 
