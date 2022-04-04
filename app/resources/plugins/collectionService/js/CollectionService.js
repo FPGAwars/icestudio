@@ -32,6 +32,7 @@ class CollectionService {
   }
 
   publishCollections(){
+    console.log('Publicando colecciones');
     iceStudio.bus.events.publish("collectionService.collections", this.collections);
   }
 
