@@ -299,12 +299,13 @@ angular
       storage.mkDir(this.ICESTUDIO_DIR);
     }
 
-    if (!storage.isValidPath(this.CACHE_DIR)) {
-      storage.mkDir(this.CACHE_DIR);
-    }
+    //-- Create the Cache dir
+    //-- If it was not previously created
+    storage.mkDir(this.CACHE_DIR);
 
-    if (!storage.isValidPath(this.IMAGE_CACHE_DIR)) {
-      storage.mkDir(this.IMAGE_CACHE_DIR);
-    }
+    //-- Create the Image Cache dir
+    //-- If it was not previously created
+    storage.mkDir(this.IMAGE_CACHE_DIR);
+    
   }
 );

@@ -41,16 +41,15 @@ class IceHD {
         return content;
         
     }
+
     mkDir(folder){
 
-
-  //-- Check if the .icestudio folder exist
+      //-- Check if the .icestudio folder exist
       if (!this.fs.existsSync(folder)) {
 
         //-- Create the .icestudio folder
         this.fs.mkdirSync(folder);
       }
-
 
     }
 
@@ -92,6 +91,7 @@ class IceHD {
            if(typeof callbackErr !== 'undefined') callbackErr(path);
         }
     }
+    
     writeFile(path, content,callback){
         try {
             this.fs.writeFileSync(path, content);

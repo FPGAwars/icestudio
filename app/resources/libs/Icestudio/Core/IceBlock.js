@@ -1,6 +1,8 @@
 "use strict";
 /*jshint unused:false*/
+
 class IceBlock {
+  
   constructor(opts) {
     this.constants = {};
     this.config = opts || {};

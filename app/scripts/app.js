@@ -11,6 +11,7 @@
 //-- Disable the jshint Warning: "xxxx defined but never used"
 /*jshint unused:false*/
 
+
 //-- Global Plugin Manager
 //-- It controlls all the plugins
 //-- Global object declaration
