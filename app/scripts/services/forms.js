@@ -1059,7 +1059,7 @@ angular.module('icestudio')
     //--   * msg: Message above the text box
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
-    constructor(name = '', virtual=true) {
+    constructor(name = '', virtual=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Output port name'), 
@@ -1070,6 +1070,11 @@ angular.module('icestudio')
       this.type = utils2.BASIC_OUTPUT;
 
       //-------- Output port do not have particular fields
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.virtualIni = virtual;
     }
 
     process(evt) {
@@ -1078,6 +1083,11 @@ angular.module('icestudio')
       super.process(evt);
       
       //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.virtualIni !== this.virtual); 
     }
 
   }

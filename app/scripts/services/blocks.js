@@ -1658,265 +1658,142 @@ angular.module('icestudio')
     //--     edited the data and pressed the OK button
     //-------------------------------------------------------------------------
     function editBasicOutput(cellView, callback) {
+         //-- Get information from the joint graphics library
+      //-- TODO
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
 
+      //-- Get the input port data
       let name = block.data.name + (block.data.range || '');
-      let value = !block.data.virtual;
-     
+      let virtual = block.data.virtual;
 
-      let form = new forms.FormBasicOutput(name, value);
-
+      //-- Build the form, and pass the actual block data
+      let form = new forms.FormBasicOutput(name, virtual);
     
-      //-- Display the form
+      //-- Display the form. It will show the current block name
+      //-- and the state of the virtual and clock checkboxes
       form.display((evt) => {
 
         //-- The callback is executed when the user has pressed the OK button
 
-        //-- Read the values from the form
-        let values = form.readFields();
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
 
-        let name = values[0];
-        let virtual = !values[1];
-
-        //-- If there was a previous notification, dismiss it
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-
-        //--------- Validate the value
-        let portInfo;
-
-        //-- Get the port Info: port name, size...
-        portInfo = forms.Form.parsePortName(name);
-
-        //-- No portInfo... The was a syntax error
-        if (!portInfo) {
-
-          //-- Do not close the form
-          evt.cancel = true;
-
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                      { name: name }));
+        //-- If there wew error, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
           return;
         }
 
-        //-- TODO: Check sizes
-
-        //-- Check particular errors
-        //-- Error: Buses cannot be clocks...
-          
-
-        //-- Close the form when finish
-        evt.cancel = false;
-       
-        console.log(block.data.range);
-        console.log(portInfo.rangestr);
-
-        //-- The following actions are only done if they was a change on the
-        //-- pin
-        
-        let size;
-        let oldSize;
-        let newSize;
-        let offset;
-
-        //-- The pin is a bus, and there is a change:
-        if ((block.data.range || '') !==
-          (portInfo.rangestr || '')) {
-
-            let pins = utils2.getPins(portInfo);
-
-            //-- Copy the previous pins to the new one
-            //-- We need to calculate the initial or final minimum
-            //-- number of pins
-            let tlen = pins.length;
-            let slen = block.data.pins.length;
-            let min = Math.min(tlen, slen);
-            for (let i = 0; i<min; i++) {
-              pins[tlen-1-i].name = block.data.pins[slen-1-i].name;
-              pins[tlen-1-i].value = block.data.pins[slen-1-i].value;
-            }
-
-            oldSize = block.data.virtual ? 1 : 
-                     (block.data.pins ? block.data.pins.length : 1);
-
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-
-            // Update block position when size changes
-            // (So that the middle point remains in the same position)
-            offset = 16 * (oldSize - newSize);
-
-            // Create new block
-            let blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-
-            if (callback) {
-
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-
-              resultAlert = alertify.success(
-                  gettextCatalog.getString('Block updated2'));
-            }
-
+        //-- If there were no changes, return: Nothing to do
+        if (!form.changed) {
           return;
         }
 
-        //-- The pin is a wire, and there is a change:
-        if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ) {
+        //-- Now we have two bloks:
+        //--   The initial one: block.data
+        //--   The new one entered by the user: portInfo
 
-          //-- Get the current bus size
-          size = block.data.pins ? block.data.pins.length : 1;
+        //-- Get the data for the new block from the Form
+        let virtual = form.virtual;
+        let portInfo = form.portInfos[0];
 
-          //-- Previous size
-          oldSize = block.data.virtual ? 1 : size;
+        //-- Get an array with the pins used
+        let pins = utils2.getPins(portInfo);
 
-          //-- New size
-          newSize = virtual ? 1 : size;
+        //-- Copy the pins from the original
+        //-- block to the new one
+        utils2.copyPins(block.data.pins, pins);
 
-          // Update block position when size changes
-          offset = 16 * (oldSize - newSize);
+        // Create new block
+        let newblock = new utils2.OutputPortBlock(
+          portInfo.name,
+          virtual,
+          portInfo.rangestr,
+          pins
+        );
 
-          //-- Edit block
-          graph.startBatch('change');
+         //-- Set the same position than the original block
+         newblock.position.x = block.position.x;
+         newblock.position.y = block.position.y;
 
-          //-- Copy the block data
-          let data = utils.clone(block.data);
-          data.name = portInfo.name;
-          data.virtual = virtual;
-          
-          cellView.model.set('data', data, { 
-                              translateBy: cellView.model.id, 
-                              tx: 0, 
-                              ty: -offset
-                            });
+        //-- There was a change in size
+        if (block.data.range !== portInfo.rangestr) {
 
-          cellView.model.translate(0, offset);
-          graph.stopBatch('change');
-          cellView.apply();
+          //-- Calculate the new position so that the output
+          //-- wire remains in the same place (the port expands or 
+          //-- shrink), but the output port is in the same place  
 
-          resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated'));
-        }
+          //-- Size in pins of the initial block
+          let oldSize = utils2.getSize(block);
 
-      });
-     
-        //  title: gettextCatalog.getString('Update the block name'),
-    }
+          //-- Size in pins of the new block
+          let newSize = utils2.getSize(newblock);
 
+          //-- Offset to applied to the vertical position
+          let offset = 16 * (oldSize - newSize);
 
-
-/*
-    function editBasicOutput(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name2'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
+          //-- If both the initial block and the final are both
+          //-- virtual: no offset applied (same position)
+          if (form.virtualIni && form.virtual) {
+            offset = 0;
           }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
+
+          //-- Appy the offset 
+          newblock.position.y += offset; 
+          
+          if (callback) {
+
+            //-- Update the block!
             graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            data.virtual = virtual;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
+
+            let cell = loadBasic(newblock);
+            callback(cell);
+            cellView.model.remove();
+
             graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+
+            resultAlert = alertify.success(
+                gettextCatalog.getString('Block updated2'));
           }
+
+          return;
         }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
+
+        //-- Case 2: There was a change, but not in size
+
+        //-- Size in pins of the initial block
+        let size = block.data.pins ? block.data.pins.length : 1;
+
+        //-- Previous size
+        let oldSize = block.data.virtual ? 1 : size;
+
+        //-- New size
+        let newSize = virtual ? 1 : size;
+
+        // Update block position when size changes
+        let offset = 16 * (oldSize - newSize);
+        
+        //-- Edit block
+        graph.startBatch('change');
+
+        cellView.model.set('data', newblock.data, { 
+                            translateBy: cellView.model.id, 
+                            tx: 0, 
+                            ty: -offset
+                          });
+
+        cellView.model.translate(0, offset);
+        graph.stopBatch('change');
+        cellView.apply();
+
+        resultAlert = alertify.success(
+            gettextCatalog.getString('Block updated'));
+
       });
     }
-*/
-
-
-
-
-
-
-
-
-
-
 
 
 
