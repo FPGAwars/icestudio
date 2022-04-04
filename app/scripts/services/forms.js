@@ -9,7 +9,9 @@
 angular.module('icestudio')
   .service('forms', 
     function (
-      gettextCatalog
+      gettextCatalog,
+      common,
+      utils2
     ) 
 {
 
@@ -271,6 +273,17 @@ angular.module('icestudio')
       html = html.replace(PARAM_ID, this.formId);
 
       return html;
+    }
+
+    //---------------------------------------------
+    //-- Read the Field value
+    //---------------------------------------------
+    read() {
+
+      //-- Read the value from the DOM
+      let value = $(`#form${this.formId}`).val();
+
+      return value;
     }
 
   }
@@ -555,6 +568,100 @@ angular.module('icestudio')
       this.fields = [];
     }
 
+    //------------------------------------------------------
+    //-- Parse the block names. The spaces are removed  
+    //-- and the individual names obtained (if they are
+    //-- separated by comas)
+    //--
+    //-- INPUT: 
+    //--   * value: String introduced by the user
+    //-- Returns:
+    //--   An array of string with the names of the ports
+    //------------------------------------------------------
+    //-- Example: If the user enters " a, b, c[1:0]",
+    //-- It returns: ["a", "b", "c[1:0]"]
+    //------------------------------------------------------
+    static parseNames(names) {
+  
+      //-- First: remove the initial and ending spaces, if any
+      let text = names.trim();
+  
+      //-- Second: Remove the spaces around the commas (,) 
+      text = text.replace(/\s*,\s*/g, ',');
+  
+      //-- Third: Get the Input block names as a list of strings
+      let finalNames = text.split(',');
+  
+      //-- Return an array with the names
+      return finalNames;
+    }   
+
+    //---------------------------------------------------
+    //-- Parse the Port names
+    //-- 
+    //-- INPUT:
+    //--   * name: String (Ex: "a[7:0]")
+    //--
+    //-- Returns:
+    //--   * null: No match (Syntax error)
+    //--   * PortInfo structure:
+    //--      -name: Port name (Ex. "a")
+    //--      -rangstr: Range string (Ex. "[7:0]")
+    //--      -size: Port size
+    //----------------------------------------------------
+    static parsePortName(portName) {
+
+      //-- Pattern for partsin the port names
+      let pattern = common.PATTERN_PORT_LABEL;
+
+      //-- Parse the name
+      let match = pattern.exec(portName);
+
+      //-- match[0]: global match
+      //-- match[1]: Initial word: name
+      //-- match[2]: Range (Ex. [7:0])
+      //-- match[3]: Most significant byte in the range (Ex. 7)
+      //-- match[4]: Less significant byte in the range (Ex. 0)
+
+      if (match) {
+
+        //--There is a full match
+        if (match[0] === match.input) {
+
+          //-- Return object
+          let portInfo = {};
+
+          //-- Get the name and rangestr
+          portInfo.name = match[1] || '';
+          portInfo.rangestr = match[2];
+
+          //-- Let's calculate the size
+
+          //-- If it is a bus...
+          if (portInfo.rangestr) {
+
+            //-- Get the range left and right numbers
+            let left = parseInt(match[3]);
+            let right = parseInt(match[4]);
+
+            portInfo.size = Math.abs(left - right) + 1;
+          }
+          //-- It is an isolated wire
+          else {
+            portInfo.size = 1;
+          }
+
+          //-- No more checkings....
+          //-- TODO: Size checking
+          return portInfo;
+        }
+
+      }
+      //-- No match
+      return null;
+
+    } 
+
     //------------------------------------
     //-- Add a field to the form
     //------------------------------------
@@ -584,8 +691,8 @@ angular.module('icestudio')
           //-- Input text
           case FIELD_TEXT:
 
-            //-- Read the value from the form i
-            value = $('#form' + field.formId).val();
+            //-- Read the value from the field
+            value = field.read(); 
             break;
 
           //-- Checkbox
@@ -672,102 +779,300 @@ angular.module('icestudio')
         .set('oncancel', function ( /*evt*/) { });
 
     }
+
   }
 
-  //-------------------------------------------------------------------------
-  //-- Create the form for the INPUT PORTS
-  //-- Returns:
-  //--   * The object Form for the Input ports
-  //-------------------------------------------------------------------------
-  //-- Form:
-  //----------------------------------------+
-  //--    Enter the input blocks            |
-  //--    +--------------------------+      |
-  //--    | Pin names                |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //--    [✅️] FPGA pin                     |
-  //--    [  ] Show clock                   |
-  //----------------------------------------+
-  function basicInputForm() {
+  //-------------------------------------------------------------
+  //-- Class for modeling the Forms for the Input and Output
+  //--    ports. All their common stuff is place here
+  //-------------------------------------------------------------
+  class FormBasicPort extends Form {
 
-    //-- Create a blank Form
-    let form = new Form();
+    //--------------------------------------------------
+    //-- INPUTS:
+    //--   * msg: Message above the text box
+    //--   * name: Default port name
+    //--   * virtual: Is this a virtual or real port?
+    //--------------------------------------------------
+    constructor(msg, name = '', virtual=true) {
 
-    //-- Field 0: Text input
-    let field0 = new TextField(
-      gettextCatalog.getString('Enter the input blocks'),
-      '',   //-- Default value
-      0     //-- Field id
-    );
+      //-- Create a blank Form (calling the upper Class)
+      super();
 
-    //-- Field 1: Checkbox for selecting if the input block
-    //-- is an FPGA pin or an internal port
-    let field1 = new CheckboxField(
-      gettextCatalog.getString('FPGA pin'),
-      true,  //-- Default value
-      1      //-- Field id
-    );
+      //-------- Add the diffent Fields:
+      //-- Field 0: Text input
+      let field0 = new TextField(
+        msg,     //-- Top message
+        name,   //-- Default value
+        0        //-- Field id
+      );
 
-    //-- Field 2: Checkbox for configuring the input pin
-    //--          as a clock
-    let field2 = new CheckboxField(
-      gettextCatalog.getString('Show clock'),
-      false,  //-- Default value
-      2       //-- Field id
-    );
+      //-- Field 1: Checkbox for selecting if the input block
+      //-- is an FPGA pin or an internal port
+      let field1 = new CheckboxField(
+        gettextCatalog.getString('FPGA pin'),
+        virtual,  //-- Default value
+        1         //-- Field id
+      );
 
-    //-- Add the fields to the form
-    form.addField(field0);
-    form.addField(field1);
-    form.addField(field2);
+      //-- Add the fields to the form
+      this.addField(field0);
+      this.addField(field1);
 
-    //-- Return the form
-    return form;
+      //-- Control the notifications generated by 
+      //-- the errors when processing the form
+      this.resultAlert = null;
+    }
+
+    //-------------------------------------------------------
+    //-- Analize the values introduce by the user and
+    //-- store them as properties
+    //-------------------------------------------------------
+    parseFields() {
+      //-- Read the values from the form
+      this.values = this.readFields();
+
+      //-- Values[0]: Input pin names
+      //-- Parse the input names
+      this.names = Form.parseNames(this.values[0]);
+
+      //-- Values[1] indicates if it is a virtual pin or not
+      this.virtual = !this.values[1];
+    }
+
+    //-----------------------------------------------------------------------
+    //-- Get the Information of the port(s): name, range, size...
+    //-- and store it in the portInfo property
+    //--
+    //-- ERRORs are check and Notifications raised in case of errors
+    //------------------------------------------------------------------------
+    getPortInfo(evt) {
+
+      let portInfo;
+      this.portInfos = [];
+
+      //-- Check all the ports (The user may have include one or more)
+      for (let name of this.names) {
+
+        //-- Get the port Info: port name, size...
+        portInfo = Form.parsePortName(name);
+
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          this.resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                      { name: name }));
+          return;
+        }
+
+        //-- TODO: Check sizes
+
+        //-- Store the current portInfo
+        this.portInfos.push(portInfo);
+      }
+
+      //-- Close the form when finish
+      evt.cancel = false;
+
+    }
+
+    //------------------------------------------------
+    //-- Process the information enter by the user
+    //------------------------------------------------
+    process(evt) {
+
+      console.log("PROCESS THE FORM!!");
+
+      //-- If there was a previous notification, dismiss it
+      if (this.resultAlert) {
+        this.resultAlert.dismiss(false);
+      }
+
+      //-- Parse the Fields
+      this.parseFields();
+
+      //-- Get the ports info and check for errors
+      this.getPortInfo(evt);
+    }
+
+    //-- Create the blocks defined in the form
+    //-- Call this methods only when the form has been processed!
+    newBlocks() {
+
+      //-- Array for storing all the blocks created
+      let blocks = [];
+
+      //-- Create all the blocks defined
+      this.portInfos.forEach( portInfo => {
+
+        //-- Create an array of empty pins (with name and values 
+        //-- set to 'NULL')
+        let pins = utils2.getPins(portInfo);
+
+        //-- Store the current block
+        let block;
+
+        //-- Construct the block depending on its type
+        if (this.type === utils2.BASIC_INPUT) {
+            block = new utils2.InputPortBlock(
+              portInfo.name,
+              this.virtual,
+              portInfo.rangestr,
+              pins,
+              this.clock
+            );
+        }
+        //-- OUTPUT BLOCK
+        else {
+          block = new utils2.OutputPortBlock(
+            portInfo.name,
+            this.virtual,
+            portInfo.rangestr,
+            pins
+          );
+        }
+
+        //-- Store this block in the array
+        blocks.push(block);
+
+      });
+
+      //-- Return an array of Blocks
+      return blocks;
+      
+    }
+
+  }
+
+  class FormBasicInput extends FormBasicPort {
+
+    //-------------------------------------------------------------------------
+    //-- Create the form for the INPUT PORTS
+    //-------------------------------------------------------------------------
+    //-- Form:
+    //----------------------------------------+
+    //--    Enter the input blocks            |
+    //--    +--------------------------+      |
+    //--    | Pin names                |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //--    [✅️] FPGA pin                     |
+    //--    [  ] Show clock                   |
+    //----------------------------------------+
+    //-- INPUTS:
+    //--   * msg: Message above the text box
+    //--   * name: Default port name
+    //--   * virtual: Is this a virtual or real port?
+    //--   * Clock: The input pin carries a clock signal
+    constructor(name = '', virtual=true, clock=false) {
+
+      //-- Create a blank BasicPortForm (calling the upper Class)
+      super(gettextCatalog.getString('Input port name:'),
+            name,
+             virtual);
+
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_INPUT;
+
+      //-------- Add the particular fields
+
+      //-- Field 2: Checkbox for configuring the input pin
+      //--          as a clock
+      let field2 = new CheckboxField(
+        gettextCatalog.getString('Show clock'),
+        clock,  //-- Default value
+        2       //-- Field id
+      );
+
+      //-- Add the fields to the form
+      this.addField(field2);
+    }
+
+    //------------------------------------------------
+    //-- Process the information entered by the user
+    //------------------------------------------------
+    process(evt) {
+
+      //-- First, Process the form as a BasicPort
+      super.process(evt);
+
+      //-- Second: Process the particular fields
+
+      //-- Input port have the clock property
+      //-- it indicates if this is a clock input
+      this.clock = this.values[2];
+
+      //-- Check all ports again... There could be no data buses defined
+      //-- as clocks (it is only for 1-wire ports)
+      for (let portInfo of this.portInfos) {
+
+        //-- Check particular errors
+        //-- Error: Buses cannot be clocks...
+        if (portInfo.rangestr && this.clock) {
+          evt.cancel = true;
+
+          //-- Show a notification with the warning
+          this.resultAlert = alertify.warning(
+              gettextCatalog.getString('Clock not allowed for data buses'));
+
+          //-- Processing not yet finished
+          return;
+        }
+      }
+    }
+
   }
 
 
-  //-------------------------------------------------------------------------
-  //-- Create the form for the OUTPUT PORTS
-  //-- Returns:
-  //--   * The object Form for the Output ports
-  //-------------------------------------------------------------------------
-  //-- Form:
-  //----------------------------------------+
-  //--    Enter the output blocks           |
-  //--    +--------------------------+      |
-  //--    | Pin names                |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //--    [✅️] FPGA pin                     |
-  //----------------------------------------+
-  function basicOutputForm() {
+  class FormBasicOutput extends FormBasicPort {
 
-    //-- Create a blank Form
-    let form = new Form();
+    //-------------------------------------------------------------------------
+    //-- Create the form for the OUTPUT PORTS
+    //-------------------------------------------------------------------------
+    //-- Form:
+    //----------------------------------------+
+    //--    Enter the output blocks           |
+    //--    +--------------------------+      |
+    //--    | Pin names                |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //--    [✅️] FPGA pin                     |
+    //----------------------------------------+
+    //-- INPUTS:
+    //--   * msg: Message above the text box
+    //--   * name: Default port name
+    //--   * virtual: Is this a virtual or real port?
+    constructor(name = '', virtual=true) {
 
-    //-- Field 0: Text input
-    let field0 = new TextField(
-      gettextCatalog.getString('Enter the output blocks'),
-      '',   //-- Default value
-      0     //-- Field id
-    );
+      //-- Create a blank BasicPortForm (calling the upper Class)
+      super(gettextCatalog.getString('Output port name'), 
+            name, 
+            virtual);
 
-    //-- Field 1: Checkbox for selecting if the output block
-    //-- is an FPGA pin or an internal port
-    let field1 = new CheckboxField(
-      gettextCatalog.getString('FPGA pin'),
-      true,  //-- Default value
-      1      //-- Field id
-    );
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_OUTPUT;
 
-    //-- Add the fields to the form
-    form.addField(field0);
-    form.addField(field1);
+      //-------- Output port do not have particular fields
+    }
 
-    //-- Return the form
-    return form;
+    process(evt) {
+
+      //-- Process the form as an BasicPort
+      super.process(evt);
+      
+      //-- No particular processing for Output ports
+    }
+
   }
+
+
+
+
+
 
   //-------------------------------------------------------------------------
   //-- Create the form for the INPUT Labels
@@ -815,7 +1120,7 @@ angular.module('icestudio')
   
   }
 
-//-------------------------------------------------------------------------
+  //-------------------------------------------------------------------------
   //-- Create the form for the OUTPUT Labels
   //-- Returns:
   //--   * The object Form
@@ -895,11 +1200,13 @@ angular.module('icestudio')
   this.Form = Form;
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
-  this.basicInputForm = basicInputForm;
-  this.basicOutputForm = basicOutputForm;
+  
   this.basicInputLabelForm = basicInputLabelForm;
   this.basicOutputLabelForm = basicOutputLabelForm;
   this.basicPairedLabelForm = basicPairedLabelForm;
+
+  this.FormBasicInput = FormBasicInput;
+  this.FormBasicOutput = FormBasicOutput;
 
   //-----------------------------------------------------------------------
   //-- Display a Form
@@ -1072,8 +1379,6 @@ angular.module('icestudio')
   };
 
 
-
-
 //---------------------------------------------------------------------------
 
 
@@ -1081,6 +1386,6 @@ angular.module('icestudio')
     console.log("holi...");
   };
 
-
+  //this.getPins = getPins;
 
 });

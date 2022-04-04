@@ -10,15 +10,14 @@ angular
       $rootScope,
       $scope,
       $timeout,
-      boards,
       profile,
       project,
       collections,
       graph,
       tools,
       utils,
+      utils2,
       forms,
-      blocks,
       common,
       shortcuts,
       gettextCatalog,
@@ -1849,12 +1848,12 @@ angular
 
           //-- Input: Place an input port
           case 'input': 
-            project.addBasicBlock(blocks.BASIC_INPUT); 
+            project.addBasicBlock(utils2.BASIC_INPUT); 
             break;
 
           //-- Output: Place an output port
           case 'output': 
-            project.addBasicBlock(blocks.BASIC_OUTPUT); 
+            project.addBasicBlock(utils2.BASIC_OUTPUT); 
             break;
 
           //-- Input label
@@ -1869,7 +1868,7 @@ angular
 
           //-- Paired labels
           case 'labelPaired':
-            project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
+            project.addBasicBlock(utils2.BASIC_PAIRED_LABELS);
             break;
 
 

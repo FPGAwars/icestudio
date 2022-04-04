@@ -1,15 +1,7 @@
-name: 'Icestudio for Windows'
+name: 'Manual Build: Windows'
 
-# Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the develop branch
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+# Manual activation
+on: [workflow_dispatch]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -51,8 +43,8 @@ jobs:
         run: |
           export DISPLAY=:0.0 
           npm run buildWindows
-          
-        # Loading vars from icestudio package.json
+
+       # Loading vars from icestudio package.json
       - id: icestudio_json
         run: |
           content=`cat package.json`
@@ -86,4 +78,5 @@ jobs:
           name: "win64_ZIP_${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}"
           path: "dist/icestudio-${{env.ICESTUDIO_VERSION}}${{env.TIMESTAMP}}-win64.zip"
           if-no-files-found: error
+
 

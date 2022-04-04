@@ -17,68 +17,16 @@ angular.module('icestudio')
       forms,  //-- Create and display forms for user inputs
 
       utils,
+      utils2,
       common,
       gettextCatalog,
       sparkMD5
     )
 {
 
-  //---------------------------------------------------------------------------
-  //-- CONSTANTS for the blocks
-  //---------------------------------------------------------------------------
-  //-- TYPE of blocks
-  const BASIC_INPUT = 'basic.input';   //-- Input ports
-  const BASIC_OUTPUT = 'basic.output'; //-- Output ports
-
-  const BASIC_PAIRED_LABELS = "basic.pairedLabel";
-  
-  //-------------------------------------------------------------------------
-  //-- Class: Block Object. It represent any graphical object in the
-  //--        circuit
-  //-- 
-  //-------------------------------------------------------------------------
-  class Block {
-
-    //-- type: Type of block:
-    //--    -BASIC_INPUT: Input port
-    //--    -BASIC_OUTPUT: Output port
-    //--    -[..]
-    constructor(type)  {
-
-      //------- Object structure
-      //-- Type of block
-      this.type = type;
-
-      //-- Block identifier
-      this.id = null;
-
-      //-- Block data. Each block has its own data type
-      this.data = {};
-
-      //-- Block position
-      this.position = {
-        x: 0,
-        y: 0  
-      };
-    }
-  }
-
-  //-- Public classes
-  this.Block = Block;
-
-  //-- Public constants 
-  this.BASIC_INPUT = BASIC_INPUT;
-  this.BASIC_OUTPUT = BASIC_OUTPUT;
-
-  this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
-
-
-
     var gridsize = 8;
     var resultAlert = null;
  
-    
-
     this.newBasic = newBasic;
     this.newGeneric = newGeneric;
 
@@ -111,17 +59,23 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   function newBasic(type, callback) {
 
+    let form;
+
     //-- Create the block by calling the corresponding function
     //-- according to the given type
     switch (type) {
 
       //-- Input port
-      case BASIC_INPUT:
-        newBasicInput(callback);
+      case utils2.BASIC_INPUT:
+
+        form = new forms.FormBasicInput();
+        newBasicPort(form, callback);
         break;
 
-      case BASIC_OUTPUT:
-        newBasicOutput(callback);
+      //-- Output port
+      case utils2.BASIC_OUTPUT:
+        form = new forms.FormBasicOutput();
+        newBasicPort(form, callback);
         break;
 
       case 'basic.outputLabel':
@@ -133,7 +87,7 @@ angular.module('icestudio')
         newBasicInputLabel(callback);
         break;
 
-      case BASIC_PAIRED_LABELS:
+      case utils2.BASIC_PAIRED_LABELS:
         newBasicPairedLabels(callback);
         break;
 
@@ -159,78 +113,34 @@ angular.module('icestudio')
   }
 
   //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Input block. A form is displayed first 
-  //-- for the user to enter the block data: name, pin type and clock pin
+  //-- Create one or more New Basic Ports. A form is displayed first 
+  //-- for the user to enter the block data: (name, pin type and clock pin..)
   //--
   //-- Inputs:
+  //--   * type: Type of block
+  //--   * form: Form for that block...
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
   //-------------------------------------------------------------------------
-  function newBasicInput(callback) {
-
-    //-- Build the form
-    let form = forms.basicInputForm();
+  function newBasicPort(form, callback) {
 
     //-- Display the form
     form.display((evt) => {
 
       //-- The callback is executed when the user has pressed the OK button
 
-      //-- Read the values from the form
-      let values = form.readFields();
+      //-- Process the inforation in the form
+      //-- The results are stored inside the form
+      //-- In case of error the corresponding notifications are raised
+      form.process(evt);
 
-      //-- Values[0]: Input pin names
-      //-- Parse the input names
-      let names = utils.parseNames(values[0]);
-
-      //-- Values[1] indicates if it is a virtual pin or not
-      let virtual = !values[1];
-
-      //-- values[2] indicates if this is a clock input
-      let clock = values[2];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
+      //-- If there wew error, the form is not closed
+      //-- Return without clossing
+      if (evt.cancel) {
+        return;
       }
 
-      //--------- Validate the values
-
-      //-- Variables for storing the port information
-      let portInfo, portInfos = [];
-
-      //-- Analize all the port names...
-      names.forEach( name => {
-        
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-                      name, 
-                      common.PATTERN_GLOBAL_PORT_LABEL);
-
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
-
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
-        }
-
-        //-- There was an error parsing the label
-        else {
-
-          //-- Do not close the form
-          evt.cancel = true;
-
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                       { name: name }));
-          return;
-        }
-      });
-
-      //--------- Everything is ok so far... Let's create the block!
+      //--------- Everything is ok so far... Let's create the blocks!
 
       //-- Array for storing the blocks
       let cells = [];
@@ -238,176 +148,32 @@ angular.module('icestudio')
       //-- Store the acumulate y position
       let positionY = 0;
 
-      //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
-        
-        //-- Error: Buses cannot be clocks...
-        if (portInfo.rangestr && clock) {
-          evt.cancel = true;
+      //-- Get all the blocks created from the form
+      //-- Only the block data, not the final block
+      let blocks = form.newBlocks();
 
-          //-- Show a notification with the warning
-          resultAlert = alertify.warning(
-             gettextCatalog.getString('Clock not allowed for data buses'));
-          return;
-        }
-
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = getPins(portInfo);
-
-        //-- Create a new blank Input port block
-        let blockInstance = new Block(BASIC_INPUT);
-
-        //-- Create the block data
-        blockInstance.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          pins: pins,
-          virtual: virtual,
-          clock: clock
-        };
+      //-- Create an array with the final blocks!
+      blocks.forEach( block => {
 
         //-- update the block position
-        blockInstance.position.y = positionY;
+        block.position.y = positionY;
 
-        //-- Build the block
-        let block = loadBasic(blockInstance);
+        //-- Build the cell
+        let cell = loadBasic(block);
 
         //-- Insert the block into the array
-        cells.push(block);
+        cells.push(cell);
 
         //-- Calculate the Next block position
         //-- The position is different for virtual and real pins
         positionY += 
-          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
+          (form.virtual ? 10 : (6 + 4 * block.data.pins.length)) * gridsize;
           
       });
 
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
-    });
-  }
-
-  //-------------------------------------------------------------------------
-  //-- Create one or more New Basic Output blocks. A form is displayed first 
-  //-- for the user to enter the block data: name and pin type 
-  //--
-  //-- Inputs:
-  //--   * callback(cells):  Call the function when the block is read. The
-  //--      cells are passed as a parameter
-  //-------------------------------------------------------------------------
-  function newBasicOutput(callback) {
-
-    //-- Build the form
-    let form = forms.basicOutputForm();
-
-    //-- Display the form
-    form.display((evt) => {
-
-      //-- The callback is executed when the user has pressed the OK button
-
-      //-- Read the values from the form
-      let values = form.readFields();
-
-      //-- Values[0]: Output pin names
-      //-- Parse the port names
-      let names = utils.parseNames(values[0]);
-
-      //-- Values[1] indicates if it is a virtual pin or not
-      let virtual = !values[1];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-
-      //--------- Validate the values
-
-      //-- Variables for storing the port information
-      let portInfo, portInfos = [];
-
-      //-- Analize all the port names...
-      names.forEach( name => {
-        
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-                      name, 
-                      common.PATTERN_GLOBAL_PORT_LABEL);
-
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
-
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
-        }
-
-        //-- There was an error parsing the label
-        else {
-
-          //-- Do not close the form
-          evt.cancel = true;
-
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', 
-                                        { name: name }));
-          return;
-        }
-      });
-
-      //--------- Everything is ok so far... Let's create the block!
-      //-- Array for storing the blocks
-      let cells = [];
-
-      //-- Store the acumulate y position
-      let positionY = 0;
-
-      //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
-
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = getPins(portInfo);
-
-        //-- Create a new blank Input port block
-        let blockInstance = new Block(BASIC_OUTPUT);
-
-        //-- Create the block data
-        blockInstance.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          pins: pins,
-          virtual: virtual,
-        };
-
-        //-- update the block position
-        blockInstance.position.y = positionY;
-
-        //-- Build the block
-        let block = loadBasic(blockInstance);
-
-        //-- Insert the block into the array
-        cells.push(block);
-
-        //-- Calculate the Next block position
-        //-- The position is different for virtual and real pins
-        positionY += 
-          (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-
-
-      });
-
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
-
+      //-- We are done! Execute the callback function 
+      callback(cells);
+      
     });
   }
 
@@ -493,10 +259,10 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
-        let blockInstance = new Block('basic.outputLabel');
+        let blockInstance = new utils2.Block('basic.outputLabel');
 
         //-- Create the block data
         blockInstance.data = {
@@ -614,10 +380,10 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic output label
-        let blockInstance = new Block('basic.inputLabel');
+        let blockInstance = new utils2.Block('basic.inputLabel');
 
         //-- Create the block data
         blockInstance.data = {
@@ -734,11 +500,11 @@ angular.module('icestudio')
 
         //-- Create an array of empty pins (with name and values 
         //-- set to 'NULL')
-        let pins = getPins(portInfo);
+        let pins = utils2.getPins(portInfo);
 
         //-- Create a new blank basic input label
-        let labelOut = new Block('basic.inputLabel');
-        let labelIn = new Block('basic.outputLabel');
+        let labelOut = new utils2.Block('basic.inputLabel');
+        let labelIn = new utils2.Block('basic.outputLabel');
 
         //-- Create the block data
         labelOut.data = {
@@ -787,44 +553,6 @@ angular.module('icestudio')
 
     });
   } 
-
-
-
-    //-----------------------------------------------------------------------
-    //-- Return an array with empty pins
-    //-- Empty pins have both name and value properties set to "NULL"
-    //-- * INPUT:
-    //--    -portInfo: Port information structure
-    //-- * Returns:
-    //--    -An array of pins
-    //-----------------------------------------------------------------------
-    function getPins(portInfo) {
-
-      //-- The output array of pins. Initially empty
-      let pins = [];
-
-      //-- Is the port a Bus?
-      if (portInfo.range) {
-
-        for (let i in portInfo.range) {
-          pins.push(
-            { index: portInfo.range[i].toString(),  //-- Pin number
-              name: 'NULL',   //-- Pin name 
-              value: 'NULL'   //-- Pin value
-            });
-        }
-      }
-      //-- The port is a wire
-      else {
-        pins.push({ 
-          index: '0', 
-          name: 'NULL', 
-          value: 'NULL' 
-        });
-      }
-
-      return pins;
-    }
 
 
     function newBasicConstant(callback) {
@@ -1087,7 +815,7 @@ angular.module('icestudio')
         blockInstance.data.ports.in = [];
         for (i in inPortInfos) {
           if (inPortInfos[i]) {
-            pins = getPins(inPortInfos[i]);
+            pins = utils2.getPins(inPortInfos[i]);
             blockInstance.data.ports.in.push({
               name: inPortInfos[i].name,
               range: inPortInfos[i].rangestr,
@@ -1099,7 +827,7 @@ angular.module('icestudio')
         blockInstance.data.ports.out = [];
         for (o in outPortInfos) {
           if (outPortInfos[o]) {
-            pins = getPins(outPortInfos[o]);
+            pins = utils2.getPins(outPortInfos[o]);
             blockInstance.data.ports.out.push({
               name: outPortInfos[o].name,
               range: outPortInfos[o].rangestr,
@@ -1615,7 +1343,7 @@ angular.module('icestudio')
           }
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1708,7 +1436,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1766,109 +1494,354 @@ angular.module('icestudio')
       });
     }
 
+    //-------------------------------------------------------------------------
+    //-- Edit an Input Port block. The Form is displayed, and the user
+    //-- can edit the information
+    //--
+    //-- Inputs:
+    //--   * cellView: 
+    //--   * callback(cells):  Call the function when the user has  
+    //--     edited the data and pressed the OK button
+    //-------------------------------------------------------------------------
     function editBasicInput(cellView, callback) {
+
+      //-- Get information from the joint graphics library
+      //-- TODO
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: block.data.clock
+
+      //-- Get the input port data
+      let name = block.data.name + (block.data.range || '');
+      let virtual = !block.data.virtual;
+      let clock = block.data.clock;
+
+      //-- Build the form, and pass the actual block data
+      let form = new forms.FormBasicInput(name, virtual, clock);
+
+    
+      //-- Display the form. It will show the current block name
+      //-- and the state of the virtual and clock checkboxes
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there wew error, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
         }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
-        var clock = values[2];
+
+        //-- Now we have two bloks:
+        //--   The initial one: block.data
+        //--   The new one entered by the user: portInfo
+
+        //-- Get the data for the new block from the Form
+        let virtual = form.virtual;
+        let clock = form.clock;
+        let portInfo = form.portInfos[0];
+
+        //-- The following actions are only done if they was a change on the
+        //-- pin
+
+        //-- There was a change in size
+        if (block.data.range !== portInfo.rangestr) {
+
+            //-- Get an array with the pins used
+            let pins = utils2.getPins(portInfo);
+
+            //-- Copy the pins from the original
+            //-- block to the new one
+            utils2.copyPins(block.data.pins, pins);
+
+            // Create new block
+            let newblock = new utils2.InputPortBlock(
+              portInfo.name,
+              virtual,
+              portInfo.rangestr,
+              pins,
+              clock
+            );
+
+            //-- Set the same position than the original block
+             newblock.position.x = block.position.x;
+             newblock.position.y = block.position.y;
+
+            //-- Calculate the new position so that the output
+            //-- wire remains in the same place (the port expands or 
+            //-- shrink), but the output port is in the same place  
+
+            //-- Size in pins of the initial block
+            let oldSize = utils2.getSize(block);
+
+            //-- Size in pins of the new block
+            let newSize = utils2.getSize(newblock);
+
+            //-- Offset to applied to the vertical position
+            let offset = 16 * (oldSize - newSize);
+
+            //-- Appy the offset 
+            newblock.position.y = block.position.y + offset; 
+            
+
+            if (callback) {
+
+              //-- Update the block!
+              graph.startBatch('change');
+
+              let cell = loadBasic(newblock);
+              callback(cell);
+              cellView.model.remove();
+
+              graph.stopBatch('change');
+
+              resultAlert = alertify.success(
+                  gettextCatalog.getString('Block updated2'));
+            }
+
+          return;
+        }
+
+        //-- There was a change on the portname, pin checkbox or
+        //-- clock checkbox
+        if (block.data.name !== portInfo.name ||
+            block.data.virtual !== virtual ||
+            block.data.clock !== clock) {
+
+          //-- Get an array with the pins used
+          let pins = utils2.getPins(portInfo);
+
+          // Create new block
+          let newblock = new utils2.InputPortBlock(
+            portInfo.name,
+            virtual,
+            portInfo.rangestr,
+            pins,
+            clock
+          );
+
+          //-- Size in pins of the initial block
+          let size = block.data.pins ? block.data.pins.length : 1;
+
+          //-- Previous size
+          let oldSize = block.data.virtual ? 1 : size;
+
+          //-- New size
+          let newSize = virtual ? 1 : size;
+
+          // Update block position when size changes
+          let offset = 16 * (oldSize - newSize);
+         
+          //-- Edit block
+          graph.startBatch('change');
+
+          cellView.model.set('data', newblock.data, { 
+                              translateBy: cellView.model.id, 
+                              tx: 0, 
+                              ty: -offset
+                            });
+
+          cellView.model.translate(0, offset);
+          graph.stopBatch('change');
+          cellView.apply();
+
+          resultAlert = alertify.success(
+              gettextCatalog.getString('Block updated'));
+        }
+
+      });
+     
+    }
+
+
+    //-------------------------------------------------------------------------
+    //-- Edit an Output Port block. The Form is displayed, and the user
+    //-- can edit the information
+    //--
+    //-- Inputs:
+    //--   * cellView: 
+    //--   * callback(cells):  Call the function when the user has  
+    //--     edited the data and pressed the OK button
+    //-------------------------------------------------------------------------
+    function editBasicOutput(cellView, callback) {
+      var graph = cellView.paper.model;
+      var block = cellView.model.attributes;
+
+      let name = block.data.name + (block.data.range || '');
+      let value = !block.data.virtual;
+     
+
+      let form = new forms.FormBasicOutput(name, value);
+
+    
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Read the values from the form
+        let values = form.readFields();
+
+        let name = values[0];
+        let virtual = !values[1];
+
+        //-- If there was a previous notification, dismiss it
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
+
+        //--------- Validate the value
+        let portInfo;
+
+        //-- Get the port Info: port name, size...
+        portInfo = forms.Form.parsePortName(name);
+
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                      { name: name }));
+          return;
+        }
+
+        //-- TODO: Check sizes
+
+        //-- Check particular errors
+        //-- Error: Buses cannot be clocks...
+          
+
+        //-- Close the form when finish
+        evt.cancel = false;
+       
+        console.log(block.data.range);
+        console.log(portInfo.rangestr);
+
+        //-- The following actions are only done if they was a change on the
+        //-- pin
+        
+        let size;
+        let oldSize;
+        let newSize;
+        let offset;
+
+        //-- The pin is a bus, and there is a change:
+        if ((block.data.range || '') !==
+          (portInfo.rangestr || '')) {
+
+            let pins = utils2.getPins(portInfo);
+
+            //-- Copy the previous pins to the new one
+            //-- We need to calculate the initial or final minimum
+            //-- number of pins
+            let tlen = pins.length;
+            let slen = block.data.pins.length;
+            let min = Math.min(tlen, slen);
+            for (let i = 0; i<min; i++) {
+              pins[tlen-1-i].name = block.data.pins[slen-1-i].name;
+              pins[tlen-1-i].value = block.data.pins[slen-1-i].value;
+            }
+
+            oldSize = block.data.virtual ? 1 : 
+                     (block.data.pins ? block.data.pins.length : 1);
+
             newSize = virtual ? 1 : (pins ? pins.length : 1);
+
             // Update block position when size changes
+            // (So that the middle point remains in the same position)
             offset = 16 * (oldSize - newSize);
+
             // Create new block
-            var blockInstance = {
+            let blockInstance = {
               id: null,
               data: {
                 name: portInfo.name,
                 range: portInfo.rangestr,
                 pins: pins,
                 virtual: virtual,
-                clock: clock
               },
               type: block.blockType,
               position: {
                 x: block.position.x,
-                y: block.position.y
+                y: block.position.y + offset
               }
             };
+
             if (callback) {
+
               graph.startBatch('change');
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
+
+              resultAlert = alertify.success(
+                  gettextCatalog.getString('Block updated2'));
             }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.clock !== clock) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            data.virtual = virtual;
-            data.clock = clock;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
+
+          return;
         }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+
+        //-- The pin is a wire, and there is a change:
+        if (block.data.name !== portInfo.name ||
+            block.data.virtual !== virtual ) {
+
+          //-- Get the current bus size
+          size = block.data.pins ? block.data.pins.length : 1;
+
+          //-- Previous size
+          oldSize = block.data.virtual ? 1 : size;
+
+          //-- New size
+          newSize = virtual ? 1 : size;
+
+          // Update block position when size changes
+          offset = 16 * (oldSize - newSize);
+
+          //-- Edit block
+          graph.startBatch('change');
+
+          //-- Copy the block data
+          let data = utils.clone(block.data);
+          data.name = portInfo.name;
+          data.virtual = virtual;
+          
+          cellView.model.set('data', data, { 
+                              translateBy: cellView.model.id, 
+                              tx: 0, 
+                              ty: -offset
+                            });
+
+          cellView.model.translate(0, offset);
+          graph.stopBatch('change');
+          cellView.apply();
+
+          resultAlert = alertify.success(
+              gettextCatalog.getString('Block updated'));
         }
+
       });
+     
+        //  title: gettextCatalog.getString('Update the block name'),
     }
 
+
+
+/*
     function editBasicOutput(cellView, callback) {
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: gettextCatalog.getString('Update the block name2'),
           value: block.data.name + (block.data.range || '')
         },
         {
@@ -1890,7 +1863,7 @@ angular.module('icestudio')
           evt.cancel = false;
           if ((block.data.range || '') !==
             (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
+            var pins = utils2.getPins(portInfo);
             oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
             newSize = virtual ? 1 : (pins ? pins.length : 1);
             // Update block position when size changes
@@ -1943,6 +1916,19 @@ angular.module('icestudio')
         }
       });
     }
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
     function editBasicConstant(cellView) {
       var block = cellView.model.attributes;
@@ -2110,3 +2096,5 @@ angular.module('icestudio')
     }
 
   });
+
+
