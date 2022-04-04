@@ -700,7 +700,7 @@ angular.module('icestudio')
 
             //-- Read the value from the form i
             value = $($('#form' + field.formId).prop('checked'));
-            value = value[0];
+            value = value[0] || false;
             break;
 
           //-- Color input
@@ -794,7 +794,7 @@ angular.module('icestudio')
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--------------------------------------------------
-    constructor(msg, name = '', virtual=true) {
+    constructor(msg, name = '', virtual=false) {
 
       //-- Create a blank Form (calling the upper Class)
       super();
@@ -811,7 +811,7 @@ angular.module('icestudio')
       //-- is an FPGA pin or an internal port
       let field1 = new CheckboxField(
         gettextCatalog.getString('FPGA pin'),
-        virtual,  //-- Default value
+        !virtual,  //-- Default value
         1         //-- Field id
       );
 
@@ -968,12 +968,12 @@ angular.module('icestudio')
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--   * Clock: The input pin carries a clock signal
-    constructor(name = '', virtual=true, clock=false) {
+    constructor(name = '', virtual=false, clock=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Input port name:'),
             name,
-             virtual);
+            virtual);
 
       //-- Store the type of block associated with the Form
       this.type = utils2.BASIC_INPUT;
@@ -990,6 +990,13 @@ angular.module('icestudio')
 
       //-- Add the fields to the form
       this.addField(field2);
+
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.virtualIni = virtual;
+      this.clockIni = clock;
     }
 
     //------------------------------------------------
@@ -1023,6 +1030,12 @@ angular.module('icestudio')
           return;
         }
       }
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+                      this.virtualIni !== this.virtual || 
+                      this.clockIni !== this.clock); 
     }
 
   }
