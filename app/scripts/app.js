@@ -18,11 +18,6 @@
 //-- because is accesible from popups windows
 var iceStudio = new Icestudio();
 
-//-- Global Plugin Manager
-//-- It controlls all the plugins
-//-- Global object declaration
-//var ICEpm = new IcePlugManager();
-
 //-- Global CONSOLE. Used for Debugging
 //-- The log file by default is "icestudio.log", located in the
 //-- user home folder
