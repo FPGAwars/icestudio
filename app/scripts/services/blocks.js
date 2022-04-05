@@ -1640,9 +1640,8 @@ angular.module('icestudio')
      
     }
 
-
     //-------------------------------------------------------------------------
-    //-- Edit an Output Port block. The Form is displayed, and the user
+    //-- Edit an Input Port block. The Form is displayed, and the user
     //-- can edit the information
     //--
     //-- Inputs:
@@ -1650,8 +1649,9 @@ angular.module('icestudio')
     //--   * callback(cells):  Call the function when the user has  
     //--     edited the data and pressed the OK button
     //-------------------------------------------------------------------------
-    function editBasicOutput(cellView, callback) {
-         //-- Get information from the joint graphics library
+    function  editBasicOutput(cellView, callback) {
+
+      //-- Get information from the joint graphics library
       //-- TODO
       var graph = cellView.paper.model;
       var block = cellView.model.attributes;
@@ -1662,6 +1662,7 @@ angular.module('icestudio')
 
       //-- Build the form, and pass the actual block data
       let form = new forms.FormBasicOutput(name, virtual);
+
     
       //-- Display the form. It will show the current block name
       //-- and the state of the virtual and clock checkboxes
@@ -1701,12 +1702,7 @@ angular.module('icestudio')
         utils2.copyPins(block.data.pins, pins);
 
         // Create new block
-        let newblock = new utils2.OutputPortBlock(
-          portInfo.name,
-          virtual,
-          portInfo.rangestr,
-          pins
-        );
+        let newblock = form.newBlock(0);
 
          //-- Set the same position than the original block
          newblock.position.x = block.position.x;
@@ -1786,8 +1782,8 @@ angular.module('icestudio')
             gettextCatalog.getString('Block updated'));
 
       });
+     
     }
-
 
 
     function editBasicConstant(cellView) {
