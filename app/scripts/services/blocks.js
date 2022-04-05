@@ -1503,7 +1503,7 @@ angular.module('icestudio')
     //--   * callback(cells):  Call the function when the user has  
     //--     edited the data and pressed the OK button
     //-------------------------------------------------------------------------
-    function editBasicInput(cellView, callback) {
+    function  editBasicInput(cellView, callback) {
 
       //-- Get information from the joint graphics library
       //-- TODO
@@ -1547,7 +1547,6 @@ angular.module('icestudio')
 
         //-- Get the data for the new block from the Form
         let virtual = form.virtual;
-        let clock = form.clock;
         let portInfo = form.portInfos[0];
 
         //-- Get an array with the pins used
@@ -1558,13 +1557,7 @@ angular.module('icestudio')
         utils2.copyPins(block.data.pins, pins);
 
         // Create new block
-        let newblock = new utils2.InputPortBlock(
-          portInfo.name,
-          virtual,
-          portInfo.rangestr,
-          pins,
-          clock
-        );
+        let newblock = form.newBlock(0);
 
          //-- Set the same position than the original block
          newblock.position.x = block.position.x;

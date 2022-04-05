@@ -328,6 +328,18 @@ angular.module('icestudio')
       return html;
     }
 
+    //---------------------------------------------
+    //-- Read the Field value
+    //---------------------------------------------
+    read() {
+
+      //-- Read the value from the form i
+      let value = $($('#form' + this.formId).prop('checked'));
+      value = value[0] || false;
+
+      return value;
+    }
+    
   }
 
   //-------------------------------------------------------------------------
@@ -373,6 +385,17 @@ angular.module('icestudio')
       html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
 
       return html;
+    }
+
+    //---------------------------------------------
+    //-- Read the Field value
+    //---------------------------------------------
+    read() {
+
+      //-- Read the value 
+      let value = $('.lb-selected-color').data('color');            
+
+      return value;
     }
 
   }
@@ -678,39 +701,12 @@ angular.module('icestudio')
       //-- Array were the values will be stored 
       let values = [];
 
-      //-- Temporal variable for storing a field value
-      let value;
-
       //-- Read the values from the Form fields
       //-- and insert them into the values array
       this.fields.forEach( field => {
 
-        //-- Read the value depending on the field type
-        switch (field.type) {
-
-          //-- Input text
-          case FIELD_TEXT:
-
-            //-- Read the value from the field
-            value = field.read(); 
-            break;
-
-          //-- Checkbox
-          case FIELD_CHECKBOX:
-
-            //-- Read the value from the form i
-            value = $($('#form' + field.formId).prop('checked'));
-            value = value[0] || false;
-            break;
-
-          //-- Color input
-          case FIELD_COLOR:
-
-            //-- Read the value 
-            value = $('.lb-selected-color').data('color');            
-            break;
-
-        }
+        //-- Read the value from the field
+        let value = field.read(); 
 
         //-- Add the value to the array
         values.push(value);
@@ -899,47 +895,26 @@ angular.module('icestudio')
       this.getPortInfo(evt);
     }
 
+    
+
+    //-------------------------------------------------------------
     //-- Create the blocks defined in the form
     //-- Call this methods only when the form has been processed!
+    //-------------------------------------------------------------
     newBlocks() {
 
       //-- Array for storing all the blocks created
       let blocks = [];
+      let block;
 
-      //-- Create all the blocks defined
-      this.portInfos.forEach( portInfo => {
+      for (let i in this.portInfos) {
 
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
-
-        //-- Store the current block
-        let block;
-
-        //-- Construct the block depending on its type
-        if (this.type === utils2.BASIC_INPUT) {
-            block = new utils2.InputPortBlock(
-              portInfo.name,
-              this.virtual,
-              portInfo.rangestr,
-              pins,
-              this.clock
-            );
-        }
-        //-- OUTPUT BLOCK
-        else {
-          block = new utils2.OutputPortBlock(
-            portInfo.name,
-            this.virtual,
-            portInfo.rangestr,
-            pins
-          );
-        }
+        //-- Create the block
+        block = this.newBlock(i);
 
         //-- Store this block in the array
         blocks.push(block);
-
-      });
+      }
 
       //-- Return an array of Blocks
       return blocks;
@@ -1038,6 +1013,36 @@ angular.module('icestudio')
                       this.clockIni !== this.clock); 
     }
 
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Create all the blocks defined
+      let portInfo = this.portInfos[n];
+      
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = utils2.getPins(portInfo);
+
+      let block = new utils2.InputPortBlock(
+        portInfo.name,
+        this.virtual,
+        portInfo.rangestr,
+        pins,
+        this.clock
+      );
+
+      return block;
+    }
+
   }
 
 
@@ -1090,10 +1095,38 @@ angular.module('icestudio')
         this.virtualIni !== this.virtual); 
     }
 
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The OutputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Create all the blocks defined
+      let portInfo = this.portInfos[n];
+      
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = utils2.getPins(portInfo);
+
+      //-- Create the block
+      let block = new utils2.OutputPortBlock(
+        portInfo.name,
+        this.virtual,
+        portInfo.rangestr,
+        pins
+      );
+
+      //-- Return the block
+      return block;
+    }
+
   }
-
-
-
 
 
 
