@@ -1252,14 +1252,44 @@ angular.module('icestudio')
 
     //-- Edit
 
+    //-----------------------------------------------------------------------
+    //-- Edit a Basic Block
+    //--
+    //-- INPUTS:
+    //--   * type: Type of Basic Block
+    //--   * cellView: Access to the graphics library
+    //--   * callback: Function to call when the block is Edited
+    //-----------------------------------------------------------------------
     function editBasic(type, cellView, callback) {
+
+      //-- Get information from the joint graphics library
+      let block = cellView.model.attributes;
+
+      //-- Get the input port data
+      let name = block.data.name + (block.data.range || '');
+      let virtual = block.data.virtual;
+      let clock = block.data.clock;
+      let form;
+
+      //-- Call the corresponding function depending on the type of block
       switch (type) {
-        case 'basic.input':
-          editBasicInput(cellView, callback);
+
+        //-- Input port
+        case utils2.BASIC_INPUT:
+
+          //-- Build the form, and pass the actual block data
+          form = new forms.FormBasicInput(name, virtual, clock);
+          editBasicPort(form, cellView, callback);
           break;
-        case 'basic.output':
-          editBasicOutput(cellView, callback);
+  
+        //-- Output port
+        case utils2.BASIC_OUTPUT:
+
+          //-- Build the form, and pass the actual block data
+          form = new forms.FormBasicOutput(name, virtual);
+          editBasicPort(form,cellView, callback);
           break;
+
         case 'basic.outputLabel':
           editBasicOutputLabel(cellView, callback);
           break;
@@ -1495,175 +1525,21 @@ angular.module('icestudio')
     }
 
     //-------------------------------------------------------------------------
-    //-- Edit an Input Port block. The Form is displayed, and the user
+    //-- Edit an Input/Output Port block. The Form is displayed, and the user
     //-- can edit the information
     //--
     //-- Inputs:
+    //--   * form
     //--   * cellView: 
     //--   * callback(cells):  Call the function when the user has  
     //--     edited the data and pressed the OK button
     //-------------------------------------------------------------------------
-    function  editBasicInput(cellView, callback) {
+    function  editBasicPort(form, cellView, callback) {
 
-      //-- Get information from the joint graphics library
-      //-- TODO
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
+      //-- Get the information from the graphics library
+      let graph = cellView.paper.model;
+      let block = cellView.model.attributes;
 
-      //-- Get the input port data
-      let name = block.data.name + (block.data.range || '');
-      let virtual = block.data.virtual;
-      let clock = block.data.clock;
-
-      //-- Build the form, and pass the actual block data
-      let form = new forms.FormBasicInput(name, virtual, clock);
-
-    
-      //-- Display the form. It will show the current block name
-      //-- and the state of the virtual and clock checkboxes
-      form.display((evt) => {
-
-        //-- The callback is executed when the user has pressed the OK button
-
-        //-- Process the inforation in the form
-        //-- The results are stored inside the form
-        //-- In case of error the corresponding notifications are raised
-        form.process(evt);
-
-        //-- If there wew error, the form is not closed
-        //-- Return without clossing
-        if (evt.cancel) {
-          return;
-        }
-
-        //-- If there were no changes, return: Nothing to do
-        if (!form.changed) {
-          return;
-        }
-
-        //-- Now we have two bloks:
-        //--   The initial one: block.data
-        //--   The new one entered by the user: portInfo
-
-        //-- Get the data for the new block from the Form
-        let virtual = form.virtual;
-        let portInfo = form.portInfos[0];
-
-        //-- Get an array with the pins used
-        let pins = utils2.getPins(portInfo);
-
-        //-- Copy the pins from the original
-        //-- block to the new one
-        utils2.copyPins(block.data.pins, pins);
-
-        // Create new block
-        let newblock = form.newBlock(0);
-
-         //-- Set the same position than the original block
-         newblock.position.x = block.position.x;
-         newblock.position.y = block.position.y;
-
-        //-- There was a change in size
-        if (block.data.range !== portInfo.rangestr) {
-
-          //-- Calculate the new position so that the output
-          //-- wire remains in the same place (the port expands or 
-          //-- shrink), but the output port is in the same place  
-
-          //-- Size in pins of the initial block
-          let oldSize = utils2.getSize(block);
-
-          //-- Size in pins of the new block
-          let newSize = utils2.getSize(newblock);
-
-          //-- Offset to applied to the vertical position
-          let offset = 16 * (oldSize - newSize);
-
-          //-- If both the initial block and the final are both
-          //-- virtual: no offset applied (same position)
-          if (form.virtualIni && form.virtual) {
-            offset = 0;
-          }
-
-          //-- Appy the offset 
-          newblock.position.y += offset; 
-          
-          if (callback) {
-
-            //-- Update the block!
-            graph.startBatch('change');
-
-            let cell = loadBasic(newblock);
-            callback(cell);
-            cellView.model.remove();
-
-            graph.stopBatch('change');
-
-            resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated2'));
-          }
-
-          return;
-        }
-
-        //-- Case 2: There was a change, but not in size
-
-        //-- Size in pins of the initial block
-        let size = block.data.pins ? block.data.pins.length : 1;
-
-        //-- Previous size
-        let oldSize = block.data.virtual ? 1 : size;
-
-        //-- New size
-        let newSize = virtual ? 1 : size;
-
-        // Update block position when size changes
-        let offset = 16 * (oldSize - newSize);
-        
-        //-- Edit block
-        graph.startBatch('change');
-
-        cellView.model.set('data', newblock.data, { 
-                            translateBy: cellView.model.id, 
-                            tx: 0, 
-                            ty: -offset
-                          });
-
-        cellView.model.translate(0, offset);
-        graph.stopBatch('change');
-        cellView.apply();
-
-        resultAlert = alertify.success(
-            gettextCatalog.getString('Block updated'));
-
-      });
-     
-    }
-
-    //-------------------------------------------------------------------------
-    //-- Edit an Input Port block. The Form is displayed, and the user
-    //-- can edit the information
-    //--
-    //-- Inputs:
-    //--   * cellView: 
-    //--   * callback(cells):  Call the function when the user has  
-    //--     edited the data and pressed the OK button
-    //-------------------------------------------------------------------------
-    function  editBasicOutput(cellView, callback) {
-
-      //-- Get information from the joint graphics library
-      //-- TODO
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-
-      //-- Get the input port data
-      let name = block.data.name + (block.data.range || '');
-      let virtual = block.data.virtual;
-
-      //-- Build the form, and pass the actual block data
-      let form = new forms.FormBasicOutput(name, virtual);
-
-    
       //-- Display the form. It will show the current block name
       //-- and the state of the virtual and clock checkboxes
       form.display((evt) => {
