@@ -1580,6 +1580,9 @@ angular.module('icestudio')
         // Create new block
         let newblock = form.newBlock(0);
 
+        // Assign the previous pins to the new pin
+        newblock.data.pins = pins;
+
          //-- Set the same position than the original block
          newblock.position.x = block.position.x;
          newblock.position.y = block.position.y;
