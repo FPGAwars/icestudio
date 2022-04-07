@@ -180,5 +180,7 @@
     {"type": "inout", "name": "gp26", "value": "B13", "pullmode" : "UP"},
     {"type": "inout", "name": "gn26", "value": "C13", "pullmode" : "UP"},
     {"type": "inout", "name": "gp27", "value": "D13", "pullmode" : "UP"},
-    {"type": "inout", "name": "gn27", "value": "E13", "pullmode" : "UP"}
+    {"type": "inout", "name": "gn27", "value": "E13", "pullmode" : "UP"},
+    {"type": "output", "name": "NULL", "value": "NULL", "pullmode" : "NONE"},
+    {"type": "input", "name": "NULL", "value": "NULL",  "pullmode" : "NONE"}
 ]

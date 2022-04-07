@@ -64,4 +64,7 @@
   {"type":"inout","name":"PIN36","value":"M9"},
   {"type":"inout","name":"PIN35","value":"P9"},
   {"type":"inout","name":"PIN34","value":"P8"},
-  {"type":"input","name":"clk12MHz","value": "P7"}]
+  {"type":"input","name":"clk12MHz","value": "P7"},
+  {"type": "output", "name": "NULL", "value": "NULL"},
+  {"type": "input", "name": "NULL", "value": "NULL"}
+]

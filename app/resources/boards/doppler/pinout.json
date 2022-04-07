@@ -190,5 +190,7 @@
         "type": "output",
         "name": "kled[3]",
         "value": "45"
-    }
+    },
+    {"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+    {"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
 ]

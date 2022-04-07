@@ -36,5 +36,7 @@
  {"name": "F_MOSI", "value": "17", "type": "inout"}, 
  {"name": "F_IO2", "value": "12", "type": "inout"}, 
  {"name": "F_IO3", "value": "13", "type": "inout"},
- {"name": "NULL", "value": "NULL", "type": "inout"}
+ {"name": "NULL", "value": "NULL", "type": "inout"},
+ {"type": "output", "name": "NULL", "value": "NULL"},
+  {"type": "input", "name": "NULL", "value": "NULL"}
 ]

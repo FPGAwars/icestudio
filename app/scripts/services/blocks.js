@@ -1624,7 +1624,7 @@ angular.module('icestudio')
             graph.stopBatch('change');
 
             resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated2'));
+                gettextCatalog.getString('Block updated'));
           }
 
           return;

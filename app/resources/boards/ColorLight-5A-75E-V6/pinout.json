@@ -933,5 +933,7 @@
       "name":"Shared_OE",
       "value":"M4",
       "pullmode":"NONE"
-   }
+   },
+   {"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+   {"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
 ]

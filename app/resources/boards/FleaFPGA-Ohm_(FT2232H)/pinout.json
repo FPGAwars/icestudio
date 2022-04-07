@@ -105,6 +105,8 @@
 {"type":"output","name":"D0_Pos","value":"A4","pullmode":"NONE"},
 {"type":"output","name":"D0_Neg","value":"A5","pullmode":"NONE"},
 {"type":"output","name":"CK_Pos","value":"G2","pullmode":"NONE"},
-{"type":"output","name":"CK_Neg","value":"F1","pullmode":"NONE"}
+{"type":"output","name":"CK_Neg","value":"F1","pullmode":"NONE"},
+{"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
 
 ]
