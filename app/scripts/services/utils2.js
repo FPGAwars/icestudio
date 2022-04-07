@@ -19,7 +19,8 @@ angular.module('icestudio')
   //-- TYPE of blocks
   const BASIC_INPUT = 'basic.input';   //-- Input ports
   const BASIC_OUTPUT = 'basic.output'; //-- Output ports
-  const BASIC_INPUT_LABEL = 'basic.inputLabel'; //-- Input labels
+  const BASIC_INPUT_LABEL = 'basic.inputLabel';   //-- Input labels
+  const BASIC_OUTPUT_LABEL = 'basic.outputLabel'; //-- OUtput labels
 
   const BASIC_PAIRED_LABELS = "basic.pairedLabel";
   
@@ -171,6 +172,19 @@ angular.module('icestudio')
 
   }
 
+  class OutputLabelBlock extends LabelBlock {
+
+    constructor(name, range, color) {
+
+      //-- Build the port common fields
+      super(BASIC_OUTPUT_LABEL, name, range, color);
+
+      //-- No particular information
+    }
+
+  }
+
+
 
   //-----------------------------------------------------------------------
   //-- Return an array with empty pins
@@ -257,6 +271,7 @@ angular.module('icestudio')
   this.OutputPortBlock = OutputPortBlock;
 
   this.InputLabelBlock = InputLabelBlock;
+  this.OutputLabelBlock = OutputLabelBlock;
 
   //-- Public functions
   this.getPins = getPins;
@@ -267,6 +282,7 @@ angular.module('icestudio')
   this.BASIC_INPUT = BASIC_INPUT;
   this.BASIC_OUTPUT = BASIC_OUTPUT;
   this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
+  this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
 
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
 

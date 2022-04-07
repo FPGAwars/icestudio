@@ -1299,7 +1299,7 @@ angular.module('icestudio')
 
       //-- Create a blank BasicLabelForm (calling the upper Class)
       super(
-        gettextCatalog.getString('Input label(s)'),
+        gettextCatalog.getString('Output labels'),
         name,
         color,
         "Fuchsia"
@@ -1337,7 +1337,64 @@ angular.module('icestudio')
   }
 
   class FormBasicOutputLabel extends FormBasicLabel {
+   //---------------------------------------------
+    //-- Create the form for the OUTPUT Labels
+    //---------------------------------------------
+    //-- Form:
+    //----------------------------------------+
+    //--    Enter the input label             |
+    //--    +--------------------------+      |
+    //--    | Label names              |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //--    Chose a color                     |
+    //--    +--------------------------+      |
+    //--    | o Fucshia                |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //----------------------------------------+
+    //-- INPUTS:
+    //--   * name: Default Label name
+    //--   * color: Default label color
+    //---------------------------------------------
+    constructor(name='', color='fuchsia') {
 
+      //-- Create a blank BasicLabelForm (calling the upper Class)
+      super(
+        gettextCatalog.getString('Input labels'),
+        name,
+        color,
+        "Fuchsia"
+      );
+
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_OUTPUT_LABEL;
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Get the info of the label n
+      let portInfo = this.portInfos[n];
+
+      //-- Create the Label block
+      let block = new utils2.OutputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      );
+
+      return block;
+    }
   }
 
 
@@ -1479,6 +1536,8 @@ angular.module('icestudio')
   this.FormBasicInput = FormBasicInput;
   this.FormBasicOutput = FormBasicOutput;
   this.FormBasicInputLabel = FormBasicInputLabel;
+  this.FormBasicOutputLabel = FormBasicOutputLabel;
+
 
   //-----------------------------------------------------------------------
   //-- Display a Form
