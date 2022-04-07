@@ -83,8 +83,12 @@ angular.module('icestudio')
         console.log("DEBUG: Crear Etiqueta de ENTRADA!!");
         break;
 
-      case 'basic.inputLabel':
-        newBasicInputLabel(callback);
+      case utils2.BASIC_INPUT_LABEL:
+
+        //-- Build the form
+        form = new forms.FormBasicInputLabel();
+        //newBasicInputLabel(callback);
+        newBasicLabel(form, callback);
         break;
 
       case utils2.BASIC_PAIRED_LABELS:
@@ -117,7 +121,6 @@ angular.module('icestudio')
   //-- for the user to enter the block data: (name, pin type and clock pin..)
   //--
   //-- Inputs:
-  //--   * type: Type of block
   //--   * form: Form for that block...
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
@@ -134,7 +137,7 @@ angular.module('icestudio')
       //-- In case of error the corresponding notifications are raised
       form.process(evt);
 
-      //-- If there wew error, the form is not closed
+      //-- If there were errors, the form is not closed
       //-- Return without clossing
       if (evt.cancel) {
         return;
@@ -177,6 +180,69 @@ angular.module('icestudio')
     });
   }
 
+  //-------------------------------------------------------------------------
+  //-- Create one or more New Basic Labels. A form is displayed first 
+  //-- for the user to enter the block data: (name, pin type and clock pin..)
+  //--
+  //-- Inputs:
+  //--   * form: Form for that block...
+  //--   * callback(cells):  Call the function when the block is read. The
+  //--      cells are passed as a parameter
+  //-------------------------------------------------------------------------
+  function newBasicLabel(form, callback) {
+
+    //-- Display the form
+    form.display((evt) => {
+
+      //-- The callback is executed when the user has pressed the OK button
+
+      //-- Process the inforation in the form
+      //-- The results are stored inside the form
+      //-- In case of error the corresponding notifications are raised
+      form.process(evt);
+
+      //-- If there were errors, the form is not closed
+      //-- Return without clossing
+      if (evt.cancel) {
+        return;
+      }
+
+      //--------- Everything is ok so far... Let's create the blocks!
+
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Store the acumulate y position
+      let positionY = 0;
+
+      //-- Get all the blocks created from the form
+      //-- Only the block data, not the final block
+      let blocks = form.newBlocks();
+
+      //-- Create an array with the final blocks!
+      blocks.forEach( block => {
+
+        //-- update the block position
+        block.position.y = positionY;
+
+        //-- Build the cell
+        let cell = loadBasic(block);
+
+        //-- Insert the block into the array
+        cells.push(cell);
+
+        //-- Calculate the Next block position
+        positionY += 10 * gridsize;
+          
+      });
+
+      //-- We are done! Execute the callback function 
+      callback(cells);
+
+    });
+
+
+  }
 
   //-------------------------------------------------------------------------
   //-- Create one or more New Basic Output blocks. A form is displayed first 
@@ -297,128 +363,7 @@ angular.module('icestudio')
 
     });
 
-  }
-
-  //-------------------------------------------------------------------------
-  //-- Create one or more New Basic input blocks. A form is displayed first 
-  //-- for the user to enter the block data: name and pin type 
-  //--
-  //-- Inputs:
-  //--   * callback(cells):  Call the function when the block is read. The
-  //--      cells are passed as a parameter
-  //-------------------------------------------------------------------------
-  function newBasicInputLabel(callback) {
-
-    //-- Build the form
-    let form = forms.basicInputLabelForm();
-
-    //-- Display the form
-    form.display((evt) => {
-
-      //-- The callback is executed when the user has pressed the OK button
-
-      //-- Read the values from the form
-      let values = form.readFields();
-
-      //-- Values[0]: input label names
-      //-- Parse the port names
-      let names = forms.Form.parseNames(values[0]);
-
-      //-- Values[1]: Color
-      let color = values[1];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-
-      //--------- Validate the values
-
-      //-- Variables for storing the port information
-      let portInfo, portInfos = [];
-
-      //-- Analize all the port names...
-      names.forEach( name => {
-
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-          name, 
-          common.PATTERN_GLOBAL_PORT_LABEL);
-
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
-
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
-        }
-
-        //-- There was an error parsing the label
-        else {
-
-          //-- Do not close the form
-          evt.cancel = true;
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', 
-                                     { name: name }));
-            return;
-        }
-      });
-
-      //--------- Everything is ok so far... Let's create the block!
-
-      //-- Array for storing the blocks
-      let cells = [];
-
-      //-- Store the acumulate y position
-      let positionY = 0;
-
-      //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
-
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
-
-        //-- Create a new blank basic output label
-        let blockInstance = new utils2.Block('basic.inputLabel');
-
-        //-- Create the block data
-        blockInstance.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          pins: pins,
-          blockColor: color,
-          virtual: true
-        };
-
-        //-- update the block position
-        blockInstance.position.y = positionY;
-
-        //-- Build the block
-        let block = loadBasic(blockInstance);
-
-        //-- Insert the block into the array
-        cells.push(block);
-
-        //-- Calculate the Next block position
-        //-- The position is different for virtual and real pins
-        positionY += 10 * gridsize;
-
-
-      });
-
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
-
-    });
-
-  }
+  } 
 
   //-------------------------------------------------------------------------
   //-- Create two paired labels: An input and output labels with the
