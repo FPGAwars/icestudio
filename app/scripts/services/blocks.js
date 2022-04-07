@@ -201,7 +201,7 @@ angular.module('icestudio')
 
       //-- Values[0]: input label names
       //-- Parse the port names
-      let names = utils.parseNames(values[0]);
+      let names = forms.Form.parseNames(values[0]);
 
       //-- Values[1]: Color
       let color = values[1];
@@ -322,7 +322,7 @@ angular.module('icestudio')
 
       //-- Values[0]: input label names
       //-- Parse the port names
-      let names = utils.parseNames(values[0]);
+      let names = forms.Form.parseNames(values[0]);
 
       //-- Values[1]: Color
       let color = values[1];
@@ -443,7 +443,7 @@ angular.module('icestudio')
 
       //-- Values[0]: input label names
       //-- Parse the port names
-      let names = utils.parseNames(values[0]);
+      let names = forms.Form.parseNames(values[0]);
 
       //-- Values[1]: Color
       let color = values[1];
