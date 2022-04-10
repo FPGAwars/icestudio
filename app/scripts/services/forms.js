@@ -1259,7 +1259,7 @@ angular.module('icestudio')
   }
 
   class FormBasicOutputLabel extends FormBasicLabel {
-   //---------------------------------------------
+    //---------------------------------------------
     //-- Create the form for the OUTPUT Labels
     //---------------------------------------------
     //-- Form:
@@ -1320,6 +1320,65 @@ angular.module('icestudio')
   }
 
 
+
+  class FormBasicPairedLabels extends FormBasicLabel {
+    constructor(name='', color='fuchsia') {
+
+      //-- Create a blank BasicLabelForm (calling the upper Class)
+      super(
+        gettextCatalog.getString('Name of the paired labels'),
+        name,
+        color,
+        "Fuchsia"
+      );
+
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_PAIRED_LABEL;
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Get the info of the label n
+      let portInfo = this.portInfos[n];
+
+      //-- Create the Paired labels: Input
+      let block1 = new utils2.InputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      ); 
+
+      //-- Create the Paired labels: Output
+      let block2 = new utils2.OutputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      );
+
+      //-- Array with the paired labels
+      let pairedLabels = [block1, block2];
+
+      //-- Return the array of paired labels
+      return pairedLabels;
+    }
+  }
+
+  
+  
+  
+  
+//--------------------------------------------------------------
+
   function basicPairedLabelForm() {
 
     //-- Create a blank Form
@@ -1361,6 +1420,7 @@ angular.module('icestudio')
   this.FormBasicOutput = FormBasicOutput;
   this.FormBasicInputLabel = FormBasicInputLabel;
   this.FormBasicOutputLabel = FormBasicOutputLabel;
+  this.FormBasicPairedLabels = FormBasicPairedLabels;
 
 
 

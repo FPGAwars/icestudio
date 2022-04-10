@@ -19,10 +19,9 @@ angular.module('icestudio')
   //-- TYPE of blocks
   const BASIC_INPUT = 'basic.input';   //-- Input ports
   const BASIC_OUTPUT = 'basic.output'; //-- Output ports
-  const BASIC_INPUT_LABEL = 'basic.inputLabel';   //-- Input labels
-  const BASIC_OUTPUT_LABEL = 'basic.outputLabel'; //-- OUtput labels
-
-  const BASIC_PAIRED_LABELS = "basic.pairedLabel";
+  const BASIC_INPUT_LABEL = 'basic.inputLabel';    //-- Input labels
+  const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
+  const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -283,7 +282,6 @@ angular.module('icestudio')
   this.BASIC_OUTPUT = BASIC_OUTPUT;
   this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
   this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
-
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
 
 });

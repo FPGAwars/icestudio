@@ -92,8 +92,11 @@ angular.module('icestudio')
         newBasicLabel(form, callback);
         break;
 
+      //-- Paired Labels
       case utils2.BASIC_PAIRED_LABELS:
-        newBasicPairedLabels(callback);
+        
+        form = new forms.FormBasicPairedLabels();
+        newBasicPairedLabels(form, callback);
         break;
 
       case 'basic.constant':
@@ -241,8 +244,6 @@ angular.module('icestudio')
       callback(cells);
 
     });
-
-
   }
 
 
@@ -254,131 +255,63 @@ angular.module('icestudio')
   //--   * callback(cells):  Call the function when the block is read. The
   //--      cells are passed as a parameter
   //-------------------------------------------------------------------------
-  function newBasicPairedLabels(callback) {
-
-    //-- Build the form
-    let form = forms.basicPairedLabelForm();
+  function newBasicPairedLabels(form, callback) {
 
     //-- Display the form
     form.display((evt) => {
 
       //-- The callback is executed when the user has pressed the OK button
 
-      //-- Read the values from the form
-      let values = form.readFields();
+      //-- Process the inforation in the form
+      //-- The results are stored inside the form
+      //-- In case of error the corresponding notifications are raised
+      form.process(evt);
 
-      //-- Values[0]: input label names
-      //-- Parse the port names
-      let names = forms.Form.parseNames(values[0]);
-
-      //-- Values[1]: Color
-      let color = values[1];
-
-      //-- If there was a previous notification, dismiss it
-      if (resultAlert) {
-        resultAlert.dismiss(false);
+      //-- If there were errors, the form is not closed
+      //-- Return without clossing
+      if (evt.cancel) {
+        return;
       }
 
-      //--------- Validate the values
-      //-- Variables for storing the port information
-      let portInfo, portInfos = [];
+      //--------- Everything is ok so far... Let's create the blocks!
 
-      //-- Analize all the port names...
-      names.forEach( name => {
-
-        //-- Get the port Info
-        portInfo = utils.parsePortLabel(
-          name, 
-          common.PATTERN_GLOBAL_PORT_LABEL);
-        
-        //-- The port was created ok
-        //-- Insert it into the portInfos array
-        if (portInfo) {
-        
-          //-- Close the form when finish
-          evt.cancel = false;
-          portInfos.push(portInfo);
-        }
-
-        //-- There was an error parsing the label
-        else {
-        
-          //-- Do not close the form
-          evt.cancel = true;
-        
-          //-- Show a warning notification
-          resultAlert = alertify.warning(
-          gettextCatalog.getString('Wrong block name {{name}}', 
-                                   { name: name }));
-          return;
-        }
-      });
-
-      //--------- Everything is ok so far... Let's create the block!
       //-- Array for storing the blocks
       let cells = [];
 
       //-- Store the acumulate y position
       let positionY = 0;
 
-      //-- Crear all the ports...
-      portInfos.forEach( portInfo => {
+      //-- Get all the blocks created from the form
+      //-- Only the block data, not the final block
+      let blocks = form.newBlocks();
 
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
+      //-- Create an array with the final blocks!
+      //-- Get all the paired Labels
+      blocks.forEach( pair => {
 
-        //-- Create a new blank basic input label
-        let labelOut = new utils2.Block('basic.inputLabel');
-        let labelIn = new utils2.Block('basic.outputLabel');
+        //-- update the pair position
+        pair[0].position.y = positionY;
+        pair[1].position.y = positionY;
+        pair[1].position.x += 130;
 
-        //-- Create the block data
-        labelOut.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          blockColor: color,
-          virtual: true,
-          pins: pins
-        };
+        //-- Build the two cells of the paired labels
+        let cell0 = loadBasic(pair[0]);
+        let cell1 = loadBasic(pair[1]);
 
-        //-- Create the block data
-        labelIn.data = {
-          name: portInfo.name,
-          range: portInfo.rangestr,
-          blockColor: color,
-          virtual: true,
-          pins: pins
-        };
+        //-- Insert the blocks into the array
+        cells.push(cell0);
+        cells.push(cell1);
 
-        //-- update the block position
-        labelOut.position.y = positionY;
-        labelOut.position.x = 0;
-
-        labelIn.position.y = positionY;
-        labelIn.position.x = 100;
-
-        //-- Build the block
-        let block1 = loadBasic(labelOut);
-        let block2 = loadBasic(labelIn);
-
-        //-- Insert the block into the array
-        cells.push(block1);
-        cells.push(block2);
-
-        //-- Calculate the Next block position
-        //-- The position is different for virtual and real pins
-        positionY += 10 * gridsize;
-        
+         //-- Calculate the Next paired block position
+         positionY += 10 * gridsize;
+          
       });
 
-      //-- We are done! Execute the callback function if it was
-      //-- passed as an argument
-      if (callback) {
-        callback(cells);
-      }
-
+      //-- We are done! Execute the callback function 
+      callback(cells);
     });
-  } 
+
+  }
 
 
     function newBasicConstant(callback) {
