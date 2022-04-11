@@ -1,71 +1,264 @@
 <!DOCTYPE html>
+
 <div ng-controller="DesignCtrl">
   <div class="banner hidden">
-    <div class="info">&nbsp;{{ information.name }}&nbsp;{{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' : '' }}</div>
+    <div class="info">
+      &nbsp;{{ information.name }}&nbsp;
+      {{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' 
+                             : '' }}
+    </div>
+
     <div class="read-only">
-        <div class="leftColumn">
-        </div>
+        <div class="leftColumn"></div>
         <div class="rightColumn">
-            <b>{{'Read only' | translate }}</b> {{': '}} {{'Unlock to edit block !' | translate }}
+            <b>{{'Read only' | translate }}</b> 
+            {{': '}} {{'Unlock to edit block !' | translate }}
         </div>   
     </div>
-    <a class="back-button" ng-click="breadcrumbsBack()">&larr;&nbsp;{{'back' | translate }}&nbsp;</a>
+
+    <a class="back-button" ng-click="breadcrumbsBack()">
+       &larr;&nbsp;{{'back' | translate }}&nbsp;
+    </a>
   </div>
   
   <div class="banner-submodule hidden">
-        <a class="edit-button" ng-click="editModeToggle($event)"><img src="resources/images/lock.png" data-lock="resources/images/lock.png" data-unlock="resources/images/unlock.png">
-            <span class="tooltiptext">{{'CAUTION ! : Changes will also be applied in all the copied' | translate }}
-                <b>{{ information.name }}</b>
-                {{'blocks of the current .ice design. If you do not want a propagation of a change, make it inside a cloned block (instead of copied one)' | translate }} &nbsp;
-            </span>
+        <a class="edit-button" ng-click="editModeToggle($event)">
+          <img src="resources/images/lock.png" 
+               data-lock="resources/images/lock.png" 
+               data-unlock="resources/images/unlock.png">
+          <span class="tooltiptext">
+              {{'CAUTION ! : Changes will also be applied in all the copied'
+                | translate }}
+            <b>{{ information.name }}</b>
+               {{'blocks of the current .ice design. If you do not want ' + 
+                 'a propagation of a change, make it inside a cloned block ' + 
+                 '(instead of copied one)' | translate }} &nbsp;
+          </span>
         </a>
   </div>
 
-  <!-- LabelFinder PopUp -->
+  <!------------------------------------------------------------------------>
+  <!-- LabelFinder PopUp Menu                                             -->
+  <!------------------------------------------------------------------------>
   <div class="lFinder-popup lifted">
+
+    <!-- Advacend Options on/off -->
     <div class="lFinder-advanced--toggle"></div>
+
+    <!-- Case sensitive option on/off -->
     <div class="lFinder-case--option"></div>
+
+    <!-- Exact match option on/off -->
     <div class="lFinder-exact--option"></div>
+
+    <!-- Input text field -->
     <input type="text" class="lFinder-field">
       <span class="items-found">0/0</span>
     </input>
+
+    <!-- Find button -->
     <div class="lFinder-find">{{'Find'| translate}}</div>
+
+    <!-- Previous button -->
     <div class="lFinder-prev">Prev</div>
-    <div class="lFinder-next">Next</div> 
-    <div class="lFinder-close"></div> 
+
+    <!-- Next button -->
+    <div class="lFinder-next">Next</div>
+    
+    <!-- Close button -->
+    <div class="lFinder-close"></div>
+    
+    <!-- Advanced menu -->
     <div class="lFinder-advanced">
+
+      <!-- New name text entry -->
       <span class="lFinder-name">{{'New Name:'| translate}}</span>
       <input class="lFinder-name--field"></input>
+
+      <!-- Replace one button -->
       <div class="lFinder-replace--name">{{'Replace One'| translate}}</div>
+
+      <!-- New color Selector -->
       <span class="lFinder-color">{{'New Color:'| translate}}</span>
+
+      <!-- Color selector menu -->
       <div class="lFinder-color--dropdown">
-        <div class="lf-dropdown-title"><span class="lf-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lf-dropdown-icon"></span></div>
+
+        <!-- Default color option -->
+        <div class="lf-dropdown-title">
+          <span class="lf-selected-color color-fuchsia" 
+                data-color="fuchsia" 
+                data-name="Fuchsia">
+          </span>
+          {{'Fuchsia' | translate }}
+          <span class="lf-dropdown-icon"></span>
+        </div>
+
+        <!-- Available colors -->
         <div class="lf-dropdown-menu">
-          <div class="lf-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lf-option-color color-indianred"></span>IndianRed</div>
-          <div class="lf-dropdown-option" data-color="red" data-name="Red"><span class="lf-option-color color-red"></span>Red</div>
-          <div class="lf-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lf-option-color color-deeppink"></span>DeepPink</div>
-          <div class="lf-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lf-option-color color-mediumvioletred"></span>MediumVioletRed</div>
-          <div class="lf-dropdown-option" data-color="coral"data-name="Coral"><span class="lf-option-color color-coral"></span>Coral</div>
-          <div class="lf-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lf-option-color color-orangered"></span>OrangeRed</div>
-          <div class="lf-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lf-option-color color-darkorange"></span>DarkOrange</div>
-          <div class="lf-dropdown-option" data-color="gold"data-name="Gold"><span class="lf-option-color color-gold"></span>Gold</div>
-          <div class="lf-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lf-option-color color-yellow"></span>Yellow</div>
-          <div class="lf-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lf-option-color color-fuchsia"></span>Fuchsia</div>
-          <div class="lf-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lf-option-color color-slateblue"></span>SlateBlue</div>
-          <div class="lf-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lf-option-color color-greenyellow"></span>GreenYellow</div>
-          <div class="lf-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lf-option-color color-springgreen"></span>SpringGreen</div>
-          <div class="lf-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lf-option-color color-darkgreen"></span>DarkGreen</div>
-          <div class="lf-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lf-option-color color-olivedrab"></span>OliveDrab</div>
-          <div class="lf-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lf-option-color color-lightseagreen"></span>LightSeaGreen</div>
-          <div class="lf-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lf-option-color color-turquoise"></span>Turquoise</div>
-          <div class="lf-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lf-option-color color-steelblue"></span>SteelBlue</div>
-          <div class="lf-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lf-option-color color-deepskyblue"></span>DeepSkyBlue</div>
-          <div class="lf-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lf-option-color color-royalblue"></span>RoyalBlue</div>
-          <div class="lf-dropdown-option" data-color="navy"data-name="Navy"><span class="lf-option-color color-navy"></span>Navy</div>
-          <div class="lf-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lf-option-color color-lightgray"></span>LightGray</div>
+
+          <div class="lf-dropdown-option" 
+            data-color="indianred" 
+            data-name="Indian Red">
+            <span class="lf-option-color color-indianred"></span>
+            {{'Indian Red' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="red" 
+            data-name="Red">
+            <span class="lf-option-color color-red"></span>
+            {{'Red' | translate }} 
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="deeppink" 
+            data-name="Deep Pink">
+            <span class="lf-option-color color-deeppink"></span>
+            {{'Deep Pink' | translate }} 
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="mediumvioletred"
+            data-name="MediumVioletRed">
+            <span class="lf-option-color color-mediumvioletred"></span>
+            {{'MediumVioletRed' | translate}}
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="coral"
+            data-name="Coral">
+            <span class="lf-option-color color-coral"></span>
+            {{'Coral' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="orangered"
+            data-name="OrangeRed">
+            <span class="lf-option-color color-orangered"></span>
+            {{'OrangeRed' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+            data-color="darkorange"
+            data-name="DarkOrange">
+            <span class="lf-option-color color-darkorange"></span>
+            {{'DarkOrange' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="gold"
+               data-name="Gold">
+               <span class="lf-option-color color-gold"></span>
+               {{'Gold' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="yellow"
+               data-name="Yellow">
+               <span class="lf-option-color color-yellow">
+               </span>
+               {{ 'Yellow' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="fuchsia"
+               data-name="Fuchsia">
+               <span class="lf-option-color color-fuchsia"></span>
+               {{'Fuchsia' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="slateblue"
+               data-name="SlateBlue">
+               <span class="lf-option-color color-slateblue"></span>
+               {{'SlateBlue' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="greenyellow"
+               data-name="GreenYellow">
+               <span class="lf-option-color color-greenyellow"></span>
+               {{ 'GreenYellow' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option"
+               data-color="springgreen"
+               data-name="SpringGreen">
+               <span class="lf-option-color color-springgreen"></span>
+               {{ 'SpringGreen' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="darkgreen"
+               data-name="DarkGreen">
+               <span class="lf-option-color color-darkgreen"></span>
+               {{'DarkGreen' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="olivedrab"
+               data-name="OliveDrab">
+               <span class="lf-option-color color-olivedrab"></span>
+               {{'OliveDrab' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="lightseagreen"
+               data-name="LightSeaGreen">
+               <span class="lf-option-color color-lightseagreen"></span>
+               {{'Light Sea Green' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="turquoise"
+               data-name="Turquoise">
+               <span class="lf-option-color color-turquoise"></span>
+               {{ 'Turquoise' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="steelblue"
+               data-name="SteelBlue">
+               <span class="lf-option-color color-steelblue"></span>
+               {{ 'Steel Blue' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="deepskyblue"
+               data-name="DeepSkyBlue">
+               <span class="lf-option-color color-deepskyblue"></span>
+               {{ 'Deep Sky Blue' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="royalblue"
+               data-name="RoyalBlue">
+               <span class="lf-option-color color-royalblue"></span>
+               {{ 'Royal Blue' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="navy"
+              data-name="Navy">
+              <span class="lf-option-color color-navy"></span>
+              {{ 'Navy' | translate }}
+          </div>
+
+          <div class="lf-dropdown-option" 
+               data-color="lightgray"
+               data-name="LightGray">
+               <span class="lf-option-color color-lightgray"></span>
+               {{ 'Light Gray' | translate }}
+          </div>
+
         </div>
       </div>
+
+      <!-- Color change button -->
       <div class="lFinder-change--color">{{'Change Color'| translate}}</div>
+
+      <!-- Replace all button -->
       <div class="lFinder-replace--all">{{'Replace All'| translate}}</div>
     </div>
   </div>
