@@ -1255,21 +1255,29 @@ angular.module('icestudio')
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutputLabel(name, color);
-          editBasicOutputLabel(form, cellView);
+          editBasicLabel2(form, cellView);
           break;
 
-        case 'basic.inputLabel':
-          editBasicInputLabel(cellView, callback);
+        //-- Input Label
+        case utils2.BASIC_INPUT_LABEL:
+
+          //-- Build the form, and pass the actual block data
+          form = new forms.FormBasicInputLabel(name, color);
+          editBasicLabel2(form, cellView);
           break;
+
         case 'basic.constant':
           editBasicConstant(cellView);
           break;
+
         case 'basic.memory':
           editBasicMemory(cellView);
           break;
+
         case 'basic.code':
           editBasicCode(cellView, callback);
           break;
+
         case 'basic.info':
           editBasicInfo(cellView);
           break;
@@ -1290,11 +1298,11 @@ angular.module('icestudio')
       cellView.model.set('data', data);
       graph.stopBatch('change');
       cellView.apply();
-      resultAlert = alertify.success(gettextCatalog.getString('Label updated'));
+      resultAlert = alertify.success(gettextCatalog.getString('Label updated2'));
     }
 
 
-    function editBasicOutputLabel(form, cellView) {
+    function editBasicLabel2(form, cellView) {
 
       //-- Get the information from the graphics library
       let graph = cellView.paper.model;
@@ -1353,99 +1361,13 @@ angular.module('icestudio')
        graph.stopBatch('change');
        cellView.apply();
 
+       resultAlert = alertify.success(
+           gettextCatalog.getString('Label updated'));
+
       });
     }
 
-    function editBasicInputLabel(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the label name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color'),
-
-          //-- Read the current Label color
-          color: cellView.model.attributes.data.blockColor
-        }
-
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var color = values[1];
-        var virtual = !values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-                blockColor: color,
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.blockColor !== color) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            //data.oldBlockColor = data.blockColor;
-            data.blockColor = color;
-            data.virtual = virtual;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
-      });
-    }
-
+   
     //-------------------------------------------------------------------------
     //-- Edit an Input/Output Port block. The Form is displayed, and the user
     //-- can edit the information
