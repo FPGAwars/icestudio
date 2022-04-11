@@ -1286,26 +1286,74 @@ angular.module('icestudio')
       }
     }
 
-    function editBasicLabel(cellView, newName, newColor){
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
+    //-----------------------------------------------------------------------
+    //-- Change a Label block and launch a success notification to the user
+    //-- 
+    //-- INPUTS:
+    //--   * data:  New particular data of the block (it depens on the type
+    //--            of block)
+    //--   * cellView: Graphical information for block to change
+    //--                                                                      
+    //------------------------------------------------------------------------
+    function changeLabelBlock(cellView, data) {
 
-      // Edit block
+      //-- Get the graphical information of the block
+      let graph = cellView.paper.model;
+
+      //-- Change the block!
       graph.startBatch('change');
-      var data = utils.clone(block.data);
-      data.name = newName;
-      data.blockColor = newColor;
       cellView.model.set('data', data);
       graph.stopBatch('change');
+
+      //-- Apply the changes
       cellView.apply();
-      resultAlert = alertify.success(gettextCatalog.getString('Label updated2'));
+
+      //-- Notify it to the user!
+      resultAlert = alertify.success(
+        gettextCatalog.getString('Label updated'));
+
     }
 
 
+    //-----------------------------------------------------------------------
+    //-- Edit a basic label block (input/output)
+    //-- This function is called form the Find panel
+    //--
+    //-- TODO: It still needs to be refactored and joined with the current
+    //-- block classes
+    //--
+    //-- INPUTS:
+    //--
+    //--   * cellView: Graphical information of the block
+    //--   * newName: New label name to assign to the block
+    //--   * newColor: New color for the Label
+    //-------------------------------------------------------------------------
+    function editBasicLabel(cellView, newName, newColor){
+      var block = cellView.model.attributes;
+
+      //-- Create the new block
+      var data = utils.clone(block.data);
+
+      //-- Set the new data
+      data.name = newName;
+      data.blockColor = newColor;
+
+      // Edit block and Notify to the user
+     changeLabelBlock(cellView, data);
+    }
+
+
+    //-----------------------------------------------------------------------
+    //-- Edit Label. It is called when the user doble clicks on a Label
+    //--
+    //--  INPUTS:
+    //--    * form: New form created
+    //--    * cellView: Graphical inforation of the block
+    //-----------------------------------------------------------------------
     function editBasicLabel2(form, cellView) {
 
-      //-- Get the information from the graphics library
-      let graph = cellView.paper.model;
+      //-- Get the information of the current block
+      //-- from the graphics library
       let block = cellView.model.attributes;
 
       //-- Display the form
@@ -1329,41 +1377,15 @@ angular.module('icestudio')
           return;
         }
 
+        // Create new block
+        let newblock = form.newBlock(0);
 
-      //-- Now we have two bloks:
-      //--   The initial one: block.data
-      //--   The new one entered by the user: portInfo
+        //-- Set the same position than the original block
+        newblock.position.x = block.position.x;
+        newblock.position.y = block.position.y;
 
-      //-- Get the data for the new block from the Form
-      //let virtual = form.virtual;
-      //let portInfo = form.portInfos[0];
-
-      // Create new block
-      let newblock = form.newBlock(0);
-
-      //-- Set the same position than the original block
-      newblock.position.x = block.position.x;
-      newblock.position.y = block.position.y;
-
-      //-- Test:
-      let offset = 0;
-
-       //-- Edit block
-       graph.startBatch('change');
-
-       cellView.model.set('data', newblock.data, { 
-                           translateBy: cellView.model.id, 
-                           tx: 0, 
-                           ty: -offset
-                         });
-
-       cellView.model.translate(0, offset);
-       graph.stopBatch('change');
-       cellView.apply();
-
-       resultAlert = alertify.success(
-           gettextCatalog.getString('Label updated'));
-
+        // Edit block
+        changeLabelBlock(cellView, newblock.data);
       });
     }
 
