@@ -1251,7 +1251,7 @@ angular.module('icestudio')
           break;
 
         //-- Output Label
-        case 'basic.outputLabel':
+        case utils2.BASIC_OUTPUT_LABEL:
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutputLabel(name, color);
@@ -1355,114 +1355,6 @@ angular.module('icestudio')
 
       });
     }
-
-    /*
-    function editBasicOutputLabel(cellView, callback) {
-      console.log("DEBUG! EditBasicOutputLabel....");
-      console.log("DEBUG: Label color: " + cellView.model.attributes.data.blockColor);
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the label name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color'),
-
-          //-- Read the current Label color
-          color: cellView.model.attributes.data.blockColor
-        }
-
-      ];
-
-      //-- Render the form. When user press the OK button the
-      //-- callback function is executed
-      forms.displayForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var color = values[1];
-        var virtual = !values[2];
-        var clock = values[2];
-        console.log("Label: " + label);
-        console.log("Blocks: Color: " + color);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = utils2.getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-                clock: clock,
-                blockColor: color,
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.clock !== clock ||
-            block.data.blockColor !== color) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            //data.oldBlockColor = data.blockColor;
-            data.blockColor = color;
-            data.virtual = virtual;
-            data.clock = clock;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
-      });
-    }
-    */
 
     function editBasicInputLabel(cellView, callback) {
       var graph = cellView.paper.model;
