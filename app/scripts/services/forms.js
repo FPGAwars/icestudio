@@ -49,15 +49,42 @@ angular.module('icestudio')
          autocomplete="off"/>
   `;
 
-   //-- Checkbox
-   const FORM_CHECKBOX_TEMPLATE = `
-   <div class="checkbox">
-     <label>
-       <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-       ${PARAM_LABEL}
-     </label>
-   </div>
+  //-- Checkbox
+  const FORM_CHECKBOX_TEMPLATE = `
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
+      ${PARAM_LABEL}
+    </label>
+  </div>
  `;
+
+  //-- Dictionary with the colors
+  const COLOR_NAME = {
+    "fuchsia": gettextCatalog.getString('Fuchsia'),
+    "indianred": gettextCatalog.getString('Indian Red'),
+    "red": gettextCatalog.getString('Red'),
+    "deeppink": gettextCatalog.getString('DeepPink'),
+    "mediumvioletred": gettextCatalog.getString('MediumVioletRed'),
+    "coral": gettextCatalog.getString('Coral'),
+    "orangered": gettextCatalog.getString('OrangeRed'),
+    "darkorange": gettextCatalog.getString('DarkOrange'),
+    "gold": gettextCatalog.getString('Gold'),
+    "yellow": gettextCatalog.getString('Yellow'),
+    "slateblue": gettextCatalog.getString('SlateBlue'),
+    "greenyellow": gettextCatalog.getString('GreenYellow'),
+    "springgreen": gettextCatalog.getString('SpringGreen'),
+    "darkgreen": gettextCatalog.getString('DarkGreen'),
+    "olivedrab": gettextCatalog.getString('OliveDrab'),
+    "lightseagreen": gettextCatalog.getString('LightSeaGreen'),
+    "turquoise": gettextCatalog.getString('Turquoise'),
+    "steelblue": gettextCatalog.getString('SteelBlue'),
+    "deepskyblue": gettextCatalog.getString('DeepSkyBlue'),
+    "royalblue": gettextCatalog.getString('RoyalBlue'),
+    "navy": gettextCatalog.getString('Navy'),
+    "lightgray": gettextCatalog.getString('LightGray'),
+  };
+
 
    //-- HTML template for the color dropdown input
    const FORM_COLOR_INPUT_TEMPLATE = `
@@ -79,111 +106,111 @@ angular.module('icestudio')
  
         <div class="lb-dropdown-option" 
           data-color="indianred" 
-          data-name="IndianRed">
+          data-name="${COLOR_NAME["indianred"]}">
             <span class="lb-option-color color-indianred">
             </span>
-            IndianRed
+            ${COLOR_NAME["indianred"]}
         </div>
         
         <div class="lb-dropdown-option" 
           data-color="red" 
-          data-name="Red">
+          data-name="${COLOR_NAME["red"]}">
             <span class="lb-option-color color-red">
             </span>
-            Red
+            ${COLOR_NAME["red"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="deeppink" 
-          data-name="DeepPink">
+          data-name="${COLOR_NAME["deeppink"]}">
             <span class="lb-option-color color-deeppink">
             </span>
-            DeepPink
+            ${COLOR_NAME["deeppink"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="mediumvioletred"
-          data-name="MediumVioletRed">
+          data-name="${COLOR_NAME["mediumvioletred"]}">
             <span class="lb-option-color color-mediumvioletred">
             </span>
-            MediumVioletRed
+            ${COLOR_NAME["mediumvioletred"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="coral"
-          data-name="Coral">
+          data-name="${COLOR_NAME["mediumvioletred"]}">
             <span class="lb-option-color color-coral"></span>
-            Coral
+            ${COLOR_NAME["mediumvioletred"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="orangered"
-          data-name="OrangeRed">
+          data-name="${COLOR_NAME["orangered"]}">
             <span class="lb-option-color color-orangered"></span>
-            OrangeRed
+            ${COLOR_NAME["orangered"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="darkorange"
-          data-name="DarkOrange">
+          data-name="${COLOR_NAME["darkorange"]}">
             <span class="lb-option-color color-darkorange"></span>
-            DarkOrange
+            ${COLOR_NAME["darkorange"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="gold"
-          data-name="Gold">
+          data-name="${COLOR_NAME["gold"]}">
             <span class="lb-option-color color-gold"></span>
-          Gold
+            ${COLOR_NAME["gold"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="yellow"
-          data-name="Yellow">
+          data-name="${COLOR_NAME["yellow"]}">
             <span class="lb-option-color color-yellow"></span>
-            Yellow
+            ${COLOR_NAME["yellow"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="fuchsia"
-          data-name="Fuchsia">
+          data-name="${COLOR_NAME["fuchsia"]}">
             <span class="lb-option-color color-fuchsia"></span>
-            Fuchsia
+            ${COLOR_NAME["fuchsia"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="slateblue"
-          data-name="SlateBlue">
+          data-name="${COLOR_NAME["slateblue"]}">
             <span class="lb-option-color color-slateblue"></span>
-            SlateBlue
+            ${COLOR_NAME["slateblue"]}
         </div>
         <div class="lb-dropdown-option" 
           data-color="greenyellow"
-          data-name="GreenYellow">
+          data-name="${COLOR_NAME["greenyellow"]}">
             <span class="lb-option-color color-greenyellow"></span>
-            GreenYellow
+            ${COLOR_NAME["greenyellow"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="springgreen"
-          data-name="SpringGreen">
+          data-name="${COLOR_NAME["springgreen"]}">
             <span class="lb-option-color color-springgreen"></span>
-            SpringGreen
+            ${COLOR_NAME["springgreen"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="darkgreen"
-          data-name="DarkGreen">
+          data-name="${COLOR_NAME["darkgreen"]}">
             <span class="lb-option-color color-darkgreen"></span>
-            DarkGreen
+            ${COLOR_NAME["darkgreen"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="olivedrab"
-          data-name="OliveDrab">
+          data-name="${COLOR_NAME["olivedrab"]}">
             <span class="lb-option-color color-olivedrab">
             </span>
-            OliveDrab
+            ${COLOR_NAME["olivedrab"]}
         </div>
  
         <div class="lb-dropdown-option" 
@@ -1224,11 +1251,31 @@ angular.module('icestudio')
         gettextCatalog.getString('Output labels'),
         name,
         color,
-        "Fuchsia"
+        COLOR_NAME[color]
       );
 
       //-- Store the type of block associated with the Form
       this.type = utils2.BASIC_INPUT_LABEL;
+
+      //-------- Input Label port do not have particular fields
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.colorIni = color;
+    }
+
+    process(evt) {
+
+      //-- Process the form as an BasicPort
+      super.process(evt);
+      
+      //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.colorIni !== this.color); 
     }
 
     //-------------------------------------------------------------
@@ -1286,11 +1333,31 @@ angular.module('icestudio')
         gettextCatalog.getString('Input labels'),
         name,
         color,
-        "Fuchsia"
+        COLOR_NAME[color]
       );
 
       //-- Store the type of block associated with the Form
       this.type = utils2.BASIC_OUTPUT_LABEL;
+
+      //-------- Output Label port do not have particular fields
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.colorIni = color;
+    }
+
+    process(evt) {
+
+      //-- Process the form as an BasicPort
+      super.process(evt);
+      
+      //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.colorIni !== this.color); 
     }
 
     //-------------------------------------------------------------

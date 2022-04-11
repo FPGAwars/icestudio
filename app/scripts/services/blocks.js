@@ -441,6 +441,17 @@ angular.module('icestudio')
       });
     }
 
+    
+
+
+
+
+
+
+
+
+
+    /*
     function newBasicCode(callback, block) {
       var blockInstance = {
         id: null,
@@ -499,12 +510,12 @@ angular.module('icestudio')
           title: gettextCatalog.getString('Enter the parameters'),
           value: defaultValues[2]
         }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
-        var params = values[2].replace(/\s*,\s*/g, ',').split(',');
-        var allNames = [];
+      ];*/
+      //forms.displayForm(formSpecs, function (evt, values) {
+      //  var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
+      //  var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
+      //  var params = values[2].replace(/\s*,\s*/g, ',').split(',');
+      /*  var allNames = [];
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -619,6 +630,7 @@ angular.module('icestudio')
         }
       });
     }
+    */
 
     function newBasicInfo(callback) {
       var blockInstance = {
@@ -1029,6 +1041,7 @@ angular.module('icestudio')
       let virtual = block.data.virtual;
       let clock = block.data.clock;
       let form;
+      let color = block.data.blockColor;
 
       //-- Call the corresponding function depending on the type of block
       switch (type) {
@@ -1049,9 +1062,14 @@ angular.module('icestudio')
           editBasicPort(form,cellView, callback);
           break;
 
+        //-- Output Label
         case 'basic.outputLabel':
-          editBasicOutputLabel(cellView, callback);
+
+          //-- Build the form, and pass the actual block data
+          form = new forms.FormBasicOutputLabel(name, color);
+          editBasicOutputLabel(form, cellView, callback);
           break;
+
         case 'basic.inputLabel':
           editBasicInputLabel(cellView, callback);
           break;
@@ -1087,6 +1105,70 @@ angular.module('icestudio')
       resultAlert = alertify.success(gettextCatalog.getString('Label updated'));
     }
 
+
+    function editBasicOutputLabel(form, cellView, callback) {
+
+      //-- Get the information from the graphics library
+      let graph = cellView.paper.model;
+      let block = cellView.model.attributes;
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }
+
+        //-- If there were no changes, return: Nothing to do
+        if (!form.changed) {
+          return;
+        }
+
+
+      //-- Now we have two bloks:
+      //--   The initial one: block.data
+      //--   The new one entered by the user: portInfo
+
+      //-- Get the data for the new block from the Form
+      //let virtual = form.virtual;
+      //let portInfo = form.portInfos[0];
+
+      // Create new block
+      let newblock = form.newBlock(0);
+
+      //-- Set the same position than the original block
+      newblock.position.x = block.position.x;
+      newblock.position.y = block.position.y;
+
+      //-- Test:
+      let offset = 0;
+
+       //-- Edit block
+       graph.startBatch('change');
+
+       cellView.model.set('data', newblock.data, { 
+                           translateBy: cellView.model.id, 
+                           tx: 0, 
+                           ty: -offset
+                         });
+
+       cellView.model.translate(0, offset);
+       graph.stopBatch('change');
+       cellView.apply();
+
+      });
+    }
+
+    /*
     function editBasicOutputLabel(cellView, callback) {
       console.log("DEBUG! EditBasicOutputLabel....");
       console.log("DEBUG: Label color: " + cellView.model.attributes.data.blockColor);
@@ -1192,6 +1274,7 @@ angular.module('icestudio')
         }
       });
     }
+    */
 
     function editBasicInputLabel(cellView, callback) {
       var graph = cellView.paper.model;
