@@ -1646,8 +1646,7 @@ angular.module('icestudio')
       super(
         gettextCatalog.getString('Name of the paired labels'),
         name,
-        color,
-        "Fuchsia"
+        color
       );
 
       //-- Store the type of block associated with the Form
@@ -1712,8 +1711,7 @@ angular.module('icestudio')
     //-- Field 1: Color dropdown
     let field1 = new ColorField(
       gettextCatalog.getString('Choose a color'),
-      "fuchsia",
-      "Fuchsia"
+      "fuchsia"
     );
 
     //-- Add the fields to the form
