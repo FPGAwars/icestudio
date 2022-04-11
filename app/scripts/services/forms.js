@@ -59,6 +59,77 @@ angular.module('icestudio')
   </div>
  `;
 
+  function getColorName(color) {
+    switch(color) {
+      case "fuchsia": 
+        return gettextCatalog.getString('Fuchsia');
+
+      case "indianred":
+        return gettextCatalog.getString('Indian Red');
+
+      case "red":
+        return gettextCatalog.getString('Red');
+
+      case "deeppink":
+        return gettextCatalog.getString('Deep Pink');
+
+      case "mediumvioletred":
+        return gettextCatalog.getString('Medium Violet Red');
+
+      case "coral":
+        return gettextCatalog.getString('Coral');
+      
+      case "orangered":
+        return gettextCatalog.getString('Orange Red');
+
+      case "darkorange":
+        return gettextCatalog.getString('Dark Orange');
+
+      case "gold":
+        return gettextCatalog.getString('Gold');
+
+      case "yellow":
+        return gettextCatalog.getString('Yellow');
+
+      case "slateblue":
+        return gettextCatalog.getString('Slate Blue');
+
+      case "greenyellow":
+        return gettextCatalog.getString('Green Yellow');
+
+      case "springgreen":
+        return gettextCatalog.getString('Spring Green');
+
+      case "darkgreen":
+        return gettextCatalog.getString('Dark Green');
+      
+      case "olivedrab":
+        return gettextCatalog.getString('Olive Drab');
+
+      case "lightseagreen":
+        return gettextCatalog.getString('Light Sea Green');
+
+      case "turquoise":
+        return gettextCatalog.getString('Turquoise');
+
+      case "steelblue":
+        return gettextCatalog.getString('Steel Blue');
+
+      case "deepskyblue":
+        return gettextCatalog.getString('Deep Sky Blue');
+
+      case "royalblue":
+        return gettextCatalog.getString('Royal Blue');
+
+      case "navy":
+        return gettextCatalog.getString('Navy');
+
+      case "lightgray":
+        return gettextCatalog.getString('Light Gray');
+
+    }
+  }
+
   //-- Dictionary with the colors
   const COLOR_NAME = {
     "fuchsia": gettextCatalog.getString('Fuchsia'),
@@ -85,6 +156,188 @@ angular.module('icestudio')
     "lightgray": gettextCatalog.getString('LightGray'),
   };
 
+
+  function getColorInputHtmlTemplate() {
+    return `
+      <div class="form-group">
+        <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
+        <div class="lb-color--dropdown">
+          <div class="lb-dropdown-title">
+    
+            <!-- The current color is the one found in spec.color -->
+            <span class="lb-selected-color color-${PARAM_COLOR}"
+              data-color="${PARAM_COLOR}"
+              data-name="${PARAM_COLOR_NAME}"> 
+            </span> 
+            ${PARAM_COLOR_NAME}
+            <span class="lb-dropdown-icon"></span>
+          </div>
+        
+          <div class="lb-dropdown-menu">
+    
+          <div class="lb-dropdown-option" 
+            data-color="indianred" 
+            data-name="${getColorName("indianred")}">
+              <span class="lb-option-color color-indianred">
+              </span>
+              ${getColorName("indianred")}
+          </div>
+          
+          <div class="lb-dropdown-option" 
+            data-color="red" 
+            data-name="${getColorName("red")}">
+              <span class="lb-option-color color-red">
+              </span>
+              ${getColorName("red")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="deeppink" 
+            data-name="${getColorName("deeppink")}">
+              <span class="lb-option-color color-deeppink">
+              </span>
+              ${getColorName("deeppink")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="mediumvioletred"
+            data-name="${getColorName("mediumvioletred")}">
+              <span class="lb-option-color color-mediumvioletred">
+              </span>
+              ${getColorName("mediumvioletred")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="coral"
+            data-name="${getColorName("coral")}">
+              <span class="lb-option-color color-coral"></span>
+              ${getColorName("coral")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="orangered"
+            data-name="${getColorName("orangered")}">
+              <span class="lb-option-color color-orangered"></span>
+              ${getColorName("orangered")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="darkorange"
+            data-name="${getColorName("darkorange")}">
+              <span class="lb-option-color color-darkorange"></span>
+              ${getColorName("darkorange")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="gold"
+            data-name="${getColorName("gold")}">
+              <span class="lb-option-color color-gold"></span>
+              ${getColorName("gold")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="yellow"
+            data-name="${getColorName("yellow")}">
+              <span class="lb-option-color color-yellow"></span>
+              ${getColorName("yellow")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="fuchsia"
+            data-name=" ${getColorName("fuchsia")}">
+              <span class="lb-option-color color-fuchsia"></span>
+              ${getColorName("fuchsia")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="slateblue"
+            data-name="${getColorName("slateblue")}">
+              <span class="lb-option-color color-slateblue"></span>
+              ${getColorName("slateblue")}
+          </div>
+          <div class="lb-dropdown-option" 
+            data-color="greenyellow"
+            data-name="${getColorName("greenyellow")}">
+              <span class="lb-option-color color-greenyellow"></span>
+              ${getColorName("greenyellow")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="springgreen"
+            data-name="${getColorName("springgreen")}">
+              <span class="lb-option-color color-springgreen"></span>
+              ${getColorName("springgreen")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="darkgreen"
+            data-name="${getColorName("darkgreen")}">
+              <span class="lb-option-color color-darkgreen"></span>
+              ${getColorName("darkgreen")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="olivedrab"
+            data-name="${getColorName("olivedrab")}">
+              <span class="lb-option-color color-olivedrab">
+              </span>
+              ${getColorName("olivedrab")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="lightseagreen" 
+            data-name="${getColorName("lightseagreen")}">
+              <span class="lb-option-color color-lightseagreen"></span>
+              ${getColorName("lightseagreen")}
+          </div> 
+    
+          <div class="lb-dropdown-option" 
+            data-color="turquoise"
+            data-name="${getColorName("turquioise")}">
+              <span class="lb-option-color color-turquoise"></span>
+              ${getColorName("turquoise")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="steelblue"
+            data-name="${getColorName("steelblue")}">
+              <span class="lb-option-color color-steelblue"></span>
+              ${getColorName("steelblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="deepskyblue"
+            data-name="${getColorName("deepskyblue")}">
+              <span class="lb-option-color color-deepskyblue"></span>
+              ${getColorName("deepskyblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="royalblue"
+            data-name="${getColorName("royalblue")}">
+              <span class="lb-option-color color-royalblue"></span>
+              ${getColorName("royalblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="navy"
+            data-name="${getColorName("navy")}">
+              <span class="lb-option-color color-navy"></span>
+              ${getColorName("navy")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="lightgray"
+            data-name="${getColorName("lightgray")}">
+              <span class="lb-option-color color-lightgray"></span>
+              ${getColorName("lightgray")}
+          </div>
+          
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
    //-- HTML template for the color dropdown input
    const FORM_COLOR_INPUT_TEMPLATE = `
@@ -175,7 +428,7 @@ angular.module('icestudio')
           data-color="fuchsia"
           data-name="${COLOR_NAME["fuchsia"]}">
             <span class="lb-option-color color-fuchsia"></span>
-            ${COLOR_NAME["fuchsia"]}
+            ${getColorName("fuchsia")}
         </div>
  
         <div class="lb-dropdown-option" 
@@ -397,11 +650,11 @@ angular.module('icestudio')
     //-- Returns:
     //--   -A string with the HTML code for that Field
     //-----------------------------------------------------------------------
-    constructor(label, color, colorName) {
+    constructor(label, color) {
       this.type = FIELD_COLOR;
       this.label = label;
       this.color = color;
-      this.colorName = colorName;
+      this.colorName = getColorName(color);
     }
     
      //---------------------------------------------------------
@@ -410,10 +663,15 @@ angular.module('icestudio')
     html() {
       //-- Generate the HTML code
 
+      //-- Get the html template
+      let html = getColorInputHtmlTemplate();
+
+
       //-- Insert the parameters in the html code template
-      let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+      html = html.replace(
         PARAM_LABEL,
-        this.label);
+        this.label
+      );
 
       html = html.replaceAll(PARAM_COLOR, this.color);
       html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
@@ -1087,7 +1345,7 @@ angular.module('icestudio')
     //--    * name: Default label name
     //--    * color: Default label color
     //------------------------------------------------------
-    constructor(msg, name='', color='fuchsia', colorName='') {
+    constructor(msg, name='', color='fuchsia') {
 
       //-- Create a blank Form (calling the upper Class)
       super();
@@ -1103,8 +1361,7 @@ angular.module('icestudio')
       //-- Field 1: Color Selector. Label color
       let field1 = new ColorField(
         gettextCatalog.getString("Choose a color:"),
-        color,      //-- Default color
-        colorName   //-- Color Name (String to display with the color)
+        color    //-- Default color
       );
 
       //-- Add the fields to the form
@@ -1250,8 +1507,7 @@ angular.module('icestudio')
       super(
         gettextCatalog.getString('Output labels'),
         name,
-        color,
-        COLOR_NAME[color]
+        color
       );
 
       //-- Store the type of block associated with the Form
@@ -1332,8 +1588,7 @@ angular.module('icestudio')
       super(
         gettextCatalog.getString('Input labels'),
         name,
-        color,
-        COLOR_NAME[color]
+        color
       );
 
       //-- Store the type of block associated with the Form

@@ -158,11 +158,11 @@ msgstr "Comprobando Python..."
 msgid "Chinese"
 msgstr "Chino"
 
-#: app/scripts/services/blocks.js:1478 app/scripts/services/forms.js:1463
+#: app/scripts/services/blocks.js:1478 app/scripts/services/forms.js:1718
 msgid "Choose a color"
 msgstr "Selecciona un color"
 
-#: app/scripts/services/forms.js:1105
+#: app/scripts/services/forms.js:1363
 msgid "Choose a color:"
 msgstr "Selecciona un color:"
 
@@ -184,7 +184,7 @@ msgstr "Haz clic aquí para instalarlo"
 msgid "Click here to view"
 msgstr "Haz clic aquí para ver"
 
-#: app/scripts/services/forms.js:948
+#: app/scripts/services/forms.js:1206
 msgid "Clock not allowed for data buses"
 msgstr "Reloj no permitido para buses de datos"
 
@@ -264,7 +264,7 @@ msgstr "Convertir"
 msgid "Copy"
 msgstr "Copiar"
 
-#: app/scripts/services/forms.js:69
+#: app/scripts/services/forms.js:140 app/scripts/services/forms.js:80
 msgid "Coral"
 msgstr "Coral"
 
@@ -284,11 +284,19 @@ msgstr "Checo"
 msgid "Dark (default)"
 msgstr "Oscuro (por defecto)"
 
-#: app/scripts/services/forms.js:77
+#: app/scripts/services/forms.js:104
+msgid "Dark Green"
+msgstr "Verde oscuro"
+
+#: app/scripts/services/forms.js:86
+msgid "Dark Orange"
+msgstr "Naranja oscuro"
+
+#: app/scripts/services/forms.js:148
 msgid "DarkGreen"
 msgstr "Verde oscuro"
 
-#: app/scripts/services/forms.js:71
+#: app/scripts/services/forms.js:142
 msgid "DarkOrange"
 msgstr "Naranja oscuro"
 
@@ -300,11 +308,19 @@ msgstr "Datasheet"
 msgid "Decimal"
 msgstr "Decimal"
 
-#: app/scripts/services/forms.js:67
+#: app/scripts/services/forms.js:74
+msgid "Deep Pink"
+msgstr "Rosa oscuro"
+
+#: app/scripts/services/forms.js:119
+msgid "Deep Sky Blue"
+msgstr "Celeste intenso"
+
+#: app/scripts/services/forms.js:138
 msgid "DeepPink"
 msgstr "Rosa oscuro"
 
-#: app/scripts/services/forms.js:82
+#: app/scripts/services/forms.js:153
 msgid "DeepSkyBlue"
 msgstr "Celeste intenso"
 
@@ -410,7 +426,7 @@ msgstr "Introduce los bloques memoria"
 msgid "Enter the output ports"
 msgstr "Introduce los puertos de salida"
 
-#: app/scripts/services/forms.js:1456
+#: app/scripts/services/forms.js:1711
 msgid "Enter the paired labels name"
 msgstr "Introduce el nombre de las etiquetas emparejadas"
 
@@ -474,7 +490,7 @@ msgstr "Plugins externos actualizados"
 msgid "FPGA I/O ports not defined"
 msgstr "Puertos E/S de la FPGA no definidos"
 
-#: app/scripts/services/forms.js:758
+#: app/scripts/services/forms.js:1016
 msgid "FPGA pin"
 msgstr "FPGA pin"
 
@@ -513,7 +529,7 @@ msgstr "Ajustar contenido"
 msgid "French"
 msgstr "Francés"
 
-#: app/scripts/services/forms.js:64
+#: app/scripts/services/forms.js:135 app/scripts/services/forms.js:65
 msgid "Fuchsia"
 msgstr "Fuxia"
 
@@ -525,7 +541,7 @@ msgstr "Gallego"
 msgid "German"
 msgstr "Alemán"
 
-#: app/scripts/services/forms.js:72
+#: app/scripts/services/forms.js:143 app/scripts/services/forms.js:89
 msgid "Gold"
 msgstr "Oro"
 
@@ -533,7 +549,11 @@ msgstr "Oro"
 msgid "Greek"
 msgstr "Griego"
 
-#: app/scripts/services/forms.js:75
+#: app/scripts/services/forms.js:98
+msgid "Green Yellow"
+msgstr "Amarillo verdoso"
+
+#: app/scripts/services/forms.js:146
 msgid "GreenYellow"
 msgstr "Amarillo verdoso"
 
@@ -561,7 +581,7 @@ msgstr "Imagen"
 msgid "Image {{name}} saved"
 msgstr "Imagen {{name}} guardada"
 
-#: app/scripts/services/forms.js:65
+#: app/scripts/services/forms.js:136 app/scripts/services/forms.js:68
 msgid "Indian Red"
 msgstr "Rojo indio"
 
@@ -577,11 +597,11 @@ msgstr "Entrada"
 msgid "Input label"
 msgstr "Etiqueta de entrada"
 
-#: app/scripts/services/forms.js:1333
+#: app/scripts/services/forms.js:1589
 msgid "Input labels"
 msgstr "Etiquetas de entrada"
 
-#: app/scripts/services/forms.js:895
+#: app/scripts/services/forms.js:1153
 msgid "Input port name:"
 msgstr "Nombre de puerto de entrada:"
 
@@ -694,11 +714,19 @@ msgstr "Idioma"
 msgid "Light"
 msgstr "Luminoso"
 
-#: app/scripts/services/forms.js:85
+#: app/scripts/services/forms.js:128
+msgid "Light Gray"
+msgstr "Gris claro"
+
+#: app/scripts/services/forms.js:110
+msgid "Light Sea Green"
+msgstr "Verde marino claro"
+
+#: app/scripts/services/forms.js:156
 msgid "LightGray"
 msgstr "Gris claro"
 
-#: app/scripts/services/forms.js:79
+#: app/scripts/services/forms.js:150
 msgid "LightSeaGreen"
 msgstr "Verde marino claro"
 
@@ -727,7 +755,11 @@ msgstr "Archivo de registro actualizado"
 msgid "Maximum bus size: 96 bits"
 msgstr "Tamaño máximo del bus: 96 bits"
 
-#: app/scripts/services/forms.js:68
+#: app/scripts/services/forms.js:77
+msgid "Medium Violet Red"
+msgstr "Rojo violeta medio"
+
+#: app/scripts/services/forms.js:139
 msgid "MediumVioletRed"
 msgstr "Rojo violeta medio"
 
@@ -739,11 +771,11 @@ msgstr "Memoria"
 msgid "Name"
 msgstr "Nombre"
 
-#: app/scripts/services/forms.js:1396
+#: app/scripts/services/forms.js:1651
 msgid "Name of the paired labels"
 msgstr "Nombre de las etiquetas emparejadas"
 
-#: app/scripts/services/forms.js:84
+#: app/scripts/services/forms.js:125 app/scripts/services/forms.js:155
 msgid "Navy"
 msgstr "Azul marino"
 
@@ -768,7 +800,11 @@ msgstr "Ninguna colección almacenada"
 msgid "OK"
 msgstr "OK"
 
-#: app/scripts/services/forms.js:78
+#: app/scripts/services/forms.js:107
+msgid "Olive Drab"
+msgstr "Verde oliva"
+
+#: app/scripts/services/forms.js:149
 msgid "OliveDrab"
 msgstr "Verde oliva"
 
@@ -780,7 +816,11 @@ msgstr "Abrir"
 msgid "Open SVG"
 msgstr "Abrir SVG"
 
-#: app/scripts/services/forms.js:70
+#: app/scripts/services/forms.js:83
+msgid "Orange Red"
+msgstr "Rojo naranja"
+
+#: app/scripts/services/forms.js:141
 msgid "OrangeRed"
 msgstr "Rojo naranja"
 
@@ -796,11 +836,11 @@ msgstr "Salida"
 msgid "Output label"
 msgstr "Etiqueta de salida"
 
-#: app/scripts/services/forms.js:1251
+#: app/scripts/services/forms.js:1508
 msgid "Output labels"
 msgstr "Etiquetas de salida"
 
-#: app/scripts/services/forms.js:1016
+#: app/scripts/services/forms.js:1274
 msgid "Output port name"
 msgstr "Nombre del puerto de salida"
 
@@ -857,7 +897,7 @@ msgstr "Salir"
 msgid "Read only"
 msgstr "Solo lectura"
 
-#: app/scripts/services/forms.js:66
+#: app/scripts/services/forms.js:137 app/scripts/services/forms.js:71
 msgid "Red"
 msgstr "Rojo"
 
@@ -897,7 +937,11 @@ msgstr "Cambiar uno"
 msgid "Reset SVG"
 msgstr "Resetear SVG"
 
-#: app/scripts/services/forms.js:83
+#: app/scripts/services/forms.js:122
+msgid "Royal Blue"
+msgstr "Añil"
+
+#: app/scripts/services/forms.js:154
 msgid "RoyalBlue"
 msgstr "Añil"
 
@@ -933,11 +977,15 @@ msgstr "Seleccionar todo"
 msgid "Select your board"
 msgstr "Selecciona tu placa"
 
-#: app/scripts/services/forms.js:907
+#: app/scripts/services/forms.js:1165
 msgid "Show clock"
 msgstr "Mostrar reloj"
 
-#: app/scripts/services/forms.js:74
+#: app/scripts/services/forms.js:95
+msgid "Slate Blue"
+msgstr "Azul pizarra"
+
+#: app/scripts/services/forms.js:145
 msgid "SlateBlue"
 msgstr "Azul pizarra"
 
@@ -949,7 +997,11 @@ msgstr "Código fuente"
 msgid "Spanish"
 msgstr "Español"
 
-#: app/scripts/services/forms.js:76
+#: app/scripts/services/forms.js:101
+msgid "Spring Green"
+msgstr "Verde primavera"
+
+#: app/scripts/services/forms.js:147
 msgid "SpringGreen"
 msgstr "Verde primavera"
 
@@ -965,7 +1017,11 @@ msgstr "Comenzar carga"
 msgid "Start verification"
 msgstr "Comenzar verificación"
 
-#: app/scripts/services/forms.js:81
+#: app/scripts/services/forms.js:116
+msgid "Steel Blue"
+msgstr "Azul acero"
+
+#: app/scripts/services/forms.js:152
 msgid "SteelBlue"
 msgstr "Azul acero"
 
@@ -1076,7 +1132,7 @@ msgstr "Herramientas"
 msgid "Turkish"
 msgstr "Turco"
 
-#: app/scripts/services/forms.js:80
+#: app/scripts/services/forms.js:113 app/scripts/services/forms.js:151
 msgid "Turquoise"
 msgstr "Turquesa"
 
@@ -1155,8 +1211,8 @@ msgstr "Formato de bloque incorrecto: {{type}}"
 
 #: app/scripts/services/blocks.js:1552 app/scripts/services/blocks.js:1736
 #: app/scripts/services/blocks.js:1793 app/scripts/services/blocks.js:352
-#: app/scripts/services/blocks.js:421 app/scripts/services/forms.js:1159
-#: app/scripts/services/forms.js:812
+#: app/scripts/services/blocks.js:421 app/scripts/services/forms.js:1070
+#: app/scripts/services/forms.js:1416
 msgid "Wrong block name {{name}}"
 msgstr "Nombre del bloque {{name}} incorrecto"
 
@@ -1184,7 +1240,7 @@ msgstr "Nombre del host remoto incorrecto {{name}}"
 msgid "Wrong search name!"
 msgstr "¡Nombre de búsqueda incorrecto!"
 
-#: app/scripts/services/forms.js:73
+#: app/scripts/services/forms.js:144 app/scripts/services/forms.js:92
 msgid "Yellow"
 msgstr "Amarillo"
 
