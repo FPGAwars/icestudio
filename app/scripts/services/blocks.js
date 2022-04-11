@@ -1255,7 +1255,7 @@ angular.module('icestudio')
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutputLabel(name, color);
-          editBasicOutputLabel(form, cellView, callback);
+          editBasicOutputLabel(form, cellView);
           break;
 
         case 'basic.inputLabel':
@@ -1294,7 +1294,7 @@ angular.module('icestudio')
     }
 
 
-    function editBasicOutputLabel(form, cellView, callback) {
+    function editBasicOutputLabel(form, cellView) {
 
       //-- Get the information from the graphics library
       let graph = cellView.paper.model;
