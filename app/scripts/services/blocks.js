@@ -624,7 +624,18 @@ angular.module('icestudio')
     }
 
 
-
+    function getPins(portInfo) {
+      var pins = [];
+      if (portInfo.range) {
+        for (var r in portInfo.range) {
+          pins.push({ index: portInfo.range[r].toString(), name: '', value: '' });
+        }
+      }
+      else {
+        pins.push({ index: '0', name: 'NULL', value: 'NULL' });
+      }
+      return pins;
+    }
 
 
 
