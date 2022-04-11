@@ -215,51 +215,51 @@ angular.module('icestudio')
  
         <div class="lb-dropdown-option" 
           data-color="lightseagreen" 
-          data-name="LightSeaGreen">
+          data-name="${COLOR_NAME["lightseagreen"]}">
             <span class="lb-option-color color-lightseagreen"></span>
-            LightSeaGreen
+            ${COLOR_NAME["lightseagreen"]}
         </div> 
  
         <div class="lb-dropdown-option" 
           data-color="turquoise"
-          data-name="Turquoise">
+          data-name="${COLOR_NAME["turquoise"]}">
             <span class="lb-option-color color-turquoise"></span>
-            Turquoise
+            ${COLOR_NAME["turquoise"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="steelblue"
-          data-name="SteelBlue">
+          data-name="${COLOR_NAME["steelblue"]}">
             <span class="lb-option-color color-steelblue"></span>
-            SteelBlue
+            ${COLOR_NAME["steelblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="deepskyblue"
-          data-name="DeepSkyBlue">
+          data-name="${COLOR_NAME["deepskyblue"]}">
             <span class="lb-option-color color-deepskyblue"></span>
-            DeepSkyBlue
+            ${COLOR_NAME["deepskyblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="royalblue"
-          data-name="RoyalBlue">
+          data-name="${COLOR_NAME["royalblue"]}">
             <span class="lb-option-color color-royalblue"></span>
-            RoyalBlue
+            ${COLOR_NAME["royalblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="navy"
-          data-name="Navy">
+          data-name="${COLOR_NAME["navy"]}">
             <span class="lb-option-color color-navy"></span>
-            Navy
+            ${COLOR_NAME["navy"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="lightgray"
-          data-name="LightGray">
+          data-name="${COLOR_NAME["lightgray"]}">
             <span class="lb-option-color color-lightgray"></span>
-           LightGray
+            ${COLOR_NAME["lightgray"]}
         </div>
         
        </div>
