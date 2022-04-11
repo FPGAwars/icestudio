@@ -21,7 +21,7 @@ msgstr ""
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>Panoda kartı çıkartın</b> ve <b>yeniden</b> bağlayın"
 
-#: app/views/menu.html:598
+#: app/views/menu.html:708
 msgid "About Icestudio"
 msgstr "Icestudio Hakkında"
 
@@ -29,27 +29,27 @@ msgstr "Icestudio Hakkında"
 msgid "Acknowledgment"
 msgstr ""
 
-#: app/views/menu.html:517
+#: app/views/menu.html:627
 msgid "Add"
 msgstr "Ekle"
 
-#: app/scripts/controllers/menu.js:1169
+#: app/scripts/controllers/menu.js:1208
 msgid "Add a block to start"
 msgstr "Başlamak için bir blok ekleyin"
 
-#: app/views/menu.html:81
+#: app/views/menu.html:120
 msgid "Add as block"
 msgstr "Blok olarak ekle"
 
-#: app/scripts/services/blocks.js:1491 app/scripts/services/blocks.js:409
+#: app/scripts/services/blocks.js:1752 app/scripts/services/blocks.js:390
 msgid "Address format"
 msgstr "Adres biçimi"
 
-#: app/scripts/services/tools.js:1797
+#: app/scripts/services/tools.js:1808
 msgid "All collections removed"
 msgstr "Tüm koleksiyonlar kaldırıldı"
 
-#: app/scripts/controllers/menu.js:1209
+#: app/scripts/controllers/menu.js:1248
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Saklanan tüm koleksiyonlar kaybolacaktır. Devam etmek istiyor musunuz?"
 
@@ -59,7 +59,7 @@ msgstr "Saklanan tüm koleksiyonlar kaybolacaktır. Devam etmek istiyor musunuz?
 msgid "At least Python 3.7 is required"
 msgstr "Python 2.7 gerekli"
 
-#: app/scripts/services/utils.js:766
+#: app/scripts/services/utils.js:653
 msgid "Author"
 msgstr "Yazar"
 
@@ -67,16 +67,14 @@ msgstr "Yazar"
 msgid "Basque"
 msgstr "Baskça"
 
-#: app/scripts/services/blocks.js:1494 app/scripts/services/blocks.js:412
+#: app/scripts/services/blocks.js:1755 app/scripts/services/blocks.js:393
 msgid "Binary"
 msgstr "İkili"
 
-#: app/scripts/services/blocks.js:1139 app/scripts/services/blocks.js:1163
-#: app/scripts/services/blocks.js:1227 app/scripts/services/blocks.js:1249
-#: app/scripts/services/blocks.js:1324 app/scripts/services/blocks.js:1345
-#: app/scripts/services/blocks.js:1408 app/scripts/services/blocks.js:1427
-#: app/scripts/services/blocks.js:1470 app/scripts/services/blocks.js:1527
-#: app/scripts/services/blocks.js:1572
+#: app/scripts/services/blocks.js:1525 app/scripts/services/blocks.js:1547
+#: app/scripts/services/blocks.js:1657 app/scripts/services/blocks.js:1691
+#: app/scripts/services/blocks.js:1731 app/scripts/services/blocks.js:1788
+#: app/scripts/services/blocks.js:1833
 msgid "Block updated"
 msgstr "Blok güncellendi"
 
@@ -84,23 +82,23 @@ msgstr "Blok güncellendi"
 msgid "Block {{name}} imported"
 msgstr "Blok {{name}} ithal"
 
-#: app/views/menu.html:65
+#: app/views/menu.html:97
 msgid "Blocks"
 msgstr "Bloklar"
 
-#: app/views/menu.html:351
+#: app/views/menu.html:461
 msgid "Board"
 msgstr "Pano"
 
-#: app/views/menu.html:235 app/views/menu.html:310
+#: app/views/menu.html:345 app/views/menu.html:420
 msgid "Board rules"
 msgstr "Pano ölçüm aleti"
 
-#: app/scripts/controllers/menu.js:783
+#: app/scripts/controllers/menu.js:820
 msgid "Board rules disabled"
 msgstr "Pano ölçüm kuralları devre dışı"
 
-#: app/scripts/controllers/menu.js:781
+#: app/scripts/controllers/menu.js:818
 msgid "Board rules enabled"
 msgstr "Pano ölçüm kuralları aktif"
 
@@ -116,7 +114,7 @@ msgstr "Pano {{name}} kullanılamıyor"
 msgid "Board {{name}} not connected"
 msgstr "Pano {{name}} bağlı değil"
 
-#: app/scripts/app.js:143 app/scripts/controllers/menu.js:1088
+#: app/scripts/app.js:161 app/scripts/controllers/menu.js:1127
 msgid "Board {{name}} selected"
 msgstr "Pano {{name}} seç"
 
@@ -124,12 +122,12 @@ msgstr "Pano {{name}} seç"
 msgid "Bootloader not active"
 msgstr "Önyükleyici etkin değil"
 
-#: app/scripts/controllers/menu.js:1111 app/views/design.html:184
-#: app/views/menu.html:430
+#: app/scripts/controllers/menu.js:1150 app/views/design.html:189
+#: app/views/menu.html:540
 msgid "Build"
 msgstr "Yapı"
 
-#: app/scripts/controllers/menu.js:1121
+#: app/scripts/controllers/menu.js:1160
 msgid "Build done"
 msgstr "Yapı tamam"
 
@@ -163,9 +161,14 @@ msgstr "Python'u Kontrol Et..."
 msgid "Chinese"
 msgstr "Çince"
 
-#: app/scripts/services/blocks.js:1089 app/scripts/services/blocks.js:1184
-#: app/scripts/services/blocks.js:276 app/scripts/services/blocks.js:72
+#: app/scripts/services/blocks.js:1478 app/scripts/services/forms.js:1718
 msgid "Choose a color"
+msgstr "Bir renk seçin"
+
+#: app/scripts/services/forms.js:1363
+#, fuzzy
+#| msgid "Choose a color"
+msgid "Choose a color:"
 msgstr "Bir renk seçin"
 
 #: app/scripts/services/project.js:170
@@ -173,7 +176,7 @@ msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr ""
 "Icestudio'nun daha <b>yeni bir sürümünü indirmek için buraya</b> tıklayın"
 
-#: app/scripts/services/tools.js:1508
+#: app/scripts/services/tools.js:1519
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "Sürücüleri kurmak için <b>buraya tıklayın</b>"
 
@@ -182,72 +185,71 @@ msgstr "Sürücüleri kurmak için <b>buraya tıklayın</b>"
 msgid "Click here to install it"
 msgstr "Yüklemek için buraya tıklayın"
 
-#: app/scripts/controllers/menu.js:723
+#: app/scripts/controllers/menu.js:760
 msgid "Click here to view"
 msgstr "Görmek için buraya tıklayın"
 
-#: app/scripts/services/blocks.js:104 app/scripts/services/blocks.js:1108
-#: app/scripts/services/blocks.js:1293 app/scripts/services/blocks.js:178
+#: app/scripts/services/forms.js:1206
 msgid "Clock not allowed for data buses"
 msgstr "Veri yolları için saat izin verilmiyor"
 
-#: app/views/menu.html:176
+#: app/views/menu.html:263
 msgid "Clone"
 msgstr "Klon"
 
-#: app/scripts/controllers/menu.js:431 app/views/version.html:38
+#: app/scripts/controllers/menu.js:466 app/views/version.html:38
 msgid "Close"
 msgstr "Kapat"
 
-#: app/views/design.html:98
+#: app/views/design.html:103
 msgid "Code"
 msgstr "Kod"
 
-#: app/scripts/services/blocks.js:570
+#: app/scripts/services/blocks.js:554
 msgid "Code block needs at least one input or one output"
 msgstr ""
 
-#: app/views/menu.html:383
+#: app/views/menu.html:493
 msgid "Collection"
 msgstr "Koleksiyon"
 
-#: app/views/menu.html:316
+#: app/views/menu.html:426
 msgid "Collection info"
 msgstr "Koleksiyon bilgisi"
 
-#: app/scripts/controllers/menu.js:997
+#: app/scripts/controllers/menu.js:1036
 msgid "Collection {{collection}} info not defined"
 msgstr "Koleksiyon {{collection}} bilgisi tanımsız"
 
-#: app/scripts/services/tools.js:1650
+#: app/scripts/services/tools.js:1661
 msgid "Collection {{name}} added"
 msgstr "Koleksiyon {{name}} eklendi"
 
-#: app/scripts/services/tools.js:1637
+#: app/scripts/services/tools.js:1648
 msgid "Collection {{name}} not replaced"
 msgstr "Koleksiyon {{name}} değiştirilmedi"
 
-#: app/scripts/services/tools.js:1788
+#: app/scripts/services/tools.js:1799
 msgid "Collection {{name}} removed"
 msgstr "Koleksiyon {{name}} kaldırıldı"
 
-#: app/scripts/services/tools.js:1626
+#: app/scripts/services/tools.js:1637
 msgid "Collection {{name}} replaced"
 msgstr "Koleksiyon {{name}} değiştirildi"
 
-#: app/scripts/controllers/menu.js:1043
+#: app/scripts/controllers/menu.js:1082
 msgid "Collection {{name}} selected"
 msgstr "Koleksiyon {{name}} seçili"
 
-#: app/views/menu.html:509
+#: app/views/menu.html:619
 msgid "Collections"
 msgstr "Koleksiyonlar"
 
-#: app/scripts/controllers/menu.js:1013 app/views/menu.html:321
+#: app/scripts/controllers/menu.js:1052 app/views/menu.html:431
 msgid "Command output"
 msgstr "Komut çıkışı"
 
-#: app/views/menu.html:590
+#: app/views/menu.html:700
 msgid "Community forum"
 msgstr "Topluluk forumu"
 
@@ -255,7 +257,7 @@ msgstr "Topluluk forumu"
 msgid "Configuration not completed"
 msgstr "Yapılandırma tamamlanmadı"
 
-#: app/views/design.html:92
+#: app/views/design.html:97
 msgid "Constant"
 msgstr "Sürekli"
 
@@ -263,15 +265,19 @@ msgstr "Sürekli"
 msgid "Convert"
 msgstr "Dönüştür"
 
-#: app/views/menu.html:166
+#: app/views/menu.html:244
 msgid "Copy"
 msgstr "Kopyala"
+
+#: app/scripts/services/forms.js:140 app/scripts/services/forms.js:80
+msgid "Coral"
+msgstr "Mercan"
 
 #: app/scripts/services/tools.js:1409
 msgid "Create virtualenv..."
 msgstr "Sanalort oluşturun..."
 
-#: app/views/menu.html:161
+#: app/views/menu.html:235
 msgid "Cut"
 msgstr "Kes"
 
@@ -285,39 +291,79 @@ msgstr "Çekce"
 msgid "Dark (default)"
 msgstr "Varsayılan"
 
-#: app/views/menu.html:305
+#: app/scripts/services/forms.js:104
+#, fuzzy
+#| msgid "DarkGreen"
+msgid "Dark Green"
+msgstr "KoyuYeşil"
+
+#: app/scripts/services/forms.js:86
+#, fuzzy
+#| msgid "DarkOrange"
+msgid "Dark Orange"
+msgstr "KoyuTuruncu"
+
+#: app/scripts/services/forms.js:148
+msgid "DarkGreen"
+msgstr "KoyuYeşil"
+
+#: app/scripts/services/forms.js:142
+msgid "DarkOrange"
+msgstr "KoyuTuruncu"
+
+#: app/views/menu.html:415
 msgid "Datasheet"
 msgstr "Verisayfası"
 
-#: app/scripts/services/blocks.js:1495 app/scripts/services/blocks.js:413
+#: app/scripts/services/blocks.js:1756 app/scripts/services/blocks.js:394
 msgid "Decimal"
 msgstr "Ondalık"
 
-#: app/views/menu.html:391
+#: app/scripts/services/forms.js:74
+#, fuzzy
+#| msgid "DeepPink"
+msgid "Deep Pink"
+msgstr "DerinPembe"
+
+#: app/scripts/services/forms.js:119
+#, fuzzy
+#| msgid "DeepSkyBlue"
+msgid "Deep Sky Blue"
+msgstr "DerinGökMavisi"
+
+#: app/scripts/services/forms.js:138
+msgid "DeepPink"
+msgstr "DerinPembe"
+
+#: app/scripts/services/forms.js:153
+msgid "DeepSkyBlue"
+msgstr "DerinGökMavisi"
+
+#: app/views/menu.html:501
 msgid "Default"
 msgstr "Varsayılan"
 
-#: app/scripts/services/utils.js:765
+#: app/scripts/services/utils.js:652
 msgid "Description"
 msgstr "Tanım"
 
-#: app/views/menu.html:498
+#: app/views/menu.html:608
 msgid "Disable"
 msgstr "Devre dışı"
 
-#: app/scripts/controllers/menu.js:436
+#: app/scripts/controllers/menu.js:471
 msgid "Do you want to close the application?"
 msgstr "Uygulamayı kapatmak istiyor musunuz?"
 
-#: app/scripts/controllers/menu.js:1192
+#: app/scripts/controllers/menu.js:1231
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Koleksiyonu kaldırmak {{name}} istiyor musunuz?"
 
-#: app/scripts/services/tools.js:1619
+#: app/scripts/services/tools.js:1630
 msgid "Do you want to replace it?"
 msgstr "Onu değiştirmek ister misin?"
 
-#: app/views/menu.html:577
+#: app/views/menu.html:687
 msgid "Documentation"
 msgstr "Dokümantasyon"
 
@@ -325,7 +371,7 @@ msgstr "Dokümantasyon"
 msgid "Don't display"
 msgstr "Gösterme"
 
-#: app/views/menu.html:485
+#: app/views/menu.html:595
 msgid "Drivers"
 msgstr "Sürücüler"
 
@@ -343,7 +389,7 @@ msgstr "Sürücüler aktif"
 msgid "Duplicated FPGA I/O ports"
 msgstr "Çoğaltılmış FPGA I/O bağlantı noktalaı"
 
-#: app/scripts/services/blocks.js:637
+#: app/scripts/services/blocks.js:621
 msgid "Duplicated block attributes"
 msgstr "Çoğaltılmış blok öznitelikleri"
 
@@ -351,15 +397,15 @@ msgstr "Çoğaltılmış blok öznitelikleri"
 msgid "Dutch"
 msgstr "Felemenkçe"
 
-#: app/views/menu.html:142
+#: app/views/menu.html:204
 msgid "Edit"
 msgstr "Düzenle"
 
-#: app/scripts/services/tools.js:1598
+#: app/scripts/services/tools.js:1609
 msgid "Edit the collection name"
 msgstr "Koleksiyon adını düzenle"
 
-#: app/views/menu.html:491
+#: app/views/menu.html:601
 msgid "Enable"
 msgstr "Aktif"
 
@@ -367,79 +413,65 @@ msgstr "Aktif"
 msgid "English"
 msgstr "İngilizce"
 
-#: app/scripts/services/blocks.js:346
+#: app/scripts/services/blocks.js:327
 msgid "Enter the constant blocks"
 msgstr "Sabit blokları girin"
 
-#: app/scripts/controllers/menu.js:671
+#: app/scripts/controllers/menu.js:708
 msgid "Enter the external collections path"
 msgstr "Garici koleksiyonlar yolunu girin"
 
-#: app/scripts/controllers/menu.js:580
+#: app/scripts/controllers/menu.js:617
 #, fuzzy
 #| msgid "Enter the external collections path"
 msgid "Enter the external plugins path"
 msgstr "Garici koleksiyonlar yolunu girin"
 
-#: app/scripts/controllers/menu.js:534
+#: app/scripts/controllers/menu.js:571
 #, fuzzy
 #| msgid "Enter the output blocks"
 msgid "Enter the file to output logging info"
 msgstr "Çıkış bloklarını girin"
 
-#: app/scripts/services/blocks.js:137
-msgid "Enter the input blocks"
-msgstr "Giriş bloklarını girin"
-
-#: app/scripts/services/blocks.js:67
-#, fuzzy
-#| msgid "Enter the input blocks"
-msgid "Enter the input label"
-msgstr "Giriş bloklarını girin"
-
-#: app/scripts/services/blocks.js:508
+#: app/scripts/services/blocks.js:492
 msgid "Enter the input ports"
 msgstr "Giriş bağlantı noktalarını girin"
 
-#: app/scripts/services/blocks.js:404
+#: app/scripts/services/blocks.js:385
 msgid "Enter the memory blocks"
 msgstr "Bellek bloklarını girin"
 
-#: app/scripts/services/blocks.js:209
-msgid "Enter the output blocks"
-msgstr "Çıkış bloklarını girin"
-
-#: app/scripts/services/blocks.js:270
-#, fuzzy
-#| msgid "Enter the output blocks"
-msgid "Enter the output label"
-msgstr "Çıkış bloklarını girin"
-
-#: app/scripts/services/blocks.js:513
+#: app/scripts/services/blocks.js:497
 msgid "Enter the output ports"
 msgstr "Çıkış bağlantı noklarını girin"
 
-#: app/scripts/services/blocks.js:518
+#: app/scripts/services/forms.js:1711
+#, fuzzy
+#| msgid "Enter the project name"
+msgid "Enter the paired labels name"
+msgstr "Enter the project name"
+
+#: app/scripts/services/blocks.js:502
 msgid "Enter the parameters"
 msgstr "Parametreleri girin"
 
-#: app/scripts/controllers/menu.js:625
+#: app/scripts/controllers/menu.js:662
 #, fuzzy
 #| msgid "Enter the project's image path"
 msgid "Enter the pip version > 3.8 path"
 msgstr "Enter the project's image path"
 
-#: app/scripts/controllers/menu.js:618
+#: app/scripts/controllers/menu.js:655
 #, fuzzy
 #| msgid "Enter the external collections path"
 msgid "Enter the python version > 3.8 path"
 msgstr "Garici koleksiyonlar yolunu girin"
 
-#: app/scripts/controllers/menu.js:770
+#: app/scripts/controllers/menu.js:807
 msgid "Enter the remote hostname user@host"
 msgstr "Uzaktan ev ana bilgisayar adını girin @anabilgisayar"
 
-#: app/scripts/services/utils.js:970
+#: app/scripts/services/utils.js:857
 msgid "Error: {{error}}"
 msgstr "Hata: {{error}}"
 
@@ -447,7 +479,7 @@ msgstr "Hata: {{error}}"
 msgid "Errors detected in the design"
 msgstr "Tasarımda tespit edilen hatalar"
 
-#: app/views/menu.html:73
+#: app/views/menu.html:108
 msgid "Examples"
 msgstr "Örnekler"
 
@@ -455,29 +487,29 @@ msgstr "Örnekler"
 msgid "Execute remote {{label}} ..."
 msgstr "Uzaktan çalıştırma {{label}} ..."
 
-#: app/views/menu.html:103
+#: app/views/menu.html:152
 msgid "Export"
 msgstr "İhraç"
 
-#: app/scripts/controllers/menu.js:284
+#: app/scripts/controllers/menu.js:316
 msgid "Export submodule"
 msgstr "İhraç alt modül"
 
-#: app/views/menu.html:243
+#: app/views/menu.html:353
 msgid "External collections"
 msgstr "Harici koleksiyon"
 
-#: app/scripts/controllers/menu.js:698
+#: app/scripts/controllers/menu.js:735
 msgid "External collections updated"
 msgstr "Harici koleksiyonu güncelle"
 
-#: app/views/menu.html:248
+#: app/views/menu.html:358
 #, fuzzy
 #| msgid "External collections"
 msgid "External plugins"
 msgstr "Harici koleksiyon"
 
-#: app/scripts/controllers/menu.js:596
+#: app/scripts/controllers/menu.js:633
 #, fuzzy
 #| msgid "External collections updated"
 msgid "External plugins updated"
@@ -487,16 +519,15 @@ msgstr "Harici koleksiyonu güncelle"
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O bağlantı noktaları tanımlanmadı"
 
-#: app/scripts/services/blocks.js:1270 app/scripts/services/blocks.js:1366
-#: app/scripts/services/blocks.js:142 app/scripts/services/blocks.js:214
+#: app/scripts/services/forms.js:1016
 msgid "FPGA pin"
 msgstr "FPGA raptiye"
 
-#: app/views/menu.html:335
+#: app/views/menu.html:445
 msgid "FPGA resources"
 msgstr "FPGA kaynaklar"
 
-#: app/views/menu.html:48
+#: app/views/menu.html:71
 msgid "File"
 msgstr "Dosya"
 
@@ -518,13 +549,17 @@ msgstr "Dosya {{file}} ithal"
 msgid "Find"
 msgstr ""
 
-#: app/views/menu.html:189
+#: app/views/menu.html:285
 msgid "Fit content"
 msgstr "Uygun içerik"
 
 #: app/views/languages.html:26
 msgid "French"
 msgstr "Fransızca"
+
+#: app/scripts/services/forms.js:135 app/scripts/services/forms.js:65
+msgid "Fuchsia"
+msgstr "Eflatun"
 
 #: app/views/languages.html:80
 msgid "Galician"
@@ -534,19 +569,33 @@ msgstr "Galiçyaca"
 msgid "German"
 msgstr "Almanca"
 
+#: app/scripts/services/forms.js:143 app/scripts/services/forms.js:89
+msgid "Gold"
+msgstr "Altın"
+
 #: app/views/languages.html:56
 msgid "Greek"
 msgstr "Yunanca"
 
-#: app/views/menu.html:554
+#: app/scripts/services/forms.js:98
+#, fuzzy
+#| msgid "GreenYellow"
+msgid "Green Yellow"
+msgstr "YeşilSarı"
+
+#: app/scripts/services/forms.js:146
+msgid "GreenYellow"
+msgstr "YeşilSarı"
+
+#: app/views/menu.html:664
 msgid "Help"
 msgstr "Yardım"
 
-#: app/scripts/services/blocks.js:1496 app/scripts/services/blocks.js:414
+#: app/scripts/services/blocks.js:1757 app/scripts/services/blocks.js:395
 msgid "Hexadecimal"
 msgstr "Onaltılı"
 
-#: app/scripts/services/graph.js:1507
+#: app/scripts/services/graph.js:1625
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
@@ -554,15 +603,21 @@ msgstr ""
 "Boş GİRİŞ/ÇIKIŞ raptiyeleriniz varsa, bunun nedeni bu kartta eşdeğer "
 "olmamasıdır"
 
-#: app/scripts/services/utils.js:779
+#: app/scripts/services/utils.js:666
 msgid "Image"
 msgstr "Görsel"
 
-#: app/scripts/controllers/menu.js:1820
+#: app/scripts/controllers/menu.js:1914
 msgid "Image {{name}} saved"
 msgstr "Görseli {{name}} kaydet"
 
-#: app/views/design.html:101
+#: app/scripts/services/forms.js:136 app/scripts/services/forms.js:68
+#, fuzzy
+#| msgid "IndianRed"
+msgid "Indian Red"
+msgstr "HintKırmızısı"
+
+#: app/views/design.html:106
 msgid "Information"
 msgstr "Bİlgi"
 
@@ -574,13 +629,23 @@ msgstr "Giriş"
 msgid "Input label"
 msgstr "Giriş etiketi"
 
-#: app/views/menu.html:451
+#: app/scripts/services/forms.js:1589
+#, fuzzy
+#| msgid "Input label"
+msgid "Input labels"
+msgstr "Giriş etiketi"
+
+#: app/scripts/services/forms.js:1153
+msgid "Input port name:"
+msgstr ""
+
+#: app/views/menu.html:561
 #, fuzzy
 #| msgid "Install"
 msgid "Install (Stable)"
 msgstr "Yükle"
 
-#: app/views/menu.html:468
+#: app/views/menu.html:578
 msgid "Install Development version"
 msgstr ""
 
@@ -615,7 +680,7 @@ msgstr ""
 "Araç zinciri güncellenecektir. Bu işlem İnternet bağlantısı gerektirir. "
 "Devam etmek istiyor musunuz?"
 
-#: app/scripts/services/tools.js:1489
+#: app/scripts/services/tools.js:1497
 msgid "Installation completed"
 msgstr "Kurulumu tamamlanmış"
 
@@ -629,34 +694,34 @@ msgstr "Yükle"
 msgid "Internet connection required"
 msgstr "İnternet bağlantısı gerekli"
 
-#: app/scripts/services/graph.js:183
+#: app/scripts/services/graph.js:299
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Geçersiz <i>Yukarı çekme</i> Bağlantı:<br>blok zaten bağlı"
 
-#: app/scripts/services/graph.js:197
+#: app/scripts/services/graph.js:313
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Geçersiz <i>Yukarı çekin</i> Bağlantı:<br>Sadece <i>Giriş</i> bloklar izin "
 "verildi"
 
-#: app/scripts/services/graph.js:189
+#: app/scripts/services/graph.js:305
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Geçersiz blok bağlantısı:<br><i>Yukarı çekin</i> zaten bağlı"
 
-#: app/scripts/services/tools.js:1663
+#: app/scripts/services/tools.js:1674
 msgid "Invalid collection {{name}}"
 msgstr "Geçersiz koleksiyon {{name}}"
 
-#: app/scripts/services/graph.js:147 app/scripts/services/graph.js:154
-#: app/scripts/services/graph.js:161
+#: app/scripts/services/graph.js:263 app/scripts/services/graph.js:270
+#: app/scripts/services/graph.js:277
 msgid "Invalid connection"
 msgstr "Geçersiz koleksiyon"
 
-#: app/scripts/services/graph.js:216
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Geçersiz koleksiyon: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:177
+#: app/scripts/services/graph.js:293
 msgid "Invalid multiple input connections"
 msgstr "Geçersiz çoklu giriş bağlantıları"
 
@@ -668,21 +733,27 @@ msgstr "Geçersiz proje biçimi"
 msgid "Italian"
 msgstr "İtalyanca"
 
+#: app/views/languages.html:110
+#, fuzzy
+#| msgid "Spanish"
+msgid "Japanish"
+msgstr "İspanyolca"
+
 #: app/views/languages.html:98
 msgid "Korean"
 msgstr ""
 
-#: app/views/menu.html:194
+#: app/views/menu.html:295
 msgid "Label Finder"
 msgstr ""
 
-#: app/scripts/services/blocks.js:1075
+#: app/scripts/services/blocks.js:1293
 #, fuzzy
 #| msgid "Block updated"
 msgid "Label updated"
 msgstr "Blok güncellendi"
 
-#: app/views/menu.html:214
+#: app/views/menu.html:324
 msgid "Language"
 msgstr "Lisan"
 
@@ -690,42 +761,82 @@ msgstr "Lisan"
 msgid "Light"
 msgstr ""
 
+#: app/scripts/services/forms.js:128
+#, fuzzy
+#| msgid "LightSeaGreen"
+msgid "Light Gray"
+msgstr "AçıkDenizYeşili"
+
+#: app/scripts/services/forms.js:110
+#, fuzzy
+#| msgid "LightSeaGreen"
+msgid "Light Sea Green"
+msgstr "AçıkDenizYeşili"
+
+#: app/scripts/services/forms.js:156
+#, fuzzy
+#| msgid "LightSeaGreen"
+msgid "LightGray"
+msgstr "AçıkDenizYeşili"
+
+#: app/scripts/services/forms.js:150
+msgid "LightSeaGreen"
+msgstr "AçıkDenizYeşili"
+
 #: app/scripts/services/project.js:91
 msgid "Load"
 msgstr "Yük"
 
-#: app/scripts/services/blocks.js:1447 app/scripts/services/blocks.js:1501
-#: app/scripts/services/blocks.js:351 app/scripts/services/blocks.js:419
+#: app/scripts/services/blocks.js:1708 app/scripts/services/blocks.js:1762
+#: app/scripts/services/blocks.js:332 app/scripts/services/blocks.js:400
 msgid "Local parameter"
 msgstr "Yerel parametre"
 
-#: app/views/menu.html:267
+#: app/views/menu.html:377
 #, fuzzy
 #| msgid "Drivers enabled"
 msgid "Logging enabled"
 msgstr "Sürücüler aktif"
 
-#: app/views/menu.html:274
+#: app/views/menu.html:384
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:558
+#: app/scripts/controllers/menu.js:595
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:1052
+#: app/scripts/services/utils.js:946
 msgid "Maximum bus size: 96 bits"
 msgstr "Azami veri yolu boyutu: 96 bit"
 
-#: app/views/design.html:95
+#: app/scripts/services/forms.js:77
+#, fuzzy
+#| msgid "MediumVioletRed"
+msgid "Medium Violet Red"
+msgstr "OrtaMorAl"
+
+#: app/scripts/services/forms.js:139
+msgid "MediumVioletRed"
+msgstr "OrtaMorAl"
+
+#: app/views/design.html:100
 msgid "Memory"
 msgstr "Bellek"
 
-#: app/scripts/services/utils.js:763
+#: app/scripts/services/utils.js:650
 msgid "Name"
 msgstr "Ad"
 
-#: app/views/menu.html:55
+#: app/scripts/services/forms.js:1651
+msgid "Name of the paired labels"
+msgstr ""
+
+#: app/scripts/services/forms.js:125 app/scripts/services/forms.js:155
+msgid "Navy"
+msgstr "Lacivert"
+
+#: app/views/menu.html:82
 msgid "New"
 msgstr "Yeni"
 
@@ -739,22 +850,42 @@ msgstr ""
 msgid "New Name:"
 msgstr "Ad"
 
-#: app/scripts/controllers/menu.js:1220
+#: app/scripts/controllers/menu.js:1259
 msgid "No collections stored"
 msgstr "Koleksiyonların kaydı yok"
 
-#: app/scripts/controllers/main.js:13 app/scripts/controllers/menu.js:450
+#: app/scripts/controllers/main.js:13 app/scripts/controllers/menu.js:486
 #: app/scripts/services/project.js:145
 msgid "OK"
 msgstr "TAMAM"
 
-#: app/views/menu.html:60
+#: app/scripts/services/forms.js:107
+#, fuzzy
+#| msgid "OliveDrab"
+msgid "Olive Drab"
+msgstr "HakiYeşil"
+
+#: app/scripts/services/forms.js:149
+msgid "OliveDrab"
+msgstr "HakiYeşil"
+
+#: app/views/menu.html:90
 msgid "Open"
 msgstr "Aç"
 
-#: app/scripts/services/utils.js:820
+#: app/scripts/services/utils.js:707
 msgid "Open SVG"
 msgstr "SVG Aç"
+
+#: app/scripts/services/forms.js:83
+#, fuzzy
+#| msgid "OrangeRed"
+msgid "Orange Red"
+msgstr "PortakalKırmızısı"
+
+#: app/scripts/services/forms.js:141
+msgid "OrangeRed"
+msgstr "PortakalKırmızısı"
 
 #: app/scripts/services/project.js:543
 msgid "Original file {{file}} does not exist"
@@ -768,28 +899,44 @@ msgstr "Çıktı"
 msgid "Output label"
 msgstr "Çıktı etiketi"
 
-#: app/views/menu.html:171
+#: app/scripts/services/forms.js:1508
+#, fuzzy
+#| msgid "Output label"
+msgid "Output labels"
+msgstr "Çıktı etiketi"
+
+#: app/scripts/services/forms.js:1274
+#, fuzzy
+#| msgid "Output label"
+msgid "Output port name"
+msgstr "Çıktı etiketi"
+
+#: app/views/design.html:94
+msgid "Paired labels"
+msgstr ""
+
+#: app/views/menu.html:253
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: app/scripts/controllers/menu.js:563 app/scripts/controllers/menu.js:601
-#: app/scripts/controllers/menu.js:653 app/scripts/controllers/menu.js:703
+#: app/scripts/controllers/menu.js:600 app/scripts/controllers/menu.js:638
+#: app/scripts/controllers/menu.js:690 app/scripts/controllers/menu.js:740
 msgid "Path {{path}} does not exist"
 msgstr "Yol {{path}} yok"
 
-#: app/scripts/services/utils.js:1199
+#: app/scripts/services/utils.js:1101
 msgid "Please run: {{cmd}}"
 msgstr "Lütfen çalıştır: {{cmd}}"
 
-#: app/views/menu.html:208
+#: app/views/menu.html:318
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: app/views/menu.html:282
+#: app/views/menu.html:392
 msgid "Project information"
 msgstr "Proje bilgileri"
 
-#: app/scripts/controllers/menu.js:721 app/scripts/controllers/menu.js:747
+#: app/scripts/controllers/menu.js:758 app/scripts/controllers/menu.js:784
 msgid "Project information updated"
 msgstr "Proje bilgileri güncellendi"
 
@@ -801,15 +948,15 @@ msgstr "Proje {{name}} yüklü"
 msgid "Project {{name}} saved"
 msgstr "Projeyi {{name}} kaydet"
 
-#: app/scripts/controllers/menu.js:648
+#: app/scripts/controllers/menu.js:685
 msgid "Python Environment updated"
 msgstr ""
 
-#: app/views/menu.html:253
+#: app/views/menu.html:363
 msgid "Python environment"
 msgstr ""
 
-#: app/views/menu.html:135
+#: app/views/menu.html:187
 msgid "Quit"
 msgstr "Çıkış"
 
@@ -817,11 +964,15 @@ msgstr "Çıkış"
 msgid "Read only"
 msgstr "Salt okunur"
 
-#: app/views/menu.html:153
+#: app/scripts/services/forms.js:137 app/scripts/services/forms.js:71
+msgid "Red"
+msgstr "Kırmızı"
+
+#: app/views/menu.html:223
 msgid "Redo"
 msgstr "Yeniden"
 
-#: app/views/menu.html:524
+#: app/views/menu.html:634
 msgid "Reload"
 msgstr "Yeniden yükle"
 
@@ -829,15 +980,15 @@ msgstr "Yeniden yükle"
 msgid "Remote host {{name}} not connected"
 msgstr "Uzak ana makine {{name}} bağlı değil"
 
-#: app/views/menu.html:259
+#: app/views/menu.html:369
 msgid "Remote hostname"
 msgstr "Uzak anamakineadı"
 
-#: app/views/menu.html:461 app/views/menu.html:530
+#: app/views/menu.html:571 app/views/menu.html:640
 msgid "Remove"
 msgstr "Kaldır"
 
-#: app/views/menu.html:544
+#: app/views/menu.html:654
 msgid "Remove all"
 msgstr "Tümünü kaldır"
 
@@ -849,47 +1000,67 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:822
+#: app/scripts/services/utils.js:709
 msgid "Reset SVG"
 msgstr "SVG Sıfırla"
+
+#: app/scripts/services/forms.js:122
+#, fuzzy
+#| msgid "RoyalBlue"
+msgid "Royal Blue"
+msgstr "KraliyetMavisi"
+
+#: app/scripts/services/forms.js:154
+msgid "RoyalBlue"
+msgstr "KraliyetMavisi"
 
 #: app/views/languages.html:74
 msgid "Russian"
 msgstr "Rusça"
 
-#: app/views/menu.html:89
+#: app/views/menu.html:130
 msgid "Save"
 msgstr "Kaydet"
 
-#: app/scripts/services/utils.js:821
+#: app/scripts/services/utils.js:708
 msgid "Save SVG"
 msgstr "SVG Kaydet"
 
-#: app/views/menu.html:94
+#: app/views/menu.html:140
 msgid "Save as"
 msgstr "Farklı kaydet"
 
-#: app/scripts/controllers/menu.js:241
+#: app/scripts/controllers/menu.js:271
 msgid "Save submodule"
 msgstr "Alt modülü kaydet"
 
-#: app/views/menu.html:345
+#: app/views/menu.html:455
 msgid "Select"
 msgstr "Seçilen"
 
-#: app/views/menu.html:181
+#: app/views/menu.html:272
 msgid "Select all"
 msgstr "Tümünü seç"
 
-#: app/scripts/services/utils.js:931
+#: app/scripts/services/utils.js:818
 msgid "Select your board"
 msgstr "Sizin seçili panonuz"
 
-#: app/scripts/services/blocks.js:1275 app/scripts/services/blocks.js:147
+#: app/scripts/services/forms.js:1165
 msgid "Show clock"
 msgstr "Saati göster"
 
-#: app/views/menu.html:582
+#: app/scripts/services/forms.js:95
+#, fuzzy
+#| msgid "SlateBlue"
+msgid "Slate Blue"
+msgstr "KoyuArduvazMavisi"
+
+#: app/scripts/services/forms.js:145
+msgid "SlateBlue"
+msgstr "KoyuArduvazMavisi"
+
+#: app/views/menu.html:692
 msgid "Source code"
 msgstr "Kaynak kodu"
 
@@ -897,23 +1068,43 @@ msgstr "Kaynak kodu"
 msgid "Spanish"
 msgstr "İspanyolca"
 
-#: app/scripts/controllers/menu.js:1120
+#: app/scripts/services/forms.js:101
+#, fuzzy
+#| msgid "SpringGreen"
+msgid "Spring Green"
+msgstr "BaharYeşili"
+
+#: app/scripts/services/forms.js:147
+msgid "SpringGreen"
+msgstr "BaharYeşili"
+
+#: app/scripts/controllers/menu.js:1159
 msgid "Start build"
 msgstr "Oluşturmaya başla"
 
-#: app/scripts/controllers/menu.js:1148
+#: app/scripts/controllers/menu.js:1187
 msgid "Start upload"
 msgstr "Yüklemeyi başlat"
 
-#: app/scripts/controllers/menu.js:1096
+#: app/scripts/controllers/menu.js:1135
 msgid "Start verification"
 msgstr "Doğrulamayı başlat"
+
+#: app/scripts/services/forms.js:116
+#, fuzzy
+#| msgid "SteelBlue"
+msgid "Steel Blue"
+msgstr "ÇelikMavisi"
+
+#: app/scripts/services/forms.js:152
+msgid "SteelBlue"
+msgstr "ÇelikMavisi"
 
 #: app/scripts/services/tools.js:446
 msgid "Synchronize remote files ..."
 msgstr "Uzak dosyaları eşleştirin ..."
 
-#: app/views/menu.html:326
+#: app/views/menu.html:436
 msgid "System Info"
 msgstr ""
 
@@ -921,15 +1112,15 @@ msgstr ""
 msgid "Taiwan"
 msgstr ""
 
-#: app/views/menu.html:112
+#: app/views/menu.html:162
 msgid "Testbench"
 msgstr "Testbankası"
 
-#: app/scripts/services/tools.js:1612
+#: app/scripts/services/tools.js:1623
 msgid "The collection {{name}} already exists."
 msgstr "Koleksiyon {{name}} zaten var."
 
-#: app/scripts/controllers/menu.js:1068
+#: app/scripts/controllers/menu.js:1107
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
 "{{name}} board?"
@@ -941,11 +1132,11 @@ msgstr ""
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "Araç zinciri kaldırılacak. Devam etmek istiyor musunuz?"
 
-#: app/scripts/services/tools.js:1832
+#: app/scripts/services/tools.js:1843
 msgid "There is a new nightly version available"
 msgstr "Mevcut yeni bir gece sürümü var"
 
-#: app/scripts/services/tools.js:1824
+#: app/scripts/services/tools.js:1835
 msgid "There is a new stable version available"
 msgstr "Mevcut yeni bir kararlı sürümü var"
 
@@ -961,7 +1152,7 @@ msgstr ""
 msgid "This project is designed for the {{name}} board."
 msgstr "Bu proje {{name}} panosu için tasarlanmıştır."
 
-#: app/scripts/services/graph.js:419
+#: app/scripts/services/graph.js:535
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -973,27 +1164,32 @@ msgstr ""
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "Tasarımda gezinmek için \"düzenleme modu\"nu kapatmanız gerekir."
 
-#: app/scripts/controllers/menu.js:242
+#: app/scripts/controllers/menu.js:272
+#, fuzzy
+#| msgid ""
+#| "To save your design you need to lock the keylock and go to top level "
+#| "design.<br/><br/>If you want to export this submodule to a file, execute "
+#| "\"Save as\" command to do it."
 msgid ""
-"To save your design you need to lock the keylock and go to top level design."
-"<br/><br/>If you want to export this submodule to a file, execute \"Save as"
-"\" command to do it."
+"To save your design you need to lock the keylock and               go to top "
+"level design.<br/><br/>If you want to export               this submodule to "
+"a file, execute \"Save as\" command to do it."
 msgstr ""
 "Tasarımınızı kaydetmek için tuş kilidini kilitlemeniz ve üst düzey tasarıma "
 "gitmeniz gerekir.<br/><br/>Bu alt modülü bir dosyaya vermek istiyorsanız, "
 "bunu yapmak için \"Farklı Kaydet\" komutunu çalıştırın."
 
-#: app/views/menu.html:199
+#: app/views/menu.html:305
 #, fuzzy
 #| msgid "Tools"
 msgid "Toolbox"
 msgstr "Araçlar"
 
-#: app/views/menu.html:443
+#: app/views/menu.html:553
 msgid "Toolchain"
 msgstr "Uyumluuygulama"
 
-#: app/scripts/services/tools.js:1497
+#: app/scripts/services/tools.js:1507
 msgid "Toolchain installed"
 msgstr "Uyumluuygulama yüklü"
 
@@ -1010,7 +1206,7 @@ msgstr "Uyumluuygulamayı kaldır"
 msgid "Toolchain version does not match"
 msgstr "Uyumluuygulama sürümü eşleşmiyor"
 
-#: app/views/menu.html:420
+#: app/views/menu.html:530
 msgid "Tools"
 msgstr "Araçlar"
 
@@ -1018,11 +1214,15 @@ msgstr "Araçlar"
 msgid "Turkish"
 msgstr ""
 
-#: app/views/menu.html:224
+#: app/scripts/services/forms.js:113 app/scripts/services/forms.js:151
+msgid "Turquoise"
+msgstr "Turkuaz"
+
+#: app/views/menu.html:334
 msgid "UI theme"
 msgstr ""
 
-#: app/views/menu.html:148
+#: app/views/menu.html:213
 msgid "Undo"
 msgstr "Geri al"
 
@@ -1034,57 +1234,56 @@ msgstr "Bilinmeyen pano"
 msgid "Unsupported project format {{version}}"
 msgstr "Desteklenmeyen proje biçimi {{version}}"
 
-#: app/scripts/app.js:164
+#: app/scripts/app.js:183
 msgid "Untitled"
 msgstr "İsimsiz"
 
-#: app/views/menu.html:454
+#: app/views/menu.html:564
 #, fuzzy
 #| msgid "Update the block name"
 msgid "Update (Latest stable)"
 msgstr "Blok adını güncelle"
 
-#: app/scripts/services/blocks.js:1265 app/scripts/services/blocks.js:1361
-#: app/scripts/services/blocks.js:1442 app/scripts/services/blocks.js:1486
+#: app/scripts/services/blocks.js:1703 app/scripts/services/blocks.js:1747
 msgid "Update the block name"
 msgstr "Blok adını güncelle"
 
-#: app/scripts/services/blocks.js:1084 app/scripts/services/blocks.js:1179
+#: app/scripts/services/blocks.js:1473
 #, fuzzy
 #| msgid "Update the block name"
 msgid "Update the label name"
 msgstr "Blok adını güncelle"
 
-#: app/scripts/controllers/menu.js:1138 app/views/design.html:185
-#: app/views/menu.html:435
+#: app/scripts/controllers/menu.js:1177 app/views/design.html:190
+#: app/views/menu.html:545
 msgid "Upload"
 msgstr "Yükle"
 
-#: app/scripts/controllers/menu.js:1149
+#: app/scripts/controllers/menu.js:1188
 msgid "Upload done"
 msgstr "Yükleme tamamlandı"
 
-#: app/scripts/controllers/menu.js:1097
+#: app/scripts/controllers/menu.js:1136
 msgid "Verification done"
 msgstr "Doğrulama yapıldı"
 
-#: app/views/design.html:183 app/views/menu.html:425
+#: app/views/design.html:188 app/views/menu.html:535
 msgid "Verify"
 msgstr "Doğrulama"
 
-#: app/scripts/services/utils.js:764 app/views/menu.html:569
+#: app/scripts/services/utils.js:651 app/views/menu.html:679
 msgid "Version"
 msgstr "Sürüm"
 
-#: app/views/menu.html:564
+#: app/views/menu.html:674
 msgid "Version notes"
 msgstr "Sürüm notları"
 
-#: app/views/menu.html:289
+#: app/views/menu.html:399
 msgid "View"
 msgstr "Görüntüle"
 
-#: app/views/menu.html:559
+#: app/views/menu.html:669
 msgid "View license"
 msgstr "Lisansı görüntüle"
 
@@ -1092,30 +1291,28 @@ msgstr "Lisansı görüntüle"
 msgid "Warnings detected in the design"
 msgstr "Tasarımda tespit edilen uyarılar"
 
-#: app/scripts/services/blocks.js:675
+#: app/scripts/services/blocks.js:856
 msgid "Wrong block format: {{type}}"
 msgstr "Yanlış blok biçimi: {{type}}"
 
-#: app/scripts/services/blocks.js:1168 app/scripts/services/blocks.js:1254
-#: app/scripts/services/blocks.js:1350 app/scripts/services/blocks.js:1432
-#: app/scripts/services/blocks.js:1475 app/scripts/services/blocks.js:1532
-#: app/scripts/services/blocks.js:168 app/scripts/services/blocks.js:234
-#: app/scripts/services/blocks.js:297 app/scripts/services/blocks.js:371
-#: app/scripts/services/blocks.js:440 app/scripts/services/blocks.js:94
+#: app/scripts/services/blocks.js:1552 app/scripts/services/blocks.js:1736
+#: app/scripts/services/blocks.js:1793 app/scripts/services/blocks.js:352
+#: app/scripts/services/blocks.js:421 app/scripts/services/forms.js:1070
+#: app/scripts/services/forms.js:1416
 msgid "Wrong block name {{name}}"
 msgstr "Yanlış blok adı {{name}}"
 
-#: app/scripts/controllers/menu.js:1680
+#: app/scripts/controllers/menu.js:1730
 #, fuzzy
 #| msgid "Wrong port name {{name}}"
 msgid "Wrong new name!"
 msgstr "Yanlış bağlantı noktası adı {{name}}"
 
-#: app/scripts/services/blocks.js:586
+#: app/scripts/services/blocks.js:570
 msgid "Wrong parameter name {{name}}"
 msgstr "Yanlış parametre adı {{name}}"
 
-#: app/scripts/services/blocks.js:543 app/scripts/services/blocks.js:561
+#: app/scripts/services/blocks.js:527 app/scripts/services/blocks.js:545
 msgid "Wrong port name {{name}}"
 msgstr "Yanlış bağlantı noktası adı {{name}}"
 
@@ -1127,15 +1324,24 @@ msgstr "Yanlış proje biçimi: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Yanlış uzak anamakineadı {{name}}"
 
-#: app/scripts/controllers/menu.js:1584
+#: app/scripts/controllers/menu.js:1634
 msgid "Wrong search name!"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:285
+#: app/scripts/services/forms.js:144 app/scripts/services/forms.js:92
+msgid "Yellow"
+msgstr "Sarı"
+
+#: app/scripts/controllers/menu.js:317
+#, fuzzy
+#| msgid ""
+#| "You are editing a submodule, if you save it, you save only the submodule "
+#| "(in this situation \"save as\" works like \"export module\"), Do you like "
+#| "to continue?"
 msgid ""
-"You are editing a submodule, if you save it, you save only the submodule (in "
-"this situation \"save as\" works like \"export module\"), Do you like to "
-"continue?"
+"You are editing a submodule, if you save it, you save only               the "
+"submodule (in this situation \"save as\" works like               \"export "
+"module\"), Do you like to continue?"
 msgstr ""
 "Bir alt modülü düzenliyorsunuz, eğer kaydederseniz, sadece alt modülü "
 "kaydedersiniz (bu durumda \"farklı kaydet\", \"dışa aktarma modülü\" gibi "
@@ -1146,7 +1352,7 @@ msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr ""
 "Olduğu gibi yükleyebilir veya panoya için {{name}} dönüştürebilirsiniz."
 
-#: app/scripts/controllers/menu.js:1112
+#: app/scripts/controllers/menu.js:1151
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
@@ -1154,7 +1360,7 @@ msgstr ""
 "Sadece üst düzey bir tasarım inşa edebilirsiniz. Alt modüllerin içinde "
 "sadece <strong>doğrulayabilirsiniz</strong>"
 
-#: app/scripts/controllers/menu.js:1139
+#: app/scripts/controllers/menu.js:1178
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1162,7 +1368,7 @@ msgstr ""
 "Tasarımınızı yalnızca üst düzey tasarıma yükleyebilirsiniz. Alt modüllerin "
 "içinde sadece <strong>doğrulayabilirsiniz</strong>"
 
-#: app/scripts/controllers/menu.js:439
+#: app/scripts/controllers/menu.js:475
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Kaydemezseniz değişikler kaybolacak"
 
@@ -1176,25 +1382,41 @@ msgid ""
 "change, make it inside a cloned block (instead of copied one)"
 msgstr ""
 
-#: app/scripts/services/drivers.js:404 app/scripts/services/utils.js:1179
+#: app/scripts/services/drivers.js:404 app/scripts/services/utils.js:1081
 msgid "{{app}} is required."
 msgstr "{{app}} gerekli."
 
-#: app/scripts/controllers/menu.js:883
+#: app/scripts/controllers/menu.js:922
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} veri sayfası tanımlanmadı"
 
-#: app/scripts/controllers/menu.js:869
+#: app/scripts/controllers/menu.js:908
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} kablo işlev şeması tanımlanmadı"
 
-#: app/scripts/controllers/menu.js:909
+#: app/scripts/controllers/menu.js:948
 msgid "{{board}} rules not defined"
 msgstr "{{board}} kurallar tanımlanmadı"
 
-#: app/scripts/controllers/menu.js:371 app/scripts/controllers/menu.js:404
+#: app/scripts/controllers/menu.js:406 app/scripts/controllers/menu.js:439
 msgid "{{name}} exported"
 msgstr "{{name}} ihraç"
+
+#~ msgid "Enter the input blocks"
+#~ msgstr "Giriş bloklarını girin"
+
+#, fuzzy
+#~| msgid "Enter the input blocks"
+#~ msgid "Enter the input label"
+#~ msgstr "Giriş bloklarını girin"
+
+#~ msgid "Enter the output blocks"
+#~ msgstr "Çıkış bloklarını girin"
+
+#, fuzzy
+#~| msgid "Enter the output blocks"
+#~ msgid "Enter the output label"
+#~ msgstr "Çıkış bloklarını girin"
 
 #~ msgid ""
 #~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
@@ -1261,21 +1483,6 @@ msgstr "{{name}} ihraç"
 #~ msgid "Copy & Paste OR Copy & Clone blocks"
 #~ msgstr "Kopyala & OR Kopyala Yapıştır & Blokları klonla"
 
-#~ msgid "Coral"
-#~ msgstr "Mercan"
-
-#~ msgid "DarkGreen"
-#~ msgstr "KoyuYeşil"
-
-#~ msgid "DarkOrange"
-#~ msgstr "KoyuTuruncu"
-
-#~ msgid "DeepPink"
-#~ msgstr "DerinPembe"
-
-#~ msgid "DeepSkyBlue"
-#~ msgstr "DerinGökMavisi"
-
 #~ msgid ""
 #~ "Default toolchain not found. Toolchain will be downloaded. This operation "
 #~ "requires Internet connection. Do you want to continue?"
@@ -1295,17 +1502,8 @@ msgstr "{{name}} ihraç"
 #~ msgid "Extract virtualenv files..."
 #~ msgstr "Sanalort dosyalarını ayıklayın..."
 
-#~ msgid "Fuchsia"
-#~ msgstr "Eflatun"
-
 #~ msgid "Generic blocks"
 #~ msgstr "Kapsamlı blok"
-
-#~ msgid "Gold"
-#~ msgstr "Altın"
-
-#~ msgid "GreenYellow"
-#~ msgstr "YeşilSarı"
 
 #~ msgid "Icestudio Inception"
 #~ msgstr "Icestudio Başlangıç"
@@ -1337,9 +1535,6 @@ msgstr "{{name}} ihraç"
 #~ "türünden bağımsız olarak yaparsınız ve değişiklikler yalnızca bu yeni "
 #~ "blok türünü etkiler"
 
-#~ msgid "IndianRed"
-#~ msgstr "HintKırmızısı"
-
 #~ msgid "Install default apio..."
 #~ msgstr "Varsayılan apio yükle..."
 
@@ -1352,38 +1547,8 @@ msgstr "{{name}} ihraç"
 #~ msgid "Labels"
 #~ msgstr "Etiketler"
 
-#~ msgid "LightSeaGreen"
-#~ msgstr "AçıkDenizYeşili"
-
-#~ msgid "MediumVioletRed"
-#~ msgstr "OrtaMorAl"
-
-#~ msgid "Navy"
-#~ msgstr "Lacivert"
-
-#~ msgid "OliveDrab"
-#~ msgstr "HakiYeşil"
-
-#~ msgid "OrangeRed"
-#~ msgstr "PortakalKırmızısı"
-
-#~ msgid "Red"
-#~ msgstr "Kırmızı"
-
 #~ msgid "Reset default"
 #~ msgstr "Varsayılanı sıfırla"
-
-#~ msgid "RoyalBlue"
-#~ msgstr "KraliyetMavisi"
-
-#~ msgid "SlateBlue"
-#~ msgstr "KoyuArduvazMavisi"
-
-#~ msgid "SpringGreen"
-#~ msgstr "BaharYeşili"
-
-#~ msgid "SteelBlue"
-#~ msgstr "ÇelikMavisi"
 
 #~ msgid "Submodule edition"
 #~ msgstr "Alt modül sürüm"
@@ -1431,18 +1596,12 @@ msgstr "{{name}} ihraç"
 #~ "Bunu yapmak için, sadece blok tanımlayıcısını jenerik ile öneklemek "
 #~ "gerekir-"
 
-#~ msgid "Turquoise"
-#~ msgstr "Turkuaz"
-
 #~ msgid "Update"
 #~ msgstr "Güncelleştir"
 
 #~ msgid "Wellcome to Inception, Icestudio version, focused on submodules."
 #~ msgstr ""
 #~ "Alt modüllere odaklanan , Icestudio başlangıç sürümüne hoş geldiniz."
-
-#~ msgid "Yellow"
-#~ msgstr "Sarı"
 
 #~ msgid ""
 #~ "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA "
@@ -1656,9 +1815,6 @@ msgstr "{{name}} ihraç"
 
 #~ msgid "Do you want to remove the selected block?"
 #~ msgstr "Do you want to remove the selected block?"
-
-#~ msgid "Enter the project name"
-#~ msgstr "Enter the project name"
 
 #~ msgid "Old project format"
 #~ msgstr "Old project format"
