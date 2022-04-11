@@ -263,126 +263,265 @@
     </div>
   </div>
 
-  <!-- Basic Toolbox -->
+  <!------------------------------------------------------------------------>
+  <!-- Basic Toolbox Pop up                                               -->
+  <!------------------------------------------------------------------------>
   <div id="iceToolbox">
     <ul  class="dropdown-menu">
     <div class="title-bar">Basic Toolbox</div>
     <div class="closeToolbox-button"></div>
       <li>
-        <a href=""  class="iceToolbox--item js-shortcut--action" data-item="input">
-          <div class="marker marker-blue"></div>{{ 'Input' | translate }}
-        </a>
-        <a href=""    class="iceToolbox--item js-shortcut--action" data-item="output">
-          <div class="marker marker-blue"></div>{{ 'Output' | translate }}
-        </a>
-        <a href=""    class="iceToolbox--item js-shortcut--action" data-item="labelInput">
-          <div class="marker marker-fuchsia"></div>{{ 'Input label' | translate }}
-        </a>
-        <a href=""   class="iceToolbox--item js-shortcut--action" data-item="labelOutput">
-          <div class="marker marker-fuchsia"></div>{{ 'Output label' | translate }}
-        </a>
         <a href="" class="iceToolbox--item js-shortcut--action" 
-                  data-item="labelPaired">
-          <div class="marker marker-fuchsia"></div>
-          {{ 'Paired labels' | translate }}
+           data-item="input">
+           <div class="marker marker-blue"></div>
+           {{ 'Input' | translate }}
         </a>
-        <a href=""   class="iceToolbox--item js-shortcut--action" data-item="constant">
-          <div class="marker marker-orange"></div>{{ 'Constant' | translate }}
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="output">
+           <div class="marker marker-blue"></div>
+           {{ 'Output' | translate }}
         </a>
-        <a href=""   class="iceToolbox--item js-shortcut--action" data-item="memory">
-          <div class="marker marker-orange"></div>{{ 'Memory' | translate }}
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="labelInput">
+           <div class="marker marker-fuchsia"></div>
+           {{ 'Input label' | translate }}
         </a>
-        <a href=""   class="iceToolbox--item js-shortcut--action" data-item="code">
-          <div class="marker marker-blue"></div>{{ 'Code' | translate }}
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="labelOutput">
+           <div class="marker marker-fuchsia"></div>
+           {{ 'Output label' | translate }}
         </a>
-        <a href=""  class="iceToolbox--item js-shortcut--action" data-item="information">
-          <div class="marker marker-gray"></div>{{ 'Information' | translate }}
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="labelPaired">
+           <div class="marker marker-fuchsia"></div>
+           {{ 'Paired labels' | translate }}
+        </a>
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="constant">
+           <div class="marker marker-orange"></div>
+           {{ 'Constant' | translate }}
+        </a>
+
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="memory">
+           <div class="marker marker-orange"></div>
+           {{ 'Memory' | translate }}
+        </a
+        >
+        <a href="" class="iceToolbox--item js-shortcut--action" 
+           data-item="code">
+           <div class="marker marker-blue"></div>
+           {{ 'Code' | translate }}
+        </a>
+
+        <a href="" class="iceToolbox--item js-shortcut--action"
+           data-item="information">
+           <div class="marker marker-gray"></div>
+           {{ 'Information' | translate }}
         </a>
       </li>
     </ul>
   </div>
+
+  <!-- PAPER: Place where the circuits are drawn -->
   <div class="paper"></div>
+
+  <!------------------------------------------------------------------------>
+  <!-- Bottom Toolbar                                                     -->
+  <!------------------------------------------------------------------------>
   <div class="footer ice-bar">
+
     <div class="breadcrumbs-container">
+
+      <!-- Show the design name and the path to the current sub-block -->
       <ol class="breadcrumb">
-        <li ng-repeat="item in graph.breadcrumbs" ng-class="{active: $last}" ng-switch="$last">
-          <span ng-switch-when="true">{{ item.name }}</span>
-          <a href ng-click="breadcrumbsNavitate(item)" ng-switch-default>{{ item.name }}</a>
+        <li ng-repeat="item in graph.breadcrumbs" 
+            ng-class="{active: $last}" 
+            ng-switch="$last">
+            <span ng-switch-when="true">{{ item.name }}</span>
+            <a href ng-click="breadcrumbsNavitate(item)" 
+                    ng-switch-default>{{ item.name }}
+            </a>
         </li>
       </ol>
     </div>
+
+
     <div class="board-container">
-      <div class="fpga-resources" ng-show="common.selectedBoard && topModule && profile.data.showFPGAResources">
-      
-       <div>  
-        <!-- 3 next fields with percentage precision higher than the nextpnr one -->
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field0.name+' : '+common.FPGAResources.nextpnr.Field0.used+' / '+common.FPGAResources.nextpnr.Field0.total+' ( '+(common.FPGAResources.nextpnr.Field0.used/common.FPGAResources.nextpnr.Field0.total*100).toFixed(1)+'%)') }}
-        </span>
+
+      <!-- FPGA resources Information -->
+      <div class="fpga-resources" 
+           ng-show="common.selectedBoard && 
+                    topModule && profile.data.showFPGAResources">
+        <div>
+          <!-- 3 next fields with percentage precision higher than 
+               the nextpnr one -->
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+               ? ('-') 
+               : (common.FPGAResources.nextpnr.Field0.name + ' : ' + 
+                  common.FPGAResources.nextpnr.Field0.used + ' / ' +
+                  common.FPGAResources.nextpnr.Field0.total +' ( ' + 
+                  (common.FPGAResources.nextpnr.Field0.used /
+                   common.FPGAResources.nextpnr.Field0.total*100).toFixed(1) +
+                   '%)') 
+            }}
+          </span>
         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field1.name+' : '+common.FPGAResources.nextpnr.Field1.used+' / '+common.FPGAResources.nextpnr.Field1.total+' ( '+(common.FPGAResources.nextpnr.Field1.used/common.FPGAResources.nextpnr.Field1.total*100).toFixed(1)+'%)') }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr)
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field1.name + ' : ' +
+                  common.FPGAResources.nextpnr.Field1.used + ' / ' +
+                  common.FPGAResources.nextpnr.Field1.total + ' ( ' +
+                  (common.FPGAResources.nextpnr.Field1.used /
+                  common.FPGAResources.nextpnr.Field1.total*100).toFixed(1) +
+                  '%)') 
+            }}
+          </span>
         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field2.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field2.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field2.total+'&nbsp;&nbsp;(&nbsp;'+(common.FPGAResources.nextpnr.Field2.used/common.FPGAResources.nextpnr.Field2.total*100).toFixed(1)+'%)') }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field2.name + 
+                  '&nbsp;:&nbsp;&nbsp;' + 
+                  common.FPGAResources.nextpnr.Field2.used + 
+                  '&nbsp;/' + 
+                  common.FPGAResources.nextpnr.Field2.total + 
+                  '&nbsp;&nbsp;(&nbsp;' + 
+                  (common.FPGAResources.nextpnr.Field2.used /
+                  common.FPGAResources.nextpnr.Field2.total*100).toFixed(1) + 
+                  '%)')
+            }}
+          </span>
         
           <!-- 3 next fields with percentage precision from nextpnr -->
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field3.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field3.used+'&nbsp;/'+common.FPGAResources.nextpnr.Field3.total+'&nbsp;&nbsp;(&nbsp;'+common.FPGAResources.nextpnr.Field3.percentage+'%)') }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field3.name + 
+                  '&nbsp;:&nbsp;&nbsp;' + 
+                  common.FPGAResources.nextpnr.Field3.used + 
+                  '&nbsp;/' + 
+                  common.FPGAResources.nextpnr.Field3.total + 
+                  '&nbsp;&nbsp;(&nbsp;' + 
+                  common.FPGAResources.nextpnr.Field3.percentage + 
+                  '%)') 
+            }}
+          </span>
+
         </div>
         
         <div>         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field10.name+' : '+common.FPGAResources.nextpnr.Field10.used+' / '+common.FPGAResources.nextpnr.Field10.total+' ( '+common.FPGAResources.nextpnr.Field10.percentage+'%)') }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field10.name + 
+              ' : ' + 
+              common.FPGAResources.nextpnr.Field10.used + 
+              ' / ' + 
+              common.FPGAResources.nextpnr.Field10.total + 
+              ' ( ' + 
+              common.FPGAResources.nextpnr.Field10.percentage 
+              +'%)') 
+            }}
+          </span>
         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field11.name+' : '+common.FPGAResources.nextpnr.Field11.used+' / '+common.FPGAResources.nextpnr.Field11.total+' ( '+common.FPGAResources.nextpnr.Field11.percentage+'%)') }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field11.name + 
+                ' : ' + 
+                common.FPGAResources.nextpnr.Field11.used + 
+                ' / ' + 
+                common.FPGAResources.nextpnr.Field11.total + 
+                ' ( ' + 
+                common.FPGAResources.nextpnr.Field11.percentage + 
+                '%)') 
+            }}
+          </span>
         
-       <!-- 2 next fields with no percentage -->
+          <!-- 2 next fields with no percentage -->
         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field12.name+' : '+common.FPGAResources.nextpnr.Field12.used+' / '+common.FPGAResources.nextpnr.Field12.total) }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field12.name + 
+                 ' : ' + 
+                 common.FPGAResources.nextpnr.Field12.used + 
+                 ' / ' + 
+                 common.FPGAResources.nextpnr.Field12.total) 
+            }}
+          </span>
         
-        <span>
-          {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? ('-') 
-          : (common.FPGAResources.nextpnr.Field13.name+'&nbsp;:&nbsp;&nbsp;'+common.FPGAResources.nextpnr.Field13.used&nbsp;&nbsp;+'/'+&nbsp;&nbsp;common.FPGAResources.nextpnr.Field13.total) }}
-        </span>
+          <span>
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? ('-') 
+              : (common.FPGAResources.nextpnr.Field13.name +
+                 '&nbsp;:&nbsp;&nbsp;' + 
+                 common.FPGAResources.nextpnr.Field13.used&nbsp;&nbsp; +
+                 '/' + &nbsp;&nbsp;common.FPGAResources.nextpnr.Field13.total)
+            }}
+          </span>
         
         
-        <span>
-          MaxFreq.:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' 
-          : (common.FPGAResources.nextpnr.MF.value+'&nbsp;MHz') }}
-        </span>
+          <span>
+            MaxFreq.:&nbsp;&nbsp;
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+               ? '-' 
+               : (common.FPGAResources.nextpnr.MF.value+'&nbsp;MHz') 
+            }}
+          </span>
         
-        <span>
-          BuildTime&nbsp;:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) ? '-' 
-          : (common.FPGAResources.nextpnr.BUILDT.value +'&nbsp;'+common.FPGAResources.nextpnr.BUILDT.unit ) }}
-        </span>
+          <span>
+            BuildTime&nbsp;:&nbsp;&nbsp;
+            {{ (common.hasChangesSinceBuild || !common.FPGAResources.nextpnr) 
+              ? '-' 
+              : (common.FPGAResources.nextpnr.BUILDT.value + 
+                 '&nbsp;' + 
+                 common.FPGAResources.nextpnr.BUILDT.unit ) 
+            }}
+          </span>
         
         </div>
-      
+      </div>
+
+      <!-- Show the current selected board -->
+      {{ common.selectedBoard.info.label }}
+
+      <!-- Buttons for Verify / Build and Upload the circuit -->
+      <div class="shortcut-toolbox">
+
+        <!-- Verify button -->
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
+           uib-tooltip="{{ 'Verify' | translate }}" 
+           tooltip-append-to-body="true" 
+           data-item="verify" >
+           <i class="icon--verify"></i>
+        </a>
+
+        <!-- Build button -->
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
+           uib-tooltip="{{ 'Build' | translate }}" 
+           tooltip-append-to-body="true" 
+           data-item="build">
+           <i class="icon--build"></i>
+        </a>
+
+        <!-- Upload button -->
+        <a href="" class="shortcut-toolbox--item js-shortcut--action" 
+           uib-tooltip="{{ 'Upload' | translate }}" 
+           tooltip-append-to-body="true" 
+           data-item="upload">
+           <i class="icon--upload"></i>
+        </a>  
 
       </div>
-      {{ common.selectedBoard.info.label }}
-      <div class="shortcut-toolbox">
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Verify' | translate }}" tooltip-append-to-body="true" data-item="verify" ><i class="icon--verify"></i></a>
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Build' | translate }}" tooltip-append-to-body="true" data-item="build"><i class="icon--build"></i></a>
-        <a href="" class="shortcut-toolbox--item js-shortcut--action" uib-tooltip="{{ 'Upload' | translate }}" tooltip-append-to-body="true" data-item="upload"><i class="icon--upload"></i></a>  
-
-    </div>
     </div>
   </div>
 </div>
