@@ -19,8 +19,9 @@ angular.module('icestudio')
   //-- TYPE of blocks
   const BASIC_INPUT = 'basic.input';   //-- Input ports
   const BASIC_OUTPUT = 'basic.output'; //-- Output ports
-
-  const BASIC_PAIRED_LABELS = "basic.pairedLabel";
+  const BASIC_INPUT_LABEL = 'basic.inputLabel';    //-- Input labels
+  const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
+  const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -100,7 +101,6 @@ angular.module('icestudio')
     }
   }
 
-
   //-------------------------------------------------------------------------
   //-- Class: Input port. The information comes from the outside and
   //--   get inside the FPGA
@@ -121,6 +121,7 @@ angular.module('icestudio')
     }
   }
 
+  
   //-------------------------------------------------------------------------
   //-- Class: Output port. The information goes from the FPGA to the 
   //--        outside. Or from one block to another the upper level
@@ -136,6 +137,53 @@ angular.module('icestudio')
       //-- No particular information
     }
   }
+
+  class LabelBlock extends Block {
+
+    //-- Parameters:
+    //-- type: Select the type of LabelBlock:
+    //--    -BASIC_INPUT_LABEL
+    //--    -BASIC_OUTPUT_LABEL
+    constructor(type, name, range, color) {
+
+      //-- Build the block common fields
+      super(type);
+
+      //-- Particular information
+      this.data.name = name;         //-- Label name
+      this.data.range = range;       //-- If the lable is single or bus. 
+                                     //--  Ej. "[1:0]"    
+      this.data.blockColor = color;  //-- Label color
+      this.data.virtual = true;      //-- Labels are a kind of virtual pin 
+
+    }
+  }
+
+  class InputLabelBlock extends LabelBlock {
+
+    constructor(name, range, color) {
+
+      //-- Build the port common fields
+      super(BASIC_INPUT_LABEL, name, range, color);
+
+      //-- No particular information
+    }
+
+  }
+
+  class OutputLabelBlock extends LabelBlock {
+
+    constructor(name, range, color) {
+
+      //-- Build the port common fields
+      super(BASIC_OUTPUT_LABEL, name, range, color);
+
+      //-- No particular information
+    }
+
+  }
+
+
 
   //-----------------------------------------------------------------------
   //-- Return an array with empty pins
@@ -221,6 +269,9 @@ angular.module('icestudio')
   this.InputPortBlock = InputPortBlock;
   this.OutputPortBlock = OutputPortBlock;
 
+  this.InputLabelBlock = InputLabelBlock;
+  this.OutputLabelBlock = OutputLabelBlock;
+
   //-- Public functions
   this.getPins = getPins;
   this.copyPins = copyPins;
@@ -229,7 +280,8 @@ angular.module('icestudio')
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
   this.BASIC_OUTPUT = BASIC_OUTPUT;
-
+  this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
+  this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
 
 });

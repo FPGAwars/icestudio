@@ -525,5 +525,7 @@
     "name": "sd_det",
     "value": "A12",
     "pullmode": "NONE"
-  }
+  },
+  {"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+  {"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
 ]

@@ -15,7 +15,14 @@ angular.module('icestudio')
     ) 
 {
 
-  //-- Constant for the Field Clases
+  //-------------------------------------------------------------------------
+  //-- Constant for working with HTML FORMS
+  //-------------------------------------------------------------------------
+  //-- Each input Form has diffefrent Fields:
+  //--  * Text : For entering texts (Ex. port names)
+  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
+  //--  * Combobox. Multiple selection. (Ex. Address format )
+  //--  * Color selection dropmenu
   const FIELD_TEXT = 'text';
   const FIELD_CHECKBOX = 'checkbox';
   const FIELD_COLOR = 'color-dropdown';
@@ -42,15 +49,295 @@ angular.module('icestudio')
          autocomplete="off"/>
   `;
 
-   //-- Checkbox
-   const FORM_CHECKBOX_TEMPLATE = `
-   <div class="checkbox">
-     <label>
-       <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-       ${PARAM_LABEL}
-     </label>
-   </div>
+  //-- Checkbox
+  const FORM_CHECKBOX_TEMPLATE = `
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
+      ${PARAM_LABEL}
+    </label>
+  </div>
  `;
+
+  function getColorName(color) {
+    switch(color) {
+      case "fuchsia": 
+        return gettextCatalog.getString('Fuchsia');
+
+      case "indianred":
+        return gettextCatalog.getString('Indian Red');
+
+      case "red":
+        return gettextCatalog.getString('Red');
+
+      case "deeppink":
+        return gettextCatalog.getString('Deep Pink');
+
+      case "mediumvioletred":
+        return gettextCatalog.getString('Medium Violet Red');
+
+      case "coral":
+        return gettextCatalog.getString('Coral');
+      
+      case "orangered":
+        return gettextCatalog.getString('Orange Red');
+
+      case "darkorange":
+        return gettextCatalog.getString('Dark Orange');
+
+      case "gold":
+        return gettextCatalog.getString('Gold');
+
+      case "yellow":
+        return gettextCatalog.getString('Yellow');
+
+      case "slateblue":
+        return gettextCatalog.getString('Slate Blue');
+
+      case "greenyellow":
+        return gettextCatalog.getString('Green Yellow');
+
+      case "springgreen":
+        return gettextCatalog.getString('Spring Green');
+
+      case "darkgreen":
+        return gettextCatalog.getString('Dark Green');
+      
+      case "olivedrab":
+        return gettextCatalog.getString('Olive Drab');
+
+      case "lightseagreen":
+        return gettextCatalog.getString('Light Sea Green');
+
+      case "turquoise":
+        return gettextCatalog.getString('Turquoise');
+
+      case "steelblue":
+        return gettextCatalog.getString('Steel Blue');
+
+      case "deepskyblue":
+        return gettextCatalog.getString('Deep Sky Blue');
+
+      case "royalblue":
+        return gettextCatalog.getString('Royal Blue');
+
+      case "navy":
+        return gettextCatalog.getString('Navy');
+
+      case "lightgray":
+        return gettextCatalog.getString('Light Gray');
+
+    }
+  }
+
+  //-- Dictionary with the colors
+  const COLOR_NAME = {
+    "fuchsia": gettextCatalog.getString('Fuchsia'),
+    "indianred": gettextCatalog.getString('Indian Red'),
+    "red": gettextCatalog.getString('Red'),
+    "deeppink": gettextCatalog.getString('DeepPink'),
+    "mediumvioletred": gettextCatalog.getString('MediumVioletRed'),
+    "coral": gettextCatalog.getString('Coral'),
+    "orangered": gettextCatalog.getString('OrangeRed'),
+    "darkorange": gettextCatalog.getString('DarkOrange'),
+    "gold": gettextCatalog.getString('Gold'),
+    "yellow": gettextCatalog.getString('Yellow'),
+    "slateblue": gettextCatalog.getString('SlateBlue'),
+    "greenyellow": gettextCatalog.getString('GreenYellow'),
+    "springgreen": gettextCatalog.getString('SpringGreen'),
+    "darkgreen": gettextCatalog.getString('DarkGreen'),
+    "olivedrab": gettextCatalog.getString('OliveDrab'),
+    "lightseagreen": gettextCatalog.getString('LightSeaGreen'),
+    "turquoise": gettextCatalog.getString('Turquoise'),
+    "steelblue": gettextCatalog.getString('SteelBlue'),
+    "deepskyblue": gettextCatalog.getString('DeepSkyBlue'),
+    "royalblue": gettextCatalog.getString('RoyalBlue'),
+    "navy": gettextCatalog.getString('Navy'),
+    "lightgray": gettextCatalog.getString('LightGray'),
+  };
+
+
+  function getColorInputHtmlTemplate() {
+    return `
+      <div class="form-group">
+        <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
+        <div class="lb-color--dropdown">
+          <div class="lb-dropdown-title">
+    
+            <!-- The current color is the one found in spec.color -->
+            <span class="lb-selected-color color-${PARAM_COLOR}"
+              data-color="${PARAM_COLOR}"
+              data-name="${PARAM_COLOR_NAME}"> 
+            </span> 
+            ${PARAM_COLOR_NAME}
+            <span class="lb-dropdown-icon"></span>
+          </div>
+        
+          <div class="lb-dropdown-menu">
+    
+          <div class="lb-dropdown-option" 
+            data-color="indianred" 
+            data-name="${getColorName("indianred")}">
+              <span class="lb-option-color color-indianred">
+              </span>
+              ${getColorName("indianred")}
+          </div>
+          
+          <div class="lb-dropdown-option" 
+            data-color="red" 
+            data-name="${getColorName("red")}">
+              <span class="lb-option-color color-red">
+              </span>
+              ${getColorName("red")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="deeppink" 
+            data-name="${getColorName("deeppink")}">
+              <span class="lb-option-color color-deeppink">
+              </span>
+              ${getColorName("deeppink")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="mediumvioletred"
+            data-name="${getColorName("mediumvioletred")}">
+              <span class="lb-option-color color-mediumvioletred">
+              </span>
+              ${getColorName("mediumvioletred")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="coral"
+            data-name="${getColorName("coral")}">
+              <span class="lb-option-color color-coral"></span>
+              ${getColorName("coral")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="orangered"
+            data-name="${getColorName("orangered")}">
+              <span class="lb-option-color color-orangered"></span>
+              ${getColorName("orangered")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="darkorange"
+            data-name="${getColorName("darkorange")}">
+              <span class="lb-option-color color-darkorange"></span>
+              ${getColorName("darkorange")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="gold"
+            data-name="${getColorName("gold")}">
+              <span class="lb-option-color color-gold"></span>
+              ${getColorName("gold")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="yellow"
+            data-name="${getColorName("yellow")}">
+              <span class="lb-option-color color-yellow"></span>
+              ${getColorName("yellow")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="fuchsia"
+            data-name=" ${getColorName("fuchsia")}">
+              <span class="lb-option-color color-fuchsia"></span>
+              ${getColorName("fuchsia")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="slateblue"
+            data-name="${getColorName("slateblue")}">
+              <span class="lb-option-color color-slateblue"></span>
+              ${getColorName("slateblue")}
+          </div>
+          <div class="lb-dropdown-option" 
+            data-color="greenyellow"
+            data-name="${getColorName("greenyellow")}">
+              <span class="lb-option-color color-greenyellow"></span>
+              ${getColorName("greenyellow")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="springgreen"
+            data-name="${getColorName("springgreen")}">
+              <span class="lb-option-color color-springgreen"></span>
+              ${getColorName("springgreen")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="darkgreen"
+            data-name="${getColorName("darkgreen")}">
+              <span class="lb-option-color color-darkgreen"></span>
+              ${getColorName("darkgreen")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="olivedrab"
+            data-name="${getColorName("olivedrab")}">
+              <span class="lb-option-color color-olivedrab">
+              </span>
+              ${getColorName("olivedrab")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="lightseagreen" 
+            data-name="${getColorName("lightseagreen")}">
+              <span class="lb-option-color color-lightseagreen"></span>
+              ${getColorName("lightseagreen")}
+          </div> 
+    
+          <div class="lb-dropdown-option" 
+            data-color="turquoise"
+            data-name="${getColorName("turquioise")}">
+              <span class="lb-option-color color-turquoise"></span>
+              ${getColorName("turquoise")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="steelblue"
+            data-name="${getColorName("steelblue")}">
+              <span class="lb-option-color color-steelblue"></span>
+              ${getColorName("steelblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="deepskyblue"
+            data-name="${getColorName("deepskyblue")}">
+              <span class="lb-option-color color-deepskyblue"></span>
+              ${getColorName("deepskyblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="royalblue"
+            data-name="${getColorName("royalblue")}">
+              <span class="lb-option-color color-royalblue"></span>
+              ${getColorName("royalblue")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="navy"
+            data-name="${getColorName("navy")}">
+              <span class="lb-option-color color-navy"></span>
+              ${getColorName("navy")}
+          </div>
+    
+          <div class="lb-dropdown-option" 
+            data-color="lightgray"
+            data-name="${getColorName("lightgray")}">
+              <span class="lb-option-color color-lightgray"></span>
+              ${getColorName("lightgray")}
+          </div>
+          
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
    //-- HTML template for the color dropdown input
    const FORM_COLOR_INPUT_TEMPLATE = `
@@ -72,160 +359,160 @@ angular.module('icestudio')
  
         <div class="lb-dropdown-option" 
           data-color="indianred" 
-          data-name="IndianRed">
+          data-name="${COLOR_NAME["indianred"]}">
             <span class="lb-option-color color-indianred">
             </span>
-            IndianRed
+            ${COLOR_NAME["indianred"]}
         </div>
         
         <div class="lb-dropdown-option" 
           data-color="red" 
-          data-name="Red">
+          data-name="${COLOR_NAME["red"]}">
             <span class="lb-option-color color-red">
             </span>
-            Red
+            ${COLOR_NAME["red"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="deeppink" 
-          data-name="DeepPink">
+          data-name="${COLOR_NAME["deeppink"]}">
             <span class="lb-option-color color-deeppink">
             </span>
-            DeepPink
+            ${COLOR_NAME["deeppink"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="mediumvioletred"
-          data-name="MediumVioletRed">
+          data-name="${COLOR_NAME["mediumvioletred"]}">
             <span class="lb-option-color color-mediumvioletred">
             </span>
-            MediumVioletRed
+            ${COLOR_NAME["mediumvioletred"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="coral"
-          data-name="Coral">
+          data-name="${COLOR_NAME["mediumvioletred"]}">
             <span class="lb-option-color color-coral"></span>
-            Coral
+            ${COLOR_NAME["mediumvioletred"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="orangered"
-          data-name="OrangeRed">
+          data-name="${COLOR_NAME["orangered"]}">
             <span class="lb-option-color color-orangered"></span>
-            OrangeRed
+            ${COLOR_NAME["orangered"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="darkorange"
-          data-name="DarkOrange">
+          data-name="${COLOR_NAME["darkorange"]}">
             <span class="lb-option-color color-darkorange"></span>
-            DarkOrange
+            ${COLOR_NAME["darkorange"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="gold"
-          data-name="Gold">
+          data-name="${COLOR_NAME["gold"]}">
             <span class="lb-option-color color-gold"></span>
-          Gold
+            ${COLOR_NAME["gold"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="yellow"
-          data-name="Yellow">
+          data-name="${COLOR_NAME["yellow"]}">
             <span class="lb-option-color color-yellow"></span>
-            Yellow
+            ${COLOR_NAME["yellow"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="fuchsia"
-          data-name="Fuchsia">
+          data-name="${COLOR_NAME["fuchsia"]}">
             <span class="lb-option-color color-fuchsia"></span>
-            Fuchsia
+            ${getColorName("fuchsia")}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="slateblue"
-          data-name="SlateBlue">
+          data-name="${COLOR_NAME["slateblue"]}">
             <span class="lb-option-color color-slateblue"></span>
-            SlateBlue
+            ${COLOR_NAME["slateblue"]}
         </div>
         <div class="lb-dropdown-option" 
           data-color="greenyellow"
-          data-name="GreenYellow">
+          data-name="${COLOR_NAME["greenyellow"]}">
             <span class="lb-option-color color-greenyellow"></span>
-            GreenYellow
+            ${COLOR_NAME["greenyellow"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="springgreen"
-          data-name="SpringGreen">
+          data-name="${COLOR_NAME["springgreen"]}">
             <span class="lb-option-color color-springgreen"></span>
-            SpringGreen
+            ${COLOR_NAME["springgreen"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="darkgreen"
-          data-name="DarkGreen">
+          data-name="${COLOR_NAME["darkgreen"]}">
             <span class="lb-option-color color-darkgreen"></span>
-            DarkGreen
+            ${COLOR_NAME["darkgreen"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="olivedrab"
-          data-name="OliveDrab">
+          data-name="${COLOR_NAME["olivedrab"]}">
             <span class="lb-option-color color-olivedrab">
             </span>
-            OliveDrab
+            ${COLOR_NAME["olivedrab"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="lightseagreen" 
-          data-name="LightSeaGreen">
+          data-name="${COLOR_NAME["lightseagreen"]}">
             <span class="lb-option-color color-lightseagreen"></span>
-            LightSeaGreen
+            ${COLOR_NAME["lightseagreen"]}
         </div> 
  
         <div class="lb-dropdown-option" 
           data-color="turquoise"
-          data-name="Turquoise">
+          data-name="${COLOR_NAME["turquoise"]}">
             <span class="lb-option-color color-turquoise"></span>
-            Turquoise
+            ${COLOR_NAME["turquoise"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="steelblue"
-          data-name="SteelBlue">
+          data-name="${COLOR_NAME["steelblue"]}">
             <span class="lb-option-color color-steelblue"></span>
-            SteelBlue
+            ${COLOR_NAME["steelblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="deepskyblue"
-          data-name="DeepSkyBlue">
+          data-name="${COLOR_NAME["deepskyblue"]}">
             <span class="lb-option-color color-deepskyblue"></span>
-            DeepSkyBlue
+            ${COLOR_NAME["deepskyblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="royalblue"
-          data-name="RoyalBlue">
+          data-name="${COLOR_NAME["royalblue"]}">
             <span class="lb-option-color color-royalblue"></span>
-            RoyalBlue
+            ${COLOR_NAME["royalblue"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="navy"
-          data-name="Navy">
+          data-name="${COLOR_NAME["navy"]}">
             <span class="lb-option-color color-navy"></span>
-            Navy
+            ${COLOR_NAME["navy"]}
         </div>
  
         <div class="lb-dropdown-option" 
           data-color="lightgray"
-          data-name="LightGray">
+          data-name="${COLOR_NAME["lightgray"]}">
             <span class="lb-option-color color-lightgray"></span>
-           LightGray
+            ${COLOR_NAME["lightgray"]}
         </div>
         
        </div>
@@ -328,6 +615,18 @@ angular.module('icestudio')
       return html;
     }
 
+    //---------------------------------------------
+    //-- Read the Field value
+    //---------------------------------------------
+    read() {
+
+      //-- Read the value from the form i
+      let value = $($('#form' + this.formId).prop('checked'));
+      value = value[0] || false;
+
+      return value;
+    }
+    
   }
 
   //-------------------------------------------------------------------------
@@ -351,11 +650,11 @@ angular.module('icestudio')
     //-- Returns:
     //--   -A string with the HTML code for that Field
     //-----------------------------------------------------------------------
-    constructor(label, color, colorName) {
+    constructor(label, color) {
       this.type = FIELD_COLOR;
       this.label = label;
       this.color = color;
-      this.colorName = colorName;
+      this.colorName = getColorName(color);
     }
     
      //---------------------------------------------------------
@@ -364,10 +663,15 @@ angular.module('icestudio')
     html() {
       //-- Generate the HTML code
 
+      //-- Get the html template
+      let html = getColorInputHtmlTemplate();
+
+
       //-- Insert the parameters in the html code template
-      let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+      html = html.replace(
         PARAM_LABEL,
-        this.label);
+        this.label
+      );
 
       html = html.replaceAll(PARAM_COLOR, this.color);
       html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
@@ -375,64 +679,21 @@ angular.module('icestudio')
       return html;
     }
 
+    //---------------------------------------------
+    //-- Read the Field value
+    //---------------------------------------------
+    read() {
+
+      //-- Read the value 
+      let value = $('.lb-selected-color').data('color');            
+
+      return value;
+    }
+
   }
 
 
 
-  //-------------------------------------------------------------------------
-  //-- Constant for working with HTML FORMS
-  //-------------------------------------------------------------------------
-  //-- Each input Form has diffefrent Fields:
-  //--  * Text : For entering texts (Ex. port names)
-  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
-  //--  * Combobox. Multiple selection. (Ex. Address format )
-  //--  * Color selection dropmenu
-
-  //-----------------------------------------------------------
-  //-- Create the html code for an input Text field
-  //-- INPUTS:
-  //--   * msg: Text message to shown as a title
-  //--   * value: Current value (if any)
-  //--   * formID: Form identifier number
-  //--
-  //-- Returns:
-  //--   -A string with the HTML code for that Field
-  //-----------------------------------------------------------
-  this.htmlInputText = function(msg, value, formId) {
-
-    //-- Insert the parameters in the html code template
-    let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, msg);
-    html = html.replace(PARAM_VALUE, value);
-    html = html.replace(PARAM_ID, formId);
-
-    return html;
-  };
-  
- 
-  
- 
-
-  //-----------------------------------------------------------
-  //-- Create the html code for an input checkbox field
-  //-- INPUTS:
-  //--   * msg: Text message to shown as a title
-  //--   * formID: Form identifier number
-  //--
-  //-- Returns:
-  //--   -A string with the HTML code for that Field
-  //-----------------------------------------------------------
-  this.htmlInputCheckbox = function(label, value, formId) {
-
-    //-- Insert the parameters in the html code template
-    let html = FORM_CHECKBOX_TEMPLATE.replace(
-                  PARAM_VALUE,
-                  (value ? 'checked' : ''));
-
-    html = html.replace(PARAM_ID, formId);
-    html = html.replace(PARAM_LABEL, label);
-
-    return html;
-  };
 
   //-------------------------------------------------------------------------
   //--- Input combobox field
@@ -524,41 +785,10 @@ angular.module('icestudio')
     return(html);
   };
 
-  //-------------------------------------------------------------------------
-  //--- Input color dropdown field
-  //-------------------------------------------------------------------------
-  /*
-        Label
-        +-----------------+
-        | o Color       v |
-        +-----------------+  
-  */
+  
 
 
-  //-----------------------------------------------------------
-  //-- Create the html code for an input color dropdown field
-  //-- INPUTS:
-  //--   * label: Text message to shown as a title
-  //--   * color: Color value
-  //--   * colorName: Color name
-  //--
-  //-- Returns:
-  //--   -A string with the HTML code for that Field
-  //-----------------------------------------------------------
-  this.htmlInputColor = function(label, color, colorName) {
-
-    //-- Insert the parameters in the html code template
-    let html = FORM_COLOR_INPUT_TEMPLATE.replace(
-                  PARAM_LABEL,
-                  label);
-
-    html = html.replaceAll(PARAM_COLOR, color);
-    html = html.replaceAll(PARAM_COLOR_NAME, colorName);
-
-    return html;
-  };
-
-
+  
   class Form {
 
     //-- Build a blank form
@@ -678,39 +908,12 @@ angular.module('icestudio')
       //-- Array were the values will be stored 
       let values = [];
 
-      //-- Temporal variable for storing a field value
-      let value;
-
       //-- Read the values from the Form fields
       //-- and insert them into the values array
       this.fields.forEach( field => {
 
-        //-- Read the value depending on the field type
-        switch (field.type) {
-
-          //-- Input text
-          case FIELD_TEXT:
-
-            //-- Read the value from the field
-            value = field.read(); 
-            break;
-
-          //-- Checkbox
-          case FIELD_CHECKBOX:
-
-            //-- Read the value from the form i
-            value = $($('#form' + field.formId).prop('checked'));
-            value = value[0];
-            break;
-
-          //-- Color input
-          case FIELD_COLOR:
-
-            //-- Read the value 
-            value = $('.lb-selected-color').data('color');            
-            break;
-
-        }
+        //-- Read the value from the field
+        let value = field.read(); 
 
         //-- Add the value to the array
         values.push(value);
@@ -794,7 +997,7 @@ angular.module('icestudio')
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--------------------------------------------------
-    constructor(msg, name = '', virtual=true) {
+    constructor(msg, name = '', virtual=false) {
 
       //-- Create a blank Form (calling the upper Class)
       super();
@@ -811,7 +1014,7 @@ angular.module('icestudio')
       //-- is an FPGA pin or an internal port
       let field1 = new CheckboxField(
         gettextCatalog.getString('FPGA pin'),
-        virtual,  //-- Default value
+        !virtual,  //-- Default value
         1         //-- Field id
       );
 
@@ -885,8 +1088,6 @@ angular.module('icestudio')
     //------------------------------------------------
     process(evt) {
 
-      console.log("PROCESS THE FORM!!");
-
       //-- If there was a previous notification, dismiss it
       if (this.resultAlert) {
         this.resultAlert.dismiss(false);
@@ -899,47 +1100,26 @@ angular.module('icestudio')
       this.getPortInfo(evt);
     }
 
+    
+
+    //-------------------------------------------------------------
     //-- Create the blocks defined in the form
     //-- Call this methods only when the form has been processed!
+    //-------------------------------------------------------------
     newBlocks() {
 
       //-- Array for storing all the blocks created
       let blocks = [];
+      let block;
 
-      //-- Create all the blocks defined
-      this.portInfos.forEach( portInfo => {
+      for (let i in this.portInfos) {
 
-        //-- Create an array of empty pins (with name and values 
-        //-- set to 'NULL')
-        let pins = utils2.getPins(portInfo);
-
-        //-- Store the current block
-        let block;
-
-        //-- Construct the block depending on its type
-        if (this.type === utils2.BASIC_INPUT) {
-            block = new utils2.InputPortBlock(
-              portInfo.name,
-              this.virtual,
-              portInfo.rangestr,
-              pins,
-              this.clock
-            );
-        }
-        //-- OUTPUT BLOCK
-        else {
-          block = new utils2.OutputPortBlock(
-            portInfo.name,
-            this.virtual,
-            portInfo.rangestr,
-            pins
-          );
-        }
+        //-- Create the block
+        block = this.newBlock(i);
 
         //-- Store this block in the array
         blocks.push(block);
-
-      });
+      }
 
       //-- Return an array of Blocks
       return blocks;
@@ -964,16 +1144,15 @@ angular.module('icestudio')
     //--    [  ] Show clock                   |
     //----------------------------------------+
     //-- INPUTS:
-    //--   * msg: Message above the text box
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--   * Clock: The input pin carries a clock signal
-    constructor(name = '', virtual=true, clock=false) {
+    constructor(name = '', virtual=false, clock=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Input port name:'),
             name,
-             virtual);
+            virtual);
 
       //-- Store the type of block associated with the Form
       this.type = utils2.BASIC_INPUT;
@@ -990,6 +1169,13 @@ angular.module('icestudio')
 
       //-- Add the fields to the form
       this.addField(field2);
+
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.virtualIni = virtual;
+      this.clockIni = clock;
     }
 
     //------------------------------------------------
@@ -1023,6 +1209,42 @@ angular.module('icestudio')
           return;
         }
       }
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+                      this.virtualIni !== this.virtual || 
+                      this.clockIni !== this.clock); 
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Create all the blocks defined
+      let portInfo = this.portInfos[n];
+      
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = utils2.getPins(portInfo);
+
+      let block = new utils2.InputPortBlock(
+        portInfo.name,
+        this.virtual,
+        portInfo.rangestr,
+        pins,
+        this.clock
+      );
+
+      return block;
     }
 
   }
@@ -1046,7 +1268,7 @@ angular.module('icestudio')
     //--   * msg: Message above the text box
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
-    constructor(name = '', virtual=true) {
+    constructor(name = '', virtual=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Output port name'), 
@@ -1057,6 +1279,11 @@ angular.module('icestudio')
       this.type = utils2.BASIC_OUTPUT;
 
       //-------- Output port do not have particular fields
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.virtualIni = virtual;
     }
 
     process(evt) {
@@ -1065,106 +1292,409 @@ angular.module('icestudio')
       super.process(evt);
       
       //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.virtualIni !== this.virtual); 
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The OutputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Create all the blocks defined
+      let portInfo = this.portInfos[n];
+      
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = utils2.getPins(portInfo);
+
+      //-- Create the block
+      let block = new utils2.OutputPortBlock(
+        portInfo.name,
+        this.virtual,
+        portInfo.rangestr,
+        pins
+      );
+
+      //-- Return the block
+      return block;
     }
 
   }
 
 
+  //-------------------------------------------------------------
+  //-- Class for modeling the Forms for the Input and Output
+  //-- labels. All their common stuff is place here
+  //-------------------------------------------------------------
+  class FormBasicLabel extends Form {
+
+    //-----------------------------------------------------
+    //-- INPUTS:
+    //--    * msg: Message above the text box
+    //--    * name: Default label name
+    //--    * color: Default label color
+    //------------------------------------------------------
+    constructor(msg, name='', color='fuchsia') {
+
+      //-- Create a blank Form (calling the upper Class)
+      super();
+
+      //-- Add the different Fields
+      //-- Field 0: Text input: label name
+      let field0 = new TextField(
+        msg,   //-- Top message
+        name,  //-- Default value
+        0      //-- Field id
+      );
+
+      //-- Field 1: Color Selector. Label color
+      let field1 = new ColorField(
+        gettextCatalog.getString("Choose a color:"),
+        color    //-- Default color
+      );
+
+      //-- Add the fields to the form
+      this.addField(field0);
+      this.addField(field1);
+
+      //-- Control the notifications generated by 
+      //-- the errors when processing the form
+      this.resultAlert = null;
+
+      //-- Store the initial values
+      //-- (For comparing it later with the new ones and detect if
+      //--  there have been changes)
+      this.nameIni = name;
+      this.colorIni = color;
+    }
+
+    //-------------------------------------------------------
+    //-- Analize the values introduce by the user and
+    //-- store them as properties
+    //-------------------------------------------------------
+    parseFields() {
+      //-- Read the values from the form
+      this.values = this.readFields();
+
+      //-- Values[0]: Label names
+      //-- Parse the names
+      this.names = Form.parseNames(this.values[0]);
+
+      //-- Values[1]: Label color
+      this.color = this.values[1];
+    }
+
+    //-----------------------------------------------------------------------
+    //-- Get the Information of the port(s): name, range, size...
+    //-- and store it in the portInfo property
+    //--
+    //-- ERRORs are check and Notifications raised in case of errors
+    //------------------------------------------------------------------------
+    getPortInfo(evt) {
+
+      let portInfo;
+      this.portInfos = [];
+
+      //-- Check all the ports (The user may have include one or more)
+      for (let name of this.names) {
+
+        //-- Get the port Info: port name, size...
+        portInfo = Form.parsePortName(name);
+
+        //-- No portInfo... The was a syntax error
+        if (!portInfo) {
+          //-- Do not close the form
+          evt.cancel = true;
+
+          //-- Show a warning notification
+          this.resultAlert = alertify.warning(
+              gettextCatalog.getString('Wrong block name {{name}}', 
+                                      { name: name }));
+          return;
+        }
+
+        //-- TODO: Check sizes
+
+        //-- Store the current portInfo
+        this.portInfos.push(portInfo);
+      }
+
+      //-- Close the form when finish
+      evt.cancel = false;
+
+    }
+
+    //------------------------------------------------
+    //-- Process the information entered by the user
+    //------------------------------------------------
+    process(evt) {
+      
+      console.log("PROCESS THE FORM!!");
+
+      //-- If there was a previous notification, dismiss it
+      if (this.resultAlert) {
+        this.resultAlert.dismiss(false);
+      }
+
+      //-- Parse the Fields
+      this.parseFields();
+
+      //-- Get the ports info and check for errors
+      this.getPortInfo(evt);
+
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the blocks defined in the form
+    //-- Call this methods only when the form has been processed!
+    //-------------------------------------------------------------
+    newBlocks() {
+
+      //-- Array for storing all the blocks created
+      let blocks = [];
+      let block;
+
+      for (let i in this.portInfos) {
+
+        //-- Create the block
+        block = this.newBlock(i);
+
+        //-- Store this block in the array
+        blocks.push(block);
+      }
+
+      //-- Return an array of Blocks
+      return blocks;
+      
+    }
 
 
-
-
-  //-------------------------------------------------------------------------
-  //-- Create the form for the INPUT Labels
-  //-- Returns:
-  //--   * The object Form
-  //-------------------------------------------------------------------------
-  //-- Form:
-  //----------------------------------------+
-  //--    Enter the input label             |
-  //--    +--------------------------+      |
-  //--    | Label names              |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //--    Chose a color                     |
-  //--    +--------------------------+      |
-  //--    | o Fucshia                |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //----------------------------------------+
-  function basicInputLabelForm() {
-
-    //-- Create a blank Form
-    let form = new Form();
-
-    //-- Field 0: Text input
-    let field0 = new TextField(
-      gettextCatalog.getString('Enter the input label'),
-      '',   //-- Default value
-      0     //-- Field id
-    );
-
-    //-- Field 1: Color dropdown
-    let field1 = new ColorField(
-      gettextCatalog.getString('Choose a color'),
-      "fuchsia",
-      "Fuchsia"
-    );
-
-    //-- Add the fields to the form
-    form.addField(field0);
-    form.addField(field1);
-
-    //-- Return the form
-    return form;
-  
   }
 
-  //-------------------------------------------------------------------------
-  //-- Create the form for the OUTPUT Labels
-  //-- Returns:
-  //--   * The object Form
-  //-------------------------------------------------------------------------
-  //-- Form:
-  //----------------------------------------+
-  //--    Enter the input label             |
-  //--    +--------------------------+      |
-  //--    | Label names              |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //--    Chose a color                     |
-  //--    +--------------------------+      |
-  //--    | o Fucshia                |      |
-  //--    +--------------------------+      |
-  //--                                      |
-  //----------------------------------------+
-  function basicOutputLabelForm() {
+  //-----------------------------------------------------------
+  //-- Class for modeling the Forms for the Input Labels
+  //-----------------------------------------------------------
+  class FormBasicInputLabel extends FormBasicLabel {
 
-    //-- Create a blank Form
-    let form = new Form();
+    //---------------------------------------------
+    //-- Create the form for the INPUT Labels
+    //---------------------------------------------
+    //-- Form:
+    //----------------------------------------+
+    //--    Enter the input label             |
+    //--    +--------------------------+      |
+    //--    | Label names              |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //--    Chose a color                     |
+    //--    +--------------------------+      |
+    //--    | o Fucshia                |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //----------------------------------------+
+    //-- INPUTS:
+    //--   * name: Default Label name
+    //--   * color: Default label color
+    //---------------------------------------------
+    constructor(name='', color='fuchsia') {
 
-    //-- Field 0: Text input
-    let field0 = new TextField(
-      gettextCatalog.getString('Enter the output label'),
-      '',   //-- Default value
-      0     //-- Field id
-    );
+      //-- Create a blank BasicLabelForm (calling the upper Class)
+      super(
+        gettextCatalog.getString('Output labels'),
+        name,
+        color
+      );
 
-    //-- Field 1: Color dropdown
-    let field1 = new ColorField(
-      gettextCatalog.getString('Choose a color'),
-      "fuchsia",
-      "Fuchsia"
-    );
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_INPUT_LABEL;
 
-    //-- Add the fields to the form
-    form.addField(field0);
-    form.addField(field1);
+      //-------- Input Label port DO NOT have particular fields
+    }
 
-    //-- Return the form
-    return form;
-  
+    process(evt) {
+
+      //-- Process the form as an BasicPort
+      super.process(evt);
+      
+      //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.colorIni !== this.color); 
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Get the info of the label n
+      let portInfo = this.portInfos[n];
+
+      //-- Create the Label block
+      let block = new utils2.InputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      );
+
+      return block;
+    }
+
   }
+
+  class FormBasicOutputLabel extends FormBasicLabel {
+    //---------------------------------------------
+    //-- Create the form for the OUTPUT Labels
+    //---------------------------------------------
+    //-- Form:
+    //----------------------------------------+
+    //--    Enter the input label             |
+    //--    +--------------------------+      |
+    //--    | Label names              |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //--    Chose a color                     |
+    //--    +--------------------------+      |
+    //--    | o Fucshia                |      |
+    //--    +--------------------------+      |
+    //--                                      |
+    //----------------------------------------+
+    //-- INPUTS:
+    //--   * name: Default Label name
+    //--   * color: Default label color
+    //---------------------------------------------
+    constructor(name='', color='fuchsia') {
+
+      //-- Create a blank BasicLabelForm (calling the upper Class)
+      super(
+        gettextCatalog.getString('Input labels'),
+        name,
+        color
+      );
+
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_OUTPUT_LABEL;
+
+      //-------- Output Label port do not have particular fields
+    }
+
+    process(evt) {
+
+      //-- Process the form as an BasicPort
+      super.process(evt);
+      
+      //-- No particular processing for Output ports
+
+      //-- There have been no errors. Detect if there have been some
+      //-- changes in the values
+      this.changed = (this.nameIni !== this.values[0] || 
+        this.colorIni !== this.color); 
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Get the info of the label n
+      let portInfo = this.portInfos[n];
+
+      //-- Create the Label block
+      let block = new utils2.OutputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      );
+
+      return block;
+    }
+  }
+
+
+
+  class FormBasicPairedLabels extends FormBasicLabel {
+    constructor(name='', color='fuchsia') {
+
+      //-- Create a blank BasicLabelForm (calling the upper Class)
+      super(
+        gettextCatalog.getString('Name of the paired labels'),
+        name,
+        color
+      );
+
+      //-- Store the type of block associated with the Form
+      this.type = utils2.BASIC_PAIRED_LABEL;
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block define in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The InputBasicPort block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Get the info of the label n
+      let portInfo = this.portInfos[n];
+
+      //-- Create the Paired labels: Input
+      let block1 = new utils2.InputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      ); 
+
+      //-- Create the Paired labels: Output
+      let block2 = new utils2.OutputLabelBlock(
+        portInfo.name,
+        portInfo.rangestr,
+        this.color
+      );
+
+      //-- Array with the paired labels
+      let pairedLabels = [block1, block2];
+
+      //-- Return the array of paired labels
+      return pairedLabels;
+    }
+  }
+
+  
+  
+  
+  
+//--------------------------------------------------------------
 
   function basicPairedLabelForm() {
 
@@ -1181,8 +1711,7 @@ angular.module('icestudio')
     //-- Field 1: Color dropdown
     let field1 = new ColorField(
       gettextCatalog.getString('Choose a color'),
-      "fuchsia",
-      "Fuchsia"
+      "fuchsia"
     );
 
     //-- Add the fields to the form
@@ -1201,12 +1730,62 @@ angular.module('icestudio')
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
   
-  this.basicInputLabelForm = basicInputLabelForm;
-  this.basicOutputLabelForm = basicOutputLabelForm;
   this.basicPairedLabelForm = basicPairedLabelForm;
 
   this.FormBasicInput = FormBasicInput;
   this.FormBasicOutput = FormBasicOutput;
+  this.FormBasicInputLabel = FormBasicInputLabel;
+  this.FormBasicOutputLabel = FormBasicOutputLabel;
+  this.FormBasicPairedLabels = FormBasicPairedLabels;
+
+
+
+
+  //-----------------------------------------------------------
+  //-- Create the html code for an input color dropdown field
+  //-- INPUTS:
+  //--   * label: Text message to shown as a title
+  //--   * color: Color value
+  //--   * colorName: Color name
+  //--
+  //-- Returns:
+  //--   -A string with the HTML code for that Field
+  //-----------------------------------------------------------
+  this.htmlInputColor = function(label, color, colorName) {
+
+    //-- Insert the parameters in the html code template
+    let html = FORM_COLOR_INPUT_TEMPLATE.replace(
+                  PARAM_LABEL,
+                  label);
+
+    html = html.replaceAll(PARAM_COLOR, color);
+    html = html.replaceAll(PARAM_COLOR_NAME, colorName);
+
+    return html;
+  };
+
+
+  //-----------------------------------------------------------
+  //-- Create the html code for an input checkbox field
+  //-- INPUTS:
+  //--   * msg: Text message to shown as a title
+  //--   * formID: Form identifier number
+  //--
+  //-- Returns:
+  //--   -A string with the HTML code for that Field
+  //-----------------------------------------------------------
+  this.htmlInputCheckbox = function(label, value, formId) {
+
+    //-- Insert the parameters in the html code template
+    let html = FORM_CHECKBOX_TEMPLATE.replace(
+                  PARAM_VALUE,
+                  (value ? 'checked' : ''));
+
+    html = html.replace(PARAM_ID, formId);
+    html = html.replace(PARAM_LABEL, label);
+
+    return html;
+  };
 
   //-----------------------------------------------------------------------
   //-- Display a Form

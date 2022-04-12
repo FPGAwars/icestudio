@@ -151,7 +151,9 @@
 {"type":"inout","name":"Shared_E","value":"F15","pullmode":"NONE"},
 {"type":"inout","name":"Shared_CLK","value":"B16","pullmode":"NONE"},
 {"type":"inout","name":"Shared_STB","value":"J14","pullmode":"NONE"},
-{"type":"inout","name":"Shared_OE","value":"F12","pullmode":"NONE"}]
+{"type":"inout","name":"Shared_OE","value":"F12","pullmode":"NONE"},
+{"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}]
 
 
 

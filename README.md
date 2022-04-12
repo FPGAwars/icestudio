@@ -90,21 +90,22 @@ Icestudio is a design tool focused on new comers to the FPGA world
 |:----------:|:----------------------------------------:|
 | English (en)   | ![Progress](http://progress-bar.dev/100) |
 | Spanish (en_ES)   | ![Progress](http://progress-bar.dev/100) |
-| French (fr_FR)    | ![Progress](http://progress-bar.dev/90) |
-| Italian (it_IT)   | ![Progress](http://progress-bar.dev/87) |
-| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/87) |
-| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/82)  |
-| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/82) |
-| German (de_DE)    | ![Progress](http://progress-bar.dev/82)  |
-| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/82) |
-| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/82) |
-| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/82) |
-| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/82)  |
-| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/82)  |
-| Greek (el_GR)     | ![Progress](http://progress-bar.dev/75)  |
-| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/75)  |
-| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/75)  |
-| Japanese (ja_JP)  | ![Progress](http://progress-bar.dev/70)  |
+| French (fr_FR)    | ![Progress](http://progress-bar.dev/83) |
+| Japanese (ja_JP)  | ![Progress](http://progress-bar.dev/83)  |
+| Italian (it_IT)   | ![Progress](http://progress-bar.dev/81) |
+| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/81) |
+| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/77)  |
+| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/77) |
+| German (de_DE)    | ![Progress](http://progress-bar.dev/77)  |
+| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/77) |
+| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/77) |
+| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/77) |
+| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/76)  |
+| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/70)  |
+| Greek (el_GR)     | ![Progress](http://progress-bar.dev/64)  |
+| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/64)  |
+| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/64)  |
+
 
 
 
@@ -119,6 +120,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 |Version | Contributors |
 |--------|--------------|
+| 0.9-1  | [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.9    | [Carlos Venegas Arrabé](https://github.com/cavearr), [mslider](https://github.com/mSlider), [Joaquim (jojo535275)](https://github.com/jojo535275),[Fernando Mosquera](https://github.com/benitoss), [TheSnowfield](https://github.com/TheSnowfield), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.8    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Joaquim (jojo535275)](https://github.com/jojo535275), [Fernando Mosquera](https://github.com/benitoss), [Ümit Solmaz](https://github.com/usnotv), [TinLethax](https://github.com/TiNredmc), [seanybaggins](https://github.com/seanybaggins), [mslider](https://github.com/mSlider), [Juan González (Obijuan)](https://github.com/Obijuan)  |
 | 0.7    | [Carlos Venegas Arrabé](https://github.com/cavearr), [Juan González (Obijuan)](https://github.com/Obijuan), [Joaquim (jojo535275)](https://github.com/jojo535275) |
