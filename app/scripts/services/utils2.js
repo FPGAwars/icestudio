@@ -22,6 +22,7 @@ angular.module('icestudio')
   const BASIC_INPUT_LABEL = 'basic.inputLabel';    //-- Input labels
   const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
   const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
+  const BASIC_CODE = 'basic.code';  //-- Verilog code
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -183,6 +184,83 @@ angular.module('icestudio')
 
   }
 
+  class CodeBlock extends Block {
+
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * inPortsInfo: Array of PortInfos
+    //--   * outPortsInfo: Array of PortInfos
+    //--   * inParamsInfo: Array of PortInfos
+    //--
+    //--  PortInfos:
+    //--    * name: String
+    //--    * rangestr: String
+    //--    * size: Integer
+    //-----------------------------------------------------------------------
+    constructor(inPortsInfo, outPortsInfo, inParamsInfo) {
+
+      //-- Build the block common fields
+      super(BASIC_CODE);
+
+      //-- Block size
+      this.size = {
+        width: 192,
+        height: 128
+      };
+
+      //-- Block ports
+      this.data.ports = {
+        in: [],
+        out: []
+      };
+     
+      //-- Block input params
+      this.data.params = [];
+
+      //-- Block code
+      this.data.code = '';
+
+      //-- Insert the Input portInfo
+      inPortsInfo.forEach(portInfo => {
+
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
+        };
+
+        this.data.ports.in.push(info);
+      });
+
+      //-- Insert the Output portInfo
+      outPortsInfo.forEach(portInfo => {
+
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
+        };
+
+        this.data.ports.out.push(info);
+      });
+
+      //-- Insert the input params
+      inParamsInfo.forEach(portInfo => {
+
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
+        };
+
+        this.data.params.push(info);
+
+      });
+
+    }
+    
+  }
+
 
 
   //-----------------------------------------------------------------------
@@ -272,6 +350,8 @@ angular.module('icestudio')
   this.InputLabelBlock = InputLabelBlock;
   this.OutputLabelBlock = OutputLabelBlock;
 
+  this.CodeBlock = CodeBlock;
+
   //-- Public functions
   this.getPins = getPins;
   this.copyPins = copyPins;
@@ -283,5 +363,6 @@ angular.module('icestudio')
   this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
   this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
+  this.BASIC_CODE = BASIC_CODE;
 
 });

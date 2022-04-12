@@ -107,8 +107,8 @@ angular.module('icestudio')
         newBasicMemory(callback);
         break;
 
-      case 'basic.code':
-        newBasicCode(callback);
+      case utils2.BASIC_CODE:
+        newBasicCode2(callback);
         break;
 
       case 'basic.info':
@@ -441,10 +441,94 @@ angular.module('icestudio')
       });
     }
 
-    
+    function newBasicCode2(callback, block) {
+
+      //-- Create the form
+      let form = new forms.FormBasicCode();
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }
+
+        //--------- Everything is ok so far... Let's create the block!
+
+        //-- TODO: Check the block parameter.... When is it passed?
+
+        //-- Validate values entered by the user
+        //-- There cannot be inputs, outputs and params with the same name
+        //-- Check it!!!
+
+        //-- Array for storing all the port names created
+        let allPortnames = [];
+
+        //-- Array with the input/output given by the user
+        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
+
+        //-- Add the array with the input parameters
+        userPorts = userPorts.concat(form.inParamsInfo);
+
+        //-- Analyze all the port names, one by one
+        for (let portInfo of userPorts) {
+
+          //-- The current element is only checked if it exist
+          if (portInfo) {
+
+            //-- Check if the current name is already in the array
+            if (allPortnames.includes(portInfo.name)) {
+
+              //-- It means that the port name is duplicated
+              //-- Show an error and return
+              evt.cancel = true;
+              resultAlert = alertify.warning(
+                  gettextCatalog.getString('Duplicated port name: ') + 
+                  portInfo.name
+              );
+              return;
+            }
+
+            //-- Name is unique so far. Insert it into the array
+            allPortnames.push(portInfo.name);
+          }
+        }
+
+        //-- OK. There are no duplicated names. Proceed!!
+
+        //-- Create a blank block
+        let blockInstance = new utils2.CodeBlock(
+          form.inPortsInfo,
+          form.outPortsInfo,
+          form.inParamsInfo
+        );
+
+        if (callback) {
+
+          //-- Build the cell
+          let cell = loadBasicCode(blockInstance);
+
+          //-- Execute the callback function passing the
+          //-- new cell as an argument (An array of one cell)
+          callback([cell]);
+        }
+
+      });
+    }  
 
 
     function newBasicCode(callback, block) {
+
+      //-- Create a blank block
       var blockInstance = {
         id: null,
         data: {
@@ -456,11 +540,15 @@ angular.module('icestudio')
         position: { x: 0, y: 0 },
         size: { width: 192, height: 128 }
       };
+
+
       var defaultValues = [
         '',
         '',
         ''
       ];
+
+
       if (block) {
         blockInstance = block;
         var index, port;
@@ -486,6 +574,8 @@ angular.module('icestudio')
           defaultValues[2] = params.join(' , ');
         }
       }
+
+
       var formSpecs = [
         {
           type: 'text',
@@ -503,6 +593,8 @@ angular.module('icestudio')
           value: defaultValues[2]
         }
       ];
+
+
       utils.renderForm(formSpecs, function (evt, values) {
         var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
         var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
@@ -549,6 +641,7 @@ angular.module('icestudio')
             nob++;
           }
         }
+
         if(nib>=inPorts.length && nob >= outPorts.length){
                evt.cancel = true;
               resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
