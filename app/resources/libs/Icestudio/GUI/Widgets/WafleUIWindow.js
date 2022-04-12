@@ -23,7 +23,8 @@ class WafleUIWindow{
         -- If you modify x and - symbols, check that is consisteng with all OS fonts , in this momment we use unicode symbol that is universal and not consume resources.
         -- For the future we could change by svg image for the icons.
         -- */
-        let content=`<div class="ics-wm-window--topbar | ics-wm__is-draggable" data-dragcontainerid="#${params.id}"><div class="ics-wm-window--topbar--button | ics-wm-window__minify">-</div><div class="ics-wm-window--topbar--button | ics-wm-window__close">x</div></div>
+        this.winId=params.id;
+        let content=`<div class="ics-wm-window--topbar | ics-wm__is-draggable" data-dragcontainerid="#${params.id}"><div class="ics-wm-window--topbar--button | ics-wm-window__minify">-</div><div class="ics-wm-window--topbar--button | ics-wm-window__close" data-winid="#${params.id}">x</div></div>
                      <div class="ics-wm-window--body"></div>
                      <div class="ics-wm-window--bottombar"></div>
                     `;
@@ -33,5 +34,9 @@ class WafleUIWindow{
         this.dom.style.left=params.x;
         this.dom.style.width=params.width;
         this.dom.style.height=params.height;
+    }
+
+    close(){
+        iceStudio.gui.removeDiv(`#${this.winId}`);
     }
 }

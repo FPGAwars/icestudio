@@ -1,17 +1,23 @@
 'use strict';
 
-class WafleWindowManager {
-    constructor() {
+class WafleWindowManager 
+{
+    constructor() 
+    {
         this.windows = {};
         this.init();
     }
 
-    _registerWindowDragAndDrop() {
+    _registerWindowDragAndDrop() 
+    {
 
-        function draggableFilter(e) {
+        function draggableFilter(e) 
+        {
             if (!e.target.classList.contains("ics-wm__is-draggable")) {
                 return;
             }
+
+            // Drag the element with id indexed by dragcontainerid attribute, should be a parent container
             let dragContainer = e.target.getAttribute('data-dragcontainerid');
             let target = iceStudio.gui.el(dragContainer);
             target.moving = true;
@@ -62,6 +68,7 @@ class WafleWindowManager {
     
     init() {
         this._registerWindowDragAndDrop();
+
     }
     
     addWindow(title, id) {
@@ -74,11 +81,31 @@ class WafleWindowManager {
                 bottom: '48px',
                 htmlClass: 'ics-wm-window'
             });
+            let buttonClose = iceStudio.gui.el(`#${id} .ics-wm-window__close`);
+            function closeWindowByPointer(e){
+                let targetId=false;
+                targetId= e.target.getAttribute('data-winid');
+                if(targetId===false || targetId===null || targetId==='') return false;
+
+                let buttonClose = iceStudio.gui.el(`${targetId} .ics-wm-window__close`);
+                for (let i = 0; i < buttonClose.length; i++) {
+                          buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
+                }
+                const id = targetId.replace('#','');
+                _this.closeWindow(id);
+            }
+            for (let i = 0; i < buttonClose.length; i++) {
+                  buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
+                  buttonClose[i].addEventListener("click", closeWindowByPointer, true);
+              }
         }
     }
     closeWindow(id) {
-        console.log('Cerrando', id);
-        iceStudio.bus.events.publish(`${id}::Terminate`, false, id);
+       iceStudio.bus.events.publish(`${id}::Terminate`, false, id);
+        this.windows[id].close(); 
+       console.log(this.windows,id);
         delete this.windows[id];
+        console.log(this.windows,id);
+        
     }
 }

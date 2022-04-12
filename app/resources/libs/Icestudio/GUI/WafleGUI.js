@@ -71,7 +71,10 @@ class WafleGUI {
     this.dom.root.insertAdjacentHTML("beforeend", html);
     return this.getNode(id);
   }
-
+  removeDiv(id){
+    let e = this.el(id);
+    if(typeof e !== 'undefined' && e !== null && e !== false) e.remove();
+  }
 
   addNode(id, cssClasses)
   {
