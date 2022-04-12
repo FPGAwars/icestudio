@@ -1,6 +1,5 @@
 
 
-/* -- Splash screen  */
 #main-icestudio-load-wrapper--bar {
     position: absolute;
     bottom: 0;
@@ -33,19 +32,6 @@
     }
   }
 
-  #main-icestudio-load-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999999999999999;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #305eac;
-    opacity: 1;
-    transition: opacity 1s ease;
-  }
-
   #main-icestudio-load-wrapper.fade-loaded {
     opacity: 0;
   
@@ -53,15 +39,6 @@
 
   #main-icestudio-load-wrapper.loaded {
     display: none;
-  }
-
-  #main-icestudio-load-wrapper svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
   }
 
   #main-icestudio-wrapper {
@@ -75,24 +52,4 @@
   #main-icestudio-wrapper.loaded {
     display: block;
   }
-
-
-/*  Splash screen iaage: Classes used for centering 
-    vertically and horizontally*/
-.splash-img-container {
-  height: 500px;
-  position: relative;
-}
-
-.splash-img-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-  
-  
-  
-  
+ 

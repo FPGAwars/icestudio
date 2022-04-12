@@ -4,7 +4,8 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
         super(args);
         this.dom = {
             host: false,
-            shadow: false
+            shadow: false,
+            window:false
         };
     
         iceStudio.bus.events.subscribe(`${this.uuid}::Terminate`,'terminate',this,this.uuid);
@@ -18,7 +19,9 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
 
             this.running = true;
             let _this = this;
-            this.dom.shadow = iceStudio.gui.addNode(this.manifest.id, 'plugin-wrapper plugin-windowed');
+            
+            this.dom.window=iceStudio.gui.wm.addWindow(this.manifest.name, this.uuid);
+            this.dom.shadow = iceStudio.gui.addNodeToSelector(`#${this.uuid} .ics-wm-window--body`,this.manifest.id, 'plugin-wrapper plugin-windowed');
             this.dom.host = iceStudio.gui.getNode(this.manifest.id);
 
             let assets = new WafleRemoteFile();
@@ -82,7 +85,6 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
                                     };
                                 }
                                 iceStudio.gui.setNodeScript(_this.manifest.id, _this.uuid, _this.dom.shadow, pluginScripts, oviews);
-                                iceStudio.gui.wm.addWindow(_this.manifest.name, _this.uuid, _this.dom.shadow);
                             });
                         });
                     });

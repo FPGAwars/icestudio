@@ -7,7 +7,7 @@ class WaflePlugin {
         this.dir = args.dir;
         this.pluginUri = args.pluginUri;
         this.running = false;
-        this.uuid= UniqueIdGenerator.UUID();
+        this.uuid= `plug--${UniqueIdGenerator.UUID()}`;
 
     }
     baseUrl() {

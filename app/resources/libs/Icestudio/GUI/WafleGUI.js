@@ -65,6 +65,14 @@ class WafleGUI {
     return this.el(`#${id}`);
   }
 
+  addDiv(id, cssClasses,content)
+  {
+    let html = `<div id="${id}" class="${cssClasses}">${content}</div>`;
+    this.dom.root.insertAdjacentHTML("beforeend", html);
+    return this.getNode(id);
+  }
+
+
   addNode(id, cssClasses)
   {
     let html = `<div id="${id}" class="${cssClasses}"></div>`;
@@ -74,6 +82,30 @@ class WafleGUI {
     shadow.innerHTML = '';
     return shadow;
   }
+
+  addNodeTo(rootId,id,cssClasses)
+  {
+    let html = `<div id="${id}" class="${cssClasses}"></div>`;
+    let root = this.el(`#${rootId}`);
+    root.insertAdjacentHTML("beforeend", html);
+    
+    let node = this.el(`#${id}`);
+    let shadow = node.attachShadow({ mode: "open" });
+    shadow.innerHTML = '';
+    return shadow;
+  }
+  addNodeToSelector(selector,id,cssClasses)
+  {
+    let html = `<div id="${id}" class="${cssClasses}"></div>`;
+    let root = this.el(selector);
+    console.log('SELECTOR',selector, root);
+    root[0].insertAdjacentHTML("beforeend", html);
+    let node = this.el(`#${id}`);
+    let shadow = node.attachShadow({ mode: "open" });
+    shadow.innerHTML = '';
+    return shadow;
+  }
+
 
   removeNode(elNode){
     elNode.parentNode.removeChild(elNode);
@@ -132,7 +164,7 @@ class WafleGUI {
     let selectorType = "querySelectorAll";
     let multiple = true;
   
-    if (selector.indexOf("#") === 0) {
+    if (selector.indexOf("#") === 0 && selector.indexOf('.')<0) {
       selectorType = "getElementById";
       selector = selector.substr(1, selector.length);
       multiple = false;
