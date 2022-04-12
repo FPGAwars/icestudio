@@ -101,7 +101,6 @@ class WafleGUI {
   {
     let html = `<div id="${id}" class="${cssClasses}"></div>`;
     let root = this.el(selector);
-    console.log('SELECTOR',selector, root);
     root[0].insertAdjacentHTML("beforeend", html);
     let node = this.el(`#${id}`);
     let shadow = node.attachShadow({ mode: "open" });
@@ -141,7 +140,8 @@ class WafleGUI {
     }    
     if (typeof shadow !== 'undefined' && shadow !== false){
         code =`${code}
-               let pluginRoot=$('#${rootId}')[0].shadowRoot;`;
+               let pluginRoot=$('#${rootId}')[0].shadowRoot;
+               let pluginHost=$('#${rootId}')[0];`;
     }
     code=`${code}
          let pluginUUID='${uuid}';
@@ -167,7 +167,7 @@ class WafleGUI {
     let selectorType = "querySelectorAll";
     let multiple = true;
   
-    if (selector.indexOf("#") === 0 && selector.indexOf('.')<0) {
+    if (selector.indexOf("#") === 0 && selector.indexOf('.')<0 && selector.indexOf(' ')<0) {
       selectorType = "getElementById";
       selector = selector.substr(1, selector.length);
       multiple = false;
@@ -319,6 +319,34 @@ class WafleGUI {
         clickel[l].addEventListener("change", this.onInputHandler, true);
       }
     }*/
+
+  }
+ 
+  activateEventsFromId(id ,root,callback) 
+  {
+   function eventClick(e) {
+    // e.preventDefault();
+    // e.stopPropagation();
+    let args = false;
+    if (typeof e.target.dataset.args !== 'undefined') {
+      args = JSON.parse(e.target.dataset.args);
+    }
+    let handler=false;
+    if (typeof e.target.dataset.handler !== 'undefined') {
+      handler = e.target.dataset.handler;
+    }
+   
+    callback('click',handler,args); 
+    // this.publish(`gui.click.${e.target.dataset.handler}`, args);
+      // return false;
+    
+    }
+      let target= this.el(`${id} [data-guievt="click"]`,root);
+       for (let j = 0; j < target.length; j++) {
+        target[j].removeEventListener("click", eventClick, true);
+        target[j].addEventListener("click", eventClick, true);
+      
+       }      
 
   }
 }

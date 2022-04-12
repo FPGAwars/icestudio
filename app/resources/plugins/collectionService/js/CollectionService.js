@@ -1,22 +1,28 @@
-class CollectionService {
-  constructor() {
+class CollectionService 
+{
+
+  constructor() 
+  {
     this.indexQ = [];
     this.indexing = false;
     this.id = -1;
     this.collections=false;
   }
-  init() {
 
-    iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this);
-    iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this);
-    iceStudio.bus.events.subscribe("collectionService.isIndexing", "isIndexing", this);
-    iceStudio.bus.events.subscribe("collectionService.getCollections", "publishCollections", this);
+  init() 
+  {
+    iceStudio.bus.events.subscribe("block.loadedFromFile", "blockContentLoaded", this,this.id);
+    iceStudio.bus.events.subscribe("localDatabase.stored", "blockIndexedOK", this,this.id);
+    iceStudio.bus.events.subscribe("collectionService.isIndexing", "isIndexing", this,this.id);
+    iceStudio.bus.events.subscribe("collectionService.getCollections", "publishCollections", this,this.id);
   }
+
   setId(id) {
     this.id = id;
   }
 
-  blockInQueue(blkid) {
+  blockInQueue(blkid) 
+  {
     let qlength = this.indexQ.length - 1;
     while (qlength > -1) {
       if (this.indexQ[qlength].blockId === blkid) {
@@ -27,24 +33,26 @@ class CollectionService {
     return false;
   }
 
-  getCollections(){
+  getCollections()
+  {
     return this.collections;
   }
 
-  publishCollections(){
-    console.log('Publicando colecciones');
+  publishCollections()
+  {
     iceStudio.bus.events.publish("collectionService.collections", this.collections);
   }
 
-  blockContentLoaded(args) {
-
+  blockContentLoaded(args) 
+  {
     if (this.blockInQueue(args.blockId)) {
       args.obj.path = args.path;
       this.indexBlock(args.blockId, args.obj);
     }
   }
 
-  isBlockValidForIndex(obj) {
+  isBlockValidForIndex(obj) 
+  {
     return (typeof obj !== "undefined" &&
       obj !== false &&
       obj !== false &&
@@ -64,7 +72,8 @@ class CollectionService {
     );
   }
 
-  indexBlock(id, obj) {
+  indexBlock(id, obj) 
+  {
     let _this = this;
     if (this.isBlockValidForIndex(obj)) {
 
@@ -88,14 +97,18 @@ class CollectionService {
       this.indexNext();
     }
   }
-  blockIndexedOK(item){
+
+  blockIndexedOK(item)
+  {
     if(item.database.dbId==='Collections' &&
        item.data.store==='blockAssets' &&
     this.blockInQueue(item.data.id)){
       this.indexNext();
     }
   }
-  indexNext() {
+
+  indexNext()
+  {
     if (this.indexing) {
       this.indexQ.splice(0, 1);
       if (this.indexQ.length > 0) {
@@ -106,26 +119,31 @@ class CollectionService {
       }
     }
   }
-  isIndexing(){
-    
+
+  isIndexing()
+  {
     iceStudio.bus.events.publish("collectionService.indexStatus",{indexing: this.indexing, queue:this.indexQ.length});
     return this.indexing;
   }
 
-  indexDB(force) {
+  indexDB(force)
+  {
     force = force || false;
     if ((this.indexing === false && this.indexQ.length > 0) || force) {
       this.indexing = true;
       iceStudio.bus.events.publish("collectionService.block.loadFromFile", this.indexQ[0]);
     }
   }
-  queueIndexDB(params) {
+
+  queueIndexDB(params)
+  {
     params.dispatch = false;
     this.indexQ.push(params);
     this.indexDB();
   }
 
-  buildTreeBlocks(child, rootPath) {
+  buildTreeBlocks(child, rootPath)
+  {
     if (typeof child.children !== "undefined") {
       let node = {
         name: child.name,
@@ -149,8 +167,8 @@ class CollectionService {
       } //-- for child.children.length
 
       if (this.hasSubFolders(node)) node.hasSubFolders = true;
-
       return node;
+    
     } else {
       return {
         id: this.nodeHash(child.path),
@@ -161,6 +179,7 @@ class CollectionService {
       };
     }
   }
+
   hasSubFolders(tree) {
     if (typeof tree.items !== "undefined") {
       for (let i = 0; i < tree.items.length; i++) {
@@ -172,7 +191,8 @@ class CollectionService {
     return false;
   }
 
-  buildTreeFromCollection(node) {
+  buildTreeFromCollection(node)
+  {
     let tree = [];
 
     if (Array.isArray(node)) {
@@ -204,8 +224,8 @@ class CollectionService {
     }
   }
 
-  collectionsToTree(collArray) {
-
+  collectionsToTree(collArray)
+  {
     iceStudio.bus.events.publish("collectionService.indexingStart");
     this.guiOpts = false;
     collArray.sort(function compare(a, b) {
@@ -220,7 +240,8 @@ class CollectionService {
     this.collections = this.buildTreeFromCollection(collArray);
   }
 
-  nodeHash(text) {
+  nodeHash(text) 
+  {
     return sha256.hex(text);
   }
 }

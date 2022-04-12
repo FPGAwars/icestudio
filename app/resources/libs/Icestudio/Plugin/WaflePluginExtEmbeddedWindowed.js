@@ -1,22 +1,24 @@
 'use strict';
 class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
-    constructor(args) {
+    
+    constructor(args)
+    {
         super(args);
         this.dom = {
             host: false,
             shadow: false,
             window:false
         };
-    
-        iceStudio.bus.events.subscribe(`${this.uuid}::Terminate`,'terminate',this,this.uuid);
     }
 
-      run() {
-        if (this.isRunning()) {
-
+      run() 
+      {
+        if (this.isRunning()) 
+        {
             console.log('Plugin is running');
         } else {
 
+            iceStudio.bus.events.subscribe(`${this.uuid}::Terminate`,'terminate',this,this.uuid);
             this.running = true;
             let _this = this;
             
@@ -98,5 +100,6 @@ class WaflePluginExtEmbeddedWindowed extends WaflePlugin {
         this.dom.shadow=false;
         this.dom.host=false;
         this.running=false;
+        iceStudio.bus.events.removeById(this.uuid);
     }
 }
