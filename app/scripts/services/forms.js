@@ -1823,8 +1823,44 @@ angular.module('icestudio')
       this.inPortsInfo = this.getPortInfo(this.inPorts, evt);
       this.outPortsInfo = this.getPortInfo(this.outPorts, evt);
       this.inParamsInfo = this.getPortInfo(this.inParams, evt);
-    }
 
+      //-- Validate values entered by the user
+      //-- There cannot be inputs, outputs and params with the same name
+      //-- Check it!!!
+
+      //-- Array for storing all the port names created
+      let allPortnames = [];
+
+      //-- Array with the input/output given by the user
+      let userPorts = this.inPortsInfo.concat(this.outPortsInfo);
+
+      //-- Add the array with the input parameters
+      userPorts = userPorts.concat(this.inParamsInfo);
+
+      //-- Analyze all the port names, one by one
+      for (let portInfo of userPorts) {
+
+        //-- The current element is only checked if it exist
+        if (portInfo) {
+
+          //-- Check if the current name is already in the array
+          if (allPortnames.includes(portInfo.name)) {
+
+            //-- It means that the port name is duplicated
+              //-- Show an error and return
+              evt.cancel = true;
+              this.resultAlert = alertify.warning(
+                  gettextCatalog.getString('Duplicated port name: ') + 
+                  portInfo.name
+              );
+              return;
+          }
+
+          //-- Name is unique so far. Insert it into the array
+          allPortnames.push(portInfo.name);
+        }
+      }
+    }
 
   }
   
