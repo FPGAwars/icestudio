@@ -114,6 +114,7 @@ Icestudio is a design tool focused on new comers to the FPGA world
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
 
 *Developer note*: use `npm run gettext` to extract the labels from the code.
+
 *Developer note*: use `export NWJS_BUILD_TYPE=sdk` after npm install to enable the chrome web console.
 
 ## Contributors
