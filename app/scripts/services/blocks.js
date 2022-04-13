@@ -107,8 +107,8 @@ angular.module('icestudio')
         newBasicMemory(callback);
         break;
 
-      case 'basic.code':
-        newBasicCode(callback);
+      case utils2.BASIC_CODE:
+        newBasicCode2(callback);
         break;
 
       case 'basic.info':
@@ -441,10 +441,91 @@ angular.module('icestudio')
       });
     }
 
-    
+    function newBasicCode2(callback) {
+
+      //-- Create the form
+      let form = new forms.FormBasicCode();
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }
+
+        //-- Validate values entered by the user
+        //-- There cannot be inputs, outputs and params with the same name
+        //-- Check it!!!
+
+        //-- Array for storing all the port names created
+        let allPortnames = [];
+
+        //-- Array with the input/output given by the user
+        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
+
+        //-- Add the array with the input parameters
+        userPorts = userPorts.concat(form.inParamsInfo);
+
+        //-- Analyze all the port names, one by one
+        for (let portInfo of userPorts) {
+
+          //-- The current element is only checked if it exist
+          if (portInfo) {
+
+            //-- Check if the current name is already in the array
+            if (allPortnames.includes(portInfo.name)) {
+
+              //-- It means that the port name is duplicated
+              //-- Show an error and return
+              evt.cancel = true;
+              resultAlert = alertify.warning(
+                  gettextCatalog.getString('Duplicated port name: ') + 
+                  portInfo.name
+              );
+              return;
+            }
+
+            //-- Name is unique so far. Insert it into the array
+            allPortnames.push(portInfo.name);
+          }
+        }
+
+        //-- OK. There are no duplicated names. Proceed!!
+
+        //-- Create a blank block
+        let blockInstance = new utils2.CodeBlock(
+          form.inPortsInfo,
+          form.outPortsInfo,
+          form.inParamsInfo
+        );
+
+        if (callback) {
+
+          //-- Build the cell
+          let cell = loadBasicCode(blockInstance);
+
+          //-- Execute the callback function passing the
+          //-- new cell as an argument (An array of one cell)
+          callback([cell]);
+        }
+
+      });
+    }  
 
 
+/*
     function newBasicCode(callback, block) {
+
+      //-- Create a blank block
       var blockInstance = {
         id: null,
         data: {
@@ -456,11 +537,15 @@ angular.module('icestudio')
         position: { x: 0, y: 0 },
         size: { width: 192, height: 128 }
       };
+
+
       var defaultValues = [
         '',
         '',
         ''
       ];
+
+
       if (block) {
         blockInstance = block;
         var index, port;
@@ -486,6 +571,8 @@ angular.module('icestudio')
           defaultValues[2] = params.join(' , ');
         }
       }
+
+
       var formSpecs = [
         {
           type: 'text',
@@ -503,11 +590,13 @@ angular.module('icestudio')
           value: defaultValues[2]
         }
       ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
-        var params = values[2].replace(/\s*,\s*/g, ',').split(',');
-        var allNames = [];
+
+
+      utils.renderForm(formSpecs, function (evt, values) {*/
+      //  var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
+      //  var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
+      //  var params = values[2].replace(/\s*,\s*/g, ',').split(',');
+      /*  var allNames = [];
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
@@ -549,6 +638,7 @@ angular.module('icestudio')
             nob++;
           }
         }
+
         if(nib>=inPorts.length && nob >= outPorts.length){
                evt.cancel = true;
               resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
@@ -621,9 +711,11 @@ angular.module('icestudio')
           resultAlert = alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
         }
       });
-    }
+    }*/
+    
 
 
+/*
     function getPins(portInfo) {
       var pins = [];
       if (portInfo.range) {
@@ -636,7 +728,7 @@ angular.module('icestudio')
       }
       return pins;
     }
-
+*/
 
 
     /*
@@ -1274,7 +1366,7 @@ angular.module('icestudio')
           editBasicMemory(cellView);
           break;
 
-        case 'basic.code':
+        case utils2.BASIC_CODE:
           editBasicCode(cellView, callback);
           break;
 
@@ -1632,46 +1724,226 @@ angular.module('icestudio')
       });
     }
 
+    //-----------------------------------------------------------------------
+    //-- Convert an array of portsInfo to a String
+    //-- Ej. portsInfo --> "a,b[1:0],c"
+    //--
+    //-- INPUTS:
+    //--   * An array of portsInfo
+    //--
+    //-- RETURNS:
+    //--   * A string with the names and range string separated by commas
+    //-----------------------------------------------------------------------
+    function portsInfo2Str(portsInfo) {
+
+      let portNamesArray = [];
+
+      //-- Get the portnames as an Array
+      portsInfo.forEach(port => {
+        let range = port.range || '';
+        let name = port.name + range;
+
+        portNamesArray.push(name);
+      });
+
+      //-- Convert the portnames as strings
+      let portsNameStr = portNamesArray.join(',');
+
+      //-- Return the string
+      return portsNameStr;
+    }
+
+
     function editBasicCode(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var blockInstance = {
-        id: block.id,
-        data: utils.clone(block.data),
-        type: 'basic.code',
-        position: block.position,
-        size: block.size
-      };
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-      newBasicCode(function (cells) {
+
+      //-- Get information from the joint graphics library
+      let block = cellView.model.attributes;
+
+      //-- Get the input port names as a string
+      let inPortNames = portsInfo2Str(block.data.ports.in);
+
+      //-- Get the output port names as a string
+      let outPortNames = portsInfo2Str(block.data.ports.out);
+
+      //-- Get the input param names as a string
+      let inParamNames = portsInfo2Str(block.data.params);
+
+      //-- Create the form
+      let form = new forms.FormBasicCode(
+        inPortNames,
+        outPortNames,
+        inParamNames
+      );
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }
+
+        //-- Validate values entered by the user
+        //-- There cannot be inputs, outputs and params with the same name
+        //-- Check it!!!
+
+        //-- Array for storing all the port names created
+        let allPortnames = [];
+
+        //-- Array with the input/output given by the user
+        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
+
+        //-- Add the array with the input parameters
+        userPorts = userPorts.concat(form.inParamsInfo);
+
+        //-- Analyze all the port names, one by one
+        for (let portInfo of userPorts) {
+
+          //-- The current element is only checked if it exist
+          if (portInfo) {
+
+            //-- Check if the current name is already in the array
+            if (allPortnames.includes(portInfo.name)) {
+
+              //-- It means that the port name is duplicated
+              //-- Show an error and return
+              evt.cancel = true;
+              resultAlert = alertify.warning(
+                  gettextCatalog.getString('Duplicated port name: ') + 
+                  portInfo.name
+              );
+              return;
+            }
+
+            //-- Name is unique so far. Insert it into the array
+            allPortnames.push(portInfo.name);
+          }
+        }
+
+        //-- OK. There are no duplicated names. Proceed!!
+
+        //-- TODO: Detect if change has been made
+        //--  if not, just return (do nothing)
+
+        //-- Create a blank block
+        let blockInstance = new utils2.CodeBlock(
+          form.inPortsInfo,
+          form.outPortsInfo,
+          form.inParamsInfo
+        );
+
+        //-- Assign the size and possition
+        blockInstance.position = block.position;
+        blockInstance.size = block.size;
+        blockInstance.id = block.id;
+        blockInstance.data.code = block.data.code;
+
         if (callback) {
-          var cell = cells[0];
+
+          //-- Build the cell
+          let cell = loadBasicCode(blockInstance);
+
           if (cell) {
-            var connectedWires = graph.getConnectedLinks(cellView.model);
+
+            //-- Get the graphical model 
+            let graph = cellView.paper.model;
+
+            //-- Get all the wires of the current block
+            let connectedWires = graph.getConnectedLinks(cellView.model);
+
+            //---------- Chage the block
             graph.startBatch('change');
+
+            //-- Remove the current block
             cellView.model.remove();
+
+            //-- Call the callback to add the new block
             callback(cell);
-            // Restore previous connections
-            for (var w in connectedWires) {
-              var wire = connectedWires[w];
-              var size = wire.get('size');
-              var source = wire.get('source');
-              var target = wire.get('target');
-              if ((source.id === cell.id && containsPort(source.port, size, cell.get('rightPorts'))) ||
-                (target.id === cell.id && containsPort(target.port, size, cell.get('leftPorts')) && (source.port !== 'constant-out' && source.port !== 'memory-out')) ||
-                (target.id === cell.id && containsPort(target.port, size, cell.get('topPorts')) && (source.port === 'constant-out' || source.port === 'memory-out'))) {
+
+            //-- Restore previous connections
+            for (let w in connectedWires) {
+
+              //-- Get the wire
+              let wire = connectedWires[w];
+
+              //-- Get its size
+              let size = wire.get('size');
+
+              //-- Get source and target cells
+              let source = wire.get('source');
+              let target = wire.get('target');
+
+              //-- TODO: This BIG if needs more comments and more
+              //--  refactoring. It is too complex
+
+              //-- Check if the current wire should be kept
+              if (
+                  //-- Condition I: Wires that starts from the output ports
+                  //-- if the port name and size has not been changed, the
+                  //-- wire is kept
+                  ( source.id === cell.id && 
+                    containsPort(source.port, size, cell.get('rightPorts'))
+                  ) ||
+
+                  //-- Condition II: Wires that ends in the input ports
+                  //-- if the port name and size has not been changed
+                  //-- and the source block are not a constant or memory
+                  //-- blocks
+                  ( target.id === cell.id && 
+                    containsPort(target.port, size, cell.get('leftPorts')) && 
+                    ( source.port !== 'constant-out' && 
+                      source.port !== 'memory-out'
+                    )
+                  ) ||
+
+                  //-- Condition III: Wire that ends in the input param ports
+                  //-- only if the source blocks are a constant or memory 
+                  //-- blocks
+                  ( target.id === cell.id && 
+                    containsPort(target.port, size, cell.get('topPorts')) && 
+                    (source.port === 'constant-out' || 
+                    source.port === 'memory-out')
+                  )
+                ) {
+
+                //-- Add the current wire (the wire is kept)      
                 graph.addCell(wire);
               }
             }
+
+            //-- We are done. Block changed
             graph.stopBatch('change');
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
+
+            //-- Notify to the user
+            resultAlert = alertify.success(
+              gettextCatalog.getString('Block updated'));
+
+          }  
         }
-      }, blockInstance);
+      });
     }
 
+    //-----------------------------------------------------------------
+    //-- Check if the given *port* with the given *size* is inside the  
+    //-- list of given *ports*
+    //--
+    //-- INPUTS:
+    //--   * port: Port to check
+    //--   * size: Port's size
+    //--   * ports: List of ports to check
+    //--
+    //--- Returns:
+    //--   * true: Port located inside ports
+    //--   * false: Port NOT inside ports
+    //------------------------------------------------------------------
     function containsPort(port, size, ports) {
       var found = false;
       for (var i in ports) {
@@ -1696,6 +1968,6 @@ angular.module('icestudio')
       cellView.apply();
     }
 
-  });
+});
 
 
