@@ -5,7 +5,7 @@
 .playground {
   max-height: calc(100% - 30px);
   overflow: auto;
-  margin-top: 35px;
+  margin-top: 5px;
 }
 
 /* Start_spinner */

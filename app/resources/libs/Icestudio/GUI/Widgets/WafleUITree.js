@@ -9,7 +9,8 @@ class WafleUITree {
     this.renderer = new WafleTemplate();
     this.id = -1;
     this.dom=false;
-    //ebus.subscribe("block.loadedFromFile", "blockContentLoaded", this);
+    this.blocksRQ=[]; //-- Blocks retrieved queue, store the pending blocks to put into design
+    iceStudio.bus.events.subscribe("localDatabase.retrieved", "blockRetrieved", this);
   }
 
   setId(id) {
@@ -64,43 +65,43 @@ class WafleUITree {
                                                                   </div>
                                                                 {{/isFolder}}
                                                                 {{#isLeaf}}
-                                                                <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                                                <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                                                               {{/isLeaf}}    
                                                               {{/items}}       
                                                             </div>
                                                           {{/isFolder}}
                                                           {{#isLeaf}}
-                                                          <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                                          <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                                                         {{/isLeaf}}    
                                                         {{/items}}        
                                                       </div>
                                                     {{/isFolder}}
                                                     {{#isLeaf}}
-                                                    <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                                    <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                                                   {{/isLeaf}}    
                                                   {{/items}}           
                                               </div>
                                             {{/isFolder}}
                                             {{#isLeaf}}
-                                            <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                            <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                                           {{/isLeaf}}    
                                           {{/items}}            
                                         </div>
                                       {{/isFolder}}
                                       {{#isLeaf}}
-                                      <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                      <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                                     {{/isLeaf}}    
                                     {{/items}}
                                   </div>
                                 {{/isFolder}}
                                 {{#isLeaf}}
-                                <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                                <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                               {{/isLeaf}}    
                                 {{/items}}
                           </div>
                       {{/isFolder}}
                       {{#isLeaf}}
-                        <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="treeView.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
+                        <span class="tree-view--leaf" data-nodeid="{{{id}}}"  data-guievt="click" data-handler="this.getBlock" data-args='{"id":"{{{id}}}"}'><i class="block-icon"></i><input type="checkbox"  data-guievt="checkbox" data-handler="treeView.selectBlock" data-args='{"id":"{{{id}}}"}'>{{{name}}}<i class="in-use"></i></span>
                       {{/isLeaf}}    
                      {{/items}}
                   </div>
@@ -118,7 +119,6 @@ toggle(root,folder) {
     let search = this.toggleFolderState(this.vtree, folder);
     if (search) {
       let el= iceStudio.gui.el( `.tree-view--folder[data-nodeid="${folder}"]`,root);
-      console.log('FOLDER',el);
       iceStudio.gui.elToggleClass(el[0],'closed');
     }
   }
@@ -158,6 +158,73 @@ toggle(root,folder) {
     }
     return false;
   }
+
+ blockRetrieved(item){
+   console.log('BLOCK RETRIEVED',item);
+   for(let i=0;i< this.blocksRQ.length;i++){
+     if(this.blocksRQ[i].id=== item.id){
+      console.log('AL DISEÑO!!!');
+        iceStudio.bus.events.publish("block.addFromFile", item.path);
+        this.blocksRQ.splice(i,1);
+      }
+    } 
+ }
+ getBlock(root,args) {
+      console.log('GET BLOCK',args);
+       let item = {
+        id: args.id,
+        store:'blockAssets',
+        block:false
+      };
+
+      let transaction = {
+        database: {dbId:'Collections',
+        storages:['blockAssets'],'version':1},
+        data: item
+      };
+      this.blocksRQ.push(item);
+      iceStudio.bus.events.publish("localDatabase.retrieve", transaction);
+    
+   /* let transaction = this.assetsDB.db.transaction(
+      ["blockAssets"],
+      "readwrite"
+    );
+
+    transaction.onerror = function (event) {
+      console.log(
+        "There has been an error with retrieving your data: " +
+        transaction.error
+      );
+    };
+
+    transaction.oncomplete = function (event) { };
+    let store = transaction.objectStore("blockAssets")
+
+    var request = store.get(args.id);
+    request.onerror = function (event) {
+      // Handle errors!
+    };
+    request.onsuccess = function (event) {
+      ebus.publish("block.addFromFile", request.result.path);
+    };
+    this.setInUse(opts, args.id);
+**/
+  }
+
+  setInUse(opts, blockId) {
+    this.guiOpts = opts;
+    //  let search = this.toggleFolderState(this.vtree, folder);
+    // if (search) {
+    this.guiOpts.el = `.tree-view--leaf[data-nodeid="${blockId}"]`;
+    this.guiOpts.elClass = "is-in-use";
+    gui.publish("gbusAddClass", this.guiOpts);
+    this.guiOpts.parentClass = "tree-view--folder";
+    this.guiOpts.parentRoot = "#tree-view-root";
+    gui.publish("gbusAddClassToParents", this.guiOpts);
+
+    // }
+  }
+
 
 
 }

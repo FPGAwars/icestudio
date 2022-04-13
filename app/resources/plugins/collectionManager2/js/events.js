@@ -15,8 +15,11 @@ function collectionsRender(tree){
     collectionsTree = new WafleUITree();
     collectionsTree.setId(pluginUUID);
     collectionsTree.setTree(tree);
-    $(pluginRoot).empty().append(collectionsTree.render());
-    iceStudio.gui.activateEventsFromId(`#tree-view-${pluginUUID}`,pluginHost,mouseEvents);
+    let playground = iceStudio.gui.el('.playground',pluginHost);
+    if(playground.length){
+        playground[0].innerHTML=collectionsTree.render();
+        iceStudio.gui.activateEventsFromId(`#tree-view-${pluginUUID}`,pluginHost,mouseEvents);
+    }
 }
 
 function registerEvents(){
@@ -35,6 +38,9 @@ function mouseEvents(eventType,handler,args){
             switch(handler){
                 case 'this.toggleFolder':
                 collectionsTree.toggle(pluginHost,args.id);
+                break;
+                case 'this.getBlock':
+                collectionsTree.getBlock(pluginHost,args);
                 break;
             }
             break;

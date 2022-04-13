@@ -1,8 +1,8 @@
 class DbEngineIndexDB {
 
   constructor(config) {
-    this.config = (typeof config === 'undefined') ? {  } : config;
-    this.databases={};
+    this.config = (typeof config === 'undefined') ? {} : config;
+    this.databases = {};
   }
 
   isReady(dbId) {
@@ -13,38 +13,69 @@ class DbEngineIndexDB {
     let _this = this;
 
     if (!this.isReady(schema.dbId)) {
-      this.databases[schema.dbId]={db:false,version:schema.version};
-        this.databases[schema.dbId].openRequest = indexedDB.open(
-          schema.dbId,
-          schema.version
-        );
+      this.databases[schema.dbId] = { db: false, version: schema.version };
+      this.databases[schema.dbId].openRequest = indexedDB.open(
+        schema.dbId,
+        schema.version
+      );
 
-        this.databases[schema.dbId].openRequest.onupgradeneeded = function (e) {
-          var db = e.target.result;
-          for(let i=0;i<schema.storages.length;i++){
+      this.databases[schema.dbId].openRequest.onupgradeneeded = function (e) {
+        var db = e.target.result;
+        for (let i = 0; i < schema.storages.length; i++) {
           if (!db.objectStoreNames.contains(schema.storages[i])) {
             let storage = db.createObjectStore(schema.storages[i], { keyPath: "id" });
             storage.createIndex("id", "id", { unique: true });
-            }
           }
-        };
-
-        this.databases[schema.dbId].openRequest.onsuccess = function (e) {
-          _this.databases[schema.dbId].db = e.target.result;
-          if(typeof onOpen !== 'undefined') {
-            onOpen();
-          }
-        };
-      
-      }else{
-        if(typeof onOpen !== 'undefined') {
-        onOpen();
         }
+      };
+
+      this.databases[schema.dbId].openRequest.onsuccess = function (e) {
+        _this.databases[schema.dbId].db = e.target.result;
+        if (typeof onOpen !== 'undefined') {
+          onOpen();
+        }
+      };
+
+    } else {
+      if (typeof onOpen !== 'undefined') {
+        onOpen();
       }
     }
+  }
 
-    store(item){
-      if(this.isReady(item.database.dbId)){
+  retrieve(item) {
+
+    if (this.isReady(item.database.dbId)) {
+      let transaction = this.databases[item.database.dbId].db.transaction(
+        [item.data.store],
+        "readwrite"
+      );
+
+
+      transaction.onerror = function (event) {
+        console.log(
+          "There has been an error with retrieving your data: " +
+          transaction.error
+        );
+      };
+
+      transaction.oncomplete = function (event) { };
+      let store = transaction.objectStore("blockAssets")
+
+      var request = store.get(item.data.id);
+      request.onerror = function (event) {
+        // Handle errors!
+      };
+      request.onsuccess = function (event) {
+          console.log('RETRIVE',event,request.result);
+        //  ebus.publish("block.addFromFile", request.result.path);
+        iceStudio.bus.events.publish('localDatabase.retrieved', request.result);
+      };
+    }
+  }
+
+  store(item) {
+    if (this.isReady(item.database.dbId)) {
       let transaction = this.databases[item.database.dbId].db.transaction(
         [item.data.store],
         "readwrite"
@@ -71,9 +102,9 @@ class DbEngineIndexDB {
         }
       };
 
-      request.onsuccess = function (e) {      
-          iceStudio.bus.events.publish('localDatabase.stored', item);
+      request.onsuccess = function (e) {
+        iceStudio.bus.events.publish('localDatabase.stored', item);
       };
     }
-    }
+  }
 }

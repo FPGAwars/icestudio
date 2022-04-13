@@ -4,6 +4,7 @@
     border: 1px solid #888888;
     border-radius: 7px;
     background-color: #444;
+    z-index:555;
 }
 
 .ics-wm-window--topbar {
@@ -38,10 +39,10 @@
 
 .ics-wm-window--body {
     position: absolute;
-    top: 24px;
+    top: 22px;
     left: 0;
     width: 100%;
-    height: calc(100% - (24px + 18px));
+    height: calc(100% - (22px + 18px));
     overflow-y: auto;
     overflow-x: hidden;
 }
