@@ -1364,43 +1364,6 @@ angular.module('icestudio')
           return;
         }
 
-        //-- Validate values entered by the user
-        //-- There cannot be inputs, outputs and params with the same name
-        //-- Check it!!!
-
-        //-- Array for storing all the port names created
-        let allPortnames = [];
-
-        //-- Array with the input/output given by the user
-        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
-
-        //-- Add the array with the input parameters
-        userPorts = userPorts.concat(form.inParamsInfo);
-
-        //-- Analyze all the port names, one by one
-        for (let portInfo of userPorts) {
-
-          //-- The current element is only checked if it exist
-          if (portInfo) {
-
-            //-- Check if the current name is already in the array
-            if (allPortnames.includes(portInfo.name)) {
-
-              //-- It means that the port name is duplicated
-              //-- Show an error and return
-              evt.cancel = true;
-              resultAlert = alertify.warning(
-                  gettextCatalog.getString('Duplicated port name: ') + 
-                  portInfo.name
-              );
-              return;
-            }
-
-            //-- Name is unique so far. Insert it into the array
-            allPortnames.push(portInfo.name);
-          }
-        }
-
         //-- OK. There are no duplicated names. Proceed!!
 
         //-- TODO: Detect if change has been made
