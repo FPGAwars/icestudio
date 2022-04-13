@@ -379,6 +379,29 @@ angular.module('icestudio')
 
       let form = new forms.FormBasicMemory();
 
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }   
+
+        //-- OK. All the values are ok. Proceed!!
+
+        //-- TODO
+
+
+      });
+
     }
 
     function newBasicMemory(callback) {
