@@ -511,8 +511,6 @@ angular.module('icestudio')
               } else {
 
                 var data = false;
-
-                let name = basename(filepath);
                 data = isJSON(content);
 
                 if (data) {
