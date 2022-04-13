@@ -866,7 +866,7 @@ angular
               });
             }
           );
-          ICEpm.publishAt('all', 'ui.updateTheme', { uiTheme: theme });
+          //ICEpm.publishAt('all', 'ui.updateTheme', { uiTheme: theme });
         }
       };
 
@@ -1223,7 +1223,7 @@ angular
       $scope.reloadCollections = function () {
         collections.loadAllCollections();
         collections.selectCollection(common.selectedCollection.path);
-        ICEpm.setEnvironment(common);
+        //ICEpm.setEnvironment(common);
       };
 
       $scope.removeCollection = function (collection) {
@@ -1759,7 +1759,6 @@ angular
       $(document).on("mousemove", function (e) {
         mousePosition.x = e.pageX;
         mousePosition.y = e.pageY;
-
         if (mouseDownTB === true){
           let posY = mousePosition.y - 40;
           let posX = mousePosition.x - 80;
@@ -2001,7 +2000,7 @@ angular
           }
         }
       }
-      ICEpm.ebus.subscribe("menu.collection", ebusCollection);
+      iceStudio.bus.events.subscribe("menu.collection", ebusCollection);
     }
   );
 

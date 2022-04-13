@@ -95,7 +95,7 @@ class IceLogger {
             //-- Convert the input argument into a string
             const txt = this._prettyPrint(msg);
 
-            //-- Write the sting into the log file
+            //-- Write the string into the log file
             this.fs.appendFileSync(this.logFile, `${txt}\n`);
         }
     }

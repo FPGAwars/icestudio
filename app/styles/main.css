@@ -471,3 +471,11 @@ opacity:0.4;
 }
 
 /* END plugin menu */
+
+/* START embedded plugin global css */
+.plugin-wrapper{
+  z-index:777;
+}
+/* END embedded plugin global css */
+
+

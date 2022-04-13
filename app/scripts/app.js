@@ -11,11 +11,12 @@
 //-- Disable the jshint Warning: "xxxx defined but never used"
 /*jshint unused:false*/
 
-
-//-- Global Plugin Manager
-//-- It controlls all the plugins
-//-- Global object declaration
-var ICEpm = new IcePlugManager();
+//-- Global Icestudio
+//-- this is the core system with services, api and communications.
+//-- Group inside different object for eficiency model by V8 engine.
+//-- The global variable should be declared as "var" and not "let" 
+//-- because is accesible from popups windows
+var iceStudio = new Icestudio();
 
 //-- Global CONSOLE. Used for Debugging
 //-- The log file by default is "icestudio.log", located in the

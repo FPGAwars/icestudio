@@ -1,19 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <title>Icestudio Plugin Sample</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- External style sheet -->
-    <link rel="stylesheet" href="style.css">
+<head>
+  <title>Icestudio Plugin Sample</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  </head>
+  <!-- External style sheet -->
+  <link rel="stylesheet" href="style.css">
 
-  <body>
-    <h1>This is an Icestudio Plugin Sample</h1>
-    <img src="img/icestudio-logo.png">
-    <img src="img/fpgawars-logo.png">
-  </body>
+</head>
+
+<body>
+  <h1>This is an Icestudio Plugin Sample</h1>
+  <img src="img/icestudio-logo.png">
+  <img src="img/fpgawars-logo.png">
+
+  <script>
+
+    function callbackTest(){
+      console.log('Test from callback generated in '+pluginID);
+    }
+
+    function onIcestudioPluginLoaded() {
+
+        console.log('Plugin loaded');
+        iceStudio.bus.events.subscribe('callbackTest',callbackTest);
+    }
+
+    function onClose(){
+      alert('Bye!')
+    }
+
+    function onLoad(){
+      alert('Inicializando');
+
+    }
+  </script>
+</body>
+
 </html>

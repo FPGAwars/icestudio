@@ -1,0 +1,56 @@
+.ics-wm-window {
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid #888888;
+    border-radius: 7px;
+    background-color: #444;
+    z-index:555;
+}
+
+.ics-wm-window--topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    display: flex;
+    flex-flow: row;
+    gap: 7px;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: move;
+}
+
+.ics-wm-window--topbar--button {
+    border-radius: 100px;
+    width: 14px;
+    height: 14px;
+    font-size: 13px;
+    text-align: center;
+    background-color: #606060;
+    cursor: pointer;
+    line-height:12px;
+}
+
+.ics-wm-window--topbar--button:first-child {
+    margin-left: 5px;
+}
+
+
+.ics-wm-window--body {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - (22px + 18px));
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ics-wm-window--bottombar {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 18px;
+}
