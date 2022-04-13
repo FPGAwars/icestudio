@@ -1,34 +1,35 @@
 "use strict";
 /*jshint unused:false*/
 class WafleUITree {
- constructor(opts) {
+  constructor(opts) {
     this.config = opts || {};
     if (typeof this.config.dbVersion === "undefined") this.config.dbVersion = 1;
     this.vtree = {};
     this.groupBlocks = [];
     this.renderer = new WafleTemplate();
     this.id = -1;
-    this.dom=false;
-    this.blocksRQ=[]; //-- Blocks retrieved queue, store the pending blocks to put into design
+    this.dom = false;
+    this.blocksRQ = []; //-- Blocks retrieved queue, store the pending blocks to put into design
     iceStudio.bus.events.subscribe("localDatabase.retrieved", "blockRetrieved", this);
   }
 
+  setDomRoot(root) {
+    this.dom = root;
+  }
   setId(id) {
     this.id = id;
   }
-  setTree(tree){
-    this.vtree=tree;
+  setTree(tree) {
+    this.vtree = tree;
   }
-  render()
-  {
-    return (this.vtree===false)? '' : this.renderer.render (this.tpl(), {
+  render() {
+    return (this.vtree === false) ? '' : this.renderer.render(this.tpl(), {
       tree: this.vtree,
     });
-    
+
   }
 
-  tpl()
-  {
+  tpl() {
     return `<div id="tree-view-${this.id}" class="tree-view-root tree-view">
               {{#tree}}
                 {{#isFolder}}
@@ -115,11 +116,11 @@ class WafleUITree {
               <div class="blocks-db"></div>
               </div>`;
   }
-toggle(root,folder) {
+  toggle(root, folder) {
     let search = this.toggleFolderState(this.vtree, folder);
     if (search) {
-      let el= iceStudio.gui.el( `.tree-view--folder[data-nodeid="${folder}"]`,root);
-      iceStudio.gui.elToggleClass(el[0],'closed');
+      let el = iceStudio.gui.el(`.tree-view--folder[data-nodeid="${folder}"]`, root);
+      iceStudio.gui.elToggleClass(el[0], 'closed');
     }
   }
 
@@ -159,72 +160,47 @@ toggle(root,folder) {
     return false;
   }
 
- blockRetrieved(item){
-   console.log('BLOCK RETRIEVED',item);
-   for(let i=0;i< this.blocksRQ.length;i++){
-     if(this.blocksRQ[i].id=== item.id){
-      console.log('AL DISEÑO!!!');
+  blockRetrieved(item) {
+    for (let i = 0; i < this.blocksRQ.length; i++) {
+      if (this.blocksRQ[i].id === item.id) {
         iceStudio.bus.events.publish("block.addFromFile", item.path);
-        this.blocksRQ.splice(i,1);
+        this.blocksRQ.splice(i, 1);
       }
-    } 
- }
- getBlock(root,args) {
-      console.log('GET BLOCK',args);
-       let item = {
-        id: args.id,
-        store:'blockAssets',
-        block:false
-      };
-
-      let transaction = {
-        database: {dbId:'Collections',
-        storages:['blockAssets'],'version':1},
-        data: item
-      };
-      this.blocksRQ.push(item);
-      iceStudio.bus.events.publish("localDatabase.retrieve", transaction);
-    
-   /* let transaction = this.assetsDB.db.transaction(
-      ["blockAssets"],
-      "readwrite"
-    );
-
-    transaction.onerror = function (event) {
-      console.log(
-        "There has been an error with retrieving your data: " +
-        transaction.error
-      );
+    }
+  }
+  getBlock(root, args) {
+    let item = {
+      id: args.id,
+      store: 'blockAssets',
+      block: false
     };
 
-    transaction.oncomplete = function (event) { };
-    let store = transaction.objectStore("blockAssets")
-
-    var request = store.get(args.id);
-    request.onerror = function (event) {
-      // Handle errors!
+    let transaction = {
+      database: {
+        dbId: 'Collections',
+        storages: ['blockAssets'], 'version': 1
+      },
+      data: item
     };
-    request.onsuccess = function (event) {
-      ebus.publish("block.addFromFile", request.result.path);
-    };
-    this.setInUse(opts, args.id);
-**/
+    this.blocksRQ.push(item);
+    iceStudio.bus.events.publish("localDatabase.retrieve", transaction);
+    this.setInUse(item.id);
   }
 
-  setInUse(opts, blockId) {
-    this.guiOpts = opts;
-    //  let search = this.toggleFolderState(this.vtree, folder);
-    // if (search) {
-    this.guiOpts.el = `.tree-view--leaf[data-nodeid="${blockId}"]`;
-    this.guiOpts.elClass = "is-in-use";
-    gui.publish("gbusAddClass", this.guiOpts);
-    this.guiOpts.parentClass = "tree-view--folder";
-    this.guiOpts.parentRoot = "#tree-view-root";
-    gui.publish("gbusAddClassToParents", this.guiOpts);
-
-    // }
+  setInUse(blockId) {
+    let leafs = iceStudio.gui.el(`.tree-view--leaf[data-nodeid="${blockId}"]`, this.dom);
+    for (let i = 0; i < leafs.length; i++) {
+      iceStudio.gui.elAddClass(leafs[i], 'is-in-use');
+      this.setParentInUse(leafs[i]);
+    }
   }
 
+  setParentInUse(el) {
+    if (iceStudio.gui.elHasClass(el.parentNode, 'tree-view--folder')) {
+      iceStudio.gui.elAddClass(el.parentNode, 'is-in-use');
+      this.setParentInUse(el.parentNode);
+    }
+  }
 
 
 }

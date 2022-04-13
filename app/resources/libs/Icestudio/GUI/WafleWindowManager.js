@@ -1,18 +1,14 @@
 'use strict';
 
-class WafleWindowManager 
-{
-    constructor() 
-    {
+class WafleWindowManager {
+    constructor() {
         this.windows = {};
         this.init();
     }
 
-    _registerWindowDragAndDrop() 
-    {
+    _registerWindowDragAndDrop() {
 
-        function draggableFilter(e) 
-        {
+        function draggableFilter(e) {
             if (!e.target.classList.contains("ics-wm__is-draggable")) {
                 return;
             }
@@ -24,7 +20,7 @@ class WafleWindowManager
 
             //-- First check if mouse input exists, if not , we suppose you have a touch input
             if (e.clientX) {
-                target.oldX = e.clientX; 
+                target.oldX = e.clientX;
                 target.oldY = e.clientY;
             } else {
                 //-- Use the 0 index for the first touch, for the momment we dont use multiple touchs
@@ -65,12 +61,12 @@ class WafleWindowManager
         document.onmousedown = draggableFilter;
         document.ontouchstart = draggableFilter;
     }
-    
+
     init() {
         this._registerWindowDragAndDrop();
 
     }
-    
+
     addWindow(title, id) {
         if (typeof this.windows[id] === 'undefined') {
             let _this = this;
@@ -82,30 +78,28 @@ class WafleWindowManager
                 htmlClass: 'ics-wm-window'
             });
             let buttonClose = iceStudio.gui.el(`#${id} .ics-wm-window__close`);
-            function closeWindowByPointer(e){
-                let targetId=false;
-                targetId= e.target.getAttribute('data-winid');
-                if(targetId===false || targetId===null || targetId==='') return false;
+            function closeWindowByPointer(e) {
+                let targetId = false;
+                targetId = e.target.getAttribute('data-winid');
+                if (targetId === false || targetId === null || targetId === '') return false;
 
                 let buttonClose = iceStudio.gui.el(`${targetId} .ics-wm-window__close`);
                 for (let i = 0; i < buttonClose.length; i++) {
-                          buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
+                    buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
                 }
-                const id = targetId.replace('#','');
+                const id = targetId.replace('#', '');
                 _this.closeWindow(id);
             }
             for (let i = 0; i < buttonClose.length; i++) {
-                  buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
-                  buttonClose[i].addEventListener("click", closeWindowByPointer, true);
-              }
+                buttonClose[i].removeEventListener("click", closeWindowByPointer, true);
+                buttonClose[i].addEventListener("click", closeWindowByPointer, true);
+            }
         }
     }
     closeWindow(id) {
-       iceStudio.bus.events.publish(`${id}::Terminate`, false, id);
-        this.windows[id].close(); 
-       console.log(this.windows,id);
+        iceStudio.bus.events.publish(`${id}::Terminate`, false, id);
+        this.windows[id].close();
         delete this.windows[id];
-        console.log(this.windows,id);
-        
+
     }
 }

@@ -2,8 +2,7 @@
 
 class WafleGUI {
 
-  constructor(onLoad) 
-  {
+  constructor(onLoad) {
     this.dom = {
       root: false,
       menu: false,
@@ -20,8 +19,7 @@ class WafleGUI {
 
   dummy() { }
 
-  init() 
-  {
+  init() {
     this.dom = {
       root: this.el("body")[0],
       menu: this.el("#menu"),
@@ -60,24 +58,21 @@ class WafleGUI {
     }
   }
 
-  getNode(id)
-  {
+  getNode(id) {
     return this.el(`#${id}`);
   }
 
-  addDiv(id, cssClasses,content)
-  {
+  addDiv(id, cssClasses, content) {
     let html = `<div id="${id}" class="${cssClasses}">${content}</div>`;
     this.dom.root.insertAdjacentHTML("beforeend", html);
     return this.getNode(id);
   }
-  removeDiv(id){
+  removeDiv(id) {
     let e = this.el(id);
-    if(typeof e !== 'undefined' && e !== null && e !== false) e.remove();
+    if (typeof e !== 'undefined' && e !== null && e !== false) e.remove();
   }
 
-  addNode(id, cssClasses)
-  {
+  addNode(id, cssClasses) {
     let html = `<div id="${id}" class="${cssClasses}"></div>`;
     this.dom.root.insertAdjacentHTML("beforeend", html);
     let node = this.el(`#${id}`);
@@ -86,19 +81,17 @@ class WafleGUI {
     return shadow;
   }
 
-  addNodeTo(rootId,id,cssClasses)
-  {
+  addNodeTo(rootId, id, cssClasses) {
     let html = `<div id="${id}" class="${cssClasses}"></div>`;
     let root = this.el(`#${rootId}`);
     root.insertAdjacentHTML("beforeend", html);
-    
+
     let node = this.el(`#${id}`);
     let shadow = node.attachShadow({ mode: "open" });
     shadow.innerHTML = '';
     return shadow;
   }
-  addNodeToSelector(selector,id,cssClasses)
-  {
+  addNodeToSelector(selector, id, cssClasses) {
     let html = `<div id="${id}" class="${cssClasses}"></div>`;
     let root = this.el(selector);
     root[0].insertAdjacentHTML("beforeend", html);
@@ -109,65 +102,60 @@ class WafleGUI {
   }
 
 
-  removeNode(elNode){
+  removeNode(elNode) {
     elNode.parentNode.removeChild(elNode);
   }
 
-  setNodeContent(shadow, html)
-  {
+  setNodeContent(shadow, html) {
     shadow.innerHTML = html;
   }
 
-  setNodeStyle(shadow, css)
-  {
+  setNodeStyle(shadow, css) {
     let style = document.createElement("style");
     style.textContent = css;
     shadow.appendChild(style);
   }
-  
-  setNodeScript(rootId,uuid,shadow, scripts,views) 
-  {
-    if(typeof views === 'undefined' ){
-        views={};
-    } 
+
+  setNodeScript(rootId, uuid, shadow, scripts, views) {
+    if (typeof views === 'undefined') {
+      views = {};
+    }
 
     let scriptnode = document.createElement('script');
     scriptnode.setAttribute("id", `scriptnode-${uuid}`);
     let code = `(function(win, doc, $,_self) {`;
-    if (typeof views !== 'undefined' && views !== false){
-         code=`${code}                     
+    if (typeof views !== 'undefined' && views !== false) {
+      code = `${code}                     
                let pluginViews=${JSON.stringify(views)};`;
-    }    
-    if (typeof shadow !== 'undefined' && shadow !== false){
-        code =`${code}
+    }
+    if (typeof shadow !== 'undefined' && shadow !== false) {
+      code = `${code}
                let pluginRoot=$('#${rootId}')[0].shadowRoot;
                let pluginHost=$('#${rootId}')[0];`;
     }
-    code=`${code}
+    code = `${code}
          let pluginUUID='${uuid}';
          ${scripts.join(';')}
          })(window, document, jQuery);`
-    
+
     scriptnode.textContent = code;
-    
-    if(typeof shadow !== 'undefined' && shadow !== false){
+
+    if (typeof shadow !== 'undefined' && shadow !== false) {
       shadow.appendChild(scriptnode);
-    }else{
+    } else {
       this.dom.root.appendChild(scriptnode);
     }
   }
 
-  addGlobalStyle( id, css ) 
-  {
+  addGlobalStyle(id, css) {
     document.head.insertAdjacentHTML("beforeend", `<style id="plugin-host--${id}">${css}</style>`);
   }
 
-  el(selector, root)
-  {
+  el(selector, root) {
     let selectorType = "querySelectorAll";
     let multiple = true;
-  
-    if (selector.indexOf("#") === 0 && selector.indexOf('.')<0 && selector.indexOf(' ')<0) {
+
+    if (selector.indexOf("#") === 0 && selector.indexOf('.') < 0 && selector.indexOf(' ') < 0) {
       selectorType = "getElementById";
       selector = selector.substr(1, selector.length);
       multiple = false;
@@ -175,9 +163,9 @@ class WafleGUI {
     let list = (typeof root !== 'undefined') ? root.shadowRoot[selectorType](selector) : document[selectorType](selector);
     return list;
   }
-
-  elGetParents(el, parentSelector)
-  {
+ 
+ 
+  elGetParents(el, parentSelector) {
     var parents = [];
     var p = el.parentNode;
 
@@ -186,13 +174,12 @@ class WafleGUI {
       parents.push(o);
       p = o.parentNode;
     }
-    
+
     parents.push(parentSelector); // Push that parentSelector you wanted to stop at
     return parents;
   }
 
-  elToggleClass(el, classname)
-  {
+  elToggleClass(el, classname) {
     if (el.classList) {
       el.classList.toggle(classname);
     } else {
@@ -203,17 +190,15 @@ class WafleGUI {
       }
     }
   }
-  
-  elHasClass(el, className)
-  {
+
+  elHasClass(el, className) {
     if (el.classList) {
       return el.classList.contains(className);
     }
     return !!el.className.match(new RegExp("(\\s|^)" + className + "(\\s|$)"));
   }
 
-  elAddClass(el, className)
-  {
+  elAddClass(el, className) {
     if (el.classList) {
       el.classList.add(className);
     } else if (!this.elHasClass(el, className)) {
@@ -221,8 +206,7 @@ class WafleGUI {
     }
   }
 
-  elRemoveClass(el, className)
-  {
+  elRemoveClass(el, className) {
     if (el.classList) {
       el.classList.remove(className);
     } else if (this.elHasClass(el, className)) {
@@ -231,8 +215,7 @@ class WafleGUI {
     }
   }
 
-  elHeight(el)
-  {
+  elHeight(el) {
     let style = window.getComputedStyle
       ? getComputedStyle(el, null)
       : el.currentStyle;
@@ -245,10 +228,9 @@ class WafleGUI {
   }
 
 
-  sandbox()
-  {
+  sandbox() {
     this.dom.height = window.innerHeight - (this.elHeight(this.dom.menu) + this.elHeight(this.dom.footer));
-    
+
     this.dom.width = window.innerWidth;
 
     document.documentElement.style.setProperty(
@@ -278,75 +260,47 @@ class WafleGUI {
 
     /* Only for debug purpouses, check if styles are correct */
     //let cssComp = getComputedStyle(document.documentElement);
-   // let cssSandbox = {
-   //   height: cssComp.getPropertyValue("--sandbox-height"),
+    // let cssSandbox = {
+    //   height: cssComp.getPropertyValue("--sandbox-height"),
     //  width: cssComp.getPropertyValue("--sandbox-width"),
     //};
     //return cssSandbox;
   }
 
-  eventResize()
-  {
+  eventResize() {
     this.sandbox();
   }
-  
-  registerEvents()
-  {
+
+  registerEvents() {
     let _this = this;
     function bindedResize() {
       _this.eventResize();
     }
-
     window.removeEventListener("resize", bindedResize);
     window.addEventListener("resize", bindedResize);
 
-    // save the click handler so it can be used in multiple places
-    /*this.clickHandler = this.eventClick.bind(this);
-    let clickel = false;
-    for (let i = 0; i < this.vdom.length; i++) {
-      clickel = this.el('[data-guievt="click"]', this.vdom[i].dom);
-      for (let j = 0; j < clickel.length; j++) {
-        clickel[j].removeEventListener("click", this.clickHandler, true);
-        clickel[j].addEventListener("click", this.clickHandler, true);
-      }
-    }
-    // save the click handler so it can be used in multiple places
-    this.onInputHandler = this.eventInput.bind(this);
-    for (let k = 0; k < this.vdom.length; k++) {
-      clickel = this.el('[data-guievt="checkbox"]', this.vdom[k].dom);
-      for (let l = 0; l < clickel.length; l++) {
-        clickel[l].removeEventListener("change", this.onInputHandler, true);
-        clickel[l].addEventListener("change", this.onInputHandler, true);
-      }
-    }*/
-
   }
- 
-  activateEventsFromId(id ,root,callback) 
-  {
-   function eventClick(e) {
-    // e.preventDefault();
-    // e.stopPropagation();
-    let args = false;
-    if (typeof e.target.dataset.args !== 'undefined') {
-      args = JSON.parse(e.target.dataset.args);
+
+  activateEventsFromId(id, root, callback) {
+    function eventClick(e) {
+      let args = false;
+      if (typeof e.target.dataset.args !== 'undefined') {
+        args = JSON.parse(e.target.dataset.args);
+      }
+      let handler = false;
+      if (typeof e.target.dataset.handler !== 'undefined') {
+        handler = e.target.dataset.handler;
+      }
+
+      callback('click', handler, args);
+
     }
-    let handler=false;
-    if (typeof e.target.dataset.handler !== 'undefined') {
-      handler = e.target.dataset.handler;
+    let target = this.el(`${id} [data-guievt="click"]`, root);
+    for (let j = 0; j < target.length; j++) {
+      target[j].removeEventListener("click", eventClick, true);
+      target[j].addEventListener("click", eventClick, true);
+
     }
-   
-    callback('click',handler,args); 
-    // this.publish(`gui.click.${e.target.dataset.handler}`, args);
-      // return false;
-    
-    }
-      let target= this.el(`${id} [data-guievt="click"]`,root);
-       for (let j = 0; j < target.length; j++) {
-        target[j].removeEventListener("click", eventClick, true);
-        target[j].addEventListener("click", eventClick, true);
-      
-       }      
 
   }
 }

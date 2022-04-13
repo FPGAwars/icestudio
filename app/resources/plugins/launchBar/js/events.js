@@ -8,9 +8,6 @@ function getPlugins(plist){
 }
 
 function registerEvents(){
-
-    console.log('Registradndo eventos desde plugin embebido');
-
     iceStudio.bus.events.subscribe('pluginManager.env', setupEnvironment); 
     iceStudio.bus.events.subscribe('pluginManager.updateEnv', setupEnvironment); 
     iceStudio.bus.events.subscribe('pluginManager.pluginList', getPlugins); 

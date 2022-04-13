@@ -20,9 +20,8 @@ function onRetrieve(item) {
     queueQuery.push(item);
     if (!retryingRetrieve) {
       retryingRetrieve = true;
-      db.openDatabase(item.database, retryStore);
+      db.openDatabase(item.database, retryRetrieve);
     }
-
   } else {
     db.retrieve(item);
     retryRetrieve();

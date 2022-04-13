@@ -10,21 +10,6 @@
     "launchAtStartup":false,
     "icon": "icon.svg",
     "multipleInstances": false,
-    "gui2":{
-        "type":"embedded-none",
-        "windowed":true,
-        "size":{
-            "position":"fixed",
-            "width":"calc(7% + 150px)",
-            "height":"100%"
-        },
-        "position":{
-            "right":"0px",
-            "top": "-91px"
-        }
-    
-    
-    },
     "gui":{
         "type":"embedded",
         "windowed":"true",

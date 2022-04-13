@@ -60,15 +60,13 @@ class DbEngineIndexDB {
       };
 
       transaction.oncomplete = function (event) { };
-      let store = transaction.objectStore("blockAssets")
+      let store = transaction.objectStore(item.data.store)
 
       var request = store.get(item.data.id);
       request.onerror = function (event) {
         // Handle errors!
       };
       request.onsuccess = function (event) {
-          console.log('RETRIVE',event,request.result);
-        //  ebus.publish("block.addFromFile", request.result.path);
         iceStudio.bus.events.publish('localDatabase.retrieved', request.result);
       };
     }

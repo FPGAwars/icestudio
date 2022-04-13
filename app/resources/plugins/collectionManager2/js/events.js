@@ -3,35 +3,51 @@ function setupEnvironment(env){
     iceStudio.bus.events.publish('collectionService.isIndexing');
 }
 
-//-- When index event in the collection service fired
-function collectionsIndexStatus(status){
+let preload=false; //-- Flag for preload collection tree from database while indexing the new one.
 
-    if(status.queue===0 && status.indexing===false && collectionsTree ===false){
+//-- When index event in the collection service fired
+function collectionsIndexStatus(status)
+{
+
+    if(status.queue===0 && status.indexing===false){
         iceStudio.bus.events.publish('collectionService.getCollections');
+    }else{
+        if(preload===false){
+            preload=true;
+            iceStudio.bus.events.publish('collectionService.getCollections');
+        }
+        setTimeout(function(){
+                iceStudio.bus.events.publish('collectionService.isIndexing');
+        },1000);
     }
 }
 
-function collectionsRender(tree){
+function collectionsRender(tree)
+{
+    if(tree !== false){
+    let playground = iceStudio.gui.el('.playground',pluginHost);
     collectionsTree = new WafleUITree();
     collectionsTree.setId(pluginUUID);
     collectionsTree.setTree(tree);
-    let playground = iceStudio.gui.el('.playground',pluginHost);
+  
     if(playground.length){
         playground[0].innerHTML=collectionsTree.render();
+        collectionsTree.setDomRoot(pluginHost);
         iceStudio.gui.activateEventsFromId(`#tree-view-${pluginUUID}`,pluginHost,mouseEvents);
+    }
     }
 }
 
-function registerEvents(){
-
+function registerEvents()
+{
     iceStudio.bus.events.subscribe('pluginManager.getEnvironment', setupEnvironment,false, pluginUUID); 
     iceStudio.bus.events.subscribe('pluginManager.updateEnv', setupEnvironment,false,pluginUUID); 
     iceStudio.bus.events.subscribe('collectionService.indexStatus',collectionsIndexStatus,false,pluginUUID);
     iceStudio.bus.events.subscribe('collectionService.collections',collectionsRender,false,pluginUUID);
 }
 
-function mouseEvents(eventType,handler,args){
-
+function mouseEvents(eventType,handler,args)
+{
     switch(eventType)
     {
         case 'click':
@@ -45,5 +61,4 @@ function mouseEvents(eventType,handler,args){
             }
             break;
     }
-
 }

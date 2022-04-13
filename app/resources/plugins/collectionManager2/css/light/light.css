@@ -143,7 +143,7 @@
 }
 
 .tree-view--folder input[type="checkbox"]:checked {
-  background-image: url(/resources/plugins/collectionManager/assets/img/check-solid.svg);
+  background-image: url(/resources/plugins/collectionManager2/img/check-solid.svg);
 }
 
 .tree-view--folder {
@@ -230,7 +230,7 @@
 
 /*.tree-view--folder.closed>.tree-view--folder-name.tree-view--folder-subfolders::before{*/
 .tree-view--folder.closed > .tree-view--folder-name::before {
-  content: url(/resources/plugins/collectionManager/assets/img/angle-right-solid.svg);
+  content: url(/resources/plugins/collectionManager2/img/angle-right-solid.svg);
   position: absolute;
   z-index: 100000;
   top: -1px;
@@ -241,7 +241,7 @@
 
 /*.tree-view--folder-name.tree-view--folder-subfolders::before{*/
 .tree-view--folder-name::before {
-  content: url(/resources/plugins/collectionManager/assets/img/angle-down-solid.svg);
+  content: url(/resources/plugins/collectionManager2/img/angle-down-solid.svg);
   position: absolute;
   z-index: 100000;
   top: -1px;
@@ -284,7 +284,7 @@ visibility: hidden;
 }
 
 .tree-view--leaf::before {
-  content: url(/resources/plugins/collectionManager/assets/img/chip.svg);
+  content: url(/resources/plugins/collectionManager2/img/chip.svg);
   position: absolute;
   z-index: 100000;
   top: 2px;
