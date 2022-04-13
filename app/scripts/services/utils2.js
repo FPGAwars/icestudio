@@ -341,6 +341,36 @@ angular.module('icestudio')
 
   }
 
+  //-----------------------------------------------------------------------
+  //-- Convert an array of portsInfo to a String
+  //-- Ej. portsInfo --> "a,b[1:0],c"
+  //--
+  //-- INPUTS:
+  //--   * An array of portsInfo
+  //--
+  //-- RETURNS:
+  //--   * A string with the names and range string separated by commas
+  //-----------------------------------------------------------------------
+  function portsInfo2Str(portsInfo) {
+
+    let portNamesArray = [];
+
+    //-- Get the portnames as an Array
+    portsInfo.forEach(port => {
+
+      let range = port.range || port.rangestr || '';
+      let name = port.name + range;
+
+      portNamesArray.push(name);
+    });
+
+    //-- Convert the portnames as strings
+    let portsNameStr = portNamesArray.join(',');
+
+    //-- Return the string
+    return portsNameStr;
+  }
+
 
   //-- Public classes
   this.Block = Block;
@@ -356,6 +386,7 @@ angular.module('icestudio')
   this.getPins = getPins;
   this.copyPins = copyPins;
   this.getSize = getSize;
+  this.portsInfo2Str = portsInfo2Str;
 
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;

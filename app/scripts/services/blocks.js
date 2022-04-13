@@ -471,15 +471,12 @@ angular.module('icestudio')
           form.inParamsInfo
         );
 
-        if (callback) {
+        //-- Build the cell
+        let cell = loadBasicCode(blockInstance);
 
-          //-- Build the cell
-          let cell = loadBasicCode(blockInstance);
-
-          //-- Execute the callback function passing the
-          //-- new cell as an argument (An array of one cell)
-          callback([cell]);
-        }
+        //-- Execute the callback function passing the
+        //-- new cell as an argument (An array of one cell)
+        callback([cell]);
 
       });
     }  
@@ -1297,35 +1294,6 @@ angular.module('icestudio')
       });
     }
 
-    //-----------------------------------------------------------------------
-    //-- Convert an array of portsInfo to a String
-    //-- Ej. portsInfo --> "a,b[1:0],c"
-    //--
-    //-- INPUTS:
-    //--   * An array of portsInfo
-    //--
-    //-- RETURNS:
-    //--   * A string with the names and range string separated by commas
-    //-----------------------------------------------------------------------
-    function portsInfo2Str(portsInfo) {
-
-      let portNamesArray = [];
-
-      //-- Get the portnames as an Array
-      portsInfo.forEach(port => {
-        let range = port.range || '';
-        let name = port.name + range;
-
-        portNamesArray.push(name);
-      });
-
-      //-- Convert the portnames as strings
-      let portsNameStr = portNamesArray.join(',');
-
-      //-- Return the string
-      return portsNameStr;
-    }
-
 
     function editBasicCode(cellView, callback) {
 
@@ -1333,13 +1301,13 @@ angular.module('icestudio')
       let block = cellView.model.attributes;
 
       //-- Get the input port names as a string
-      let inPortNames = portsInfo2Str(block.data.ports.in);
+      let inPortNames = utils2.portsInfo2Str(block.data.ports.in);
 
       //-- Get the output port names as a string
-      let outPortNames = portsInfo2Str(block.data.ports.out);
+      let outPortNames = utils2.portsInfo2Str(block.data.ports.out);
 
       //-- Get the input param names as a string
-      let inParamNames = portsInfo2Str(block.data.params);
+      let inParamNames = utils2.portsInfo2Str(block.data.params);
 
       //-- Create the form
       let form = new forms.FormBasicCode(
@@ -1364,10 +1332,13 @@ angular.module('icestudio')
           return;
         }
 
-        //-- OK. There are no duplicated names. Proceed!!
+        //-- The form values are OK. Proceed!!
 
-        //-- TODO: Detect if change has been made
-        //--  if not, just return (do nothing)
+        //-- Detect if the user has changed the form
+        //-- If no change... return. Nothing to to
+        if (!form.changed()) {
+          return;
+        }
 
         //-- Create a blank block
         let blockInstance = new utils2.CodeBlock(
@@ -1382,88 +1353,85 @@ angular.module('icestudio')
         blockInstance.id = block.id;
         blockInstance.data.code = block.data.code;
 
-        if (callback) {
+        //-- Build the cell
+        let cell = loadBasicCode(blockInstance);
 
-          //-- Build the cell
-          let cell = loadBasicCode(blockInstance);
+        if (cell) {
 
-          if (cell) {
+          //-- Get the graphical model 
+          let graph = cellView.paper.model;
 
-            //-- Get the graphical model 
-            let graph = cellView.paper.model;
+          //-- Get all the wires of the current block
+          let connectedWires = graph.getConnectedLinks(cellView.model);
 
-            //-- Get all the wires of the current block
-            let connectedWires = graph.getConnectedLinks(cellView.model);
+          //---------- Chage the block
+          graph.startBatch('change');
 
-            //---------- Chage the block
-            graph.startBatch('change');
+          //-- Remove the current block
+          cellView.model.remove();
 
-            //-- Remove the current block
-            cellView.model.remove();
+          //-- Call the callback to add the new block
+          callback(cell);
 
-            //-- Call the callback to add the new block
-            callback(cell);
+          //-- Restore previous connections
+          for (let w in connectedWires) {
 
-            //-- Restore previous connections
-            for (let w in connectedWires) {
+            //-- Get the wire
+            let wire = connectedWires[w];
 
-              //-- Get the wire
-              let wire = connectedWires[w];
+            //-- Get its size
+            let size = wire.get('size');
 
-              //-- Get its size
-              let size = wire.get('size');
+            //-- Get source and target cells
+            let source = wire.get('source');
+            let target = wire.get('target');
 
-              //-- Get source and target cells
-              let source = wire.get('source');
-              let target = wire.get('target');
+            //-- TODO: This BIG if needs more comments and more
+            //--  refactoring. It is too complex
 
-              //-- TODO: This BIG if needs more comments and more
-              //--  refactoring. It is too complex
+            //-- Check if the current wire should be kept
+            if (
+                //-- Condition I: Wires that starts from the output ports
+                //-- if the port name and size has not been changed, the
+                //-- wire is kept
+                ( source.id === cell.id && 
+                  containsPort(source.port, size, cell.get('rightPorts'))
+                ) ||
 
-              //-- Check if the current wire should be kept
-              if (
-                  //-- Condition I: Wires that starts from the output ports
-                  //-- if the port name and size has not been changed, the
-                  //-- wire is kept
-                  ( source.id === cell.id && 
-                    containsPort(source.port, size, cell.get('rightPorts'))
-                  ) ||
-
-                  //-- Condition II: Wires that ends in the input ports
-                  //-- if the port name and size has not been changed
-                  //-- and the source block are not a constant or memory
-                  //-- blocks
-                  ( target.id === cell.id && 
-                    containsPort(target.port, size, cell.get('leftPorts')) && 
-                    ( source.port !== 'constant-out' && 
-                      source.port !== 'memory-out'
-                    )
-                  ) ||
-
-                  //-- Condition III: Wire that ends in the input param ports
-                  //-- only if the source blocks are a constant or memory 
-                  //-- blocks
-                  ( target.id === cell.id && 
-                    containsPort(target.port, size, cell.get('topPorts')) && 
-                    (source.port === 'constant-out' || 
-                    source.port === 'memory-out')
+                //-- Condition II: Wires that ends in the input ports
+                //-- if the port name and size has not been changed
+                //-- and the source block are not a constant or memory
+                //-- blocks
+                ( target.id === cell.id && 
+                  containsPort(target.port, size, cell.get('leftPorts')) && 
+                  ( source.port !== 'constant-out' && 
+                    source.port !== 'memory-out'
                   )
-                ) {
+                ) ||
 
-                //-- Add the current wire (the wire is kept)      
-                graph.addCell(wire);
-              }
+                //-- Condition III: Wire that ends in the input param ports
+                //-- only if the source blocks are a constant or memory 
+                //-- blocks
+                ( target.id === cell.id && 
+                  containsPort(target.port, size, cell.get('topPorts')) && 
+                  (source.port === 'constant-out' || 
+                  source.port === 'memory-out')
+                )
+              ) {
+
+              //-- Add the current wire (the wire is kept)      
+              graph.addCell(wire);
             }
+          }
 
-            //-- We are done. Block changed
-            graph.stopBatch('change');
+          //-- We are done. Block changed
+          graph.stopBatch('change');
 
-            //-- Notify to the user
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated'));
+          //-- Notify to the user
+          resultAlert = alertify.success(
+            gettextCatalog.getString('Block updated'));
 
-          }  
-        }
+        }  
       });
     }
 
