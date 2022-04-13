@@ -312,7 +312,6 @@ module.exports = function (grunt) {
   //-- its name change between releases....so CHECK IT!!!!!
   //-- unpack the seconf number of the version: Ex "0.58.0" --> v2 = 58
   let [ ,v2, ] = NW_VERSION.split('.');
-  
   //-- Filename for the NW ARM
   const NWJS_ARM_NAME = `nwjs-v0.${v2}.1-linux-arm`;
 
