@@ -104,11 +104,14 @@ angular.module('icestudio')
         break;
 
       case 'basic.memory':
-        newBasicMemory(callback);
+        newBasicMemory2(callback);
         break;
 
+      //-- Code block
       case utils2.BASIC_CODE:
-        newBasicCode(callback);
+        
+        form = new forms.FormBasicCode();
+        newBasicCode(form, callback);
         break;
 
       case 'basic.info':
@@ -371,6 +374,13 @@ angular.module('icestudio')
       });
     }
 
+    function newBasicMemory2(callback) {
+
+
+      let form = new forms.FormBasicMemory();
+
+    }
+
     function newBasicMemory(callback) {
       var blockInstance = {
         id: null,
@@ -441,10 +451,7 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicCode(callback) {
-
-      //-- Create the form
-      let form = new forms.FormBasicCode();
+    function newBasicCode(form, callback) {
 
       //-- Display the form
       form.display((evt) => {
