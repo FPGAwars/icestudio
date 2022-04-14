@@ -921,7 +921,7 @@ angular.module('icestudio')
           break;
 
         case utils2.BASIC_MEMORY:
-          editBasicMemory2(cellView);
+          editBasicMemory(cellView);
           break;
 
         case utils2.BASIC_CODE:
@@ -1225,7 +1225,7 @@ angular.module('icestudio')
       });
     }
 
-    function editBasicMemory2(cellView) {
+    function editBasicMemory(cellView) {
 
       //-- Get the current memory block
       let block = cellView.model.attributes;
@@ -1274,63 +1274,6 @@ angular.module('icestudio')
           gettextCatalog.getString('Block updated'));
       });
 
-    }
-
-    function editBasicMemory(cellView) {
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: block.data.format,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var label = values[0];
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-        if (paramInfo) {
-          var name = paramInfo.name;
-          evt.cancel = false;
-          if (block.data.name !== name ||
-            block.data.local !== local ||
-            block.data.format !== format) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            data.format = format;
-            cellView.model.set('data', data);
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-          return;
-        }
-      });
     }
 
 
