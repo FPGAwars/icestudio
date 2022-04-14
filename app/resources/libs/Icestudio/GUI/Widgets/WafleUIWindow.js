@@ -1,5 +1,4 @@
-const { initConfig } = require("grunt");
-
+'use strict';
 class WafleUIWindow{
 
     constructor(params){
