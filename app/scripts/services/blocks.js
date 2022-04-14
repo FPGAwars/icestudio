@@ -103,12 +103,15 @@ angular.module('icestudio')
         newBasicConstant(callback);
         break;
 
-      case 'basic.memory':
-        newBasicMemory(callback);
+      case utils2.BASIC_MEMORY:
+        newBasicMemory2(callback);
         break;
 
+      //-- Code block
       case utils2.BASIC_CODE:
-        newBasicCode2(callback);
+        
+        form = new forms.FormBasicCode();
+        newBasicCode(form, callback);
         break;
 
       case 'basic.info':
@@ -371,80 +374,9 @@ angular.module('icestudio')
       });
     }
 
-    function newBasicMemory(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.memory',
-        position: { x: 0, y: 0 },
-        size: { width: 96, height: 104 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the memory blocks'),
-          value: ''
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: 10,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo, paramInfos = [];
-        for (var l in labels) {
-          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            evt.cancel = false;
-            paramInfos.push(paramInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in paramInfos) {
-          paramInfo = paramInfos[p];
-          blockInstance.data = {
-            name: paramInfo.name,
-            list: '',
-            local: local,
-            format: format
-          };
-          cells.push(loadBasicMemory(blockInstance));
-          blockInstance.position.x += 15 * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
+    function newBasicMemory2(callback) {
 
-    function newBasicCode2(callback) {
-
-      //-- Create the form
-      let form = new forms.FormBasicCode();
+      let form = new forms.FormBasicMemory();
 
       //-- Display the form
       form.display((evt) => {
@@ -460,44 +392,63 @@ angular.module('icestudio')
         //-- Return without clossing
         if (evt.cancel) {
           return;
+        }   
+
+        //-- OK. All the values are ok. Proceed!!
+
+        //-- Array for storing the blocks
+        let cells = [];
+
+        //-- Store the acumulate x position
+        let positionX = 0;
+
+        //-- Get all the blocks created from the form
+        //-- Only the block data, not the final block
+        let blocks = form.newBlocks();
+
+        //-- Create an array with the final blocks!
+        blocks.forEach( block => {
+
+          //-- update the block position
+          block.position.x = positionX;
+
+          //-- Build the cell
+          let cell = loadBasicMemory(block);
+
+          //-- Insert the block into the array
+          cells.push(cell);
+
+          //-- update the block position
+          positionX += 22 * gridsize;
+          
+        });
+
+        if (callback) {
+          callback(cells);
         }
 
-        //-- Validate values entered by the user
-        //-- There cannot be inputs, outputs and params with the same name
-        //-- Check it!!!
+      });
 
-        //-- Array for storing all the port names created
-        let allPortnames = [];
+    }
 
-        //-- Array with the input/output given by the user
-        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
 
-        //-- Add the array with the input parameters
-        userPorts = userPorts.concat(form.inParamsInfo);
+    function newBasicCode(form, callback) {
 
-        //-- Analyze all the port names, one by one
-        for (let portInfo of userPorts) {
+      //-- Display the form
+      form.display((evt) => {
 
-          //-- The current element is only checked if it exist
-          if (portInfo) {
+        //-- The callback is executed when the user has pressed the OK button
 
-            //-- Check if the current name is already in the array
-            if (allPortnames.includes(portInfo.name)) {
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
 
-              //-- It means that the port name is duplicated
-              //-- Show an error and return
-              evt.cancel = true;
-              resultAlert = alertify.warning(
-                  gettextCatalog.getString('Duplicated port name: ') + 
-                  portInfo.name
-              );
-              return;
-            }
-
-            //-- Name is unique so far. Insert it into the array
-            allPortnames.push(portInfo.name);
-          }
-        }
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }       
 
         //-- OK. There are no duplicated names. Proceed!!
 
@@ -508,409 +459,16 @@ angular.module('icestudio')
           form.inParamsInfo
         );
 
-        if (callback) {
+        //-- Build the cell
+        let cell = loadBasicCode(blockInstance);
 
-          //-- Build the cell
-          let cell = loadBasicCode(blockInstance);
-
-          //-- Execute the callback function passing the
-          //-- new cell as an argument (An array of one cell)
-          callback([cell]);
-        }
+        //-- Execute the callback function passing the
+        //-- new cell as an argument (An array of one cell)
+        callback([cell]);
 
       });
     }  
 
-
-/*
-    function newBasicCode(callback, block) {
-
-      //-- Create a blank block
-      var blockInstance = {
-        id: null,
-        data: {
-          code: '',
-          params: [],
-          ports: { in: [], out: [] }
-        },
-        type: 'basic.code',
-        position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
-      };
-
-
-      var defaultValues = [
-        '',
-        '',
-        ''
-      ];
-
-
-      if (block) {
-        blockInstance = block;
-        var index, port;
-        if (block.data.ports) {
-          var inPorts = [];
-          for (index in block.data.ports.in) {
-            port = block.data.ports.in[index];
-            inPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[0] = inPorts.join(' , ');
-          var outPorts = [];
-          for (index in block.data.ports.out) {
-            port = block.data.ports.out[index];
-            outPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[1] = outPorts.join(' , ');
-        }
-        if (block.data.params) {
-          var params = [];
-          for (index in block.data.params) {
-            params.push(block.data.params[index].name);
-          }
-          defaultValues[2] = params.join(' , ');
-        }
-      }
-
-
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input ports'),
-          value: defaultValues[0]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the output ports'),
-          value: defaultValues[1]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the parameters'),
-          value: defaultValues[2]
-        }
-      ];
-
-
-      utils.renderForm(formSpecs, function (evt, values) {*/
-      //  var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
-      //  var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
-      //  var params = values[2].replace(/\s*,\s*/g, ',').split(',');
-      /*  var allNames = [];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var i, inPortInfo, inPortInfos = [];
-
-        let nib=0, nob=0;
-        for (i in inPorts) {
-          if (inPorts[i]) {
-            inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
-            if (inPortInfo && inPortInfo.name) {
-              evt.cancel = false;
-              inPortInfos.push(inPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
-              return;
-            }
-          }else{
-            nib++;
-          }
-        }
-
-        var o, outPortInfo, outPortInfos = [];
-        for (o in outPorts) {
-          if (outPorts[o]) {
-            outPortInfo = utils.parsePortLabel(outPorts[o], common.PATTERN_PORT_LABEL);
-            if (outPortInfo && outPortInfo.name) {
-              evt.cancel = false;
-              outPortInfos.push(outPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
-              return;
-            }
-          }else{
-            nob++;
-          }
-        }
-
-        if(nib>=inPorts.length && nob >= outPorts.length){
-               evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
-              return;
-
-
-        }
-
-        var p, paramInfo, paramInfos = [];
-        for (p in params) {
-          if (params[p]) {
-            paramInfo = utils.parseParamLabel(params[p], common.PATTERN_PARAM_LABEL);
-            if (paramInfo) {
-              evt.cancel = false;
-              paramInfos.push(paramInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
-              return;
-            }
-          }
-        }
-        // Create ports
-        var pins;
-        blockInstance.data.ports.in = [];
-        for (i in inPortInfos) {
-          if (inPortInfos[i]) {
-            pins = getPins(inPortInfos[i]);
-            blockInstance.data.ports.in.push({
-              name: inPortInfos[i].name,
-              range: inPortInfos[i].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(inPortInfos[i].name);
-          }
-        }
-        blockInstance.data.ports.out = [];
-        for (o in outPortInfos) {
-          if (outPortInfos[o]) {
-            pins = getPins(outPortInfos[o]);
-            blockInstance.data.ports.out.push({
-              name: outPortInfos[o].name,
-              range: outPortInfos[o].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(outPortInfos[o].name);
-          }
-        }
-        blockInstance.data.params = [];
-        for (p in paramInfos) {
-          if (paramInfos[p]) {
-            blockInstance.data.params.push({
-              name: paramInfos[p].name
-            });
-            allNames.push(paramInfos[p].name);
-          }
-        }
-        // Check duplicated attributes
-        var numNames = allNames.length;
-        if (numNames === $.unique(allNames).length) {
-          evt.cancel = false;
-          // Create block
-          if (callback) {
-            callback([loadBasicCode(blockInstance)]);
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
-        }
-      });
-    }*/
-    
-
-
-/*
-    function getPins(portInfo) {
-      var pins = [];
-      if (portInfo.range) {
-        for (var r in portInfo.range) {
-          pins.push({ index: portInfo.range[r].toString(), name: '', value: '' });
-        }
-      }
-      else {
-        pins.push({ index: '0', name: 'NULL', value: 'NULL' });
-      }
-      return pins;
-    }
-*/
-
-
-    /*
-    function newBasicCode(callback, block) {
-      var blockInstance = {
-        id: null,
-        data: {
-          code: '',
-          params: [],
-          ports: { in: [], out: [] }
-        },
-        type: 'basic.code',
-        position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
-      };
-      var defaultValues = [
-        '',
-        '',
-        ''
-      ];
-      if (block) {
-        blockInstance = block;
-        var index, port;
-        if (block.data.ports) {
-          var inPorts = [];
-          for (index in block.data.ports.in) {
-            port = block.data.ports.in[index];
-            inPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[0] = inPorts.join(' , ');
-          var outPorts = [];
-          for (index in block.data.ports.out) {
-            port = block.data.ports.out[index];
-            outPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[1] = outPorts.join(' , ');
-        }
-        if (block.data.params) {
-          var params = [];
-          for (index in block.data.params) {
-            params.push(block.data.params[index].name);
-          }
-          defaultValues[2] = params.join(' , ');
-        }
-      }
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input ports'),
-          value: defaultValues[0]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the output ports'),
-          value: defaultValues[1]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the parameters'),
-          value: defaultValues[2]
-        }
-      ];*/
-      //forms.displayForm(formSpecs, function (evt, values) {
-      //  var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
-      //  var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
-      //  var params = values[2].replace(/\s*,\s*/g, ',').split(',');
-      /*  var allNames = [];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var i, inPortInfo, inPortInfos = [];
-
-        let nib=0, nob=0;
-        for (i in inPorts) {
-          if (inPorts[i]) {
-            inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
-            if (inPortInfo && inPortInfo.name) {
-              evt.cancel = false;
-              inPortInfos.push(inPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
-              return;
-            }
-          }else{
-            nib++;
-          }
-        }
-
-        var o, outPortInfo, outPortInfos = [];
-        for (o in outPorts) {
-          if (outPorts[o]) {
-            outPortInfo = utils.parsePortLabel(outPorts[o], common.PATTERN_PORT_LABEL);
-            if (outPortInfo && outPortInfo.name) {
-              evt.cancel = false;
-              outPortInfos.push(outPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
-              return;
-            }
-          }else{
-            nob++;
-          }
-        }
-        if(nib>=inPorts.length && nob >= outPorts.length){
-               evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
-              return;
-
-
-        }
-
-        var p, paramInfo, paramInfos = [];
-        for (p in params) {
-          if (params[p]) {
-            paramInfo = utils.parseParamLabel(params[p], common.PATTERN_PARAM_LABEL);
-            if (paramInfo) {
-              evt.cancel = false;
-              paramInfos.push(paramInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
-              return;
-            }
-          }
-        }
-        // Create ports
-        var pins;
-        blockInstance.data.ports.in = [];
-        for (i in inPortInfos) {
-          if (inPortInfos[i]) {
-            pins = utils2.getPins(inPortInfos[i]);
-            blockInstance.data.ports.in.push({
-              name: inPortInfos[i].name,
-              range: inPortInfos[i].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(inPortInfos[i].name);
-          }
-        }
-        blockInstance.data.ports.out = [];
-        for (o in outPortInfos) {
-          if (outPortInfos[o]) {
-            pins = utils2.getPins(outPortInfos[o]);
-            blockInstance.data.ports.out.push({
-              name: outPortInfos[o].name,
-              range: outPortInfos[o].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(outPortInfos[o].name);
-          }
-        }
-        blockInstance.data.params = [];
-        for (p in paramInfos) {
-          if (paramInfos[p]) {
-            blockInstance.data.params.push({
-              name: paramInfos[p].name
-            });
-            allNames.push(paramInfos[p].name);
-          }
-        }
-        // Check duplicated attributes
-        var numNames = allNames.length;
-        if (numNames === $.unique(allNames).length) {
-          evt.cancel = false;
-          // Create block
-          if (callback) {
-            callback([loadBasicCode(blockInstance)]);
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
-        }
-      });
-    }
-    */
 
     function newBasicInfo(callback) {
       var blockInstance = {
@@ -1362,7 +920,7 @@ angular.module('icestudio')
           editBasicConstant(cellView);
           break;
 
-        case 'basic.memory':
+        case utils2.BASIC_MEMORY:
           editBasicMemory(cellView);
           break;
 
@@ -1421,10 +979,10 @@ angular.module('icestudio')
     //--   * newColor: New color for the Label
     //-------------------------------------------------------------------------
     function editBasicLabel(cellView, newName, newColor){
-      var block = cellView.model.attributes;
+      let block = cellView.model.attributes;
 
       //-- Create the new block
-      var data = utils.clone(block.data);
+      let data = utils.clone(block.data);
 
       //-- Set the new data
       data.name = newName;
@@ -1668,89 +1226,54 @@ angular.module('icestudio')
     }
 
     function editBasicMemory(cellView) {
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: block.data.format,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var label = values[0];
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-        if (paramInfo) {
-          var name = paramInfo.name;
-          evt.cancel = false;
-          if (block.data.name !== name ||
-            block.data.local !== local ||
-            block.data.format !== format) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            data.format = format;
-            cellView.model.set('data', data);
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+
+      //-- Get the current memory block
+      let block = cellView.model.attributes;
+
+      //-- Get the data of the current block
+      let name = block.data.name;
+      let format = block.data.format;
+      let local = block.data.local;
+
+      //-- Create the form
+      let form = new forms.FormBasicMemory(name, format, local);
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
           return;
         }
-      });
-    }
 
-    //-----------------------------------------------------------------------
-    //-- Convert an array of portsInfo to a String
-    //-- Ej. portsInfo --> "a,b[1:0],c"
-    //--
-    //-- INPUTS:
-    //--   * An array of portsInfo
-    //--
-    //-- RETURNS:
-    //--   * A string with the names and range string separated by commas
-    //-----------------------------------------------------------------------
-    function portsInfo2Str(portsInfo) {
+        //-- If there were no changes, return: Nothing to do
+        if (!form.changed()) {
+          return;
+        }
 
-      let portNamesArray = [];
+        //-- Create the new block data and assign values
+        let data = utils.clone(block.data);
+        data.name = form.names[0];
+        data.local = form.local;
+        data.format = form.value;
+        cellView.model.set('data', data);
 
-      //-- Get the portnames as an Array
-      portsInfo.forEach(port => {
-        let range = port.range || '';
-        let name = port.name + range;
+        //-- Apply the changes!
+        cellView.apply();
 
-        portNamesArray.push(name);
+        //-- Notify the changes to the user
+        resultAlert = alertify.success(
+          gettextCatalog.getString('Block updated'));
       });
 
-      //-- Convert the portnames as strings
-      let portsNameStr = portNamesArray.join(',');
-
-      //-- Return the string
-      return portsNameStr;
     }
 
 
@@ -1760,13 +1283,13 @@ angular.module('icestudio')
       let block = cellView.model.attributes;
 
       //-- Get the input port names as a string
-      let inPortNames = portsInfo2Str(block.data.ports.in);
+      let inPortNames = utils2.portsInfo2Str(block.data.ports.in);
 
       //-- Get the output port names as a string
-      let outPortNames = portsInfo2Str(block.data.ports.out);
+      let outPortNames = utils2.portsInfo2Str(block.data.ports.out);
 
       //-- Get the input param names as a string
-      let inParamNames = portsInfo2Str(block.data.params);
+      let inParamNames = utils2.portsInfo2Str(block.data.params);
 
       //-- Create the form
       let form = new forms.FormBasicCode(
@@ -1791,47 +1314,13 @@ angular.module('icestudio')
           return;
         }
 
-        //-- Validate values entered by the user
-        //-- There cannot be inputs, outputs and params with the same name
-        //-- Check it!!!
+        //-- The form values are OK. Proceed!!
 
-        //-- Array for storing all the port names created
-        let allPortnames = [];
-
-        //-- Array with the input/output given by the user
-        let userPorts = form.inPortsInfo.concat(form.outPortsInfo);
-
-        //-- Add the array with the input parameters
-        userPorts = userPorts.concat(form.inParamsInfo);
-
-        //-- Analyze all the port names, one by one
-        for (let portInfo of userPorts) {
-
-          //-- The current element is only checked if it exist
-          if (portInfo) {
-
-            //-- Check if the current name is already in the array
-            if (allPortnames.includes(portInfo.name)) {
-
-              //-- It means that the port name is duplicated
-              //-- Show an error and return
-              evt.cancel = true;
-              resultAlert = alertify.warning(
-                  gettextCatalog.getString('Duplicated port name: ') + 
-                  portInfo.name
-              );
-              return;
-            }
-
-            //-- Name is unique so far. Insert it into the array
-            allPortnames.push(portInfo.name);
-          }
+        //-- Detect if the user has changed the form
+        //-- If no change... return. Nothing to to
+        if (!form.changed()) {
+          return;
         }
-
-        //-- OK. There are no duplicated names. Proceed!!
-
-        //-- TODO: Detect if change has been made
-        //--  if not, just return (do nothing)
 
         //-- Create a blank block
         let blockInstance = new utils2.CodeBlock(
@@ -1846,88 +1335,85 @@ angular.module('icestudio')
         blockInstance.id = block.id;
         blockInstance.data.code = block.data.code;
 
-        if (callback) {
+        //-- Build the cell
+        let cell = loadBasicCode(blockInstance);
 
-          //-- Build the cell
-          let cell = loadBasicCode(blockInstance);
+        if (cell) {
 
-          if (cell) {
+          //-- Get the graphical model 
+          let graph = cellView.paper.model;
 
-            //-- Get the graphical model 
-            let graph = cellView.paper.model;
+          //-- Get all the wires of the current block
+          let connectedWires = graph.getConnectedLinks(cellView.model);
 
-            //-- Get all the wires of the current block
-            let connectedWires = graph.getConnectedLinks(cellView.model);
+          //---------- Chage the block
+          graph.startBatch('change');
 
-            //---------- Chage the block
-            graph.startBatch('change');
+          //-- Remove the current block
+          cellView.model.remove();
 
-            //-- Remove the current block
-            cellView.model.remove();
+          //-- Call the callback to add the new block
+          callback(cell);
 
-            //-- Call the callback to add the new block
-            callback(cell);
+          //-- Restore previous connections
+          for (let w in connectedWires) {
 
-            //-- Restore previous connections
-            for (let w in connectedWires) {
+            //-- Get the wire
+            let wire = connectedWires[w];
 
-              //-- Get the wire
-              let wire = connectedWires[w];
+            //-- Get its size
+            let size = wire.get('size');
 
-              //-- Get its size
-              let size = wire.get('size');
+            //-- Get source and target cells
+            let source = wire.get('source');
+            let target = wire.get('target');
 
-              //-- Get source and target cells
-              let source = wire.get('source');
-              let target = wire.get('target');
+            //-- TODO: This BIG if needs more comments and more
+            //--  refactoring. It is too complex
 
-              //-- TODO: This BIG if needs more comments and more
-              //--  refactoring. It is too complex
+            //-- Check if the current wire should be kept
+            if (
+                //-- Condition I: Wires that starts from the output ports
+                //-- if the port name and size has not been changed, the
+                //-- wire is kept
+                ( source.id === cell.id && 
+                  containsPort(source.port, size, cell.get('rightPorts'))
+                ) ||
 
-              //-- Check if the current wire should be kept
-              if (
-                  //-- Condition I: Wires that starts from the output ports
-                  //-- if the port name and size has not been changed, the
-                  //-- wire is kept
-                  ( source.id === cell.id && 
-                    containsPort(source.port, size, cell.get('rightPorts'))
-                  ) ||
-
-                  //-- Condition II: Wires that ends in the input ports
-                  //-- if the port name and size has not been changed
-                  //-- and the source block are not a constant or memory
-                  //-- blocks
-                  ( target.id === cell.id && 
-                    containsPort(target.port, size, cell.get('leftPorts')) && 
-                    ( source.port !== 'constant-out' && 
-                      source.port !== 'memory-out'
-                    )
-                  ) ||
-
-                  //-- Condition III: Wire that ends in the input param ports
-                  //-- only if the source blocks are a constant or memory 
-                  //-- blocks
-                  ( target.id === cell.id && 
-                    containsPort(target.port, size, cell.get('topPorts')) && 
-                    (source.port === 'constant-out' || 
-                    source.port === 'memory-out')
+                //-- Condition II: Wires that ends in the input ports
+                //-- if the port name and size has not been changed
+                //-- and the source block are not a constant or memory
+                //-- blocks
+                ( target.id === cell.id && 
+                  containsPort(target.port, size, cell.get('leftPorts')) && 
+                  ( source.port !== 'constant-out' && 
+                    source.port !== 'memory-out'
                   )
-                ) {
+                ) ||
 
-                //-- Add the current wire (the wire is kept)      
-                graph.addCell(wire);
-              }
+                //-- Condition III: Wire that ends in the input param ports
+                //-- only if the source blocks are a constant or memory 
+                //-- blocks
+                ( target.id === cell.id && 
+                  containsPort(target.port, size, cell.get('topPorts')) && 
+                  (source.port === 'constant-out' || 
+                  source.port === 'memory-out')
+                )
+              ) {
+
+              //-- Add the current wire (the wire is kept)      
+              graph.addCell(wire);
             }
+          }
 
-            //-- We are done. Block changed
-            graph.stopBatch('change');
+          //-- We are done. Block changed
+          graph.stopBatch('change');
 
-            //-- Notify to the user
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated'));
+          //-- Notify to the user
+          resultAlert = alertify.success(
+            gettextCatalog.getString('Block updated'));
 
-          }  
-        }
+        }  
       });
     }
 
