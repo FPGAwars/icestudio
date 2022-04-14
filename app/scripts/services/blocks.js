@@ -920,8 +920,8 @@ angular.module('icestudio')
           editBasicConstant(cellView);
           break;
 
-        case 'basic.memory':
-          editBasicMemory(cellView);
+        case utils2.BASIC_MEMORY:
+          editBasicMemory2(cellView);
           break;
 
         case utils2.BASIC_CODE:
@@ -979,10 +979,10 @@ angular.module('icestudio')
     //--   * newColor: New color for the Label
     //-------------------------------------------------------------------------
     function editBasicLabel(cellView, newName, newColor){
-      var block = cellView.model.attributes;
+      let block = cellView.model.attributes;
 
       //-- Create the new block
-      var data = utils.clone(block.data);
+      let data = utils.clone(block.data);
 
       //-- Set the new data
       data.name = newName;
@@ -1223,6 +1223,57 @@ angular.module('icestudio')
           return;
         }
       });
+    }
+
+    function editBasicMemory2(cellView) {
+
+      //-- Get the current memory block
+      let block = cellView.model.attributes;
+
+      //-- Get the data of the current block
+      let name = block.data.name;
+      let format = block.data.format;
+      let local = block.data.local;
+
+      //-- Create the form
+      let form = new forms.FormBasicMemory(name, format, local);
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
+          return;
+        }
+
+        //-- If there were no changes, return: Nothing to do
+        if (!form.changed()) {
+          return;
+        }
+
+        //-- Create the new block data and assign values
+        let data = utils.clone(block.data);
+        data.name = form.names[0];
+        data.local = form.local;
+        data.format = form.value;
+        cellView.model.set('data', data);
+
+        //-- Apply the changes!
+        cellView.apply();
+
+        //-- Notify the changes to the user
+        resultAlert = alertify.success(
+          gettextCatalog.getString('Block updated'));
+      });
+
     }
 
     function editBasicMemory(cellView) {
