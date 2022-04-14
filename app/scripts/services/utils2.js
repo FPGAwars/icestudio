@@ -23,6 +23,7 @@ angular.module('icestudio')
   const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
   const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
   const BASIC_CODE = 'basic.code';  //-- Verilog code
+  const BASIC_MEMORY = 'basic.memory';
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -262,6 +263,33 @@ angular.module('icestudio')
   }
 
 
+  class MemoryBlock extends Block {
+
+    constructor(name='', list='', local=false, format=10) {
+
+      //-- Build the block common fields
+      super(BASIC_MEMORY);
+
+      //-- Block size
+      this.size = {
+        width: 20 * 8,
+        height: 22 * 8
+      };
+
+      //-- Name
+      this.data.name = name;
+
+      //-- List
+      this.data.list = list;
+
+      //-- Local parameter
+      this.data.local = local;
+
+      //-- Format
+      this.data.format = format;
+    }
+
+  }
 
   //-----------------------------------------------------------------------
   //-- Return an array with empty pins
@@ -341,6 +369,36 @@ angular.module('icestudio')
 
   }
 
+  //-----------------------------------------------------------------------
+  //-- Convert an array of portsInfo to a String
+  //-- Ej. portsInfo --> "a,b[1:0],c"
+  //--
+  //-- INPUTS:
+  //--   * An array of portsInfo
+  //--
+  //-- RETURNS:
+  //--   * A string with the names and range string separated by commas
+  //-----------------------------------------------------------------------
+  function portsInfo2Str(portsInfo) {
+
+    let portNamesArray = [];
+
+    //-- Get the portnames as an Array
+    portsInfo.forEach(port => {
+
+      let range = port.range || port.rangestr || '';
+      let name = port.name + range;
+
+      portNamesArray.push(name);
+    });
+
+    //-- Convert the portnames as strings
+    let portsNameStr = portNamesArray.join(',');
+
+    //-- Return the string
+    return portsNameStr;
+  }
+
 
   //-- Public classes
   this.Block = Block;
@@ -351,11 +409,13 @@ angular.module('icestudio')
   this.OutputLabelBlock = OutputLabelBlock;
 
   this.CodeBlock = CodeBlock;
+  this.MemoryBlock = MemoryBlock;
 
   //-- Public functions
   this.getPins = getPins;
   this.copyPins = copyPins;
   this.getSize = getSize;
+  this.portsInfo2Str = portsInfo2Str;
 
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
@@ -364,5 +424,6 @@ angular.module('icestudio')
   this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
   this.BASIC_CODE = BASIC_CODE;
+  this.BASIC_MEMORY = BASIC_MEMORY;
 
 });
