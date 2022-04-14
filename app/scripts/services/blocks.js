@@ -103,7 +103,7 @@ angular.module('icestudio')
         newBasicConstant(callback);
         break;
 
-      case 'basic.memory':
+      case utils2.BASIC_MEMORY:
         newBasicMemory2(callback);
         break;
 
@@ -376,7 +376,6 @@ angular.module('icestudio')
 
     function newBasicMemory2(callback) {
 
-
       let form = new forms.FormBasicMemory();
 
       //-- Display the form
@@ -397,82 +396,41 @@ angular.module('icestudio')
 
         //-- OK. All the values are ok. Proceed!!
 
-        //-- TODO
+        //-- Array for storing the blocks
+        let cells = [];
 
+        //-- Store the acumulate x position
+        let positionX = 0;
 
-      });
+        //-- Get all the blocks created from the form
+        //-- Only the block data, not the final block
+        let blocks = form.newBlocks();
 
-    }
+        //-- Create an array with the final blocks!
+        blocks.forEach( block => {
 
-    function newBasicMemory(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.memory',
-        position: { x: 0, y: 0 },
-        size: { width: 96, height: 104 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the memory blocks'),
-          value: ''
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: 10,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo, paramInfos = [];
-        for (var l in labels) {
-          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            evt.cancel = false;
-            paramInfos.push(paramInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in paramInfos) {
-          paramInfo = paramInfos[p];
-          blockInstance.data = {
-            name: paramInfo.name,
-            list: '',
-            local: local,
-            format: format
-          };
-          cells.push(loadBasicMemory(blockInstance));
-          blockInstance.position.x += 15 * gridsize;
-        }
+          //-- update the block position
+          block.position.x = positionX;
+
+          //-- Build the cell
+          let cell = loadBasicMemory(block);
+
+          //-- Insert the block into the array
+          cells.push(cell);
+
+          //-- update the block position
+          positionX += 22 * gridsize;
+          
+        });
+
         if (callback) {
           callback(cells);
         }
+
       });
+
     }
+
 
     function newBasicCode(form, callback) {
 

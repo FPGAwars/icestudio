@@ -2144,6 +2144,53 @@ angular.module('icestudio')
       this.getPortInfo(evt);
     }
 
+    //-------------------------------------------------------------
+    //-- Create the blocks defined in the form
+    //-- Call this methods only when the form has been processed!
+    //-------------------------------------------------------------
+    newBlocks() {
+
+      //-- Array for storing all the blocks created
+      let blocks = [];
+      let block;
+
+      for (let i in this.portInfos) {
+
+        //-- Create the block
+        block = this.newBlock(i);
+
+        //-- Store this block in the array
+        blocks.push(block);
+      }
+
+      //-- Return an array of Blocks
+      return blocks;
+      
+    }
+
+    //-------------------------------------------------------------
+    //-- Create the block defined in the form
+    //-- Call this method only when the form has been processed!
+    //-- 
+    //-- INPUTS:
+    //--   * n:  Number of block to create
+    //--
+    //-- RETURN:
+    //--   * The Memory block
+    //-------------------------------------------------------------
+    newBlock(n) {
+
+      //-- Create the block
+      let block = new utils2.MemoryBlock(
+        this.names[n],
+        '',
+        this.local,
+        this.value
+      );
+
+      return block;
+    }
+
   }
   
 //--------------------------------------------------------------
