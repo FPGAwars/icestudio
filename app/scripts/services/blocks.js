@@ -474,15 +474,18 @@ angular.module('icestudio')
 
 
     function newBasicInfo(callback) {
-      var blockInstance = {
-        id: null,
-        data: { info: '', readonly: false },
-        type: 'basic.info',
-        position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
-      };
+
+      //-- Create the info Block
+      let block = new utils2.InfoBlock();
+
       if (callback) {
-        callback([loadBasicInfo(blockInstance)]);
+
+        //-- Build the cell
+        let cell = loadBasicInfo(block);
+
+        //-- Execute the callback function passing the 
+        //-- new cell as an argument (An array of one cell)
+        callback([cell]);
       }
     }
 

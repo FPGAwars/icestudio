@@ -25,6 +25,7 @@ angular.module('icestudio')
   const BASIC_CODE = 'basic.code';     //-- Verilog code
   const BASIC_MEMORY = 'basic.memory'; //-- Memory parameter
   const BASIC_CONSTANT = 'basic.constant'; //-- Constant parameter
+  const BASIC_INFO = 'basic.info'; //-- Info block
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -312,6 +313,26 @@ angular.module('icestudio')
     }
   }
 
+
+  class InfoBlock extends Block {
+
+    constructor() {
+
+      //-- Build the block common fields
+      super(BASIC_INFO);
+
+      this.data.info = '';
+      this.data.readonly = false;
+
+      //-- Block size
+      this.size = {
+        width: 192,
+        height: 128
+      };
+
+    }
+  }
+
   //-----------------------------------------------------------------------
   //-- Return an array with empty pins
   //-- Empty pins have both name and value properties set to "NULL"
@@ -438,12 +459,14 @@ angular.module('icestudio')
   this.CodeBlock = CodeBlock;
   this.MemoryBlock = MemoryBlock;
   this.ConstantBlock = ConstantBlock;
+  this.InfoBlock = InfoBlock;
 
   //-- Public functions
   this.getPins = getPins;
   this.copyPins = copyPins;
   this.getSize = getSize;
   this.portsInfo2Str = portsInfo2Str;
+  
 
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
@@ -454,6 +477,8 @@ angular.module('icestudio')
   this.BASIC_CODE = BASIC_CODE;
   this.BASIC_MEMORY = BASIC_MEMORY;
   this.BASIC_CONSTANT = BASIC_CONSTANT;
+  this.BASIC_INFO = BASIC_INFO;
+  
   
 
 });
