@@ -2220,6 +2220,19 @@ angular.module('icestudio')
 
   }
   
+
+  class FormBasicConstant extends Form {
+
+
+    constructor(name='', local=false) {
+
+      //-- Create a blank Form (calling the upper Class)
+      super();
+
+      //-- TODO
+    }
+  }
+
 //--------------------------------------------------------------
 
 
@@ -2235,6 +2248,7 @@ angular.module('icestudio')
   this.FormBasicPairedLabels = FormBasicPairedLabels;
   this.FormBasicCode = FormBasicCode;
   this.FormBasicMemory = FormBasicMemory;
+  this.FormBasicConstant = FormBasicConstant;
 
 
 

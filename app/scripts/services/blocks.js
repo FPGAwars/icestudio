@@ -99,7 +99,8 @@ angular.module('icestudio')
         newBasicPairedLabels(form, callback);
         break;
 
-      case 'basic.constant':
+      //-- Constant parameter block
+      case utils2.BASIC_CONSTANT:
         newBasicConstant(callback);
         break;
 
@@ -315,6 +316,16 @@ angular.module('icestudio')
     });
 
   }
+
+
+  function newBasicConstant2(callback) {
+
+    //-- Create the form
+    let form = new forms.FormBasicConstant();
+
+
+  }
+
 
 
     function newBasicConstant(callback) {

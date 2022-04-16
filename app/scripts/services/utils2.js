@@ -22,8 +22,9 @@ angular.module('icestudio')
   const BASIC_INPUT_LABEL = 'basic.inputLabel';    //-- Input labels
   const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
   const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
-  const BASIC_CODE = 'basic.code';  //-- Verilog code
-  const BASIC_MEMORY = 'basic.memory';
+  const BASIC_CODE = 'basic.code';     //-- Verilog code
+  const BASIC_MEMORY = 'basic.memory'; //-- Memory parameter
+  const BASIC_CONSTANT = 'basic.constant'; //-- Constant parameter
   
   //-- Maximum length for the BUSES in ports
   //const MAX_SIZE = 96;
@@ -330,9 +331,15 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   function copyPins(pinsSrc, pinsDest) {
 
+    //-- If pinsSrc is not defined, there is nothing
+    //-- to copy
+    if (!pinsSrc) {
+      return
+    }
+
     //-- Get the target and destination lengths
-    let dlen = pinsDest.length;
-    let slen = pinsSrc.length;
+    let dlen = pinsDest.length || 0;
+    let slen = pinsSrc.length || 0;
 
     //-- Calculate the minimum size
     let min = Math.min(dlen, slen);
@@ -425,5 +432,6 @@ angular.module('icestudio')
   this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
   this.BASIC_CODE = BASIC_CODE;
   this.BASIC_MEMORY = BASIC_MEMORY;
+  this.BASIC_CONSTANT = BASIC_CONSTANT;
 
 });
