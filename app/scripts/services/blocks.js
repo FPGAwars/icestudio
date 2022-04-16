@@ -1453,16 +1453,27 @@ angular.module('icestudio')
       return found;
     }
 
+
     function editBasicInfo(cellView) {
-      var block = cellView.model.attributes;
-      var data = utils.clone(block.data);
-      // Toggle readonly
+
+      //-- Access the current block
+      let block = cellView.model.attributes;
+
+      //-- Copy the block data
+      let data = utils.clone(block.data);
+
+      //-- Toggle readonly
       data.readonly = !data.readonly;
+
       // Translate info content
       if (data.info && data.readonly) {
         data.text = gettextCatalog.getString(data.info);
       }
+
+      //-- Set the new data
       cellView.model.set('data', data);
+
+       //-- Apply the changes!
       cellView.apply();
     }
 
