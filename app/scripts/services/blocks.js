@@ -919,7 +919,7 @@ angular.module('icestudio')
           editBasicLabel2(form, cellView);
           break;
 
-        case 'basic.constant':
+        case utils2.BASIC_CONSTANT:
           editBasicConstant(cellView);
           break;
 
@@ -1183,50 +1183,56 @@ angular.module('icestudio')
      
     }
 
-
     function editBasicConstant(cellView) {
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var label = values[0];
-        var local = values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-        if (paramInfo) {
-          var name = paramInfo.name;
-          evt.cancel = false;
-          if (block.data.name !== name ||
-            block.data.local !== local) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            cellView.model.set('data', data);
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
+
+      //-- Get the current memory block
+      let block = cellView.model.attributes;
+
+      //-- Get the data of the current block
+      let name = block.data.name;
+      let local = block.data.local;
+
+      //-- Create the form
+      let form = new forms.FormBasicConstant(name, local);
+
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- The callback is executed when the user has pressed the OK button
+
+        //-- Process the inforation in the form
+        //-- The results are stored inside the form
+        //-- In case of error the corresponding notifications are raised
+        form.process(evt);
+
+        //-- If there were errors, the form is not closed
+        //-- Return without clossing
+        if (evt.cancel) {
           return;
         }
+
+        //-- If there were no changes, return: Nothing to do
+        if (!form.changed()) {
+          return;
+        }
+
+        //-- Create the new block data and assign values
+        let data = utils.clone(block.data);
+        data.name = form.names[0];
+        data.local = form.local;
+        cellView.model.set('data', data);
+
+        //-- Apply the changes!
+        cellView.apply();
+
+        //-- Notify the changes to the user
+        resultAlert = alertify.success(
+          gettextCatalog.getString('Block updated'));
+
       });
+
     }
+
 
     function editBasicMemory(cellView) {
 

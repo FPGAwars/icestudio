@@ -2381,6 +2381,25 @@ angular.module('icestudio')
       return block;
     }
 
+    //-----------------------------------------------------------------------
+    //-- Detect if the form was changed by the user
+    //--
+    //--  RETURN: A boolean value indicating the change
+    //--    * true: There was a change in the block
+    //--    * false: No change in the block
+    //-----------------------------------------------------------------------
+    changed() {
+
+      //-- Compare these values with the initial ones
+      //-- to detec if there has been a change
+      //-- All the items compared are Strings
+      let changed = this.nameIni !== this.values[0] ||
+                    this.localIni !== this.local;
+
+      //-- Return a boolean value
+      return changed;
+    }
+
 
   }
 
