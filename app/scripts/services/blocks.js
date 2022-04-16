@@ -377,64 +377,6 @@ angular.module('icestudio')
   }
 
 
-
-    function newBasicConstant(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.constant',
-        position: { x: 0, y: 0 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the constant blocks'),
-          value: ''
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        }
-      ];
-      forms.displayForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo, paramInfos = [];
-        for (var l in labels) {
-          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            evt.cancel = false;
-            paramInfos.push(paramInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in paramInfos) {
-          paramInfo = paramInfos[p];
-          blockInstance.data = {
-            name: paramInfo.name,
-            value: '',
-            local: local
-          };
-          cells.push(loadBasicConstant(blockInstance));
-          blockInstance.position.x += 15 * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
-
     function newBasicMemory2(callback) {
 
       let form = new forms.FormBasicMemory();
