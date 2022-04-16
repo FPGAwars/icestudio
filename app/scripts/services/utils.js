@@ -789,40 +789,39 @@ angular.module('icestudio')
     };
 
     this.selectBoardPrompt = function (callback) {
+
       // Disable user events
       this.disableKeyEvents();
+
       // Hide Cancel button
       $('.ajs-cancel').addClass('hidden');
 
-      var formSpecs = [{
-        type: 'combobox',
-        label: gettextCatalog.getString('Select your board'),
-        value: '',
-        options: common.boards.map(function (board) {
-          return {
-            value: board.name,
-            label: board.info.label
-          };
-        })
-      }];
+      //-- Create the form
+      let form = new forms.FormSelectBoard();
 
-      forms.displayForm(formSpecs, function (evt, values) {
-        var selectedBoard = values[0];
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- Process the information in the form
+        form.process(evt);
+
+        //-- Read the selected board
+        let selectedBoard = form.values[0];
+
         if (selectedBoard) {
+
           evt.cancel = false;
+
+          //-- Execute the callback
           if (callback) {
             callback(selectedBoard);
           }
+
           // Enable user events
           this.enableKeyEvents();
-          // Restore Cancel button
-          setTimeout(function () {
-            $('.ajs-cancel').removeClass('hidden');
-          }, 200);
-        } else {
-          evt.cancel = true;
-        }
-      }.bind(this));
+        } 
+      });
+
     };
 
     this.copySync = function (orig, dest) {
