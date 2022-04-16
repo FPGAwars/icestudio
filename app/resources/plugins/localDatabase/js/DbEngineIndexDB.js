@@ -6,7 +6,10 @@ class DbEngineIndexDB {
   }
 
   isReady(dbId) {
-    return (typeof this.databases[dbId] !== 'undefined');
+    return (typeof this.databases[dbId] !== 'undefined' &&
+    typeof this.databases[dbId].db !== 'undefined' &&
+    typeof this.databases[dbId].db.transaction !== 'undefined' 
+    );
   }
 
   openDatabase(schema, onOpen) {
