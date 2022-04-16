@@ -23,6 +23,7 @@ class WafleGUI {
     this.dom = {
       root: this.el("body")[0],
       menu: this.el("#menu"),
+      canvas: this.el('.joint-paper')[0],
       footer: this.el(".footer.ice-bar")[0],
       height: 0,
       width: 0
@@ -31,9 +32,14 @@ class WafleGUI {
     //-- Its needed  to wait for framework initialization and Icestudio ui elements exists
     let retry = false;
 
-    if (this.dom.root === false || this.dom.root === null ||
-      this.dom.menu === false || this.dom.menu === null ||
-      this.dom.footer === false || this.dom.footer === null) {
+    if ( typeof this.dom.root === 'undefined' || 
+         this.dom.root === false || this.dom.root === null ||
+         typeof this.dom.menu === 'undefined' || 
+         this.dom.menu === false || this.dom.menu === null ||
+         typeof this.dom.canvas === 'undefined' || 
+         this.dom.canvas === false || this.dom.canvas === null || 
+         typeof this.dom.footer === 'undefined' || 
+         this.dom.footer === false || this.dom.footer === null) {
 
       retry = true;
     }
