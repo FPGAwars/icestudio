@@ -2170,7 +2170,7 @@ angular.module('icestudio')
 
     //-- Generate the html code for all the fields in the form
     for (let i in form) {
-      var field = form[i];
+      let field = form[i];
 
       //-- Process all the form fields
       switch (field.type) {
@@ -2180,27 +2180,20 @@ angular.module('icestudio')
 
           //-- TEMP CODE. REMOVE IT WHEN REFACTORED
           f = new TextField(field.title, field.value, i);
-
-          //-- Create the html code
-          //-- label, value, formId
-          html = f.html();
-
-          //-- Store the html for this Form
-          formHtml.push(html);
           break;
 
         //-- Combobox input field
         case FIELD_COMBOBOX:
 
           f = new ComboboxField(field.options, field.label, field.value, i);
-
-          html = f.html();
-            
-          //-- Store the html for this Field
-          formHtml.push(html);
           break;
-
       }
+
+      html = f.html();
+            
+      //-- Store the html for this Field
+      formHtml.push(html);
+      break;
     }
 
     //-- Closing tag for the Form
