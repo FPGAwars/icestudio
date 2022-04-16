@@ -597,6 +597,9 @@ angular
           let newLogfile = form.values[0];
 
           //-- If there was not a change in the log file... return
+          if (newLogfile === lFile) {
+            return;
+          }
 
           const hd = new IceHD();
           const separator =
@@ -636,44 +639,64 @@ angular
         });
       };
 
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- external plugin path
+      //---------------------------------------------------------------------
       $scope.setExternalPlugins = function () {
-        var externalPlugins = profile.get("externalPlugins");
-        var formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString("Enter the external plugins path"),
-            value: externalPlugins || "",
-          },
-        ];
-        forms.displayForm(formSpecs, function (evt, values) {
-          var newExternalPlugins = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+
+        //-- Get the current external Plugin path
+        const externalPlugins = profile.get("externalPlugins");
+
+        //-- Create the form
+        let form = new forms.FormExternalPlugins(externalPlugins);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new plugins path
+          let newPath = form.values[0];
+
+          //-- If there was not a change... return
+          if (newPath === externalPlugins) {
+            return;
           }
-          if (newExternalPlugins !== externalPlugins) {
-            if (
-              newExternalPlugins === "" ||
-              nodeFs.existsSync(newExternalPlugins)
-            ) {
-              profile.set("externalPlugins", newExternalPlugins);
-              alertify.success(
-                gettextCatalog.getString("External plugins updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newExternalPlugins,
-                  },
-                  5
-                )
-              );
-            }
+
+          //-- If the file is valid...
+          if ( newPath === "" || nodeFs.existsSync(newPath)) {
+
+             //-- Set the new file
+            profile.set("externalPlugins", newPath);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("External plugins updated")
+            );
+          }
+          //-- The file is not valid 
+          else {
+            //-- Notify the error
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newPath,
+                },
+                5
+              )
+            );
           }
         });
-      };
+      }; 
+
+
       $scope.setPythonEnv = function () {
         let pythonEnv = profile.get("pythonEnv");
         let formSpecs = [
