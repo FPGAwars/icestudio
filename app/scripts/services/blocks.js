@@ -317,7 +317,7 @@ angular.module('icestudio')
 
   }
 
-
+/*
   function newBasicConstant2(callback) {
 
     //-- Create the form
@@ -326,7 +326,7 @@ angular.module('icestudio')
 
   }
 
-
+*/
 
     function newBasicConstant(callback) {
       var blockInstance = {

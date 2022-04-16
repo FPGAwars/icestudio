@@ -334,7 +334,7 @@ angular.module('icestudio')
     //-- If pinsSrc is not defined, there is nothing
     //-- to copy
     if (!pinsSrc) {
-      return
+      return;
     }
 
     //-- Get the target and destination lengths
