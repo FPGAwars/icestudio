@@ -563,52 +563,79 @@ angular
       $scope.fitContent = function () {
         graph.fitContent();
       };
+
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- log filename
+      //---------------------------------------------------------------------
       $scope.setLoggingFile = function () {
+
+        //-- Get the current log file
         const lFile = profile.get("loggingFile");
-        const formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the file to output logging info"
-            ),
-            value: lFile || "",
-          },
-        ];
-        forms.displayForm(formSpecs, function (evt, values) {
-          var newLFile = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          if (newLFile !== lFile) {
-            const hd = new IceHD();
-            const separator =
-              common.DARWIN === false && common.LINUX === false ? "\\" : "/";
 
-            const dirLFile = newLFile.substring(
-              0,
-              newLFile.lastIndexOf(separator) + 1
+        //-- Create the form
+        let form = new forms.FormLogfile(lFile);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          //-- The results are stored inside the form
+          //-- In case of error the corresponding notifications are raised
+          form.process(evt);
+
+          //-- If there were errors, the form is not closed
+          //-- Return without clossing
+          if (evt.cancel) {
+            return;
+          } 
+
+          //-- Read the new logfile
+          let newLogfile = form.values[0];
+
+          //-- If there was not a change in the log file... return
+
+          const hd = new IceHD();
+          const separator =
+            common.DARWIN === false && common.LINUX === false ? "\\" : "/";
+
+          const dirLFile = newLogfile.substring(
+            0,
+            newLogfile.lastIndexOf(separator) + 1
+          );
+
+          //-- If the file is valid..
+          if (newLogfile === "" || hd.isValidPath(dirLFile)) {
+
+            //-- Set the new file
+            profile.set("loggingFile", newLogfile);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("Logging file updated")
             );
+          }
+          //-- The file is not valid 
+          else {
 
-            if (newLFile === "" || hd.isValidPath(dirLFile)) {
-              profile.set("loggingFile", newLFile);
-              alertify.success(
-                gettextCatalog.getString("Logging file updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newLFile,
-                  },
-                  5
-                )
-              );
-            }
+            //-- Notify the error
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newLogfile,
+                },
+                5
+              )
+            );
           }
         });
       };
+
       $scope.setExternalPlugins = function () {
         var externalPlugins = profile.get("externalPlugins");
         var formSpecs = [
