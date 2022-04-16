@@ -2507,27 +2507,13 @@ angular.module('icestudio')
           //-- Create the html code
           //-- label, value, formId
           html = f.html();
-          //html = this.htmlInputText(field.title, field.value, i);
 
           //-- Store the html for this Form
           formHtml.push(html);
           break;
 
-        //-- Checkbox input field
-        case 'checkbox':
-
-          //-- Create the html code for an input checkbox field
-          html = this.htmlInputCheckbox(
-            field.label, 
-            field.value,
-            i);
-
-          //-- Store the html for this Field
-          formHtml.push(html);
-          break;
-
         //-- Combobox input field
-        case 'combobox':
+        case FIELD_COMBOBOX:
 
           //-- Create the html code for an input Combobox field
           html = this.htmlInputCombobox(
@@ -2540,26 +2526,6 @@ angular.module('icestudio')
           formHtml.push(html);
           break;
 
-        //-- Color-Dropdown input Field
-        case 'color-dropdown':
-          
-
-          //-- Set the default color if not previously defined
-          field.color = field.color || "fuchsia";
-
-          //-- Get the color with the first letter as capital
-          let colorName = field.color.charAt(0).toUpperCase() + 
-                          field.color.slice(1);
-
-          //-- Create the html code for an input Color field
-          html = this.htmlInputColor(
-            field.label, 
-            field.color,
-            colorName);
-
-          //-- Store the html for this Field
-          formHtml.push(html);
-          break;
       }
     }
 
@@ -2596,32 +2562,11 @@ angular.module('icestudio')
             switch (field.type) {
 
               //-- Input text and input combobox
-              case 'text':
-              case 'combobox':
+              case FIELD_TEXT:
+              case FIELD_COMBOBOX:
 
                 //-- Read the value from the form i
                 value = $('#form' + i).val();
-
-                //-- Add the value to the array
-                values.push(value);
-                break;
-
-              //-- Input checkbox
-              case 'checkbox':
-
-                //-- Read the value from the form i
-                value = $($('#form' + i).prop('checked'));
-                value = value[0];
-
-                //-- Add the value to the array
-                values.push(value);
-                break;
-
-              //-- Input color dropdown menu
-              case 'color-dropdown':
-
-                //-- Read the value
-                value = $('.lb-selected-color').data('color');
 
                 //-- Add the value to the array
                 values.push(value);
@@ -2638,15 +2583,5 @@ angular.module('icestudio')
       //--   Do nothing... 
       .set('oncancel', function ( /*evt*/) { });
   };
-
-
-//---------------------------------------------------------------------------
-
-
-  this.test = function() {
-    console.log("holi...");
-  };
-
-  //this.getPins = getPins;
 
 });
