@@ -292,6 +292,26 @@ angular.module('icestudio')
 
   }
 
+
+  class ConstantBlock extends Block {
+
+    constructor(name='', value='', local=false) {
+
+      //-- Build the block common fields
+      super(BASIC_CONSTANT);
+
+      //-- Name
+      this.data.name = name;
+
+      //-- Constant value
+      this.data.value = value;
+
+      //-- Local parameter
+      this.data.local = local;
+
+    }
+  }
+
   //-----------------------------------------------------------------------
   //-- Return an array with empty pins
   //-- Empty pins have both name and value properties set to "NULL"
@@ -417,6 +437,7 @@ angular.module('icestudio')
 
   this.CodeBlock = CodeBlock;
   this.MemoryBlock = MemoryBlock;
+  this.ConstantBlock = ConstantBlock;
 
   //-- Public functions
   this.getPins = getPins;
@@ -433,5 +454,6 @@ angular.module('icestudio')
   this.BASIC_CODE = BASIC_CODE;
   this.BASIC_MEMORY = BASIC_MEMORY;
   this.BASIC_CONSTANT = BASIC_CONSTANT;
+  
 
 });

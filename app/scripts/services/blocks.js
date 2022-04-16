@@ -101,7 +101,7 @@ angular.module('icestudio')
 
       //-- Constant parameter block
       case utils2.BASIC_CONSTANT:
-        newBasicConstant(callback);
+        newBasicConstant2(callback);
         break;
 
       case utils2.BASIC_MEMORY:
@@ -317,16 +317,66 @@ angular.module('icestudio')
 
   }
 
-/*
+
   function newBasicConstant2(callback) {
 
     //-- Create the form
     let form = new forms.FormBasicConstant();
 
+      //-- Display the form
+      form.display((evt) => {
+
+      //-- The callback is executed when the user has pressed the OK button
+
+      //-- Process the inforation in the form
+      //-- The results are stored inside the form
+      //-- In case of error the corresponding notifications are raised
+      form.process(evt);
+
+      //-- If there were errors, the form is not closed
+      //-- Return without clossing
+      if (evt.cancel) {
+        return;
+      }   
+
+      //-- OK. All the values are ok. Proceed!!
+
+      //-- Array for storing the blocks
+      let cells = [];
+
+      //-- Store the acumulate x position
+      let positionX = 0;
+
+      //-- Get all the blocks created from the form
+      //-- Only the block data, not the final block
+      let blocks = form.newBlocks();
+
+       //-- Create an array with the final blocks!
+       blocks.forEach( block => {
+
+       //-- update the block position
+       block.position.x = positionX;
+
+       //-- Build the cell
+       let cell = loadBasicConstant(block);
+
+       //-- Insert the block into the array
+       cells.push(cell);
+
+       //-- update the block position
+       positionX += 15 * gridsize;
+
+       });
+
+       if (callback) {
+        callback(cells);
+      }
+
+     });
 
   }
 
-*/
+
 
     function newBasicConstant(callback) {
       var blockInstance = {
