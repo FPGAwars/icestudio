@@ -48,7 +48,7 @@ angular.module('icestudio')
   //--     -BASIC_INPUT_LABEL
   //--     -'basic.constant'
   //--     -'basic.memory'
-  //--     -'basic.code'
+  //--     -BASIC_CODE
   //--     -'basic.info'
   //--
   //--   * callback(cells): The function is called when the user clic on
@@ -531,10 +531,13 @@ angular.module('icestudio')
 
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
+
         case 'basic.memory':
           return loadBasicMemory(instance, disabled);
-        case 'basic.code':
+
+        case blocks.BASIC_CODE:
           return loadBasicCode(instance, disabled);
+          
         case 'basic.info':
           return loadBasicInfo(instance, disabled);
         default:

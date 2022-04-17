@@ -1179,7 +1179,7 @@ angular.module('icestudio')
                     view.clearValues();
                     view.applyChoices();
                 }
-                else if (type === 'basic.code') {
+                else if (type === blocks.BASIC_CODE) {
                     // Reset rules in Code block ports
                     data = utils.clone(cell.get('data'));
                     connectedLinks = graph.getConnectedLinks(cell);
@@ -1509,7 +1509,7 @@ angular.module('icestudio')
                         case 'basic.constant':
                         case blocks.BASIC_OUTPUT_LABEL: 
                         case blocks.BASIC_INPUT_LABEL:
-                        case 'basic.code':
+                        case blocks.BASIC_CODE:
                         case blocks.BASIC_INPUT: 
                         case blocks.BASIC_OUTPUT:
                             founded = true;

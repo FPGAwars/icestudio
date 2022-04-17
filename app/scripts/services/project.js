@@ -292,7 +292,7 @@ angular.module('icestudio')
               local: false
             };
             break;
-          case 'basic.code':
+          case blocks.BASIC_CODE:
             var params = [];
             for (var p in block.data.params) {
               params.push({
@@ -566,7 +566,7 @@ angular.module('icestudio')
             case 'basic.constant':
             case 'basic.memory':
               break;
-            case 'basic.code':
+            case blocks.BASIC_CODE:
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
               }

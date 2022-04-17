@@ -1947,10 +1947,13 @@ angular
             project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
             break;
 
+          case 'memory': 
+            project.addBasicBlock('basic.memory'); 
+            break;
 
-
-          case 'memory': project.addBasicBlock('basic.memory'); break;
-          case 'code': project.addBasicBlock('basic.code'); break;
+          case 'code': 
+            project.addBasicBlock(blocks.BASIC_CODE); 
+            break;
           case 'information': project.addBasicBlock('basic.info'); break;
           case 'constant': project.addBasicBlock('basic.constant'); break;
           case 'verify': $scope.verifyCode(); break;
