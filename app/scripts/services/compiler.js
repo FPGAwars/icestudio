@@ -194,7 +194,7 @@ angular.module('icestudio')
 
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-        if (block.type === 'basic.input') {
+        if (block.type === blocks.BASIC_INPUT) {
         
           ports.in.push({
             name: utils.digestId(block.id),
@@ -337,7 +337,7 @@ angular.module('icestudio')
         // Assignations
         for (i in graph.blocks) {
           var block = graph.blocks[i];
-          if (block.type === 'basic.input') {
+          if (block.type === blocks.BASIC_INPUT) {
             if (wire.source.block === block.id) {
               connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id)+ ';');
             }
@@ -421,7 +421,7 @@ angular.module('icestudio')
       for (var b in blockArray) {
         var block = blockArray[b];
 
-        if (block.type !== 'basic.input' &&
+        if (block.type !== blocks.BASIC_INPUT &&
           block.type !== 'basic.output' &&
           block.type !== 'basic.constant' &&
           block.type !== 'basic.memory' &&
@@ -524,13 +524,13 @@ angular.module('icestudio')
 
       var i, j;
       var initPorts = [];
-      var blocks = project.design.graph.blocks;
+      var blockArray = project.design.graph.blocks;
 
       // Find all not connected input ports:
       // - Code blocks
       // - Generic blocks
-      for (i in blocks) {
-        var block = blocks[i];
+      for (i in blockArray) {
+        var block = blockArray[i];
         if (block) {
           if (block.type === 'basic.code' || !block.type.startsWith('basic.')) {
             // Code block or Generic block
@@ -560,11 +560,11 @@ angular.module('icestudio')
       var i;
       var initPins = [];
       var usedPins = [];
-      var blocks = project.design.graph.blocks;
+      var blockArray = project.design.graph.blocks;
 
       // Find all set output pins
-      for (i in blocks) {
-        var block = blocks[i];
+      for (i in blockArray) {
+        var block = blockArray[i];
         if (block.type === 'basic.output') {
           for (var p in block.data.pins) {
             usedPins.push(block.data.virtual ? '' : block.data.pins[p].value);
@@ -597,7 +597,7 @@ angular.module('icestudio')
         project.design &&
         project.design.graph) {
 
-        var blocks = project.design.graph.blocks;
+        var blockArray = project.design.graph.blocks;
         var dependencies = project.dependencies;
 
         // Main module
@@ -618,9 +618,9 @@ angular.module('icestudio')
                 block: initPort.name,
                 port: 'out'
               };
-              for (i in blocks) {
-                block = blocks[i];
-                if (block.type === 'basic.input' &&
+              for (i in blockArray) {
+                block = blockArray[i];
+                if (block.type === blocks.BASIC_INPUT &&
                   !block.data.range &&
                   !block.data.virtual &&
                   initPort.pin === block.data.pins[0].value) {
@@ -634,7 +634,7 @@ angular.module('icestudio')
                 // Add imaginary input block with the initPort value
                 project.design.graph.blocks.push({
                   id: initPort.name,
-                  type: 'basic.input',
+                  type: blocks.BASIC_INPUT,
                   data: {
                     name: initPort.name,
                     pins: [{
@@ -726,8 +726,8 @@ angular.module('icestudio')
 
         // Code modules 
       
-        for (i in blocks) {
-          block = blocks[i];
+        for (i in blockArray) {
+          block = blockArray[i];
           if (block) {
             if (block.type === 'basic.code') {
               data = {
@@ -747,12 +747,12 @@ angular.module('icestudio')
 
     function pcfCompiler(project, opt) {
       var i, j, block, pin, value, code = '';
-      var blocks = project.design.graph.blocks;
+      var blockArray = project.design.graph.blocks;
       opt = opt || {};
 
-      for (i in blocks) {
-        block = blocks[i];
-        if (block.type === 'basic.input' ||
+      for (i in blockArray) {
+        block = blockArray[i];
+        if (block.type === blocks.BASIC_INPUT ||
           block.type === 'basic.output') {
 
           if (block.data.pins.length > 1) {
@@ -791,9 +791,9 @@ angular.module('icestudio')
 
           // Find existing input block with the initPort value
           var found = false;
-          for (j in blocks) {
-            block = blocks[j];
-            if (block.type === 'basic.input' &&
+          for (j in blockArray) {
+            block = blockArray[j];
+            if (block.type === blocks.BASIC_INPUT &&
               !block.data.range &&
               !block.data.virtual &&
               initPort.pin === block.data.pins[0].value) {
@@ -833,16 +833,16 @@ angular.module('icestudio')
 
     function lpfCompiler(project, opt) {
       var i, block, pin, value, code = '';
-      var blocks = project.design.graph.blocks;
+      var blockArray = project.design.graph.blocks;
       opt = opt || {};
 
       code += '# -- Board: ';
       code += common.selectedBoard.name;
       code += '\n\n';
 
-      for (i in blocks) {
-        block = blocks[i];
-        if (block.type === 'basic.input' ||
+      for (i in blockArray) {
+        block = blockArray[i];
+        if (block.type === blocks.BASIC_INPUT ||
           block.type === 'basic.output') {
 
             //-- Future improvement: Both cases: 1-pin or multiple pins in an array
@@ -904,13 +904,13 @@ angular.module('icestudio')
         project.design &&
         project.design.graph) {
 
-        var blocks = project.design.graph.blocks;
+        var blockArray = project.design.graph.blocks;
         var dependencies = project.dependencies;
 
         // Find in blocks
 
-        for (i in blocks) {
-          var block = blocks[i];
+        for (i in blockArray) {
+          var block = blockArray[i];
           if (block.type === 'basic.memory') {
             listFiles.push({
               name: utils.digestId(block.id)  + '.list',
@@ -1061,7 +1061,7 @@ angular.module('icestudio')
       var graph = project.design.graph;
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-        if (block.type === 'basic.input') {
+        if (block.type === blocks.BASIC_INPUT) {
           if (block.data.name) {
             input.push({
               id: utils.digestId(block.id) ,

@@ -515,9 +515,11 @@ angular.module('icestudio')
     //-- Load
 
     function loadBasic(instance, disabled) {
+
       switch (instance.type) {
-        case 'basic.input':
+        case blocks.BASIC_INPUT:
           return loadBasicInput(instance, disabled);
+          
         case 'basic.output':
           return loadBasicOutput(instance, disabled);
         case 'basic.outputLabel':
@@ -525,7 +527,7 @@ angular.module('icestudio')
 
         case blocks.BASIC_INPUT_LABEL:
           return loadBasicInputLabel(instance, disabled);
-          
+
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':
@@ -745,7 +747,7 @@ angular.module('icestudio')
 
       for (i in block.design.graph.blocks) {
         var item = block.design.graph.blocks[i];
-        if (item.type === 'basic.input') {
+        if (item.type === blocks.BASIC_INPUT) {
           if (!item.data.range) {
             instance.data.ports.in.push({
               name: item.id,

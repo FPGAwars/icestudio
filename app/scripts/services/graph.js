@@ -308,7 +308,7 @@ angular.module('icestudio')
                     }
                     // Ensure input -> pull-up connections
                     if (cellViewT.model.get('pullup')) {
-                        var ret = (cellViewS.model.get('blockType') === 'basic.input');
+                        var ret = (cellViewS.model.get('blockType') === blocks.BASIC_INPUT);
                         if (!ret) {
                             warning(gettextCatalog.getString('Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'));
                         }
@@ -1172,10 +1172,10 @@ angular.module('icestudio')
                     return;
                 }
                 var type = cell.get('blockType');
-                if (type === 'basic.input' || type === 'basic.output') {
+                if (type === blocks.BASIC_INPUT || type === 'basic.output') {
                     // Reset choices in all Input / blocks
                     var view = paper.findViewByModel(cell.id);
-                    cell.set('choices', (type === 'basic.input') ? common.pinoutInputHTML : common.pinoutOutputHTML);
+                    cell.set('choices', (type === blocks.BASIC_INPUT) ? common.pinoutInputHTML : common.pinoutOutputHTML);
                     view.clearValues();
                     view.applyChoices();
                 }
@@ -1205,7 +1205,7 @@ angular.module('icestudio')
                     connectedLinks = graph.getConnectedLinks(cell);
                     if (block.design.graph.blocks) {
                         _.each(block.design.graph.blocks, function (item) {
-                            if (item.type === 'basic.input' && !item.data.range) {
+                            if (item.type === blocks.BASIC_INPUT && !item.data.range) {
                                 var connected = false;
                                 _.each(connectedLinks, function (connectedLink) {
                                     if (connectedLink.get('target').port === item.id) {
@@ -1510,7 +1510,8 @@ angular.module('icestudio')
                         case 'basic.outputLabel': 
                         case blocks.BASIC_INPUT_LABEL:
                         case 'basic.code':
-                        case 'basic.input': case 'basic.output':
+                        case blocks.BASIC_INPUT: 
+                        case 'basic.output':
                             founded = true;
                             break;
 
@@ -1557,7 +1558,7 @@ angular.module('icestudio')
 
                 if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
-                        (blockInstance.type === 'basic.input' ||
+                        (blockInstance.type === blocks.BASIC_INPUT ||
                             blockInstance.type === 'basic.output')) {
                         var pins = blockInstance.data.pins;
 
