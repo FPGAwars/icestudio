@@ -696,56 +696,67 @@ angular
         });
       }; 
 
-
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- python path
+      //---------------------------------------------------------------------
       $scope.setPythonEnv = function () {
+
+        //-- Get the current python path
         let pythonEnv = profile.get("pythonEnv");
-        let formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the python version > 3.8 path"
-            ),
-            value: pythonEnv.python || "",
-          },
-          {
-            type: "text",
-            title: gettextCatalog.getString("Enter the pip version > 3.8 path"),
-            value: pythonEnv.pip || "",
-          },
-        ];
-        forms.displayForm(formSpecs, function (evt, values) {
-          let newPythonPath = values[0];
-          let newPipPath = values[1];
 
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+        //-- Create the form
+        let form = new forms.FormPythonEnv(pythonEnv.python, pythonEnv.pip);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new paths
+          let newPythonPath = form.values[0];
+          let newPipPath = form.values[1];
+
+          //-- If there where no changes.. return
+          if ( newPythonPath === pythonEnv.python &&
+               newPipPath === pythonEnv.pip) {
+                 return;
           }
-          if (
-            newPythonPath !== pythonEnv.python ||
-            newPipPath !== pythonEnv.pip
-          ) {
-            if (
-              (newPythonPath === "" || nodeFs.existsSync(newPythonPath)) &&
-              (newPipPath === "" || nodeFs.existsSync(newPipPath))
-            ) {
-              let newPythonEnv = { python: newPythonPath, pip: newPipPath };
-              profile.set("pythonEnv", newPythonEnv);
 
-              alertify.success(
-                gettextCatalog.getString("Python Environment updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: "of python or pip",
-                  },
-                  5
-                )
-              );
-            }
+          //-- If the files are valid...
+          if (
+            (newPythonPath === "" || nodeFs.existsSync(newPythonPath)) &&
+            (newPipPath === "" || nodeFs.existsSync(newPipPath))) 
+          {
+            //-- The files are valid...
+            //-- Set them in the profile
+            let newPythonEnv = { 
+              python: newPythonPath, pip: newPipPath 
+            };
+            profile.set("pythonEnv", newPythonEnv);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("Python Environment updated")
+            );
+          }
+          //-- The file is not valid 
+          else {
+            //-- Notify the user
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: "of python or pip",
+                },
+                5
+              )
+            );
           }
         });
       };
