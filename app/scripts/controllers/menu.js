@@ -1954,8 +1954,15 @@ angular
           case 'code': 
             project.addBasicBlock(blocks.BASIC_CODE); 
             break;
-          case 'information': project.addBasicBlock('basic.info'); break;
-          case 'constant': project.addBasicBlock('basic.constant'); break;
+
+          case 'information': 
+            project.addBasicBlock('basic.info'); 
+            break;
+
+          case 'constant': 
+            project.addBasicBlock(blocks.BASIC_CONSTANT); 
+            break;
+
           case 'verify': $scope.verifyCode(); break;
           case 'build': $scope.buildCode(); break;
           case 'upload': $scope.uploadCode(); break;

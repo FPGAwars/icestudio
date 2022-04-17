@@ -167,7 +167,7 @@ angular.module('icestudio')
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
         
-        if (block.type === 'basic.constant') {
+        if (block.type === blocks.BASIC_CONSTANT) {
           params.push({
             name: utils.digestId(block.id),
             value: block.data.value
@@ -423,7 +423,7 @@ angular.module('icestudio')
 
         if (block.type !== blocks.BASIC_INPUT &&
           block.type !== blocks.BASIC_OUTPUT &&
-          block.type !== 'basic.constant' &&
+          block.type !== blocks.BASIC_CONSTANT &&
           block.type !== blocks.BASIC_MEMORY &&
           block.type !== 'basic.info' &&
           block.type !== blocks.BASIC_INPUT_LABEL &&
@@ -1104,7 +1104,7 @@ angular.module('icestudio')
       var graph = project.design.graph;
       for (var i in graph.blocks) {
         var block = graph.blocks[i];
-        if (block.type === 'basic.constant') {
+        if (block.type === blocks.BASIC_CONSTANT) {
           if (!block.data.local) {
             if (block.data.name) {
               params.push({

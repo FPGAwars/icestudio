@@ -285,7 +285,7 @@ angular.module('icestudio')
               virtual: false
             };
             break;
-          case 'basic.constant':
+          case blocks.BASIC_CONSTANT:
             block.data = {
               name: block.data.label,
               value: block.data.value,
@@ -563,7 +563,7 @@ angular.module('icestudio')
             case blocks.BASIC_OUTPUT:
             case blocks.BASIC_OUTPUT_LABEL:
             case blocks.BASIC_INPUT_LABEL:
-            case 'basic.constant':
+            case blocks.BASIC_CONSTANT:
             case blocks.BASIC_MEMORY:
               break;
             case blocks.BASIC_CODE:

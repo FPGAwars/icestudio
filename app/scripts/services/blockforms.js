@@ -46,7 +46,7 @@ angular.module('icestudio')
   //--     -BASIC_OUTPUT --> Output port
   //--     -BASIC_OUTPUT_LABEL
   //--     -BASIC_INPUT_LABEL
-  //--     -'basic.constant'
+  //--     -BASIC_CONSTANT
   //--     -BASIC_MEMORY
   //--     -BASIC_CODE
   //--     -'basic.info'
@@ -529,7 +529,7 @@ angular.module('icestudio')
         case blocks.BASIC_INPUT_LABEL:
           return loadBasicInputLabel(instance, disabled);
 
-        case 'basic.constant':
+        case blocks.BASIC_CONSTANT:
           return loadBasicConstant(instance, disabled);
 
         case blocks.BASIC_MEMORY:
@@ -775,7 +775,7 @@ angular.module('icestudio')
             size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
           });
         }
-        else if (item.type === 'basic.constant' || item.type === blocks.BASIC_MEMORY) {
+        else if (item.type === blocks.BASIC_CONSTANT || item.type === blocks.BASIC_MEMORY) {
           if (!item.data.local) {
             topPorts.push({
               id: item.id,
