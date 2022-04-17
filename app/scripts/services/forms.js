@@ -381,10 +381,11 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   //--- CHECKBOX FIELD. Input checkbox field
   //-------------------------------------------------------------------------
-    //-- This is how it is rendered in the Form
-  /*
-         [ ] Label
-  */
+  //-- This is how it is rendered in the Form
+  //
+  //     [ ] Label
+  //
+  //-------------------------------------------------------------------------
   class CheckboxField {
 
     //-----------------------------------------------------------------------
@@ -401,11 +402,15 @@ angular.module('icestudio')
       this.formId = formId;
 
       //-- Html template for building the checkbox field
+      //-- The parameters are:
+      //--  %LABEL% : Text place to the right of the checkbox
+      //--  %ID% : Form identification number
+      //--  %VALUE%: Default value
       this.htmlTemplate = `
         <div class="checkbox">
           <label>
-            <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-            ${PARAM_LABEL}
+            <input type="checkbox" %VALUE% id="form%ID%"/>
+            %LABEL%
           </label>
         </div>
       `;
@@ -419,11 +424,11 @@ angular.module('icestudio')
 
       //-- Insert the parameters in the html code template
       let html = this.htmlTemplate.replace(
-        PARAM_VALUE,
+        "%VALUE%",
         (this.value ? 'checked' : ''));
 
-      html = html.replace(PARAM_ID, this.formId);
-      html = html.replace(PARAM_LABEL, this.label);
+      html = html.replace("%ID%", this.formId);
+      html = html.replace("%LABEL%", this.label);
 
       return html;
     }
@@ -439,8 +444,8 @@ angular.module('icestudio')
 
       return value;
     }
-    
   }
+
 
   //-------------------------------------------------------------------------
   //--- COLOR FIELD. Input color dropdown field
