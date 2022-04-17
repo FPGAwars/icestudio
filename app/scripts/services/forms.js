@@ -15,42 +15,6 @@ angular.module('icestudio')
     ) 
 {
 
-  //-------------------------------------------------------------------------
-  //-- Constant for working with HTML FORMS
-  //-------------------------------------------------------------------------
-  //-- Each input Form has diffefrent Fields:
-  //--  * Text : For entering texts (Ex. port names)
-  //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
-  //--  * Combobox. Multiple selection. (Ex. Address format )
-  //--  * Color selection dropmenu
-  const FIELD_COMBOBOX = 'combobox';
-
-  //-- Constants for the Field Parameters
-  const PARAM_ID = "%ID%";
-  const PARAM_VALUE = "%VALUE%";
-  const PARAM_LABEL = "%LABEL%";
-  const PARAM_OPTIONS = "%OPTIONS%";
-  const PARAM_SELECTED = "%SELECTED%";
-
-  //-- HTML code template
-  //-- Ex. <option value="10" selected>Decimal</option>
-  const COMBOBOX_OPTION_TEMPLATE=`
-    <option value="${PARAM_VALUE}" ${PARAM_SELECTED}>
-      ${PARAM_LABEL}
-    </option>
-  `;
-
-  //-- HTML template for the combobox input
-  const FORM_COMBOBOX_TEMPLATE = `
-    <div class="form-group">
-      <label style="font-weight:normal">${PARAM_LABEL}</label>
-      <select class="form-control" id="form${PARAM_ID}">
-        ${PARAM_OPTIONS}
-      </select>
-    </div>
-  `;
-
-
   //---------------------------------------------------------
   //-- TEXTFIELD. It represents a Form Input text field
   //---------------------------------------------------------
@@ -219,6 +183,10 @@ angular.module('icestudio')
       this.colorName = this.getColorName(color);
 
       //-- Html template for building the color selector field
+      //-- The parameters are:
+      //--  %TEXT% : Text place to the right of the checkbox
+      //--  %COLOR% : Color (in english)
+      //--  %COLOR_NAME%: Color (translated)
       this.htmlTemplate = `
         <div class="form-group">
           <label style ="font-weight:normal"> %TEXT% </label>
@@ -535,11 +503,33 @@ angular.module('icestudio')
     //-------------------------------------------------------------------------
     constructor(options, label, value, formId) {
 
-      this.type = FIELD_COMBOBOX;
+      //-- Properties
       this.label = label;
       this.options = options;
       this.value = value;
       this.formId = formId;
+
+      //-- Html template for building the combobox field
+      //-- The parameters are:
+      //--  %VALUE% : Default value for the option
+      //--  %LABEL% : Text assigned to the option
+      //--  %SELECTED%: If the option is the default
+      this.htmlComboboxOptionTemplate = `
+        <option value="%VALUE%" %SELECTED%>
+          %LABEL%
+        </option>
+      `;
+
+      //--  %ID% : Form identification number
+      //--  %OPTIONS%: Array of available options
+      this.htmlTemplate = `
+        <div class="form-group">
+          <label style="font-weight:normal">%LABEL%</label>
+          <select class="form-control" id="form%ID%">
+            %OPTIONS%
+          </select>
+        </div>
+      `;
     }
 
     //----------------------------------------------------
@@ -555,9 +545,9 @@ angular.module('icestudio')
     htmlComboboxOption(value, selected, label) {
 
       //-- Insert the parameters in the html TEMPLATE
-      let html = COMBOBOX_OPTION_TEMPLATE.replace(PARAM_VALUE, value);
-      html = html.replace(PARAM_SELECTED, selected);
-      html = html.replace(PARAM_LABEL, label);
+      let html = this.htmlComboboxOptionTemplate.replace("%VALUE%", value);
+      html = html.replace("%SELECTED%", selected);
+      html = html.replace("%LABEL%", label);
 
       return html;
     }
@@ -598,9 +588,9 @@ angular.module('icestudio')
       opts = opts.join('');
 
       //-- Insert the parameters in the Combox HTML template
-      let html = FORM_COMBOBOX_TEMPLATE.replace(PARAM_LABEL, this.label);
-      html = html.replace(PARAM_ID, this.formId);
-      html = html.replace(PARAM_OPTIONS, opts);
+      let html = this.htmlTemplate.replace("%LABEL%", this.label);
+      html = html.replace("%ID%", this.formId);
+      html = html.replace("%OPTIONS%", opts);
       
       return html;
     }
