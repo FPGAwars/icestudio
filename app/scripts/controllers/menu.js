@@ -1948,7 +1948,7 @@ angular
             break;
 
           case 'memory': 
-            project.addBasicBlock('basic.memory'); 
+            project.addBasicBlock(blocks.BASIC_MEMORY); 
             break;
 
           case 'code': 

@@ -172,7 +172,7 @@ angular.module('icestudio')
             name: utils.digestId(block.id),
             value: block.data.value
           });
-        } else if (block.type === 'basic.memory') {
+        } else if (block.type === blocks.BASIC_MEMORY) {
           let name =  utils.digestId(block.id);
         
           params.push({
@@ -424,7 +424,7 @@ angular.module('icestudio')
         if (block.type !== blocks.BASIC_INPUT &&
           block.type !== blocks.BASIC_OUTPUT &&
           block.type !== 'basic.constant' &&
-          block.type !== 'basic.memory' &&
+          block.type !== blocks.BASIC_MEMORY &&
           block.type !== 'basic.info' &&
           block.type !== blocks.BASIC_INPUT_LABEL &&
           block.type !== blocks.BASIC_OUTPUT_LABEL) {
@@ -911,7 +911,7 @@ angular.module('icestudio')
 
         for (i in blockArray) {
           var block = blockArray[i];
-          if (block.type === 'basic.memory') {
+          if (block.type === blocks.BASIC_MEMORY) {
             listFiles.push({
               name: utils.digestId(block.id)  + '.list',
               content: block.data.list
