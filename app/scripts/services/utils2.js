@@ -9,13 +9,12 @@
 
 angular.module('icestudio')
   .service('utils2', 
-    function (
-    ) 
+    function () 
 {
 
-  //---------------------------------------------------------------------------
+  //-------------------------------------------------------------------------
   //-- CONSTANTS for the blocks
-  //---------------------------------------------------------------------------
+  //-------------------------------------------------------------------------
   //-- TYPE of blocks
   const BASIC_INPUT = 'basic.input';   //-- Input ports
   const BASIC_OUTPUT = 'basic.output'; //-- Output ports
@@ -26,9 +25,7 @@ angular.module('icestudio')
   const BASIC_MEMORY = 'basic.memory'; //-- Memory parameter
   const BASIC_CONSTANT = 'basic.constant'; //-- Constant parameter
   const BASIC_INFO = 'basic.info'; //-- Info block
-  
-  //-- Maximum length for the BUSES in ports
-  //const MAX_SIZE = 96;
+
 
   //-------------------------------------------------------------------------
   //-- Class: Block Object. It represent any graphical object in the

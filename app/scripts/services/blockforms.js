@@ -1,12 +1,10 @@
 //---------------------------------------------------------------------------
-//-- BLOCKS
-//--
-//-- Functions, constants, and data structures for managing Icestudio blocks
+//-- Functions for creating and editing icestudio blocks using forms
 //---------------------------------------------------------------------------
 'use strict';
 
 angular.module('icestudio')
-  .service('blocks', 
+  .service('blockforms', 
     function (
 
       //-- Access to the JointJS API
