@@ -23,8 +23,6 @@ angular.module('icestudio')
   //--  * Checkbox: on/off (Ex. FPGA pin/ virtual pin)
   //--  * Combobox. Multiple selection. (Ex. Address format )
   //--  * Color selection dropmenu
-  const FIELD_TEXT = 'text';
-  const FIELD_CHECKBOX = 'checkbox';
   const FIELD_COLOR = 'color-dropdown';
   const FIELD_COMBOBOX = 'combobox';
 
@@ -38,28 +36,7 @@ angular.module('icestudio')
   const PARAM_COLOR = "%COLOR%";
   const PARAM_COLOR_NAME = "%COLOR_NAME%";
 
-  //------------------------ HTML TEMPLATES for the Fields
-
-  //-- Input text
-  const FORM_TEXT_TEMPLATE = `
-  <p> ${PARAM_TEXT} </p>
-  <input class="ajs-input" 
-         type="text" 
-         id="form${PARAM_ID}" 
-         value="${PARAM_VALUE}"
-         autocomplete="off"/>
-  `;
-
-  //-- Checkbox
-  const FORM_CHECKBOX_TEMPLATE = `
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
-      ${PARAM_LABEL}
-    </label>
-  </div>
- `;
-
+  
   function getColorName(color) {
     switch(color) {
       case "fuchsia": 
@@ -354,10 +331,20 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     constructor(label, value, formId) {
 
-      this.type = FIELD_TEXT;
+      //-- Properties
       this.label = label;
       this.value = value;
       this.formId = formId;
+
+      //-- Html template for building the text field
+      this.htmlTemplate = `
+        <p> ${PARAM_TEXT} </p>
+        <input class="ajs-input" 
+               type="text" 
+               id="form${PARAM_ID}" 
+               value="${PARAM_VALUE}"
+               autocomplete="off"/>
+      `;
     }
 
     //---------------------------------------------------------
@@ -368,7 +355,7 @@ angular.module('icestudio')
       //-- Generate the HTML code
 
       //-- Insert the parameters in the html code template
-      let html = FORM_TEXT_TEMPLATE.replace(PARAM_TEXT, this.label);
+      let html = this.htmlTemplate.replace(PARAM_TEXT, this.label);
       html = html.replace(PARAM_VALUE, this.value);
       html = html.replace(PARAM_ID, this.formId);
 
@@ -405,10 +392,20 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     constructor(label, value, formId) {
 
-      this.type = FIELD_CHECKBOX;
+      //-- Properties
       this.label = label;
       this.value = value;
       this.formId = formId;
+
+      //-- Html template for building the checkbox field
+      this.htmlTemplate = `
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ${PARAM_VALUE} id="form${PARAM_ID}"/>
+            ${PARAM_LABEL}
+          </label>
+        </div>
+      `;
     }
 
     //---------------------------------------------------------
@@ -418,7 +415,7 @@ angular.module('icestudio')
       //-- Generate the HTML code
 
       //-- Insert the parameters in the html code template
-      let html = FORM_CHECKBOX_TEMPLATE.replace(
+      let html = this.htmlTemplate.replace(
         PARAM_VALUE,
         (this.value ? 'checked' : ''));
 
