@@ -204,24 +204,24 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     //-- Create the html code for an input color dropdown field
     //-- INPUTS:
-    //--   * Label: Text place above the color input box
+    //--   * msg: Text place above the color input box
     //--   * color: Color value (String)
     //--   * colorName: Color name (String)
     //--
     //-- Returns:
     //--   -A string with the HTML code for that Field
     //-----------------------------------------------------------------------
-    constructor(label, color) {
+    constructor(msg, color) {
 
       //-- Properties
-      this.label = label;
+      this.msg = msg;
       this.color = color;
       this.colorName = this.getColorName(color);
 
       //-- Html template for building the color selector field
       this.htmlTemplate = `
         <div class="form-group">
-          <label style ="font-weight:normal"> %LABEL% </label>
+          <label style ="font-weight:normal"> %TEXT% </label>
           <div class="lb-color--dropdown">
             <div class="lb-dropdown-title">
       
@@ -485,8 +485,8 @@ angular.module('icestudio')
 
       //-- Insert the parameters in the html code template
       let html = this.htmlTemplate.replace(
-        "%LABEL%",
-        this.label
+        "%TEXT%",
+        this.msg
       );
 
       html = html.replaceAll("%COLOR%", this.color);
