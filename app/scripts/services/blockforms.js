@@ -15,7 +15,7 @@ angular.module('icestudio')
       forms,  //-- Create and display forms for user inputs
 
       utils,
-      utils2,
+      blocks,
       common,
       gettextCatalog,
       sparkMD5
@@ -64,50 +64,50 @@ angular.module('icestudio')
     switch (type) {
 
       //-- Input port
-      case utils2.BASIC_INPUT:
+      case blocks.BASIC_INPUT:
 
         form = new forms.FormBasicInput();
         newBasicPort(form, callback);
         break;
 
       //-- Output port
-      case utils2.BASIC_OUTPUT:
+      case blocks.BASIC_OUTPUT:
 
         form = new forms.FormBasicOutput();
         newBasicPort(form, callback);
         break;
 
       //-- Output label
-      case utils2.BASIC_OUTPUT_LABEL:
+      case blocks.BASIC_OUTPUT_LABEL:
 
         form = new forms.FormBasicOutputLabel();
         newBasicLabel(form, callback);
         break;
 
       //-- Input label
-      case utils2.BASIC_INPUT_LABEL:
+      case blocks.BASIC_INPUT_LABEL:
         form = new forms.FormBasicInputLabel();
         newBasicLabel(form, callback);
         break;
 
       //-- Paired Labels
-      case utils2.BASIC_PAIRED_LABELS:
+      case blocks.BASIC_PAIRED_LABELS:
         
         form = new forms.FormBasicPairedLabels();
         newBasicPairedLabels(form, callback);
         break;
 
       //-- Constant parameter block
-      case utils2.BASIC_CONSTANT:
+      case blocks.BASIC_CONSTANT:
         newBasicConstant2(callback);
         break;
 
-      case utils2.BASIC_MEMORY:
+      case blocks.BASIC_MEMORY:
         newBasicMemory2(callback);
         break;
 
       //-- Code block
-      case utils2.BASIC_CODE:
+      case blocks.BASIC_CODE:
         
         form = new forms.FormBasicCode();
         newBasicCode(form, callback);
@@ -454,7 +454,7 @@ angular.module('icestudio')
         //-- OK. There are no duplicated names. Proceed!!
 
         //-- Create a blank block
-        let blockInstance = new utils2.CodeBlock(
+        let blockInstance = new blocks.CodeBlock(
           form.inPortsInfo,
           form.outPortsInfo,
           form.inParamsInfo
@@ -474,7 +474,7 @@ angular.module('icestudio')
     function newBasicInfo(callback) {
 
       //-- Create the info Block
-      let block = new utils2.InfoBlock();
+      let block = new blocks.InfoBlock();
 
       if (callback) {
 
@@ -889,7 +889,7 @@ angular.module('icestudio')
       switch (type) {
 
         //-- Input port
-        case utils2.BASIC_INPUT:
+        case blocks.BASIC_INPUT:
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicInput(name, virtual, clock);
@@ -897,7 +897,7 @@ angular.module('icestudio')
           break;
   
         //-- Output port
-        case utils2.BASIC_OUTPUT:
+        case blocks.BASIC_OUTPUT:
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutput(name, virtual);
@@ -905,7 +905,7 @@ angular.module('icestudio')
           break;
 
         //-- Output Label
-        case utils2.BASIC_OUTPUT_LABEL:
+        case blocks.BASIC_OUTPUT_LABEL:
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutputLabel(name, color);
@@ -913,22 +913,22 @@ angular.module('icestudio')
           break;
 
         //-- Input Label
-        case utils2.BASIC_INPUT_LABEL:
+        case blocks.BASIC_INPUT_LABEL:
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicInputLabel(name, color);
           editBasicLabel2(form, cellView);
           break;
 
-        case utils2.BASIC_CONSTANT:
+        case blocks.BASIC_CONSTANT:
           editBasicConstant(cellView);
           break;
 
-        case utils2.BASIC_MEMORY:
+        case blocks.BASIC_MEMORY:
           editBasicMemory(cellView);
           break;
 
-        case utils2.BASIC_CODE:
+        case blocks.BASIC_CODE:
           editBasicCode(cellView, callback);
           break;
 
@@ -1091,11 +1091,11 @@ angular.module('icestudio')
         let portInfo = form.portInfos[0];
 
         //-- Get an array with the pins used
-        let pins = utils2.getPins(portInfo);
+        let pins = blocks.getPins(portInfo);
 
         //-- Copy the pins from the original
         //-- block to the new one
-        utils2.copyPins(block.data.pins, pins);
+        blocks.copyPins(block.data.pins, pins);
 
         // Create new block
         let newblock = form.newBlock(0);
@@ -1115,10 +1115,10 @@ angular.module('icestudio')
           //-- shrink), but the output port is in the same place  
 
           //-- Size in pins of the initial block
-          let oldSize = utils2.getSize(block);
+          let oldSize = blocks.getSize(block);
 
           //-- Size in pins of the new block
-          let newSize = utils2.getSize(newblock);
+          let newSize = blocks.getSize(newblock);
 
           //-- Offset to applied to the vertical position
           let offset = 16 * (oldSize - newSize);
@@ -1293,13 +1293,13 @@ angular.module('icestudio')
       let block = cellView.model.attributes;
 
       //-- Get the input port names as a string
-      let inPortNames = utils2.portsInfo2Str(block.data.ports.in);
+      let inPortNames = blocks.portsInfo2Str(block.data.ports.in);
 
       //-- Get the output port names as a string
-      let outPortNames = utils2.portsInfo2Str(block.data.ports.out);
+      let outPortNames = blocks.portsInfo2Str(block.data.ports.out);
 
       //-- Get the input param names as a string
-      let inParamNames = utils2.portsInfo2Str(block.data.params);
+      let inParamNames = blocks.portsInfo2Str(block.data.params);
 
       //-- Create the form
       let form = new forms.FormBasicCode(
@@ -1333,7 +1333,7 @@ angular.module('icestudio')
         }
 
         //-- Create a blank block
-        let blockInstance = new utils2.CodeBlock(
+        let blockInstance = new blocks.CodeBlock(
           form.inPortsInfo,
           form.outPortsInfo,
           form.inParamsInfo

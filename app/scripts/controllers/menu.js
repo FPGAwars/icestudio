@@ -16,7 +16,7 @@ angular
       graph,
       tools,
       utils,
-      utils2,
+      blocks,
       forms,
       common,
       shortcuts,
@@ -1924,12 +1924,12 @@ angular
 
           //-- Input: Place an input port
           case 'input': 
-            project.addBasicBlock(utils2.BASIC_INPUT); 
+            project.addBasicBlock(blocks.BASIC_INPUT); 
             break;
 
           //-- Output: Place an output port
           case 'output': 
-            project.addBasicBlock(utils2.BASIC_OUTPUT); 
+            project.addBasicBlock(blocks.BASIC_OUTPUT); 
             break;
 
           //-- Input label
@@ -1944,7 +1944,7 @@ angular
 
           //-- Paired labels
           case 'labelPaired':
-            project.addBasicBlock(utils2.BASIC_PAIRED_LABELS);
+            project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
             break;
 
 

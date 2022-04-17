@@ -11,7 +11,7 @@ angular.module('icestudio')
     function (
       gettextCatalog,
       common,
-      utils2
+      blocks
     ) 
 {
 
@@ -975,7 +975,7 @@ angular.module('icestudio')
             virtual);
 
       //-- Store the type of block associated with the Form
-      this.type = utils2.BASIC_INPUT;
+      this.type = blocks.BASIC_INPUT;
 
       //-------- Add the particular fields
 
@@ -1054,9 +1054,9 @@ angular.module('icestudio')
       
       //-- Create an array of empty pins (with name and values 
       //-- set to 'NULL')
-      let pins = utils2.getPins(portInfo);
+      let pins = blocks.getPins(portInfo);
 
-      let block = new utils2.InputPortBlock(
+      let block = new blocks.InputPortBlock(
         portInfo.name,
         this.virtual,
         portInfo.rangestr,
@@ -1096,7 +1096,7 @@ angular.module('icestudio')
             virtual);
 
       //-- Store the type of block associated with the Form
-      this.type = utils2.BASIC_OUTPUT;
+      this.type = blocks.BASIC_OUTPUT;
 
       //-------- Output port do not have particular fields
       //-- Store the initial values
@@ -1136,10 +1136,10 @@ angular.module('icestudio')
       
       //-- Create an array of empty pins (with name and values 
       //-- set to 'NULL')
-      let pins = utils2.getPins(portInfo);
+      let pins = blocks.getPins(portInfo);
 
       //-- Create the block
-      let block = new utils2.OutputPortBlock(
+      let block = new blocks.OutputPortBlock(
         portInfo.name,
         this.virtual,
         portInfo.rangestr,
@@ -1337,7 +1337,7 @@ angular.module('icestudio')
       );
 
       //-- Store the type of block associated with the Form
-      this.type = utils2.BASIC_INPUT_LABEL;
+      this.type = blocks.BASIC_INPUT_LABEL;
 
       //-------- Input Label port DO NOT have particular fields
     }
@@ -1371,7 +1371,7 @@ angular.module('icestudio')
       let portInfo = this.portInfos[n];
 
       //-- Create the Label block
-      let block = new utils2.InputLabelBlock(
+      let block = new blocks.InputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
         this.color
@@ -1413,7 +1413,7 @@ angular.module('icestudio')
       );
 
       //-- Store the type of block associated with the Form
-      this.type = utils2.BASIC_OUTPUT_LABEL;
+      this.type = blocks.BASIC_OUTPUT_LABEL;
 
       //-------- Output Label port do not have particular fields
     }
@@ -1447,7 +1447,7 @@ angular.module('icestudio')
       let portInfo = this.portInfos[n];
 
       //-- Create the Label block
-      let block = new utils2.OutputLabelBlock(
+      let block = new blocks.OutputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
         this.color
@@ -1470,7 +1470,7 @@ angular.module('icestudio')
       );
 
       //-- Store the type of block associated with the Form
-      this.type = utils2.BASIC_PAIRED_LABEL;
+      this.type = blocks.BASIC_PAIRED_LABEL;
     }
 
     //-------------------------------------------------------------
@@ -1489,14 +1489,14 @@ angular.module('icestudio')
       let portInfo = this.portInfos[n];
 
       //-- Create the Paired labels: Input
-      let block1 = new utils2.InputLabelBlock(
+      let block1 = new blocks.InputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
         this.color
       ); 
 
       //-- Create the Paired labels: Output
-      let block2 = new utils2.OutputLabelBlock(
+      let block2 = new blocks.OutputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
         this.color
@@ -1702,13 +1702,13 @@ angular.module('icestudio')
       //-- values used when creating the form
 
       //-- Get the input port names as a string
-      let inPortNames = utils2.portsInfo2Str(this.inPortsInfo);
+      let inPortNames = blocks.portsInfo2Str(this.inPortsInfo);
 
       //-- Get the output port names as a string
-      let outPortNames = utils2.portsInfo2Str(this.outPortsInfo);
+      let outPortNames = blocks.portsInfo2Str(this.outPortsInfo);
 
       //-- Get the input param names as a string
-      let inParamNames = utils2.portsInfo2Str(this.inParamsInfo);
+      let inParamNames = blocks.portsInfo2Str(this.inParamsInfo);
 
       //-- Compare these values with the initial ones
       //-- to detec if there has been a change
@@ -1905,7 +1905,7 @@ angular.module('icestudio')
     newBlock(n) {
 
       //-- Create the block
-      let block = new utils2.MemoryBlock(
+      let block = new blocks.MemoryBlock(
         this.names[n],
         '',
         this.local,
@@ -2089,7 +2089,7 @@ angular.module('icestudio')
     newBlock(n) {
 
       //-- Create the block
-      let block = new utils2.ConstantBlock(
+      let block = new blocks.ConstantBlock(
         this.names[n],
         '',
         this.local

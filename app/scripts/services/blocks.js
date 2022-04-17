@@ -1,6 +1,5 @@
 //---------------------------------------------------------------------------
-//-- Temporal utils module
-//-- Used for refactoring
+//-- Module for working with Blocks
 //---------------------------------------------------------------------------
 'use strict';
 
@@ -8,7 +7,7 @@
 /* jshint unused:false */
 
 angular.module('icestudio')
-  .service('utils2', 
+  .service('blocks', 
     function () 
 {
 
