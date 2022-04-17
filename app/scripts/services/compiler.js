@@ -431,7 +431,7 @@ angular.module('icestudio')
 
           // Header
           var instance;
-          if (block.type === 'basic.code') {
+          if (block.type === blocks.BASIC_CODE) {
             instance = name + '_' + utils.digestId(block.id);
           } else {
             instance = utils.digestId(block.type);
@@ -447,7 +447,7 @@ angular.module('icestudio')
               (wire.source.port === 'constant-out' ||
                 wire.source.port === 'memory-out')) {
               var paramName = wire.target.port;
-              if (block.type !== 'basic.code') {
+              if (block.type !== blocks.BASIC_CODE) {
                 paramName =  utils.digestId(paramName); 
               }
               var param = '';
@@ -492,7 +492,7 @@ angular.module('icestudio')
 
       function connectPort(portName, portsNames, ports, block) {
         if (portName) {
-          if (block.type !== 'basic.code') {
+          if (block.type !== blocks.BASIC_CODE) {
             portName =  utils.digestId(portName);
           }
           if (portsNames.indexOf(portName) === -1) {
@@ -532,7 +532,7 @@ angular.module('icestudio')
       for (i in blockArray) {
         var block = blockArray[i];
         if (block) {
-          if (block.type === 'basic.code' || !block.type.startsWith('basic.')) {
+          if (block.type === blocks.BASIC_CODE || !block.type.startsWith('basic.')) {
             // Code block or Generic block
             for (j in block.data.ports.in) {
               var inPort = block.data.ports.in[j];
@@ -729,7 +729,7 @@ angular.module('icestudio')
         for (i in blockArray) {
           block = blockArray[i];
           if (block) {
-            if (block.type === 'basic.code') {
+            if (block.type === blocks.BASIC_CODE) {
               data = {
                 name: name + '_' +  utils.digestId(block.id) ,
                 params: block.data.params,
