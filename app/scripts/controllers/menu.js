@@ -21,162 +21,185 @@ angular
       common,
       shortcuts,
       gettextCatalog,
-      gui,
+
+      //-- Accesing nw and nw.Window interface
+      //-- Accesing _package object
+      //-- Defined in module window.js
+      gui, 
       _package,
       nodeFs,
       nodePath
     ) 
-  {
-      //-- Initialize scope
+{
+  //-- Initialize scope
 
-      $scope.profile = profile;
-      $scope.project = project;
-      $scope.tools = tools;
-      $scope.common = common;
+  $scope.profile = profile;
+  $scope.project = project;
+  $scope.tools = tools;
+  $scope.common = common;
 
-      $scope.version = _package.version;
-      $scope.toolchain = tools.toolchain;
+  $scope.version = _package.version;
+  $scope.toolchain = tools.toolchain;
 
-      $scope.workingdir = "";
-      $scope.snapshotdir = "";
+  $scope.workingdir = "";
+  $scope.snapshotdir = "";
 
-      var zeroProject = true; // New project without changes
-      var resultAlert = null;
-      var winCommandOutput = null;
+  let zeroProject = true; // New project without changes
+  let resultAlert = null;
+  let winCommandOutput = null;
 
-      var buildUndoStack = [];
-      var changedUndoStack = [];
-      var currentUndoStack = [];
+  let buildUndoStack = [];
+  let changedUndoStack = [];
+  let currentUndoStack = [];
 
-      //-----------------------------------
-      // MAIN WINDOW events
-      //-----------------------------------
+  //-----------------------------------
+  // MAIN WINDOW events
+  //-----------------------------------
 
-      //-- Get the Window object
-      let win = gui.Window.get();
+  //-- Get the Window object
+  let win = gui.Window.get();
 
-      //-- Close the Main window
-      win.on("close", function () {
+  //-- Close the Main window
+  win.on("close", function () {
 
-        //-- Call the exit function
-        exit();
-      });
+    //-- Call the exit function
+    exit();
+  });
 
-      //-- The window is miximized
-      win.on("maximize", function () {
-        console.log("MAXIMIZE!!!!");
-        graph.fitPaper();
-      });
+  //-- The window is maximized
+  win.on("maximize", function () {
 
-      //-- The user wants to resize the windows
-      win.on("resize", function () {
+    //-- Adjust the paper to the new size
+    graph.fitPaper();
+  });
 
-        //-- When working with big designs it is better not to fit 
-        //-- the contents (Leave it commented)
-        graph.fitPaper();
-        //graph.fitContent();
-      });
+  //-- The user wants to resize the windows
+  win.on("resize", function () {
 
-      win.on("move", function () {
-        //-- When working with big designs it is better not to fit
-        //-- the contents (leave it commented)
-        //graph.fitContent();
-      });
+    //-- When working with big designs it is better not to fit 
+    //-- the contents (Leave it commented)
+    graph.fitPaper();
+    //graph.fitContent();
+  });
 
-      win.on("restore", function () {
-        graph.fitContent();
-      });
+  //-- The user has moved the window
+  win.on("move", function () {
+    //-- When working with big designs it is better not to fit
+    //-- the contents (leave it commented)
+    //graph.fitContent();
+  });
 
-      // Darwin fix for shortcuts
-      if (process.platform === "darwin") {
-        var mb = new gui.Menu({
-          type: "menubar",
-        });
-        mb.createMacBuiltin("Icestudio");
-        win.menu = mb;
+  //-- Emitted when window is restored from minimize, maximize and 
+  //-- fullscreen state.
+  win.on("restore", function () {
+    graph.fitContent();
+  });
+
+  // Darwin fix for shortcuts
+  if (process.platform === "darwin") {
+    let mb = new gui.Menu({
+      type: "menubar",
+    });
+    mb.createMacBuiltin("Icestudio");
+    win.menu = mb;
+  }
+
+  //-- New window, get the focus
+  win.focus();
+
+  //-------------------------------------------------------------------------
+  //-- Read the arguments passed to the app
+  //-- For example, when opening a new example. It is passed as an argument
+  //-------------------------------------------------------------------------
+  setTimeout(function () {
+    // Parse GET url parmeters for window instance arguments
+    // all arguments will be embeded in icestudio_argv param
+    // that is a JSON string url encoded
+
+    // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
+    // unescape is deprecated javascript function, should use decodeURI instead
+
+    console.log("DEPURANDO!!!------->");
+    console.log(window.location.search);
+
+    var queryStr = "";
+    if (window.location.search.indexOf("?icestudio_argv=") === 0) {
+      queryStr =
+        "?icestudio_argv=" +
+        atob(
+          decodeURI(window.location.search.replace("?icestudio_argv=", ""))
+        ) +
+        "&";
+      console.log("CASO 1!!!!!!!");
+    } else {
+      queryStr = decodeURI(window.location.search) + "&";
+      console.log("CASO 2!!!!!!");
+    }
+    console.log(`QueryStr: ${queryStr}`);
+    var regex = new RegExp(".*?[&\\?]icestudio_argv=(.*?)&.*");
+    var val = queryStr.replace(regex, "$1");
+
+    var params = val === queryStr ? false : val;
+
+    console.log(`URL: params: ${params}`);
+
+    // If there are url params, compatibilize it with shell call
+    if (typeof gui.App.argv === "undefined") {
+      gui.App.argv = [];
+    }
+
+    var prop;
+    if (params !== false) {
+      params = JSON.parse(decodeURI(params));
+
+      for (prop in params) {
+        gui.App.argv.push(params[prop]);
       }
+    }
 
-      // New window, get the focus
-      win.focus();
 
-      // Load app arguments
+    var argv = gui.App.argv;
+    if (
+      typeof window.opener !== "undefined" &&
+      window.opener !== null &&
+      typeof window.opener.opener !== "undefined" &&
+      window.opener.opener !== null
+    ) {
+      argv = [];
+    }
 
-      setTimeout(function () {
-        // Parse GET url parmeters for window instance arguments
-        // all arguments will be embeded in icestudio_argv param
-        // that is a JSON string url encoded
+    if (params !== false) {
+      for (prop in params) {
+        argv.push(params[prop]);
+      }
+    }
+    var local = false;
+    for (var i in argv) {
+      var arg = argv[i];
+      processArg(arg);
+      local = arg === "local" || local;
+    }
 
-        // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
-        // unescape is deprecated javascript function, should use decodeURI instead
+    var editable =
+      !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
+      !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
+      project.path.startsWith(common.selectedCollection.path);
 
-        var queryStr = "";
-        if (window.location.search.indexOf("?icestudio_argv=") === 0) {
-          queryStr =
-            "?icestudio_argv=" +
-            atob(
-              decodeURI(window.location.search.replace("?icestudio_argv=", ""))
-            ) +
-            "&";
-        } else {
-          queryStr = decodeURI(window.location.search) + "&";
-        }
-        var regex = new RegExp(".*?[&\\?]icestudio_argv=(.*?)&.*");
-        var val = queryStr.replace(regex, "$1");
+    if (editable || !local) {
+      updateWorkingdir(project.path);
+    } else {
+      project.path = "";
+    }
+    var versionW = $scope.profile.get("displayVersionInfoWindow");
+    let lastversionReview = $scope.profile.get("lastVersionReview");
+    let hasNewVersion =
+      lastversionReview === false || lastversionReview < _package.version;
+    if (versionW === "yes" || hasNewVersion) {
+      $scope.openVersionInfoWindow(hasNewVersion);
+    }
+  }, 500);
 
-        var params = val === queryStr ? false : val;
-        // If there are url params, compatibilize it with shell call
-        if (typeof gui.App.argv === "undefined") {
-          gui.App.argv = [];
-        }
-
-        var prop;
-        if (params !== false) {
-          params = JSON.parse(decodeURI(params));
-
-          for (prop in params) {
-            gui.App.argv.push(params[prop]);
-          }
-        }
-        var argv = gui.App.argv;
-        if (
-          typeof window.opener !== "undefined" &&
-          window.opener !== null &&
-          typeof window.opener.opener !== "undefined" &&
-          window.opener.opener !== null
-        ) {
-          argv = [];
-        }
-
-        if (params !== false) {
-          for (prop in params) {
-            argv.push(params[prop]);
-          }
-        }
-        var local = false;
-        for (var i in argv) {
-          var arg = argv[i];
-          processArg(arg);
-          local = arg === "local" || local;
-        }
-
-        var editable =
-          !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
-          !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
-          project.path.startsWith(common.selectedCollection.path);
-
-        if (editable || !local) {
-          updateWorkingdir(project.path);
-        } else {
-          project.path = "";
-        }
-        var versionW = $scope.profile.get("displayVersionInfoWindow");
-        let lastversionReview = $scope.profile.get("lastVersionReview");
-        let hasNewVersion =
-          lastversionReview === false || lastversionReview < _package.version;
-        if (versionW === "yes" || hasNewVersion) {
-          $scope.openVersionInfoWindow(hasNewVersion);
-        }
-      }, 500);
+  
 
       function processArg(arg) {
         if (nodeFs.existsSync(arg)) {
@@ -2095,6 +2118,5 @@ angular
         }
       }
       iceStudio.bus.events.subscribe("menu.collection", ebusCollection);
-    }
-  );
+});
 

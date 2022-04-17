@@ -143,9 +143,6 @@ angular.module('icestudio')
         //-- Set the paper height and width attributes
         $('.joint-paper.joint-theme-default>svg').attr('height', win.height);
         $('.joint-paper.joint-theme-default>svg').attr('width', win.width);
-
-        //-- DEBUG
-        console.log("RESIZE!!!");
     };
 
     //-----------------------------------------------------------------------
