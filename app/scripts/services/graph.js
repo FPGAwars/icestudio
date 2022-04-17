@@ -1505,7 +1505,7 @@ angular.module('icestudio')
                 }
                 if (founded !== false) {
                     switch (blk[founded].type) {
-                        case 'basic.memory':
+                        case blocks.BASIC_MEMORY:
                         case 'basic.constant':
                         case blocks.BASIC_OUTPUT_LABEL: 
                         case blocks.BASIC_INPUT_LABEL:
