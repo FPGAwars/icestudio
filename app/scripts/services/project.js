@@ -571,7 +571,7 @@ angular.module('icestudio')
                 delete block.data.ports.in[j].default;
               }
               break;
-            case 'basic.info':
+            case blocks.BASIC_INFO:
               delete block.data.text;
               break;
             default:

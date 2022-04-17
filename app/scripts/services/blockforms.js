@@ -49,7 +49,7 @@ angular.module('icestudio')
   //--     -BASIC_CONSTANT
   //--     -BASIC_MEMORY
   //--     -BASIC_CODE
-  //--     -'basic.info'
+  //--     -BASIC_INFO
   //--
   //--   * callback(cells): The function is called when the user clic on
   //--      the OK button and all the data is ok.
@@ -113,7 +113,7 @@ angular.module('icestudio')
         newBasicCode(form, callback);
         break;
 
-      case 'basic.info':
+      case blocks.BASIC_INFO:
         newBasicInfo(callback);
         break;
 
@@ -538,7 +538,7 @@ angular.module('icestudio')
         case blocks.BASIC_CODE:
           return loadBasicCode(instance, disabled);
           
-        case 'basic.info':
+        case blocks.BASIC_INFO:
           return loadBasicInfo(instance, disabled);
         default:
           break;
@@ -940,9 +940,10 @@ angular.module('icestudio')
           editBasicCode(cellView, callback);
           break;
 
-        case 'basic.info':
+        case blocks.BASIC_INFO:
           editBasicInfo(cellView);
           break;
+
         default:
           break;
       }

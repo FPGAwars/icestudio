@@ -1956,16 +1956,24 @@ angular
             break;
 
           case 'information': 
-            project.addBasicBlock('basic.info'); 
+            project.addBasicBlock(blocks.BASIC_INFO); 
             break;
 
           case 'constant': 
             project.addBasicBlock(blocks.BASIC_CONSTANT); 
             break;
 
-          case 'verify': $scope.verifyCode(); break;
-          case 'build': $scope.buildCode(); break;
-          case 'upload': $scope.uploadCode(); break;
+          case 'verify': 
+            $scope.verifyCode(); 
+            break;
+
+          case 'build': 
+            $scope.buildCode(); 
+            break;
+
+          case 'upload': 
+            $scope.uploadCode(); 
+            break;
         }
         return false;
       });

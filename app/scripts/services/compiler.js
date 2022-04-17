@@ -425,7 +425,7 @@ angular.module('icestudio')
           block.type !== blocks.BASIC_OUTPUT &&
           block.type !== blocks.BASIC_CONSTANT &&
           block.type !== blocks.BASIC_MEMORY &&
-          block.type !== 'basic.info' &&
+          block.type !== blocks.BASIC_INFO &&
           block.type !== blocks.BASIC_INPUT_LABEL &&
           block.type !== blocks.BASIC_OUTPUT_LABEL) {
 
