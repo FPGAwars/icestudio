@@ -761,56 +761,71 @@ angular
         });
       };
 
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- external collections path
+      //---------------------------------------------------------------------
       $scope.setExternalCollections = function () {
-        var externalCollections = profile.get("externalCollections");
-        var formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the external collections path"
-            ),
-            value: externalCollections || "",
-          },
-        ];
-        forms.displayForm(formSpecs, function (evt, values) {
-          var newExternalCollections = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+
+        //-- Get the current external collection path
+        let externalCollections = profile.get("externalCollections") || "";
+
+        //-- Create the form
+        let form = new forms.FormExternalCollections(externalCollections);
+
+        //-- Display the form
+        form.display((evt) => {
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new path
+          let newExternalCollections = form.values[0];
+
+          //-- If there where no changes.. return
+          if (newExternalCollections === externalCollections) {
+            return;
           }
-          if (newExternalCollections !== externalCollections) {
-            if (
-              newExternalCollections === "" ||
-              nodeFs.existsSync(newExternalCollections)
-            ) {
-              profile.set("externalCollections", newExternalCollections);
-              collections.loadExternalCollections();
-              collections.selectCollection(); // default
-              utils.rootScopeSafeApply();
-              if (
-                common.selectedCollection.path.startsWith(
-                  newExternalCollections
-                )
-              ) {
-              }
-              alertify.success(
-                gettextCatalog.getString("External collections updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newExternalCollections,
-                  },
-                  5
-                )
-              );
-            }
+
+          //-- If the file is valid...
+          if (
+            newExternalCollections === "" ||
+            nodeFs.existsSync(newExternalCollections)
+          ) {
+            //-- The file is valida...
+            //-- Set it in the profile
+            profile.set("externalCollections", newExternalCollections);
+
+            //-- Load the collections
+            collections.loadExternalCollections();
+            collections.selectCollection(); // default
+            utils.rootScopeSafeApply();
+
+            //-- Notify the user
+            alertify.success(
+              gettextCatalog.getString("External collections updated")
+            );
+          } 
+          //-- The file is not valid
+          else {
+            //-- Notify the user
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newExternalCollections,
+                },
+                5
+              )
+            );
           }
         });
       };
 
+      
       $(document).on("infoChanged", function (evt, newValues) {
         var values = getProjectInformation();
         if (!_.isEqual(values, newValues)) {
