@@ -1507,7 +1507,7 @@ angular.module('icestudio')
                     switch (blk[founded].type) {
                         case 'basic.memory':
                         case 'basic.constant':
-                        case 'basic.outputLabel': 
+                        case blocks.BASIC_OUTPUT_LABEL: 
                         case blocks.BASIC_INPUT_LABEL:
                         case 'basic.code':
                         case blocks.BASIC_INPUT: 

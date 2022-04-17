@@ -1722,7 +1722,7 @@ angular
         //-- label filter + indexing
         for (let i = 0; i < graphCells.length; i++) {
           if (graphCells[i].attributes.blockType === blocks.BASIC_INPUT_LABEL ||
-              graphCells[i].attributes.blockType === 'basic.outputLabel') {
+              graphCells[i].attributes.blockType === blocks.BASIC_OUTPUT_LABEL) {
             if (parsedSearch && parsedSearch.name.length > 0 &&
                   graphCells[i].attributes.data.name.match(reName) !== null) {           
               for (let j = 0; j < htmlIoBlocks.length; j++) {
@@ -1934,7 +1934,7 @@ angular
 
           //-- Input label
           case 'labelInput': 
-            project.addBasicBlock('basic.outputLabel'); 
+            project.addBasicBlock(blocks.BASIC_OUTPUT_LABEL); 
             break;
 
           //-- Output label

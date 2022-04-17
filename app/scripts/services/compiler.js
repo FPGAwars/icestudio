@@ -253,7 +253,7 @@ angular.module('icestudio')
               }
             }
           }
-          if (lin.type === 'basic.outputLabel') {
+          if (lin.type === blocks.BASIC_OUTPUT_LABEL) {
             for (widx in graph.wires) {
               vw = graph.wires[widx];
               if (vw.source.block === lin.id) {
@@ -427,7 +427,7 @@ angular.module('icestudio')
           block.type !== 'basic.memory' &&
           block.type !== 'basic.info' &&
           block.type !== blocks.BASIC_INPUT_LABEL &&
-          block.type !== 'basic.outputLabel') {
+          block.type !== blocks.BASIC_OUTPUT_LABEL) {
 
           // Header
           var instance;
