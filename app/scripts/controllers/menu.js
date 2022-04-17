@@ -1721,7 +1721,7 @@ angular
 
         //-- label filter + indexing
         for (let i = 0; i < graphCells.length; i++) {
-          if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
+          if (graphCells[i].attributes.blockType === blocks.BASIC_INPUT_LABEL ||
               graphCells[i].attributes.blockType === 'basic.outputLabel') {
             if (parsedSearch && parsedSearch.name.length > 0 &&
                   graphCells[i].attributes.data.name.match(reName) !== null) {           
@@ -1939,7 +1939,7 @@ angular
 
           //-- Output label
           case 'labelOutput': 
-            project.addBasicBlock('basic.inputLabel');
+            project.addBasicBlock(blocks.BASIC_INPUT_LABEL);
             break;
 
           //-- Paired labels

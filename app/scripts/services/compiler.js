@@ -5,6 +5,7 @@
 angular.module('icestudio')
   .service('compiler', function (common,
     utils,
+    blocks,
     nodeSha1,
     _package) {
 
@@ -236,7 +237,7 @@ angular.module('icestudio')
 
         for (lidx in graph.blocks) {
           lin = graph.blocks[lidx];
-          if (lin.type === 'basic.inputLabel') {
+          if (lin.type === blocks.BASIC_INPUT_LABEL) {
             for (widx in graph.wires) {
               vw = graph.wires[widx];
               if (vw.target.block === lin.id) {
@@ -415,17 +416,17 @@ angular.module('icestudio')
     function getInstances(name, graph) {
       var w, wire;
       var instances = [];
-      var blocks = graph.blocks;
+      var blockArray = graph.blocks;
 
-      for (var b in blocks) {
-        var block = blocks[b];
+      for (var b in blockArray) {
+        var block = blockArray[b];
 
         if (block.type !== 'basic.input' &&
           block.type !== 'basic.output' &&
           block.type !== 'basic.constant' &&
           block.type !== 'basic.memory' &&
           block.type !== 'basic.info' &&
-          block.type !== 'basic.inputLabel' &&
+          block.type !== blocks.BASIC_INPUT_LABEL &&
           block.type !== 'basic.outputLabel') {
 
           // Header

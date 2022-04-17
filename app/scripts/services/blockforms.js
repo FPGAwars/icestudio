@@ -45,7 +45,7 @@ angular.module('icestudio')
   //--     -BASIC_INPUT --> Input port
   //--     -BASIC_OUTPUT --> Output port
   //--     -'basic.outputLabel'
-  //--     -'basic.inputLabel'
+  //--     -BASIC_INPUT_LABEL
   //--     -'basic.constant'
   //--     -'basic.memory'
   //--     -'basic.code'
@@ -522,8 +522,10 @@ angular.module('icestudio')
           return loadBasicOutput(instance, disabled);
         case 'basic.outputLabel':
           return loadBasicOutputLabel(instance, disabled);
-        case 'basic.inputLabel':
+
+        case blocks.BASIC_INPUT_LABEL:
           return loadBasicInputLabel(instance, disabled);
+          
         case 'basic.constant':
           return loadBasicConstant(instance, disabled);
         case 'basic.memory':

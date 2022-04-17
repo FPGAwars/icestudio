@@ -8,6 +8,7 @@ angular.module('icestudio')
     profile,
     utils,
     common,
+    blocks,
     gui,
     gettextCatalog,
     nodeFs,
@@ -273,7 +274,7 @@ angular.module('icestudio')
           case 'basic.input':
           case 'basic.output':
           case 'basic.outputLabel':
-          case 'basic.inputLabel':
+          case blocks.BASIC_INPUT_LABEL:
             block.data = {
               name: block.data.label,
               pins: [{
@@ -561,7 +562,7 @@ angular.module('icestudio')
             case 'basic.input':
             case 'basic.output':
             case 'basic.outputLabel':
-            case 'basic.inputLabel':
+            case blocks.BASIC_INPUT_LABEL:
             case 'basic.constant':
             case 'basic.memory':
               break;
