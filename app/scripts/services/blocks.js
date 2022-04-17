@@ -29,25 +29,29 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   //-- Class: Block Object. It represent any graphical object in the
   //--        circuit
-  //-- 
   //-------------------------------------------------------------------------
   class Block {
 
+    //--------------------------------------------------
     //-- Information common to all blocks:
     //-- * type: Type of block:
-    //--         -BASIC_INPUT: Input port
-    //--         -BASIC_OUTPUT: Output port
-    //--         -[..]
-    //-- * id: unique block identifier
-    //-- * position: Position in the grid (x,y)
-    //-- * data: Information specific of every block
+    //--         -BASIC_INPUT
+    //--         -BASIC_OUTPUT
+    //--         -BASIC_INPUT_LABEL
+    //--         -BASIC_OUTPUT_LABEL 
+    //--         -BASIC_PAIRED_LABELS
+    //--         -BASIC_CODE 
+    //--         -BASIC_MEMORY 
+    //--         -BASIC_CONSTANT
+    //--         -BASIC_INFO
+    //--------------------------------------------------
     constructor(type)  {
 
       //------- Object structure
       //-- Type of block
       this.type = type;
 
-      //-- Block identifier
+      //-- Unique Block identifier
       this.id = null;
 
       //-- Block data. Each block has its own data type
@@ -59,34 +63,33 @@ angular.module('icestudio')
         y: 0  
       };
     }
-
   }
 
 
   //-------------------------------------------------------------------------
   //-- Class: Port. Virtual class for representing both input and output  
   //--              ports. 
-  //--
-  //--   * Particular information:
-  //--      -name (String): Port name 
-  //--      -virtual (Bool): Type of pin. Real or Virtual
-  //--          * true: It is a virtual port, inside the FPGA
-  //--          * false: It is a pin, whichs connects the FPGA with the 
-  //--                   the experior
-  //--      -range: A String indicating the bus range (it is is a bus)
-  //--              Ex: "[1:0]"
-  //--      -pins: Array of objects. Available Only if the port is a pin
-  //--          -index: Position of the pin in the array (default 0)
-  //--          -name: "" : Pin name (From the resources/boards/{board}
-  //--                               /pinout.json) (Which comes from .pcf)
-  //--          -value: "": Pin value (physical pin assigned by .pcf)
   //-------------------------------------------------------------------------
   class PortBlock extends Block {
 
+    //-----------------------------------------------------------------------
     //-- Parameters:
-    //-- type: Select the type of PortBlock:
-    //--   -BASIC_INPUT
-    //--   -BASIC_OUTPUT
+    //--  * type: Select the type of PortBlock:
+    //--    -BASIC_INPUT
+    //--    -BASIC_OUTPUT
+    //--  * name (String): Port name
+    //--  * virtual (Bool): Type of pin. Real or Virtual
+    //--          * true: It is a virtual port, inside the FPGA
+    //--          * false: It is a pin, whichs connects the FPGA with the 
+    //--                   the experior
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * pins: Array of objects. Available Only if the port is a pin
+    //--       -index: Position of the pin in the array (default 0)
+    //--       -name: "" : Pin name (From the resources/boards/{board}
+    //--                               /pinout.json) (Which comes from .pcf)
+    //--       -value: "": Pin value (physical pin assigned by .pcf)
+    //-----------------------------------------------------------------------
     constructor(type, name, virtual, range, pins) {
 
       //-- Build the block common fields
@@ -111,6 +114,7 @@ angular.module('icestudio')
   //--         * False: Normal signal
   //-------------------------------------------------------------------------
   class InputPortBlock extends PortBlock {
+
     constructor(name, virtual, range, pins, clock) {
 
       //-- Build the port common fields
@@ -129,6 +133,7 @@ angular.module('icestudio')
   //--   NO particular information
   //-------------------------------------------------------------------------
   class OutputPortBlock extends PortBlock {
+
     constructor(name, virtual, range, pins) {
 
       //-- Build the port common fields
@@ -138,12 +143,22 @@ angular.module('icestudio')
     }
   }
 
+  //-------------------------------------------------------------------------
+  //-- Class: Label Block. Virtual class for representing both input and
+  //--        output labels
+  //-------------------------------------------------------------------------
   class LabelBlock extends Block {
 
+    //-----------------------------------------------------------------
     //-- Parameters:
-    //-- type: Select the type of LabelBlock:
-    //--    -BASIC_INPUT_LABEL
-    //--    -BASIC_OUTPUT_LABEL
+    //--  * type: Select the type of LabelBlock:
+    //--      -BASIC_INPUT_LABEL
+    //--      -BASIC_OUTPUT_LABEL
+    //--  * name (String): Port name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
     constructor(type, name, range, color) {
 
       //-- Build the block common fields
@@ -159,8 +174,20 @@ angular.module('icestudio')
     }
   }
 
+
+  //-------------------------------------------------------------------------
+  //-- Class: Input Label Block. Class for representing input
+  //--        labels
+  //-------------------------------------------------------------------------
   class InputLabelBlock extends LabelBlock {
 
+    //-----------------------------------------------------------------
+    //-- Parameters:
+    //--  * name (String): label name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
     constructor(name, range, color) {
 
       //-- Build the port common fields
@@ -168,11 +195,21 @@ angular.module('icestudio')
 
       //-- No particular information
     }
-
   }
 
+  //-------------------------------------------------------------------------
+  //-- Class: Output Label Block. Class for representing output
+  //--        labels
+  //-------------------------------------------------------------------------
   class OutputLabelBlock extends LabelBlock {
 
+    //-----------------------------------------------------------------
+    //-- Parameters:
+    //--  * name (String): label name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
     constructor(name, range, color) {
 
       //-- Build the port common fields
@@ -180,9 +217,12 @@ angular.module('icestudio')
 
       //-- No particular information
     }
-
   }
 
+
+  //-------------------------------------------------------------------------
+  //-- Class: Code block. Class for representing verilog block codes
+  //-------------------------------------------------------------------------
   class CodeBlock extends Block {
 
     //-----------------------------------------------------------------------
@@ -255,14 +295,27 @@ angular.module('icestudio')
         this.data.params.push(info);
 
       });
-
     }
-    
   }
 
 
+  //-------------------------------------------------------------------------
+  //-- Class: Memory block. Class for representing memory parameters
+  //-------------------------------------------------------------------------
   class MemoryBlock extends Block {
 
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * name (String): Memory block name
+    //--   * list (String): Initial memory contents
+    //--   * local (Bool): If the parameter is global or local:
+    //--       * true: Local parameter
+    //--       * false: Global parameter
+    //--   * format (integer): Format of the memory contents:
+    //--       - 2: Binary
+    //--       - 10: Decimal
+    //--       - 16: Hexadecimal
+    //-----------------------------------------------------------------------
     constructor(name='', list='', local=false, format=10) {
 
       //-- Build the block common fields
@@ -290,8 +343,19 @@ angular.module('icestudio')
   }
 
 
+  //-------------------------------------------------------------------------
+  //-- Class for representing constant parameters
+  //-------------------------------------------------------------------------
   class ConstantBlock extends Block {
 
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * name (String): Constant block name
+    //--   * value (String): Default constant value
+    //--   * local (Bool): If the parameter is global or local:
+    //--       * true: Local parameter
+    //--       * false: Global parameter
+    //-----------------------------------------------------------------------
     constructor(name='', value='', local=false) {
 
       //-- Build the block common fields
@@ -305,11 +369,12 @@ angular.module('icestudio')
 
       //-- Local parameter
       this.data.local = local;
-
     }
   }
 
-
+  //-------------------------------------------------------------------------
+  //-- Class for representing an Info block
+  //-------------------------------------------------------------------------
   class InfoBlock extends Block {
 
     constructor() {
@@ -448,10 +513,8 @@ angular.module('icestudio')
   this.Block = Block;
   this.InputPortBlock = InputPortBlock;
   this.OutputPortBlock = OutputPortBlock;
-
   this.InputLabelBlock = InputLabelBlock;
   this.OutputLabelBlock = OutputLabelBlock;
-
   this.CodeBlock = CodeBlock;
   this.MemoryBlock = MemoryBlock;
   this.ConstantBlock = ConstantBlock;
@@ -462,7 +525,6 @@ angular.module('icestudio')
   this.copyPins = copyPins;
   this.getSize = getSize;
   this.portsInfo2Str = portsInfo2Str;
-  
 
   //-- Public constants 
   this.BASIC_INPUT = BASIC_INPUT;
@@ -474,7 +536,5 @@ angular.module('icestudio')
   this.BASIC_MEMORY = BASIC_MEMORY;
   this.BASIC_CONSTANT = BASIC_CONSTANT;
   this.BASIC_INFO = BASIC_INFO;
-  
-  
 
 });
