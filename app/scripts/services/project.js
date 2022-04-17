@@ -272,7 +272,7 @@ angular.module('icestudio')
         var block = data.graph.blocks[b];
         switch (block.type) {
           case blocks.BASIC_INPUT:
-          case 'basic.output':
+          case blocks.BASIC_OUTPUT:
           case blocks.BASIC_OUTPUT_LABEL:
           case blocks.BASIC_INPUT_LABEL:
             block.data = {
@@ -560,7 +560,7 @@ angular.module('icestudio')
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
             case blocks.BASIC_INPUT:
-            case 'basic.output':
+            case blocks.BASIC_OUTPUT:
             case blocks.BASIC_OUTPUT_LABEL:
             case blocks.BASIC_INPUT_LABEL:
             case 'basic.constant':
@@ -662,7 +662,7 @@ angular.module('icestudio')
       var i, pins;
       for (i in block.design.graph.blocks) {
         if (block.design.graph.blocks[i].type === blocks.BASIC_INPUT ||
-          block.design.graph.blocks[i].type === 'basic.output' ||
+          block.design.graph.blocks[i].type === blocks.BASIC_OUTPUT ||
           block.design.graph.blocks[i].type === blocks.BASIC_OUTPUT_LABEL ||
           block.design.graph.blocks[i].type === blocks.BASIC_INPUT_LABEL
         ) {

@@ -520,7 +520,7 @@ angular.module('icestudio')
         case blocks.BASIC_INPUT:
           return loadBasicInput(instance, disabled);
           
-        case 'basic.output':
+        case blocks.BASIC_OUTPUT:
           return loadBasicOutput(instance, disabled);
 
         case blocks.BASIC_OUTPUT_LABEL:
@@ -764,7 +764,7 @@ angular.module('icestudio')
           });
         }
 
-        else if (item.type === 'basic.output') {
+        else if (item.type === blocks.BASIC_OUTPUT) {
           rightPorts.push({
             id: item.id,
             name: item.data.name,

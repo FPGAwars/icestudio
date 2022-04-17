@@ -200,7 +200,7 @@ angular.module('icestudio')
             name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
           });
-        } else if (block.type === 'basic.output') {
+        } else if (block.type === blocks.BASIC_OUTPUT) {
           ports.out.push({
             name: utils.digestId(block.id),
             range: block.data.range ? block.data.range : ''
@@ -341,7 +341,7 @@ angular.module('icestudio')
             if (wire.source.block === block.id) {
               connections.assign.push('assign w' + w + ' = ' + utils.digestId(block.id)+ ';');
             }
-          } else if (block.type === 'basic.output') {
+          } else if (block.type === blocks.BASIC_OUTPUT) {
             if (wire.target.block === block.id) {
               if (wire.source.port === 'constant-out' ||
                 wire.source.port === 'memory-out') {
@@ -422,7 +422,7 @@ angular.module('icestudio')
         var block = blockArray[b];
 
         if (block.type !== blocks.BASIC_INPUT &&
-          block.type !== 'basic.output' &&
+          block.type !== blocks.BASIC_OUTPUT &&
           block.type !== 'basic.constant' &&
           block.type !== 'basic.memory' &&
           block.type !== 'basic.info' &&
@@ -565,7 +565,7 @@ angular.module('icestudio')
       // Find all set output pins
       for (i in blockArray) {
         var block = blockArray[i];
-        if (block.type === 'basic.output') {
+        if (block.type === blocks.BASIC_OUTPUT) {
           for (var p in block.data.pins) {
             usedPins.push(block.data.virtual ? '' : block.data.pins[p].value);
           }
@@ -753,7 +753,7 @@ angular.module('icestudio')
       for (i in blockArray) {
         block = blockArray[i];
         if (block.type === blocks.BASIC_INPUT ||
-          block.type === 'basic.output') {
+          block.type === blocks.BASIC_OUTPUT) {
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
@@ -843,7 +843,7 @@ angular.module('icestudio')
       for (i in blockArray) {
         block = blockArray[i];
         if (block.type === blocks.BASIC_INPUT ||
-          block.type === 'basic.output') {
+          block.type === blocks.BASIC_OUTPUT) {
 
             //-- Future improvement: Both cases: 1-pin or multiple pins in an array
             //-- could be refactorized instead of repeating code
@@ -1075,7 +1075,7 @@ angular.module('icestudio')
             });
             inputUnnamed += 1;
           }
-        } else if (block.type === 'basic.output') {
+        } else if (block.type === blocks.BASIC_OUTPUT) {
           if (block.data.name) {
             output.push({
               id:  utils.digestId(block.id) ,

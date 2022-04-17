@@ -1172,7 +1172,7 @@ angular.module('icestudio')
                     return;
                 }
                 var type = cell.get('blockType');
-                if (type === blocks.BASIC_INPUT || type === 'basic.output') {
+                if (type === blocks.BASIC_INPUT || type === blocks.BASIC_OUTPUT) {
                     // Reset choices in all Input / blocks
                     var view = paper.findViewByModel(cell.id);
                     cell.set('choices', (type === blocks.BASIC_INPUT) ? common.pinoutInputHTML : common.pinoutOutputHTML);
@@ -1511,7 +1511,7 @@ angular.module('icestudio')
                         case blocks.BASIC_INPUT_LABEL:
                         case 'basic.code':
                         case blocks.BASIC_INPUT: 
-                        case 'basic.output':
+                        case blocks.BASIC_OUTPUT:
                             founded = true;
                             break;
 
@@ -1559,7 +1559,7 @@ angular.module('icestudio')
                 if (blockInstance.type !== false && blockInstance.type.indexOf('basic.') !== -1) {
                     if (opt.reset &&
                         (blockInstance.type === blocks.BASIC_INPUT ||
-                            blockInstance.type === 'basic.output')) {
+                            blockInstance.type === blocks.BASIC_OUTPUT)) {
                         var pins = blockInstance.data.pins;
 
                         // - if conversion from one board to other is in progress,
