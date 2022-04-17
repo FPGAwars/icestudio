@@ -2378,12 +2378,10 @@ angular.module('icestudio')
 
 //--------------------------------------------------------------
 
-
   //-- Public classes
   this.Form = Form;
   this.TextField = TextField;
   this.CheckboxField = CheckboxField;
-
   this.FormBasicInput = FormBasicInput;
   this.FormBasicOutput = FormBasicOutput;
   this.FormBasicInputLabel = FormBasicInputLabel;
@@ -2397,106 +2395,5 @@ angular.module('icestudio')
   this.FormExternalPlugins = FormExternalPlugins;
   this.FormPythonEnv = FormPythonEnv;
   this.FormExternalCollections = FormExternalCollections;
-
-  //-----------------------------------------------------------------------
-  //-- Display a Form
-  //-- Input: specs. Form specifications for rendering
-  //--    * form: Form structure. It is an array of fields.They all have 
-  //--       the property type: Which kind of information should be 
-  //--         displayed. The field available are:
-  //--          -Text, checkbox, combobox, color-dropdown
-  //-- 
-  //--    * callback(evt, values); The callback is executed when 
-  //--          the users click on OK
-  //-----------------------------------------------------------------------
-  this.displayForm = function (form, callback) {
-
-    //-- Variable for storing the html code of all the fields
-    let formHtml = [];
-
-    //-- Variable for storing temporal html code
-    let html;
-
-    let f;
-
-    //-- Initial tag for the Form
-    formHtml.push('<div>');
-
-    //-- Generate the html code for all the fields in the form
-    for (let i in form) {
-      let field = form[i];
-
-      //-- Process all the form fields
-      switch (field.type) {
-        
-        //-- Text input field
-        case FIELD_TEXT:
-
-          //-- TEMP CODE. REMOVE IT WHEN REFACTORED
-          f = new TextField(field.title, field.value, i);
-          break;
-
-      }
-
-      html = f.html();
-            
-      //-- Store the html for this Field
-      formHtml.push(html);
-      break;
-    }
-
-    //-- Closing tag for the Form
-    formHtml.push('</div>');
-
-    //-- Generate a string with the HTML by joining
-    //-- all the html of the fields
-    formHtml = formHtml.join('');
-
-    //-- Display the Form
-    alertify.confirm(formHtml)
-
-        //-- If the user has pressed the OK button...
-      .set('onok', function (evt) {
-
-        //-- Initialize the values for calling the
-        //-- callback function
-        let values = [];
-
-        //-- Temporal variable for storing a field value
-        let value;
-
-        //-- If there is a callback function as argument
-        if (callback) {
-
-          //-- Read the values from the Form fields
-          //-- and insert them into the values array
-          for (let i in form) {
-
-            let field = form[i];
-
-            //-- Read the value depending on the field type
-            switch (field.type) {
-
-              //-- Input text and input combobox
-              case FIELD_TEXT:
-
-                //-- Read the value from the form i
-                value = $('#form' + i).val();
-
-                //-- Add the value to the array
-                values.push(value);
-                break;
-            }
-          }
-          //-- Now we can call the callback function passing
-          //-- all the values as arguments
-          callback(evt, values);
-        }
-      })
-
-      //-- The button cancel is pressed:
-      //--   Do nothing... 
-      .set('oncancel', function ( /*evt*/) { });
-  };
 
 });
