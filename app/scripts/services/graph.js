@@ -13,7 +13,7 @@ angular.module('icestudio')
       //-- More infor: https://www.npmjs.com/package/jointjs
       //-- Tutorial: https://resources.jointjs.com/tutorial/
       joint,
-
+      blocks,
       boards,
       blockforms,
       profile,
