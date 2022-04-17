@@ -15,7 +15,7 @@ angular.module('icestudio')
       joint,
 
       boards,
-      blocks,
+      blockforms,
       profile,
       utils,
       common,
@@ -525,7 +525,7 @@ angular.module('icestudio')
                     if (type.indexOf('basic.') !== -1) {
                         // Edit basic blocks
                         if (paper.options.enabled) {
-                            blocks.editBasic(type, cellView, addCell);
+                            blockforms.editBasic(type, cellView, addCell);
 
                         }
                     }
@@ -1018,13 +1018,13 @@ angular.module('icestudio')
         };
 
         this.createBlock = function (type, block) {
-            blocks.newGeneric(type, block, function (cell) {
+            blockforms.newGeneric(type, block, function (cell) {
                 self.addDraggableCell(cell);
             });
         };
 
         this.createBasicBlock = function (type) {
-            blocks.newBasic(type, function (cells) {
+            blockforms.newBasic(type, function (cells) {
                 self.addDraggableCells(cells);
             });
         };
@@ -1598,11 +1598,11 @@ angular.module('icestudio')
                         }
 
                     }
-                    cell = blocks.loadBasic(blockInstance, opt.disabled);
+                    cell = blockforms.loadBasic(blockInstance, opt.disabled);
                 }
                 else {
                     if (blockInstance.type in common.allDependencies) {
-                        cell = blocks.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], opt.disabled);
+                        cell = blockforms.loadGeneric(blockInstance, common.allDependencies[blockInstance.type], opt.disabled);
                     }
                 }
 
@@ -1642,7 +1642,7 @@ angular.module('icestudio')
                     }
                     wireInstance.vertices = newVertices;
                 }
-                cell = blocks.loadWire(wireInstance, source, target);
+                cell = blockforms.loadWire(wireInstance, source, target);
                 if (opt.new) {
                     cell = cell.clone();
                 }
