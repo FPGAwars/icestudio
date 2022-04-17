@@ -27,7 +27,6 @@ angular.module('icestudio')
   const FIELD_COMBOBOX = 'combobox';
 
   //-- Constants for the Field Parameters
-  const PARAM_TEXT = "%TEXT%";
   const PARAM_ID = "%ID%";
   const PARAM_VALUE = "%VALUE%";
   const PARAM_LABEL = "%LABEL%";
@@ -36,7 +35,7 @@ angular.module('icestudio')
   const PARAM_COLOR = "%COLOR%";
   const PARAM_COLOR_NAME = "%COLOR_NAME%";
 
-  
+
   function getColorName(color) {
     switch(color) {
       case "fuchsia": 
@@ -310,39 +309,43 @@ angular.module('icestudio')
     </div>
   `;
 
+
   //---------------------------------------------------------
   //-- TEXTFIELD. It represents a Form Input text field
   //---------------------------------------------------------
-  //-- This is how it is rendered in the Form
-  /*
-         text message
-        +-----------------+
-        | Input text      |
-        +-----------------+ 
-   
-  */
+  //-- This is how this field is rendered in the Form
+  //
+  //    text message
+  //    +-----------------+
+  //    | Input text      |
+  //    +-----------------+ 
+  //----------------------------------------------------------  
   class TextField {
 
     //-----------------------------------------------------------------------
     //-- Input parameters:
-    //--   * Label: Text place above the input box
+    //--   * msg: Text place above the input box
     //--   * value: Default value
     //--   * formId: Form identification number
     //-----------------------------------------------------------------------
-    constructor(label, value, formId) {
+    constructor(msg, value, formId) {
 
       //-- Properties
-      this.label = label;
+      this.msg = msg;
       this.value = value;
       this.formId = formId;
 
       //-- Html template for building the text field
+      //-- The parameters are:
+      //--  %TEXT% : Text place above the input box
+      //--  %ID% : Form identification number
+      //--  %VALUE%: Default text value
       this.htmlTemplate = `
-        <p> ${PARAM_TEXT} </p>
+        <p> %TEXT% </p>
         <input class="ajs-input" 
                type="text" 
-               id="form${PARAM_ID}" 
-               value="${PARAM_VALUE}"
+               id="form%ID%" 
+               value="%VALUE%"
                autocomplete="off"/>
       `;
     }
@@ -355,9 +358,9 @@ angular.module('icestudio')
       //-- Generate the HTML code
 
       //-- Insert the parameters in the html code template
-      let html = this.htmlTemplate.replace(PARAM_TEXT, this.label);
-      html = html.replace(PARAM_VALUE, this.value);
-      html = html.replace(PARAM_ID, this.formId);
+      let html = this.htmlTemplate.replace("%TEXT%", this.msg);
+      html = html.replace("%VALUE%", this.value);
+      html = html.replace("%ID%", this.formId);
 
       return html;
     }
@@ -372,8 +375,8 @@ angular.module('icestudio')
 
       return value;
     }
-
   }
+
 
   //-------------------------------------------------------------------------
   //--- CHECKBOX FIELD. Input checkbox field
