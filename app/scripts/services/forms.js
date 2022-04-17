@@ -31,9 +31,6 @@ angular.module('icestudio')
   const PARAM_LABEL = "%LABEL%";
   const PARAM_OPTIONS = "%OPTIONS%";
   const PARAM_SELECTED = "%SELECTED%";
-  const PARAM_COLOR = "%COLOR%";
-  const PARAM_COLOR_NAME = "%COLOR_NAME%";
-
 
   //-- HTML code template
   //-- Ex. <option value="10" selected>Decimal</option>
@@ -194,12 +191,14 @@ angular.module('icestudio')
   //-------------------------------------------------------------------------
   //--- COLOR FIELD. Input color dropdown field
   //-------------------------------------------------------------------------
-  /*
-        Label
-        +-----------------+
-        | o Color       v |
-        +-----------------+  
-  */
+  //-- This is how it is rendered in the Form
+  //
+  //      Text message
+  //      +-----------------+
+  //      | o Color       v |
+  //      +-----------------+  
+  //
+  //-------------------------------------------------------------------------
 
   class ColorField {
     //-----------------------------------------------------------------------
@@ -222,16 +221,16 @@ angular.module('icestudio')
       //-- Html template for building the color selector field
       this.htmlTemplate = `
         <div class="form-group">
-          <label style ="font-weight:normal"> ${PARAM_LABEL} </label>
+          <label style ="font-weight:normal"> %LABEL% </label>
           <div class="lb-color--dropdown">
             <div class="lb-dropdown-title">
       
               <!-- The current color is the one found in spec.color -->
-              <span class="lb-selected-color color-${PARAM_COLOR}"
-                data-color="${PARAM_COLOR}"
-                data-name="${PARAM_COLOR_NAME}"> 
+              <span class="lb-selected-color color-%COLOR%"
+                data-color="%COLOR%"
+                data-name="%COLOR_NAME%"> 
               </span> 
-              ${PARAM_COLOR_NAME}
+              %COLOR_NAME%
               <span class="lb-dropdown-icon"></span>
             </div>
           
@@ -486,12 +485,12 @@ angular.module('icestudio')
 
       //-- Insert the parameters in the html code template
       let html = this.htmlTemplate.replace(
-        PARAM_LABEL,
+        "%LABEL%",
         this.label
       );
 
-      html = html.replaceAll(PARAM_COLOR, this.color);
-      html = html.replaceAll(PARAM_COLOR_NAME, this.colorName);
+      html = html.replaceAll("%COLOR%", this.color);
+      html = html.replaceAll("%COLOR_NAME%", this.colorName);
 
       return html;
     }
