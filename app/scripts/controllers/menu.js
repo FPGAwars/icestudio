@@ -1,5 +1,9 @@
 "use strict";
 
+//-- Nodejs path module
+//-- https://nodejs.org/docs/latest-v17.x/api/path.html
+const path = require('path');
+
 //-- MENU callback functions
 
 angular
@@ -23,17 +27,13 @@ angular
       gettextCatalog,
 
       //-- Accesing nw and nw.Window interface
-      //-- Defined in module window.js
+      //-- Defined in module app/scripts/factories/window.js
       gui, 
 
       //-- Accesing _package object
       //-- Defined in module app/scripts/factories/window.js
       _package,
-      nodeFs,
-
-      //-- node.path module:
-      //-- https://nodejs.org/docs/latest-v17.x/api/path.html
-      nodePath
+      nodeFs
     ) 
 {
 
@@ -94,7 +94,7 @@ angular
   win.focus();
 
   //--------------------------------------------------------------
-  //-- Configure the window event
+  //-- Configure the window events
   //-- More information:
   //-- https://nwjs.readthedocs.io/en/latest/References/Window/
   //--------------------------------------------------------------
@@ -135,7 +135,6 @@ angular
     graph.fitContent();
   });
 
-  
 
   //-------------------------------------------------------------------------
   //-- Read the arguments passed to the app
@@ -150,6 +149,11 @@ angular
     // Objetos_globales/unescape
     // unescape is deprecated javascript function, should use 
     // decodeURI instead
+
+    console.log("NEW WINDOW STARTED....");
+    //const path = require('path');
+
+    console.log(path.sep);
 
     console.log("DEPURANDO!!!------->");
     console.log(window.location.search);
@@ -404,10 +408,10 @@ angular
         if (
           (selected &&
             filepath.startsWith(
-              nodePath.join(common.INTERNAL_COLLECTIONS_DIR, selected)
+              path.join(common.INTERNAL_COLLECTIONS_DIR, selected)
             )) ||
           filepath.startsWith(
-            nodePath.join(profile.get("externalCollections"), selected)
+            path.join(profile.get("externalCollections"), selected)
           )
         ) {
           collections.selectCollection(common.selectedCollection.path);
@@ -495,7 +499,7 @@ angular
               // Copy the built file
               if (
                 utils.copySync(
-                  nodePath.join(common.BUILD_DIR, "hardware" + ext),
+                  path.join(common.BUILD_DIR, "hardware" + ext),
                   filepath
                 )
               ) {
@@ -523,11 +527,11 @@ angular
 
         //-- Get the directory name
         //-- Ex. "/home/obijuan"
-        let dirname = nodePath.dirname(filepath);
+        let dirname = path.dirname(filepath);
 
         //-- Add the final separator
         //-- Ex. "/home/obijuan/"
-        let workingdir = nodePath.join(dirname, nodePath.sep);
+        let workingdir = path.join(dirname, path.sep);
 
         //-- Store the current working directory
         $scope.workingdir = workingdir;
@@ -1050,7 +1054,7 @@ angular
         var board = common.selectedBoard;
         if (
           nodeFs.existsSync(
-            nodePath.join("resources", "boards", board.name, "pinout.svg")
+            path.join("resources", "boards", board.name, "pinout.svg")
           )
         ) {
           gui.Window.open(
