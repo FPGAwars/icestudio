@@ -180,9 +180,53 @@ angular
   //-- Set the working directory for the current design
   updateWorkingdir(project.path);
 
+  //-- Show the version notes after some time, if the corresponding option
+  //-- was set in the profile
+  setTimeout(function () {
+
+    //-- Get the current state of the version info
+    let versionW = $scope.profile.get("displayVersionInfoWindow");
+
+    //-- Get the latest version used
+    let lastversionReview = $scope.profile.get("lastVersionReview");
+
+    //-- Check if the current version is newer than the one used
+    //-- before
+    let hasNewVersion =
+      lastversionReview === false || lastversionReview < _package.version;
+
+    //-- Display the version notes, if the option is enable or
+    //-- if this is a newer version
+    if (versionW === "yes" || hasNewVersion) {
+      $scope.openVersionInfoWindow(hasNewVersion);
+    }
+  }, 500);
+
+  
   //-------------------------------------------------------------------------
   //--  FUNCTIONS
   //-------------------------------------------------------------------------
+
+  //-----------------------------------------------------------
+  //-- Display the version notes info window
+  //-----------------------------------------------------------
+  $scope.openVersionInfoWindow = function () {
+
+    //-- The version notes panel is no longer hidden
+    $("#version-info-tab").removeClass("hidden");
+
+    //-- Get the state of the version notes: to be displayed or not
+    let versionW = $scope.profile.get("displayVersionInfoWindow");
+
+    //-- Get the state for the "don't display" checkbox
+    let noShowVersion = (versionW === "no");
+
+    //-- Set the state of the "don't display" checkbox
+    $('#version-info-tab--no-display').prop(
+      "checked",
+      noShowVersion
+    );
+  };
 
       /*
        * This function triggers when version info window will be closed
@@ -199,24 +243,7 @@ angular
         }
       };
 
-      $scope.openVersionInfoWindow = function (showPopUp) {
-        $("#version-info-tab").removeClass("hidden");
-        var versionW = $scope.profile.get("displayVersionInfoWindow");
-        let noShowVersion = false;
-        if (versionW === "no") {
-          noShowVersion = true;
-        }
-        if (typeof showPopUp !== "undefined" && showPopUp === true) {
-          profile.set("displayVersionInfoWindow", "yes");
-          profile.set("lastVersionReview", _package.version);
-          noShowVersion = false;
-        }
-
-        $('#version-info-tab--no-display').prop(
-          "checked",
-          noShowVersion
-        );
-      };
+      
 
       //---------------------------------------------------------------------
       //-- CALLBACK FUNCIONTS for the File MENU

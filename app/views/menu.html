@@ -666,23 +666,38 @@
           </li>
 
           <!-- HELP Menu -->
-          <li uib-dropdown ng-mouseover="showMenu('help')" ng-mouseleave="hideMenu()" ng-click="fixMenu('help')" is-open="status.help">
-            <a href uib-dropdown-toggle>{{ 'Help' | translate }}<span class="caret"></span></a>
+          <li uib-dropdown 
+              ng-mouseover="showMenu('help')" 
+              ng-mouseleave="hideMenu()" 
+              ng-click="fixMenu('help')" 
+              is-open="status.help">
+            <a href uib-dropdown-toggle>
+              {{ 'Help' | translate }}
+              <span class="caret"></span>
+            </a>
 
             <ul uib-dropdown-menu>
               <!-- HELP/View license -->
               <li disabled>
-                <a href ng-click="openUrl('https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',$event)">{{ 'View license' | translate }}</a>
+                <a href ng-click="openUrl(
+                  'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
+                  $event)">
+                  {{ 'View license' | translate }}
+                </a>
               </li>
 
               <!-- HELP/Version notes -->
               <li>
-                <a href ng-click="openVersionInfoWindow()">{{ 'Version notes' | translate }}</a>
+                <a href ng-click="openVersionInfoWindow()">
+                  {{ 'Version notes' | translate }}
+                </a>
               </li>
 
               <!-- Show the current Version -->
               <li class="disabled">
-                <a href>{{ 'Version' | translate }} {{ common.ICESTUDIO_VERSION }}</a>
+                <a href>{{ 'Version' | translate }} 
+                        {{ common.ICESTUDIO_VERSION }}
+                </a>
               </li>
 
               <!-- Divisor line between sections of the menu -->
