@@ -30,6 +30,9 @@ angular
       //-- Defined in module app/scripts/factories/window.js
       _package,
       nodeFs,
+
+      //-- node.path module:
+      //-- https://nodejs.org/docs/latest-v17.x/api/path.html
       nodePath
     ) 
 {
@@ -168,7 +171,10 @@ angular
     var regex = new RegExp(".*?[&\\?]icestudio_argv=(.*?)&.*");
     var val = queryStr.replace(regex, "$1");
 
-    var params = val === queryStr ? false : val;
+    //-- Mark if there are parameters passed or not:
+    //--  * params = false: No parameters
+    //--  * params = true: There are parameters
+    let params = val === queryStr ? false : val;
 
     console.log(`URL: params: ${params}`);
 
@@ -506,9 +512,30 @@ angular
           .catch(function () { });
       }
 
+      //---------------------------------------------------------------------
+      //-- Store the current working directory
+      //-- It is extracted from the given filepath
+      //--
+      //--  Ex. filepath = "/home/obijuan/test.ice"
+      //--  The current working directory is set to "/home/obijuan/"
+      //---------------------------------------------------------------------
       function updateWorkingdir(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + utils.sep;
+
+        //-- Get the directory name
+        //-- Ex. "/home/obijuan"
+        let dirname = nodePath.dirname(filepath);
+
+        //-- Add the final separator
+        //-- Ex. "/home/obijuan/"
+        let workingdir = nodePath.join(dirname, nodePath.sep);
+
+        //-- Store the current working directory
+        $scope.workingdir = workingdir;
+
+        //-- Debug:
+        console.log("Working dir: " + $scope.workingdir);
       }
+
 
       function equalWorkingFilepath(filepath) {
         return $scope.workingdir + project.name + ".ice" === filepath;
