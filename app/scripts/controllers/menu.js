@@ -4,7 +4,9 @@
 //-- https://nodejs.org/docs/latest-v17.x/api/path.html
 const path = require('path');
 
-//-- MENU callback functions
+//-- Nodejs URL module
+//-- https://nodejs.org/api/url.html
+const url = require('url');
 
 angular
   .module("icestudio")
@@ -138,117 +140,49 @@ angular
 
   //-------------------------------------------------------------------------
   //-- Read the arguments passed to the app
-  //-- For example, when opening a new example. It is passed as an argument
+  //-- If no arguments, nothing is done (just a blank project)
+  //-- Currenty there is only one argument to pass: The filename of the 
+  //--   icestudio design to open
   //-------------------------------------------------------------------------
-  setTimeout(function () {
-    // Parse GET url parmeters for window instance arguments
-    // all arguments will be embeded in icestudio_argv param
-    // that is a JSON string url encoded
 
-    // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/
-    // Objetos_globales/unescape
-    // unescape is deprecated javascript function, should use 
-    // decodeURI instead
+  //-- The parameters are located in the URL
+  //-- They can be obtained by the global object window.location.search
+  //--  It returns the querystring part of a URL, including the question
+  //--  mark (?).
 
-    console.log("NEW WINDOW STARTED....");
-    console.log(nw);
+  //-- Build the URL object
+  let myURL = new url.URL("http://index.html" + window.location.search);
 
-    console.log(path.sep);
+  //-- Get the icestudio_argv param
+  let icestudioArgv = myURL.searchParams.get('icestudio_argv');
 
-    console.log("DEPURANDO!!!------->");
-    console.log(window.location.search);
+  //-- The argument is given
+  if (icestudioArgv) {
 
-    var queryStr = "";
-    if (window.location.search.indexOf("?icestudio_argv=") === 0) {
-      queryStr =
-        "?icestudio_argv=" +
-        atob(
-          decodeURI(window.location.search.replace("?icestudio_argv=", ""))
-        ) +
-        "&";
-      console.log("CASO 1!!!!!!!");
-    } else {
-      queryStr = decodeURI(window.location.search) + "&";
-      console.log("CASO 2!!!!!!");
+    //-- Decode the arguments again (from base64 to utf8)
+    //-- What is obtained is a json string
+    let paramsJson = Buffer.from(icestudioArgv, 'base64').toString('utf8');
+
+    //-- Get the final params object
+    let params = JSON.parse(paramsJson);
+
+    //-- Get the filepath
+    let filepath = params["filepath"];
+
+    //-- Check the filepath
+    if (nodeFs.existsSync(filepath)) {
+
+      //-- Open the file
+      project.open(filepath);
     }
-    console.log(`QueryStr: ${queryStr}`);
-    var regex = new RegExp(".*?[&\\?]icestudio_argv=(.*?)&.*");
-    var val = queryStr.replace(regex, "$1");
-
-    //-- Mark if there are parameters passed or not:
-    //--  * params = false: No parameters
-    //--  * params = true: There are parameters
-    let params = val === queryStr ? false : val;
-
-    console.log(`URL: params: ${params}`);
-
-    // If there are url params, compatibilize it with shell call
-    if (typeof nw.App.argv === "undefined") {
-      nw.App.argv = [];
-    }
-
-    var prop;
-    if (params !== false) {
-      params = JSON.parse(decodeURI(params));
-
-      for (prop in params) {
-        nw.App.argv.push(params[prop]);
-      }
-    }
-
-
-    var argv = nw.App.argv;
-    if (
-      typeof window.opener !== "undefined" &&
-      window.opener !== null &&
-      typeof window.opener.opener !== "undefined" &&
-      window.opener.opener !== null
-    ) {
-      argv = [];
-    }
-
-    if (params !== false) {
-      for (prop in params) {
-        argv.push(params[prop]);
-      }
-    }
-    var local = false;
-    for (var i in argv) {
-      var arg = argv[i];
-      processArg(arg);
-      local = arg === "local" || local;
-    }
-
-    var editable =
-      !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
-      !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
-      project.path.startsWith(common.selectedCollection.path);
-
-    if (editable || !local) {
-      updateWorkingdir(project.path);
-    } else {
-      project.path = "";
-    }
-    var versionW = $scope.profile.get("displayVersionInfoWindow");
-    let lastversionReview = $scope.profile.get("lastVersionReview");
-    let hasNewVersion =
-      lastversionReview === false || lastversionReview < _package.version;
-    if (versionW === "yes" || hasNewVersion) {
-      $scope.openVersionInfoWindow(hasNewVersion);
-    }
-  }, 500);
+  }
+ 
+  //-- Set the working directory for the current design
+  updateWorkingdir(project.path);
 
   //-------------------------------------------------------------------------
   //--  FUNCTIONS
   //-------------------------------------------------------------------------
-  
-
-      function processArg(arg) {
-        if (nodeFs.existsSync(arg)) {
-          var filepath = arg;
-          project.open(filepath);
-        }
-      }
 
       /*
        * This function triggers when version info window will be closed
