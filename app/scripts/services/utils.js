@@ -1020,18 +1020,28 @@ angular.module('icestudio')
         url += icestudioArgv;
       }
 
-      // Create a new window and get it.
-      // new-instance and new_instance are necesary for OS compatibility
-      // to avoid crash on new window project after close parent
-      // (little trick for nwjs bug).
-      //url='index.html?icestudio_argv=fsdfsfa';
+      //-- Get the default window size from the package.json file
+      let width = _package.window.width;
+      let height = _package.window.height;
 
+      //-- The URL has this syntax:
+      //
+      //-- index.html?icestudio_argv=encoded_value
+      //--
+      //-- Where encoded value is something like: 
+      //--     eyJmaWxlcGF0aCI6Ii9ob21lL29iaWp1YW4vRGV2ZW...
+
+      //-----------------------------------------------------------
+      //-- Open the new window
+      //-- More information:
+      //-- https://nwjs.readthedocs.io/en/latest/References/Window/
+      //--   #windowopenurl-options-callback
+      //-----------------------------------------------------------
       gui.Window.open(url, {
-        'new_instance': true,  //Deprecated for new nwjs versios
+        'new_instance': true,  
         'position': 'center',
-        //        'toolbar': false,   //Deprecated for new nwjs versios
-        'width': 900,
-        'height': 600,
+        'width': width,
+        'height': height,
         'show': true,
       });
 

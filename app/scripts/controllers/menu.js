@@ -23,14 +23,26 @@ angular
       gettextCatalog,
 
       //-- Accesing nw and nw.Window interface
-      //-- Accesing _package object
       //-- Defined in module window.js
       gui, 
+
+      //-- Accesing _package object
+      //-- Defined in module app/scripts/factories/window.js
       _package,
       nodeFs,
       nodePath
     ) 
 {
+
+  //-------------------------------------------------------------------------
+  //-- This code is executed when a new Icestuio Window is created:
+  //--  Either on startup, when a new project is created or when an
+  //--  example is opened
+  //--
+  //-- The new window receive the parameters through the URL
+  //-- Ex. 
+  //-------------------------------------------------------------------------  
+
   //-- Initialize scope
 
   $scope.profile = profile;
@@ -53,27 +65,52 @@ angular
   let currentUndoStack = [];
 
   //-----------------------------------
-  // MAIN WINDOW events
+  // MAIN WINDOW
   //-----------------------------------
 
   //-- Get the Window object
   let win = gui.Window.get();
 
-  //-- Close the Main window
+  //-- ONLY MAC:
+  //-- Creates the builtin menus (App, Edit and Window) within the menubar
+  //-- on Mac
+  //-- More information: 
+  //-- https://nwjs.readthedocs.io/en/latest/References/Menu/
+  //-- #menucreatemacbuiltinappname-options-mac
+  if (process.platform === "darwin") {
+
+    let mb = new gui.Menu({
+      type: "menubar",
+    });
+    
+    mb.createMacBuiltin("Icestudio");
+    win.menu = mb;
+  }
+
+  //-- Get the focus on the main window
+  win.focus();
+
+  //--------------------------------------------------------------
+  //-- Configure the window event
+  //-- More information:
+  //-- https://nwjs.readthedocs.io/en/latest/References/Window/
+  //--------------------------------------------------------------
+
+  //-- Event: Window closed
   win.on("close", function () {
 
     //-- Call the exit function
     exit();
   });
 
-  //-- The window is maximized
+  //-- Event: The window is maximized
   win.on("maximize", function () {
 
     //-- Adjust the paper to the new size
     graph.fitPaper();
   });
 
-  //-- The user wants to resize the windows
+  //-- Event: The window was resized
   win.on("resize", function () {
 
     //-- When working with big designs it is better not to fit 
@@ -82,7 +119,7 @@ angular
     //graph.fitContent();
   });
 
-  //-- The user has moved the window
+  //-- Event: The window was moved
   win.on("move", function () {
     //-- When working with big designs it is better not to fit
     //-- the contents (leave it commented)
@@ -95,17 +132,7 @@ angular
     graph.fitContent();
   });
 
-  // Darwin fix for shortcuts
-  if (process.platform === "darwin") {
-    let mb = new gui.Menu({
-      type: "menubar",
-    });
-    mb.createMacBuiltin("Icestudio");
-    win.menu = mb;
-  }
-
-  //-- New window, get the focus
-  win.focus();
+  
 
   //-------------------------------------------------------------------------
   //-- Read the arguments passed to the app
@@ -116,8 +143,10 @@ angular
     // all arguments will be embeded in icestudio_argv param
     // that is a JSON string url encoded
 
-    // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
-    // unescape is deprecated javascript function, should use decodeURI instead
+    // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/
+    // Objetos_globales/unescape
+    // unescape is deprecated javascript function, should use 
+    // decodeURI instead
 
     console.log("DEPURANDO!!!------->");
     console.log(window.location.search);
@@ -199,6 +228,9 @@ angular
     }
   }, 500);
 
+  //-------------------------------------------------------------------------
+  //--  FUNCTIONS
+  //-------------------------------------------------------------------------
   
 
       function processArg(arg) {
@@ -248,6 +280,9 @@ angular
 
       //-- FILE/New
       $scope.newProject = () => {
+
+        //-- Create a new blank icestudio window
+        //-- No argument passed
         utils.newWindow();
       };
 
