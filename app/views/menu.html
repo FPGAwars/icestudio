@@ -36,7 +36,8 @@
            nwworkingdir="{{workingdir}}" nwsaveas="{{ project.name }}.pcf"/>
     <input id="input-export-testbench" type="file" accept=".v" class="hidden"  
            nwworkingdir="{{workingdir}}" nwsaveas="{{ project.name }}_tb.v"/>
-    <input id="input-export-gtkwave" type="file" accept=".gtkw" class="hidden"  
+    <input id="input-export-gtkwave" type="file" accept=".gtkw" 
+           class="hidden"  
            nwworkingdir="{{workingdir}}" 
            nwsaveas="{{ project.name }}_tb.gtkw"/>
     <input id="input-export-blif" type="file" accept=".blif" class="hidden"  
@@ -79,8 +80,11 @@
                 <!-- When the button is clicked, the function newProject()
                      is called. It is located in the 
                      app/scripts/controllers/menu.js file-->
-                <a href ng-click="newProject()">{{ 'New' | translate }}
-                    <span class="shortcut">{{ 'newProject' | shortcut }}</span>
+                <a href ng-click="newProject()">
+                    {{ 'New' | translate }}
+                    <span class="shortcut">
+                      {{ 'newProject' | shortcut }}
+                    </span>
                 </a>
               </li>
 
@@ -88,7 +92,9 @@
               <li>
                 <a href ng-click="openProjectDialog()">
                   {{ 'Open' | translate }}...
-                  <span class="shortcut">{{ 'openProject' | shortcut }}</span>
+                  <span class="shortcut">
+                    {{ 'openProject' | shortcut }}
+                  </span>
                 </a>
               </li>
 

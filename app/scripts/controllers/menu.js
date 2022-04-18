@@ -247,7 +247,7 @@ angular
       //---------------------------------------------------------------------
 
       //-- FILE/New
-      $scope.newProject = function () {
+      $scope.newProject = () => {
         utils.newWindow();
       };
 

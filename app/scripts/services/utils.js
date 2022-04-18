@@ -975,6 +975,9 @@ angular.module('icestudio')
       }
     };
 
+    //-----------------------------------------------------------------------
+    //-- Create a new ICESTUDIO window
+    //-----------------------------------------------------------------------
     this.newWindow = function (filepath, local) {
 
       var params = false;
@@ -991,13 +994,32 @@ angular.module('icestudio')
         }
         params.local = 'local';
       }
-      // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
-      // that contains the same arguments that shell call, in this way the two calls will be
-      // compatible.
-      // If in the future you will add more paremeters to the new window , you should review
-      // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+      // To pass parameters to the new project window, we use the GET 
+      // parameter "icestudio_argv" that contains the same arguments that 
+      // shell call, in this way the two calls will be compatible.
+      // If in the future you will add more paremeters to the new window, 
+      // you should review scripts/controllers/menu.js even if all 
+      // parameters that arrive are automatically parse
 
-      var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
+      //-- Convert the params to json
+      let jsonParams = JSON.stringify(params);
+
+      //-- Encode the params into Base64 format
+      let paramsBase64 = Buffer.from(jsonParams).toString('base64');
+
+      //-- Now Encode the params for use them in a URI
+      let paramUri = encodeURI(paramsBase64);
+
+      //-- Create the URL icestudio_argv param
+      let icestudioArgv = '?icestudio_argv=' + paramUri;
+
+      //-- Create the final URL
+      let url = 'index.html';
+
+      if (params) {
+        url += icestudioArgv;
+      }
+
       // Create a new window and get it.
       // new-instance and new_instance are necesary for OS compatibility
       // to avoid crash on new window project after close parent
