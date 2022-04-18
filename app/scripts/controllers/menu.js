@@ -26,10 +26,6 @@ angular
       shortcuts,
       gettextCatalog,
 
-      //-- Accesing nw and nw.Window interface
-      //-- Defined in module app/scripts/factories/window.js
-      gui, 
-
       //-- Accesing _package object
       //-- Defined in module app/scripts/factories/window.js
       _package,
@@ -72,7 +68,11 @@ angular
   //-----------------------------------
 
   //-- Get the Window object
-  let win = gui.Window.get();
+  //-- The nw object is globaly available. It contains all the
+  //-- NWjs APIs
+  //-- More information:
+  //--  https://nwjs.readthedocs.io/en/latest/ 
+  let win = nw.Window.get();
 
   //-- ONLY MAC:
   //-- Creates the builtin menus (App, Edit and Window) within the menubar
@@ -81,8 +81,8 @@ angular
   //-- https://nwjs.readthedocs.io/en/latest/References/Menu/
   //-- #menucreatemacbuiltinappname-options-mac
   if (process.platform === "darwin") {
-
-    let mb = new gui.Menu({
+  
+    let mb = new nw.Menu({
       type: "menubar",
     });
     
@@ -151,7 +151,7 @@ angular
     // decodeURI instead
 
     console.log("NEW WINDOW STARTED....");
-    //const path = require('path');
+    console.log(nw);
 
     console.log(path.sep);
 
@@ -183,8 +183,8 @@ angular
     console.log(`URL: params: ${params}`);
 
     // If there are url params, compatibilize it with shell call
-    if (typeof gui.App.argv === "undefined") {
-      gui.App.argv = [];
+    if (typeof nw.App.argv === "undefined") {
+      nw.App.argv = [];
     }
 
     var prop;
@@ -192,12 +192,12 @@ angular
       params = JSON.parse(decodeURI(params));
 
       for (prop in params) {
-        gui.App.argv.push(params[prop]);
+        nw.App.argv.push(params[prop]);
       }
     }
 
 
-    var argv = gui.App.argv;
+    var argv = nw.App.argv;
     if (
       typeof window.opener !== "undefined" &&
       window.opener !== null &&
@@ -1036,7 +1036,7 @@ angular
       };
 
       $scope.showPCF = function () {
-        gui.Window.open(
+        nw.Window.open(
           "resources/viewers/plain/pcf.html?board=" + common.selectedBoard.name,
           {
             title: common.selectedBoard.info.label + " - PCF",
@@ -1057,7 +1057,7 @@ angular
             path.join("resources", "boards", board.name, "pinout.svg")
           )
         ) {
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/svg/pinout.html?board=" + board.name,
             {
               title: common.selectedBoard.info.label + " - Pinout",
@@ -1081,7 +1081,7 @@ angular
       $scope.showDatasheet = function () {
         var board = common.selectedBoard;
         if (board.info.datasheet) {
-          gui.Shell.openExternal(board.info.datasheet);
+          nw.Shell.openExternal(board.info.datasheet);
         } else {
           alertify.error(
             gettextCatalog.getString("{{board}} datasheet not defined", {
@@ -1097,7 +1097,7 @@ angular
         var rules = JSON.stringify(board.rules);
         if (rules !== "{}") {
           var encRules = encodeURIComponent(rules);
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/table/rules.html?rules=" + encRules,
             {
               title: common.selectedBoard.info.label + " - Rules",
@@ -1155,7 +1155,7 @@ angular
           `&app_dir=${encodeURIComponent(common.APP_DIR)}---`;
 
         //-- Create the window
-        gui.Window.open(URL, {
+        nw.Window.open(URL, {
           title: "System Info",
           focus: true,
           resizable: false,
@@ -1183,7 +1183,7 @@ angular
         var collection = common.selectedCollection;
         var readme = collection.content.readme;
         if (readme) {
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/markdown/readme.html?readme=" + readme,
             {
               title:
@@ -1210,7 +1210,7 @@ angular
       };
 
       $scope.showCommandOutput = function () {
-        winCommandOutput = gui.Window.open(
+        winCommandOutput = nw.Window.open(
           "resources/viewers/plain/output.html?content=" +
           encodeURIComponent(common.commandOutput),
           {
