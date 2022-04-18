@@ -8,6 +8,10 @@ const path = require('path');
 //-- https://nodejs.org/api/url.html
 const url = require('url');
 
+//-- node fs module
+//-- https://nodejs.org/api/fs.html
+const fs = require('fs');
+
 angular
   .module("icestudio")
   .controller(
@@ -30,8 +34,7 @@ angular
 
       //-- Accesing _package object
       //-- Defined in module app/scripts/factories/window.js
-      _package,
-      nodeFs
+      _package
     ) 
 {
 
@@ -170,7 +173,7 @@ angular
     let filepath = params["filepath"];
 
     //-- Check the filepath
-    if (nodeFs.existsSync(filepath)) {
+    if (fs.existsSync(filepath)) {
 
       //-- Open the file
       project.open(filepath);
@@ -294,7 +297,7 @@ angular
           // If this is not the first action, and
           // the file path is different, open
           // the project in a new window
-          utils.newWindow(filepath, true);
+          utils.newWindow(filepath);
         }
       };
 
@@ -726,7 +729,7 @@ angular
           }
 
           //-- If the file is valid...
-          if ( newPath === "" || nodeFs.existsSync(newPath)) {
+          if ( newPath === "" || fs.existsSync(newPath)) {
 
              //-- Set the new file
             profile.set("externalPlugins", newPath);
@@ -786,8 +789,8 @@ angular
 
           //-- If the files are valid...
           if (
-            (newPythonPath === "" || nodeFs.existsSync(newPythonPath)) &&
-            (newPipPath === "" || nodeFs.existsSync(newPipPath))) 
+            (newPythonPath === "" || fs.existsSync(newPythonPath)) &&
+            (newPipPath === "" || fs.existsSync(newPipPath))) 
           {
             //-- The files are valid...
             //-- Set them in the profile
@@ -849,7 +852,7 @@ angular
           //-- If the file is valid...
           if (
             newExternalCollections === "" ||
-            nodeFs.existsSync(newExternalCollections)
+            fs.existsSync(newExternalCollections)
           ) {
             //-- The file is valida...
             //-- Set it in the profile
@@ -1021,7 +1024,7 @@ angular
       $scope.showPinout = function () {
         var board = common.selectedBoard;
         if (
-          nodeFs.existsSync(
+          fs.existsSync(
             path.join("resources", "boards", board.name, "pinout.svg")
           )
         ) {
@@ -2056,7 +2059,7 @@ angular
 
       function saveSnapshot(base64Data) {
         utils.saveDialog("#input-save-snapshot", ".png", function (filepath) {
-          nodeFs.writeFile(filepath, base64Data, "base64", function (err) {
+          fs.writeFile(filepath, base64Data, "base64", function (err) {
             $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
             $scope.$apply();
             if (!err) {
