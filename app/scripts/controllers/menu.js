@@ -228,20 +228,26 @@ angular
     );
   };
 
-      /*
-       * This function triggers when version info window will be closed
-       *                                                                 */
-      $scope.closeVersionInfoWindow = function () {
-        $("#version-info-tab").addClass("hidden");
-        var nodisplay = $('#version-info-tab--no-display').is(
-          ":checked"
-        );
-        if (nodisplay) {
-          profile.set("displayVersionInfoWindow", "no");
-        } else {
-          profile.set("displayVersionInfoWindow", "yes");
-        }
-      };
+  //-------------------------------------------------------------------------
+  //-- Callback function of the CLOSE button from the version notes window
+  //-- The state of the "don't display" checkbox is stored in the
+  //-- profile file
+  //-------------------------------------------------------------------------
+  $scope.closeVersionInfoWindow = function () {
+
+    //-- Hide the version notes window
+    $("#version-info-tab").addClass("hidden");
+
+    //-- Get the state of the "Don't display" checkbox
+    let nodisplay = $('#version-info-tab--no-display').is(
+      ":checked"
+    );
+
+    //-- Write the option to the profile file (so that it is remembered
+    //--  after icestudio is closed)
+    let option = (nodisplay) ? "no" : "yes";
+    profile.set("displayVersionInfoWindow", option);
+  };
 
       
 

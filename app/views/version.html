@@ -2,7 +2,7 @@
 
 <!-- This page is initially hidden -->
 <div id="version-info-tab" class="hidden">
-  
+
   <div class="version-info-tab--bg"></div>
   <div class="version-info-tab--body">
     <div class="version-info-tab--body--content">
@@ -61,14 +61,21 @@
     </div>
 
     <div class="version-info-tab--options">
+
+        <!-- Check button -->
         <div class="version-info-tab--options--group">
           <input type="checkbox" id="version-info-tab--no-display">
             <label for="version-info-tab--no-display">
               {{ 'Don\'t display' | translate }}
             </label>
         </div>
+
+        <!-- Close button -->
         <div class="version-info-tab--options--group"></div>
         <div class="version-info-tab--options--group util--text-align-right">
+
+          <!-- Callback function. It call when the close button -->
+          <!--    is pressed                                    -->
           <button ng-click="closeVersionInfoWindow()">
             {{ 'Close' | translate }}
           </button>
