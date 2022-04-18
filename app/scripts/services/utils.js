@@ -977,46 +977,43 @@ angular.module('icestudio')
 
     //-----------------------------------------------------------------------
     //-- Create a new ICESTUDIO window
+    //--
+    //--  INPUTS:
+    //--    * filepath: (option) Icestudio file to open in the new window
     //-----------------------------------------------------------------------
-    this.newWindow = function (filepath, local) {
+    this.newWindow = function (filepath) {
 
-      var params = false;
+      //-- If there are parameters to pass or not
+      //-- No parameters by default
+      let hasParams = false;
 
-      if (typeof filepath !== 'undefined') {
-        params = {
-          'filepath': filepath
-        };
-      }
-
-      if (typeof local !== 'undefined' && local === true) {
-        if (params === false) {
-          params = {};
-        }
-        params.local = 'local';
-      }
-      // To pass parameters to the new project window, we use the GET 
-      // parameter "icestudio_argv" that contains the same arguments that 
-      // shell call, in this way the two calls will be compatible.
-      // If in the future you will add more paremeters to the new window, 
-      // you should review scripts/controllers/menu.js even if all 
-      // parameters that arrive are automatically parse
-
-      //-- Convert the params to json
-      let jsonParams = JSON.stringify(params);
-
-      //-- Encode the params into Base64 format
-      let paramsBase64 = Buffer.from(jsonParams).toString('base64');
-
-      //-- Now Encode the params for use them in a URI
-      let paramUri = encodeURI(paramsBase64);
-
-      //-- Create the URL icestudio_argv param
-      let icestudioArgv = '?icestudio_argv=' + paramUri;
-
-      //-- Create the final URL
+      //-- URL with no parameters
       let url = 'index.html';
 
-      if (params) {
+      //-- Create the arguments
+      //-- The filepath was given: pass it as an argument
+      if (filepath) {
+        
+        //-- There are params in the URL
+        hasParams = true;
+
+        //-- Create the object params
+        //-- Currently it only contains one element, but in the future
+        //-- it can be increased
+        let params = {
+          'filepath': filepath
+        };
+
+        //-- Convert the params to json
+        let jsonParams = JSON.stringify(params);
+
+        //-- Encode the params into Base64 format
+        let paramsBase64 = Buffer.from(jsonParams).toString('base64');
+
+        //-- Create the URL query with the icestudio_argv param
+        let icestudioArgv = '?icestudio_argv=' + paramsBase64;
+
+        //-- Create the final URL, with parameters
         url += icestudioArgv;
       }
 
@@ -1044,11 +1041,11 @@ angular.module('icestudio')
         'height': height,
         'show': true,
       });
-
     };
 
+
     //-- Place the path inside quotes. It is important for managing filepaths
-    //-- that contains spaces in ther names
+    //-- that contains spaces in their names
     this.coverPath = coverPath;
 
     function coverPath(filepath) {

@@ -249,20 +249,21 @@ angular
     profile.set("displayVersionInfoWindow", option);
   };
 
-      
 
-      //---------------------------------------------------------------------
-      //-- CALLBACK FUNCIONTS for the File MENU
-      //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  //-- CALLBACK FUNCIONTS for the File MENU
+  //---------------------------------------------------------------------
 
-      //-- FILE/New
-      $scope.newProject = () => {
+  //-- FILE/New
+  $scope.newProject = () => {
 
-        //-- Create a new blank icestudio window
-        //-- No argument passed
-        utils.newWindow();
-      };
+    //-- Create a new blank icestudio window
+    //-- No argument passed
+    utils.newWindow();
+  };
 
+
+  
       $scope.openProjectDialog = function () {
         utils.openDialog("#input-open-project", ".ice", function (filepath) {
           if (zeroProject) {
