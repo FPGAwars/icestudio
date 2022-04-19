@@ -273,7 +273,6 @@
   <script src="scripts/factories/node.js"></script>
   <script src="scripts/factories/window.js"></script>
   <script src="scripts/controllers/design.js"></script>
-  <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/menu.js"></script>
   <script src="scripts/directives/menuboard.js"></script>
   <script src="scripts/directives/menutree.js"></script>
@@ -353,11 +352,7 @@
 
     <!-- The rest of ICESTUDIO GUI -->
     <div ng-include="'views/design.html'"></div>
-    
-    <!-- Not used. But cannot be removed by now         -->
-    <!-- It makes angular to execute main.js controller -->
-    <div ng-view>
-    </div>
+
   </div>
 
 </body>
