@@ -26,19 +26,6 @@ var iceConsole = new IceLogger();
 
 angular
   .module("icestudio", ["ui.bootstrap", "ngRoute", "gettext"])
-  .config([
-    "$routeProvider",
-    function ($routeProvider) {
-      $routeProvider
-        .when("/", {
-          templateUrl: "views/main.html",
-          controller: "MainCtrl",
-        })
-        .otherwise({
-          redirectTo: "/",
-        });
-    },
-  ])
   .run(function (
     profile,  //-- Icestudio profile file managment
     project,
