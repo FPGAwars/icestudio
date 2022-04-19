@@ -525,6 +525,7 @@ angular
         return $scope.workingdir + project.name + ".ice" === filepath;
       }
 
+    
       $scope.quit = function () {
         exit();
       };
@@ -562,8 +563,10 @@ angular
           _exit();
         }
 
+        //-----------------------------
+        //-- Close the current window
+        //-----------------------------
         function _exit() {
-          //win.hide();
           win.close(true);
         }
       }
