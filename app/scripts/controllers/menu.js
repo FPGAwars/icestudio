@@ -275,7 +275,7 @@ angular
     //-- Open the file Dialog
     //-- The selecter is passed as a parameter
     //-- The html element is located in the menu.html file
-    utils.openDialog("#input-open-project", ".ice", function (filepath) {
+    utils.openDialog("#input-open-project", function (filepath) {
 
       if (zeroProject) {
         // If this is the first action, open
@@ -292,7 +292,7 @@ angular
     });
   };
 
-  
+
       $scope.openProject = function (filepath) {
         if (zeroProject) {
           // If this is the first action, open
@@ -405,7 +405,7 @@ angular
 
       $scope.addAsBlock = function () {
         var notification = true;
-        utils.openDialog("#input-add-as-block", ".ice", 
+        utils.openDialog("#input-add-as-block", 
           function (filepaths) {
             filepaths = filepaths.split(";");
             for (var i in filepaths) {
@@ -1360,7 +1360,7 @@ angular
       }
 
       $scope.addCollections = function () {
-        utils.openDialog("#input-add-collection", ".zip", function (filepaths) {
+        utils.openDialog("#input-add-collection", function (filepaths) {
           filepaths = filepaths.split(";");
           tools.addCollections(filepaths);
         });

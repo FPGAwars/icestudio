@@ -880,7 +880,7 @@ angular.module('icestudio')
     //--   * callback(filepath): It is called when the user has pressed the 
     //--        ok button. The chosen file is passed as a parameter
     //-----------------------------------------------------------------------
-    this.openDialog = function (inputID, ext, callback) {
+    this.openDialog = function (inputID, callback) {
 
       //-- Get the filechooser element (from the DOM)
       let chooser = $(inputID);
