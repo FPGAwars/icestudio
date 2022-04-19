@@ -348,9 +348,14 @@
       </div>
     </div>
 
-    <!-- The rest of icstudio gui. It is dinamycally loaded -->
-    <!-- see app/scripts/controllers/main.js and            -->
-    <!-- app/views/main.html                                -->
+    <!-- ICESTUDIO MENU BAR, located at the top -->
+    <div ng-include="'views/menu.html'"></div>
+
+    <!-- The rest of ICESTUDIO GUI -->
+    <div ng-include="'views/design.html'"></div>
+    
+    <!-- Not used. But cannot be removed by now         -->
+    <!-- It makes angular to execute main.js controller -->
     <div ng-view>
     </div>
   </div>
