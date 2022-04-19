@@ -267,6 +267,7 @@ angular
 
 
   //-------------------------------------------------------------------------
+  //-- FILE/Open
   //-- Open a new .ice file and load it in Icestudio
   //-- A Dialog for selecting the file is displayed
   //-------------------------------------------------------------------------
@@ -277,39 +278,37 @@ angular
     //-- The html element is located in the menu.html file
     utils.openDialog("#input-open-project", function (filepath) {
 
-      if (zeroProject) {
-        // If this is the first action, open
-        // the project in the same window
-        updateWorkingdir(filepath);
-        project.open(filepath);
+      //-- Open the file in icestudio
+      $scope.openProject(filepath);
 
-      } else if (project.changed || !equalWorkingFilepath(filepath)) {
-        // If this is not the first action, or
-        // the file path is different, open
-        // the project in a new window
-        utils.newWindow(filepath);
-      }
     });
   };
 
+  //--------------------------------------------------------------------------
+  //-- Open an icestudio File directly (No Dialog)
+  //--
+  //-- INPUTS:
+  //--   * filepath (String): Icestudio file to open
+  //--------------------------------------------------------------------------
+  $scope.openProject = function (filepath) {
 
-      $scope.openProject = function (filepath) {
-        if (zeroProject) {
-          // If this is the first action, open
-          // the project in the same window
-          var editable =
-            !filepath.startsWith(common.DEFAULT_COLLECTION_DIR) &&
-            !filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
-            filepath.startsWith(common.selectedCollection.path);
-          updateWorkingdir(editable ? filepath : "");
-          project.open(filepath, true);
-        } else {
-          // If this is not the first action, and
-          // the file path is different, open
-          // the project in a new window
-          utils.newWindow(filepath);
-        }
-      };
+    if (zeroProject) {
+      // If this is the first action, open
+      // the project in the same window
+     
+      updateWorkingdir(filepath);
+      project.open(filepath);
+
+    } 
+    else if (project.changed || !equalWorkingFilepath(filepath)) {
+      // If this is not the first action, and
+      // the file path is different, open
+      // the project in a new window
+      utils.newWindow(filepath);
+    }
+  };
+
+
 
       $scope.saveProject = function () {
         if (

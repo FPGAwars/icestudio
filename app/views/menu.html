@@ -86,6 +86,8 @@
                      app/scripts/controllers/menu.js file-->
                 <a href ng-click="newProject()">
                     {{ 'New' | translate }}
+
+                    <!-- Add the shotcut tip to the right -->
                     <span class="shortcut">
                       {{ 'newProject' | shortcut }}
                     </span>
@@ -103,15 +105,14 @@
               </li>
 
               <!-- File/Blocks -->
+              <!-- Option obsolete... will be removed!
               <li class="dropdown-submenu" uib-dropdown>
                 <a href uib-dropdown-toggle>{{ 'Blocks' | translate }}</a>
 
-                <!-- It is a Sub-menu. The blocks from the current selected
-                     collection are shown -->
                 <menutree data="common.selectedCollection.content.blocks" 
                           callback="openProject(path)">
                 </menutree>
-              </li>
+              </li> -->
 
               <!-- File/Examples -->
               <li class="dropdown-submenu" uib-dropdown>
