@@ -254,7 +254,7 @@ angular
 
 
   //---------------------------------------------------------------------
-  //-- CALLBACK FUNCIONTS for the File MENU
+  //-- CALLBACK FUNCTIONS for the File MENU
   //---------------------------------------------------------------------
 
   //-- FILE/New
@@ -266,23 +266,33 @@ angular
   };
 
 
-  
-      $scope.openProjectDialog = function () {
-        utils.openDialog("#input-open-project", ".ice", function (filepath) {
-          if (zeroProject) {
-            // If this is the first action, open
-            // the projec in the same window
-            updateWorkingdir(filepath);
-            project.open(filepath);
-          } else if (project.changed || !equalWorkingFilepath(filepath)) {
-            // If this is not the first action, and
-            // the file path is different, open
-            // the project in a new window
-            utils.newWindow(filepath);
-          }
-        });
-      };
+  //-------------------------------------------------------------------------
+  //-- Open a new .ice file and load it in Icestudio
+  //-- A Dialog for selecting the file is displayed
+  //-------------------------------------------------------------------------
+  $scope.openProjectDialog = function () {
 
+    //-- Open the file Dialog
+    //-- The selecter is passed as a parameter
+    //-- The html element is located in the menu.html file
+    utils.openDialog("#input-open-project", ".ice", function (filepath) {
+
+      if (zeroProject) {
+        // If this is the first action, open
+        // the project in the same window
+        updateWorkingdir(filepath);
+        project.open(filepath);
+
+      } else if (project.changed || !equalWorkingFilepath(filepath)) {
+        // If this is not the first action, or
+        // the file path is different, open
+        // the project in a new window
+        utils.newWindow(filepath);
+      }
+    });
+  };
+
+  
       $scope.openProject = function (filepath) {
         if (zeroProject) {
           // If this is the first action, open

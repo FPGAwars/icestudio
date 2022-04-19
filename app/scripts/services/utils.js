@@ -871,20 +871,45 @@ angular.module('icestudio')
       return `<b>${text}</b>`;
     };
 
+    //-----------------------------------------------------------------------
+    //-- Open the Dialog for choosing a file
+    //--
+    //-- INPUTS:
+    //--   * inputID (String): Html selector of the file chooser input
+    //--  
+    //--   * callback(filepath): It is called when the user has pressed the 
+    //--        ok button. The chosen file is passed as a parameter
+    //-----------------------------------------------------------------------
     this.openDialog = function (inputID, ext, callback) {
-      var chooser = $(inputID);
+
+      //-- Get the filechooser element (from the DOM)
+      let chooser = $(inputID);
+
+      //-- Reove any previously event attached
       chooser.unbind('change');
-      chooser.change(function ( /*evt*/) {
-        var filepath = $(this).val();
-        //if (filepath.endsWith(ext)) {
+
+      //-- Atach a new callback function
+      chooser.change( function () {
+
+        //-- It is executed when the user has selected the file
+        //-- Read the filepath entered by the user
+        let filepath = $(this).val();
+       
+        //-- Execute the callback (if it was given)
         if (callback) {
           callback(filepath);
         }
-        //}
+        
+        //-- Remove the current select filename from the chooser
         $(this).val('');
       });
+
+      //-- Activate the File chooser! (The element is shown, it waits for
+      //-- the user to enter the file and the calblack is executed
       chooser.trigger('click');
     };
+
+
 
     this.saveDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);

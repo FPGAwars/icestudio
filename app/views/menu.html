@@ -19,7 +19,11 @@
        ondragstart="() => {return false;}" 
        ondrop="() => {return false;}">
 
+    <!-- File selector for loading .ice files in Icestudio -->
+    <!-- It is normally hidden.                            -->
     <input id="input-open-project" type="file" accept=".ice" class="hidden"/>
+
+
     <input id="input-save-project" type="file" accept=".ice" class="hidden" 
            nwworkingdir="{{workingdir}}" nwsaveas="{{project.name}}.ice"/>
     <input id="input-save-snapshot" type="file" accept=".png" class="hidden"  
