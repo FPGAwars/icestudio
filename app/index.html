@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html>
 
+<!----------------------------------------------------------------------->
+<!-- INDEX HTML FILE --- Initial ENTRY POINT                           -->
+<!----------------------------------------------------------------------->
+<!-- Start sequence:                                                   -->
+<!--   * NW is executed. Icestudio is a NWjs application.              -->
+<!--   * NW creates the main display window  (a browser)               -->
+<!--   * NW loads this file into the window (index.html)               -->
+<!--   * index.html is procesed and executed                           -->
+<!----------------------------------------------------------------------->
+<!-- index.html structure:                                             -->
+<!--   * CSS is loaded (for both internal and external dependencies)   -->
+<!--   * js files are loaded (both internal and external js files)     -->
+<!--   * The body contains the structure of the Icestudio GUI          -->
+<!----------------------------------------------------------------------->
+<!-- When the js files are executed, there is already a nw window      -->
+<!--   available                                                       -->
+<!-- All the js files have access to the nw object (which gives access -->
+<!-- to the nw API                                                     -->
+<!----------------------------------------------------------------------->
+<!-- JS ENTRY POINT:                                                   -->
+<!--   Icestudio depends on many .js files. The main JS file, which is -->
+<!--   initially executed, is app.js                                   -->
+<!--  If you want to understand the icestudio code, first have a look  -->
+<!-- to this index.html and then continue with app.js                  -->
+<!----------------------------------------------------------------------->
+<!-- NW documentation:                                                 -->
+<!-- https://nwjs.readthedocs.io/en/latest/                            -->
+<!----------------------------------------------------------------------->
+
 <head>
   <title>Icestudio</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -107,7 +136,6 @@
       bottom: 0;
       margin: auto;
     }
-
   </style> 
 
 
@@ -217,7 +245,7 @@
   <!--  https://github.com/janl/mustache.js                               -->
   <script src="node_modules/mustache/mustache.min.js"></script>
 
-    <!-- ************************************************************** -->
+  <!-- ************************************************************** -->
   <!-- ******      ICESTUDIO Javascript modules             ********* -->
   <!-- ************************************************************** -->
 
@@ -268,19 +296,30 @@
   <!-------------------------------------------------------->
   <!-- Icestudio javascript modules                       -->
   <!-------------------------------------------------------->
+  <!-- Definition of external modules -->
   <script src="scripts/factories/error.js"></script>
   <script src="scripts/factories/joint.js"></script>
   <script src="scripts/factories/node.js"></script>
   <script src="scripts/factories/window.js"></script>
+
+  <!-- js files asociated to html code      -->
+  <!-- They contains the callbacks functions -->
   <script src="scripts/controllers/design.js"></script>
   <script src="scripts/controllers/menu.js"></script>
+
+  <!-- Special menus  -->
   <script src="scripts/directives/menuboard.js"></script>
   <script src="scripts/directives/menutree.js"></script>
+
+  <!-- js files related to joint (the graphical library)    -->
+  <!--  used for drawing the circuits                       -->
   <script src="scripts/graphics/joint.command.js"></script>
   <script src="scripts/graphics/joint.connectors.js"></script>
   <script src="scripts/graphics/joint.routers.js"></script>
   <script src="scripts/graphics/joint.selection.js"></script>
   <script src="scripts/graphics/joint.shapes.js"></script>
+
+  <!-- Other internal support libraries -->
   <script src="scripts/services/blockforms.js"></script>
   <script src="scripts/services/boards.js"></script>
   <script src="scripts/services/utils.js"></script>
