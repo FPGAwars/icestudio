@@ -109,30 +109,12 @@
     }
 
   </style> 
-</head>
-
-<!-- The ng-app directive tells Angularjs that this is the root -->
-<!-- element of the Angularjs application                       -->
-<body ng-app="icestudio">
-
-  <div id="main-icestudio-load-wrapper">
-    <div id="main-icestudio-load-wrapper--bar"></div>
-
-      <div class="splash-img-container">
-        <div class="splash-img-center">
-            <img  src="resources/images/icestudio-github.svg">
-        </div>
-      </div>
-  </div>
-
-  <div id="main-icestudio-wrapper">
-      <div ng-view></div>
-  </div>
 
 
   <!-- ************************************************************** -->
   <!-- ******      External Javascript modules              ********* -->
   <!-- ************************************************************** -->
+
   <!-- jquery: jQuery is a fast, small, and feature-rich         -->
   <!--  JavaScript library                                       -->
   <!--  https://jquery.com/                                      -->
@@ -235,9 +217,7 @@
   <!--  https://github.com/janl/mustache.js                               -->
   <script src="node_modules/mustache/mustache.min.js"></script>
 
-
-
-  <!-- ************************************************************** -->
+    <!-- ************************************************************** -->
   <!-- ******      ICESTUDIO Javascript modules             ********* -->
   <!-- ************************************************************** -->
 
@@ -316,6 +296,30 @@
   <script src="scripts/services/collections.js"></script>
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
-</body>
 
+</head>
+
+<!---------------------------------------------------------------->
+<!-- ICESTUDIO GUI STRUCTURE                                    -->
+<!---------------------------------------------------------------->
+
+<!-- The ng-app directive tells Angularjs that this is the root -->
+<!-- element of the Angularjs application                       -->
+<body ng-app="icestudio">
+
+  <div id="main-icestudio-load-wrapper">
+    <div id="main-icestudio-load-wrapper--bar"></div>
+
+      <div class="splash-img-container">
+        <div class="splash-img-center">
+            <img  src="resources/images/icestudio-github.svg">
+        </div>
+      </div>
+  </div>
+
+  <div id="main-icestudio-wrapper">
+      <div ng-view></div>
+  </div>
+
+</body>
 </html>
