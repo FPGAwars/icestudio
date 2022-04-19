@@ -1330,12 +1330,19 @@ angular.module('icestudio')
     };
 
     this.openDevToolsUI = function () {
-      gui.Window.get().showDevTools();
+      nw.Window.get().showDevTools();
     };
+
+    //-----------------------------------------------------------
+    //-- Open a given url in an external browser
+    //--
+    //--  INPUTS:
+    //--   * url (String): The URL to show
+    //-----------------------------------------------------------
     this.openUrlExternalBrowser = function (url) {
 
-      gui.Shell.openExternal(url);
-      //require('nw.gui').Shell.openExternal( url);
+      nw.Shell.openExternal(url);
+      
     };
 
     // RENDERFORM "color-dropdown" functions

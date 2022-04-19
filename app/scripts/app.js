@@ -56,6 +56,40 @@ angular
   {
     console.log("->DEBUG: app.js");
 
+    /* If in package.json appears development:{mode:true}*/
+    /* activate development tools */
+    tools.ifDevelopmentMode();
+
+    //-- Configure ALERTIFY. Default values
+    alertify.defaults.movable = false;
+    alertify.defaults.closable = false;
+    alertify.defaults.transition = "fade";
+    alertify.defaults.notifier.delay = 3;
+
+    //-- Configure ALERTIFY default labels for the buttons
+    let labels = {
+      ok: gettextCatalog.getString("OK**"),
+      cancel: gettextCatalog.getString("Cancel"),
+    };
+    alertify.set("alert", "labels", labels);
+    alertify.set("prompt", "labels", labels);
+    alertify.set("confirm", "labels", labels);
+    
+    //-- Links configuration:
+    //-- All the html elements belonging to the given class
+    //-- will be open in an external browser
+    $(document).delegate(
+      ".action-open-url-external-browser", //-- Selector
+      "click",
+
+      //-- Callback (when the link is clicked)
+      function (e) {
+        e.preventDefault();
+        utils.openUrlExternalBrowser($(this).prop("href"));
+        return false;
+      }
+    );
+
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
