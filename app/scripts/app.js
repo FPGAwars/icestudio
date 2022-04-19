@@ -54,6 +54,8 @@ angular
     gettextCatalog
     )
   {
+    console.log("->DEBUG: app.js");
+
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
@@ -192,5 +194,7 @@ angular
         }, 3000);
       }, 4000);
     });
+    
+    console.log("->DEBUG: app.js: END");
   });
 
