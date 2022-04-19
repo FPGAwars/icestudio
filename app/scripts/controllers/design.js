@@ -16,6 +16,11 @@ angular
       common) 
 {
 
+  //----------------------------------------------------------------
+  //-- Module initialization
+  //----------------------------------------------------------------
+  console.log("->DEBUG: design.js: START!");
+
   $scope.graph = graph;
   $scope.common = common;
   $scope.profile = profile;
@@ -25,8 +30,17 @@ angular
   $scope.backup = {};
   $scope.toRestore = false;
 
-  // Intialization
-  graph.createPaper($('.paper'));
+  //-- Create the PAPER. It is the place were the circuits are drawn
+  //-- It is asociated to html element 'paper', located in the
+  //--  design.html file
+  let htmlElement = $('.paper');
+  graph.createPaper(htmlElement);
+
+  console.log("->DEBUG: design.js: STOP!");
+
+  //-------------------------------------------------------------
+  //-- FUNCTIONS
+  //-------------------------------------------------------------
 
   // Breadcrumbs
 

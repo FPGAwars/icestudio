@@ -1,10 +1,11 @@
+
+/* PAPER STYLE: Place where the circuits are drawn */
 .paper {
   position: relative;
   display: inline-block;
   background: transparent;
   overflow: hidden;
-  cursor: default;
-
+  cursor: default; 
 }
 
 .joint-paper.joint-theme-default{

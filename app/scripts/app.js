@@ -55,7 +55,7 @@ angular
 
     //-- Configure ALERTIFY default labels for the buttons
     let labels = {
-      ok: gettextCatalog.getString("OK**"),
+      ok: gettextCatalog.getString("OK"),
       cancel: gettextCatalog.getString("Cancel"),
     };
     alertify.set("alert", "labels", labels);
