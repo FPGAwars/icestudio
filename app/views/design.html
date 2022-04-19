@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 
 <div ng-controller="DesignCtrl">
+
+  <!---------------------------------------------------->
+  <!-- Information Banners                            -->
+  <!---------------------------------------------------->
   <div class="banner hidden">
+
     <div class="info">
       &nbsp;{{ information.name }}&nbsp;
       {{ information.version ? '-&nbsp;v' + information.version + '&nbsp;' 
@@ -22,19 +27,19 @@
   </div>
   
   <div class="banner-submodule hidden">
-        <a class="edit-button" ng-click="editModeToggle($event)">
-          <img src="resources/images/lock.png" 
-               data-lock="resources/images/lock.png" 
-               data-unlock="resources/images/unlock.png">
-          <span class="tooltiptext">
-              {{'CAUTION ! : Changes will also be applied in all the copied'
-                | translate }}
-            <b>{{ information.name }}</b>
-               {{'blocks of the current .ice design. If you do not want ' + 
-                 'a propagation of a change, make it inside a cloned block ' + 
-                 '(instead of copied one)' | translate }} &nbsp;
-          </span>
-        </a>
+    <a class="edit-button" ng-click="editModeToggle($event)">
+      <img src="resources/images/lock.png" 
+            data-lock="resources/images/lock.png" 
+            data-unlock="resources/images/unlock.png">
+      <span class="tooltiptext">
+          {{'CAUTION ! : Changes will also be applied in all the copied'
+            | translate }}
+        <b>{{ information.name }}</b>
+            {{'blocks of the current .ice design. If you do not want ' + 
+              'a propagation of a change, make it inside a cloned block ' + 
+              '(instead of copied one)' | translate }} &nbsp;
+      </span>
+    </a>
   </div>
 
   <!------------------------------------------------------------------------>
