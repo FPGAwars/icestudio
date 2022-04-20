@@ -39,11 +39,11 @@ angular
 {
 
   //-------------------------------------------------------------------------
-  //-- This code is executed when a new Icestuio Window is created:
+  //-- This code is executed when a new Icestudio Window is created:
   //--  Either on startup, when a new project is created or when an
   //--  example is opened
   //--
-  //-- The new window receive the parameters through the URL
+  //-- The new window receives the parameters through the URL
   //-- Ex. 
   //-------------------------------------------------------------------------  
 
@@ -196,12 +196,12 @@ angular
     //-- Check if the current version is newer than the one used
     //-- before
     let hasNewVersion =
-      lastversionReview === false || lastversionReview < _package.version;
+       lastversionReview === false || lastversionReview < _package.version;
 
     //-- Display the version notes, if the option is enable or
     //-- if this is a newer version
     if (versionW === "yes" || hasNewVersion) {
-      $scope.openVersionInfoWindow(hasNewVersion);
+      $scope.openVersionInfoWindow();
     }
   }, 500);
 
@@ -215,7 +215,7 @@ angular
   //-----------------------------------------------------------
   $scope.openVersionInfoWindow = function () {
 
-    //-- The version notes panel is no longer hidden
+    //-- The version notes panel is no longer hidden: Show it!
     $("#version-info-tab").removeClass("hidden");
 
     //-- Get the state of the version notes: to be displayed or not
@@ -250,6 +250,7 @@ angular
     //--  after icestudio is closed)
     let option = (nodisplay) ? "no" : "yes";
     profile.set("displayVersionInfoWindow", option);
+    profile.set("lastVersionReview", _package.version);
   };
 
 
