@@ -17,7 +17,6 @@ angular.module('icestudio')
     nodeCP,
     nodeGetOS,
     nodeLangInfo,
-    gui,
     SVGO,
     fastCopy,
     sparkMD5) 
@@ -1004,7 +1003,7 @@ angular.module('icestudio')
     //-- Create a new ICESTUDIO window
     //--
     //--  INPUTS:
-    //--    * filepath: (option) Icestudio file to open in the new window
+    //--    * filepath: (optional) Icestudio file to open in the new window
     //-----------------------------------------------------------------------
     this.newWindow = function (filepath) {
 
@@ -1042,9 +1041,12 @@ angular.module('icestudio')
         url += icestudioArgv;
       }
 
-      //-- Get the default window size from the package.json file
-      let width = _package.window.width;
-      let height = _package.window.height;
+      //-- Get the Window configuration from the package.json
+      let window = this.clone(_package.window);
+
+      //-- Set some needed properties:
+      window['new_instance'] = true;
+      window['show'] = true;
 
       //-- The URL has this syntax:
       //
@@ -1059,13 +1061,8 @@ angular.module('icestudio')
       //-- https://nwjs.readthedocs.io/en/latest/References/Window/
       //--   #windowopenurl-options-callback
       //-----------------------------------------------------------
-      gui.Window.open(url, {
-        'new_instance': true,  
-        'position': 'center',
-        'width': width,
-        'height': height,
-        'show': true,
-      });
+      nw.Window.open(url, window);
+
     };
 
 
