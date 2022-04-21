@@ -1138,6 +1138,15 @@ angular.module('icestudio')
             offset = 0;
           }
 
+          //--- Special CASE: we are inside a block, the ports should all
+          //--- be virtual: no offset should be applied
+          if (common.isEditingSubmodule) {
+            offset = 0;
+
+            //-- In addition, change the port to virtual
+            newblock.data.virtual = true;
+          }
+
           //-- Appy the offset 
           newblock.position.y += offset; 
           
@@ -1172,6 +1181,15 @@ angular.module('icestudio')
 
         // Update block position when size changes
         let offset = 16 * (oldSize - newSize);
+
+        //--- Special CASE: we are inside a block, the ports should all
+        //--- be virtual: no offset should be applied
+        if (common.isEditingSubmodule) {
+          offset = 0;
+
+          //-- In addition, change the port to virtual
+          newblock.data.virtual = true;
+        }
         
         //-- Edit block
         graph.startBatch('change');
