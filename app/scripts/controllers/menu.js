@@ -156,10 +156,16 @@ angular
   //-- Build the URL object
   let myURL = new url.URL("http://index.html" + window.location.search);
 
+  //-- Icestudio file to open on the new window. 
+  //-- There is no .ice file by default
+  let filepath = "";
+
   //-- Get the icestudio_argv param
   let icestudioArgv = myURL.searchParams.get('icestudio_argv');
 
-  //-- The argument is given
+  //-- The argument is given as URL
+  //-- It happens when a new icestudio project is created or a file/example
+  //-- are loaded in a new window
   if (icestudioArgv) {
 
     //-- Decode the arguments again (from base64 to utf8)
@@ -170,7 +176,27 @@ angular
     let params = JSON.parse(paramsJson);
 
     //-- Get the filepath
-    let filepath = params["filepath"];
+    filepath = params["filepath"];
+  }
+  //-- No argument through url
+  //-- Check if there was an argument comming from the command line
+  //-- If there are arguments is because it has been start by doble
+  //-- cliking on an .ice file
+  else {
+
+    //-- Read the arguments from nw API
+    let args = nw.App.argv;
+
+    //-- There arguments
+    if (args.length > 0 ) {
+
+      //-- Read the first argument. It should be the filepath
+      filepath = nw.App.argv[0];
+    }
+  }
+ 
+  //-- If there was a .ice file given
+  if (filepath) {
 
     //-- Check the filepath
     if (fs.existsSync(filepath)) {
@@ -179,7 +205,7 @@ angular
       project.open(filepath);
     }
   }
- 
+
   //-- Set the working directory for the current design
   updateWorkingdir(project.path);
 
@@ -262,8 +288,10 @@ angular
   $scope.newProject = () => {
 
     //-- Create a new blank icestudio window
-    //-- No argument passed
-    utils.newWindow();
+    //-- A non-existant file is passed as a parameters
+    //-- It let us distinguis if the new window was created because of
+    //-- a new file or it was the first window opened
+    utils.newWindow("Untitled.ice");
   };
 
 
