@@ -156,7 +156,7 @@ angular.module('icestudio')
     //--              Ex: "[1:0]"
     //--  * color (String): Color name (in English). Ex: "fuchsia" 
     //-----------------------------------------------------------------
-    constructor(type, name, range, color) {
+    constructor(type, name, range, color, pins) {
 
       //-- Build the block common fields
       super(type);
@@ -167,6 +167,7 @@ angular.module('icestudio')
                                      //--  Ej. "[1:0]"    
       this.data.blockColor = color;  //-- Label color
       this.data.virtual = true;      //-- Labels are a kind of virtual pin 
+      this.data.pins = pins; 
 
     }
   }
@@ -185,10 +186,10 @@ angular.module('icestudio')
     //--              Ex: "[1:0]"
     //--  * color (String): Color name (in English). Ex: "fuchsia" 
     //-----------------------------------------------------------------
-    constructor(name, range, color) {
+    constructor(name, range, color, pins) {
 
       //-- Build the port common fields
-      super(BASIC_INPUT_LABEL, name, range, color);
+      super(BASIC_INPUT_LABEL, name, range, color, pins);
 
       //-- No particular information
     }
@@ -207,10 +208,10 @@ angular.module('icestudio')
     //--              Ex: "[1:0]"
     //--  * color (String): Color name (in English). Ex: "fuchsia" 
     //-----------------------------------------------------------------
-    constructor(name, range, color) {
+    constructor(name, range, color, pins) {
 
       //-- Build the port common fields
-      super(BASIC_OUTPUT_LABEL, name, range, color);
+      super(BASIC_OUTPUT_LABEL, name, range, color, pins);
 
       //-- No particular information
     }

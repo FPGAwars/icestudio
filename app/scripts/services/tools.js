@@ -14,7 +14,6 @@ angular
       utils,
       common,
       gettextCatalog,
-      gettext,
       nodeGettext,
       nodeFs,
       nodeFse,

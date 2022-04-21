@@ -1370,11 +1370,16 @@ angular.module('icestudio')
       //-- Get the info of the label n
       let portInfo = this.portInfos[n];
 
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = blocks.getPins(portInfo);
+
       //-- Create the Label block
       let block = new blocks.InputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
-        this.color
+        this.color,
+        pins
       );
 
       return block;
@@ -1446,11 +1451,16 @@ angular.module('icestudio')
       //-- Get the info of the label n
       let portInfo = this.portInfos[n];
 
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = blocks.getPins(portInfo);
+
       //-- Create the Label block
       let block = new blocks.OutputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
-        this.color
+        this.color,
+        pins
       );
 
       return block;
@@ -1488,18 +1498,24 @@ angular.module('icestudio')
       //-- Get the info of the label n
       let portInfo = this.portInfos[n];
 
+      //-- Create an array of empty pins (with name and values 
+      //-- set to 'NULL')
+      let pins = blocks.getPins(portInfo);
+
       //-- Create the Paired labels: Input
       let block1 = new blocks.InputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
-        this.color
+        this.color,
+        pins
       ); 
 
       //-- Create the Paired labels: Output
       let block2 = new blocks.OutputLabelBlock(
         portInfo.name,
         portInfo.rangestr,
-        this.color
+        this.color,
+        pins
       );
 
       //-- Array with the paired labels
