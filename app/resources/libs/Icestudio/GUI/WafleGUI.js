@@ -32,22 +32,29 @@ class WafleGUI {
     //-- Its needed  to wait for framework initialization and Icestudio ui elements exists
     let retry = false;
 
-    if ( typeof this.dom.root === 'undefined' || 
-         this.dom.root === false || this.dom.root === null ||
-         typeof this.dom.menu === 'undefined' || 
-         this.dom.menu === false || this.dom.menu === null ||
-         typeof this.dom.canvas === 'undefined' || 
-         this.dom.canvas === false || this.dom.canvas === null || 
-         typeof this.dom.footer === 'undefined' || 
-         this.dom.footer === false || this.dom.footer === null) {
+
+    if (typeof this.dom.root === 'undefined' ||
+      this.dom.root === false || this.dom.root === null ||
+      typeof this.dom.menu === 'undefined' ||
+      this.dom.menu === false || this.dom.menu === null ||
+      typeof this.dom.canvas === 'undefined' ||
+      this.dom.canvas === false || this.dom.canvas === null ||
+      typeof this.dom.footer === 'undefined' ||
+      this.dom.footer === false || this.dom.footer === null) {
 
       retry = true;
     }
 
+    //-- In some OSs jointjs is slowest createing GPU context and height should be negative until it is 
+    //-- initialized 100%. If no wait some elements could not appear at initialization
     if (retry === false) {
 
-      if (this.elHeight(this.dom.menu) === 0) retry = true;
 
+      const testHeight = window.innerHeight - (this.elHeight(this.dom.menu) + this.elHeight(this.dom.footer));
+
+      if (testHeight <= 0) {
+        retry = true;
+      }
     }
 
     if (retry) {
@@ -169,8 +176,8 @@ class WafleGUI {
     let list = (typeof root !== 'undefined') ? root.shadowRoot[selectorType](selector) : document[selectorType](selector);
     return list;
   }
- 
- 
+
+
   elGetParents(el, parentSelector) {
     var parents = [];
     var p = el.parentNode;
