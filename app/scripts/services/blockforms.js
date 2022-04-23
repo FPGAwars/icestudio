@@ -917,7 +917,7 @@ angular.module('icestudio')
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicOutputLabel(name, color);
-          editBasicLabel2(form, cellView);
+          editBasicLabel2(form, cellView, callback);
           break;
 
         //-- Input Label
@@ -925,7 +925,7 @@ angular.module('icestudio')
 
           //-- Build the form, and pass the actual block data
           form = new forms.FormBasicInputLabel(name, color);
-          editBasicLabel2(form, cellView);
+          editBasicLabel2(form, cellView, callback);
           break;
 
         case blocks.BASIC_CONSTANT:
@@ -1013,10 +1013,11 @@ angular.module('icestudio')
     //--    * form: New form created
     //--    * cellView: Graphical inforation of the block
     //-----------------------------------------------------------------------
-    function editBasicLabel2(form, cellView) {
+    function editBasicLabel2(form, cellView, callback) {
 
       //-- Get the information of the current block
       //-- from the graphics library
+      let graph = cellView.paper.model;
       let block = cellView.model.attributes;
 
       //-- Display the form
@@ -1040,6 +1041,9 @@ angular.module('icestudio')
           return;
         }
 
+        //-- Get some data from the new block
+        let portInfo = form.portInfos[0];
+
         // Create new block
         let newblock = form.newBlock(0);
 
@@ -1047,8 +1051,30 @@ angular.module('icestudio')
         newblock.position.x = block.position.x;
         newblock.position.y = block.position.y;
 
-        // Edit block
+        //-- There was a change in size
+        if (block.data.range !== portInfo.rangestr) {
+
+           //-- Update the block!
+           graph.startBatch('change');
+
+           let cell = loadBasic(newblock);
+           callback(cell);
+           cellView.model.remove();
+
+           graph.stopBatch('change');
+
+           resultAlert = alertify.success(
+               gettextCatalog.getString('Block updated'));
+
+        }
+
+        //-- No change in size
+        else {
+          // Edit block
         changeLabelBlock(cellView, newblock.data);
+        }
+
+        
       });
     }
 
