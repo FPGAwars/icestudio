@@ -59,6 +59,13 @@ angular.module('icestudio')
 
     let form;
 
+    //-- If inside a module, the FPGA-pin option is disabled
+    //-- The pins are always virtual
+    let disabled = common.isEditingSubmodule;
+    let virtual = disabled;
+    let clock = false;  //-- Clock checkbox no checked by default
+    let name = '';      //-- Port name by default
+
     //-- Create the block by calling the corresponding function
     //-- according to the given type
     switch (type) {
@@ -66,14 +73,14 @@ angular.module('icestudio')
       //-- Input port
       case blocks.BASIC_INPUT:
 
-        form = new forms.FormBasicInput();
+        form = new forms.FormBasicInput(name, virtual, clock, disabled);
         newBasicPort(form, callback);
         break;
 
       //-- Output port
       case blocks.BASIC_OUTPUT:
 
-        form = new forms.FormBasicOutput();
+        form = new forms.FormBasicOutput(name, virtual,disabled);
         newBasicPort(form, callback);
         break;
 
@@ -888,10 +895,15 @@ angular.module('icestudio')
 
       //-- Get the input port data
       let name = block.data.name + (block.data.range || '');
-      let virtual = block.data.virtual;
+      //let virtual = block.data.virtual;
       let clock = block.data.clock;
       let form;
       let color = block.data.blockColor;
+
+      //-- If inside a module, the FPGA-pin option is disabled
+      //-- The pins are always virtual
+      let disabled = common.isEditingSubmodule;
+      let virtual = disabled;
 
       //-- Call the corresponding function depending on the type of block
       switch (type) {
@@ -900,7 +912,7 @@ angular.module('icestudio')
         case blocks.BASIC_INPUT:
 
           //-- Build the form, and pass the actual block data
-          form = new forms.FormBasicInput(name, virtual, clock);
+          form = new forms.FormBasicInput(name, virtual, clock, disabled);
           editBasicPort(form, cellView, callback);
           break;
   
@@ -908,7 +920,7 @@ angular.module('icestudio')
         case blocks.BASIC_OUTPUT:
 
           //-- Build the form, and pass the actual block data
-          form = new forms.FormBasicOutput(name, virtual);
+          form = new forms.FormBasicOutput(name, virtual, disabled);
           editBasicPort(form,cellView, callback);
           break;
 

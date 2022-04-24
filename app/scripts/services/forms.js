@@ -98,13 +98,15 @@ angular.module('icestudio')
     //--   * Label: Text place to the right of the checkbox
     //--   * value: Default value
     //--   * formId: Form identification number
+    //--   * disabled: If the checkbox is active or not
     //-----------------------------------------------------------------------
-    constructor(label, value, formId) {
+    constructor(label, value, formId, disabled=false) {
 
       //-- Properties
       this.label = label;
       this.value = value;
       this.formId = formId;
+      this.disabled = disabled;
 
       //-- Html template for building the checkbox field
       //-- The parameters are:
@@ -114,7 +116,7 @@ angular.module('icestudio')
       this.htmlTemplate = `
         <div class="checkbox">
           <label>
-            <input type="checkbox" %VALUE% id="form%ID%"/>
+            <input type="checkbox" %VALUE% id="form%ID%" %DISABLED%/>
             %LABEL%
           </label>
         </div>
@@ -125,7 +127,9 @@ angular.module('icestudio')
     //-- Return a string whith the HTML code for this field
     //---------------------------------------------------------
     html() {
-      //-- Generate the HTML code
+
+       //-- Create the disabled attribute
+       let disabled = this.disabled ? "disabled" : "";
 
       //-- Insert the parameters in the html code template
       let html = this.htmlTemplate.replace(
@@ -134,6 +138,7 @@ angular.module('icestudio')
 
       html = html.replace("%ID%", this.formId);
       html = html.replace("%LABEL%", this.label);
+      html = html.replace("%DISABLED%", disabled);
 
       return html;
     }
@@ -817,7 +822,7 @@ angular.module('icestudio')
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--------------------------------------------------
-    constructor(msg, name = '', virtual=false) {
+    constructor(msg, name = '', virtual=false, disabled=false) {
 
       //-- Create a blank Form (calling the upper Class)
       super();
@@ -835,7 +840,8 @@ angular.module('icestudio')
       let field1 = new CheckboxField(
         gettextCatalog.getString('FPGA pin'),
         !virtual,  //-- Default value
-        1         //-- Field id
+        1,         //-- Field id
+        disabled   //-- Disabled attribute
       );
 
       //-- Add the fields to the form
@@ -967,12 +973,14 @@ angular.module('icestudio')
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
     //--   * Clock: The input pin carries a clock signal
-    constructor(name = '', virtual=false, clock=false) {
+    //--   * disabled: FPGA-pin checkbox disabled
+    constructor(name = '', virtual=false, clock=false, disabled=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Input port name:'),
             name,
-            virtual);
+            virtual,
+            disabled);
 
       //-- Store the type of block associated with the Form
       this.type = blocks.BASIC_INPUT;
@@ -1088,12 +1096,13 @@ angular.module('icestudio')
     //--   * msg: Message above the text box
     //--   * name: Default port name
     //--   * virtual: Is this a virtual or real port?
-    constructor(name = '', virtual=false) {
+    constructor(name = '', virtual=false, disabled=false) {
 
       //-- Create a blank BasicPortForm (calling the upper Class)
       super(gettextCatalog.getString('Output port name'), 
             name, 
-            virtual);
+            virtual,
+            disabled);
 
       //-- Store the type of block associated with the Form
       this.type = blocks.BASIC_OUTPUT;
