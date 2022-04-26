@@ -645,10 +645,10 @@ angular.module('icestudio')
                 }
 
                 function replaceBlock(upperBlock, lowerBlock) {
-
+                    let portsMap=false;
                     if (lowerBlock) {
                         // 1. Compute portsMap between the upperBlock and the lowerBlock
-                        let portsMap = computeAllPortsMap(upperBlock, lowerBlock);
+                        portsMap = computeAllPortsMap(upperBlock, lowerBlock);
                         // 2. Reconnect the wires from the lowerBlock to the upperBlock
                         let wires = graph.getConnectedLinks(lowerBlock);
                         _.each(wires, function (wire) {
