@@ -139,6 +139,73 @@
   </style> 
 
 
+</head>
+
+<!---------------------------------------------------------------->
+<!-- ICESTUDIO GUI STRUCTURE                                    -->
+<!---------------------------------------------------------------->
+
+<!-- The ng-app directive tells Angularjs that this is the root -->
+<!-- element of the Angularjs application                       -->
+<body ng-app="icestudio">
+
+  <!------------------------------------------------------->
+  <!-- Initial load screen                               -->
+  <!-- It is shown every time a new Icestudio window     -->
+  <!-- is open (including the initial one)               -->
+  <!------------------------------------------------------->
+  <div id="main-icestudio-load-wrapper">
+    <div id="main-icestudio-load-wrapper--bar"></div>
+
+      <div class="splash-img-container">
+        <div class="splash-img-center">
+            <img  src="resources/images/icestudio-github.svg">
+        </div>
+      </div>
+  </div>
+
+  <!-------------------------------------------------------->
+  <!-- ICESTUDIO MAIN WINDOW                              -->
+  <!-------------------------------------------------------->
+  <div id="main-icestudio-wrapper">
+
+    <!-- SPINNER: Normally hidden                    -->
+    <!-- It is used for showing activity to the user -->
+    <!-- The main interface is disable and only the  -->
+    <!-- animation is shown                          -->
+    <div class="spinner-wrapper">
+      <div class="spinner-wrapper--bg"></div>
+      <div class="spinner-wrapper--container">
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICESTUDIO MENU BAR, located at the top          -->
+    <!-- Asociatted to app/scripts/controllers/menu.js   -->
+    <div ng-include="'views/menu.html'"></div>
+
+    <!-- The rest of ICESTUDIO GUI:                      -->
+    <!--  * Information banners                          -->
+    <!--  * Label Finder popUp menu                      -->
+    <!--  * Basic Toolbox pop up menu                    -->
+    <!--  * PAPER: Main design board                     -->
+    <!--  * Bottom toolbar                               -->
+    <!----------------------------------------------------->
+    <!-- Asociatted to app/scripts/controllers/design.js -->
+    <div ng-include="'views/design.html'"></div>
+
+  </div>
+
   <!-- ************************************************************** -->
   <!-- ******      External Javascript modules              ********* -->
   <!-- ************************************************************** -->
@@ -147,19 +214,6 @@
   <!--  JavaScript library                                       -->
   <!--  https://jquery.com/                                      -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-  <!-- angularjs: AngularJS lets you extend HTML vocabulary for your  -->
-  <!--  application. The resulting environment is extraordinarily     -->
-  <!--  expressive, readable, and quick to develop                    -->
-  <!--  https://angularjs.org/                                        -->
-  <script src="node_modules/angular/angular.js"></script>
-  <script src="node_modules/angular-route/angular-route.js"></script>
-  <script 
-    src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js">
-  </script>
-  <script 
-    src="node_modules/angular-gettext/dist/angular-gettext.min.js">
-  </script>
 
   <!-- jquery-resize: Resize elements easily                        -->
   <!-- http://benalman.com/projects/jquery-resize-plugin/           -->
@@ -244,7 +298,6 @@
   <!-- in a template using values provided in a hash or object            --> 
   <!--  https://github.com/janl/mustache.js                               -->
   <script src="node_modules/mustache/mustache.min.js"></script>
-
   <!-- ************************************************************** -->
   <!-- ******      ICESTUDIO Javascript modules             ********* -->
   <!-- ************************************************************** -->
@@ -288,10 +341,24 @@
   <script src="resources/libs/iceprofiler.js"></script>
   <script src="resources/libs/iceparametrichelper.js"></script>
 
+  <!-- angularjs: AngularJS lets you extend HTML vocabulary for your  -->
+  <!--  application. The resulting environment is extraordinarily     -->
+  <!--  expressive, readable, and quick to develop                    -->
+  <!--  https://angularjs.org/                                        -->
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/angular-route/angular-route.js"></script>
+  <script 
+    src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js">
+  </script>
+  <script 
+    src="node_modules/angular-gettext/dist/angular-gettext.min.js">
+  </script>
+
   <!---------------------------------------------->
   <!-- Icestudio app ENTRY POINT                -->
   <!---------------------------------------------->
   <script src="scripts/app.js"></script>
+
 
   <!-------------------------------------------------------->
   <!-- Icestudio javascript modules                       -->
@@ -335,72 +402,8 @@
   <script src="scripts/services/shortcuts.js"></script>
   <script src="scripts/services/tools.js"></script>
 
-</head>
 
-<!---------------------------------------------------------------->
-<!-- ICESTUDIO GUI STRUCTURE                                    -->
-<!---------------------------------------------------------------->
 
-<!-- The ng-app directive tells Angularjs that this is the root -->
-<!-- element of the Angularjs application                       -->
-<body ng-app="icestudio">
-
-  <!------------------------------------------------------->
-  <!-- Initial load screen                               -->
-  <!-- It is shown every time a new Icestudio window     -->
-  <!-- is open (including the initial one)               -->
-  <!------------------------------------------------------->
-  <div id="main-icestudio-load-wrapper">
-    <div id="main-icestudio-load-wrapper--bar"></div>
-
-      <div class="splash-img-container">
-        <div class="splash-img-center">
-            <img  src="resources/images/icestudio-github.svg">
-        </div>
-      </div>
-  </div>
-
-  <!-------------------------------------------------------->
-  <!-- ICESTUDIO MAIN WINDOW                              -->
-  <!-------------------------------------------------------->
-  <div id="main-icestudio-wrapper">
-
-    <!-- SPINNER: Normally hidden                    -->
-    <!-- It is used for showing activity to the user -->
-    <!-- The main interface is disable and only the  -->
-    <!-- animation is shown                          -->
-    <div class="spinner-wrapper">
-      <div class="spinner-wrapper--bg"></div>
-      <div class="spinner-wrapper--container">
-        <div class="sk-cube-grid">
-          <div class="sk-cube sk-cube1"></div>
-          <div class="sk-cube sk-cube2"></div>
-          <div class="sk-cube sk-cube3"></div>
-          <div class="sk-cube sk-cube4"></div>
-          <div class="sk-cube sk-cube5"></div>
-          <div class="sk-cube sk-cube6"></div>
-          <div class="sk-cube sk-cube7"></div>
-          <div class="sk-cube sk-cube8"></div>
-          <div class="sk-cube sk-cube9"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ICESTUDIO MENU BAR, located at the top          -->
-    <!-- Asociatted to app/scripts/controllers/menu.js   -->
-    <div ng-include="'views/menu.html'"></div>
-
-    <!-- The rest of ICESTUDIO GUI:                      -->
-    <!--  * Information banners                          -->
-    <!--  * Label Finder popUp menu                      -->
-    <!--  * Basic Toolbox pop up menu                    -->
-    <!--  * PAPER: Main design board                     -->
-    <!--  * Bottom toolbar                               -->
-    <!----------------------------------------------------->
-    <!-- Asociatted to app/scripts/controllers/design.js -->
-    <div ng-include="'views/design.html'"></div>
-
-  </div>
 
 </body>
 </html>

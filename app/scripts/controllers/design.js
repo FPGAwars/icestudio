@@ -201,7 +201,6 @@ angular
   }
 
   $rootScope.$on('navigateProject', function (event, args) {
-
     var opt = { disabled: true };
     if (typeof args.submodule !== 'undefined') {
 

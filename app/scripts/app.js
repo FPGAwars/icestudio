@@ -206,14 +206,14 @@ angular
         );
         project.updateTitle(gettextCatalog.getString("Untitled"));
       });
-      setTimeout(function () {
+     // setTimeout(function () {
         $("#main-icestudio-wrapper").addClass("loaded");
         $("#main-icestudio-load-wrapper").addClass("fade-loaded");
         setTimeout(function () {
           $("#main-icestudio-load-wrapper").addClass("loaded");
           $("#main-icestudio-load-wrapper").removeClass("fade-loaded");
-        }, 3000);
-      }, 4000);
+        }, 1000);
+      //}, 1000);
     });
     
     console.log("->DEBUG: app.js: END");
