@@ -367,6 +367,7 @@ angular.module('icestudio')
 
       //-- Get the extra python packages to install
       let extraPackages = _package.apio.extras || [];
+      let extraPackagesString = "";
 
       //-- Get the pip string with the version
       //-- Stable: "==0.6.0"
@@ -378,6 +379,9 @@ angular.module('icestudio')
         //-- The stable version to installed is read from the icestucio app/package.json:
         //-- apio.min object!
         versionString = "==" + _package.apio.min;
+
+        //-- Get the extraPackages. Only used when installing the stable version
+        extraPackagesString = "[" + extraPackages.toString() + "]";
       }
 
       //---- WARNING! It is just for testing in the current WIP
@@ -392,7 +396,9 @@ angular.module('icestudio')
       let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
 
       //-- Get the pip params for installing apio
-      const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
+      const params = "install -U " + apio + extraPackagesString + versionString;
+
+      console.log("--> DEBUG: Params paased to pip: " + params);
 
       return params;
     };
