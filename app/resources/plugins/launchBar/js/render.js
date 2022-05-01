@@ -16,4 +16,22 @@ function render(plist){
         iceStudio.bus.events.publish('pluginManager.launch',pId); 
         return false;
       });
+
+      $(pluginRoot).find('#launchbar-wrapper').hover(function(e){
+        
+        if($(this).hasClass('out-of-focus')){
+          $(this).removeClass('out-of-focus');
+        }
+      },
+      function(e){
+        if(!$(this).hasClass('out-of-focus')){
+          $(this).addClass('out-of-focus');
+        }
+
+      });
+
+    setTimeout(function(){
+      $(pluginRoot).find('#launchbar-wrapper').addClass('out-of-focus');
+
+    },5000);
 }

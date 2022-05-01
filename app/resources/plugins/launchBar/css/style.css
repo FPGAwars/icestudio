@@ -1,26 +1,32 @@
-#launchbar-wrapper{
+#launchbar-wrapper {
 
-    position:relative;
-    display:flex;
-    border:1px solid #c0c0c0;
-    border-radius:4px;
-    color:white;
+    position: relative;
+    display: flex;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    color: white;
     flex-direction: column;
     justify-content: center;
     width: 48px;
     padding: 0;
-    margin: 10px;
-    background-color: rgba(255,255,255,0.1);
-    align-self:center;
+    margin: 0px;
+    background-color: rgba(255, 255, 255, 0.1);
+    align-self: center;
+    transition: all ease 0.5s;
 }
 
-.launcher{
-margin-bottom:auto;
-cursor:pointer;
-margin:4px;
+#launchbar-wrapper.out-of-focus {
+
+    margin-left: -40px;
 }
 
-.launcher-icon{
-    width:100%;
+.launcher {
+    margin-bottom: auto;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.launcher-icon {
+    width: 100%;
 
 }

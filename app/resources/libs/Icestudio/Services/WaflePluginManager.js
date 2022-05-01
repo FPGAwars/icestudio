@@ -82,11 +82,11 @@ class WaflePluginManager {
         const fs = require('fs');
         let _this = this;
         fs.readdir(this.pluginDir, function (err, files) {
+            console.log('PLUGINS::',files);
             _this.toload = files.length;
             files.forEach(function (file) {
                 fs.readFile(_this.pluginDir + '/' + file + '/manifest.json', 'utf8', function (err, contents) {
                     let mf = JSON.parse(contents);
-
                     if (mf !== false) {
 
                         let args = {
@@ -126,6 +126,7 @@ class WaflePluginManager {
                     _this.toload--;
 
                     if (_this.toload === 0) {
+                        console.log('LANZANDO CARGA');
                         _this.onload = false;
                         _this.pluginsLoaded(callback, ownerCallback);
                     }
