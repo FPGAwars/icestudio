@@ -381,6 +381,8 @@ angular.module('icestudio')
         versionString = "==" + _package.apio.min;
 
         //-- Get the extraPackages. Only used when installing the stable version
+        //-- Bug in Windows: If the extra packages are used during the apio
+        //-- upgrading (installing the latest stable), apio is not upgraded
         extraPackagesString = "[" + extraPackages.toString() + "]";
       }
 
