@@ -358,7 +358,7 @@ angular.module('icestudio')
     };
 
 
-    //------------------------------------------------
+    //------------------------------------------------------------------------
     //-- Return the parameters needed for pip for installing  
     //-- the apio toolchains. The version to install is read  
     //-- from the common.APIO_VERSION global object
@@ -376,29 +376,28 @@ angular.module('icestudio')
 
       if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
 
-        //-- The stable version to installed is read from the icestucio app/package.json:
+        //-- The stable version to installed is read from the 
+        //  icestudio app/package.json:
         //-- apio.min object!
         versionString = "==" + _package.apio.min;
 
-        //-- Get the extraPackages. Only used when installing the stable version
+        //-- Get the extraPackages. Only used when installing the stable 
+        //-- version
         //-- Bug in Windows: If the extra packages are used during the apio
         //-- upgrading (installing the latest stable), apio is not upgraded
         extraPackagesString = "[" + extraPackages.toString() + "]";
       }
 
-      //---- WARNING! It is just for testing in the current WIP
-      //-- TEMP FIX: Just for testing. Add a version to the "latest apio version"
-      //if (common.APIO_VERSION === common.APIO_VERSION_LATEST_STABLE) {
-      //  versionString = "==" + "0.8.0";  //-- This version is WIRED! JUST FOR TESTING
-      //}
-
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
       //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
-      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
+      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ?
+                  common.APIO_PIP_VCS : 
+                  "apio";
 
       //-- Get the pip params for installing apio
-      const params = "install -U " + apio + extraPackagesString + versionString;
+      const params = "install -U " + apio + extraPackagesString + 
+                     versionString;
 
       console.log("--> DEBUG: Params paased to pip: " + params);
 
@@ -418,15 +417,17 @@ angular.module('icestudio')
     //-- The toolchains are NOT disabled by default
     this.toolchainDisabled = false;
 
-    //---------------------------------------------------------------------------
+    //------------------------------------------------------------------------
     //-- Get the command that should be used for executing the apio toolchain
     //-- This command includes the full path to apio executable, as well as  
     //-- the setting of the APIO_HOME_DIR environment variable
     this.getApioExecutable = function () {
 
-      //-- Check if the ICESTUDIO_APIO env variable is set with the apio toolchain to use  or  
-      //-- if it has been set on the package.json file
-      let candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
+      //-- Check if the ICESTUDIO_APIO env variable is set with the apio 
+      //-- toolchain to use  or if it has been set on the package.json file
+      let candidateApio = process.env.ICESTUDIO_APIO ? 
+                          process.env.ICESTUDIO_APIO : 
+                          _package.apio.external;
 
       //-- The is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
@@ -439,15 +440,17 @@ angular.module('icestudio')
         return coverPath(candidateApio);
       }
 
-      //-- There are no external apio toolchain. Use the one installed by icestudio
+      //-- There are no external apio toolchain. Use the one installed 
+      //-- by icestudio
       this.toolchainDisabled = false;
 
-      //-- The apio command to execute is located in the common.APIO_CMD global object
+      //-- The apio command to execute is located in the 
+      //-- common.APIO_CMD global object
       return common.APIO_CMD;
     };
 
 
-    //-------------------------------------------------------------------------
+    //-----------------------------------------------------------------------
     //-- Remove the toolchains and related folders
     //-- 
     this.removeToolchain = function () {
@@ -499,7 +502,8 @@ angular.module('icestudio')
       let localdir = filepath.substr(0, filepath.lastIndexOf(b));
       let dirname = b.substr(0, b.lastIndexOf('.'));
       let path = nodePath.join(localdir, 'ice-build');
-      //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
+      // If we want to remove spaces 
+      // return nodePath.join(path,dirname).replace(/ /g, '_');
       return nodePath.join(path, dirname);
     };
 
