@@ -100,7 +100,6 @@ set_io --warn-no-port CLK 21  # input
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
-set_io --warn-no-port RES  66  # input
 set_io --warn-no-port DONE 65  # output
 set_io --warn-no-port SS   71  # output
 set_io --warn-no-port MISO 68  # input
