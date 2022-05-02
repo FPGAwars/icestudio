@@ -46,9 +46,6 @@ angular.module('icestudio')
   .factory('nodeSudo', function() {
     return require('sudo-prompt');
   })
-  .factory('nodeOnline', function() {
-    return require('is-online');
-  })
   .factory('nodeGlob', function() {
     return require('glob');
   })

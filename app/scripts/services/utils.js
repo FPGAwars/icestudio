@@ -12,7 +12,6 @@ angular.module('icestudio')
     nodePath,
     nodeChildProcess,
     nodeExtract,
-    nodeOnline,
     nodeSha1,
     nodeCP,
     nodeGetOS,
@@ -313,16 +312,15 @@ angular.module('icestudio')
     //-- Check if there is internet connection
     //--
     this.isOnline = function (callback, error) {
-      nodeOnline({
-        timeout: 5000
-      }, function (err, online) {
-        if (online) {
-          callback();
-        } else {
-          error();
-          callback(true);
-        }
-      });
+
+      if(navigator.onLine){
+
+        callback();
+      }else{
+        error();
+        callback(true);
+      }
+     
     };
 
 
