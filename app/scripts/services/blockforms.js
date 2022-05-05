@@ -895,15 +895,18 @@ angular.module('icestudio')
 
       //-- Get the input port data
       let name = block.data.name + (block.data.range || '');
-      //let virtual = block.data.virtual;
+      let virtual = block.data.virtual;
       let clock = block.data.clock;
       let form;
       let color = block.data.blockColor;
 
       //-- If inside a module, the FPGA-pin option is disabled
-      //-- The pins are always virtual
       let disabled = common.isEditingSubmodule;
-      let virtual = disabled;
+
+      //-- Inside a module the pins are always virtual
+      if (common.isEditingSubmodule) {
+        virtual = true;
+      }
 
       //-- Call the corresponding function depending on the type of block
       switch (type) {
