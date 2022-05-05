@@ -651,6 +651,13 @@ angular.module('icestudio')
       return finalNames;
     }   
 
+    static parsePortName(portName) {
+      //-- Pattern for partsin the port names
+      let pattern = common.PATTERN_PORT_LABEL;
+
+      return Form.parseNameWithPattern(portName, pattern);
+    }
+
     //---------------------------------------------------
     //-- Parse the Port names
     //-- 
@@ -664,10 +671,7 @@ angular.module('icestudio')
     //--      -rangstr: Range string (Ex. "[7:0]")
     //--      -size: Port size
     //----------------------------------------------------
-    static parsePortName(portName) {
-
-      //-- Pattern for partsin the port names
-      let pattern = common.PATTERN_PORT_LABEL;
+    static parseNameWithPattern(portName, pattern) {
 
       //-- Parse the name
       let match = pattern.exec(portName);
@@ -884,7 +888,10 @@ angular.module('icestudio')
       for (let name of this.names) {
 
         //-- Get the port Info: port name, size...
-        portInfo = Form.parsePortName(name);
+        portInfo = Form.parseNameWithPattern(
+          name, 
+          common.PATTERN_GLOBAL_PORT_LABEL
+        );
 
         //-- No portInfo... The was a syntax error
         if (!portInfo) {
