@@ -32,57 +32,111 @@ let dummyUnplug = function() {
 
 var serialManager = function () {
 
+    //-- Serial device information:
+    //--  DeviceInfo: 
+    //--   * displayName (String): Serial device name
+    //--   * path (String): Device's system path 
+    //--   * productId: USB product ID
+    //--   * vendorId: number optional
     this.devices = [];
+
+    //-- Information about the current device state
     this.info = {
+
+        //-- Serial dev status: Opened or not
+        //--   * false: Not opened
+        //--   * true: Opened
         status: false,
+
+        //-- Device index
         dev: -1,
+
+        //-- Conection information
+        //-- ConnectionInfo
+        //--   * bitrate (Number)
+        //--   * bufferSize (Number)
+        //--   * ctsFlowControl (Boolean)
+        //--   * dataBits (string)
+        //--   * name (String)
+        //--   * parityBit (String)
+        //--   * persistent (Boolean)
+        //--   * receiveTimeout (Number)
+        //--   * sendTimeout (Number)
+        //--   * stopBits (String)
         conn: false
     };
+
+    //-- Encoder and decoder classes for processing the ASCII strings
+    //-- https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
-    this.receiverUserF = false;
-    this.registeredCallbacks = {};
-    this.version = function(){
-        return 'v1.0';
-    }
 
-    //-- Read all the available serial devices
+    //-- Callback function for the data received
+    //-- Initially not configured
+    this.receiverUserF = false;
+
+    //-- Table with the registers callbacks
+    this.registeredCallbacks = {};
+
+    //-----------------------------------------------------------------------
+    //-- Function: Read all the available serial devices
+    //-- When the devices are ready, the callback(devInfo) function is
+    //-- executed
+    //-----------------------------------------------------------------------
     this.refreshDevices = function (callback) {
 
       //-- Call the Serial Chrome API
       //-- TODO: Chrome.Serial API is deprecatedd
       //-- use Web Serial API instead:
       //-- https://developer.chrome.com/docs/extensions/reference/serial/
-      chrome.serial.getDevices(function (dev) {
+      //---------------------------------------------------------------------
+      //-- Callback(DeviceInfo)
+      //---------------------------------------------------------------------
+      chrome.serial.getDevices(function (devInfo) {
 
         //-- Store the serial devices in the serial manager
-        this.devices = dev;
+        this.devices = devInfo;
 
         //-- Execute the callback function
-        callback(dev);
+        callback(devInfo);
 
       }.bind(this));
     }
 
 
+    //-----------------------------------------------------------------------
+    //-- Disconnect the serial device
+    //-----------------------------------------------------------------------
     this.unplug = function (callback) {
         
-        if(typeof callback === 'undefined') callback = dummyUnplug;
+      if(typeof callback === 'undefined') 
+        callback = dummyUnplug;
 
-        if(this.info.status !== false && 
-           this.info.dev !== -1 && 
-           this.info.conn !== false) 
-        {
-          chrome.serial.disconnect(this.info.conn.connectionId, callback);
-          this.info.status = false;
-          this.info.dev = -1;
-          this.info.conn = false;
-        }
+      if(this.info.status !== false && 
+          this.info.dev !== -1 && 
+          this.info.conn !== false) 
+      {
+        chrome.serial.disconnect(this.info.conn.connectionId, callback);
+        this.info.status = false;
+        this.info.dev = -1;
+        this.info.conn = false;
+      }
     }
 
+    //-----------------------------------------------------------------------
+    //-- Configure the serial device. All the callback functions are set
+    //--
+    //-- INPUTS:
+    //--   * id: Devide identifiction
+    //--   * userOptions: User configuration
+    //--   * callback_onconnect: Executed when the conection is done
+    //--   * callbacl_onreceive: Executed when data is received
+    //-----------------------------------------------------------------------
     this.plug = function (id, userOptions, 
                           callback_onconnect, 
                           callback_onreceive) {
+
+      //-- Default options
       let options = {
         bitrate: 115200,
         dataBits: "eight",
@@ -90,23 +144,36 @@ var serialManager = function () {
         stopBits: "one"
       };
 
+      //-- Add the parameters chosen by the user
       if (typeof userOptions !== 'undefined') {
         for (let prop in userOptions) {
           options[prop] = userOptions[prop];
         }
       }
 
-      chrome.serial.connect(this.devices[id].path, 
-                            options, 
-                            function (connectionInfo) {
+      //-- Open the serial device
+      chrome.serial.connect(
+        this.devices[id].path,   //-- Path
+        options,                 //-- User options
+        function (connectionInfo) 
+      {
 
+        //-- If the connection was ok, configure the serial manager
         if (typeof connectionInfo !== 'undefined' && 
             connectionInfo !== false && 
             typeof connectionInfo.connectionId !== 'undefined') 
         {
+
+          //-- Connection stablished
           this.info.status = true;
+
+          //-- Store the current devide id
           this.info.dev = id;
+
+          //-- Store the connection Information
           this.info.conn = connectionInfo;
+
+          //-- Set the callback function for the data received
           let reader_callback = this.reader.bind(this);
           if (typeof callback_onreceive !== 'undefined') {
             this.receiverUserF = callback_onreceive;
@@ -120,6 +187,8 @@ var serialManager = function () {
             chrome.serial.onReceive.addListener(reader_callback);
             this.registeredCallbacks[reader_callback.name] = true;
           }
+
+          //-- Set the callback function for the conection
           if (typeof callback_onconnect !== 'undefined') 
             callback_onconnect(connectionInfo);
         }
