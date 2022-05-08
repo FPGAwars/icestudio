@@ -1,3 +1,4 @@
+
 function hasClass(el, className) {
   if (el.classList)
     return el.classList.contains(className);
@@ -112,7 +113,10 @@ var serialManager = function () {
           } else {
             this.receiverUserF = false;
           }
-          if (typeof this.registeredCallbacks[reader_callback.name] === 'undefined') {
+
+          if (typeof this.registeredCallbacks[reader_callback.name] === 
+              'undefined') 
+          {
             chrome.serial.onReceive.addListener(reader_callback);
             this.registeredCallbacks[reader_callback.name] = true;
           }
@@ -120,27 +124,39 @@ var serialManager = function () {
             callback_onconnect(connectionInfo);
         }
 
-
       }.bind(this));
     }
 
+    //-----------------------------------------------------------------------
+    //-- Data received from the serial device
+    //-----------------------------------------------------------------------
     this.reader = function (info) {
 
-        if (typeof info.connectionId !== 'undefined' && info.connectionId !== false && info.connectionId == sm.info.conn.connectionId) {
-            if (this.receiverUserF !== false) {
-                this.receiverUserF(this.decoder.decode(info.data).replace(/(?:\\[n]|[\n])/g, "\n\r"));
-            }
-
+      if (typeof info.connectionId !== 'undefined' && 
+        info.connectionId !== false && 
+        info.connectionId == sm.info.conn.connectionId) 
+      {
+        if (this.receiverUserF !== false) {
+            this.receiverUserF(
+              this.decoder.decode(info.data).
+                    replace(/(?:\\[n]|[\n])/g, "\n\r")
+            );
         }
 
+      }
     }
 
+    //-----------------------------------------------------------------------
+    //-- Send data to the serial device
+    //-----------------------------------------------------------------------
     this.write = function (data) {
-        if (this.info.status === true) {
+      if (this.info.status === true) {
 
-            chrome.serial.send(this.info.conn.connectionId, this.encoder.encode(data), function (sendInfo) {});
+        chrome.serial.send(this.info.conn.connectionId, 
+                            this.encoder.encode(data), 
+                            function (sendInfo) {});
 
-        }
+      }
     }
 
 };
@@ -149,6 +165,12 @@ let term = false;
 
 //-- Local Echo state. Set the default value
 let localEcho = true;
+
+//-- HexView state:
+//-- It determines how the data from the serial device is displayed:
+//--   * false:  ASCII
+//--   * True: Hexadecimal
+let hexView = false;
 
 let sm = new serialManager();
 
@@ -181,11 +203,19 @@ function renderSerialDevices(dev) {
         let checked = 'checked';
         for (let i = dev.length - 1; i > -1; i--) {
             html += '<tr>' +
-                '<td class="border px-4 py-2"><input type="radio" name="serial-dev" value="' + i + '" ' + checked + '></td>' +
-                '<td class="border px-4 py-2">' + dev[i].displayName + '</td>' +
-                '<td class="border px-4 py-2">' + dev[i].path + '</td>' +
-                '<td class="border px-4 py-2">' + dev[i].productId + '</td>' +
-                '<td class="border px-4 py-2">' + dev[i].vendorId + '</td></tr>';
+                `<td class="border px-4 py-2">
+                  <input type="radio" name="serial-dev" value="` + 
+                    i + '" ' + checked + `>
+                </td>` +
+                '<td class="border px-4 py-2">' + 
+                   dev[i].displayName + '</td>' +
+                '<td class="border px-4 py-2">' + 
+                   dev[i].path + '</td>' +
+                '<td class="border px-4 py-2">' + 
+                  dev[i].productId + '</td>' +
+                '<td class="border px-4 py-2">' + dev[i].vendorId +
+                `</td>
+                </tr>`;
 
             checked = '';
         }
@@ -199,9 +229,32 @@ function renderSerialDevices(dev) {
 
 }
 
+//---------------------------------------------------------------------------
+//-- Callback function. It is executed when data is received from the
+//-- serial device
+//---------------------------------------------------------------------------
 function renderRec(data) {
 
+  //-- The information in the terminal is shown either in ASCII
+  //-- or in hexadecimal, depending on the configured mode
+
+  //-- Hexadecimal mode
+  if (hexView) {
+
+    //-- Convert the data to bytes
+    const buf = Buffer.from(data, 'utf8');
+
+    //-- Write the bytes to the terminal
+    for (byte of buf) {
+      term.write(`${byte.toString(16)} `);
+    }
+  }
+
+  //-- ASCII mode
+  else {
     term.write(data);
+  }
+  
 }
 
 function renderPlug(connectionInfo) {
@@ -247,14 +300,32 @@ function renderUnPlug() {
     addClass(xtermLe, 'hidden');
 }
 
+//---------------------------------------------------------------------------
+//-- Callback configuration for the Local echo checkbox button
+//---------------------------------------------------------------------------
 let confEchoLe = document.getElementById('sconf-localecho');
 
 confEchoLe.addEventListener('change', function (e) {
 
     e.preventDefault();
-    localEcho = this.checked;
+    localEcho = e.target.checked;
 
     return false;
+
+}, false);
+
+
+//---------------------------------------------------------------------------
+//-- Callback configuration for the HEx view checkbox button
+//---------------------------------------------------------------------------
+let confHex = document.getElementById('sconf-hexview');
+
+confHex.addEventListener('change', e => {
+
+  e.preventDefault();
+  hexView = e.target.checked;
+
+  return false;
 
 }, false);
 
@@ -334,7 +405,9 @@ cleanLe[0].addEventListener('click', function (e) {
 
 
 
-let disconnectLe = document.querySelectorAll('[data-action="serial-disconnect"]');
+let disconnectLe = document.querySelectorAll(
+  '[data-action="serial-disconnect"]'
+);
 
 disconnectLe[0].addEventListener('click', function (e) {
 
