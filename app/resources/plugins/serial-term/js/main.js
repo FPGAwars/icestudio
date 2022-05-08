@@ -1,29 +1,32 @@
 function hasClass(el, className) {
-    if (el.classList)
-        return el.classList.contains(className);
-    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  if (el.classList)
+    return el.classList.contains(className);
+
+  return !!el.className.match(
+             new RegExp('(\\s|^)' + className + '(\\s|$)')
+           );
 }
 
 function addClass(el, className) {
-    if (el.classList)
-        el.classList.add(className)
-    else if (!hasClass(el, className))
-        el.className += " " + className;
+  if (el.classList)
+    el.classList.add(className)
+
+  else if (!hasClass(el, className))
+    el.className += " " + className;
 }
 
 function removeClass(el, className) {
-    if (el.classList)
-        el.classList.remove(className)
-    else if (hasClass(el, className)) {
-        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-        el.className = el.className.replace(reg, ' ');
-    }
+  if (el.classList)
+    el.classList.remove(className)
+  else if (hasClass(el, className)) {
+    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+    el.className = el.className.replace(reg, ' ');
+  }
 }
 
-   let dummyUnplug = function() {
+let dummyUnplug = function() {
 
-
-    }
+}
 
 
 var serialManager = function () {
@@ -41,57 +44,84 @@ var serialManager = function () {
     this.version = function(){
         return 'v1.0';
     }
-    this.refreshDevices = function (callback) {
-        chrome.serial.getDevices(function (dev) {
-            this.devices = dev;
-            if (typeof callback !== 'undefined') callback(dev);
 
-        }.bind(this));
+    //-- Read all the available serial devices
+    this.refreshDevices = function (callback) {
+
+      //-- Call the Serial Chrome API
+      //-- TODO: Chrome.Serial API is deprecatedd
+      //-- use Web Serial API instead:
+      //-- https://developer.chrome.com/docs/extensions/reference/serial/
+      chrome.serial.getDevices(function (dev) {
+
+        //-- Store the serial devices in the serial manager
+        this.devices = dev;
+
+        //-- Execute the callback function
+        callback(dev);
+
+      }.bind(this));
     }
+
+
     this.unplug = function (callback) {
         
         if(typeof callback === 'undefined') callback = dummyUnplug;
-        if(this.info.status !== false && this.info.dev !== -1 && this.info.conn !== false){
-        chrome.serial.disconnect(this.info.conn.connectionId, callback);
-        this.info.status = false;
-        this.info.dev = -1;
-        this.info.conn = false;
+
+        if(this.info.status !== false && 
+           this.info.dev !== -1 && 
+           this.info.conn !== false) 
+        {
+          chrome.serial.disconnect(this.info.conn.connectionId, callback);
+          this.info.status = false;
+          this.info.dev = -1;
+          this.info.conn = false;
         }
     }
 
-    this.plug = function (id, userOptions, callback_onconnect, callback_onreceive) {
-        let options = {
-            bitrate: 115200,
-            dataBits: "eight",
-            parityBit: "no",
-            stopBits: "one"
-        };
-        if (typeof userOptions !== 'undefined') {
-            for (let prop in userOptions) {
-                options[prop] = userOptions[prop];
-            }
+    this.plug = function (id, userOptions, 
+                          callback_onconnect, 
+                          callback_onreceive) {
+      let options = {
+        bitrate: 115200,
+        dataBits: "eight",
+        parityBit: "no",
+        stopBits: "one"
+      };
+
+      if (typeof userOptions !== 'undefined') {
+        for (let prop in userOptions) {
+          options[prop] = userOptions[prop];
         }
-        chrome.serial.connect(this.devices[id].path, options, function (connectionInfo) {
+      }
 
-            if (typeof connectionInfo !== 'undefined' && connectionInfo !== false && typeof connectionInfo.connectionId !== 'undefined') {
-                this.info.status = true;
-                this.info.dev = id;
-                this.info.conn = connectionInfo;
-                let reader_callback = this.reader.bind(this);
-                if (typeof callback_onreceive !== 'undefined') {
-                    this.receiverUserF = callback_onreceive;
-                } else {
-                    this.receiverUserF = false;
-                }
-                if (typeof this.registeredCallbacks[reader_callback.name] === 'undefined') {
-                    chrome.serial.onReceive.addListener(reader_callback);
-                    this.registeredCallbacks[reader_callback.name] = true;
-                }
-                if (typeof callback_onconnect !== 'undefined') callback_onconnect(connectionInfo);
-            }
+      chrome.serial.connect(this.devices[id].path, 
+                            options, 
+                            function (connectionInfo) {
+
+        if (typeof connectionInfo !== 'undefined' && 
+            connectionInfo !== false && 
+            typeof connectionInfo.connectionId !== 'undefined') 
+        {
+          this.info.status = true;
+          this.info.dev = id;
+          this.info.conn = connectionInfo;
+          let reader_callback = this.reader.bind(this);
+          if (typeof callback_onreceive !== 'undefined') {
+            this.receiverUserF = callback_onreceive;
+          } else {
+            this.receiverUserF = false;
+          }
+          if (typeof this.registeredCallbacks[reader_callback.name] === 'undefined') {
+            chrome.serial.onReceive.addListener(reader_callback);
+            this.registeredCallbacks[reader_callback.name] = true;
+          }
+          if (typeof callback_onconnect !== 'undefined') 
+            callback_onconnect(connectionInfo);
+        }
 
 
-        }.bind(this));
+      }.bind(this));
     }
 
     this.reader = function (info) {
@@ -116,7 +146,10 @@ var serialManager = function () {
 };
 
 let term = false;
-let localEcho = false;
+
+//-- Local Echo state. Set the default value
+let localEcho = true;
+
 let sm = new serialManager();
 
 function renderSerialDevices(dev) {
@@ -125,7 +158,16 @@ function renderSerialDevices(dev) {
     let connectLe = document.getElementById('bt-connect');
     addClass(connectLe, 'hidden');
 
-    html = '<table  class="table-auto"><thead><tr><th  class="w-1/2 px-4 py-2">Select</th><th  class="w-1/2 px-4 py-2">Name</th><th  class="w-1/2 px-4 py-2">Path</th><th  class="w-1/2 px-4 py-2">productId</th><th  class="w-1/2 px-4 py-2">vendorId</th></tr></thead><tbody>';
+    html = `<table  class="table-auto">
+      <thead>
+        <tr>
+          <th  class="w-1/2 px-4 py-2">Select</th>
+          <th  class="w-1/2 px-4 py-2">Name</th>
+          <th  class="w-1/2 px-4 py-2">Path</th>
+          <th  class="w-1/2 px-4 py-2">productId</th>
+          <th  class="w-1/2 px-4 py-2">vendorId</th></tr>
+      </thead>
+    <tbody>`;
 
     if (typeof dev !== 'undefined' && dev !== false && dev.length > 0) {
 
@@ -217,15 +259,24 @@ confEchoLe.addEventListener('change', function (e) {
 }, false);
 
 
-let getDevicesLe = document.querySelectorAll('[data-action="serial-getdevices"]');
+//---------------------------------------------------------------------------
+//-- Refresh all the Serial devices
+//---------------------------------------------------------------------------
+let getDevicesLe = document.querySelectorAll(
+  '[data-action="serial-getdevices"]'
+);
 
-getDevicesLe[0].addEventListener('click', function (e) {
+//-- Callback function for the "Reaload Serial Device" button
+getDevicesLe[0].addEventListener('click', e => {
 
     e.preventDefault();
     sm.refreshDevices(renderSerialDevices);
     return false;
 
 }, false);
+
+
+
 
 let connectLe = document.querySelectorAll('[data-action="serial-connect"]');
 
