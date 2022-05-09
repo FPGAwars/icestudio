@@ -4,7 +4,7 @@ var subModuleActive = false;
 
 angular
   .module('icestudio')
-  .controller('DesignCtrl', 
+  .controller('DesignCtrl',
     function (
       $rootScope,
       $scope,
@@ -13,254 +13,259 @@ angular
       graph,
       gettextCatalog,
       utils,
-      common) 
-{
+      common) {
 
-  //----------------------------------------------------------------
-  //-- Module initialization
-  //----------------------------------------------------------------
-  console.log("->DEBUG: design.js: START!");
+      //----------------------------------------------------------------
+      //-- Module initialization
+      //----------------------------------------------------------------
+      console.log("->DEBUG: design.js: START!");
 
-  $scope.graph = graph;
-  $scope.common = common;
-  $scope.profile = profile;
-  $scope.information = {};
-  $scope.topModule = true;
-  $scope.isNavigating = false;
-  $scope.backup = {};
-  $scope.toRestore = false;
-
-  //-- Create the PAPER. It is the place were the circuits are drawn
-  //-- It is asociated to html element 'paper', located in the
-  //--  design.html file
-  let htmlElement = $('.paper');
-  graph.createPaper(htmlElement);
-
-  console.log("->DEBUG: design.js: STOP!");
-
-  //-------------------------------------------------------------
-  //-- FUNCTIONS
-  //-------------------------------------------------------------
-
-  // Breadcrumbs
-
-  $scope.breadcrumbsNavitate = function (selectedItem) {
-    var item;
-    if (common.isEditingSubmodule) {
-      alertify.warning(
-        gettextCatalog.getString(
-          'To navigate through design, you need to close "edit mode".'));
-
-    } else {
-      if (!$scope.isNavigating) {
-        $scope.isNavigating = true;
-
-        do {
-          graph.breadcrumbs.pop();
-          item = graph.breadcrumbs.slice(-1)[0];
-        }
-        while (selectedItem !== item);
-        loadSelectedGraph();
-      }
-    }
-  };
-
-  $scope.breadcrumbsBack = function () {
-    if (!$scope.isNavigating) {
-      $scope.isNavigating = true;
-      graph.breadcrumbs.pop();
-      loadSelectedGraph();
-    }
-  };
-
-  $scope.editModeToggle = function ($event) {
-
-    var btn = $event.currentTarget;
-
-    if (!$scope.isNavigating) {
-      var block = graph.breadcrumbs[graph.breadcrumbs.length - 1];
-      var tmp = false;
-      var rw = true;
-      var lockImg = false;
-      var lockImgSrc = false;
-      if (common.isEditingSubmodule) {
-        lockImg = $('img', btn);
-        lockImgSrc = lockImg.attr('data-lock');
-        lockImg[0].src = lockImgSrc;
-        common.isEditingSubmodule = false;
-        subModuleActive = false;
-        var cells = $scope.graph.getCells();
-
-
-        // Sort Constant/Memory cells by x-coordinate
-        cells = _.sortBy(cells, function (cell) {
-                if (cell.get('type') === 'ice.Constant' ||
-                        cell.get('type') === 'ice.Memory') {
-                        return cell.get('position').x;
-                }
-        });
-        // Sort I/O cells by y-coordinate
-        cells = _.sortBy(cells, function (cell) {
-                if (cell.get('type') === 'ice.Input' ||
-                        cell.get('type') === 'ice.Output') {
-                        return cell.get('position').y;
-                }
-        });
-        $scope.graph.setCells(cells);
-
-        var graphData = $scope.graph.toJSON();
-        var p = utils.cellsToProject(graphData.cells);
-        tmp = utils.clone(common.allDependencies[block.type]);
-        tmp.design.graph = p.design.graph;
-        /*var hId = utils.dependencyID(tmp);*/
-
-        var hId = block.type;
-        common.allDependencies[hId] = tmp;
-        $scope.toRestore = hId;
-
-        common.forceBack = true;
-      } else {
-        lockImg = $('img', btn);
-        lockImgSrc = lockImg.attr('data-unlock');
-        lockImg[0].src = lockImgSrc;
-        tmp = common.allDependencies[block.type];
-        $scope.toRestore = false;
-        rw = false;
-        common.isEditingSubmodule = true;
-        subModuleActive = true;
-      }
-
-      $rootScope.$broadcast('navigateProject', {
-        update: false,
-        project: tmp,
-        editMode: rw
-      });
-      utils.rootScopeSafeApply();
-
-    }
-  };
-
-
-  function loadSelectedGraph() {
-
-    var n = graph.breadcrumbs.length;
-    var opt = { disabled: true };
-    var design = false;
-    var i = 0;
-    if (n === 1) {
-
-      design = project.get('design');
-      opt.disabled = false;
-      if ($scope.toRestore !== false && 
-          common.submoduleId !== false && 
-          design.graph.blocks.length > 0) 
-      {
-        for (i = 0; i < design.graph.blocks.length; i++) {
-          if (common.submoduleUID === design.graph.blocks[i].id) {
-              design.graph.blocks[i].type = $scope.toRestore;
-          }
-        }
-
-        $scope.toRestore = false;
-      }
-
-      graph.resetView();
-      graph.loadDesign(design, opt, function () {
-        $scope.isNavigating = false;
-        graph.fitContent();
-      });
+      $scope.graph = graph;
+      $scope.common = common;
+      $scope.profile = profile;
+      $scope.information = {};
       $scope.topModule = true;
-    }
-    else {
-      var type = graph.breadcrumbs[n - 1].type;
-      var dependency = common.allDependencies[type];
-      design = dependency.design;
-      if ($scope.toRestore !== false && 
-           common.submoduleId !== false && 
-           design.graph.blocks.length > 0)
-      {
-        //toRestoreLn=$scope.toRestore;
-        for (i = 0; i < design.graph.blocks.length; i++) {
-          if (common.submoduleUID === design.graph.blocks[i].id) {
-            common.allDependencies[type].design.graph.blocks[i].type = 
-              $scope.toRestore;
+      $scope.isNavigating = false;
+      $scope.backup = {};
+      $scope.toRestore = false;
+
+      //-- Create the PAPER. It is the place were the circuits are drawn
+      //-- It is asociated to html element 'paper', located in the
+      //--  design.html file
+      let htmlElement = $('.paper');
+      graph.createPaper(htmlElement);
+
+      console.log("->DEBUG: design.js: STOP!");
+
+      //-------------------------------------------------------------
+      //-- FUNCTIONS
+      //-------------------------------------------------------------
+
+      // Breadcrumbs
+
+      $scope.breadcrumbsNavitate = function (selectedItem) {
+        var item;
+        if (common.isEditingSubmodule) {
+          alertify.warning(
+            gettextCatalog.getString(
+              'To navigate through design, you need to close "edit mode".'));
+
+        } else {
+          if (!$scope.isNavigating) {
+            $scope.isNavigating = true;
+
+            do {
+              graph.breadcrumbs.pop();
+              item = graph.breadcrumbs.slice(-1)[0];
+            }
+            while (selectedItem !== item);
+            loadSelectedGraph();
           }
         }
-        $scope.toRestore = false;
+      };
+
+      $scope.breadcrumbsBack = function () {
+        if (!$scope.isNavigating) {
+          $scope.isNavigating = true;
+          graph.breadcrumbs.pop();
+
+          loadSelectedGraph();
+        }
+      };
+
+      $scope.editModeToggle = function ($event) {
+
+        var btn = $event.currentTarget;
+
+        if (!$scope.isNavigating) {
+          var block = graph.breadcrumbs[graph.breadcrumbs.length - 1];
+          var tmp = false;
+          var rw = true;
+          var lockImg = false;
+          var lockImgSrc = false;
+          if (common.isEditingSubmodule) {
+            lockImg = $('img', btn);
+            lockImgSrc = lockImg.attr('data-lock');
+            lockImg[0].src = lockImgSrc;
+            common.isEditingSubmodule = false;
+            subModuleActive = false;
+            var cells = $scope.graph.getCells();
+
+
+            // Sort Constant/Memory cells by x-coordinate
+            cells = _.sortBy(cells, function (cell) {
+              if (cell.get('type') === 'ice.Constant' ||
+                cell.get('type') === 'ice.Memory') {
+                return cell.get('position').x;
+              }
+            });
+            // Sort I/O cells by y-coordinate
+            cells = _.sortBy(cells, function (cell) {
+              if (cell.get('type') === 'ice.Input' ||
+                cell.get('type') === 'ice.Output') {
+                return cell.get('position').y;
+              }
+            });
+            $scope.graph.setCells(cells);
+
+            var graphData = $scope.graph.toJSON();
+            var p = utils.cellsToProject(graphData.cells);
+            tmp = utils.clone(common.allDependencies[block.type]);
+            tmp.design.graph = p.design.graph;
+            /*var hId = utils.dependencyID(tmp);*/
+
+            var hId = block.type;
+            common.allDependencies[hId] = tmp;
+            $scope.toRestore = hId;
+
+            common.forceBack = true;
+          } else {
+            lockImg = $('img', btn);
+            lockImgSrc = lockImg.attr('data-unlock');
+            lockImg[0].src = lockImgSrc;
+            tmp = common.allDependencies[block.type];
+            $scope.toRestore = false;
+            rw = false;
+            common.isEditingSubmodule = true;
+            subModuleActive = true;
+          }
+
+          $rootScope.$broadcast('navigateProject', {
+            update: false,
+            project: tmp,
+            editMode: rw
+          });
+          utils.rootScopeSafeApply();
+
+        }
+      };
+
+      function _decoupledLoadSelectedGraph() {
+      
+        
+        var n = graph.breadcrumbs.length;
+        var opt = { disabled: true };
+        var design = false;
+        var i = 0;
+        if (n === 1) {
+
+          design = project.get('design');
+          opt.disabled = false;
+          if ($scope.toRestore !== false &&
+            common.submoduleId !== false &&
+            design.graph.blocks.length > 0) {
+            for (i = 0; i < design.graph.blocks.length; i++) {
+              if (common.submoduleUID === design.graph.blocks[i].id) {
+                design.graph.blocks[i].type = $scope.toRestore;
+              }
+            }
+
+            $scope.toRestore = false;
+          }
+
+          graph.resetView();
+          graph.loadDesign(design, opt, function () {
+            $scope.isNavigating = false;
+            graph.fitContent();
+
+          });
+          $scope.topModule = true;
+        }
+        else {
+          var type = graph.breadcrumbs[n - 1].type;
+          var dependency = common.allDependencies[type];
+          design = dependency.design;
+          if ($scope.toRestore !== false &&
+            common.submoduleId !== false &&
+            design.graph.blocks.length > 0) {
+            //toRestoreLn=$scope.toRestore;
+            for (i = 0; i < design.graph.blocks.length; i++) {
+              if (common.submoduleUID === design.graph.blocks[i].id) {
+                common.allDependencies[type].design.graph.blocks[i].type =
+                  $scope.toRestore;
+              }
+            }
+            $scope.toRestore = false;
+          }
+
+          //                               graph.fitContent();
+          graph.resetView();
+          graph.loadDesign(dependency.design, opt, function () {
+            graph.fitContent();
+            $scope.isNavigating = false;
+
+          });
+          $scope.information = dependency.package;
+        }
       }
 
-      //                               graph.fitContent();
-      graph.resetView();
-      graph.loadDesign(dependency.design, opt, function () {
-        graph.fitContent();
-        $scope.isNavigating = false;
 
-      });
-      $scope.information = dependency.package;
-    }
-  }
+      
+      function loadSelectedGraph() {
+      
+        utils.beginBlockingTask(); 
+        setTimeout(function(){
+          _decoupledLoadSelectedGraph();
+        },200);
+      }
 
-  $rootScope.$on('navigateProject', function (event, args) {
-    var opt = { disabled: true };
-    if (typeof args.submodule !== 'undefined') {
+      $rootScope.$on('navigateProject', function (event, args) {
+        var opt = { disabled: true };
+        if (typeof args.submodule !== 'undefined') {
 
-            common.submoduleId = args.submodule;
+          common.submoduleId = args.submodule;
 
-    }
-    if (typeof args.submoduleId !== 'undefined') {
+        }
+        if (typeof args.submoduleId !== 'undefined') {
 
-            common.submoduleUID = args.submoduleId;
+          common.submoduleUID = args.submoduleId;
 
-    }
-    if (typeof args.editMode !== 'undefined') {
+        }
+        if (typeof args.editMode !== 'undefined') {
 
-            opt.disabled = args.editMode;
-    }
+          opt.disabled = args.editMode;
+        }
 
-    if (args.update) {
-      // Update the main project
-      //        graph.fitContent();
-
-      graph.resetView();
-      project.update({ deps: false }, function () {
-        graph.loadDesign(args.project.design, opt, function () {
-                graph.fitContent();
-        });
-
-      });
-
-    }
-    else {
-      //        graph.fitContent();
-      //  utils.rootScopeSafeApply();
-
-      graph.resetView();
-
-      graph.loadDesign(args.project.design, opt, function () {
+        if (args.update) {
+          graph.resetView();
+          project.update({ deps: false }, function () {
+            graph.loadDesign(args.project.design, opt, function () {
               graph.fitContent();
+
+              utils.endBlockingTask();
+            });
+
+          });
+
+        }
+        else {
+          graph.resetView();
+
+          graph.loadDesign(args.project.design, opt, function () {
+            graph.fitContent();
+            utils.endBlockingTask();
+          });
+        }
+        $scope.topModule = false;
+        $scope.information = args.project.package;
+        //utils.rootScopeSafeApply();
+        if (typeof common.forceBack !== 'undefined' &&
+          common.forceBack === true) {
+          common.forceBack = false;
+          $scope.breadcrumbsBack();
+        }
+
       });
-    }
-    $scope.topModule = false;
-    $scope.information = args.project.package;
-    //utils.rootScopeSafeApply();
-    if (typeof common.forceBack !== 'undefined' && 
-        common.forceBack === true) 
-    {
-      common.forceBack = false;
-      $scope.breadcrumbsBack();
-    }
 
-  });
+      $rootScope.$on('breadcrumbsBack', function (/*event*/) {
+        $scope.breadcrumbsBack();
+        utils.rootScopeSafeApply();
+      });
 
-  $rootScope.$on('breadcrumbsBack', function (/*event*/) {
-    $scope.breadcrumbsBack();
-    utils.rootScopeSafeApply();
-  });
+      $rootScope.$on('editModeToggle', function (event) {
+        $scope.editModeToggle(event);
+        utils.rootScopeSafeApply();
 
-  $rootScope.$on('editModeToggle', function (event) {
-    $scope.editModeToggle(event);
-    utils.rootScopeSafeApply();
+      });
 
-  });
-            
-});
+    });

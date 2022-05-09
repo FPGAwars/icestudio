@@ -306,7 +306,7 @@ angular.module('icestudio')
                             return ret;
                         }
                         // Prevent different size connections
-                        let tsize=0;
+                        let tsize = 0;
                         let lsize = linkView.model.get('size');
                         let portId = magnetT.getAttribute('port');
                         let tLeftPorts = cellViewT.model.get('leftPorts');
@@ -452,26 +452,29 @@ angular.module('icestudio')
                 });
 
                 selectionView.on('selection-box:pointerclick', function (evt) {
-                    if (self.addingDraggableBlock) {
-                        // Set new block's position
-                        self.addingDraggableBlock = false;
-                        processReplaceBlock(selection.at(0));
-                        disableSelected();
-                        updateWiresOnObstacles();
-                        graph.trigger('batch:stop');
-                    }
-                    else {
-                        // Toggle selected cell
-                        if (utils.hasShift(evt)) {
-                            var cell = selection.get($(evt.target).data('model'));
-                            selection.reset(selection.without(cell));
-                            selectionView.destroySelectionBox(cell);
+                    if (isDblClick === false) {
+                        if (self.addingDraggableBlock) {
+                            // Set new block's position
+                            self.addingDraggableBlock = false;
+                            processReplaceBlock(selection.at(0));
+                            disableSelected();
+                            console.log('pointerclick');
+                            updateWiresOnObstacles();
+                            graph.trigger('batch:stop');
+                        }
+                        else {
+                            // Toggle selected cell
+                            if (utils.hasShift(evt)) {
+                                var cell = selection.get($(evt.target).data('model'));
+                                selection.reset(selection.without(cell));
+                                selectionView.destroySelectionBox(cell);
+                            }
                         }
                     }
                 });
 
                 paper.on('cell:pointerclick', function (cellView, evt, x, y) {
-               
+
                     if (!checkInsideViewBox(cellView, x, y)) {
                         // Out of the view box
                         return;
@@ -494,6 +497,7 @@ angular.module('icestudio')
                         }
                     }
                 });
+                let isDblClick = false;
                 paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
 
                     if (x && y && !checkInsideViewBox(cellView, x, y)) {
@@ -521,21 +525,23 @@ angular.module('icestudio')
                                 alertify.warning(gettextCatalog.getString('To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'));
                                 return;
                             }
-
                             // Navigate inside generic blocks
                             z.index = 1;
+                            isDblClick = true;
                             let project = common.allDependencies[type];
                             let breadcrumbsLength = self.breadcrumbs.length;
-
-                            $('body').addClass('waiting');
-                            $rootScope.$broadcast('navigateProject', {
-                                update: breadcrumbsLength === 1,
-                                project: project,
-                                submodule: type,
-                                submoduleId: blockId
-                            });
-                            self.breadcrumbs.push({ name: project.package.name || '#', type: type });
-                            utils.rootScopeSafeApply();
+                            utils.beginBlockingTask();
+                            setTimeout(function () {
+                                $rootScope.$broadcast('navigateProject', {
+                                    update: breadcrumbsLength === 1,
+                                    project: project,
+                                    submodule: type,
+                                    submoduleId: blockId
+                                });
+                                self.breadcrumbs.push({ name: project.package.name || '#', type: type });
+                                utils.rootScopeSafeApply();
+                                isDblClick = false;
+                            }, 100);
                         }
                     }
 
@@ -589,12 +595,20 @@ angular.module('icestudio')
                 });
 
                 paper.on('cell:pointerup', function (cellView/*, evt*/) {
-                    graph.trigger('batch:start');
-                    processReplaceBlock(cellView.model);
-                    graph.trigger('batch:stop');
-                    if (paper.options.enabled) {
-                        updateWiresOnObstacles();
-                    }
+                    /*-- This timeout is necesary to difference between single click or double click.
+                    When you click first time , this event trigger first, then you click one more time,
+                    bcause you want the double click action, you need to wait to take only one decision */
+
+                    setTimeout(function () {
+                        if (isDblClick === false) {
+                            graph.trigger('batch:start');
+                            processReplaceBlock(cellView.model);
+                            graph.trigger('batch:stop');
+                            if (paper.options.enabled) {
+                                updateWiresOnObstacles();
+                            }
+                        }
+                    }, 200);
                 });
 
                 paper.on('cell:pointermove', function (cellView/*, evt*/) {
@@ -645,7 +659,7 @@ angular.module('icestudio')
                 }
 
                 function replaceBlock(upperBlock, lowerBlock) {
-                    let portsMap=false;
+                    let portsMap = false;
                     if (lowerBlock) {
                         // 1. Compute portsMap between the upperBlock and the lowerBlock
                         portsMap = computeAllPortsMap(upperBlock, lowerBlock);
@@ -846,7 +860,6 @@ angular.module('icestudio')
 
 
             function updateWiresOnObstacles() {
-
                 let cells = graph.getCells();
 
                 //_.each(cells, function (cell) {
@@ -1161,9 +1174,9 @@ angular.module('icestudio')
             function resetBlocks() {
                 let data, connectedLinks;
                 let cells = graph.getCells();
-                let type=false;
-                let block=false;
-                let connected =false;
+                let type = false;
+                let block = false;
+                let connected = false;
 
                 _.each(cells, function (cell) {
                     if (cell.isLink()) {
@@ -1268,10 +1281,10 @@ angular.module('icestudio')
                                 let hId = false;
                                 let dep = false;
                                 let dat = false;
-                                let seq= false;
-                                let oldversion= false;
+                                let seq = false;
+                                let oldversion = false;
 
-                                for ( dep in dependencies) {
+                                for (dep in dependencies) {
                                     dependencies[dep].package.name = dependencies[dep].package.name + ' CLONE';
                                     dat = new Date();
                                     seq = dat.getTime();
@@ -1416,35 +1429,40 @@ angular.module('icestudio')
             };
 
             this.loadDesign = function (design, opt, callback) {
+
                 if (design &&
                     design.graph &&
                     design.graph.blocks &&
                     design.graph.wires) {
 
-                    opt = opt || {disabled:false,reset:true};
-                    $('body').addClass('waiting');
+                    opt = opt || { disabled: false, reset: true };
                     commandManager.stopListening();
 
                     self.clearAll();
 
                     let cells = graphToCells(design.graph, opt);
-                    
+
                     self.fitContent();
-                    
+
                     graph.addCells(cells);
-                    
+
                     self.setState(design.state);
 
                     self.appEnable(!opt.disabled);
-
                     if (!opt.disabled) {
                         commandManager.listen();
                     }
 
                     if (callback) {
+
+
                         callback();
+
+                        utils.endBlockingTask();
+                    } else {
+
+                        utils.endBlockingTask();
                     }
-                    $('body').removeClass('waiting');
                     return true;
                 }
             };
@@ -1488,7 +1506,7 @@ angular.module('icestudio')
 
                     let founded = false;
                     let blk2 = false;
-                    let i=0;
+                    let i = 0;
                     for (i = 0; i < blk.length; i++) {
                         if (wre[edge].block === blk[i].id) {
                             founded = i;
@@ -1732,7 +1750,7 @@ angular.module('icestudio')
                     updateCellAttributes(cell);
                 });
                 graph.addCells(cells);
-                let cellView =false;
+                let cellView = false;
                 _.each(cells, function (cell) {
                     if (!cell.isLink()) {
                         cellView = paper.findViewByModel(cell);

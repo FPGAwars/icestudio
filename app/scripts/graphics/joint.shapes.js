@@ -63,7 +63,6 @@ function placementCssIOTasks(data, bbox, state, queue) {
     bw = bbox.width;
     bh = Math.round(bbox.height - virtualtopOffset);
 
-console.log('MMMMM',bw,bh);
 
     for (i = 0; i < this.nativeDom.virtualContentSelector.length; i++) {
       queue.push({

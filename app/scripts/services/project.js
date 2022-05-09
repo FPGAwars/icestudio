@@ -55,29 +55,35 @@ angular.module('icestudio')
         project[key] = obj;
       }
     };
-
-    this.open = function (filepath, emptyPath) {
+ this.open = function (filepath, emptyPath) {
 
       
-      $("body").addClass("waiting");
+      let _this=this;
+      utils.beginBlockingTask();
+      setTimeout(function(){
+      _this._decoupledOpen(filepath,emptyPath);
+      },200);
+ }; 
+    this._decoupledOpen = function(filepath,emptyPath){
+
+
+
+      
       var self = this;
-        
+       
       self.path = emptyPath ? '' : filepath;
       self.filepath = filepath;
-      setTimeout(function(){
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
           self.filename=name;
           self.dirname=utils.dirname(filepath);
-
-        $("body").removeClass("waiting");
           self.load(name, data);
+
         })
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
-      },2000);
       };
 
     this.load = function (name, data) {

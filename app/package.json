@@ -81,7 +81,7 @@
     "openurl": "~1.1.1",
     "rmdir": "~1.2.0",
     "rsyncwrapper": "~2.0.1",
-    "select2": "~4.0.5",
+    "select2": "~4.1.0-rc.0",
     "sha1": "~1.1.1",
     "snapsvg": "~0.5.1",
     "spark-md5": "^3.0.1",

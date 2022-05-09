@@ -18,8 +18,7 @@ angular.module('icestudio')
     nodeLangInfo,
     SVGO,
     fastCopy,
-    sparkMD5) 
-{    
+    sparkMD5) {
 
     let _pythonExecutableCached = null;
     let _pythonPipExecutableCached = null;
@@ -313,14 +312,14 @@ angular.module('icestudio')
     //--
     this.isOnline = function (callback, error) {
 
-      if(navigator.onLine){
+      if (navigator.onLine) {
 
         callback();
-      }else{
+      } else {
         error();
         callback(true);
       }
-     
+
     };
 
 
@@ -390,12 +389,12 @@ angular.module('icestudio')
       //-- Stable and latest stable: "apio"
       //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
       let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ?
-                  common.APIO_PIP_VCS : 
-                  "apio";
+        common.APIO_PIP_VCS :
+        "apio";
 
       //-- Get the pip params for installing apio
-      const params = "install -U " + apio + extraPackagesString + 
-                     versionString;
+      const params = "install -U " + apio + extraPackagesString +
+        versionString;
 
       console.log("--> DEBUG: Params paased to pip: " + params);
 
@@ -423,9 +422,9 @@ angular.module('icestudio')
 
       //-- Check if the ICESTUDIO_APIO env variable is set with the apio 
       //-- toolchain to use  or if it has been set on the package.json file
-      let candidateApio = process.env.ICESTUDIO_APIO ? 
-                          process.env.ICESTUDIO_APIO : 
-                          _package.apio.external;
+      let candidateApio = process.env.ICESTUDIO_APIO ?
+        process.env.ICESTUDIO_APIO :
+        _package.apio.external;
 
       //-- The is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
@@ -828,7 +827,7 @@ angular.module('icestudio')
 
           // Enable user events
           this.enableKeyEvents();
-        } 
+        }
       });
 
     };
@@ -898,17 +897,17 @@ angular.module('icestudio')
       chooser.unbind('change');
 
       //-- Atach a new callback function
-      chooser.change( function () {
+      chooser.change(function () {
 
         //-- It is executed when the user has selected the file
         //-- Read the filepath entered by the user
         let filepath = $(this).val();
-       
+
         //-- Execute the callback (if it was given)
         if (callback) {
           callback(filepath);
         }
-        
+
         //-- Remove the current select filename from the chooser
         $(this).val('');
       });
@@ -990,7 +989,7 @@ angular.module('icestudio')
     //--  * Returns: A copy of the input object
     //-----------------------------------------------------------------------
     this.clone = function (data) {
-      
+
       //-- Implementation using the fast-copy npm package:
       //-- More info: https://www.npmjs.com/package/fast-copy
       return fastCopy(data);
@@ -1027,7 +1026,7 @@ angular.module('icestudio')
       //-- Create the arguments
       //-- The filepath was given: pass it as an argument
       if (filepath) {
-        
+
         //-- There are params in the URL
         hasParams = true;
 
@@ -1353,6 +1352,7 @@ angular.module('icestudio')
     };
 
     this.endBlockingTask = function () {
+
       angular.element('#menu').removeClass('is-disabled');
       $('body').removeClass('waiting');
     };
@@ -1374,7 +1374,7 @@ angular.module('icestudio')
     this.openUrlExternalBrowser = function (url) {
 
       nw.Shell.openExternal(url);
-      
+
     };
 
     // RENDERFORM "color-dropdown" functions
@@ -1522,4 +1522,4 @@ angular.module('icestudio')
       }, 50);
     };
 
-});
+  });
