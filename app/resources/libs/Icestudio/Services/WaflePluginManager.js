@@ -126,7 +126,6 @@ class WaflePluginManager {
                     _this.toload--;
 
                     if (_this.toload === 0) {
-                        console.log('LANZANDO CARGA');
                         _this.onload = false;
                         _this.pluginsLoaded(callback, ownerCallback);
                     }

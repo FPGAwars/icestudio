@@ -166,7 +166,7 @@ angular
           graph.resetView();
           graph.loadDesign(design, opt, function () {
             $scope.isNavigating = false;
-            graph.fitContent();
+             graph.fitContent();
 
           });
           $scope.topModule = true;
@@ -230,9 +230,9 @@ angular
           graph.resetView();
           project.update({ deps: false }, function () {
             graph.loadDesign(args.project.design, opt, function () {
-              graph.fitContent();
 
               utils.endBlockingTask();
+            
             });
 
           });
@@ -242,7 +242,6 @@ angular
           graph.resetView();
 
           graph.loadDesign(args.project.design, opt, function () {
-            graph.fitContent();
             utils.endBlockingTask();
           });
         }

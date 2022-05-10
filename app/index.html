@@ -34,6 +34,65 @@
   <title>Icestudio</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+  <!-- critical css, should be loaded as soon as possible -->
+  <style>
+    
+    /* -- Splash screen  */
+    #main-icestudio-load-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9999999999999999;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #305eac;
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
+    
+    #main-icestudio-load-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+.spinner-wrapper{
+  width:100%;
+  height:100vh;
+  position:fixed;
+  overflow:hidden;
+  top:0;left:0;
+  z-index:999;
+  display:none;
+}
+body.waiting .spinner-wrapper{
+  display:block;
+}
+.spinner-wrapper--bg{
+  width:100%;
+  height:100vh;
+  position:absolute;
+  top:0;left:0;
+  overflow:hidden;
+z-index:0;
+background-color:#7ccff4;
+opacity:0.4;
+}
+
+.spinner-wrapper--container{
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  margin:auto;
+  width:80px;
+  height:80px;
+  z-index:1;
+}
+  </style> 
+
+
   <!-- ************************************************************** -->
   <!-- ******      Priority Styles                          ********* -->
   <!-- ************************************************************** -->
@@ -110,34 +169,6 @@
 
   <!-- Version window -->
   <link rel="stylesheet" href="styles/version.css">
-
-  <!-- critical css, should be loaded as soon as possible -->
-  <style>
-    
-    /* -- Splash screen  */
-    #main-icestudio-load-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 9999999999999999;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      background-color: #305eac;
-      opacity: 1;
-      transition: opacity 1s ease;
-    }
-    
-    #main-icestudio-load-wrapper img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-    }
-  </style> 
-
 
 </head>
 

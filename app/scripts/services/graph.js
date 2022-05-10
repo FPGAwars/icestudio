@@ -27,6 +27,14 @@ angular.module('icestudio')
             window
         ) {
 
+            /*-- This is a temporal trick to maintain wires ordered and avoid anoing wire rumble when navigate
+                 between modules, we fix with the new engine , meanwhile this works --*/
+            let _this=this;
+            $('body').on('Graph::updateWires',function(){
+                   setTimeout(function(){ _this.updateWires();
+                   },100);
+            }); 
+        
             //-- ZOOM constants
             const ZOOM_MAX = 2.1;
             const ZOOM_MIN = 0.3;
@@ -458,7 +466,6 @@ angular.module('icestudio')
                             self.addingDraggableBlock = false;
                             processReplaceBlock(selection.at(0));
                             disableSelected();
-                            console.log('pointerclick');
                             updateWiresOnObstacles();
                             graph.trigger('batch:stop');
                         }
@@ -858,6 +865,9 @@ angular.module('icestudio')
             };
 
 
+            this.updateWires=function(){
+                updateWiresOnObstacles();
+            };
 
             function updateWiresOnObstacles() {
                 let cells = graph.getCells();
@@ -1157,8 +1167,6 @@ angular.module('icestudio')
 
             this.selectLanguage = function (language) {
 
-                //-- DEBUG
-                console.log("LANGUAGE: " + language);
                 graph.startBatch('change');
                 // Trigger lang event
                 const data = {
@@ -1329,7 +1337,6 @@ angular.module('icestudio')
             }
 
             this.removeSelected = function () {
-                console.log("BACKSPACE!!!!!!");
                 if (hasSelection()) {
                     graph.removeCells(selection.models);
                     selectionView.cancelSelection();
@@ -1442,7 +1449,7 @@ angular.module('icestudio')
 
                     let cells = graphToCells(design.graph, opt);
 
-                    self.fitContent();
+                      self.fitContent();
 
                     graph.addCells(cells);
 
@@ -1459,10 +1466,16 @@ angular.module('icestudio')
                         callback();
 
                         utils.endBlockingTask();
+                        
+                          self.fitContent();
                     } else {
 
                         utils.endBlockingTask();
+                   
+                        self.fitContent();
+
                     }
+                   
                     return true;
                 }
             };

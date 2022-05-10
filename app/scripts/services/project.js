@@ -103,13 +103,18 @@ angular.module('icestudio')
           gettextCatalog.getString('You can load it as it is or convert it for the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
           function () {
             // Load
-            _load();
+            setTimeout(function(){
+              _load();
+            },100);
           },
           function () {
+
+            setTimeout(function(){
             // Convert
             project.design.board = common.selectedBoard.name;
 
             _load(true, boardMigration(projectBoard, common.selectedBoard.name));
+            },100);
           });
       }
       else {

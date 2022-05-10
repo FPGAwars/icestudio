@@ -1353,6 +1353,7 @@ angular.module('icestudio')
 
     this.endBlockingTask = function () {
 
+      $('body').trigger('Graph::updateWires');
       angular.element('#menu').removeClass('is-disabled');
       $('body').removeClass('waiting');
     };
