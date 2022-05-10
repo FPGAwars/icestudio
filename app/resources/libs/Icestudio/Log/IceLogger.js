@@ -130,4 +130,14 @@ class IceLogger {
         //-- Return the calculated string
         return output;
     }
+
+    takeScreenshot(){
+
+        chrome.tabs.captureVisibleTab((screenshotUrl) => {  
+            chrome.downloads.download({url:screenshotUrl},function(downloadId){
+            console.log("Log screenshot begin, the downId is:" + downloadId);
+            });
+        });
+
+    }
 }

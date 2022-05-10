@@ -188,7 +188,7 @@ angular
             $scope.toRestore = false;
           }
 
-          //                               graph.fitContent();
+          graph.fitContent();
           graph.resetView();
           graph.loadDesign(dependency.design, opt, function () {
             graph.fitContent();

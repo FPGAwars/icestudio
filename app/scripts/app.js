@@ -23,7 +23,6 @@ var iceStudio = new Icestudio();
 //-- user home folder
 var iceConsole = new IceLogger();
 
-
 angular
   .module("icestudio", ["ui.bootstrap", "ngRoute", "gettext"])
   .run(function (

@@ -32,7 +32,7 @@ angular.module('icestudio')
             let _this=this;
             $('body').on('Graph::updateWires',function(){
                    setTimeout(function(){ _this.updateWires();
-                   },100);
+                   },200);
             }); 
         
             //-- ZOOM constants
@@ -548,7 +548,7 @@ angular.module('icestudio')
                                 self.breadcrumbs.push({ name: project.package.name || '#', type: type });
                                 utils.rootScopeSafeApply();
                                 isDblClick = false;
-                            }, 100);
+                            }, 500);
                         }
                     }
 
@@ -1467,12 +1467,12 @@ angular.module('icestudio')
 
                         utils.endBlockingTask();
                         
-                          self.fitContent();
+                         self.fitContent();
                     } else {
 
                         utils.endBlockingTask();
                    
-                        self.fitContent();
+                         self.fitContent();
 
                     }
                    
