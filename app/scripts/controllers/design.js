@@ -206,7 +206,7 @@ angular
         utils.beginBlockingTask(); 
         setTimeout(function(){
           _decoupledLoadSelectedGraph();
-        },200);
+        },500);
       }
 
       $rootScope.$on('navigateProject', function (event, args) {

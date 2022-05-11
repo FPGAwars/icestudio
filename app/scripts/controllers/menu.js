@@ -1319,10 +1319,9 @@ angular
       };
 
       $scope.buildCode = function () {
-        if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
-        ) {
+        console.log('BUILDCODE',common);
+        console.log('STACK',graph.breadcrumbs);
+        if ( graph.breadcrumbs.length > 1 ) {
           alertify.alert(
             gettextCatalog.getString("Build"),
             gettextCatalog.getString(
@@ -1346,10 +1345,8 @@ angular
       };
 
       $scope.uploadCode = function () {
-        if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
-        ) {
+
+        if ( graph.breadcrumbs.length > 1 ) {
           alertify.alert(
             gettextCatalog.getString("Upload"),
             gettextCatalog.getString(
@@ -1603,7 +1600,7 @@ angular
           //-- Changed: The Back key is disabled by default
           //--  (asked by joaquim) 
           //-- (Uncomment the next sentence  for enabling it)
-          //$rootScope.$broadcast("breadcrumbsBack");
+         // $rootScope.$broadcast("breadcrumbsBack");
         }
       });
 
