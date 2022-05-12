@@ -1,1602 +1,538 @@
+//---------------------------------------------------------------------------
+//-- Module for working with Blocks
+//---------------------------------------------------------------------------
 'use strict';
 
 angular.module('icestudio')
-  .service('blocks', function (joint,
-    utils,
-    common,
-    gettextCatalog,
-    sparkMD5) {
-    var gridsize = 8;
-    var resultAlert = null;
+  .service('blocks', 
+    function () 
+{
 
-    this.newBasic = newBasic;
-    this.newGeneric = newGeneric;
-
-    this.loadBasic = loadBasic;
-    this.loadGeneric = loadGeneric;
-    this.loadWire = loadWire;
-
-    this.editBasic = editBasic; // this is double clicking
-    this.editBasicLabel = editBasicLabel; // this is from "label-Finder"
-
-    //-- New
-
-    function newBasic(type, callback) {
-      switch (type) {
-        case 'basic.input':
-          newBasicInput(callback);
-          break;
-        case 'basic.output':
-          newBasicOutput(callback);
-          break;
-        case 'basic.outputLabel':
-          newBasicOutputLabel(callback);
-          break;
-        case 'basic.inputLabel':
-          newBasicInputLabel(callback);
-          break;
+  //-------------------------------------------------------------------------
+  //-- CONSTANTS for the blocks
+  //-------------------------------------------------------------------------
+  //-- TYPE of blocks
+  const BASIC_INPUT = 'basic.input';   //-- Input ports
+  const BASIC_OUTPUT = 'basic.output'; //-- Output ports
+  const BASIC_INPUT_LABEL = 'basic.inputLabel';    //-- Input labels
+  const BASIC_OUTPUT_LABEL = 'basic.outputLabel';  //-- OUtput labels
+  const BASIC_PAIRED_LABELS = "basic.pairedLabel"; //-- Paired labels
+  const BASIC_CODE = 'basic.code';     //-- Verilog code
+  const BASIC_MEMORY = 'basic.memory'; //-- Memory parameter
+  const BASIC_CONSTANT = 'basic.constant'; //-- Constant parameter
+  const BASIC_INFO = 'basic.info'; //-- Info block
 
 
-        case 'basic.constant':
-          newBasicConstant(callback);
-          break;
-        case 'basic.memory':
-          newBasicMemory(callback);
-          break;
-        case 'basic.code':
-          newBasicCode(callback);
-          break;
-        case 'basic.info':
-          newBasicInfo(callback);
-          break;
-        default:
-          break;
-      }
-    }
+  //-------------------------------------------------------------------------
+  //-- Class: Block Object. It represent any graphical object in the
+  //--        circuit
+  //-------------------------------------------------------------------------
+  class Block {
 
-    function newBasicOutputLabel(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.outputLabel',
-        position: { x: 0, y: 0 }
+    //--------------------------------------------------
+    //-- Information common to all blocks:
+    //-- * type: Type of block:
+    //--         -BASIC_INPUT
+    //--         -BASIC_OUTPUT
+    //--         -BASIC_INPUT_LABEL
+    //--         -BASIC_OUTPUT_LABEL 
+    //--         -BASIC_PAIRED_LABELS
+    //--         -BASIC_CODE 
+    //--         -BASIC_MEMORY 
+    //--         -BASIC_CONSTANT
+    //--         -BASIC_INFO
+    //--------------------------------------------------
+    constructor(type)  {
+
+      //------- Object structure
+      //-- Type of block
+      this.type = type;
+
+      //-- Unique Block identifier
+      this.id = null;
+
+      //-- Block data. Each block has its own data type
+      this.data = {};
+
+      //-- Block position
+      this.position = {
+        x: 0,
+        y: 0  
       };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input label'),
-          value: ''
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
-        }
-
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var color = values[1];
-        var virtual = !values[2];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            blockColor: color,
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual,
-            clock: clock
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
     }
+  }
 
 
-    function newBasicInput(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.input',
-        position: { x: 0, y: 0 }
+  //-------------------------------------------------------------------------
+  //-- Class: Port. Virtual class for representing both input and output  
+  //--              ports. 
+  //-------------------------------------------------------------------------
+  class PortBlock extends Block {
+
+    //-----------------------------------------------------------------------
+    //-- Parameters:
+    //--  * type: Select the type of PortBlock:
+    //--    -BASIC_INPUT
+    //--    -BASIC_OUTPUT
+    //--  * name (String): Port name
+    //--  * virtual (Bool): Type of pin. Real or Virtual
+    //--          * true: It is a virtual port, inside the FPGA
+    //--          * false: It is a pin, whichs connects the FPGA with the 
+    //--                   the experior
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * pins: Array of objects. Available Only if the port is a pin
+    //--       -index: Position of the pin in the array (default 0)
+    //--       -name: "" : Pin name (From the resources/boards/{board}
+    //--                               /pinout.json) (Which comes from .pcf)
+    //--       -value: "": Pin value (physical pin assigned by .pcf)
+    //-----------------------------------------------------------------------
+    constructor(type, name, virtual, range, pins) {
+
+      //-- Build the block common fields
+      super(type);
+
+      //-- Particular information
+      this.data.name = name;         //-- Port name. A String
+      this.data.virtual = virtual;   //-- Type of port: Real or virtual
+      this.data.range = range;       //-- If the port is single or bus. 
+                                     //--  Ej. "[1:0]"     
+      this.data.pins = pins;         //-- Only if the port is a pin 
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class: Input port. The information comes from the outside and
+  //--   get inside the FPGA
+  //--
+  //--   * Particular information:
+  //--      -clock: (bool). If the port is a clock or not
+  //--         * true: It is a clock signal
+  //--         * False: Normal signal
+  //-------------------------------------------------------------------------
+  class InputPortBlock extends PortBlock {
+
+    constructor(name, virtual, range, pins, clock) {
+
+      //-- Build the port common fields
+      super(BASIC_INPUT, name, virtual, range, pins);
+
+      //-- Particular information
+      this.data.clock = clock;    //-- Optional. Is the port a clock input?
+    }
+  }
+
+  
+  //-------------------------------------------------------------------------
+  //-- Class: Output port. The information goes from the FPGA to the 
+  //--        outside. Or from one block to another the upper level
+  //--
+  //--   NO particular information
+  //-------------------------------------------------------------------------
+  class OutputPortBlock extends PortBlock {
+
+    constructor(name, virtual, range, pins) {
+
+      //-- Build the port common fields
+      super(BASIC_OUTPUT, name, virtual, range, pins);
+
+      //-- No particular information
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class: Label Block. Virtual class for representing both input and
+  //--        output labels
+  //-------------------------------------------------------------------------
+  class LabelBlock extends Block {
+
+    //-----------------------------------------------------------------
+    //-- Parameters:
+    //--  * type: Select the type of LabelBlock:
+    //--      -BASIC_INPUT_LABEL
+    //--      -BASIC_OUTPUT_LABEL
+    //--  * name (String): Port name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
+    constructor(type, name, range, color, pins) {
+
+      //-- Build the block common fields
+      super(type);
+
+      //-- Particular information
+      this.data.name = name;         //-- Label name
+      this.data.range = range;       //-- If the lable is single or bus. 
+                                     //--  Ej. "[1:0]"    
+      this.data.blockColor = color;  //-- Label color
+      this.data.virtual = true;      //-- Labels are a kind of virtual pin 
+      this.data.pins = pins; 
+
+    }
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Class: Input Label Block. Class for representing input
+  //--        labels
+  //-------------------------------------------------------------------------
+  class InputLabelBlock extends LabelBlock {
+
+    //-----------------------------------------------------------------
+    //-- Parameters:
+    //--  * name (String): label name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
+    constructor(name, range, color, pins) {
+
+      //-- Build the port common fields
+      super(BASIC_INPUT_LABEL, name, range, color, pins);
+
+      //-- No particular information
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class: Output Label Block. Class for representing output
+  //--        labels
+  //-------------------------------------------------------------------------
+  class OutputLabelBlock extends LabelBlock {
+
+    //-----------------------------------------------------------------
+    //-- Parameters:
+    //--  * name (String): label name
+    //--  * range: A String indicating the bus range (if is is a bus)
+    //--              Ex: "[1:0]"
+    //--  * color (String): Color name (in English). Ex: "fuchsia" 
+    //-----------------------------------------------------------------
+    constructor(name, range, color, pins) {
+
+      //-- Build the port common fields
+      super(BASIC_OUTPUT_LABEL, name, range, color, pins);
+
+      //-- No particular information
+    }
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Class: Code block. Class for representing verilog block codes
+  //-------------------------------------------------------------------------
+  class CodeBlock extends Block {
+
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * inPortsInfo: Array of PortInfos
+    //--   * outPortsInfo: Array of PortInfos
+    //--   * inParamsInfo: Array of PortInfos
+    //--
+    //--  PortInfos:
+    //--    * name: String
+    //--    * rangestr: String
+    //--    * size: Integer
+    //-----------------------------------------------------------------------
+    constructor(inPortsInfo, outPortsInfo, inParamsInfo) {
+
+      //-- Build the block common fields
+      super(BASIC_CODE);
+
+      //-- Block size
+      this.size = {
+        width: 192,
+        height: 128
       };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
-          value: ''
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: true
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: false
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var virtual = !values[1];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual,
-            clock: clock
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
 
-    function newBasicOutput(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.output',
-        position: { x: 0, y: 0 }
+      //-- Block ports
+      this.data.ports = {
+        in: [],
+        out: []
       };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the output blocks'),
-          value: ''
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: true
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var virtual = !values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
+     
+      //-- Block input params
+      this.data.params = [];
 
-    function newBasicInputLabel(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.inputLabel',
-        position: { x: 0, y: 0 }
+      //-- Block code
+      this.data.code = '';
 
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the output label'),
-          value: ''
+      //-- Insert the Input portInfo
+      inPortsInfo.forEach(portInfo => {
 
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
-        }
-
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var color = values[1];
-        var virtual = !values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo, portInfos = [];
-        for (var l in labels) {
-          portInfo = utils.parsePortLabel(labels[l], common.PATTERN_GLOBAL_PORT_LABEL);
-          if (portInfo) {
-            evt.cancel = false;
-            portInfos.push(portInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in portInfos) {
-          portInfo = portInfos[p];
-          var pins = getPins(portInfo);
-          blockInstance.data = {
-            blockColor: color,
-            name: portInfo.name,
-            range: portInfo.rangestr,
-            pins: pins,
-            virtual: virtual
-          };
-          cells.push(loadBasic(blockInstance));
-          // Next block position
-          blockInstance.position.y += (virtual ? 10 : (6 + 4 * pins.length)) * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
-
-    function getPins(portInfo) {
-      var pins = [];
-      if (portInfo.range) {
-        for (var r in portInfo.range) {
-          pins.push({ index: portInfo.range[r].toString(), name: '', value: '' });
-        }
-      }
-      else {
-        pins.push({ index: '0', name: 'NULL', value: 'NULL' });
-      }
-      return pins;
-    }
-
-    function newBasicConstant(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.constant',
-        position: { x: 0, y: 0 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the constant blocks'),
-          value: ''
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo, paramInfos = [];
-        for (var l in labels) {
-          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            evt.cancel = false;
-            paramInfos.push(paramInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in paramInfos) {
-          paramInfo = paramInfos[p];
-          blockInstance.data = {
-            name: paramInfo.name,
-            value: '',
-            local: local
-          };
-          cells.push(loadBasicConstant(blockInstance));
-          blockInstance.position.x += 15 * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
-
-    function newBasicMemory(callback) {
-      var blockInstance = {
-        id: null,
-        data: {},
-        type: 'basic.memory',
-        position: { x: 0, y: 0 },
-        size: { width: 96, height: 104 }
-      };
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the memory blocks'),
-          value: ''
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: 10,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: false
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var labels = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo, paramInfos = [];
-        for (var l in labels) {
-          paramInfo = utils.parseParamLabel(labels[l], common.PATTERN_GLOBAL_PARAM_LABEL);
-          if (paramInfo) {
-            evt.cancel = false;
-            paramInfos.push(paramInfo);
-          }
-          else {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: labels[l] }));
-            return;
-          }
-        }
-        // Create blocks
-        var cells = [];
-        for (var p in paramInfos) {
-          paramInfo = paramInfos[p];
-          blockInstance.data = {
-            name: paramInfo.name,
-            list: '',
-            local: local,
-            format: format
-          };
-          cells.push(loadBasicMemory(blockInstance));
-          blockInstance.position.x += 15 * gridsize;
-        }
-        if (callback) {
-          callback(cells);
-        }
-      });
-    }
-
-    function newBasicCode(callback, block) {
-      var blockInstance = {
-        id: null,
-        data: {
-          code: '',
-          params: [],
-          ports: { in: [], out: [] }
-        },
-        type: 'basic.code',
-        position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
-      };
-      var defaultValues = [
-        '',
-        '',
-        ''
-      ];
-      if (block) {
-        blockInstance = block;
-        var index, port;
-        if (block.data.ports) {
-          var inPorts = [];
-          for (index in block.data.ports.in) {
-            port = block.data.ports.in[index];
-            inPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[0] = inPorts.join(' , ');
-          var outPorts = [];
-          for (index in block.data.ports.out) {
-            port = block.data.ports.out[index];
-            outPorts.push(port.name + (port.range || ''));
-          }
-          defaultValues[1] = outPorts.join(' , ');
-        }
-        if (block.data.params) {
-          var params = [];
-          for (index in block.data.params) {
-            params.push(block.data.params[index].name);
-          }
-          defaultValues[2] = params.join(' , ');
-        }
-      }
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the input ports'),
-          value: defaultValues[0]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the output ports'),
-          value: defaultValues[1]
-        },
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Enter the parameters'),
-          value: defaultValues[2]
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var inPorts = values[0].replace(/\s*,\s*/g, ',').split(',');
-        var outPorts = values[1].replace(/\s*,\s*/g, ',').split(',');
-        var params = values[2].replace(/\s*,\s*/g, ',').split(',');
-        var allNames = [];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var i, inPortInfo, inPortInfos = [];
-
-        let nib=0, nob=0;
-        for (i in inPorts) {
-          if (inPorts[i]) {
-            inPortInfo = utils.parsePortLabel(inPorts[i], common.PATTERN_PORT_LABEL);
-            if (inPortInfo && inPortInfo.name) {
-              evt.cancel = false;
-              inPortInfos.push(inPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: inPorts[i] }));
-              return;
-            }
-          }else{
-            nib++;
-          }
-        }
-
-        var o, outPortInfo, outPortInfos = [];
-        for (o in outPorts) {
-          if (outPorts[o]) {
-            outPortInfo = utils.parsePortLabel(outPorts[o], common.PATTERN_PORT_LABEL);
-            if (outPortInfo && outPortInfo.name) {
-              evt.cancel = false;
-              outPortInfos.push(outPortInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong port name {{name}}', { name: outPorts[o] }));
-              return;
-            }
-          }else{
-            nob++;
-          }
-        }
-        if(nib>=inPorts.length && nob >= outPorts.length){
-               evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Code block needs at least one input or one output'));
-              return;
-
-
-        }
-
-        var p, paramInfo, paramInfos = [];
-        for (p in params) {
-          if (params[p]) {
-            paramInfo = utils.parseParamLabel(params[p], common.PATTERN_PARAM_LABEL);
-            if (paramInfo) {
-              evt.cancel = false;
-              paramInfos.push(paramInfo);
-            }
-            else {
-              evt.cancel = true;
-              resultAlert = alertify.warning(gettextCatalog.getString('Wrong parameter name {{name}}', { name: params[p] }));
-              return;
-            }
-          }
-        }
-        // Create ports
-        var pins;
-        blockInstance.data.ports.in = [];
-        for (i in inPortInfos) {
-          if (inPortInfos[i]) {
-            pins = getPins(inPortInfos[i]);
-            blockInstance.data.ports.in.push({
-              name: inPortInfos[i].name,
-              range: inPortInfos[i].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(inPortInfos[i].name);
-          }
-        }
-        blockInstance.data.ports.out = [];
-        for (o in outPortInfos) {
-          if (outPortInfos[o]) {
-            pins = getPins(outPortInfos[o]);
-            blockInstance.data.ports.out.push({
-              name: outPortInfos[o].name,
-              range: outPortInfos[o].rangestr,
-              size: (pins.length > 1) ? pins.length : undefined
-            });
-            allNames.push(outPortInfos[o].name);
-          }
-        }
-        blockInstance.data.params = [];
-        for (p in paramInfos) {
-          if (paramInfos[p]) {
-            blockInstance.data.params.push({
-              name: paramInfos[p].name
-            });
-            allNames.push(paramInfos[p].name);
-          }
-        }
-        // Check duplicated attributes
-        var numNames = allNames.length;
-        if (numNames === $.unique(allNames).length) {
-          evt.cancel = false;
-          // Create block
-          if (callback) {
-            callback([loadBasicCode(blockInstance)]);
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Duplicated block attributes'));
-        }
-      });
-    }
-
-    function newBasicInfo(callback) {
-      var blockInstance = {
-        id: null,
-        data: { info: '', readonly: false },
-        type: 'basic.info',
-        position: { x: 0, y: 0 },
-        size: { width: 192, height: 128 }
-      };
-      if (callback) {
-        callback([loadBasicInfo(blockInstance)]);
-      }
-    }
-
-    function newGeneric(type, block, callback) {
-
-      var blockInstance = {
-        id: null,
-        type: type,
-        position: { x: 0, y: 0 }
-      };
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-      if (block &&
-        block.design &&
-        block.design.graph &&
-        block.design.graph.blocks &&
-        block.design.graph.wires) {
-        if (callback) {
-          callback(loadGeneric(blockInstance, block));
-        }
-      }
-      else {
-        resultAlert = alertify.error(gettextCatalog.getString('Wrong block format: {{type}}', { type: type }), 30);
-      }
-    }
-
-
-    //-- Load
-
-    function loadBasic(instance, disabled) {
-      switch (instance.type) {
-        case 'basic.input':
-          return loadBasicInput(instance, disabled);
-        case 'basic.output':
-          return loadBasicOutput(instance, disabled);
-        case 'basic.outputLabel':
-          return loadBasicOutputLabel(instance, disabled);
-        case 'basic.inputLabel':
-          return loadBasicInputLabel(instance, disabled);
-        case 'basic.constant':
-          return loadBasicConstant(instance, disabled);
-        case 'basic.memory':
-          return loadBasicMemory(instance, disabled);
-        case 'basic.code':
-          return loadBasicCode(instance, disabled);
-        case 'basic.info':
-          return loadBasicInfo(instance, disabled);
-        default:
-          break;
-      }
-    }
-
-    function loadBasicInput(instance, disabled) {
-      var data = instance.data;
-      var rightPorts = [{
-        id: 'out',
-        name: '',
-        label: '',
-        size: data.pins ? data.pins.length : (data.size || 1)
-      }];
-
-      var cell = new joint.shapes.ice.Input({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        rightPorts: rightPorts,
-        choices: common.pinoutInputHTML
-      });
-
-      return cell;
-    }
-
-    function loadBasicOutputLabel(instance, disabled) {
-      var data = instance.data;
-      var rightPorts = [{
-        id: 'outlabel',
-        name: '',
-        label: '',
-        size: data.pins ? data.pins.length : (data.size || 1)
-      }];
-
-      var cell = new joint.shapes.ice.OutputLabel({
-        id: instance.id,
-        blockColor: instance.blockColor,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        rightPorts: rightPorts,
-        choices: common.pinoutInputHTML
-      });
-      return cell;
-    }
-
-
-    function loadBasicOutput(instance, disabled) {
-      var data = instance.data;
-      var leftPorts = [{
-        id: 'in',
-        name: '',
-        label: '',
-        size: data.pins ? data.pins.length : (data.size || 1)
-      }];
-      var cell = new joint.shapes.ice.Output({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        choices: common.pinoutOutputHTML
-      });
-      return cell;
-    }
-    function loadBasicInputLabel(instance, disabled) {
-      var data = instance.data;
-      var leftPorts = [{
-        id: 'inlabel',
-        name: '',
-        label: '',
-        size: data.pins ? data.pins.length : (data.size || 1)
-      }];
-
-      //var cell = new joint.shapes.ice.Output({
-      var cell = new joint.shapes.ice.InputLabel({
-        id: instance.id,
-        blockColor: instance.blockColor,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        choices: common.pinoutOutputHTML
-      });
-      return cell;
-    }
-
-
-    function loadBasicConstant(instance, disabled) {
-      var bottomPorts = [{
-        id: 'constant-out',
-        name: '',
-        label: ''
-      }];
-      var cell = new joint.shapes.ice.Constant({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        disabled: disabled,
-        bottomPorts: bottomPorts
-      });
-      return cell;
-    }
-
-    function loadBasicMemory(instance, disabled) {
-      var bottomPorts = [{
-        id: 'memory-out',
-        name: '',
-        label: ''
-      }];
-      var cell = new joint.shapes.ice.Memory({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        size: instance.size,
-        disabled: disabled,
-        bottomPorts: bottomPorts
-      });
-      return cell;
-    }
-
-    function loadBasicCode(instance, disabled) {
-      var port;
-      var leftPorts = [];
-      var rightPorts = [];
-      var topPorts = [];
-
-      for (var i in instance.data.ports.in) {
-        port = instance.data.ports.in[i];
-        if (!port.range) {
-          port.default = utils.hasInputRule(port.name);
-        }
-        leftPorts.push({
-          id: port.name,
-          name: port.name,
-          label: port.name + (port.range || ''),
-          size: port.size || 1
-        });
-      }
-
-      for (var o in instance.data.ports.out) {
-        port = instance.data.ports.out[o];
-        rightPorts.push({
-          id: port.name,
-          name: port.name,
-          label: port.name + (port.range || ''),
-          size: port.size || 1
-        });
-      }
-
-      for (var p in instance.data.params) {
-        port = instance.data.params[p];
-        topPorts.push({
-          id: port.name,
-          name: port.name,
-          label: port.name
-        });
-      }
-
-      var cell = new joint.shapes.ice.Code({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        size: instance.size,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        rightPorts: rightPorts,
-        topPorts: topPorts
-      });
-
-      return cell;
-    }
-
-    function loadBasicInfo(instance, disabled) {
-      // Translate info content
-      if (instance.data.info && instance.data.readonly) {
-        instance.data.text = gettextCatalog.getString(instance.data.info);
-      }
-      var cell = new joint.shapes.ice.Info({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        position: instance.position,
-        size: instance.size,
-        disabled: disabled
-      });
-      return cell;
-    }
-
-    function loadGeneric(instance, block, disabled) {
-
-
-      var i;
-      var leftPorts = [];
-      var rightPorts = [];
-      var topPorts = [];
-      var bottomPorts = [];
-      let virtualBlock= new IceBlock({cacheDirImg:common.IMAGE_CACHE_DIR});
-      instance.data = { ports: { in: [] } };
-
-      for (i in block.design.graph.blocks) {
-        var item = block.design.graph.blocks[i];
-        if (item.type === 'basic.input') {
-          if (!item.data.range) {
-            instance.data.ports.in.push({
-              name: item.id,
-              default: utils.hasInputRule((item.data.clock ? 'clk' : '') || item.data.name)
-            });
-          }
-          leftPorts.push({
-            id: item.id,
-            name: item.data.name,
-            label: item.data.name + (item.data.range || ''),
-            size: item.data.pins ? item.data.pins.length : (item.data.size || 1),
-            clock: item.data.clock
-          });
-        }
-
-        else if (item.type === 'basic.output') {
-          rightPorts.push({
-            id: item.id,
-            name: item.data.name,
-            label: item.data.name + (item.data.range || ''),
-            size: item.data.pins ? item.data.pins.length : (item.data.size || 1)
-          });
-        }
-        else if (item.type === 'basic.constant' || item.type === 'basic.memory') {
-          if (!item.data.local) {
-            topPorts.push({
-              id: item.id,
-              name: item.data.name,
-              label: item.data.name
-            });
-          }
-        }
-      }
-
-      //      var size = instance.size;
-      var size = false;
-      if (!size) {
-        var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
-        var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
-
-        size = {
-          width: Math.max(4 * gridsize * numPortsWidth, 12 * gridsize),
-          height: Math.max(4 * gridsize * numPortsHeight, 8 * gridsize)
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
         };
-      }
 
-      var blockLabel = block.package.name;
-      var blockImage = '';
-      let blockImageSrc='';
-      let hash='';
-      if (block.package.image) {
-        if (block.package.image.startsWith('%3Csvg')) {
-          blockImage = decodeURI(block.package.image);
-        }
-        else if (block.package.image.startsWith('<svg')) {
-          blockImage = block.package.image;
-        }
-        if(blockImage.length>0){
-          hash=sparkMD5.hash(blockImage);
-          blockImageSrc=virtualBlock.svgFile(hash,blockImage);
-        }
-      }
-
-      var cell = new joint.shapes.ice.Generic({
-        id: instance.id,
-        blockType: instance.type,
-        data: instance.data,
-        config: block.design.config,
-        pullup: block.design.pullup,
-        image: blockImageSrc,
-        label: blockLabel,
-        tooltip: gettextCatalog.getString(block.package.description),
-        position: instance.position,
-        size: size,
-        disabled: disabled,
-        leftPorts: leftPorts,
-        rightPorts: rightPorts,
-        topPorts: topPorts
+        this.data.ports.in.push(info);
       });
-      return cell;
-    }
 
-    function loadWire(instance, source, target) {
+      //-- Insert the Output portInfo
+      outPortsInfo.forEach(portInfo => {
 
-      // Find selectors
-      var sourceSelector, targetSelector;
-      var leftPorts = target.get('leftPorts');
-      var rightPorts = source.get('rightPorts');
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
+        };
 
-      for (var _out = 0; _out < rightPorts.length; _out++) {
-        if (rightPorts[_out] === instance.source.port) {
-          sourceSelector = _out;
-          break;
-        }
-      }
-      for (var _in = 0; _in < leftPorts.length; _in++) {
-        if (leftPorts[_in] === instance.target.port) {
-          targetSelector = _in;
-          break;
-        }
-      }
-
-      var _wire = new joint.shapes.ice.Wire({
-        source: {
-          id: source.id,
-          selector: sourceSelector,
-          port: instance.source.port
-        },
-        target: {
-          id: target.id,
-          selector: targetSelector,
-          port: instance.target.port
-        },
-        vertices: instance.vertices
+        this.data.ports.out.push(info);
       });
-      return _wire;
-    }
 
+      //-- Insert the input params
+      inParamsInfo.forEach(portInfo => {
 
-    //-- Edit
+        let info = {
+          name: portInfo.name,
+          range: portInfo.rangestr,
+          size: portInfo.size > 1 ? portInfo.size : undefined
+        };
 
-    function editBasic(type, cellView, callback) {
-      switch (type) {
-        case 'basic.input':
-          editBasicInput(cellView, callback);
-          break;
-        case 'basic.output':
-          editBasicOutput(cellView, callback);
-          break;
-        case 'basic.outputLabel':
-          editBasicOutputLabel(cellView, callback);
-          break;
-        case 'basic.inputLabel':
-          editBasicInputLabel(cellView, callback);
-          break;
-        case 'basic.constant':
-          editBasicConstant(cellView);
-          break;
-        case 'basic.memory':
-          editBasicMemory(cellView);
-          break;
-        case 'basic.code':
-          editBasicCode(cellView, callback);
-          break;
-        case 'basic.info':
-          editBasicInfo(cellView);
-          break;
-        default:
-          break;
-      }
-    }
+        this.data.params.push(info);
 
-    function editBasicLabel(cellView, newName, newColor){
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-
-      // Edit block
-      graph.startBatch('change');
-      var data = utils.clone(block.data);
-      data.name = newName;
-      data.blockColor = newColor;
-      cellView.model.set('data', data);
-      graph.stopBatch('change');
-      cellView.apply();
-      resultAlert = alertify.success(gettextCatalog.getString('Label updated'));
-    }
-
-    function editBasicOutputLabel(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the label name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
-        }
-
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var color = values[1];
-        var virtual = !values[2];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-                clock: clock
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.clock !== clock ||
-            block.data.blockColor !== color) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            //data.oldBlockColor = data.blockColor;
-            data.blockColor = color;
-            data.virtual = virtual;
-            data.clock = clock;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
       });
     }
+  }
 
-    function editBasicInputLabel(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the label name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'color-dropdown',
-          label: gettextCatalog.getString('Choose a color')
-        }
 
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var color = values[1];
-        var virtual = !values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.blockColor !== color) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            //data.oldBlockColor = data.blockColor;
-            data.blockColor = color;
-            data.virtual = virtual;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
-      });
-    }
+  //-------------------------------------------------------------------------
+  //-- Class: Memory block. Class for representing memory parameters
+  //-------------------------------------------------------------------------
+  class MemoryBlock extends Block {
 
-    function editBasicInput(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
-          value: block.data.clock
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
-        var clock = values[2];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if (portInfo.rangestr && clock) {
-            evt.cancel = true;
-            resultAlert = alertify.warning(gettextCatalog.getString('Clock not allowed for data buses'));
-            return;
-          }
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual,
-                clock: clock
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual ||
-            block.data.clock !== clock) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            data.virtual = virtual;
-            data.clock = clock;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
-      });
-    }
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * name (String): Memory block name
+    //--   * list (String): Initial memory contents
+    //--   * local (Bool): If the parameter is global or local:
+    //--       * true: Local parameter
+    //--       * false: Global parameter
+    //--   * format (integer): Format of the memory contents:
+    //--       - 2: Binary
+    //--       - 10: Decimal
+    //--       - 16: Hexadecimal
+    //-----------------------------------------------------------------------
+    constructor(name='', list='', local=false, format=10) {
 
-    function editBasicOutput(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name + (block.data.range || '')
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
-          value: !block.data.virtual
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var oldSize, newSize, offset = 0;
-        var label = values[0];
-        var virtual = !values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var portInfo = utils.parsePortLabel(label, common.PATTERN_GLOBAL_PORT_LABEL);
-        if (portInfo) {
-          evt.cancel = false;
-          if ((block.data.range || '') !==
-            (portInfo.rangestr || '')) {
-            var pins = getPins(portInfo);
-            oldSize = block.data.virtual ? 1 : (block.data.pins ? block.data.pins.length : 1);
-            newSize = virtual ? 1 : (pins ? pins.length : 1);
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Create new block
-            var blockInstance = {
-              id: null,
-              data: {
-                name: portInfo.name,
-                range: portInfo.rangestr,
-                pins: pins,
-                virtual: virtual
-              },
-              type: block.blockType,
-              position: {
-                x: block.position.x,
-                y: block.position.y + offset
-              }
-            };
-            if (callback) {
-              graph.startBatch('change');
-              callback(loadBasic(blockInstance));
-              cellView.model.remove();
-              graph.stopBatch('change');
-              resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-            }
-          }
-          else if (block.data.name !== portInfo.name ||
-            block.data.virtual !== virtual) {
-            var size = block.data.pins ? block.data.pins.length : 1;
-            oldSize = block.data.virtual ? 1 : size;
-            newSize = virtual ? 1 : size;
-            // Update block position when size changes
-            offset = 16 * (oldSize - newSize);
-            // Edit block
-            graph.startBatch('change');
-            var data = utils.clone(block.data);
-            data.name = portInfo.name;
-            data.virtual = virtual;
-            cellView.model.set('data', data, { translateBy: cellView.model.id, tx: 0, ty: -offset });
-            cellView.model.translate(0, offset);
-            graph.stopBatch('change');
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-        }
-      });
-    }
+      //-- Build the block common fields
+      super(BASIC_MEMORY);
 
-    function editBasicConstant(cellView) {
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var label = values[0];
-        var local = values[1];
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-        if (paramInfo) {
-          var name = paramInfo.name;
-          evt.cancel = false;
-          if (block.data.name !== name ||
-            block.data.local !== local) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            cellView.model.set('data', data);
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-          return;
-        }
-      });
-    }
-
-    function editBasicMemory(cellView) {
-      var block = cellView.model.attributes;
-      var formSpecs = [
-        {
-          type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
-          value: block.data.name
-        },
-        {
-          type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
-          value: block.data.format,
-          options: [
-            { value: 2, label: gettextCatalog.getString('Binary') },
-            { value: 10, label: gettextCatalog.getString('Decimal') },
-            { value: 16, label: gettextCatalog.getString('Hexadecimal') }
-          ]
-        },
-        {
-          type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
-          value: block.data.local
-        }
-      ];
-      utils.renderForm(formSpecs, function (evt, values) {
-        var label = values[0];
-        var local = values[2];
-        var format = parseInt(values[1]);
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        // Validate values
-        var paramInfo = utils.parseParamLabel(label, common.PATTERN_GLOBAL_PARAM_LABEL);
-        if (paramInfo) {
-          var name = paramInfo.name;
-          evt.cancel = false;
-          if (block.data.name !== name ||
-            block.data.local !== local ||
-            block.data.format !== format) {
-            // Edit block
-            var data = utils.clone(block.data);
-            data.name = name;
-            data.local = local;
-            data.format = format;
-            cellView.model.set('data', data);
-            cellView.apply();
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-        else {
-          evt.cancel = true;
-          resultAlert = alertify.warning(gettextCatalog.getString('Wrong block name {{name}}', { name: label }));
-          return;
-        }
-      });
-    }
-
-    function editBasicCode(cellView, callback) {
-      var graph = cellView.paper.model;
-      var block = cellView.model.attributes;
-      var blockInstance = {
-        id: block.id,
-        data: utils.clone(block.data),
-        type: 'basic.code',
-        position: block.position,
-        size: block.size
+      //-- Block size
+      this.size = {
+        width: 20 * 8,
+        height: 22 * 8
       };
-      if (resultAlert) {
-        resultAlert.dismiss(false);
-      }
-      newBasicCode(function (cells) {
-        if (callback) {
-          var cell = cells[0];
-          if (cell) {
-            var connectedWires = graph.getConnectedLinks(cellView.model);
-            graph.startBatch('change');
-            cellView.model.remove();
-            callback(cell);
-            // Restore previous connections
-            for (var w in connectedWires) {
-              var wire = connectedWires[w];
-              var size = wire.get('size');
-              var source = wire.get('source');
-              var target = wire.get('target');
-              if ((source.id === cell.id && containsPort(source.port, size, cell.get('rightPorts'))) ||
-                (target.id === cell.id && containsPort(target.port, size, cell.get('leftPorts')) && (source.port !== 'constant-out' && source.port !== 'memory-out')) ||
-                (target.id === cell.id && containsPort(target.port, size, cell.get('topPorts')) && (source.port === 'constant-out' || source.port === 'memory-out'))) {
-                graph.addCell(wire);
-              }
-            }
-            graph.stopBatch('change');
-            resultAlert = alertify.success(gettextCatalog.getString('Block updated'));
-          }
-        }
-      }, blockInstance);
+
+      //-- Name
+      this.data.name = name;
+
+      //-- List
+      this.data.list = list;
+
+      //-- Local parameter
+      this.data.local = local;
+
+      //-- Format
+      this.data.format = format;
     }
 
-    function containsPort(port, size, ports) {
-      var found = false;
-      for (var i in ports) {
-        if (port === ports[i].name && size === ports[i].size) {
-          found = true;
-          break;
-        }
-      }
-      return found;
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Class for representing constant parameters
+  //-------------------------------------------------------------------------
+  class ConstantBlock extends Block {
+
+    //-----------------------------------------------------------------------
+    //-- INPUTS:
+    //--   * name (String): Constant block name
+    //--   * value (String): Default constant value
+    //--   * local (Bool): If the parameter is global or local:
+    //--       * true: Local parameter
+    //--       * false: Global parameter
+    //-----------------------------------------------------------------------
+    constructor(name='', value='', local=false) {
+
+      //-- Build the block common fields
+      super(BASIC_CONSTANT);
+
+      //-- Name
+      this.data.name = name;
+
+      //-- Constant value
+      this.data.value = value;
+
+      //-- Local parameter
+      this.data.local = local;
+    }
+  }
+
+  //-------------------------------------------------------------------------
+  //-- Class for representing an Info block
+  //-------------------------------------------------------------------------
+  class InfoBlock extends Block {
+
+    constructor() {
+
+      //-- Build the block common fields
+      super(BASIC_INFO);
+
+      this.data.info = '';
+      this.data.readonly = false;
+
+      //-- Block size
+      this.size = {
+        width: 192,
+        height: 128
+      };
+
+    }
+  }
+
+  //-----------------------------------------------------------------------
+  //-- Return an array with empty pins
+  //-- Empty pins have both name and value properties set to "NULL"
+  //-- * INPUT:
+  //--    -portInfo: Port information structure
+  //-- * Returns:
+  //--    -An array of pins
+  //-----------------------------------------------------------------------
+  function getPins(portInfo) {
+
+    //-- The output array of pins. Initially empty
+    let pins = [];
+
+    for (let i = 0; i < portInfo.size; i++) {
+      pins.push(
+        {
+          index: i.toString(),
+          name: 'NULL',
+          value: 'NULL' //-- Pin value
+        });
     }
 
-    function editBasicInfo(cellView) {
-      var block = cellView.model.attributes;
-      var data = utils.clone(block.data);
-      // Toggle readonly
-      data.readonly = !data.readonly;
-      // Translate info content
-      if (data.info && data.readonly) {
-        data.text = gettextCatalog.getString(data.info);
-      }
-      cellView.model.set('data', data);
-      cellView.apply();
+    return pins;
+  }
+
+
+  //-------------------------------------------------------------------------
+  //-- Copy the pins from the source object to the target object
+  //--
+  //-- INPUTS:
+  //--   * pinsSrc: Array of source pins
+  //--   * pinsDst: Array of destination pins
+  //--
+  //-- Both arrays can have different sizes
+  //-- The numer of pins to copy is, therefore the minimal length
+  //-- of the arrays
+  //-------------------------------------------------------------------------
+  function copyPins(pinsSrc, pinsDest) {
+
+    //-- If pinsSrc is not defined, there is nothing
+    //-- to copy
+    if (!pinsSrc) {
+      return;
     }
 
-  });
+    //-- Get the target and destination lengths
+    let dlen = pinsDest.length || 0;
+    let slen = pinsSrc.length || 0;
+
+    //-- Calculate the minimum size
+    let min = Math.min(dlen, slen);
+
+    //-- Copy the pins (only min pins are copied)
+    //-- The copy starts from the highest pins to the lowest 
+    for (let i = 0; i < min; i++) {
+      pinsDest[dlen - 1 - i].name = pinsSrc[slen - 1 - i].name;
+      pinsDest[dlen - 1 - i].value = pinsSrc[slen - 1 - i].value;
+    }
+  }
+  
+  //-------------------------------------------------------------------------
+  //-- Get the number of poin of the given port block (input or output)
+  //--
+  //-- INPUTS:
+  //--   * portBlock: Input or output port block
+  //--
+  //-- RETURNS:
+  //--   -The size in pins
+  //-------------------------------------------------------------------------
+  function getSize(portBlock) {
+
+    //-- Size by default
+    let size = 1;
+
+    //-- If there exist pins, the size is the number of pins
+    if (portBlock.data.pins) {
+      size = portBlock.data.pins.length;
+    }
+
+    //-- Return the portBlock size
+    return size;
+
+  }
+
+  //-----------------------------------------------------------------------
+  //-- Convert an array of portsInfo to a String
+  //-- Ej. portsInfo --> "a,b[1:0],c"
+  //--
+  //-- INPUTS:
+  //--   * An array of portsInfo
+  //--
+  //-- RETURNS:
+  //--   * A string with the names and range string separated by commas
+  //-----------------------------------------------------------------------
+  function portsInfo2Str(portsInfo) {
+
+    let portNamesArray = [];
+
+    //-- Get the portnames as an Array
+    portsInfo.forEach(port => {
+
+      let range = port.range || port.rangestr || '';
+      let name = port.name + range;
+
+      portNamesArray.push(name);
+    });
+
+    //-- Convert the portnames as strings
+    let portsNameStr = portNamesArray.join(',');
+
+    //-- Return the string
+    return portsNameStr;
+  }
+
+
+  //-- Public classes
+  this.Block = Block;
+  this.InputPortBlock = InputPortBlock;
+  this.OutputPortBlock = OutputPortBlock;
+  this.InputLabelBlock = InputLabelBlock;
+  this.OutputLabelBlock = OutputLabelBlock;
+  this.CodeBlock = CodeBlock;
+  this.MemoryBlock = MemoryBlock;
+  this.ConstantBlock = ConstantBlock;
+  this.InfoBlock = InfoBlock;
+
+  //-- Public functions
+  this.getPins = getPins;
+  this.copyPins = copyPins;
+  this.getSize = getSize;
+  this.portsInfo2Str = portsInfo2Str;
+
+  //-- Public constants 
+  this.BASIC_INPUT = BASIC_INPUT;
+  this.BASIC_OUTPUT = BASIC_OUTPUT;
+  this.BASIC_INPUT_LABEL = BASIC_INPUT_LABEL;
+  this.BASIC_OUTPUT_LABEL = BASIC_OUTPUT_LABEL;
+  this.BASIC_PAIRED_LABELS = BASIC_PAIRED_LABELS;
+  this.BASIC_CODE = BASIC_CODE;
+  this.BASIC_MEMORY = BASIC_MEMORY;
+  this.BASIC_CONSTANT = BASIC_CONSTANT;
+  this.BASIC_INFO = BASIC_INFO;
+
+});

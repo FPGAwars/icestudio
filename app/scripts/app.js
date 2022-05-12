@@ -1,44 +1,81 @@
+//---------------------------------------------------------------------------
+//-- ICESTUDIO Main entry point
+//---------------------------------------------------------------------------
+//-- External packages used:
+//--
+//--  * Alertify: https://www.npmjs.com/package/alertifyjs
+//--     Developing pretty browser dialogs and notifications
+//---------------------------------------------------------------------------
 "use strict";
 
 //-- Disable the jshint Warning: "xxxx defined but never used"
 /*jshint unused:false*/
 
-//-- Global Plugin Manager
-//-- It controlls all the plugins
-//-- Global object declaration
-var ICEpm = new IcePlugManager();
+//-- Global Icestudio
+//-- this is the core system with services, api and communications.
+//-- Group inside different object for eficiency model by V8 engine.
+//-- The global variable should be declared as "var" and not "let" 
+//-- because is accesible from popups windows
+var iceStudio = new Icestudio();
 
 //-- Global CONSOLE. Used for Debugging
 //-- The log file by default is "icestudio.log", located in the
 //-- user home folder
 var iceConsole = new IceLogger();
 
-
 angular
   .module("icestudio", ["ui.bootstrap", "ngRoute", "gettext"])
-  .config([
-    "$routeProvider",
-    function ($routeProvider) {
-      $routeProvider
-        .when("/", {
-          templateUrl: "views/main.html",
-          controller: "MainCtrl",
-        })
-        .otherwise({
-          redirectTo: "/",
-        });
-    },
-  ])
   .run(function (
-    profile,
+    profile,  //-- Icestudio profile file managment
     project,
     common,
     tools,
     utils,
     boards,
     collections,
+
+    //-- Angular-gettext package
+    //-- More info: 
+    //-- https://angular-gettext.rocketeer.be/dev-guide/api/angular-gettext/
     gettextCatalog
-  ) {
+    )
+  {
+    console.log("->DEBUG: app.js");
+
+    /* If in package.json appears development:{mode:true}*/
+    /* activate development tools */
+    tools.ifDevelopmentMode();
+
+    //-- Configure ALERTIFY. Default values
+    alertify.defaults.movable = false;
+    alertify.defaults.closable = false;
+    alertify.defaults.transition = "fade";
+    alertify.defaults.notifier.delay = 3;
+
+    //-- Configure ALERTIFY default labels for the buttons
+    let labels = {
+      ok: gettextCatalog.getString("OK"),
+      cancel: gettextCatalog.getString("Cancel"),
+    };
+    alertify.set("alert", "labels", labels);
+    alertify.set("prompt", "labels", labels);
+    alertify.set("confirm", "labels", labels);
+    
+    //-- Links configuration:
+    //-- All the html elements belonging to the given class
+    //-- will be open in an external browser
+    $(document).delegate(
+      ".action-open-url-external-browser", //-- Selector
+      "click",
+
+      //-- Callback (when the link is clicked)
+      function (e) {
+        e.preventDefault();
+        utils.openUrlExternalBrowser($(this).prop("href"));
+        return false;
+      }
+    );
+
     //-- Load the boards info from their .json files and
     //-- create the GLOBAL Object common.boards
     //-- Read more information about it in the file app/scripts/services/boards.js
@@ -139,10 +176,15 @@ angular
           utils.selectBoardPrompt(function (selectedBoard) {
             var newBoard = boards.selectBoard(selectedBoard);
             profile.set("board", newBoard.name);
+
+            //-- Display a Dialog with the board selected
             alertify.success(
-              gettextCatalog.getString("Board {{name}} selected", {
-                name: utils.bold(newBoard.info.label),
-              })
+
+              //-- Message to show. Board name in Bold
+              gettextCatalog.getString(
+                "Board {{name}} selected", 
+                { name: utils.bold(newBoard.info.label) }
+              )
             );
 
             tools.checkToolchain( () => {}, //-- No callback 
@@ -163,14 +205,16 @@ angular
         );
         project.updateTitle(gettextCatalog.getString("Untitled"));
       });
-      setTimeout(function () {
+     // setTimeout(function () {
         $("#main-icestudio-wrapper").addClass("loaded");
         $("#main-icestudio-load-wrapper").addClass("fade-loaded");
         setTimeout(function () {
           $("#main-icestudio-load-wrapper").addClass("loaded");
           $("#main-icestudio-load-wrapper").removeClass("fade-loaded");
-        }, 3000);
-      }, 4000);
+        }, 1000);
+      //}, 1000);
     });
+    
+    console.log("->DEBUG: app.js: END");
   });
 

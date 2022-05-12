@@ -14,7 +14,6 @@ angular
       utils,
       common,
       gettextCatalog,
-      gettext,
       nodeGettext,
       nodeFs,
       nodeFse,
@@ -1473,7 +1472,15 @@ angular
 
         iceConsole.log("**** FINAL STEP: Checking the installed apio");
 
-       
+        //------- Create the CACHE folders
+        //------- They were removed before installing the toolchain
+        //------- It is necesarry to create them again in order to display
+        //------- the blocks correctly  
+        let storage = new IceHD();
+
+        //-- Cache and Image cache dir
+        storage.mkDir(common.CACHE_DIR);
+        storage.mkDir(common.IMAGE_CACHE_DIR);
 
         //-- Check that the toolchain has been installed
         checkToolchain(function () {
@@ -1490,11 +1497,14 @@ angular
               100
             );
 
-            iceConsole.log("****************** INSTALLATION COMPLETED! **************");
+            iceConsole.log(
+              "****************** INSTALLATION COMPLETED! **************");
             iceConsole.log("\n\n");  
 
             //-- Notification: Installed!
-            alertify.success(gettextCatalog.getString("Toolchain installed"));
+            alertify.success(
+              gettextCatalog.getString("Toolchain installed"));
+              
             setupDriversAlert();
           }
 

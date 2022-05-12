@@ -1,7 +1,7 @@
 {
   "name": "icestudio",
   "flavour": "develop",
-  "version": "0.9.0-1",
+  "version": "0.9.2w",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
     {
@@ -28,12 +28,14 @@
   "window": {
     "width": 900,
     "height": 620,
+    "min_width": 800,
+    "min_height": 300, 
     "resizable": true,
     "position": "center",
     "icon": "resources/images/icestudio-logo.png"
   },
   "apio": {
-    "min": "0.8.0.post1",
+    "min": "0.8.1",
     "max": "1.0.0",
     "extras": [
       "blackiceprog",
@@ -50,9 +52,9 @@
   "dependencies": {
     "ace-builds": "~1.4.12",
     "adm-zip": "0.4.7",
-    "alertifyjs": "~1.11.1",
+    "alertifyjs": "~1.13.1",
     "angular": "~1.6.9",
-    "angular-gettext": "https://github.com/Jesus89/angular-gettext.git#master",
+    "angular-gettext": "2.4.2",
     "angular-gettext-tools": "2.3.5",
     "angular-route": "~1.6.9",
     "angular-ui-bootstrap": "~1.3.3",
@@ -66,7 +68,6 @@
     "fs-extra": "~1.0.0",
     "getos": "~3.0.1",
     "glob": "^7.1.4",
-    "is-online": "~5.2.0",
     "jexcel": "^3.9.1",
     "jointjs": "~2.0.1",
     "jquery": "~3.0.0",
@@ -80,7 +81,7 @@
     "openurl": "~1.1.1",
     "rmdir": "~1.2.0",
     "rsyncwrapper": "~2.0.1",
-    "select2": "~4.0.5",
+    "select2": "~4.1.0-rc.0",
     "sha1": "~1.1.1",
     "snapsvg": "~0.5.1",
     "spark-md5": "^3.0.1",

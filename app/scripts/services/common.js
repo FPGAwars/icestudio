@@ -1,16 +1,30 @@
+//----------------------------------------------------------------------------
+//-- This module defines the global data structures used in Icestudio
+//-- The different Icestudio modules get this information and store it
+//-- in the common module, so that it is always available to the rest 
+//-- of modules
+//----------------------------------------------------------------------------
 "use strict";
 
-/*jshint unused:false*/
-
-//------------------------------------------------------------------------------
-//-- This module defines the global data structures used in Icestudio
-//-- The different Icestudio modules get that information and store it
-//-- in the common module, so that is always available to the rest of modules
-//-----------------------------------------------------------------------------
+//-- Disable the jshint Warning: "xxxx defined but never used"
+/* jshint unused:false */
 
 angular
   .module("icestudio")
-  .service("common", function (nodePath, nodeTmp, nodeFs, _package) {
+  .service("common", 
+    function (
+
+      //-- node Path module
+      //-- More info: https://nodejs.org/docs/latest-v17.x/api/path.html
+      nodePath,  
+
+      //-- Create temporary files and directories
+      //-- More info: https://www.npmjs.com/package/tmp
+      nodeTmp, 
+      nodeFs, 
+      _package
+    )
+  {
 
     // Project version. It defines the current structure for the 
     // icestudio projects (Both in memory and on the .ice files)
@@ -106,10 +120,8 @@ angular
       this.WIN32 && process.arch === "ia32" ? "icestudio_home" : ".icestudio";
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, "icestudio.log");
-    this.ICESTUDIO_DIR = safeDir(
-      nodePath.join(this.BASE_DIR, this.ICESTUDIO_HOME),
-      this
-    );
+    this.ICESTUDIO_DIR = nodePath.join(this.BASE_DIR, this.ICESTUDIO_HOME);
+    
     this.INTERNAL_COLLECTIONS_DIR = nodePath.join(
       this.ICESTUDIO_DIR,
       "collections"
@@ -149,19 +161,7 @@ angular
     this.APIO_VERSION = this.APIO_VERSION_STABLE; //-- Default apio version: STABLE
 
     //-- APIO PACKAGES VERSION to install for the Stable Version
-    this.APIO_PKG_OSS_CAD_SUITE_VERSION = "0.0.7";
-    this.APIO_PKG_DFU_VERSION = "2020.11.24";
-    this.APIO_PKG_ECP5_VERSION = "2019.12.12";
-    this.APIO_PKG_FUJPROG_VERSION = "2020.10.6";
-    this.APIO_PKG_ICESPROG_VERSION = "1.0.0";
-   
-    //-- Packages declared as obsoletes
-    this.APIO_PKG_SYSTEM_VERSION = "1.1.2";
-    this.APIO_PKG_SCONS_VERSION = "3.0.1";
-    this.APIO_PKG_ICE40_VERSION = "2019.12.11";
-    this.APIO_PKG_YOSYS_VERSION = "2019.12.11";
-    this.APIO_PKG_VERILATOR_VERSION = "1.0.0";
-    this.APIO_PKG_IVERILOG_VERSION = "1.1.1";
+    this.APIO_PKG_OSS_CAD_SUITE_VERSION = "0.0.8";
 
     //-- Get the System PATH
     this.PATH = process.env.PATH;
@@ -224,27 +224,9 @@ angular
       /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
 
+    //-- Check the port names. Ex. a[1:0], b
     this.PATTERN_GLOBAL_PORT_LABEL = /^([^\[\]]+)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_GLOBAL_PARAM_LABEL = /^([^\[\]]+)?$/;
-
-    function safeDir(_dir, self) {
-      /* if (self.WIN32) {
-        // Put the env directory to the root of the current local disk when
-        // default path contains non-ASCII characters. Virtualenv will fail to
-        for (var i in _dir) {
-          if (_dir[i].charCodeAt(0) > 127) {
-            const _dirFormat = nodePath.parse(_dir);
-            return nodePath.format({
-              root: _dirFormat.root,
-              dir: _dirFormat.root,
-              base: '.icestudio',
-              name: '.icestudio',
-            });
-          }
-        }
-      }*/
-      return _dir;
-    }
 
     this.setBuildDir = function (buildpath) {
       let fserror = false;
@@ -285,11 +267,13 @@ angular
       storage.mkDir(this.ICESTUDIO_DIR);
     }
 
-    if (!storage.isValidPath(this.CACHE_DIR)) {
-      storage.mkDir(this.CACHE_DIR);
-    }
+    //-- Create the Cache dir
+    //-- If it was not previously created
+    storage.mkDir(this.CACHE_DIR);
 
-    if (!storage.isValidPath(this.IMAGE_CACHE_DIR)) {
-      storage.mkDir(this.IMAGE_CACHE_DIR);
-    }
-  });
+    //-- Create the Image Cache dir
+    //-- If it was not previously created
+    storage.mkDir(this.IMAGE_CACHE_DIR);
+    
+  }
+);

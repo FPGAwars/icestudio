@@ -1,0 +1,25 @@
+{
+    "manifest_ver": "1.0",
+    "id":"zconfigurator",
+    "name": "ZConfigurator",
+    "author":{
+        "name":"Carlos Venegas",
+        "twitter": "@cavearr"
+    },
+    "version":"1.0",
+    "launchAtStartup":false,
+    "icon": "icon.svg",
+    "multipleInstances": false,
+    "gui":{
+        "type":"embedded",
+        "windowed":"true",
+        "layout":["zconfigurator.html"],
+        "style":["css/style.css"],
+        "styleThemed":{"dark":["css/dark.css"],
+                        "light":["css/light.css"]
+        },
+        "styleHost":["css/host.css"],
+        "scripts":["js/configurator.js"],
+        "views":[]
+    }
+}

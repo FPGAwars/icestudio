@@ -90,20 +90,22 @@ Icestudio is a design tool focused on new comers to the FPGA world
 |:----------:|:----------------------------------------:|
 | English (en)   | ![Progress](http://progress-bar.dev/100) |
 | Spanish (en_ES)   | ![Progress](http://progress-bar.dev/100) |
-| French (fr_FR)    | ![Progress](http://progress-bar.dev/90) |
-| Italian (it_IT)   | ![Progress](http://progress-bar.dev/87) |
-| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/87) |
-| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/82)  |
-| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/82) |
-| German (de_DE)    | ![Progress](http://progress-bar.dev/82)  |
-| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/82) |
-| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/82) |
-| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/82) |
-| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/82)  |
-| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/82)  |
-| Greek (el_GR)     | ![Progress](http://progress-bar.dev/75)  |
-| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/75)  |
-| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/75)  |
+| Japanese (ja_JP)  | ![Progress](http://progress-bar.dev/79)  |
+| French (fr_FR)    | ![Progress](http://progress-bar.dev/78) |
+| Italian (it_IT)   | ![Progress](http://progress-bar.dev/77) |
+| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/77) |
+| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/73)  |
+| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/73) |
+| German (de_DE)    | ![Progress](http://progress-bar.dev/73)  |
+| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/73) |
+| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/73) |
+| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/73) |
+| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/73)  |
+| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/68)  |
+| Greek (el_GR)     | ![Progress](http://progress-bar.dev/63)  |
+| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/63)  |
+| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/63)  |
+
 
 
 
@@ -113,6 +115,7 @@ Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/
 
 *Developer note*: use `npm run gettext` to extract the labels from the code.
 
+*Developer note*: use `export NWJS_BUILD_TYPE=sdk` after npm install to enable the chrome web console.
 
 ## Contributors
 
@@ -151,7 +154,7 @@ Licensed under [GPL 2.0](http://opensource.org/licenses/GPL-2.0) and [Creative C
 
 <!-- Badges -->
 
-[version-image]: https://img.shields.io/badge/version-v0.9.0-orange.svg
+[version-image]: https://img.shields.io/badge/version-v0.9.2w-orange.svg
 
 [license-image]: http://img.shields.io/:license-gpl-blue.svg
 

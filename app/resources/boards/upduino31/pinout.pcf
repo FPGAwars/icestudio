@@ -1,0 +1,71 @@
+# -----------------------------------------------------------------------------
+#- UPduino v3.1 constraint file (.pcf)
+#- By tinyVision.ai
+#- Feb - 2022
+#- MIT license
+#- Repo: https://github.com/tinyvision-ai-inc/UPduino-v3.0/
+# -----------------------------------------------------------------------------
+
+# The LED pins are on dedicated pins and cannot be modified!
+# Note that they are negative logic (write a 0 to turn on).
+# These are also brought out to the left side of the board. 
+# Cut the board trace on jumper R28 to disable the onboard 3 color LED.
+set_io --warn-no-port led_green 39
+set_io --warn-no-port led_red	41
+set_io --warn-no-port led_blue	40
+
+# FTDI chip interface
+set_io --warn-no-port serial_txd 14 # FPGA transmit to USB
+set_io --warn-no-port serial_rxd 15 # FPGA receive from USB
+set_io --warn-no-port spi_cs 16 # Connected to SPI flash, drive high unless using SPI flash!
+
+# If using the FTDI MPSSE engine, the following signals apply
+set_io --warn-no-port spi_sck 15  # Shared with the flash
+set_io --warn-no-port spi_ssn 16  # Connected to SPI flash, drive high unless using SPI flash!
+set_io --warn-no-port spi_mosi 17 # Shared with the flash
+set_io --warn-no-port spi_miso 14 # Shared with the flash
+
+# Normal GPIO pins, left side
+set_io --warn-no-port gpio_23 23
+set_io --warn-no-port gpio_25 25
+set_io --warn-no-port gpio_26 26
+set_io --warn-no-port gpio_27 27
+set_io --warn-no-port gpio_32 32
+set_io --warn-no-port gpio_35 35
+set_io --warn-no-port gpio_31 31
+set_io --warn-no-port gpio_37 37
+set_io --warn-no-port gpio_34 34
+set_io --warn-no-port gpio_43 43
+set_io --warn-no-port gpio_36 36
+set_io --warn-no-port gpio_42 42
+set_io --warn-no-port gpio_38 38
+set_io --warn-no-port gpio_28 28
+
+# Normal GPIO pins, right side
+
+# Following pins are added on the v3.0 of the board.
+# SPI pins are brought out to the right side of the board
+
+# Note: On board 12MHz clock can be brought to IOB_25B_G3 (pin 20) which is a global
+# clock input. Short across R16 (labelled OSC on the board) to enable 12MHz clock to
+# pin 20.
+set_io --warn-no-port gpio_20 20
+set_io --warn-no-port gpio_10 10
+
+# Following are also found on v2.x of the UPduino
+set_io --warn-no-port gpio_12 12
+set_io --warn-no-port gpio_21 21
+set_io --warn-no-port gpio_13 13
+set_io --warn-no-port gpio_19 19
+set_io --warn-no-port gpio_18 18
+set_io --warn-no-port gpio_11 11
+set_io --warn-no-port gpio_9 9
+set_io --warn-no-port gpio_6 6
+set_io --warn-no-port gpio_44 44
+set_io --warn-no-port gpio_4 4
+set_io --warn-no-port gpio_3 3
+set_io --warn-no-port gpio_48 48
+set_io --warn-no-port gpio_45 45
+set_io --warn-no-port gpio_47 47
+set_io --warn-no-port gpio_46 46
+set_io --warn-no-port gpio_2 2

@@ -1,6 +1,8 @@
 "use strict";
 /*jshint unused:false*/
+
 class IceBlock {
+  
   constructor(opts) {
     this.constants = {};
     this.config = opts || {};
@@ -30,10 +32,10 @@ class IceBlock {
   }
 
   busLoadFromFile(args) {
-    //console.log('BLOCK LOAD FILE FROM BUS',args);
     this.fs.readFile(args.path, function (path, content) {
       args.obj = JSON.parse(content);
-      ICEpm.publishAt(args.id, "block.loadedFromFile", args);
+      //--  ICEpm.publishAt(args.id, "block.loadedFromFile", args);
+      iceStudio.bus.events.publish('block.loadedFromFile',args);
     });
   }
 

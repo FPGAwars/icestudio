@@ -54,5 +54,7 @@
  {"name": "TDO", "value": "17", "type": "output"},
  {"name": "TDI", "value": "14", "type": "input"}, 
  
- {"name": "NULL", "value": "NULL", "type": "inout"}
+ {"name": "NULL", "value": "NULL", "type": "inout"},
+ {"type": "output", "name": "NULL", "value": "NULL"},
+  {"type": "input", "name": "NULL", "value": "NULL"}
 ]

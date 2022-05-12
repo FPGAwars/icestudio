@@ -8,6 +8,7 @@ angular.module('icestudio')
     profile,
     utils,
     common,
+    blocks,
     gui,
     gettextCatalog,
     nodeFs,
@@ -38,7 +39,7 @@ angular.module('icestudio')
       };
     }
 
-    ICEpm.ebus.subscribe('block.addFromFile','addBlockFile',this);
+    iceStudio.bus.events.subscribe('block.addFromFile','addBlockFile',this);
     
     this.get = function (key) {
       if (key in project) {
@@ -54,29 +55,35 @@ angular.module('icestudio')
         project[key] = obj;
       }
     };
-
-    this.open = function (filepath, emptyPath) {
+ this.open = function (filepath, emptyPath) {
 
       
-      $("body").addClass("waiting");
+      let _this=this;
+      utils.beginBlockingTask();
+      setTimeout(function(){
+      _this._decoupledOpen(filepath,emptyPath);
+      },200);
+ }; 
+    this._decoupledOpen = function(filepath,emptyPath){
+
+
+
+      
       var self = this;
-        
+       
       self.path = emptyPath ? '' : filepath;
       self.filepath = filepath;
-      setTimeout(function(){
       utils.readFile(filepath)
         .then(function (data) {
           var name = utils.basename(filepath);
           self.filename=name;
           self.dirname=utils.dirname(filepath);
-
-        $("body").removeClass("waiting");
           self.load(name, data);
+
         })
         .catch(function () {
           alertify.error(gettextCatalog.getString('Invalid project format'), 30);
         });
-      },2000);
       };
 
     this.load = function (name, data) {
@@ -96,13 +103,18 @@ angular.module('icestudio')
           gettextCatalog.getString('You can load it as it is or convert it for the {{name}} board.', { name: utils.bold(common.selectedBoard.info.label) }),
           function () {
             // Load
-            _load();
+            setTimeout(function(){
+              _load();
+            },100);
           },
           function () {
+
+            setTimeout(function(){
             // Convert
             project.design.board = common.selectedBoard.name;
 
             _load(true, boardMigration(projectBoard, common.selectedBoard.name));
+            },100);
           });
       }
       else {
@@ -270,10 +282,10 @@ angular.module('icestudio')
       for (var b in data.graph.blocks) {
         var block = data.graph.blocks[b];
         switch (block.type) {
-          case 'basic.input':
-          case 'basic.output':
-          case 'basic.outputLabel':
-          case 'basic.inputLabel':
+          case blocks.BASIC_INPUT:
+          case blocks.BASIC_OUTPUT:
+          case blocks.BASIC_OUTPUT_LABEL:
+          case blocks.BASIC_INPUT_LABEL:
             block.data = {
               name: block.data.label,
               pins: [{
@@ -284,14 +296,14 @@ angular.module('icestudio')
               virtual: false
             };
             break;
-          case 'basic.constant':
+          case blocks.BASIC_CONSTANT:
             block.data = {
               name: block.data.label,
               value: block.data.value,
               local: false
             };
             break;
-          case 'basic.code':
+          case blocks.BASIC_CODE:
             var params = [];
             for (var p in block.data.params) {
               params.push({
@@ -558,19 +570,19 @@ angular.module('icestudio')
         for (var i in _project.design.graph.blocks) {
           var block = _project.design.graph.blocks[i];
           switch (block.type) {
-            case 'basic.input':
-            case 'basic.output':
-            case 'basic.outputLabel':
-            case 'basic.inputLabel':
-            case 'basic.constant':
-            case 'basic.memory':
+            case blocks.BASIC_INPUT:
+            case blocks.BASIC_OUTPUT:
+            case blocks.BASIC_OUTPUT_LABEL:
+            case blocks.BASIC_INPUT_LABEL:
+            case blocks.BASIC_CONSTANT:
+            case blocks.BASIC_MEMORY:
               break;
-            case 'basic.code':
+            case blocks.BASIC_CODE:
               for (var j in block.data.ports.in) {
                 delete block.data.ports.in[j].default;
               }
               break;
-            case 'basic.info':
+            case blocks.BASIC_INFO:
               delete block.data.text;
               break;
             default:
@@ -602,7 +614,10 @@ angular.module('icestudio')
       if (subModuleActive && typeof common.submoduleId !== 'undefined' && typeof common.allDependencies[common.submoduleId] !== 'undefined') {
         project.package = common.allDependencies[common.submoduleId].package;
       }
-      var state = graph.getState();
+
+      //-- Get a copy of the current viewstate
+      let state = graph.getState();
+
       project.design.state = {
         pan: {
           x: parseFloat(state.pan.x.toFixed(4)),
@@ -657,10 +672,10 @@ angular.module('icestudio')
       delete block.design.board;
       var i, pins;
       for (i in block.design.graph.blocks) {
-        if (block.design.graph.blocks[i].type === 'basic.input' ||
-          block.design.graph.blocks[i].type === 'basic.output' ||
-          block.design.graph.blocks[i].type === 'basic.outputLabel' ||
-          block.design.graph.blocks[i].type === 'inputLabel'
+        if (block.design.graph.blocks[i].type === blocks.BASIC_INPUT ||
+          block.design.graph.blocks[i].type === blocks.BASIC_OUTPUT ||
+          block.design.graph.blocks[i].type === blocks.BASIC_OUTPUT_LABEL ||
+          block.design.graph.blocks[i].type === blocks.BASIC_INPUT_LABEL
         ) {
           if (block.design.graph.blocks[i].data.size === undefined) {
             pins = block.design.graph.blocks[i].data.pins;

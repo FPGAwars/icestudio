@@ -177,7 +177,14 @@ angular.module('icestudio')
         linux: { label: 'Ctrl+P', ctrl: true, key: 80 },
         mac: { label: '⌘+P', meta: true, key: 80 },
         opt: { prompt: true, disabled: true, preventDefault: true }
-      }
+      },
+
+      //-- DEBUG: This shortcut is just for testing and debugging purposes
+      testing: {
+        linux: { label: 'Ctrl+2', ctrl: true, key: 50 },
+        mac: { label: '⌘+2', meta: true, key: 50 },
+        opt: { disabled: true }
+      },
     };
 
   });

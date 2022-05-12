@@ -1,0 +1,103 @@
+# For iceWerx board
+
+
+#-- Oscillator (12 Mhz)
+set_io --warn-no-port clk P7 # input
+
+#------------ LEDS
+
+#-- Red LED
+set_io --warn-no-port red A5 # output
+
+#-- Green LED
+set_io --warn-no-port green M4 # output
+
+#--- 10-bit A/D convertes
+
+set_io --warn-no-port tx P4 # output
+set_io --warn-no-port adclk P5 # input
+
+#-- 8Mb (1MB) SPI Flash
+set_io --warn-no-port cs P13 # output
+set_io --warn-no-port sck P12 # output
+set_io --warn-no-port sdo M11 # output
+set_io --warn-no-port sdi P11 # input
+
+#-- PL2 (J2) CONNECTOR
+# AD3
+# AD4
+set_io --warn-no-port j2_5  M7 
+set_io --warn-no-port j2_7  M6
+set_io --warn-no-port j2_9  P3
+set_io --warn-no-port j2_11 P2
+set_io --warn-no-port j2_13 M3
+set_io --warn-no-port j2_15 M1
+set_io --warn-no-port j2_17 K3
+set_io --warn-no-port j2_19 J1
+set_io --warn-no-port j2_21 H1
+set_io --warn-no-port j2_23 G1
+set_io --warn-no-port j2_25 E1
+set_io --warn-no-port j2_27 C1
+set_io --warn-no-port j2_29 C3
+set_io --warn-no-port j2_31 A1
+set_io --warn-no-port j2_33 A3
+set_io --warn-no-port j2_35 A4
+
+# Reset
+# 3.3v
+# GND
+# AD1
+# AD2
+set_io --warn-no-port j2_12 P1
+set_io --warn-no-port j2_14 N1
+set_io --warn-no-port j2_16 L1
+set_io --warn-no-port j2_18 J3
+set_io --warn-no-port j2_20 H3
+set_io --warn-no-port j2_22 G3
+set_io --warn-no-port j2_24 F3
+set_io --warn-no-port j2_26 D1
+set_io --warn-no-port j2_28 D3
+set_io --warn-no-port j2_30 B1
+set_io --warn-no-port j2_32 A2
+set_io --warn-no-port j2_34 C4
+set_io --warn-no-port j2_36 C5
+
+#-- PL3 (J3) CONNECTOR
+#5v
+set_io --warn-no-port j3_3  M12
+set_io --warn-no-port j3_5  N14
+set_io --warn-no-port j3_7  K12
+set_io --warn-no-port j3_9  H11
+set_io --warn-no-port j3_11 J12
+set_io --warn-no-port j3_13 G12
+set_io --warn-no-port j3_15 F12
+set_io --warn-no-port j3_17 E12
+set_io --warn-no-port j3_19 D12
+set_io --warn-no-port j3_21 C12
+set_io --warn-no-port j3_23 B14
+set_io --warn-no-port j3_25 A11
+set_io --warn-no-port j3_27 C10
+set_io --warn-no-port j3_29 A10
+set_io --warn-no-port j3_31 D6
+set_io --warn-no-port j3_33 C7
+set_io --warn-no-port j3_35 A7
+
+# GND
+set_io --warn-no-port j3_4  P8
+set_io --warn-no-port j3_6  P14
+set_io --warn-no-port j3_8  L12
+set_io --warn-no-port j3_10 L14
+set_io --warn-no-port j3_12 K14
+set_io --warn-no-port j3_14 H12
+set_io --warn-no-port j3_16 G14
+set_io --warn-no-port j3_18 F14
+set_io --warn-no-port j3_20 E14
+set_io --warn-no-port j3_22 D14
+set_io --warn-no-port j3_24 C14
+set_io --warn-no-port j3_26 A12
+set_io --warn-no-port j3_28 C11
+set_io --warn-no-port j3_30 D10
+set_io --warn-no-port j3_32 D7
+set_io --warn-no-port j3_34 C6
+set_io --warn-no-port j3_36 A6
+

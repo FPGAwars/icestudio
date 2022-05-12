@@ -19,7 +19,8 @@
       "icoboard",
       "kefir",
       "iCE40-HX8K",
-      "icefun"
+      "icefun",
+      "iceWerx"
     ]
   },
   {
@@ -45,6 +46,7 @@
       "upduino2",
       "upduino21",
       "upduino3",
+      "upduino31",
       "fpga101",
       "iCE40-UP5K",
       "fomu",

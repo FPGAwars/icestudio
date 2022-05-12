@@ -1,10 +1,10 @@
 "use strict";
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 //-- Boards
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 //-- CONFIGURATION FILES
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 //-- The Boards are described by three .json files, located in the folder  
 //-- resources/boards/boardname
 //--    * pinout.json:  Pin numbers, names and type (input, output, inout)
@@ -12,9 +12,9 @@
 //--    * rules.json: Automatic connection of unused pins
 //-- 
 //-- In addition there are two more OPTIONAL files:
-//--    * pinout.pcf (optional): Board constraints. This is just for documentation
-//--      purposes (the actual constraint file is automatically generated on 
-//--      the fly when the circuit is being sinthesized)
+//--    * pinout.pcf (optional): Board constraints. This is just for 
+//--      documentation purposes (the actual constraint file is automatically
+//--      generated on the fly when the circuit is being sinthesized)
 //--    * pinout.svg (optional): Drawing of all the pins
 //----------------------------------------------------------------------------
 //-- DATA STRUCTURES
@@ -61,8 +61,8 @@ angular
       let menu = nodeFs.readFileSync(nodePath.join(path, "menu.json"));
       menu = JSON.parse(menu);
       
-      //-- The menu is divided in big sections: The FPGA family: ICE40HX8k, ICE40HX4k, 
-      //-- ICE40LPHX, UP5K, ECP5... 
+      //-- The menu is divided in big sections: The FPGA family: 
+      //-- ICE40HX8k, ICE40HX4k, ICE40LPHX, UP5K, ECP5... 
       menu.forEach(FPGAfamily => {
 
         //-- Access to all the boards from the current family
@@ -74,17 +74,27 @@ angular
 
           //-- Every board should have at least their three MANDATORY files:
           //-- info.json, pinout.json and rules.
-          //--------------------------------------------------------------------
+          //------------------------------------------------------------------
           //-- TODO: It can be improved: It is better to distinguis between
-          //--  among different errores, instead only one. If anyone introduces  
-          //--  a bad board, it is difficult to find where is the error....
-          //--------------------------------------------------------------------
+          //--  different errors, instead only one. If anyone 
+          //--  introduces a bad board, it is difficult to find where is 
+          //--  the error....
+          //------------------------------------------------------------------
           try {
             if (
               nodeFs.statSync(boardPath).isDirectory() &&
-              nodeFs.statSync(nodePath.join(boardPath, "info.json")).isFile() &&
-              nodeFs.statSync(nodePath.join(boardPath, "pinout.json")).isFile() &&
-              nodeFs.statSync(nodePath.join(boardPath, "rules.json")).isFile()
+
+              nodeFs.statSync(
+                nodePath.join(boardPath,"info.json")
+              ).isFile() &&
+
+              nodeFs.statSync(
+                nodePath.join(boardPath, "pinout.json")
+              ).isFile() &&
+
+              nodeFs.statSync(
+                  nodePath.join(boardPath, "rules.json")
+              ).isFile()
             ) {
 
               //-- Board files ok. READ them!!

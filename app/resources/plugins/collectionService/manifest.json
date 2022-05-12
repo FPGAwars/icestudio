@@ -1,0 +1,13 @@
+{
+    "manifest_ver": "1.0",
+    "id":"collectionService",
+    "name": "Collection service in local sandbox",
+    "icon": "img/icestudio-logo.png",
+    "launchAtStartup":true,
+    "gui":{
+        "type":"service",
+        "provider": "collectionServiceWorker.js",
+        "providerMainThread": ["js/CollectionServiceMainThread.js"]
+    },
+    "capability":["core"]
+}

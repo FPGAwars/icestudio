@@ -1,4 +1,5 @@
-[{"type":"input","name":"CLK","value":"P6"},
+[
+  {"type":"input","name":"CLK","value":"P6"},
 {"type":"output","name":"LED","value":"T6","pullmode":"UP"},
 {"type":"input","name":"Button","value":"R7","pullmode":"NONE"},
 {"type":"inout","name":"sdram_clk","value":"C8","pullmode":"NONE"},
@@ -104,7 +105,10 @@
 {"type":"inout","name":"Shared_E","value":"N4","pullmode":"NONE"},
 {"type":"inout","name":"Shared_CLK","value":"M3","pullmode":"NONE"},
 {"type":"inout","name":"Shared_STB","value":"N1","pullmode":"NONE"},
-{"type":"inout","name":"Shared_OE","value":"M4","pullmode":"NONE"}]
+{"type":"inout","name":"Shared_OE","value":"M4","pullmode":"NONE"},
+{"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
+]
 
 
 

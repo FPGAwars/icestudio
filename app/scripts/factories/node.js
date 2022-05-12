@@ -2,9 +2,13 @@
 
 angular.module('icestudio')
   .factory('fastCopy', function() {
+
+    //-- Package for creating deep copies very fast
+    //-- More info: https://www.npmjs.com/package/fast-copy
     return require('fast-copy');
   })
-.factory('sparkMD5', function() {
+
+  .factory('sparkMD5', function() {
     return require('spark-md5');
   })
  
@@ -20,9 +24,13 @@ angular.module('icestudio')
   .factory('nodeSha1', function() {
     return require('sha1');
   })
+
+  //-- Node Path module
+  //-- More info: https://nodejs.org/docs/latest-v17.x/api/path.html
   .factory('nodePath', function() {
     return require('path');
   })
+
   .factory('nodeChildProcess', function() {
     return require('child_process');
   })
@@ -37,9 +45,6 @@ angular.module('icestudio')
   })
   .factory('nodeSudo', function() {
     return require('sudo-prompt');
-  })
-  .factory('nodeOnline', function() {
-    return require('is-online');
   })
   .factory('nodeGlob', function() {
     return require('glob');
@@ -62,9 +67,13 @@ angular.module('icestudio')
   .factory('nodeGetOS', function() {
     return require('getos');
   })
+
+  //-- Create temporary files and directories
+  //-- More info: https://www.npmjs.com/package/tmp
   .factory('nodeTmp', function() {
     return require('tmp');
   })
+  
   .factory('nodeDebounce', function() {
     return require('lodash.debounce');
   })

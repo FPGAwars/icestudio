@@ -150,4 +150,7 @@
 {"type":"inout","name":"P6_L5","value":"L5","pullmode":"NONE"},
 {"type":"inout","name":"P6_P16","value":"P16","pullmode":"NONE"},
 {"type":"inout","name":"P6_J16","value":"J16","pullmode":"NONE"},
-{"type":"inout","name":"P6_J18","value":"J18","pullmode":"NONE"}]
+{"type":"inout","name":"P6_J18","value":"J18","pullmode":"NONE"},
+{"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
+]

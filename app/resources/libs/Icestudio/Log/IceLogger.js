@@ -95,7 +95,7 @@ class IceLogger {
             //-- Convert the input argument into a string
             const txt = this._prettyPrint(msg);
 
-            //-- Write the sting into the log file
+            //-- Write the string into the log file
             this.fs.appendFileSync(this.logFile, `${txt}\n`);
         }
     }
@@ -129,5 +129,15 @@ class IceLogger {
 
         //-- Return the calculated string
         return output;
+    }
+
+    takeScreenshot(){
+
+        chrome.tabs.captureVisibleTab((screenshotUrl) => {  
+            chrome.downloads.download({url:screenshotUrl},function(downloadId){
+            console.log("Log screenshot begin, the downId is:" + downloadId);
+            });
+        });
+
     }
 }

@@ -23,10 +23,16 @@ let SerialManager = function () {
     this.receiverUserF = false;
     this.registeredCallbacks = {};
 
+    //-- Read all the available serial devices
     this.refreshDevices = function (callback) {
+
+        //-- Call the Serial Chrome API
+        //-- TODO: Chrome.Serial API is deprecatedd
+        //-- use Web Serial API instead:
+        //-- https://developer.chrome.com/docs/extensions/reference/serial/
         chrome.serial.getDevices(function (dev) {
             this.devices = dev;
-            if (typeof callback !== 'undefined') callback(dev);
+            callback(dev);
 
         }.bind(this));
     }

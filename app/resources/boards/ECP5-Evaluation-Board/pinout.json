@@ -206,6 +206,8 @@
 {"type":"inout","name":"J31_07","value":"C8","pullmode":"NONE"},
 {"type":"inout","name":"J31_08","value":"B8","pullmode":"NONE"},
 {"type":"inout","name":"J31_09","value":"A7","pullmode":"NONE"},
-{"type":"inout","name":"J31_10","value":"A8","pullmode":"NONE"}
+{"type":"inout","name":"J31_10","value":"A8","pullmode":"NONE"},
+{"type": "output", "name": "NULL", "value": "NULL", "pullmode": "NONE"},
+{"type": "input", "name": "NULL", "value": "NULL", "pullmode": "NONE"}
 
 ]

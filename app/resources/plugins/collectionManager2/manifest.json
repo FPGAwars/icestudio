@@ -1,0 +1,25 @@
+{
+    "manifest_ver": "1.0",
+    "id":"collectionManager2",
+    "name": "Collection Manager",
+    "author":{
+        "name":"Carlos Venegas",
+        "twitter": "@cavearr"
+    },
+    "version":"1.0",
+    "launchAtStartup":false,
+    "icon": "icon.svg",
+    "multipleInstances": false,
+    "gui":{
+        "type":"embedded",
+        "windowed":"true",
+        "layout":["collectionManager.html"],
+        "style":["css/style.css"],
+        "styleThemed":{"dark":["css/dark/dark.css"],
+                        "light":["css/light/light.css"]
+        },
+        "styleHost":["css/host.css"],
+        "scripts":["js/events.js","js/collectionManager.js"],
+        "views":[]
+    }
+}

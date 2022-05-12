@@ -1,5 +1,17 @@
 "use strict";
 
+//-- Nodejs path module
+//-- https://nodejs.org/docs/latest-v17.x/api/path.html
+const path = require('path');
+
+//-- Nodejs URL module
+//-- https://nodejs.org/api/url.html
+const url = require('url');
+
+//-- node fs module
+//-- https://nodejs.org/api/fs.html
+const fs = require('fs');
+
 angular
   .module("icestudio")
   .controller(
@@ -8,229 +20,324 @@ angular
       $rootScope,
       $scope,
       $timeout,
-      boards,
       profile,
       project,
       collections,
       graph,
       tools,
       utils,
+      blocks,
+      forms,
       common,
       shortcuts,
       gettextCatalog,
-      gui,
-      _package,
-      nodeFs,
-      nodePath
-    ) {
-      //-- Initialize scope
 
-      $scope.profile = profile;
-      $scope.project = project;
-      $scope.tools = tools;
-      $scope.common = common;
+      //-- Accesing _package object
+      //-- Defined in module app/scripts/factories/window.js
+      _package
+    ) 
+{
 
-      $scope.version = _package.version;
-      $scope.toolchain = tools.toolchain;
+  //-------------------------------------------------------------------------
+  //-- This code is executed when a new Icestudio Window is created:
+  //--  Either on startup, when a new project is created or when an
+  //--  example is opened
+  //--
+  //-- The new window receives the parameters through the URL
+  //-- Ex. 
+  //-------------------------------------------------------------------------  
 
-      $scope.workingdir = "";
-      $scope.snapshotdir = "";
+  //-- Initialize scope
 
-      var zeroProject = true; // New project without changes
-      var resultAlert = null;
-      var winCommandOutput = null;
+  $scope.profile = profile;
+  $scope.project = project;
+  $scope.tools = tools;
+  $scope.common = common;
 
-      var buildUndoStack = [];
-      var changedUndoStack = [];
-      var currentUndoStack = [];
+  $scope.version = _package.version;
+  $scope.toolchain = tools.toolchain;
 
-      // Window events
-      var win = gui.Window.get();
-      win.on("close", function () {
-        exit();
-      });
-      win.on("resize", function () {
-        graph.fitContent();
-      });
+  $scope.workingdir = "";
+  $scope.snapshotdir = "";
 
-      win.on("restore", function () {
-        graph.fitContent();
-      });
+  let zeroProject = true; // New project without changes
+  let resultAlert = null;
+  let winCommandOutput = null;
 
-      win.on("move", function () {
-        graph.fitContent();
-      });
+  let buildUndoStack = [];
+  let changedUndoStack = [];
+  let currentUndoStack = [];
 
-      // Darwin fix for shortcuts
-      if (process.platform === "darwin") {
-        var mb = new gui.Menu({
-          type: "menubar",
-        });
-        mb.createMacBuiltin("Icestudio");
-        win.menu = mb;
-      }
+  //-----------------------------------
+  // MAIN WINDOW
+  //-----------------------------------
 
-      // New window, get the focus
-      win.focus();
-      // Load app arguments
+  //-- Get the Window object
+  //-- The nw object is globaly available. It contains all the
+  //-- NWjs APIs
+  //-- More information:
+  //--  https://nwjs.readthedocs.io/en/latest/ 
+  let win = nw.Window.get();
 
-      setTimeout(function () {
-        // Parse GET url parmeters for window instance arguments
-        // all arguments will be embeded in icestudio_argv param
-        // that is a JSON string url encoded
+  //-- ONLY MAC:
+  //-- Creates the builtin menus (App, Edit and Window) within the menubar
+  //-- on Mac
+  //-- More information: 
+  //-- https://nwjs.readthedocs.io/en/latest/References/Menu/
+  //-- #menucreatemacbuiltinappname-options-mac
+  if (process.platform === "darwin") {
+  
+    let mb = new nw.Menu({
+      type: "menubar",
+    });
+    
+    mb.createMacBuiltin("Icestudio");
+    win.menu = mb;
+  }
 
-        // https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/unescape
-        // unescape is deprecated javascript function, should use decodeURI instead
+  //-- Get the focus on the main window
+  win.focus();
 
-        var queryStr = "";
-        if (window.location.search.indexOf("?icestudio_argv=") === 0) {
-          queryStr =
-            "?icestudio_argv=" +
-            atob(
-              decodeURI(window.location.search.replace("?icestudio_argv=", ""))
-            ) +
-            "&";
-        } else {
-          queryStr = decodeURI(window.location.search) + "&";
-        }
-        var regex = new RegExp(".*?[&\\?]icestudio_argv=(.*?)&.*");
-        var val = queryStr.replace(regex, "$1");
+  //--------------------------------------------------------------
+  //-- Configure the window events
+  //-- More information:
+  //-- https://nwjs.readthedocs.io/en/latest/References/Window/
+  //--------------------------------------------------------------
 
-        var params = val === queryStr ? false : val;
-        // If there are url params, compatibilize it with shell call
-        if (typeof gui.App.argv === "undefined") {
-          gui.App.argv = [];
-        }
+  //-- Event: Window closed
+  win.on("close", function () {
 
-        var prop;
-        if (params !== false) {
-          params = JSON.parse(decodeURI(params));
+    //-- Call the exit function
+    exit();
+  });
 
-          for (prop in params) {
-            gui.App.argv.push(params[prop]);
-          }
-        }
-        var argv = gui.App.argv;
-        if (
-          typeof window.opener !== "undefined" &&
-          window.opener !== null &&
-          typeof window.opener.opener !== "undefined" &&
-          window.opener.opener !== null
-        ) {
-          argv = [];
-        }
+  //-- Event: The window is maximized
+  win.on("maximize", function () {
 
-        if (params !== false) {
-          for (prop in params) {
-            argv.push(params[prop]);
-          }
-        }
-        var local = false;
-        for (var i in argv) {
-          var arg = argv[i];
-          processArg(arg);
-          local = arg === "local" || local;
-        }
+    //-- Adjust the paper to the new size
+    graph.fitPaper();
+  });
 
-        var editable =
-          !project.path.startsWith(common.DEFAULT_COLLECTION_DIR) &&
-          !project.path.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
-          project.path.startsWith(common.selectedCollection.path);
+  //-- Event: The window was resized
+  win.on("resize", function () {
 
-        if (editable || !local) {
-          updateWorkingdir(project.path);
-        } else {
-          project.path = "";
-        }
-        var versionW = $scope.profile.get("displayVersionInfoWindow");
-        let lastversionReview = $scope.profile.get("lastVersionReview");
-        let hasNewVersion =
-          lastversionReview === false || lastversionReview < _package.version;
-        if (versionW === "yes" || hasNewVersion) {
-          $scope.openVersionInfoWindow(hasNewVersion);
-        }
-      }, 500);
+    //-- When working with big designs it is better not to fit 
+    //-- the contents (Leave it commented)
+    graph.fitPaper();
+    //graph.fitContent();
+  });
 
-      function processArg(arg) {
-        if (nodeFs.existsSync(arg)) {
-          var filepath = arg;
-          project.open(filepath);
-        }
-      }
+  //-- Event: The window was moved
+  win.on("move", function () {
+    //-- When working with big designs it is better not to fit
+    //-- the contents (leave it commented)
+    //graph.fitContent();
+  });
 
-      /*
-       * This function triggers when version info window will be closed
-       *                                                                 */
-      $scope.closeVersionInfoWindow = function () {
-        $("#version-info-tab").addClass("hidden");
-        var nodisplay = $('#version-info-tab--no-display').is(
-          ":checked"
-        );
-        if (nodisplay) {
-          profile.set("displayVersionInfoWindow", "no");
-        } else {
-          profile.set("displayVersionInfoWindow", "yes");
-        }
-      };
+  //-- Emitted when window is restored from minimize, maximize and 
+  //-- fullscreen state.
+  win.on("restore", function () {
+    graph.fitContent();
+  });
 
-      $scope.openVersionInfoWindow = function (showPopUp) {
-        $("#version-info-tab").removeClass("hidden");
-        var versionW = $scope.profile.get("displayVersionInfoWindow");
-        let noShowVersion = false;
-        if (versionW === "no") {
-          noShowVersion = true;
-        }
-        if (typeof showPopUp !== "undefined" && showPopUp === true) {
-          profile.set("displayVersionInfoWindow", "yes");
-          profile.set("lastVersionReview", _package.version);
-          noShowVersion = false;
-        }
 
-        $('#version-info-tab--no-display').prop(
-          "checked",
-          noShowVersion
-        );
-      };
+  //-------------------------------------------------------------------------
+  //-- Read the arguments passed to the app
+  //-- If no arguments, nothing is done (just a blank project)
+  //-- Currenty there is only one argument to pass: The filename of the 
+  //--   icestudio design to open
+  //-------------------------------------------------------------------------
 
-      //-- File
+  //-- The parameters are located in the URL
+  //-- They can be obtained by the global object window.location.search
+  //--  It returns the querystring part of a URL, including the question
+  //--  mark (?).
 
-      $scope.newProject = function () {
-        utils.newWindow();
-      };
+  //-- Build the URL object
+  let myURL = new url.URL("http://index.html" + window.location.search);
 
-      $scope.openProjectDialog = function () {
-        utils.openDialog("#input-open-project", ".ice", function (filepath) {
-          if (zeroProject) {
-            // If this is the first action, open
-            // the projec in the same window
-            updateWorkingdir(filepath);
-            project.open(filepath);
-          } else if (project.changed || !equalWorkingFilepath(filepath)) {
-            // If this is not the first action, and
-            // the file path is different, open
-            // the project in a new window
-            utils.newWindow(filepath);
-          }
-        });
-      };
+  //-- Icestudio file to open on the new window. 
+  //-- There is no .ice file by default
+  let filepath = "";
 
-      $scope.openProject = function (filepath) {
-        if (zeroProject) {
-          // If this is the first action, open
-          // the project in the same window
-          var editable =
-            !filepath.startsWith(common.DEFAULT_COLLECTION_DIR) &&
-            !filepath.startsWith(common.INTERNAL_COLLECTIONS_DIR) &&
-            filepath.startsWith(common.selectedCollection.path);
-          updateWorkingdir(editable ? filepath : "");
-          project.open(filepath, true);
-        } else {
-          // If this is not the first action, and
-          // the file path is different, open
-          // the project in a new window
-          utils.newWindow(filepath, true);
-        }
-      };
+  //-- Get the icestudio_argv param
+  let icestudioArgv = myURL.searchParams.get('icestudio_argv');
+
+  //-- The argument is given as URL
+  //-- It happens when a new icestudio project is created or a file/example
+  //-- are loaded in a new window
+  if (icestudioArgv) {
+
+    //-- Decode the arguments again (from base64 to utf8)
+    //-- What is obtained is a json string
+    let paramsJson = Buffer.from(icestudioArgv, 'base64').toString('utf8');
+
+    //-- Get the final params object
+    let params = JSON.parse(paramsJson);
+
+    //-- Get the filepath
+    filepath = params["filepath"];
+  }
+  //-- No argument through url
+  //-- Check if there was an argument comming from the command line
+  //-- If there are arguments is because it has been start by doble
+  //-- cliking on an .ice file
+  else {
+
+    //-- Read the arguments from nw API
+    let args = nw.App.argv;
+
+    //-- There arguments
+    if (args.length > 0 ) {
+
+      //-- Read the first argument. It should be the filepath
+      filepath = nw.App.argv[0];
+    }
+  }
+ 
+  //-- If there was a .ice file given
+  if (filepath) {
+
+    //-- Check the filepath
+    if (fs.existsSync(filepath)) {
+
+      //-- Open the file
+      project.open(filepath);
+    }
+  }
+
+  //-- Set the working directory for the current design
+  updateWorkingdir(project.path);
+
+  //-- Show the version notes after some time, if the corresponding option
+  //-- was set in the profile
+  setTimeout(function () {
+
+    //-- Get the current state of the version info
+    let versionW = $scope.profile.get("displayVersionInfoWindow");
+
+    //-- Get the latest version used
+    let lastversionReview = $scope.profile.get("lastVersionReview");
+
+    //-- Check if the current version is newer than the one used
+    //-- before
+    let hasNewVersion =
+       lastversionReview === false || lastversionReview < _package.version;
+
+    //-- Display the version notes, if the option is enable or
+    //-- if this is a newer version
+    if (versionW === "yes" || hasNewVersion) {
+      $scope.openVersionInfoWindow();
+    }
+  }, 500);
+
+  
+  //-------------------------------------------------------------------------
+  //--  FUNCTIONS
+  //-------------------------------------------------------------------------
+
+  //-----------------------------------------------------------
+  //-- Display the version notes info window
+  //-----------------------------------------------------------
+  $scope.openVersionInfoWindow = function () {
+
+    //-- The version notes panel is no longer hidden: Show it!
+    $("#version-info-tab").removeClass("hidden");
+
+    //-- Get the state of the version notes: to be displayed or not
+    let versionW = $scope.profile.get("displayVersionInfoWindow");
+
+    //-- Get the state for the "don't display" checkbox
+    let noShowVersion = (versionW === "no");
+
+    //-- Set the state of the "don't display" checkbox
+    $('#version-info-tab--no-display').prop(
+      "checked",
+      noShowVersion
+    );
+  };
+
+  //-------------------------------------------------------------------------
+  //-- Callback function of the CLOSE button from the version notes window
+  //-- The state of the "don't display" checkbox is stored in the
+  //-- profile file
+  //-------------------------------------------------------------------------
+  $scope.closeVersionInfoWindow = function () {
+
+    //-- Hide the version notes window
+    $("#version-info-tab").addClass("hidden");
+
+    //-- Get the state of the "Don't display" checkbox
+    let nodisplay = $('#version-info-tab--no-display').is(
+      ":checked"
+    );
+
+    //-- Write the option to the profile file (so that it is remembered
+    //--  after icestudio is closed)
+    let option = (nodisplay) ? "no" : "yes";
+    profile.set("displayVersionInfoWindow", option);
+    profile.set("lastVersionReview", _package.version);
+  };
+
+
+  //---------------------------------------------------------------------
+  //-- CALLBACK FUNCTIONS for the File MENU
+  //---------------------------------------------------------------------
+
+  //-- FILE/New
+  $scope.newProject = () => {
+
+    //-- Create a new blank icestudio window
+    //-- A non-existant file is passed as a parameters
+    //-- It let us distinguis if the new window was created because of
+    //-- a new file or it was the first window opened
+    utils.newWindow("Untitled.ice");
+  };
+
+
+  //-------------------------------------------------------------------------
+  //-- FILE/Open
+  //-- Open a new .ice file and load it in Icestudio
+  //-- A Dialog for selecting the file is displayed
+  //-------------------------------------------------------------------------
+  $scope.openProjectDialog = function () {
+
+    //-- Open the file Dialog
+    //-- The selecter is passed as a parameter
+    //-- The html element is located in the menu.html file
+    utils.openDialog("#input-open-project", function (filepath) {
+
+      //-- Open the file in icestudio
+      $scope.openProject(filepath);
+
+    });
+  };
+
+  //--------------------------------------------------------------------------
+  //-- Open an icestudio File directly (No Dialog)
+  //--
+  //-- INPUTS:
+  //--   * filepath (String): Icestudio file to open
+  //--------------------------------------------------------------------------
+  $scope.openProject = function (filepath) {
+
+    if (zeroProject) {
+      // If this is the first action, open
+      // the project in the same window
+     
+      updateWorkingdir(filepath);
+      project.open(filepath);
+
+    } 
+    else if (project.changed || !equalWorkingFilepath(filepath)) {
+      // If this is not the first action, and
+      // the file path is different, open
+      // the project in a new window
+      utils.newWindow(filepath);
+    }
+  };
+
+
 
       $scope.saveProject = function () {
         if (
@@ -240,7 +347,9 @@ angular
           alertify.alert(
             gettextCatalog.getString("Save submodule"),
             gettextCatalog.getString(
-              'To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'
+              'To save your design you need to lock the keylock and \
+              go to top level design.<br/><br/>If you want to export \
+              this submodule to a file, execute "Save as" command to do it.'
             ),
             function () { }
           );
@@ -283,7 +392,9 @@ angular
           alertify.confirm(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-              'You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'
+              'You are editing a submodule, if you save it, you save only \
+              the submodule (in this situation "save as" works like \
+              "export module"), Do you like to continue?'
             ),
             function () {
               $scope.doSaveProjectAs(localCallback);
@@ -306,10 +417,10 @@ angular
         if (
           (selected &&
             filepath.startsWith(
-              nodePath.join(common.INTERNAL_COLLECTIONS_DIR, selected)
+              path.join(common.INTERNAL_COLLECTIONS_DIR, selected)
             )) ||
           filepath.startsWith(
-            nodePath.join(profile.get("externalCollections"), selected)
+            path.join(profile.get("externalCollections"), selected)
           )
         ) {
           collections.selectCollection(common.selectedCollection.path);
@@ -322,12 +433,13 @@ angular
 
       $scope.addAsBlock = function () {
         var notification = true;
-        utils.openDialog("#input-add-as-block", ".ice", function (filepaths) {
-          filepaths = filepaths.split(";");
-          for (var i in filepaths) {
-            project.addBlockFile(filepaths[i], notification);
-          }
-        });
+        utils.openDialog("#input-add-as-block", 
+          function (filepaths) {
+            filepaths = filepaths.split(";");
+            for (var i in filepaths) {
+              project.addBlockFile(filepaths[i], notification);
+            }
+          });
       };
 
       $scope.exportVerilog = function () {
@@ -396,7 +508,7 @@ angular
               // Copy the built file
               if (
                 utils.copySync(
-                  nodePath.join(common.BUILD_DIR, "hardware" + ext),
+                  path.join(common.BUILD_DIR, "hardware" + ext),
                   filepath
                 )
               ) {
@@ -413,14 +525,36 @@ angular
           .catch(function () { });
       }
 
+      //---------------------------------------------------------------------
+      //-- Store the current working directory
+      //-- It is extracted from the given filepath
+      //--
+      //--  Ex. filepath = "/home/obijuan/test.ice"
+      //--  The current working directory is set to "/home/obijuan/"
+      //---------------------------------------------------------------------
       function updateWorkingdir(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + utils.sep;
+
+        //-- Get the directory name
+        //-- Ex. "/home/obijuan"
+        let dirname = path.dirname(filepath);
+
+        //-- Add the final separator
+        //-- Ex. "/home/obijuan/"
+        let workingdir = path.join(dirname, path.sep);
+
+        //-- Store the current working directory
+        $scope.workingdir = workingdir;
+
+        //-- Debug:
+        console.log("Working dir: " + $scope.workingdir);
       }
+
 
       function equalWorkingFilepath(filepath) {
         return $scope.workingdir + project.name + ".ice" === filepath;
       }
 
+    
       $scope.quit = function () {
         exit();
       };
@@ -433,7 +567,8 @@ angular
           alertify.set("confirm", "defaultFocus", "cancel");
           alertify.confirm(
             utils.bold(
-              gettextCatalog.getString("Do you want to close the application?")
+              gettextCatalog.getString("Do you want to close " + 
+                                       "the application?")
             ) +
             "<br>" +
             gettextCatalog.getString(
@@ -457,14 +592,17 @@ angular
           _exit();
         }
 
+        //-----------------------------
+        //-- Close the current window
+        //-----------------------------
         function _exit() {
-          //win.hide();
           win.close(true);
         }
       }
 
-      //-- Edit
-
+      //---------------------------------------------------------------------
+      //-- CALLBACK FUNCIONTS for the EDIT MENU
+      //---------------------------------------------------------------------
       $scope.undoGraph = function () {
         graph.undo();
       };
@@ -526,193 +664,269 @@ angular
       $scope.fitContent = function () {
         graph.fitContent();
       };
+
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- log filename
+      //---------------------------------------------------------------------
       $scope.setLoggingFile = function () {
+
+        //-- Get the current log file
         const lFile = profile.get("loggingFile");
-        const formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the file to output logging info"
-            ),
-            value: lFile || "",
-          },
-        ];
-        utils.renderForm(formSpecs, function (evt, values) {
-          var newLFile = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          if (newLFile !== lFile) {
-            const hd = new IceHD();
-            const separator =
-              common.DARWIN === false && common.LINUX === false ? "\\" : "/";
 
-            const dirLFile = newLFile.substring(
-              0,
-              newLFile.lastIndexOf(separator) + 1
+        //-- Create the form
+        let form = new forms.FormLogfile(lFile);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          //-- The results are stored inside the form
+          //-- In case of error the corresponding notifications are raised
+          form.process(evt);
+
+          //-- If there were errors, the form is not closed
+          //-- Return without clossing
+          if (evt.cancel) {
+            return;
+          } 
+
+          //-- Read the new logfile
+          let newLogfile = form.values[0];
+
+          //-- If there was not a change in the log file... return
+          if (newLogfile === lFile) {
+            return;
+          }
+
+          const hd = new IceHD();
+          const separator =
+            common.DARWIN === false && common.LINUX === false ? "\\" : "/";
+
+          const dirLFile = newLogfile.substring(
+            0,
+            newLogfile.lastIndexOf(separator) + 1
+          );
+
+          //-- If the file is valid..
+          if (newLogfile === "" || hd.isValidPath(dirLFile)) {
+
+            //-- Set the new file
+            profile.set("loggingFile", newLogfile);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("Logging file updated")
             );
+          }
+          //-- The file is not valid 
+          else {
 
-            if (newLFile === "" || hd.isValidPath(dirLFile)) {
-              profile.set("loggingFile", newLFile);
-              alertify.success(
-                gettextCatalog.getString("Logging file updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newLFile,
-                  },
-                  5
-                )
-              );
-            }
+            //-- Notify the error
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newLogfile,
+                },
+                5
+              )
+            );
           }
         });
       };
+
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- external plugin path
+      //---------------------------------------------------------------------
       $scope.setExternalPlugins = function () {
-        var externalPlugins = profile.get("externalPlugins");
-        var formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString("Enter the external plugins path"),
-            value: externalPlugins || "",
-          },
-        ];
-        utils.renderForm(formSpecs, function (evt, values) {
-          var newExternalPlugins = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+
+        //-- Get the current external Plugin path
+        const externalPlugins = profile.get("externalPlugins");
+
+        //-- Create the form
+        let form = new forms.FormExternalPlugins(externalPlugins);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new plugins path
+          let newPath = form.values[0];
+
+          //-- If there was not a change... return
+          if (newPath === externalPlugins) {
+            return;
           }
-          if (newExternalPlugins !== externalPlugins) {
-            if (
-              newExternalPlugins === "" ||
-              nodeFs.existsSync(newExternalPlugins)
-            ) {
-              profile.set("externalPlugins", newExternalPlugins);
-              alertify.success(
-                gettextCatalog.getString("External plugins updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newExternalPlugins,
-                  },
-                  5
-                )
-              );
-            }
+
+          //-- If the file is valid...
+          if ( newPath === "" || fs.existsSync(newPath)) {
+
+             //-- Set the new file
+            profile.set("externalPlugins", newPath);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("External plugins updated")
+            );
+          }
+          //-- The file is not valid 
+          else {
+            //-- Notify the error
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newPath,
+                },
+                5
+              )
+            );
           }
         });
-      };
+      }; 
+
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- python path
+      //---------------------------------------------------------------------
       $scope.setPythonEnv = function () {
+
+        //-- Get the current python path
         let pythonEnv = profile.get("pythonEnv");
-        let formSpecs = [
-          {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the python version > 3.8 path"
-            ),
-            value: pythonEnv.python || "",
-          },
-          {
-            type: "text",
-            title: gettextCatalog.getString("Enter the pip version > 3.8 path"),
-            value: pythonEnv.pip || "",
-          },
-        ];
-        utils.renderForm(formSpecs, function (evt, values) {
-          let newPythonPath = values[0];
-          let newPipPath = values[1];
 
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+        //-- Create the form
+        let form = new forms.FormPythonEnv(pythonEnv.python, pythonEnv.pip);
+
+        //-- Display the form
+        form.display((evt) => {
+
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new paths
+          let newPythonPath = form.values[0];
+          let newPipPath = form.values[1];
+
+          //-- If there where no changes.. return
+          if ( newPythonPath === pythonEnv.python &&
+               newPipPath === pythonEnv.pip) {
+                 return;
           }
+
+          //-- If the files are valid...
           if (
-            newPythonPath !== pythonEnv.python ||
-            newPipPath !== pythonEnv.pip
-          ) {
-            if (
-              (newPythonPath === "" || nodeFs.existsSync(newPythonPath)) &&
-              (newPipPath === "" || nodeFs.existsSync(newPipPath))
-            ) {
-              let newPythonEnv = { python: newPythonPath, pip: newPipPath };
-              profile.set("pythonEnv", newPythonEnv);
-
-              alertify.success(
-                gettextCatalog.getString("Python Environment updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: "of python or pip",
-                  },
-                  5
-                )
-              );
-            }
-          }
-        });
-      };
-
-      $scope.setExternalCollections = function () {
-        var externalCollections = profile.get("externalCollections");
-        var formSpecs = [
+            (newPythonPath === "" || fs.existsSync(newPythonPath)) &&
+            (newPipPath === "" || fs.existsSync(newPipPath))) 
           {
-            type: "text",
-            title: gettextCatalog.getString(
-              "Enter the external collections path"
-            ),
-            value: externalCollections || "",
-          },
-        ];
-        utils.renderForm(formSpecs, function (evt, values) {
-          var newExternalCollections = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
+            //-- The files are valid...
+            //-- Set them in the profile
+            let newPythonEnv = { 
+              python: newPythonPath, pip: newPipPath 
+            };
+            profile.set("pythonEnv", newPythonEnv);
+
+            //-- Notify to the user
+            alertify.success(
+              gettextCatalog.getString("Python Environment updated")
+            );
           }
-          if (newExternalCollections !== externalCollections) {
-            if (
-              newExternalCollections === "" ||
-              nodeFs.existsSync(newExternalCollections)
-            ) {
-              profile.set("externalCollections", newExternalCollections);
-              collections.loadExternalCollections();
-              collections.selectCollection(); // default
-              utils.rootScopeSafeApply();
-              if (
-                common.selectedCollection.path.startsWith(
-                  newExternalCollections
-                )
-              ) {
-              }
-              alertify.success(
-                gettextCatalog.getString("External collections updated")
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  "Path {{path}} does not exist",
-                  {
-                    path: newExternalCollections,
-                  },
-                  5
-                )
-              );
-            }
+          //-- The file is not valid 
+          else {
+            //-- Notify the user
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: "of python or pip",
+                },
+                5
+              )
+            );
           }
         });
       };
 
+      //---------------------------------------------------------------------
+      //-- Display a form for asking the user to introduce the
+      //-- external collections path
+      //---------------------------------------------------------------------
+      $scope.setExternalCollections = function () {
+
+        //-- Get the current external collection path
+        let externalCollections = profile.get("externalCollections") || "";
+
+        //-- Create the form
+        let form = new forms.FormExternalCollections(externalCollections);
+
+        //-- Display the form
+        form.display((evt) => {
+          //-- The callback is executed when the user has pressed the 
+          //-- OK button
+
+          //-- Process the information in the form
+          form.process(evt);
+
+          //-- Read the new path
+          let newExternalCollections = form.values[0];
+
+          //-- If there where no changes.. return
+          if (newExternalCollections === externalCollections) {
+            return;
+          }
+
+          //-- If the file is valid...
+          if (
+            newExternalCollections === "" ||
+            fs.existsSync(newExternalCollections)
+          ) {
+            //-- The file is valida...
+            //-- Set it in the profile
+            profile.set("externalCollections", newExternalCollections);
+
+            //-- Load the collections
+            collections.loadExternalCollections();
+            collections.selectCollection(); // default
+            utils.rootScopeSafeApply();
+
+            //-- Notify the user
+            alertify.success(
+              gettextCatalog.getString("External collections updated")
+            );
+          } 
+          //-- The file is not valid
+          else {
+            //-- Notify the user
+            evt.cancel = true;
+            resultAlert = alertify.error(
+              gettextCatalog.getString(
+                "Path {{path}} does not exist",
+                {
+                  path: newExternalCollections,
+                },
+                5
+              )
+            );
+          }
+        });
+      };
+
+      
       $(document).on("infoChanged", function (evt, newValues) {
         var values = getProjectInformation();
         if (!_.isEqual(values, newValues)) {
@@ -800,7 +1014,9 @@ angular
               graph.loadDesign(project.get("design"), {
                 disabled: false,
               });
-              //alertify.success(gettextCatalog.getString('Language {{name}} selected',  { name: utils.bold(language) }));
+              //alertify.success(
+              //  gettextCatalog.getString('Language {{name}} selected',
+              //  { name: utils.bold(language) }));
             }
           );
           // Rearrange the collections content
@@ -827,12 +1043,12 @@ angular
               });
             }
           );
-          ICEpm.publishAt('all', 'ui.updateTheme', { uiTheme: theme });
+          //ICEpm.publishAt('all', 'ui.updateTheme', { uiTheme: theme });
         }
       };
 
       $scope.showPCF = function () {
-        gui.Window.open(
+        nw.Window.open(
           "resources/viewers/plain/pcf.html?board=" + common.selectedBoard.name,
           {
             title: common.selectedBoard.info.label + " - PCF",
@@ -849,11 +1065,11 @@ angular
       $scope.showPinout = function () {
         var board = common.selectedBoard;
         if (
-          nodeFs.existsSync(
-            nodePath.join("resources", "boards", board.name, "pinout.svg")
+          fs.existsSync(
+            path.join("resources", "boards", board.name, "pinout.svg")
           )
         ) {
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/svg/pinout.html?board=" + board.name,
             {
               title: common.selectedBoard.info.label + " - Pinout",
@@ -877,7 +1093,7 @@ angular
       $scope.showDatasheet = function () {
         var board = common.selectedBoard;
         if (board.info.datasheet) {
-          gui.Shell.openExternal(board.info.datasheet);
+          nw.Shell.openExternal(board.info.datasheet);
         } else {
           alertify.error(
             gettextCatalog.getString("{{board}} datasheet not defined", {
@@ -893,7 +1109,7 @@ angular
         var rules = JSON.stringify(board.rules);
         if (rules !== "{}") {
           var encRules = encodeURIComponent(rules);
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/table/rules.html?rules=" + encRules,
             {
               title: common.selectedBoard.info.label + " - Rules",
@@ -951,7 +1167,7 @@ angular
           `&app_dir=${encodeURIComponent(common.APP_DIR)}---`;
 
         //-- Create the window
-        gui.Window.open(URL, {
+        nw.Window.open(URL, {
           title: "System Info",
           focus: true,
           resizable: false,
@@ -979,7 +1195,7 @@ angular
         var collection = common.selectedCollection;
         var readme = collection.content.readme;
         if (readme) {
-          gui.Window.open(
+          nw.Window.open(
             "resources/viewers/markdown/readme.html?readme=" + readme,
             {
               title:
@@ -1006,7 +1222,7 @@ angular
       };
 
       $scope.showCommandOutput = function () {
-        winCommandOutput = gui.Window.open(
+        winCommandOutput = nw.Window.open(
           "resources/viewers/plain/output.html?content=" +
           encodeURIComponent(common.commandOutput),
           {
@@ -1103,10 +1319,9 @@ angular
       };
 
       $scope.buildCode = function () {
-        if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
-        ) {
+        console.log('BUILDCODE',common);
+        console.log('STACK',graph.breadcrumbs);
+        if ( graph.breadcrumbs.length > 1 ) {
           alertify.alert(
             gettextCatalog.getString("Build"),
             gettextCatalog.getString(
@@ -1130,10 +1345,8 @@ angular
       };
 
       $scope.uploadCode = function () {
-        if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
-        ) {
+
+        if ( graph.breadcrumbs.length > 1 ) {
           alertify.alert(
             gettextCatalog.getString("Upload"),
             gettextCatalog.getString(
@@ -1175,7 +1388,7 @@ angular
       }
 
       $scope.addCollections = function () {
-        utils.openDialog("#input-add-collection", ".zip", function (filepaths) {
+        utils.openDialog("#input-add-collection", function (filepaths) {
           filepaths = filepaths.split(";");
           tools.addCollections(filepaths);
         });
@@ -1184,7 +1397,7 @@ angular
       $scope.reloadCollections = function () {
         collections.loadAllCollections();
         collections.selectCollection(common.selectedCollection.path);
-        ICEpm.setEnvironment(common);
+        //ICEpm.setEnvironment(common);
       };
 
       $scope.removeCollection = function (collection) {
@@ -1379,11 +1592,22 @@ angular
         if (graph.isEnabled()) {
           removeSelected();
         } else {
-          $rootScope.$broadcast("breadcrumbsBack");
+          console.log("--------> BACK!!!!");
+          //-- When inside a block in non-edit mode
+          //-- the back key causes it to return to 
+          //-- the top-main module
+
+          //-- Changed: The Back key is disabled by default
+          //--  (asked by joaquim) 
+          //-- (Uncomment the next sentence  for enabling it)
+         // $rootScope.$broadcast("breadcrumbsBack");
         }
       });
 
       shortcuts.method("takeSnapshot", takeSnapshot);
+
+      //-- Shortcut for Testing and Debugging
+      shortcuts.method("testing", testing);
 
       $(document).on("keydown", function (event) {
         var opt = {
@@ -1595,8 +1819,8 @@ angular
 
         //-- label filter + indexing
         for (let i = 0; i < graphCells.length; i++) {
-          if (graphCells[i].attributes.blockType === 'basic.inputLabel' ||
-              graphCells[i].attributes.blockType === 'basic.outputLabel') {
+          if (graphCells[i].attributes.blockType === blocks.BASIC_INPUT_LABEL ||
+              graphCells[i].attributes.blockType === blocks.BASIC_OUTPUT_LABEL) {
             if (parsedSearch && parsedSearch.name.length > 0 &&
                   graphCells[i].attributes.data.name.match(reName) !== null) {           
               for (let j = 0; j < htmlIoBlocks.length; j++) {
@@ -1709,7 +1933,6 @@ angular
       $(document).on("mousemove", function (e) {
         mousePosition.x = e.pageX;
         mousePosition.y = e.pageY;
-
         if (mouseDownTB === true){
           let posY = mousePosition.y - 40;
           let posX = mousePosition.x - 80;
@@ -1744,6 +1967,9 @@ angular
         icons: false
       };
 
+      //----------------------------------------------------
+      //-- Callback function for the EDIT/TOOLBOX option
+      //----------------------------------------------------
       function showToolBox() {
         if (toolbox.dom === false) {
           toolbox.dom = $('#iceToolbox');
@@ -1779,26 +2005,85 @@ angular
           toolbox.dom.addClass('opened');
         }
       }
+
+      //-----------------------------------------------------------------
+      //-- Callback function for the ToolBox menu. Whenever an option
+      //-- is selected, this function is executed
+      //-----------------------------------------------------------------
       $(document).delegate('.js-shortcut--action', 'click', function (e) {
+
         e.preventDefault();
 
-        let target = $(this).data('item');
-        switch (target) {
-          case 'input': project.addBasicBlock('basic.input'); break;
-          case 'output': project.addBasicBlock('basic.output'); break;         
-          case 'labelInput': project.addBasicBlock('basic.outputLabel'); break;
-          case 'labelOutput': project.addBasicBlock('basic.inputLabel'); break;
-          case 'memory': project.addBasicBlock('basic.memory'); break;
-          case 'code': project.addBasicBlock('basic.code'); break;
-          case 'information': project.addBasicBlock('basic.info'); break;
-          case 'constant': project.addBasicBlock('basic.constant'); break;
-          case 'verify': $scope.verifyCode(); break;
-          case 'build': $scope.buildCode(); break;
-          case 'upload': $scope.uploadCode(); break;
+        //-- Read the item selected
+        let menuOption = $(this).data('item');
+
+        //-- Call the callback function for every menu option
+        switch (menuOption) {
+
+          //-- Input: Place an input port
+          case 'input': 
+            project.addBasicBlock(blocks.BASIC_INPUT); 
+            break;
+
+          //-- Output: Place an output port
+          case 'output': 
+            project.addBasicBlock(blocks.BASIC_OUTPUT); 
+            break;
+
+          //-- Input label
+          case 'labelInput': 
+            project.addBasicBlock(blocks.BASIC_OUTPUT_LABEL); 
+            break;
+
+          //-- Output label
+          case 'labelOutput': 
+            project.addBasicBlock(blocks.BASIC_INPUT_LABEL);
+            break;
+
+          //-- Paired labels
+          case 'labelPaired':
+            project.addBasicBlock(blocks.BASIC_PAIRED_LABELS);
+            break;
+
+          case 'memory': 
+            project.addBasicBlock(blocks.BASIC_MEMORY); 
+            break;
+
+          case 'code': 
+            project.addBasicBlock(blocks.BASIC_CODE); 
+            break;
+
+          case 'information': 
+            project.addBasicBlock(blocks.BASIC_INFO); 
+            break;
+
+          case 'constant': 
+            project.addBasicBlock(blocks.BASIC_CONSTANT); 
+            break;
+
+          case 'verify': 
+            $scope.verifyCode(); 
+            break;
+
+          case 'build': 
+            $scope.buildCode(); 
+            break;
+
+          case 'upload': 
+            $scope.uploadCode(); 
+            break;
         }
         return false;
       });
       //-- END BASIC TOOLBOX
+
+      //---------------------------------------------------------------------
+      //-- testing. Function for Debugging
+      //---------------------------------------------------------------------
+      function testing() {
+        console.log("--> TESTING!!!!! ");
+        alertify.alert('<b>Ready!</b> ' + process.platform);
+      }
 
       function takeSnapshot() {
         win.capturePage(function (img) {
@@ -1812,7 +2097,7 @@ angular
 
       function saveSnapshot(base64Data) {
         utils.saveDialog("#input-save-snapshot", ".png", function (filepath) {
-          nodeFs.writeFile(filepath, base64Data, "base64", function (err) {
+          fs.writeFile(filepath, base64Data, "base64", function (err) {
             $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
             $scope.$apply();
             if (!err) {
@@ -1907,7 +2192,6 @@ angular
           }
         }
       }
-      ICEpm.ebus.subscribe("menu.collection", ebusCollection);
-    }
-  );
+      iceStudio.bus.events.subscribe("menu.collection", ebusCollection);
+});
 

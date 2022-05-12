@@ -4,6 +4,7 @@ angular.module('icestudio')
   .service('utils', function ($rootScope,
     gettextCatalog,
     common,
+    forms,
     _package,
     window,
     nodeFs,
@@ -11,12 +12,10 @@ angular.module('icestudio')
     nodePath,
     nodeChildProcess,
     nodeExtract,
-    nodeOnline,
     nodeSha1,
     nodeCP,
     nodeGetOS,
     nodeLangInfo,
-    gui,
     SVGO,
     fastCopy,
     sparkMD5) {
@@ -312,16 +311,15 @@ angular.module('icestudio')
     //-- Check if there is internet connection
     //--
     this.isOnline = function (callback, error) {
-      nodeOnline({
-        timeout: 5000
-      }, function (err, online) {
-        if (online) {
-          callback();
-        } else {
-          error();
-          callback(true);
-        }
-      });
+
+      if (navigator.onLine) {
+
+        callback();
+      } else {
+        error();
+        callback(true);
+      }
+
     };
 
 
@@ -357,7 +355,7 @@ angular.module('icestudio')
     };
 
 
-    //------------------------------------------------
+    //------------------------------------------------------------------------
     //-- Return the parameters needed for pip for installing  
     //-- the apio toolchains. The version to install is read  
     //-- from the common.APIO_VERSION global object
@@ -366,6 +364,7 @@ angular.module('icestudio')
 
       //-- Get the extra python packages to install
       let extraPackages = _package.apio.extras || [];
+      let extraPackagesString = "";
 
       //-- Get the pip string with the version
       //-- Stable: "==0.6.0"
@@ -374,24 +373,30 @@ angular.module('icestudio')
 
       if (common.APIO_VERSION === common.APIO_VERSION_STABLE) {
 
-        //-- The stable version to installed is read from the icestucio app/package.json:
+        //-- The stable version to installed is read from the 
+        //  icestudio app/package.json:
         //-- apio.min object!
         versionString = "==" + _package.apio.min;
-      }
 
-      //---- WARNING! It is just for testing in the current WIP
-      //-- TEMP FIX: Just for testing. Add a version to the "latest apio version"
-      //if (common.APIO_VERSION === common.APIO_VERSION_LATEST_STABLE) {
-      //  versionString = "==" + "0.8.0";  //-- This version is WIRED! JUST FOR TESTING
-      //}
+        //-- Get the extraPackages. Only used when installing the stable 
+        //-- version
+        //-- Bug in Windows: If the extra packages are used during the apio
+        //-- upgrading (installing the latest stable), apio is not upgraded
+        extraPackagesString = "[" + extraPackages.toString() + "]";
+      }
 
       //-- Get the apio package name:
       //-- Stable and latest stable: "apio"
       //-- dev: "git+https://github.com/FPGAwars/apio.git@develop#egg=apio"
-      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ? common.APIO_PIP_VCS : "apio";
+      let apio = (common.APIO_VERSION === common.APIO_VERSION_DEV) ?
+        common.APIO_PIP_VCS :
+        "apio";
 
       //-- Get the pip params for installing apio
-      const params = "install -U " + apio + "[" + extraPackages.toString() + "]" + versionString;
+      const params = "install -U " + apio + extraPackagesString +
+        versionString;
+
+      console.log("--> DEBUG: Params paased to pip: " + params);
 
       return params;
     };
@@ -409,15 +414,17 @@ angular.module('icestudio')
     //-- The toolchains are NOT disabled by default
     this.toolchainDisabled = false;
 
-    //---------------------------------------------------------------------------
+    //------------------------------------------------------------------------
     //-- Get the command that should be used for executing the apio toolchain
     //-- This command includes the full path to apio executable, as well as  
     //-- the setting of the APIO_HOME_DIR environment variable
     this.getApioExecutable = function () {
 
-      //-- Check if the ICESTUDIO_APIO env variable is set with the apio toolchain to use  or  
-      //-- if it has been set on the package.json file
-      let candidateApio = process.env.ICESTUDIO_APIO ? process.env.ICESTUDIO_APIO : _package.apio.external;
+      //-- Check if the ICESTUDIO_APIO env variable is set with the apio 
+      //-- toolchain to use  or if it has been set on the package.json file
+      let candidateApio = process.env.ICESTUDIO_APIO ?
+        process.env.ICESTUDIO_APIO :
+        _package.apio.external;
 
       //-- The is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
@@ -430,15 +437,17 @@ angular.module('icestudio')
         return coverPath(candidateApio);
       }
 
-      //-- There are no external apio toolchain. Use the one installed by icestudio
+      //-- There are no external apio toolchain. Use the one installed 
+      //-- by icestudio
       this.toolchainDisabled = false;
 
-      //-- The apio command to execute is located in the common.APIO_CMD global object
+      //-- The apio command to execute is located in the 
+      //-- common.APIO_CMD global object
       return common.APIO_CMD;
     };
 
 
-    //-------------------------------------------------------------------------
+    //-----------------------------------------------------------------------
     //-- Remove the toolchains and related folders
     //-- 
     this.removeToolchain = function () {
@@ -490,7 +499,8 @@ angular.module('icestudio')
       let localdir = filepath.substr(0, filepath.lastIndexOf(b));
       let dirname = b.substr(0, b.lastIndexOf('.'));
       let path = nodePath.join(localdir, 'ice-build');
-      //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
+      // If we want to remove spaces 
+      // return nodePath.join(path,dirname).replace(/ /g, '_');
       return nodePath.join(path, dirname);
     };
 
@@ -509,31 +519,12 @@ angular.module('icestudio')
               } else {
 
                 var data = false;
+                data = isJSON(content);
 
-                let name = basename(filepath);
-                let test = true;
-                if (test && typeof ICEpm !== 'undefined' &&
-                  ICEpm.isFactory(name)) {
-
-                  ICEpm.factory(name, content, function (data) {
-                    if (data) {
-                      // JSON data
-                      resolve(data);
-                    } else {
-                      reject();
-                    }
-                  });
-
+                if (data) {
+                  resolve(data);
                 } else {
-
-                  data = isJSON(content);
-
-                  if (data) {
-                    // JSON data
-                    resolve(data);
-                  } else {
-                    reject();
-                  }
+                  reject();
                 }
               }
             });
@@ -640,121 +631,6 @@ angular.module('icestudio')
       return 'en';
     }
 
-    this.renderForm = function (specs, callback) {
-      var content = [];
-      content.push('<div>');
-      for (var i in specs) {
-        var spec = specs[i];
-        switch (spec.type) {
-          case 'text':
-            content.push('\
-              <p>' + spec.title + '</p>\
-              <input class="ajs-input" type="text" id="form' + i + '" autocomplete="off"/>\
-            ');
-            break;
-          case 'checkbox':
-            content.push('\
-              <div class="checkbox">\
-                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
-              </div>\
-            ');
-            break;
-          case 'combobox':
-            var options = spec.options.map(function (option) {
-              var selected = spec.value === option.value ? ' selected' : '';
-              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
-            }).join('');
-            content.push('\
-              <div class="form-group">\
-                <label style="font-weight:normal">' + spec.label + '</label>\
-                <select class="form-control" id="form' + i + '">\
-                  ' + options + '\
-                </select>\
-              </div>\
-            ');
-            break;
-          case 'color-dropdown':
-            content.push('\
-              <div class="form-group">\
-                <label style ="font-weight:normal">' + spec.label + '</label>\
-                <div class="lb-color--dropdown">\
-                  <div class="lb-dropdown-title"><span class="lb-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lb-dropdown-icon"></span></div>\
-                  <div class="lb-dropdown-menu">\
-                    <div class="lb-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lb-option-color color-indianred"></span>IndianRed</div>\
-                    <div class="lb-dropdown-option" data-color="red" data-name="Red"><span class="lb-option-color color-red"></span>Red</div>\
-                    <div class="lb-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lb-option-color color-deeppink"></span>DeepPink</div>\
-                    <div class="lb-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lb-option-color color-mediumvioletred"></span>MediumVioletRed</div>\
-                    <div class="lb-dropdown-option" data-color="coral"data-name="Coral"><span class="lb-option-color color-coral"></span>Coral</div>\
-                    <div class="lb-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lb-option-color color-orangered"></span>OrangeRed</div>\
-                    <div class="lb-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lb-option-color color-darkorange"></span>DarkOrange</div>\
-                    <div class="lb-dropdown-option" data-color="gold"data-name="Gold"><span class="lb-option-color color-gold"></span>Gold</div>\
-                    <div class="lb-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lb-option-color color-yellow"></span>Yellow</div>\
-                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>Fuchsia</div>\
-                    <div class="lb-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lb-option-color color-slateblue"></span>SlateBlue</div>\
-                    <div class="lb-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lb-option-color color-greenyellow"></span>GreenYellow</div>\
-                    <div class="lb-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lb-option-color color-springgreen"></span>SpringGreen</div>\
-                    <div class="lb-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lb-option-color color-darkgreen"></span>DarkGreen</div>\
-                    <div class="lb-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lb-option-color color-olivedrab"></span>OliveDrab</div>\
-                    <div class="lb-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lb-option-color color-lightseagreen"></span>LightSeaGreen</div>\
-                    <div class="lb-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lb-option-color color-turquoise"></span>Turquoise</div>\
-                    <div class="lb-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lb-option-color color-steelblue"></span>SteelBlue</div>\
-                    <div class="lb-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lb-option-color color-deepskyblue"></span>DeepSkyBlue</div>\
-                    <div class="lb-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lb-option-color color-royalblue"></span>RoyalBlue</div>\
-                    <div class="lb-dropdown-option" data-color="navy"data-name="Navy"><span class="lb-option-color color-navy"></span>Navy</div>\
-                    <div class="lb-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lb-option-color color-lightgray"></span>LightGray</div>\
-                  </div>\
-                </div>\
-              </div>\
-            ');
-            break;
-        }
-      }
-      content.push('</div>');
-
-      alertify.confirm(content.join('\n'))
-        .set('onok', function (evt) {
-          var values = [];
-          if (callback) {
-            for (var i in specs) {
-              var spec = specs[i];
-              switch (spec.type) {
-                case 'text':
-                case 'combobox':
-                  values.push($('#form' + i).val());
-                  break;
-                case 'checkbox':
-                  values.push($('#form' + i).prop('checked'));
-                  break;
-                case 'color-dropdown':
-                  values.push($('.lb-selected-color').data('color'));
-                  break;
-              }
-            }
-            callback(evt, values);
-          }
-        })
-        .set('oncancel', function ( /*evt*/) { });
-
-      // Restore input values
-      setTimeout(function () {
-        $('#form0').select();
-        for (var i in specs) {
-          var spec = specs[i];
-          switch (spec.type) {
-            case 'text':
-            case 'combobox':
-              $('#form' + i).val(spec.value);
-              break;
-            case 'checkbox':
-              $('#form' + i).prop('checked', spec.value);
-              break;
-            case 'color-dropdown':
-              $('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>Fuchsia<span class=\"lb-dropdown-icon\"></span>");
-              break;
-          }
-        }
-      }, 50);
-    };
 
     this.projectinfoprompt = function (values, callback) {
       var i;
@@ -921,40 +797,39 @@ angular.module('icestudio')
     };
 
     this.selectBoardPrompt = function (callback) {
+
       // Disable user events
       this.disableKeyEvents();
+
       // Hide Cancel button
       $('.ajs-cancel').addClass('hidden');
 
-      var formSpecs = [{
-        type: 'combobox',
-        label: gettextCatalog.getString('Select your board'),
-        value: '',
-        options: common.boards.map(function (board) {
-          return {
-            value: board.name,
-            label: board.info.label
-          };
-        })
-      }];
+      //-- Create the form
+      let form = new forms.FormSelectBoard();
 
-      this.renderForm(formSpecs, function (evt, values) {
-        var selectedBoard = values[0];
+      //-- Display the form
+      form.display((evt) => {
+
+        //-- Process the information in the form
+        form.process(evt);
+
+        //-- Read the selected board
+        let selectedBoard = form.values[0];
+
         if (selectedBoard) {
+
           evt.cancel = false;
+
+          //-- Execute the callback
           if (callback) {
             callback(selectedBoard);
           }
+
           // Enable user events
           this.enableKeyEvents();
-          // Restore Cancel button
-          setTimeout(function () {
-            $('.ajs-cancel').removeClass('hidden');
-          }, 200);
-        } else {
-          evt.cancel = true;
         }
-      }.bind(this));
+      });
+
     };
 
     this.copySync = function (orig, dest) {
@@ -993,24 +868,56 @@ angular.module('icestudio')
       return ret;
     };
 
+    //-----------------------------------------------------------------------
+    //-- Return a text in bold HTML
+    //-- Input:
+    //--    * text: String to converto to Bold
+    //-- Returns:
+    //--    * The HTML text in bold
+    //-----------------------------------------------------------------------
     this.bold = function (text) {
-      return '<b>' + text + '</b>';
+      return `<b>${text}</b>`;
     };
 
-    this.openDialog = function (inputID, ext, callback) {
-      var chooser = $(inputID);
+    //-----------------------------------------------------------------------
+    //-- Open the Dialog for choosing a file
+    //--
+    //-- INPUTS:
+    //--   * inputID (String): Html selector of the file chooser input
+    //--  
+    //--   * callback(filepath): It is called when the user has pressed the 
+    //--        ok button. The chosen file is passed as a parameter
+    //-----------------------------------------------------------------------
+    this.openDialog = function (inputID, callback) {
+
+      //-- Get the filechooser element (from the DOM)
+      let chooser = $(inputID);
+
+      //-- Reove any previously event attached
       chooser.unbind('change');
-      chooser.change(function ( /*evt*/) {
-        var filepath = $(this).val();
-        //if (filepath.endsWith(ext)) {
+
+      //-- Atach a new callback function
+      chooser.change(function () {
+
+        //-- It is executed when the user has selected the file
+        //-- Read the filepath entered by the user
+        let filepath = $(this).val();
+
+        //-- Execute the callback (if it was given)
         if (callback) {
           callback(filepath);
         }
-        //}
+
+        //-- Remove the current select filename from the chooser
         $(this).val('');
       });
+
+      //-- Activate the File chooser! (The element is shown, it waits for
+      //-- the user to enter the file and the calblack is executed
       chooser.trigger('click');
     };
+
+
 
     this.saveDialog = function (inputID, ext, callback) {
       var chooser = $(inputID);
@@ -1076,14 +983,22 @@ angular.module('icestudio')
       return null;
     };
 
+    //-----------------------------------------------------------------------
+    //-- clone. Return a deep copy of the given input object data
+    //--  * data: Input object to copy
+    //--  * Returns: A copy of the input object
+    //-----------------------------------------------------------------------
     this.clone = function (data) {
+
+      //-- Implementation using the fast-copy npm package:
+      //-- More info: https://www.npmjs.com/package/fast-copy
+      return fastCopy(data);
+
+      //-- Alternative implementation:
       // Very slow in comparison but more stable for all types
       // of objects, if fails, rollback to JSON method or try strict
       // on fast-copy module
       //return  JSON.parse(JSON.stringify(data));
-      return fastCopy(data);
-
-
     };
 
     this.dependencyID = function (dependency) {
@@ -1093,48 +1008,75 @@ angular.module('icestudio')
       }
     };
 
-    this.newWindow = function (filepath, local) {
+    //-----------------------------------------------------------------------
+    //-- Create a new ICESTUDIO window
+    //--
+    //--  INPUTS:
+    //--    * filepath: (optional) Icestudio file to open in the new window
+    //-----------------------------------------------------------------------
+    this.newWindow = function (filepath) {
 
-      var params = false;
+      //-- If there are parameters to pass or not
+      //-- No parameters by default
+      let hasParams = false;
 
-      if (typeof filepath !== 'undefined') {
-        params = {
+      //-- URL with no parameters
+      let url = 'index.html';
+
+      //-- Create the arguments
+      //-- The filepath was given: pass it as an argument
+      if (filepath) {
+
+        //-- There are params in the URL
+        hasParams = true;
+
+        //-- Create the object params
+        //-- Currently it only contains one element, but in the future
+        //-- it can be increased
+        let params = {
           'filepath': filepath
         };
+
+        //-- Convert the params to json
+        let jsonParams = JSON.stringify(params);
+
+        //-- Encode the params into Base64 format
+        let paramsBase64 = Buffer.from(jsonParams).toString('base64');
+
+        //-- Create the URL query with the icestudio_argv param
+        let icestudioArgv = '?icestudio_argv=' + paramsBase64;
+
+        //-- Create the final URL, with parameters
+        url += icestudioArgv;
       }
 
-      if (typeof local !== 'undefined' && local === true) {
-        if (params === false) {
-          params = {};
-        }
-        params.local = 'local';
-      }
-      // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
-      // that contains the same arguments that shell call, in this way the two calls will be
-      // compatible.
-      // If in the future you will add more paremeters to the new window , you should review
-      // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+      //-- Get the Window configuration from the package.json
+      let window = this.clone(_package.window);
 
-      var url = 'index.html' + ((params === false) ? '' : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
-      // Create a new window and get it.
-      // new-instance and new_instance are necesary for OS compatibility
-      // to avoid crash on new window project after close parent
-      // (little trick for nwjs bug).
-      //url='index.html?icestudio_argv=fsdfsfa';
+      //-- Set some needed properties:
+      window['new_instance'] = true;
+      window['show'] = true;
 
-      gui.Window.open(url, {
-        'new_instance': true,  //Deprecated for new nwjs versios
-        'position': 'center',
-        //        'toolbar': false,   //Deprecated for new nwjs versios
-        'width': 900,
-        'height': 600,
-        'show': true,
-      });
+      //-- The URL has this syntax:
+      //
+      //-- index.html?icestudio_argv=encoded_value
+      //--
+      //-- Where encoded value is something like: 
+      //--     eyJmaWxlcGF0aCI6Ii9ob21lL29iaWp1YW4vRGV2ZW...
+
+      //-----------------------------------------------------------
+      //-- Open the new window
+      //-- More information:
+      //-- https://nwjs.readthedocs.io/en/latest/References/Window/
+      //--   #windowopenurl-options-callback
+      //-----------------------------------------------------------
+      nw.Window.open(url, window);
 
     };
 
+
     //-- Place the path inside quotes. It is important for managing filepaths
-    //-- that contains spaces in ther names
+    //-- that contains spaces in their names
     this.coverPath = coverPath;
 
     function coverPath(filepath) {
@@ -1410,6 +1352,8 @@ angular.module('icestudio')
     };
 
     this.endBlockingTask = function () {
+
+      $('body').trigger('Graph::updateWires');
       angular.element('#menu').removeClass('is-disabled');
       $('body').removeClass('waiting');
     };
@@ -1419,12 +1363,19 @@ angular.module('icestudio')
     };
 
     this.openDevToolsUI = function () {
-      gui.Window.get().showDevTools();
+      nw.Window.get().showDevTools();
     };
+
+    //-----------------------------------------------------------
+    //-- Open a given url in an external browser
+    //--
+    //--  INPUTS:
+    //--   * url (String): The URL to show
+    //-----------------------------------------------------------
     this.openUrlExternalBrowser = function (url) {
 
-      gui.Shell.openExternal(url);
-      //require('nw.gui').Shell.openExternal( url);
+      nw.Shell.openExternal(url);
+
     };
 
     // RENDERFORM "color-dropdown" functions
@@ -1455,5 +1406,121 @@ angular.module('icestudio')
     function closeDropdown() {
       $('.lb-dropdown-menu').removeClass('show');
     }
+
+    this.renderForm = function (specs, callback) {
+      var content = [];
+      content.push('<div>');
+      for (var i in specs) {
+        var spec = specs[i];
+        switch (spec.type) {
+          case 'text':
+            content.push('\
+              <p>' + spec.title + '</p>\
+              <input class="ajs-input" type="text" id="form' + i + '" autocomplete="off"/>\
+            ');
+            break;
+          case 'checkbox':
+            content.push('\
+              <div class="checkbox">\
+                <label><input type="checkbox" ' + (spec.value ? 'checked' : '') + ' id="form' + i + '"/>' + spec.label + '</label>\
+              </div>\
+            ');
+            break;
+          case 'combobox':
+            var options = spec.options.map(function (option) {
+              var selected = spec.value === option.value ? ' selected' : '';
+              return '<option value="' + option.value + '"' + selected + '>' + option.label + '</option>';
+            }).join('');
+            content.push('\
+              <div class="form-group">\
+                <label style="font-weight:normal">' + spec.label + '</label>\
+                <select class="form-control" id="form' + i + '">\
+                  ' + options + '\
+                </select>\
+              </div>\
+            ');
+            break;
+          case 'color-dropdown':
+            content.push('\
+              <div class="form-group">\
+                <label style ="font-weight:normal">' + spec.label + '</label>\
+                <div class="lb-color--dropdown">\
+                  <div class="lb-dropdown-title"><span class="lb-selected-color color-fuchsia" data-color="fuchsia" data-name="Fuchsia"></span>Fuchsia<span class="lb-dropdown-icon"></span></div>\
+                  <div class="lb-dropdown-menu">\
+                    <div class="lb-dropdown-option" data-color="indianred" data-name="IndianRed"><span class="lb-option-color color-indianred"></span>IndianRed</div>\
+                    <div class="lb-dropdown-option" data-color="red" data-name="Red"><span class="lb-option-color color-red"></span>Red</div>\
+                    <div class="lb-dropdown-option" data-color="deeppink" data-name="DeepPink"><span class="lb-option-color color-deeppink"></span>DeepPink</div>\
+                    <div class="lb-dropdown-option" data-color="mediumvioletred"data-name="MediumVioletRed"><span class="lb-option-color color-mediumvioletred"></span>MediumVioletRed</div>\
+                    <div class="lb-dropdown-option" data-color="coral"data-name="Coral"><span class="lb-option-color color-coral"></span>Coral</div>\
+                    <div class="lb-dropdown-option" data-color="orangered"data-name="OrangeRed"><span class="lb-option-color color-orangered"></span>OrangeRed</div>\
+                    <div class="lb-dropdown-option" data-color="darkorange"data-name="DarkOrange"><span class="lb-option-color color-darkorange"></span>DarkOrange</div>\
+                    <div class="lb-dropdown-option" data-color="gold"data-name="Gold"><span class="lb-option-color color-gold"></span>Gold</div>\
+                    <div class="lb-dropdown-option" data-color="yellow"data-name="Yellow"><span class="lb-option-color color-yellow"></span>Yellow</div>\
+                    <div class="lb-dropdown-option" data-color="fuchsia"data-name="Fuchsia"><span class="lb-option-color color-fuchsia"></span>Fuchsia</div>\
+                    <div class="lb-dropdown-option" data-color="slateblue"data-name="SlateBlue"><span class="lb-option-color color-slateblue"></span>SlateBlue</div>\
+                    <div class="lb-dropdown-option" data-color="greenyellow"data-name="GreenYellow"><span class="lb-option-color color-greenyellow"></span>GreenYellow</div>\
+                    <div class="lb-dropdown-option" data-color="springgreen"data-name="SpringGreen"><span class="lb-option-color color-springgreen"></span>SpringGreen</div>\
+                    <div class="lb-dropdown-option" data-color="darkgreen"data-name="DarkGreen"><span class="lb-option-color color-darkgreen"></span>DarkGreen</div>\
+                    <div class="lb-dropdown-option" data-color="olivedrab"data-name="OliveDrab"><span class="lb-option-color color-olivedrab"></span>OliveDrab</div>\
+                    <div class="lb-dropdown-option" data-color="lightseagreen"data-name="LightSeaGreen"><span class="lb-option-color color-lightseagreen"></span>LightSeaGreen</div>\
+                    <div class="lb-dropdown-option" data-color="turquoise"data-name="Turquoise"><span class="lb-option-color color-turquoise"></span>Turquoise</div>\
+                    <div class="lb-dropdown-option" data-color="steelblue"data-name="SteelBlue"><span class="lb-option-color color-steelblue"></span>SteelBlue</div>\
+                    <div class="lb-dropdown-option" data-color="deepskyblue"data-name="DeepSkyBlue"><span class="lb-option-color color-deepskyblue"></span>DeepSkyBlue</div>\
+                    <div class="lb-dropdown-option" data-color="royalblue"data-name="RoyalBlue"><span class="lb-option-color color-royalblue"></span>RoyalBlue</div>\
+                    <div class="lb-dropdown-option" data-color="navy"data-name="Navy"><span class="lb-option-color color-navy"></span>Navy</div>\
+                    <div class="lb-dropdown-option" data-color="lightgray"data-name="LightGray"><span class="lb-option-color color-lightgray"></span>LightGray</div>\
+                  </div>\
+                </div>\
+              </div>\
+            ');
+            break;
+        }
+      }
+      content.push('</div>');
+
+      alertify.confirm(content.join('\n'))
+        .set('onok', function (evt) {
+          var values = [];
+          if (callback) {
+            for (var i in specs) {
+              var spec = specs[i];
+              switch (spec.type) {
+                case 'text':
+                case 'combobox':
+                  values.push($('#form' + i).val());
+                  break;
+                case 'checkbox':
+                  values.push($('#form' + i).prop('checked'));
+                  break;
+                case 'color-dropdown':
+                  values.push($('.lb-selected-color').data('color'));
+                  break;
+              }
+            }
+            callback(evt, values);
+          }
+        })
+        .set('oncancel', function ( /*evt*/) { });
+
+      // Restore input values
+      setTimeout(function () {
+        $('#form0').select();
+        for (var i in specs) {
+          var spec = specs[i];
+          switch (spec.type) {
+            case 'text':
+            case 'combobox':
+              $('#form' + i).val(spec.value);
+              break;
+            case 'checkbox':
+              $('#form' + i).prop('checked', spec.value);
+              break;
+            case 'color-dropdown':
+              $('.lb-dropdown-title').html("<span class=\"lb-selected-color color-fuchsia\" data-color=\"fuchsia\"></span>Fuchsia<span class=\"lb-dropdown-icon\"></span>");
+              break;
+          }
+        }
+      }, 50);
+    };
 
   });

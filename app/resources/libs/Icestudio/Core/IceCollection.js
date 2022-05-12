@@ -140,4 +140,5 @@ class IceCollection {
       this.fs.isDir(this.fs.joinPath(path, "examples"))
     );
   }
+ 
 }
