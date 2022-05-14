@@ -242,10 +242,34 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-        # -- Debug: Print the icestudio version
+      # Loading vars from icestudio package.json
+      - id: icestudio_json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+
+      # -- Debug: Print the icestudio version
+      # -- It is read from the package.json
       - name: Get the Icestudio version
         env:
           VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
         run: |
           echo "VERSION: ${{ env.VERSION }}"
+  
+        # ---------------------------------------
+        # -- Upload the binaries to the release
+        # ---------------------------------------
+      - name: 'Upload ZIP/Aarch64'
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
+        with:
+            upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
+            asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
+            asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
+            asset_content_type: application/tar+gzip
 
