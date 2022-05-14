@@ -13,9 +13,9 @@ jobs:
   #-- Build for Linux and windows
   build-LinWin:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     outputs:
-      #-- URL to upload the binaries from 
+      #-- URL to upload the binaries for 
       #-- the jobs executed after build-LinWin
       upload_url: ${{ steps.create_release.outputs.upload_url }} 
     steps:
@@ -53,31 +53,24 @@ jobs:
       - name: Setup Nodejs version
         uses: actions/setup-node@v1
         with:
-          node-version: '17.3'
+          node-version: '17.3.0'
 
       - name: Install npm dependencies
         run: |  
           npm install 
 
-      - name: Install dependencies to build Windows bundle
+      # It is necesarry to install wine for building the package for
+      # windows. Also it is necesary to download the wine-mono windows
+      # installer and install it with wine
+      - name: Install dependencies
         run: |
+          sudo add-apt-repository universe
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt update
-          sudo apt-get upgrade --no-install-recommends -y --force-yes
-          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
-          export DISPLAY=:0.0 
-          wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
-          sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-          wget -qO- https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -
-          sudo sh -c 'echo "deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/ ./" > /etc/apt/sources.list.d/obs.list'
-          sudo apt-get update
-          sudo apt-get install -y winehq-devel winetricks nsis 
-          export WINEARCH=win32
-          cd /home/runner
-          rm -rf .wine
-          wget -q http://drive16.magnitude.es/wineconf.1804a.tar.zst
-          tar --use-compress-program zstd -xf wineconf.1804a.tar.zst
+          sudo apt-get install wine nsis 
+          wget https://dl.winehq.org/wine/wine-mono/5.0.0/wine-mono-5.0.0-x86.msi
+          export DISPLAY=:0.0
+          wine msiexec /i wine-mono-5.0.0-x86.msi
       
       # -- Build For windows!!
       - name: Build Microsoft Windows package
@@ -87,7 +80,7 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-      #-- Create the Release
+      #-- Create the Release (draft)
       - name: Create the Stable Release
         id: create_release
         uses: actions/create-release@v1
@@ -165,9 +158,9 @@ jobs:
   build-macos:
     
     # -- It is only run if the build for linux/win is ok, and  
-    # -- the release already created
+    # -- the release was already created
     needs: build-LinWin
-    runs-on: macos-latest
+    runs-on: macos-10.15
     steps:
      
       - name: Checkout the master repo branch
@@ -224,7 +217,7 @@ jobs:
     needs: build-LinWin
 
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -241,14 +234,6 @@ jobs:
       
       - name: Install npm dependencies
         run:   npm install 
-      
-      - name: Install dependencies
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -y gnupg2 rlwrap software-properties-common binutils cabextract p7zip zenity unrar unzip wget p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 xvfb zstd
-          export DISPLAY=:0.0 
-          cd /home/runner
 
       - name: Build ARM
         run: |
@@ -257,16 +242,6 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-        # Loading vars from icestudio package.json
-      - id: icestudio_json
-        run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
-         
-
         # -- Debug: Print the icestudio version
       - name: Get the Icestudio version
         env:
@@ -274,16 +249,3 @@ jobs:
         run: |
           echo "VERSION: ${{ env.VERSION }}"
 
-        # ---------------------------------------
-        # -- Upload the binaries to the release
-        # ---------------------------------------
-      - name: 'Upload ZIP/Aarch64'
-        uses: actions/upload-release-asset@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VERSION: "${{fromJson(steps.icestudio_json.outputs.packageJson).version}}"
-        with:
-            upload_url: ${{ needs.build-LinWin.outputs.upload_url }}
-            asset_path: "dist/icestudio-${{env.VERSION}}-Aarch64.zip"
-            asset_name: "icestudio-${{env.VERSION}}-Aarch64.zip"
-            asset_content_type: application/tar+gzip
