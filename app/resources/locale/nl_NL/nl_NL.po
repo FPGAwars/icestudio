@@ -32,7 +32,7 @@ msgstr ""
 msgid "Add"
 msgstr "Plaatsen"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "Plaats een blok om te beginnen"
 
@@ -48,7 +48,7 @@ msgstr "Adresformaat"
 msgid "All collections removed"
 msgstr "Alle collecties zijn verwijderd"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Alle opgeslagen collecties worden verwijderd. Doorgaan?"
 
@@ -57,7 +57,7 @@ msgstr "Alle opgeslagen collecties worden verwijderd. Doorgaan?"
 msgid "At least Python 3.7 is required"
 msgstr "Python 2.7 is vereist"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "Auteur"
 
@@ -82,7 +82,7 @@ msgstr "Binaire"
 msgid "Block updated"
 msgstr "Blok bijgewerkt"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "Blok {{name}} geïmporteerd"
 
@@ -118,7 +118,7 @@ msgstr "Bord {{naam}} niet beschikbaar"
 msgid "Board {{name}} not connected"
 msgstr "Bord {{naam}} niet aangesloten"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "Bord {{name}} geselecteerd"
 
@@ -126,12 +126,12 @@ msgstr "Bord {{name}} geselecteerd"
 msgid "Bootloader not active"
 msgstr "Bootloader niet actief"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Maken"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "Maken voltooid"
 
@@ -139,7 +139,7 @@ msgstr "Maken voltooid"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -167,7 +167,7 @@ msgstr "Chinees"
 msgid "Choose a color:"
 msgstr ""
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Klik hier om <b>een nieuwe versie van IceStudio te downloaden</b>"
 
@@ -257,7 +257,7 @@ msgstr "Constant"
 msgid "Constant names"
 msgstr "Constant"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "Converteren"
 
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Default"
 msgstr "Standaard"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -334,7 +334,7 @@ msgstr "Desactiveren"
 msgid "Do you want to close the application?"
 msgstr "Programma sluiten?"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Collectie {{name}} verwijderen?"
 
@@ -422,7 +422,7 @@ msgstr "Voer het pad naar de externe collectie in"
 msgid "Enter the remote hostname user@host"
 msgstr "Voer de externe hostnaam user@host in"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "Fout: {{error}}"
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "File"
 msgstr "Bestand"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "Bestand {{file}} is al aanwezig in het projectpad. Vervangen?"
@@ -497,7 +497,7 @@ msgstr "Bestand {{file}} is al aanwezig in het projectpad. Vervangen?"
 msgid "File {{file}} does not exist"
 msgstr "Bestand {{file}} bestaat niet"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "Bestand {{file}} geïmporteerd"
 
@@ -554,17 +554,17 @@ msgstr "Hexadecimaal"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "Afbeelding"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "Afbeelding {{name}} opgeslagen"
 
@@ -650,17 +650,17 @@ msgstr "Installeren"
 msgid "Internet connection required"
 msgstr "Internet verbinding vereist"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Ongeldige <i>pull up</i> aansluiting:<br>blok is al aangesloten"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Ongeldige <i>pull up</i> aansluiting:<br>alleen <i>ingangsblokken</i> zijn "
 "toegestaan"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Ongeldige blokaansluiting:<br><i>pull up</i> is al aangesloten"
 
@@ -668,20 +668,20 @@ msgstr "Ongeldige blokaansluiting:<br><i>pull up</i> is al aangesloten"
 msgid "Invalid collection {{name}}"
 msgstr "Ongeldige collectie {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "Ongeldige aansluiting"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Ongeldige aansluiting: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "Ongeldige meervoudige ingangsaansluitingen"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "Ongeldig projectformaat"
 
@@ -723,7 +723,7 @@ msgstr ""
 msgid "Light Sea Green"
 msgstr ""
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "Laden"
 
@@ -744,7 +744,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "Maximale busbreedte: 96 bits"
 
@@ -765,7 +765,7 @@ msgstr "Geheugen"
 msgid "Memory blocks"
 msgstr "Voer de geheugenblokken in"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "Naam"
 
@@ -790,12 +790,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "Naam"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "Geen collecties"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "OK"
 
@@ -811,7 +811,7 @@ msgstr ""
 msgid "Open"
 msgstr "Openen"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "Open SVG"
 
@@ -823,7 +823,7 @@ msgstr ""
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "Originele bestand {{file}} bestaat niet"
 
@@ -862,7 +862,7 @@ msgstr "Plakken"
 msgid "Path {{path}} does not exist"
 msgstr "Pad {{file}} bestaat niet"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "Voer uit: {{cmd}}"
 
@@ -878,11 +878,11 @@ msgstr "Projectinformatie"
 msgid "Project information updated"
 msgstr "Projectinformatie bijgewerkt"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "Project {{name}} geladen"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "Project {{name}} opgeslagen"
 
@@ -943,7 +943,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "Reset SVG"
 
@@ -959,7 +959,7 @@ msgstr ""
 msgid "Save"
 msgstr "Opslaan"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "SVG opslaan"
 
@@ -1013,11 +1013,11 @@ msgstr ""
 msgid "SpringGreen"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "Maken starten"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "Upload starten"
 
@@ -1073,7 +1073,7 @@ msgstr ""
 msgid "There is a new stable version available"
 msgstr ""
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1081,7 +1081,7 @@ msgstr ""
 "Voor deze importoperatie is een projectpad nodig. U moet het huidige project "
 "opslaan. Doorgaan?"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "Dit project is bedoeld voor het bord {{name}}"
 
@@ -1091,13 +1091,13 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr ""
 
@@ -1158,11 +1158,11 @@ msgstr "Ongedaan maken"
 msgid "Unknown board"
 msgstr "Onbekend bord"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "Niet-ondersteund projectformaat {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "Naamloos"
 
@@ -1171,12 +1171,12 @@ msgstr "Naamloos"
 msgid "Update (Latest stable)"
 msgstr "Werk de bloknaam bij"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Uploaden"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "Uploaden voltooid"
 
@@ -1188,7 +1188,7 @@ msgstr "Verificatie voltooid"
 msgid "Verify"
 msgstr "Verifiëren"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "Versie"
 
@@ -1223,12 +1223,12 @@ msgstr "Verkeerd blokformaat: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "Verkeerde bloknaam {{name}}"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "Verkeerde poortnaam {{name}}"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "Verkeerd projectformaat: {{name}}"
 
@@ -1236,7 +1236,7 @@ msgstr "Verkeerd projectformaat: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Verkeerde externe hostnaam {{name}}"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1251,17 +1251,17 @@ msgid ""
 "module\"), Do you like to continue?"
 msgstr ""
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "U kunt het laden zoals het is of converteren voor het {{name}} bord."
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1279,7 +1279,7 @@ msgstr "Uw wijzigingen gaan verloren als u ze niet opslaat"
 msgid "back"
 msgstr "terug"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "{{app}} is vereist."
 

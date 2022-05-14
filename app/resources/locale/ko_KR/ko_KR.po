@@ -35,7 +35,7 @@ msgstr ""
 msgid "Add"
 msgstr "더하기"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "시작하기 위해 블럭 더하기"
 
@@ -51,7 +51,7 @@ msgstr "주소 구성 방식 "
 msgid "All collections removed"
 msgstr "선택한 것들 모두 지우기"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습니까? "
 
@@ -60,7 +60,7 @@ msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습
 msgid "At least Python 3.7 is required"
 msgstr "파이썬 2.7이 필요합니다"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "작가 "
 
@@ -85,7 +85,7 @@ msgstr "2진수 "
 msgid "Block updated"
 msgstr "블록 업데이트 "
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "블록 {{name}} 가져오기"
 
@@ -121,7 +121,7 @@ msgstr "보드 {{name}} 불가능"
 msgid "Board {{name}} not connected"
 msgstr "보드 {{name}} 연결되지 않았음"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "보드 {{name}} 선택됨 "
 
@@ -129,12 +129,12 @@ msgstr "보드 {{name}} 선택됨 "
 msgid "Bootloader not active"
 msgstr "부트로더가 활성화되지 않음 "
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "만들기"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "만들기 완료 "
 
@@ -142,7 +142,7 @@ msgstr "만들기 완료 "
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "취소 "
 
@@ -172,7 +172,7 @@ msgstr "중국"
 msgid "Choose a color:"
 msgstr "색깔을 선택하세요"
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "여기를 클릭하여 <b> 새로운 버전을 다운받으세요. </b>"
 
@@ -262,7 +262,7 @@ msgstr "정수"
 msgid "Constant names"
 msgstr "정수"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "변환"
 
@@ -331,7 +331,7 @@ msgstr "진파랑"
 msgid "Default"
 msgstr "기본값"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "설명"
 
@@ -343,7 +343,7 @@ msgstr "불가"
 msgid "Do you want to close the application?"
 msgstr "응용 프로그램을 닫으시겠습니까?"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} 컬렉션을 삭제하시겠습니까?"
 
@@ -431,7 +431,7 @@ msgstr "외부 수집 경로 입력"
 msgid "Enter the remote hostname user@host"
 msgstr "원격 호스트 이름 user@host를 입력하십시오"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "에러:{{error}}"
 
@@ -497,7 +497,7 @@ msgstr ""
 msgid "File"
 msgstr "파일"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "{{file}} 파일이 프로젝트 경로에 이미 존재합니다. 교체하시겠습니까?"
@@ -506,7 +506,7 @@ msgstr "{{file}} 파일이 프로젝트 경로에 이미 존재합니다. 교체
 msgid "File {{file}} does not exist"
 msgstr "{{file}}이 존재하지 않음"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "{{file}}파일 가져오기"
 
@@ -565,17 +565,17 @@ msgstr "16진수의"
 msgid "Icestudio is part of"
 msgstr "Icestudio 시작"
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr "빈 IN/OUT 핀이 있는 경우, 이 보드에 동일한 핀이 없기 때문이다"
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "사진"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "사진 {{name}}이 저장되었음"
 
@@ -662,15 +662,15 @@ msgstr "설치"
 msgid "Internet connection required"
 msgstr "인터넷 연결 필요"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "잘못된 <i>풀 업 </i> 연결: <br> 블록이 이미 연결됨"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "잘못된 <i>풀 업 </i> 연결: <i>만 허용됨"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "잘못된 블록 연결: <br><i>Pull up </i>가 이미 연결됨"
 
@@ -678,20 +678,20 @@ msgstr "잘못된 블록 연결: <br><i>Pull up </i>가 이미 연결됨"
 msgid "Invalid collection {{name}}"
 msgstr "잘못된 컬렉션 {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "잘못 된 연결"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "잘못된 연결: {{a} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "잘못된 다중 입력 연결"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "잘못된 프로젝트 형식"
 
@@ -735,7 +735,7 @@ msgstr "밝은 바다 초록"
 msgid "Light Sea Green"
 msgstr "밝은 바다 초록"
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "로드"
 
@@ -756,7 +756,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "최대 버스 크기: 96비트"
 
@@ -778,7 +778,7 @@ msgstr "메모리"
 msgid "Memory blocks"
 msgstr "메모리 블록 입력"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "이름"
 
@@ -803,12 +803,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "이름"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "저장된 컬렉션 없음"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "알겠습니다"
 
@@ -825,7 +825,7 @@ msgstr "생기없는 올리브"
 msgid "Open"
 msgstr "열기"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "SVG 열기"
 
@@ -838,7 +838,7 @@ msgstr "오렌지 레드"
 msgid "OrangeRed"
 msgstr "오렌지 레드"
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "원본 파일 {{file}} 이 존재하지 않습니다"
 
@@ -878,7 +878,7 @@ msgstr "붙여넣기"
 msgid "Path {{path}} does not exist"
 msgstr "경로 {{path}} 가 존재하지 않습니다"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "작동: {{cmd}}"
 
@@ -894,11 +894,11 @@ msgstr "프로젝트 정보"
 msgid "Project information updated"
 msgstr "프로젝트 정보가 업데이트되었습니다"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "프로젝트 {{name}}이 로드되었습니다"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "프로젝트 {{name}}이 저장되었습니다"
 
@@ -958,7 +958,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "SVG 재설정"
 
@@ -975,7 +975,7 @@ msgstr "러시아어"
 msgid "Save"
 msgstr "저장하다"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "SVG 저장"
 
@@ -1029,11 +1029,11 @@ msgstr "봄 초록"
 msgid "SpringGreen"
 msgstr "봄 초록"
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "빌드 시작"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "업로드 시작"
 
@@ -1088,7 +1088,7 @@ msgstr "새로운 야간 버전이 출시되었다"
 msgid "There is a new stable version available"
 msgstr "새로운 안정한 버전이 출시되었다"
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1096,7 +1096,7 @@ msgstr ""
 "이 가져오기 작업에는 프로젝트 경로가 필요합니다. 현재 프로젝트를 저장해야 합"
 "니다. 계속하시겠습니까?"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "이 프로젝트는 {{name}}보드에 맞게 설계되었다."
 
@@ -1106,7 +1106,7 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1114,7 +1114,7 @@ msgstr ""
 "\"편집 모드\"의 깊은 블락에 들어가기위해서, 현재 \"편집모드\"를 키 락으로 잠"
 "가야 합니다"
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "디자인을 보기위해서는, \"편집모드\"를 닫아야합니다."
 
@@ -1179,11 +1179,11 @@ msgstr "뒤로가기"
 msgid "Unknown board"
 msgstr "알 수 없는 보드"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "지원되지 않는 프로젝트 형식 {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "제목이 없음"
 
@@ -1192,12 +1192,12 @@ msgstr "제목이 없음"
 msgid "Update (Latest stable)"
 msgstr "블럭 이름 업데이트"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "업로드"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "업로드 완료"
 
@@ -1209,7 +1209,7 @@ msgstr "검증 완료"
 msgid "Verify"
 msgstr "입증하다"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "버전"
 
@@ -1244,12 +1244,12 @@ msgstr "잘못된 블록 형식: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "잘못된 블럭 이름{{name}}"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "잘못 된 포트 이름{{name}}"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "잘못된 프로젝트 형식: {{name}}"
 
@@ -1257,7 +1257,7 @@ msgstr "잘못된 프로젝트 형식: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "잘못된 원격 호스트 이름 {{name}}"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1275,11 +1275,11 @@ msgstr ""
 "서브모듈을 편집하는 중에 서브모듈만 저장하면(이 경우 \"추출 된 모듈\"과 같은 "
 "\"저장\"이 작동함), 계속하시겠습니까?"
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "그대로 로드하거나 {{name}}보드로 변환 할 수 있다."
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
@@ -1287,7 +1287,7 @@ msgstr ""
 "최상위 레벨 디자인만을 빌드할 수 있습니다.서브모듈은 오직 입증만 <strong> 가"
 "능합니다"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1307,7 +1307,7 @@ msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입
 msgid "back"
 msgstr "뒤로가기"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "{{앱}}이 필요합니다."
 

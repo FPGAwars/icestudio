@@ -32,7 +32,7 @@ msgstr ""
 msgid "Add"
 msgstr "Přidat"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "Přidat blok na začátek"
 
@@ -48,7 +48,7 @@ msgstr "Formát adresy"
 msgid "All collections removed"
 msgstr "Všechny kolekce odstraněny"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Všechny uložené kolekce budou zahozeny. Přejete si pokračovat?"
 
@@ -57,7 +57,7 @@ msgstr "Všechny uložené kolekce budou zahozeny. Přejete si pokračovat?"
 msgid "At least Python 3.7 is required"
 msgstr "Je potřeba Python verze 2.7"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "Autor"
 
@@ -82,7 +82,7 @@ msgstr "Binární"
 msgid "Block updated"
 msgstr "Blok aktualizován"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "Blok {{name}} importován"
 
@@ -118,7 +118,7 @@ msgstr "Deska {{name}} není dostupná"
 msgid "Board {{name}} not connected"
 msgstr "Deska {{name}} není připojena"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "Deska {{name}} vybrána"
 
@@ -126,12 +126,12 @@ msgstr "Deska {{name}} vybrána"
 msgid "Bootloader not active"
 msgstr "Zavaděč není aktivní"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Sestavení"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "Sestavení hotovo"
 
@@ -139,7 +139,7 @@ msgstr "Sestavení hotovo"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -169,7 +169,7 @@ msgstr "Čínština"
 msgid "Choose a color:"
 msgstr "Zvolte barvu"
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Klikněte zde <b>ke stažení novější verze</b> Icestudia"
 
@@ -259,7 +259,7 @@ msgstr "Konstanta"
 msgid "Constant names"
 msgstr "Konstanta"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "Převést"
 
@@ -328,7 +328,7 @@ msgstr "Tmavě modrá"
 msgid "Default"
 msgstr "Výchozí"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "Popis"
 
@@ -340,7 +340,7 @@ msgstr "Zakázat"
 msgid "Do you want to close the application?"
 msgstr "Chcete zavřít aplikaci?"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Chcete odstranit kolekci {{name}}?"
 
@@ -428,7 +428,7 @@ msgstr "Zadejte cestu k externím kolekcím"
 msgid "Enter the remote hostname user@host"
 msgstr "Zadejte vzdáleného hostitele uživatel@hostitel"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "Chyba: {{error}}"
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "File"
 msgstr "Soubor"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
@@ -503,7 +503,7 @@ msgstr "Soubor {{file}} již existuje v projektu. Přejete si ho nahradit?"
 msgid "File {{file}} does not exist"
 msgstr "Soubor {{file}} neexistuje"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "Soubor {{file}} importován"
 
@@ -562,7 +562,7 @@ msgstr "Šestnáctkové"
 msgid "Icestudio is part of"
 msgstr "Vznik Icestudia"
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
@@ -570,11 +570,11 @@ msgstr ""
 "Pokud máte nepřiřazené vstupně/výstupní piny, je to proto, že na desce není "
 "žádný vhodný ekvivalent"
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "Obraz"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "Obraz {{name}} uložen"
 
@@ -661,17 +661,17 @@ msgstr "Instalovat"
 msgid "Internet connection required"
 msgstr "Potřeba připojení na internet"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Neplatné připojení <i>Pull-upu</i>:<br>blok je již připojen"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Neplatné připojení <i>Pull-upu</i>:<br>to je povoleno pouze pro <i>Vstupní</"
 "i> bloky"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Neplatné zapojení bloku:<br><i>Pull-up</i>je již připojen"
 
@@ -679,20 +679,20 @@ msgstr "Neplatné zapojení bloku:<br><i>Pull-up</i>je již připojen"
 msgid "Invalid collection {{name}}"
 msgstr "Neplatná kolekce {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "Neplatné spojení"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Neplatné spojení: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "Neplatné vícenásobná vstupní připojení"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "Neplatný formát projektu"
 
@@ -736,7 +736,7 @@ msgstr "Světle mořská zelená"
 msgid "Light Sea Green"
 msgstr "Světle mořská zelená"
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "Nahrát"
 
@@ -757,7 +757,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "Maximální šířka sběrnice: 96 bitů"
 
@@ -779,7 +779,7 @@ msgstr "Paměť"
 msgid "Memory blocks"
 msgstr "Zadejte paměťové bloky"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "Jméno"
 
@@ -804,12 +804,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "Jméno"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "Žádné kolekce neuloženy"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "Budiž"
 
@@ -826,7 +826,7 @@ msgstr "Olivová"
 msgid "Open"
 msgstr "Otevřít"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "Otevřít SVG"
 
@@ -839,7 +839,7 @@ msgstr "Oranžovo červená"
 msgid "OrangeRed"
 msgstr "Oranžovo červená"
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "Původní soubor {{file}} neexistuje"
 
@@ -879,7 +879,7 @@ msgstr "Vložit"
 msgid "Path {{path}} does not exist"
 msgstr "Cesta {{path}} neexistuje"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "Prosím spusťte: {{cmd}}"
 
@@ -895,11 +895,11 @@ msgstr "Informace o projektu"
 msgid "Project information updated"
 msgstr "Informace o projektu aktualizovány"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "Projekt {{name}} nahrán"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "Projekt {{name}} uložen"
 
@@ -959,7 +959,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "Obnovit SVG"
 
@@ -976,7 +976,7 @@ msgstr "Ruština"
 msgid "Save"
 msgstr "Uložit"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "Uložit SVG"
 
@@ -1030,11 +1030,11 @@ msgstr "Jarní zelená"
 msgid "SpringGreen"
 msgstr "Jarní zelená"
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "Začínám překlad"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "Začínám nahrávat"
 
@@ -1091,7 +1091,7 @@ msgstr "Nové noční sestavení je k dispozici"
 msgid "There is a new stable version available"
 msgstr "Nová stabilní verze k dispozici"
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1099,7 +1099,7 @@ msgstr ""
 "Operace importu vyžaduje projektovou cestu. Potřebujete uložit současný "
 "projekt. Přejete si pokračovat?"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "Tento projekt je navržen pro desku {{name}}."
 
@@ -1109,7 +1109,7 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1117,7 +1117,7 @@ msgstr ""
 "Ke vstupu do úpravy vnitřního bloku potřebujete dokončit současnou úpravu, "
 "uzamkněte zámek."
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "Pro procházení návrhu musíte uzavřít režim úprav."
 
@@ -1182,11 +1182,11 @@ msgstr "Zpět"
 msgid "Unknown board"
 msgstr "Neznámá deska"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "Nepodporovaný formát projektu {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "Nepojmenovaný"
 
@@ -1195,12 +1195,12 @@ msgstr "Nepojmenovaný"
 msgid "Update (Latest stable)"
 msgstr "Aktualizovat jméno bloku"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Nahrát"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "Nahrávání hotovo"
 
@@ -1212,7 +1212,7 @@ msgstr "Kontrola hotová"
 msgid "Verify"
 msgstr "Zkontrolovat"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "Verze"
 
@@ -1247,12 +1247,12 @@ msgstr "Špatný formát bloku: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "Špatný název bloku {{name}}"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "Špatné jméno portu {{name}}"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "Špatný formát projektu: {{name}}"
 
@@ -1260,7 +1260,7 @@ msgstr "Špatný formát projektu: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Špatný název vzdáleného hostitele {{name}}"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1279,11 +1279,11 @@ msgstr ""
 "situaci \"uložit jako\" funguje jako \"exportovat modul\"), chcete "
 "pokračovat?"
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "Můžete nahrát tak jak je, nebo převést pro desku {{name}}."
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
@@ -1291,7 +1291,7 @@ msgstr ""
 "Sestavovat můžete pouze na nejvyšší úrovni návrhu. Uvnitř submodulů můžete "
 "pouze <strong>Verifikovat</strong>"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1311,7 +1311,7 @@ msgstr "Vaše změny budou ztraceny pokud je neuložíte"
 msgid "back"
 msgstr "zpět"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "{{app}} je vyžadováno."
 

@@ -32,7 +32,7 @@ msgstr ""
 msgid "Add"
 msgstr "Engadir"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "Engada un bloque para comezar"
 
@@ -48,7 +48,7 @@ msgstr "Formato do enderezo de memoria"
 msgid "All collections removed"
 msgstr "Elimináronse todas as coleccións"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Perderanse todas as coleccións gardadas. Desexa continuar?"
 
@@ -57,7 +57,7 @@ msgstr "Perderanse todas as coleccións gardadas. Desexa continuar?"
 msgid "At least Python 3.7 is required"
 msgstr "Requírese Python 2.7"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "Autor"
 
@@ -82,7 +82,7 @@ msgstr "Binario"
 msgid "Block updated"
 msgstr "Bloque actualizado"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "Importouse o bloque {{name}}"
 
@@ -118,7 +118,7 @@ msgstr "A placa {{name}} non está dispoñible"
 msgid "Board {{name}} not connected"
 msgstr "Non se puido conectar á placa {{name}}"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "Seleccionouse a placa {{name}}"
 
@@ -126,12 +126,12 @@ msgstr "Seleccionouse a placa {{name}}"
 msgid "Bootloader not active"
 msgstr "O bootloader non está activo"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Sintetizar"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "Sintetizado realizado"
 
@@ -139,7 +139,7 @@ msgstr "Sintetizado realizado"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -167,7 +167,7 @@ msgstr "Chinés"
 msgid "Choose a color:"
 msgstr ""
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Fai clic aquí para <b>descargar unha nova versión<b> de Icestudio"
 
@@ -257,7 +257,7 @@ msgstr "Constante"
 msgid "Constant names"
 msgstr "Constante"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "Converter"
 
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Default"
 msgstr "Predeterminado"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "Descripción"
 
@@ -334,7 +334,7 @@ msgstr "Deshabilitar"
 msgid "Do you want to close the application?"
 msgstr "Desexa pechar a aplicación?"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Desexa eliminar a colección {{name}}?"
 
@@ -422,7 +422,7 @@ msgstr "Introduza a ruta ás coleccións externas"
 msgid "Enter the remote hostname user@host"
 msgstr "Introduza o nome do equipo remoto: usuario@equipo"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "Erro: {{error}}"
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "File"
 msgstr "Ficheiro"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "Xa existe o ficheiro {{file}} no cartafol do proxecto. Desexa trocalo?"
@@ -497,7 +497,7 @@ msgstr "Xa existe o ficheiro {{file}} no cartafol do proxecto. Desexa trocalo?"
 msgid "File {{file}} does not exist"
 msgstr "Non existe o ficheiro {{file}}"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "Importouse o ficheiro {{file}}"
 
@@ -554,17 +554,17 @@ msgstr "Hexadecimal"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "Imaxe"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "Gardouse a imaxe {{name}}"
 
@@ -650,18 +650,18 @@ msgstr "Instalar"
 msgid "Internet connection required"
 msgstr "Requírese dunha conexión a Internet"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr ""
 "A conexión <i>pull-up</i> non é válida:<br>o bloque xa se atopa conectado"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "A conexión <i>pull-up</i> non é válida:<br>tan só permítense os bloques "
 "<i>Entrada</i>"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr ""
 "A conexión do bloque non é válida:<br>xa existe unha conexión <i>pull-up</i>"
@@ -670,20 +670,20 @@ msgstr ""
 msgid "Invalid collection {{name}}"
 msgstr "A colección {{name}} non é válida"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "Conexión non válida"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Conexión non válida: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "Conexións de entrada múltiple non válida"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "O formato do proxecto non é válido"
 
@@ -725,7 +725,7 @@ msgstr ""
 msgid "Light Sea Green"
 msgstr ""
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "Cargar"
 
@@ -746,7 +746,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "Tamaño máximo do bus: 96 bits"
 
@@ -767,7 +767,7 @@ msgstr "Memoria"
 msgid "Memory blocks"
 msgstr "Introduza os bloques de memoria"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "Nome"
 
@@ -792,12 +792,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "Nome"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "Non hay coleccións gardadas"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "Aceptar"
 
@@ -813,7 +813,7 @@ msgstr ""
 msgid "Open"
 msgstr "Abrir"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "Abrir SVG"
 
@@ -825,7 +825,7 @@ msgstr ""
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "Non existe o ficheiro {{name}} orixinal"
 
@@ -864,7 +864,7 @@ msgstr "Pegar"
 msgid "Path {{path}} does not exist"
 msgstr "Non existe a ruta {{path}}"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "Por favor executa: {{cmd}}"
 
@@ -880,11 +880,11 @@ msgstr "Información do proxecto"
 msgid "Project information updated"
 msgstr "Información do proxecto actualizada"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "Cargouse o proxecto {{name}}"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "Gardouse o proxecto {{name}}"
 
@@ -945,7 +945,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "Restablecer SVG"
 
@@ -961,7 +961,7 @@ msgstr ""
 msgid "Save"
 msgstr "Gardar"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "Gardar SVG"
 
@@ -1013,11 +1013,11 @@ msgstr ""
 msgid "SpringGreen"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "Iniciando o sintetizado"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "Iniciando a carga"
 
@@ -1073,7 +1073,7 @@ msgstr ""
 msgid "There is a new stable version available"
 msgstr ""
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1081,7 +1081,7 @@ msgstr ""
 "É necesario gardar o proxecto actual xa que a operación de importación "
 "require dun cartafol do proxecto. Desexa continuar?"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "Este proxecto está deseñado para a placa {{name}}"
 
@@ -1091,13 +1091,13 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
 msgstr ""
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr ""
 
@@ -1158,11 +1158,11 @@ msgstr "Desfacer"
 msgid "Unknown board"
 msgstr "Placa desconocida"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "Non está soportado o formato {{version}} do proxecto."
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "Sen título"
 
@@ -1171,12 +1171,12 @@ msgstr "Sen título"
 msgid "Update (Latest stable)"
 msgstr "Actualizar o nome do bloque"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Cargar"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "Carga realizada"
 
@@ -1188,7 +1188,7 @@ msgstr "Verificación realizada"
 msgid "Verify"
 msgstr "Verificar"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "Versión"
 
@@ -1223,12 +1223,12 @@ msgstr "Formato de bloque incorrecto: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "O nome do bloque {{name}} non é correcto"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "O nome do porto {{name}} non é correcto"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "O formato do proxecto {{name}} non é correcto"
 
@@ -1236,7 +1236,7 @@ msgstr "O formato do proxecto {{name}} non é correcto"
 msgid "Wrong remote hostname {{name}}"
 msgstr "O nome do equipo remoto {{name}} non é correcto"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1251,17 +1251,17 @@ msgid ""
 "module\"), Do you like to continue?"
 msgstr ""
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "Pode cargalo como está ou convertelo para a placa {{name}}."
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1279,7 +1279,7 @@ msgstr "Os cambios realizados perderanse se non se gardan"
 msgid "back"
 msgstr "atrás"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "Precisase {{app}}."
 

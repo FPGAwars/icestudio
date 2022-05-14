@@ -32,7 +32,7 @@ msgstr "Riconoscimenti"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "Aggiungere un blocco per iniziare"
 
@@ -48,7 +48,7 @@ msgstr "Codifica dell'indirizzo"
 msgid "All collections removed"
 msgstr "Tutte le collezioni sono state rimosse"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
 
@@ -57,7 +57,7 @@ msgstr "Tutte le connessioni memorizzate saranno perse. Vuoi continuare?"
 msgid "At least Python 3.7 is required"
 msgstr "È richiesto almeno Python 3.5"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "Autore"
 
@@ -82,7 +82,7 @@ msgstr "Binario"
 msgid "Block updated"
 msgstr "Aggiorna blocco"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "Blocco {{name}} importato"
 
@@ -118,7 +118,7 @@ msgstr "Scheda {{name}} non disponibile"
 msgid "Board {{name}} not connected"
 msgstr "Scheda {{name}} non connessa"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "Scheda {{name}} selezionata"
 
@@ -126,12 +126,12 @@ msgstr "Scheda {{name}} selezionata"
 msgid "Bootloader not active"
 msgstr "Bootloader non attivo"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "Compila"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "Compilazione terminata"
 
@@ -139,7 +139,7 @@ msgstr "Compilazione terminata"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "Cancella"
 
@@ -169,7 +169,7 @@ msgstr "Cinese"
 msgid "Choose a color:"
 msgstr "Scegli un colore"
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "Clicca qui per <b>scaricare la versione più recente</b> di Icestudio"
 
@@ -260,7 +260,7 @@ msgstr "Costante"
 msgid "Constant names"
 msgstr "Costante"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "Converti"
 
@@ -328,7 +328,7 @@ msgstr "BluCieloProfondo"
 msgid "Default"
 msgstr "Predefinito"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "Descrizione"
 
@@ -340,7 +340,7 @@ msgstr "Disattiva"
 msgid "Do you want to close the application?"
 msgstr "Vuoi chiudere l'applicazione?"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "Vuoi rimuovere la collezione {{name}}?"
 
@@ -427,7 +427,7 @@ msgstr "Inserisci il percorso file di python con versione > 3.8"
 msgid "Enter the remote hostname user@host"
 msgstr "Inserisci il nome dell'host remoto user@host"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "Errore: {{error}}"
 
@@ -491,7 +491,7 @@ msgstr ""
 msgid "File"
 msgstr "File"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "File {{file}} esiste già nella cartella. Vuoi rimpiazzarlo?"
@@ -500,7 +500,7 @@ msgstr "File {{file}} esiste già nella cartella. Vuoi rimpiazzarlo?"
 msgid "File {{file}} does not exist"
 msgstr "File {{file}} non esiste"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "File {{file}} importato"
 
@@ -558,18 +558,18 @@ msgstr "Esadecimale"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr ""
 "Se hai pin IN/OUT vuoti, è perché non esiste un equivalente in questa scheda"
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "Immagine"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "Immagine {{name}} salvata"
 
@@ -656,17 +656,17 @@ msgstr "Installa"
 msgid "Internet connection required"
 msgstr "Connessione a internet necessaria"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "Connessione di tipo <i>Pull up</i> invalida:<br>blocco già connesso"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "Connessione di tipo <i>Pull up</i> invalida:<br>solo i blocchi di "
 "<i>ingresso</i> sono permessi"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "Connessione al blocco invalida:<br><i>Pull up</i> già connesso"
 
@@ -674,20 +674,20 @@ msgstr "Connessione al blocco invalida:<br><i>Pull up</i> già connesso"
 msgid "Invalid collection {{name}}"
 msgstr "Collezione invalida {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "Connessione invalida"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "Connessione invalida: {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "Connessioni di multipli ingressi invalidi"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "Formato del progetto invalido"
 
@@ -731,7 +731,7 @@ msgstr "Chiaro"
 msgid "Light Sea Green"
 msgstr "VerdeAcqua"
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "Carica"
 
@@ -752,7 +752,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "Dimensione massima del bus: 96 bits"
 
@@ -774,7 +774,7 @@ msgstr "Memoria"
 msgid "Memory blocks"
 msgstr "Inserire il nome dei blocchi di memoria"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "Nome"
 
@@ -799,12 +799,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "Nome"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "Nessuna connessione memorizzata"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "OK"
 
@@ -821,7 +821,7 @@ msgstr "VerdeOlivo"
 msgid "Open"
 msgstr "Apri"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "Apri SVG"
 
@@ -834,7 +834,7 @@ msgstr "RossoArancio"
 msgid "OrangeRed"
 msgstr "RossoArancio"
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "Filo originale {{file}} non esiste più"
 
@@ -874,7 +874,7 @@ msgstr "Incolla"
 msgid "Path {{path}} does not exist"
 msgstr "IL percorso {{path}}è inesistente"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "Prego eseguire: {{cmd}}"
 
@@ -890,11 +890,11 @@ msgstr "Informazioni del progetto"
 msgid "Project information updated"
 msgstr "Informazioni del progetto aggionate"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "Progetto {{name}} caricato"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "Progetto {{name}} salvato"
 
@@ -954,7 +954,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "Ripristina SVG"
 
@@ -971,7 +971,7 @@ msgstr "Russo"
 msgid "Save"
 msgstr "Salva"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "Salva come SVG"
 
@@ -1025,11 +1025,11 @@ msgstr "VerdePrimavera"
 msgid "SpringGreen"
 msgstr "VerdePrimavera"
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "Inizia compilazione"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "Inizia caricamento"
 
@@ -1087,7 +1087,7 @@ msgstr "C'è una nuova versione nightly disponibile"
 msgid "There is a new stable version available"
 msgstr "C'è una nuova versione stabile disponibile"
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1095,7 +1095,7 @@ msgstr ""
 "L'importazione richiede il percorso del progetto. Devi salvare il progetto "
 "corrente. Vuoi continuare?"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "Questo progetto è stato progettato per la scheda {{name}}"
 
@@ -1105,7 +1105,7 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1114,7 +1114,7 @@ msgstr ""
 "necessario completare la \"modalità modifica\" corrente, chiudi il "
 "catenaccio per farlo."
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr ""
 "Per navigare attraverso progetti, devi prima chiudere la \"modalità modifica"
@@ -1181,11 +1181,11 @@ msgstr "Annulla"
 msgid "Unknown board"
 msgstr "Scheda sconosciuta"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "Formato del progetto non supportato {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "Senza titolo"
 
@@ -1194,12 +1194,12 @@ msgstr "Senza titolo"
 msgid "Update (Latest stable)"
 msgstr "Aggiorna il nome del blocco"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "Carica"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "Caricamento completato"
 
@@ -1211,7 +1211,7 @@ msgstr "Verifica completata"
 msgid "Verify"
 msgstr "Verifica"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "Versione"
 
@@ -1246,12 +1246,12 @@ msgstr "Formato del blocco erratot: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "Nome del blocco {{name}} errato"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "Nome della porta {{name}} errata"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "Formato del progetto errato: {{name}}"
 
@@ -1259,7 +1259,7 @@ msgstr "Formato del progetto errato: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Nome dell'host remoto {{name}} errato"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1278,11 +1278,11 @@ msgstr ""
 "sottomodulo (in questa situazione \"salva con nome\" funziona come \"esporta "
 "modulo\"), Continuare?"
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "Puoi caricarlo così come è o convertirlo per la scheda {{name}}"
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
@@ -1290,7 +1290,7 @@ msgstr ""
 "Puoi costruire solo sul design di primo livello. All'interno dei sottomodi è "
 "solo possibile <strong>Verificare</strong>"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1310,7 +1310,7 @@ msgstr "I tuoi progressi saranno perduti se non li salvi"
 msgid "back"
 msgstr "indietro"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "{{app}} è richiesta."
 

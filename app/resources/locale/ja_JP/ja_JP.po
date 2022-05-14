@@ -32,7 +32,7 @@ msgstr "謝辞"
 msgid "Add"
 msgstr "追加"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "ブロックを追加して始める"
 
@@ -48,7 +48,7 @@ msgstr "アドレスフォーマット"
 msgid "All collections removed"
 msgstr "すべてのコレクションが削除されました"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "保存されているコレクションはすべて失われます。継続しますか？"
 
@@ -56,7 +56,7 @@ msgstr "保存されているコレクションはすべて失われます。継
 msgid "At least Python 3.7 is required"
 msgstr "Python 3.7 以上が必要です"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "作者"
 
@@ -81,7 +81,7 @@ msgstr "2進数"
 msgid "Block updated"
 msgstr "ブロックが更新されました"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "ブロック {{name}} がインポートされました"
 
@@ -117,7 +117,7 @@ msgstr "ボード {{name}} は使えません"
 msgid "Board {{name}} not connected"
 msgstr "ボード {{name}} が接続されていません"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "ボード {{name}} が選択されました"
 
@@ -125,12 +125,12 @@ msgstr "ボード {{name}} が選択されました"
 msgid "Bootloader not active"
 msgstr "ブートローダがアクティブでない"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "ビルド"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "ビルド完了"
 
@@ -138,7 +138,7 @@ msgstr "ビルド完了"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr "注意！変更内容はコピーしたものすべてに適用されます"
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -167,7 +167,7 @@ msgstr "中国語"
 msgid "Choose a color:"
 msgstr "色を選択"
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "ここをクリックして Icestudio の <b> 新バージョン </b> をダウンロード"
 
@@ -257,7 +257,7 @@ msgstr "定数"
 msgid "Constant names"
 msgstr "定数"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "変換"
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "Default"
 msgstr "デフォルト"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "説明"
 
@@ -333,7 +333,7 @@ msgstr "無効化"
 msgid "Do you want to close the application?"
 msgstr "アプリケーションを終了しますか？"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "コレクション {{name}} を削除しますか？"
 
@@ -420,7 +420,7 @@ msgstr "バージョン3.8以上のpythonのパスを入力"
 msgid "Enter the remote hostname user@host"
 msgstr "リモートホスト名を入力 user@host"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "エラー：{{error}}"
 
@@ -484,7 +484,7 @@ msgstr ""
 msgid "File"
 msgstr "ファイル"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr ""
@@ -494,7 +494,7 @@ msgstr ""
 msgid "File {{file}} does not exist"
 msgstr "ファイル {{file}} が存在しません"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "ファイル {{file}} がインポートされました"
 
@@ -551,17 +551,17 @@ msgstr "16進数"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr "IN/OUTピンが空白であるのは、このボードに該当するピンがないためです"
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "画像"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "画像 {{name}} が保存されました"
 
@@ -647,15 +647,15 @@ msgstr "インストール中"
 msgid "Internet connection required"
 msgstr "インターネット接続が必要"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "無効な <I>プルアップ</i> 接続：<br>ブロックが既に接続されています"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "無効な <I>プルアップ</i> 接続：<br>入力ブロックのみ可能です"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "無効なブロック接続：<br><I>プルアップ</i> が既に接続されています"
 
@@ -663,20 +663,20 @@ msgstr "無効なブロック接続：<br><I>プルアップ</i> が既に接続
 msgid "Invalid collection {{name}}"
 msgstr "無効な接続 {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "無効な接続"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "無効な接続：{{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "無効な複数の入力接続"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "無効なプロジェクトフォーマット"
 
@@ -718,7 +718,7 @@ msgstr "ライト"
 msgid "Light Sea Green"
 msgstr ""
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "ロード"
 
@@ -738,7 +738,7 @@ msgstr "ログファイル"
 msgid "Logging file updated"
 msgstr "ログファイルが更新されました"
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "最大のバス幅：96 ビット"
 
@@ -759,7 +759,7 @@ msgstr "メモリ"
 msgid "Memory blocks"
 msgstr "メモリブロックの入力"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "名前"
 
@@ -783,12 +783,12 @@ msgstr "新しい色："
 msgid "New Name:"
 msgstr "新しい名前："
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr ""
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr ""
 
@@ -804,7 +804,7 @@ msgstr ""
 msgid "Open"
 msgstr "開く"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "SVG を開く"
 
@@ -816,7 +816,7 @@ msgstr ""
 msgid "OrangeRed"
 msgstr ""
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "オリジナルのファイル{{file}}が存在しない"
 
@@ -856,7 +856,7 @@ msgstr "ペースト"
 msgid "Path {{path}} does not exist"
 msgstr "パス {{path}} が存在しません"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "実行してください： {{cmd}}"
 
@@ -872,11 +872,11 @@ msgstr "プロジェクトの情報"
 msgid "Project information updated"
 msgstr "プロジェクトの情報が更新されました"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "プロジェクト {{name}} がロードされました"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "プロジェクト {{name}} が保存されました"
 
@@ -937,7 +937,7 @@ msgstr "全て置き換える"
 msgid "Replace One"
 msgstr "置き換える"
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "SVGをリセット"
 
@@ -953,7 +953,7 @@ msgstr "ロシア語"
 msgid "Save"
 msgstr "保存"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "SVG を保存"
 
@@ -1005,11 +1005,11 @@ msgstr ""
 msgid "SpringGreen"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "ビルド開始"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "アップロード開始"
 
@@ -1063,7 +1063,7 @@ msgstr "新しいナイトリー版が利用可能です"
 msgid "There is a new stable version available"
 msgstr "新しい安定版が利用可能です"
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
@@ -1071,7 +1071,7 @@ msgstr ""
 "このインポート操作には、プロジェクトのパスが必要です。現在のプロジェクトを保"
 "存する必要があります。続行しますか？"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "このプロジェクトはボード {{name}} 向けです。"
 
@@ -1081,7 +1081,7 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1089,7 +1089,7 @@ msgstr ""
 "内側のブロックの「編集モード」に入るには、現在の「編集モード」を終了させ、"
 "キーロックをかけて行う必要があります。"
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "デザインを操作するには、「編集モード」を終了する必要があります。"
 
@@ -1153,11 +1153,11 @@ msgstr "戻す"
 msgid "Unknown board"
 msgstr "不明なボード"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "非対応のプロジェクトフォーマット {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "無名"
 
@@ -1165,12 +1165,12 @@ msgstr "無名"
 msgid "Update (Latest stable)"
 msgstr "アップデート（最新の安定版）"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "アップロード"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "アップロード完了"
 
@@ -1182,7 +1182,7 @@ msgstr "検証完了"
 msgid "Verify"
 msgstr "検証"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "バージョン"
 
@@ -1217,11 +1217,11 @@ msgstr "誤ったブロックフォーマット：{{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "誤ったブロック名：{{name}}"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 msgid "Wrong new name!"
 msgstr "誤った名前！"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "誤ったプロジェクトフォーマット：{{name}}"
 
@@ -1229,7 +1229,7 @@ msgstr "誤ったプロジェクトフォーマット：{{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "誤ったリモートホスト名 {{name}}"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr "誤った検索名！"
 
@@ -1248,11 +1248,11 @@ msgstr ""
 "（この場合、「名前を付けて保存」は「モジュールのエクスポート」のように機能し"
 "ます）。続けますか？"
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "そのまま読み込むか、ボード {{name}} 用に変換することができます。"
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
@@ -1260,7 +1260,7 @@ msgstr ""
 "ビルドはトップレベルでのみ可能です。サブモジュールでは<strong>検証</strong>の"
 "み可能です"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1280,7 +1280,7 @@ msgstr "保存しないと変更内容が失われます"
 msgid "back"
 msgstr "戻る"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "{{app}} が必要です。"
 

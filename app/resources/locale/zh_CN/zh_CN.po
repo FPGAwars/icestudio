@@ -32,7 +32,7 @@ msgstr ""
 msgid "Add"
 msgstr "添加"
 
-#: app/scripts/controllers/menu.js:1385
+#: app/scripts/controllers/menu.js:1382
 msgid "Add a block to start"
 msgstr "添加图块并开始"
 
@@ -48,7 +48,7 @@ msgstr "地址格式"
 msgid "All collections removed"
 msgstr "所有集合已删除"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1422
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "所有存储的集合将会丢失。是否继续？"
 
@@ -57,7 +57,7 @@ msgstr "所有存储的集合将会丢失。是否继续？"
 msgid "At least Python 3.7 is required"
 msgstr "需要安装 Python 2.7"
 
-#: app/scripts/services/utils.js:643
+#: app/scripts/services/utils.js:642
 msgid "Author"
 msgstr "作者"
 
@@ -82,7 +82,7 @@ msgstr "二进制"
 msgid "Block updated"
 msgstr "图块已更新"
 
-#: app/scripts/services/project.js:494
+#: app/scripts/services/project.js:505
 msgid "Block {{name}} imported"
 msgstr "图块 {{name}} 已被导入"
 
@@ -118,7 +118,7 @@ msgstr "开发板 {{name}} 不可用"
 msgid "Board {{name}} not connected"
 msgstr "开发板 {{name}} 未连接"
 
-#: app/scripts/app.js:185 app/scripts/controllers/menu.js:1304
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1304
 msgid "Board {{name}} selected"
 msgstr "开发板 {{name}} 已选中"
 
@@ -126,12 +126,12 @@ msgstr "开发板 {{name}} 已选中"
 msgid "Bootloader not active"
 msgstr "Bootloader 失效"
 
-#: app/scripts/controllers/menu.js:1327 app/views/design.html:518
+#: app/scripts/controllers/menu.js:1326 app/views/design.html:518
 #: app/views/menu.html:607
 msgid "Build"
 msgstr "构建"
 
-#: app/scripts/controllers/menu.js:1337
+#: app/scripts/controllers/menu.js:1336
 msgid "Build done"
 msgstr "构建成功"
 
@@ -139,7 +139,7 @@ msgstr "构建成功"
 msgid "CAUTION ! : Changes will also be applied in all the copied"
 msgstr ""
 
-#: app/scripts/app.js:59 app/scripts/services/project.js:147
+#: app/scripts/app.js:58 app/scripts/services/project.js:158
 msgid "Cancel"
 msgstr "取消"
 
@@ -169,7 +169,7 @@ msgstr "中文"
 msgid "Choose a color:"
 msgstr "选择一个颜色"
 
-#: app/scripts/services/project.js:171
+#: app/scripts/services/project.js:182
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "点击此处 <b>下载 Icestudio 的新版本</b>"
 
@@ -259,7 +259,7 @@ msgstr "常量"
 msgid "Constant names"
 msgstr "常量"
 
-#: app/scripts/services/project.js:93
+#: app/scripts/services/project.js:99
 msgid "Convert"
 msgstr "转换"
 
@@ -328,7 +328,7 @@ msgstr "深蓝"
 msgid "Default"
 msgstr "默认"
 
-#: app/scripts/services/utils.js:642
+#: app/scripts/services/utils.js:641
 msgid "Description"
 msgstr "描述"
 
@@ -340,7 +340,7 @@ msgstr "关闭"
 msgid "Do you want to close the application?"
 msgstr "您是否要关闭应用程序？"
 
-#: app/scripts/controllers/menu.js:1408
+#: app/scripts/controllers/menu.js:1405
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是否要移除集合 {{name}}？"
 
@@ -428,7 +428,7 @@ msgstr "输入新集合路径"
 msgid "Enter the remote hostname user@host"
 msgstr "输入远程主机 用户名@主机名"
 
-#: app/scripts/services/utils.js:846
+#: app/scripts/services/utils.js:845
 msgid "Error: {{error}}"
 msgstr "错误: {{error}}"
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "File"
 msgstr "文件"
 
-#: app/scripts/services/project.js:508
+#: app/scripts/services/project.js:519
 msgid ""
 "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
@@ -503,7 +503,7 @@ msgstr "文件 {{file}} 在项目路径中已存在。是否替换？"
 msgid "File {{file}} does not exist"
 msgstr "文件 {{file}} 不存在"
 
-#: app/scripts/services/project.js:541
+#: app/scripts/services/project.js:552
 msgid "File {{file}} imported"
 msgstr "已导入文件 {{file}}"
 
@@ -561,17 +561,17 @@ msgstr "十六进制"
 msgid "Icestudio is part of"
 msgstr ""
 
-#: app/scripts/services/graph.js:1619
+#: app/scripts/services/graph.js:1650
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
 msgstr "如果你有空白的 IN/OUT 引脚，那是因为这块开发板上没有这些引脚"
 
-#: app/scripts/services/utils.js:656
+#: app/scripts/services/utils.js:655
 msgid "Image"
 msgstr "镜像"
 
-#: app/scripts/controllers/menu.js:2108
+#: app/scripts/controllers/menu.js:2105
 msgid "Image {{name}} saved"
 msgstr "镜像 {{name}} 已保存"
 
@@ -654,15 +654,15 @@ msgstr "安装"
 msgid "Internet connection required"
 msgstr "需要网络连接"
 
-#: app/scripts/services/graph.js:290
+#: app/scripts/services/graph.js:298
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "无效的 <i>上拉</i> 连接：<br>图块已被连接"
 
-#: app/scripts/services/graph.js:304
+#: app/scripts/services/graph.js:312
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "无效的 <i>上拉</i> 连接：<br>只有 <i>输入</i> 图块才能被上拉"
 
-#: app/scripts/services/graph.js:296
+#: app/scripts/services/graph.js:304
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "无效的图块连接：<br><i>上拉</i> 已经使用"
 
@@ -670,20 +670,20 @@ msgstr "无效的图块连接：<br><i>上拉</i> 已经使用"
 msgid "Invalid collection {{name}}"
 msgstr "无效的集合 {{name}}"
 
-#: app/scripts/services/graph.js:254 app/scripts/services/graph.js:261
-#: app/scripts/services/graph.js:268
+#: app/scripts/services/graph.js:262 app/scripts/services/graph.js:269
+#: app/scripts/services/graph.js:276
 msgid "Invalid connection"
 msgstr "无效的连接"
 
-#: app/scripts/services/graph.js:324
+#: app/scripts/services/graph.js:332
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "无效的连接 {{a}} → {{b}}"
 
-#: app/scripts/services/graph.js:284
+#: app/scripts/services/graph.js:292
 msgid "Invalid multiple input connections"
 msgstr "无效的多输入连接"
 
-#: app/scripts/services/project.js:499 app/scripts/services/project.js:78
+#: app/scripts/services/project.js:510 app/scripts/services/project.js:85
 msgid "Invalid project format"
 msgstr "无效的项目格式"
 
@@ -727,7 +727,7 @@ msgstr "亮海绿"
 msgid "Light Sea Green"
 msgstr "亮海绿"
 
-#: app/scripts/services/project.js:92
+#: app/scripts/services/project.js:98
 msgid "Load"
 msgstr "载入"
 
@@ -748,7 +748,7 @@ msgstr ""
 msgid "Logging file updated"
 msgstr ""
 
-#: app/scripts/services/utils.js:960
+#: app/scripts/services/utils.js:959
 msgid "Maximum bus size: 96 bits"
 msgstr "最大总线宽度：96 bits"
 
@@ -770,7 +770,7 @@ msgstr "内存"
 msgid "Memory blocks"
 msgstr "输入内存图块名称"
 
-#: app/scripts/services/utils.js:640
+#: app/scripts/services/utils.js:639
 msgid "Name"
 msgstr "名称"
 
@@ -795,12 +795,12 @@ msgstr ""
 msgid "New Name:"
 msgstr "名称"
 
-#: app/scripts/controllers/menu.js:1436
+#: app/scripts/controllers/menu.js:1433
 msgid "No collections stored"
 msgstr "没有存储的集合"
 
-#: app/scripts/app.js:58 app/scripts/controllers/menu.js:585
-#: app/scripts/services/project.js:146
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:585
+#: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "确定"
 
@@ -817,7 +817,7 @@ msgstr "橄榄绿"
 msgid "Open"
 msgstr "打开"
 
-#: app/scripts/services/utils.js:697
+#: app/scripts/services/utils.js:696
 msgid "Open SVG"
 msgstr "打开 SVG"
 
@@ -830,7 +830,7 @@ msgstr "橙红"
 msgid "OrangeRed"
 msgstr "橙红"
 
-#: app/scripts/services/project.js:544
+#: app/scripts/services/project.js:555
 msgid "Original file {{file}} does not exist"
 msgstr "原始文件 {{file}} 不存在"
 
@@ -870,7 +870,7 @@ msgstr "粘贴"
 msgid "Path {{path}} does not exist"
 msgstr "路径 {{path}} 不存在"
 
-#: app/scripts/services/utils.js:1142
+#: app/scripts/services/utils.js:1141
 msgid "Please run: {{cmd}}"
 msgstr "请运行： {{cmd}}"
 
@@ -886,11 +886,11 @@ msgstr "项目信息"
 msgid "Project information updated"
 msgstr "项目信息已更新"
 
-#: app/scripts/services/project.js:132
+#: app/scripts/services/project.js:143
 msgid "Project {{name}} loaded"
 msgstr "项目 {{name}} 已载入"
 
-#: app/scripts/services/project.js:405
+#: app/scripts/services/project.js:416
 msgid "Project {{name}} saved"
 msgstr "项目 {{name}} 已保存"
 
@@ -950,7 +950,7 @@ msgstr ""
 msgid "Replace One"
 msgstr ""
 
-#: app/scripts/services/utils.js:699
+#: app/scripts/services/utils.js:698
 msgid "Reset SVG"
 msgstr "重载 SVG"
 
@@ -967,7 +967,7 @@ msgstr "Russian"
 msgid "Save"
 msgstr "保存"
 
-#: app/scripts/services/utils.js:698
+#: app/scripts/services/utils.js:697
 msgid "Save SVG"
 msgstr "保存 SVG"
 
@@ -1021,11 +1021,11 @@ msgstr "春绿"
 msgid "SpringGreen"
 msgstr "春绿"
 
-#: app/scripts/controllers/menu.js:1336
+#: app/scripts/controllers/menu.js:1335
 msgid "Start build"
 msgstr "开始编译"
 
-#: app/scripts/controllers/menu.js:1364
+#: app/scripts/controllers/menu.js:1361
 msgid "Start upload"
 msgstr "开始上传"
 
@@ -1080,13 +1080,13 @@ msgstr "有新的每日构建版本"
 msgid "There is a new stable version available"
 msgstr "有新的稳定版本"
 
-#: app/scripts/services/project.js:468
+#: app/scripts/services/project.js:479
 msgid ""
 "This import operation requires a project path. You need to save the current "
 "project. Do you want to continue?"
 msgstr "本次导入操作需要项目路径，您必须保存当前项目，是否继续？"
 
-#: app/scripts/services/project.js:96
+#: app/scripts/services/project.js:102
 msgid "This project is designed for the {{name}} board."
 msgstr "该项目为开发板 {{name}} 设计使用。"
 
@@ -1096,7 +1096,7 @@ msgid ""
 "              done by an emerging team from"
 msgstr ""
 
-#: app/scripts/services/graph.js:521
+#: app/scripts/services/graph.js:532
 msgid ""
 "To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
 "mode\", lock the keylock to do it."
@@ -1104,7 +1104,7 @@ msgstr ""
 "要为更深层次的图块使用 \"编辑模式\"，您需要完成当前的\"编辑模式\"，然后锁定键"
 "锁即可。"
 
-#: app/scripts/controllers/design.js:51
+#: app/scripts/controllers/design.js:50
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "要浏览设计，您需要退出 \"编辑模式\"。"
 
@@ -1168,11 +1168,11 @@ msgstr "撤销"
 msgid "Unknown board"
 msgstr "未知的开发板"
 
-#: app/scripts/services/project.js:170
+#: app/scripts/services/project.js:181
 msgid "Unsupported project format {{version}}"
 msgstr "不支持的项目格式 {{version}}"
 
-#: app/scripts/app.js:207
+#: app/scripts/app.js:206
 msgid "Untitled"
 msgstr "未命名"
 
@@ -1181,12 +1181,12 @@ msgstr "未命名"
 msgid "Update (Latest stable)"
 msgstr "更新图块名称"
 
-#: app/scripts/controllers/menu.js:1354 app/views/design.html:526
+#: app/scripts/controllers/menu.js:1351 app/views/design.html:526
 #: app/views/menu.html:615
 msgid "Upload"
 msgstr "上传"
 
-#: app/scripts/controllers/menu.js:1365
+#: app/scripts/controllers/menu.js:1362
 msgid "Upload done"
 msgstr "上传成功"
 
@@ -1198,7 +1198,7 @@ msgstr "验证成功"
 msgid "Verify"
 msgstr "验证"
 
-#: app/scripts/services/utils.js:641 app/views/menu.html:832
+#: app/scripts/services/utils.js:640 app/views/menu.html:832
 msgid "Version"
 msgstr "版本"
 
@@ -1233,12 +1233,12 @@ msgstr "图块格式错误： {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "图块名称错误 {{name}}"
 
-#: app/scripts/controllers/menu.js:1907
+#: app/scripts/controllers/menu.js:1904
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "端口名称错误 {{name}}"
 
-#: app/scripts/services/project.js:143
+#: app/scripts/services/project.js:154
 msgid "Wrong project format: {{name}}"
 msgstr "项目格式错误： {{name}}"
 
@@ -1246,7 +1246,7 @@ msgstr "项目格式错误： {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "远程主机名错误 {{name}}"
 
-#: app/scripts/controllers/menu.js:1811
+#: app/scripts/controllers/menu.js:1808
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1264,17 +1264,17 @@ msgstr ""
 "您正在编辑一个子模块。如果您保存，您将只会保存子模块 (在此情况下 \"另存为\" "
 "和 \"导出子模块\" 效果相同)，是否继续？"
 
-#: app/scripts/services/project.js:97
+#: app/scripts/services/project.js:103
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "您可以载入原始项目，或转换以适应开发板 {{name}}。"
 
-#: app/scripts/controllers/menu.js:1328
+#: app/scripts/controllers/menu.js:1327
 msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr "您只能在顶层设计中编译。在子模块中您将只能 <strong>验证</strong>"
 
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1352
 msgid ""
 "You can only upload  your design at top-level design. Inside submodules you "
 "only can <strong>Verify</strong>"
@@ -1292,7 +1292,7 @@ msgstr "如果不保存，您的更改将会丢失"
 msgid "back"
 msgstr "后退"
 
-#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1122
+#: app/scripts/services/drivers.js:412 app/scripts/services/utils.js:1121
 msgid "{{app}} is required."
 msgstr "需要 {{app}} 。"
 
