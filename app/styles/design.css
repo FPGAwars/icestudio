@@ -375,11 +375,27 @@ g {
   pointer-events: auto;
 }
 
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 3px;
+  padding-right: 0;
+  overflow: hidden;
+}
+
 .select2-selection {
-  font-size: 13px;
+  font-size: 12px;
   height: 26px !important;
 }
 
+.select2-selection button{
+  display:none;
+}
+.select2-selection:hover button{
+  display:block;
+}
+
+.io-block .io-fpga-content .header label {
+  font-size:12px;
+}
 .select2-selection__rendered {
   line-height: 24px !important;
 }
