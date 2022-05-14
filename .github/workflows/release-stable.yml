@@ -242,8 +242,9 @@ jobs:
           echo "====> DEBUG: Contents of the dist folder..."
           ls -l dist
 
-      # Loading vars from icestudio package.json
-      - id: icestudio_json
+      #-- Read the package.json file
+      - name: Read the package.json file
+        id: icestudio_json
         run: |
           content=`cat package.json`
           content="${content//'%'/'%25'}"
