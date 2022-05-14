@@ -408,7 +408,7 @@ angular.module('icestudio')
     for (let i = 0; i < portInfo.size; i++) {
       pins.push(
         {
-          index: i.toString(),
+          index: (portInfo.size - 1 - i).toString(),
           name: 'NULL',
           value: 'NULL' //-- Pin value
         });
