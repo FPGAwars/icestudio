@@ -341,8 +341,8 @@ angular
 
       $scope.saveProject = function () {
         if (
-          typeof common.isEditingSubmodule !== "undefined" &&
-          common.isEditingSubmodule === true
+          (typeof common.isEditingSubmodule !== "undefined" &&
+          common.isEditingSubmodule === true ) || graph.breadcrumbs.length>1
         ) {
           alertify.alert(
             gettextCatalog.getString("Save submodule"),
@@ -385,7 +385,22 @@ angular
 
 
       $scope.saveProjectAs = function (localCallback) {
-        if (
+        if(  (  typeof common.isEditingSubmodule === "undefined" || (
+                typeof common.isEditingSubmodule !== "undefined" &&
+                 common.isEditingSubmodule === false)
+    
+               ) && graph.breadcrumbs.length>1){
+
+                alertify.alert(
+                  gettextCatalog.getString("Export submodule"),
+                  gettextCatalog.getString(
+                    'You are navigating into the design, if you want to save the entire design, you need to back  \
+                     to the top level. If you want to export this module as new file, unlock the module and "save as"'
+                  ),
+                  function () { }
+                );
+        }else{
+                if (
           typeof common.isEditingSubmodule !== "undefined" &&
           common.isEditingSubmodule === true
         ) {
@@ -403,6 +418,7 @@ angular
           );
         } else {
           $scope.doSaveProjectAs(localCallback);
+        }
         }
       };
 
