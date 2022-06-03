@@ -12,6 +12,8 @@
   {"type":"inout","name":"lcol4","value":"C5"},
   {"type":"inout","name":"spkp","value":"M12"},
   {"type":"inout","name":"spkm","value":"M6"},
+  {"type":"output","name":"tx","value": "P4"},
+  {"type":"input","name":"rx","value": "P5"},
   {"type":"inout","name":"key1","value":"C11"},
   {"type":"inout","name":"key2","value":"C6"},
   {"type":"inout","name":"key3","value":"A11"},
