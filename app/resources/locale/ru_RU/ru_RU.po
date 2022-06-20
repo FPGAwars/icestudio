@@ -56,7 +56,7 @@ msgstr "Все сохраненные коллеции будут удалены
 #: app/scripts/services/tools.js:1389
 #, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Необходим Python 2.7"
+msgstr "Необходим Python 3.7 или новее"
 
 #: app/scripts/services/utils.js:643
 msgid "Author"
@@ -138,7 +138,7 @@ msgstr "Сборка закончена"
 
 #: app/views/design.html:35
 msgid "CAUTION ! : Changes will also be applied in all the copied"
-msgstr ""
+msgstr "ВНИМАНИЕ! : Изменения будут также применены ко всем скопированным"
 
 #: app/scripts/app.js:59 app/scripts/services/project.js:147
 msgid "Cancel"
@@ -155,7 +155,7 @@ msgstr "Выберите цвет"
 
 #: app/scripts/services/tools.js:1344
 msgid "Check Internet connection..."
-msgstr "Проверка соединение с Интернетом..."
+msgstr "Проверка соединения с Интернетом..."
 
 #: app/scripts/services/tools.js:1378
 msgid "Check Python..."
@@ -168,11 +168,11 @@ msgstr "Китайский"
 #: app/scripts/services/forms.js:1199
 #, fuzzy
 msgid "Choose a color:"
-msgstr "Выберите цвет"
+msgstr "Выберите цвет:"
 
 #: app/scripts/services/project.js:171
 msgid "Click here to <b>download a newer version</b> of Icestudio"
-msgstr "Нажмите здесь <b>для загрузки новой версии</b> of Icestudio"
+msgstr "Нажмите здесь <b>для загрузки новой версии</b> Icestudio"
 
 #: app/scripts/services/tools.js:1518
 msgid "Click here to <b>setup the drivers</b>"
@@ -189,7 +189,7 @@ msgstr "Нажмите для просмотра"
 
 #: app/scripts/services/forms.js:1041
 msgid "Clock not allowed for data buses"
-msgstr "Сишгнал тактирования не разрешен для шин данных"
+msgstr "Сигнал тактирования не разрешен для шин данных"
 
 #: app/views/menu.html:278
 msgid "Clone"
@@ -287,7 +287,7 @@ msgstr "Чешский"
 #: app/views/uithemes.html:16
 #, fuzzy
 msgid "Dark (default)"
-msgstr "По умолчанию"
+msgstr "Тёмный (по умолчанию)"
 
 #: app/scripts/services/forms.js:424
 #, fuzzy
@@ -378,7 +378,7 @@ msgstr "Дублирование портов ввода/вывода платы
 #: app/scripts/services/forms.js:1712
 #, fuzzy
 msgid "Duplicated port name:"
-msgstr "Метка вывода"
+msgstr "Метка вывода:"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -510,7 +510,7 @@ msgstr "Файл {{file}} импортирован"
 
 #: app/views/design.html:65
 msgid "Find"
-msgstr ""
+msgstr "Найти"
 
 #: app/views/menu.html:300
 msgid "Fit content"
@@ -567,7 +567,7 @@ msgstr "Icestudio Inception"
 msgid ""
 "If you have blank IN/OUT pins, it's because there is no equivalent in this "
 "board"
-msgstr "Могли остаться пустые  пины, потому что на этой плате нет эквивалента"
+msgstr "Могли остаться пустые пины, потому что на этой плате нет эквивалента"
 
 #: app/scripts/services/utils.js:656
 msgid "Image"
@@ -597,7 +597,7 @@ msgstr "Метка ввода"
 #: app/scripts/services/forms.js:1431
 #, fuzzy
 msgid "Input labels"
-msgstr "Метка ввода"
+msgstr "Метки ввода"
 
 #: app/scripts/services/forms.js:1579
 #, fuzzy
@@ -606,7 +606,7 @@ msgstr "Параметры"
 
 #: app/scripts/services/forms.js:987
 msgid "Input port name:"
-msgstr ""
+msgstr "Введите имя порта:"
 
 #: app/scripts/services/forms.js:1565
 #, fuzzy
@@ -616,18 +616,20 @@ msgstr "Входные порты"
 #: app/views/menu.html:635
 #, fuzzy
 msgid "Install (Stable)"
-msgstr "Установить"
+msgstr "Установить (Стабильная версия)"
 
 #: app/views/menu.html:656
 msgid "Install Development version"
-msgstr ""
+msgstr "Установить (В разработке)"
 
 #: app/scripts/services/tools.js:1118
 msgid ""
 "Install the <b>STABLE Toolchain</b>. This operation requires Internet "
 "connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
-msgstr ""
+msgstr "Установите <b>стабильный набор инструментов</b>. Требуется подключение к сети "
+"<br><p><b>ВАЖНО:</b> Отключите VPN-сервис (если он активен), чтобы "
+"разрешить установку</p> <p>Продолжить ?</p>"
 
 #: app/scripts/services/tools.js:1144
 #, fuzzy
@@ -635,7 +637,7 @@ msgid ""
 "Install the DEVELOPMENT toolchain. It will be downloaded. This operation "
 "requires Internet connection. Do you want to continue?"
 msgstr ""
-"Набор инструментов будет обновлен. Для этой операции потребуется соединение "
+"Установить набор инструментов в разработке. Для этой операции потребуется соединение "
 "с Интернетом. Продолжить ?"
 
 #: app/scripts/services/tools.js:1166
@@ -654,7 +656,7 @@ msgstr "Установка завершена"
 #: app/scripts/services/tools.js:1274
 #, fuzzy
 msgid "Installing"
-msgstr "Установить"
+msgstr "Установка"
 
 #: app/scripts/services/drivers.js:421 app/scripts/services/tools.js:1362
 msgid "Internet connection required"
@@ -707,11 +709,11 @@ msgstr "Испанский"
 
 #: app/views/languages.html:98
 msgid "Korean"
-msgstr ""
+msgstr "Корейский"
 
 #: app/views/menu.html:310
 msgid "Label Finder"
-msgstr ""
+msgstr "Поиск блока"
 
 #: app/scripts/services/blockforms.js:991
 #, fuzzy
@@ -724,7 +726,7 @@ msgstr "Язык"
 
 #: app/views/uithemes.html:26
 msgid "Light"
-msgstr ""
+msgstr "Светлый"
 
 #: app/scripts/services/forms.js:448 app/views/design.html:257
 #, fuzzy
@@ -751,11 +753,11 @@ msgstr "Драйвера подключены"
 
 #: app/views/menu.html:413
 msgid "Logging file"
-msgstr ""
+msgstr "Файл журнала"
 
 #: app/scripts/controllers/menu.js:722
 msgid "Logging file updated"
-msgstr ""
+msgstr "Файл журнала обновлен"
 
 #: app/scripts/services/utils.js:960
 msgid "Maximum bus size: 96 bits"
@@ -785,7 +787,7 @@ msgstr "Имя"
 
 #: app/scripts/services/forms.js:1493
 msgid "Name of the paired labels"
-msgstr ""
+msgstr "Имя парных меток"
 
 #: app/scripts/services/forms.js:445 app/views/design.html:250
 msgid "Navy"
@@ -797,12 +799,12 @@ msgstr "Новый"
 
 #: app/views/design.html:87
 msgid "New Color:"
-msgstr ""
+msgstr "Новый цвет:"
 
 #: app/views/design.html:80
 #, fuzzy
 msgid "New Name:"
-msgstr "Имя"
+msgstr "Новое имя:"
 
 #: app/scripts/controllers/menu.js:1436
 msgid "No collections stored"
@@ -868,7 +870,7 @@ msgstr "Метка вывода"
 
 #: app/views/design.html:306 app/views/menu.html:778
 msgid "Paired labels"
-msgstr ""
+msgstr "Парные метки"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -905,11 +907,11 @@ msgstr "Проект {{name}} сохранен"
 
 #: app/scripts/controllers/menu.js:845
 msgid "Python Environment updated"
-msgstr ""
+msgstr "Среда Python обновлена"
 
 #: app/views/menu.html:389
 msgid "Python environment"
-msgstr ""
+msgstr "Среда Python"
 
 #: app/views/menu.html:202
 msgid "Quit"
@@ -953,11 +955,11 @@ msgstr "Удалить все"
 
 #: app/views/design.html:267
 msgid "Replace All"
-msgstr ""
+msgstr "Заменить ВСЕ"
 
 #: app/views/design.html:84
 msgid "Replace One"
-msgstr ""
+msgstr "Заменить один"
 
 #: app/scripts/services/utils.js:699
 msgid "Reset SVG"
@@ -1053,11 +1055,11 @@ msgstr "Синхронизация файлов..."
 
 #: app/views/menu.html:477
 msgid "System Info"
-msgstr ""
+msgstr "Информация о системе"
 
 #: app/views/languages.html:62
 msgid "Taiwan"
-msgstr ""
+msgstr "Тайваньский"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1065,7 +1067,7 @@ msgstr "Тестбенч"
 
 #: app/views/version.html:45
 msgid "Thank you very much!"
-msgstr ""
+msgstr "Большое спасибо!"
 
 #: app/scripts/services/tools.js:1622
 msgid "The collection {{name}} already exists."
@@ -1166,7 +1168,7 @@ msgstr "Инструменты"
 
 #: app/views/languages.html:104
 msgid "Turkish"
-msgstr ""
+msgstr "Турецкий"
 
 #: app/scripts/services/forms.js:433 app/views/design.html:222
 msgid "Turquoise"
@@ -1174,7 +1176,7 @@ msgstr "Бирюзовый"
 
 #: app/views/menu.html:354
 msgid "UI theme"
-msgstr ""
+msgstr "Тема интерфейса"
 
 #: app/views/menu.html:228
 msgid "Undo"
@@ -1195,7 +1197,7 @@ msgstr "Безымянный"
 #: app/views/menu.html:639
 #, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Обновить имя блока"
+msgstr "Обновить имя блока (последняя стабильная версия)"
 
 #: app/scripts/controllers/menu.js:1354 app/views/design.html:526
 #: app/views/menu.html:615
@@ -1237,7 +1239,7 @@ msgstr "Предупреждения в схеме"
 #: app/views/version.html:21
 #, fuzzy
 msgid "Welcome to Icestudio!"
-msgstr "О программе"
+msgstr "Добро пожаловать в Icestudio!"
 
 #: app/scripts/services/blockforms.js:517
 msgid "Wrong block format: {{type}}"
@@ -1264,7 +1266,7 @@ msgstr "Неправильный удаленный хост {{name}}"
 
 #: app/scripts/controllers/menu.js:1811
 msgid "Wrong search name!"
-msgstr ""
+msgstr "Неправильное имя поиска!"
 
 #: app/scripts/services/forms.js:412 app/views/design.html:166
 msgid "Yellow"
@@ -1292,7 +1294,7 @@ msgid ""
 "You can only build at top-level design. Inside submodules you only can "
 "<strong>Verify</strong>"
 msgstr ""
-"Сборка возможна на верхнем уровне.  В субмодулях доступна только "
+"Сборка возможна на верхнем уровне. В субмодулях доступна только "
 "<strong>Проверка</strong>"
 
 #: app/scripts/controllers/menu.js:1355
@@ -1305,7 +1307,7 @@ msgstr ""
 
 #: app/views/version.html:23
 msgid "You can read the release notes on the"
-msgstr ""
+msgstr "Вы можете прочитать примечания к выпуску"
 
 #: app/scripts/controllers/menu.js:574
 msgid "Your changes will be lost if you don’t save them"
