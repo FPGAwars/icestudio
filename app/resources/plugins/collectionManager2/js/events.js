@@ -1,6 +1,7 @@
 //-- When some change in the configuration or in the environment, launch it
 function setupEnvironment(env){
     iceStudio.bus.events.publish('collectionService.isIndexing');
+    console.log('Configuración Collectionmanager',env);
 }
 
 let preload=false; //-- Flag for preload collection tree from database while indexing the new one.

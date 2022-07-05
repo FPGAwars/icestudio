@@ -39,6 +39,7 @@
   {
     "type": "UP5K",
     "boards": [
+      "MCH2022_badge",
       "iCEBreaker",
       "iCEBreaker-bitsy0",
       "iCEBreaker-bitsy1",

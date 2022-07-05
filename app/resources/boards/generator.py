@@ -32,7 +32,12 @@ if not os.path.isdir(name):
 print('Generating pinout...')
 
 # Regex pattern
-pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output|inout))?'
+# The old pattern regexp only permit one parameter in pcf line definition:
+#
+# pattern = 'set_io\s+(--warn-no-port)?\s*(.*?)\s+(.*?)\s+(#+\s+(input|output|inout))?'
+#
+# The new one is more flexible for io arguments
+pattern = 'set_io\s+(-\w*|no|yes|\s+)*(.*?)\s+(\d*)(\s+)*(#+\s+(input|output|inout))?'
 
 # Open file
 with open(os.path.join(path, 'pinout.pcf')) as file:
@@ -48,7 +53,7 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
         format_pinout += [{
             'name': item[1],
             'value': item[2],
-            'type': item[4] or 'inout'
+            'type': item[5] or 'inout'
         }]
         
     # Save json file
