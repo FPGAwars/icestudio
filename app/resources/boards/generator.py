@@ -50,10 +50,11 @@ with open(os.path.join(path, 'pinout.pcf')) as file:
 
     format_pinout = []
     for item in pinout:
+        
         format_pinout += [{
-            'name': item[1],
-            'value': item[2],
-            'type': item[5] or 'inout'
+            'name': item[1].strip(),
+            'value': item[2].strip(),
+            'type': item[5].strip() or 'inout'
         }]
         
     # Save json file
