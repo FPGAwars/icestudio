@@ -5,8 +5,8 @@
 
 
 # Oscillator input (12 MHz)
-set_io clk_in 35    # input
-set_frequency clk_in 12
+set_io clk 35    # input
+set_frequency clk 12
 
 # UART (to RP2040)
 set_io -nowarn -pullup yes uart_tx      9 . # output

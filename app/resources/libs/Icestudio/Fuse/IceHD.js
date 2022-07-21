@@ -9,6 +9,10 @@ class IceHD {
         this.path = require('path');
     }
     
+    init(){
+        this.fs = require('fs');
+        this.path = require('path');
+    }
     isValidPath(path){
         return this.fs.existsSync(path);
     }
@@ -17,7 +21,18 @@ class IceHD {
         return  this.fs.lstatSync(path).isDirectory();
     }
     isFile(path) {
-        return this.fs.lstatSync(path).isFile();
+        let stats=false;
+         try{
+            stats=this.fs.lstatSync(path).isFile()
+       }catch(e){
+            // TODO: Handle error  
+            if(e.code == 'ENOENT'){
+            
+          }else {
+          
+            }
+       }
+        return stats;
     }
 
     isSymbolicLink(path) {
@@ -25,6 +40,7 @@ class IceHD {
     }
 
     joinPath(folder,name){
+        console.log(folder,name);
         return this.path.join(folder, name);
     }
 
@@ -101,5 +117,16 @@ class IceHD {
             console.error(err)
           }
     }
+    coverPath(filepath) {
+      return '"' + filepath + '"';
+    }
+    shellEscape(arrayArgs) {
+        return arrayArgs.map(function (c) {
+          if (c.indexOf("(") >= 0) {
+            c = `"${c}"`;
+          }
+          return c;
+        });
+      }
 
 }

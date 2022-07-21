@@ -1,0 +1,12 @@
+{
+    "manifest_ver": "1.0",
+    "id":"MCH22-Badge-Toolchain",
+    "name": "MCH22 Badge Toolchain",
+    "launchAtStartup":true,
+    "gui":{
+        "type":"service",
+        "provider": "mch22badge-toolchain.js",
+        "providerMainThread": ["mch22badgeToolchainMainThread.js"]
+    },
+    "capability":["core"]
+}
