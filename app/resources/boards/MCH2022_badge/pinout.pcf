@@ -16,10 +16,10 @@ set_io -nowarn -pullup yes uart_rx      6   # input
 set_io -nowarn -pullup yes irq_n       10
 
 # SPI Slave (to ESP32)
-set_io -nowarn -pullup no  spi_mosi    17  # output
-set_io -nowarn -pullup no  spi_miso    14  # input
-set_io -nowarn -pullup no  spi_clk     15  # output
-set_io -nowarn -pullup yes spi_cs_n    16  # output
+set_io -nowarn -pullup no  spi_mosi    17  # input
+set_io -nowarn -pullup no  spi_miso    14  # output
+set_io -nowarn -pullup no  spi_clk     15  # input
+set_io -nowarn -pullup yes spi_cs_n    16  # input
 set_frequency spi_clk 80
 
 # PSRAM
