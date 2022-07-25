@@ -32,7 +32,7 @@ function upload(data) {
         let commands = hd.shellEscape([uploader]);
 
         command = [python]
-            .concat(commands)
+            .concat(hd.coverPath(commands))
             .concat(hd.coverPath(bitstream))
             .join(" ");
     } catch (e) {

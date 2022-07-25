@@ -46,7 +46,7 @@ set_io -nowarn -pullup yes lcd_cs_n    28  # output
 set_io -nowarn -pullup no  lcd_mode    43  # output
 set_io -nowarn -pullup no  lcd_rst_n   36  # output
 
-set_io -nowarn -pullup no  lcd_fmark   25  # output
+set_io -nowarn -pullup no  lcd_fmark   25  # input
 
 # PMOD
 set_io -nowarn -pullup no  pmod[0]     47  # PMOD1
