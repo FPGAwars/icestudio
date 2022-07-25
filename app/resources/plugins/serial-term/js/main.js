@@ -240,7 +240,7 @@ let localEcho = true;
 //--   * false:  ASCII
 //--   * True: Hexadecimal
 let hexView = false;
-
+let onEnterMode = "\n";
 let sm = new serialManager();
 
 function renderSerialDevices(dev) {
@@ -338,16 +338,21 @@ function renderPlug(connectionInfo) {
         term.open(terminal);
 
         term.onData(function (data) {
-            if (data == "\u007f") {
+
+          //-- You could view the key code with:
+
+          console.table([{'char': data, 'code':data.charCodeAt(0), 'hex':data.charCodeAt(0).toString(16)}]);
+          if (data == "\u007f") {
                 if (localEcho) {
                     term.write("\b");
                 }
                 sm.write("\b");
             } else if (data == "\r") {
                 if (localEcho) {
-                    term.write("\n\r");
+                    term.write(onEnterMode);
                 }
-                sm.write("\n");
+                sm.write(onEnterMode);
+            
             } else {
                 if (localEcho) {
                     term.write(data);
@@ -394,6 +399,25 @@ confHex.addEventListener('change', e => {
   e.preventDefault();
   hexView = e.target.checked;
 
+  return false;
+
+}, false);
+
+
+//---------------------------------------------------------------------------
+//-- Callback configuration for the on Enter select config
+//---------------------------------------------------------------------------
+let confOnEnter = document.getElementById('sconf-onenter');
+
+confOnEnter.addEventListener('change', e => {
+
+  e.preventDefault();
+  switch(e.target.value){
+    case  'CRLF': onEnterMode="\n\r"; break;
+    default: onEnterMode="\n"; break;
+  }
+
+  console.log('CAMBIO',onEnterMode);
   return false;
 
 }, false);

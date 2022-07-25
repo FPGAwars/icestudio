@@ -4,3 +4,6 @@ body{
   padding:30px;
   background: #222;
 }
+select{
+  color:black;
+}
