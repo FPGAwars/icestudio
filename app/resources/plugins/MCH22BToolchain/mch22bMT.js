@@ -16,7 +16,7 @@ function upload(data) {
     let endmsg = data.msg.end;
     let cstatus = -1;
 
-    let uploader = hd.joinPath(env.DEFAULT_PLUGIN_DIR, 'MCH22-Badge-toolchain/mch2022-tools');
+    let uploader = hd.joinPath(env.DEFAULT_PLUGIN_DIR, 'MCH22BToolchain/mch2022-tools');
     uploader = hd.joinPath(uploader, 'webusb_fpga.py');
 
     let python = 'python3';//  hd.joinPath(env.ENV_BIN_DIR,'python3');
