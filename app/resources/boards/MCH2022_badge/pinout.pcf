@@ -39,12 +39,12 @@ set_io -nowarn -pullup no  lcd_d[4]    34  # output
 set_io -nowarn -pullup no  lcd_d[5]    37  # output
 set_io -nowarn -pullup no  lcd_d[6]    38  # output
 set_io -nowarn -pullup no  lcd_d[7]    42  # output
-set_io -nowarn -pullup yes lcd_rs_      11  # output
+set_io -nowarn -pullup yes lcd_rs_     11  # output
 set_io -nowarn -pullup yes lcd_wr_n    23  # output
 set_io -nowarn -pullup yes lcd_cs_n    28  # output
 
-set_io -nowarn -pullup no  lcd_mode    43  # output
-set_io -nowarn -pullup no  lcd_rst_n   36  # output
+set_io -nowarn -pullup no  lcd_mode    43  # input
+set_io -nowarn -pullup no  lcd_rst_n   36  
 
 set_io -nowarn -pullup no  lcd_fmark   25  # input
 
