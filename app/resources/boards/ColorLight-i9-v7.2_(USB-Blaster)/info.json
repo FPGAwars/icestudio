@@ -1,0 +1,1 @@
+{"label":"ColorLight-i9-v7.2_(USB-Blaster)","datasheet":"https://github.com/wuxx/Colorlight-FPGA-Projects/blob/master/colorlight_i9_v7.2.md","interface":"FTDI","arch":"ecp5","FPGAResources":{"ffs":43848,"luts":43848,"pios":245,"plbs":4,"brams":108}}
