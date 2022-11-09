@@ -74,6 +74,13 @@ angular.module('icestudio')
           possibleExecutables.push('/usr/bin/python3');
           possibleExecutables.push('/usr/bin/python');
 
+          possibleExecutables.push('/opt/homebrew/bin/python3.10');
+          possibleExecutables.push('/opt/homebrew/bin/python3.9');
+          possibleExecutables.push('/opt/homebrew/bin/python3.8');
+          possibleExecutables.push('/opt/homebrew/bin/python3.7');
+          possibleExecutables.push('/opt/homebrew/bin/python3');
+          possibleExecutables.push('/opt/homebrew/bin/python');
+
           possibleExecutables.push('/usr/local/bin/python3.10');
           possibleExecutables.push('/usr/local/bin/python3.9');
           possibleExecutables.push('/usr/local/bin/python3.8');
