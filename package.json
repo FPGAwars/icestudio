@@ -3,7 +3,7 @@
   "version": "0.9.2w",
   "description": "Visual editor for open FPGA boards",
   "contributors": [
-   {
+    {
       "name": "Carlos Venegas Arrabe",
       "url": "https://github.com/cavearr"
     },
@@ -49,5 +49,8 @@
   },
   "darwinDependencies": {
     "grunt-appdmg": "https://github.com/agoodney/grunt-appdmg.git"
+  },
+  "dependencies": {
+    "grunt-appdmg": "github:agoodney/grunt-appdmg"
   }
 }
