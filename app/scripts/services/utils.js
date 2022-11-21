@@ -67,33 +67,14 @@ angular.module('icestudio')
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-          possibleExecutables.push('/usr/bin/python3.10');
-          possibleExecutables.push('/usr/bin/python3.9');
-          possibleExecutables.push('/usr/bin/python3.8');
-          possibleExecutables.push('/usr/bin/python3.7');
-          possibleExecutables.push('/usr/bin/python3');
-          possibleExecutables.push('/usr/bin/python');
-
-          possibleExecutables.push('/opt/homebrew/bin/python3.10');
-          possibleExecutables.push('/opt/homebrew/bin/python3.9');
-          possibleExecutables.push('/opt/homebrew/bin/python3.8');
-          possibleExecutables.push('/opt/homebrew/bin/python3.7');
-          possibleExecutables.push('/opt/homebrew/bin/python3');
-          possibleExecutables.push('/opt/homebrew/bin/python');
-
-          possibleExecutables.push('/usr/local/bin/python3.10');
-          possibleExecutables.push('/usr/local/bin/python3.9');
-          possibleExecutables.push('/usr/local/bin/python3.8');
-          possibleExecutables.push('/usr/local/bin/python3.7');
-          possibleExecutables.push('/usr/local/bin/python3');
-          possibleExecutables.push('/usr/local/bin/python');
-
-          possibleExecutables.push('python3.10');
-          possibleExecutables.push('python3.9');
-          possibleExecutables.push('python3.8');
-          possibleExecutables.push('python3.7');
-          possibleExecutables.push('python3');
-          possibleExecutables.push('python');
+          let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
+          paths.forEach((base) => {
+            for (let i = 7; i < 99; i++) {
+              possibleExecutables.push(`${base}python3.${i}`);
+            }
+            possibleExecutables.push(`${base}python3`);
+            possibleExecutables.push(`${base}python`);
+          });
         }
 
         //-- Move through all the possible executables
