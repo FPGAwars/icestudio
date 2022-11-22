@@ -55,26 +55,32 @@ angular.module('icestudio')
 
         } //-- Possible python executables in Windows
         else if (common.WIN32) {
-          possibleExecutables.push('C:\\Python310\\python.exe');
-          possibleExecutables.push('C:\\Python39\\python.exe');
-          possibleExecutables.push('C:\\Python38\\python.exe');
-          possibleExecutables.push('C:\\Python37\\python.exe');
           possibleExecutables.push('py.exe -3');
           possibleExecutables.push('python.exe');
 
+          possibleExecutables.push('C:\\Python315\\python.exe');
+          possibleExecutables.push('C:\\Python314\\python.exe');
+          possibleExecutables.push('C:\\Python313\\python.exe');
+          possibleExecutables.push('C:\\Python312\\python.exe');
+          possibleExecutables.push('C:\\Python311\\python.exe');
+          possibleExecutables.push('C:\\Python39\\python.exe');
+          possibleExecutables.push('C:\\Python38\\python.exe');
+          possibleExecutables.push('C:\\Python37\\python.exe');
         } //-- Python executables in Linux/Mac
         else {
+          let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
+          paths.forEach((base) => {
+            possibleExecutables.push(`${base}python3`);
+            possibleExecutables.push(`${base}python`);
+
+            for (let i = 7; i < 16; i++) {
+              possibleExecutables.push(`${base}python3.${i}`);
+            }
+          });
           possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
           possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
 
-          let paths = ['/usr/bin/', '/usr/local/bin/', '/opt/homebrew/bin/', ''];
-          paths.forEach((base) => {
-            for (let i = 7; i < 99; i++) {
-              possibleExecutables.push(`${base}python3.${i}`);
-            }
-            possibleExecutables.push(`${base}python3`);
-            possibleExecutables.push(`${base}python`);
-          });
+
         }
 
         //-- Move through all the possible executables
@@ -105,15 +111,17 @@ angular.module('icestudio')
         const result = nodeChildProcess.execSync(executable);
 
         //-- Check the output. Return true if it is python3
-        return (result !== false && result !== null &&
-          (result.toString().indexOf('3.7') >= 0 ||
-            result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0 ||
-            result.toString().indexOf('3.10') >= 0));
+        if (result !== false && result !== null) {
+
+          const pythonVersion = /Python 3\.(\d+)\.(\d+)/g.exec(result.toString());
+          return (pythonVersion !== null && pythonVersion.length === 3 &&
+            parseInt(pythonVersion[1]) >= 7);
+        }
 
       } catch (e) {
-        return false;
+        console.error(e);
       }
+      return false;
     }
 
 
