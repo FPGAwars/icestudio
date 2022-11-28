@@ -240,7 +240,7 @@ let localEcho = true;
 //--   * false:  ASCII
 //--   * True: Hexadecimal
 let hexView = false;
-let onEnterMode = "\n";
+let onEnterMode = "\n\r";
 let sm = new serialManager();
 
 function renderSerialDevices(dev) {
@@ -413,8 +413,11 @@ confOnEnter.addEventListener('change', e => {
 
   e.preventDefault();
   switch(e.target.value){
-    case  'CRLF': onEnterMode="\n\r"; break;
-    default: onEnterMode="\n"; break;
+
+    case  'CR': onEnterMode="\r"; break;
+    case  'LF': onEnterMode="\n"; break;   
+    default: onEnterMode="\n\r"; break;
+    
   }
 
   console.log('CAMBIO',onEnterMode);
