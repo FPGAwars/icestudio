@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: app/views/design.html:20
 msgid ": '}} {{'Unlock to edit block !"
@@ -26,7 +26,7 @@ msgstr "Über Icestudio"
 
 #: app/views/version.html:33
 msgid "Acknowledgment"
-msgstr ""
+msgstr "Danksagung"
 
 #: app/views/menu.html:708
 msgid "Add"
@@ -53,9 +53,8 @@ msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Alle gespeicherten Sammlungen werden gelöscht. Fortfahren?"
 
 #: app/scripts/services/tools.js:1389
-#, fuzzy
 msgid "At least Python 3.7 is required"
-msgstr "Python 2.7 benötigt"
+msgstr "Python 2.7 wird benötigt"
 
 #: app/scripts/services/utils.js:643
 msgid "Author"
@@ -137,7 +136,7 @@ msgstr "Erstellen abgeschlossen"
 
 #: app/views/design.html:35
 msgid "CAUTION ! : Changes will also be applied in all the copied"
-msgstr ""
+msgstr "Achtung !: Änderungen werden in allen Kopien angewendet"
 
 #: app/scripts/app.js:59 app/scripts/services/project.js:147
 msgid "Cancel"
@@ -148,7 +147,6 @@ msgid "Catalan"
 msgstr "Katalanisch"
 
 #: app/views/design.html:264
-#, fuzzy
 msgid "Change Color"
 msgstr "Wähle eine Farbe"
 
@@ -165,9 +163,8 @@ msgid "Chinese"
 msgstr "Chinesisch"
 
 #: app/scripts/services/forms.js:1199
-#, fuzzy
 msgid "Choose a color:"
-msgstr "Wähle eine Farbe"
+msgstr "Wähle eine Farbe:"
 
 #: app/scripts/services/project.js:171
 msgid "Click here to <b>download a newer version</b> of Icestudio"
@@ -285,9 +282,8 @@ msgid "Czech"
 msgstr "Tschechisch"
 
 #: app/views/uithemes.html:16
-#, fuzzy
 msgid "Dark (default)"
-msgstr "Standard"
+msgstr "Dunkel (Standard)"
 
 #: app/scripts/services/forms.js:424
 #, fuzzy
@@ -376,9 +372,8 @@ msgid "Duplicated FPGA I/O ports"
 msgstr "Doppelte FPGA I/O Schnittstellen"
 
 #: app/scripts/services/forms.js:1712
-#, fuzzy
 msgid "Duplicated port name:"
-msgstr "Ausgangs-Beschriftung"
+msgstr "Duplikat bei der Beschriftung:"
 
 #: app/views/languages.html:44
 msgid "Dutch"
@@ -401,29 +396,24 @@ msgid "English"
 msgstr "Englisch"
 
 #: app/scripts/services/forms.js:2368
-#, fuzzy
 msgid "Enter the external collection path"
-msgstr "Gebe den Pfad zu externen Sammlungen ein"
+msgstr "Pfad zu externen Sammlungen eingeben"
 
 #: app/scripts/services/forms.js:2265
-#, fuzzy
 msgid "Enter the external plugins path"
-msgstr "Gebe den Pfad zu externen Sammlungen ein"
+msgstr "Pfad zu externen Erweiterungen eingeben"
 
 #: app/scripts/services/forms.js:2219
-#, fuzzy
 msgid "Enter the log filename"
-msgstr "Enter the block's label"
+msgstr "Log-Datei Pfad angeben"
 
 #: app/scripts/services/forms.js:2320
-#, fuzzy
 msgid "Enter the pip path"
-msgstr "Gebe die Eingangs-Anschlüsse ein"
+msgstr "Python-Pop Pfad angeben"
 
 #: app/scripts/services/forms.js:2312
-#, fuzzy
 msgid "Enter the python path"
-msgstr "Gebe den Pfad zu externen Sammlungen ein"
+msgstr "Python-Pfad eingeben"
 
 #: app/scripts/controllers/menu.js:984
 msgid "Enter the remote hostname user@host"
@@ -462,14 +452,12 @@ msgid "External collections updated"
 msgstr "Externe Sammlungen aktualisiert"
 
 #: app/views/menu.html:383
-#, fuzzy
 msgid "External plugins"
-msgstr "Externe Sammlungen"
+msgstr "Externe Erweiterungen"
 
 #: app/scripts/controllers/menu.js:780
-#, fuzzy
 msgid "External plugins updated"
-msgstr "Externe Sammlungen aktualisiert"
+msgstr "Externe Erweiterungen aktualisiert"
 
 #: app/scripts/services/tools.js:687
 msgid "FPGA I/O ports not defined"
@@ -485,11 +473,11 @@ msgstr "FPGA Ressourcen"
 
 #: app/views/version.html:51
 msgid "FPGAwars community"
-msgstr ""
+msgstr "FPGAwars Community"
 
 #: app/views/version.html:43
 msgid "FPGAwars community."
-msgstr ""
+msgstr "FPGAwars Community."
 
 #: app/views/menu.html:76
 msgid "File"
@@ -510,7 +498,7 @@ msgstr "Datei {{file}} importiert"
 
 #: app/views/design.html:65
 msgid "Find"
-msgstr ""
+msgstr "Suche"
 
 #: app/views/menu.html:300
 msgid "Fit content"
@@ -542,7 +530,6 @@ msgid "Greek"
 msgstr "Griechisch"
 
 #: app/scripts/services/forms.js:418
-#, fuzzy
 msgid "Green Yellow"
 msgstr "Grün-Gelb"
 
@@ -560,7 +547,7 @@ msgstr "Hexadezimal"
 
 #: app/views/version.html:49
 msgid "Icestudio is part of"
-msgstr ""
+msgstr "Icestudio ist ein Teil von"
 
 #: app/scripts/services/graph.js:1619
 msgid ""
@@ -579,7 +566,6 @@ msgid "Image {{name}} saved"
 msgstr "Bild {{name}} gespeichert"
 
 #: app/scripts/services/forms.js:388 app/views/design.html:109
-#, fuzzy
 msgid "Indian Red"
 msgstr "Indisches-Rot"
 
@@ -596,32 +582,28 @@ msgid "Input label"
 msgstr "Eingangs-Beschriftung"
 
 #: app/scripts/services/forms.js:1431
-#, fuzzy
 msgid "Input labels"
 msgstr "Eingangs-Beschriftung"
 
 #: app/scripts/services/forms.js:1579
-#, fuzzy
 msgid "Input parameters"
-msgstr "Gebe die Parameter ein"
+msgstr "Eingangs-Parameter"
 
 #: app/scripts/services/forms.js:987
 msgid "Input port name:"
-msgstr ""
+msgstr "Port-Name eingeben:"
 
 #: app/scripts/services/forms.js:1565
-#, fuzzy
 msgid "Input ports"
-msgstr "Gebe die Eingangs-Anschlüsse ein"
+msgstr "Eingangs-Anschlüsse"
 
 #: app/views/menu.html:635
-#, fuzzy
 msgid "Install (Stable)"
-msgstr "Installation"
+msgstr "Installiere (stabile Version)"
 
 #: app/views/menu.html:656
 msgid "Install Development version"
-msgstr ""
+msgstr "Installiere Entwicklungsversion"
 
 #: app/scripts/services/tools.js:1118
 msgid ""
@@ -629,6 +611,9 @@ msgid ""
 "connection <br><p><b>NOTE:</b> You need to disconnect your VPN (if any) to "
 "allow the toolchain installation</p> <p>Do you want to continue?</p>"
 msgstr ""
+"Installiere die <b>stabile Toolchain</b>. Dies benötigt eine "
+"Internetverbindung <br><p><b>HINWEIS:</b> Bitte gegebenenfalls all VPN "
+"Verbindungen vor der Installation trennen</p> <p>Fortfahren?</p>"
 
 #: app/scripts/services/tools.js:1144
 #, fuzzy
@@ -653,9 +638,8 @@ msgid "Installation completed"
 msgstr "Installation abgeschlossen"
 
 #: app/scripts/services/tools.js:1274
-#, fuzzy
 msgid "Installing"
-msgstr "Installation"
+msgstr "Installation wird ausgeführt"
 
 #: app/scripts/services/drivers.js:421 app/scripts/services/tools.js:1362
 msgid "Internet connection required"
@@ -700,22 +684,20 @@ msgid "Italian"
 msgstr "Italienisch"
 
 #: app/views/languages.html:110
-#, fuzzy
 msgid "Japanish"
-msgstr "Spanisch"
+msgstr "Japanisch"
 
 #: app/views/languages.html:98
 msgid "Korean"
-msgstr ""
+msgstr "Koreanisch"
 
 #: app/views/menu.html:310
 msgid "Label Finder"
-msgstr ""
+msgstr "Suche Label"
 
 #: app/scripts/services/blockforms.js:991
-#, fuzzy
 msgid "Label updated"
-msgstr "Block aktualisiert"
+msgstr "Label aktualisiert"
 
 #: app/views/menu.html:341
 msgid "Language"
@@ -723,15 +705,13 @@ msgstr "Sprache"
 
 #: app/views/uithemes.html:26
 msgid "Light"
-msgstr ""
+msgstr "Hell"
 
 #: app/scripts/services/forms.js:448 app/views/design.html:257
-#, fuzzy
 msgid "Light Gray"
-msgstr "Helles Meergrün"
+msgstr "Helles Grau"
 
 #: app/scripts/services/forms.js:430 app/views/design.html:215
-#, fuzzy
 msgid "Light Sea Green"
 msgstr "Helles Meergrün"
 
@@ -744,17 +724,16 @@ msgid "Local parameter"
 msgstr "Lokaler Parameter"
 
 #: app/views/menu.html:404
-#, fuzzy
 msgid "Logging enabled"
-msgstr "Treiber aktiviert"
+msgstr "Log-Protokollierung aktiviert"
 
 #: app/views/menu.html:413
 msgid "Logging file"
-msgstr ""
+msgstr "Log-Datei"
 
 #: app/scripts/controllers/menu.js:722
 msgid "Logging file updated"
-msgstr ""
+msgstr "Log-Datei aktualisiert"
 
 #: app/scripts/services/utils.js:960
 msgid "Maximum bus size: 96 bits"
@@ -774,9 +753,8 @@ msgid "Memory"
 msgstr "Speicher"
 
 #: app/scripts/services/forms.js:1770
-#, fuzzy
 msgid "Memory blocks"
-msgstr "Import block"
+msgstr "Speicher Blöcke"
 
 #: app/scripts/services/utils.js:640
 msgid "Name"
@@ -784,7 +762,7 @@ msgstr "Name"
 
 #: app/scripts/services/forms.js:1493
 msgid "Name of the paired labels"
-msgstr ""
+msgstr "Name der verknüpften Labels"
 
 #: app/scripts/services/forms.js:445 app/views/design.html:250
 msgid "Navy"
@@ -796,12 +774,11 @@ msgstr "Neu"
 
 #: app/views/design.html:87
 msgid "New Color:"
-msgstr ""
+msgstr "Neue Farbe:"
 
 #: app/views/design.html:80
-#, fuzzy
 msgid "New Name:"
-msgstr "Name"
+msgstr "Neuer Name:"
 
 #: app/scripts/controllers/menu.js:1436
 msgid "No collections stored"
@@ -851,23 +828,20 @@ msgid "Output label"
 msgstr "Ausgangs-Beschriftung"
 
 #: app/scripts/services/forms.js:1350
-#, fuzzy
 msgid "Output labels"
-msgstr "Ausgangs-Beschriftung"
+msgstr "Ausgangs-Labels"
 
 #: app/scripts/services/forms.js:1109
-#, fuzzy
 msgid "Output port name"
-msgstr "Ausgangs-Beschriftung"
+msgstr "Ausgangs-Port Name"
 
 #: app/scripts/services/forms.js:1572
-#, fuzzy
 msgid "Output ports"
-msgstr "Ausgangs-Beschriftung"
+msgstr "Ausgangs-Port"
 
 #: app/views/design.html:306 app/views/menu.html:778
 msgid "Paired labels"
-msgstr ""
+msgstr "Verknüpfte Labels"
 
 #: app/views/menu.html:268
 msgid "Paste"
@@ -904,11 +878,11 @@ msgstr "Projekt {{name}} gespeichert"
 
 #: app/scripts/controllers/menu.js:845
 msgid "Python Environment updated"
-msgstr ""
+msgstr "Python-Umgebung aktualisiert"
 
 #: app/views/menu.html:389
 msgid "Python environment"
-msgstr ""
+msgstr "Python-Umgebung"
 
 #: app/views/menu.html:202
 msgid "Quit"
@@ -928,7 +902,7 @@ msgstr "Wiederholen"
 
 #: app/views/version.html:29
 msgid "Release History WIKI"
-msgstr ""
+msgstr "Versions-Historie"
 
 #: app/views/menu.html:715
 msgid "Reload"
@@ -952,11 +926,11 @@ msgstr "Alle löschen"
 
 #: app/views/design.html:267
 msgid "Replace All"
-msgstr ""
+msgstr "Alle ersetzten"
 
 #: app/views/design.html:84
 msgid "Replace One"
-msgstr ""
+msgstr "Ersetzten"
 
 #: app/scripts/services/utils.js:699
 msgid "Reset SVG"
@@ -1052,11 +1026,11 @@ msgstr "Synchronisiere Remote-Dateien..."
 
 #: app/views/menu.html:477
 msgid "System Info"
-msgstr ""
+msgstr "Systeminformationen"
 
 #: app/views/languages.html:62
 msgid "Taiwan"
-msgstr ""
+msgstr "Taiwan"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1064,7 +1038,7 @@ msgstr "Testbench"
 
 #: app/views/version.html:45
 msgid "Thank you very much!"
-msgstr ""
+msgstr "Vielen Dank!"
 
 #: app/scripts/services/tools.js:1622
 msgid "The collection {{name}} already exists."
@@ -1107,6 +1081,8 @@ msgid ""
 "This release has been possible thanks to the great work \n"
 "              done by an emerging team from"
 msgstr ""
+"Diese Veröffentlichung war möglich dank der großartigen Arbeit \n"
+"              von einem aufstrebenden Team von"
 
 #: app/scripts/services/graph.js:521
 msgid ""
@@ -1165,15 +1141,16 @@ msgstr "Werkzeuge"
 
 #: app/views/languages.html:104
 msgid "Turkish"
-msgstr ""
+msgstr "Türkisch"
 
 #: app/scripts/services/forms.js:433 app/views/design.html:222
 msgid "Turquoise"
 msgstr "Türkis"
 
 #: app/views/menu.html:354
+#, fuzzy
 msgid "UI theme"
-msgstr ""
+msgstr "Benutzeroberfläche"
 
 #: app/views/menu.html:228
 msgid "Undo"
@@ -1192,9 +1169,8 @@ msgid "Untitled"
 msgstr "Unbenannt"
 
 #: app/views/menu.html:639
-#, fuzzy
 msgid "Update (Latest stable)"
-msgstr "Aktualisiere Block-Namen"
+msgstr "Aktualisiere"
 
 #: app/scripts/controllers/menu.js:1354 app/views/design.html:526
 #: app/views/menu.html:615
@@ -1234,9 +1210,8 @@ msgid "Warnings detected in the design"
 msgstr "Warnungen im Entwurf erkannt"
 
 #: app/views/version.html:21
-#, fuzzy
 msgid "Welcome to Icestudio!"
-msgstr "Über Icestudio"
+msgstr "Willkommen zu Icestudio!"
 
 #: app/scripts/services/blockforms.js:517
 msgid "Wrong block format: {{type}}"
@@ -1263,7 +1238,7 @@ msgstr "Falscher Remote-Hostname {{name}}"
 
 #: app/scripts/controllers/menu.js:1811
 msgid "Wrong search name!"
-msgstr ""
+msgstr "Falscher Suchname!"
 
 #: app/scripts/services/forms.js:412 app/views/design.html:166
 msgid "Yellow"
@@ -1301,7 +1276,7 @@ msgstr ""
 
 #: app/views/version.html:23
 msgid "You can read the release notes on the"
-msgstr ""
+msgstr "Versionshinweise auf der"
 
 #: app/scripts/controllers/menu.js:574
 msgid "Your changes will be lost if you don’t save them"
