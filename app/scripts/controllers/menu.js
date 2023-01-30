@@ -657,6 +657,10 @@ angular
         }
       };
 
+      $scope.removeSelected = function () {
+        graph.removeSelected();
+      };
+
       $scope.selectAll = function () {
         checkGraph()
           .then(function () {
@@ -673,9 +677,11 @@ angular
         showToolBox();
       };  
 
+      /* redundant: patched via $scope - @mgesteiro
       function removeSelected() {
-        project.removeSelected();
+        project.removeSelected();  // <- this is justa a wrapper of graph.removeSelected()
       }
+      */
 
       $scope.fitContent = function () {
         graph.fitContent();
@@ -1583,6 +1589,7 @@ angular
       shortcuts.method("copySelected", $scope.copySelected);
       shortcuts.method("pasteAndCloneSelected", $scope.pasteAndCloneSelected);
       shortcuts.method("pasteSelected", $scope.pasteSelected);
+      shortcuts.method("removeSelected", $scope.removeSelected);
       shortcuts.method("selectAll", $scope.selectAll);
       shortcuts.method("fitContent", $scope.fitContent);
 
@@ -1603,10 +1610,10 @@ angular
       // -- Show Floating toolbox
       shortcuts.method("showToolBox", $scope.showToolBox);
 
-      shortcuts.method("removeSelected", removeSelected);
+      //shortcuts.method("removeSelected", removeSelected);  // moved alongside other EDIT menu options
       shortcuts.method("back", function () {
         if (graph.isEnabled()) {
-          removeSelected();
+          graph.removeSelected();
         } else {
           console.log("--------> BACK!!!!");
           //-- When inside a block in non-edit mode

@@ -281,6 +281,15 @@
                   </span></a>
               </li>
 
+              <!-- Edit/Delete -->
+              <li>
+                <a href ng-click="removeSelected()">
+                  {{ 'Delete' | translate }}
+                  <span class="shortcut">
+                    {{ 'removeSelected' | shortcut }}
+                  </span></a>
+              </li>
+
               <!-- Edit/Select all -->
               <li>
                 <a href ng-click="selectAll()">
