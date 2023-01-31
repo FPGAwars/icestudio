@@ -23,3 +23,6 @@ bower_components
 app/resources/collection
 app/resources/locale/**/*.json
 ice-build/
+
+# WebStorm IDE project folder
+.idea
