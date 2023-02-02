@@ -88,7 +88,7 @@ angular.module('icestudio')
       },
       saveProjectAs: {
         linux: { label: 'Ctrl+Shift+S', ctrl: true, shift: true, key: 83 },
-        mac: { label: 'Shift+⌘+S', meta: true, shift: true, key: 83 },
+        mac: { label: '⌘+⇧+S', meta: true, shift: true, key: 83 },
         opt: { prompt: true }
       },
       quit: {
@@ -107,7 +107,7 @@ angular.module('icestudio')
       },
       redoGraph2: {
         linux: { label: 'Ctrl+Shift+Z', ctrl: true, shift: true, key: 90 },
-        mac: { label: 'Shift+⌘+Z', meta: true, shift: true, key: 90 },
+        mac: { label: '⌘+⇧+Z', meta: true, shift: true, key: 90 },
         opt: { preventDefault: true }
       },
       cutSelected: {
@@ -124,9 +124,16 @@ angular.module('icestudio')
       },
       pasteAndCloneSelected: {
         linux: { label: 'Ctrl+Shift+V', ctrl: true, shift: true, key: 86 },
-        mac: { label: 'Shit+⌘+V', meta: true, shift: true, key: 86 }
+        mac: { label: '⌘+⇧+V', meta: true, shift: true, key: 86 }
       },
-
+      duplicateSelected: {
+        linux: { label: 'Ctrl+D', ctrl: true, key: 68 },
+        mac: { label: '⌘+D', meta: true, key: 68 }
+      },
+      removeSelected: {
+        linux: { label: 'Del', key: 46 },
+        mac: { label: 'Fn+⌫', key: 46 },
+      },
       selectAll: {
         linux: { label: 'Ctrl+A', ctrl: true, key: 65 },
         mac: { label: '⌘+A', meta: true, key: 65 }
@@ -164,13 +171,9 @@ angular.module('icestudio')
         linux: { label: 'Arrow right', key: 39 },
         mac: { label: 'Arrow right', key: 39 }
       },
-      removeSelected: {
-        linux: { label: 'Supr', key: 46 },
-        mac: { label: 'Fn+Delete', key: 46 },
-      },
       back: {
         linux: { label: 'Back', key: 8 },
-        mac: { label: 'Delete', key: 8 },
+        mac: { label: '⌫', key: 8 },
         opt: { disabled: true }
       },
       takeSnapshot: {

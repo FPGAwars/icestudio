@@ -688,10 +688,6 @@ angular.module('icestudio')
       return block;
     }
 
-    this.removeSelected = function () {
-      graph.removeSelected();
-    };
-
     this.clear = function () {
       project = _default();
       graph.clearAll();
