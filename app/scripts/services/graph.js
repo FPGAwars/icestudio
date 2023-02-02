@@ -1320,6 +1320,23 @@ angular.module('icestudio')
                 }
             };
 
+            this.duplicateSelected = function() {
+                if (hasSelection()) {
+                    utils.duplicateSelected(selection, graph, function (object) {
+                        if (object.version === common.VERSION) {
+                            self.appendDesign(object.design, object.dependencies);
+                        }
+                    });
+                }
+            };
+
+            this.removeSelected = function () {
+                if (hasSelection()) {
+                    graph.removeCells(selection.models);
+                    selectionView.cancelSelection();
+                    updateWiresOnObstacles();
+                }
+            };
 
             this.selectAll = function () {
                 disableSelected();
@@ -1335,14 +1352,6 @@ angular.module('icestudio')
             function hasSelection() {
                 return selection && selection.length > 0;
             }
-
-            this.removeSelected = function () {
-                if (hasSelection()) {
-                    graph.removeCells(selection.models);
-                    selectionView.cancelSelection();
-                    updateWiresOnObstacles();
-                }
-            };
 
             function disableSelected() {
                 if (hasSelection()) {

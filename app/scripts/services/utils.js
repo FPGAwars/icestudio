@@ -231,14 +231,14 @@ angular.module('icestudio')
           //-- Error executing the command
           //-- Show the error notification
           if (notifyerror) {
-            alertify.error('Error executting command ' + command, 30);
+            alertify.error('Error executing command ' + command, 30);
           }
 
           //-- Comand finished with errors. Call the callback function
           callback(true, output);
 
         } else {
-          //-- Command finished with NO errors. Cal lthe callback function
+          //-- Command finished with NO errors. Call the callback function
           callback(false, output);
         }
       });
@@ -343,7 +343,7 @@ angular.module('icestudio')
       const executable = coverPath(pipExec);
 
       //-- Get the pip parameters needed for installing apio
-      //-- The needed apio vesion is also added
+      //-- The needed apio version is also added
       const params = this.getApioParameters();
       console.log(pipExec, executable, params);
       //-- Run the pip command!
@@ -392,7 +392,7 @@ angular.module('icestudio')
       const params = "install -U " + apio + extraPackagesString +
         versionString;
 
-      console.log("--> DEBUG: Params paased to pip: " + params);
+      console.log("--> DEBUG: Params passed to pip: " + params);
 
       return params;
     };
@@ -422,7 +422,7 @@ angular.module('icestudio')
         process.env.ICESTUDIO_APIO :
         _package.apio.external;
 
-      //-- The is an alternative apio toolchain ready
+      //-- There is an alternative apio toolchain ready
       if (nodeFs.existsSync(candidateApio)) {
 
         if (!this.toolchainDisabled) {
@@ -867,7 +867,7 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     //-- Return a text in bold HTML
     //-- Input:
-    //--    * text: String to converto to Bold
+    //--    * text: String to convert to Bold
     //-- Returns:
     //--    * The HTML text in bold
     //-----------------------------------------------------------------------
@@ -886,13 +886,13 @@ angular.module('icestudio')
     //-----------------------------------------------------------------------
     this.openDialog = function (inputID, callback) {
 
-      //-- Get the filechooser element (from the DOM)
+      //-- Get the file chooser element (from the DOM)
       let chooser = $(inputID);
 
-      //-- Reove any previously event attached
+      //-- Remove any previously event attached
       chooser.unbind('change');
 
-      //-- Atach a new callback function
+      //-- Attach a new callback function
       chooser.change(function () {
 
         //-- It is executed when the user has selected the file
@@ -909,7 +909,7 @@ angular.module('icestudio')
       });
 
       //-- Activate the File chooser! (The element is shown, it waits for
-      //-- the user to enter the file and the calblack is executed
+      //-- the user to enter the file, and the callback is executed)
       chooser.trigger('click');
     };
 
@@ -1139,7 +1139,7 @@ angular.module('icestudio')
                   });
                 }
               }
-              alertify.warning(message, 30);
+              alertify.warning(message, "30");
             });
           }
         } else {
@@ -1150,6 +1150,14 @@ angular.module('icestudio')
           }
         }
       });
+    };
+
+    this.duplicateSelected = function (selection, graph, callback) {
+      let cells = selectionToCells(selection, graph);
+      let content = this.cellsToProject(cells, graph);
+      if (callback && content) {
+        callback(content);
+      }
     };
 
     function selectionToCells(selection, graph) {

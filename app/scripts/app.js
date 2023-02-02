@@ -13,9 +13,9 @@
 
 //-- Global Icestudio
 //-- this is the core system with services, api and communications.
-//-- Group inside different object for eficiency model by V8 engine.
+//-- Group inside different object for efficiency model by V8 engine.
 //-- The global variable should be declared as "var" and not "let" 
-//-- because is accesible from popups windows
+//-- because it is accessible from popups windows
 var iceStudio = new Icestudio();
 
 //-- Global CONSOLE. Used for Debugging
@@ -26,7 +26,7 @@ var iceConsole = new IceLogger();
 angular
   .module("icestudio", ["ui.bootstrap", "ngRoute", "gettext"])
   .run(function (
-    profile,  //-- Icestudio profile file managment
+    profile,  //-- Icestudio profile file management
     project,
     common,
     tools,
@@ -156,7 +156,7 @@ angular
         "common.APIO_HOME_DIR: APIO folder: " + common.APIO_HOME_DIR
       );
       iceConsole.log(
-        "common.ENV_DIR: PYthon virtual environment: " + common.ENV_DIR
+        "common.ENV_DIR: Python virtual environment: " + common.ENV_DIR
       );
       iceConsole.log(
         "common.ENV_BIN_DIR: Executable files: " + common.ENV_BIN_DIR
@@ -187,14 +187,17 @@ angular
               )
             );
 
-            tools.checkToolchain( () => {}, //-- No callback 
-                                  false); //-- No error notifications
-
+            tools.checkToolchain(
+                () => {}, //-- No callback
+                false     //-- No error notifications
+            );
           });
         } else {
           profile.set("board", boards.selectBoard(profile.get("board")).name);
-          tools.checkToolchain( () => {}, //-- No callback 
-                                false); //-- No error notifications
+          tools.checkToolchain(
+              () => {}, //-- No callback
+              false     //-- No error notifications
+          );
         }
 
         $("html").attr("lang", profile.get("language"));
@@ -205,10 +208,10 @@ angular
         );
         project.updateTitle(gettextCatalog.getString("Untitled"));
       });
-     // setTimeout(function () {
-        $("#main-icestudio-wrapper").addClass("loaded");
-        $("#main-icestudio-load-wrapper").addClass("fade-loaded");
-        setTimeout(function () {
+      // setTimeout(function () {
+      $("#main-icestudio-wrapper").addClass("loaded");
+      $("#main-icestudio-load-wrapper").addClass("fade-loaded");
+      setTimeout(function () {
           $("#main-icestudio-load-wrapper").addClass("loaded");
           $("#main-icestudio-load-wrapper").removeClass("fade-loaded");
         }, 1000);
@@ -217,4 +220,3 @@ angular
     
     console.log("->DEBUG: app.js: END");
   });
-
