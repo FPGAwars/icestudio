@@ -28,3 +28,5 @@ ice-build/
 .idea
 # From update_translations.sh
 app/resources/locale/statistics.txt
+# From table_translations.sh
+app/resources/locale/readme_table.txt
