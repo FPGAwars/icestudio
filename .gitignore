@@ -26,3 +26,5 @@ ice-build/
 
 # WebStorm IDE project folder
 .idea
+# From update_translations.sh
+app/resources/locale/statistics.txt
