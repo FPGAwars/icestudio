@@ -86,34 +86,35 @@ Icestudio is a design tool focused on new comers to the FPGA world
 
 ### Languages
 
-|  Language  | Translated strings                       |
-|:----------:|:----------------------------------------:|
-| English (en)   | ![Progress](http://progress-bar.dev/100) |
-| Spanish (en_ES)   | ![Progress](http://progress-bar.dev/100) |
-| Japanese (ja_JP)  | ![Progress](http://progress-bar.dev/79)  |
-| French (fr_FR)    | ![Progress](http://progress-bar.dev/78) |
-| Italian (it_IT)   | ![Progress](http://progress-bar.dev/77) |
-| Taiwan (zh_TW)    | ![Progress](http://progress-bar.dev/77) |
-| Chinese (zh_CN)   | ![Progress](http://progress-bar.dev/73)  |
-| Basque (eu_ES)    | ![Progress](http://progress-bar.dev/73) |
-| German (de_DE)    | ![Progress](http://progress-bar.dev/73)  |
-| Korean  (ko_KR)   | ![Progress](http://progress-bar.dev/73) |
-| Czech (cs_CZ)     | ![Progress](http://progress-bar.dev/73) |
-| Turkish  (tr_TR)  | ![Progress](http://progress-bar.dev/73) |
-| Russian (ru_RU)   | ![Progress](http://progress-bar.dev/73)  |
-| Catalan (ca_ES)   | ![Progress](http://progress-bar.dev/68)  |
-| Greek (el_GR)     | ![Progress](http://progress-bar.dev/63)  |
-| Dutch (nl_NL)     | ![Progress](http://progress-bar.dev/63)  |
-| Galician (gl_ES)  | ![Progress](http://progress-bar.dev/63)  |
-
-
+|  Language  | Translated strings |
+|:----------:|:------------------:|
+| Spanish (es_ES) | ![Progress](http://progress-bar.dev/100) |
+| English (en) | ![Progress](http://progress-bar.dev/100) |
+| German (de_DE) | ![Progress](http://progress-bar.dev/90) |
+| Russian (ru_RU) | ![Progress](http://progress-bar.dev/78) |
+| Japanese (ja_JP) | ![Progress](http://progress-bar.dev/76) |
+| French (fr_FR) | ![Progress](http://progress-bar.dev/75) |
+| Taiwanese (zh_TW) | ![Progress](http://progress-bar.dev/74) |
+| Italian (it_IT) | ![Progress](http://progress-bar.dev/74) |
+| Chinese (zh_CN) | ![Progress](http://progress-bar.dev/71) |
+| Turkish (tr_TR) | ![Progress](http://progress-bar.dev/71) |
+| Korean (ko_KR) | ![Progress](http://progress-bar.dev/71) |
+| Basque (eu_ES) | ![Progress](http://progress-bar.dev/71) |
+| Czech (cs_CZ) | ![Progress](http://progress-bar.dev/71) |
+| Catalonian (ca_ES) | ![Progress](http://progress-bar.dev/66) |
+| Dutch (nl_NL) | ![Progress](http://progress-bar.dev/61) |
+| Galician (gl_ES) | ![Progress](http://progress-bar.dev/61) |
+| Greek (el_GR) | ![Progress](http://progress-bar.dev/61) |
 
 
 **Contribute!**
 
 Add or update the [app translations](https://github.com/FPGAwars/icestudio/tree/develop/app/resources/locale) using **[Poedit](https://poedit.net/)**.
 
-*Developer note*: use `npm run gettext` to extract the labels from the code.
+*Developer note*: 
+  * use `npm run gettext` to extract the labels from the code and update the template file (`template.pot`)
+  * use `scripts/update_translations.sh` to update current existing `*.po` language files based on the template (before editing them)
+  * use `grunt nggettext_compile` to regenerate `*.json` language files (these are what the IDE really need) to test them
 
 *Developer note*: use `export NWJS_BUILD_TYPE=sdk` after npm install to enable the chrome web console.
 
