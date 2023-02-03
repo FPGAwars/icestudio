@@ -25,7 +25,7 @@ msgstr "<b>Deskonektatu</b> eta <b>berriro konektatu</b> plaka"
 #: app/views/design.html:34
 msgid ""
 "<b>WARNING!</b><br>\n"
-"        The changes made here, will also be applied to all the\n"
+"        The changes made here will also be applied to all the\n"
 "        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
 "        you DO NOT want them to propagate, create a cloned block instead\n"
 "        using<br>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Add"
 msgstr "Gehitu"
 
-#: app/scripts/controllers/menu.js:1402
+#: app/scripts/controllers/menu.js:1401
 msgid "Add a block to start"
 msgstr "Gehi ezazu bloke bat hasteko"
 
@@ -60,7 +60,7 @@ msgstr "Helbidearen formatua"
 msgid "All collections removed"
 msgstr "Bildumak ezabatu dira"
 
-#: app/scripts/controllers/menu.js:1442
+#: app/scripts/controllers/menu.js:1441
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "Gordetako bildumak galduko dira. Jarraitu nahi al duzu?"
 
@@ -86,7 +86,7 @@ msgid "Binary"
 msgstr "Bitarra"
 
 #: app/scripts/services/tools.js:159
-msgid "Bitstream not found, build first your project"
+msgid "Bitstream not found: build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1082
@@ -114,11 +114,11 @@ msgstr "Plaka"
 msgid "Board rules"
 msgstr "Plakaren arauak"
 
-#: app/scripts/controllers/menu.js:1017
+#: app/scripts/controllers/menu.js:1016
 msgid "Board rules disabled"
 msgstr "Plakaren arauak desgaituta"
 
-#: app/scripts/controllers/menu.js:1015
+#: app/scripts/controllers/menu.js:1014
 msgid "Board rules enabled"
 msgstr "Plakaren arauak gaituta"
 
@@ -134,7 +134,7 @@ msgstr "{{name}} plaka ez dago erabilgarri"
 msgid "Board {{name}} not connected"
 msgstr "{{name}} plaka ez dago konektatuta"
 
-#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1324
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1323
 msgid "Board {{name}} selected"
 msgstr "{{name}} plaka hautatu duzu"
 
@@ -142,12 +142,12 @@ msgstr "{{name}} plaka hautatu duzu"
 msgid "Bootloader not active"
 msgstr "Bootloader ez aktiboa"
 
-#: app/scripts/controllers/menu.js:1346 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1345 app/views/design.html:506
 #: app/views/menu.html:625
 msgid "Build"
 msgstr "Sintetizatu"
 
-#: app/scripts/controllers/menu.js:1356
+#: app/scripts/controllers/menu.js:1355
 msgid "Build done"
 msgstr "Sintetizatua egin da"
 
@@ -156,7 +156,8 @@ msgid "Cancel"
 msgstr "Utzi"
 
 #: app/views/languages.html:92
-msgid "Catalan"
+#, fuzzy
+msgid "Catalonian"
 msgstr "Katalan"
 
 #: app/views/design.html:262
@@ -195,7 +196,7 @@ msgstr "Klik egizu hemen <b>driverrak eguneratzeko</b>"
 msgid "Click here to install it"
 msgstr "Instalatzeko hemen klik egin"
 
-#: app/scripts/controllers/menu.js:957
+#: app/scripts/controllers/menu.js:956
 msgid "Click here to view"
 msgstr "Klik egizu ikusteko"
 
@@ -207,7 +208,7 @@ msgstr "Datu busentzat ordularia ez dago onetsia"
 msgid "Clone"
 msgstr "Klonatu"
 
-#: app/scripts/controllers/menu.js:581 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:80
 msgid "Close"
 msgstr "Itxi"
 
@@ -223,7 +224,7 @@ msgstr "Bilduma"
 msgid "Collection info"
 msgstr "Bildumaren informazioa"
 
-#: app/scripts/controllers/menu.js:1233
+#: app/scripts/controllers/menu.js:1232
 msgid "Collection {{collection}} info not defined"
 msgstr "{{collection}} bildumaren informazioa zehaztuta gabe dago"
 
@@ -243,7 +244,7 @@ msgstr "{{name}} bilduma ezabatu da"
 msgid "Collection {{name}} replaced"
 msgstr "{{name}} bilduma ordeztu da"
 
-#: app/scripts/controllers/menu.js:1279
+#: app/scripts/controllers/menu.js:1278
 msgid "Collection {{name}} selected"
 msgstr "{{name}} bilduma hautatu da"
 
@@ -251,7 +252,7 @@ msgstr "{{name}} bilduma hautatu da"
 msgid "Collections"
 msgstr "Bildumak"
 
-#: app/scripts/controllers/menu.js:1249 app/views/menu.html:489
+#: app/scripts/controllers/menu.js:1248 app/views/menu.html:489
 msgid "Command output"
 msgstr "Komando irteera"
 
@@ -301,22 +302,14 @@ msgstr "Txekiar"
 msgid "Dark (default)"
 msgstr "Lehenetsia"
 
-#: app/scripts/services/forms.js:424
+#: app/scripts/services/forms.js:424 app/views/design.html:199
 #, fuzzy
 msgid "Dark Green"
 msgstr "Berde-iluna"
 
-#: app/scripts/services/forms.js:406
+#: app/scripts/services/forms.js:406 app/views/design.html:150
 #, fuzzy
 msgid "Dark Orange"
-msgstr "Laranja-iluna"
-
-#: app/views/design.html:199
-msgid "DarkGreen"
-msgstr "Berde-iluna"
-
-#: app/views/design.html:150
-msgid "DarkOrange"
 msgstr "Laranja-iluna"
 
 #: app/views/menu.html:470
@@ -353,11 +346,11 @@ msgstr "Azalpena"
 msgid "Disable"
 msgstr "Desgaitu"
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr "Aplikazioa itxi nahi al duzu?"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1424
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} bilduma ezabatu nahi al duzu?"
 
@@ -446,7 +439,7 @@ msgstr "Sarrerako portuak sar itzazu"
 msgid "Enter the python path"
 msgstr "Kanpoko bildumen bidea sar ezazu"
 
-#: app/scripts/controllers/menu.js:1004
+#: app/scripts/controllers/menu.js:1003
 msgid "Enter the remote hostname user@host"
 msgstr "Urrutiko ostalariaren izena sar ezazu erabiltzailea@host"
 
@@ -478,7 +471,7 @@ msgstr "Azpimodulua esportatu"
 msgid "External collections"
 msgstr "Kanpoko bildumak"
 
-#: app/scripts/controllers/menu.js:929
+#: app/scripts/controllers/menu.js:928
 msgid "External collections updated"
 msgstr "Kanpoko bildumak eguneratu dira"
 
@@ -487,7 +480,7 @@ msgstr "Kanpoko bildumak eguneratu dira"
 msgid "External plugins"
 msgstr "Kanpoko bildumak"
 
-#: app/scripts/controllers/menu.js:800
+#: app/scripts/controllers/menu.js:799
 #, fuzzy
 msgid "External plugins updated"
 msgstr "Kanpoko bildumak eguneratu dira"
@@ -564,13 +557,9 @@ msgstr "Urrea"
 msgid "Greek"
 msgstr "Greziera"
 
-#: app/scripts/services/forms.js:418
+#: app/scripts/services/forms.js:418 app/views/design.html:185
 #, fuzzy
 msgid "Green Yellow"
-msgstr "Berde-horia"
-
-#: app/views/design.html:185
-msgid "GreenYellow"
 msgstr "Berde-horia"
 
 #: app/views/menu.html:827
@@ -587,16 +576,17 @@ msgid "Icestudio is part of"
 msgstr "Icestudioren hastapenak"
 
 #: app/scripts/services/graph.js:1659
+#, fuzzy
 msgid ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
-"board"
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
 msgstr "SARRERA/IRTEERA pinak hutsik badaude, zure plakan baliokiderik ez da"
 
 #: app/scripts/services/utils.js:651
 msgid "Image"
 msgstr "Irudia"
 
-#: app/scripts/controllers/menu.js:2126
+#: app/scripts/controllers/menu.js:2125
 msgid "Image {{name}} saved"
 msgstr "{{name}} izeneko irudia gorde da"
 
@@ -684,17 +674,20 @@ msgid "Internet connection required"
 msgstr "Interneteko sarbidea behar da"
 
 #: app/scripts/services/graph.js:298
-msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>block already connected"
 msgstr "<i>Pull up</i> konexio baliogabea:<br>blokea dagoeneko konektatua dago"
 
 #: app/scripts/services/graph.js:312
-msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr ""
 "<i>Pull up</i> konexio baliogabea:<br><i>sarrera</i> blokeak soilik dira "
 "onargarriak"
 
 #: app/scripts/services/graph.js:304
-msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+#, fuzzy
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr ""
 "Bloke konexio baliogabeak:<br><i>Pull up</i> -a dagoeneko konektatua dago"
 
@@ -725,7 +718,7 @@ msgstr "Italiera"
 
 #: app/views/languages.html:110
 #, fuzzy
-msgid "Japanish"
+msgid "Japanese"
 msgstr "Gaztelera"
 
 #: app/views/languages.html:98
@@ -776,7 +769,7 @@ msgstr "Driverrak gaitu dira"
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:742
+#: app/scripts/controllers/menu.js:741
 msgid "Logging file updated"
 msgstr ""
 
@@ -784,13 +777,9 @@ msgstr ""
 msgid "Maximum bus size: 96 bits"
 msgstr "Busaren tamaina maximoa: 96 bit"
 
-#: app/scripts/services/forms.js:397
+#: app/scripts/services/forms.js:397 app/views/design.html:129
 #, fuzzy
 msgid "Medium Violet Red"
-msgstr "Bioleta"
-
-#: app/views/design.html:129
-msgid "MediumVioletRed"
 msgstr "Bioleta"
 
 #: app/views/design.html:309 app/views/menu.html:805
@@ -831,22 +820,18 @@ msgstr "Izena"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1453
+#: app/scripts/controllers/menu.js:1452
 msgid "No collections stored"
 msgstr "Ez dago gordeta bildumarik"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:601
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "Ados"
 
-#: app/scripts/services/forms.js:427
+#: app/scripts/services/forms.js:427 app/views/design.html:206
 #, fuzzy
 msgid "Olive Drab"
-msgstr "Oliba-motela"
-
-#: app/views/design.html:206
-msgid "OliveDrab"
 msgstr "Oliba-motela"
 
 #: app/views/menu.html:100
@@ -857,13 +842,9 @@ msgstr "Ireki"
 msgid "Open SVG"
 msgstr "SVGa ireki"
 
-#: app/scripts/services/forms.js:403
+#: app/scripts/services/forms.js:403 app/views/design.html:143
 #, fuzzy
 msgid "Orange Red"
-msgstr "Gorri-laranja"
-
-#: app/views/design.html:143
-msgid "OrangeRed"
 msgstr "Gorri-laranja"
 
 #: app/scripts/services/project.js:555
@@ -901,8 +882,8 @@ msgstr ""
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: app/scripts/controllers/menu.js:751 app/scripts/controllers/menu.js:808
-#: app/scripts/controllers/menu.js:873 app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:750 app/scripts/controllers/menu.js:807
+#: app/scripts/controllers/menu.js:872 app/scripts/controllers/menu.js:936
 msgid "Path {{path}} does not exist"
 msgstr "Ez da {{path}} izeneko biderik"
 
@@ -922,7 +903,7 @@ msgstr ""
 msgid "Project information"
 msgstr "Proiektuaren informazioa"
 
-#: app/scripts/controllers/menu.js:955 app/scripts/controllers/menu.js:981
+#: app/scripts/controllers/menu.js:954 app/scripts/controllers/menu.js:980
 msgid "Project information updated"
 msgstr "Proiektuaren informazioa eguneratu da"
 
@@ -934,7 +915,7 @@ msgstr "{{name}} proiektua kargatu da"
 msgid "Project {{name}} saved"
 msgstr "{{name}} proiektua gorde da"
 
-#: app/scripts/controllers/menu.js:865
+#: app/scripts/controllers/menu.js:864
 msgid "Python Environment updated"
 msgstr ""
 
@@ -1031,13 +1012,9 @@ msgstr "Plaka hauta ezazu"
 msgid "Show clock"
 msgstr "Ordularia erakutsi"
 
-#: app/scripts/services/forms.js:415
+#: app/scripts/services/forms.js:415 app/views/design.html:178
 #, fuzzy
 msgid "Slate Blue"
-msgstr "Urdin-arbela"
-
-#: app/views/design.html:178
-msgid "SlateBlue"
 msgstr "Urdin-arbela"
 
 #: app/views/menu.html:871
@@ -1048,24 +1025,20 @@ msgstr "Iturburu kodea"
 msgid "Spanish"
 msgstr "Gaztelera"
 
-#: app/scripts/services/forms.js:421
+#: app/scripts/services/forms.js:421 app/views/design.html:192
 #, fuzzy
 msgid "Spring Green"
 msgstr "Berde-udaberria"
 
-#: app/views/design.html:192
-msgid "SpringGreen"
-msgstr "Berde-udaberria"
-
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1354
 msgid "Start build"
 msgstr "Sintetizatua hasi"
 
-#: app/scripts/controllers/menu.js:1381
+#: app/scripts/controllers/menu.js:1380
 msgid "Start upload"
 msgstr "Karga hasi"
 
-#: app/scripts/controllers/menu.js:1332
+#: app/scripts/controllers/menu.js:1331
 msgid "Start verification"
 msgstr "Egiaztapena hasi"
 
@@ -1083,8 +1056,9 @@ msgid "System Info"
 msgstr ""
 
 #: app/views/languages.html:62
-msgid "Taiwan"
-msgstr ""
+#, fuzzy
+msgid "Taiwanese"
+msgstr "Txinera"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1098,10 +1072,11 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr "{{name}} bilduma badago"
 
-#: app/scripts/controllers/menu.js:1304
+#: app/scripts/controllers/menu.js:1303
+#, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"the {{name}} board?"
 msgstr ""
 "FPGAaren E/S konfigurazioa galduko da. {{name}} plaka aldatu nahi al duzu?"
 
@@ -1136,9 +1111,10 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/graph.js:532
+#, fuzzy
 msgid ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"To enter \"edit mode\" in a deeper block, you need to finish first the "
+"current one by locking the padlock."
 msgstr ""
 "Azpiko blokearen \"edizio modua\" -n sartzeko, egungo \"edizio modua\" "
 "amaitu behar duzu, kandadua blokeatuta."
@@ -1150,9 +1126,9 @@ msgstr "Diseinuan zehar nabigatzeko, \"edizio modua\" itxi ezazu."
 #: app/scripts/controllers/menu.js:349
 #, fuzzy
 msgid ""
-"To save your design you need to lock the padlock and               go to top "
-"level design.<br/><br/>If you want to export               this submodule to "
-"a file, execute \"Save as\" command to do it."
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
 msgstr ""
 "Diseinua gordetzeko kandadua blokea ezazu eta goi mailako diseinura joan. "
 "Azpimodulua diseinu batera esportatu nahi baduzu, \"Gorde honela..\" agindua "
@@ -1221,16 +1197,16 @@ msgstr "Izenik gabe"
 msgid "Update (Latest stable)"
 msgstr "Blokearen izena egunera ezazu"
 
-#: app/scripts/controllers/menu.js:1371 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1370 app/views/design.html:514
 #: app/views/menu.html:633
 msgid "Upload"
 msgstr "Kargatu"
 
-#: app/scripts/controllers/menu.js:1382
+#: app/scripts/controllers/menu.js:1381
 msgid "Upload done"
 msgstr "Karga egin da"
 
-#: app/scripts/controllers/menu.js:1333
+#: app/scripts/controllers/menu.js:1332
 msgid "Verification done"
 msgstr "Egiaztapena egin da"
 
@@ -1273,7 +1249,7 @@ msgstr "Blokearen formatua okerra da: {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "{{name}} blokearen izena okerra da"
 
-#: app/scripts/controllers/menu.js:1925
+#: app/scripts/controllers/menu.js:1924
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "Portuaren izena okerra da: {{name}}"
@@ -1286,7 +1262,7 @@ msgstr "Proiektuaren formatua okerra da: {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "Urrutiko ostalariaren {{name}} izena okerra da"
 
-#: app/scripts/controllers/menu.js:1829
+#: app/scripts/controllers/menu.js:1828
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1297,9 +1273,8 @@ msgstr "Horia"
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, if you save it, you'll save only               "
-"the submodule (in this situation \"save as\" works like               "
-"\"export module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "Azpi modulua editatzen ari zara, gordetzen baduzu, azpimodulua gordeko duzu "
 "soilik (hala bada,  Gorde honela\" \"modulua esportatu\"ren antzera lan "
@@ -1307,28 +1282,29 @@ msgstr ""
 
 #: app/scripts/controllers/menu.js:396
 msgid ""
-"You are navigating into the design, if you want to save the entire design, "
-"you need to back                       to the top level. If you want to "
-"export this module as new file, unlock the module and \"save as\""
+"You are navigating into the design: if you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\""
 msgstr ""
 
 #: app/scripts/services/project.js:103
-msgid "You can load it as it is or convert it for the {{name}} board."
+#, fuzzy
+msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "Dagoen moduan karga dezakezu edo {{name}} plakarako bihurtu"
 
-#: app/scripts/controllers/menu.js:1347
+#: app/scripts/controllers/menu.js:1346
 #, fuzzy
 msgid ""
-"You can only build at the top-level design. Inside submodules, you can only "
+"You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
 "Goi mailako diseinuan soilik eraiki dezakezu. Azpimoduluen barnean, soilik "
 "<strong> baiezta dezakezu</strong>"
 
-#: app/scripts/controllers/menu.js:1372
+#: app/scripts/controllers/menu.js:1371
 #, fuzzy
 msgid ""
-"You can only upload at the top-level design. Inside submodules, you can only "
+"You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr ""
 "Goi mailako diseinuan soilik eraiki dezakezu. Azpimoduluen barnean, soilik "
@@ -1338,7 +1314,7 @@ msgstr ""
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:590
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr "Aldaketak galduko dituzu gordetzen ez badituzu"
 
@@ -1350,21 +1326,45 @@ msgstr "atzera"
 msgid "{{app}} is required."
 msgstr "{{app}} behar da"
 
-#: app/scripts/controllers/menu.js:1119
+#: app/scripts/controllers/menu.js:1118
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} plakaren datasheet-a ez zehaztua"
 
-#: app/scripts/controllers/menu.js:1105
+#: app/scripts/controllers/menu.js:1104
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} plakaren pinout-a ez zehaztua"
 
-#: app/scripts/controllers/menu.js:1145
+#: app/scripts/controllers/menu.js:1144
 msgid "{{board}} rules not defined"
 msgstr "{{board}} plakaren arauak ez daude definituta"
 
-#: app/scripts/controllers/menu.js:499 app/scripts/controllers/menu.js:532
+#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr "{{name}} esportatu da"
+
+#~ msgid "SlateBlue"
+#~ msgstr "Urdin-arbela"
+
+#~ msgid "DarkGreen"
+#~ msgstr "Berde-iluna"
+
+#~ msgid "DarkOrange"
+#~ msgstr "Laranja-iluna"
+
+#~ msgid "GreenYellow"
+#~ msgstr "Berde-horia"
+
+#~ msgid "MediumVioletRed"
+#~ msgstr "Bioleta"
+
+#~ msgid "OliveDrab"
+#~ msgstr "Oliba-motela"
+
+#~ msgid "OrangeRed"
+#~ msgstr "Gorri-laranja"
+
+#~ msgid "SpringGreen"
+#~ msgstr "Berde-udaberria"
 
 #~ msgid "Read only"
 #~ msgstr "Irakurtzeko soilik"

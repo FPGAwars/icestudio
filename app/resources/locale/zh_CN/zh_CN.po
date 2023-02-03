@@ -25,7 +25,7 @@ msgstr "<b>拔下</b>并<b>重新连接</b>开发板"
 #: app/views/design.html:34
 msgid ""
 "<b>WARNING!</b><br>\n"
-"        The changes made here, will also be applied to all the\n"
+"        The changes made here will also be applied to all the\n"
 "        [<b>{{ information.name }}</b>] blocks in the current design. If\n"
 "        you DO NOT want them to propagate, create a cloned block instead\n"
 "        using<br>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Add"
 msgstr "添加"
 
-#: app/scripts/controllers/menu.js:1402
+#: app/scripts/controllers/menu.js:1401
 msgid "Add a block to start"
 msgstr "添加图块并开始"
 
@@ -60,7 +60,7 @@ msgstr "地址格式"
 msgid "All collections removed"
 msgstr "所有集合已删除"
 
-#: app/scripts/controllers/menu.js:1442
+#: app/scripts/controllers/menu.js:1441
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "所有存储的集合将会丢失。是否继续？"
 
@@ -86,7 +86,7 @@ msgid "Binary"
 msgstr "二进制"
 
 #: app/scripts/services/tools.js:159
-msgid "Bitstream not found, build first your project"
+msgid "Bitstream not found: build your project first"
 msgstr ""
 
 #: app/scripts/services/blockforms.js:1082
@@ -114,11 +114,11 @@ msgstr "开发板"
 msgid "Board rules"
 msgstr "开发板规则"
 
-#: app/scripts/controllers/menu.js:1017
+#: app/scripts/controllers/menu.js:1016
 msgid "Board rules disabled"
 msgstr "开发板规则关闭"
 
-#: app/scripts/controllers/menu.js:1015
+#: app/scripts/controllers/menu.js:1014
 msgid "Board rules enabled"
 msgstr "开发板规则开启"
 
@@ -134,7 +134,7 @@ msgstr "开发板 {{name}} 不可用"
 msgid "Board {{name}} not connected"
 msgstr "开发板 {{name}} 未连接"
 
-#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1324
+#: app/scripts/app.js:184 app/scripts/controllers/menu.js:1323
 msgid "Board {{name}} selected"
 msgstr "开发板 {{name}} 已选中"
 
@@ -142,12 +142,12 @@ msgstr "开发板 {{name}} 已选中"
 msgid "Bootloader not active"
 msgstr "Bootloader 失效"
 
-#: app/scripts/controllers/menu.js:1346 app/views/design.html:506
+#: app/scripts/controllers/menu.js:1345 app/views/design.html:506
 #: app/views/menu.html:625
 msgid "Build"
 msgstr "构建"
 
-#: app/scripts/controllers/menu.js:1356
+#: app/scripts/controllers/menu.js:1355
 msgid "Build done"
 msgstr "构建成功"
 
@@ -156,7 +156,8 @@ msgid "Cancel"
 msgstr "取消"
 
 #: app/views/languages.html:92
-msgid "Catalan"
+#, fuzzy
+msgid "Catalonian"
 msgstr "Catalan"
 
 #: app/views/design.html:262
@@ -194,7 +195,7 @@ msgstr "点击此处 <b>安装驱动程序</b>"
 msgid "Click here to install it"
 msgstr "点击此处安装"
 
-#: app/scripts/controllers/menu.js:957
+#: app/scripts/controllers/menu.js:956
 msgid "Click here to view"
 msgstr "点击此处浏览"
 
@@ -206,7 +207,7 @@ msgstr "数据总线上不可以使用时钟"
 msgid "Clone"
 msgstr "克隆"
 
-#: app/scripts/controllers/menu.js:581 app/views/version.html:80
+#: app/scripts/controllers/menu.js:580 app/views/version.html:80
 msgid "Close"
 msgstr "关闭"
 
@@ -222,7 +223,7 @@ msgstr "集合"
 msgid "Collection info"
 msgstr "集合信息"
 
-#: app/scripts/controllers/menu.js:1233
+#: app/scripts/controllers/menu.js:1232
 msgid "Collection {{collection}} info not defined"
 msgstr "集合 {{collection}} 的信息未定义"
 
@@ -242,7 +243,7 @@ msgstr "已移除集合 {{name}}"
 msgid "Collection {{name}} replaced"
 msgstr "已替换集合 {{name}}"
 
-#: app/scripts/controllers/menu.js:1279
+#: app/scripts/controllers/menu.js:1278
 msgid "Collection {{name}} selected"
 msgstr "已选中集合 {{name}}"
 
@@ -250,7 +251,7 @@ msgstr "已选中集合 {{name}}"
 msgid "Collections"
 msgstr "集合"
 
-#: app/scripts/controllers/menu.js:1249 app/views/menu.html:489
+#: app/scripts/controllers/menu.js:1248 app/views/menu.html:489
 msgid "Command output"
 msgstr "命令输出"
 
@@ -300,22 +301,14 @@ msgstr "Czech"
 msgid "Dark (default)"
 msgstr "默认"
 
-#: app/scripts/services/forms.js:424
+#: app/scripts/services/forms.js:424 app/views/design.html:199
 #, fuzzy
 msgid "Dark Green"
 msgstr "深绿"
 
-#: app/scripts/services/forms.js:406
+#: app/scripts/services/forms.js:406 app/views/design.html:150
 #, fuzzy
 msgid "Dark Orange"
-msgstr "深橙"
-
-#: app/views/design.html:199
-msgid "DarkGreen"
-msgstr "深绿"
-
-#: app/views/design.html:150
-msgid "DarkOrange"
 msgstr "深橙"
 
 #: app/views/menu.html:470
@@ -352,11 +345,11 @@ msgstr "描述"
 msgid "Disable"
 msgstr "关闭"
 
-#: app/scripts/controllers/menu.js:586
+#: app/scripts/controllers/menu.js:585
 msgid "Do you want to close the application?"
 msgstr "您是否要关闭应用程序？"
 
-#: app/scripts/controllers/menu.js:1425
+#: app/scripts/controllers/menu.js:1424
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "您是否要移除集合 {{name}}？"
 
@@ -445,7 +438,7 @@ msgstr "输入输入端口名称"
 msgid "Enter the python path"
 msgstr "输入新集合路径"
 
-#: app/scripts/controllers/menu.js:1004
+#: app/scripts/controllers/menu.js:1003
 msgid "Enter the remote hostname user@host"
 msgstr "输入远程主机 用户名@主机名"
 
@@ -477,7 +470,7 @@ msgstr "导出子模块"
 msgid "External collections"
 msgstr "外部集合"
 
-#: app/scripts/controllers/menu.js:929
+#: app/scripts/controllers/menu.js:928
 msgid "External collections updated"
 msgstr "外部集合已更新"
 
@@ -486,7 +479,7 @@ msgstr "外部集合已更新"
 msgid "External plugins"
 msgstr "外部集合"
 
-#: app/scripts/controllers/menu.js:800
+#: app/scripts/controllers/menu.js:799
 #, fuzzy
 msgid "External plugins updated"
 msgstr "外部集合已更新"
@@ -561,13 +554,9 @@ msgstr "金黄"
 msgid "Greek"
 msgstr "Greek"
 
-#: app/scripts/services/forms.js:418
+#: app/scripts/services/forms.js:418 app/views/design.html:185
 #, fuzzy
 msgid "Green Yellow"
-msgstr "黄绿"
-
-#: app/views/design.html:185
-msgid "GreenYellow"
 msgstr "黄绿"
 
 #: app/views/menu.html:827
@@ -583,16 +572,17 @@ msgid "Icestudio is part of"
 msgstr ""
 
 #: app/scripts/services/graph.js:1659
+#, fuzzy
 msgid ""
-"If you have blank IN/OUT pins, it's because there is no equivalent in this "
-"board"
+"If you see blank IN/OUT pins, it is because equivalent pins do not exist on "
+"this board"
 msgstr "如果你有空白的 IN/OUT 引脚，那是因为这块开发板上没有这些引脚"
 
 #: app/scripts/services/utils.js:651
 msgid "Image"
 msgstr "镜像"
 
-#: app/scripts/controllers/menu.js:2126
+#: app/scripts/controllers/menu.js:2125
 msgid "Image {{name}} saved"
 msgstr "镜像 {{name}} 已保存"
 
@@ -676,15 +666,18 @@ msgid "Internet connection required"
 msgstr "需要网络连接"
 
 #: app/scripts/services/graph.js:298
-msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>block already connected"
 msgstr "无效的 <i>上拉</i> 连接：<br>图块已被连接"
 
 #: app/scripts/services/graph.js:312
-msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
+#, fuzzy
+msgid "Invalid <i>Pull-up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "无效的 <i>上拉</i> 连接：<br>只有 <i>输入</i> 图块才能被上拉"
 
 #: app/scripts/services/graph.js:304
-msgid "Invalid block connection:<br><i>Pull up</i> already connected"
+#, fuzzy
+msgid "Invalid block connection:<br><i>Pull-up</i> already connected"
 msgstr "无效的图块连接：<br><i>上拉</i> 已经使用"
 
 #: app/scripts/services/tools.js:1784
@@ -714,7 +707,7 @@ msgstr "Italian"
 
 #: app/views/languages.html:110
 #, fuzzy
-msgid "Japanish"
+msgid "Japanese"
 msgstr "Spanish"
 
 #: app/views/languages.html:98
@@ -765,7 +758,7 @@ msgstr "驱动开启"
 msgid "Logging file"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:742
+#: app/scripts/controllers/menu.js:741
 msgid "Logging file updated"
 msgstr ""
 
@@ -773,13 +766,9 @@ msgstr ""
 msgid "Maximum bus size: 96 bits"
 msgstr "最大总线宽度：96 bits"
 
-#: app/scripts/services/forms.js:397
+#: app/scripts/services/forms.js:397 app/views/design.html:129
 #, fuzzy
 msgid "Medium Violet Red"
-msgstr "紫红"
-
-#: app/views/design.html:129
-msgid "MediumVioletRed"
 msgstr "紫红"
 
 #: app/views/design.html:309 app/views/menu.html:805
@@ -820,22 +809,18 @@ msgstr "名称"
 msgid "Next"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:1453
+#: app/scripts/controllers/menu.js:1452
 msgid "No collections stored"
 msgstr "没有存储的集合"
 
-#: app/scripts/app.js:57 app/scripts/controllers/menu.js:601
+#: app/scripts/app.js:57 app/scripts/controllers/menu.js:600
 #: app/scripts/services/project.js:157
 msgid "OK"
 msgstr "确定"
 
-#: app/scripts/services/forms.js:427
+#: app/scripts/services/forms.js:427 app/views/design.html:206
 #, fuzzy
 msgid "Olive Drab"
-msgstr "橄榄绿"
-
-#: app/views/design.html:206
-msgid "OliveDrab"
 msgstr "橄榄绿"
 
 #: app/views/menu.html:100
@@ -846,13 +831,9 @@ msgstr "打开"
 msgid "Open SVG"
 msgstr "打开 SVG"
 
-#: app/scripts/services/forms.js:403
+#: app/scripts/services/forms.js:403 app/views/design.html:143
 #, fuzzy
 msgid "Orange Red"
-msgstr "橙红"
-
-#: app/views/design.html:143
-msgid "OrangeRed"
 msgstr "橙红"
 
 #: app/scripts/services/project.js:555
@@ -890,8 +871,8 @@ msgstr ""
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/scripts/controllers/menu.js:751 app/scripts/controllers/menu.js:808
-#: app/scripts/controllers/menu.js:873 app/scripts/controllers/menu.js:937
+#: app/scripts/controllers/menu.js:750 app/scripts/controllers/menu.js:807
+#: app/scripts/controllers/menu.js:872 app/scripts/controllers/menu.js:936
 msgid "Path {{path}} does not exist"
 msgstr "路径 {{path}} 不存在"
 
@@ -911,7 +892,7 @@ msgstr ""
 msgid "Project information"
 msgstr "项目信息"
 
-#: app/scripts/controllers/menu.js:955 app/scripts/controllers/menu.js:981
+#: app/scripts/controllers/menu.js:954 app/scripts/controllers/menu.js:980
 msgid "Project information updated"
 msgstr "项目信息已更新"
 
@@ -923,7 +904,7 @@ msgstr "项目 {{name}} 已载入"
 msgid "Project {{name}} saved"
 msgstr "项目 {{name}} 已保存"
 
-#: app/scripts/controllers/menu.js:865
+#: app/scripts/controllers/menu.js:864
 msgid "Python Environment updated"
 msgstr ""
 
@@ -1020,13 +1001,9 @@ msgstr "选择开发板"
 msgid "Show clock"
 msgstr "显示时钟"
 
-#: app/scripts/services/forms.js:415
+#: app/scripts/services/forms.js:415 app/views/design.html:178
 #, fuzzy
 msgid "Slate Blue"
-msgstr "板岩蓝"
-
-#: app/views/design.html:178
-msgid "SlateBlue"
 msgstr "板岩蓝"
 
 #: app/views/menu.html:871
@@ -1037,24 +1014,20 @@ msgstr "源代码"
 msgid "Spanish"
 msgstr "Spanish"
 
-#: app/scripts/services/forms.js:421
+#: app/scripts/services/forms.js:421 app/views/design.html:192
 #, fuzzy
 msgid "Spring Green"
 msgstr "春绿"
 
-#: app/views/design.html:192
-msgid "SpringGreen"
-msgstr "春绿"
-
-#: app/scripts/controllers/menu.js:1355
+#: app/scripts/controllers/menu.js:1354
 msgid "Start build"
 msgstr "开始编译"
 
-#: app/scripts/controllers/menu.js:1381
+#: app/scripts/controllers/menu.js:1380
 msgid "Start upload"
 msgstr "开始上传"
 
-#: app/scripts/controllers/menu.js:1332
+#: app/scripts/controllers/menu.js:1331
 msgid "Start verification"
 msgstr "开始验证"
 
@@ -1072,8 +1045,9 @@ msgid "System Info"
 msgstr ""
 
 #: app/views/languages.html:62
-msgid "Taiwan"
-msgstr ""
+#, fuzzy
+msgid "Taiwanese"
+msgstr "中文"
 
 #: app/views/menu.html:174
 msgid "Testbench"
@@ -1087,10 +1061,11 @@ msgstr ""
 msgid "The collection {{name}} already exists."
 msgstr "集合 {{name}} 已存在。"
 
-#: app/scripts/controllers/menu.js:1304
+#: app/scripts/controllers/menu.js:1303
+#, fuzzy
 msgid ""
 "The current FPGA I/O configuration will be lost. Do you want to change to "
-"{{name}} board?"
+"the {{name}} board?"
 msgstr "目前FPGA的I/O配置将会丢失，您是否确定换用 {{name}} 开发板？"
 
 #: app/scripts/services/tools.js:1295
@@ -1122,9 +1097,10 @@ msgid ""
 msgstr ""
 
 #: app/scripts/services/graph.js:532
+#, fuzzy
 msgid ""
-"To enter on \"edit mode\" of deeper block, you need to finish current \"edit "
-"mode\", lock the keylock to do it."
+"To enter \"edit mode\" in a deeper block, you need to finish first the "
+"current one by locking the padlock."
 msgstr ""
 "要为更深层次的图块使用 \"编辑模式\"，您需要完成当前的\"编辑模式\"，然后锁定键"
 "锁即可。"
@@ -1136,9 +1112,9 @@ msgstr "要浏览设计，您需要退出 \"编辑模式\"。"
 #: app/scripts/controllers/menu.js:349
 #, fuzzy
 msgid ""
-"To save your design you need to lock the padlock and               go to top "
-"level design.<br/><br/>If you want to export               this submodule to "
-"a file, execute \"Save as\" command to do it."
+"To save your design you need to lock the padlock and               go to the "
+"top-level design.<br/><br/>If you want to export               this "
+"submodule to a file, use the \"Save as\" command."
 msgstr ""
 "要保存您的设计，您需要锁定键锁并且切换到顶层设计<br/><br/>如果您想将子模块导"
 "出到文件，请点击\"另存为\"。"
@@ -1206,16 +1182,16 @@ msgstr "未命名"
 msgid "Update (Latest stable)"
 msgstr "更新图块名称"
 
-#: app/scripts/controllers/menu.js:1371 app/views/design.html:514
+#: app/scripts/controllers/menu.js:1370 app/views/design.html:514
 #: app/views/menu.html:633
 msgid "Upload"
 msgstr "上传"
 
-#: app/scripts/controllers/menu.js:1382
+#: app/scripts/controllers/menu.js:1381
 msgid "Upload done"
 msgstr "上传成功"
 
-#: app/scripts/controllers/menu.js:1333
+#: app/scripts/controllers/menu.js:1332
 msgid "Verification done"
 msgstr "验证成功"
 
@@ -1258,7 +1234,7 @@ msgstr "图块格式错误： {{type}}"
 msgid "Wrong block name {{name}}"
 msgstr "图块名称错误 {{name}}"
 
-#: app/scripts/controllers/menu.js:1925
+#: app/scripts/controllers/menu.js:1924
 #, fuzzy
 msgid "Wrong new name!"
 msgstr "端口名称错误 {{name}}"
@@ -1271,7 +1247,7 @@ msgstr "项目格式错误： {{name}}"
 msgid "Wrong remote hostname {{name}}"
 msgstr "远程主机名错误 {{name}}"
 
-#: app/scripts/controllers/menu.js:1829
+#: app/scripts/controllers/menu.js:1828
 msgid "Wrong search name!"
 msgstr ""
 
@@ -1282,35 +1258,35 @@ msgstr "橙黄"
 #: app/scripts/controllers/menu.js:409
 #, fuzzy
 msgid ""
-"You are editing a submodule, if you save it, you'll save only               "
-"the submodule (in this situation \"save as\" works like               "
-"\"export module\"). Do you want to continue?"
+"You are editing a submodule, so you will save just this submodule (\"Save as"
+"\" works like \"Export                 module\"). Do you want to continue?"
 msgstr ""
 "您正在编辑一个子模块。如果您保存，您将只会保存子模块 (在此情况下 \"另存为\" "
 "和 \"导出子模块\" 效果相同)，是否继续？"
 
 #: app/scripts/controllers/menu.js:396
 msgid ""
-"You are navigating into the design, if you want to save the entire design, "
-"you need to back                       to the top level. If you want to "
-"export this module as new file, unlock the module and \"save as\""
+"You are navigating into the design: if you want to save the entire design, "
+"you need to go back                      to the top-level. If you want to "
+"export this module as new file, unlock the module and use \"Save as\""
 msgstr ""
 
 #: app/scripts/services/project.js:103
-msgid "You can load it as it is or convert it for the {{name}} board."
+#, fuzzy
+msgid "You can load it as it is or convert it to use the {{name}} board."
 msgstr "您可以载入原始项目，或转换以适应开发板 {{name}}。"
 
-#: app/scripts/controllers/menu.js:1347
+#: app/scripts/controllers/menu.js:1346
 #, fuzzy
 msgid ""
-"You can only build at the top-level design. Inside submodules, you can only "
+"You can only build at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr "您只能在顶层设计中编译。在子模块中您将只能 <strong>验证</strong>"
 
-#: app/scripts/controllers/menu.js:1372
+#: app/scripts/controllers/menu.js:1371
 #, fuzzy
 msgid ""
-"You can only upload at the top-level design. Inside submodules, you can only "
+"You can only upload at the top-level design. Inside submodules, you can "
 "<strong>Verify</strong>"
 msgstr "您只能在顶层设计中编译。在子模块中您将只能 <strong>验证</strong>"
 
@@ -1318,7 +1294,7 @@ msgstr "您只能在顶层设计中编译。在子模块中您将只能 <strong>
 msgid "You can read the release notes on the"
 msgstr ""
 
-#: app/scripts/controllers/menu.js:590
+#: app/scripts/controllers/menu.js:589
 msgid "Your changes will be lost if you don’t save them"
 msgstr "如果不保存，您的更改将会丢失"
 
@@ -1330,21 +1306,45 @@ msgstr "后退"
 msgid "{{app}} is required."
 msgstr "需要 {{app}} 。"
 
-#: app/scripts/controllers/menu.js:1119
+#: app/scripts/controllers/menu.js:1118
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}} 数据表未定义"
 
-#: app/scripts/controllers/menu.js:1105
+#: app/scripts/controllers/menu.js:1104
 msgid "{{board}} pinout not defined"
 msgstr "{{board}} 引脚未定义"
 
-#: app/scripts/controllers/menu.js:1145
+#: app/scripts/controllers/menu.js:1144
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 规则未定义"
 
-#: app/scripts/controllers/menu.js:499 app/scripts/controllers/menu.js:532
+#: app/scripts/controllers/menu.js:498 app/scripts/controllers/menu.js:531
 msgid "{{name}} exported"
 msgstr "{{name}} 已导出"
+
+#~ msgid "SlateBlue"
+#~ msgstr "板岩蓝"
+
+#~ msgid "DarkGreen"
+#~ msgstr "深绿"
+
+#~ msgid "DarkOrange"
+#~ msgstr "深橙"
+
+#~ msgid "GreenYellow"
+#~ msgstr "黄绿"
+
+#~ msgid "MediumVioletRed"
+#~ msgstr "紫红"
+
+#~ msgid "OliveDrab"
+#~ msgstr "橄榄绿"
+
+#~ msgid "OrangeRed"
+#~ msgstr "橙红"
+
+#~ msgid "SpringGreen"
+#~ msgstr "春绿"
 
 #~ msgid "Read only"
 #~ msgstr "只读"

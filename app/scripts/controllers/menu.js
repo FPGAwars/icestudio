@@ -348,8 +348,8 @@ angular
             gettextCatalog.getString("Save submodule"),
             gettextCatalog.getString(
               'To save your design you need to lock the padlock and \
-              go to top level design.<br/><br/>If you want to export \
-              this submodule to a file, execute "Save as" command to do it.'
+              go to the top-level design.<br/><br/>If you want to export \
+              this submodule to a file, use the "Save as" command.'
             ),
             function () { }
           );
@@ -394,8 +394,8 @@ angular
                 alertify.alert(
                   gettextCatalog.getString("Export submodule"),
                   gettextCatalog.getString(
-                    'You are navigating into the design, if you want to save the entire design, you need to back  \
-                     to the top level. If you want to export this module as new file, unlock the module and "save as"'
+                    'You are navigating into the design: if you want to save the entire design, you need to go back \
+                     to the top-level. If you want to export this module as new file, unlock the module and use "Save as"'
                   ),
                   function () { }
                 );
@@ -407,9 +407,8 @@ angular
           alertify.confirm(
             gettextCatalog.getString("Export submodule"),
             gettextCatalog.getString(
-              'You are editing a submodule, if you save it, you\'ll save only \
-              the submodule (in this situation "save as" works like \
-              "export module"). Do you want to continue?'
+                'You are editing a submodule, so you will save just this submodule ("Save as" works like "Export \
+                module"). Do you want to continue?'
             ),
             function () {
               $scope.doSaveProjectAs(localCallback);
@@ -1302,7 +1301,7 @@ angular
           if (!graph.isEmpty()) {
             alertify.confirm(
               gettextCatalog.getString(
-                "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?",
+                "The current FPGA I/O configuration will be lost. Do you want to change to the {{name}} board?",
                 {
                   name: utils.bold(board.info.label),
                 }
@@ -1345,7 +1344,7 @@ angular
           alertify.alert(
             gettextCatalog.getString("Build"),
             gettextCatalog.getString(
-              "You can only build at the top-level design. Inside submodules, you can only <strong>Verify</strong>"
+              "You can only build at the top-level design. Inside submodules, you can <strong>Verify</strong>"
             ),
             function () { }
           );
@@ -1370,7 +1369,7 @@ angular
           alertify.alert(
             gettextCatalog.getString("Upload"),
             gettextCatalog.getString(
-              "You can only upload at the top-level design. Inside submodules, you can only <strong>Verify</strong>"
+              "You can only upload at the top-level design. Inside submodules, you can <strong>Verify</strong>"
             ),
             function () { }
           );
